@@ -763,7 +763,9 @@ Remember to:
 
 ## Presenter Script Guidelines
 - Write in conversational, easy-to-read format
-- Include word-for-word speaking notes
+- Include word-for-word speaking notes that take 30-40 minutes to read through
+- Script should be comprehensive enough to fill entire session when read verbatim
+- Include every detail that will be mentioned, no improvisation needed
 - Mark timing cues with ⏱️
 - Highlight key terms in **bold**
 - Include Tips for simplified explanations
@@ -771,42 +773,59 @@ Remember to:
 - Use platform-specific notes (iOS/Android)
 - Add Alternative Approaches
 - Include Learning Objectives checkpoints
+- Document every prop and option that will be mentioned
+- Include transition phrases between sections
+- Add verbal cues for when to start typing/coding
+- Include exact wording for complex technical explanations
+- Add reminders for live demo interactions
+- Document every example and analogy in full
+- Include verbal cues for showing/hiding different windows
+- Add notes for handling common technical issues during demo
+- Include complete explanations of all code alternatives
+- Document every step of live coding in detail
+- Add prompts for audience interaction points
+- Include full troubleshooting dialogue
 
 ### Script Structure
 #### Opening (5 minutes)
-- Welcome and overview
-- Quick participant background check
-- Session roadmap
-- Learning objectives
-- Real-world application
+- Detailed welcome message
+- Comprehensive background check questions
+- Complete session roadmap explanation
+- In-depth learning objectives review
+- Real-world application examples with full context
 
 #### Concept Introduction (10 minutes)
-- Core concept explanation
-- Native development parallels
-- Simple metaphors and analogies
-- Visual diagrams or examples
-- Quick comprehension check
+- Thorough concept explanations with multiple analogies
+- Detailed native development parallels
+- Multiple metaphors and analogies for each concept
+- Complete visual diagrams explanation scripts
+- Comprehensive comprehension check dialogues
 
 #### Code Walkthrough (30 minutes)
-- Line-by-line explanation
-- Highlight key patterns
-- Platform-specific considerations
-- Common pitfalls and solutions
-- Interactive coding segments
+- Line-by-line explanation scripts
+- Complete prop and option documentation
+- Detailed platform-specific considerations
+- Full common pitfalls and solutions dialogue
+- Comprehensive interactive coding segment instructions
+- Exact wording for explaining each code block
+- Complete alternative implementation discussions
+- Detailed performance implication explanations
+- Full TypeScript type explanation scripts
+- Comprehensive styling approach discussions
 
 #### Q&A and Discussion (10 minutes)
-- Prepared question prompts
-- Common misconceptions
-- Debugging scenarios
-- Best practices discussion
-- Real-world examples
+- Complete list of prepared questions and answers
+- Detailed misconception explanations
+- Full debugging scenario walkthroughs
+- Comprehensive best practices discussions
+- Complete real-world example explanations
 
 #### Wrap-up (5 minutes)
-- Key takeaways
-- Next steps preview
-- Resources for further learning
-- Homework assignment
-- Feedback collection
+- Detailed key takeaways review
+- Complete next steps explanation
+- Full resource list with context
+- Comprehensive homework assignment explanation
+- Detailed feedback collection prompts
 
 ### Example Script Format
 ```markdown
@@ -968,3 +987,90 @@ When state updates aren't reflecting:
    - Test coverage report
    - Performance considerations
 ```
+
+## Documentation Organization
+
+### Large Document Management
+- Split extensive documentation into modular files
+- Use index files to maintain document hierarchy
+- Follow a clear numbering/naming convention
+- Keep individual files under 500 lines for maintainability
+
+### Presenter Script Organization
+```markdown
+training-session/
+├── SCRIPT.md                 # Main index and overview
+├── sections/                 # Detailed script sections
+│   ├── 01_introduction.md
+│   ├── 02_core_concepts.md
+│   └── 03_live_coding.md
+├── code-snippets/           # Referenced code examples
+│   ├── typescript/
+│   └── javascript/
+└── assets/                  # Visual aids and diagrams
+    ├── diagrams/
+    └── screenshots/
+```
+
+### File Naming Standards
+- Use numeric prefixes for order (01_, 02_, etc.)
+- Use lowercase with hyphens for readability
+- Include clear section indicators
+- Maintain consistent extensions
+
+### Cross-Referencing
+- Use relative links between documents
+- Maintain table of contents in index files
+- Include clear navigation headers/footers
+- Reference line numbers for code snippets
+
+### Version Control Considerations
+- Commit modular files separately
+- Use meaningful commit messages per section
+- Tag stable versions of documentation
+- Maintain change history per section
+
+### Large Script Management
+- Break presenter scripts into logical sections
+- Each section should be self-contained
+- Maximum 500 lines per script file
+- Include timing markers for each subsection
+
+### Script Section Structure
+```markdown
+# Section Title
+⏱️ Duration: X minutes
+
+## Setup Notes
+[Preparation steps for this section]
+
+## Verbal Script
+"Exact words to say..."
+
+## Code Examples
+```typescript
+// Code to type/explain
+```
+
+## Visual Aids
+[References to diagrams/screenshots]
+
+## Checkpoints
+- [ ] Key points covered
+- [ ] Code demonstrated
+- [ ] Audience comprehension verified
+```
+
+### Script Dependencies
+- Create separate directories for:
+  - Code snippets
+  - Visual aids
+  - Exercise files
+  - Solution files
+- Maintain clear references between files
+
+### Script Versioning
+- Track script changes separately from code
+- Include last-updated timestamps
+- Note any prerequisite updates
+- Document script modifications
