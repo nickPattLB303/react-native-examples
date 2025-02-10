@@ -1,2 +1,1 @@
 # react-native-examples
-test
