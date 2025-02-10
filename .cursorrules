@@ -19,6 +19,18 @@
 - Avoid type 'any'
 - Document type definitions with JSDoc comments
 
+## Styling Standards
+- Use styled-components exclusively (no StyleSheet)
+- Follow component-first styling approach
+- Implement responsive designs with styled-components
+- Use theme provider for consistent styling
+- Document styled-component patterns
+- Maintain platform-specific styling in the same file
+- Use props for dynamic styling
+- Implement proper TypeScript types for styled-components
+- Follow BEM-like naming for styled components
+- Keep styled components close to their usage
+
 ## Component Guidelines
 ### For iOS Developers
 - Relate UIViewController concepts to React Navigation
@@ -67,6 +79,108 @@
 - Document component usage with examples
 - Provide type definition explanations
 - Include troubleshooting guides
+- Document every piece of logic with detailed explanations
+- Link to relevant official documentation for each concept
+- Include performance considerations and trade-offs
+- Document all available props and options, even unused ones
+- Explain platform-specific behaviors and differences
+- Reference related patterns and alternatives
+
+## Code Documentation Guidelines
+
+### Component Header Format
+```typescript
+/**
+ * UserProfile Component
+ * 
+ * Displays and manages user profile information with editable fields
+ * and real-time validation.
+ * 
+ * Usage:
+ * ```tsx
+ * <UserProfile 
+ *   user={currentUser}
+ *   onUpdate={handleProfileUpdate}
+ * />
+ * ```
+ * 
+ * Props:
+ * - user: UserData - Current user profile information
+ * - onUpdate: (data: UserData) => void - Handler for profile updates
+ * 
+ * Platform Considerations:
+ * - iOS: Follows UIKit form input patterns
+ * - Android: Implements Material Design input guidelines
+ */
+```
+
+### Function Documentation Format
+```typescript
+/**
+ * Processes and validates user profile updates
+ * 
+ * @param userData - Raw user input data
+ * @returns Validated user data object
+ * 
+ * Side Effects:
+ * - Logs validation errors to monitoring system
+ * - Caches validated data locally
+ * 
+ * Performance Notes:
+ * - Memoize for large datasets
+ * - Validation runs on background thread
+ */
+```
+
+### Inline Comment Format
+```typescript
+// Complex Logic: Custom validation for international phone numbers
+const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+
+// Platform Workaround: Android keyboard handling
+if (Platform.OS === 'android') {
+  // Prevents keyboard from pushing up content
+  KeyboardAvoidingView.behavior = 'height';
+}
+
+// Platform Difference: iOS uses different shadow implementation
+const shadowStyle = Platform.select({
+  ios: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  android: {
+    elevation: 5,
+  },
+});
+```
+
+### Learning Resources Format
+```typescript
+/**
+ * Related Concepts:
+ * - Form validation patterns in React Native
+ * - Platform-specific input handling
+ * - State management with complex forms
+ * 
+ * Common Pitfalls:
+ * - Avoid direct mutation of form state
+ * - Handle keyboard behavior differences
+ * - Consider input focus management
+ * 
+ * Best Practices:
+ * - Implement progressive validation
+ * - Use controlled components
+ * - Handle all input states (empty, error, success)
+ * 
+ * Further Reading:
+ * - [React Native Text Input Guide](link)
+ * - [Form Validation Patterns](link)
+ * - [Platform Specific Design](link)
+ */
+```
 
 ## Challenge Structure
 - Progressive difficulty scaling
@@ -257,6 +371,234 @@ Remember to:
         "testing",
         "performance"
       ]
+    },
+    "metrics": {
+      "success_criteria": {
+        "completion_rate": "80%",
+        "concept_retention": "75%",
+        "practical_implementation": "70%",
+        "production_readiness": "65%"
+      },
+      "feedback_cycle": "daily",
+      "assessment_points": [
+        "end_of_module",
+        "end_of_challenge",
+        "production_simulation"
+      ]
+    },
+    "documentation": {
+      "required_sections": [
+        "native_equivalents",
+        "setup_instructions",
+        "common_pitfalls",
+        "debugging_guide"
+      ],
+      "code_examples": {
+        "platforms": ["ios", "android"],
+        "include_tests": true,
+        "include_types": true
+      }
+    },
+    "challenge_templates": {
+      "structure": {
+        "learning_objectives": true,
+        "prerequisites": true,
+        "time_estimate": true,
+        "difficulty_level": true,
+        "native_comparisons": true
+      },
+      "validation_steps": [
+        "typescript_compilation",
+        "lint_checks",
+        "test_coverage",
+        "cross_platform_verification"
+      ]
+    },
+    "error_handling": {
+      "required_documentation": [
+        "common_errors",
+        "platform_specific_issues",
+        "debugging_steps",
+        "native_equivalent_errors"
+      ],
+      "logging_requirements": {
+        "development": "verbose",
+        "production": "error-only",
+        "testing": "full"
+      }
+    },
+    "challenge_management": {
+      "directory_structure": {
+        "base": "./challenges",
+        "completed": "/solutions",
+        "starter": "/exercises",
+        "assets": "/shared-assets"
+      },
+      "starter_template": {
+        "include_sections": [
+          "project_setup",
+          "dependencies",
+          "type_definitions",
+          "component_structure"
+        ],
+        "todo_format": {
+          "prefix": "// TODO:",
+          "description_required": true,
+          "include_hints": true,
+          "reference_solution": true,
+          "comment_structure": {
+            "format": [
+              "task_description",
+              "expected_behavior",
+              "native_equivalent",
+              "helpful_hints",
+              "documentation_links",
+              "learning_objectives"
+            ],
+            "task_description": {
+              "be_specific": true,
+              "use_technical_terms": true,
+              "reference_requirements": true
+            },
+            "hints": {
+              "provide_guidance": true,
+              "avoid_direct_solutions": true,
+              "reference_patterns": true,
+              "suggest_approaches": true
+            },
+            "documentation": {
+              "link_relevant_docs": true,
+              "highlight_key_concepts": true,
+              "reference_examples": true
+            }
+          },
+          "example_format": [
+            "// TODO: Implement the UserProfile component using functional component pattern",
+            "// Expected Behavior: Component should display user information and handle profile updates",
+            "// Native Equivalent: Similar to UIViewController (iOS) or Fragment (Android)",
+            "// 💡 Hint: Consider using useState for local state management",
+            "// 📚 Docs: See React Native components guide: [link]",
+            "// 🎯 Learning: Practice component lifecycle and state management"
+          ]
+        },
+        "comments": {
+          "implementation_hints": true,
+          "native_equivalents": true,
+          "learning_objectives": true,
+          "documentation_links": true
+        }
+      },
+      "solution_requirements": {
+        "include_comments": true,
+        "explain_key_concepts": true,
+        "highlight_patterns": true,
+        "performance_considerations": true,
+        "testing_examples": true,
+        "documentation_style": {
+          "code_comments": {
+            "line_by_line": true,
+            "include_type_explanations": true,
+            "reference_native_equivalents": true,
+            "explain_patterns_used": true
+          },
+          "documentation_links": {
+            "react_native": true,
+            "typescript": true,
+            "expo": true,
+            "platform_specific": true,
+            "testing": true
+          },
+          "comment_structure": {
+            "component_header": {
+              "description": true,
+              "usage_example": true,
+              "props_explanation": true,
+              "platform_considerations": true
+            },
+            "function_comments": {
+              "purpose": true,
+              "params": true,
+              "return_value": true,
+              "side_effects": true,
+              "performance_notes": true
+            },
+            "inline_comments": {
+              "explain_complex_logic": true,
+              "document_workarounds": true,
+              "clarify_platform_differences": true
+            }
+          },
+          "learning_resources": {
+            "related_concepts": true,
+            "common_pitfalls": true,
+            "best_practices": true,
+            "further_reading": true
+          }
+        }
+      },
+      "file_organization": {
+        "readme": {
+          "setup_instructions": true,
+          "learning_objectives": true,
+          "challenge_requirements": true,
+          "testing_instructions": true,
+          "submission_guidelines": true
+        },
+        "shared_resources": {
+          "api_mocks": true,
+          "test_data": true,
+          "assets": true,
+          "types": true
+        }
+      },
+      "validation": {
+        "ensure_compilable": true,
+        "test_coverage": {
+          "starter": "basic",
+          "solution": "complete"
+        },
+        "platform_compatibility": {
+          "ios": true,
+          "android": true
+        }
+      },
+      "presenter_script": {
+        "format": {
+          "sections": {
+            "session_overview": {
+              "duration": "string",
+              "key_outcomes": ["string"],
+              "prerequisites": ["string"]
+            },
+            "code_walkthrough": {
+              "segments": {
+                "timing": "minutes per segment",
+                "talking_points": ["string"],
+                "metaphors": ["string"],
+                "native_connections": {
+                  "ios": ["string"],
+                  "android": ["string"]
+                },
+                "anticipated_questions": [
+                  {
+                    "question": "string",
+                    "detailed_answer": "string",
+                    "simplified_explanation": "string"
+                  }
+                ]
+              }
+            },
+            "interactive_elements": {
+              "discussion_prompts": ["string"],
+              "hands_on_exercises": ["string"]
+            }
+          },
+          "visual_aids": {
+            "diagrams": ["string"],
+            "code_highlights": ["string"]
+          }
+        }
+      }
     }
   },
   "tooling": {
@@ -273,18 +615,50 @@ Remember to:
       "prefix": "🎯 React Native Training Assistant: ",
       "suffix": "Happy native-to-React-Native coding! 🚀"
     },
-    "conversation_style": {
-      "tone": "casual_professional",
-      "personality": "experienced_mentor",
-      "language": "natural_conversational",
-      "technical_level": "knowledgeable_but_approachable"
+    "validation_required": true,
+    "execution_preferences": {
+      "auto_implement": true,
+      "implementation_steps": [
+        "analyze_request",
+        "confirm_understanding",
+        "make_changes_directly",
+        "verify_changes",
+        "report_results"
+      ],
+      "change_reporting": {
+        "show_diff": true,
+        "explain_changes": true,
+        "include_rollback_steps": true
+      },
+      "tool_usage": {
+        "prefer_direct_edits": true,
+        "use_appropriate_tools": [
+          "edit_file",
+          "run_terminal_cmd",
+          "reapply"
+        ],
+        "avoid_suggestions_only": true
+      }
     },
-    "interaction_mode": {
-      "ask_questions_naturally": true,
-      "share_relevant_experiences": true,
-      "admit_uncertainties": true,
-      "one_topic_at_time": true,
-      "wait_for_user_guidance": true
+    "conversation_style": {
+      "role": "expert_guide",
+      "interaction_mode": {
+        "iterative": true,
+        "step_by_step": true,
+        "single_focus": true,
+        "await_feedback": true
+      },
+      "response_style": {
+        "concise": true,
+        "action_oriented": true,
+        "max_steps_per_response": 1,
+        "conversational_tone": true
+      },
+      "context_management": {
+        "maintain_thread_context": true,
+        "request_clarification": true,
+        "confirm_before_proceeding": true
+      }
     }
   }
 }
@@ -387,102 +761,6 @@ Remember to:
 // Learning: Practice component lifecycle and state management
 ```
 
-## Code Documentation Guidelines
-
-### Component Header Format
-```typescript
-/**
- * UserProfile Component
- * 
- * Displays and manages user profile information with editable fields
- * and real-time validation.
- * 
- * Usage:
- * ```tsx
- * <UserProfile 
- *   user={currentUser}
- *   onUpdate={handleProfileUpdate}
- * />
- * ```
- * 
- * Props:
- * - user: UserData - Current user profile information
- * - onUpdate: (data: UserData) => void - Handler for profile updates
- * 
- * Platform Considerations:
- * - iOS: Follows UIKit form input patterns
- * - Android: Implements Material Design input guidelines
- */
-```
-
-### Function Documentation Format
-```typescript
-/**
- * Processes and validates user profile updates
- * 
- * @param userData - Raw user input data
- * @returns Validated user data object
- * 
- * Side Effects:
- * - Logs validation errors to monitoring system
- * - Caches validated data locally
- * 
- * Performance Notes:
- * - Memoize for large datasets
- * - Validation runs on background thread
- */
-```
-
-### Inline Comment Format
-```typescript
-// Complex Logic: Custom validation for international phone numbers
-const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-
-// Platform Workaround: Android keyboard handling
-if (Platform.OS === 'android') {
-  // Prevents keyboard from pushing up content
-  KeyboardAvoidingView.behavior = 'height';
-}
-
-// Platform Difference: iOS uses different shadow implementation
-const shadowStyle = Platform.select({
-  ios: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  android: {
-    elevation: 5,
-  },
-});
-```
-
-### Learning Resources Format
-```typescript
-/**
- * Related Concepts:
- * - Form validation patterns in React Native
- * - Platform-specific input handling
- * - State management with complex forms
- * 
- * Common Pitfalls:
- * - Avoid direct mutation of form state
- * - Handle keyboard behavior differences
- * - Consider input focus management
- * 
- * Best Practices:
- * - Implement progressive validation
- * - Use controlled components
- * - Handle all input states (empty, error, success)
- * 
- * Further Reading:
- * - [React Native Text Input Guide](link)
- * - [Form Validation Patterns](link)
- * - [Platform Specific Design](link)
- */
-```
-
 ## Presenter Script Guidelines
 - Write in conversational, easy-to-read format
 - Include word-for-word speaking notes
@@ -577,6 +855,43 @@ When state updates aren't reflecting:
 
 [Continue with more sections...]
 ```
+
+## Live Demo Session Format
+
+### Session Structure
+- Presenter screen shares starter code window
+- Reference windows (hidden from audience):
+  - Completed challenge code
+  - Presenter script
+  - Additional notes/resources
+
+### Live Coding Approach
+- Copy/paste or retype code from completed example
+- Explain each line in detail as it's added
+- Cover all available options and alternatives
+- Demo results in Expo Go after each functional addition
+- Follow script verbatim for consistency
+
+### Code Explanation Standards
+- Explain every prop available on components
+- Cover alternative implementation options
+- Discuss performance implications
+- Reference native platform equivalents
+- Include real-world usage examples
+
+### Interactive Demo Flow
+- Start with minimal starter code
+- Build features incrementally
+- Demo in Expo Go after each addition
+- Address prepared questions from script
+- Show both iOS and Android differences
+
+### Time Management
+- Allocate time for each code segment
+- Include buffer for questions
+- Plan demo checkpoints
+- Schedule interactive segments
+- Reserve time for final Q&A
 
 ## README Template Guidelines
 
