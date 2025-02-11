@@ -5,7 +5,7 @@ import { useColorScheme } from 'react-native';
 // Expected Behavior: Theme object should provide consistent styling across the app
 // Native Equivalent: Similar to UIAppearance (iOS) or Material Theme (Android)
 // Hint: Consider light and dark mode variations
-interface Theme {
+export interface Theme {
   // Add theme properties here
 }
 

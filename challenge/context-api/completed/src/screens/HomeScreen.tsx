@@ -5,7 +5,7 @@ import {
   Animated,
   Platform,
 } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { useTheme } from '../context/ThemeContext';
 
@@ -65,16 +65,16 @@ const Card = styled(Animated.View)<StyledProps>`
   border-width: 1px;
   background-color: ${(props: StyledProps) => props.theme.colors.card};
   border-color: ${(props: StyledProps) => props.theme.colors.border};
-  ${Platform.select({
-    ios: `
-      shadow-color: ${(props: StyledProps) => props.theme.colors.text};
+  ${(props: StyledProps) => Platform.select({
+    ios: css`
+      shadow-color: ${props.theme.colors.text};
       shadow-offset: 0px 2px;
       shadow-opacity: 0.25;
       shadow-radius: 3.84px;
     `,
-    android: `
+    android: css`
       elevation: 5;
-    `,
+    `
   })}
 `;
 

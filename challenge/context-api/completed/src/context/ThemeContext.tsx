@@ -30,7 +30,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * const backgroundColor = theme.colors.background;
  * ```
  */
-interface Theme {
+export interface Theme {
   dark: boolean;
   colors: {
     primary: string;    // Main brand color - See Material Design color system
@@ -55,9 +55,9 @@ interface Theme {
       xlarge: number; // 24 - Header text (prominent display)
     };
     fontWeight: {
-      regular: '400'; // Normal text weight
-      medium: '500';  // Semi-bold emphasis
-      bold: '700';    // Strong emphasis
+      regular: string; // '400' - Normal text weight
+      medium: string;  // '500' - Semi-bold emphasis
+      bold: string;    // '700' - Strong emphasis
     };
   };
 }
@@ -205,6 +205,38 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const systemColorScheme = useColorScheme();
   const [isDark, setIsDark] = useState<boolean>(systemColorScheme === 'dark');
 
+  // Initialize theme value
+  const [themeValue, setThemeValue] = useState<ThemeContextType>({
+    theme: isDark ? themes.dark : themes.light,
+    isDark,
+    toggleTheme: async () => {
+      const newTheme = !isDark;
+      setIsDark(newTheme);
+      try {
+        await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme ? 'dark' : 'light');
+      } catch (error) {
+        console.error('Error saving theme:', error);
+      }
+    },
+    setTheme: async (theme: 'light' | 'dark') => {
+      setIsDark(theme === 'dark');
+      try {
+        await AsyncStorage.setItem(THEME_STORAGE_KEY, theme);
+      } catch (error) {
+        console.error('Error saving theme:', error);
+      }
+    },
+  });
+
+  // Update theme value when isDark changes
+  useEffect(() => {
+    setThemeValue(prev => ({
+      ...prev,
+      theme: isDark ? themes.dark : themes.light,
+      isDark,
+    }));
+  }, [isDark]);
+
   useEffect(() => {
     // Load saved theme preference
     const loadTheme = async () => {
@@ -232,33 +264,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
-  const toggleTheme = async () => {
-    try {
-      const newTheme = !isDark;
-      setIsDark(newTheme);
-      await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme ? 'dark' : 'light');
-    } catch (error) {
-      console.error('Error saving theme:', error);
-    }
-  };
-
-  const setTheme = async (theme: 'light' | 'dark') => {
-    try {
-      setIsDark(theme === 'dark');
-      await AsyncStorage.setItem(THEME_STORAGE_KEY, theme);
-    } catch (error) {
-      console.error('Error saving theme:', error);
-    }
-  };
-
-  const value = {
-    theme: isDark ? themes.dark : themes.light,
-    isDark,
-    toggleTheme,
-    setTheme,
-  };
-
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={themeValue}>{children}</ThemeContext.Provider>;
 };
 
 /**

@@ -1,12 +1,7 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import styled from 'styled-components/native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { HomeScreen } from './src/screens/HomeScreen';
-
-const Container = styled(SafeAreaView)`
-  flex: 1;
-`;
 
 /**
  * Root App Component
@@ -17,9 +12,15 @@ const Container = styled(SafeAreaView)`
 export default function App() {
   return (
     <ThemeProvider>
-      <Container>
+      <SafeAreaView style={styles.container}>
         <HomeScreen />
-      </Container>
+      </SafeAreaView>
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
