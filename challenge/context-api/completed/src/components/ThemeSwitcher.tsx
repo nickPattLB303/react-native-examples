@@ -111,7 +111,15 @@ export const ThemeSwitcher: React.FC = () => {
       accessibilityState={{ checked: isDark }}
       accessibilityLabel={`Switch to ${isDark ? 'light' : 'dark'} theme`}
     >
-      <Text style={[styles.text, { color: theme.colors.text }]}>
+      <Text 
+        style={[
+          styles.text, 
+          { 
+            color: theme.colors.text,
+            fontWeight: '500' as const,
+          }
+        ]}
+      >
         {isDark ? 'Dark Mode' : 'Light Mode'}
       </Text>
       <Switch

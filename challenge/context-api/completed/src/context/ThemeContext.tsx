@@ -55,9 +55,9 @@ interface Theme {
       xlarge: number; // 24 - Header text (prominent display)
     };
     fontWeight: {
-      regular: string; // '400' - Normal text weight
-      medium: string;  // '500' - Semi-bold emphasis
-      bold: string;    // '700' - Strong emphasis
+      regular: '400'; // Normal text weight
+      medium: '500';  // Semi-bold emphasis
+      bold: '700';    // Strong emphasis
     };
   };
 }

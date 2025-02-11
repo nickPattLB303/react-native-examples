@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { ThemeProvider } from './src/context/ThemeContext';
-import { HomeScreen } from './src/screens/HomeScreen';
+import { ThemeProvider } from './challenge/context-api/completed/src/context/ThemeContext';
+import { HomeScreen } from './challenge/context-api/completed/src/screens/HomeScreen';
 
 /**
  * Root App Component

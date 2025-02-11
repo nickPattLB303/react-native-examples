@@ -114,13 +114,13 @@ export const HomeScreen: React.FC = () => {
     <ScrollView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
       contentInsetAdjustmentBehavior="automatic"
-      accessibilityRole="scrollview"
+      accessibilityRole="scrollbar"
       accessibilityLabel="Theme demonstration screen"
     >
       <Animated.View 
         style={{ opacity: fadeAnim }}
         accessible={true}
-        accessibilityRole="main"
+        accessibilityRole="none"
       >
         <Text
           style={[
@@ -128,7 +128,7 @@ export const HomeScreen: React.FC = () => {
             {
               color: theme.colors.text,
               fontSize: theme.typography.fontSize.xlarge,
-              fontWeight: theme.typography.fontWeight.bold,
+              fontWeight: theme.typography.fontWeight.bold as '700',
             },
           ]}
           accessibilityRole="header"
@@ -147,7 +147,7 @@ export const HomeScreen: React.FC = () => {
             },
           ]}
           accessible={true}
-          accessibilityRole="article"
+          accessibilityRole="none"
         >
           <Text
             style={[
@@ -174,7 +174,7 @@ export const HomeScreen: React.FC = () => {
             },
           ]}
           accessible={true}
-          accessibilityRole="article"
+          accessibilityRole="none"
         >
           <Text
             style={[
