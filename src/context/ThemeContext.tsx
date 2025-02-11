@@ -1,5 +1,6 @@
-import React, { createContext, useContext } from 'react';
-import { useColorScheme } from 'react-native';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { useColorScheme, Appearance } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Theme Interface
@@ -23,9 +24,11 @@ import { useColorScheme } from 'react-native';
  *    - fontSize: { small, medium, large, xlarge }
  *    - fontWeight: { regular, medium, bold }
  * 
- * Native Equivalents:
- * - iOS: UIAppearance and UITraitCollection
- * - Android: Material Theme and Resource System
+ * Implementation Notes:
+ * - Use semantic color naming
+ * - Follow platform color guidelines
+ * - Ensure WCAG contrast compliance
+ * - Maintain consistent spacing scale
  * 
  * @example
  * ```typescript
@@ -52,6 +55,11 @@ export interface Theme {
  * 3. toggleTheme: Function to switch themes
  * 4. setTheme: Function to set specific theme
  * 
+ * Implementation Notes:
+ * - Use proper TypeScript types
+ * - Include all necessary theme management functions
+ * - Consider memoization for performance
+ * 
  * @example
  * ```typescript
  * type ThemeContextType = {
@@ -70,26 +78,36 @@ type ThemeContextType = {
  * Theme Context
  * 
  * TODO: Create the context with undefined as default value
- * Hint: Use createContext with proper type safety
+ * Implementation Notes:
+ * - Use createContext with proper type safety
+ * - Consider default value implications
  */
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+const THEME_STORAGE_KEY = '@theme_preference';
 
 /**
  * Theme Provider Component
  * 
  * TODO: Implement the provider with the following features:
  * 1. System theme detection using useColorScheme
- * 2. Theme state management with useState
+ * 2. Theme state management with useState and useMemo
  * 3. Theme persistence with AsyncStorage
  * 4. System theme change listener
  * 5. Theme toggle and set functions
  * 
  * Implementation Steps:
  * 1. Initialize state with system theme
- * 2. Set up theme persistence
- * 3. Add system theme listener
- * 4. Implement theme switching
- * 5. Provide context value
+ * 2. Create memoized theme value
+ * 3. Implement theme persistence
+ * 4. Add system theme listener
+ * 5. Handle cleanup
+ * 
+ * Performance Notes:
+ * - Use useMemo for theme value
+ * - Implement proper cleanup
+ * - Handle async operations correctly
+ * - Manage re-renders efficiently
  * 
  * @param {React.ReactNode} children - Child components
  */
@@ -105,6 +123,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
  * 1. Context consumption using useContext
  * 2. Type safety checks
  * 3. Error handling for usage outside provider
+ * 
+ * Implementation Notes:
+ * - Add proper error message
+ * - Ensure type safety
+ * - Consider performance implications
  * 
  * @throws {Error} When used outside of ThemeProvider
  * @returns {ThemeContextType} Theme context value
@@ -131,7 +154,7 @@ export const useTheme = () => {
  *    - Light text
  *    - Platform-specific colors
  * 
- * Guidelines:
+ * Implementation Notes:
  * - Follow platform color guidelines
  * - Ensure WCAG contrast compliance
  * - Use semantic color naming

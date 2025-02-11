@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { useColorScheme, Appearance } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -205,40 +205,26 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const systemColorScheme = useColorScheme();
   const [isDark, setIsDark] = useState<boolean>(systemColorScheme === 'dark');
 
-  // Initialize theme value
-  const [themeValue, setThemeValue] = useState<ThemeContextType>({
+  // Memoize theme value to prevent unnecessary re-renders
+  const themeValue = useMemo<ThemeContextType>(() => ({
     theme: isDark ? themes.dark : themes.light,
     isDark,
-    toggleTheme: async () => {
-      const newTheme = !isDark;
-      setIsDark(newTheme);
-      try {
-        await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme ? 'dark' : 'light');
-      } catch (error) {
+    toggleTheme: () => {
+      setIsDark(prev => !prev);
+      AsyncStorage.setItem(THEME_STORAGE_KEY, isDark ? 'light' : 'dark').catch(error => {
         console.error('Error saving theme:', error);
-      }
+      });
     },
-    setTheme: async (theme: 'light' | 'dark') => {
+    setTheme: (theme: 'light' | 'dark') => {
       setIsDark(theme === 'dark');
-      try {
-        await AsyncStorage.setItem(THEME_STORAGE_KEY, theme);
-      } catch (error) {
+      AsyncStorage.setItem(THEME_STORAGE_KEY, theme).catch(error => {
         console.error('Error saving theme:', error);
-      }
+      });
     },
-  });
+  }), [isDark]);
 
-  // Update theme value when isDark changes
+  // Load saved theme preference on mount
   useEffect(() => {
-    setThemeValue(prev => ({
-      ...prev,
-      theme: isDark ? themes.dark : themes.light,
-      isDark,
-    }));
-  }, [isDark]);
-
-  useEffect(() => {
-    // Load saved theme preference
     const loadTheme = async () => {
       try {
         const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
@@ -254,9 +240,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     // Listen for system theme changes
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      if (!AsyncStorage.getItem(THEME_STORAGE_KEY)) {
-        setIsDark(colorScheme === 'dark');
-      }
+      AsyncStorage.getItem(THEME_STORAGE_KEY).then(savedTheme => {
+        if (!savedTheme) {
+          setIsDark(colorScheme === 'dark');
+        }
+      }).catch(error => {
+        console.error('Error checking saved theme:', error);
+      });
     });
 
     return () => {
