@@ -1,5 +1,19 @@
 # React Native Theme Implementation with Context API - Part 3
 
+Welcome to the third part of our session. Now, it's time to roll up our sleeves and bring our theme system to life. In this section, I will show you how to implement our Theme Provider. As I code, I want you to picture the flow of information from the very top of the app, where our global theme is managed, down to every individual component that needs to display a consistent look and feel.
+
+I begin by explaining that the first step is to initialize the state which holds the current theme mode. I explain how we use the device's color scheme as the starting point, ensuring that our app initially respects the user's system preferences. As I write the code, I describe how we set up a state variable, and then use a memoization technique to create a context value that includes not only the current theme details but also the functions needed to toggle and set the theme.
+
+Next, I walk you through how we load any saved theme preferences from persistent storage. I emphasize how vital it is to provide a seamless experience by reading a previously selected theme so that the user's preference is retained across app sessions. I narrate the importance of handling potential errors during this asynchronous operation, reassuring you that our code is both robust and user-friendly.
+
+As I move forward, I detail how we establish a listener for system theme changes. This part of the implementation ensures that if the operating system's theme changes, our application will adjust accordingly—unless the user has explicitly set a preference. I explain every piece of the code in a conversational tone, clarifying why each listener must be properly cleaned up when the component unmounts to prevent memory leaks.
+
+Then, I describe the essence of our theme functions. I explain how the toggle function is designed to flip the theme from light to dark or vice versa, and how it simultaneously updates the AsyncStorage so that the theme selection persists even after the app is closed. I take a moment to stress the use of error handling in these functions, ensuring that any issues during the save or update process are caught and logged appropriately.
+
+By the end of this section, I summarize how every part of our Theme Provider—from system detection and state management to persistence and cleanup—works in harmony to offer a smooth, intuitive theming experience for our application. I encourage you to meditate on this flow, understanding that our careful attention to detail not only creates a fluid user experience but also exemplifies best practices in React Native development.
+
+Let's now dive into the code implementation. I will proceed to type each line, speak my thoughts aloud, and ensure that every concept is clearly understood. Enjoy the live coding, and keep your questions ready for our later Q&A session.
+
 ## Part 5: Implementation Steps (60 min)
 
 ### Step 1: Theme Provider Implementation (15 min)

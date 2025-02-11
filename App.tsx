@@ -4,14 +4,45 @@ import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components/
 import { ThemeProvider, useTheme, Theme } from './src/context/ThemeContext';
 import { HomeScreen } from './src/screens/HomeScreen';
 
+/**
+ * Styled component props interface
+ * Provides type safety for theme-aware styled components
+ */
 interface StyledProps {
   theme: Theme;
 }
 
+/**
+ * Theme-aware container component
+ * Handles safe area insets and applies theme background
+ */
 const Container = styled(SafeAreaView)<StyledProps>`
   flex: 1;
   background-color: ${(props: StyledProps) => props.theme.colors.background};
 `;
+
+/**
+ * AppContent Component
+ * 
+ * Handles the styled-components theme integration.
+ * Consumes theme from ThemeContext and provides it to styled-components.
+ * 
+ * Implementation Notes:
+ * - Uses useTheme hook for theme access
+ * - Wraps content in StyledThemeProvider
+ * - Applies theme-aware container styling
+ */
+const AppContent = () => {
+  const { theme } = useTheme();
+  
+  return (
+    <StyledThemeProvider theme={theme}>
+      <Container>
+        <HomeScreen />
+      </Container>
+    </StyledThemeProvider>
+  );
+};
 
 /**
  * Root App Component
@@ -21,7 +52,7 @@ const Container = styled(SafeAreaView)<StyledProps>`
  * 
  * Component Structure:
  * - ThemeProvider: Manages global theme state
- * - StyledThemeProvider: Provides theme to styled-components
+ * - AppContent: Handles styled-components integration
  * - Container: Theme-aware SafeAreaView
  * - HomeScreen: Main content display
  * 
@@ -39,18 +70,6 @@ const Container = styled(SafeAreaView)<StyledProps>`
  * AppRegistry.registerComponent('AppName', () => App);
  * ```
  */
-const AppContent = () => {
-  const { theme } = useTheme();
-  
-  return (
-    <StyledThemeProvider theme={theme}>
-      <Container>
-        <HomeScreen />
-      </Container>
-    </StyledThemeProvider>
-  );
-};
-
 export default function App() {
   return (
     <ThemeProvider>
