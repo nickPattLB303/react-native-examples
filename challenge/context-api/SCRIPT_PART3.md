@@ -31,6 +31,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     </ThemeContext.Provider>
   );
 };
+
+// Define styled-components for our theme demo
+const DemoContainer = styled.View<{ theme: Theme }>`
+  flex: 1;
+  padding: ${props => props.theme.spacing.md}px;
+  background-color: ${props => props.theme.colors.background};
+`;
+
+const DemoText = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.typography.fontSize.medium}px;
+  margin-bottom: ${props => props.theme.spacing.sm}px;
+`;
 ```
 
 Key Implementation Points:
@@ -109,35 +122,39 @@ System Theme Considerations:
 ### Step 2: Theme Switcher Component (15 min)
 
 #### Basic Component Structure
-"Let's build our ThemeSwitcher component:
+"Let's build our ThemeSwitcher component using styled-components:
 
 ```typescript
+// Styled components for ThemeSwitcher
+const Container = styled(Animated.View)<{ theme: Theme }>`
+  padding: ${props => props.theme.spacing.md}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${props => props.theme.colors.card};
+  border-radius: 8px;
+`;
+
+const Label = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.typography.fontSize.medium}px;
+  font-weight: ${props => props.theme.typography.fontWeight.medium};
+`;
+
 export const ThemeSwitcher: React.FC = () => {
   const { theme, isDark, toggleTheme } = useTheme();
   const [fadeAnim] = useState(new Animated.Value(1));
-  
+
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        { opacity: fadeAnim, backgroundColor: theme.colors.card },
-      ]}
-      accessible={true}
-      accessibilityRole="switch"
-      accessibilityState={{ checked: isDark }}
-      accessibilityLabel={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-    >
-      <Text style={[styles.text, { color: theme.colors.text }]}>
-        {isDark ? 'Dark Mode' : 'Light Mode'}
-      </Text>
+    <Container style={{ opacity: fadeAnim }}>
+      <Label>{isDark ? 'Dark Mode' : 'Light Mode'}</Label>
       <Switch
         value={isDark}
         onValueChange={toggleTheme}
         trackColor={{ false: '#767577', true: theme.colors.primary }}
         thumbColor={isDark ? '#ffffff' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
       />
-    </Animated.View>
+    </Container>
   );
 };
 ```
@@ -181,27 +198,33 @@ Animation Implementation Notes:
 ### Step 3: Platform-Specific Implementation (15 min)
 
 #### iOS Considerations
-"Let's handle iOS-specific features:
+"Let's handle iOS-specific styling with styled-components:
 
 ```typescript
-// iOS-specific shadow implementation
-const iosShadowStyle = {
-  shadowColor: theme.colors.text,
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-};
+const Card = styled.View<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.card};
+  border-radius: 8px;
+  
+  ${Platform.select({
+    ios: css`
+      shadow-color: ${props => props.theme.colors.text};
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+      shadow-radius: 3.84px;
+    `,
+    android: css`
+      elevation: 5;
+    `
+  })}
+`;
 
-// iOS-specific component styling
-const iosStyles = StyleSheet.create({
-  container: {
-    ...Platform.select({
-      ios: {
-        ...iosShadowStyle,
-      },
-    }),
-  },
-});
+// iOS-specific text styling
+const IOSText = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.typography.fontSize.medium}px;
+  /* iOS-specific font */
+  font-family: -apple-system;
+`;
 ```
 
 iOS Implementation Notes:
@@ -240,37 +263,30 @@ Android Implementation Notes:
 
 ### Step 4: Testing & Error Handling (15 min)
 
-#### Unit Testing
-"Let's write tests for our theme implementation:
+#### Unit Testing Styled Components
+"Let's write tests for our styled components:
 
 ```typescript
-describe('ThemeProvider', () => {
-  it('provides correct theme based on system preference', () => {
-    // Mock system color scheme
-    jest.spyOn(Appearance, 'getColorScheme').mockReturnValue('dark');
-    
-    const { result } = renderHook(() => useTheme(), {
-      wrapper: ThemeProvider,
-    });
-    
-    expect(result.current.isDark).toBe(true);
-    expect(result.current.theme).toEqual(themes.dark);
-  });
-  
-  it('persists theme changes', async () => {
-    const { result } = renderHook(() => useTheme(), {
-      wrapper: ThemeProvider,
-    });
-    
-    act(() => {
-      result.current.toggleTheme();
-    });
-    
-    // Verify AsyncStorage was called
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-      THEME_STORAGE_KEY,
-      'light'
+import { render } from '@testing-library/react-native';
+import { ThemeProvider } from './ThemeContext';
+import styled from 'styled-components/native';
+
+const TestComponent = styled.View<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.background};
+`;
+
+describe('Styled Components with Theme', () => {
+  it('applies theme styles correctly', () => {
+    const { getByTestId } = render(
+      <ThemeProvider>
+        <TestComponent testID="test-component" />
+      </ThemeProvider>
     );
+
+    const component = getByTestId('test-component');
+    expect(component).toHaveStyle({
+      backgroundColor: themes.light.colors.background,
+    });
   });
 });
 ```

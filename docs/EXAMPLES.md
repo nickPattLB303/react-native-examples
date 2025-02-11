@@ -152,45 +152,45 @@ When state updates aren't reflecting:
 ### Basic Component Example
 ```typescript
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
 interface UserProfileProps {
   name: string;
   email: string;
 }
 
+const Container = styled.View`
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+`;
+
+const Name = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const Email = styled.Text`
+  font-size: 16px;
+  color: #666;
+`;
+
 /**
  * Basic user profile display component
  * 
  * Demonstrates:
  * - TypeScript props
- * - Basic styling
+ * - styled-components
  * - Component structure
  */
 export const UserProfile: React.FC<UserProfileProps> = ({ name, email }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.email}>{email}</Text>
-    </View>
+    <Container>
+      <Name>{name}</Name>
+      <Email>{email}</Email>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  email: {
-    fontSize: 16,
-    color: '#666',
-  },
-});
 ```
 
 ### State Management Example
@@ -292,5 +292,130 @@ export const useUpdateUser = () => {
     }
     return response.json();
   });
+};
+```
+
+### Themed Component Example
+```typescript
+import styled from 'styled-components/native';
+
+interface Theme {
+  colors: {
+    primary: string;
+    background: string;
+    text: string;
+  };
+  spacing: {
+    small: number;
+    medium: number;
+    large: number;
+  };
+}
+
+const Card = styled.View<{ theme: Theme }>`
+  padding: ${props => props.theme.spacing.medium}px;
+  background-color: ${props => props.theme.colors.background};
+  border-radius: 8px;
+`;
+
+const Title = styled.Text<{ theme: Theme }>`
+  font-size: 18px;
+  color: ${props => props.theme.colors.text};
+  font-weight: bold;
+`;
+
+const Content = styled.Text<{ theme: Theme }>`
+  font-size: 16px;
+  color: ${props => props.theme.colors.text};
+  margin-top: ${props => props.theme.spacing.small}px;
+`;
+
+export const ThemedCard: React.FC<{ title: string; content: string }> = ({ 
+  title, 
+  content 
+}) => {
+  return (
+    <Card>
+      <Title>{title}</Title>
+      <Content>{content}</Content>
+    </Card>
+  );
+};
+```
+
+### Platform Specific Example
+```typescript
+import styled, { css } from 'styled-components/native';
+import { Platform } from 'react-native';
+
+const Card = styled.View<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.background};
+  border-radius: 8px;
+  margin: ${props => props.theme.spacing.medium}px;
+  
+  ${Platform.select({
+    ios: css`
+      shadow-color: #000;
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+      shadow-radius: 3.84px;
+    `,
+    android: css`
+      elevation: 5;
+    `
+  })}
+`;
+
+const PlatformText = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-family: ${Platform.select({
+    ios: '-apple-system',
+    android: 'Roboto'
+  })};
+  font-size: 16px;
+`;
+
+export const PlatformCard: React.FC = ({ children }) => (
+  <Card>
+    <PlatformText>{children}</PlatformText>
+  </Card>
+);
+```
+
+### Animation Example
+```typescript
+import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
+
+const AnimatedContainer = styled(Animated.View)<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.medium}px;
+  border-radius: 8px;
+`;
+
+const AnimatedText = styled(Animated.Text)<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: 16px;
+`;
+
+export const FadeInView: React.FC = ({ children }) => {
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, {
+      duration: 500,
+      easing: Easing.inOut(Easing.ease),
+    });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  return (
+    <AnimatedContainer style={animatedStyle}>
+      <AnimatedText>{children}</AnimatedText>
+    </AnimatedContainer>
+  );
 };
 ``` 

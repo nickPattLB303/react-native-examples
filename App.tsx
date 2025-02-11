@@ -1,7 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import { ThemeProvider } from './challenge/context-api/completed/src/context/ThemeContext';
-import { HomeScreen } from './challenge/context-api/completed/src/screens/HomeScreen';
+import { SafeAreaView } from 'react-native';
+import styled from 'styled-components/native';
+import { ThemeProvider } from './src/context/ThemeContext';
+import { HomeScreen } from './src/screens/HomeScreen';
+
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
 /**
  * Root App Component
@@ -12,15 +17,9 @@ import { HomeScreen } from './challenge/context-api/completed/src/screens/HomeSc
 export default function App() {
   return (
     <ThemeProvider>
-      <SafeAreaView style={styles.container}>
+      <Container>
         <HomeScreen />
-      </SafeAreaView>
+      </Container>
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

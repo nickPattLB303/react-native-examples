@@ -1,6 +1,46 @@
 import React from 'react';
-import { View, Switch, Text, StyleSheet, Animated } from 'react-native';
+import { Switch, Text, Animated } from 'react-native';
+import styled from 'styled-components/native';
 import { useTheme } from '../context/ThemeContext';
+
+interface StyledProps {
+  theme: {
+    colors: {
+      card: string;
+      text: string;
+    };
+  };
+}
+
+/**
+ * Styled Components
+ * 
+ * Layout Notes:
+ * - Uses flexbox for responsive layout
+ * - Implements platform-specific styling
+ * - Maintains consistent spacing
+ * - Follows accessibility guidelines for touch targets
+ * 
+ * Platform Considerations:
+ * - iOS: Follows Human Interface Guidelines for spacing
+ * - Android: Implements Material Design metrics
+ */
+const Container = styled(Animated.View)<StyledProps>`
+  padding: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  margin-vertical: 8px;
+  background-color: ${(props: StyledProps) => props.theme.colors.card};
+`;
+
+const StyledText = styled(Text)<StyledProps>`
+  font-size: 16px;
+  margin-right: 8px;
+  font-weight: 500;
+  color: ${(props: StyledProps) => props.theme.colors.text};
+`;
 
 /**
  * ThemeSwitcher Component
@@ -101,27 +141,16 @@ export const ThemeSwitcher: React.FC = () => {
   };
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        { opacity: fadeAnim, backgroundColor: theme.colors.card },
-      ]}
+    <Container
+      style={{ opacity: fadeAnim }}
       accessible={true}
       accessibilityRole="switch"
       accessibilityState={{ checked: isDark }}
       accessibilityLabel={`Switch to ${isDark ? 'light' : 'dark'} theme`}
     >
-      <Text 
-        style={[
-          styles.text, 
-          { 
-            color: theme.colors.text,
-            fontWeight: '500' as const,
-          }
-        ]}
-      >
+      <StyledText>
         {isDark ? 'Dark Mode' : 'Light Mode'}
-      </Text>
+      </StyledText>
       <Switch
         trackColor={{ false: '#767577', true: theme.colors.primary }}
         thumbColor={isDark ? '#ffffff' : '#f4f3f4'}
@@ -129,40 +158,6 @@ export const ThemeSwitcher: React.FC = () => {
         onValueChange={handleThemeChange}
         value={isDark}
       />
-    </Animated.View>
+    </Container>
   );
-};
-
-/**
- * Component styles
- * 
- * Style References:
- * - Layout Props: {@link https://reactnative.dev/docs/layout-props}
- * - Style Props: {@link https://reactnative.dev/docs/style}
- * - Colors: {@link https://reactnative.dev/docs/colors}
- * 
- * Layout Notes:
- * - Uses flexbox for responsive layout
- * - Implements platform-specific styling
- * - Maintains consistent spacing
- * - Follows accessibility guidelines for touch targets
- * 
- * Platform Considerations:
- * - iOS: Follows Human Interface Guidelines for spacing
- * - Android: Implements Material Design metrics
- */
-const styles = StyleSheet.create({
-  container: {
-    padding: 16, // Consistent with platform guidelines
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 8, // Platform-specific rounding
-    marginVertical: 8,
-  },
-  text: {
-    fontSize: 16, // Readable text size
-    marginRight: 8, // Proper spacing from switch
-    fontWeight: '500', // Medium emphasis
-  },
-}); 
+}; 

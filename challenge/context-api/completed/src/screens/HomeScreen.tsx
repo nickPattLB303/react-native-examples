@@ -1,28 +1,110 @@
 import React, { useEffect } from 'react';
 import {
-  View,
   Text,
-  StyleSheet,
   ScrollView,
   Animated,
   Platform,
 } from 'react-native';
+import styled from 'styled-components/native';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { useTheme } from '../context/ThemeContext';
+
+interface StyledProps {
+  theme: {
+    colors: {
+      background: string;
+      text: string;
+      card: string;
+      border: string;
+      primary: string;
+    };
+    typography: {
+      fontSize: {
+        medium: number;
+        xlarge: number;
+      };
+      fontWeight: {
+        bold: string;
+      };
+    };
+  };
+}
+
+/**
+ * Styled Components
+ * 
+ * Layout Notes:
+ * - Uses flexbox for responsive layout
+ * - Maintains consistent spacing scale
+ * - Implements proper typography hierarchy
+ * - Follows platform-specific styling guidelines
+ * 
+ * Accessibility Considerations:
+ * - Touch targets meet size requirements
+ * - Text meets contrast guidelines
+ * - Proper content spacing
+ * - Clear visual hierarchy
+ */
+const Container = styled(ScrollView)<StyledProps>`
+  flex: 1;
+  padding: 16px;
+  background-color: ${(props: StyledProps) => props.theme.colors.background};
+`;
+
+const Title = styled(Text)<StyledProps>`
+  margin-bottom: 16px;
+  color: ${(props: StyledProps) => props.theme.colors.text};
+  font-size: ${(props: StyledProps) => props.theme.typography.fontSize.xlarge}px;
+  font-weight: ${(props: StyledProps) => props.theme.typography.fontWeight.bold};
+`;
+
+const Card = styled(Animated.View)<StyledProps>`
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-width: 1px;
+  background-color: ${(props: StyledProps) => props.theme.colors.card};
+  border-color: ${(props: StyledProps) => props.theme.colors.border};
+  ${Platform.select({
+    ios: `
+      shadow-color: ${(props: StyledProps) => props.theme.colors.text};
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+      shadow-radius: 3.84px;
+    `,
+    android: `
+      elevation: 5;
+    `,
+  })}
+`;
+
+const PrimaryCard = styled(Card)`
+  background-color: ${(props: StyledProps) => props.theme.colors.primary};
+`;
+
+const CardText = styled(Text)<StyledProps>`
+  line-height: 24px;
+  color: ${(props: StyledProps) => props.theme.colors.text};
+  font-size: ${(props: StyledProps) => props.theme.typography.fontSize.medium}px;
+`;
+
+const WhiteText = styled(CardText)`
+  color: #FFFFFF;
+`;
 
 /**
  * HomeScreen Component
  * 
  * Demonstrates theme application across different UI elements with
- * smooth animations and platform-specific styling.
+ * smooth animations and platform-specific styling using styled-components.
  * 
  * Component References:
- * - ScrollView: {@link https://reactnative.dev/docs/scrollview}
+ * - styled-components: {@link https://styled-components.com/docs/basics#react-native}
  * - Animated: {@link https://reactnative.dev/docs/animated}
  * - Platform: {@link https://reactnative.dev/docs/platform-specific-code}
  * 
  * Features:
- * - Theme-aware styling with proper TypeScript types
+ * - Theme-aware styling with styled-components
  * - Animated content loading with native driver
  * - Platform-specific shadows and elevation
  * - Responsive layout using flexbox
@@ -37,21 +119,27 @@ import { useTheme } from '../context/ThemeContext';
  * Implementation Notes:
  * - Uses useTheme hook for consistent theme access
  * - Implements fade-in animation for content
- * - Handles platform-specific shadow implementations
+ * - Uses styled-components for theme-aware styling
  * - Demonstrates proper theme application patterns
  * - Follows accessibility guidelines
  * 
  * Performance Considerations:
  * - Uses native driver for animations
- * - Minimizes style calculations with StyleSheet
- * - Optimizes platform-specific code with Platform.select
+ * - Optimizes styled-components with proper typing
  * - Implements proper cleanup for animations
+ * - Uses memoization where appropriate
  * 
  * Accessibility:
  * - Proper heading hierarchy
  * - Sufficient color contrast
  * - Readable typography
  * - Proper content structure
+ * 
+ * Styled Components:
+ * - Container: Main scrollable container with theme background
+ * - Title: Themed text component with proper typography
+ * - Card: Themed card with platform-specific shadows
+ * - CardText: Themed text with proper line height
  * 
  * Usage:
  * ```tsx
@@ -88,31 +176,8 @@ export const HomeScreen: React.FC = () => {
     };
   }, []);
 
-  /**
-   * Platform-specific shadow styles
-   * Handles different shadow implementations between iOS and Android
-   * 
-   * Style References:
-   * - iOS Shadows: {@link https://reactnative.dev/docs/shadow-props}
-   * - Android Elevation: {@link https://reactnative.dev/docs/view-style-props#elevation-android}
-   * 
-   * @returns Platform-specific shadow style object
-   */
-  const getShadowStyle = () => Platform.select({
-    ios: {
-      shadowColor: theme.colors.text,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-    },
-    android: {
-      elevation: 5,
-    },
-  });
-
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    <Container
       contentInsetAdjustmentBehavior="automatic"
       accessibilityRole="scrollbar"
       accessibilityLabel="Theme demonstration screen"
@@ -122,115 +187,35 @@ export const HomeScreen: React.FC = () => {
         accessible={true}
         accessibilityRole="none"
       >
-        <Text
-          style={[
-            styles.title,
-            {
-              color: theme.colors.text,
-              fontSize: theme.typography.fontSize.xlarge,
-              fontWeight: theme.typography.fontWeight.bold as '700',
-            },
-          ]}
-          accessibilityRole="header"
-        >
+        <Title accessibilityRole="header">
           Theme Demo
-        </Text>
+        </Title>
 
         {/* Theme demonstration card */}
-        <View
-          style={[
-            styles.card,
-            {
-              backgroundColor: theme.colors.card,
-              borderColor: theme.colors.border,
-              ...getShadowStyle(),
-            },
-          ]}
+        <Card
           accessible={true}
           accessibilityRole="none"
         >
-          <Text
-            style={[
-              styles.cardText,
-              {
-                color: theme.colors.text,
-                fontSize: theme.typography.fontSize.medium,
-              },
-            ]}
-          >
+          <CardText>
             This card demonstrates theme application to various UI elements.
             The background, text color, and border should all adapt to the
             current theme.
-          </Text>
-        </View>
+          </CardText>
+        </Card>
 
         {/* Primary color demonstration card */}
-        <View
-          style={[
-            styles.card,
-            {
-              backgroundColor: theme.colors.primary,
-              ...getShadowStyle(),
-            },
-          ]}
+        <PrimaryCard
           accessible={true}
           accessibilityRole="none"
         >
-          <Text
-            style={[
-              styles.cardText,
-              {
-                color: '#FFFFFF',
-                fontSize: theme.typography.fontSize.medium,
-              },
-            ]}
-          >
+          <WhiteText>
             This card shows how to use the primary theme color with
             consistent typography and spacing.
-          </Text>
-        </View>
+          </WhiteText>
+        </PrimaryCard>
 
         <ThemeSwitcher />
       </Animated.View>
-    </ScrollView>
+    </Container>
   );
-};
-
-/**
- * Component styles
- * 
- * Style References:
- * - Layout Props: {@link https://reactnative.dev/docs/layout-props}
- * - Style Props: {@link https://reactnative.dev/docs/style}
- * - Typography: {@link https://reactnative.dev/docs/text-style-props}
- * 
- * Layout Notes:
- * - Uses flexbox for responsive layout
- * - Maintains consistent spacing scale
- * - Implements proper typography hierarchy
- * - Follows platform-specific styling guidelines
- * 
- * Accessibility Considerations:
- * - Touch targets meet size requirements
- * - Text meets contrast guidelines
- * - Proper content spacing
- * - Clear visual hierarchy
- */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16, // Consistent content padding
-  },
-  title: {
-    marginBottom: 16, // Proper spacing after title
-  },
-  card: {
-    padding: 16, // Internal card padding
-    borderRadius: 8, // Consistent corner rounding
-    marginBottom: 16, // Spacing between cards
-    borderWidth: 1, // Subtle border for definition
-  },
-  cardText: {
-    lineHeight: 24, // Improved readability
-  },
-}); 
+}; 

@@ -1,228 +1,170 @@
 # React Native Theme Implementation with Context API - Part 4
 
-## Part 6: Testing & Troubleshooting (15 min)
+## Part 6: Advanced Styled-Components Patterns (15 min)
 
-### Integration Testing
-"Let's write integration tests for our theme system:
+### Composition Patterns
+"Let's explore advanced composition patterns with styled-components:
 
 ```typescript
-import { render, fireEvent, act } from '@testing-library/react-native';
+// Base components
+const BaseCard = styled.View<{ theme: Theme }>`
+  padding: ${props => props.theme.spacing.md}px;
+  border-radius: 8px;
+  background-color: ${props => props.theme.colors.card};
+`;
 
-describe('Theme Integration', () => {
-  beforeEach(() => {
-    // Reset AsyncStorage mock
-    AsyncStorage.clear();
-    // Reset appearance mock
-    jest.clearAllMocks();
-  });
+const BaseText = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.typography.fontSize.medium}px;
+`;
 
-  it('theme changes propagate through component tree', async () => {
-    const { getByTestId, getByText } = render(
-      <ThemeProvider>
-        <HomeScreen />
-      </ThemeProvider>
-    );
+// Extended components
+const ElevatedCard = styled(BaseCard)`
+  ${Platform.select({
+    ios: css`
+      shadow-color: ${props => props.theme.colors.text};
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+      shadow-radius: 3.84px;
+    `,
+    android: css`
+      elevation: 5;
+    `
+  })}
+`;
 
-    const themeSwitch = getByTestId('theme-switch');
-    const container = getByTestId('home-container');
-
-    // Initial theme
-    expect(container.props.style).toContainEqual({
-      backgroundColor: themes.light.colors.background,
-    });
-
-    // Toggle theme
-    await act(async () => {
-      fireEvent(themeSwitch, 'valueChange', true);
-    });
-
-    // Verify theme change
-    expect(container.props.style).toContainEqual({
-      backgroundColor: themes.dark.colors.background,
-    });
-  });
-
-  it('persists theme across app restarts', async () => {
-    // Simulate stored theme
-    await AsyncStorage.setItem(THEME_STORAGE_KEY, 'dark');
-
-    const { getByTestId } = render(
-      <ThemeProvider>
-        <HomeScreen />
-      </ThemeProvider>
-    );
-
-    const container = getByTestId('home-container');
-
-    // Should load dark theme
-    expect(container.props.style).toContainEqual({
-      backgroundColor: themes.dark.colors.background,
-    });
-  });
-});
+const Title = styled(BaseText)`
+  font-size: ${props => props.theme.typography.fontSize.large}px;
+  font-weight: ${props => props.theme.typography.fontWeight.bold};
+`;
 ```
 
-### Performance Testing
-"Let's measure and optimize theme performance:
+### Variant System
+"Implementing a variant system with styled-components:
 
 ```typescript
-describe('Theme Performance', () => {
-  it('minimizes renders on theme change', () => {
-    const renderCount = jest.fn();
-    
-    const TestComponent = () => {
-      const { theme } = useTheme();
-      renderCount();
-      return null;
-    };
+type ButtonVariant = 'primary' | 'secondary' | 'outline';
 
-    const { getByTestId } = render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>
-    );
-
-    const themeSwitch = getByTestId('theme-switch');
-    
-    // Initial render
-    expect(renderCount).toHaveBeenCalledTimes(1);
-    
-    // Theme change
-    fireEvent(themeSwitch, 'valueChange', true);
-    
-    // Should only re-render once
-    expect(renderCount).toHaveBeenCalledTimes(2);
-  });
-});
-```
-
-### Common Issues & Solutions
-
-#### 1. Theme Not Updating
-```typescript
-// Problem: Theme changes not reflecting
-const Component = () => {
-  // ❌ Wrong: Direct context usage
-  const context = useContext(ThemeContext);
-  
-  // ✅ Right: Use custom hook
-  const { theme } = useTheme();
-};
-```
-
-#### 2. Performance Issues
-```typescript
-// Problem: Unnecessary re-renders
-const Component = () => {
-  // ❌ Wrong: Inline styles
-  return (
-    <View style={{ backgroundColor: theme.colors.background }}>
-      <Text style={{ color: theme.colors.text }}>
-        Content
-      </Text>
-    </View>
-  );
-  
-  // ✅ Right: StyleSheet and style arrays
-  return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={[styles.text, { color: theme.colors.text }]}>
-        Content
-      </Text>
-    </View>
-  );
-};
-```
-
-#### 3. Animation Glitches
-```typescript
-// Problem: Jerky animations
-const Component = () => {
-  // ❌ Wrong: No native driver
-  Animated.timing(fadeAnim, {
-    toValue: 1,
-    duration: 200,
-  }).start();
-  
-  // ✅ Right: Use native driver
-  Animated.timing(fadeAnim, {
-    toValue: 1,
-    duration: 200,
-    useNativeDriver: true,
-  }).start();
-};
-```
-
-## Part 7: Advanced Topics (10 min)
-
-### Theme Variants
-```typescript
-// Extended theme system with variants
-interface ThemeVariant {
-  name: string;
-  colors: ColorPalette;
-  spacing: SpacingSystem;
-  typography: TypographySystem;
+interface ButtonProps {
+  theme: Theme;
+  variant: ButtonVariant;
+  size?: 'small' | 'medium' | 'large';
 }
 
-const themes: Record<string, ThemeVariant> = {
-  light: { /* ... */ },
-  dark: { /* ... */ },
-  highContrast: { /* ... */ },
-  sepia: { /* ... */ },
+const getButtonStyles = (props: ButtonProps) => {
+  switch (props.variant) {
+    case 'primary':
+      return css`
+        background-color: ${props.theme.colors.primary};
+        color: #FFFFFF;
+      `;
+    case 'secondary':
+      return css`
+        background-color: ${props.theme.colors.card};
+        color: ${props.theme.colors.text};
+      `;
+    case 'outline':
+      return css`
+        background-color: transparent;
+        border: 1px solid ${props.theme.colors.primary};
+        color: ${props.theme.colors.primary};
+      `;
+  }
 };
+
+const StyledButton = styled.TouchableOpacity<ButtonProps>`
+  padding: ${props => props.theme.spacing.md}px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  ${props => getButtonStyles(props)}
+`;
 ```
 
-### Dynamic Theme Generation
-```typescript
-const generateTheme = (baseTheme: Theme, overrides: Partial<Theme>): Theme => {
-  return deepMerge(baseTheme, overrides);
-};
+### Animation Integration
+"Advanced animation patterns with styled-components:
 
-const customTheme = generateTheme(themes.light, {
-  colors: {
-    primary: '#FF0000',
-  },
-});
-```
-
-### Theme Transitions
 ```typescript
-const ThemeTransition: React.FC = ({ children }) => {
-  const { theme } = useTheme();
-  const [fadeAnim] = useState(new Animated.Value(1));
-  
+const FadeInView = styled(Animated.View)<{ theme: Theme }>`
+  opacity: ${props => props.opacity};
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.md}px;
+`;
+
+const SlideInView = styled(Animated.View)<{ theme: Theme }>`
+  transform: translateX(${props => props.translateX}px);
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.md}px;
+`;
+
+const AnimatedComponent: React.FC = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-100)).current;
+
   useEffect(() => {
-    Animated.sequence([
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: true,
-      }),
+    Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 150,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.spring(slideAnim, {
+        toValue: 0,
         useNativeDriver: true,
       }),
     ]).start();
-  }, [theme]);
-  
+  }, []);
+
   return (
-    <Animated.View style={{ opacity: fadeAnim }}>
-      {children}
-    </Animated.View>
+    <>
+      <FadeInView style={{ opacity: fadeAnim }}>
+        <Text>Fade In Content</Text>
+      </FadeInView>
+      <SlideInView style={{ transform: [{ translateX: slideAnim }] }}>
+        <Text>Slide In Content</Text>
+      </SlideInView>
+    </>
   );
 };
+```
+
+### Performance Optimization
+"Best practices for performance with styled-components:
+
+```typescript
+// 1. Memoize styled components
+const MemoizedCard = React.memo(styled.View`
+  // Styles
+`);
+
+// 2. Use CSS helper for complex styles
+const complexStyles = css<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.md}px;
+  // More styles...
+`;
+
+const OptimizedComponent = styled.View`
+  ${complexStyles}
+`;
+
+// 3. Prop interpolation
+const DynamicComponent = styled.View<{ theme: Theme; active: boolean }>`
+  opacity: ${props => props.active ? 1 : 0.5};
+  ${props => props.active && css`
+    border: 2px solid ${props.theme.colors.primary};
+  `}
+`;
 ```
 
 ## Wrap-up (5 min)
 
 ### Key Takeaways
-1. Context API provides clean theme management
-2. Performance optimization is crucial
-3. Platform-specific considerations matter
-4. Testing ensures reliability
-5. Proper typing enhances development
+1. Styled-components provides clean theme integration
+2. Component composition enhances reusability
+3. Platform-specific styling is straightforward
+4. Animation integration is seamless
+5. Performance optimization is crucial
 
 ### Next Steps
 1. Implement additional theme variants
@@ -232,27 +174,26 @@ const ThemeTransition: React.FC = ({ children }) => {
 5. Document edge cases
 
 ### Resources
-1. React Native Documentation
-   - Context API: https://reactjs.org/docs/context.html
-   - Hooks Guide: https://reactjs.org/docs/hooks-intro.html
-   - Animation System: https://reactnative.dev/docs/animated
+1. styled-components Documentation
+   - Main docs: https://styled-components.com/docs
+   - React Native specific: https://styled-components.com/docs/basics#react-native
 
 2. Platform Guidelines
    - iOS Human Interface Guidelines: https://developer.apple.com/design/
    - Material Design: https://material.io/design
 
-3. Testing Resources
-   - React Native Testing Library: https://callstack.github.io/react-native-testing-library/
-   - Jest Documentation: https://jestjs.io/docs/getting-started
+3. Animation Resources
+   - React Native Animated: https://reactnative.dev/docs/animated
+   - Reanimated: https://docs.swmansion.com/react-native-reanimated/
 
 4. Additional Reading
    - Performance Optimization: https://reactnative.dev/docs/performance
    - Accessibility Guidelines: https://reactnative.dev/docs/accessibility
 
 ### Q&A Session (10 min)
-"Now, let's open the floor for questions. We can discuss:
-1. Implementation details
-2. Performance optimization
-3. Testing strategies
-4. Platform-specific concerns
+"Now, let's open the floor for questions about:
+1. Styled-components implementation
+2. Theme system architecture
+3. Animation patterns
+4. Performance optimization
 5. Real-world scenarios" 

@@ -43,10 +43,91 @@ Let's start by installing required dependencies:
 
 ```bash
 # Install base dependencies
-npm install @react-native-async-storage/async-storage
+npm install @react-native-async-storage/async-storage styled-components @types/styled-components @types/styled-components-react-native
 
 # TypeScript types
 npm install --save-dev @types/react @types/react-native
+```
+
+### Styling with styled-components
+"We'll be using styled-components for our theme implementation. This provides several advantages:
+
+1. Theme Integration:
+```typescript
+const Container = styled.View<{ theme: Theme }>`
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.md}px;
+`;
+```
+
+2. Component Composition:
+```typescript
+const BaseText = styled.Text`
+  font-size: 16px;
+`;
+
+const Title = styled(BaseText)`
+  font-weight: bold;
+  color: ${props => props.theme.colors.primary};
+`;
+```
+
+3. Platform-Specific Styling:
+```typescript
+const Card = styled.View`
+  ${Platform.select({
+    ios: `
+      shadow-color: ${props => props.theme.colors.shadow};
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+    `,
+    android: `
+      elevation: 5;
+    `
+  })}
+`;
+```
+
+4. Dynamic Styles:
+```typescript
+const Button = styled.TouchableOpacity<{ variant: 'primary' | 'secondary' }>`
+  background-color: ${props => 
+    props.variant === 'primary' 
+      ? props.theme.colors.primary 
+      : props.theme.colors.secondary
+  };
+`;
+```
+
+### Styled Components Best Practices
+1. Type Safety:
+```typescript
+interface StyledProps {
+  theme: Theme;
+  variant?: 'primary' | 'secondary';
+}
+
+const StyledButton = styled.TouchableOpacity<StyledProps>`
+  // Type-safe styles
+`;
+```
+
+2. Component Organization:
+```typescript
+// Separate styled components file
+export const Container = styled.View``;
+export const Title = styled.Text``;
+
+// Component file
+import { Container, Title } from './styles';
+```
+
+3. Theme Access:
+```typescript
+const { theme } = useTheme();
+const StyledView = styled.View`
+  background-color: ${props => props.theme.colors.background};
+`;
 ```
 
 ## Part 2: Context API Deep Dive (30 min)

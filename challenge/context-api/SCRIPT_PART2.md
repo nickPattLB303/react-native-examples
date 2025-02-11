@@ -269,4 +269,151 @@ Spacing Best Practices:
 3. Follow platform metrics
 4. Maintain rhythm
 
+## Implementation with styled-components
+
+### Component Structure
+"Let's structure our components using styled-components:
+
+```typescript
+// ThemeProvider setup remains the same
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // ... ThemeProvider implementation
+};
+
+// Styled components for ThemeSwitcher
+const Container = styled(Animated.View)<{ theme: Theme }>`
+  padding: ${props => props.theme.spacing.md}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${props => props.theme.colors.card};
+`;
+
+const Label = styled.Text<{ theme: Theme }>`
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.typography.fontSize.medium}px;
+`;
+
+// ThemeSwitcher component
+export const ThemeSwitcher: React.FC = () => {
+  const { theme, isDark, toggleTheme } = useTheme();
+  return (
+    <Container>
+      <Label>{isDark ? 'Dark Mode' : 'Light Mode'}</Label>
+      <Switch value={isDark} onValueChange={toggleTheme} />
+    </Container>
+  );
+};
+```
+
+### Styled Components Architecture
+1. Component Organization:
+```typescript
+// styles.ts
+export const Container = styled.View`
+  flex: 1;
+  background-color: ${props => props.theme.colors.background};
+`;
+
+// Component.tsx
+import * as S from './styles';
+
+export const MyComponent = () => (
+  <S.Container>
+    {/* Component content */}
+  </S.Container>
+);
+```
+
+2. Theme Type Safety:
+```typescript
+interface ThemeProps {
+  theme: Theme;
+}
+
+const StyledComponent = styled.View<ThemeProps>`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+```
+
+3. Responsive Styles:
+```typescript
+const ResponsiveContainer = styled.View<ThemeProps>`
+  padding: ${({ theme }) => theme.spacing.responsive}px;
+  margin: ${({ theme }) => theme.spacing.responsive}px;
+`;
+```
+
+### Animation Integration
+"Combining styled-components with Animated:
+
+```typescript
+const FadeView = styled(Animated.View)<ThemeProps>`
+  opacity: ${props => props.opacity};
+  background-color: ${props => props.theme.colors.background};
+`;
+
+const Component = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  return (
+    <FadeView style={{ opacity: fadeAnim }}>
+      {/* Content */}
+    </FadeView>
+  );
+};
+```
+
+### Platform-Specific Styling
+"Handling platform differences with styled-components:
+
+```typescript
+const Card = styled.View<ThemeProps>`
+  ${Platform.select({
+    ios: css`
+      shadow-color: ${props => props.theme.colors.shadow};
+      shadow-offset: 0px 2px;
+      shadow-opacity: 0.25;
+      shadow-radius: 3.84px;
+    `,
+    android: css`
+      elevation: 5;
+    `,
+  })}
+`;
+```
+
+### Performance Optimization
+1. Memoization:
+```typescript
+const MemoizedComponent = React.memo(styled.View`
+  // Styles
+`);
+```
+
+2. Dynamic Props:
+```typescript
+const DynamicComponent = styled.View<{ active: boolean }>`
+  opacity: ${props => props.active ? 1 : 0.5};
+`;
+```
+
+3. Theme Access:
+```typescript
+const { theme } = useTheme();
+const styles = useMemo(() => ({
+  container: css`
+    background-color: ${theme.colors.background};
+  `,
+}), [theme]);
+```
+
 [Continued in SCRIPT_PART3.md...] 
