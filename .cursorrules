@@ -1,5 +1,59 @@
 # Project: React Native with TypeScript Training Program
 
+## Documentation References
+Detailed documentation, templates, and examples can be found in the following files:
+- `docs/TEMPLATES.md` - Component, function, and documentation templates
+- `docs/PROJECT_STRUCTURE.md` - Detailed project organization guidelines
+- `docs/GUIDELINES.md` - Extended coding and documentation standards
+- `docs/EXAMPLES.md` - Comprehensive examples and use cases
+
+## Project Structure
+```
+react-native-examples/
+├── src/                      # Starter code location
+│   └── [challenge-specific-files]
+├── App.tsx                   # Root app file (updated per challenge)
+├── challenge/                # Challenge-specific directory
+│   ├── completed/           # Completed challenge code
+│   ├── SCRIPT.md            # Detailed presenter script
+│   ├── QUESTIONS.md         # Prepared Q&A
+│   └── README.md            # Challenge documentation
+└── docs/                    # General documentation
+```
+
+## Branch Management
+- Main branch contains base project setup
+- Create new branch for each challenge: `challenge/[challenge-name]`
+- Branch structure:
+  ```
+  main
+  └── challenge/user-profile
+  └── challenge/navigation
+  └── challenge/state-management
+  ```
+- Each challenge branch includes:
+  - Starter code in src/
+  - Updated App.tsx
+  - Complete challenge/ directory
+
+## Live Demo Workflow
+1. Start with clean challenge branch
+2. Open three windows:
+   - Main window: src/ and App.tsx (shared screen)
+   - Reference window 1: challenge/completed/
+   - Reference window 2: challenge/SCRIPT.md
+3. Follow script timing:
+   - 5min: Introduction and setup
+   - 10min: Challenge overview
+   - 30min: Implementation
+   - 10min: Q&A
+   - 5min: Wrap-up
+4. Implementation flow:
+   - Explain each code addition
+   - Document all available options
+   - Demo in Expo Go after each feature
+   - Reference prepared Q&A
+
 ## Environment Standards
 - Use Expo managed workflow for all examples
 - Follow TypeScript strict mode configuration
@@ -7,31 +61,22 @@
 - Use latest stable Expo SDK features
 
 ## Code Organization
-- Implement feature-first folder structure
-- Group related components and logic together
-- Separate business logic from UI components
-- Follow native platform conventions where applicable
+See `docs/PROJECT_STRUCTURE.md` for detailed guidelines on:
+- Feature-first folder structure
+- Component and logic organization
+- Business logic separation
+- Platform-specific conventions
 
 ## TypeScript Standards
 - Enable strict mode in tsconfig.json
 - Define explicit types for all props and state
 - Use interfaces for component props
 - Avoid type 'any'
-- Document type definitions with JSDoc comments
-
-## Styling Standards
-- Use styled-components exclusively (no StyleSheet)
-- Follow component-first styling approach
-- Implement responsive designs with styled-components
-- Use theme provider for consistent styling
-- Document styled-component patterns
-- Maintain platform-specific styling in the same file
-- Use props for dynamic styling
-- Implement proper TypeScript types for styled-components
-- Follow BEM-like naming for styled components
-- Keep styled components close to their usage
+See `docs/GUIDELINES.md` for detailed TypeScript standards and examples.
 
 ## Component Guidelines
+See `docs/TEMPLATES.md` for detailed component templates and patterns.
+
 ### For iOS Developers
 - Relate UIViewController concepts to React Navigation
 - Map UIKit patterns to React Native components
@@ -45,160 +90,95 @@
 - Document ViewModel patterns in React context
 
 ## State Management
-- Use Zustand for global state (compare with native state solutions)
+- Use Zustand for global state
 - Implement Context API for component tree state
-- Document state flow and component lifecycle
-- Compare with native state management patterns
+- Document state flow and lifecycle
+See `docs/GUIDELINES.md` for detailed state management patterns and examples.
 
-## Data Fetching
+## Data Fetching & Testing
 - Implement React Query patterns
-- Document API call lifecycles
 - Handle loading and error states
-- Compare with native networking patterns
+- Write comprehensive tests
+See `docs/GUIDELINES.md` for detailed implementation guidelines.
 
-## Testing Standards
-- Write unit tests for business logic
-- Implement component testing with React Native Testing Library
-- Document test coverage requirements
-- Compare with XCTest/JUnit patterns
-
-## Performance Guidelines
+## Performance & Best Practices
 - Implement proper component memoization
 - Use React.memo() strategically
-- Document performance monitoring tools
-- Compare with native profiling tools
-
-## Best Practices
 - Follow React Native community guidelines
-- Implement proper error boundaries
-- Use TypeScript utility types
-- Document platform-specific considerations
+See `docs/GUIDELINES.md` for detailed performance optimization strategies.
 
-## Documentation Requirements
-- Include native platform equivalents in comments
-- Document component usage with examples
-- Provide type definition explanations
-- Include troubleshooting guides
-- Document every piece of logic with detailed explanations
-- Link to relevant official documentation for each concept
-- Include performance considerations and trade-offs
-- Document all available props and options, even unused ones
-- Explain platform-specific behaviors and differences
-- Reference related patterns and alternatives
-
-## Code Documentation Guidelines
-
-### Component Header Format
-```typescript
-/**
- * UserProfile Component
- * 
- * Displays and manages user profile information with editable fields
- * and real-time validation.
- * 
- * Usage:
- * ```tsx
- * <UserProfile 
- *   user={currentUser}
- *   onUpdate={handleProfileUpdate}
- * />
- * ```
- * 
- * Props:
- * - user: UserData - Current user profile information
- * - onUpdate: (data: UserData) => void - Handler for profile updates
- * 
- * Platform Considerations:
- * - iOS: Follows UIKit form input patterns
- * - Android: Implements Material Design input guidelines
- */
-```
-
-### Function Documentation Format
-```typescript
-/**
- * Processes and validates user profile updates
- * 
- * @param userData - Raw user input data
- * @returns Validated user data object
- * 
- * Side Effects:
- * - Logs validation errors to monitoring system
- * - Caches validated data locally
- * 
- * Performance Notes:
- * - Memoize for large datasets
- * - Validation runs on background thread
- */
-```
-
-### Inline Comment Format
-```typescript
-// Complex Logic: Custom validation for international phone numbers
-const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-
-// Platform Workaround: Android keyboard handling
-if (Platform.OS === 'android') {
-  // Prevents keyboard from pushing up content
-  KeyboardAvoidingView.behavior = 'height';
-}
-
-// Platform Difference: iOS uses different shadow implementation
-const shadowStyle = Platform.select({
-  ios: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  android: {
-    elevation: 5,
-  },
-});
-```
-
-### Learning Resources Format
-```typescript
-/**
- * Related Concepts:
- * - Form validation patterns in React Native
- * - Platform-specific input handling
- * - State management with complex forms
- * 
- * Common Pitfalls:
- * - Avoid direct mutation of form state
- * - Handle keyboard behavior differences
- * - Consider input focus management
- * 
- * Best Practices:
- * - Implement progressive validation
- * - Use controlled components
- * - Handle all input states (empty, error, success)
- * 
- * Further Reading:
- * - [React Native Text Input Guide](link)
- * - [Form Validation Patterns](link)
- * - [Platform Specific Design](link)
- */
-```
+## Documentation Standards
+See `docs/TEMPLATES.md` for detailed documentation templates and examples.
 
 ## Challenge Structure
-- Progressive difficulty scaling
-- Platform-specific considerations
-- Real-world production scenarios
-- Focus on debugging skills
+Each challenge should include:
+1. Starter Code (src/):
+   - Basic component structure
+   - TODO comments
+   - Minimal dependencies
+2. App.tsx:
+   - Clean integration points
+   - Clear entry point
+3. Challenge Directory:
+   - Complete implementation
+   - Full presenter script
+   - Q&A document
+   - Setup instructions
+See `docs/EXAMPLES.md` for detailed challenge templates.
 
-## Code Review Standards
-- Enforce TypeScript strict mode
-- Check platform compatibility
-- Verify proper type usage
-- Ensure documentation completeness
+## Script Requirements
+- Word-for-word presentation text
+- Timing markers for each section
+- Detailed code explanations including:
+  - All available props/options
+  - Alternative implementations
+  - Platform-specific considerations
+- Demo checkpoints with Expo Go
+- Prepared responses to common questions
+- Transition phrases between sections
+See `docs/TEMPLATES.md` for script templates and examples.
 
-Remember to:
-- Consider platform-specific behaviors
-- Document native equivalent patterns
-- Focus on production-ready code
-- Emphasize debugging and troubleshooting
+## Demo Standards
+- Use Expo Go for all demonstrations
+- Show both iOS and Android simulators
+- Demo after each functional addition
+- Highlight platform differences
+- Show error states and edge cases
+- Demonstrate debugging techniques
+See `docs/GUIDELINES.md` for detailed demo guidelines.
+
+## Configuration
+{
+  "training": {
+    "version": "1.0.0",
+    "environment": {
+      "expo_version": "latest_stable",
+      "typescript": {
+        "strict": true,
+        "config": "./tsconfig.json"
+      }
+    },
+    "sessions": {
+      "duration_minutes": 60,
+      "structure": {
+        "concept_review": 5,
+        "challenge_explanation": 10,
+        "implementation": 30,
+        "qa_troubleshooting": 10,
+        "next_steps": 5
+      }
+    }
+  },
+  "tooling": {
+    "required": [
+      {"name": "expo-cli", "version": "latest"},
+      {"name": "typescript", "version": "^5.0.0"},
+      {"name": "react-native-testing-library", "version": "latest"},
+      {"name": "zustand", "version": "^4.0.0"},
+      {"name": "react-query", "version": "latest"}
+    ]
+  }
+}
 
 ## AI Communication Standards
 - Never make assumptions about requirements or context
@@ -258,55 +238,16 @@ Remember to:
 - Include quick reference guides for common patterns
 - Maintain a progression map of concepts
 
-## Challenge Templates
-- Basic component creation
-- State management implementation
-- Navigation flow setup
-- API integration
-- Performance optimization
-- Testing implementation
-- Production deployment
-
-## Quick Reference Mappings
-- iOS/UIKit → React Native components
-- Android/XML → JSX/TSX structures
-- Native state → Context/Zustand patterns
-- Platform-specific APIs → React Native APIs
-- Native testing → React Native testing
-
-## Session Structure
-- 5min concept review
-- 10min challenge explanation
-- 30min guided implementation
-- 10min Q&A and troubleshooting
-- 5min next steps and homework
-
-## Progress Tracking
-- Define clear milestone markers
-- Track common stumbling points
-- Document frequently asked questions
-- Maintain solution repositories
-- Create troubleshooting guides
-- Log platform-specific issues
-
-## Resource Organization
-- Maintain centralized code examples
-- Create reusable challenge templates
-- Document common conversion patterns
-- Keep platform-specific reference guides
-- Update dependency requirements regularly
-- Maintain parallel starter and solution code structures
-- Include detailed TODO comments in starter code
-- Provide comprehensive documentation in solutions
-- Keep shared assets and types in common location
-- Version control both starter and completed versions
-
-## Version Control Standards
-- Maintain versioned training materials
-- Track challenge iterations and improvements
-- Document changes and updates
-- Keep solution branches for reference
-- Tag stable versions of training content
+## Challenge Development Checklist
+- [ ] Create new challenge branch
+- [ ] Set up starter code structure
+- [ ] Implement complete solution
+- [ ] Write comprehensive script
+- [ ] Prepare Q&A document
+- [ ] Test in Expo Go
+- [ ] Verify cross-platform
+- [ ] Document setup steps
+- [ ] Create demo checkpoints
 
 ## Documentation Links
 - React Native official documentation
@@ -339,329 +280,6 @@ Remember to:
 - Measure concept retention
 - Evaluate practical implementation success
 - Assess production readiness of participants
-
-## Configuration
-{
-  "training": {
-    "version": "1.0.0",
-    "environment": {
-      "expo_version": "latest_stable",
-      "typescript": {
-        "strict": true,
-        "config": "./tsconfig.json"
-      }
-    },
-    "sessions": {
-      "duration_minutes": 60,
-      "structure": {
-        "concept_review": 5,
-        "challenge_explanation": 10,
-        "implementation": 30,
-        "qa_troubleshooting": 10,
-        "next_steps": 5
-      }
-    },
-    "progression": {
-      "levels": ["basic", "intermediate", "advanced"],
-      "checkpoints": [
-        "component_basics",
-        "navigation",
-        "state_management",
-        "api_integration",
-        "testing",
-        "performance"
-      ]
-    },
-    "metrics": {
-      "success_criteria": {
-        "completion_rate": "80%",
-        "concept_retention": "75%",
-        "practical_implementation": "70%",
-        "production_readiness": "65%"
-      },
-      "feedback_cycle": "daily",
-      "assessment_points": [
-        "end_of_module",
-        "end_of_challenge",
-        "production_simulation"
-      ]
-    },
-    "documentation": {
-      "required_sections": [
-        "native_equivalents",
-        "setup_instructions",
-        "common_pitfalls",
-        "debugging_guide"
-      ],
-      "code_examples": {
-        "platforms": ["ios", "android"],
-        "include_tests": true,
-        "include_types": true
-      }
-    },
-    "challenge_templates": {
-      "structure": {
-        "learning_objectives": true,
-        "prerequisites": true,
-        "time_estimate": true,
-        "difficulty_level": true,
-        "native_comparisons": true
-      },
-      "validation_steps": [
-        "typescript_compilation",
-        "lint_checks",
-        "test_coverage",
-        "cross_platform_verification"
-      ]
-    },
-    "error_handling": {
-      "required_documentation": [
-        "common_errors",
-        "platform_specific_issues",
-        "debugging_steps",
-        "native_equivalent_errors"
-      ],
-      "logging_requirements": {
-        "development": "verbose",
-        "production": "error-only",
-        "testing": "full"
-      }
-    },
-    "challenge_management": {
-      "directory_structure": {
-        "base": "./challenges",
-        "completed": "/solutions",
-        "starter": "/exercises",
-        "assets": "/shared-assets"
-      },
-      "starter_template": {
-        "include_sections": [
-          "project_setup",
-          "dependencies",
-          "type_definitions",
-          "component_structure"
-        ],
-        "todo_format": {
-          "prefix": "// TODO:",
-          "description_required": true,
-          "include_hints": true,
-          "reference_solution": true,
-          "comment_structure": {
-            "format": [
-              "task_description",
-              "expected_behavior",
-              "native_equivalent",
-              "helpful_hints",
-              "documentation_links",
-              "learning_objectives"
-            ],
-            "task_description": {
-              "be_specific": true,
-              "use_technical_terms": true,
-              "reference_requirements": true
-            },
-            "hints": {
-              "provide_guidance": true,
-              "avoid_direct_solutions": true,
-              "reference_patterns": true,
-              "suggest_approaches": true
-            },
-            "documentation": {
-              "link_relevant_docs": true,
-              "highlight_key_concepts": true,
-              "reference_examples": true
-            }
-          },
-          "example_format": [
-            "// TODO: Implement the UserProfile component using functional component pattern",
-            "// Expected Behavior: Component should display user information and handle profile updates",
-            "// Native Equivalent: Similar to UIViewController (iOS) or Fragment (Android)",
-            "// 💡 Hint: Consider using useState for local state management",
-            "// 📚 Docs: See React Native components guide: [link]",
-            "// 🎯 Learning: Practice component lifecycle and state management"
-          ]
-        },
-        "comments": {
-          "implementation_hints": true,
-          "native_equivalents": true,
-          "learning_objectives": true,
-          "documentation_links": true
-        }
-      },
-      "solution_requirements": {
-        "include_comments": true,
-        "explain_key_concepts": true,
-        "highlight_patterns": true,
-        "performance_considerations": true,
-        "testing_examples": true,
-        "documentation_style": {
-          "code_comments": {
-            "line_by_line": true,
-            "include_type_explanations": true,
-            "reference_native_equivalents": true,
-            "explain_patterns_used": true
-          },
-          "documentation_links": {
-            "react_native": true,
-            "typescript": true,
-            "expo": true,
-            "platform_specific": true,
-            "testing": true
-          },
-          "comment_structure": {
-            "component_header": {
-              "description": true,
-              "usage_example": true,
-              "props_explanation": true,
-              "platform_considerations": true
-            },
-            "function_comments": {
-              "purpose": true,
-              "params": true,
-              "return_value": true,
-              "side_effects": true,
-              "performance_notes": true
-            },
-            "inline_comments": {
-              "explain_complex_logic": true,
-              "document_workarounds": true,
-              "clarify_platform_differences": true
-            }
-          },
-          "learning_resources": {
-            "related_concepts": true,
-            "common_pitfalls": true,
-            "best_practices": true,
-            "further_reading": true
-          }
-        }
-      },
-      "file_organization": {
-        "readme": {
-          "setup_instructions": true,
-          "learning_objectives": true,
-          "challenge_requirements": true,
-          "testing_instructions": true,
-          "submission_guidelines": true
-        },
-        "shared_resources": {
-          "api_mocks": true,
-          "test_data": true,
-          "assets": true,
-          "types": true
-        }
-      },
-      "validation": {
-        "ensure_compilable": true,
-        "test_coverage": {
-          "starter": "basic",
-          "solution": "complete"
-        },
-        "platform_compatibility": {
-          "ios": true,
-          "android": true
-        }
-      },
-      "presenter_script": {
-        "format": {
-          "sections": {
-            "session_overview": {
-              "duration": "string",
-              "key_outcomes": ["string"],
-              "prerequisites": ["string"]
-            },
-            "code_walkthrough": {
-              "segments": {
-                "timing": "minutes per segment",
-                "talking_points": ["string"],
-                "metaphors": ["string"],
-                "native_connections": {
-                  "ios": ["string"],
-                  "android": ["string"]
-                },
-                "anticipated_questions": [
-                  {
-                    "question": "string",
-                    "detailed_answer": "string",
-                    "simplified_explanation": "string"
-                  }
-                ]
-              }
-            },
-            "interactive_elements": {
-              "discussion_prompts": ["string"],
-              "hands_on_exercises": ["string"]
-            }
-          },
-          "visual_aids": {
-            "diagrams": ["string"],
-            "code_highlights": ["string"]
-          }
-        }
-      }
-    }
-  },
-  "tooling": {
-    "required": [
-      {"name": "expo-cli", "version": "latest"},
-      {"name": "typescript", "version": "^5.0.0"},
-      {"name": "react-native-testing-library", "version": "latest"},
-      {"name": "zustand", "version": "^4.0.0"},
-      {"name": "react-query", "version": "latest"}
-    ]
-  },
-  "ai_communication": {
-    "response_format": {
-      "prefix": "🎯 React Native Training Assistant: ",
-      "suffix": "Happy native-to-React-Native coding! 🚀"
-    },
-    "validation_required": true,
-    "execution_preferences": {
-      "auto_implement": true,
-      "implementation_steps": [
-        "analyze_request",
-        "confirm_understanding",
-        "make_changes_directly",
-        "verify_changes",
-        "report_results"
-      ],
-      "change_reporting": {
-        "show_diff": true,
-        "explain_changes": true,
-        "include_rollback_steps": true
-      },
-      "tool_usage": {
-        "prefer_direct_edits": true,
-        "use_appropriate_tools": [
-          "edit_file",
-          "run_terminal_cmd",
-          "reapply"
-        ],
-        "avoid_suggestions_only": true
-      }
-    },
-    "conversation_style": {
-      "role": "expert_guide",
-      "interaction_mode": {
-        "iterative": true,
-        "step_by_step": true,
-        "single_focus": true,
-        "await_feedback": true
-      },
-      "response_style": {
-        "concise": true,
-        "action_oriented": true,
-        "max_steps_per_response": 1,
-        "conversational_tone": true
-      },
-      "context_management": {
-        "maintain_thread_context": true,
-        "request_clarification": true,
-        "confirm_before_proceeding": true
-      }
-    }
-  }
-}
 
 ## AI Training Leadership Style
 
@@ -761,11 +379,105 @@ Remember to:
 // Learning: Practice component lifecycle and state management
 ```
 
+## Code Documentation Guidelines
+
+### Component Header Format
+```typescript
+/**
+ * UserProfile Component
+ * 
+ * Displays and manages user profile information with editable fields
+ * and real-time validation.
+ * 
+ * Usage:
+ * ```tsx
+ * <UserProfile 
+ *   user={currentUser}
+ *   onUpdate={handleProfileUpdate}
+ * />
+ * ```
+ * 
+ * Props:
+ * - user: UserData - Current user profile information
+ * - onUpdate: (data: UserData) => void - Handler for profile updates
+ * 
+ * Platform Considerations:
+ * - iOS: Follows UIKit form input patterns
+ * - Android: Implements Material Design input guidelines
+ */
+```
+
+### Function Documentation Format
+```typescript
+/**
+ * Processes and validates user profile updates
+ * 
+ * @param userData - Raw user input data
+ * @returns Validated user data object
+ * 
+ * Side Effects:
+ * - Logs validation errors to monitoring system
+ * - Caches validated data locally
+ * 
+ * Performance Notes:
+ * - Memoize for large datasets
+ * - Validation runs on background thread
+ */
+```
+
+### Inline Comment Format
+```typescript
+// Complex Logic: Custom validation for international phone numbers
+const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+
+// Platform Workaround: Android keyboard handling
+if (Platform.OS === 'android') {
+  // Prevents keyboard from pushing up content
+  KeyboardAvoidingView.behavior = 'height';
+}
+
+// Platform Difference: iOS uses different shadow implementation
+const shadowStyle = Platform.select({
+  ios: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  android: {
+    elevation: 5,
+  },
+});
+```
+
+### Learning Resources Format
+```typescript
+/**
+ * Related Concepts:
+ * - Form validation patterns in React Native
+ * - Platform-specific input handling
+ * - State management with complex forms
+ * 
+ * Common Pitfalls:
+ * - Avoid direct mutation of form state
+ * - Handle keyboard behavior differences
+ * - Consider input focus management
+ * 
+ * Best Practices:
+ * - Implement progressive validation
+ * - Use controlled components
+ * - Handle all input states (empty, error, success)
+ * 
+ * Further Reading:
+ * - [React Native Text Input Guide](link)
+ * - [Form Validation Patterns](link)
+ * - [Platform Specific Design](link)
+ */
+```
+
 ## Presenter Script Guidelines
 - Write in conversational, easy-to-read format
-- Include word-for-word speaking notes that take 30-40 minutes to read through
-- Script should be comprehensive enough to fill entire session when read verbatim
-- Include every detail that will be mentioned, no improvisation needed
+- Include word-for-word speaking notes
 - Mark timing cues with ⏱️
 - Highlight key terms in **bold**
 - Include Tips for simplified explanations
@@ -773,59 +485,42 @@ Remember to:
 - Use platform-specific notes (iOS/Android)
 - Add Alternative Approaches
 - Include Learning Objectives checkpoints
-- Document every prop and option that will be mentioned
-- Include transition phrases between sections
-- Add verbal cues for when to start typing/coding
-- Include exact wording for complex technical explanations
-- Add reminders for live demo interactions
-- Document every example and analogy in full
-- Include verbal cues for showing/hiding different windows
-- Add notes for handling common technical issues during demo
-- Include complete explanations of all code alternatives
-- Document every step of live coding in detail
-- Add prompts for audience interaction points
-- Include full troubleshooting dialogue
 
 ### Script Structure
 #### Opening (5 minutes)
-- Detailed welcome message
-- Comprehensive background check questions
-- Complete session roadmap explanation
-- In-depth learning objectives review
-- Real-world application examples with full context
+- Welcome and overview
+- Quick participant background check
+- Session roadmap
+- Learning objectives
+- Real-world application
 
 #### Concept Introduction (10 minutes)
-- Thorough concept explanations with multiple analogies
-- Detailed native development parallels
-- Multiple metaphors and analogies for each concept
-- Complete visual diagrams explanation scripts
-- Comprehensive comprehension check dialogues
+- Core concept explanation
+- Native development parallels
+- Simple metaphors and analogies
+- Visual diagrams or examples
+- Quick comprehension check
 
 #### Code Walkthrough (30 minutes)
-- Line-by-line explanation scripts
-- Complete prop and option documentation
-- Detailed platform-specific considerations
-- Full common pitfalls and solutions dialogue
-- Comprehensive interactive coding segment instructions
-- Exact wording for explaining each code block
-- Complete alternative implementation discussions
-- Detailed performance implication explanations
-- Full TypeScript type explanation scripts
-- Comprehensive styling approach discussions
+- Line-by-line explanation
+- Highlight key patterns
+- Platform-specific considerations
+- Common pitfalls and solutions
+- Interactive coding segments
 
 #### Q&A and Discussion (10 minutes)
-- Complete list of prepared questions and answers
-- Detailed misconception explanations
-- Full debugging scenario walkthroughs
-- Comprehensive best practices discussions
-- Complete real-world example explanations
+- Prepared question prompts
+- Common misconceptions
+- Debugging scenarios
+- Best practices discussion
+- Real-world examples
 
 #### Wrap-up (5 minutes)
-- Detailed key takeaways review
-- Complete next steps explanation
-- Full resource list with context
-- Comprehensive homework assignment explanation
-- Detailed feedback collection prompts
+- Key takeaways
+- Next steps preview
+- Resources for further learning
+- Homework assignment
+- Feedback collection
 
 ### Example Script Format
 ```markdown
@@ -874,43 +569,6 @@ When state updates aren't reflecting:
 
 [Continue with more sections...]
 ```
-
-## Live Demo Session Format
-
-### Session Structure
-- Presenter screen shares starter code window
-- Reference windows (hidden from audience):
-  - Completed challenge code
-  - Presenter script
-  - Additional notes/resources
-
-### Live Coding Approach
-- Copy/paste or retype code from completed example
-- Explain each line in detail as it's added
-- Cover all available options and alternatives
-- Demo results in Expo Go after each functional addition
-- Follow script verbatim for consistency
-
-### Code Explanation Standards
-- Explain every prop available on components
-- Cover alternative implementation options
-- Discuss performance implications
-- Reference native platform equivalents
-- Include real-world usage examples
-
-### Interactive Demo Flow
-- Start with minimal starter code
-- Build features incrementally
-- Demo in Expo Go after each addition
-- Address prepared questions from script
-- Show both iOS and Android differences
-
-### Time Management
-- Allocate time for each code segment
-- Include buffer for questions
-- Plan demo checkpoints
-- Schedule interactive segments
-- Reserve time for final Q&A
 
 ## README Template Guidelines
 
@@ -987,90 +645,3 @@ When state updates aren't reflecting:
    - Test coverage report
    - Performance considerations
 ```
-
-## Documentation Organization
-
-### Large Document Management
-- Split extensive documentation into modular files
-- Use index files to maintain document hierarchy
-- Follow a clear numbering/naming convention
-- Keep individual files under 500 lines for maintainability
-
-### Presenter Script Organization
-```markdown
-training-session/
-├── SCRIPT.md                 # Main index and overview
-├── sections/                 # Detailed script sections
-│   ├── 01_introduction.md
-│   ├── 02_core_concepts.md
-│   └── 03_live_coding.md
-├── code-snippets/           # Referenced code examples
-│   ├── typescript/
-│   └── javascript/
-└── assets/                  # Visual aids and diagrams
-    ├── diagrams/
-    └── screenshots/
-```
-
-### File Naming Standards
-- Use numeric prefixes for order (01_, 02_, etc.)
-- Use lowercase with hyphens for readability
-- Include clear section indicators
-- Maintain consistent extensions
-
-### Cross-Referencing
-- Use relative links between documents
-- Maintain table of contents in index files
-- Include clear navigation headers/footers
-- Reference line numbers for code snippets
-
-### Version Control Considerations
-- Commit modular files separately
-- Use meaningful commit messages per section
-- Tag stable versions of documentation
-- Maintain change history per section
-
-### Large Script Management
-- Break presenter scripts into logical sections
-- Each section should be self-contained
-- Maximum 500 lines per script file
-- Include timing markers for each subsection
-
-### Script Section Structure
-```markdown
-# Section Title
-⏱️ Duration: X minutes
-
-## Setup Notes
-[Preparation steps for this section]
-
-## Verbal Script
-"Exact words to say..."
-
-## Code Examples
-```typescript
-// Code to type/explain
-```
-
-## Visual Aids
-[References to diagrams/screenshots]
-
-## Checkpoints
-- [ ] Key points covered
-- [ ] Code demonstrated
-- [ ] Audience comprehension verified
-```
-
-### Script Dependencies
-- Create separate directories for:
-  - Code snippets
-  - Visual aids
-  - Exercise files
-  - Solution files
-- Maintain clear references between files
-
-### Script Versioning
-- Track script changes separately from code
-- Include last-updated timestamps
-- Note any prerequisite updates
-- Document script modifications
