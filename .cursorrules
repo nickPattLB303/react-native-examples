@@ -39,17 +39,16 @@ react-native-examples/
 ## Live Demo Workflow
 1. Start with clean challenge branch
 2. Open three windows:
-   - Main window: src/ and App.tsx (shared screen)
+   - Main window: src/ and App.tsx (shared Webex screen)
    - Reference window 1: challenge/completed/
    - Reference window 2: challenge/SCRIPT.md
 3. Follow script timing:
-   - 5min: Introduction and setup
-   - 10min: Challenge overview
-   - 30min: Implementation
+   - 45min: Implementation and live coding
    - 10min: Q&A
-   - 5min: Wrap-up
+   - 5min: Wrap-up and next steps
 4. Implementation flow:
-   - Explain each code addition
+   - Start immediately with code explanation
+   - Explain each addition in detail
    - Document all available options
    - Demo in Expo Go after each feature
    - Reference prepared Q&A
@@ -127,16 +126,61 @@ Each challenge should include:
 See `docs/EXAMPLES.md` for detailed challenge templates.
 
 ## Script Requirements
-- Word-for-word presentation text
-- Timing markers for each section
+- Word-for-word presentation text that takes 45-50 minutes to read through
+- Jump directly into code explanation (no introductions)
 - Detailed code explanations including:
   - All available props/options
   - Alternative implementations
   - Platform-specific considerations
 - Demo checkpoints with Expo Go
 - Prepared responses to common questions
-- Transition phrases between sections
+- Transition phrases between code sections
+- Clear verbal cues for:
+  - When you're typing/pasting code
+  - When you're switching to Expo Go
+  - When you're showing different files
 See `docs/TEMPLATES.md` for script templates and examples.
+
+### Script Structure
+#### Implementation (45 minutes)
+- Start with code overview
+- Build features incrementally
+- Explain all options thoroughly
+- Demo in Expo Go frequently
+- Address questions as they arise
+
+#### Q&A (10 minutes)
+- Address prepared questions
+- Show alternative implementations
+- Demonstrate debugging techniques
+- Discuss real-world scenarios
+
+#### Wrap-up (5 minutes)
+- Summarize key points
+- Preview next session
+- Share resources
+
+### Example Script Format
+```markdown
+## [Challenge Name] Implementation
+⏱️ Duration: 60 minutes
+
+### Starting Point
+"Let's dive right into the code. We'll be building [feature] using [technologies]. Open up the starter code in src/[file]..."
+
+[Begin with first code section]
+
+### Implementation Steps
+1. First Feature (10 min):
+   "Looking at the code, we'll start with..."
+   [Code explanation and demo]
+
+2. Second Feature (15 min):
+   "Now that we have the basic structure, let's add..."
+   [Code explanation and demo]
+
+[Continue with implementation sections...]
+```
 
 ## Demo Standards
 - Use Expo Go for all demonstrations
