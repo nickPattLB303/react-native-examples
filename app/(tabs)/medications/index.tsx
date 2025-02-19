@@ -6,11 +6,10 @@
 
 import { Link } from 'expo-router';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScreenContainer } from '@/components/styled/containers';
 
 /**
  * @function MedicationsScreen
@@ -19,24 +18,11 @@ import { ThemedView } from '@/components/ThemedView';
  */
 export default function MedicationsScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer>
       <ThemedText type="title">Medications</ThemedText>
       <Link href="/medications/details" asChild>
         <Button mode="contained">View Details</Button>
       </Link>
-    </ThemedView>
+    </ScreenContainer>
   );
-}
-
-/**
- * @constant styles
- * @description StyleSheet for the MedicationsScreen component
- * @type {StyleSheet}
- */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-}); 
+} 

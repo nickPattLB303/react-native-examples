@@ -1,21 +1,22 @@
+/**
+ * @module SettingsScreen
+ * @description Settings screen component for user preferences
+ */
+
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScreenContainer } from '@/components/styled/containers';
 
+/**
+ * @function SettingsScreen
+ * @description Displays and manages user settings and preferences
+ * @returns {React.ReactElement} A screen component for settings management
+ */
 export default function SettingsScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer>
       <ThemedText type="title">Settings</ThemedText>
-    </ThemedView>
+    </ScreenContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-}); 
+} 

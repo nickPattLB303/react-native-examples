@@ -6,11 +6,10 @@
 
 import { Link } from 'expo-router';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScreenContainer } from '@/components/styled/containers';
 
 /**
  * @function AccountScreen
@@ -19,7 +18,7 @@ import { ThemedView } from '@/components/ThemedView';
  */
 export default function AccountScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer>
       <ThemedText type="title">Account</ThemedText>
       <Link href="/account/profile" asChild>
         <Button mode="contained">View Profile</Button>
@@ -27,19 +26,6 @@ export default function AccountScreen() {
       <Link href="/account/settings" asChild>
         <Button mode="contained">Settings</Button>
       </Link>
-    </ThemedView>
+    </ScreenContainer>
   );
-}
-
-/**
- * @constant styles
- * @description StyleSheet for the AccountScreen component
- * @type {StyleSheet}
- */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-}); 
+} 

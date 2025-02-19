@@ -1,21 +1,22 @@
+/**
+ * @module ProfileScreen
+ * @description Profile screen component showing user profile information
+ */
+
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScreenContainer } from '@/components/styled/containers';
 
+/**
+ * @function ProfileScreen
+ * @description Displays the user's profile information
+ * @returns {React.ReactElement} A screen component showing profile details
+ */
 export default function ProfileScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer>
       <ThemedText type="title">Profile</ThemedText>
-    </ThemedView>
+    </ScreenContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-}); 
+} 

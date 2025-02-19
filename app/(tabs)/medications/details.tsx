@@ -1,21 +1,23 @@
+/**
+ * @module MedicationDetailsScreen
+ * @description Medication details screen component
+ * @since 1.0.0
+ */
+
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScreenContainer } from '@/components/styled/containers';
 
+/**
+ * @function MedicationDetailsScreen
+ * @description Displays detailed information about a specific medication
+ * @returns {React.ReactElement} A screen component showing medication details
+ */
 export default function MedicationDetailsScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer>
       <ThemedText type="title">Medication Details</ThemedText>
-    </ThemedView>
+    </ScreenContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-}); 
+} 

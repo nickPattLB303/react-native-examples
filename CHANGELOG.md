@@ -40,6 +40,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Added proper type declarations for styled-components
     - Fixed theme type compatibility with Navigation theme
     - Improved type safety across theme system
+  - Started migration from StyleSheet to styled-components:
+    - Created shared styled container components
+    - Converted account screens to use styled-components
+    - Converted medications screens to use styled-components
+    - Converted orders screens to use styled-components
+    - Improved theme consistency with spacing tokens
+    - Fixed theme provider integration and type safety
+    - Consolidated theme configuration in a single location
 
 ### Changed
 - Updated tab navigation layout to use new icon set for tab bar icons
