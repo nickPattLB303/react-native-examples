@@ -1,3 +1,8 @@
+/**
+ * @module app/tabs/HomeScreen
+ * @description Home screen component with welcome message and getting started steps
+ */
+
 import { Image, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import type { DefaultTheme } from 'styled-components/native';
@@ -7,21 +12,37 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+/**
+ * @interface StyledProps
+ * @description Base props for styled components with theme support
+ */
 interface StyledProps {
   theme: DefaultTheme;
 }
 
+/**
+ * @component TitleContainer
+ * @description Container for the welcome title and wave animation
+ */
 const TitleContainer = styled(ThemedView)<StyledProps>`
   flex-direction: row;
   align-items: center;
   gap: ${({ theme }: StyledProps) => theme.spacing.sm}px;
 `;
 
+/**
+ * @component StepContainer
+ * @description Container for each getting started step
+ */
 const StepContainer = styled(ThemedView)<StyledProps>`
   gap: ${({ theme }: StyledProps) => theme.spacing.sm}px;
   margin-bottom: ${({ theme }: StyledProps) => theme.spacing.sm}px;
 `;
 
+/**
+ * @component ReactLogo
+ * @description Styled React logo image for the header
+ */
 const ReactLogo = styled(Image)`
   height: 178px;
   width: 290px;
@@ -30,7 +51,12 @@ const ReactLogo = styled(Image)`
   position: absolute;
 `;
 
-export default function HomeScreen() {
+/**
+ * @function HomeScreen
+ * @description Main home screen component with welcome message and getting started steps
+ * @returns {React.ReactElement} The home screen component
+ */
+export default function HomeScreen(): React.ReactElement {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
