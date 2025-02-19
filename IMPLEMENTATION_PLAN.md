@@ -77,7 +77,7 @@ This document outlines an iterative plan to build a small, simple application th
   - **Account:** Account Overview, Profile, Settings, Payment (and other necessary account screens)
 
 ### 3. UI & Styling
-- [ ] Configure react-native-paper and integrate its theme.
+- [x] Configure react-native-paper and integrate its theme.
 - [ ] Create a custom theme using styled-components (supporting dark mode).
 - [ ] Develop reusable UI components that follow Material Design principles.
 - [ ] Implement responsive layouts using Flexbox and Expo's useWindowDimensions.
