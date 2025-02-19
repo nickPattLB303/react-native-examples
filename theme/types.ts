@@ -22,6 +22,11 @@ export interface CustomTheme {
   fonts: MD3Theme['fonts'];
 
   /**
+   * @property {boolean} dark - Whether the theme is in dark mode
+   */
+  dark: boolean;
+
+  /**
    * @property {Object} spacing - Standardized spacing values for consistent layout
    */
   spacing: {

@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Module and interface documentation
     - Property descriptions and type information
     - Component documentation with props and return types
+  - Enhanced TypeScript support:
+    - Added proper type declarations for styled-components
+    - Fixed theme type compatibility with Navigation theme
+    - Improved type safety across theme system
 
 ### Changed
 - Updated tab navigation layout to use new icon set for tab bar icons

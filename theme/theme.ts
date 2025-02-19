@@ -91,6 +91,7 @@ export const lightTheme: CustomTheme = {
   ...MD3LightTheme,
   ...NavigationLightTheme,
   ...baseTheme,
+  dark: false,
   colors: {
     ...MD3LightTheme.colors,
     ...NavigationLightTheme.colors,
@@ -125,6 +126,7 @@ export const darkTheme: CustomTheme = {
   ...MD3DarkTheme,
   ...NavigationDarkTheme,
   ...baseTheme,
+  dark: true,
   colors: {
     ...MD3DarkTheme.colors,
     ...NavigationDarkTheme.colors,
