@@ -67,6 +67,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - Support for different sizes and full-width option
       - Consistent styling with theme tokens
       - Added ThemedButton component for easy usage
+    - Created shared styled list components:
+      - BaseListItem with theme integration
+      - ListContainer for consistent layout
+      - ListSeparator for visual separation
+      - ListItemTitle and ListItemDescription components
+      - Specialized MedicationListItem component:
+        - Medication-specific styling and icons
+        - Support for name, dosage, and frequency
+        - Compact mode option
+      - Specialized OrderListItem component:
+        - Order-specific styling and icons
+        - Status-based color coding
+        - Support for order details display
+        - Compact mode option
 
 ### Changed
 - Updated tab navigation layout to use new icon set for tab bar icons
@@ -77,8 +91,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated ThemedText from StyleSheet to styled-components for better theme integration
 - Added typography configuration to theme system for consistent text styling
 - Converted Button components to use styled-components with theme integration
+- Added list components with consistent styling and theme integration
+- Implemented specialized list items for medications and orders
+- Converted existing components to use styled-components:
+  - Collapsible component with theme-aware spacing and animations
+  - ParallaxScrollView with styled containers and headers
+  - HelloWave with typography integration
+  - TabBarBackground with proper blur styling
+  - NotFoundScreen with consistent spacing
+  - HomeScreen with theme-aware containers
+  - Improved component consistency and theme integration
+  - Enhanced maintainability and code organization
+- Enhanced TypeScript support in styled components:
+  - Added proper type definitions for styled component props
+  - Fixed theme type inference in template literals
+  - Improved type safety in styled component functions
+  - Created reusable interfaces for styled component props
 
 ### Removed
 - Removed explore.tsx and its associated tab
 - Cleaned up unused navigation code from previous implementation
 - Removed StyleSheet-based text styles in favor of styled-components
+- Eliminated inline styles and StyleSheet instances from converted components
+- Removed all remaining StyleSheet.create calls from the codebase
