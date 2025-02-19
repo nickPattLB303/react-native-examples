@@ -1,61 +1,118 @@
 /**
  * @module components/styled/list
- * @description Shared styled list components for consistent list styling
+ * @description Shared styled list components for consistent list styling across the application
  */
 
 import styled from 'styled-components/native';
 import { List } from 'react-native-paper';
 import type { DefaultTheme } from 'styled-components/native';
+import type { ViewStyle } from 'react-native';
 
+/**
+ * Props for styled list components
+ * @interface StyledListProps
+ */
 interface StyledListProps {
+  /** Theme object for styling */
   theme: DefaultTheme;
+  /** Whether to use compact styling */
   compact?: boolean;
 }
 
 /**
- * @component BaseListItem
- * @description Base styled list item with theme integration
+ * Props for list item components
+ * @interface ListItemProps
+ * @extends {StyledListProps}
  */
-export const BaseListItem = styled(List.Item)<StyledListProps>`
-  padding: ${({ theme, compact }) => compact ? theme.spacing.xs : theme.spacing.sm}px;
-  border-radius: ${({ theme }) => theme.borderRadius.sm}px;
-  background-color: ${({ theme }) => theme.colors.background};
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+interface ListItemProps extends StyledListProps {
+  /** Custom styles to apply */
+  style?: ViewStyle;
+}
+
+/**
+ * Type-safe theme accessor function
+ */
+const getThemeValue = <T extends keyof DefaultTheme>(theme: DefaultTheme, path: T) => theme[path];
+
+/**
+ * Base styled list item with theme integration
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <BaseListItem
+ *   title="Item Title"
+ *   description="Item description"
+ *   compact={true}
+ * />
+ * ```
+ */
+export const BaseListItem = styled(List.Item)<ListItemProps>`
+  padding: ${({ theme, compact }: StyledListProps) => 
+    compact ? getThemeValue(theme, 'spacing').xs : getThemeValue(theme, 'spacing').sm}px;
+  border-radius: ${({ theme }: StyledListProps) => getThemeValue(theme, 'borderRadius').sm}px;
+  background-color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').background};
+  margin-bottom: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').xs}px;
 `;
 
 /**
- * @component ListContainer
- * @description Container for list items with consistent spacing
+ * Container for list items with consistent spacing
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <ListContainer>
+ *   <BaseListItem />
+ *   <BaseListItem />
+ * </ListContainer>
+ * ```
  */
-export const ListContainer = styled.View`
-  padding: ${({ theme }) => theme.spacing.sm}px;
-  gap: ${({ theme }) => theme.spacing.sm}px;
+export const ListContainer = styled.View<StyledListProps>`
+  padding: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').sm}px;
+  gap: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').sm}px;
 `;
 
 /**
- * @component ListSeparator
- * @description Consistent separator between list items
+ * Consistent separator between list items
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <BaseListItem />
+ * <ListSeparator />
+ * <BaseListItem />
+ * ```
  */
-export const ListSeparator = styled.View`
+export const ListSeparator = styled.View<StyledListProps>`
   height: 1px;
-  background-color: ${({ theme }) => theme.colors.outline};
-  margin: ${({ theme }) => theme.spacing.xs}px 0;
+  background-color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').outline};
+  margin: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').xs}px 0;
 `;
 
 /**
- * @component ListItemTitle
- * @description Styled title for list items
+ * Styled title for list items
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <ListItemTitle>Item Title</ListItemTitle>
+ * ```
  */
-export const ListItemTitle = styled(List.Item.Title)`
-  font-size: ${({ theme }) => theme.typography.sizes.base}px;
-  color: ${({ theme }) => theme.colors.text};
+export const ListItemTitle = styled.Text<StyledListProps>`
+  font-size: ${({ theme }: StyledListProps) => getThemeValue(theme, 'typography').sizes.base}px;
+  color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').text};
 `;
 
 /**
- * @component ListItemDescription
- * @description Styled description for list items
+ * Styled description for list items
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <ListItemDescription>Item description</ListItemDescription>
+ * ```
  */
-export const ListItemDescription = styled(List.Item.Description)`
-  font-size: ${({ theme }) => theme.typography.sizes.small}px;
-  color: ${({ theme }) => theme.colors.secondary};
+export const ListItemDescription = styled.Text<StyledListProps>`
+  font-size: ${({ theme }: StyledListProps) => getThemeValue(theme, 'typography').sizes.small}px;
+  color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').secondary};
 `; 

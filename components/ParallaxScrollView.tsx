@@ -10,19 +10,30 @@ import Animated, {
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import type { DefaultTheme } from 'styled-components/native';
 
+/** Height of the parallax header in pixels */
 const HEADER_HEIGHT = 250;
 
+/** Styled container component */
 const Container = styled(ThemedView)`
   flex: 1;
 `;
 
-const Header = styled(Animated.View)<{ backgroundColor: string }>`
+/** Props for the styled header component */
+interface HeaderProps {
+  backgroundColor: string;
+  theme: DefaultTheme;
+}
+
+/** Styled header component with animation support */
+const Header = styled(Animated.View)<HeaderProps>`
   height: ${HEADER_HEIGHT}px;
   overflow: hidden;
   background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
+/** Styled content container */
 const Content = styled(ThemedView)`
   flex: 1;
   padding: ${({ theme }) => theme.spacing.xl}px;
@@ -30,20 +41,37 @@ const Content = styled(ThemedView)`
   overflow: hidden;
 `;
 
-type Props = PropsWithChildren<{
+/**
+ * Props for the ParallaxScrollView component
+ * @interface ParallaxScrollViewProps
+ */
+interface ParallaxScrollViewProps extends PropsWithChildren {
+  /** React element to be displayed in the header */
   headerImage: ReactElement;
-  headerBackgroundColor: { dark: string; light: string };
-}>;
+  /** Background colors for light and dark themes */
+  headerBackgroundColor: {
+    dark: string;
+    light: string;
+  };
+}
 
+/**
+ * A scrollable component with parallax header effect
+ * @component
+ * @param {ParallaxScrollViewProps} props - The component props
+ * @returns {JSX.Element} A scrollable view with parallax header effect
+ */
 export default function ParallaxScrollView({
   children,
   headerImage,
   headerBackgroundColor,
-}: Props) {
+}: ParallaxScrollViewProps): JSX.Element {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
+
+  /** Animated style for the parallax header effect */
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [

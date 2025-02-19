@@ -4,16 +4,49 @@
  */
 
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StyleProp, ViewStyle, OpaqueColorValue } from 'react-native';
 import { BaseListItem, ListItemTitle, ListItemDescription } from './styled/list';
-import { IconSymbol } from './ui/IconSymbol';
+import { IconSymbol, type IconSymbolName } from './ui/IconSymbol';
 import { useTheme } from 'styled-components/native';
+import type { DefaultTheme } from 'styled-components/native';
 
+/** Valid order status values */
+export const ORDER_STATUS = {
+  PENDING: 'pending',
+  PROCESSING: 'processing',
+  SHIPPED: 'shipped',
+  DELIVERED: 'delivered',
+  CANCELLED: 'cancelled',
+} as const;
+
+/** Type for order status */
+export type OrderStatus = typeof ORDER_STATUS[keyof typeof ORDER_STATUS];
+
+/** Props passed to icon components */
+interface IconProps {
+  size?: number;
+  color?: string | OpaqueColorValue;
+  style?: StyleProp<ViewStyle>;
+}
+
+/** Status color mapping */
+const STATUS_COLORS: Record<OrderStatus, keyof DefaultTheme['colors']> = {
+  [ORDER_STATUS.PENDING]: 'primary',
+  [ORDER_STATUS.PROCESSING]: 'primary',
+  [ORDER_STATUS.SHIPPED]: 'primary',
+  [ORDER_STATUS.DELIVERED]: 'primary',
+  [ORDER_STATUS.CANCELLED]: 'error',
+};
+
+/**
+ * Props for the OrderListItem component
+ * @interface OrderListItemProps
+ */
 export interface OrderListItemProps {
   /** Order ID */
   orderId: string;
   /** Order status */
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  status: OrderStatus;
   /** Order date */
   date: string;
   /** Total items in order */
@@ -25,17 +58,20 @@ export interface OrderListItemProps {
 }
 
 /**
- * @function OrderListItem
- * @description A list item component specifically designed for displaying order information
+ * A list item component specifically designed for displaying order information
+ * 
+ * @component
+ * @param {OrderListItemProps} props - The component props
+ * @returns {JSX.Element} A list item displaying order information
  * 
  * @example
  * ```tsx
  * <OrderListItem
  *   orderId="ORD-123"
- *   status="processing"
+ *   status={ORDER_STATUS.PROCESSING}
  *   date="2024-03-15"
  *   itemCount={3}
- *   onPress={() => {}}
+ *   onPress={() => console.log('Order pressed')}
  * />
  * ```
  */
@@ -46,24 +82,17 @@ export function OrderListItem({
   itemCount,
   onPress,
   compact = false,
-}: OrderListItemProps) {
+}: OrderListItemProps): JSX.Element {
   const theme = useTheme();
 
-  const getStatusColor = (status: OrderListItemProps['status']) => {
-    switch (status) {
-      case 'pending':
-        return theme.colors.warning;
-      case 'processing':
-        return theme.colors.info;
-      case 'shipped':
-        return theme.colors.primary;
-      case 'delivered':
-        return theme.colors.success;
-      case 'cancelled':
-        return theme.colors.error;
-      default:
-        return theme.colors.secondary;
-    }
+  /**
+   * Gets the appropriate color for the order status
+   * @param {OrderStatus} status - The order status
+   * @returns {string} The color code for the status
+   */
+  const getStatusColor = (status: OrderStatus): string => {
+    const colorKey = STATUS_COLORS[status];
+    return theme.colors[colorKey] as string;
   };
 
   return (
@@ -78,19 +107,19 @@ export function OrderListItem({
             <ListItemDescription>Items: {itemCount}</ListItemDescription>
           </>
         }
-        left={props => (
+        left={(props: IconProps) => (
           <IconSymbol
-            name="box.fill"
+            name="house.fill"
             size={24}
             color={getStatusColor(status)}
             {...props}
           />
         )}
-        right={props => (
+        right={(props: IconProps) => (
           <IconSymbol
             name="chevron.right"
             size={24}
-            color={theme.colors.secondary}
+            color={theme.colors.secondary as string}
             {...props}
           />
         )}
