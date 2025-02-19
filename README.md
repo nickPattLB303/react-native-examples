@@ -1,71 +1,50 @@
-# React Native with TypeScript Training Program
+# Welcome to your Expo app 👋
 
-## Overview
-This repository contains a comprehensive training program for teaching React Native development with TypeScript, focusing on helping native iOS and Android developers transition to React Native.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-### Development Philosophy
-We follow the principle that "perfect is the enemy of good." Our approach emphasizes:
-- Building working solutions first, optimizing later
-- Learning through practical implementation
-- Balancing best practices with delivery speed
-- Making conscious trade-offs when needed
-- Documenting decisions and future improvements
+## Get started
 
-## Repository Structure
+1. Install dependencies
 
-### Configuration
-- `.cursorrules` - Core configuration for training program settings, tooling, and AI communication preferences
+   ```bash
+   npm install
+   ```
 
-### Documentation
-- `docs/GUIDELINES.md` - Teaching methodology, communication standards, and technical requirements
-- `docs/TEMPLATES.md` - Code documentation templates and standards
-- `docs/EXAMPLES.md` - Example implementations and presenter scripts
-- `docs/assets/` - Supporting diagrams and visual aids
+2. Start the app
 
-## Getting Started
+   ```bash
+    npx expo start
+   ```
 
-### For Trainers
-1. Review `docs/GUIDELINES.md` for teaching methodology and standards
-2. Familiarize yourself with the templates in `docs/TEMPLATES.md`
-3. Study the example implementations in `docs/EXAMPLES.md`
-4. Follow the presenter scripts for consistent delivery
+In the output, you'll find options to open the app in a
 
-### For Students
-1. Ensure your development environment meets the requirements in `.cursorrules`
-2. Start with the basic component examples in `docs/EXAMPLES.md`
-3. Follow the progression path outlined in the configuration
-4. Use the templates from `docs/TEMPLATES.md` for your implementations
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-## Version Control
-- See `CHANGELOG.md` for version history
-- All documentation follows semantic versioning
-- Current version: 1.0.0
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Cross-References
+## Get a fresh project
 
-### Learning Path
-1. Environment Setup (`.cursorrules` → Environment Standards)
-2. Basic Concepts (`docs/GUIDELINES.md` → Technical Standards)
-3. Component Development (`docs/TEMPLATES.md` → Component Documentation)
-4. Implementation Examples (`docs/EXAMPLES.md` → Basic Component Example)
+When you're ready, run:
 
-### Documentation Standards
-- Code Documentation: `docs/TEMPLATES.md#code-documentation-guidelines`
-- TODO Comments: `docs/TEMPLATES.md#todo-comment-guidelines`
-- README Templates: `docs/TEMPLATES.md#readme-template`
+```bash
+npm run reset-project
+```
 
-### Teaching Resources
-- Session Structure: `docs/GUIDELINES.md#session-structure`
-- Presenter Scripts: `docs/EXAMPLES.md#presenter-script-guidelines`
-- Example Implementations: `docs/EXAMPLES.md#example-implementations`
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Contributing
-1. Follow the documentation standards in `docs/TEMPLATES.md`
-2. Ensure cross-platform compatibility
-3. Include comprehensive documentation
-4. Add relevant examples to `docs/EXAMPLES.md`
+## Learn more
 
-## Support
-- Review common issues in example implementations
-- Follow troubleshooting guides in documentation
-- Refer to platform-specific considerations
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
