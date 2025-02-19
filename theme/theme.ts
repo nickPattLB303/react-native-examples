@@ -61,6 +61,19 @@ const fontConfig = {
  * @description Base theme configuration shared between light and dark themes
  */
 const baseTheme = {
+  typography: {
+    sizes: {
+      base: 16,
+      title: 32,
+      subtitle: 20,
+      small: 14,
+    },
+    lineHeights: {
+      base: 24,
+      title: 32,
+      link: 30,
+    },
+  },
   spacing: {
     xs: 4,
     sm: 8,

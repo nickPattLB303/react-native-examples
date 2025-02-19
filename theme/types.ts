@@ -27,6 +27,32 @@ export interface CustomTheme {
   dark: boolean;
 
   /**
+   * @property {Object} typography - Typography configuration for consistent text styling
+   */
+  typography: {
+    /** Font sizes for different text styles */
+    sizes: {
+      /** Base font size (16px) */
+      base: number;
+      /** Title font size (32px) */
+      title: number;
+      /** Subtitle font size (20px) */
+      subtitle: number;
+      /** Small font size (14px) */
+      small: number;
+    };
+    /** Line heights for different text styles */
+    lineHeights: {
+      /** Base line height (24px) */
+      base: number;
+      /** Title line height (32px) */
+      title: number;
+      /** Link line height (30px) */
+      link: number;
+    };
+  };
+
+  /**
    * @property {Object} spacing - Standardized spacing values for consistent layout
    */
   spacing: {
