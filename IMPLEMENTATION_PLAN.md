@@ -66,12 +66,12 @@ This document outlines an iterative plan to build a small, simple application th
 
 ### 2. Navigation Setup
 - [x] Set up Expo Router with file-based routing.
-- [ ] Implement Tab Navigation with the following tabs:
-  - [ ] Medications
-  - [ ] Orders
-  - [ ] Account
-- [ ] Within each tab, set up Stack Navigation.
-- [ ] Create initial screen files for each tab:
+- [x] Implement Tab Navigation with the following tabs:
+  - [x] Medications
+  - [x] Orders
+  - [x] Account
+- [x] Within each tab, set up Stack Navigation.
+- [x] Create initial screen files for each tab:
   - **Medications:** List Screen, Details Screen
   - **Orders:** List Screen, Details Screen
   - **Account:** Account Overview, Profile, Settings, Payment (and other necessary account screens)
