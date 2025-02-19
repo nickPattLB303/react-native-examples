@@ -88,5 +88,3 @@ AI Communication Standards
 - Begin each response with "🎯 React Native Training Assistant: "
 - End each response with "Happy native-to-React-Native coding! 🚀"
 
-Documenting Changes
-- Always document changes in the `CHANGELOG.md` file

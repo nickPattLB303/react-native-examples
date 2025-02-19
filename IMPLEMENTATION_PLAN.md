@@ -50,17 +50,17 @@ This document outlines an iterative plan to build a small, simple application th
 - Implement React Context/useReducer for local state management in complex components.
 - Note: Use Zustand for global state (e.g., user authentication, global theme, app-wide notifications) and Context/useReducer for local state (specific screens/components like medication details or forms), following best practices [Mobile at Scale](https://www.mobileatscale.com/content/posts/01-state-management/).
 
-## Detailed Checklist
+## Checklist
 
 ### 1. Project Setup & Dependencies
 - [x] Ensure the project is created using create-expo app with the --default template.
 - [x] Configure TypeScript, Prettier, and ESLint following the .cursorrules guidelines.
-- [ ] Install necessary dependencies:
-  - [ ] react-native-paper
-  - [ ] styled-components
-  - [ ] zustand
-  - [ ] react-query
-  - [ ] faker (Faker JS)
+- [x] Install necessary dependencies:
+  - [x] react-native-paper
+  - [x] styled-components
+  - [x] zustand
+  - [x] react-query
+  - [x] faker (Faker JS)
   - [x] expo-router
   - [x] react-native-safe-area-context
 
