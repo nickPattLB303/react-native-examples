@@ -80,6 +80,8 @@ export const MedicationSearchBar = memo(function MedicationSearchBar({
       style={style}
       onError={onError}
       testID="medication-search-bar"
+      searchIcon="magnify"
+      clearIcon="close"
     />
   );
 }); 

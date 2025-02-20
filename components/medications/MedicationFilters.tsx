@@ -21,11 +21,11 @@ export type MedicationFilterType = typeof MEDICATION_FILTERS[keyof typeof MEDICA
 
 /** Default medication filter options */
 export const DEFAULT_MEDICATION_FILTERS: FilterOption[] = [
-  { id: MEDICATION_FILTERS.ACTIVE, label: 'Active', icon: 'checkmark' },
-  { id: MEDICATION_FILTERS.INACTIVE, label: 'Inactive', icon: 'xmark' },
-  { id: MEDICATION_FILTERS.REQUIRES_REFILL, label: 'Needs Refill', icon: 'bell.fill' },
-  { id: MEDICATION_FILTERS.EXPIRING_SOON, label: 'Expiring Soon', icon: 'clock.fill' },
-  { id: MEDICATION_FILTERS.RECENTLY_ADDED, label: 'Recently Added', icon: 'plus' },
+  { id: MEDICATION_FILTERS.ACTIVE, label: 'Active', icon: 'check-circle' },
+  { id: MEDICATION_FILTERS.INACTIVE, label: 'Inactive', icon: 'close-circle' },
+  { id: MEDICATION_FILTERS.REQUIRES_REFILL, label: 'Needs Refill', icon: 'bell' },
+  { id: MEDICATION_FILTERS.EXPIRING_SOON, label: 'Expiring Soon', icon: 'clock' },
+  { id: MEDICATION_FILTERS.RECENTLY_ADDED, label: 'Recently Added', icon: 'plus-circle' },
 ];
 
 /**

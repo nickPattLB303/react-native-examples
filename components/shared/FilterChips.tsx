@@ -55,11 +55,16 @@ const ChipsContainer = styled(FlexRow)`
  * Styled chip component with consistent theme integration
  */
 const StyledChip = styled(Chip).attrs(({ theme, selected }) => ({
-  mode: 'outlined',
-  selectedColor: selected ? theme.colors.primary : theme.colors.onSurfaceVariant,
+  mode: selected ? 'flat' : 'outlined',
+  selectedColor: theme.colors.primary,
+  textColor: selected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant,
+  style: {
+    backgroundColor: selected ? theme.colors.primary : 'transparent',
+  },
 }))`
   margin-right: ${({ theme }) => theme.spacing.xs}px;
   margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+  border-radius: 16px;
 `;
 
 /**

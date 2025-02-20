@@ -87,7 +87,7 @@ This document outlines an iterative plan to build a small, simple application th
 - [X] Set up react-query for asynchronous data fetching and caching.
 - [x] Integrate Faker JS to simulate backend data for medications, orders, and account functionalities.
 - [x] Configure Zustand for managing global state.
-- [ ] Implement React Context/useReducer for local state management in complex components.
+- [x] Implement React Context/useReducer for local state management in complex components.
 
 ### 5. Screen Implementation
 - [ ] **Medications Screens:**

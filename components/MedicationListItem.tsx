@@ -58,7 +58,7 @@ export function MedicationListItem({
         }
         left={props => (
           <IconSymbol
-            name="pills.fill"
+            name="pill"
             size={24}
             color={theme.colors.primary}
             {...props}
@@ -66,7 +66,7 @@ export function MedicationListItem({
         )}
         right={props => (
           <IconSymbol
-            name="chevron.right"
+            name="chevron-right"
             size={24}
             color={theme.colors.secondary}
             {...props}
