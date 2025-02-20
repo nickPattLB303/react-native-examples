@@ -5,8 +5,11 @@
 
 import { TextProps } from 'react-native';
 import styled, { css } from 'styled-components/native';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 import { ThemedText } from '@/components/ThemedText';
+
+type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
+type TypographyVariant = 'display' | 'headline' | 'title' | 'body' | 'label' | 'caption';
 
 /**
  * @interface StyledTextProps
@@ -14,60 +17,69 @@ import { ThemedText } from '@/components/ThemedText';
  * @extends TextProps
  */
 export interface StyledTextProps extends TextProps {
-  theme: DefaultTheme;
-  $variant?: 'display' | 'headline' | 'title' | 'body' | 'label' | 'caption';
-  $weight?: 'regular' | 'medium' | 'semibold' | 'bold';
-  $color?: keyof DefaultTheme['colors'];
+  theme: CustomTheme;
+  $variant?: TypographyVariant;
+  $weight?: FontWeight;
+  $color?: keyof CustomTheme['colors'];
 }
 
 /**
  * Typography scale following Material Design principles
  */
-const typographyScale = {
-  display: css`
-    font-size: 36px;
-    line-height: 44px;
-  `,
-  headline: css`
-    font-size: 24px;
-    line-height: 32px;
-  `,
-  title: css`
-    font-size: 20px;
-    line-height: 28px;
-  `,
-  body: css`
-    font-size: 16px;
-    line-height: 24px;
-  `,
-  label: css`
-    font-size: 14px;
-    line-height: 20px;
-  `,
-  caption: css`
-    font-size: 12px;
-    line-height: 16px;
-  `,
+const getTypographyStyle = (theme: CustomTheme, variant: TypographyVariant = 'body') => {
+  switch (variant) {
+    case 'display':
+      return css`
+        font-size: ${theme.typography.sizes.title * 1.5}px;
+        line-height: ${theme.typography.lineHeights.title * 1.5}px;
+      `;
+    case 'headline':
+      return css`
+        font-size: ${theme.typography.sizes.title}px;
+        line-height: ${theme.typography.lineHeights.title}px;
+      `;
+    case 'title':
+      return css`
+        font-size: ${theme.typography.sizes.subtitle}px;
+        line-height: ${theme.typography.lineHeights.title}px;
+      `;
+    case 'label':
+      return css`
+        font-size: ${theme.typography.sizes.small}px;
+        line-height: ${theme.typography.lineHeights.base}px;
+      `;
+    case 'caption':
+      return css`
+        font-size: ${theme.typography.sizes.small * 0.85}px;
+        line-height: ${theme.typography.lineHeights.base * 0.85}px;
+      `;
+    case 'body':
+    default:
+      return css`
+        font-size: ${theme.typography.sizes.base}px;
+        line-height: ${theme.typography.lineHeights.base}px;
+      `;
+  }
 };
 
 /**
  * Font weight scale
  */
-const weightScale = {
+const weightScale: Record<FontWeight, string> = {
   regular: '400',
   medium: '500',
   semibold: '600',
   bold: '700',
-};
+} as const;
 
 /**
  * @component Text
  * @description Base text component with Material Design typography
  */
 export const Text = styled(ThemedText)<StyledTextProps>`
-  ${({ $variant = 'body' }) => typographyScale[$variant]};
-  font-weight: ${({ $weight = 'regular' }) => weightScale[$weight]};
-  color: ${({ theme, $color = 'text' }) => theme.colors[$color]};
+  ${({ theme, $variant }: StyledTextProps) => getTypographyStyle(theme, $variant)};
+  font-weight: ${({ $weight = 'regular' }: StyledTextProps) => weightScale[$weight]};
+  color: ${({ theme, $color = 'text' }: StyledTextProps) => theme.colors[$color]};
 `;
 
 /**
@@ -102,6 +114,6 @@ export const Label = styled(Text).attrs({ $variant: 'label' })``;
 
 /**
  * @component Caption
- * @description Caption text component for auxiliary information
+ * @description Caption text component for supplementary information
  */
 export const Caption = styled(Text).attrs({ $variant: 'caption' })``; 

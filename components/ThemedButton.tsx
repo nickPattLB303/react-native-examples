@@ -6,6 +6,7 @@
 import React from 'react';
 import { ButtonProps } from 'react-native-paper';
 import { PrimaryButton, SecondaryButton, OutlineButton } from './styled/buttons';
+import type { CustomTheme } from '@/theme/types';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline';
 type ButtonSize = 'small' | 'medium' | 'large';
@@ -23,15 +24,24 @@ export interface ThemedButtonProps extends Omit<ButtonProps, 'children'> {
   isLoading?: boolean;
   /** Accessibility label */
   accessibilityLabel?: string;
+  /** Theme object */
+  theme?: CustomTheme;
 }
 
 /**
- * @function ThemedButton
- * @description A themed button component with multiple style variants
+ * A themed button component with multiple style variants
+ * @component
+ * @param {ThemedButtonProps} props - Component props
+ * @returns {JSX.Element} A themed button component
  * 
  * @example
  * ```tsx
- * <ThemedButton variant="primary" onPress={handlePress}>
+ * <ThemedButton 
+ *   variant="primary" 
+ *   onPress={handlePress}
+ *   size="large"
+ *   fullWidth
+ * >
  *   Click Me
  * </ThemedButton>
  * ```
@@ -44,7 +54,7 @@ export function ThemedButton({
   accessibilityLabel,
   disabled,
   ...props
-}: ThemedButtonProps) {
+}: ThemedButtonProps): JSX.Element {
   const commonProps = {
     fullWidth,
     size,
@@ -55,6 +65,7 @@ export function ThemedButton({
       disabled: isLoading || disabled,
       busy: isLoading,
     },
+    accessibilityRole: 'button',
     ...props,
   };
 

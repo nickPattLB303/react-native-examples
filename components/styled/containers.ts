@@ -5,7 +5,7 @@
 
 import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 import { ThemedView } from '@/components/ThemedView';
 
 /**
@@ -15,13 +15,17 @@ import { ThemedView } from '@/components/ThemedView';
  */
 export interface StyledContainerProps extends ViewProps {
   /** The theme object provided by styled-components */
-  theme: DefaultTheme;
+  theme: CustomTheme;
   /** Whether the container should take full width */
   $fullWidth?: boolean;
   /** Custom padding override */
   $padding?: number;
   /** Custom gap override */
   $gap?: number;
+  /** Optional accessibility role */
+  accessibilityRole?: ViewProps['accessibilityRole'];
+  /** Optional accessibility label */
+  accessibilityLabel?: string;
 }
 
 /**
@@ -40,6 +44,7 @@ export const ScreenContainer = styled(ThemedView)<StyledContainerProps>`
   padding: ${({ theme, $padding }: StyledContainerProps) => $padding ?? theme.spacing.md}px;
   gap: ${({ theme, $gap }: StyledContainerProps) => $gap ?? theme.spacing.md}px;
   width: ${({ $fullWidth }: StyledContainerProps) => $fullWidth ? '100%' : 'auto'};
+  background-color: ${({ theme }: StyledContainerProps) => theme.colors.background};
 `;
 
 /**

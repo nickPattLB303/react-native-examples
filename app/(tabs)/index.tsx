@@ -3,9 +3,10 @@
  * @description Home screen component with welcome message and getting started steps
  */
 
+import React from 'react';
 import { Image, Platform } from 'react-native';
 import styled from 'styled-components/native';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -17,7 +18,7 @@ import { ThemedView } from '@/components/ThemedView';
  * @description Base props for styled components with theme support
  */
 interface StyledProps {
-  theme: DefaultTheme;
+  theme: CustomTheme;
 }
 
 /**
@@ -52,44 +53,53 @@ const ReactLogo = styled(Image)`
 `;
 
 /**
- * @function HomeScreen
- * @description Main home screen component with welcome message and getting started steps
- * @returns {React.ReactElement} The home screen component
+ * Main home screen component with welcome message and getting started steps
+ * @component
+ * @returns {JSX.Element} The home screen component
  */
-export default function HomeScreen(): React.ReactElement {
+export default function HomeScreen(): JSX.Element {
+  const devToolsKey = Platform.select({
+    ios: 'cmd + d',
+    android: 'cmd + m',
+    web: 'F12'
+  });
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-        <ReactLogo source={require('@/assets/images/partial-react-logo.png')} />
+        <ReactLogo 
+          source={require('@/assets/images/partial-react-logo.png')}
+          accessibilityLabel="React Native logo"
+          accessibilityRole="image"
+        />
       }>
-      <TitleContainer>
+      <TitleContainer accessibilityRole="header">
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </TitleContainer>
+
       <StepContainer>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        <ThemedText type="subtitle" accessibilityRole="header">Step 1: Try it</ThemedText>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
           <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
+            {devToolsKey}
           </ThemedText>{' '}
           to open developer tools.
         </ThemedText>
       </StepContainer>
+
       <StepContainer>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText type="subtitle" accessibilityRole="header">Step 2: Explore</ThemedText>
         <ThemedText>
           Tap the Explore tab to learn more about what's included in this starter app.
         </ThemedText>
       </StepContainer>
+
       <StepContainer>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
+        <ThemedText type="subtitle" accessibilityRole="header">Step 3: Get a fresh start</ThemedText>
         <ThemedText>
           When you're ready, run{' '}
           <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}

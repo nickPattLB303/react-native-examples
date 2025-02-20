@@ -10,34 +10,42 @@ import Animated, {
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 
 /** Height of the parallax header in pixels */
 const HEADER_HEIGHT = 250;
 
+/**
+ * @interface StyledProps
+ * @description Base props for styled components with theme support
+ */
+interface StyledProps {
+  theme: CustomTheme;
+}
+
 /** Styled container component */
-const Container = styled(ThemedView)`
+const Container = styled(ThemedView)<StyledProps>`
   flex: 1;
 `;
 
 /** Props for the styled header component */
 interface HeaderProps {
   backgroundColor: string;
-  theme: DefaultTheme;
+  theme: CustomTheme;
 }
 
 /** Styled header component with animation support */
 const Header = styled(Animated.View)<HeaderProps>`
   height: ${HEADER_HEIGHT}px;
   overflow: hidden;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor }: HeaderProps) => backgroundColor};
 `;
 
 /** Styled content container */
-const Content = styled(ThemedView)`
+const Content = styled(ThemedView)<StyledProps>`
   flex: 1;
-  padding: ${({ theme }) => theme.spacing.xl}px;
-  gap: ${({ theme }) => theme.spacing.md}px;
+  padding: ${({ theme }: StyledProps) => theme.spacing.xl}px;
+  gap: ${({ theme }: StyledProps) => theme.spacing.md}px;
   overflow: hidden;
 `;
 

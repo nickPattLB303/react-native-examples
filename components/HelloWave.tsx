@@ -7,21 +7,33 @@ import Animated, {
   withRepeat,
   withSequence,
 } from 'react-native-reanimated';
-
+import type { CustomTheme } from '@/theme/types';
 import { ThemedText } from '@/components/ThemedText';
 
-const WaveText = styled(ThemedText)`
-  font-size: ${({ theme }) => theme.typography.sizes.title - 4}px;
-  line-height: ${({ theme }) => theme.typography.lineHeights.title}px;
+interface WaveTextProps {
+  theme: CustomTheme;
+}
+
+const WaveText = styled(ThemedText)<WaveTextProps>`
+  font-size: ${({ theme }: WaveTextProps) => theme.typography.sizes.title - 4}px;
+  line-height: ${({ theme }: WaveTextProps) => theme.typography.lineHeights.title}px;
   margin-top: -6px;
 `;
 
-export function HelloWave() {
+/**
+ * A component that displays an animated waving hand emoji
+ * @component
+ * @returns {JSX.Element} An animated waving emoji
+ */
+export function HelloWave(): JSX.Element {
   const rotationAnimation = useSharedValue(0);
 
   useEffect(() => {
     rotationAnimation.value = withRepeat(
-      withSequence(withTiming(25, { duration: 150 }), withTiming(0, { duration: 150 })),
+      withSequence(
+        withTiming(25, { duration: 150 }), 
+        withTiming(0, { duration: 150 })
+      ),
       4 // Run the animation 4 times
     );
   }, [rotationAnimation]);
@@ -31,7 +43,11 @@ export function HelloWave() {
   }));
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View 
+      style={animatedStyle}
+      accessibilityLabel="Waving hand emoji"
+      accessibilityRole="image"
+    >
       <WaveText>👋</WaveText>
     </Animated.View>
   );

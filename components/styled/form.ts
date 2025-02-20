@@ -5,11 +5,18 @@
 
 import styled from 'styled-components/native';
 import { TextInput, Switch } from 'react-native-paper';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 
+/**
+ * Base props for styled form components
+ * @interface StyledFormProps
+ */
 interface StyledFormProps {
-  theme: DefaultTheme;
+  /** Theme object for styling */
+  theme: CustomTheme;
+  /** Whether the component has an error */
   error?: boolean;
+  /** Whether the component should take full width */
   fullWidth?: boolean;
 }
 
@@ -17,17 +24,17 @@ interface StyledFormProps {
  * @component FormContainer
  * @description Container for form elements with consistent spacing
  */
-export const FormContainer = styled.View`
-  gap: ${({ theme }) => theme.spacing.md}px;
-  padding: ${({ theme }) => theme.spacing.md}px;
+export const FormContainer = styled.View<StyledFormProps>`
+  gap: ${({ theme }: StyledFormProps) => theme.spacing.md}px;
+  padding: ${({ theme }: StyledFormProps) => theme.spacing.md}px;
 `;
 
 /**
  * @component FormGroup
  * @description Group of related form elements
  */
-export const FormGroup = styled.View`
-  gap: ${({ theme }) => theme.spacing.xs}px;
+export const FormGroup = styled.View<StyledFormProps>`
+  gap: ${({ theme }: StyledFormProps) => theme.spacing.xs}px;
 `;
 
 /**
@@ -35,62 +42,62 @@ export const FormGroup = styled.View`
  * @description Label for form inputs
  */
 export const FormLabel = styled.Text<StyledFormProps>`
-  font-size: ${({ theme }) => theme.typography.sizes.small}px;
-  color: ${({ theme, error }) => error ? theme.colors.error : theme.colors.text};
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+  font-size: ${({ theme }: StyledFormProps) => theme.typography.sizes.small}px;
+  color: ${({ theme, error }: StyledFormProps) => error ? theme.colors.error : theme.colors.text};
+  margin-bottom: ${({ theme }: StyledFormProps) => theme.spacing.xs}px;
 `;
 
 /**
  * @component FormInput
  * @description Styled text input for forms
  */
-export const FormInput = styled(TextInput).attrs(({ theme }) => ({
+export const FormInput = styled(TextInput).attrs(({ theme }: StyledFormProps) => ({
   mode: 'outlined',
   outlineColor: theme.colors.outline,
   activeOutlineColor: theme.colors.primary,
 }))<StyledFormProps>`
-  background-color: ${({ theme }) => theme.colors.background};
-  width: ${({ fullWidth }) => fullWidth ? '100%' : 'auto'};
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+  background-color: ${({ theme }: StyledFormProps) => theme.colors.background};
+  width: ${({ fullWidth }: StyledFormProps) => fullWidth ? '100%' : 'auto'};
+  margin-bottom: ${({ theme }: StyledFormProps) => theme.spacing.xs}px;
 `;
 
 /**
  * @component FormError
  * @description Error message for form inputs
  */
-export const FormError = styled.Text`
-  font-size: ${({ theme }) => theme.typography.sizes.small}px;
-  color: ${({ theme }) => theme.colors.error};
-  margin-top: ${({ theme }) => theme.spacing.xs}px;
+export const FormError = styled.Text<StyledFormProps>`
+  font-size: ${({ theme }: StyledFormProps) => theme.typography.sizes.small}px;
+  color: ${({ theme }: StyledFormProps) => theme.colors.error};
+  margin-top: ${({ theme }: StyledFormProps) => theme.spacing.xs}px;
 `;
 
 /**
  * @component FormSwitch
  * @description Styled switch for forms
  */
-export const FormSwitch = styled(Switch).attrs(({ theme }) => ({
+export const FormSwitch = styled(Switch).attrs(({ theme }: StyledFormProps) => ({
   color: theme.colors.primary,
-}))`
-  margin-vertical: ${({ theme }) => theme.spacing.xs}px;
+}))<StyledFormProps>`
+  margin-vertical: ${({ theme }: StyledFormProps) => theme.spacing.xs}px;
 `;
 
 /**
  * @component FormRow
  * @description Horizontal row for form elements
  */
-export const FormRow = styled.View`
+export const FormRow = styled.View<StyledFormProps>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing.sm}px;
+  gap: ${({ theme }: StyledFormProps) => theme.spacing.sm}px;
 `;
 
 /**
  * @component FormDivider
  * @description Visual separator for form sections
  */
-export const FormDivider = styled.View`
+export const FormDivider = styled.View<StyledFormProps>`
   height: 1px;
-  background-color: ${({ theme }) => theme.colors.outline};
-  margin-vertical: ${({ theme }) => theme.spacing.md}px;
+  background-color: ${({ theme }: StyledFormProps) => theme.colors.outline};
+  margin-vertical: ${({ theme }: StyledFormProps) => theme.spacing.md}px;
 `; 

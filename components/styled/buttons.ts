@@ -5,12 +5,21 @@
 
 import styled from 'styled-components/native';
 import { Button } from 'react-native-paper';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 
+type ButtonSize = 'small' | 'medium' | 'large';
+
+/**
+ * @interface StyledButtonProps
+ * @description Props for styled button components
+ */
 interface StyledButtonProps {
-  theme: DefaultTheme;
+  /** Theme object for styling */
+  theme: CustomTheme;
+  /** Whether the button should take full width */
   fullWidth?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  /** Size variant of the button */
+  size?: ButtonSize;
 }
 
 /**
@@ -18,12 +27,12 @@ interface StyledButtonProps {
  * @description Base styled button with theme integration
  */
 export const BaseButton = styled(Button)<StyledButtonProps>`
-  border-radius: ${({ theme }) => theme.borderRadius.md}px;
-  padding: ${({ theme, size = 'medium' }) => 
+  border-radius: ${({ theme }: StyledButtonProps) => theme.borderRadius.md}px;
+  padding: ${({ theme, size = 'medium' }: StyledButtonProps) => 
     size === 'small' ? theme.spacing.xs : 
     size === 'large' ? theme.spacing.md : 
     theme.spacing.sm}px;
-  width: ${({ fullWidth }) => fullWidth ? '100%' : 'auto'};
+  width: ${({ fullWidth }: StyledButtonProps) => fullWidth ? '100%' : 'auto'};
 `;
 
 /**
@@ -31,7 +40,7 @@ export const BaseButton = styled(Button)<StyledButtonProps>`
  * @description Primary action button with brand colors
  */
 export const PrimaryButton = styled(BaseButton)`
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }: StyledButtonProps) => theme.colors.primary};
 `;
 
 /**
@@ -39,7 +48,7 @@ export const PrimaryButton = styled(BaseButton)`
  * @description Secondary action button with muted styling
  */
 export const SecondaryButton = styled(BaseButton)`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }: StyledButtonProps) => theme.colors.secondary};
 `;
 
 /**
@@ -49,5 +58,5 @@ export const SecondaryButton = styled(BaseButton)`
 export const OutlineButton = styled(BaseButton)`
   background-color: transparent;
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.primary};
+  border-color: ${({ theme }: StyledButtonProps) => theme.colors.primary};
 `; 

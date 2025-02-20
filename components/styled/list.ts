@@ -5,7 +5,7 @@
 
 import styled from 'styled-components/native';
 import { List } from 'react-native-paper';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 import type { ViewStyle } from 'react-native';
 
 /**
@@ -14,7 +14,7 @@ import type { ViewStyle } from 'react-native';
  */
 interface StyledListProps {
   /** Theme object for styling */
-  theme: DefaultTheme;
+  theme: CustomTheme;
   /** Whether to use compact styling */
   compact?: boolean;
 }
@@ -30,11 +30,6 @@ interface ListItemProps extends StyledListProps {
 }
 
 /**
- * Type-safe theme accessor function
- */
-const getThemeValue = <T extends keyof DefaultTheme>(theme: DefaultTheme, path: T): DefaultTheme[T] => theme[path];
-
-/**
  * Base styled list item with theme integration
  * @component
  * 
@@ -48,11 +43,11 @@ const getThemeValue = <T extends keyof DefaultTheme>(theme: DefaultTheme, path: 
  * ```
  */
 export const BaseListItem = styled(List.Item)<ListItemProps>`
-  padding: ${({ theme, compact }: StyledListProps) => 
-    compact ? getThemeValue(theme, 'spacing').xs : getThemeValue(theme, 'spacing').sm}px;
-  border-radius: ${({ theme }: StyledListProps) => getThemeValue(theme, 'borderRadius').sm}px;
-  background-color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').background};
-  margin-bottom: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').xs}px;
+  padding: ${({ theme, compact }: ListItemProps) => 
+    compact ? theme.spacing.xs : theme.spacing.sm}px;
+  border-radius: ${({ theme }: ListItemProps) => theme.borderRadius.sm}px;
+  background-color: ${({ theme }: ListItemProps) => theme.colors.background};
+  margin-bottom: ${({ theme }: ListItemProps) => theme.spacing.xs}px;
 `;
 
 /**
@@ -68,8 +63,8 @@ export const BaseListItem = styled(List.Item)<ListItemProps>`
  * ```
  */
 export const ListContainer = styled.View<StyledListProps>`
-  padding: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').sm}px;
-  gap: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').sm}px;
+  padding: ${({ theme }: StyledListProps) => theme.spacing.sm}px;
+  gap: ${({ theme }: StyledListProps) => theme.spacing.sm}px;
 `;
 
 /**
@@ -85,8 +80,8 @@ export const ListContainer = styled.View<StyledListProps>`
  */
 export const ListSeparator = styled.View<StyledListProps>`
   height: 1px;
-  background-color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').outline};
-  margin: ${({ theme }: StyledListProps) => getThemeValue(theme, 'spacing').xs}px 0;
+  background-color: ${({ theme }: StyledListProps) => theme.colors.outline};
+  margin: ${({ theme }: StyledListProps) => theme.spacing.xs}px 0;
 `;
 
 /**
@@ -99,8 +94,8 @@ export const ListSeparator = styled.View<StyledListProps>`
  * ```
  */
 export const ListItemTitle = styled.Text<StyledListProps>`
-  font-size: ${({ theme }: StyledListProps) => getThemeValue(theme, 'typography').sizes.base}px;
-  color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').text};
+  font-size: ${({ theme }: StyledListProps) => theme.typography.sizes.base}px;
+  color: ${({ theme }: StyledListProps) => theme.colors.text};
 `;
 
 /**
@@ -113,6 +108,6 @@ export const ListItemTitle = styled.Text<StyledListProps>`
  * ```
  */
 export const ListItemDescription = styled.Text<StyledListProps>`
-  font-size: ${({ theme }: StyledListProps) => getThemeValue(theme, 'typography').sizes.small}px;
-  color: ${({ theme }: StyledListProps) => getThemeValue(theme, 'colors').secondary};
+  font-size: ${({ theme }: StyledListProps) => theme.typography.sizes.small}px;
+  color: ${({ theme }: StyledListProps) => theme.colors.secondary};
 `; 

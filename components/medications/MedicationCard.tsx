@@ -10,6 +10,7 @@ import { useTheme } from 'react-native-paper';
 import { IconSymbol } from '../ui/IconSymbol';
 import { ThemedText } from '../ThemedText';
 import { Card, FlexRow } from '../styled/containers';
+import type { CustomTheme } from '@/theme/types';
 
 /**
  * Props for the MedicationCard component
@@ -45,25 +46,26 @@ export interface MedicationCardProps {
  */
 const Header = styled(FlexRow)`
   justify-content: space-between;
-  margin-bottom: ${({ theme }) => theme.spacing.md}px;
+  margin-bottom: ${({ theme }: { theme: CustomTheme }) => theme.spacing.md}px;
 `;
 
 /**
  * Styled status badge
  */
 const StatusBadge = styled.View<{ isActive: boolean }>`
-  background-color: ${({ theme, isActive }) => 
+  background-color: ${({ theme, isActive }: { theme: CustomTheme; isActive: boolean }) => 
     isActive ? theme.colors.primary : theme.colors.error}20;
-  padding: ${({ theme }) => `${theme.spacing.xs}px ${theme.spacing.sm}px`};
-  border-radius: ${({ theme }) => theme.borderRadius.sm}px;
+  padding: ${({ theme }: { theme: CustomTheme }) => 
+    `${theme.spacing.xs}px ${theme.spacing.sm}px`};
+  border-radius: ${({ theme }: { theme: CustomTheme }) => theme.borderRadius.sm}px;
 `;
 
 /**
  * Styled info section
  */
 const InfoSection = styled.View`
-  gap: ${({ theme }) => theme.spacing.sm}px;
-  margin-bottom: ${({ theme }) => theme.spacing.lg}px;
+  gap: ${({ theme }: { theme: CustomTheme }) => theme.spacing.sm}px;
+  margin-bottom: ${({ theme }: { theme: CustomTheme }) => theme.spacing.lg}px;
 `;
 
 /**
@@ -71,8 +73,8 @@ const InfoSection = styled.View`
  */
 const Actions = styled(FlexRow)`
   justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing.md}px;
-  margin-top: ${({ theme }) => theme.spacing.md}px;
+  gap: ${({ theme }: { theme: CustomTheme }) => theme.spacing.md}px;
+  margin-top: ${({ theme }: { theme: CustomTheme }) => theme.spacing.md}px;
 `;
 
 /**
@@ -158,7 +160,7 @@ export const MedicationCard = memo(function MedicationCard({
       <InfoSection>
         <FlexRow>
           <IconSymbol
-            name="pills.fill"
+            name="gear.fill"
             size={24}
             color={theme.colors.primary}
           />
@@ -167,7 +169,7 @@ export const MedicationCard = memo(function MedicationCard({
 
         <FlexRow>
           <IconSymbol
-            name="clock.fill"
+            name="gear.fill"
             size={24}
             color={theme.colors.primary}
           />
@@ -177,7 +179,7 @@ export const MedicationCard = memo(function MedicationCard({
         {nextRefillDate && (
           <FlexRow>
             <IconSymbol
-              name="calendar"
+              name="gear.fill"
               size={24}
               color={theme.colors.primary}
             />
@@ -188,7 +190,7 @@ export const MedicationCard = memo(function MedicationCard({
         {typeof daysSupplyRemaining === 'number' && (
           <FlexRow>
             <IconSymbol
-              name={needsRefill ? 'bell.fill' : 'checkmark.circle.fill'}
+              name={needsRefill ? 'bell.fill' : 'checkmark'}
               size={24}
               color={needsRefill ? theme.colors.error : theme.colors.primary}
             />
@@ -207,7 +209,7 @@ export const MedicationCard = memo(function MedicationCard({
             type="link"
             color={theme.colors.error}
             onPress={handleDelete}
-            accessibilityRole="button"
+            accessibilityRole="link"
             accessibilityHint="Double tap to delete medication"
           >
             Delete
@@ -217,7 +219,7 @@ export const MedicationCard = memo(function MedicationCard({
           <ThemedText
             type="link"
             onPress={handleRefill}
-            accessibilityRole="button"
+            accessibilityRole="link"
             accessibilityHint="Double tap to request refill"
           >
             Request Refill

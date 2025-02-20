@@ -3,15 +3,20 @@
  * @description 404 Not Found screen component
  */
 
+import React from 'react';
 import { Link, Stack } from 'expo-router';
 import styled from 'styled-components/native';
-import type { DefaultTheme } from 'styled-components/native';
+import type { CustomTheme } from '@/theme/types';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+/**
+ * @interface StyledProps
+ * @description Props for styled components with theme support
+ */
 interface StyledProps {
-  theme: DefaultTheme;
+  theme: CustomTheme;
 }
 
 /**
@@ -35,17 +40,31 @@ const StyledLink = styled(Link)<StyledProps>`
 `;
 
 /**
- * @function NotFoundScreen
- * @description Screen component displayed when a route is not found
- * @returns {React.ReactElement} The not found screen component
+ * 404 Not Found screen component
+ * @component
+ * @returns {JSX.Element} The not found screen component
  */
-export default function NotFoundScreen(): React.ReactElement {
+export default function NotFoundScreen(): JSX.Element {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      <Stack.Screen 
+        options={{ 
+          title: 'Oops!',
+          headerShown: true,
+        }} 
+      />
       <Container>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <StyledLink href="/">
+        <ThemedText 
+          type="title"
+          accessibilityRole="header"
+        >
+          This screen doesn't exist.
+        </ThemedText>
+        <StyledLink 
+          href="/"
+          accessibilityRole="link"
+          accessibilityLabel="Go to home screen"
+        >
           <ThemedText type="link">Go to home screen!</ThemedText>
         </StyledLink>
       </Container>
