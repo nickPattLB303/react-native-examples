@@ -74,8 +74,8 @@ export default function HomeScreen(): JSX.Element {
           accessibilityRole="image"
         />
       }>
-      <TitleContainer accessibilityRole="header">
-        <ThemedText type="title">Welcome!</ThemedText>
+      <TitleContainer>
+        <ThemedText type="title" accessibilityRole="header">Welcome!</ThemedText>
         <HelloWave />
       </TitleContainer>
 

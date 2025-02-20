@@ -36,7 +36,8 @@ const Container = styled(ThemedView)<StyledProps>`
  */
 const StyledLink = styled(Link)<StyledProps>`
   margin-top: ${({ theme }: StyledProps) => theme.spacing.md}px;
-  padding-vertical: ${({ theme }: StyledProps) => theme.spacing.md}px;
+  padding-top: ${({ theme }: StyledProps) => theme.spacing.md}px;
+  padding-bottom: ${({ theme }: StyledProps) => theme.spacing.md}px;
 `;
 
 /**
