@@ -247,6 +247,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added sample useMedications hook with Faker.js integration
   - Configured default query options for optimal performance
   - Added proper TypeScript types and documentation
+- Completed Faker.js integration for data simulation:
+  - Added useOrders hook with realistic order data generation
+  - Added useAccount hook with comprehensive account data simulation
+  - Implemented detailed TypeScript interfaces for all data types
+  - Added proper JSDoc documentation with examples
+  - Created realistic data generators for:
+    - Orders with items, status, and tracking
+    - Account profiles with addresses and payment methods
 
 ### Changed
 - Updated tab navigation layout to use new icon set for tab bar icons

@@ -84,8 +84,8 @@ This document outlines an iterative plan to build a small, simple application th
 - [ ] Wrap the app in SafeAreaProvider and use SafeAreaView where needed.
 
 ### 4. Data, State Management & API Integration
-- [ ] Set up react-query for asynchronous data fetching and caching.
-- [ ] Integrate Faker JS to simulate backend data for medications, orders, and account functionalities.
+- [X] Set up react-query for asynchronous data fetching and caching.
+- [x] Integrate Faker JS to simulate backend data for medications, orders, and account functionalities.
 - [ ] Configure Zustand for managing global state.
 - [ ] Implement React Context/useReducer for local state management in complex components.
 
