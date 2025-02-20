@@ -13,12 +13,12 @@ import { faker } from '@faker-js/faker';
 export interface Order {
   id: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  items: Array<{
+  items: {
     id: string;
     name: string;
     quantity: number;
     price: number;
-  }>;
+  }[];
   total: number;
   trackingNumber?: string;
   estimatedDelivery?: Date;

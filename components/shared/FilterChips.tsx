@@ -7,6 +7,8 @@ import React, { memo } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Chip } from 'react-native-paper';
 import styled from 'styled-components/native';
+import type { MaterialCommunityIcons } from '@expo/vector-icons';
+import { CustomTheme } from '@/theme/types';
 import { FlexRow } from '../styled/containers';
 
 /**
@@ -18,8 +20,8 @@ export interface FilterOption {
   id: string;
   /** Label to display on the chip */
   label: string;
-  /** Optional icon name for the chip */
-  icon?: string;
+  /** Optional Material Community icon name */
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
 }
 
 /**
@@ -44,9 +46,18 @@ export interface FilterChipsProps {
 }
 
 /**
+ * Props for the styled chip component
+ * @interface StyledChipProps
+ */
+interface StyledChipProps {
+  theme: CustomTheme;
+  selected?: boolean;
+}
+
+/**
  * Styled container for the filter chips
  */
-const ChipsContainer = styled(FlexRow)`
+const ChipsContainer = styled(FlexRow)<{ theme: CustomTheme }>`
   flex-wrap: wrap;
   padding-vertical: ${({ theme }) => theme.spacing.xs}px;
 `;
@@ -54,7 +65,7 @@ const ChipsContainer = styled(FlexRow)`
 /**
  * Styled chip component with consistent theme integration
  */
-const StyledChip = styled(Chip).attrs(({ theme, selected }) => ({
+const StyledChip = styled(Chip).attrs<StyledChipProps>(({ theme, selected }) => ({
   mode: selected ? 'flat' : 'outlined',
   selectedColor: theme.colors.primary,
   textColor: selected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant,
@@ -79,9 +90,9 @@ const StyledChip = styled(Chip).attrs(({ theme, selected }) => ({
  * @example
  * ```tsx
  * const filterOptions = [
- *   { id: 'active', label: 'Active' },
- *   { id: 'completed', label: 'Completed' },
- *   { id: 'archived', label: 'Archived' },
+ *   { id: 'active', label: 'Active', icon: 'check-circle' },
+ *   { id: 'completed', label: 'Completed', icon: 'check-all' },
+ *   { id: 'archived', label: 'Archived', icon: 'archive' },
  * ];
  * 
  * function FilterableList() {

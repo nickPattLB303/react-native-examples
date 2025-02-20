@@ -109,7 +109,7 @@ function FormActions({ onSubmit, isEdit }: Pick<MedicationFormProps, 'onSubmit' 
         await onSubmit(state.data);
         dispatch({ type: 'RESET_FORM' });
       } catch (error) {
-        // Handle error
+        dispatch({ type: 'SET_ERROR', error: error instanceof Error ? error : new Error('Failed to submit form') });
       } finally {
         dispatch({ type: 'SET_SUBMITTING', isSubmitting: false });
       }

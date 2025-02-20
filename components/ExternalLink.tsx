@@ -1,4 +1,4 @@
-import React, { type ComponentProps, useState, memo, useCallback } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { Link, type LinkProps } from 'expo-router';
 import { openBrowserAsync } from 'expo-web-browser';
 import { Platform, ActivityIndicator, type ViewStyle } from 'react-native';
@@ -164,7 +164,7 @@ export const ExternalLink = memo(function ExternalLink({
 
     // Call the original onPress handler if provided
     rest.onPress?.(event);
-  }, [href, showLoadingState, onError, rest.onPress]);
+  }, [href, showLoadingState, onError, rest]);
 
   return (
     <ThemedView style={containerStyle}>

@@ -4,14 +4,11 @@
  */
 
 import React from 'react';
-import { ButtonProps, useTheme } from 'react-native-paper';
+import { ButtonProps } from 'react-native-paper';
 import { PrimaryButton, SecondaryButton, OutlineButton } from './styled/buttons';
 
-const BUTTON_VARIANTS = ['primary', 'secondary', 'outline'] as const;
-const BUTTON_SIZES = ['small', 'medium', 'large'] as const;
-
-type ButtonVariant = typeof BUTTON_VARIANTS[number];
-type ButtonSize = typeof BUTTON_SIZES[number];
+type ButtonVariant = 'primary' | 'secondary' | 'outline';
+type ButtonSize = 'small' | 'medium' | 'large';
 
 export interface ThemedButtonProps extends Omit<ButtonProps, 'children'> {
   /** Button variant type */
@@ -48,8 +45,6 @@ export function ThemedButton({
   disabled,
   ...props
 }: ThemedButtonProps) {
-  const theme = useTheme();
-
   const commonProps = {
     fullWidth,
     size,

@@ -4,8 +4,8 @@
  */
 
 import React, { memo, useCallback } from 'react';
-import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { useTheme, MD3Colors } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { IconSymbol } from './ui/IconSymbol';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
