@@ -184,6 +184,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added error reset functionality
   - Added comprehensive JSDoc documentation with examples
   - Added proper error logging and callbacks
+- Created new MedicationCard component:
+  - Built on styled-components and react-native-paper
+  - Added comprehensive medication details display
+  - Implemented status indicators and badges
+  - Added support for refill and delete actions
+  - Enhanced accessibility with proper roles and hints
+  - Added proper error handling and callbacks
+  - Added comprehensive JSDoc documentation with examples
+  - Added proper theme integration
+- Created new OrderCard component:
+  - Built on styled-components and react-native-paper
+  - Added comprehensive order details display
+  - Implemented status-based styling and badges
+  - Added support for cancel and track actions
+  - Enhanced accessibility with proper roles and hints
+  - Added proper error handling and callbacks
+  - Added comprehensive JSDoc documentation with examples
+  - Added proper theme integration
 
 ### Changed
 - Updated tab navigation layout to use new icon set for tab bar icons
