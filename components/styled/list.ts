@@ -32,7 +32,7 @@ interface ListItemProps extends StyledListProps {
 /**
  * Type-safe theme accessor function
  */
-const getThemeValue = <T extends keyof DefaultTheme>(theme: DefaultTheme, path: T) => theme[path];
+const getThemeValue = <T extends keyof DefaultTheme>(theme: DefaultTheme, path: T): DefaultTheme[T] => theme[path];
 
 /**
  * Base styled list item with theme integration
