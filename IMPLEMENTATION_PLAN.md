@@ -79,7 +79,7 @@ This document outlines an iterative plan to build a small, simple application th
 ### 3. UI & Styling
 - [x] Configure react-native-paper and integrate its theme.
 - [x] Create a custom theme using styled-components (supporting dark mode).
-- [ ] Develop reusable UI components that follow Material Design principles.
+- [x] Develop reusable UI components that follow Material Design principles.
 - [ ] Implement responsive layouts using Flexbox and Expo's useWindowDimensions.
 - [ ] Wrap the app in SafeAreaProvider and use SafeAreaView where needed.
 
