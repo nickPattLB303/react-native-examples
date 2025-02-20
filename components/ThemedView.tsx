@@ -1,6 +1,6 @@
 import { View, type ViewProps } from 'react-native';
-
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useTheme } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Props for the ThemedView component
@@ -8,27 +8,34 @@ import { useThemeColor } from '@/hooks/useThemeColor';
  * @extends {ViewProps}
  */
 export interface ThemedViewProps extends ViewProps {
-  /** Optional color to use in light theme */
-  lightColor?: string;
-  /** Optional color to use in dark theme */
-  darkColor?: string;
+  /** Optional background color override */
+  backgroundColor?: string;
+  /** Whether to apply safe area insets */
+  useSafeArea?: boolean;
+  /** Specific safe area edges to apply */
+  safeAreaEdges?: ('top' | 'bottom' | 'left' | 'right')[];
+  /** Whether the view is pressable/interactive */
+  isInteractive?: boolean;
+  /** Accessibility role for the view */
+  accessibilityRole?: 'none' | 'button' | 'header' | 'tablist' | 'tab';
+  /** Accessibility label */
+  accessibilityLabel?: string;
 }
 
 /**
  * A themed view component that adapts its background color based on the current theme
+ * and handles safe area insets appropriately
  * 
  * @component
  * @param {ThemedViewProps} props - The component props
- * @param {ViewStyle} [props.style] - Optional style overrides
- * @param {string} [props.lightColor] - Color to use in light theme
- * @param {string} [props.darkColor] - Color to use in dark theme
  * @returns {JSX.Element} A themed view component
  * 
  * @example
  * ```tsx
  * <ThemedView
- *   lightColor="#ffffff"
- *   darkColor="#000000"
+ *   backgroundColor="#ffffff"
+ *   useSafeArea
+ *   safeAreaEdges={['top']}
  *   style={{ padding: 16 }}
  * >
  *   {children}
@@ -37,14 +44,37 @@ export interface ThemedViewProps extends ViewProps {
  */
 export function ThemedView({ 
   style, 
-  lightColor, 
-  darkColor, 
+  backgroundColor,
+  useSafeArea = false,
+  safeAreaEdges = ['top', 'bottom', 'left', 'right'],
+  isInteractive = false,
+  accessibilityRole = 'none',
+  accessibilityLabel,
   ...otherProps 
 }: ThemedViewProps): JSX.Element {
-  const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor }, 
-    'background'
-  );
+  const theme = useTheme();
+  const insets = useSafeAreaInsets();
 
-  return <View style={[{ backgroundColor }, style]} {...otherProps} />;
+  const bgColor = backgroundColor || theme.colors.background;
+  
+  const safeAreaStyle = useSafeArea ? {
+    paddingTop: safeAreaEdges.includes('top') ? insets.top : 0,
+    paddingBottom: safeAreaEdges.includes('bottom') ? insets.bottom : 0,
+    paddingLeft: safeAreaEdges.includes('left') ? insets.left : 0,
+    paddingRight: safeAreaEdges.includes('right') ? insets.right : 0,
+  } : {};
+
+  return (
+    <View 
+      style={[
+        { backgroundColor: bgColor },
+        safeAreaStyle,
+        style
+      ]} 
+      accessible={isInteractive}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={accessibilityLabel}
+      {...otherProps} 
+    />
+  );
 }

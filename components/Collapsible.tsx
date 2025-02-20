@@ -1,31 +1,25 @@
-import { PropsWithChildren, useState } from 'react';
-import styled from 'styled-components/native';
+import { PropsWithChildren } from 'react';
 import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Animated, { 
+  useAnimatedStyle, 
+  withTiming, 
+  useSharedValue,
+  withSpring,
+  interpolate
+} from 'react-native-reanimated';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import type { DefaultTheme } from 'styled-components/native';
 
-/** Props for styled components with theme */
-interface StyledProps {
-  theme: DefaultTheme;
-}
+const AnimatedIcon = Animated.createAnimatedComponent(IconSymbol);
+const AnimatedView = Animated.createAnimatedComponent(ThemedView);
 
-/** Styled header component for the collapsible section */
-const CollapsibleHeader = styled(TouchableOpacity)<StyledProps>`
-  flex-direction: row;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.xs}px;
-`;
-
-/** Styled content container for the collapsible section */
-const CollapsibleContent = styled(ThemedView)<StyledProps>`
-  margin-top: ${({ theme }) => theme.spacing.xs}px;
-  margin-left: ${({ theme }) => theme.spacing.lg}px;
-`;
+const SPACING = {
+  xs: 8,
+  lg: 24,
+} as const;
 
 /**
  * Props for the Collapsible component
@@ -39,10 +33,14 @@ interface CollapsibleProps extends PropsWithChildren {
   style?: StyleProp<ViewStyle>;
   /** Initial state of the collapsible section */
   defaultOpen?: boolean;
+  /** Optional callback when collapse state changes */
+  onStateChange?: (isOpen: boolean) => void;
+  /** Optional custom animation duration in milliseconds */
+  animationDuration?: number;
 }
 
 /**
- * A collapsible section component with an animated chevron icon
+ * A collapsible section component with smooth animations and accessibility support
  * 
  * @component
  * @param {CollapsibleProps} props - The component props
@@ -50,7 +48,11 @@ interface CollapsibleProps extends PropsWithChildren {
  * 
  * @example
  * ```tsx
- * <Collapsible title="Section Title" defaultOpen={true}>
+ * <Collapsible 
+ *   title="Section Title" 
+ *   defaultOpen={true}
+ *   onStateChange={(isOpen) => console.log('Collapsible state:', isOpen)}
+ * >
  *   <Text>Collapsible content goes here</Text>
  * </Collapsible>
  * ```
@@ -60,26 +62,70 @@ export function Collapsible({
   title,
   style,
   defaultOpen = false,
+  onStateChange,
+  animationDuration = 300,
 }: CollapsibleProps): JSX.Element {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  const colorScheme = useColorScheme() ?? 'light';
-  const iconColor = Colors[colorScheme].icon;
+  const theme = useTheme();
+  const rotationValue = useSharedValue(defaultOpen ? 1 : 0);
+  const contentHeight = useSharedValue(defaultOpen ? 1 : 0);
+
+  const iconAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ 
+      rotate: `${interpolate(rotationValue.value, [0, 1], [0, 90])}deg`
+    }]
+  }));
+
+  const contentAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: contentHeight.value,
+    transform: [{ 
+      scale: interpolate(contentHeight.value, [0, 1], [0.95, 1])
+    }]
+  }));
+
+  const handlePress = () => {
+    const newValue = rotationValue.value === 0 ? 1 : 0;
+    rotationValue.value = withSpring(newValue, {
+      damping: 20,
+      stiffness: 200
+    });
+    contentHeight.value = withTiming(newValue, {
+      duration: animationDuration
+    });
+    onStateChange?.(newValue === 1);
+  };
 
   return (
     <ThemedView style={style}>
-      <CollapsibleHeader
-        onPress={() => setIsOpen((value) => !value)}
-        activeOpacity={0.8}>
-        <IconSymbol
-          name="chevron.right"
-          size={18}
-          weight="medium"
-          color={iconColor}
-          style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
-        />
-        <ThemedText type="defaultSemiBold">{title}</ThemedText>
-      </CollapsibleHeader>
-      {isOpen && <CollapsibleContent>{children}</CollapsibleContent>}
+      <TouchableOpacity
+        onPress={handlePress}
+        activeOpacity={0.8}
+        accessibilityRole="button"
+        accessibilityState={{ expanded: rotationValue.value === 1 }}
+        accessibilityHint={`Tap to ${rotationValue.value === 1 ? 'collapse' : 'expand'} section`}
+      >
+        <ThemedView style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+          <AnimatedIcon
+            name="chevron.right"
+            size={18}
+            weight="medium"
+            color={theme.colors.onSurface}
+            style={iconAnimatedStyle}
+          />
+          <ThemedText type="defaultSemiBold">{title}</ThemedText>
+        </ThemedView>
+      </TouchableOpacity>
+      
+      <AnimatedView 
+        style={[
+          { 
+            marginTop: SPACING.xs,
+            marginLeft: SPACING.lg 
+          },
+          contentAnimatedStyle
+        ]}
+      >
+        {children}
+      </AnimatedView>
     </ThemedView>
   );
 }
