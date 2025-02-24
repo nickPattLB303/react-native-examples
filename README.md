@@ -1,70 +1,40 @@
-# React Native Training Repository
+# React Native Training Course
 
-This repository contains training materials, examples, exercises, and challenges for learning React Native development.
+A comprehensive training course for developers with experience in Android, iOS, and web development (React and Angular) to become proficient in React Native.
+
+## Course Overview
+
+This 4-week intensive training course is designed to take developers from different backgrounds and make them proficient in React Native development. By the end of the course, participants will be able to work on production React Native projects.
+
+### Course Structure
+
+- **Duration**: 4 weeks
+- **Daily Schedule**: 1-hour instructor-led session + 4-6 hours self-directed learning
+- **Format**: Combination of instructor-led sessions, self-directed learning, exercises, challenges, and a capstone project
+
+### Learning Paths
+
+This course supports three distinct learning paths:
+
+1. **End-to-end instructor-led**: For participants attending the full 4-week course
+2. **End-to-end self-led**: For participants working through the material independently
+3. **Async - learn specific topics**: For participants needing to learn specific topics on demand
 
 ## Repository Structure
 
-### Branches
+This repository is organized as follows:
 
-```
-main
-├── README.md                 # Repository navigation guide
-│
-docs
-├── documentation/           # Course materials and guides
-│   ├── modules/            # Module documentation
-│   ├── topics/             # Topic-specific guides
-│   └── getting-started/    # Setup and introduction
-│
-slides
-├── presentations/          # Training session slides
-│
-exercises
-├── <exercise_name>
-│   ├── starter            # Starting point code
-│   └── complete           # Completed example
-│
-challenges
-├── <challenge_name>
-    ├── starter            # Starting point code
-    └── complete           # Completed example
-```
+- `main` branch: Course overview and navigation
+- `docs` branch: All text-based documentation in markdown format
+- `slides` branch: HTML/CSS slides for live training sessions
+- `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
+- `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
+- `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
+- `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
-### Navigating the Repository
 
-1. **Access Documentation**
-   ```bash
-   git checkout docs
-   ```
+## Development Tools
 
-2. **View Presentation Slides**
-   ```bash
-   git checkout slides
-   ```
-
-3. **Work on Exercises**
-   ```bash
-   # Get starter code
-   git checkout exercises/<exercise_name>/starter
-   
-   # View completed example
-   git checkout exercises/<exercise_name>/complete
-   ```
-
-4. **Work on Challenges**
-   ```bash
-   # Get starter code
-   git checkout challenges/<challenge_name>/starter
-   
-   # View completed example
-   git checkout challenges/<challenge_name>/complete
-   ```
-
-### Quick Reference
-
-- Documentation: `docs` branch
-- Presentation Slides: `slides` branch
-- Exercise Starter Code: `exercises/<exercise_name>/starter`
-- Exercise Solutions: `exercises/<exercise_name>/complete`
-- Challenge Starter Code: `challenges/<challenge_name>/starter`
-- Challenge Solutions: `challenges/<challenge_name>/complete` 
+- HTML, CSS, JavaScript, React: [CodePen](https://codepen.io/)
+- React Native: [Expo Snack](https://snack.expo.dev/)
+- React Native Development: [Expo Go](https://expo.dev/client)
