@@ -8,5 +8,4 @@ Starter code should:
 - Include necessary imports
 - Provide clear instructions in comments
 - Include test placeholders
-- Have basic error handling structure
 - Include type definitions where applicable 
