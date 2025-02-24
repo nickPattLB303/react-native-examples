@@ -6,8 +6,7 @@ This rule defines the structure and organization of the React Native training co
 ## Rule
 - The repository follows a specific branch structure:
   - `main`: Contains README.md with navigation instructions and course overview
-  - `docs`: Contains all text-based documentation in markdown format
-  - `slides`: Contains HTML/CSS slides for live training sessions
+  - `docs`: Contains all text-based documentation in markdown format and HTML/CSS slides for live training sessions
   - `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
   - `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
   - `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
@@ -17,6 +16,9 @@ This rule defines the structure and organization of the React Native training co
   - Modules (large topics)
   - Sections (components of modules)
   - Sub-sections (components of sections)
+
+- Slides should be organized in the docs branch under a dedicated slides directory:
+  - `/docs/slides/module-X/section-Y/`
 
 - All code examples should follow the medication/pharmacy/orders theme
 - All starter and completed code must include JSDoc documentation
@@ -37,4 +39,14 @@ This rule defines the structure and organization of the React Native training co
         functions.md
         /examples
           function-examples.js
+    /slides
+      /module-1-javascript-fundamentals
+        /section-1-variables
+          index.html
+          styles.css
+          script.js
+        /section-2-functions
+          index.html
+          styles.css
+          script.js
   ``` 

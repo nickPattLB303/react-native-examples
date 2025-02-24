@@ -8,6 +8,7 @@ This document provides an overview of all the rules for the React Native Trainin
    - Repository structure
    - Documentation hierarchy
    - Branch naming conventions
+   - Slides organization within docs branch
 
 2. [Documentation Standards and Writing Style](./documentation-standards.md)
    - Microsoft Writing Style Guide compliance
@@ -41,7 +42,7 @@ This document provides an overview of all the rules for the React Native Trainin
 
 7. [Slide and Presentation Standards](./slide-standards.md)
    - HTML/CSS slide requirements
-   - Slide organization
+   - Slide organization in docs/slides directory
    - Design requirements
    - Content guidelines
 

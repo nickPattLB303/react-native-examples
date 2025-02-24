@@ -5,7 +5,7 @@ This rule defines the standards for HTML slides and presentation materials used 
 
 ## Rule
 - All slides must be created using HTML and CSS (no PowerPoint or other presentation software)
-- Slides must be organized in the `slides` directory by module and section
+- Slides must be organized in the `docs/slides` directory by module and section
 - Each presentation should include:
   - Title slide with module/section name
   - Learning objectives slide
@@ -42,7 +42,7 @@ This rule defines the standards for HTML slides and presentation materials used 
 ## Examples
 - Proper slide directory structure:
   ```
-  /slides
+  /docs/slides
     /module-1-javascript-fundamentals
       /section-1-variables
         index.html
