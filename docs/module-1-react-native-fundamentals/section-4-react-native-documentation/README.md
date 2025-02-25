@@ -214,6 +214,13 @@ Use different search strategies for each question:
 - Use Google with site-specific search (site:reactnative.dev)
 - Check GitHub issues for edge cases
 
+These documentation skills will be directly applicable when building our pharmacy app, where you'll need to:
+- Implement medication image loading with proper loading states
+- Create deep links for prescription refill notifications
+- Adapt the UI based on the user's device
+- Build a smooth, refreshable medication list
+- Ensure the app performs well even with a large medication database
+
 Use the [Documentation Scavenger Hunt CodePen](https://codepen.io/your-username/pen/documentation-hunt) to record your findings.
 
 This exercise will help you develop effective documentation navigation skills that will save you time throughout your React Native development journey.

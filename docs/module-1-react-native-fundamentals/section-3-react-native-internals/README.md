@@ -318,7 +318,14 @@ Create a diagram that illustrates the flow of data and control in a React Native
 3. Illustrate how data flows back to update the UI
 4. Identify potential performance bottlenecks in this flow
 
-Use the [Architecture Diagram CodePen](https://codepen.io/your-username/pen/architecture-diagram) as a starting point.
+For your diagram, consider including:
+- The JavaScript thread processing the event
+- The bridge serializing/deserializing messages
+- The native modules handling platform-specific operations
+- The UI components being updated
+- The threading model and how it affects the flow
+
+Use the [Architecture Diagram CodePen](https://codepen.io/your-username/pen/architecture-diagram) to create and share your diagram.
 
 This exercise helps you visualize the complex interactions between JavaScript and native code in a React Native application, reinforcing your understanding of the architecture.
 

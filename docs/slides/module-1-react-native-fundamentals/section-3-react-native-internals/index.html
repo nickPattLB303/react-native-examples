@@ -523,9 +523,17 @@ function ScanScreen() {
         <li>Illustrate how data flows back to update the UI</li>
         <li>Identify potential performance bottlenecks in this flow</li>
       </ol>
+      <p>For your diagram, consider including:</p>
+      <ul>
+        <li>The JavaScript thread processing the event</li>
+        <li>The bridge serializing/deserializing messages</li>
+        <li>The native modules handling platform-specific operations</li>
+        <li>The UI components being updated</li>
+        <li>The threading model and how it affects the flow</li>
+      </ul>
       <div class="callout info">
         <div class="callout-title">Exercise Resources</div>
-        <p>Use the <a href="https://codepen.io/your-username/pen/architecture-diagram" target="_blank">Architecture Diagram CodePen</a> as a starting point.</p>
+        <p>Use the <a href="https://codepen.io/your-username/pen/architecture-diagram" target="_blank">Architecture Diagram CodePen</a> to create and share your diagram.</p>
       </div>
       <div class="presenter-notes">
         This exercise helps participants visualize the complex interactions between JavaScript and native code in a React Native application, reinforcing their understanding of the architecture.

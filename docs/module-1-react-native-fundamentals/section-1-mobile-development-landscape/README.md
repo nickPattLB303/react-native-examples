@@ -146,6 +146,12 @@ For each feature, recommend either native, hybrid, or cross-platform development
 - Development efficiency
 - Maintenance considerations
 
+This exercise simulates real-world decisions you would make when planning a pharmacy application. Consider how each approach would impact:
+- Patient experience with medication management
+- Healthcare provider integration
+- Regulatory compliance requirements
+- Development team resources
+
 Use the [Platform Selection Analysis CodePen](https://codepen.io/your-username/pen/platform-selection) to document your analysis.
 
 This exercise helps you apply the concepts from this section to real-world pharmacy app features, reinforcing your understanding of when different mobile development approaches are most appropriate.
