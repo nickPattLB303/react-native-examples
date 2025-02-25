@@ -164,11 +164,28 @@ While React Native offers many advantages, it's important to understand its limi
 
 ## Exercise: React Native Advantages Analysis
 
-For a pharmacy app that needs to display medication information, refill prescriptions, and send reminders:
+In this exercise, you will evaluate the benefits and challenges of using React Native for a pharmacy application with specific features.
 
-1. List three specific features that would benefit from React Native's approach
-2. Identify any potential challenges or limitations you might face
-3. Compare the development approach with native iOS and Android
+### Objective
+Analyze how React Native's capabilities align with pharmacy app requirements and identify potential advantages and limitations compared to native development.
+
+### Steps
+1. For a pharmacy app that needs to display medication information, refill prescriptions, and send reminders:
+   - List three specific features that would benefit from React Native's approach and explain why
+   - Identify any potential challenges or limitations you might face when implementing these features
+   - Compare the development approach, timeline, and resource requirements with native iOS and Android development
+
+2. Consider factors such as:
+   - Development speed and efficiency
+   - User experience and performance
+   - Access to device features
+   - Maintenance and updates
+   - Team composition and skills
+
+3. Create a brief recommendation on whether React Native would be appropriate for this pharmacy app, with supporting rationale.
+
+### Application
+This exercise simulates the technology selection process that occurs at the beginning of real-world healthcare app projects. The ability to evaluate framework strengths and weaknesses in the context of specific application requirements is essential for making sound architectural decisions that impact development efficiency, user experience, and long-term maintenance.
 
 Use the [React Native Advantages CodePen](https://codepen.io/your-username/pen/advantages-analysis) to complete this exercise.
 

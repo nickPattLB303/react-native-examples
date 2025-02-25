@@ -518,29 +518,43 @@ function ScanScreen() {
     </section>
     
     <!-- Exercise Slide -->
-    <section class="slide content-slide">
+    <section class="slide exercise-slide">
       <h2>Exercise: React Native Architecture Diagram</h2>
-      <p>Create a diagram that illustrates the flow of data and control in a React Native application:</p>
-      <ol>
-        <li>Start with a user interaction (e.g., tapping a "Refill Prescription" button)</li>
-        <li>Show how the event travels through the React Native architecture</li>
-        <li>Illustrate how data flows back to update the UI</li>
-        <li>Identify potential performance bottlenecks in this flow</li>
-      </ol>
-      <p>For your diagram, consider including:</p>
-      <ul>
-        <li>The JavaScript thread processing the event</li>
-        <li>The bridge serializing/deserializing messages</li>
-        <li>The native modules handling platform-specific operations</li>
-        <li>The UI components being updated</li>
-        <li>The threading model and how it affects the flow</li>
-      </ul>
-      <div class="callout info">
-        <div class="callout-title">Exercise Resources</div>
-        <p>Use the <a href="https://codepen.io/your-username/pen/architecture-diagram" target="_blank">Architecture Diagram CodePen</a> to create and share your diagram.</p>
+      <div class="exercise-content">
+        <p>In this exercise, you will create a visual representation of React Native's architecture to understand how data flows through the system when a user interacts with a pharmacy app.</p>
+        
+        <h3>Objective</h3>
+        <p>Visualize and explain the complete data flow in a React Native application from user interaction to UI updates, identifying potential performance bottlenecks.</p>
+        
+        <h3>Key Steps</h3>
+        <ol>
+          <li>Create a diagram that illustrates the flow of data and control:
+            <ul>
+              <li>Start with a user interaction (e.g., tapping a "Refill Prescription" button)</li>
+              <li>Show how the event travels through the React Native architecture</li>
+              <li>Illustrate how data flows back to update the UI</li>
+              <li>Identify potential performance bottlenecks in this flow</li>
+            </ul>
+          </li>
+          <li>Include key components in your diagram:
+            <ul>
+              <li>The JavaScript thread processing the event</li>
+              <li>The bridge serializing/deserializing messages</li>
+              <li>The native modules handling platform-specific operations</li>
+              <li>The UI components being updated</li>
+              <li>The threading model and how it affects the flow</li>
+            </ul>
+          </li>
+          <li>Add annotations explaining where delays might occur, how asynchronous operations are handled, and what happens with multiple UI updates</li>
+        </ol>
+        
+        <div class="exercise-resources">
+          <p>Complete this exercise using the <a href="https://codepen.io/your-username/pen/architecture-diagram" target="_blank">Architecture Diagram CodePen</a></p>
+        </div>
       </div>
+      
       <div class="presenter-notes">
-        This exercise helps participants visualize the complex interactions between JavaScript and native code in a React Native application, reinforcing their understanding of the architecture.
+        <p>Guide participants through the exercise, allowing approximately 25 minutes. This exercise helps visualize the complex interactions between JavaScript and native code, which is essential for understanding performance optimization in pharmacy apps that require real-time updates and native device integration.</p>
       </div>
     </section>
     

@@ -133,28 +133,34 @@ This fragmentation is what continues to drive innovation in cross-platform devel
 
 ## Exercise: Platform Selection
 
-In this exercise, analyze which development approach would be best for the following pharmacy app features:
+In this exercise, you will analyze different mobile development approaches for specific pharmacy app features to determine the most appropriate platform for each use case.
 
-1. **Medication barcode scanner**: Consider native device access requirements and performance needs
-2. **Medication reminder notifications**: Evaluate reliability and background processing capabilities
-3. **Pharmacy locator with maps**: Assess integration with mapping services and location APIs
-4. **Medication information database**: Consider data storage, offline access, and synchronization
+### Objective
+Evaluate the strengths and limitations of native, hybrid, and cross-platform development approaches for different pharmacy app features to make informed architectural decisions.
 
-For each feature, recommend either native, hybrid, or cross-platform development and explain your reasoning based on:
-- Performance requirements
-- Platform API access needs
-- Development efficiency
-- Maintenance considerations
+### Steps
+1. For each of the following pharmacy app features, analyze which development approach (native, hybrid, or cross-platform) would be most appropriate:
+   - **Medication barcode scanner**: Consider native device access requirements and performance needs
+   - **Medication reminder notifications**: Evaluate reliability and background processing capabilities
+   - **Pharmacy locator with maps**: Assess integration with mapping services and location APIs
+   - **Medication information database**: Consider data storage, offline access, and synchronization
 
-This exercise simulates real-world decisions you would make when planning a pharmacy application. Consider how each approach would impact:
-- Patient experience with medication management
-- Healthcare provider integration
-- Regulatory compliance requirements
-- Development team resources
+2. For each feature, document your recommendation and explain your reasoning based on:
+   - Performance requirements
+   - Platform API access needs
+   - Development efficiency
+   - Maintenance considerations
+
+3. Consider how each approach would impact:
+   - Patient experience with medication management
+   - Healthcare provider integration
+   - Regulatory compliance requirements
+   - Development team resources
+
+### Application
+This exercise simulates real-world decisions you would make when planning a pharmacy application architecture. The ability to select the right development approach for specific features is critical for creating effective healthcare applications that balance performance, development efficiency, and maintenance requirements.
 
 Use the [Platform Selection Analysis CodePen](https://codepen.io/your-username/pen/platform-selection) to document your analysis.
-
-This exercise helps you apply the concepts from this section to real-world pharmacy app features, reinforcing your understanding of when different mobile development approaches are most appropriate.
 
 ## Summary
 

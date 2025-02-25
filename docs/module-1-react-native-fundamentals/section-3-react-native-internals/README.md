@@ -311,23 +311,34 @@ React Native is evolving with a new architecture that addresses some limitations
 
 ## Exercise: React Native Architecture Diagram
 
-Create a diagram that illustrates the flow of data and control in a React Native application:
+In this exercise, you will create a visual representation of React Native's architecture to understand how data flows through the system when a user interacts with a pharmacy app.
 
-1. Start with a user interaction (e.g., tapping a "Refill Prescription" button)
-2. Show how the event travels through the React Native architecture
-3. Illustrate how data flows back to update the UI
-4. Identify potential performance bottlenecks in this flow
+### Objective
+Visualize and explain the complete data flow in a React Native application from user interaction to UI updates, identifying potential performance bottlenecks.
 
-For your diagram, consider including:
-- The JavaScript thread processing the event
-- The bridge serializing/deserializing messages
-- The native modules handling platform-specific operations
-- The UI components being updated
-- The threading model and how it affects the flow
+### Steps
+1. Create a diagram that illustrates the flow of data and control in a React Native application:
+   - Start with a user interaction (e.g., tapping a "Refill Prescription" button)
+   - Show how the event travels through the React Native architecture
+   - Illustrate how data flows back to update the UI
+   - Identify potential performance bottlenecks in this flow
+
+2. Include the following components in your diagram:
+   - The JavaScript thread processing the event
+   - The bridge serializing/deserializing messages
+   - The native modules handling platform-specific operations
+   - The UI components being updated
+   - The threading model and how it affects the flow
+
+3. Add annotations explaining:
+   - Where potential delays might occur
+   - How the architecture handles asynchronous operations
+   - What happens when multiple UI updates are triggered simultaneously
+
+### Application
+This exercise simulates the architectural analysis needed when optimizing a pharmacy app's performance. Understanding React Native's internal architecture is crucial when debugging performance issues in medication management features, implementing smooth prescription refill workflows, or optimizing medication reminder notifications that require interaction with native device capabilities.
 
 Use the [Architecture Diagram CodePen](https://codepen.io/your-username/pen/architecture-diagram) to create and share your diagram.
-
-This exercise helps you visualize the complex interactions between JavaScript and native code in a React Native application, reinforcing your understanding of the architecture.
 
 ## Summary
 

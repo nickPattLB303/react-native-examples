@@ -200,30 +200,28 @@ This approach helps you build a solid understanding of React Native concepts whi
 
 ## Exercise: Documentation Scavenger Hunt
 
-Practice finding information in the React Native documentation by completing the following tasks:
+In this exercise, you will practice finding specific information in the React Native documentation that will be essential for building mobile healthcare applications.
 
-1. Find the props for the `Image` component that handle loading states
+### Objective
+Develop effective documentation search strategies to quickly locate specific React Native features and APIs needed for pharmacy app development.
+
+### Steps
+1. Find the props for the `Image` component that handle loading states and placeholders
 2. Locate information about how to implement deep linking in a React Native app
 3. Find the API for accessing device information like OS version and device model
 4. Discover how to implement pull-to-refresh in a `FlatList`
-5. Find information about optimizing JavaScript bundle size
+5. Find information about optimizing JavaScript bundle size for better app performance
 
-Use different search strategies for each question:
+For each task, use a different search strategy:
 - Try the built-in documentation search
 - Navigate through documentation sections
 - Use Google with site-specific search (site:reactnative.dev)
 - Check GitHub issues for edge cases
 
-These documentation skills will be directly applicable when building our pharmacy app, where you'll need to:
-- Implement medication image loading with proper loading states
-- Create deep links for prescription refill notifications
-- Adapt the UI based on the user's device
-- Build a smooth, refreshable medication list
-- Ensure the app performs well even with a large medication database
+### Application
+This exercise simulates real-world development scenarios where you need to quickly find solutions in the documentation. These documentation skills will be directly applicable when building our pharmacy app, where you'll need to implement medication image loading with proper states, create deep links for prescription refill notifications, adapt the UI based on the user's device, build a refreshable medication list, and optimize performance for a large medication database.
 
 Use the [Documentation Scavenger Hunt CodePen](https://codepen.io/your-username/pen/documentation-hunt) to record your findings.
-
-This exercise will help you develop effective documentation navigation skills that will save you time throughout your React Native development journey.
 
 ## Summary
 
