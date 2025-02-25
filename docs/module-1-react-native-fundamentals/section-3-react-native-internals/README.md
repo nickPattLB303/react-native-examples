@@ -10,9 +10,7 @@ After completing this section, you will be able to:
 **Prerequisite Knowledge**: Basic understanding of React and mobile development concepts
 **Estimated Time**: 30-45 minutes
 
-## The React Native Architecture
-
-> 💡 **Tip**: This section gets pretty technical - don't worry if it doesn't all click right away. Focus on grasping the basic idea of how JavaScript talks to native code through the bridge. The implementation details will make more sense once you've built a few components. If something feels too complex, just make a mental note and keep moving - we'll revisit these concepts in context later.
+## Introduction
 
 To truly understand React Native, we need to look under the hood at its architecture. This knowledge will help you debug issues, optimize performance, and make better design decisions.
 
@@ -25,6 +23,8 @@ At its core, React Native consists of three main parts:
 3. **Bridge**: The communication layer between JavaScript and native code
 
 ![React Native Architecture](./examples/architecture-diagram.png)
+
+> 💡 **Tip**: This section gets pretty technical - don't worry if it doesn't all click right away. Focus on grasping the basic idea of how JavaScript talks to native code through the bridge. The implementation details will make more sense once you've built a few components. If something feels too complex, just make a mental note and keep moving - we'll revisit these concepts in context later.
 
 > 💡 **Deep Dive**: React Native is not a "compile once, run anywhere" framework like Flutter. Instead, it's a "learn once, write anywhere" framework that uses a runtime bridge to connect JavaScript code with native platform components. This approach allows for true native rendering while maintaining a unified development experience.
 

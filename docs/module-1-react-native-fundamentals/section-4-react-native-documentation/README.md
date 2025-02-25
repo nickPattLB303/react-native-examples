@@ -3,14 +3,14 @@
 ## Learning Objectives
 After completing this section, you will be able to:
 - Navigate the official React Native documentation effectively
-- Identify key resources for learning and problem-solving
-- Understand the structure and organization of the documentation
-- Leverage community resources to supplement official documentation
+- Identify key sections of the documentation for different needs
+- Utilize the API reference to find component and API details
+- Discover community resources that complement the official docs
 
 **Prerequisite Knowledge**: None
 **Estimated Time**: 20-30 minutes
 
-## The Official Documentation
+## Introduction
 
 > 💡 **Tip**: Being able to find stuff in the docs is super valuable - even the React Native team checks the docs regularly! For the scavenger hunt exercise, focus more on figuring out good search strategies than finding every answer quickly. Knowing how to look things up will save you tons of time down the road.
 
