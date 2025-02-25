@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: The Mobile Development Landscape | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>The Mobile Development Landscape</h1>
+      <h2>Section 1: Understanding the Options</h2>
+      <p class="metadata">Module 1 | 45 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Compare and contrast native, hybrid, and cross-platform development approaches</li>
+        <li>Identify the key challenges in mobile development</li>
+        <li>Understand the evolution of cross-platform solutions</li>
+        <li>Recognize where React Native fits in the mobile development ecosystem</li>
+      </ul>
+    </section>
+    
+    <!-- Mobile Development Challenges Slide -->
+    <section class="slide content-slide">
+      <h2>Mobile Development Challenges</h2>
+      <p>Building mobile applications presents unique challenges:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Technical Challenges</h3>
+          <ul>
+            <li>Platform fragmentation</li>
+            <li>Different programming languages</li>
+            <li>Varying UI paradigms</li>
+            <li>Device constraints (memory, battery)</li>
+            <li>Offline capabilities</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Business Challenges</h3>
+          <ul>
+            <li>Development costs for multiple platforms</li>
+            <li>Maintenance overhead</li>
+            <li>Time-to-market pressure</li>
+            <li>Finding specialized talent</li>
+            <li>Balancing quality and speed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">The Multi-Platform Dilemma</div>
+        <p>Organizations often need to support both iOS and Android to reach their entire user base, but maintaining separate codebases is expensive and time-consuming.</p>
+      </div>
+    </section>
+    
+    <!-- Native Development Slide -->
+    <section class="slide content-slide">
+      <h2>Native Development</h2>
+      <p>Building apps using platform-specific languages and tools:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>iOS Native Development</h3>
+          <ul>
+            <li>Languages: Swift, Objective-C</li>
+            <li>IDE: Xcode</li>
+            <li>UI Frameworks: UIKit, SwiftUI</li>
+            <li>Device APIs: iOS SDK</li>
+          </ul>
+          <div class="platform-ios">
+            <strong>For iOS Developers:</strong> This is your home territory, with direct access to all iOS capabilities and the latest Apple features.
+          </div>
+        </div>
+        <div class="column">
+          <h3>Android Native Development</h3>
+          <ul>
+            <li>Languages: Kotlin, Java</li>
+            <li>IDE: Android Studio</li>
+            <li>UI Frameworks: Jetpack Compose, XML layouts</li>
+            <li>Device APIs: Android SDK</li>
+          </ul>
+          <div class="platform-android">
+            <strong>For Android Developers:</strong> This is your home territory, with direct access to all Android capabilities and the latest Google features.
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Native Development Pros and Cons Slide -->
+    <section class="slide content-slide">
+      <h2>Native Development: Pros and Cons</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Advantages</h3>
+          <ul>
+            <li>Best performance</li>
+            <li>Full access to platform features</li>
+            <li>Platform-specific UI/UX</li>
+            <li>First-class support for new OS features</li>
+            <li>Robust tooling and debugging</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Disadvantages</h3>
+          <ul>
+            <li>Separate codebases to maintain</li>
+            <li>Higher development costs</li>
+            <li>Different skill sets required</li>
+            <li>Longer development cycles</li>
+            <li>Feature parity challenges</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Native Development Example</div>
+        <p>A medication reminder app built natively would require separate iOS and Android teams, with different implementations of the same features like notification scheduling, barcode scanning, and UI rendering.</p>
+      </div>
+    </section>
+    
+    <!-- Web-Based Approaches Slide -->
+    <section class="slide content-slide">
+      <h2>Web-Based Approaches</h2>
+      <p>Using web technologies to build mobile applications:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Progressive Web Apps (PWAs)</h3>
+          <ul>
+            <li>Web apps with native-like features</li>
+            <li>Technologies: HTML, CSS, JavaScript</li>
+            <li>Capabilities: Offline support, push notifications</li>
+            <li>Distribution: Web, limited app store presence</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Hybrid Apps</h3>
+          <ul>
+            <li>Web apps in a native container</li>
+            <li>Technologies: HTML, CSS, JavaScript + native wrappers</li>
+            <li>Frameworks: Cordova, Ionic, Capacitor</li>
+            <li>Distribution: App stores</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform-web">
+        <strong>For Web Developers:</strong> These approaches leverage your existing skills in web development, allowing you to build mobile apps without learning new languages.
+      </div>
+    </section>
+    
+    <!-- Web-Based Approaches Pros and Cons Slide -->
+    <section class="slide content-slide">
+      <h2>Web-Based Approaches: Pros and Cons</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Advantages</h3>
+          <ul>
+            <li>Single codebase</li>
+            <li>Leverage web development skills</li>
+            <li>Rapid development</li>
+            <li>Easier updates (especially PWAs)</li>
+            <li>Lower development costs</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Disadvantages</h3>
+          <ul>
+            <li>Performance limitations</li>
+            <li>Limited access to native features</li>
+            <li>UI/UX often feels non-native</li>
+            <li>Browser compatibility issues</li>
+            <li>Higher battery consumption</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Web-Based Example</div>
+        <p>A medication reminder app built as a PWA could work across platforms but might struggle with reliable background notifications and wouldn't have access to native barcode scanning capabilities without additional plugins.</p>
+      </div>
+    </section>
+    
+    <!-- Cross-Platform Native Approaches Slide -->
+    <section class="slide content-slide">
+      <h2>Cross-Platform Native Approaches</h2>
+      <p>Using a shared codebase that compiles to native code or interfaces with native components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>React Native</h3>
+          <ul>
+            <li>JavaScript/TypeScript + React</li>
+            <li>Renders to native UI components</li>
+            <li>Bridge to native modules</li>
+            <li>Learn once, write anywhere</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Other Cross-Platform Frameworks</h3>
+          <ul>
+            <li>Flutter: Dart language, custom rendering</li>
+            <li>Xamarin: C#, native UI components</li>
+            <li>NativeScript: JavaScript/TypeScript, native APIs</li>
+            <li>Kotlin Multiplatform: Kotlin, shared logic</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">The Middle Ground</div>
+        <p>Cross-platform native approaches aim to balance development efficiency with native performance and capabilities.</p>
+      </div>
+    </section>
+    
+    <!-- Cross-Platform Native Pros and Cons Slide -->
+    <section class="slide content-slide">
+      <h2>Cross-Platform Native: Pros and Cons</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Advantages</h3>
+          <ul>
+            <li>Significant code sharing (70-90%)</li>
+            <li>Near-native performance</li>
+            <li>Access to most native APIs</li>
+            <li>Faster development cycles</li>
+            <li>Unified team skills</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Disadvantages</h3>
+          <ul>
+            <li>Some performance overhead</li>
+            <li>Delayed access to new OS features</li>
+            <li>Framework-specific limitations</li>
+            <li>Debugging complexity</li>
+            <li>Dependency on third-party libraries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Cross-Platform Example</div>
+        <p>A medication reminder app built with React Native could share most code between platforms while still accessing native notification APIs and camera functionality for barcode scanning.</p>
+      </div>
+    </section>
+    
+    <!-- Comparison Matrix Slide -->
+    <section class="slide content-slide">
+      <h2>Approach Comparison Matrix</h2>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="background-color: var(--primary-color); color: white;">
+            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Criteria</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Native</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Hybrid/PWA</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">React Native</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Flutter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Performance</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Native API Access</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Code Sharing</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★☆☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Development Speed</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Native Look & Feel</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★☆☆</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Learning Curve</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★★★</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★☆☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★☆☆</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">★★★☆☆</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout info">
+        <div class="callout-title">Rating Scale</div>
+        <p>★★★★★ = Excellent, ★★★★☆ = Very Good, ★★★☆☆ = Good, ★★☆☆☆ = Fair, ★☆☆☆☆ = Poor</p>
+      </div>
+    </section>
+    
+    <!-- Decision Factors Slide -->
+    <section class="slide content-slide">
+      <h2>Decision Factors</h2>
+      <p>Key considerations when choosing a mobile development approach:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Project Factors</h3>
+          <ul>
+            <li>Performance requirements</li>
+            <li>Platform-specific feature needs</li>
+            <li>Timeline constraints</li>
+            <li>Budget limitations</li>
+            <li>Long-term maintenance plans</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Team Factors</h3>
+          <ul>
+            <li>Existing skill sets</li>
+            <li>Team size and structure</li>
+            <li>Learning capacity</li>
+            <li>Development preferences</li>
+            <li>Future hiring considerations</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Decision Framework</div>
+        <p>There's no one-size-fits-all solution. The best approach depends on your specific project requirements, team capabilities, and business constraints.</p>
+      </div>
+    </section>
+    
+    <!-- Pharmacy App Case Study Slide -->
+    <section class="slide content-slide">
+      <h2>Case Study: Medication Reminder App</h2>
+      <p>Let's analyze which approach might work best for our pharmacy app:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Requirements</h3>
+          <ul>
+            <li>Reliable notifications</li>
+            <li>Barcode scanning</li>
+            <li>Offline data storage</li>
+            <li>Smooth UI for elderly users</li>
+            <li>Cross-platform support</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Approach Analysis</h3>
+          <ul>
+            <li><strong>Native:</strong> Best performance, highest cost</li>
+            <li><strong>PWA/Hybrid:</strong> Limited notification reliability</li>
+            <li><strong>React Native:</strong> Good balance of features and efficiency</li>
+            <li><strong>Flutter:</strong> Strong UI consistency across platforms</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Recommendation</div>
+        <p>For this medication reminder app, React Native offers a good balance: reliable access to notification APIs, barcode scanning capabilities through native modules, and efficient cross-platform development.</p>
+      </div>
+    </section>
+    
+    <!-- Industry Trends Slide -->
+    <section class="slide content-slide">
+      <h2>Industry Trends</h2>
+      <p>The mobile development landscape continues to evolve:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Current Trends</h3>
+          <ul>
+            <li>Growing adoption of cross-platform frameworks</li>
+            <li>Increased focus on performance optimization</li>
+            <li>Declarative UI paradigms (SwiftUI, Jetpack Compose)</li>
+            <li>Serverless and edge computing integration</li>
+            <li>AI/ML capabilities in mobile apps</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Future Directions</h3>
+          <ul>
+            <li>Improved cross-platform native performance</li>
+            <li>Better integration with wearables and IoT</li>
+            <li>Enhanced AR/VR capabilities</li>
+            <li>More sophisticated offline-first architectures</li>
+            <li>Convergence of mobile and desktop development</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">React Native's Position</div>
+        <p>React Native continues to evolve with its new architecture, addressing performance concerns and improving the developer experience, maintaining its position as a leading cross-platform solution.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Approach Analysis</h2>
+      <p>In small groups, analyze which development approach would be best for the following scenarios:</p>
+      <ol>
+        <li><strong>Banking App:</strong> Requires high security, biometric authentication, and complex financial calculations</li>
+        <li><strong>Content-Focused News App:</strong> Primarily displays articles and videos with minimal native interaction</li>
+        <li><strong>Augmented Reality Shopping App:</strong> Uses camera for AR product visualization and complex 3D rendering</li>
+        <li><strong>Internal Enterprise Tool:</strong> Needs to work across platforms with frequent updates and limited budget</li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Instructions</div>
+        <p>For each scenario, recommend an approach (native, hybrid, or cross-platform) and justify your choice based on the requirements and constraints discussed in this section.</p>
+      </div>
+      <div class="presenter-notes">
+        Allow 10 minutes for group discussion, then have each group present their recommendations. Encourage debate about the trade-offs of different approaches.
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Mobile development approaches include native, web-based, and cross-platform native solutions</li>
+        <li>Native development offers the best performance and platform integration but at higher cost</li>
+        <li>Web-based approaches provide maximum code sharing but with performance and capability limitations</li>
+        <li>Cross-platform native frameworks like React Native balance code sharing with near-native performance</li>
+        <li>The best approach depends on project requirements, team skills, and business constraints</li>
+        <li>React Native is well-positioned for many types of applications, especially those needing a balance of efficiency and native capabilities</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 2: Why React Native?</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

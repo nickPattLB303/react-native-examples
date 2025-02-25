@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Why React Native? | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Why React Native?</h1>
+      <h2>Section 2: The Value Proposition</h2>
+      <p class="metadata">Module 1 | 30 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Articulate the key advantages of React Native for mobile development</li>
+        <li>Understand the business and technical benefits of using React Native</li>
+        <li>Identify scenarios where React Native is an appropriate choice</li>
+        <li>Recognize the limitations and challenges of React Native</li>
+      </ul>
+    </section>
+    
+    <!-- Value Proposition Slide -->
+    <section class="slide content-slide">
+      <h2>The React Native Value Proposition</h2>
+      <p>React Native has become one of the most popular frameworks for mobile development, used by companies ranging from startups to tech giants.</p>
+      <div class="callout info">
+        <div class="callout-title">Key Adopters</div>
+        <ul>
+          <li>Facebook/Instagram</li>
+          <li>Microsoft (Office, Xbox apps)</li>
+          <li>Shopify</li>
+          <li>Walmart</li>
+          <li>Tesla</li>
+          <li>Bloomberg</li>
+        </ul>
+      </div>
+      <div class="presenter-notes">
+        Emphasize that these major companies have invested heavily in React Native, which demonstrates its viability for production applications at scale.
+      </div>
+    </section>
+    
+    <!-- Cross-Platform Efficiency Slide -->
+    <section class="slide content-slide">
+      <h2>1. Cross-Platform Efficiency</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Code Sharing Benefits</h3>
+          <ul>
+            <li>Typically 70-90% code sharing between iOS and Android</li>
+            <li>Reduced development time and resources</li>
+            <li>Easier maintenance and feature parity</li>
+            <li>Smaller team size requirements</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout deep-dive">
+            <div class="callout-title">How It Works</div>
+            <p>React Native achieves code sharing through abstraction layers that map to native components. When you write <code>&lt;View&gt;</code>, React Native renders a <code>UIView</code> on iOS and an <code>android.view</code> on Android.</p>
+          </div>
+        </div>
+      </div>
+      <pre><code>
+// This component works on both iOS and Android
+const MedicationReminder = ({ medication, time, dosage }) => {
+  return (
+    <View style={styles.reminderCard}>
+      <Text style={styles.medicationName}>{medication}</Text>
+      <Text style={styles.reminderDetails}>
+        Take {dosage} at {time}
+      </Text>
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Native Performance Slide -->
+    <section class="slide content-slide">
+      <h2>2. Native Performance</h2>
+      <p>Unlike earlier hybrid approaches, React Native delivers near-native performance for most applications.</p>
+      <h3>Performance Advantages</h3>
+      <ul>
+        <li>Uses actual native UI components, not WebViews</li>
+        <li>JavaScript runs in a separate thread, not blocking the UI</li>
+        <li>Optimized bridge between JavaScript and native code</li>
+        <li>Ability to use native code for performance-critical sections</li>
+      </ul>
+      <div class="platform-android">
+        <strong>For Android Developers:</strong> Think of this as similar to how RecyclerView efficiently renders only the visible items. React Native similarly optimizes rendering by only updating what's changed.
+      </div>
+      <div class="platform-ios">
+        <strong>For iOS Developers:</strong> This is comparable to how UICollectionView reuses cells. React Native leverages the efficiency of native components while providing a more declarative programming model.
+      </div>
+    </section>
+    
+    <!-- Developer Experience Slide -->
+    <section class="slide content-slide">
+      <h2>3. Developer Experience</h2>
+      <p>React Native offers one of the best developer experiences in the mobile development ecosystem.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Developer-Friendly Features</h3>
+          <ul>
+            <li>Hot Reloading: See changes instantly</li>
+            <li>Familiar Web Paradigms: CSS-like styling</li>
+            <li>Rich Ecosystem: NPM packages and tools</li>
+            <li>Excellent Debugging Tools</li>
+            <li>Strong TypeScript Support</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout tip">
+            <div class="callout-title">Hot Reloading</div>
+            <p>Make a change, save the file, and see it instantly in your app without rebuilding or losing state - a massive productivity boost compared to native development.</p>
+          </div>
+        </div>
+      </div>
+      <pre><code>
+// Make a change, save the file, and see it instantly with hot reloading
+const styles = StyleSheet.create({
+  reminderCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  // ...other styles
+});
+      </code></pre>
+    </section>
+    
+    <!-- Business Advantages Slide -->
+    <section class="slide content-slide">
+      <h2>4. Business Advantages</h2>
+      <p>Beyond technical benefits, React Native offers significant business advantages.</p>
+      <h3>Business Benefits</h3>
+      <ul>
+        <li>Faster Time to Market: Ship features to both platforms simultaneously</li>
+        <li>Cost Efficiency: Smaller teams can maintain multiple platforms</li>
+        <li>Easier Talent Acquisition: Leverage the large pool of JavaScript/React developers</li>
+        <li>Incremental Adoption: Can be integrated into existing native apps gradually</li>
+        <li>Continuous Deployment: Easier to implement with tools like CodePush</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Real-World Impact</div>
+        <p>Many companies report 30-40% faster development cycles after switching to React Native, with corresponding reductions in development costs.</p>
+      </div>
+    </section>
+    
+    <!-- Community and Backing Slide -->
+    <section class="slide content-slide">
+      <h2>5. Strong Community and Corporate Backing</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Ecosystem Strength</h3>
+          <ul>
+            <li>Created and maintained by Facebook (Meta)</li>
+            <li>100,000+ stars on GitHub</li>
+            <li>Active open-source community</li>
+            <li>Regular updates and improvements</li>
+            <li>Thousands of third-party libraries</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout deep-dive">
+            <div class="callout-title">Community Growth</div>
+            <p>The React Native community has grown exponentially since its release in 2015, with dedicated conferences, meetups, and online communities worldwide.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Corporate Investment</div>
+        <p>Facebook's continued investment in React Native, including the new architecture initiative, demonstrates long-term commitment to the platform.</p>
+      </div>
+    </section>
+    
+    <!-- Web-to-Mobile Transition Slide -->
+    <section class="slide content-slide">
+      <h2>6. Web-to-Mobile Transition</h2>
+      <p>For organizations with existing web applications, React Native offers a smoother transition path.</p>
+      <h3>Transition Benefits</h3>
+      <ul>
+        <li>Leverage existing React knowledge and potentially some code</li>
+        <li>Similar component model and state management approaches</li>
+        <li>Familiar tooling and ecosystem</li>
+        <li>Potential for code sharing between web and mobile (with React Native Web)</li>
+      </ul>
+      <pre><code>
+// This component could work in both React (web) and React Native with minimal changes
+const MedicationDetails = ({ medication }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{medication.name}</Text>
+      <Text>Dosage: {medication.dosage}</Text>
+      <Text>Frequency: {medication.frequency}</Text>
+      <Text>Purpose: {medication.purpose}</Text>
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- When to Choose React Native Slide -->
+    <section class="slide content-slide">
+      <h2>When to Choose React Native</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Ideal Use Cases</h3>
+          <ul>
+            <li>MVPs and startups: When speed to market is critical</li>
+            <li>Apps with moderate complexity: Business, e-commerce, social apps</li>
+            <li>Content-driven applications: News, media, information apps</li>
+            <li>Form-heavy applications: Data entry, surveys, enterprise apps</li>
+            <li>Teams with React/JavaScript expertise</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Challenging Use Cases</h3>
+          <ul>
+            <li>Graphics-intensive games: May require native performance</li>
+            <li>Apps requiring extensive custom native functionality: AR/VR, complex animations</li>
+            <li>Platform-specific design requirements: When each platform needs a distinct look</li>
+            <li>Low-level hardware integration: Without existing native modules</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Escape Hatches Slide -->
+    <section class="slide content-slide">
+      <h2>Escape Hatches for Challenging Cases</h2>
+      <div class="callout deep-dive">
+        <div class="callout-title">Native Modules</div>
+        <p>Even in challenging cases, React Native provides escape hatches. You can write custom native modules in Swift, Objective-C, Java, or Kotlin and expose them to your JavaScript code.</p>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h4>iOS (Objective-C)</h4>
+          <pre><code>
+@implementation RCTMedicationScanner
+
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD(scanMedication:(NSString *)barcode
+                resolver:(RCTPromiseResolveBlock)resolve
+                rejecter:(RCTPromiseRejectBlock)reject)
+{
+  // Native implementation
+  resolve(@{@"name": @"Amoxicillin", @"dosage": @"500mg"});
+}
+
+@end
+          </code></pre>
+        </div>
+        <div class="column">
+          <h4>JavaScript Usage</h4>
+          <pre><code>
+import { NativeModules } from 'react-native';
+const { MedicationScanner } = NativeModules;
+
+async function scanMed() {
+  try {
+    const result = await MedicationScanner.scanMedication('123456789');
+    console.log(result); // { name: 'Amoxicillin', dosage: '500mg' }
+  } catch (error) {
+    console.error(error);
+  }
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Limitations Slide -->
+    <section class="slide content-slide">
+      <h2>Limitations and Considerations</h2>
+      <p>While React Native offers many advantages, it's important to understand its limitations:</p>
+      <h3>Potential Challenges</h3>
+      <ul>
+        <li>Native API Updates: Sometimes lag behind platform releases</li>
+        <li>Complex Debugging: Issues at the JavaScript-native boundary can be tricky</li>
+        <li>Bundle Size: Initial app size can be larger than pure native apps</li>
+        <li>Third-Party Dependencies: Quality varies in the ecosystem</li>
+        <li>Performance Edge Cases: Some complex UI interactions may require optimization</li>
+      </ul>
+      <div class="platform-android">
+        <strong>For Android Developers:</strong> The component lifecycle differs from the Activity/Fragment lifecycle you're familiar with.
+      </div>
+      <div class="platform-ios">
+        <strong>For iOS Developers:</strong> React Native abstracts away some of the fine-grained control you might be used to with UIKit.
+      </div>
+    </section>
+    
+    <!-- Pharmacy App Example Slide -->
+    <section class="slide content-slide">
+      <h2>Example: Pharmacy App</h2>
+      <h3>React Native Implementation</h3>
+      <pre><code>
+// MedicationList.js
+import React, { useState, useEffect } from 'react';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+import MedicationItem from './MedicationItem';
+
+const MedicationList = () => {
+  const [medications, setMedications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Fetch medications from API
+    fetchMedications()
+      .then(data => {
+        setMedications(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+  
+  if (loading) {
+    return <Text>Loading medications...</Text>;
+  }
+  
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => <MedicationItem medication={item} />}
+    />
+  );
+};
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Cross-Platform UI</div>
+        <p>This component will render a native UITableView on iOS and a RecyclerView on Android, with optimized performance on both platforms.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: React Native Advantages Analysis</h2>
+      <p>For a pharmacy app that needs to display medication information, refill prescriptions, and send reminders:</p>
+      <ol>
+        <li>List three specific features that would benefit from React Native's approach</li>
+        <li>Identify any potential challenges or limitations you might face</li>
+        <li>Compare the development approach with native iOS and Android</li>
+      </ol>
+      <div class="callout info">
+        <div class="callout-title">Exercise Resources</div>
+        <p>Use the <a href="https://codepen.io/your-username/pen/advantages-analysis" target="_blank">React Native Advantages CodePen</a> to complete this exercise.</p>
+      </div>
+      <div class="presenter-notes">
+        This exercise helps participants apply the concepts to a real-world scenario and think critically about the tradeoffs involved in choosing React Native.
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>React Native offers cross-platform efficiency with 70-90% code sharing</li>
+        <li>It provides near-native performance by using actual native UI components</li>
+        <li>Developer experience is enhanced with hot reloading and familiar web paradigms</li>
+        <li>Business advantages include faster time to market and reduced development costs</li>
+        <li>Strong community and corporate backing ensure long-term viability</li>
+        <li>React Native is ideal for many app types but has limitations for certain use cases</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 3: React Native Internals</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: React Native Documentation | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>React Native Documentation</h1>
+      <h2>Section 4: Navigating the Docs</h2>
+      <p class="metadata">Module 1 | 30 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Navigate the official React Native documentation effectively</li>
+        <li>Identify key sections of the documentation for different needs</li>
+        <li>Utilize the API reference to find component and API details</li>
+        <li>Discover community resources that complement the official docs</li>
+      </ul>
+    </section>
+    
+    <!-- Documentation Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Documentation Overview</h2>
+      <p>The React Native documentation is your primary resource for learning and reference.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Official Documentation</h3>
+          <ul>
+            <li>Comprehensive guides</li>
+            <li>API references</li>
+            <li>Component documentation</li>
+            <li>Platform-specific information</li>
+            <li>Regularly updated</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Documentation URL</h3>
+          <p><a href="https://reactnative.dev/docs/getting-started" target="_blank">https://reactnative.dev/docs/getting-started</a></p>
+          <div class="callout tip">
+            <div class="callout-title">Pro Tip</div>
+            <p>Bookmark the documentation homepage for quick access during development.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Documentation Structure Slide -->
+    <section class="slide content-slide">
+      <h2>Documentation Structure</h2>
+      <p>The React Native documentation is organized into several key sections:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Guides</h3>
+          <ul>
+            <li>Getting Started</li>
+            <li>Environment Setup</li>
+            <li>Workflow</li>
+            <li>Design</li>
+            <li>Performance</li>
+            <li>Integration with Native Code</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>References</h3>
+          <ul>
+            <li>Core Components and APIs</li>
+            <li>React Fundamentals</li>
+            <li>Platform-specific Code</li>
+            <li>Native Modules</li>
+            <li>Configuration</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Documentation Versions</div>
+        <p>Make sure you're viewing documentation that matches your React Native version. The version selector is typically at the top of the documentation site.</p>
+      </div>
+    </section>
+    
+    <!-- Core Components Slide -->
+    <section class="slide content-slide">
+      <h2>Core Components Documentation</h2>
+      <p>React Native provides a set of essential, cross-platform components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Basic Components</h3>
+          <ul>
+            <li><code>View</code>: Container component</li>
+            <li><code>Text</code>: Text display</li>
+            <li><code>Image</code>: Image display</li>
+            <li><code>TextInput</code>: Text input fields</li>
+            <li><code>ScrollView</code>: Scrollable container</li>
+            <li><code>Button</code>: Simple button component</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>List Components</h3>
+          <ul>
+            <li><code>FlatList</code>: Efficient scrolling lists</li>
+            <li><code>SectionList</code>: Sectioned lists</li>
+          </ul>
+          <h3>Other Components</h3>
+          <ul>
+            <li><code>Modal</code>: Overlay content</li>
+            <li><code>Pressable</code>: Customizable press interactions</li>
+            <li><code>ActivityIndicator</code>: Loading spinner</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Component Documentation Example</div>
+        <p>Each component's documentation includes props, methods, examples, and platform-specific notes.</p>
+      </div>
+    </section>
+    
+    <!-- Component Documentation Example Slide -->
+    <section class="slide content-slide">
+      <h2>Component Documentation Example</h2>
+      <p>Let's look at how a typical component is documented:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <img src="../../shared/images/flatlist-docs-example.png" alt="FlatList Documentation Example" style="max-width: 80%; border: 1px solid #ccc; border-radius: 4px;">
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Reading Component Docs</div>
+        <p>Pay special attention to:</p>
+        <ul>
+          <li>Required props (usually marked with *)</li>
+          <li>Common props that affect behavior</li>
+          <li>Platform-specific notes</li>
+          <li>Performance considerations</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- API Documentation Slide -->
+    <section class="slide content-slide">
+      <h2>API Documentation</h2>
+      <p>React Native provides APIs for platform functionality:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Common APIs</h3>
+          <ul>
+            <li><code>Alert</code>: Show alerts and prompts</li>
+            <li><code>Animated</code>: Create animations</li>
+            <li><code>AppState</code>: App foreground/background state</li>
+            <li><code>Dimensions</code>: Screen dimensions</li>
+            <li><code>Linking</code>: External URLs and deep links</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform-Specific APIs</h3>
+          <ul>
+            <li><code>Platform</code>: Platform detection</li>
+            <li><code>PermissionsAndroid</code>: Android permissions</li>
+            <li><code>PushNotificationIOS</code>: iOS notifications</li>
+            <li><code>StatusBar</code>: Status bar configuration</li>
+            <li><code>BackHandler</code>: Android back button</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform-android">
+        <strong>For Android Developers:</strong> Many Android-specific APIs have direct parallels to native Android functionality but with a JavaScript interface.
+      </div>
+      <div class="platform-ios">
+        <strong>For iOS Developers:</strong> iOS-specific APIs often map closely to UIKit functionality but are accessed through JavaScript.
+      </div>
+    </section>
+    
+    <!-- API Documentation Example Slide -->
+    <section class="slide content-slide">
+      <h2>API Documentation Example</h2>
+      <p>Let's examine the documentation for the <code>Alert</code> API:</p>
+      <pre><code>
+// Example from the Alert API documentation
+import { Alert } from 'react-native';
+
+Alert.alert(
+  'Medication Reminder',
+  'Time to take your Lisinopril',
+  [
+    {
+      text: 'Remind me later',
+      onPress: () => console.log('Remind later pressed'),
+      style: 'cancel',
+    },
+    { 
+      text: 'Mark as taken', 
+      onPress: () => console.log('Medication taken') 
+    },
+  ],
+  { cancelable: false }
+);
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">API Documentation Structure</div>
+        <p>API documentation typically includes:</p>
+        <ul>
+          <li>Method signatures and parameters</li>
+          <li>Return values</li>
+          <li>Usage examples</li>
+          <li>Platform compatibility notes</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Guides Section Slide -->
+    <section class="slide content-slide">
+      <h2>Guides Section</h2>
+      <p>The Guides section provides in-depth explanations of key concepts:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Essential Guides</h3>
+          <ul>
+            <li>Style and Layout</li>
+            <li>Navigation</li>
+            <li>Networking</li>
+            <li>Images</li>
+            <li>Animations</li>
+            <li>Accessibility</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Advanced Guides</h3>
+          <ul>
+            <li>Performance Optimization</li>
+            <li>Native Modules</li>
+            <li>Native Components</li>
+            <li>Upgrading</li>
+            <li>Testing</li>
+            <li>Security</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Learning Path</div>
+        <p>Start with the essential guides before moving to advanced topics. The guides build on each other and provide a structured learning path.</p>
+      </div>
+    </section>
+    
+    <!-- Guides Example Slide -->
+    <section class="slide content-slide">
+      <h2>Guide Example: Style and Layout</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Guide Content</h3>
+          <ul>
+            <li>Introduction to Flexbox</li>
+            <li>Layout properties</li>
+            <li>Style inheritance rules</li>
+            <li>Dimension units</li>
+            <li>Common patterns</li>
+            <li>Platform differences</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code>
+// Example from the Style guide
+import { StyleSheet, View, Text } from 'react-native';
+
+export default function MedicationCard() {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.title}>Lisinopril</Text>
+      <Text style={styles.dosage}>10mg</Text>
+      <Text style={styles.instructions}>
+        Take once daily with food
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  dosage: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 8,
+  },
+  instructions: {
+    fontSize: 14,
+    color: '#333',
+  },
+});
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Platform-Specific Documentation Slide -->
+    <section class="slide content-slide">
+      <h2>Platform-Specific Documentation</h2>
+      <p>React Native documentation includes platform-specific information:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Android-Specific</h3>
+          <ul>
+            <li>Native UI Components</li>
+            <li>Permissions</li>
+            <li>Headless JS</li>
+            <li>Integration with existing apps</li>
+            <li>Gradle configuration</li>
+          </ul>
+          <div class="platform-android">
+            <strong>For Android Developers:</strong> These sections explain how React Native interacts with Android-specific APIs and systems.
+          </div>
+        </div>
+        <div class="column">
+          <h3>iOS-Specific</h3>
+          <ul>
+            <li>Native UI Components</li>
+            <li>Linking Libraries</li>
+            <li>Running on device</li>
+            <li>Integration with existing apps</li>
+            <li>CocoaPods configuration</li>
+          </ul>
+          <div class="platform-ios">
+            <strong>For iOS Developers:</strong> These sections explain how React Native interacts with iOS-specific APIs and systems.
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Searching the Documentation Slide -->
+    <section class="slide content-slide">
+      <h2>Searching the Documentation</h2>
+      <p>Effective documentation searching is a key skill:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Search Strategies</h3>
+          <ol>
+            <li>Use the built-in search function</li>
+            <li>Search by component or API name</li>
+            <li>Search by functionality (e.g., "image caching")</li>
+            <li>Search by error message</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Search Alternatives</h3>
+          <ul>
+            <li>Google with "site:reactnative.dev"</li>
+            <li>GitHub issues for edge cases</li>
+            <li>Stack Overflow for common problems</li>
+            <li>React Native community forums</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Search Tip</div>
+        <p>When searching for a specific prop or method, include the component name in your search (e.g., "FlatList renderItem" instead of just "renderItem").</p>
+      </div>
+    </section>
+    
+    <!-- Complementary Resources Slide -->
+    <section class="slide content-slide">
+      <h2>Complementary Resources</h2>
+      <p>The official documentation is complemented by other resources:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Official Resources</h3>
+          <ul>
+            <li>React Native Blog</li>
+            <li>GitHub Repository</li>
+            <li>Release Notes</li>
+            <li>React Documentation</li>
+            <li>Expo Documentation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Community Resources</h3>
+          <ul>
+            <li>React Native Directory (libraries)</li>
+            <li>Reactiflux Discord</li>
+            <li>Stack Overflow</li>
+            <li>React Native Community GitHub</li>
+            <li>React Native Newsletter</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Resource List</div>
+        <p>A comprehensive list of community resources is available in the <a href="../../../community-resources.md" target="_blank">Community Resources</a> document.</p>
+      </div>
+    </section>
+    
+    <!-- Documentation for Libraries Slide -->
+    <section class="slide content-slide">
+      <h2>Documentation for Libraries</h2>
+      <p>Most React Native projects use additional libraries with their own documentation:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Libraries</h3>
+          <ul>
+            <li>React Navigation</li>
+            <li>Redux / MobX</li>
+            <li>React Native Gesture Handler</li>
+            <li>React Native Reanimated</li>
+            <li>React Native SVG</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Finding Quality Libraries</h3>
+          <ul>
+            <li>Check the React Native Directory</li>
+            <li>Look for active maintenance</li>
+            <li>Assess documentation quality</li>
+            <li>Review GitHub issues</li>
+            <li>Check TypeScript support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Library Documentation Example</div>
+        <p>React Navigation documentation is a good example of comprehensive library documentation with guides, API references, and examples.</p>
+      </div>
+    </section>
+    
+    <!-- Pharmacy App Example Slide -->
+    <section class="slide content-slide">
+      <h2>Example: Medication List Component</h2>
+      <p>Let's see how documentation helps us build a medication list:</p>
+      <pre><code>
+// This example uses multiple documented components
+import React, { useState, useEffect } from 'react';
+import { 
+  FlatList,  // We'd look up FlatList in the docs
+  View, 
+  Text, 
+  StyleSheet,
+  ActivityIndicator, // Loading indicator docs
+  RefreshControl,    // Pull-to-refresh docs
+} from 'react-native';
+
+export default function MedicationList() {
+  const [medications, setMedications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // We'd look up useEffect in React docs
+  useEffect(() => {
+    fetchMedications();
+  }, []);
+
+  // We'd look up fetch in MDN docs
+  const fetchMedications = async () => {
+    try {
+      const response = await fetch('https://api.pharmacy.example/medications');
+      const data = await response.json();
+      setMedications(data);
+      setLoading(false);
+      setRefreshing(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchMedications();
+  };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0066cc" />;
+  }
+
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <View style={styles.medicationItem}>
+          <Text style={styles.medicationName}>{item.name}</Text>
+          <Text style={styles.medicationDosage}>{item.dosage}</Text>
+        </View>
+      )}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  medicationItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  medicationName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  medicationDosage: {
+    fontSize: 16,
+    color: '#666',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Documentation Scavenger Hunt Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Documentation Scavenger Hunt</h2>
+      <p>Let's practice finding information in the React Native documentation:</p>
+      <ol>
+        <li>Find the props for the <code>Image</code> component that handle loading states</li>
+        <li>Locate information about how to implement deep linking in a React Native app</li>
+        <li>Find the API for accessing device information like OS version and device model</li>
+        <li>Discover how to implement pull-to-refresh in a <code>FlatList</code></li>
+        <li>Find information about optimizing JavaScript bundle size</li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Tip</div>
+        <p>Use different search strategies for each question. Try the built-in search, navigation through sections, and Google with site-specific search.</p>
+      </div>
+      <div class="presenter-notes">
+        This exercise helps participants become familiar with navigating the documentation. Allow 10 minutes for this activity and then discuss the answers as a group.
+      </div>
+    </section>
+    
+    <!-- Documentation Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Documentation Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>When Learning</h3>
+          <ul>
+            <li>Start with Getting Started guides</li>
+            <li>Follow the Core Concepts in order</li>
+            <li>Try the examples in your own project</li>
+            <li>Read release notes when upgrading</li>
+            <li>Check both React and React Native docs</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>When Troubleshooting</h3>
+          <ul>
+            <li>Check props and API parameters first</li>
+            <li>Look for platform-specific notes</li>
+            <li>Search for error messages</li>
+            <li>Check GitHub issues for edge cases</li>
+            <li>Verify your React Native version</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout deep-dive">
+        <div class="callout-title">Documentation Evolution</div>
+        <p>React Native documentation is constantly evolving. Older versions may have different APIs or recommendations. Always check that you're viewing documentation for your current React Native version.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>The React Native documentation is comprehensive and well-structured</li>
+        <li>Core components and APIs are thoroughly documented with examples</li>
+        <li>Guides provide in-depth explanations of key concepts</li>
+        <li>Platform-specific documentation helps with iOS and Android integration</li>
+        <li>Effective searching strategies help find information quickly</li>
+        <li>Community resources complement the official documentation</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Module 1 Challenge: Analyzing Approaches for a Medication Reminder App</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
