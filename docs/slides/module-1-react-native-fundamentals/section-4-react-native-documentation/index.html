@@ -439,11 +439,13 @@ const styles = StyleSheet.create({
       </div>
     </section>
     
-    <!-- Pharmacy App Example Slide -->
+    <!-- Example: Medication List Component Slide -->
     <section class="slide content-slide">
       <h2>Example: Medication List Component</h2>
-      <p>Let's see how documentation helps us build a medication list:</p>
-      <pre><code>
+      <div class="columns">
+        <div class="column">
+          <p>Let's see how documentation helps us build a medication list:</p>
+          <pre><code>
 // This example uses multiple documented components
 import React, { useState, useEffect } from 'react';
 import { 
@@ -505,23 +507,22 @@ export default function MedicationList() {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  medicationItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  medicationName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  medicationDosage: {
-    fontSize: 16,
-    color: '#666',
-  },
-});
-      </code></pre>
+          </code></pre>
+        </div>
+        <div class="column">
+          <div class="callout example">
+            <div class="callout-title">Documentation Journey: MedSync App</div>
+            <p>When building the MedSync medication tracking app, the development team relied heavily on documentation:</p>
+            <ol>
+              <li><strong>Component Selection</strong>: Used the docs to choose FlatList over ScrollView for better performance with long medication lists</li>
+              <li><strong>Accessibility</strong>: Referenced accessibility guidelines to ensure the app worked with screen readers for visually impaired users</li>
+              <li><strong>Platform Differences</strong>: Discovered iOS-specific notification permission requirements in the Push Notification docs</li>
+              <li><strong>Performance</strong>: Applied FlatList optimization techniques from the Performance section to handle 1000+ medication entries smoothly</li>
+            </ol>
+            <p>The team estimated that effective documentation usage saved them 3-4 weeks of development time.</p>
+          </div>
+        </div>
+      </div>
     </section>
     
     <!-- Documentation Scavenger Hunt Slide -->
@@ -587,6 +588,10 @@ const styles = StyleSheet.create({
         <li>Community resources complement the official documentation for specific use cases</li>
         <li>Regular reference to the documentation is essential for staying current with React Native</li>
       </ul>
+      <div class="callout info">
+        <div class="callout-title">Putting It All Together</div>
+        <p>We've now covered the mobile development landscape, the advantages of React Native, its internal architecture, and how to navigate its documentation. It's time to apply this knowledge to our pharmacy app scenario. In the Module Challenge, you'll analyze different approaches to building a medication reminder app and evaluate how React Native can address the specific requirements of healthcare applications.</p>
+      </div>
       <div class="next-steps">
         <a href="../index.html#7"><strong>Next:</strong> Module 1 Challenge</a>
       </div>

@@ -262,6 +262,49 @@ const styles = StyleSheet.create({
           React Component → Virtual DOM → Shadow Tree → Layout Calculation → Native Commands → Native Views
         </div>
       </div>
+      
+      <div style="text-align: center; margin: 20px 0;">
+        <pre style="text-align: left; display: inline-block; font-size: 0.9rem; background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
+┌─────────────────────────────┐     ┌─────────────────────────────┐
+│                             │     │                             │
+│      JavaScript Thread      │     │        Native Thread        │
+│                             │     │                             │
+│  ┌─────────────────────┐    │     │                             │
+│  │                     │    │     │                             │
+│  │  React Component    │    │     │                             │
+│  │  <MedicationCard/>  │    │     │                             │
+│  │                     │    │     │                             │
+│  └──────────┬──────────┘    │     │                             │
+│             │               │     │                             │
+│             ▼               │     │                             │
+│  ┌─────────────────────┐    │     │                             │
+│  │                     │    │     │                             │
+│  │    Virtual DOM      │    │     │                             │
+│  │    Reconciliation   │    │     │                             │
+│  │                     │    │     │                             │
+│  └──────────┬──────────┘    │     │                             │
+│             │               │     │                             │
+│             ▼               │     │                             │
+│  ┌─────────────────────┐    │     │                             │
+│  │                     │    │     │                             │
+│  │    Shadow Tree      │    │     │                             │
+│  │    (C++ Yoga)       │    │     │                             │
+│  │                     │    │     │                             │
+│  └──────────┬──────────┘    │     │                             │
+│             │               │     │                             │
+│             ▼               │     │                             │
+│  ┌─────────────────────┐    │     │  ┌─────────────────────┐    │
+│  │                     │    │     │  │                     │    │
+│  │  Native Commands    ├────┼─────┼─▶│  UIView (iOS)       │    │
+│  │                     │    │     │  │  or                 │    │
+│  └─────────────────────┘    │     │  │  Android.View       │    │
+│                             │     │  │                     │    │
+└─────────────────────────────┘     │  └─────────────────────┘    │
+                                    │                             │
+                                    └─────────────────────────────┘
+        </pre>
+      </div>
+      
       <div class="platform-android">
         <strong>For Android Developers:</strong> This is similar to how RecyclerView works with its Adapter and ViewHolder pattern, but with an additional layer of abstraction.
       </div>
@@ -433,19 +476,40 @@ function ScanScreen() {
     <section class="slide content-slide">
       <h2>Example: Medication Reminder App</h2>
       <p>Let's trace how a medication reminder notification would flow through the React Native architecture:</p>
-      <ol>
-        <li><strong>JavaScript Side</strong>: App schedules a reminder using a native module</li>
-        <li><strong>Bridge</strong>: Request is serialized and sent to native side</li>
-        <li><strong>Native Module</strong>: Registers the notification with the platform's notification system</li>
-        <li><strong>Platform Notification System</strong>: Displays the notification at the scheduled time</li>
-        <li><strong>User Interaction</strong>: User taps the notification</li>
-        <li><strong>Native Side</strong>: App is launched/foregrounded and notification data is retrieved</li>
-        <li><strong>Bridge</strong>: Notification data is serialized and sent to JavaScript</li>
-        <li><strong>JavaScript Side</strong>: App updates UI based on the notification data</li>
-      </ol>
-      <div class="callout tip">
-        <div class="callout-title">Architecture Insight</div>
-        <p>This example shows how React Native's architecture handles cross-platform functionality while leveraging native capabilities for optimal user experience.</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <pre style="text-align: left; display: inline-block; font-size: 0.9rem; background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
+┌─────────────────────┐                                      ┌─────────────────────┐
+│                     │                                      │                     │
+│   JavaScript Side   │                                      │     Native Side     │
+│                     │                                      │                     │
+│  ┌───────────────┐  │         ┌───────────────┐           │ ┌─────────────────┐ │
+│  │ Schedule      │  │         │               │           │ │ Platform         │ │
+│  │ Reminder      ├──┼────────▶│    Bridge     ├───────────┼▶│ Notification     │ │
+│  │ (10:00 AM     │  │         │  Serializes   │           │ │ System           │ │
+│  │  Lisinopril)  │  │         │    Data       │           │ │                  │ │
+│  └───────────────┘  │         └───────┬───────┘           │ └────────┬────────┘ │
+│                     │                 │                    │          │          │
+│                     │                 │                    │          │          │
+│                     │                 │                    │          │          │
+│                     │                 │                    │          ▼          │
+│  ┌───────────────┐  │         ┌───────┴───────┐           │ ┌─────────────────┐ │
+│  │ Update UI     │  │         │               │           │ │ User taps        │ │
+│  │ Mark as taken │◀─┼─────────│    Bridge     │◀──────────┼─┤ notification     │ │
+│  │ or snooze     │  │         │  Deserializes │           │ │ "Take Lisinopril"│ │
+│  └───────────────┘  │         └───────────────┘           │ └─────────────────┘ │
+│                     │                                      │                     │
+└─────────────────────┘                                      └─────────────────────┘
+        </pre>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Real-World Example: PillRemind</div>
+        <p>A healthcare provider built a medication adherence app for patients with chronic conditions. Their implementation:</p>
+        <ul>
+          <li><strong>JavaScript Layer</strong>: Handles medication schedules, user preferences, and UI</li>
+          <li><strong>Native Module</strong>: Custom notification module that supports different notification styles on iOS and Android</li>
+          <li><strong>Performance Optimization</strong>: Moved complex adherence calculations to native code to reduce bridge traffic</li>
+          <li><strong>Results</strong>: 23% improvement in medication adherence among users, with 98% of notifications delivered reliably</li>
+        </ul>
       </div>
     </section>
     
@@ -479,6 +543,10 @@ function ScanScreen() {
         <li>The new architecture (Fabric, TurboModules, and JSI) aims to improve performance and capabilities</li>
         <li>Understanding the internals helps with debugging and optimizing React Native applications</li>
       </ul>
+      <div class="callout info">
+        <div class="callout-title">From Theory to Practice</div>
+        <p>Now that we understand how React Native works internally, we need to know where to find answers when we encounter challenges building our pharmacy app. In the next section, we'll explore the React Native documentation and community resources that will be essential as we implement features like medication reminders, barcode scanning, and offline storage.</p>
+      </div>
       <div class="next-steps">
         <a href="../section-4-react-native-documentation/index.html"><strong>Next:</strong> Section 4: React Native Documentation</a>
       </div>

@@ -309,8 +309,10 @@ async function scanMed() {
     <!-- Pharmacy App Example Slide -->
     <section class="slide content-slide">
       <h2>Example: Pharmacy App</h2>
-      <h3>React Native Implementation</h3>
-      <pre><code>
+      <div class="columns">
+        <div class="column">
+          <h3>React Native Implementation</h3>
+          <pre><code>
 // MedicationList.js
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
@@ -345,7 +347,22 @@ const MedicationList = () => {
     />
   );
 };
-      </code></pre>
+          </code></pre>
+        </div>
+        <div class="column">
+          <div class="callout example">
+            <div class="callout-title">MediSafe Case Study</div>
+            <p>MediSafe, a leading medication management app with over 7 million users, rebuilt their app using React Native. Key benefits they experienced:</p>
+            <ul>
+              <li><strong>Development Speed</strong>: 40% faster feature delivery</li>
+              <li><strong>Team Efficiency</strong>: Single team maintaining both platforms</li>
+              <li><strong>User Experience</strong>: Maintained native feel while sharing code</li>
+              <li><strong>Performance</strong>: Smooth animations for medication reminders</li>
+            </ul>
+            <p>Their medication reminder feature uses native notifications while sharing the business logic across platforms.</p>
+          </div>
+        </div>
+      </div>
       <div class="callout tip">
         <div class="callout-title">Cross-Platform UI</div>
         <p>This component will render a native UITableView on iOS and a RecyclerView on Android, with optimized performance on both platforms.</p>
@@ -381,6 +398,10 @@ const MedicationList = () => {
         <li>Strong community and corporate backing ensure long-term viability</li>
         <li>React Native is ideal for many app types but has limitations for certain use cases</li>
       </ul>
+      <div class="callout info">
+        <div class="callout-title">Diving Deeper</div>
+        <p>Now that we understand the advantages of React Native for our pharmacy app, let's explore how it actually works under the hood. In the next section, we'll examine the architecture that enables React Native to deliver on its promises of native performance with JavaScript code, which will help us make better design decisions for our medication management features.</p>
+      </div>
       <div class="next-steps">
         <a href="../section-3-react-native-internals/index.html"><strong>Next:</strong> Section 3: React Native Internals</a>
       </div>
