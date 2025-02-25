@@ -8,7 +8,7 @@ After completing this section, you will be able to:
 - Understand the context that led to React Native's creation
 
 **Prerequisite Knowledge**: None
-**Estimated Time**: 30 minutes
+**Estimated Time**: 30-45 minutes
 
 ## The Evolution of Mobile Development
 

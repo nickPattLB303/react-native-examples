@@ -8,9 +8,11 @@ After completing this section, you will be able to:
 - Identify the key components of the React Native runtime
 
 **Prerequisite Knowledge**: Basic understanding of React and mobile development concepts
-**Estimated Time**: 45 minutes
+**Estimated Time**: 30-45 minutes
 
 ## The React Native Architecture
+
+> 💡 **Tip**: This section gets pretty technical - don't worry if it doesn't all click right away. Focus on grasping the basic idea of how JavaScript talks to native code through the bridge. The implementation details will make more sense once you've built a few components. If something feels too complex, just make a mental note and keep moving - we'll revisit these concepts in context later.
 
 To truly understand React Native, we need to look under the hood at its architecture. This knowledge will help you debug issues, optimize performance, and make better design decisions.
 

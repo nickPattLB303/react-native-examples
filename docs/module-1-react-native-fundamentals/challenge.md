@@ -6,6 +6,8 @@ Analyze different approaches to building a medication reminder app and evaluate 
 **Prerequisite Knowledge**: Module 1 content
 **Estimated Time**: 45-60 minutes
 
+> 💡 **Tip**: This challenge is about applying concepts, not creating perfect diagrams or exhaustive analyses. If you find yourself going down a rabbit hole on any section, just capture your main thoughts and move on. The architecture diagram is particularly helpful for cementing your understanding, but don't stress about making it perfect. Remember, this is just the intro - you'll get plenty more practice with these concepts!
+
 ## Challenge Description
 
 In this challenge, you'll analyze a hypothetical medication reminder app from multiple perspectives. This app needs to:

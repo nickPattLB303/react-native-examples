@@ -8,9 +8,11 @@ After completing this section, you will be able to:
 - Leverage community resources to supplement official documentation
 
 **Prerequisite Knowledge**: None
-**Estimated Time**: 15 minutes
+**Estimated Time**: 20-30 minutes
 
 ## The Official Documentation
+
+> 💡 **Tip**: Being able to find stuff in the docs is super valuable - even the React Native team checks the docs regularly! For the scavenger hunt exercise, focus more on figuring out good search strategies than finding every answer quickly. Knowing how to look things up will save you tons of time down the road.
 
 The official React Native documentation at [reactnative.dev](https://reactnative.dev/) is your primary resource for learning and reference. It's comprehensive, well-maintained, and regularly updated with the latest information.
 

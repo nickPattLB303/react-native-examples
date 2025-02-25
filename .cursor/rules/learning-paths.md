@@ -47,7 +47,7 @@ This rule defines the educational approach and learning paths for the React Nati
   - Implement basic styling using StyleSheet
   
   **Prerequisite Knowledge**: Basic JavaScript, React fundamentals
-  **Estimated Time**: 45 minutes
+  **Estimated Time**: 30 - 45 minutes
   
   > 🚀 **Self-Led Learners**: Complete the CodePen exercise at the end of this section before moving on.
   

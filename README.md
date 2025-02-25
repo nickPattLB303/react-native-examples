@@ -12,6 +12,22 @@ This 4-week intensive training course is designed to take developers from differ
 - **Daily Schedule**: 1-hour instructor-led session + 4-6 hours self-directed learning
 - **Format**: Combination of instructor-led sessions, self-directed learning, exercises, challenges, and a capstone project
 
+### Course Modules
+
+1. React Native Fundamentals
+2. Environment Setup
+3. Web Development Essentials
+4. JavaScript Essentials
+5. TypeScript Essentials
+6. React Essentials
+7. React Native UI and Styling
+8. Components and User Input
+9. Navigation and Routing
+10. State Management
+11. Performance and Debugging
+12. Advanced Features
+13. Capstone Project
+
 ### Learning Paths
 
 This course supports three distinct learning paths:

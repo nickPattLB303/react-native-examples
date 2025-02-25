@@ -73,7 +73,7 @@ This rule defines the standards for HTML slides and presentation materials used 
       <section class="slide title-slide">
         <h1>React Native Components</h1>
         <h2>Building Blocks of Your Application</h2>
-        <p class="metadata">Module 2, Section 3 | 45 minutes</p>
+        <p class="metadata">Module 2, Section 3 | 30 - 45 minutes</p>
       </section>
       
       <!-- Learning Objectives Slide -->

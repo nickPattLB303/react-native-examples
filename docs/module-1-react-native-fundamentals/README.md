@@ -8,10 +8,12 @@ After completing this module, you will be able to:
 - Navigate and utilize the official React Native documentation
 
 **Prerequisite Knowledge**: None
-**Estimated Time**: 2 hours
+**Estimated Time**: 2-3 hours
 
 ## Module Overview
 This module introduces you to React Native and its place in the mobile development ecosystem. We'll explore the history of cross-platform development, understand why React Native has become a popular choice, dive into how it works internally, and learn how to leverage the official documentation.
+
+> 💡 **Tip**: Don't sweat the technical details in Section 3 (React Native Internals) too much on your first pass - we'll circle back to these concepts throughout the course. Focus on getting the big picture and why React Native is valuable before moving on.
 
 ## Sections
 1. [The Mobile Development Landscape](./section-1-mobile-development-landscape/README.md)

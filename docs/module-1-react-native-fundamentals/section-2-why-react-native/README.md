@@ -8,7 +8,7 @@ After completing this section, you will be able to:
 - Recognize the limitations and challenges of React Native
 
 **Prerequisite Knowledge**: Basic understanding of mobile development approaches
-**Estimated Time**: 30 minutes
+**Estimated Time**: 25-35 minutes
 
 ## The React Native Value Proposition
 
