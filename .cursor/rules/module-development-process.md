@@ -1,0 +1,146 @@
+# Module Development Process
+
+## Description
+This rule defines the optimal process for developing new modules, based on lessons learned from Module 1 development.
+
+## Rule
+
+### Planning and Structure
+- **Template-First Approach**: Create complete templates for both slides and markdown before adding content
+  - Develop slide templates with consistent structure, sections, and components
+  - Create markdown templates with standardized headings, callouts, and exercise formats
+  - Test templates with placeholder content before full development
+
+- **Shared Component Library**: Use consistent components across both slides and markdown
+  - Exercises must follow the same format in both slides and markdown
+  - Callouts (tips, deep dives, platform-specific notes) must be consistent
+  - Code examples must use the same style and context
+
+- **Path Planning**: Establish consistent naming conventions upfront
+  - Section directories must use kebab-case (e.g., `mobile-development-landscape`)
+  - All paths must be planned and documented before content creation
+  - No post-creation path renaming or restructuring
+
+### Technical Implementation
+- **Test Early**: Test interactive elements with small examples before building complete content
+  - Validate presenter mode functionality with a test presentation
+  - Verify navigation system with minimal slide set
+  - Test responsiveness across screen sizes
+
+- **Path Abstraction**: Use configuration files for path management
+  - Create a central `paths.js` file defining all module and section paths
+  - Reference path constants rather than hardcoding paths
+  - Update the path configuration when adding new sections/modules
+
+- **Progressive Enhancement**: Implement core functionality first, then add features
+  - Start with basic slide functionality
+  - Add navigation between sections once basics are working
+  - Implement advanced features (section menu, presenter notes) last
+
+### Content Alignment
+- **Single Source of Truth**: Define content in one place when possible
+  - Consider using a shared data source or content management approach
+  - Implement validation to ensure slides and markdown remain aligned
+  - Document which source is authoritative for which content element
+
+- **Thematic Consistency Checklist**: Use a checklist for each module/section
+  - Pharmacy/medication theme inclusion
+  - CodePen/Expo links format
+  - Learning objectives consistency
+  - Exercise implementation
+  - Time estimates
+
+- **Exercise Definition Template**: Standardize exercise formats
+  - Objective
+  - Required steps
+  - Resources (CodePen/Expo links)
+  - Application to pharmacy/medication theme
+  - Expected output
+
+### Review and Testing
+- **Cross-Format Review**: Compare slide and markdown content side-by-side
+  - Review both formats for each section before proceeding to the next
+  - Use the thematic consistency checklist during review
+  - Check that links work in both formats
+
+- **User Testing**: Test with both instructor-led and self-guided learners
+  - Gather feedback on clarity and flow
+  - Verify technical accuracy
+  - Test with different knowledge levels
+
+- **Browser Compatibility Testing**: Test across multiple environments
+  - Test in primary browsers (Chrome, Firefox, Safari)
+  - Test on desktop and mobile screen sizes
+  - Verify presenter mode works on different devices
+
+### Workflow Optimization
+- **Modular Development**: Complete one section entirely before moving to the next
+  - Finish slides and markdown for a section before proceeding
+  - Use the first section as a reference template for subsequent sections
+  - Apply lessons learned to improve each new section
+
+- **Automated Validation**: Use tools to check consistency
+  - Validate links to CodePen/Expo resources
+  - Check for placeholder text that needs to be updated
+  - Verify slides and markdown have the same sections
+
+- **Interactive Preview**: Use development environments that support simultaneous previews
+  - Run local server to view slides during development
+  - Use split screen to view slides and markdown side by side
+  - Test navigation between sections during development
+
+## Examples
+
+### Template-First Example
+Before developing Module 2, create empty templates for all sections:
+
+```
+/docs/slides/module-2-environment-setup/
+  /section-1-development-environment/
+    index.html (with standard slide structure but placeholder content)
+  /section-2-debugging-tools/
+    index.html (with standard slide structure but placeholder content)
+  
+/docs/module-2-environment-setup/
+  /section-1-development-environment/
+    README.md (with standard headings but placeholder content)
+  /section-2-debugging-tools/
+    README.md (with standard headings but placeholder content)
+```
+
+### Thematic Consistency Checklist Example
+For each section/module, check:
+
+- [ ] Learning objectives match between slides and markdown
+- [ ] All code examples use pharmacy/medication context
+- [ ] Exercise instructions are identical in both formats
+- [ ] CodePen/Expo links follow standard format
+- [ ] Time estimates are consistent
+- [ ] Platform-specific callouts are included
+- [ ] Deep dive sections are consistent
+- [ ] Section navigation works
+
+### Single Source of Truth Approach
+Consider using a JSON file to define key content that must appear in both formats:
+
+```json
+{
+  "module": "2",
+  "title": "Environment Setup",
+  "sections": [
+    {
+      "id": "development-environment",
+      "title": "Development Environment",
+      "learningObjectives": [
+        "Install and configure essential React Native development tools",
+        "Set up a development environment for iOS and Android",
+        "Understand the role of each tool in the development workflow"
+      ],
+      "timeEstimate": "45-60 minutes",
+      "codePenLink": "https://codepen.io/react-native-course/pen/environment-setup"
+    }
+  ]
+}
+```
+
+This JSON could be used to generate both slide and markdown content automatically, ensuring consistency. 

@@ -51,6 +51,28 @@ This document provides an overview of all the rules for the React Native Trainin
    - Design requirements
    - Content guidelines
 
+9. [Module Development Process](./module-development-process.md)
+   - Template-first approach
+   - Technical implementation strategy
+   - Content alignment methodology
+   - Review and testing requirements
+   - Workflow optimization
+
+10. [Quality Assurance Checklist](./quality-assurance-checklist.md)
+    - Content alignment verification
+    - Technical quality verification
+    - Accessibility standards
+    - Learning experience evaluation
+    - Issue tracking and resolution
+
+11. [Content Alignment Template](./content-alignment-template.md)
+    - Learning objectives template
+    - Exercise template
+    - Callout template
+    - Code example template
+    - Summary template
+    - Content planning approach
+
 ## How to Use These Rules
 
 These rules serve as guidelines for all contributors to the React Native Training Course project. They ensure consistency, quality, and effectiveness across all aspects of the course.

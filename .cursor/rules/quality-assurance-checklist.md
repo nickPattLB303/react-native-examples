@@ -1,0 +1,122 @@
+# Quality Assurance Checklist
+
+## Description
+This rule provides a comprehensive quality assurance checklist for reviewing and validating course modules before finalization.
+
+## Rule
+Every module and section must be verified against this checklist before being considered complete. The checklist should be used during development (formative evaluation) and after completion (summative evaluation).
+
+### Content Alignment Checklist
+
+#### Learning Objectives
+- [ ] Learning objectives match exactly between slides and markdown
+- [ ] Learning objectives are specific, measurable, achievable, relevant, and time-bound (SMART)
+- [ ] Learning objectives are consistent with module overview
+- [ ] Learning objectives are properly sequenced for scaffolded learning
+
+#### Thematic Consistency
+- [ ] All code examples use pharmacy/medication context
+- [ ] All examples are relevant to healthcare/pharmacy applications
+- [ ] All exercises incorporate the pharmacy theme
+- [ ] Platform-specific callouts relate to healthcare/pharmacy when applicable
+
+#### Exercise and Challenge Consistency
+- [ ] Exercise instructions are identical in both slide and markdown formats
+- [ ] CodePen/Expo links follow standard format (https://codepen.io/react-native-course/pen/[exercise-id])
+- [ ] Exercise steps are clear and achievable
+- [ ] Exercise objectives align with section learning objectives
+- [ ] Exercise difficulty is appropriate for the section
+
+#### Links and Resources
+- [ ] All links are functional and point to the correct resource
+- [ ] External resource links are evergreen or include date of reference
+- [ ] Internal navigation links work correctly
+- [ ] Resource links follow consistent format
+
+#### Timing and Scope
+- [ ] Time estimates are consistent between slides and markdown
+- [ ] Section content can reasonably be completed within the estimated time
+- [ ] Content depth is appropriate for the allocated time
+- [ ] Pacing guidance is included for instructors
+
+### Technical Quality Checklist
+
+#### Presentation Layer
+- [ ] Slides render correctly in Chrome, Firefox, and Safari
+- [ ] Slides are responsive on different screen sizes
+- [ ] Presenter notes are accessible via "P" key
+- [ ] Code syntax highlighting displays correctly
+- [ ] Navigation controls work (keyboard, buttons, section menu)
+- [ ] Slides function on both desktop and mobile devices
+
+#### Content Structure
+- [ ] Directory structure follows project standards
+- [ ] File naming follows conventions
+- [ ] Path references are consistent and correct
+- [ ] No broken internal links or references
+
+#### Code Examples
+- [ ] All code is syntactically correct
+- [ ] Code examples are focused and relevant
+- [ ] Complex examples include line-by-line explanations
+- [ ] Code follows project style guidelines
+
+### Accessibility Checklist
+
+#### Visual Design
+- [ ] Sufficient color contrast for text and background
+- [ ] Text size is readable at different screen sizes
+- [ ] Important content is not distinguished by color alone
+- [ ] Images have descriptive alt text
+
+#### Content Accessibility
+- [ ] Technical terms are explained or linked to glossary
+- [ ] Complex concepts have visual aids
+- [ ] Content is logically structured with clear hierarchy
+- [ ] No unnecessarily complex language
+
+### Learning Experience Checklist
+
+#### Engagement
+- [ ] Content includes questions or prompts for reflection
+- [ ] Variety of learning activities (read, watch, practice)
+- [ ] Real-world applications are emphasized
+- [ ] Learner agency is supported through choices
+
+#### Scaffolding
+- [ ] Content builds progressively on previous knowledge
+- [ ] Difficult concepts are broken down into manageable parts
+- [ ] Support is provided for challenging content
+- [ ] Multiple learning paths are supported
+
+## Usage Instructions
+
+1. Create a copy of this checklist for each module/section
+2. Complete initial verification during development
+3. Conduct peer review using this checklist
+4. Address all issues before finalizing
+5. Store completed checklists for future reference
+
+## Example: Completed Section Checklist
+
+**Module 1, Section 2: Why React Native?**
+- [x] Learning objectives match exactly between slides and markdown
+- [x] All code examples use pharmacy/medication context
+- [x] Exercise instructions are identical in both formats
+- [x] CodePen links follow standard format
+- [x] All links are functional
+- [x] Time estimates are consistent (30-45 minutes)
+- [x] Slides render correctly in all browsers
+- [x] Presenter notes are accessible
+- [x] Directory structure follows standards
+- [x] Code examples are syntactically correct
+- [x] Sufficient color contrast for text
+- [x] Technical terms are explained
+- [x] Content includes reflection questions
+- [x] Content builds on Section 1
+
+**Issues Identified and Resolved:**
+1. Fixed inconsistent learning objective wording between slides and markdown
+2. Updated CodePen link to follow standard format
+3. Added missing pharmacy context to one code example
+4. Fixed path reference in navigation menu 
