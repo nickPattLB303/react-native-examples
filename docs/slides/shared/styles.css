@@ -7,6 +7,7 @@
 :root {
   /* Primary colors - pharmacy/medication theme */
   --primary-color: #0066cc;        /* Blue - pharmacy cross color */
+  --primary-color-rgb: 0, 102, 204; /* RGB values for primary color */
   --secondary-color: #4caf50;      /* Green - health/wellness */
   --accent-color: #ff5722;         /* Orange - prescription label */
   --light-color: #e3f2fd;          /* Light blue background */
@@ -62,6 +63,7 @@ html, body {
   width: var(--slide-width);
   height: var(--slide-height);
   padding: var(--spacing-xl);
+  padding-left: calc(var(--spacing-xl) + 50px); /* Extra padding on the left for the nav menu */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -216,6 +218,41 @@ pre code {
   background-color: transparent;
   padding: 0;
   border-radius: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* Add some basic syntax coloring */
+.code-block {
+  color: #333;
+}
+
+.code-block .comment, .code-block .hljs-comment {
+  color: #6a9955;
+}
+
+.code-block .string, .code-block .hljs-string {
+  color: #ce9178;
+}
+
+.code-block .keyword, .code-block .hljs-keyword {
+  color: #569cd6;
+}
+
+.code-block .function, .code-block .hljs-function {
+  color: #dcdcaa;
+}
+
+.code-block .tag, .code-block .hljs-tag {
+  color: #569cd6;
+}
+
+.code-block .attr, .code-block .hljs-attr {
+  color: #9cdcfe;
+}
+
+.code-block .number, .code-block .hljs-number {
+  color: #b5cea8;
 }
 
 /* Columns layout */
@@ -304,9 +341,21 @@ pre code {
   width: 100%;
   max-width: 900px;
   align-self: flex-start;
+  display: none; /* Hide by default */
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
 }
 
-.presenter-mode .presenter-notes {
+.presenter-notes::before {
+  content: "Presenter Notes";
+  display: block;
+  font-weight: bold;
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-color);
+}
+
+body.presenter-mode .presenter-notes {
   display: block !important;
 }
 
@@ -405,4 +454,133 @@ pre code {
 
 .slide {
   animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Navigation buttons */
+.slide-navigation {
+  position: fixed;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  z-index: 1000;
+}
+
+.nav-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.nav-button:hover {
+  opacity: 1;
+}
+
+.presenter-button {
+  background-color: var(--accent-color);
+}
+
+/* Next steps links */
+.next-steps a {
+  color: var(--primary-color);
+  text-decoration: none;
+  display: inline-block;
+  padding: var(--spacing-xs) 0;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.next-steps a:hover {
+  color: var(--dark-color);
+  text-decoration: underline;
+}
+
+/* Section Navigation Menu */
+.section-nav-menu {
+  position: fixed;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  z-index: 1500;
+  font-size: 0.9rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: auto;
+  min-width: 40px; /* Smaller when collapsed */
+  max-width: 300px;
+  transition: all 0.3s ease;
+}
+
+.section-nav-toggle {
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.section-nav-toggle:hover {
+  background-color: var(--dark-color);
+}
+
+.section-nav-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Hide content when menu is collapsed */
+.section-nav-menu.collapsed .section-nav-content {
+  display: none;
+}
+
+.section-nav-menu.collapsed {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.section-nav-link {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--dark-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+.section-nav-link:hover {
+  background-color: var(--light-color);
+  text-decoration: none;
+}
+
+.section-nav-link.current-section {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  font-weight: bold;
+  border-left: 3px solid var(--primary-color);
+}
+
+.section-nav-link.module-link {
+  background-color: var(--light-color);
+  font-weight: bold;
 } 

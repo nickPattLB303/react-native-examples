@@ -62,6 +62,75 @@
         goToSlide(slideIndex);
       }
     }
+    
+    // Add navigation buttons
+    addNavigationButtons();
+    
+    // Make section navigation links clickable
+    makeNextSectionLinksClickable();
+  }
+  
+  // Add navigation buttons to the UI
+  function addNavigationButtons() {
+    const navContainer = document.createElement('div');
+    navContainer.className = 'slide-navigation';
+    
+    const prevButton = document.createElement('button');
+    prevButton.className = 'nav-button prev-button';
+    prevButton.innerHTML = '&larr;';
+    prevButton.title = 'Previous Slide';
+    prevButton.addEventListener('click', prevSlide);
+    
+    const nextButton = document.createElement('button');
+    nextButton.className = 'nav-button next-button';
+    nextButton.innerHTML = '&rarr;';
+    nextButton.title = 'Next Slide';
+    nextButton.addEventListener('click', nextSlide);
+    
+    const presenterButton = document.createElement('button');
+    presenterButton.className = 'nav-button presenter-button';
+    presenterButton.innerHTML = 'P';
+    presenterButton.title = 'Toggle Presenter Notes';
+    presenterButton.addEventListener('click', togglePresenterMode);
+    
+    navContainer.appendChild(prevButton);
+    navContainer.appendChild(presenterButton);
+    navContainer.appendChild(nextButton);
+    
+    document.body.appendChild(navContainer);
+  }
+  
+  // Make "Next: Section X" links clickable
+  function makeNextSectionLinksClickable() {
+    document.querySelectorAll('.next-steps').forEach(nextStepsElement => {
+      const text = nextStepsElement.textContent;
+      const sectionMatch = text.match(/Next:\s+Section\s+(\d+):\s+(.*)/i);
+      
+      if (sectionMatch) {
+        const sectionNumber = sectionMatch[1];
+        const sectionTitle = sectionMatch[2].trim();
+        
+        // Map section numbers to correct directory names
+        const sectionPaths = {
+          '1': 'mobile-development-landscape',
+          '2': 'why-react-native',
+          '3': 'react-native-internals',
+          '4': 'react-native-documentation'
+        };
+        
+        // Get the correct path for this section number
+        const sectionPath = sectionPaths[sectionNumber] || sectionTitle.toLowerCase().replace(/\s+/g, '-');
+        
+        // Create a link that replaces the text
+        const link = document.createElement('a');
+        link.href = `../section-${sectionNumber}-${sectionPath}/index.html`;
+        link.innerHTML = `<strong>Next:</strong> Section ${sectionNumber}: ${sectionTitle}`;
+        
+        // Clear the element and add the link
+        nextStepsElement.innerHTML = '';
+        nextStepsElement.appendChild(link);
+      }
+    });
   }
   
   // Navigation functions
@@ -91,31 +160,55 @@
   function togglePresenterMode() {
     isPresenterMode = !isPresenterMode;
     
-    slides.forEach(slide => {
-      const presenterNotes = slide.querySelector('.presenter-notes');
-      if (presenterNotes) {
-        presenterNotes.style.display = isPresenterMode ? 'block' : 'none';
-      }
+    // Find all presenter notes and toggle their visibility
+    document.querySelectorAll('.presenter-notes').forEach(notes => {
+      notes.style.display = isPresenterMode ? 'block' : 'none';
     });
     
     // Add/remove presenter mode class to body
     if (isPresenterMode) {
       document.body.classList.add('presenter-mode');
+      console.log('Presenter mode enabled');
     } else {
       document.body.classList.remove('presenter-mode');
+      console.log('Presenter mode disabled');
+    }
+    
+    // Add visual indicator for presenter mode
+    let indicator = document.getElementById('presenter-mode-indicator');
+    if (isPresenterMode) {
+      if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.id = 'presenter-mode-indicator';
+        indicator.textContent = 'Presenter Mode';
+        indicator.style.position = 'fixed';
+        indicator.style.top = '10px';
+        indicator.style.left = '10px';
+        indicator.style.backgroundColor = 'rgba(255, 87, 34, 0.8)';
+        indicator.style.color = 'white';
+        indicator.style.padding = '5px 10px';
+        indicator.style.borderRadius = '4px';
+        indicator.style.zIndex = '2000';
+        document.body.appendChild(indicator);
+      }
+    } else if (indicator) {
+      indicator.remove();
     }
   }
   
   // Keyboard event handler
   function handleKeyDown(e) {
+    // Don't handle events if they're in an input field
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      return;
+    }
+    
     switch (e.key) {
       case 'ArrowRight':
       case ' ':
-      case 'n':
         nextSlide();
         break;
       case 'ArrowLeft':
-      case 'p':
         prevSlide();
         break;
       case 'Home':
@@ -125,10 +218,14 @@
         goToSlide(slides.length - 1);
         break;
       case 'p':
-        if (e.ctrlKey || e.metaKey) {
-          togglePresenterMode();
-          e.preventDefault();
-        }
+      case 'P':
+        // Toggle presenter mode
+        togglePresenterMode();
+        e.preventDefault();
+        break;
+      case 'n':
+      case 'N':
+        nextSlide();
         break;
     }
   }
@@ -183,10 +280,88 @@
     }
   }
   
+  // Add section navigation menu
+  function addSectionNavMenu() {
+    // Create the navigation menu container
+    const navMenu = document.createElement('div');
+    navMenu.className = 'section-nav-menu collapsed'; // Start collapsed
+    
+    // Create the menu toggle button (simplified)
+    const menuToggle = document.createElement('button');
+    menuToggle.className = 'section-nav-toggle';
+    menuToggle.innerHTML = '☰';
+    menuToggle.title = 'Toggle Section Navigation';
+    
+    // Create the menu content
+    const menuContent = document.createElement('div');
+    menuContent.className = 'section-nav-content';
+    menuContent.style.display = 'none';
+    
+    // Get base path for navigation
+    const currentPath = window.location.pathname;
+    const pathParts = currentPath.split('/');
+    
+    // Find the index of 'slides' in the path
+    const slidesIndex = pathParts.findIndex(part => part === 'slides');
+    if (slidesIndex === -1) return; // Not in slides directory
+    
+    // Build the base path up to the module directory
+    const moduleBasePath = pathParts.slice(0, slidesIndex + 2).join('/');
+    
+    // Add module overview link
+    const moduleLink = document.createElement('a');
+    moduleLink.href = `${moduleBasePath}/index.html`;
+    moduleLink.textContent = 'Module Overview';
+    moduleLink.className = 'section-nav-link module-link';
+    menuContent.appendChild(moduleLink);
+    
+    // Define the sections with their correct directory names
+    const sections = [
+      { num: 1, name: 'mobile-development-landscape' }, // Fixed path for Section 1
+      { num: 2, name: 'why-react-native' },
+      { num: 3, name: 'react-native-internals' },
+      { num: 4, name: 'react-native-documentation' }
+    ];
+    
+    // Add links for each section
+    sections.forEach(section => {
+      const sectionLink = document.createElement('a');
+      sectionLink.href = `${moduleBasePath}/section-${section.num}-${section.name}/index.html`;
+      sectionLink.textContent = `Section ${section.num}: ${section.name.replace(/-/g, ' ')}`;
+      sectionLink.className = 'section-nav-link';
+      
+      // Highlight current section
+      if (currentPath.includes(`section-${section.num}`)) {
+        sectionLink.classList.add('current-section');
+      }
+      
+      menuContent.appendChild(sectionLink);
+    });
+    
+    // Toggle menu visibility when clicking the toggle button
+    menuToggle.addEventListener('click', function() {
+      if (menuContent.style.display === 'none') {
+        menuContent.style.display = 'block';
+        navMenu.classList.remove('collapsed');
+      } else {
+        menuContent.style.display = 'none';
+        navMenu.classList.add('collapsed');
+      }
+    });
+    
+    // Add elements to the menu
+    navMenu.appendChild(menuToggle);
+    navMenu.appendChild(menuContent);
+    
+    // Add the menu to the document
+    document.body.appendChild(navMenu);
+  }
+  
   // Initialize everything when DOM is loaded
   document.addEventListener('DOMContentLoaded', function() {
     initSlides();
     setupPlatformSpecificContent();
+    addSectionNavMenu();
     
     // Add print button
     const printButton = document.createElement('button');
@@ -202,34 +377,17 @@
 // Syntax highlighting
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre code').forEach((block) => {
-    highlightCode(block);
+    // Simple approach: just escape HTML entities
+    const code = block.textContent;
+    const escapedCode = code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    
+    // Set the escaped content
+    block.innerHTML = escapedCode;
+    
+    // Add a class to the pre element for styling
+    block.parentElement.classList.add('code-block');
   });
-});
-
-// Simple syntax highlighter
-function highlightCode(element) {
-  const code = element.textContent;
-  
-  // JavaScript/JSX highlighting patterns
-  const patterns = [
-    { pattern: /(import|export|from|const|let|var|function|return|if|else|for|while|class|extends|=>)/g, className: 'hljs-keyword' },
-    { pattern: /(["'`])(?:(?=(\\?))\2.)*?\1/g, className: 'hljs-string' },
-    { pattern: /\/\/.*|\/\*[\s\S]*?\*\//g, className: 'hljs-comment' },
-    { pattern: /\b\d+\b/g, className: 'hljs-number' },
-    { pattern: /\b(React|useState|useEffect|useContext|useRef)\b/g, className: 'hljs-function' },
-    { pattern: /(<\/?[a-zA-Z][a-zA-Z0-9]*>?)/g, className: 'hljs-tag' },
-    { pattern: /([a-zA-Z]+)=/g, className: 'hljs-attr' },
-    { pattern: /\b(true|false|null|undefined)\b/g, className: 'hljs-built_in' }
-  ];
-  
-  let highlightedCode = code;
-  
-  // Apply syntax highlighting
-  patterns.forEach(({ pattern, className }) => {
-    highlightedCode = highlightedCode.replace(pattern, match => 
-      `<span class="${className}">${match}</span>`
-    );
-  });
-  
-  element.innerHTML = highlightedCode;
-} 
+}); 
