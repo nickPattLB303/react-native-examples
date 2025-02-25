@@ -10,37 +10,42 @@ This document provides an overview of all the rules for the React Native Trainin
    - Branch naming conventions
    - Slides organization within docs branch
 
-2. [Documentation Standards and Writing Style](./documentation-standards.md)
+2. [Course Modules](./course-modules.md)
+   - Module list and numbering
+   - Module organization
+   - Naming conventions
+
+3. [Documentation Standards and Writing Style](./documentation-standards.md)
    - Microsoft Writing Style Guide compliance
    - ADDIE model implementation
    - Learning path support
    - Callout boxes usage
 
-3. [Code Standards and Examples](./code-standards.md)
+4. [Code Standards and Examples](./code-standards.md)
    - Medication/pharmacy/orders theme
    - JSDoc documentation requirements
    - Platform-specific code handling
    - Exercise and challenge structure
 
-4. [Learning Paths and Educational Approach](./learning-paths.md)
+5. [Learning Paths and Educational Approach](./learning-paths.md)
    - Three learning paths support
    - Course schedule structure
    - Content difficulty progression
    - Standalone exercise design
 
-5. [Technical Depth and Explanations](./technical-depth.md)
+6. [Technical Depth and Explanations](./technical-depth.md)
    - Surface, mid, and deep-level explanations
    - "Under the hood" requirements
    - Visual explanations
    - Platform-specific connections
 
-6. [Tooling and Development Environment](./tooling-environment.md)
+7. [Tooling and Development Environment](./tooling-environment.md)
    - Platform usage (CodePen, Expo Snack)
    - Expo Go setup
    - Repository branch structure
    - Local development instructions
 
-7. [Slide and Presentation Standards](./slide-standards.md)
+8. [Slide and Presentation Standards](./slide-standards.md)
    - HTML/CSS slide requirements
    - Slide organization in docs/slides directory
    - Design requirements

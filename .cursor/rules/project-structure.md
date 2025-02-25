@@ -13,7 +13,7 @@ This rule defines the structure and organization of the React Native training co
   - `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
 - Documentation should follow a hierarchical structure:
-  - Modules (large topics)
+  - Modules (large topics, as defined in [Course Modules](./course-modules.md))
   - Sections (components of modules)
   - Sub-sections (components of sections)
 

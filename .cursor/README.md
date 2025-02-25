@@ -12,6 +12,7 @@ The rules are organized in the `rules` directory:
 
 - [index.md](./rules/index.md): Overview of all rules
 - [project-structure.md](./rules/project-structure.md): Repository and documentation structure
+- [course-modules.md](./rules/course-modules.md): Course modules and organization
 - [documentation-standards.md](./rules/documentation-standards.md): Writing style and formatting
 - [code-standards.md](./rules/code-standards.md): Code examples and JSDoc requirements
 - [learning-paths.md](./rules/learning-paths.md): Educational approach and learning paths
