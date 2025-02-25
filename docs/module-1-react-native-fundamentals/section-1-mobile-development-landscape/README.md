@@ -131,15 +131,24 @@ Throughout this evolution, one challenge has remained constant: the mobile ecosy
 
 This fragmentation is what continues to drive innovation in cross-platform development tools, with React Native standing as one of the most successful solutions to date.
 
-## Exercise: Mobile Development Timeline
+## Exercise: Platform Selection
 
-Create a timeline of mobile development frameworks and approaches, highlighting:
-1. When each major framework was introduced
-2. What problem it was trying to solve
-3. Its key advantages and disadvantages
-4. Whether it's still relevant today
+In this exercise, analyze which development approach would be best for the following pharmacy app features:
 
-Use the [Mobile Development Timeline CodePen](https://codepen.io/your-username/pen/mobile-timeline) as a starting point.
+1. **Medication barcode scanner**: Consider native device access requirements and performance needs
+2. **Medication reminder notifications**: Evaluate reliability and background processing capabilities
+3. **Pharmacy locator with maps**: Assess integration with mapping services and location APIs
+4. **Medication information database**: Consider data storage, offline access, and synchronization
+
+For each feature, recommend either native, hybrid, or cross-platform development and explain your reasoning based on:
+- Performance requirements
+- Platform API access needs
+- Development efficiency
+- Maintenance considerations
+
+Use the [Platform Selection Analysis CodePen](https://codepen.io/your-username/pen/platform-selection) to document your analysis.
+
+This exercise helps you apply the concepts from this section to real-world pharmacy app features, reinforcing your understanding of when different mobile development approaches are most appropriate.
 
 ## Summary
 

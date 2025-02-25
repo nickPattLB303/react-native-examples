@@ -320,6 +320,8 @@ Create a diagram that illustrates the flow of data and control in a React Native
 
 Use the [Architecture Diagram CodePen](https://codepen.io/your-username/pen/architecture-diagram) as a starting point.
 
+This exercise helps you visualize the complex interactions between JavaScript and native code in a React Native application, reinforcing your understanding of the architecture.
+
 ## Summary
 
 React Native's architecture is a sophisticated system that bridges the gap between JavaScript and native mobile platforms. By understanding how the JavaScript thread communicates with native components through the bridge, you can better optimize your applications and debug issues when they arise.

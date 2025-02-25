@@ -200,15 +200,23 @@ This approach helps you build a solid understanding of React Native concepts whi
 
 ## Exercise: Documentation Scavenger Hunt
 
-Complete the following tasks using only the official React Native documentation:
+Practice finding information in the React Native documentation by completing the following tasks:
 
-1. Find how to implement a pull-to-refresh feature in a scrollable list
-2. Determine how to detect when the app moves between foreground and background states
-3. Discover how to create a custom button with a loading indicator
-4. Find the recommended way to persist data locally in a React Native app
-5. Identify how to handle deep linking to your app from external sources
+1. Find the props for the `Image` component that handle loading states
+2. Locate information about how to implement deep linking in a React Native app
+3. Find the API for accessing device information like OS version and device model
+4. Discover how to implement pull-to-refresh in a `FlatList`
+5. Find information about optimizing JavaScript bundle size
+
+Use different search strategies for each question:
+- Try the built-in documentation search
+- Navigate through documentation sections
+- Use Google with site-specific search (site:reactnative.dev)
+- Check GitHub issues for edge cases
 
 Use the [Documentation Scavenger Hunt CodePen](https://codepen.io/your-username/pen/documentation-hunt) to record your findings.
+
+This exercise will help you develop effective documentation navigation skills that will save you time throughout your React Native development journey.
 
 ## Summary
 
