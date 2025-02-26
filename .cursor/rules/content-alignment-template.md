@@ -62,7 +62,14 @@ In this exercise, you will [brief description of exercise purpose related to pha
 ### Application
 This exercise simulates a real-world scenario where you would [description of how this applies to pharmacy/medication applications].
 
-Use the [Exercise Name CodePen](https://codepen.io/react-native-course/pen/[exercise-id]) to complete this exercise.
+#### Exercise Resources
+Complete this exercise using the [Exercise Name Microsoft Form](https://forms.office.com/[form-id]) to document your analysis.
+
+<!-- For diagramming exercises, use this format instead: -->
+<!-- Complete this exercise using the [Exercise Name Microsoft Whiteboard](https://whiteboard.microsoft.com/[whiteboard-id]) to create your diagram. -->
+
+<!-- For coding exercises, use this format instead: -->
+<!-- Complete this exercise using the [Exercise Name CodePen/Expo Snack](https://codepen.io/react-native-course/pen/[exercise-id]) to write and test your code. -->
 ```
 
 #### Slide Format:
@@ -81,7 +88,11 @@ Use the [Exercise Name CodePen](https://codepen.io/react-native-course/pen/[exer
       <li>[Step 4 instruction]</li>
     </ol>
     <div class="exercise-resources">
-      <p>Complete this exercise using the <a href="https://codepen.io/react-native-course/pen/[exercise-id]" target="_blank">Exercise Name CodePen</a></p>
+      <p>Complete this exercise using the <a href="https://forms.office.com/[form-id]" target="_blank">Exercise Name Microsoft Form</a></p>
+      <!-- For diagramming exercises, use this format instead: -->
+      <!-- <p>Complete this exercise using the <a href="https://whiteboard.microsoft.com/[whiteboard-id]" target="_blank">Exercise Name Microsoft Whiteboard</a></p> -->
+      <!-- For coding exercises, use this format instead: -->
+      <!-- <p>Complete this exercise using the <a href="https://codepen.io/react-native-course/pen/[exercise-id]" target="_blank">Exercise Name CodePen/Expo Snack</a></p> -->
     </div>
   </div>
   <div class="presenter-notes">

@@ -49,7 +49,7 @@ This rule defines the educational approach and learning paths for the React Nati
   **Prerequisite Knowledge**: Basic JavaScript, React fundamentals
   **Estimated Time**: 30 - 45 minutes
   
-  > 🚀 **Self-Led Learners**: Complete the CodePen exercise at the end of this section before moving on.
+  > 🚀 **Self-Led Learners**: Complete the Microsoft Form or Whiteboard exercise at the end of this section before moving on. For coding exercises, use the provided CodePen or Expo Snack.
   
   > 🔍 **Instructor-Led Note**: This section will be covered in the Day 3 morning session.
   ```

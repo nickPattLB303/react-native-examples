@@ -160,7 +160,8 @@ Evaluate the strengths and limitations of native, hybrid, and cross-platform dev
 ### Application
 This exercise simulates real-world decisions you would make when planning a pharmacy application architecture. The ability to select the right development approach for specific features is critical for creating effective healthcare applications that balance performance, development efficiency, and maintenance requirements.
 
-Use the [Platform Selection Analysis CodePen](https://codepen.io/your-username/pen/platform-selection) to document your analysis.
+#### Exercise Resources
+Complete this exercise using the [Platform Selection Analysis Microsoft Form](https://forms.office.com/r/platformSelectionAnalysis) to document your analysis.
 
 ## Summary
 

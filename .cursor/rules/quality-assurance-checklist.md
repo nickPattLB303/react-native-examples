@@ -22,7 +22,10 @@ Every module and section must be verified against this checklist before being co
 
 #### Exercise and Challenge Consistency
 - [ ] Exercise instructions are identical in both slide and markdown formats
-- [ ] CodePen/Expo links follow standard format (https://codepen.io/react-native-course/pen/[exercise-id])
+- [ ] Exercise resources use the appropriate tool for the exercise type:
+  - [ ] Analysis/documentation exercises use Microsoft Forms (https://forms.office.com/[form-id])
+  - [ ] Diagramming exercises use Microsoft Whiteboard (https://whiteboard.microsoft.com/[whiteboard-id])
+  - [ ] Coding exercises use CodePen/Expo Snack (https://codepen.io/react-native-course/pen/[exercise-id])
 - [ ] Exercise steps are clear and achievable
 - [ ] Exercise objectives align with section learning objectives
 - [ ] Exercise difficulty is appropriate for the section
@@ -103,7 +106,7 @@ Every module and section must be verified against this checklist before being co
 - [x] Learning objectives match exactly between slides and markdown
 - [x] All code examples use pharmacy/medication context
 - [x] Exercise instructions are identical in both formats
-- [x] CodePen links follow standard format
+- [x] CodePen/Expo Snack links follow standard format
 - [x] All links are functional
 - [x] Time estimates are consistent (30-45 minutes)
 - [x] Slides render correctly in all browsers
@@ -117,6 +120,6 @@ Every module and section must be verified against this checklist before being co
 
 **Issues Identified and Resolved:**
 1. Fixed inconsistent learning objective wording between slides and markdown
-2. Updated CodePen link to follow standard format
+2. Updated CodePen/Expo Snack link to follow standard format
 3. Added missing pharmacy context to one code example
 4. Fixed path reference in navigation menu 

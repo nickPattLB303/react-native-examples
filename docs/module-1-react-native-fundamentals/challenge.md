@@ -75,7 +75,9 @@ For each of the following features, identify the specific section of the React N
 
 ## Submission
 
-Complete this challenge using the [Module 1 Challenge CodePen](https://codepen.io/your-username/pen/module-1-challenge).
+Complete this challenge using the following resources:
+- [Module 1 Challenge Analysis Microsoft Form](https://forms.office.com/r/module1ChallengeAnalysis) for the approach comparison table and documentation reference list
+- [Module 1 Challenge Architecture Microsoft Whiteboard](https://whiteboard.microsoft.com/module1ChallengeArchitecture) for the React Native architecture diagram and bridge communication flow analysis
 
 Your submission should include:
 - The approach comparison table

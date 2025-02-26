@@ -40,7 +40,11 @@ This document provides an overview of all the rules for the React Native Trainin
    - Platform-specific connections
 
 7. [Tooling and Development Environment](./tooling-environment.md)
-   - Platform usage (CodePen, Expo Snack)
+   - Platform usage:
+     - HTML, CSS, JavaScript, React: CodePen
+     - React Native: Expo Snack
+     - Analysis Exercises: Microsoft Forms
+     - Diagramming Exercises: Microsoft Whiteboard
    - Expo Go setup
    - Repository branch structure
    - Local development instructions

@@ -54,3 +54,5 @@ This repository is organized as follows:
 - HTML, CSS, JavaScript, React: [CodePen](https://codepen.io/)
 - React Native: [Expo Snack](https://snack.expo.dev/)
 - React Native Development: [Expo Go](https://expo.dev/client)
+- Analysis Exercises: [Microsoft Forms](https://forms.office.com/)
+- Diagramming Exercises: [Microsoft Whiteboard](https://whiteboard.microsoft.com/)

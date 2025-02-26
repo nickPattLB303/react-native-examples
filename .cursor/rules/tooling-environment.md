@@ -36,63 +36,16 @@ This rule defines the standards for tooling, development environments, and platf
   - Troubleshooting guides
   - Platform-specific considerations (macOS, Windows, Linux)
 
+## Development Tools
+
+The following tools are used throughout the course:
+
+- HTML, CSS, JavaScript, React: CodePen
+- React Native: Expo Snack
+- React Native Development: Expo Go
+- Analysis Exercises: Microsoft Forms
+- Diagramming Exercises: Microsoft Whiteboard
+
 ## Examples
 - Proper Expo Snack setup:
-  ```markdown
-  # Medication List Component
-
-  ## Running this Example
-  
-  ### Option 1: Expo Snack (No Setup Required)
-  1. Open this Snack in your browser: [Medication List Snack](https://snack.expo.dev/@username/medication-list)
-  2. You can view the result in the preview pane or scan the QR code with the Expo Go app on your device
-  
-  ### Option 2: Local Development
-  1. Clone the repository: `git clone https://github.com/username/react-native-training.git`
-  2. Navigate to the example: `cd react-native-training/examples/medication-list`
-  3. Install dependencies: `npm install`
-  4. Start the development server: `npx expo start`
-  5. Scan the QR code with the Expo Go app or press 'i' for iOS simulator / 'a' for Android emulator
   ```
-
-- Proper challenge branch instructions:
-  ```markdown
-  # Pharmacy Locator Challenge
-
-  ## Setup Instructions
-  
-  1. Clone the repository if you haven't already:
-     ```bash
-     git clone https://github.com/username/react-native-training.git
-     ```
-  
-  2. Checkout the starter branch:
-     ```bash
-     git checkout challenges/pharmacy-locator/starter
-     ```
-  
-  3. Install dependencies:
-     ```bash
-     npm install
-     ```
-  
-  4. Start the development server:
-     ```bash
-     npx expo start
-     ```
-  
-  ## Challenge Requirements
-  
-  Build a pharmacy locator that:
-  - Displays a map with nearby pharmacies
-  - Shows pharmacy details (name, address, hours)
-  - Allows filtering by services offered
-  - Provides directions to the selected pharmacy
-  
-  ## Reference Solution
-  
-  After completing the challenge, you can view the reference solution by checking out:
-  ```bash
-  git checkout challenges/pharmacy-locator/complete
-  ```
-  ``` 

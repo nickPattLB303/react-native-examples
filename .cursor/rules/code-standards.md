@@ -35,6 +35,8 @@ This rule defines the standards for all code examples, exercises, challenges, an
 - Code platform usage:
   - HTML, CSS, JavaScript, React: CodePen
   - React Native: Expo Snack
+  - Analysis Exercises: Microsoft Forms
+  - Diagramming Exercises: Microsoft Whiteboard
   - Challenges: Pre-made branches in the repository
 
 - React Native setup:

@@ -221,7 +221,8 @@ For each task, use a different search strategy:
 ### Application
 This exercise simulates real-world development scenarios where you need to quickly find solutions in the documentation. These documentation skills will be directly applicable when building our pharmacy app, where you'll need to implement medication image loading with proper states, create deep links for prescription refill notifications, adapt the UI based on the user's device, build a refreshable medication list, and optimize performance for a large medication database.
 
-Use the [Documentation Scavenger Hunt CodePen](https://codepen.io/your-username/pen/documentation-hunt) to record your findings.
+#### Exercise Resources
+Complete this exercise using the [Documentation Scavenger Hunt Microsoft Form](https://forms.office.com/r/documentationScavengerHunt) to record your findings.
 
 ## Summary
 

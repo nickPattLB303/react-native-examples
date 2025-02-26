@@ -338,7 +338,8 @@ Visualize and explain the complete data flow in a React Native application from 
 ### Application
 This exercise simulates the architectural analysis needed when optimizing a pharmacy app's performance. Understanding React Native's internal architecture is crucial when debugging performance issues in medication management features, implementing smooth prescription refill workflows, or optimizing medication reminder notifications that require interaction with native device capabilities.
 
-Use the [Architecture Diagram CodePen](https://codepen.io/your-username/pen/architecture-diagram) to create and share your diagram.
+#### Exercise Resources
+Complete this exercise using the [Architecture Diagram Microsoft Whiteboard](https://whiteboard.microsoft.com/architectureDiagram) to create your diagram.
 
 ## Summary
 

@@ -187,7 +187,8 @@ Analyze how React Native's capabilities align with pharmacy app requirements and
 ### Application
 This exercise simulates the technology selection process that occurs at the beginning of real-world healthcare app projects. The ability to evaluate framework strengths and weaknesses in the context of specific application requirements is essential for making sound architectural decisions that impact development efficiency, user experience, and long-term maintenance.
 
-Use the [React Native Advantages CodePen](https://codepen.io/your-username/pen/advantages-analysis) to complete this exercise.
+#### Exercise Resources
+Complete this exercise using the [React Native Advantages Analysis Microsoft Form](https://forms.office.com/r/reactNativeAdvantages) to document your analysis.
 
 ## Summary
 

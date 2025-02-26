@@ -45,7 +45,7 @@ This rule defines the optimal process for developing new modules, based on lesso
 
 - **Thematic Consistency Checklist**: Use a checklist for each module/section
   - Pharmacy/medication theme inclusion
-  - CodePen/Expo links format
+  - Exercise resource links format (Forms/Whiteboard/CodePen/Expo Snack)
   - Learning objectives consistency
   - Exercise implementation
   - Time estimates
@@ -53,7 +53,10 @@ This rule defines the optimal process for developing new modules, based on lesso
 - **Exercise Definition Template**: Standardize exercise formats
   - Objective
   - Required steps
-  - Resources (CodePen/Expo links)
+  - Resources:
+    - Microsoft Forms for analysis/documentation exercises
+    - Microsoft Whiteboard for diagramming exercises
+    - CodePen/Expo Snack for coding exercises
   - Application to pharmacy/medication theme
   - Expected output
 
@@ -80,7 +83,7 @@ This rule defines the optimal process for developing new modules, based on lesso
   - Apply lessons learned to improve each new section
 
 - **Automated Validation**: Use tools to check consistency
-  - Validate links to CodePen/Expo resources
+  - Validate links to Microsoft Forms, Microsoft Whiteboard, CodePen, and Expo Snack resources
   - Check for placeholder text that needs to be updated
   - Verify slides and markdown have the same sections
 
@@ -114,7 +117,10 @@ For each section/module, check:
 - [ ] Learning objectives match between slides and markdown
 - [ ] All code examples use pharmacy/medication context
 - [ ] Exercise instructions are identical in both formats
-- [ ] CodePen/Expo links follow standard format
+- [ ] Exercise resources use the appropriate tool for the exercise type:
+  - [ ] Analysis/documentation exercises use Microsoft Forms
+  - [ ] Diagramming exercises use Microsoft Whiteboard
+  - [ ] Coding exercises use CodePen/Expo Snack
 - [ ] Time estimates are consistent
 - [ ] Platform-specific callouts are included
 - [ ] Deep dive sections are consistent
@@ -144,3 +150,32 @@ Consider using a JSON file to define key content that must appear in both format
 ```
 
 This JSON could be used to generate both slide and markdown content automatically, ensuring consistency. 
+
+### Content Development Checklist
+
+- [ ] Learning objectives defined
+- [ ] Content outline created
+- [ ] Slide deck developed
+- [ ] Markdown documentation written
+- [ ] Exercise instructions created
+- [ ] Exercise resources prepared:
+  - [ ] Microsoft Forms for analysis/documentation exercises
+  - [ ] Microsoft Whiteboard for diagramming exercises
+  - [ ] CodePen/Expo Snack links for coding exercises
+- [ ] Challenge instructions created
+- [ ] Challenge resources prepared
+- [ ] Content reviewed against quality checklist
+
+### Quality Assurance Checklist
+
+- [ ] Learning objectives are clear and measurable
+- [ ] Content aligns with learning objectives
+- [ ] Pharmacy theme is consistently applied
+- [ ] Exercise instructions are clear and complete
+- [ ] Exercise resources (Forms/Whiteboard/CodePen/Expo Snack) follow standard format
+- [ ] Challenge instructions are clear and complete
+- [ ] All links are functional
+- [ ] Content is free of errors (grammar, spelling, technical)
+- [ ] Content is accessible (alt text, color contrast, etc.)
+
+```

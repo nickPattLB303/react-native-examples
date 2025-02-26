@@ -6,7 +6,7 @@
  * This script validates content alignment between slides and markdown documentation.
  * It checks for:
  * - Learning objectives consistency
- * - CodePen/Expo links validity
+ * - CodePen/Expo Snack links validity
  * - Exercise structure consistency
  * - Path consistency
  * - Placeholder text identification
@@ -108,7 +108,7 @@ function validateSection(moduleDir, sectionDir) {
   // Validate learning objectives
   validateLearningObjectives(markdownContent, $, sectionDir);
   
-  // Validate CodePen/Expo links
+  // Validate CodePen/Expo Snack links
   validateExternalLinks(markdownContent, $, sectionDir);
   
   // Validate exercises
@@ -163,13 +163,17 @@ function validateLearningObjectives(markdown, $, sectionDir) {
 }
 
 /**
- * Validate that CodePen/Expo links are consistent and follow the pattern
+ * Validate that CodePen/Expo Snack links are consistent and follow the pattern
  */
 function validateExternalLinks(markdown, $, sectionDir) {
+  // Validate CodePen/Expo Snack links
+  const codePenRegex = /\[.*?\]\((https:\/\/codepen\.io\/.*?)\)/g;
+  const expoSnackRegex = /\[.*?\]\((https:\/\/snack\.expo\.dev\/.*?)\)/g;
+  
   // Check CodePen links in markdown
-  const markdownCodePenLinks = (markdown.match(/\[.*CodePen.*?\]\((https:\/\/codepen\.io\/[^)]+)\)/g) || [])
+  const markdownCodePenLinks = (markdown.match(codePenRegex) || [])
     .map(link => {
-      const matches = link.match(/\[.*CodePen.*?\]\((https:\/\/codepen\.io\/[^)]+)\)/);
+      const matches = link.match(codePenRegex);
       return matches ? matches[1] : null;
     })
     .filter(Boolean);
