@@ -1,0 +1,110 @@
+# Slack Channel Integration
+
+## description
+Guidelines for integrating Slack channels into the React Native training workflow to enhance collaboration, support, and community building among participants.
+
+## globs
+["docs/**/*", "**/*.md"]
+
+## alwaysApply
+true
+
+## Rule Content
+
+### Slack Channel Structure
+
+#### Channel Organization
+- **#rn-training-announcements**: For course updates, schedule changes, and important notices
+- **#rn-training-general**: For general discussion about the training
+- **#rn-training-help**: For participants to ask questions and get assistance
+- **#rn-training-resources**: For sharing useful links, tools, and learning resources
+- **#rn-training-challenges**: For collaboration on course challenges
+- **Module-specific channels**: e.g., #rn-module1, #rn-module2, etc.
+- **Platform-specific channels**: e.g., #rn-android-issues, #rn-ios-issues
+
+#### Channel Guidelines
+- Clearly defined purpose for each channel
+- Pinned messages for channel rules and important resources
+- Organized threads for specific topics
+- Regular clean-up of resolved issues
+
+### Integration with Training Materials
+
+#### References in Documentation
+- Include Slack channel references in each module's README.md
+- Specify which channel to use for topic-specific questions
+- Link to relevant pinned resources in Slack
+
+#### Exercise and Challenge Support
+- Provide challenge-specific threads for collaboration
+- Include Slack channel references in exercise instructions
+- Create dedicated threads for common issues and their solutions
+
+#### Office Hours and Support
+- Schedule regular office hours in specific Slack channels
+- Announce expert availability for specific topics
+- Utilize Slack Huddles for quick troubleshooting sessions
+
+### Collaborative Learning Strategies
+
+#### Peer Support
+- Encourage participants to answer each other's questions
+- Recognize and highlight helpful community members
+- Facilitate peer code reviews through dedicated threads
+
+#### Knowledge Sharing
+- Create weekly "What I Learned" threads
+- Encourage sharing of useful resources and tips
+- Facilitate "Ask Me Anything" sessions with experts
+
+#### Team Challenges
+- Organize team-based challenges using Slack channels
+- Create cross-functional teams mixing Android, iOS, and web developers
+- Facilitate team formation and communication
+
+### Community Building
+
+#### Onboarding Process
+- Welcome message template for new participants
+- Channel orientation guide for new members
+- Initial icebreaker activities to build connections
+
+#### Engagement Activities
+- Regular polls and surveys for feedback
+- Weekly challenges and competitions
+- Recognition and highlighting of participant achievements
+
+#### Post-Training Community
+- Transition strategy from training to ongoing community
+- Long-term community management plan
+- Alumni engagement strategies
+
+### Integration Methods
+
+#### Slack Integrations
+- GitHub integration for repository updates
+- Calendar integration for training schedule
+- Custom slash commands for common queries
+- Automated reminders for assignments and deadlines
+
+#### Participant Tracking
+- Engagement metrics tracking
+- Completion tracking through Slack interactions
+- Feedback collection mechanisms
+
+### Instructor Guidelines
+
+#### Channel Moderation
+- Response time expectations
+- Escalation procedures for difficult questions
+- Tone and communication style guidelines
+- Managing off-topic discussions
+
+#### Content Delivery
+- Pre-session announcements
+- Post-session summaries and resources
+- Additional resources distribution
+
+## @ References
+@docs/module-1-react-native-fundamentals/README.md - Example module documentation
+@.cursor/rules/instructor-session-management.mdc - Related instructor guidelines 
