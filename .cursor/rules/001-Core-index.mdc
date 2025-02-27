@@ -3,10 +3,10 @@ description: "This document provides an overview of all the rules for the React 
 globs: 
 alwaysApply: true
 ---
-
+         
 # React Native Training Course Rules
 
-@.cursor/README.md
+@README.md
 @docs/README.md
 
 
@@ -43,28 +43,13 @@ This document provides an overview of all the rules for the React Native Trainin
    - Content difficulty progression
    - Standalone exercise design
 
-6. [Instructor Session Guides](mdc:instructor-sessions.md)
-   - Session preparation requirements
-   - Session blueprint structure
-   - Learning path adaptations
-   - Demonstration plans
-   - Exercise facilitation
-   - Webex and Articulate integration
-
-7. [React Native Positioning and Marketing](mdc:react-native-positioning.md)
-   - Core value propositions
-   - Addressing developer skepticism
-   - Enthusiasm-building techniques
-   - Pharmacy-specific marketing angles
-   - Measuring buy-in success
-
-8. [Technical Depth and Explanations](mdc:technical-depth.md)
+6. [Technical Depth and Explanations](mdc:technical-depth.md)
    - Surface, mid, and deep-level explanations
    - "Under the hood" requirements
    - Visual explanations
    - Platform-specific connections
 
-9. [Tooling and Development Environment](mdc:tooling-environment.md)
+7. [Tooling and Development Environment](mdc:tooling-environment.md)
    - Platform usage:
      - HTML, CSS, JavaScript, React: CodePen
      - React Native: Expo Snack
@@ -74,27 +59,27 @@ This document provides an overview of all the rules for the React Native Trainin
    - Repository branch structure
    - Local development instructions
 
-10. [Slide and Presentation Standards](mdc:slide-standards.md)
-    - HTML/CSS slide requirements
-    - Slide organization in docs/slides directory
-    - Design requirements
-    - Content guidelines
+8. [Slide and Presentation Standards](mdc:slide-standards.md)
+   - HTML/CSS slide requirements
+   - Slide organization in docs/slides directory
+   - Design requirements
+   - Content guidelines
 
-11. [Module Development Process](mdc:module-development-process.md)
-    - Template-first approach
-    - Technical implementation strategy
-    - Content alignment methodology
-    - Review and testing requirements
-    - Workflow optimization
+9. [Module Development Process](mdc:module-development-process.md)
+   - Template-first approach
+   - Technical implementation strategy
+   - Content alignment methodology
+   - Review and testing requirements
+   - Workflow optimization
 
-12. [Quality Assurance Checklist](mdc:quality-assurance-checklist.md)
+10. [Quality Assurance Checklist](mdc:quality-assurance-checklist.md)
     - Content alignment verification
     - Technical quality verification
     - Accessibility standards
     - Learning experience evaluation
     - Issue tracking and resolution
 
-13. [Content Alignment Template](mdc:content-alignment-template.md)
+11. [Content Alignment Template](mdc:content-alignment-template.md)
     - Learning objectives template
     - Exercise template
     - Callout template
@@ -102,14 +87,14 @@ This document provides an overview of all the rules for the React Native Trainin
     - Summary template
     - Content planning approach
 
-14. [Articulate 360 Integration](mdc:articulate-compatibility.md)
+12. [Articulate 360 Integration](mdc:articulate-compatibility.md)
     - Content structure and conversion
     - Interactive element mapping
     - Code example formatting
     - Pharmacy theme consistency
     - Testing and review
 
-15. [Communication Channels](mdc:communication-channels.md)
+13. [Communication Channels](mdc:communication-channels.md)
     - Webex channel integration
     - Collaborative exercises
     - Repository-Webex connections

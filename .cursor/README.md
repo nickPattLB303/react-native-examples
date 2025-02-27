@@ -14,17 +14,12 @@ The rules are organized in the `rules` directory and are available in two format
 The `.mdc` format includes metadata that helps Cursor AI understand when and how to apply rules. Rules follow a numeric naming convention:
 
 - Core Rules (001-099): Fundamental project standards
-  - `001-Core-index.mdc`: Overview of all rules
-  - `002-Core-verification.mdc`: Confirms rules are being processed correctly
-  - `003-Core-example-validation.mdc`: Ensures code examples follow standards
-  - `004-Core-articulate-compatibility.mdc`: Guidelines for Articulate 360 compatibility
-  - `005-Core-communication-channels.mdc`: Guidelines for Webex chat integration
-  - `006-Core-instructor-sessions.mdc`: Standards for instructor-led session guides
-  - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
 
 Example rules:
+- `001-Core-index.mdc`: Overview of all rules
+- `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - `110-Content-learning-paths.mdc`: Educational approach and learning paths
 - `210-Process-tooling-environment.mdc`: Development tools and environments
 
@@ -102,45 +97,6 @@ ios/
 
 Both ignore files support standard gitignore syntax, including negation with `!` to explicitly include files that would otherwise be ignored.
 
-## Additional Configuration Files
-
-In addition to the rules in the `.cursor/rules` directory, the project includes:
-
-### Root Level Configuration
-
-- **`.cursorrules`**: JSON configuration file that defines global behaviors for Cursor AI, including:
-  - Project naming
-  - Code styling preferences
-  - File header templates
-  - Commit message guidelines
-
-### Context Files
-
-Special documentation files that provide additional context to the AI:
-
-- **`docs/readme-learning-paths.md`**: Detailed information about the three learning paths (Beginner, Intermediate, Advanced)
-- **`docs/README.md`**: General project information
-- **`docs/community-resources.md`**: External resources and references
-- **`docs/articulate-integration.md`**: Guidelines for Articulate 360 integration with the course material
-- **`docs/instructor-resources/webex-facilitation-guide.md`**: Guide for instructors on managing the Webex chat channel
-- **`docs/participant-resources/webex-participation-guide.md`**: Guide for participants on effectively using the Webex chat channel
-
-These files help Cursor AI understand the project's educational approach and adapt its responses accordingly.
-
-## Communication Channel Integration
-
-The React Native Training Course incorporates a Webex chat channel for real-time communication and collaboration. Key resources include:
-
-- **`005-Core-communication-channels.mdc`**: Guidelines for integrating Webex with course materials
-- **Instructor Facilitation Guide**: Detailed strategies for managing the Webex learning community
-- **Participant Guide**: Best practices for learners to engage effectively in Webex discussions
-
-The communication channel integration ensures:
-- Consistent question handling across in-person and online interactions
-- Structured collaborative exercises that leverage the repository content
-- Cross-platform knowledge management between GitHub, Articulate, and Webex
-- Clear protocols for code sharing, reviews, and problem-solving
-
 ## How to Use These Rules
 
 When using Cursor AI to assist with this project:
@@ -148,7 +104,6 @@ When using Cursor AI to assist with this project:
 1. Reference these rules to ensure AI-generated content follows project standards
 2. Point the AI to specific rules when working on particular aspects of the project
 3. Update rules as project requirements evolve
-4. Verify rules are being processed by checking for the verification phrase "📘 React Native Training" in new conversations
 
 ## Updating Rules
 
