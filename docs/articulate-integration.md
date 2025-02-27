@@ -7,6 +7,14 @@
 
 This guide outlines the process for converting React Native Training Course materials to Articulate 360 format. It provides practical workflows, templates, and best practices for ensuring consistency between the GitHub repository content and the Articulate e-learning modules.
 
+## Core Principles
+
+1. **Repository First, Articulate Second**: We prioritize building a complete, high-quality repository. Articulate conversion is a secondary concern that should not slow down repository development.
+
+2. **Conversion-Friendly Structure**: Create content with future conversion in mind, but don't let it dictate your approach.
+
+3. **Documentation Over Constraints**: Document conversion considerations rather than enforcing strict limitations on repository content.
+
 ## Articulate 360 Project Structure
 
 The Articulate 360 version of this course should mirror the module structure in this repository:
@@ -130,5 +138,28 @@ Each module in the repository should include an Articulate implementation sectio
 - This module requires extra attention to the state flow diagram
 - Code examples should build progressively
 ```
+
+## Automated Validation
+
+We've implemented lightweight validation for Articulate compatibility:
+
+1. **ESLint Rule**: The `pharmacy-theme/articulate-compatibility` rule checks markdown files for potential conversion issues
+2. **Validation Script**: `npm run validate:articulate` checks for:
+   - Deeply nested headings (> H3)
+   - Complex tables (> 5 columns)
+   - Embedded videos
+   - Very large images
+   - Missing Articulate implementation notes in module/section READMEs
+
+3. **Warning-Only Approach**: These checks generate warnings but don't block development
+
+## Potential Conversion Challenges
+
+Be aware of these common challenges when planning content:
+
+1. **Complex Diagrams**: Diagrams with many interconnected elements may need to be simplified or split
+2. **Interactive Code Examples**: Live coding exercises need alternative approaches in Articulate
+3. **Deep Technical Content**: Very detailed technical explanations may need visual aids in Articulate
+4. **Platform-Specific Instructions**: Multi-platform instructions may need separate slides in Articulate
 
 By following these guidelines, we can maintain consistency between the repository content and the Articulate 360 version of the course while taking advantage of Articulate's interactive capabilities. 
