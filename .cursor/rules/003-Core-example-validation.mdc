@@ -18,6 +18,10 @@ alwaysApply: false
 
 # Example Validation
 
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 When creating or reviewing code examples in this project, ensure all examples:
 
 ## Pharmacy Terminology Standards
@@ -95,5 +99,15 @@ All code examples must:
 3. Use consistent styling
 4. Follow the JSX component pattern for React Native
 5. Include proper JSDoc comments
+6. Be meaningful and demonstrate the concept being taught
+7. Use the theme appropriately 
+
+## Rule
+All code examples in the React Native Training Course must:
+1. Follow the pharmacy/medication theme
+2. Include proper JSDoc documentation
+3. Be syntactically correct
+4. Follow project coding standards
+5. Include comments explaining key concepts
 6. Be meaningful and demonstrate the concept being taught
 7. Use the theme appropriately 

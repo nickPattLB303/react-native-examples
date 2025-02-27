@@ -17,6 +17,7 @@ alwaysApply: false
 
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
 
 This rule provides guidelines for integrating the Webex chat channel with the React Native Training Course materials, ensuring seamless communication and collaboration between the repository content, Articulate e-learning modules, and live discussions.
 

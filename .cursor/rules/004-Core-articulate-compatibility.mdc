@@ -8,6 +8,7 @@ alwaysApply: false
 
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
 
 This rule ensures that content created for the React Native Training Course maintains compatibility with Articulate 360 for parallel e-learning development, without impeding repository progress.
 

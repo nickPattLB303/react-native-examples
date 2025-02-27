@@ -18,6 +18,7 @@ alwaysApply: false
 
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
 [Module 1 README](mdc:docs/module-1-react-native-fundamentals/README.md)
 
 

@@ -24,6 +24,7 @@ For a complete index of all specific rules, see [001-Core-index.mdc](rules/001-C
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
 [Repository README](mdc:README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
 
 
 This document provides an overview of all the rules for the React Native Training Course project.

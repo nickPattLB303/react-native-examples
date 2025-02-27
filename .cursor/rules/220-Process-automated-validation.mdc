@@ -17,6 +17,10 @@ alwaysApply: false
 
 # Automated Validation Scripts
 
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 ## Overview
 This rule defines automated validation scripts and CI/CD integration to ensure code quality and standards compliance throughout the React Native training course development.
 
