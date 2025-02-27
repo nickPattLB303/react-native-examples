@@ -9,7 +9,7 @@ const pharmacyThemePlugin = require('./scripts/eslint-plugin-pharmacy-theme');
 module.exports = {
   root: true,
   extends: [
-    'eslint:recommended',
+    '@react-native',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:jsdoc/recommended',
@@ -57,6 +57,9 @@ module.exports = {
     // Pharmacy theme rules
     'pharmacy-theme/use-medication-terminology': 'error',
     'pharmacy-theme/consistent-domain-terms': 'warn',
+    
+    // Articulate compatibility rules - warnings only
+    'pharmacy-theme/articulate-compatibility': 'warn',
   },
   // Ignore certain files
   ignorePatterns: [

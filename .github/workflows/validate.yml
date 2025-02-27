@@ -34,22 +34,41 @@ jobs:
       - name: Validate platform-specific code
         run: npm run validate:platform-code
       
+      - name: Validate pharmacy theme
+        run: npm run validate:theme
+      
+      - name: Check Articulate compatibility (informational)
+        run: npm run validate:articulate
+        continue-on-error: true
+      
       - name: Generate validation report
         if: always()
         run: |
-          echo "# Validation Results" > validation-report.md
-          echo "" >> validation-report.md
-          echo "## Linting Results" >> validation-report.md
-          npm run lint || echo "❌ ESLint failed" >> validation-report.md
-          echo "" >> validation-report.md
-          echo "## Documentation Structure Results" >> validation-report.md
-          npm run validate:docs || echo "❌ Documentation validation failed" >> validation-report.md
-          echo "" >> validation-report.md
-          echo "## Cross-link Verification Results" >> validation-report.md
-          npm run validate:links || echo "❌ Cross-link validation failed" >> validation-report.md
-          echo "" >> validation-report.md
-          echo "## Platform-specific Code Results" >> validation-report.md
-          npm run validate:platform-code || echo "❌ Platform-specific code validation failed" >> validation-report.md
+          echo "# Validation Report" > validation-report.md
+          echo "## ESLint" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run lint 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          echo "## Documentation Structure" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run validate:docs 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          echo "## Cross-links" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run validate:links 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          echo "## Platform-specific Code" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run validate:platform-code 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          echo "## Pharmacy Theme" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run validate:theme 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          echo "## Articulate Compatibility (Informational)" >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
+          npm run validate:articulate 2>&1 || true >> validation-report.md
+          echo "\`\`\`" >> validation-report.md
       
       - name: Upload validation report
         if: always()

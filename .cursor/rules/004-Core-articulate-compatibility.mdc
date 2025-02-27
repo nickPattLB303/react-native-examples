@@ -9,33 +9,78 @@ alwaysApply: false
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
 
-This rule ensures that content created for the React Native Training Course maintains compatibility with Articulate 360 for parallel e-learning development.
+This rule ensures that content created for the React Native Training Course maintains compatibility with Articulate 360 for parallel e-learning development, without impeding repository progress.
 
-## Content Structure Compatibility
+## Core Principles
 
-When creating content, ensure it follows these guidelines for Articulate compatibility:
+1. **Repository First, Articulate Second**: Prioritize building a complete, high-quality repository. Articulate conversion is a secondary concern that should not slow down repository development.
+
+2. **Conversion-Friendly Structure**: Create content with future conversion in mind, but don't let it dictate your approach.
+
+3. **Documentation Over Constraints**: Document conversion considerations rather than enforcing strict limitations on repository content.
+
+## Content Structure Guidelines
+
+When creating content, consider these guidelines for easier Articulate conversion:
 
 1. **Modular Content Blocks**: Create content in discrete, self-contained modules that can be independently imported into Articulate 360.
    
-2. **Limited Nesting**: Keep heading hierarchy simple (H1 → H2 → H3) as deep nesting may not translate well to Articulate slides.
+2. **Limited Nesting**: When practical, keep heading hierarchy simple (H1 → H2 → H3) as deep nesting may not translate well to Articulate slides.
    
 3. **Standard Markdown Elements**: Prioritize standard elements (lists, tables, code blocks, images) that have direct equivalents in Articulate.
    
-4. **Image Dimensions**: Keep images under 1280px wide to ensure they display properly in Articulate without rescaling.
+4. **Image Considerations**: When creating diagrams and screenshots:
+   - Keep a copy of source files (e.g., Figma, draw.io) for potential modification during Articulate conversion
+   - Consider how images might be split across multiple Articulate slides
    
-5. **Video Compatibility**: For video content, provide links to externally hosted videos (YouTube/Vimeo) rather than embedded files.
+5. **Interactive Elements**: For exercises and challenges, consider how they might be implemented in Articulate:
+   - Could this be a drag-and-drop activity?
+   - Would this work as a multiple-choice question?
+   - Is this better as an external link to a coding environment?
 
+## Articulate Implementation Notes
 
-## Documentation Protocols
+For each module, include a brief section at the end titled "Articulate 360 Implementation Notes" with:
 
-For each module or significant content piece:
+```markdown
+### Articulate 360 Implementation Notes
 
-1. **Articulate Import Notes**: Add a section at the end of each module with specific notes for Articulate implementation.
-   
-2. **Asset Inventory**: Maintain a list of all assets (images, code samples) needed for Articulate recreation.
-   
-3. **Interaction Map**: Document which content sections should become interactive elements in Articulate.
+**Slide Structure:**
+- Introduction: 1 slide with learning objectives
+- Core Concepts: 3-5 slides
+- Code Examples: 2-3 slides per example
+- Practice Activities: 1-2 interactive slides
+- Summary: 1 slide
 
+**Interactive Elements:**
+- [Exercise name]: Convert to [Articulate interaction type]
+- [Exercise name]: Use [specific Articulate feature]
 
+**Special Considerations:**
+- [Any particular challenges or opportunities for this module in Articulate]
+```
+
+## Asset Management
+
+Maintain a simple asset inventory for each module to track resources that will need to be converted:
+
+1. **Images and Diagrams**: List with source file locations
+2. **Code Examples**: Note which examples will need special treatment in Articulate
+3. **External Resources**: Document any external tools or links used
+
+## Validation Approach
+
+The automated validation for Articulate compatibility should be lightweight:
+
+1. **Module Structure Check**: Verify each module includes the "Articulate 360 Implementation Notes" section
+2. **Asset Inventory Check**: Ensure all referenced assets are documented
+3. **Warning-Only Validation**: Flag potential conversion issues as warnings, not errors
+
+## Reference Resources
+
+For detailed guidance on Articulate conversion, refer to:
+- [Articulate Integration Guide](mdc:docs/articulate-integration.md)
+- Articulate 360 documentation for specific interaction types
+- Example converted modules (once available)
 
 Following these guidelines will ensure that course materials developed in this repository can be efficiently translated to Articulate 360 with minimal rework. 
