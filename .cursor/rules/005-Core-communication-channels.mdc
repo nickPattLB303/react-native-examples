@@ -1,10 +1,22 @@
 ---
+name: "Communication Channels Integration"
+version: "1.0"
 description: "Guidelines for integrating Webex chat channel with course materials and facilitating collaborative learning"
+priority: "medium"
+type: "Core"
 globs: 
+  - "docs/**/*.md"
+  - "docs/slides/**/*.html"
+triggers:
+  - file_change
+  - file_open
 alwaysApply: false
 ---
 
 # Communication Channels Integration
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 This rule provides guidelines for integrating the Webex chat channel with the React Native Training Course materials, ensuring seamless communication and collaboration between the repository content, Articulate e-learning modules, and live discussions.
 

@@ -14,8 +14,8 @@ alwaysApply: false
 
 # Technical Depth and Explanations
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 
 ## Description

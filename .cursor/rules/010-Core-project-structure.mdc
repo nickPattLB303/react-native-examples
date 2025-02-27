@@ -1,13 +1,23 @@
 ---
+name: "Project Structure and Organization"
+version: "1.0"
 description: "defines the structure and organization of the React Native training course repository"
+priority: "high"
+type: "Core"
 globs: 
+  - "**/*.md"
+  - "**/*.html"
+triggers:
+  - file_change
+  - file_open
 alwaysApply: false
 ---
 
 # Project Structure and Organization
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Repository README](mdc:README.md)
 
 
 ## Description
@@ -23,12 +33,14 @@ This rule defines the structure and organization of the React Native training co
   - `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
 - Documentation should follow a hierarchical structure:
-  - Modules (large topics, as defined in [Course Modules](mdc:course-modules.md))
+  - Modules (large topics, as defined in [Course Modules](mdc:101-Content-course-modules.mdc))
   - Sections (components of modules)
   - Sub-sections (components of sections)
 
+- Each module and section should have its own README.md file that provides an overview, learning objectives, and navigation links
+
 - Slides should be organized in the docs branch under a dedicated slides directory:
-  - `/docs/slides/module-X/section-Y/`
+  - [Module X, Section Y Slides](mdc:docs/slides/module-X/section-Y/)
 
 - All code examples should follow the medication/pharmacy/orders theme
 - All starter and completed code must include JSDoc documentation
@@ -41,11 +53,14 @@ This rule defines the structure and organization of the React Native training co
   ```
   /docs
     /module-1-javascript-fundamentals
+      README.md  # Module overview, learning objectives, section links
       /section-1-variables
+        README.md  # Section overview, learning objectives, content
         variables.md
         /examples
           variable-examples.js
       /section-2-functions
+        README.md  # Section overview, learning objectives, content
         functions.md
         /examples
           function-examples.js

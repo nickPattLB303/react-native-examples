@@ -18,8 +18,8 @@ alwaysApply: true
 
 # Code Standards and Examples
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 
 ## Description

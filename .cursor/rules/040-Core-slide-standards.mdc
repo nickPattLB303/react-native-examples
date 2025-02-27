@@ -14,8 +14,8 @@ alwaysApply: false
 
 # Slide and Presentation Standards
 
-@.cursor/README.md
-@docs/slides/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/slides/README.md)
 
 
 ## Description
@@ -60,18 +60,18 @@ This rule defines the standards for HTML slides and presentation materials used 
 ## Examples
 - Proper slide directory structure:
   ```
-  /docs/slides
-    /module-1-javascript-fundamentals
-      /section-1-variables
+  docs/slides/
+    module-1-javascript-fundamentals/
+      section-1-variables/
         index.html
         styles.css
         script.js
-        /images
-      /section-2-functions
+        images/
+      section-2-functions/
         index.html
         styles.css
         script.js
-        /images
+        images/
   ```
 
 - Proper slide HTML structure:

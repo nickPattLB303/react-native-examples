@@ -1,22 +1,14 @@
 ---
-name: "Course Modules"
-version: "1.0"
 description: "defines the modules that make up the React Native Training Course. These modules represent the main topics covered in the course and provide a high-level structure for all course content"
-priority: "medium"
-type: "Content"
 globs: 
-  - "docs/**/*.md"
-  - "docs/slides/**/*.html"
-triggers:
-  - file_change
-  - file_open
 alwaysApply: false
 ---
 
 # Course Modules
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Module 1 README](mdc:docs/module-1-react-native-fundamentals/README.md)
 
 
 ## Description
@@ -42,8 +34,10 @@ The React Native Training Course consists of the following modules, which should
 - All content must be organized according to this module structure
 - Module numbers must be used consistently in file paths, documentation references, and slide organization
 - Each module should have its own directory in the docs branch following the pattern `module-X-name-with-hyphens`
+- Each module should have a README.md file that provides an overview of the module, learning objectives, and links to its sections
 
 ## Examples
 - Proper module directory naming: `module-1-react-native-fundamentals`
 - Proper documentation reference: "As we covered in Module 3: Web Development Essentials..."
-- Proper slide organization: `/docs/slides/module-7-react-native-ui-and-styling/` 
+- Proper slide organization: [Module 7 Slides](mdc:docs/slides/module-7-react-native-ui-and-styling)
+- Proper module README structure: See [Module 1 README](mdc:docs/module-1-react-native-fundamentals/README.md) for an example 

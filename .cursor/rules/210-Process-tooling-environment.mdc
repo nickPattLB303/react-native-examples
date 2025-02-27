@@ -17,8 +17,8 @@ alwaysApply: false
 
 # Tooling and Development Environment
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 
 ## Description

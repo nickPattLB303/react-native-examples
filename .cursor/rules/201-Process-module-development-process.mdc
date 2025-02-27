@@ -14,8 +14,8 @@ alwaysApply: false
 
 # Module Development Process
 
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 
 ## Description
@@ -116,17 +116,18 @@ This rule defines the optimal process for developing new modules, based on lesso
 Before developing Module 2, create empty templates for all sections:
 
 ```
-/docs/slides/module-2-environment-setup/
-  /section-1-development-environment/
+docs/slides/module-2-environment-setup/
+  section-1-development-environment/
     index.html (with standard slide structure but placeholder content)
-  /section-2-debugging-tools/
+  section-2-debugging-tools/
     index.html (with standard slide structure but placeholder content)
   
-/docs/module-2-environment-setup/
-  /section-1-development-environment/
-    README.md (with standard headings but placeholder content)
-  /section-2-debugging-tools/
-    README.md (with standard headings but placeholder content)
+docs/module-2-environment-setup/
+  README.md (with module overview and section links)
+  section-1-development-environment/
+    README.md (with section content and learning objectives)
+  section-2-debugging-tools/
+    README.md (with section content and learning objectives)
 ```
 
 ### Thematic Consistency Checklist Example

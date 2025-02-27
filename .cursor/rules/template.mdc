@@ -3,7 +3,7 @@ name: "Template Rule"
 version: "1.0"
 description: "Brief description of what this rule does"
 priority: "medium"
-type: "Template"
+type: "Core"
 globs: 
   - "**/*.js"    # JavaScript files
   - "**/*.jsx"   # React JSX files
@@ -22,8 +22,8 @@ alwaysApply: false
 This is where you provide a general overview of the rule.
 
 ## Key Guidelines
-@.cursor/README.md
-@docs/README.md
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
 
 - Guideline 1
 - Guideline 2
