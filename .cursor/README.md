@@ -14,12 +14,13 @@ The rules are organized in the `rules` directory and are available in two format
 The `.mdc` format includes metadata that helps Cursor AI understand when and how to apply rules. Rules follow a numeric naming convention:
 
 - Core Rules (001-099): Fundamental project standards
+  - `001-Core-index.mdc`: Overview of all rules
+  - `002-Core-verification.mdc`: Confirms rules are being processed correctly
+  - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
 
 Example rules:
-- `001-Core-index.mdc`: Overview of all rules
-- `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - `110-Content-learning-paths.mdc`: Educational approach and learning paths
 - `210-Process-tooling-environment.mdc`: Development tools and environments
 
@@ -104,6 +105,7 @@ When using Cursor AI to assist with this project:
 1. Reference these rules to ensure AI-generated content follows project standards
 2. Point the AI to specific rules when working on particular aspects of the project
 3. Update rules as project requirements evolve
+4. Verify rules are being processed by checking for the verification phrase "📘 React Native Training" in new conversations
 
 ## Updating Rules
 
