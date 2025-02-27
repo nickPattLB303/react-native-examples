@@ -116,6 +116,13 @@ This document provides an overview of all the rules for the React Native Trainin
     - Repository-Webex connections
     - Cross-platform knowledge management
 
+14. [Automated Validation Scripts](mdc:220-Process-automated-validation.mdc)
+    - ESLint configuration
+    - GitHub Actions workflows
+    - Documentation validation scripts
+    - Pre-commit hooks setup
+    - Continuous integration
+
 ## How to Use These Rules
 
 These rules serve as guidelines for all contributors to the React Native Training Course project. They ensure consistency, quality, and effectiveness across all aspects of the course.

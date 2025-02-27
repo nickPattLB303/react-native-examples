@@ -6,6 +6,10 @@
   "scripts": {
     "validate-module": "node scripts/validate-content.js",
     "validate-all": "for module in docs/module-*; do node scripts/validate-content.js $(basename $module); done",
+    "validate:links": "node scripts/validate-links.js",
+    "lint": "echo \"ESLint validation to be implemented\" && exit 0",
+    "validate:docs": "node scripts/validate-content.js",
+    "validate": "npm run validate:links && npm run validate:docs && npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

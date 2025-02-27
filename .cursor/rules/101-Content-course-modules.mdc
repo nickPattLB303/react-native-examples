@@ -1,6 +1,16 @@
 ---
+name: "Course Modules"
+version: "1.0"
 description: "defines the modules that make up the React Native Training Course. These modules represent the main topics covered in the course and provide a high-level structure for all course content"
+priority: "high"
+type: "Content"
 globs: 
+  - "docs/module-*/**/*"
+  - "**/course-outline.md"
+  - "**/syllabus.md"
+triggers:
+  - file_change
+  - file_open
 alwaysApply: false
 ---
 
