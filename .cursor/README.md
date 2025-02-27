@@ -17,6 +17,7 @@ The `.mdc` format includes metadata that helps Cursor AI understand when and how
   - `001-Core-index.mdc`: Overview of all rules
   - `002-Core-verification.mdc`: Confirms rules are being processed correctly
   - `003-Core-example-validation.mdc`: Ensures code examples follow standards
+  - `004-Core-articulate-compatibility.mdc`: Guidelines for Articulate 360 compatibility
   - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
@@ -118,6 +119,7 @@ Special documentation files that provide additional context to the AI:
 - **`docs/readme-learning-paths.md`**: Detailed information about the three learning paths (Beginner, Intermediate, Advanced)
 - **`docs/README.md`**: General project information
 - **`docs/community-resources.md`**: External resources and references
+- **`docs/articulate-integration.md`**: Guidelines for Articulate 360 integration with the course material
 
 These files help Cursor AI understand the project's educational approach and adapt its responses accordingly.
 
