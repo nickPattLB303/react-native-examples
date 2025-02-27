@@ -1,4 +1,22 @@
+---
+name: "Slide and Presentation Standards"
+version: "1.0"
+description: "defines the standards for HTML slides and presentation materials used in the instructor-led training sessions"
+priority: "high"
+type: "Core"
+globs: 
+  - "docs/slides/**/*.html"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Slide and Presentation Standards
+
+@.cursor/README.md
+@docs/slides/README.md
+
 
 ## Description
 This rule defines the standards for HTML slides and presentation materials used in the instructor-led training sessions.

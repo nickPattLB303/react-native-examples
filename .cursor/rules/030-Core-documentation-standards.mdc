@@ -1,4 +1,22 @@
+---
+name: "Documentation Standards and Writing Style"
+version: "1.0"
+description: "defines the documentation standards, writing style, and formatting requirements for all content in the React Native training course"
+priority: "high"
+type: "Core"
+globs: 
+  - "docs/**/*.md"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Documentation Standards and Writing Style
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule defines the documentation standards, writing style, and formatting requirements for all content in the React Native training course.

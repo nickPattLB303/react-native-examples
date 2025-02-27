@@ -1,4 +1,26 @@
+---
+name: "Code Standards and Examples"
+version: "1.0"
+description: "defines the standards for all code examples, exercises, challenges, and projects in the React Native training course"
+priority: "high"
+type: "Core"
+globs: 
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.html"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: true
+---
+
 # Code Standards and Examples
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule defines the standards for all code examples, exercises, challenges, and projects in the React Native training course.

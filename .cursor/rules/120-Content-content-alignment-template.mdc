@@ -1,4 +1,22 @@
+---
+name: "Content Alignment Template"
+version: "1.0"
+description: "provides templates and structures to ensure consistent content alignment between slide presentations and markdown documentation"
+priority: "medium"
+type: "Content"
+globs: 
+  - "docs/**/*.md"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Content Alignment Template
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule provides templates and structures to ensure consistent content alignment between slide presentations and markdown documentation.

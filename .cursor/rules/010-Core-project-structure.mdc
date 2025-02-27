@@ -1,4 +1,22 @@
+---
+name: "Project Structure and Organization"
+version: "1.0"
+description: "defines the structure and organization of the React Native training course repository"
+priority: "high"
+type: "Core"
+globs: 
+  - "docs/**/*.md"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Project Structure and Organization
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule defines the structure and organization of the React Native training course repository.

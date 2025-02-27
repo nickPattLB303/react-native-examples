@@ -1,4 +1,22 @@
+---
+name: "Module Development Process"
+version: "1.0"
+description: "defines the optimal process for developing new modules, based on lessons learned from Module 1 development"
+priority: "medium"
+type: "Process"
+globs: 
+  - "**/*"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Module Development Process
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule defines the optimal process for developing new modules, based on lessons learned from Module 1 development.

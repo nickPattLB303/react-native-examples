@@ -8,7 +8,23 @@ Cursor Rules are guidelines that help Cursor AI understand the project's require
 
 ## Rules Structure
 
-The rules are organized in the `rules` directory:
+The rules are organized in the `rules` directory and are available in two formats:
+
+### MDC Format (Preferred)
+The `.mdc` format includes metadata that helps Cursor AI understand when and how to apply rules. Rules follow a numeric naming convention:
+
+- Core Rules (001-099): Fundamental project standards
+- Content Rules (100-199): Content creation and management
+- Process Rules (200-299): Development workflow and processes
+
+Example rules:
+- `001-Core-index.mdc`: Overview of all rules
+- `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
+- `110-Content-learning-paths.mdc`: Educational approach and learning paths
+- `210-Process-tooling-environment.mdc`: Development tools and environments
+
+### Markdown Format (Legacy)
+The original `.md` format is maintained for backward compatibility:
 
 - [index.md](./rules/index.md): Overview of all rules
 - [project-structure.md](./rules/project-structure.md): Repository and documentation structure
@@ -19,6 +35,38 @@ The rules are organized in the `rules` directory:
 - [technical-depth.md](./rules/technical-depth.md): Technical explanations and depth
 - [tooling-environment.md](./rules/tooling-environment.md): Development tools and environments
 - [slide-standards.md](./rules/slide-standards.md): Presentation and slide standards
+
+## MDC Format Structure
+
+The `.mdc` files follow this structure:
+
+```yaml
+---
+name: "Rule Name"
+version: "1.0"
+description: "Detailed description of what the rule does"
+priority: "high"
+type: "Core"
+globs: 
+  - "**/*.js"    # File patterns this rule applies to
+  - "**/*.jsx"   
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false  # Whether the rule should always be applied
+---
+```
+
+Key components:
+- **name**: The name of the rule (usually matches the title)
+- **version**: Version number for tracking changes
+- **description**: A detailed explanation of what the rule does
+- **priority**: Importance level of the rule ("high", "medium", or "low")
+- **type**: Category of the rule ("Core", "Content", or "Process")
+- **globs**: Patterns that determine which files the rule applies to
+- **triggers**: Events that cause the rule to be applied (file_change, file_open)
+- **alwaysApply**: When set to `true`, the rule is applied regardless of the files being edited
+- **@ references**: The content can include references to other files using the `@` syntax (e.g., `@docs/README.md`)
 
 ## How to Use These Rules
 
@@ -32,6 +80,17 @@ When using Cursor AI to assist with this project:
 
 If you need to update these rules:
 
-1. Edit the relevant rule file
-2. Update the index.md file if necessary
-3. Commit the changes to the repository 
+1. Edit the relevant rule file (preferably the `.mdc` version)
+2. Update the index files if necessary
+3. Commit the changes to the repository
+4. **Important**: Due to a known bug with .mdc files, you may need to close Cursor completely and select 'Override' when prompted to ensure changes persist
+
+## Migration Script
+
+A migration script is available to convert `.md` rules to the `.mdc` format:
+
+```bash
+./scripts/migrate-cursor-rules.sh
+```
+
+This script will create `.mdc` versions of all rule files with appropriate metadata and numbering convention. 

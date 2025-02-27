@@ -1,4 +1,22 @@
+---
+name: "Quality Assurance Checklist"
+version: "1.0"
+description: "provides a comprehensive quality assurance checklist for reviewing and validating course modules before finalization"
+priority: "high"
+type: "Core"
+globs: 
+  - "**/*"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: true
+---
+
 # Quality Assurance Checklist
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule provides a comprehensive quality assurance checklist for reviewing and validating course modules before finalization.

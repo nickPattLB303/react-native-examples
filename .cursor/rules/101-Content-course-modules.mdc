@@ -1,4 +1,23 @@
+---
+name: "Course Modules"
+version: "1.0"
+description: "defines the modules that make up the React Native Training Course. These modules represent the main topics covered in the course and provide a high-level structure for all course content"
+priority: "medium"
+type: "Content"
+globs: 
+  - "docs/**/*.md"
+  - "docs/slides/**/*.html"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Course Modules
+
+@.cursor/README.md
+@docs/README.md
+
 
 ## Description
 This rule defines the modules that make up the React Native Training Course. These modules represent the main topics covered in the course and provide a high-level structure for all course content.
