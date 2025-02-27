@@ -15,6 +15,10 @@ This guide outlines the process for converting React Native Training Course mate
 
 3. **Documentation Over Constraints**: Document conversion considerations rather than enforcing strict limitations on repository content.
 
+4. **Batch Conversion Planning**: Plan for Articulate conversion as a separate phase rather than trying to develop both simultaneously.
+
+5. **Simplicity Over Perfection**: It's better to have complete repository content that needs adaptation than incomplete content that's perfectly Articulate-ready.
+
 ## Articulate 360 Project Structure
 
 The Articulate 360 version of this course should mirror the module structure in this repository:
@@ -39,12 +43,20 @@ Articulate Project/
 Follow this process when converting repository content to Articulate 360:
 
 1. **Review the Module**: Read through the entire module in the repository
-2. **Check Articulate Notes**: Review the "Articulate 360 Implementation Notes" section at the end of each module
+2. **Check Articulate Notes**: Review the "Articulate Conversion Notes" section at the end of each module
 3. **Create Slide Structure**: Map content sections to Articulate slides
 4. **Import Assets**: Transfer all required images and diagrams
 5. **Recreate Code Examples**: Use the code snippets as text in Articulate slides
 6. **Build Interactions**: Convert exercises to appropriate Articulate interactions
 7. **Review**: Compare with original repository content for accuracy
+
+## Simplified Documentation Approach
+
+During repository development, maintain minimal but useful documentation for future Articulate conversion:
+
+1. **Brief Conversion Notes**: Include a short "Articulate Conversion Notes" section at the end of each module
+2. **Asset Source Files**: Keep source files for diagrams and complex visuals
+3. **Logical Content Structure**: Organize content in a way that naturally maps to slide sequences
 
 ## Slide Templates
 
@@ -87,16 +99,6 @@ Ensure all Articulate slides maintain the medication/pharmacy theme:
 3. Maintain the visual theme across slides
 4. Use pharmacy-related images and icons where appropriate
 
-## Module-Specific Considerations
-
-### Module 1: React Native Fundamentals
-- Heavy focus on environment setup - consider adding video demonstrations
-- Make CodePen examples available via direct links
-
-### Module 2: Components and Props
-- Ensure component hierarchy visualizations are clear
-- Consider adding animations for props passing between components
-
 ## Testing and Review
 
 Before finalizing Articulate modules:
@@ -107,51 +109,32 @@ Before finalizing Articulate modules:
 4. Check pharmacy theming consistency
 5. Validate knowledge checks against learning objectives
 
-## Asset Management
+## Simplified Articulate Notes Template
 
-Track all assets using the Asset Inventory table:
-
-| Asset Name | Source Location | Articulate Location | Notes |
-|------------|-----------------|---------------------|-------|
-| medication_list.png | docs/assets/images/ | Assets/Images/ | Used in 3 slides |
-| PrescriptionForm.jsx | examples/module2/ | Assets/Code Examples/ | Split into 2 slides |
-
-## Implementation Template
-
-Each module in the repository should include an Articulate implementation section like this:
+Each module should include a brief "Articulate Conversion Notes" section:
 
 ```markdown
-### Articulate 360 Implementation Notes
+#### Articulate Conversion Notes
 
-**Slide Structure:**
-- Introduction: 1 slide with learning objectives
-- Core Concepts: 3-5 slides
-- Code Examples: 2-3 slides per example
-- Practice Activities: 1-2 interactive slides
-- Summary: 1 slide
+**Key Visuals**: 
+- Component hierarchy diagram (will need simplification)
+- State flow chart (consider animation in Articulate)
 
-**Interactive Elements:**
-- Convert the quiz to Articulate knowledge check
-- Use drag-and-drop for component structure exercise
+**Interactive Opportunities**:
+- The component matching exercise could use Articulate's matching interaction
+- Consider converting the debugging challenge to a scenario-based interaction
 
-**Special Considerations:**
-- This module requires extra attention to the state flow diagram
-- Code examples should build progressively
+**Potential Challenges**:
+- The live coding section will need an alternative approach in Articulate
 ```
 
-## Automated Validation
+## Validation Approach
 
-We've implemented lightweight validation for Articulate compatibility:
+Keep validation lightweight and non-blocking:
 
-1. **ESLint Rule**: The `pharmacy-theme/articulate-compatibility` rule checks markdown files for potential conversion issues
-2. **Validation Script**: `npm run validate:articulate` checks for:
-   - Deeply nested headings (> H3)
-   - Complex tables (> 5 columns)
-   - Embedded videos
-   - Very large images
-   - Missing Articulate implementation notes in module/section READMEs
-
-3. **Warning-Only Approach**: These checks generate warnings but don't block development
+1. **Optional Checks**: Run Articulate compatibility checks separately from main validation
+2. **Warning-Only**: Treat Articulate compatibility issues as warnings, not errors
+3. **Focus on Major Issues**: Only flag significant problems that would make conversion difficult
 
 ## Potential Conversion Challenges
 
@@ -162,4 +145,16 @@ Be aware of these common challenges when planning content:
 3. **Deep Technical Content**: Very detailed technical explanations may need visual aids in Articulate
 4. **Platform-Specific Instructions**: Multi-platform instructions may need separate slides in Articulate
 
-By following these guidelines, we can maintain consistency between the repository content and the Articulate 360 version of the course while taking advantage of Articulate's interactive capabilities. 
+## Balancing Progress with Conversion Planning
+
+Remember these key principles:
+
+1. **Don't Overoptimize**: It's better to have complete repository content that needs adaptation than incomplete content that's perfectly Articulate-ready.
+
+2. **Leverage Articulate's Strengths**: Some content may actually work better when reimagined for Articulate rather than directly converted.
+
+3. **Separate Concerns**: Keep repository development and Articulate planning as related but separate workflows.
+
+4. **Document Decisions**: When you make choices that might affect Articulate conversion, briefly document your reasoning.
+
+By following these guidelines, we can maintain consistency between the repository content and the Articulate 360 version of the course while taking advantage of Articulate's interactive capabilities and without slowing down repository development. 

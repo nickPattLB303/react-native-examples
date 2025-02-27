@@ -16,7 +16,7 @@ alwaysApply: true
 
 This directory contains Cursor AI rules for the React Native Training Course project. These rules help ensure consistency and quality across all aspects of the course development.
 
-For a complete index of all specific rules, see [001-Core-index.mdc](rules/001-Core-index.mdc).
+For a complete index of all specific rules, see [001-Core-index.mdc](mdc:rules/001-Core-index.mdc).
 
 ## What are Cursor Rules?
 

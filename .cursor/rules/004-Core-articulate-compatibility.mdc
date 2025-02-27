@@ -20,68 +20,87 @@ This rule ensures that content created for the React Native Training Course main
 
 3. **Documentation Over Constraints**: Document conversion considerations rather than enforcing strict limitations on repository content.
 
-## Content Structure Guidelines
+## Practical Implementation Guidelines
 
-When creating content, consider these guidelines for easier Articulate conversion:
+### Content Development Approach
 
-1. **Modular Content Blocks**: Create content in discrete, self-contained modules that can be independently imported into Articulate 360.
-   
-2. **Limited Nesting**: When practical, keep heading hierarchy simple (H1 → H2 → H3) as deep nesting may not translate well to Articulate slides.
-   
-3. **Standard Markdown Elements**: Prioritize standard elements (lists, tables, code blocks, images) that have direct equivalents in Articulate.
-   
-4. **Image Considerations**: When creating diagrams and screenshots:
-   - Keep a copy of source files (e.g., Figma, draw.io) for potential modification during Articulate conversion
-   - Consider how images might be split across multiple Articulate slides
-   
-5. **Interactive Elements**: For exercises and challenges, consider how they might be implemented in Articulate:
-   - Could this be a drag-and-drop activity?
-   - Would this work as a multiple-choice question?
-   - Is this better as an external link to a coding environment?
+1. **Develop for the Repository**: Focus on creating the best possible content for the repository format first.
 
-## Articulate Implementation Notes
+2. **Articulate Conversion Notes**: Include brief notes about Articulate conversion as you go, but don't let this slow down development.
 
-For each module, include a brief section at the end titled "Articulate 360 Implementation Notes" with:
+3. **Batch Conversion Planning**: Plan for Articulate conversion as a separate phase rather than trying to develop both simultaneously.
+
+### Content Structure Considerations
+
+When creating repository content, keep these Articulate-friendly practices in mind:
+
+1. **Logical Content Chunks**: Break content into logical sections that could reasonably become individual Articulate slides or slide sequences.
+   
+2. **Visual Assets**: 
+   - Save source files for all diagrams and complex visuals
+   - Consider creating alternate versions of complex diagrams that might need to be simplified for Articulate
+   - Use consistent image dimensions where possible
+
+3. **Code Examples**:
+   - Break complex code examples into smaller, focused snippets
+   - Include clear annotations that can be converted to Articulate callouts
+   - Consider which code examples are essential vs. supplementary
+
+4. **Interactive Elements**:
+   - For each exercise, briefly note how it might translate to Articulate (e.g., "Could be a drag-and-drop activity")
+   - Design exercises with multiple difficulty levels that can be adapted to different Articulate interaction types
+
+### Simplified Articulate Notes
+
+At the end of each module or major section, include a brief "Articulate Conversion Notes" section:
 
 ```markdown
-### Articulate 360 Implementation Notes
+#### Articulate Conversion Notes
 
-**Slide Structure:**
-- Introduction: 1 slide with learning objectives
-- Core Concepts: 3-5 slides
-- Code Examples: 2-3 slides per example
-- Practice Activities: 1-2 interactive slides
-- Summary: 1 slide
+**Key Visuals**: 
+- Component hierarchy diagram (will need simplification)
+- State flow chart (consider animation in Articulate)
 
-**Interactive Elements:**
-- [Exercise name]: Convert to [Articulate interaction type]
-- [Exercise name]: Use [specific Articulate feature]
+**Interactive Opportunities**:
+- The component matching exercise could use Articulate's matching interaction
+- Consider converting the debugging challenge to a scenario-based interaction
 
-**Special Considerations:**
-- [Any particular challenges or opportunities for this module in Articulate]
+**Potential Challenges**:
+- The live coding section will need an alternative approach in Articulate
 ```
 
-## Asset Management
+### Asset Management
 
-Maintain a simple asset inventory for each module to track resources that will need to be converted:
+Maintain a simple tracking system for assets that will need special handling in Articulate:
 
-1. **Images and Diagrams**: List with source file locations
-2. **Code Examples**: Note which examples will need special treatment in Articulate
-3. **External Resources**: Document any external tools or links used
+1. **Create an assets directory** with subdirectories for source files, diagrams, and complex visuals
+2. **Use consistent naming conventions** that make the purpose and module association clear
+3. **Include a simple README in each asset directory** noting special considerations for Articulate
 
 ## Validation Approach
 
-The automated validation for Articulate compatibility should be lightweight:
+Keep validation lightweight and non-blocking:
 
-1. **Module Structure Check**: Verify each module includes the "Articulate 360 Implementation Notes" section
-2. **Asset Inventory Check**: Ensure all referenced assets are documented
-3. **Warning-Only Validation**: Flag potential conversion issues as warnings, not errors
+1. **Optional Checks**: Run Articulate compatibility checks separately from main validation
+2. **Warning-Only**: Treat Articulate compatibility issues as warnings, not errors
+3. **Focus on Major Issues**: Only flag significant problems that would make conversion difficult
 
 ## Reference Resources
 
 For detailed guidance on Articulate conversion, refer to:
 - [Articulate Integration Guide](mdc:docs/articulate-integration.md)
-- Articulate 360 documentation for specific interaction types
 - Example converted modules (once available)
 
-Following these guidelines will ensure that course materials developed in this repository can be efficiently translated to Articulate 360 with minimal rework. 
+## Balancing Progress with Conversion Planning
+
+Remember these key principles:
+
+1. **Don't Overoptimize**: It's better to have complete repository content that needs adaptation than incomplete content that's perfectly Articulate-ready.
+
+2. **Leverage Articulate's Strengths**: Some content may actually work better when reimagined for Articulate rather than directly converted.
+
+3. **Separate Concerns**: Keep repository development and Articulate planning as related but separate workflows.
+
+4. **Document Decisions**: When you make choices that might affect Articulate conversion, briefly document your reasoning.
+
+By following these guidelines, you'll create high-quality repository content that can be efficiently converted to Articulate 360 without letting the conversion requirements slow down your primary development work. 
