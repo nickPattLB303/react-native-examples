@@ -1,6 +1,14 @@
 ---
+name: "React Native Training Course Rules Index"
+version: "1.0"
 description: "This document provides an overview of all the rules for the React Native Training Course project."
+priority: "high"
+type: "Core"
 globs: 
+  - "**/*"
+triggers:
+  - file_change
+  - file_open
 alwaysApply: true
 ---
          
