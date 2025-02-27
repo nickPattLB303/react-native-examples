@@ -1,14 +1,6 @@
 ---
-name: "Project Structure and Organization"
-version: "1.0"
 description: "defines the structure and organization of the React Native training course repository"
-priority: "high"
-type: "Core"
 globs: 
-  - "docs/**/*.md"
-triggers:
-  - file_change
-  - file_open
 alwaysApply: false
 ---
 
@@ -31,7 +23,7 @@ This rule defines the structure and organization of the React Native training co
   - `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
 - Documentation should follow a hierarchical structure:
-  - Modules (large topics, as defined in [Course Modules](./course-modules.md))
+  - Modules (large topics, as defined in [Course Modules](mdc:course-modules.md))
   - Sections (components of modules)
   - Sub-sections (components of sections)
 

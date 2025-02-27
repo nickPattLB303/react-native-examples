@@ -1,17 +1,6 @@
 ---
-name: "Articulate 360 Compatibility"
-version: "1.0"
-description: "Ensures course materials remain compatible with Articulate 360 e-learning format"
-priority: "high"
-type: "Core"
+description: "Ensures course materials remain compatible with Articulate 360 e-learning format."
 globs: 
-  - "docs/**/*.md"
-  - "docs/slides/**/*.*"
-  - "**/*.js"
-  - "**/*.jsx"
-triggers:
-  - file_change
-  - file_open
 alwaysApply: false
 ---
 
@@ -33,41 +22,6 @@ When creating content, ensure it follows these guidelines for Articulate compati
    
 5. **Video Compatibility**: For video content, provide links to externally hosted videos (YouTube/Vimeo) rather than embedded files.
 
-## Code Example Guidelines
-
-For code examples to be effectively reproduced in Articulate:
-
-1. **Segmented Examples**: Break complex code examples into smaller, focused snippets (5-15 lines) that fit on a single Articulate slide.
-   
-2. **Visual Differentiation**: Use color-coding and callouts in code that can be manually reproduced in Articulate.
-   
-3. **Progressive Disclosure**: Structure examples to build incrementally, showing one concept at a time.
-   
-4. **Static Screenshots**: For complex UI examples, provide static screenshots that can be imported into Articulate.
-   
-5. **Alternative Text**: Include descriptive alternative text for all code examples and visualizations.
-
-## Interactive Elements
-
-When designing interactive exercises:
-
-1. **Simplified Interactions**: Design interactions that can be implemented using Articulate's built-in quiz and interaction types.
-   
-2. **Multiple Choice**: Structure knowledge checks as multiple-choice questions compatible with Articulate quizzing.
-   
-3. **Code Challenges**: For code exercises, provide clear instructions and expected outputs rather than relying on in-browser execution.
-   
-4. **Completion Criteria**: Clearly define exercise completion criteria that can be adapted to Articulate's tracking capabilities.
-
-## File Format Considerations
-
-1. **Asset Management**: Store all images in a dedicated `/assets` directory for easy Articulate import.
-   
-2. **Resolution Independence**: Provide SVG versions of diagrams where possible for lossless scaling in Articulate.
-   
-3. **Text Extraction**: Ensure code examples can be easily copied as text for manual rebuilding in Articulate.
-   
-4. **Layout Simplification**: Avoid complex layouts that would be difficult to recreate in Articulate's slide formats.
 
 ## Documentation Protocols
 
@@ -79,23 +33,6 @@ For each module or significant content piece:
    
 3. **Interaction Map**: Document which content sections should become interactive elements in Articulate.
 
-## Example Articulate Import Note
 
-```markdown
-### Articulate 360 Implementation Notes
-
-**Slide Structure:**
-- Split the "Medication Component" section into 3 separate slides
-- Place code examples on separate slides from explanatory text
-
-**Interactive Elements:**
-- Convert the "Try it yourself" section to an Articulate Knowledge Check
-- The diagram should be recreated as a Storyline animation
-
-**Assets Required:**
-- pharmacy_interface.png
-- medication_flow_diagram.svg
-- MedicationList.jsx (as syntax-highlighted text)
-```
 
 Following these guidelines will ensure that course materials developed in this repository can be efficiently translated to Articulate 360 with minimal rework. 

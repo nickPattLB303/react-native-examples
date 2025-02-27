@@ -1,15 +1,6 @@
 ---
-name: "Communication Channels"
-version: "1.0"
 description: "Guidelines for integrating Webex chat channel with course materials and facilitating collaborative learning"
-priority: "high"
-type: "Core"
 globs: 
-  - "docs/**/*.md"
-  - "docs/slides/**/*.*"
-triggers:
-  - file_change
-  - file_open
 alwaysApply: false
 ---
 
@@ -152,12 +143,6 @@ When creating Articulate content, consider these Webex integration points:
 ### Daily Structure
 ```
 [09:00] Instructor posts daily agenda
-[09:15] Participants post completion of previous day's challenge
-[10:30] First discussion prompt from course materials
-[12:00] Lunchtime challenge posted
-[13:00] Solution sharing session
-[14:30] Second discussion prompt from materials 
-[16:00] End-of-day reflection prompt
 [16:30] Next day preparation resources posted
 ```
 

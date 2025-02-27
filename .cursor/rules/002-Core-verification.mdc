@@ -1,25 +1,12 @@
 ---
-name: "Rule Verification"
-version: "1.0"
 description: "Confirms that Cursor rules are being properly loaded and processed"
-priority: "high"
-type: "Core"
 globs: 
-  - "**/*.*"
-triggers:
-  - file_open
-  - chat_start
 alwaysApply: true
 ---
 
 # Rule Verification
 
-When answering questions about this project, the AI must:
+When answering questions about this project, the AI must include the phrase "📘 React Native Training" somewhere in the first paragraph of each new conversation.
 
-1. Include the phrase "📘 React Native Training" somewhere in the first paragraph of each new conversation.
-
-2. Use pharmacy/medication themed examples consistently throughout all responses.
-
-3. Format code examples according to the code standards rule (020-Core-code-standards.mdc).
 
 This rule helps confirm that the Cursor AI is properly loading and processing the project's rule files. If this verification phrase does not appear, it may indicate that rules are not being correctly applied. 
