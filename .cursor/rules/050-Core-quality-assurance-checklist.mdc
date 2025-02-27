@@ -1,6 +1,6 @@
 ---
 name: "Quality Assurance Checklist"
-version: "1.0"
+version: "1.1"
 description: "provides a comprehensive quality assurance checklist for reviewing and validating course modules before finalization"
 priority: "high"
 type: "Core"
@@ -111,6 +111,32 @@ Every module and section must be verified against this checklist before being co
 - [ ] Support is provided for challenging content
 - [ ] Multiple learning paths are supported
 
+### Webex Communication Integration
+
+#### Discussion Prompts
+- [ ] Each section includes at least one discussion prompt for Webex
+- [ ] Discussion prompts are relevant to section content
+- [ ] Prompts encourage meaningful reflection or application
+- [ ] Proper tagging format is used (e.g., [M1], [CHALLENGE])
+
+#### Question Anticipation
+- [ ] FAQ Preview included at the end of complex sections
+- [ ] Common misconceptions are addressed proactively
+- [ ] Clear indicators for when to use Webex for questions
+- [ ] Sample question formats provided where appropriate
+
+#### Collaborative Activities
+- [ ] Exercises include clear Webex collaboration instructions where applicable
+- [ ] Pair programming activities have defined roles and communication guidelines
+- [ ] Code review exercises include Webex posting instructions
+- [ ] Group challenges include Webex coordination checkpoints
+
+#### Knowledge Management
+- [ ] Important concepts have consistent tagging for searchability
+- [ ] Module includes guidance for organizing Webex discussions
+- [ ] Exemplary solution sharing process is defined
+- [ ] Feedback collection points are identified
+
 ## Usage Instructions
 
 1. Create a copy of this checklist for each module/section
@@ -136,9 +162,13 @@ Every module and section must be verified against this checklist before being co
 - [x] Technical terms are explained
 - [x] Content includes reflection questions
 - [x] Content builds on Section 1
+- [x] Discussion prompts included for Webex channel
+- [x] FAQ Preview included with common React Native questions
+- [x] Collaborative code review activity has clear Webex instructions
 
 **Issues Identified and Resolved:**
 1. Fixed inconsistent learning objective wording between slides and markdown
 2. Updated CodePen/Expo Snack link to follow standard format
 3. Added missing pharmacy context to one code example
-4. Fixed path reference in navigation menu 
+4. Fixed path reference in navigation menu
+5. Added Webex discussion prompt with proper tagging format 
