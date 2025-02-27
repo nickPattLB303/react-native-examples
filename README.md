@@ -1,58 +1,98 @@
 # React Native Training Course
 
-A comprehensive training course for developers with experience in Android, iOS, and web development (React and Angular) to become proficient in React Native.
+A comprehensive training course for React Native development with a pharmacy/healthcare theme.
 
-## Course Overview
+## 📋 Quick Start
 
-This 4-week intensive training course is designed to take developers from different backgrounds and make them proficient in React Native development. By the end of the course, participants will be able to work on production React Native projects.
+```bash
+# Install dependencies
+npm install
 
-### Course Structure
+# Set up Husky hooks
+npm run prepare
 
-- **Duration**: 4 weeks
-- **Daily Schedule**: 1-hour instructor-led session + 4-6 hours self-directed learning
-- **Format**: Combination of instructor-led sessions, self-directed learning, exercises, challenges, and a capstone project
+# Run validations
+npm run validate
+```
 
-### Course Modules
+## 📱 Sample Components
 
-1. React Native Fundamentals
-2. Environment Setup
-3. Web Development Essentials
-4. JavaScript Essentials
-5. TypeScript Essentials
-6. React Essentials
-7. React Native UI and Styling
-8. Components and User Input
-9. Navigation and Routing
-10. State Management
-11. Performance and Debugging
-12. Advanced Features
-13. Capstone Project
+The repository includes sample components that adhere to all course requirements:
 
-### Learning Paths
+- `src/components/MedicationCard.jsx` - A reusable card for displaying medication details
+- `src/screens/PrescriptionListScreen.jsx` - A screen showing medication lists
+- `src/data/MedicationData.js` - Sample pharmacy-themed data
 
-This course supports three distinct learning paths:
+Use these files as templates for creating your own components and screens.
 
-1. **End-to-end instructor-led**: For participants attending the full 4-week course
-2. **End-to-end self-led**: For participants working through the material independently
-3. **Async - learn specific topics**: For participants needing to learn specific topics on demand
+## 🧪 Validation System
 
-## Repository Structure
+This project includes a comprehensive validation system to ensure all code follows:
 
-This repository is organized as follows:
+1. **Pharmacy Theme Requirements** - All examples use healthcare terminology
+2. **Platform-Specific Guidelines** - Platform code includes explanatory comments
+3. **Documentation Standards** - Cross-references and structure are validated
+4. **Code Quality Standards** - ESLint ensures code meets quality requirements
 
-- `main` branch: Course overview and navigation
-- `docs` branch: All text-based documentation in markdown format and HTML/CSS slides for live training sessions
-  - `/docs/slides`: Contains all presentation materials organized by module
-- `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
-- `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
-- `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
-- `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
+## 💻 Available Scripts
 
+```bash
+# Run all validations
+npm run validate
 
-## Development Tools
+# Run specific validations
+npm run validate:theme         # Check pharmacy theme adherence
+npm run validate:platform-code # Check platform-specific code
+npm run validate:links         # Verify documentation cross-links 
+npm run validate:docs          # Validate documentation structure
+npm run lint                   # Run ESLint
+```
 
-- HTML, CSS, JavaScript, React: [CodePen](https://codepen.io/)
-- React Native: [Expo Snack](https://snack.expo.dev/)
-- React Native Development: [Expo Go](https://expo.dev/client)
-- Analysis Exercises: [Microsoft Forms](https://forms.office.com/)
-- Diagramming Exercises: [Microsoft Whiteboard](https://whiteboard.microsoft.com/)
+## 📚 Documentation
+
+- [Developer Guide](./docs/developer-guide.md) - Comprehensive guide for contributors
+- [Course Structure](./docs/course-structure.md) - Overview of course modules and structure
+- [Core Concepts](./docs/core-concepts.md) - Core React Native concepts covered in the course
+
+## 🔄 Continuous Integration
+
+This repository uses GitHub Actions for continuous validation:
+
+- Each PR triggers automatic validation checks
+- Detailed validation reports are generated as artifacts
+- PRs must pass all validation checks before merging
+
+## 🧩 Project Structure
+
+```
+├── .github/workflows    # GitHub Actions CI workflows
+├── docs/                # Documentation files
+├── scripts/             # Validation scripts
+├── src/                 # Source code
+│   ├── components/      # Reusable components
+│   ├── screens/         # Screen components
+│   └── data/            # Sample data providers
+└── .eslintrc.js         # ESLint configuration
+```
+
+## 🏥 Pharmacy Theme
+
+This training course uses a consistent pharmacy/healthcare theme:
+
+- Components use medication and pharmacy terminology
+- Data examples are based on prescriptions and healthcare
+- Functions use healthcare verbs (prescribe, dispense, administer)
+
+To learn more about the theme requirements, see the [Developer Guide](./docs/developer-guide.md).
+
+## ❓ Need Help?
+
+If you need assistance, check:
+
+1. The [Developer Guide](./docs/developer-guide.md) for detailed information
+2. Review existing components for examples
+3. Contact the course maintainers via the Webex chat channel
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

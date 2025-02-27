@@ -11,8 +11,9 @@
     "validate:docs": "node scripts/validate-content.js",
     "validate:platform-code": "node scripts/validate-platform-code.js",
     "validate:theme": "node scripts/validate-theme.js",
-    "validate": "npm run validate:links && npm run validate:docs && npm run lint && npm run validate:platform-code",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "validate": "npm run validate:links && npm run validate:docs && npm run lint && npm run validate:platform-code && npm run validate:theme",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "keywords": [
     "react-native",
@@ -33,7 +34,19 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.0.0",
-    "eslint-plugin-jsdoc": "^40.0.0"
+    "eslint-plugin-jsdoc": "^40.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "node scripts/validate-theme.js",
+      "node scripts/validate-platform-code.js"
+    ],
+    "*.{md,markdown}": [
+      "node scripts/validate-links.js"
+    ]
   },
   "repository": {
     "type": "git",
