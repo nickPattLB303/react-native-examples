@@ -16,6 +16,7 @@ The `.mdc` format includes metadata that helps Cursor AI understand when and how
 - Core Rules (001-099): Fundamental project standards
   - `001-Core-index.mdc`: Overview of all rules
   - `002-Core-verification.mdc`: Confirms rules are being processed correctly
+  - `003-Core-example-validation.mdc`: Ensures code examples follow standards
   - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
@@ -97,6 +98,28 @@ ios/
 ```
 
 Both ignore files support standard gitignore syntax, including negation with `!` to explicitly include files that would otherwise be ignored.
+
+## Additional Configuration Files
+
+In addition to the rules in the `.cursor/rules` directory, the project includes:
+
+### Root Level Configuration
+
+- **`.cursorrules`**: JSON configuration file that defines global behaviors for Cursor AI, including:
+  - Project naming
+  - Code styling preferences
+  - File header templates
+  - Commit message guidelines
+
+### Context Files
+
+Special documentation files that provide additional context to the AI:
+
+- **`docs/readme-learning-paths.md`**: Detailed information about the three learning paths (Beginner, Intermediate, Advanced)
+- **`docs/README.md`**: General project information
+- **`docs/community-resources.md`**: External resources and references
+
+These files help Cursor AI understand the project's educational approach and adapt its responses accordingly.
 
 ## How to Use These Rules
 

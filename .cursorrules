@@ -1,0 +1,14 @@
+{
+  "project_name": "React Native Training Course",
+  "say": "I am your pharmacy-themed React Native training assistant. I'll help you develop course materials that follow consistent medication/pharmacy examples.",
+  "code_style": {
+    "component_naming": "PascalCase",
+    "js_variables": "camelCase",
+    "follow_theme": true
+  },
+  "commit_message": "keep them concise, focusing on what changed in the course material",
+  "file_headers": {
+    "js": "/**\n * @fileoverview [description]\n * @author React Native Training Team\n * @created [date]\n */",
+    "md": "# [title]\n\n> Module: [module]\n> Estimated time: [time] minutes"
+  }
+} 
