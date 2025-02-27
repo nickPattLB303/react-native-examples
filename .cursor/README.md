@@ -19,6 +19,7 @@ The `.mdc` format includes metadata that helps Cursor AI understand when and how
   - `003-Core-example-validation.mdc`: Ensures code examples follow standards
   - `004-Core-articulate-compatibility.mdc`: Guidelines for Articulate 360 compatibility
   - `005-Core-communication-channels.mdc`: Guidelines for Webex chat integration
+  - `006-Core-instructor-sessions.mdc`: Standards for instructor-led session guides
   - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
