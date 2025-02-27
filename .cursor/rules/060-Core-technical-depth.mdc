@@ -1,7 +1,7 @@
 ---
 name: "Technical Depth and Explanations"
 version: "1.0"
-description: "ensures that all technical content provides sufficient depth, particularly focusing on "under the hood" explanations of React Native's internal workings rather than just surface-level API usage"
+description: "ensures that all technical content provides sufficient depth, particularly focusing on \"under the hood\" explanations of React Native's internal workings rather than just surface-level API usage"
 priority: "high"
 type: "Core"
 globs: 
