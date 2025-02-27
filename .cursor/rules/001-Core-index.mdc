@@ -12,7 +12,14 @@ triggers:
 alwaysApply: true
 ---
          
-# React Native Training Course Rules
+# Cursor Rules for React Native Training Course
+
+This directory contains Cursor AI rules for the React Native Training Course project. These rules help ensure consistency and quality across all aspects of the course development.
+
+For a complete index of all specific rules, see [001-Core-index.mdc](rules/001-Core-index.mdc).
+
+## What are Cursor Rules?
+
 
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
