@@ -18,6 +18,7 @@ The `.mdc` format includes metadata that helps Cursor AI understand when and how
   - `002-Core-verification.mdc`: Confirms rules are being processed correctly
   - `003-Core-example-validation.mdc`: Ensures code examples follow standards
   - `004-Core-articulate-compatibility.mdc`: Guidelines for Articulate 360 compatibility
+  - `005-Core-communication-channels.mdc`: Guidelines for Webex chat integration
   - `020-Core-code-standards.mdc`: Code examples and JSDoc requirements
 - Content Rules (100-199): Content creation and management
 - Process Rules (200-299): Development workflow and processes
@@ -120,8 +121,24 @@ Special documentation files that provide additional context to the AI:
 - **`docs/README.md`**: General project information
 - **`docs/community-resources.md`**: External resources and references
 - **`docs/articulate-integration.md`**: Guidelines for Articulate 360 integration with the course material
+- **`docs/instructor-resources/webex-facilitation-guide.md`**: Guide for instructors on managing the Webex chat channel
+- **`docs/participant-resources/webex-participation-guide.md`**: Guide for participants on effectively using the Webex chat channel
 
 These files help Cursor AI understand the project's educational approach and adapt its responses accordingly.
+
+## Communication Channel Integration
+
+The React Native Training Course incorporates a Webex chat channel for real-time communication and collaboration. Key resources include:
+
+- **`005-Core-communication-channels.mdc`**: Guidelines for integrating Webex with course materials
+- **Instructor Facilitation Guide**: Detailed strategies for managing the Webex learning community
+- **Participant Guide**: Best practices for learners to engage effectively in Webex discussions
+
+The communication channel integration ensures:
+- Consistent question handling across in-person and online interactions
+- Structured collaborative exercises that leverage the repository content
+- Cross-platform knowledge management between GitHub, Articulate, and Webex
+- Clear protocols for code sharing, reviews, and problem-solving
 
 ## How to Use These Rules
 

@@ -1,0 +1,199 @@
+---
+name: "Communication Channels"
+version: "1.0"
+description: "Guidelines for integrating Webex chat channel with course materials and facilitating collaborative learning"
+priority: "high"
+type: "Core"
+globs: 
+  - "docs/**/*.md"
+  - "docs/slides/**/*.*"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
+# Communication Channels Integration
+
+This rule provides guidelines for integrating the Webex chat channel with the React Native Training Course materials, ensuring seamless communication and collaboration between the repository content, Articulate e-learning modules, and live discussions.
+
+## Webex Channel Integration
+
+### Question Handling
+
+Design course materials with the Webex channel in mind:
+
+1. **Anticipated Questions**: At the end of each major section, include an "FAQ Preview" that lists common questions participants might have, providing instructors with prepared answers.
+
+2. **Question Routing**: Include clear indicators for when questions should be:
+   - Answered immediately during sessions
+   - Posted to the Webex channel for deeper discussion
+   - Researched and answered in a follow-up session
+
+3. **Code Question Protocol**: Establish a format for code-related questions in Webex:
+   ```
+   [Module 2.3] Component Props Question
+   
+   My code:
+   ```jsx
+   const MedicationItem = ({ medication }) => {
+     // Code with issue
+   }
+   ```
+   
+   Expected behavior: Medication name should display in bold
+   Actual behavior: Getting undefined error
+   ```
+
+4. **Knowledge Base Building**: Structure the Webex channel to accumulate a searchable knowledge base:
+   - Use threaded replies for each question
+   - Add tags/hashtags for categorization (#components, #state, #navigation)
+   - Pin exemplary solutions
+
+### Collaborative Exercises
+
+Design exercises with collaboration in mind:
+
+1. **Pair Programming**: Include specific pair programming exercises with role assignments:
+   - Navigator: Reads instructions and guides implementation
+   - Driver: Writes the code
+   - Both roles should switch halfway through
+
+2. **Code Reviews**: After individual exercises, build in peer code review cycles:
+   - Post screenshots/snippets to designated Webex threads
+   - Provide a code review checklist specific to each exercise
+   - Require at least two constructive comments per review
+
+3. **Group Challenges**: Design pharmacy-themed challenges that require 3-4 person teams:
+   - Assign specific roles (UI, data management, navigation)
+   - Include Webex coordination checkpoints
+   - Provide collaborative workspace links (e.g., Expo Snack team mode)
+
+4. **Asynchronous Collaboration**: Not all collaboration will happen in real-time:
+   - Create "overnight challenges" posted in Webex
+   - Encourage morning solution sharing
+   - Structure incremental project work with check-ins
+
+## Repository-Webex Connections
+
+Connect the repository content directly to Webex communications:
+
+1. **Module-Specific Channels**: Create a channel organization recommendation:
+   ```
+   #general - Course-wide announcements
+   #module1 - React Native Fundamentals questions
+   #module2 - Components and Props discussions
+   #challenges - All coding challenges
+   #resources - Useful links and tools
+   ```
+
+2. **GitHub Integration**: Suggest webhook setup between GitHub and Webex:
+   - New example code pushes trigger notifications
+   - Issue tracking for identified errors in materials
+   - Automatic daily summaries of repository updates
+
+3. **Resource Linking**: Include standardized links to specific Webex resources:
+   - Deep links to channel threads for extended examples
+   - Links to facilitator profiles for direct questions
+   - Code sample threads for reference
+
+## Documentation for Instructors
+
+Include instructor-specific notes regarding Webex usage:
+
+1. **Channel Moderation**: Guidelines for keeping discussions focused:
+   - Sample response templates for common questions
+   - Escalation paths for complex issues
+   - Scheduled topic focus times
+
+2. **Daily Digests**: Template for daily summaries:
+   ```
+   Today's Key Learnings:
+   - Components: [Concept], [Common Issue]
+   - Hooks: [Concept], [Common Issue]
+   
+   Tomorrow's Focus:
+   - Navigation fundamentals
+   - Preparation: Review X and Y examples
+   
+   Outstanding Questions:
+   - [Question 1] - Will address tomorrow
+   - [Question 2] - Resources posted in #resources
+   ```
+
+3. **Progress Tracking**: Use Webex for tracking participant progress:
+   - Daily check-in prompts
+   - Challenge completion tracking
+   - Knowledge gap identification
+
+## Articulate-Webex Connections
+
+When creating Articulate content, consider these Webex integration points:
+
+1. **Discussion Prompts**: Include specific slides with discussion prompts for Webex:
+   ```
+   [Discussion] Share in Webex #module2:
+   - One challenge you faced with component props
+   - One technique you found helpful
+   - One question you still have
+   ```
+
+2. **Extended Examples**: For complex topics:
+   - Place core concepts in Articulate
+   - Indicate "Extended examples available in Webex #examples channel"
+   - Provide slide-specific hashtags for finding relevant discussions
+
+3. **Follow-up Activities**: Design activities that bridge Articulate content and Webex:
+   - "After completing this module, post your component solution to #module2"
+   - "Find a peer in Webex for code review using the review checklist"
+
+## Sample Webex Interaction Patterns
+
+### Daily Structure
+```
+[09:00] Instructor posts daily agenda
+[09:15] Participants post completion of previous day's challenge
+[10:30] First discussion prompt from course materials
+[12:00] Lunchtime challenge posted
+[13:00] Solution sharing session
+[14:30] Second discussion prompt from materials 
+[16:00] End-of-day reflection prompt
+[16:30] Next day preparation resources posted
+```
+
+### Question Handling Flow
+```
+1. Participant posts question to appropriate channel
+2. If simple clarification:
+   - Direct answer provided
+3. If conceptual issue:
+   - Instructor points to relevant documentation section
+   - Schedules for group discussion if common
+4. If code-specific:
+   - Request formatted code sample
+   - Suggest debugging steps
+   - Offer 1:1 help if needed
+5. Follow-up check to ensure resolution
+```
+
+## Cross-Platform Knowledge Management
+
+Ensure knowledge transfers effectively between platforms:
+
+1. **FAQ Collection**: Compile common Webex questions into:
+   - Repository documentation updates
+   - Future Articulate content improvements
+   - Reference cheat sheets
+
+2. **Exemplary Solutions**: Process for elevating excellent work:
+   - Participant permission workflow
+   - Code cleanup and standardization
+   - Integration into repository examples
+   - Attribution tracking
+
+3. **Feedback Loop**: Structured process for using Webex feedback:
+   - Weekly content improvement task based on discussions
+   - Categorizing identified documentation gaps
+   - Prioritization of clarification topics
+
+By aligning the course materials with these Webex integration patterns, participants will experience a seamless learning journey across the repository content, Articulate modules, and collaborative discussions. 
