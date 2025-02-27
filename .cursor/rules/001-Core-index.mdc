@@ -58,13 +58,20 @@ This document provides an overview of all the rules for the React Native Trainin
    - Exercise facilitation
    - Webex and Articulate integration
 
-7. [Technical Depth and Explanations](./technical-depth.md)
+7. [React Native Positioning and Marketing](./react-native-positioning.md)
+   - Core value propositions
+   - Addressing developer skepticism
+   - Enthusiasm-building techniques
+   - Pharmacy-specific marketing angles
+   - Measuring buy-in success
+
+8. [Technical Depth and Explanations](./technical-depth.md)
    - Surface, mid, and deep-level explanations
    - "Under the hood" requirements
    - Visual explanations
    - Platform-specific connections
 
-8. [Tooling and Development Environment](./tooling-environment.md)
+9. [Tooling and Development Environment](./tooling-environment.md)
    - Platform usage:
      - HTML, CSS, JavaScript, React: CodePen
      - React Native: Expo Snack
@@ -74,27 +81,27 @@ This document provides an overview of all the rules for the React Native Trainin
    - Repository branch structure
    - Local development instructions
 
-9. [Slide and Presentation Standards](./slide-standards.md)
-   - HTML/CSS slide requirements
-   - Slide organization in docs/slides directory
-   - Design requirements
-   - Content guidelines
+10. [Slide and Presentation Standards](./slide-standards.md)
+    - HTML/CSS slide requirements
+    - Slide organization in docs/slides directory
+    - Design requirements
+    - Content guidelines
 
-10. [Module Development Process](./module-development-process.md)
+11. [Module Development Process](./module-development-process.md)
     - Template-first approach
     - Technical implementation strategy
     - Content alignment methodology
     - Review and testing requirements
     - Workflow optimization
 
-11. [Quality Assurance Checklist](./quality-assurance-checklist.md)
+12. [Quality Assurance Checklist](./quality-assurance-checklist.md)
     - Content alignment verification
     - Technical quality verification
     - Accessibility standards
     - Learning experience evaluation
     - Issue tracking and resolution
 
-12. [Content Alignment Template](./content-alignment-template.md)
+13. [Content Alignment Template](./content-alignment-template.md)
     - Learning objectives template
     - Exercise template
     - Callout template
@@ -102,14 +109,14 @@ This document provides an overview of all the rules for the React Native Trainin
     - Summary template
     - Content planning approach
 
-13. [Articulate 360 Integration](./articulate-compatibility.md)
+14. [Articulate 360 Integration](./articulate-compatibility.md)
     - Content structure and conversion
     - Interactive element mapping
     - Code example formatting
     - Pharmacy theme consistency
     - Testing and review
 
-14. [Communication Channels](./communication-channels.md)
+15. [Communication Channels](./communication-channels.md)
     - Webex channel integration
     - Collaborative exercises
     - Repository-Webex connections

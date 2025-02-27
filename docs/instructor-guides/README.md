@@ -29,9 +29,13 @@ Each module has a dedicated instructor guide that follows a consistent structure
 
 ## Available Guides
 
+### Module-Specific Guides
 - [Module 1: React Native Fundamentals](./module-1-session-guide.md)
 - [Module 2: Components and Props](./module-2-session-guide.md) (Coming soon)
 - [Module 3: State Management](./module-3-session-guide.md) (Coming soon)
+
+### Supplementary Guides
+- [React Native Marketing and Positioning Guide](./react-native-marketing-guide.md) - Essential strategies for generating developer buy-in and enthusiasm
 
 ## Using the Template
 
@@ -53,6 +57,19 @@ Consistent with course standards, instructor guides should:
 - Frame demonstrations and exercises in pharmacy contexts
 - Prepare answers to questions using pharmacy examples
 
+## Marketing and Positioning React Native
+
+A critical aspect of the training is not just teaching React Native, but also convincing participants of its value. The [React Native Marketing and Positioning Guide](./react-native-marketing-guide.md) provides:
+
+- Opening day strategies to establish buy-in
+- Response frameworks for handling skeptical questions
+- Module-specific positioning themes and "wow moments"
+- Concrete examples comparing React Native to native development
+- Pharmacy-specific selling points
+- Measurement techniques to track marketing effectiveness
+
+Remember to integrate marketing points throughout your delivery, not just as separate sections. Every technical concept should connect to a value proposition.
+
 ## Formatting Standards
 
 For consistent formatting across all guides:
@@ -63,6 +80,7 @@ For consistent formatting across all guides:
 - Use italic text (`*text*`) for notes that are for instructor eyes only
 - Use the 👥 emoji to indicate participant interaction points
 - Use 🟢 (beginner), 🟡 (intermediate), 🟣 (advanced) emojis for learning path-specific content
+- Use 🚀 emoji to highlight particularly exciting React Native features
 
 ## Continuous Improvement
 
@@ -77,12 +95,14 @@ Instructor guides are living documents that should improve with each delivery:
    - Note timing issues for individual sections
    - Mark places where participants struggled
    - Identify questions not covered in Q&A section
+   - Track reactions to positioning and marketing points
 
 3. After each session:
    - Update the Continuous Improvement Notes section
    - Adjust timing for sections as needed
    - Add newly discovered questions to Q&A section
    - Share insights with other instructors
+   - Document successful marketing approaches
 
 ## Webex and Repository Integration
 
@@ -99,6 +119,7 @@ If you need assistance with creating or updating instructor guides:
 
 1. Check the [Instructor Session Guides Rule](../../.cursor/rules/006-Core-instructor-sessions.mdc) for full standards
 2. Review the [Module 1 guide](./module-1-session-guide.md) for a comprehensive example
-3. Contact the course development team for guidance
+3. Review the [React Native Positioning Rule](../../.cursor/rules/007-Core-react-native-positioning.mdc) for marketing guidance
+4. Contact the course development team for guidance
 
 Remember: Comprehensive instructor guides are key to delivering consistent, high-quality training experiences across different instructors and participant groups. 
