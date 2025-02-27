@@ -1,0 +1,106 @@
+# React Native Training Course - Cursor Index Ignore File
+# Files and directories to be excluded from Cursor's codebase indexing
+
+# Use more restrictive patterns for indexing to keep index relevant and focused
+
+# All patterns from .cursorignore plus additional restrictions for indexing
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.expo/
+web-build/
+
+# Dependencies - essential to exclude from indexing for performance
+node_modules/
+vendor/
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Cache, logs, and temporary files
+.cache/
+.npm/
+.yarn/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Config files that don't need indexing
+*.config.js
+*.conf.js
+babel.config.js
+metro.config.js
+jest.config.js
+tsconfig.json
+.prettierrc
+.eslintrc*
+.babelrc*
+
+# Media and binary files - exclude from indexing for performance
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+*.ttf
+*.woff
+*.woff2
+*.eot
+*.mp3
+*.mp4
+*.mov
+*.avi
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Generated code
+*.generated.*
+*.auto.*
+*.g.*
+
+# Environment and secrets
+.env*
+*.pem
+*.key
+
+# Test files (include test files that demonstrate concepts)
+# coverage/
+# .nyc_output/
+# *.test.js
+# *.spec.js
+
+# Expo and React Native specific
+android/
+ios/
+
+# Optional: Exclude third-party libraries that come with boilerplates
+**/vendor/**
+
+# Git and CI/CD - we don't need these for code understanding
+.git/
+.github/
+.gitlab/
+.circleci/
+
+# Cursor's own files - don't index Cursor configuration
+.cursor/ 

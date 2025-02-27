@@ -68,6 +68,35 @@ Key components:
 - **alwaysApply**: When set to `true`, the rule is applied regardless of the files being edited
 - **@ references**: The content can include references to other files using the `@` syntax (e.g., `@docs/README.md`)
 
+## Ignore Files
+
+The project includes two special files to control what files Cursor processes:
+
+### .cursorignore
+
+The `.cursorignore` file (located in the project root) specifies which files and directories should be ignored by Cursor features. It follows the same syntax as `.gitignore`:
+
+```
+# Example patterns
+node_modules/
+build/
+*.log
+```
+
+### .cursorindexignore
+
+The `.cursorindexignore` file controls which files are excluded from Cursor's codebase indexing feature. This is more restrictive than `.cursorignore` to optimize indexing performance:
+
+```
+# Example patterns
+node_modules/
+*.config.js
+android/
+ios/
+```
+
+Both ignore files support standard gitignore syntax, including negation with `!` to explicitly include files that would otherwise be ignored.
+
 ## How to Use These Rules
 
 When using Cursor AI to assist with this project:
