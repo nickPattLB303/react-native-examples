@@ -1,0 +1,59 @@
+name: Course Content Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint
+      
+      - name: Validate documentation structure
+        run: npm run validate:docs
+      
+      - name: Verify cross-links
+        run: npm run validate:links
+      
+      - name: Validate platform-specific code
+        run: npm run validate:platform-code
+      
+      - name: Generate validation report
+        if: always()
+        run: |
+          echo "# Validation Results" > validation-report.md
+          echo "" >> validation-report.md
+          echo "## Linting Results" >> validation-report.md
+          npm run lint || echo "❌ ESLint failed" >> validation-report.md
+          echo "" >> validation-report.md
+          echo "## Documentation Structure Results" >> validation-report.md
+          npm run validate:docs || echo "❌ Documentation validation failed" >> validation-report.md
+          echo "" >> validation-report.md
+          echo "## Cross-link Verification Results" >> validation-report.md
+          npm run validate:links || echo "❌ Cross-link validation failed" >> validation-report.md
+          echo "" >> validation-report.md
+          echo "## Platform-specific Code Results" >> validation-report.md
+          npm run validate:platform-code || echo "❌ Platform-specific code validation failed" >> validation-report.md
+      
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: validation-report
+          path: validation-report.md 

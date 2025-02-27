@@ -7,9 +7,11 @@
     "validate-module": "node scripts/validate-content.js",
     "validate-all": "for module in docs/module-*; do node scripts/validate-content.js $(basename $module); done",
     "validate:links": "node scripts/validate-links.js",
-    "lint": "echo \"ESLint validation to be implemented\" && exit 0",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "validate:docs": "node scripts/validate-content.js",
-    "validate": "npm run validate:links && npm run validate:docs && npm run lint",
+    "validate:platform-code": "node scripts/validate-platform-code.js",
+    "validate:theme": "node scripts/validate-theme.js",
+    "validate": "npm run validate:links && npm run validate:docs && npm run lint && npm run validate:platform-code",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -23,9 +25,16 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "chalk": "^4.1.2"
+    "chalk": "^4.1.2",
+    "glob": "^8.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^4.0.0",
+    "eslint-plugin-jsdoc": "^40.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yourusername/react-native-training-course.git"
