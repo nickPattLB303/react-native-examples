@@ -7,7 +7,7 @@ This document tracks key implementation decisions made during the development of
 ### Decision: Migrate Cursor Rules to Roo Code Memory Bank
 - **Date**: Current date
 - **Decision**: Migrate all Cursor rules to Roo Code memory-bank structure
-- **Rationale**: 
+- **Rationale**:
   - Roo Code provides a more structured approach to project context and documentation
   - Memory-bank files are more organized and easier to maintain
   - Roo Code offers better integration with different modes (Code, Architect, Ask, Debug)
@@ -54,4 +54,23 @@ This document tracks key implementation decisions made during the development of
 - **Impact**:
   - All important information from Cursor rules is preserved
   - Content is now organized in a more accessible way
-  - Future updates will be easier to manage 
+  - Future updates will be easier to manage
+
+## Training Session Planning
+
+### Decision: Training Session Implementation Approach
+- **Date**: February 27, 2025
+- **Decision**: Implement a blended approach for training sessions that combines structured slide presentations with hands-on exercises, tailored to different learning paths
+- **Rationale**:
+  - The project has well-structured slides and documentation that support multiple learning approaches
+  - Different learning paths (instructor-led, self-led, async) require flexible implementation strategies
+  - Hands-on exercises and challenges are essential for practical skill development
+- **Alternatives Considered**:
+  - Strictly following slides in a linear presentation format
+  - Focusing primarily on hands-on exercises with minimal presentation
+  - Creating separate plans for each learning path
+- **Impact**:
+  - More effective learning experience for participants across different learning paths
+  - Better balance between theoretical knowledge and practical application
+  - Flexibility to adapt to different learning styles and needs
+  - Consistent approach that maintains the course's pharmacy/medication theme

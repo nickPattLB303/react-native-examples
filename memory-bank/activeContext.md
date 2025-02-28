@@ -1,28 +1,31 @@
 # Active Context
 
-## Current Session: Migration from Cursor to Roo Code
+## Current Session: Training Session Planning
 
 ### Current Task
-Migrating Cursor rules to Roo Code format, ensuring all content is properly transferred to the appropriate files in the memory-bank structure.
+Analyzing the project structure and materials to determine the optimal approach for running React Native training sessions.
 
 ### Active Files
-- `.clinerules` - Main configuration file for Cline (older version of Roo Code)
-- `.roomode` - Main configuration file for Roo Code
+- `README.md` - Project overview
+- `docs/` - Documentation directory
+- `docs/slides/` - Presentation slides
+- `docs/module-1-react-native-fundamentals/` - Module 1 content
 - `memory-bank/productContext.md` - Project overview
 - `memory-bank/activeContext.md` - Current session context (this file)
 - `memory-bank/progress.md` - Progress tracking
-- `memory-bank/systemPatterns.md` - System patterns and conventions
-- `memory-bank/techContext.md` - Technical context
+- `memory-bank/projectBrief.md` - Project brief information
 
 ### Current Focus
-Converting the content from the Cursor rules in `.cursor/rules/` to the appropriate Roo Code memory-bank files while maintaining all the important information and context.
+Determining the best approach for running training sessions based on the project's goals, structure, and available materials.
 
 ### Open Questions
-1. Are there any specific Roo Code features that should be leveraged beyond the basic memory-bank structure?
-2. Should we maintain both Cursor and Roo Code configurations simultaneously during the transition?
-3. Are there any additional memory-bank files that would be beneficial for this project?
+1. How should the instructor balance between slides and hands-on exercises?
+2. What customizations might be needed for different learning paths (instructor-led, self-led, async)?
+3. How should the challenges and exercises be integrated into the training flow?
+4. What additional materials might be needed to support the training sessions?
 
 ### Notes
-- The Cursor rules contain valuable information about the React Native Training Course project structure, standards, and processes.
-- The migration should ensure that all this information is properly organized in the Roo Code memory-bank structure.
-- The goal is to maintain the same level of guidance and structure while leveraging the Roo Code format. 
+- The project has a well-structured set of slides in the `docs/slides/` directory
+- The documentation in `docs/` provides detailed content for each module and section
+- The project supports multiple learning paths: instructor-led, self-led, and async topic-specific learning
+- The course follows a consistent pharmacy/medication theme throughout all examples
