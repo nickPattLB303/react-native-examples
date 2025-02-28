@@ -1,0 +1,73 @@
+---
+name: "Tooling and Development Environment"
+version: "1.0"
+description: "defines the standards for tooling, development environments, and platforms used throughout the React Native training course"
+priority: "medium"
+type: "Process"
+globs: 
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
+# Tooling and Development Environment
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
+
+## Description
+This rule defines the standards for tooling, development environments, and platforms used throughout the React Native training course.
+
+## Rule
+- Use specific platforms for different types of code:
+  - HTML, CSS, JavaScript, React: CodePen
+  - React Native: Expo Snack
+  - Challenges: Repository branches with local setup
+
+- React Native development setup:
+  - Use Expo Go as the primary development environment
+  - Follow the official Expo documentation for setup instructions
+  - Additional tools introduced on a case-by-case basis with clear documentation
+
+- Expo Snack SDK usage:
+  - Create Snacks locally in the repository
+  - Ensure all Snacks are properly documented
+  - Include clear instructions for running and modifying Snacks
+
+- Repository branch structure for exercises and challenges:
+  - `exercises/<EXERCISE_NAME>/starter`: Starting point for exercises
+  - `exercises/<EXERCISE_NAME>/complete`: Completed example for exercises
+  - `challenges/<CHALLENGE_NAME>/starter`: Starting point for challenges
+  - `challenges/<CHALLENGE_NAME>/complete`: Completed example for challenges
+
+- All code examples must include:
+  - Clear setup instructions
+  - Required dependencies
+  - Commands to run the code
+  - Expected output or behavior
+
+- For local development, provide:
+  - Environment setup instructions
+  - Troubleshooting guides
+  - Platform-specific considerations (macOS, Windows, Linux)
+
+## Development Tools
+
+The following tools are used throughout the course:
+
+- HTML, CSS, JavaScript, React: CodePen
+- React Native: Expo Snack
+- React Native Development: Expo Go
+- Analysis Exercises: Microsoft Forms
+- Diagramming Exercises: Microsoft Whiteboard
+
+## Examples
+- Proper Expo Snack setup:
+  ```
