@@ -23,149 +23,84 @@ alwaysApply: false
 This rule ensures that all technical content provides sufficient depth, particularly focusing on "under the hood" explanations of React Native's internal workings rather than just surface-level API usage.
 
 ## Rule
-- All technical content must be explained at three levels:
-  - **Surface Level**: Basic API usage and implementation
-  - **Mid Level**: How the feature works within the React Native architecture
-  - **Deep Level**: How the feature connects to native platforms and internal mechanisms
+- All technical explanations must include:
+  - Surface-level usage instructions (how to use the API/feature)
+  - Mid-level conceptual explanations (how it works conceptually)
+  - Deep-level internal explanations (how it works under the hood)
 
-- Each technical concept must include:
-  - **Conceptual explanation**: What it is and why it matters
-  - **Implementation details**: How to use it in code
-  - **Under the hood explanation**: How it works internally
-  - **Performance considerations**: How it impacts app performance
-  - **Best practices**: How to use it optimally
-  - **Advocacy comparison**: How it compares to native and other frameworks
+- "Under the hood" explanations must cover:
+  - JavaScript to native bridge mechanics where relevant
+  - Threading model and performance implications
+  - Platform-specific implementation details
+  - Rendering pipeline and reconciliation process
+  - Memory management considerations
 
-- Visual explanations must be provided for complex concepts:
+- Avoid vague explanations like:
+  - "React Native handles that for you"
+  - "It just works"
+  - "The framework takes care of this"
+
+- Include diagrams and visual explanations for complex concepts:
   - Architecture diagrams
-  - Flow charts
-  - Component hierarchies
-  - Sequence diagrams
-  - Comparative visualizations with native implementations
+  - Data flow diagrams
+  - Component lifecycle visualizations
+  - Bridge communication flow
 
-- Platform-specific details must be explained:
-  - How the feature works on iOS
-  - How the feature works on Android
-  - Platform-specific limitations or considerations
-  - Platform-specific performance characteristics
-  - Comparison with equivalent native implementations
+- Connect React Native concepts to familiar concepts in:
+  - Android development (Java/Kotlin)
+  - iOS development (Swift/Objective-C)
+  - Web development (React/Angular)
 
-- Technical depth must support advocacy goals:
-  - Demonstrate technical advantages over native development
-  - Address common technical concerns with evidence
-  - Show how React Native solves complex cross-platform challenges
-  - Highlight performance optimizations and improvements
-  - Explain how React Native bridges JavaScript and native code
+- Include references to source code or official documentation for further exploration
 
 ## Examples
+- Proper technical explanation:
+  ```markdown
+  # React Native FlatList Component
 
-### Surface Level Explanation (Basic)
-```javascript
-// Using the FlatList component
-function MedicationList({ medications }) {
-  return (
-    <FlatList
-      data={medications}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <MedicationItem 
-          name={item.name}
-          dosage={item.dosage}
-          frequency={item.frequency}
-        />
-      )}
-    />
-  );
-}
-```
+  ## Usage (Surface Level)
+  The `FlatList` component is used to render large lists of data efficiently. Here's how to implement a basic list:
 
-### Mid Level Explanation (Architecture)
-```markdown
-## How FlatList Works in React Native
+  ```jsx
+  <FlatList
+    data={medications}
+    renderItem={({ item }) => <MedicationItem medication={item} />}
+    keyExtractor={item => item.id.toString()}
+  />
+  ```
 
-The FlatList component optimizes rendering of long lists by:
+  ## How It Works (Mid Level)
+  Unlike a standard mapping of items to components, `FlatList` only renders items that are currently visible on screen plus a small buffer. As you scroll, items that move off-screen are recycled, and new items are rendered as they come into view.
 
-1. **Windowing**: Only rendering items currently visible on screen
-2. **Recycling**: Reusing list item components as you scroll
-3. **Lazy Loading**: Loading items on demand as they scroll into view
-4. **Memory Management**: Releasing items that scroll far out of view
+  ## Under The Hood (Deep Level)
+  The `FlatList` component is built on React Native's `VirtualizedList`, which implements virtualization. Here's what happens internally:
 
-This differs from a standard ScrollView which renders all children at once, leading to performance issues with long lists.
+  1. **Native List Components**: On iOS, `FlatList` uses `UICollectionView`, while on Android it uses `RecyclerView`. These native components are specifically designed for efficient list rendering.
 
-### Implementation in React Native Architecture:
-- FlatList is built on VirtualizedList, which handles the virtualization logic
-- It uses React's reconciliation process to efficiently update only changed items
-- It leverages native scroll views for smooth performance
-```
+  2. **Cell Recycling**: Rather than creating new view instances for each item, `FlatList` maintains a pool of reusable "cells" (views). As you scroll, off-screen cells are detached from their data and recycled for new items coming into view.
 
-### Deep Level Explanation (Internal Mechanisms)
-```markdown
-## Under the Hood: FlatList and Native List Views
+  3. **Windowing**: The component maintains a "window" of rendered items. The JavaScript thread calculates which items should be visible based on scroll position and sends only those items across the bridge to the native thread.
 
-When you use a FlatList in React Native, here's what happens internally:
+  4. **Bridge Optimization**: To minimize bridge traffic (a common performance bottleneck), `FlatList` batches updates and only sends the minimum required information across the bridge.
 
-1. **JavaScript Side**:
-   - VirtualizedList calculates which items should be visible
-   - It maintains a "window" of rendered items with buffer zones
-   - It schedules rendering of new items as the user scrolls
+  5. **Memory Management**: By rendering only visible items, memory usage remains relatively constant regardless of list size. This is critical for mobile apps where memory constraints are significant.
 
-2. **Bridge Communication**:
-   - Visible item information is serialized and sent over the bridge
-   - Scroll events from native are sent back to JS
+  > 🔍 **For Android Developers**: This recycling mechanism is very similar to how `RecyclerView` and `ViewHolder` pattern works in native Android.
 
-3. **Native Side**:
-   - iOS: Implemented using UICollectionView
-   - Android: Implemented using RecyclerView
-   - Both provide efficient cell reuse mechanisms
+  > 🔍 **For iOS Developers**: This is analogous to `UICollectionView`'s cell reuse mechanism with `dequeueReusableCell(withReuseIdentifier:for:)`.
+  ```
 
-4. **Performance Optimization**:
-   - Cell reuse patterns match native patterns
-   - View flattening reduces nested view hierarchies
-   - Off-main-thread layout calculations (new architecture)
+- Improper technical explanation:
+  ```markdown
+  # FlatList Component
 
-### Comparison with Native Implementation:
+  The `FlatList` component is used to render lists in React Native. It's optimized for performance and handles rendering efficiently. React Native takes care of recycling views as you scroll.
 
-| Aspect | React Native FlatList | Native UICollectionView/RecyclerView |
-|--------|----------------------|--------------------------------------|
-| Setup Complexity | ~10 lines of JS | 50-100 lines of platform-specific code |
-| Cell Reuse | Automatic | Manual implementation required |
-| Cross-Platform | Single implementation | Separate implementations |
-| Performance | Near-native with optimizations | Slightly better raw performance |
-| Memory Usage | Comparable with optimizations | Slightly more efficient |
-
-This demonstrates how React Native provides a simplified API while leveraging the same native performance optimizations under the hood.
-```
-
-### Advocacy-Focused Technical Explanation
-```markdown
-## Why React Native's FlatList Matters for Developers
-
-### The Challenge
-Building performant, cross-platform list views has traditionally required:
-- Separate iOS and Android implementations (100-200+ lines each)
-- Platform-specific knowledge of UICollectionView and RecyclerView
-- Duplicate logic for data handling, cell reuse, and event handling
-- Separate optimization strategies for each platform
-
-### The React Native Solution
-FlatList provides:
-- A single, cross-platform implementation (10-15 lines)
-- Built-in performance optimizations
-- Familiar React component patterns
-- Simplified API with powerful customization options
-
-### Real-World Impact
-At Pharmacy App Inc., switching to React Native FlatList resulted in:
-- 60% reduction in list-related code
-- 40% faster development time for list features
-- Consistent performance across iOS and Android
-- Easier maintenance and feature additions
-
-### Technical Deep Dive
-While providing a simple API, FlatList leverages the same native optimizations:
-- Cell recycling mechanisms
-- Memory management
-- Efficient rendering
-- Native scroll physics
-
-This demonstrates React Native's core value: native performance with JavaScript developer experience.
+  ```jsx
+  <FlatList
+    data={medications}
+    renderItem={({ item }) => <MedicationItem medication={item} />}
+    keyExtractor={item => item.id.toString()}
+  />
+  ```
+  
