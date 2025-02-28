@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Section 4: Project Structure and Configuration</title>
+  <link rel="stylesheet" href="../../shared/css/reveal.css">
+  <link rel="stylesheet" href="../../shared/css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../../shared/css/highlight/zenburn.css">
+  <link rel="stylesheet" href="../../shared/css/custom.css">
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../../shared/css/print/pdf.css' : '../../shared/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Title Slide -->
+      <section>
+        <h1>Project Structure and Configuration</h1>
+        <h3>Module 2: Environment Setup</h3>
+        <p>Section 4 - 60 minutes</p>
+      </section>
+
+      <!-- Learning Objectives -->
+      <section>
+        <h2>Learning Objectives</h2>
+        <ul>
+          <li>Understand core files and directories in React Native projects</li>
+          <li>Configure applications using app.json and package.json</li>
+          <li>Implement advanced configuration options in Expo projects</li>
+          <li>Optimize development workflows</li>
+          <li>Create scalable project structures</li>
+        </ul>
+      </section>
+
+      <!-- Core Project Structure -->
+      <section>
+        <h2>Core Project Structure</h2>
+        <ul>
+          <li><code>.expo/</code> - Expo-specific files and configurations</li>
+          <li><code>.vscode/</code> - VS Code editor settings</li>
+          <li><code>app/</code> - Main application code and routes</li>
+          <li><code>assets/</code> - Static resources (images, fonts)</li>
+          <li><code>babel.config.js</code> - JavaScript transpiler configuration</li>
+          <li><code>app.json</code> - Expo project configuration</li>
+          <li><code>package.json</code> - Project dependencies and scripts</li>
+          <li><code>tsconfig.json</code> - TypeScript configuration</li>
+        </ul>
+      </section>
+
+      <!-- App Directory Structure -->
+      <section>
+        <h2>App Directory Structure</h2>
+        <pre><code class="hljs javascript">
+// Main entry point
+app/
+  ├── _layout.tsx    // Root layout component
+  ├── index.tsx      // Home screen
+  ├── about.tsx      // About screen
+  └── settings.tsx   // Settings screen
+        </code></pre>
+        <p>The <code>app/</code> directory contains the main application code and routes</p>
+      </section>
+
+      <!-- Assets Directory -->
+      <section>
+        <h2>Assets Directory</h2>
+        <pre><code class="hljs javascript">
+// Importing assets
+import { Image } from 'react-native';
+import logo from '../assets/images/logo.png';
+
+export default function LogoDisplay() {
+  return <Image source={logo} style={{ width: 100, height: 100 }} />;
+}
+        </code></pre>
+        <p>The <code>assets/</code> directory holds static resources like images and fonts</p>
+      </section>
+
+      <!-- Configuration Files: app.json -->
+      <section>
+        <h2>Configuration Files: app.json</h2>
+        <pre><code class="hljs json">
+{
+  "expo": {
+    "name": "My App",
+    "slug": "my-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": { ... },
+    "android": { ... }
+  }
+}
+        </code></pre>
+        <p>Contains configuration settings for the Expo project</p>
+      </section>
+
+      <!-- Configuration Files: package.json -->
+      <section>
+        <h2>Configuration Files: package.json</h2>
+        <pre><code class="hljs json">
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~49.0.0",
+    "react": "18.2.0",
+    "react-native": "0.72.3"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.14",
+    "typescript": "^5.1.3"
+  }
+}
+        </code></pre>
+        <p>Defines project dependencies and scripts</p>
+      </section>
+
+      <!-- Environment Variables -->
+      <section>
+        <h2>Environment Variables</h2>
+        <pre><code class="hljs bash">
+# Install required packages
+npm install dotenv babel-plugin-inline-dotenv
+
+# Create environment files
+touch .env.development
+touch .env.production
+touch .env.staging
+        </code></pre>
+        <p>Environment-specific variables help manage different configurations</p>
+      </section>
+
+      <!-- Using Environment Variables -->
+      <section>
+        <h2>Using Environment Variables</h2>
+        <pre><code class="hljs javascript">
+// babel.config.js
+module.exports = function(api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: ['inline-dotenv']
+  };
+};
+
+// In your code
+console.log(process.env.API_URL);
+        </code></pre>
+        <p>Access environment variables in your application code</p>
+      </section>
+
+      <!-- Dynamic Configuration with app.config.js -->
+      <section>
+        <h2>Dynamic Configuration with app.config.js</h2>
+        <pre><code class="hljs javascript">
+// app.config.js
+export default {
+  name: 'My App',
+  version: '1.0.0',
+  // Load values from .env
+  extra: {
+    apiUrl: process.env.API_URL,
+    authToken: process.env.AUTH_TOKEN,
+  },
+  // Environment-specific settings
+  ios: {
+    bundleIdentifier: process.env.ENV === 'production'
+      ? 'com.mycompany.myapp'
+      : 'com.mycompany.myapp.dev'
+  }
+};
+        </code></pre>
+        <p>Provides dynamic configuration based on environment</p>
+      </section>
+
+      <!-- Platform-Specific Configuration -->
+      <section>
+        <h2>Platform-Specific Configuration</h2>
+        <pre><code class="hljs javascript">
+// app.config.js
+export default {
+  // ... other config
+  ios: {
+    bundleIdentifier: 'com.mycompany.myapp',
+    buildNumber: '1.0.0',
+    infoPlist: {
+      NSCameraUsageDescription: 'This app uses the camera to scan barcodes'
+    }
+  },
+  android: {
+    package: 'com.mycompany.myapp',
+    versionCode: 1,
+    permissions: ['CAMERA', 'ACCESS_FINE_LOCATION']
+  }
+};
+        </code></pre>
+        <p>Configure platform-specific settings for iOS and Android</p>
+      </section>
+
+      <!-- Advanced Configuration with Plugins -->
+      <section>
+        <h2>Advanced Configuration with Plugins</h2>
+        <pre><code class="hljs javascript">
+// app.config.js
+export default {
+  // ... other config
+  plugins: [
+    [
+      'expo-camera',
+      {
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access your camera'
+      }
+    ],
+    [
+      'expo-location',
+      {
+        locationAlwaysAndWhenInUsePermission: 
+          'Allow $(PRODUCT_NAME) to use your location'
+      }
+    ]
+  ]
+};
+        </code></pre>
+        <p>Use Expo's plugin system for native code configuration without ejecting</p>
+      </section>
+
+      <!-- Recommended Project Structure -->
+      <section>
+        <h2>Recommended Project Structure</h2>
+        <pre><code class="hljs">
+my-app/
+├── app/                  # Main application screens
+├── src/                  # Source code
+│   ├── components/       # Reusable UI components
+│   ├── hooks/            # Custom React hooks
+│   ├── services/         # API and business logic
+│   ├── utils/            # Helper functions
+│   └── types/            # TypeScript type definitions
+├── assets/               # Static resources
+├── config/               # Configuration files
+├── docs/                 # Documentation
+└── scripts/              # Build and utility scripts
+        </code></pre>
+        <p>A scalable structure for larger applications</p>
+      </section>
+
+      <!-- Benefits of Structured Approach -->
+      <section>
+        <h2>Benefits of Structured Approach</h2>
+        <ul>
+          <li><strong>Separation of Concerns</strong>: Each directory has a clear purpose</li>
+          <li><strong>Scalability</strong>: Easy to add new features without disrupting existing code</li>
+          <li><strong>Developer Experience</strong>: Clear organization helps new team members</li>
+          <li><strong>Maintainability</strong>: Isolates changes to specific areas</li>
+          <li><strong>Testability</strong>: Components and services are modular and easier to test</li>
+        </ul>
+      </section>
+
+      <!-- TypeScript Configuration -->
+      <section>
+        <h2>TypeScript Configuration</h2>
+        <pre><code class="hljs javascript">
+// tsconfig.json
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"]
+    }
+  }
+}
+        </code></pre>
+        <p>Configure TypeScript with path aliases for cleaner imports</p>
+      </section>
+
+      <!-- Path Aliases with Babel -->
+      <section>
+        <h2>Path Aliases with Babel</h2>
+        <pre><code class="hljs javascript">
+// babel.config.js
+module.exports = function(api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: [
+      [
+        'module-resolver',
+        {
+          root: ['./'],
+          alias: {
+            '@': './src',
+            '@components': './src/components',
+            '@hooks': './src/hooks'
+          }
+        }
+      ]
+    ]
+  };
+};
+        </code></pre>
+        <p>Make path aliases work with Babel for cleaner imports</p>
+      </section>
+
+      <!-- Additional Configurations -->
+      <section>
+        <h2>Additional Configurations</h2>
+        <ul>
+          <li><strong>Metro Configuration</strong>: Customize the JavaScript bundler</li>
+          <li><strong>ESLint Configuration</strong>: Ensure consistent code quality</li>
+          <li><strong>Git Configuration</strong>: Properly ignore files with .gitignore</li>
+        </ul>
+        <p>These configurations enhance your development workflow</p>
+      </section>
+
+      <!-- Exercise: Project Structure Documentation -->
+      <section>
+        <h2>Exercise: Project Structure Documentation</h2>
+        <p><strong>Objective</strong>: Document and organize a React Native project structure for a pharmacy application.</p>
+        <p><strong>Tasks</strong>:</p>
+        <ol>
+          <li>Create a new default Expo project and examine its structure</li>
+          <li>Create a comprehensive documentation file explaining the project structure</li>
+          <li>Create an improved directory structure for a pharmacy application</li>
+          <li>Document your rationale and best practices</li>
+        </ol>
+      </section>
+
+      <!-- Exercise: Environment Management Setup -->
+      <section>
+        <h2>Exercise: Environment Management Setup</h2>
+        <p><strong>Objective</strong>: Configure environment management for a React Native Expo project.</p>
+        <p><strong>Tasks</strong>:</p>
+        <ol>
+          <li>Create an environment management setup with .env.example</li>
+          <li>Document different approaches to environment management</li>
+          <li>Create a developer onboarding guide</li>
+        </ol>
+      </section>
+
+      <!-- Summary -->
+      <section>
+        <h2>Summary</h2>
+        <ul>
+          <li>Core structure of a React Native project using Expo</li>
+          <li>Configuration using app.json and app.config.js</li>
+          <li>Environment-specific configuration with dotenv</li>
+          <li>Platform-specific settings for iOS and Android</li>
+          <li>Advanced configuration using Expo's plugins system</li>
+          <li>Recommended project structure for larger applications</li>
+          <li>TypeScript configuration with path aliases</li>
+          <li>Additional configurations to optimize development workflow</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../../shared/js/reveal.js"></script>
+  <script src="../../shared/js/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'slide',
+      dependencies: [
+        { src: '../../shared/js/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+</html> 

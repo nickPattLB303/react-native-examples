@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: Running on Simulators and Devices | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>Running on Simulators and Devices</h2>
+      <p class="metadata">Module 2 | 30-45 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Run React Native applications on iOS simulators</li>
+        <li>Run React Native applications on Android emulators</li>
+        <li>Test applications on physical iOS and Android devices using Expo Go</li>
+        <li>Understand the differences between development environments</li>
+        <li>Troubleshoot common device and simulator issues</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 30-45 minutes</p>
+        <p><strong>Prerequisites:</strong> Sections 1 and 2 completion</p>
+      </div>
+    </section>
+    
+    <!-- Introduction to Testing Environments -->
+    <section class="slide content-slide">
+      <h2>Introduction to Testing Environments</h2>
+      <p>React Native allows you to test your application in different environments, each with its own advantages and limitations:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Simulator/Emulator Testing</h3>
+          <ul>
+            <li>iOS Simulator (macOS only)</li>
+            <li>Android Emulator</li>
+            <li>Web browser (for React Native Web)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Physical Device Testing</h3>
+          <ul>
+            <li>Physical iOS devices with Expo Go</li>
+            <li>Physical Android devices with Expo Go</li>
+            <li>Custom development builds</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform-specific">
+        <div class="platform-ios">
+          <p><strong>For iOS Developers:</strong> You're already familiar with the iOS Simulator, but React Native's integration provides some unique features and limitations compared to native iOS development.</p>
+        </div>
+        <div class="platform-android">
+          <p><strong>For Android Developers:</strong> While you've used Android emulators before, the React Native development workflow introduces some differences you should be aware of.</p>
+        </div>
+        <div class="platform-web">
+          <p><strong>For Web Developers:</strong> This section introduces mobile testing environments that might be new to you, but they follow similar principles to browser testing for web applications.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- iOS Simulator Slide -->
+    <section class="slide content-slide">
+      <h2>Running on iOS Simulator</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Launching Your App</h3>
+          <pre><code>npx expo start --ios</code></pre>
+          <p>This command will:</p>
+          <ol>
+            <li>Start the Metro bundler</li>
+            <li>Launch the iOS Simulator</li>
+            <li>Install the Expo Go app in the simulator</li>
+            <li>Open your application in Expo Go</li>
+          </ol>
+          <p>Alternatively:</p>
+          <pre><code>npx expo start
+# Then press 'i' in the terminal</code></pre>
+        </div>
+        <div class="column">
+          <h3>Choosing Different Devices</h3>
+          <ol>
+            <li>Open Xcode</li>
+            <li>Go to Xcode > Open Developer Tool > Simulator</li>
+            <li>In Simulator, select File > Open Simulator > [Choose Device]</li>
+          </ol>
+          <p>Or specify a simulator when launching:</p>
+          <pre><code>npx expo start --ios --simulator="iPhone 14 Pro"</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: iOS Simulator</div>
+        <p>When you run your app in the iOS Simulator, React Native compiles your JavaScript code using the Metro bundler and loads it into the Expo Go app. The native bridge then translates React Native components into native iOS UI components.</p>
+      </div>
+    </section>
+    
+    <!-- iOS Simulator Issues Slide -->
+    <section class="slide content-slide">
+      <h2>Common iOS Simulator Issues</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Simulator is Slow</h3>
+          <ul>
+            <li>Close other applications to free up resources</li>
+            <li>Reduce the window size of the simulator</li>
+            <li>Use a less resource-intensive device type (e.g., iPhone SE instead of iPhone 14 Pro Max)</li>
+          </ul>
+          
+          <h3>App Doesn't Load or Shows Errors</h3>
+          <ul>
+            <li>Reset the simulator (Simulator > Reset Content and Settings)</li>
+            <li>Restart the Metro bundler with <code>npx expo start --clear</code></li>
+            <li>Check for JavaScript errors in the Metro bundler console</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Networking Issues</h3>
+          <ul>
+            <li>Ensure your computer and simulator are not on different networks</li>
+            <li>Check if any firewall settings are blocking connections</li>
+            <li>Try running with <code>npx expo start --localhost</code></li>
+          </ul>
+          
+          <div class="callout tip">
+            <div class="callout-title">Tip</div>
+            <p>The iOS Simulator is generally faster and more reliable than the Android Emulator, making it a good choice for rapid development iterations when targeting both platforms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Android Emulator Slide -->
+    <section class="slide content-slide">
+      <h2>Running on Android Emulator</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Setting Up an Android Virtual Device (AVD)</h3>
+          <ol>
+            <li>Open Android Studio</li>
+            <li>Click on "More Actions" or the three dots</li>
+            <li>Select "Virtual Device Manager"</li>
+            <li>Click "Create Device"</li>
+            <li>Select a phone definition (e.g., Pixel 6)</li>
+            <li>Select a system image (e.g., Android 13)</li>
+            <li>Configure the AVD settings and click "Finish"</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Launching Your App</h3>
+          <pre><code>npx expo start --android</code></pre>
+          <p>This command will:</p>
+          <ol>
+            <li>Start the Metro bundler</li>
+            <li>Connect to the running Android emulator</li>
+            <li>Install the Expo Go app in the emulator</li>
+            <li>Open your application in Expo Go</li>
+          </ol>
+          <p>Alternatively:</p>
+          <pre><code>npx expo start
+# Then press 'a' in the terminal</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: Android Emulation</div>
+        <p>The Android emulator virtualizes an entire Android operating system. Unlike iOS, which shares many architectural elements with macOS, Android has different architecture, making emulation more resource-intensive.</p>
+      </div>
+    </section>
+    
+    <!-- Android Emulator Issues Slide -->
+    <section class="slide content-slide">
+      <h2>Common Android Emulator Issues</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Emulator is Slow</h3>
+          <ul>
+            <li>Enable hardware acceleration in the AVD settings</li>
+            <li>Use a device with fewer pixels (e.g., Pixel 4 instead of Pixel 6 Pro)</li>
+            <li>Allocate more RAM to the emulator in the AVD settings</li>
+            <li>Use the x86 or x86_64 system images instead of ARM</li>
+          </ul>
+          
+          <h3>App Crashes or Doesn't Start</h3>
+          <ul>
+            <li>Wipe data on the emulator (in AVD Manager > wipe data)</li>
+            <li>Restart the Metro bundler with <code>npx expo start --clear</code></li>
+            <li>Check the Metro console and Android logs for errors</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Hardware Virtualization Issues</h3>
+          <ul>
+            <li>Ensure virtualization is enabled in your BIOS settings</li>
+            <li>On Windows, make sure Hyper-V is enabled</li>
+            <li>On macOS, no additional configuration is needed for hardware acceleration</li>
+          </ul>
+          
+          <div class="callout tip">
+            <div class="callout-title">Tip</div>
+            <p>Keep a single emulator running during your development session rather than starting and stopping it repeatedly, as the startup process is resource-intensive.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Physical iOS Devices Slide -->
+    <section class="slide content-slide">
+      <h2>Running on Physical iOS Devices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Using Expo Go on iOS</h3>
+          <ol>
+            <li>Install the Expo Go app from the App Store on your iOS device</li>
+            <li>Make sure your computer and iOS device are on the same WiFi network</li>
+            <li>In your project directory, run <code>npx expo start</code></li>
+            <li>Scan the QR code with your iOS device's camera</li>
+            <li>The Expo Go app will open and load your project</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Common Physical iOS Device Issues</h3>
+          <h4>Cannot Connect to Metro Bundler</h4>
+          <ul>
+            <li>Ensure both your computer and device are on the same WiFi network</li>
+            <li>Disable any VPNs on your computer or device</li>
+            <li>Try running with an explicit IP: <code>npx expo start --host &lt;your-computer-ip&gt;</code></li>
+            <li>Check if your WiFi router has client isolation enabled</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: QR Code Connection</div>
+        <p>When you scan the QR code, your device connects to the Metro bundler running on your computer. The bundler sends the JavaScript code to your device, which then runs it within the Expo Go app. This avoids the need for provisioning profiles or App Store distribution during development.</p>
+      </div>
+    </section>
+    
+    <!-- Physical Android Devices Slide -->
+    <section class="slide content-slide">
+      <h2>Running on Physical Android Devices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Using Expo Go on Android</h3>
+          <ol>
+            <li>Install the Expo Go app from the Google Play Store</li>
+            <li>Make sure your computer and Android device are on the same WiFi network</li>
+            <li>Enable Developer Mode on your Android device (Settings > About phone > tap Build number 7 times)</li>
+            <li>Enable USB debugging in Developer Options</li>
+            <li>In your project directory, run <code>npx expo start</code></li>
+            <li>Scan the QR code with the Expo Go app (not the camera app)</li>
+            <li>The app will load your project</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Common Physical Android Device Issues</h3>
+          <h4>App Doesn't Scan QR Code Properly</h4>
+          <ul>
+            <li>Make sure you're using the Expo Go app to scan, not the camera</li>
+            <li>Increase the brightness of your computer screen</li>
+            <li>Try entering the URL manually in Expo Go</li>
+          </ul>
+          
+          <h4>Connection or Loading Issues</h4>
+          <ul>
+            <li>Check that USB debugging is enabled</li>
+            <li>Ensure your device and computer are on the same network</li>
+            <li>Try connecting via USB and run <code>adb reverse tcp:8081 tcp:8081</code></li>
+            <li>Clear the Expo Go app's cache or reinstall it</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Comparing Environments Slide -->
+    <section class="slide content-slide">
+      <h2>Comparing Development Environments</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>iOS Simulator</h3>
+          <p><strong>Pros:</strong></p>
+          <ul>
+            <li>Fast to launch</li>
+            <li>Closely mimics iOS behavior</li>
+            <li>Easy to test different iOS versions and devices</li>
+          </ul>
+          <p><strong>Cons:</strong></p>
+          <ul>
+            <li>Not a perfect representation of real device performance</li>
+            <li>Lacks physical sensors</li>
+            <li>Consumes significant system resources</li>
+          </ul>
+          
+          <h3>Android Emulator</h3>
+          <p><strong>Pros:</strong></p>
+          <ul>
+            <li>Supports most Android APIs</li>
+            <li>Can emulate different devices and Android versions</li>
+          </ul>
+          <p><strong>Cons:</strong></p>
+          <ul>
+            <li>Slower than iOS Simulator</li>
+            <li>Consumes a lot of resources</li>
+            <li>Hardware acceleration configuration can be complex</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Physical iOS Devices</h3>
+          <p><strong>Pros:</strong></p>
+          <ul>
+            <li>Actual device performance and behavior</li>
+            <li>Access to all device features (camera, accelerometer, etc.)</li>
+          </ul>
+          <p><strong>Cons:</strong></p>
+          <ul>
+            <li>Requires constant connection to development machine</li>
+            <li>Limited by available physical devices for testing</li>
+          </ul>
+          
+          <h3>Physical Android Devices</h3>
+          <p><strong>Pros:</strong></p>
+          <ul>
+            <li>Real-world performance testing</li>
+            <li>Diverse hardware for testing</li>
+            <li>Access to all device features</li>
+          </ul>
+          <p><strong>Cons:</strong></p>
+          <ul>
+            <li>Fragmentation of Android ecosystem makes testing across all configurations difficult</li>
+            <li>Developer mode setup can be complex</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices for Multi-Platform Testing</h2>
+      <ol>
+        <li><strong>Start with Simulators/Emulators:</strong> They're quicker to set up and iterate with during early development.</li>
+        
+        <li><strong>Test Critical Features on Physical Devices:</strong> Especially features that use hardware capabilities like camera, GPS, or sensors.</li>
+        
+        <li><strong>Test on Multiple OS Versions:</strong> Particularly on Android, where fragmentation is common.</li>
+        
+        <li><strong>Create a Device Testing Matrix:</strong> Identify the most common device configurations your users will have and ensure you test on those.</li>
+        
+        <li><strong>Use Expo's Device Preview:</strong> This feature lets you see how your app looks on different device sizes simultaneously.</li>
+        
+        <li><strong>Enable Remote Debugging:</strong> Helpful for diagnosing issues specific to physical devices.</li>
+        
+        <li><strong>Monitor Performance Metrics:</strong> Pay attention to load times, responsiveness, and memory usage across different devices.</li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">Pharmacy App Consideration</div>
+        <p>For a pharmacy application, testing on physical devices is particularly important for features like barcode scanning, camera-based pill identification, and location-based pharmacy finding.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Section Exercise: Testing Environment Setup</h2>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Objective</div>
+        <p>Configure and document multiple testing environments for a React Native application.</p>
+      </div>
+      <h3>Tasks</h3>
+      <ol>
+        <li>Configure your development environment to test the default Expo app on at least two different platforms:
+          <ul>
+            <li>iOS Simulator (if on macOS)</li>
+            <li>Android Emulator</li>
+            <li>Web browser</li>
+            <li>Physical device (if available)</li>
+          </ul>
+        </li>
+        <li>Document the process in <code>testing-environment.md</code>, including:
+          <ul>
+            <li>Prerequisites for each environment</li>
+            <li>Configuration steps</li>
+            <li>Launch steps</li>
+            <li>Screenshots of the app running on each platform</li>
+          </ul>
+        </li>
+        <li>Create a testing verification checklist in <code>environment-verification.md</code></li>
+        <li>Document the advantages and limitations of each environment in <code>environment-comparison.md</code></li>
+      </ol>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Learned how to run React Native applications on:
+          <ul>
+            <li>iOS Simulator</li>
+            <li>Android Emulator</li>
+            <li>Physical iOS and Android devices using Expo Go</li>
+          </ul>
+        </li>
+        <li>Understood the advantages and limitations of each testing environment</li>
+        <li>Explored common issues and their solutions for each platform</li>
+        <li>Learned best practices for multi-platform testing</li>
+        <li>Configured a comprehensive testing environment for React Native development</li>
+      </ul>
+      <div class="next-steps">
+        <strong>Next:</strong> Section 4: Project Structure and Configuration
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: Development Tools Installation | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>Development Tools Installation</h2>
+      <p class="metadata">Module 2 | 30-45 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Install all required development tools for React Native development on macOS</li>
+        <li>Configure your system for both iOS and Android development</li>
+        <li>Understand the purpose of each tool in the React Native development workflow</li>
+        <li>Verify your installation with appropriate checks</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 30-45 minutes</p>
+        <p><strong>Prerequisites:</strong> Basic command line familiarity</p>
+      </div>
+    </section>
+    
+    <!-- Essential Tools Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Essential Development Tools Overview</h2>
+      <p>React Native development requires several tools and dependencies to create, build, and run applications across different platforms:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>For iOS Development</h3>
+          <ul>
+            <li>Xcode & Command Line Tools</li>
+            <li>iOS Simulator</li>
+            <li>CocoaPods (dependency manager)</li>
+          </ul>
+          <div class="platform-ios">
+            <strong>iOS Developers:</strong> Ensure Xcode is updated to the latest stable version with Command Line Tools installed.
+          </div>
+        </div>
+        <div class="column">
+          <h3>For Android Development</h3>
+          <ul>
+            <li>Android Studio</li>
+            <li>Android SDK</li>
+            <li>JDK (Java Development Kit)</li>
+            <li>Android Virtual Device (Emulator)</li>
+          </ul>
+          <div class="platform-android">
+            <strong>Android Developers:</strong> Ensure your SDK is configured specifically for React Native development.
+          </div>
+        </div>
+      </div>
+      <h3>Common Tools for All Platforms</h3>
+      <ul>
+        <li>Node.js & npm</li>
+        <li>Watchman (file watching service)</li>
+        <li>Expo CLI & Expo Go app</li>
+        <li>Git (version control)</li>
+      </ul>
+      <div class="platform-web">
+        <strong>Web Developers:</strong> You're likely familiar with Node.js and npm, but you'll need additional tools for mobile development.
+      </div>
+    </section>
+    
+    <!-- Xcode Installation Slide -->
+    <section class="slide content-slide">
+      <h2>Installing Xcode and Command Line Tools</h2>
+      <p>Xcode is Apple's integrated development environment (IDE) required for iOS development:</p>
+      <ol>
+        <li>Open the App Store and search for "Xcode"</li>
+        <li>Click "Get" or "Download" to install Xcode (large download - may take time)</li>
+        <li>Open Xcode and accept any license agreements</li>
+        <li>Install Command Line Tools via Terminal:</li>
+      </ol>
+      <pre><code>xcode-select --install</code></pre>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: Command Line Tools</div>
+        <p>The Command Line Tools package gives you essential development tools like Git, the Apple LLVM compiler, and build tools necessary for native development. React Native uses these tools during the build process to compile native code for iOS.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Remind participants that Xcode is several GB in size and may require significant download time. If participants are attending a workshop, suggest downloading Xcode in advance.</p>
+      </div>
+    </section>
+    
+    <!-- Homebrew and Node.js Slide -->
+    <section class="slide content-slide">
+      <h2>Installing Homebrew, Node.js, and Watchman</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Install Homebrew</h3>
+          <p>Package manager for macOS that simplifies tool installation:</p>
+          <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+          <p>Follow on-screen instructions to complete setup.</p>
+        </div>
+        <div class="column">
+          <h3>Install Node.js</h3>
+          <p>JavaScript runtime that powers React Native:</p>
+          <pre><code>brew install node</code></pre>
+          <p>Verify installation:</p>
+          <pre><code>node --version  # Should show v16.x or later
+npm --version   # Should show v8.x or later</code></pre>
+        </div>
+      </div>
+      <h3>Install Watchman</h3>
+      <p>File watching service that improves performance:</p>
+      <pre><code>brew install watchman</code></pre>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: Watchman's Role</div>
+        <p>Watchman optimizes the development workflow by efficiently observing file changes. When you modify your code, Watchman notifies the Metro bundler, which then rebundles your JavaScript. This enables features like Fast Refresh.</p>
+      </div>
+    </section>
+    
+    <!-- Android Development Environment Slide -->
+    <section class="slide content-slide">
+      <h2>Setting Up Android Development Environment</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Install JDK</h3>
+          <pre><code>brew install --cask adoptopenjdk/openjdk/adoptopenjdk11</code></pre>
+          
+          <h3>Install Android Studio</h3>
+          <ol>
+            <li>Download from <a href="https://developer.android.com/studio" target="_blank">developer.android.com/studio</a></li>
+            <li>Follow installation wizard</li>
+            <li>Select: Android SDK, Platform, Virtual Device</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Configure Android SDK</h3>
+          <ol>
+            <li>In Android Studio, go to "More Actions" > "SDK Manager"</li>
+            <li>In SDK Platforms tab, select:
+              <ul>
+                <li>Android 13 (Tiramisu)</li>
+                <li>Android 12 (S)</li>
+                <li>Android 11 (R)</li>
+              </ul>
+            </li>
+            <li>In SDK Tools tab, select:
+              <ul>
+                <li>Android SDK Build-Tools</li>
+                <li>Android SDK Command-line Tools</li>
+                <li>Android Emulator</li>
+                <li>Android SDK Platform-Tools</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Environment Variables</div>
+        <p>Add these to your shell profile file (`.zshrc`, `.bash_profile`):</p>
+        <pre><code>export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools</code></pre>
+      </div>
+    </section>
+    
+    <!-- Expo CLI and Mobile Apps Slide -->
+    <section class="slide content-slide">
+      <h2>Installing Expo CLI and Mobile Testing Apps</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Install Expo CLI</h3>
+          <p>Command-line utility for creating and managing Expo projects:</p>
+          <pre><code>npm install -g expo-cli</code></pre>
+          <p>Verify installation:</p>
+          <pre><code>expo --version</code></pre>
+        </div>
+        <div class="column">
+          <h3>Install Expo Go on Mobile Devices</h3>
+          <p>For testing on physical devices:</p>
+          <ul>
+            <li>iOS: Download <a href="https://apps.apple.com/us/app/expo-go/id982107779" target="_blank">Expo Go from App Store</a></li>
+            <li>Android: Download <a href="https://play.google.com/store/apps/details?id=host.exp.exponent" target="_blank">Expo Go from Google Play</a></li>
+          </ul>
+          <p>This allows you to test your applications without building and deploying them to a device manually.</p>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">What is Expo?</div>
+        <p>Expo is a framework and platform built around React Native that provides a set of tools and services for developing, building, and deploying React Native applications. It simplifies the development process, especially for beginners.</p>
+      </div>
+    </section>
+    
+    <!-- Verification Slide -->
+    <section class="slide content-slide">
+      <h2>Verifying Your Installation</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Verify Node.js and npm</h3>
+          <pre><code>node --version
+npm --version</code></pre>
+          
+          <h3>Verify Watchman</h3>
+          <pre><code>watchman --version</code></pre>
+          
+          <h3>Verify Xcode Command Line Tools</h3>
+          <pre><code>xcode-select --print-path</code></pre>
+          <p>Should output: <code>/Applications/Xcode.app/Contents/Developer</code></p>
+        </div>
+        <div class="column">
+          <h3>Verify Android SDK</h3>
+          <pre><code>sdkmanager --list | grep "installed"</code></pre>
+          <p>Should list installed Android SDK packages</p>
+          
+          <h3>Verify Expo CLI</h3>
+          <pre><code>expo --version</code></pre>
+          
+          <h3>Verify Environment Variables</h3>
+          <pre><code>echo $ANDROID_HOME</code></pre>
+          <p>Should point to your Android SDK location</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Troubleshooting Slide -->
+    <section class="slide content-slide">
+      <h2>Troubleshooting Common Installation Issues</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Xcode Command Line Tools Issues</h3>
+          <pre><code>sudo xcode-select --reset
+xcode-select --install</code></pre>
+          
+          <h3>Node.js Version Conflicts</h3>
+          <p>Use nvm to manage multiple Node.js versions:</p>
+          <pre><code>brew install nvm
+
+# Then follow instructions to configure nvm
+nvm install 16
+nvm use 16</code></pre>
+        </div>
+        <div class="column">
+          <h3>Android SDK Configuration Issues</h3>
+          <ol>
+            <li>Check that the path in <code>ANDROID_HOME</code> exists</li>
+            <li>Make sure you've sourced your profile file:</li>
+            <pre><code>source ~/.zshrc  # Or appropriate file</code></pre>
+            <li>Verify with:</li>
+            <pre><code>echo $ANDROID_HOME</code></pre>
+          </ol>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: Android Environment Variables</div>
+        <p>React Native's build process uses these environment variables to locate the Android SDK tools it needs for compiling and packaging your application. Without them, the Metro bundler and React Native CLI won't be able to communicate with the Android tools.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Section Exercise: Development Tools Verification</h2>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Objective</div>
+        <p>Create a verification script that checks all installed development tools.</p>
+      </div>
+      <h3>Tasks</h3>
+      <ol>
+        <li>Create a script named <code>env-check.sh</code> that verifies:
+          <ul>
+            <li>Node.js installation and version (≥ 14.0.0)</li>
+            <li>npm installation and version</li>
+            <li>Expo CLI installation</li>
+            <li>Android SDK installation</li>
+            <li>Xcode installation (macOS)</li>
+            <li>Watchman installation</li>
+          </ul>
+        </li>
+        <li>Run the script and fix any issues detected</li>
+        <li>Document the process in <code>environment-verification.md</code></li>
+      </ol>
+      <div class="callout example">
+        <div class="callout-title">Starter Template</div>
+        <pre><code>#!/bin/bash
+
+# Function to check if a command exists
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+echo "===== React Native Environment Verification ====="
+# Add verification code here</code></pre>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Installed essential tools for React Native development:
+          <ul>
+            <li>Xcode and Command Line Tools for iOS development</li>
+            <li>Android Studio and SDK for Android development</li>
+            <li>Node.js, npm, and Watchman for the JavaScript environment</li>
+            <li>Expo CLI for managing React Native projects</li>
+          </ul>
+        </li>
+        <li>Configured environment variables for Android development</li>
+        <li>Verified installations to ensure a working environment</li>
+        <li>Learned troubleshooting techniques for common issues</li>
+      </ul>
+      <div class="next-steps">
+        <strong>Next:</strong> Section 2: Creating Your First Expo Project
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

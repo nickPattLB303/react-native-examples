@@ -34,9 +34,6 @@ This course supports three distinct learning paths:
 - [React Native Internals](./module-1-react-native-fundamentals/section-3-react-native-internals/README.md)
 - [React Native Documentation](./module-1-react-native-fundamentals/section-4-react-native-documentation/README.md)
 
-### Module 2: Environment Setup
-
-
 ## Prerequisites
 
 To get the most out of this course, you should have:
@@ -44,12 +41,6 @@ To get the most out of this course, you should have:
 - Basic knowledge of JavaScript
 - Familiarity with at least one of: Android, iOS, or web development (React/Angular)
 - Development environment set up according to [Expo documentation](https://docs.expo.dev/get-started/installation/)
-
-## Getting Started
-
-1. Clone this repository
-2. Follow the setup instructions in the [Environment Setup Guide](./environment-setup.md)
-3. Start with [Module 1: React Native Fundamentals](./module-1-react-native-fundamentals/README.md)
 
 ## Course Theme
 

@@ -31,7 +31,7 @@ This rule defines the structure and organization of the React Native training co
 - Each module and section should have its own README.md file that provides an overview, learning objectives, and navigation links
 
 - Slides should be organized in the docs branch under a dedicated slides directory:
-  - [Module X, Section Y Slides](mdc:docs/slides/module-X/section-Y)
+  - `/slides/module-X/section-Y/`
 
 - All code examples should follow the medication/pharmacy/orders theme
 - All starter and completed code must include JSDoc documentation

@@ -1,4 +1,4 @@
-c8z3vt# React Native Training Course Slides
+# React Native Training Course Slides
 
 This directory contains HTML slides for the React Native Training Course. These slides are designed to be used in instructor-led sessions but can also be used by self-led learners.
 
@@ -18,7 +18,6 @@ The slides are organized by module and section, following the same structure as 
       index.html                                # Section 3 slides
     /section-4-react-native-documentation
       index.html                                # Section 4 slides
-  /module-2-environment-setup
     ...
   /shared
     styles.css                                  # Shared styles for all slides

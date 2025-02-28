@@ -117,8 +117,8 @@ This rule defines the optimal process for developing new modules, based on lesso
 Before developing Module 2, create empty templates for all sections:
 
 ```
-docs/slides/module-2-environment-setup/
-  section-1-development-environment/
+/slides/module-2-environment-setup/
+  /section-1-development-environment/
     index.html (with standard slide structure but placeholder content)
   section-2-debugging-tools/
     index.html (with standard slide structure but placeholder content)
