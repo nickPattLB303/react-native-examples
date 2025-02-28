@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: HTML Basics | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>HTML Basics</h2>
+      <p class="metadata">Module 3 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Create well-structured HTML documents</li>
+        <li>Use semantic HTML elements appropriately</li>
+        <li>Understand how HTML concepts relate to React Native components</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Sections 1-2</p>
+      </div>
+    </section>
+    
+    <!-- HTML Overview Slide -->
+    <section class="slide content-slide">
+      <h2>HTML Overview</h2>
+      <div class="content-block">
+        <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages. It describes the structure of web content using elements represented by tags.</p>
+        
+        <h3>HTML Document Structure</h3>
+        <div class="code-block">
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Pharmacy Medication List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Pharmacy Medication List&lt;/h1&gt;
+  &lt;p&gt;Welcome to your medication management system.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+        <ul>
+          <li><code>&lt;!DOCTYPE html&gt;</code>: Declares the document type</li>
+          <li><code>&lt;html&gt;</code>: The root element</li>
+          <li><code>&lt;head&gt;</code>: Contains meta-information about the document</li>
+          <li><code>&lt;body&gt;</code>: Contains the visible page content</li>
+        </ul>
+      </div>
+      <div class="callout deep-dive">
+        <p>The HTML document structure creates a tree of elements, similar to how React and React Native create a tree of components. This hierarchical approach to UI organization is fundamental to modern frontend development.</p>
+      </div>
+    </section>
+    
+    <!-- HTML Elements and Tags Slide -->
+    <section class="slide content-slide">
+      <h2>HTML Elements and Tags</h2>
+      <div class="content-block">
+        <p>HTML elements are defined by tags. Most elements have an opening tag, content, and a closing tag:</p>
+        <div class="code-block">
+          <pre><code>&lt;tagname&gt;Content goes here...&lt;/tagname&gt;</code></pre>
+        </div>
+        <p>Some elements are self-closing (don't have closing tags):</p>
+        <div class="code-block">
+          <pre><code>&lt;input type="text" placeholder="Medication name"&gt;
+&lt;img src="pill.png" alt="Medication pill"&gt;</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[HTML Element Structure Diagram]</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Common HTML Elements - Text Slide -->
+    <section class="slide content-slide">
+      <h2>Common HTML Elements: Text</h2>
+      <div class="content-block">
+        <div class="columns">
+          <div class="column">
+            <h3>HTML Code</h3>
+            <div class="code-block">
+              <pre><code>&lt;h1&gt;Pharmacy Dashboard&lt;/h1&gt;
+&lt;h2&gt;Today's Medications&lt;/h2&gt;
+&lt;p&gt;You have 3 medications scheduled for today.&lt;/p&gt;
+&lt;strong&gt;Important:&lt;/strong&gt; Take with food.
+&lt;em&gt;Side effects may include drowsiness.&lt;/em&gt;</code></pre>
+            </div>
+          </div>
+          <div class="column">
+            <h3>Rendered Result</h3>
+            <div class="preview-block">
+              <h1 style="font-size: 24px; margin: 10px 0;">Pharmacy Dashboard</h1>
+              <h2 style="font-size: 20px; margin: 8px 0;">Today's Medications</h2>
+              <p>You have 3 medications scheduled for today.</p>
+              <p><strong>Important:</strong> Take with food.</p>
+              <p><em>Side effects may include drowsiness.</em></p>
+            </div>
+          </div>
+        </div>
+        <p>Headings (<code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>) create a hierarchical structure for your content, with <code>&lt;h1&gt;</code> being the most important.</p>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native doesn't have semantic heading elements. Instead, you use <code>&lt;Text&gt;</code> components with different style properties.</p>
+      </div>
+    </section>
+    
+    <!-- Common HTML Elements - Lists Slide -->
+    <section class="slide content-slide">
+      <h2>Common HTML Elements: Lists</h2>
+      <div class="content-block">
+        <div class="columns">
+          <div class="column">
+            <h3>Unordered List</h3>
+            <div class="code-block">
+              <pre><code>&lt;h3&gt;Morning Medications&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lisinopril 10mg&lt;/li&gt;
+  &lt;li&gt;Vitamin D 1000IU&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+            <div class="preview-block">
+              <h3>Morning Medications</h3>
+              <ul>
+                <li>Lisinopril 10mg</li>
+                <li>Vitamin D 1000IU</li>
+              </ul>
+            </div>
+          </div>
+          <div class="column">
+            <h3>Ordered List</h3>
+            <div class="code-block">
+              <pre><code>&lt;h3&gt;Medication Schedule&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Take blood pressure medication&lt;/li&gt;
+  &lt;li&gt;Wait 30 minutes&lt;/li&gt;
+  &lt;li&gt;Eat breakfast&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+            <div class="preview-block">
+              <h3>Medication Schedule</h3>
+              <ol>
+                <li>Take blood pressure medication</li>
+                <li>Wait 30 minutes</li>
+                <li>Eat breakfast</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native uses <code>&lt;FlatList&gt;</code> and <code>&lt;SectionList&gt;</code> components to render lists, which are optimized for mobile performance.</p>
+      </div>
+    </section>
+    
+    <!-- Common HTML Elements - Links and Images Slide -->
+    <section class="slide content-slide">
+      <h2>Common HTML Elements: Links & Images</h2>
+      <div class="content-block">
+        <div class="columns">
+          <div class="column">
+            <h3>Links</h3>
+            <div class="code-block">
+              <pre><code>&lt;a href="https://pharmacy.example.com"&gt;Visit Our Pharmacy&lt;/a&gt;
+&lt;a href="refill.html"&gt;Request a Refill&lt;/a&gt;
+&lt;a href="tel:+15555555555"&gt;Call Pharmacy: (555) 555-5555&lt;/a&gt;</code></pre>
+            </div>
+            <div class="preview-block">
+              <p><a href="#0">Visit Our Pharmacy</a></p>
+              <p><a href="#0">Request a Refill</a></p>
+              <p><a href="#0">Call Pharmacy: (555) 555-5555</a></p>
+            </div>
+          </div>
+          <div class="column">
+            <h3>Images</h3>
+            <div class="code-block">
+              <pre><code>&lt;img src="images/medication.jpg" 
+     alt="Prescription bottle" 
+     width="200"&gt;</code></pre>
+            </div>
+            <div class="preview-block">
+              <div class="image-placeholder">
+                <p>[Image: Prescription bottle]</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> In React Native, navigation is typically handled by a library like React Navigation rather than simple href links, and images use the <code>&lt;Image&gt;</code> component with different source handling.</p>
+      </div>
+    </section>
+    
+    <!-- Forms and Input Slide -->
+    <section class="slide content-slide">
+      <h2>Forms and Input</h2>
+      <div class="content-block">
+        <div class="code-block">
+          <pre><code>&lt;form action="/submit-prescription" method="post"&gt;
+  &lt;label for="medication"&gt;Medication Name:&lt;/label&gt;
+  &lt;input type="text" id="medication" name="medication"&gt;
+  
+  &lt;label for="dosage"&gt;Dosage:&lt;/label&gt;
+  &lt;input type="text" id="dosage" name="dosage"&gt;
+  
+  &lt;label for="frequency"&gt;Frequency:&lt;/label&gt;
+  &lt;select id="frequency" name="frequency"&gt;
+    &lt;option value="daily"&gt;Once Daily&lt;/option&gt;
+    &lt;option value="twice"&gt;Twice Daily&lt;/option&gt;
+    &lt;option value="three"&gt;Three Times Daily&lt;/option&gt;
+  &lt;/select&gt;
+  
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+        <p>Common form elements include:</p>
+        <ul>
+          <li><code>&lt;form&gt;</code>: Container for form elements</li>
+          <li><code>&lt;input&gt;</code>: For text fields, checkboxes, radio buttons, etc.</li>
+          <li><code>&lt;select&gt;</code>: For dropdown selections</li>
+          <li><code>&lt;textarea&gt;</code>: For multi-line text input</li>
+          <li><code>&lt;button&gt;</code>: For clickable buttons</li>
+          <li><code>&lt;label&gt;</code>: To associate text with form elements</li>
+        </ul>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native provides components like <code>&lt;TextInput&gt;</code>, <code>&lt;Picker&gt;</code>, and <code>&lt;Button&gt;</code> for form elements, but form submission is typically handled through JavaScript functions rather than HTML-like submission.</p>
+      </div>
+    </section>
+    
+    <!-- Semantic HTML Slide -->
+    <section class="slide content-slide">
+      <h2>Semantic HTML</h2>
+      <div class="content-block">
+        <p>Semantic HTML elements clearly describe their meaning to both the browser and the developer. Using semantic elements improves accessibility, SEO, and code readability.</p>
+        <div class="code-block">
+          <pre><code>&lt;header&gt;
+  &lt;h1&gt;HealthRx Pharmacy&lt;/h1&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="/medications"&gt;Medications&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;section&gt;
+    &lt;h2&gt;Your Medications&lt;/h2&gt;
+    &lt;article class="medication"&gt;
+      &lt;h3&gt;Amoxicillin&lt;/h3&gt;
+      &lt;p&gt;500mg, 3 times daily&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+  
+  &lt;aside&gt;
+    &lt;h2&gt;Refill Reminders&lt;/h2&gt;
+    &lt;p&gt;Your Metformin prescription will expire in 5 days.&lt;/p&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;&copy; 2023 HealthRx Pharmacy&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+      </div>
+      <div class="callout deep-dive">
+        <p>Semantic HTML is part of a broader concept of separating content from presentation. React Native follows a similar philosophy by separating component structure from styling.</p>
+      </div>
+    </section>
+    
+    <!-- Tables Slide -->
+    <section class="slide content-slide">
+      <h2>Tables</h2>
+      <div class="content-block">
+        <p>Tables are used to display data in rows and columns:</p>
+        <div class="code-block small-text">
+          <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Medication&lt;/th&gt;
+      &lt;th&gt;Dosage&lt;/th&gt;
+      &lt;th&gt;Frequency&lt;/th&gt;
+      &lt;th&gt;Next Dose&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Amoxicillin&lt;/td&gt;
+      &lt;td&gt;500mg&lt;/td&gt;
+      &lt;td&gt;Every 8 hours&lt;/td&gt;
+      &lt;td&gt;2:00 PM&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Lisinopril&lt;/td&gt;
+      &lt;td&gt;10mg&lt;/td&gt;
+      &lt;td&gt;Once daily&lt;/td&gt;
+      &lt;td&gt;8:00 AM&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[Rendered Table Example]</p>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native doesn't have direct table components, but you can create similar layouts using combinations of <code>&lt;View&gt;</code> and <code>&lt;FlatList&gt;</code> components.</p>
+      </div>
+    </section>
+    
+    <!-- Generic Containers Slide -->
+    <section class="slide content-slide">
+      <h2>Generic Containers: div and span</h2>
+      <div class="content-block">
+        <p><code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> are generic container elements used for grouping and styling:</p>
+        <div class="code-block">
+          <pre><code>&lt;div class="medication-card"&gt;
+  &lt;h3&gt;Amoxicillin&lt;/h3&gt;
+  &lt;p&gt;Take &lt;span class="highlight"&gt;500mg&lt;/span&gt; three times daily&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <ul>
+          <li><code>&lt;div&gt;</code> is a block-level element (starts on a new line)</li>
+          <li><code>&lt;span&gt;</code> is an inline element (stays in the flow of text)</li>
+        </ul>
+        <div class="image-placeholder">
+          <p>[Block vs Inline Elements Visualization]</p>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> <code>&lt;div&gt;</code> is similar to React Native's <code>&lt;View&gt;</code> component, while <code>&lt;span&gt;</code> is somewhat similar to <code>&lt;Text&gt;</code>. In React Native, all text must be inside a <code>&lt;Text&gt;</code> component.</p>
+      </div>
+    </section>
+    
+    <!-- HTML Attributes Slide -->
+    <section class="slide content-slide">
+      <h2>HTML Attributes</h2>
+      <div class="content-block">
+        <p>HTML elements can have attributes that provide additional information:</p>
+        <div class="code-block">
+          <pre><code>&lt;a href="https://pharmacy.example.com" target="_blank" rel="noopener"&gt;Visit Our Pharmacy&lt;/a&gt;
+
+&lt;input type="text" placeholder="Enter medication name" disabled&gt;
+
+&lt;button id="refill-btn" class="primary-button" onclick="requestRefill()"&gt;Request Refill&lt;/button&gt;</code></pre>
+        </div>
+        <p>Common attributes include:</p>
+        <ul>
+          <li><code>id</code>: Unique identifier</li>
+          <li><code>class</code>: Used for styling</li>
+          <li><code>style</code>: Inline CSS</li>
+          <li><code>src</code>: Source for images, scripts</li>
+          <li><code>href</code>: Hyperlink reference</li>
+          <li><code>data-*</code>: Custom data attributes</li>
+        </ul>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> HTML attributes are equivalent to React props in React Native.</p>
+      </div>
+    </section>
+    
+    <!-- Connection to React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Connection to React Native</h2>
+      <div class="content-block">
+        <p>HTML concepts have direct parallels in React Native:</p>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>HTML Concept</th>
+              <th>React Native Equivalent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;div&gt;</code></td>
+              <td><code>&lt;View&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;span&gt;</code>, <code>&lt;p&gt;</code></td>
+              <td><code>&lt;Text&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;img&gt;</code></td>
+              <td><code>&lt;Image&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;input&gt;</code></td>
+              <td><code>&lt;TextInput&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;button&gt;</code></td>
+              <td><code>&lt;Button&gt;</code>, <code>&lt;TouchableOpacity&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code></td>
+              <td><code>&lt;FlatList&gt;</code>, <code>&lt;SectionList&gt;</code></td>
+            </tr>
+            <tr>
+              <td>HTML attributes</td>
+              <td>React props</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout deep-dive">
+        <p>While HTML separates structure (HTML) from presentation (CSS) and behavior (JavaScript), React Native combines these concerns into components. Each component encapsulates its structure, styling, and behavior, following a component-based architecture.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Building a Medication Card in HTML</h2>
+      <div class="content-block">
+        <p>Using CodePen, create an HTML structure for a medication card component that displays:</p>
+        <ul>
+          <li>Medication name</li>
+          <li>Dosage information</li>
+          <li>Schedule/frequency</li>
+          <li>Important notes</li>
+        </ul>
+        <div class="exercise-details">
+          <p><strong>Activity:</strong> Complete the Medication Card HTML Exercise</p>
+          <p><strong>Link:</strong> <a href="https://codepen.io/your-username/pen/create" target="_blank">Medication Card HTML Exercise</a></p>
+          <p><strong>Time:</strong> 15-20 minutes</p>
+        </div>
+      </div>
+      <div class="callout self-led">
+        <p><strong>Self-Led Learners:</strong> After creating the HTML structure, think about how you would translate this to React Native components.</p>
+      </div>
+    </section>
+    
+    <!-- Key Takeaways Slide -->
+    <section class="slide summary-slide">
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>HTML describes the structure and content of web pages</li>
+        <li>Semantic HTML improves accessibility and code readability</li>
+        <li>HTML elements have direct parallels in React Native components</li>
+        <li>Both HTML and React Native organize UI elements in a hierarchical tree</li>
+        <li>Understanding HTML concepts provides a foundation for working with React Native</li>
+      </ul>
+      <div class="navigation-links">
+        <p><a href="../section-2-browser-fundamentals/index.html">← Previous: Section 2: How Browsers Work</a></p>
+        <p><a href="../section-4-css-basics/index.html">Next: Section 4: CSS Basics →</a></p>
+        <p><a href="../index.html">Back to Module Overview</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: CSS Basics | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>CSS Basics</h2>
+      <p class="metadata">Module 3 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Apply CSS styling to HTML elements</li>
+        <li>Implement responsive design principles</li>
+        <li>Recognize parallels between CSS and React Native styling</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Sections 1-3</p>
+      </div>
+    </section>
+    
+    <!-- CSS Overview Slide -->
+    <section class="slide content-slide">
+      <h2>CSS Overview</h2>
+      <div class="content-block">
+        <p>CSS (Cascading Style Sheets) is a style sheet language used to describe the presentation of HTML documents. It controls layout, colors, fonts, and other visual aspects of web pages.</p>
+        <div class="image-placeholder">
+          <p>[CSS Styling Example Before/After]</p>
+        </div>
+        <p>CSS follows a simple principle: <strong>separate content (HTML) from presentation (CSS)</strong>.</p>
+      </div>
+      <div class="callout deep-dive">
+        <p>This separation of concerns is a fundamental principle in modern web development and has influenced React Native's approach to styling, even though the implementation differs.</p>
+      </div>
+    </section>
+    
+    <!-- Adding CSS to HTML Slide -->
+    <section class="slide content-slide">
+      <h2>Adding CSS to HTML</h2>
+      <div class="content-block">
+        <p>There are three ways to add CSS to an HTML document:</p>
+        
+        <div class="columns">
+          <div class="column">
+            <h3>1. Inline CSS</h3>
+            <div class="code-block">
+              <pre><code>&lt;h1 style="color: blue; font-size: 24px;"&gt;
+  Medication List
+&lt;/h1&gt;</code></pre>
+            </div>
+          </div>
+          <div class="column">
+            <h3>2. Internal CSS</h3>
+            <div class="code-block">
+              <pre><code>&lt;head&gt;
+  &lt;style&gt;
+    h1 {
+      color: blue;
+      font-size: 24px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+        
+        <h3>3. External CSS (separate file)</h3>
+        <div class="code-block small-code">
+          <pre><code>/* In HTML file */
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+
+/* In styles.css */
+h1 {
+  color: blue;
+  font-size: 24px;
+}</code></pre>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native primarily uses the equivalent of inline styles through the <code>style</code> prop, though the <code>StyleSheet</code> API provides optimizations similar to external CSS.</p>
+      </div>
+    </section>
+    
+    <!-- CSS Syntax Slide -->
+    <section class="slide content-slide">
+      <h2>CSS Syntax</h2>
+      <div class="content-block">
+        <p>CSS consists of selectors and declarations:</p>
+        <div class="code-block">
+          <pre><code>selector {
+  property: value;
+  property: value;
+}</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[CSS Syntax Diagram]</p>
+        </div>
+        <div class="example-block">
+          <pre><code>h1 {
+  color: blue;
+  font-size: 24px;
+}
+
+.medication-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+#prescription-form {
+  max-width: 600px;
+  margin: 0 auto;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CSS Selectors Slide -->
+    <section class="slide content-slide">
+      <h2>CSS Selectors</h2>
+      <div class="content-block">
+        <p>Selectors determine which elements receive the style:</p>
+        <table class="selector-table">
+          <thead>
+            <tr>
+              <th>Selector Type</th>
+              <th>Syntax</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Element</td>
+              <td><code>element</code></td>
+              <td><code>h1 { color: blue; }</code></td>
+            </tr>
+            <tr>
+              <td>Class</td>
+              <td><code>.classname</code></td>
+              <td><code>.medication-card { background-color: #f5f5f5; }</code></td>
+            </tr>
+            <tr>
+              <td>ID</td>
+              <td><code>#idname</code></td>
+              <td><code>#prescription-form { max-width: 600px; }</code></td>
+            </tr>
+            <tr>
+              <td>Attribute</td>
+              <td><code>element[attribute="value"]</code></td>
+              <td><code>input[type="text"] { border: 1px solid #ccc; }</code></td>
+            </tr>
+            <tr>
+              <td>Descendant</td>
+              <td><code>parent descendant</code></td>
+              <td><code>.medication-card h3 { margin-top: 0; }</code></td>
+            </tr>
+            <tr>
+              <td>Combined</td>
+              <td><code>.class1.class2</code></td>
+              <td><code>.medication-card.active { border: 2px solid blue; }</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout deep-dive">
+        <p>CSS selectors enable targeting specific elements in the DOM tree. React Native doesn't have this concept - styles are applied directly to components via props, which is more explicit and avoids some of the complexity of CSS specificity.</p>
+      </div>
+    </section>
+    
+    <!-- Text Styling Slide -->
+    <section class="slide content-slide">
+      <h2>Common CSS Properties: Text Styling</h2>
+      <div class="content-block">
+        <div class="columns">
+          <div class="column">
+            <div class="code-block">
+              <pre><code>.medication-name {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  text-decoration: underline;
+  line-height: 1.5;
+}</code></pre>
+            </div>
+          </div>
+          <div class="column">
+            <div class="preview-block">
+              <p style="font-family: 'Arial', sans-serif; font-size: 18px; font-weight: bold; color: #333; text-align: center; text-decoration: underline; line-height: 1.5;">Amoxicillin</p>
+              <ul>
+                <li><code>font-family</code>: Specifies the font</li>
+                <li><code>font-size</code>: Sets the text size</li>
+                <li><code>font-weight</code>: Controls text boldness</li>
+                <li><code>color</code>: Sets the text color</li>
+                <li><code>text-align</code>: Aligns text horizontally</li>
+                <li><code>text-decoration</code>: Adds underline, etc.</li>
+                <li><code>line-height</code>: Controls vertical spacing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native uses similar text styling properties but in camelCase format (e.g., <code>fontFamily</code>, <code>fontSize</code>).</p>
+      </div>
+    </section>
+    
+    <!-- Box Model Slide -->
+    <section class="slide content-slide">
+      <h2>The CSS Box Model</h2>
+      <div class="content-block">
+        <p>The CSS box model consists of:</p>
+        <ul>
+          <li><strong>Content</strong>: The actual content of the element</li>
+          <li><strong>Padding</strong>: Space between content and border</li>
+          <li><strong>Border</strong>: The boundary around the padding</li>
+          <li><strong>Margin</strong>: Space outside the border</li>
+        </ul>
+        <div class="image-placeholder">
+          <p>[CSS Box Model Diagram]</p>
+        </div>
+        <div class="code-block">
+          <pre><code>.medication-card {
+  width: 300px;
+  height: auto;
+  padding: 16px;
+  border: 1px solid #ddd;
+  margin: 10px;
+}</code></pre>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native uses a subset of the CSS box model, but measurements are in density-independent pixels rather than the various units available in CSS.</p>
+      </div>
+    </section>
+    
+    <!-- Display and Positioning Slide -->
+    <section class="slide content-slide">
+      <h2>Display and Positioning</h2>
+      <div class="content-block">
+        <h3>Display Property</h3>
+        <div class="code-block">
+          <pre><code>.medication-card {
+  display: block; /* Other values: inline, inline-block, flex, grid, none */
+}</code></pre>
+        </div>
+        
+        <h3>Position Property</h3>
+        <div class="code-block">
+          <pre><code>.badge {
+  position: absolute; /* Other values: relative, fixed, sticky, static */
+  top: 10px;
+  right: 10px;
+}
+
+.medication-container {
+  position: relative;
+}</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[CSS Positioning Examples]</p>
+        </div>
+      </div>
+      <div class="callout deep-dive">
+        <p>React Native primarily uses Flexbox for layout, which is just one of several layout mechanisms in CSS. This provides a more consistent layout experience across different platforms.</p>
+      </div>
+    </section>
+    
+    <!-- Flexbox Layout Slide -->
+    <section class="slide content-slide">
+      <h2>Flexbox Layout</h2>
+      <div class="content-block">
+        <p>Flexbox is a powerful layout system for creating responsive designs:</p>
+        <div class="code-block">
+          <pre><code>.medication-list {
+  display: flex;
+  flex-direction: row; /* or column */
+  flex-wrap: wrap;
+  justify-content: space-between; /* horizontal alignment */
+  align-items: center; /* vertical alignment */
+  gap: 16px;
+}
+
+.medication-card {
+  flex: 1;
+  min-width: 250px;
+}</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[Flexbox Layout Examples]</p>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native's layout system is primarily based on Flexbox, with some differences from the web implementation. Most Flexbox concepts transfer directly to React Native.</p>
+      </div>
+    </section>
+    
+    <!-- CSS Units Slide -->
+    <section class="slide content-slide">
+      <h2>CSS Units</h2>
+      <div class="content-block">
+        <p>CSS offers various units for measurements:</p>
+        <table class="units-table">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>px</code></td>
+              <td>Pixels (fixed size)</td>
+              <td><code>width: 200px;</code></td>
+            </tr>
+            <tr>
+              <td><code>%</code></td>
+              <td>Percentage of parent element</td>
+              <td><code>width: 50%;</code></td>
+            </tr>
+            <tr>
+              <td><code>em</code></td>
+              <td>Relative to the font-size of the element</td>
+              <td><code>margin: 2em;</code></td>
+            </tr>
+            <tr>
+              <td><code>rem</code></td>
+              <td>Relative to the root element's font-size</td>
+              <td><code>font-size: 1.2rem;</code></td>
+            </tr>
+            <tr>
+              <td><code>vh/vw</code></td>
+              <td>Percentage of viewport height/width</td>
+              <td><code>height: 50vh;</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native primarily uses density-independent pixels, without the variety of units available in CSS.</p>
+      </div>
+    </section>
+    
+    <!-- Responsive Design Slide -->
+    <section class="slide content-slide">
+      <h2>Responsive Design</h2>
+      <div class="content-block">
+        <p>Responsive design ensures that websites look good on all devices by adapting to different screen sizes.</p>
+        
+        <h3>Media Queries</h3>
+        <div class="code-block small-code">
+          <pre><code>/* Base styles for all devices */
+.medication-card {
+  width: 100%;
+  padding: 10px;
+}
+
+/* Styles for tablets and larger */
+@media (min-width: 768px) {
+  .medication-card {
+    width: 48%;
+    padding: 15px;
+  }
+}
+
+/* Styles for desktops and larger */
+@media (min-width: 1024px) {
+  .medication-card {
+    width: 31%;
+    padding: 20px;
+  }
+}</code></pre>
+        </div>
+        <div class="image-placeholder">
+          <p>[Responsive Design Example on Different Devices]</p>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native has a different approach to responsive design through the <code>Dimensions</code> API and responsive hooks. Media queries don't exist in the same way.</p>
+      </div>
+    </section>
+    
+    <!-- CSS Variables Slide -->
+    <section class="slide content-slide">
+      <h2>CSS Variables (Custom Properties)</h2>
+      <div class="content-block">
+        <p>CSS variables allow you to define reusable values:</p>
+        <div class="code-block">
+          <pre><code>:root {
+  --primary-color: #4285f4;
+  --secondary-color: #34a853;
+  --danger-color: #ea4335;
+  --font-heading: 'Roboto', sans-serif;
+  --spacing-unit: 8px;
+}
+
+.medication-name {
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.warning {
+  color: var(--danger-color);
+}</code></pre>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For React Native Developers:</strong> React Native doesn't have built-in CSS variables, but you can achieve the same effect by defining a theme object in JavaScript.</p>
+      </div>
+    </section>
+    
+    <!-- Connection to React Native Styling Slide -->
+    <section class="slide content-slide">
+      <h2>Connection to React Native Styling</h2>
+      <div class="content-block">
+        <p>React Native styling is heavily inspired by CSS, but with some key differences:</p>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>CSS</th>
+              <th>React Native</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>color: blue;</code></td>
+              <td><code>color: 'blue',</code></td>
+            </tr>
+            <tr>
+              <td><code>font-size: 16px;</code></td>
+              <td><code>fontSize: 16,</code></td>
+            </tr>
+            <tr>
+              <td><code>margin: 10px 20px;</code></td>
+              <td><code>margin: 10, marginHorizontal: 20,</code></td>
+            </tr>
+            <tr>
+              <td><code>background-color: #f0f0f0;</code></td>
+              <td><code>backgroundColor: '#f0f0f0',</code></td>
+            </tr>
+            <tr>
+              <td>Class selectors</td>
+              <td>Style objects applied to components</td>
+            </tr>
+            <tr>
+              <td>External stylesheets</td>
+              <td><code>StyleSheet.create()</code></td>
+            </tr>
+            <tr>
+              <td>Media queries</td>
+              <td>Dimensions API, responsive hooks</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <!-- React Native StyleSheet Example Slide -->
+    <section class="slide content-slide">
+      <h2>React Native StyleSheet Example</h2>
+      <div class="content-block">
+        <div class="code-block">
+          <pre><code>import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  medicationCard: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 12,
+  },
+  medicationName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  medicationDosage: {
+    fontSize: 14,
+    color: '#666',
+  },
+});</code></pre>
+        </div>
+        <p>Using the styles:</p>
+        <div class="code-block">
+          <pre><code>&lt;View style={styles.medicationCard}&gt;
+  &lt;Text style={styles.medicationName}&gt;Amoxicillin&lt;/Text&gt;
+  &lt;Text style={styles.medicationDosage}&gt;500mg, 3 times daily&lt;/Text&gt;
+&lt;/View&gt;</code></pre>
+        </div>
+      </div>
+      <div class="callout deep-dive">
+        <p>The <code>StyleSheet.create()</code> method in React Native offers performance optimizations by validating styles at compile time and converting them to atomic IDs.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Styling a Medication Card with CSS</h2>
+      <div class="content-block">
+        <p>Using the HTML structure you created in the previous exercise, add CSS styling to create a visually appealing medication card.</p>
+        <div class="exercise-details">
+          <p><strong>Activity:</strong> Complete the Medication Card CSS Exercise</p>
+          <p><strong>Link:</strong> <a href="https://codepen.io/your-username/pen/create" target="_blank">Medication Card CSS Exercise</a></p>
+          <p><strong>Time:</strong> 15-20 minutes</p>
+        </div>
+        <p>In this exercise, you'll:</p>
+        <ol>
+          <li>Define appropriate CSS selectors for your HTML structure</li>
+          <li>Apply styling for typography, colors, spacing, and layout</li>
+          <li>Make the design responsive using media queries</li>
+          <li>Use CSS variables for consistent styling</li>
+          <li>Add hover effects for interactive elements</li>
+        </ol>
+      </div>
+      <div class="callout self-led">
+        <p><strong>Self-Led Learners:</strong> After completing the CSS styling, try to recreate the same design using React Native's StyleSheet approach (you can do this conceptually if you're not yet familiar with React Native syntax).</p>
+      </div>
+    </section>
+    
+    <!-- Pharmacy Example Slide -->
+    <section class="slide content-slide">
+      <h2>Real-World Example: Medication Card</h2>
+      <div class="content-block">
+        <div class="columns">
+          <div class="column">
+            <h3>CSS Approach</h3>
+            <div class="code-block small-code">
+              <pre><code>/* CSS */
+.med-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.med-name {
+  color: #4285f4;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.med-dosage {
+  color: #333;
+  font-size: 14px;
+}</code></pre>
+            </div>
+          </div>
+          <div class="column">
+            <h3>React Native Approach</h3>
+            <div class="code-block small-code">
+              <pre><code>// React Native
+const styles = StyleSheet.create({
+  medCard: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+    padding: 16,
+    marginBottom: 16,
+  },
+  medName: {
+    color: '#4285f4',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  medDosage: {
+    color: '#333',
+    fontSize: 14,
+  },
+});</code></pre>
+            </div>
+          </div>
+        </div>
+        <p>Note how the concepts translate between CSS and React Native, despite the syntax differences.</p>
+      </div>
+    </section>
+    
+    <!-- Key Takeaways Slide -->
+    <section class="slide summary-slide">
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>CSS controls the presentation and layout of HTML documents</li>
+        <li>The box model, Flexbox, and responsive design are fundamental CSS concepts</li>
+        <li>React Native styling is heavily inspired by CSS but with some key differences</li>
+        <li>Understanding CSS concepts provides a foundation for React Native styling</li>
+        <li>React Native simplifies styling by using a subset of CSS capabilities</li>
+        <li>Both CSS and React Native StyleSheet follow the principle of separating presentation from content</li>
+      </ul>
+      <div class="navigation-links">
+        <p><a href="../section-3-html-basics/index.html">← Previous: Section 3: HTML Basics</a></p>
+        <p><a href="../../module-4-javascript-essentials/index.html">Next Module: JavaScript Essentials →</a></p>
+        <p><a href="../index.html">Back to Module Overview</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

@@ -110,25 +110,54 @@
         const sectionNumber = sectionMatch[1];
         const sectionTitle = sectionMatch[2].trim();
         
-        // Map section numbers to correct directory names
-        const sectionPaths = {
-          '1': 'mobile-development-landscape',
-          '2': 'why-react-native',
-          '3': 'react-native-internals',
-          '4': 'react-native-documentation'
-        };
+        // Get current module from the URL path
+        const currentPath = window.location.pathname;
+        const pathParts = currentPath.split('/');
+        const slidesIndex = pathParts.findIndex(part => part === 'slides');
         
-        // Get the correct path for this section number
-        const sectionPath = sectionPaths[sectionNumber] || sectionTitle.toLowerCase().replace(/\s+/g, '-');
-        
-        // Create a link that replaces the text
-        const link = document.createElement('a');
-        link.href = `../section-${sectionNumber}-${sectionPath}/index.html`;
-        link.innerHTML = `<strong>Next:</strong> Section ${sectionNumber}: ${sectionTitle}`;
-        
-        // Clear the element and add the link
-        nextStepsElement.innerHTML = '';
-        nextStepsElement.appendChild(link);
+        if (slidesIndex !== -1) {
+          const moduleName = pathParts[slidesIndex + 1]; // e.g., "module-3-web-development-essentials"
+          
+          // Define module-specific section paths
+          const modulePathMap = {
+            'module-1-introduction-to-react-native': {
+              '1': 'mobile-development-landscape',
+              '2': 'why-react-native',
+              '3': 'react-native-internals',
+              '4': 'react-native-documentation'
+            },
+            'module-2-environment-setup': {
+              '1': 'development-tools-installation',
+              '2': 'creating-first-expo-project',
+              '3': 'running-on-simulators-and-devices',
+              '4': 'project-structure-and-configuration'
+            },
+            'module-3-web-development-essentials': {
+              '1': 'web-history',
+              '2': 'browser-fundamentals',
+              '3': 'html-basics',
+              '4': 'css-basics'
+            }
+          };
+          
+          // Get the correct path for this section number in the current module
+          let sectionPath;
+          if (modulePathMap[moduleName] && modulePathMap[moduleName][sectionNumber]) {
+            sectionPath = modulePathMap[moduleName][sectionNumber];
+          } else {
+            // Fallback: convert the section title to a path format
+            sectionPath = sectionTitle.toLowerCase().replace(/\s+/g, '-');
+          }
+          
+          // Create a link that replaces the text
+          const link = document.createElement('a');
+          link.href = `../section-${sectionNumber}-${sectionPath}/index.html`;
+          link.innerHTML = `<strong>Next:</strong> Section ${sectionNumber}: ${sectionTitle}`;
+          
+          // Clear the element and add the link
+          nextStepsElement.innerHTML = '';
+          nextStepsElement.appendChild(link);
+        }
       }
     });
   }
@@ -305,6 +334,10 @@
     const slidesIndex = pathParts.findIndex(part => part === 'slides');
     if (slidesIndex === -1) return; // Not in slides directory
     
+    // Extract the module name from the path
+    const moduleName = pathParts[slidesIndex + 1]; // e.g., "module-3-web-development-essentials"
+    if (!moduleName || !moduleName.startsWith('module-')) return; // Not in a module directory
+    
     // Build the base path up to the module directory
     const moduleBasePath = pathParts.slice(0, slidesIndex + 2).join('/');
     
@@ -315,19 +348,43 @@
     moduleLink.className = 'section-nav-link module-link';
     menuContent.appendChild(moduleLink);
     
-    // Define the sections with their correct directory names
-    const sections = [
-      { num: 1, name: 'mobile-development-landscape' }, // Fixed path for Section 1
-      { num: 2, name: 'why-react-native' },
-      { num: 3, name: 'react-native-internals' },
-      { num: 4, name: 'react-native-documentation' }
-    ];
+    // Define module-specific sections based on the current module
+    const moduleMap = {
+      'module-1-introduction-to-react-native': [
+        { num: 1, name: 'mobile-development-landscape' },
+        { num: 2, name: 'why-react-native' },
+        { num: 3, name: 'react-native-internals' },
+        { num: 4, name: 'react-native-documentation' }
+      ],
+      'module-2-environment-setup': [
+        { num: 1, name: 'development-tools-installation' },
+        { num: 2, name: 'creating-first-expo-project' },
+        { num: 3, name: 'running-on-simulators-and-devices' },
+        { num: 4, name: 'project-structure-and-configuration' }
+      ],
+      'module-3-web-development-essentials': [
+        { num: 1, name: 'web-history' },
+        { num: 2, name: 'browser-fundamentals' },
+        { num: 3, name: 'html-basics' },
+        { num: 4, name: 'css-basics' }
+      ]
+      // Add more modules as needed
+    };
+    
+    // Get sections for this module, or use an empty array if not defined
+    const sections = moduleMap[moduleName] || [];
+    
+    // If we have no predefined sections, try to scan for section directories
+    if (sections.length === 0) {
+      console.log('No predefined sections found for module:', moduleName);
+    }
     
     // Add links for each section
     sections.forEach(section => {
       const sectionLink = document.createElement('a');
       sectionLink.href = `${moduleBasePath}/section-${section.num}-${section.name}/index.html`;
-      sectionLink.textContent = `Section ${section.num}: ${section.name.replace(/-/g, ' ')}`;
+      const sectionTitle = section.name.replace(/-/g, ' ');
+      sectionLink.textContent = `Section ${section.num}: ${sectionTitle.charAt(0).toUpperCase() + sectionTitle.slice(1)}`;
       sectionLink.className = 'section-nav-link';
       
       // Highlight current section

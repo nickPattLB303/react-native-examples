@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: How Browsers Work | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2</h1>
+      <h2>How Browsers Work</h2>
+      <p class="metadata">Module 3 | 30-45 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Explain the key components of a browser engine</li>
+        <li>Describe the process of rendering HTML, CSS, and JavaScript</li>
+        <li>Identify similarities between browser rendering and React Native's approach</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 30-45 minutes</p>
+        <p><strong>Prerequisites:</strong> Section 1</p>
+      </div>
+    </section>
+    
+    <!-- Browser Architecture Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Browser Architecture Overview</h2>
+      <div class="content-block">
+        <p>Modern web browsers are complex software applications with multiple components working together.</p>
+        <div class="image-placeholder">
+          <p>[Browser Architecture Diagram]</p>
+        </div>
+        <p>Key browser components include:</p>
+        <ul>
+          <li><strong>User Interface:</strong> Visual elements you interact with (address bar, buttons)</li>
+          <li><strong>Browser Engine:</strong> Coordinates between UI and rendering engine</li>
+          <li><strong>Rendering Engine:</strong> Parses HTML/CSS to display content</li>
+          <li><strong>Networking:</strong> Handles HTTP requests and responses</li>
+          <li><strong>JavaScript Engine:</strong> Executes JavaScript code</li>
+          <li><strong>UI Backend:</strong> Used for drawing basic widgets</li>
+          <li><strong>Data Storage:</strong> Handles cookies, localStorage, IndexedDB, etc.</li>
+        </ul>
+      </div>
+      <div class="callout deep-dive">
+        <p>Different browsers use different rendering engines - Chrome and Edge use Blink, Firefox uses Gecko, Safari uses WebKit. React Native originally used WebKit for iOS rendering and different engines on other platforms, but has evolved to use more native components.</p>
+      </div>
+    </section>
+    
+    <!-- The Rendering Pipeline Slide -->
+    <section class="slide content-slide">
+      <h2>The Rendering Pipeline</h2>
+      <div class="content-block">
+        <p>When you load a webpage, the browser follows these steps to display it:</p>
+        <ol>
+          <li><strong>Parsing HTML:</strong> Creates the Document Object Model (DOM)</li>
+          <li><strong>Parsing CSS:</strong> Creates the CSS Object Model (CSSOM)</li>
+          <li><strong>Combining DOM and CSSOM:</strong> Creates the Render Tree (only visible elements)</li>
+          <li><strong>Layout (Reflow):</strong> Calculates position and size of each element</li>
+          <li><strong>Painting:</strong> Renders pixels to the screen</li>
+          <li><strong>Compositing:</strong> Combines layers for final display</li>
+        </ol>
+        <div class="image-placeholder">
+          <p>[Browser Rendering Pipeline Diagram]</p>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For Android Developers:</strong> This pipeline is similar to Android's view rendering process: measure → layout → draw. The DOM is conceptually similar to Android's View hierarchy.</p>
+      </div>
+    </section>
+    
+    <!-- Critical Rendering Path Slide -->
+    <section class="slide content-slide">
+      <h2>Critical Rendering Path</h2>
+      <div class="content-block">
+        <p>The sequence of steps the browser takes to render a page is called the Critical Rendering Path:</p>
+        <div class="code-block">
+          <pre>HTML → DOM → CSSOM → Render Tree → Layout → Paint → Composite</pre>
+        </div>
+        <p>Understanding this process is crucial for optimizing web performance, just as understanding React Native's rendering process is important for optimizing app performance.</p>
+        <h3>How JavaScript Affects Rendering</h3>
+        <p>JavaScript can modify the DOM and CSSOM, triggering additional layout, paint, and composite operations:</p>
+        <ul>
+          <li>JavaScript can add, remove, or update DOM elements</li>
+          <li>JavaScript can change CSS styles</li>
+          <li>These changes can force the browser to recalculate layout (reflow)</li>
+          <li>Frequent reflows can cause performance issues</li>
+        </ul>
+      </div>
+      <div class="callout deep-dive">
+        <p>Browsers use optimization techniques like batching DOM updates to minimize reflows. React's Virtual DOM and React Native's architecture use similar concepts to optimize UI updates.</p>
+      </div>
+    </section>
+    
+    <!-- Browser JavaScript Execution Slide -->
+    <section class="slide content-slide">
+      <h2>Browser JavaScript Execution</h2>
+      <div class="content-block">
+        <p>The JavaScript engine executes code in a single-threaded environment:</p>
+        <ol>
+          <li>JavaScript code is parsed</li>
+          <li>It's converted to machine code by the Just-In-Time (JIT) compiler</li>
+          <li>The code executes in the main thread</li>
+          <li>Long-running JavaScript can block rendering and create unresponsive UIs</li>
+        </ol>
+        <p>This single-threaded nature is a key constraint that has influenced architectural decisions in frameworks like React and React Native.</p>
+      </div>
+      <div class="callout deep-dive">
+        <p>JavaScript engines like V8 (Chrome), SpiderMonkey (Firefox), and JavaScriptCore (Safari) use sophisticated optimization techniques to execute code efficiently. React Native uses JavaScriptCore across all platforms to provide a consistent JavaScript environment.</p>
+      </div>
+    </section>
+    
+    <!-- The Event Loop Slide -->
+    <section class="slide content-slide">
+      <h2>The Event Loop</h2>
+      <div class="content-block">
+        <p>JavaScript uses an event loop to handle asynchronous operations without blocking the main thread:</p>
+        <ul>
+          <li><strong>Call Stack:</strong> Tracks currently executing functions</li>
+          <li><strong>Event Queue:</strong> Holds callbacks waiting to be processed</li>
+          <li><strong>Event Loop:</strong> Moves callbacks from the queue to the stack when the stack is empty</li>
+        </ul>
+        <div class="code-block">
+          <pre><code>function getPrescriptionData() {
+  // Simulated API call
+  setTimeout(() => {
+    const medications = ['Amoxicillin', 'Lisinopril', 'Metformin'];
+    console.log('Medications loaded:', medications);
+  }, 2000);
+  
+  console.log('Request initiated...');
+}
+
+getPrescriptionData();
+// Output:
+// "Request initiated..." (immediately)
+// "Medications loaded: Amoxicillin,Lisinopril,Metformin" (after 2 seconds)</code></pre>
+        </div>
+      </div>
+      <div class="callout platform-specific">
+        <p><strong>For iOS Developers:</strong> This parallels iOS's main thread and GCD (Grand Central Dispatch) for background tasks.</p>
+      </div>
+    </section>
+    
+    <!-- Connection to React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Connection to React Native</h2>
+      <div class="content-block">
+        <p>React Native's architecture shares several concepts with browser rendering:</p>
+        <ol>
+          <li><strong>Virtual DOM:</strong> React uses a virtual representation of the UI, similar to the browser's DOM</li>
+          <li><strong>Diffing Algorithm:</strong> React calculates the minimal set of changes needed, similar to how browsers optimize repaints</li>
+          <li><strong>Bridge Architecture:</strong> React Native's JavaScript-to-native bridge functions somewhat like the browser's JavaScript-to-DOM interface</li>
+          <li><strong>Event System:</strong> React Native has an event system similar to the browser's event model</li>
+          <li><strong>Threading Model:</strong> Both have a main UI thread that should not be blocked</li>
+        </ol>
+        <div class="image-placeholder">
+          <p>[React Native vs Browser Rendering Comparison Diagram]</p>
+        </div>
+      </div>
+      <div class="callout deep-dive">
+        <p>While browsers render to the DOM, React Native renders to native UI components. However, the process of determining what to render follows similar principles. The new React Native architecture (Fabric) makes this process even more efficient.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Browser Rendering Diagram</h2>
+      <div class="content-block">
+        <p>Using Microsoft Whiteboard, create a diagram of the browser rendering process and compare it to React Native's rendering process.</p>
+        <div class="exercise-details">
+          <p><strong>Activity:</strong> Complete the Browser vs React Native Rendering diagram</p>
+          <p><strong>Link:</strong> <a href="https://link-to-whiteboard" target="_blank">Browser vs React Native Rendering</a></p>
+          <p><strong>Time:</strong> 15-20 minutes</p>
+        </div>
+        <p>In this exercise, you'll:</p>
+        <ol>
+          <li>Draw the browser rendering pipeline</li>
+          <li>Draw React Native's rendering pipeline</li>
+          <li>Identify similarities and differences</li>
+          <li>Note how these approaches affect performance</li>
+        </ol>
+      </div>
+      <div class="callout self-led">
+        <p><strong>Self-Led Learners:</strong> After completing the diagram, try to identify potential performance bottlenecks in both rendering processes.</p>
+      </div>
+    </section>
+    
+    <!-- Pharmacy Example Slide -->
+    <section class="slide content-slide">
+      <h2>Real-World Example: Pharmacy App</h2>
+      <div class="content-block">
+        <p>Consider how a medication list might render in a web browser vs. React Native:</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Web Browser Process</h3>
+            <ol>
+              <li>Parse HTML for medication list</li>
+              <li>Apply CSS styles to list items</li>
+              <li>Execute JavaScript to fetch medication data</li>
+              <li>Update DOM with medication details</li>
+              <li>Reflow and repaint to show updated list</li>
+            </ol>
+          </div>
+          <div class="column">
+            <h3>React Native Process</h3>
+            <ol>
+              <li>Render MedicationList component</li>
+              <li>Execute JavaScript to fetch medication data</li>
+              <li>Update Virtual DOM with medication details</li>
+              <li>Calculate diff of what changed</li>
+              <li>Update only necessary native UI components</li>
+            </ol>
+          </div>
+        </div>
+        <p>Both approaches try to minimize the performance cost of UI updates, but use different mechanisms to achieve this goal.</p>
+      </div>
+    </section>
+    
+    <!-- Key Takeaways Slide -->
+    <section class="slide summary-slide">
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>Browsers use a complex pipeline to render web content</li>
+        <li>JavaScript execution and DOM updates can affect rendering performance</li>
+        <li>The event loop enables asynchronous operations in a single-threaded environment</li>
+        <li>React Native's architecture shares key concepts with browser rendering</li>
+        <li>Understanding browser internals provides insight into React Native's design decisions</li>
+      </ul>
+      <div class="navigation-links">
+        <p><a href="../section-1-web-history/index.html">← Previous: Section 1: A Brief History of the Web</a></p>
+        <p><a href="../section-3-html-basics/index.html">Next: Section 3: HTML Basics →</a></p>
+        <p><a href="../index.html">Back to Module Overview</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
