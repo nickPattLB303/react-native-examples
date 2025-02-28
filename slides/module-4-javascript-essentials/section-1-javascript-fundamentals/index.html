@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: JavaScript Fundamentals | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>JavaScript Fundamentals</h2>
+      <p class="metadata">Module 4 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand JavaScript's role in React Native development</li>
+        <li>Work with variables, data types, and operators</li>
+        <li>Implement control flow using conditionals and loops</li>
+        <li>Use template literals for string manipulation</li>
+        <li>Handle errors effectively in JavaScript</li>
+        <li>Understand type coercion and its implications</li>
+      </ul>
+    </section>
+
+    <!-- JavaScript in React Native -->
+    <section class="slide content-slide">
+      <h2>JavaScript in React Native</h2>
+      <div class="columns">
+        <div class="column">
+          <p>JavaScript is the programming language used to build React Native applications.</p>
+          <ul>
+            <li>React Native uses modern JavaScript (ES6+)</li>
+            <li>JavaScript handles application logic</li>
+            <li>JSX (JavaScript XML) defines UI components</li>
+            <li>JavaScript bridges to native components</li>
+          </ul>
+        </div>
+        <div class="column code-block">
+          <pre><code class="language-javascript">// React Native component using JavaScript
+import React, { useState } from 'react';
+import { Text, Button } from 'react-native';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <>
+      <Text>Count: {count}</Text>
+      <Button 
+        title="Increment" 
+        onPress={() => setCount(count + 1)} 
+      />
+    </>
+  );
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variables and Declarations -->
+    <section class="slide">
+      <div class="content">
+        <h2>Variables and Declarations</h2>
+        <div class="columns two">
+          <div>
+            <h3>Three ways to declare variables:</h3>
+            <ul>
+              <li><code>const</code>: Cannot be reassigned</li>
+              <li><code>let</code>: Block-scoped, can be reassigned</li>
+              <li><code>var</code>: Function-scoped, avoid in modern code</li>
+            </ul>
+            <div class="note">
+              <p>In React Native, prefer <code>const</code> by default, use <code>let</code> when reassignment is needed.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Constants (cannot be reassigned)
+const API_URL = 'https://api.example.com';
+const MAX_ITEMS = 50;
+
+// Variables that can change
+let count = 0;
+let isLoading = true;
+
+// Avoid var in modern JavaScript
+var oldWay = 'legacy'; // Not recommended
+
+// Error: cannot reassign const
+// API_URL = 'https://new-api.example.com';</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Types -->
+    <section class="slide">
+      <div class="content">
+        <h2>Data Types</h2>
+        <div class="columns two">
+          <div>
+            <h3>Primitive Types:</h3>
+            <ul>
+              <li><code>string</code>: Text values</li>
+              <li><code>number</code>: Integers and floats</li>
+              <li><code>boolean</code>: true/false</li>
+              <li><code>null</code>: Intentional absence of value</li>
+              <li><code>undefined</code>: Unassigned value</li>
+              <li><code>symbol</code>: Unique identifiers</li>
+            </ul>
+            <h3>Reference Types:</h3>
+            <ul>
+              <li><code>object</code>: Collections of properties</li>
+              <li><code>array</code>: Ordered collections</li>
+              <li><code>function</code>: Callable objects</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Primitive types
+const name = 'John Doe';        // string
+const age = 30;                 // number
+const isActive = true;          // boolean
+const noValue = null;           // null
+let undefinedVar;               // undefined
+const uniqueId = Symbol('id');  // symbol
+
+// Reference types
+const user = {                  // object
+  name: 'John',
+  age: 30
+};
+
+const medications = [           // array
+  'Aspirin', 'Ibuprofen', 'Tylenol'
+];
+
+const greet = function() {      // function
+  return 'Hello!';
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operators -->
+    <section class="slide">
+      <div class="content">
+        <h2>Operators and Expressions</h2>
+        <div class="columns two">
+          <div>
+            <h3>Common Operators:</h3>
+            <ul>
+              <li>Arithmetic: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code></li>
+              <li>Assignment: <code>=</code>, <code>+=</code>, <code>-=</code></li>
+              <li>Comparison: <code>==</code>, <code>===</code>, <code>!=</code>, <code>!==</code></li>
+              <li>Logical: <code>&&</code>, <code>||</code>, <code>!</code></li>
+              <li>Ternary: <code>condition ? expr1 : expr2</code></li>
+            </ul>
+            <div class="note">
+              <p>Always use <code>===</code> (strict equality) instead of <code>==</code> to avoid unexpected type coercion.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Arithmetic operators
+const sum = 5 + 10;          // 15
+const product = 4 * 3;       // 12
+
+// Assignment operators
+let count = 0;
+count += 5;                  // count = count + 5
+
+// Comparison operators
+const isEqual = 5 === '5';   // false (strict equality)
+const isLooseEqual = 5 == '5'; // true (loose equality)
+
+// Logical operators
+const hasPermission = isAdmin && isActive;
+const canAccess = isAdmin || hasSpecialAccess;
+
+// Ternary operator
+const status = isActive ? 'Active' : 'Inactive';</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Control Flow: Conditionals -->
+    <section class="slide">
+      <div class="content">
+        <h2>Control Flow: Conditionals</h2>
+        <div class="columns two">
+          <div>
+            <h3>Conditional Statements:</h3>
+            <ul>
+              <li><code>if/else</code>: Basic conditional branching</li>
+              <li><code>else if</code>: Multiple conditions</li>
+              <li><code>switch</code>: Multiple case evaluation</li>
+              <li>Ternary operator: Compact conditionals</li>
+            </ul>
+            <div class="note">
+              <p>In React Native, conditionals are often used for conditional rendering of components.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// if/else statement
+if (user.role === 'admin') {
+  console.log('Admin access granted');
+} else if (user.role === 'editor') {
+  console.log('Editor access granted');
+} else {
+  console.log('Limited access');
+}
+
+// switch statement
+switch (medication.type) {
+  case 'antibiotic':
+    console.log('Take full course');
+    break;
+  case 'pain':
+    console.log('Take as needed');
+    break;
+  default:
+    console.log('Follow prescription');
+}
+
+// Ternary operator
+const message = age >= 18 
+  ? 'Adult medication' 
+  : 'Pediatric medication';</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Control Flow: Loops -->
+    <section class="slide">
+      <div class="content">
+        <h2>Control Flow: Loops</h2>
+        <div class="columns two">
+          <div>
+            <h3>Loop Types:</h3>
+            <ul>
+              <li><code>for</code>: Traditional counting loop</li>
+              <li><code>for...of</code>: Iterate over iterable values</li>
+              <li><code>for...in</code>: Iterate over object properties</li>
+              <li><code>while</code>: Condition-based loop</li>
+              <li><code>do...while</code>: Executes at least once</li>
+            </ul>
+            <div class="note">
+              <p>In React Native, array methods like <code>map</code>, <code>filter</code>, and <code>reduce</code> are often preferred over traditional loops.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// for loop
+for (let i = 0; i < medications.length; i++) {
+  console.log(medications[i]);
+}
+
+// for...of loop (arrays)
+for (const med of medications) {
+  console.log(med);
+}
+
+// for...in loop (objects)
+for (const key in user) {
+  console.log(`${key}: ${user[key]}`);
+}
+
+// while loop
+let count = 0;
+while (count < 5) {
+  console.log(count);
+  count++;
+}
+
+// do...while loop
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 3);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Template Literals -->
+    <section class="slide">
+      <div class="content">
+        <h2>Template Literals</h2>
+        <div class="columns two">
+          <div>
+            <p>Template literals provide an improved way to work with strings:</p>
+            <ul>
+              <li>Enclosed by backticks (<code>`</code>)</li>
+              <li>Support multi-line strings</li>
+              <li>Allow embedded expressions with <code>${expression}</code></li>
+              <li>Make string concatenation more readable</li>
+            </ul>
+            <div class="note">
+              <p>Template literals are widely used in React Native for dynamic text, styling, and JSX.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Old way (string concatenation)
+const oldWay = 'Hello, ' + user.name + '! ' +
+  'You have ' + user.notifications + ' notifications.';
+
+// Template literals
+const greeting = `Hello, ${user.name}!
+You have ${user.notifications} notifications.`;
+
+// With expressions
+const message = `Your dose is ${dosage * 2}mg every ${hours} hours.`;
+
+// In React Native JSX
+function MedicationItem({ med }) {
+  return (
+    <Text style={{ 
+      color: med.isActive ? 'green' : 'red',
+      fontSize: `${baseFontSize * 1.2}px`
+    }}>
+      {`${med.name} - ${med.dosage}`}
+    </Text>
+  );
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Handling -->
+    <section class="slide">
+      <div class="content">
+        <h2>Error Handling</h2>
+        <div class="columns two">
+          <div>
+            <p>JavaScript provides mechanisms to handle errors gracefully:</p>
+            <ul>
+              <li><code>try/catch/finally</code>: Handle exceptions</li>
+              <li><code>throw</code>: Create custom errors</li>
+              <li>Error object: Built-in error type</li>
+              <li>Custom error types: Extend Error</li>
+            </ul>
+            <div class="note">
+              <p>Proper error handling is crucial in React Native to prevent app crashes and provide feedback to users.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic try/catch
+try {
+  const data = JSON.parse(response);
+  processData(data);
+} catch (error) {
+  console.error('Failed to parse data:', error.message);
+} finally {
+  // Always executes
+  hideLoadingIndicator();
+}
+
+// Throwing custom errors
+function calculateDosage(weight, age) {
+  if (weight <= 0 || age <= 0) {
+    throw new Error('Invalid patient data');
+  }
+  
+  if (age < 18) {
+    throw new Error('Pediatric dosing requires specialist');
+  }
+  
+  return weight * 0.5;
+}
+
+// Using in React Native
+try {
+  const dosage = calculateDosage(patient.weight, patient.age);
+  setDosage(dosage);
+} catch (error) {
+  setError(error.message);
+  Alert.alert('Dosage Error', error.message);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Type Coercion -->
+    <section class="slide">
+      <div class="content">
+        <h2>Type Coercion</h2>
+        <div class="columns two">
+          <div>
+            <p>JavaScript automatically converts types in certain operations:</p>
+            <ul>
+              <li>Implicit coercion: Automatic conversion</li>
+              <li>Explicit coercion: Manual conversion</li>
+              <li>Common coercion scenarios:
+                <ul>
+                  <li>String + Number → String</li>
+                  <li>Boolean in conditionals</li>
+                  <li>Loose equality (==)</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="note">
+              <p>Understanding type coercion helps prevent subtle bugs in React Native applications.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Implicit coercion
+const sum = '5' + 3;        // '53' (string)
+const diff = '10' - 5;      // 5 (number)
+const result = true + 1;    // 2 (number)
+
+// In conditionals
+if ('0') {                  // true (non-empty string)
+  console.log('This runs');
+}
+
+if (0) {                    // false (zero)
+  console.log('This does not run');
+}
+
+// Loose vs strict equality
+console.log(5 == '5');      // true (coercion happens)
+console.log(5 === '5');     // false (no coercion)
+
+// Explicit coercion
+const numStr = '42';
+const num = Number(numStr);  // 42 (number)
+const str = String(42);      // '42' (string)
+const bool = Boolean(1);     // true (boolean)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JavaScript in React Native -->
+    <section class="slide">
+      <div class="content">
+        <h2>JavaScript in React Native Components</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+
+function MedicationReminder({ patientName, medications }) {
+  // State variables using JavaScript
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showDetails, setShowDetails] = useState(false);
+  
+  // Computed values using JavaScript
+  const currentMed = medications[currentIndex];
+  const hasMoreMeds = currentIndex < medications.length - 1;
+  
+  // Side effects using JavaScript
+  useEffect(() => {
+    // Template literals for logging
+    console.log(`Showing medication ${currentIndex + 1} of ${medications.length}`);
+    
+    // Conditional logic
+    if (currentMed.priority === 'high') {
+      // Error handling
+      try {
+        sendHighPriorityAlert(patientName, currentMed.name);
+      } catch (error) {
+        console.error(`Failed to send alert: ${error.message}`);
+      }
+    }
+  }, [currentIndex, medications, currentMed, patientName]);
+  
+  // Event handler using JavaScript
+  const handleNext = () => {
+    // Conditional logic
+    if (hasMoreMeds) {
+      // Update state
+      setCurrentIndex(currentIndex + 1);
+      setShowDetails(false);
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      {/* Conditional rendering using JavaScript */}
+      <Text style={styles.name}>
+        {patientName}'s Medication {currentIndex + 1}/{medications.length}
+      </Text>
+      
+      <Text style={styles.medication}>
+        {currentMed.name} - {currentMed.dosage}
+      </Text>
+      
+      {/* Conditional rendering with && operator */}
+      {showDetails && (
+        <Text style={styles.details}>
+          Take {currentMed.frequency} with {currentMed.instructions}
+        </Text>
+      )}
+      
+      {/* Event handlers and ternary operators */}
+      <Button
+        title={showDetails ? "Hide Details" : "Show Details"}
+        onPress={() => setShowDetails(!showDetails)}
+      />
+      
+      {/* Conditional rendering with ternary */}
+      {hasMoreMeds ? (
+        <Button title="Next Medication" onPress={handleNext} />
+      ) : (
+        <Text style={styles.complete}>All medications reviewed!</Text>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  medication: {
+    fontSize: 16,
+    marginVertical: 8,
+  },
+  details: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 8,
+  },
+  complete: {
+    marginTop: 16,
+    color: 'green',
+    fontWeight: 'bold',
+  },
+});</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise -->
+    <section class="slide">
+      <div class="content">
+        <h2>Exercise: Medication Calculator</h2>
+        <div class="exercise">
+          <p>Create a JavaScript function that calculates medication dosages based on patient data:</p>
+          <ol>
+            <li>Create variables for patient weight, age, and medication type</li>
+            <li>Implement conditional logic for different age groups</li>
+            <li>Use template literals to format the dosage instructions</li>
+            <li>Add error handling for invalid inputs</li>
+            <li>Return the calculated dosage and instructions</li>
+          </ol>
+          <div class="note">
+            <p>Try this exercise in a JavaScript playground like <a href="https://codepen.io/pen/" target="_blank">CodePen</a> or <a href="https://codesandbox.io/" target="_blank">CodeSandbox</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="slide">
+      <div class="content">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>JavaScript is the foundation of React Native development</li>
+          <li>Use <code>const</code> by default, <code>let</code> when reassignment is needed</li>
+          <li>Understand primitive vs. reference types and their behavior</li>
+          <li>Use strict equality (<code>===</code>) to avoid unexpected type coercion</li>
+          <li>Leverage template literals for cleaner string manipulation</li>
+          <li>Implement proper error handling to create robust applications</li>
+          <li>Control flow constructs (conditionals and loops) are essential for application logic</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="slide">
+      <div class="content">
+        <div class="navigation">
+          <a href="../section-2-functions-and-scope/" class="next">Next: Functions and Scope</a>
+          <a href="../../module-4-javascript-essentials/" class="module">Back to Module</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

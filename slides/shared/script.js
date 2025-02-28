@@ -137,6 +137,12 @@
               '2': 'browser-fundamentals',
               '3': 'html-basics',
               '4': 'css-basics'
+            },
+            'module-4-javascript-essentials': {
+              '1': 'javascript-fundamentals',
+              '2': 'functions-and-scope',
+              '3': 'arrays-and-objects',
+              '4': 'asynchronous-javascript'
             }
           };
           
@@ -367,6 +373,12 @@
         { num: 2, name: 'browser-fundamentals' },
         { num: 3, name: 'html-basics' },
         { num: 4, name: 'css-basics' }
+      ],
+      'module-4-javascript-essentials': [
+        { num: 1, name: 'javascript-fundamentals' },
+        { num: 2, name: 'functions-and-scope' },
+        { num: 3, name: 'arrays-and-objects' },
+        { num: 4, name: 'asynchronous-javascript' }
       ]
       // Add more modules as needed
     };

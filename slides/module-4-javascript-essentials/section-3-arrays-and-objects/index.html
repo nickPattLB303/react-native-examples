@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: Arrays and Objects | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>Arrays and Objects</h2>
+      <p class="metadata">Module 4 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Create and manipulate arrays using modern array methods</li>
+        <li>Work with objects and access their properties</li>
+        <li>Use object destructuring to extract values efficiently</li>
+        <li>Apply the spread operator for arrays and objects</li>
+        <li>Implement array transformation methods like map, filter, and reduce</li>
+        <li>Create complex data structures combining arrays and objects</li>
+        <li>Understand immutability concepts for React Native state management</li>
+      </ul>
+    </section>
+
+    <!-- Arrays: Introduction -->
+    <section class="slide">
+      <div class="content">
+        <h2>Arrays in JavaScript</h2>
+        <div class="columns two">
+          <div>
+            <p>Arrays are ordered collections of values that are fundamental to React Native development:</p>
+            <ul>
+              <li>Used to store lists of data (medications, patients, etc.)</li>
+              <li>Zero-based indexing</li>
+              <li>Can contain mixed types (though not recommended)</li>
+              <li>Dynamic length (can grow and shrink)</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Creating arrays
+const medications = ["Aspirin", "Lisinopril", "Metformin"];
+const emptyArray = [];
+const mixedArray = [1, "text", true, null, {name: "John"}];
+
+// Array constructor (less common)
+const newArray = new Array(3); // Array with 3 empty slots
+const nameArray = Array.of("Alice", "Bob", "Charlie");
+
+// Array from iterable
+const chars = Array.from("ABCDE"); // ["A", "B", "C", "D", "E"]
+const numbers = Array.from({length: 5}, (_, i) => i + 1);
+// [1, 2, 3, 4, 5]</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Arrays: Accessing Elements -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Access and Modification</h2>
+        <div class="columns two">
+          <div>
+            <h3>Common operations:</h3>
+            <ul>
+              <li>Accessing elements with square brackets</li>
+              <li>Getting array length via <code>length</code> property</li>
+              <li>Setting values with assignment</li>
+              <li>Adding/removing elements with methods</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medications = ["Aspirin", "Lisinopril", "Metformin"];
+
+// Accessing elements (zero-based indexing)
+console.log(medications[0]); // "Aspirin"
+console.log(medications[2]); // "Metformin"
+console.log(medications[3]); // undefined (out of bounds)
+
+// Array length
+console.log(medications.length); // 3
+
+// Modifying elements
+medications[1] = "Ibuprofen";
+console.log(medications); // ["Aspirin", "Ibuprofen", "Metformin"]
+
+// Adding elements (modifies original array)
+medications.push("Simvastatin"); // Add to end
+medications.unshift("Atorvastatin"); // Add to beginning
+
+// Removing elements (modifies original array)
+const last = medications.pop(); // Remove from end
+const first = medications.shift(); // Remove from beginning</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Methods: Adding and Removing -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Methods: Adding and Removing</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">const prescriptions = ["Aspirin", "Lisinopril"];
+
+// Adding elements
+prescriptions.push("Metformin");       // Adds to the end
+console.log(prescriptions);            // ["Aspirin", "Lisinopril", "Metformin"]
+
+prescriptions.unshift("Simvastatin");  // Adds to the beginning
+console.log(prescriptions);            // ["Simvastatin", "Aspirin", "Lisinopril", "Metformin"]
+
+// Removing elements
+const last = prescriptions.pop();      // Removes from the end
+console.log(last);                     // "Metformin"
+console.log(prescriptions);            // ["Simvastatin", "Aspirin", "Lisinopril"]
+
+const first = prescriptions.shift();   // Removes from the beginning
+console.log(first);                    // "Simvastatin"
+console.log(prescriptions);            // ["Aspirin", "Lisinopril"]
+
+// splice() - insert or remove at specific positions
+prescriptions.splice(1, 0, "Amlodipine"); // Insert at index 1, delete 0 elements
+console.log(prescriptions);            // ["Aspirin", "Amlodipine", "Lisinopril"]
+
+prescriptions.splice(0, 1);            // Remove 1 element starting at index 0
+console.log(prescriptions);            // ["Amlodipine", "Lisinopril"]</code></pre>
+        </div>
+        <div class="note">
+          <p><strong>React Native Tip:</strong> Methods like <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, and <code>splice</code> mutate the original array. When working with state in React Native, use non-mutating approaches to maintain immutability.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Methods: Finding Elements -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Methods: Finding Elements</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">const medications = [
+  { id: 1, name: "Aspirin", type: "pain" },
+  { id: 2, name: "Amoxicillin", type: "antibiotic" },
+  { id: 3, name: "Lisinopril", type: "blood pressure" }
+];
+
+// indexOf - find position of simple value (uses strict equality)
+const simpleArray = ["Aspirin", "Lisinopril", "Metformin"];
+console.log(simpleArray.indexOf("Lisinopril")); // 1
+console.log(simpleArray.indexOf("Unknown")); // -1
+
+// find - returns first matching element
+const pain = medications.find(med => med.type === "pain");
+console.log(pain); // { id: 1, name: "Aspirin", type: "pain" }
+
+// findIndex - returns index of first matching element
+const index = medications.findIndex(med => med.name === "Lisinopril");
+console.log(index); // 2
+
+// some - checks if at least one element passes test
+const hasAntibiotic = medications.some(med => med.type === "antibiotic");
+console.log(hasAntibiotic); // true
+
+// every - checks if all elements pass test
+const allPainMeds = medications.every(med => med.type === "pain");
+console.log(allPainMeds); // false
+
+// includes - checks if array contains a value (simple values only)
+console.log(simpleArray.includes("Metformin")); // true</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Transformation: map -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Transformation: map()</h2>
+        <div class="columns two">
+          <div>
+            <p><code>map()</code> creates a new array by transforming each element:</p>
+            <ul>
+              <li>Calls a function on each element</li>
+              <li>Creates a new array with the results</li>
+              <li>Original array remains unchanged</li>
+              <li>One-to-one transformation (same length)</li>
+            </ul>
+            <div class="note">
+              <p><strong>React Native Tip:</strong> <code>map()</code> is extensively used to render lists of components from arrays of data.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medications = [
+  { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
+  { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
+  { id: 3, name: "Metformin", type: "diabetes", dosage: "500mg" }
+];
+
+// Extract just the names
+const medicationNames = medications.map(med => med.name);
+console.log(medicationNames); 
+// ["Aspirin", "Lisinopril", "Metformin"]
+
+// More complex transformation
+const medicationItems = medications.map(med => ({
+  label: med.name,
+  description: `${med.dosage} (${med.type})`,
+  key: med.id.toString()
+}));
+
+// In React Native JSX
+function renderMedicationList() {
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        <Text>{item.name} - {item.dosage}</Text>
+      )}
+    />
+  );
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Transformation: filter -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Transformation: filter()</h2>
+        <div class="columns two">
+          <div>
+            <p><code>filter()</code> creates a new array with elements that pass a test:</p>
+            <ul>
+              <li>Tests each element with a function</li>
+              <li>Includes elements that return <code>true</code></li>
+              <li>Original array remains unchanged</li>
+              <li>Result may be shorter than original</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medications = [
+  { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
+  { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
+  { id: 3, name: "Metformin", type: "diabetes", dosage: "500mg" }
+];
+
+// Filter by medication type
+const painMeds = medications.filter(med => med.type === "pain");
+console.log(painMeds.length); // 1
+console.log(painMeds[0].name); // "Aspirin"
+
+// Filter by multiple criteria
+const highDoseMeds = medications.filter(med => {
+  const dosageNumber = parseInt(med.dosage);
+  return dosageNumber >= 500;
+});
+console.log(highDoseMeds.length); // 1
+
+// Combining filter and map
+const highDoseNames = medications
+  .filter(med => parseInt(med.dosage) >= 100)
+  .map(med => med.name);
+console.log(highDoseNames); // ["Aspirin", "Metformin"]</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Transformation: reduce -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Transformation: reduce()</h2>
+        <div class="columns two">
+          <div>
+            <p><code>reduce()</code> accumulates array values into a single result:</p>
+            <ul>
+              <li>Executes a reducer function on each element</li>
+              <li>Accumulates result into a single value</li>
+              <li>Accumulator can be any type (number, string, array, object)</li>
+              <li>Very versatile and powerful</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medications = [
+  { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
+  { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
+  { id: 3, name: "Metformin", type: "diabetes", dosage: "500mg" }
+];
+
+// Sum numeric values
+const pillCounts = [30, 60, 90, 120];
+const totalPills = pillCounts.reduce(
+  (sum, count) => sum + count, 
+  0 // initial value
+);
+console.log(totalPills); // 300
+
+// Collect unique medication types
+const medicationTypes = medications.reduce((types, med) => {
+  if (!types.includes(med.type)) {
+    types.push(med.type);
+  }
+  return types;
+}, []);
+console.log(medicationTypes); 
+// ["pain", "blood pressure", "diabetes"]
+
+// Group medications by type
+const groupedByType = medications.reduce((groups, med) => {
+  const type = med.type;
+  if (!groups[type]) {
+    groups[type] = [];
+  }
+  groups[type].push(med);
+  return groups;
+}, {});
+
+console.log(groupedByType.pain.length); // 1</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Transformation: sort -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Transformation: sort()</h2>
+        <div class="columns two">
+          <div>
+            <p><code>sort()</code> arranges array elements in place:</p>
+            <ul>
+              <li>Sorts elements and changes the original array</li>
+              <li>Default sorts as strings (lexicographically)</li>
+              <li>Accepts compare function for custom sorting</li>
+            </ul>
+            <div class="note">
+              <p><strong>Warning:</strong> <code>sort()</code> mutates the original array. Always create a copy of your array before sorting in React Native.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medications = [
+  { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
+  { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
+  { id: 3, name: "Metformin", type: "diabetes", dosage: "500mg" }
+];
+
+// Default string sort
+const fruits = ["orange", "apple", "banana"];
+fruits.sort();
+console.log(fruits); // ["apple", "banana", "orange"]
+
+// Sorting numbers (need compare function)
+const doses = [10, 5, 25, 15];
+doses.sort((a, b) => a - b); // Ascending
+console.log(doses); // [5, 10, 15, 25]
+
+// Immutable sort with objects
+const sortedMeds = [...medications].sort((a, b) => 
+  a.name.localeCompare(b.name)
+);
+
+// In React Native
+function MedicationList({ medications }) {
+  const sortedMeds = [...medications].sort(
+    (a, b) => a.name.localeCompare(b.name)
+  );
+  
+  return (
+    <FlatList
+      data={sortedMeds}
+      renderItem={({ item }) => (
+        <Text>{item.name}</Text>
+      )}
+    />
+  );
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Array Spread Operator -->
+    <section class="slide">
+      <div class="content">
+        <h2>Array Spread Operator</h2>
+        <div class="columns two">
+          <div>
+            <p>The spread operator (<code>...</code>) expands array elements:</p>
+            <ul>
+              <li>Copy arrays</li>
+              <li>Combine arrays</li>
+              <li>Create new arrays with additional elements</li>
+              <li>Extract array elements</li>
+              <li>Essential for immutable state updates</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const morningMeds = ["Lisinopril", "Vitamin D"];
+const eveningMeds = ["Aspirin", "Simvastatin"];
+
+// Combine arrays
+const allMeds = [...morningMeds, ...eveningMeds];
+console.log(allMeds); 
+// ["Lisinopril", "Vitamin D", "Aspirin", "Simvastatin"]
+
+// Create a copy of an array
+const medsCopy = [...morningMeds];
+
+// Add element without mutating original
+const updatedMorningMeds = [...morningMeds, "Fish Oil"];
+console.log(updatedMorningMeds); 
+// ["Lisinopril", "Vitamin D", "Fish Oil"]
+console.log(morningMeds); 
+// ["Lisinopril", "Vitamin D"] (unchanged)
+
+// Insert in the middle
+const withInsert = [
+  ...allMeds.slice(0, 2),
+  "Metformin",
+  ...allMeds.slice(2)
+];</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Objects: Introduction -->
+    <section class="slide">
+      <div class="content">
+        <h2>Objects in JavaScript</h2>
+        <div class="columns two">
+          <div>
+            <p>Objects are collections of key-value pairs:</p>
+            <ul>
+              <li>Store related data and functionality</li>
+              <li>Keys are strings or symbols</li>
+              <li>Values can be any JavaScript type</li>
+              <li>Dynamic (can add/remove properties)</li>
+              <li>Essential for modeling data in React Native</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Object literal
+const medication = {
+  id: 1,
+  name: "Aspirin",
+  dosage: "81mg",
+  frequency: "once daily",
+  instructions: "Take with food"
+};
+
+// Empty object
+const emptyObject = {};
+
+// Nested objects
+const prescription = {
+  patient: {
+    id: "P123",
+    name: "John Doe"
+  },
+  medication: {
+    name: "Lisinopril",
+    dosage: "10mg"
+  },
+  date: new Date(),
+  refills: 3
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Object: Accessing Properties -->
+    <section class="slide">
+      <div class="content">
+        <h2>Object: Accessing Properties</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">const medication = {
+  id: 1,
+  name: "Aspirin",
+  dosage: "81mg",
+  frequency: "once daily",
+  instructions: "Take with food"
+};
+
+// Dot notation
+console.log(medication.name); // "Aspirin"
+console.log(medication.dosage); // "81mg"
+
+// Bracket notation (useful for dynamic property names)
+console.log(medication["instructions"]); // "Take with food"
+
+const propName = "frequency";
+console.log(medication[propName]); // "once daily"
+
+// Adding new properties
+medication.refills = 3;
+medication["prescribedBy"] = "Dr. Smith";
+
+// Modifying properties
+medication.dosage = "325mg";
+
+// Deleting properties
+delete medication.refills;
+
+// Checking if a property exists
+console.log("instructions" in medication); // true
+console.log(medication.hasOwnProperty("price")); // false
+console.log(medication.nonExistentProp); // undefined</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Object Methods -->
+    <section class="slide">
+      <div class="content">
+        <h2>Object Methods</h2>
+        <div class="columns two">
+          <div>
+            <p>Object methods are functions stored as object properties:</p>
+            <ul>
+              <li>Traditional function syntax (creates <code>this</code> context)</li>
+              <li>ES6 shorthand method syntax</li>
+              <li>Arrow functions (inherit <code>this</code> from surroundings)</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const patient = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 45,
+  medications: ["Aspirin", "Lisinopril"],
+  
+  // Traditional method (with own 'this')
+  getFullName: function() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+  
+  // ES6 method shorthand
+  getAge() {
+    return this.age;
+  },
+  
+  // Arrow function (warning: 'this' isn't bound)
+  getMedications: () => {
+    // 'this' doesn't refer to patient!
+    // In a browser, 'this' might be window or undefined
+    return patient.medications.join(", ");
+  }
+};
+
+console.log(patient.getFullName()); // "John Doe"
+console.log(patient.getAge()); // 45
+console.log(patient.getMedications()); // "Aspirin, Lisinopril"</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Object Destructuring -->
+    <section class="slide">
+      <div class="content">
+        <h2>Object Destructuring</h2>
+        <div class="columns two">
+          <div>
+            <p>Object destructuring extracts properties into variables:</p>
+            <ul>
+              <li>Concise syntax for extracting multiple properties</li>
+              <li>Can rename variables</li>
+              <li>Can provide default values</li>
+              <li>Can destructure nested objects</li>
+              <li>Works in function parameters</li>
+            </ul>
+            <div class="note">
+              <p><strong>React Native Tip:</strong> Destructuring is widely used with React props and hooks.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medication = {
+  id: 1,
+  name: "Aspirin",
+  dosage: "81mg",
+  frequency: "once daily",
+  instructions: "Take with food"
+};
+
+// Basic destructuring
+const { name, dosage, instructions } = medication;
+console.log(name); // "Aspirin"
+console.log(instructions); // "Take with food"
+
+// Renaming variables
+const { name: medicationName, dosage: medicationDosage } = medication;
+console.log(medicationName); // "Aspirin"
+
+// Default values
+const { price = "Not specified" } = medication;
+console.log(price); // "Not specified"
+
+// Nested destructuring
+const prescription = {
+  medication: {
+    name: "Lisinopril",
+    dosage: "10mg"
+  },
+  patient: {
+    id: "P12345",
+    name: "Jane Smith"
+  }
+};
+
+const { 
+  medication: { name: medName }, 
+  patient: { name: patientName } 
+} = prescription;
+console.log(medName); // "Lisinopril"
+console.log(patientName); // "Jane Smith"</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Object Spread Operator -->
+    <section class="slide">
+      <div class="content">
+        <h2>Object Spread Operator</h2>
+        <div class="columns two">
+          <div>
+            <p>The spread operator for objects:</p>
+            <ul>
+              <li>Create copies of objects</li>
+              <li>Merge multiple objects</li>
+              <li>Create new objects with modified properties</li>
+              <li>Essential for immutable state updates in React Native</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">const medication = {
+  name: "Aspirin",
+  dosage: "81mg",
+  frequency: "once daily"
+};
+
+// Copy an object
+const medicationCopy = { ...medication };
+
+// Merge objects
+const baseInfo = { name: "Aspirin", dosage: "325mg" };
+const details = { 
+  frequency: "twice daily", 
+  instructions: "Take with food" 
+};
+
+const completeInfo = { ...baseInfo, ...details };
+console.log(completeInfo); 
+// { name: "Aspirin", dosage: "325mg", 
+//   frequency: "twice daily", instructions: "Take with food" }
+
+// Override properties
+const updatedInfo = { 
+  ...baseInfo, 
+  dosage: "81mg" // Overrides the dosage from baseInfo
+};
+console.log(updatedInfo); // { name: "Aspirin", dosage: "81mg" }
+
+// React Native state update example
+function updateMedication(prevState, id, newDosage) {
+  return {
+    ...prevState,
+    medications: prevState.medications.map(med => 
+      med.id === id 
+        ? { ...med, dosage: newDosage } 
+        : med
+    )
+  };
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Computed Property Names -->
+    <section class="slide">
+      <div class="content">
+        <h2>Computed Property Names</h2>
+        <div class="columns two">
+          <div>
+            <p>Computed property names allow dynamic property keys:</p>
+            <ul>
+              <li>Use square brackets <code>[]</code> in object literals</li>
+              <li>Evaluate expressions as property names</li>
+              <li>Useful for dynamic data structures</li>
+              <li>Works with variables and expressions</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Variables as property names
+const propertyName = "dosageInfo";
+const timeOfDay = "evening";
+
+const medicationSchedule = {
+  name: "Simvastatin",
+  [propertyName]: "40mg", // Uses value of propertyName
+  [`${timeOfDay}Dose`]: true // Template literal
+};
+
+console.log(medicationSchedule.dosageInfo); // "40mg"
+console.log(medicationSchedule.eveningDose); // true
+
+// Dynamic object creation with computed properties
+function createMedication(name, value, unit) {
+  return {
+    name,
+    [`${name}Dosage`]: `${value}${unit}`,
+    [`${name}LastTaken`]: new Date()
+  };
+}
+
+const aspirin = createMedication("Aspirin", 81, "mg");
+console.log(aspirin.AspirinDosage); // "81mg"</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Working with Arrays of Objects -->
+    <section class="slide">
+      <div class="content">
+        <h2>Working with Arrays of Objects</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">const medicationList = [
+  { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
+  { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
+  { id: 3, name: "Metformin", type: "diabetes", dosage: "500mg" }
+];
+
+// Finding a specific medication
+const diabetes = medicationList.find(med => med.type === "diabetes");
+console.log(diabetes.name); // "Metformin"
+
+// Creating a new array with modified objects (immutably)
+const updatedList = medicationList.map(med => {
+  if (med.id === 2) {
+    return { ...med, dosage: "20mg" }; // Create new object
+  }
+  return med; // Keep unchanged
+});
+
+// Adding a new medication (immutably)
+const newMed = { 
+  id: 4, 
+  name: "Simvastatin", 
+  type: "cholesterol", 
+  dosage: "20mg" 
+};
+const extendedList = [...medicationList, newMed];
+
+// Removing a medication (immutably)
+const filteredList = medicationList.filter(med => med.id !== 1);
+
+// Updating all medications with a new property
+const withInstructions = medicationList.map(med => ({
+  ...med,
+  instructions: `Take ${med.name} as directed`
+}));</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Immutability in React Native -->
+    <section class="slide">
+      <div class="content">
+        <h2>Immutability in React Native</h2>
+        <div class="columns two">
+          <div>
+            <p>Why immutability matters in React Native:</p>
+            <ul>
+              <li>React/React Native rely on reference equality checks</li>
+              <li>Mutating objects directly can bypass re-renders</li>
+              <li>Enables efficient shouldComponentUpdate</li>
+              <li>Makes debugging easier</li>
+              <li>Simplifies state management</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// ❌ Incorrect way (mutating)
+const updateMedicationDosage = (medications, id, newDosage) => {
+  const med = medications.find(m => m.id === id);
+  med.dosage = newDosage; // Mutation! Bad for React Native
+  return medications; // Same array reference
+};
+
+// ✅ Correct way (immutable)
+const updateMedicationDosageCorrectly = (medications, id, newDosage) => {
+  return medications.map(med => {
+    if (med.id === id) {
+      return { ...med, dosage: newDosage }; // New object
+    }
+    return med;
+  });
+};
+
+// In a React Native functional component
+function MedicationScreen() {
+  const [medications, setMedications] = useState([
+    { id: 1, name: "Aspirin", dosage: "81mg" }
+  ]);
+  
+  const updateDosage = (id, newDosage) => {
+    setMedications(prevMeds => 
+      updateMedicationDosageCorrectly(prevMeds, id, newDosage)
+    );
+  };
+  
+  // Component rendering...
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Complex Data Transformations -->
+    <section class="slide">
+      <div class="content">
+        <h2>Complex Data Transformations</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">const patientData = {
+  id: "P12345",
+  name: "John Doe",
+  medications: [
+    { id: 1, name: "Aspirin", type: "pain", dosage: "325mg", times: ["morning"] },
+    { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg", times: ["morning"] },
+    { id: 3, name: "Simvastatin", type: "cholesterol", dosage: "20mg", times: ["evening"] }
+  ]
+};
+
+// Group medications by time of day
+const medicationsByTime = patientData.medications.reduce((schedule, med) => {
+  med.times.forEach(time => {
+    if (!schedule[time]) {
+      schedule[time] = [];
+    }
+    schedule[time].push(med);
+  });
+  return schedule;
+}, {});
+
+console.log(medicationsByTime.morning.length); // 2
+console.log(medicationsByTime.evening.length); // 1
+
+// Create a medication schedule
+const medicationSchedule = Object.entries(medicationsByTime).map(([time, meds]) => {
+  return {
+    timeOfDay: time,
+    medications: meds.map(med => ({
+      name: med.name,
+      dosage: med.dosage,
+      instructions: `Take ${med.dosage} of ${med.name}`
+    }))
+  };
+});
+
+// Example React Native component using this data
+function MedicationSchedule({ schedule }) {
+  return (
+    <View>
+      {schedule.map(timeSlot => (
+        <View key={timeSlot.timeOfDay}>
+          <Text style={styles.timeHeader}>{timeSlot.timeOfDay}</Text>
+          {timeSlot.medications.map(med => (
+            <Text key={med.name}>{med.instructions}</Text>
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise -->
+    <section class="slide">
+      <div class="content">
+        <h2>Exercise: Patient Medication Tracker</h2>
+        <div class="exercise">
+          <p>Create a set of functions to manage patient medications:</p>
+          <ol>
+            <li>Create a data structure for a patient with medications</li>
+            <li>Implement functions to add, update, and remove medications</li>
+            <li>Create a function to filter medications by type</li>
+            <li>Implement a sorting function for medications by name</li>
+            <li>Create a function that groups medications by time of day</li>
+          </ol>
+          <div class="note">
+            <p>Try this exercise in a JavaScript playground like <a href="https://codepen.io/pen/" target="_blank">CodePen</a> or <a href="https://codesandbox.io/" target="_blank">CodeSandbox</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="slide">
+      <div class="content">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Arrays and objects are fundamental data structures in JavaScript and React Native</li>
+          <li>Modern array methods (<code>map</code>, <code>filter</code>, <code>reduce</code>) provide powerful data transformation capabilities</li>
+          <li>The spread operator (<code>...</code>) is essential for non-mutating operations on arrays and objects</li>
+          <li>Object destructuring simplifies working with complex data structures</li>
+          <li>Maintaining immutability is crucial for React Native state management</li>
+          <li>Arrays of objects are the foundation of most React Native data models</li>
+          <li>Complex data transformations help prepare data for rendering in React Native components</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="slide">
+      <div class="content">
+        <div class="navigation">
+          <a href="../section-2-functions-and-scope/" class="prev">Previous: Functions and Scope</a>
+          <a href="../section-4-asynchronous-javascript/" class="next">Next: Asynchronous JavaScript</a>
+          <a href="../../module-4-javascript-essentials/" class="module">Back to Module</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

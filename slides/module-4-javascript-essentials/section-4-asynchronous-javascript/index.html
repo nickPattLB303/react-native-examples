@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Asynchronous JavaScript | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>Asynchronous JavaScript</h2>
+      <p class="metadata">Module 4 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the asynchronous nature of JavaScript</li>
+        <li>Work with callbacks, promises, and async/await</li>
+        <li>Handle errors in asynchronous code</li>
+        <li>Implement common asynchronous patterns in React Native</li>
+        <li>Fetch and process data from APIs</li>
+        <li>Manage multiple asynchronous operations</li>
+      </ul>
+    </section>
+
+    <!-- Introduction to Asynchronous JavaScript -->
+    <section class="slide content-slide">
+      <h2>Introduction to Asynchronous JavaScript</h2>
+      <div class="columns">
+        <div class="column">
+          <p>JavaScript is single-threaded but needs to handle time-consuming operations like:</p>
+          <ul>
+            <li>Network requests</li>
+            <li>File operations</li>
+            <li>Database queries</li>
+            <li>Timers and animations</li>
+          </ul>
+          <p>Asynchronous programming allows these operations to run without blocking the main thread.</p>
+        </div>
+        <div class="column code-block">
+          <pre><code class="language-javascript">// Synchronous code executes in sequence
+console.log("First");
+console.log("Second");
+console.log("Third");
+// Output: First, Second, Third
+
+// Asynchronous code doesn't block execution
+console.log("First");
+setTimeout(() => {
+  console.log("Second - after delay");
+}, 1000);
+console.log("Third");
+// Output: First, Third, Second - after delay</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Note</div>
+        <p>Understanding asynchronous JavaScript is crucial for React Native development, as many operations (API calls, storage, animations) are asynchronous.</p>
+      </div>
+    </section>
+
+    <!-- The JavaScript Event Loop -->
+    <section class="slide content-slide">
+      <h2>The JavaScript Event Loop</h2>
+      <div class="columns">
+        <div class="column">
+          <p>The event loop is how JavaScript handles asynchronous operations:</p>
+          <ol>
+            <li>JavaScript runs code on a single thread</li>
+            <li>Asynchronous operations are delegated to the browser/runtime</li>
+            <li>When completed, callbacks are placed in a queue</li>
+            <li>The event loop checks the queue when the call stack is empty</li>
+            <li>Callbacks are executed in the order they were queued</li>
+          </ol>
+        </div>
+        <div class="column">
+          <p class="text-center"><strong>JavaScript Event Loop Components:</strong></p>
+          <ul>
+            <li><strong>Call Stack:</strong> Where functions are executed (LIFO)</li>
+            <li><strong>Web APIs:</strong> Browser/runtime features that handle async tasks</li>
+            <li><strong>Callback Queue:</strong> Where callbacks wait to be executed (FIFO)</li>
+            <li><strong>Event Loop:</strong> Checks if call stack is empty and moves callbacks</li>
+          </ul>
+          <div class="callout info">
+            <div class="callout-title">Note</div>
+            <p>[Event Loop Diagram - Add Visualization Later]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Callbacks -->
+    <section class="slide">
+      <div class="content">
+        <h2>Callbacks</h2>
+        <div class="columns two">
+          <div>
+            <p>Callbacks are functions passed as arguments to other functions, to be executed after an operation completes.</p>
+            <ul>
+              <li>The earliest pattern for handling asynchronous code</li>
+              <li>Simple to implement</li>
+              <li>But can lead to deeply nested code</li>
+              <li>Challenging error handling</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic callback pattern
+function fetchMedication(id, callback) {
+  // Simulate API request with setTimeout
+  setTimeout(() => {
+    const medication = {
+      id: id,
+      name: "Aspirin",
+      dosage: "81mg"
+    };
+    callback(medication);
+  }, 1000);
+}
+
+// Using the callback
+fetchMedication(123, (medication) => {
+  console.log(`Fetched ${medication.name}`);
+  // Do something with the medication data
+});
+
+console.log("Fetching medication...");
+// Output:
+// "Fetching medication..."
+// (after 1 second) "Fetched Aspirin"</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Callback Hell -->
+    <section class="slide">
+      <div class="content">
+        <h2>Callback Hell</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Nested callbacks lead to "Callback Hell" or "Pyramid of Doom"
+fetchPatient(patientId, (error, patient) => {
+  if (error) {
+    console.error("Error fetching patient:", error);
+    return;
+  }
+  
+  fetchMedications(patient.id, (error, medications) => {
+    if (error) {
+      console.error("Error fetching medications:", error);
+      return;
+    }
+    
+    fetchPharmacy(medications[0].pharmacyId, (error, pharmacy) => {
+      if (error) {
+        console.error("Error fetching pharmacy:", error);
+        return;
+      }
+      
+      fetchPharmacist(pharmacy.id, (error, pharmacist) => {
+        if (error) {
+          console.error("Error fetching pharmacist:", error);
+          return;
+        }
+        
+        // Deep nesting makes code hard to read and maintain
+        console.log(`Contact ${pharmacist.name} at ${pharmacy.name} about ${medications[0].name} for ${patient.name}`);
+      });
+    });
+  });
+});</code></pre>
+        </div>
+        <div class="note">
+          <p><strong>Warning:</strong> Callback hell makes code difficult to read, debug, and maintain. Modern JavaScript provides better alternatives like Promises and async/await.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promises: Introduction -->
+    <section class="slide">
+      <div class="content">
+        <h2>Promises: Introduction</h2>
+        <div class="columns two">
+          <div>
+            <p>Promises represent the eventual completion (or failure) of an asynchronous operation and its resulting value.</p>
+            <p>A Promise can be in one of three states:</p>
+            <ul>
+              <li><strong>Pending</strong>: Initial state, neither fulfilled nor rejected</li>
+              <li><strong>Fulfilled</strong>: The operation completed successfully</li>
+              <li><strong>Rejected</strong>: The operation failed</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Creating a promise
+function fetchMedicationPromise(id) {
+  return new Promise((resolve, reject) => {
+    // Simulate API request
+    setTimeout(() => {
+      if (id > 0) {
+        const medication = {
+          id: id,
+          name: "Aspirin",
+          dosage: "81mg"
+        };
+        resolve(medication); // Success
+      } else {
+        reject(new Error("Invalid medication ID")); // Failure
+      }
+    }, 1000);
+  });
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Using Promises -->
+    <section class="slide">
+      <div class="content">
+        <h2>Using Promises</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Using a promise
+fetchMedicationPromise(123)
+  .then(medication => {
+    console.log(`Fetched ${medication.name}`);
+    return medication; // Return for chaining
+  })
+  .then(medication => {
+    console.log(`Dosage: ${medication.dosage}`);
+  })
+  .catch(error => {
+    console.error("Error fetching medication:", error);
+  })
+  .finally(() => {
+    console.log("Fetch operation completed");
+  });
+
+console.log("Fetching medication...");
+
+// Error handling with promises
+fetchMedicationPromise(-1) // Will cause an error
+  .then(medication => {
+    console.log(`Fetched ${medication.name}`);
+  })
+  .catch(error => {
+    console.error("Error occurred:", error.message);
+    // "Error occurred: Invalid medication ID"
+  });</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promise Chaining -->
+    <section class="slide">
+      <div class="content">
+        <h2>Promise Chaining</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Refactoring the callback hell example with promises
+fetchPatientPromise(patientId)
+  .then(patient => {
+    console.log(`Patient: ${patient.name}`);
+    return fetchMedicationsPromise(patient.id);
+  })
+  .then(medications => {
+    console.log(`Medications: ${medications.length}`);
+    return fetchPharmacyPromise(medications[0].pharmacyId);
+  })
+  .then(pharmacy => {
+    console.log(`Pharmacy: ${pharmacy.name}`);
+    return fetchPharmacistPromise(pharmacy.id);
+  })
+  .then(pharmacist => {
+    console.log(`Pharmacist: ${pharmacist.name}`);
+  })
+  .catch(error => {
+    // One catch handles errors from any step in the chain
+    console.error("Error in promise chain:", error);
+  });</code></pre>
+        </div>
+        <div class="note">
+          <p>Promise chaining flattens the "pyramid of doom" into a linear sequence of steps, making the code more readable and maintainable.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Working with Multiple Promises -->
+    <section class="slide">
+      <div class="content">
+        <h2>Working with Multiple Promises</h2>
+        <div class="columns two">
+          <div>
+            <p>JavaScript provides methods for working with multiple promises:</p>
+            <ul>
+              <li><code>Promise.all()</code>: Waits for all promises to resolve</li>
+              <li><code>Promise.race()</code>: Resolves/rejects as soon as one promise resolves/rejects</li>
+              <li><code>Promise.allSettled()</code>: Waits for all promises to settle</li>
+              <li><code>Promise.any()</code>: Resolves if any promise resolves</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Promise.all - fetch multiple medications in parallel
+const medicationPromises = [
+  fetchMedicationPromise(1),
+  fetchMedicationPromise(2),
+  fetchMedicationPromise(3)
+];
+
+Promise.all(medicationPromises)
+  .then(medications => {
+    console.log(`Fetched ${medications.length} medications`);
+    medications.forEach(med => {
+      console.log(`- ${med.name}: ${med.dosage}`);
+    });
+  })
+  .catch(error => {
+    // If any promise rejects, the catch handler is called
+    console.error("Error fetching medications:", error);
+  });</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More Promise Combinators -->
+    <section class="slide">
+      <div class="content">
+        <h2>More Promise Combinators</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Promise.race - resolves/rejects as soon as one promise resolves/rejects
+Promise.race([
+  fetchMedicationPromise(1),
+  fetchMedicationPromise(2)
+])
+  .then(firstMedication => {
+    console.log(`First result: ${firstMedication.name}`);
+  });
+
+// Promise.allSettled - waits for all promises to settle (resolve or reject)
+Promise.allSettled([
+  fetchMedicationPromise(1),
+  fetchMedicationPromise(-1) // Will reject
+])
+  .then(results => {
+    results.forEach(result => {
+      if (result.status === 'fulfilled') {
+        console.log(`Success: ${result.value.name}`);
+      } else {
+        console.log(`Failed: ${result.reason}`);
+      }
+    });
+  });
+
+// Promise.any - resolves if any promise resolves, rejects if all reject
+Promise.any([
+  fetchMedicationPromise(-1), // Will reject
+  fetchMedicationPromise(2)
+])
+  .then(medication => {
+    console.log(`At least one succeeded: ${medication.name}`);
+  })
+  .catch(error => {
+    console.error("All promises failed");
+  });</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Async/Await: Introduction -->
+    <section class="slide">
+      <div class="content">
+        <h2>Async/Await: Introduction</h2>
+        <div class="columns two">
+          <div>
+            <p>Async/await is syntactic sugar built on top of promises that makes asynchronous code look and behave more like synchronous code.</p>
+            <ul>
+              <li><code>async</code> functions always return a promise</li>
+              <li><code>await</code> pauses execution until the promise resolves</li>
+              <li>Works with any promise-based API</li>
+              <li>Introduced in ES2017 (ES8)</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Async function declaration
+async function fetchMedicationData(id) {
+  try {
+    // Await pauses execution until the promise resolves
+    const medication = await fetchMedicationPromise(id);
+    console.log(`Fetched ${medication.name}`);
+    return medication;
+  } catch (error) {
+    console.error("Error fetching medication:", error);
+    throw error; // Re-throw or handle the error
+  }
+}
+
+// Using an async function
+fetchMedicationData(123)
+  .then(medication => {
+    console.log(`Dosage: ${medication.dosage}`);
+  })
+  .catch(error => {
+    console.error("Error in async function:", error);
+  });
+
+// Async arrow function
+const fetchPatientData = async (id) => {
+  // Implementation
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sequential vs. Parallel Execution -->
+    <section class="slide">
+      <div class="content">
+        <h2>Sequential vs. Parallel Execution</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Sequential execution (each await waits for the previous to complete)
+async function fetchSequential() {
+  console.time("sequential");
+  
+  const medication1 = await fetchMedicationPromise(1);
+  const medication2 = await fetchMedicationPromise(2);
+  const medication3 = await fetchMedicationPromise(3);
+  
+  console.timeEnd("sequential"); // ~3000ms (1s + 1s + 1s)
+  return [medication1, medication2, medication3];
+}
+
+// Parallel execution (start all promises before awaiting)
+async function fetchParallel() {
+  console.time("parallel");
+  
+  const promise1 = fetchMedicationPromise(1);
+  const promise2 = fetchMedicationPromise(2);
+  const promise3 = fetchMedicationPromise(3);
+  
+  const medication1 = await promise1;
+  const medication2 = await promise2;
+  const medication3 = await promise3;
+  
+  console.timeEnd("parallel"); // ~1000ms (all run concurrently)
+  return [medication1, medication2, medication3];
+}
+
+// Using Promise.all with async/await
+async function fetchParallelWithPromiseAll() {
+  console.time("promise.all");
+  
+  const medications = await Promise.all([
+    fetchMedicationPromise(1),
+    fetchMedicationPromise(2),
+    fetchMedicationPromise(3)
+  ]);
+  
+  console.timeEnd("promise.all"); // ~1000ms
+  return medications;
+}</code></pre>
+        </div>
+        <div class="note">
+          <p>Understanding the difference between sequential and parallel execution is crucial for optimizing performance in React Native applications.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Handling with Async/Await -->
+    <section class="slide">
+      <div class="content">
+        <h2>Error Handling with Async/Await</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// Using try/catch with async/await
+async function fetchWithErrorHandling() {
+  try {
+    const patient = await fetchPatientPromise(123);
+    const medications = await fetchMedicationsPromise(patient.id);
+    
+    if (medications.length === 0) {
+      throw new Error("No medications found");
+    }
+    
+    return medications;
+  } catch (error) {
+    console.error("Error in medication fetch:", error);
+    // Handle error appropriately
+    return []; // Return empty array as fallback
+  } finally {
+    console.log("Fetch operation completed");
+  }
+}
+
+// Alternative pattern for multiple operations
+async function fetchMultipleWithErrorHandling() {
+  try {
+    // Patient fetch
+    const patient = await fetchPatientPromise(123);
+    
+    // Medication fetch - with its own error handling
+    let medications = [];
+    try {
+      medications = await fetchMedicationsPromise(patient.id);
+    } catch (medError) {
+      console.warn("Could not fetch medications:", medError);
+      // Continue with empty medications array
+    }
+    
+    // Pharmacy fetch - only if we have medications
+    let pharmacy = null;
+    if (medications.length > 0) {
+      try {
+        pharmacy = await fetchPharmacyPromise(medications[0].pharmacyId);
+      } catch (pharmError) {
+        console.warn("Could not fetch pharmacy:", pharmError);
+      }
+    }
+    
+    return { patient, medications, pharmacy };
+  } catch (error) {
+    console.error("Critical error:", error);
+    throw error;
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fetch API -->
+    <section class="slide">
+      <div class="content">
+        <h2>Fetch API</h2>
+        <div class="columns two">
+          <div>
+            <p>The Fetch API provides a modern interface for making HTTP requests:</p>
+            <ul>
+              <li>Promise-based API for network requests</li>
+              <li>Replaces older XMLHttpRequest</li>
+              <li>Built into modern browsers and React Native</li>
+              <li>Supports various HTTP methods, headers, and body formats</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic GET request
+fetch('https://api.example.com/medications')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json(); // Parse JSON response
+  })
+  .then(data => {
+    console.log('Medications:', data);
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });
+
+// Using async/await with fetch
+async function fetchMedications() {
+  try {
+    const response = await fetch('https://api.example.com/medications');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error;
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POST, PUT, DELETE with Fetch -->
+    <section class="slide">
+      <div class="content">
+        <h2>POST, PUT, DELETE with Fetch</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">// POST request with fetch
+async function createMedication(medicationData) {
+  try {
+    const response = await fetch('https://api.example.com/medications', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_TOKEN'
+      },
+      body: JSON.stringify(medicationData)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error creating medication:', error);
+    throw error;
+  }
+}
+
+// PUT request with fetch
+async function updateMedication(id, updates) {
+  try {
+    const response = await fetch(`https://api.example.com/medications/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Update failed:', error);
+    throw error;
+  }
+}
+
+// DELETE request with fetch
+async function deleteMedication(id) {
+  try {
+    const response = await fetch(`https://api.example.com/medications/${id}`, {
+      method: 'DELETE'
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return true; // Successfully deleted
+  } catch (error) {
+    console.error('Delete failed:', error);
+    throw error;
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Fetching in React Native Components -->
+    <section class="slide">
+      <div class="content">
+        <h2>Data Fetching in React Native Components</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+
+function MedicationList() {
+  const [medications, setMedications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Define async function inside useEffect
+    async function loadMedications() {
+      try {
+        setLoading(true);
+        const response = await fetch('https://api.example.com/medications');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setMedications(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load medications: ' + err.message);
+        setMedications([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadMedications();
+    
+    // Optional cleanup function
+    return () => {
+      // Cancel any pending requests if component unmounts
+      // (requires additional implementation with AbortController)
+    };
+  }, []); // Empty dependency array means this runs once on mount
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (error) {
+    return <Text style={{ color: 'red' }}>{error}</Text>;
+  }
+
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        <Text>{item.name} - {item.dosage}</Text>
+      )}
+    />
+  );
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Handling Race Conditions -->
+    <section class="slide">
+      <div class="content">
+        <h2>Handling Race Conditions</h2>
+        <div class="columns two">
+          <div>
+            <p>Race conditions occur when multiple asynchronous operations are in flight and you need to ensure responses are handled correctly.</p>
+            <p>Common situations:</p>
+            <ul>
+              <li>User rapidly changes search parameters</li>
+              <li>Navigating between details while data is loading</li>
+              <li>Multiple API calls that may complete in any order</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">function MedicationDetail({ medicationId }) {
+  const [medication, setMedication] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    let isMounted = true; // Flag to track if component is mounted
+    
+    async function fetchData() {
+      setLoading(true);
+      
+      try {
+        const data = await fetchMedicationPromise(medicationId);
+        
+        // Only update state if component is still mounted
+        // and this is the latest request
+        if (isMounted) {
+          setMedication(data);
+          setLoading(false);
+        }
+      } catch (error) {
+        if (isMounted) {
+          console.error('Fetch error:', error);
+          setLoading(false);
+        }
+      }
+    }
+    
+    fetchData();
+    
+    // Cleanup function to run when component unmounts
+    // or when medicationId changes
+    return () => {
+      isMounted = false;
+    };
+  }, [medicationId]); // Re-run when medicationId changes
+  
+  // Component rendering logic
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Debouncing API Calls -->
+    <section class="slide">
+      <div class="content">
+        <h2>Debouncing API Calls</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+
+// Custom hook for debounced API calls
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    // Set a timeout to update the debounced value after delay
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    // Cancel the timeout if value changes or component unmounts
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+// Usage in a component
+function MedicationSearch() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  // Only perform search when debouncedSearchTerm changes
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setLoading(true);
+      
+      fetch(`https://api.example.com/medications?search=${debouncedSearchTerm}`)
+        .then(response => response.json())
+        .then(data => {
+          setResults(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Search error:', error);
+          setLoading(false);
+        });
+    } else {
+      setResults([]);
+    }
+  }, [debouncedSearchTerm]);
+  
+  // Component rendering logic
+}</code></pre>
+        </div>
+        <div class="note">
+          <p>Debouncing prevents excessive API calls when input values change rapidly, improving performance and reducing server load.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Handling Strategies -->
+    <section class="slide">
+      <div class="content">
+        <h2>Error Handling Strategies</h2>
+        <div class="columns two">
+          <div>
+            <h3>Best Practices:</h3>
+            <ul>
+              <li>Be specific about error types</li>
+              <li>Provide meaningful error messages</li>
+              <li>Use global handlers for unhandled errors</li>
+              <li>Implement retry mechanisms</li>
+              <li>Add timeouts to prevent hanging operations</li>
+              <li>Display user-friendly error states</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Global error handler for unhandled promise rejections
+if (typeof process !== 'undefined') {
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Log to monitoring service
+  });
+}
+
+// For React Native, you can use the ErrorUtils global
+if (global.ErrorUtils) {
+  const originalGlobalHandler = global.ErrorUtils.getGlobalHandler();
+  
+  global.ErrorUtils.setGlobalHandler((error, isFatal) => {
+    // Log to monitoring service
+    console.error('Global error:', error);
+    
+    // Call original handler
+    originalGlobalHandler(error, isFatal);
+  });
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Retry Pattern -->
+    <section class="slide">
+      <div class="content">
+        <h2>Retry Pattern</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+  let lastError;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.warn(`Attempt ${attempt + 1} failed:`, error);
+      lastError = error;
+      
+      // Wait before retrying (exponential backoff)
+      const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+  
+  throw new Error(`Failed after ${maxRetries} attempts: ${lastError}`);
+}
+
+// Usage
+fetchWithRetry('https://api.example.com/medications')
+  .then(data => console.log('Data:', data))
+  .catch(error => console.error('All retries failed:', error));</code></pre>
+        </div>
+        <div class="note">
+          <p>The retry pattern with exponential backoff helps handle transient network issues by automatically retrying failed requests.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeout Pattern -->
+    <section class="slide">
+      <div class="content">
+        <h2>Timeout Pattern</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">function fetchWithTimeout(url, options = {}, timeout = 5000) {
+  return Promise.race([
+    fetch(url, options),
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timed out')), timeout)
+    )
+  ]);
+}
+
+// Usage
+fetchWithTimeout('https://api.example.com/medications', {}, 3000)
+  .then(response => response.json())
+  .then(data => console.log('Data:', data))
+  .catch(error => {
+    if (error.message === 'Request timed out') {
+      console.error('The request took too long to complete');
+    } else {
+      console.error('Fetch error:', error);
+    }
+  });</code></pre>
+        </div>
+        <div class="note">
+          <p>The timeout pattern prevents operations from hanging indefinitely by enforcing a maximum time limit.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cancelling Requests -->
+    <section class="slide">
+      <div class="content">
+        <h2>Cancelling Requests</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">function MedicationDetail({ medicationId }) {
+  const [medication, setMedication] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    // Create an AbortController instance
+    const controller = new AbortController();
+    const signal = controller.signal;
+    
+    async function fetchMedication() {
+      setLoading(true);
+      
+      try {
+        const response = await fetch(
+          `https://api.example.com/medications/${medicationId}`,
+          { signal } // Pass the signal to fetch
+        );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setMedication(data);
+        setLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted');
+        } else {
+          console.error('Fetch error:', error);
+          setLoading(false);
+        }
+      }
+    }
+    
+    fetchMedication();
+    
+    // Cleanup function that aborts the fetch when component unmounts
+    // or when medicationId changes
+    return () => {
+      controller.abort(); // Cancel the fetch
+    };
+  }, [medicationId]);
+  
+  // Component rendering logic
+}</code></pre>
+        </div>
+        <div class="note">
+          <p>The AbortController API provides a way to cancel in-flight fetch requests, which is useful when a component unmounts or when new data is requested.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise -->
+    <section class="slide">
+      <div class="content">
+        <h2>Exercise: Medication API Client</h2>
+        <div class="exercise">
+          <p>Create a medication management API client with the following features:</p>
+          <ol>
+            <li>Promise-based functions to fetch, create, update, and delete medications</li>
+            <li>Error handling with appropriate error types</li>
+            <li>Retry mechanism for failed requests</li>
+            <li>Timeout handling for slow requests</li>
+            <li>A React component that uses your API client to display a list of medications</li>
+          </ol>
+          <div class="note">
+            <p>Try this exercise in a JavaScript playground like <a href="https://codepen.io/pen/" target="_blank">CodePen</a> or <a href="https://codesandbox.io/" target="_blank">CodeSandbox</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="slide">
+      <div class="content">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Asynchronous JavaScript is essential for handling time-consuming operations without blocking</li>
+          <li>Promises provide a structured way to handle asynchronous operations</li>
+          <li>Async/await syntax makes asynchronous code more readable and maintainable</li>
+          <li>Fetch API is the standard way to make HTTP requests in modern JavaScript</li>
+          <li>Proper error handling is critical for robust asynchronous code</li>
+          <li>Race conditions must be carefully managed in React Native applications</li>
+          <li>Patterns like debouncing, retries, and timeouts improve application reliability</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="slide">
+      <div class="content">
+        <div class="navigation">
+          <a href="../section-3-arrays-and-objects/" class="prev">Previous: Arrays and Objects</a>
+          <a href="../../module-4-javascript-essentials/" class="module">Back to Module</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

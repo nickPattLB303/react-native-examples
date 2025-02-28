@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Functions and Scope | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2</h1>
+      <h2>Functions and Scope</h2>
+      <p class="metadata">Module 4 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand different ways to declare functions in JavaScript</li>
+        <li>Work with function parameters and return values</li>
+        <li>Explain variable scope and its impact on code organization</li>
+        <li>Implement closures to maintain state</li>
+        <li>Use the 'this' keyword correctly in different contexts</li>
+        <li>Apply higher-order functions in React Native development</li>
+      </ul>
+    </section>
+
+    <!-- Function Declarations -->
+    <section class="slide">
+      <div class="content">
+        <h2>Function Declarations</h2>
+        <div class="columns two">
+          <div>
+            <p>Function declarations define named functions that are hoisted (available before their declaration in code).</p>
+            <ul>
+              <li>Begin with the <code>function</code> keyword</li>
+              <li>Followed by a name, parameters, and body</li>
+              <li>Can be called before they are defined</li>
+              <li>Create their own <code>this</code> context</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Function declaration
+function calculateDosage(weight, age) {
+  const baseDose = weight * 0.5;
+  
+  if (age < 12) {
+    return baseDose * 0.8;
+  }
+  
+  return baseDose;
+}
+
+// Can be called before or after declaration
+const childDose = calculateDosage(30, 8);
+console.log(childDose); // 12
+
+// Function with no parameters
+function getCurrentTime() {
+  return new Date().toLocaleTimeString();
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Function Expressions -->
+    <section class="slide">
+      <div class="content">
+        <h2>Function Expressions</h2>
+        <div class="columns two">
+          <div>
+            <p>Function expressions define functions as part of an expression, typically by assigning them to variables.</p>
+            <ul>
+              <li>Not hoisted (must be defined before use)</li>
+              <li>Can be named or anonymous</li>
+              <li>Often used as callbacks</li>
+              <li>Create their own <code>this</code> context</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Anonymous function expression
+const calculateBMI = function(weight, height) {
+  return weight / (height * height);
+};
+
+// Named function expression
+const factorial = function factorial(n) {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+};
+
+// Using function expressions as callbacks
+setTimeout(function() {
+  console.log('Reminder: Take your medication');
+}, 3000);
+
+// Function expressions in React Native
+const MedicationItem = function({ name, dosage }) {
+  return (
+    <View>
+      <Text>{name} - {dosage}</Text>
+    </View>
+  );
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Arrow Functions -->
+    <section class="slide">
+      <div class="content">
+        <h2>Arrow Functions</h2>
+        <div class="columns two">
+          <div>
+            <p>Arrow functions provide a concise syntax for writing function expressions.</p>
+            <ul>
+              <li>More compact syntax</li>
+              <li>Implicit return for single expressions</li>
+              <li>Do not create their own <code>this</code> context</li>
+              <li>Cannot be used as constructors</li>
+              <li>Ideal for callbacks and functional programming</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic arrow function
+const double = (x) => x * 2;
+
+// Multiple parameters
+const calculateTotal = (price, tax) => price + (price * tax);
+
+// With function body and explicit return
+const calculateDosage = (weight, age) => {
+  const baseDose = weight * 0.5;
+  return age < 12 ? baseDose * 0.8 : baseDose;
+};
+
+// No parameters
+const getCurrentTime = () => new Date().toLocaleTimeString();
+
+// In React Native components
+const MedicationList = ({ medications }) => (
+  <FlatList
+    data={medications}
+    keyExtractor={item => item.id.toString()}
+    renderItem={({ item }) => (
+      <Text>{item.name} - {item.dosage}</Text>
+    )}
+  />
+);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Parameters and Arguments -->
+    <section class="slide">
+      <div class="content">
+        <h2>Parameters and Arguments</h2>
+        <div class="columns two">
+          <div>
+            <h3>Parameter Features:</h3>
+            <ul>
+              <li>Default parameters</li>
+              <li>Rest parameters</li>
+              <li>Destructuring parameters</li>
+              <li>The <code>arguments</code> object (not in arrow functions)</li>
+            </ul>
+            <div class="note">
+              <p>Default and destructured parameters are widely used in React Native components.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Default parameters
+function greetUser(name = 'Guest', greeting = 'Hello') {
+  return `${greeting}, ${name}!`;
+}
+console.log(greetUser()); // "Hello, Guest!"
+console.log(greetUser('John')); // "Hello, John!"
+
+// Rest parameters
+function calculateTotal(...prices) {
+  return prices.reduce((sum, price) => sum + price, 0);
+}
+console.log(calculateTotal(10, 20, 30)); // 60
+
+// Destructuring parameters
+function displayMedication({ name, dosage, frequency }) {
+  return `Take ${dosage} of ${name} ${frequency}`;
+}
+const med = { name: 'Aspirin', dosage: '81mg', frequency: 'daily' };
+console.log(displayMedication(med)); // "Take 81mg of Aspirin daily"
+
+// Arguments object (not available in arrow functions)
+function logArguments() {
+  console.log(arguments);
+}
+logArguments(1, 'test', true); // [1, 'test', true]</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variable Scope -->
+    <section class="slide">
+      <div class="content">
+        <h2>Variable Scope</h2>
+        <div class="columns two">
+          <div>
+            <h3>Types of Scope:</h3>
+            <ul>
+              <li><strong>Global scope</strong>: Variables declared outside any function or block</li>
+              <li><strong>Function scope</strong>: Variables declared within a function</li>
+              <li><strong>Block scope</strong>: Variables declared within a block (using <code>let</code> or <code>const</code>)</li>
+            </ul>
+            <div class="note">
+              <p>Understanding scope is crucial for preventing bugs and managing state in React Native applications.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Global scope
+const appName = 'MedTracker';
+
+function displayMedication(medication) {
+  // Function scope
+  const { name, dosage } = medication;
+  
+  if (dosage) {
+    // Block scope
+    let instructions = `Take ${dosage} of ${name}`;
+    console.log(instructions);
+  }
+  
+  // Error: instructions is not defined here
+  // console.log(instructions);
+  
+  // Can access global variables
+  console.log(`Provided by ${appName}`);
+}
+
+// Error: name is not defined here
+// console.log(name);
+
+// In React Native components
+function MedicationScreen() {
+  // Component scope
+  const [medications, setMedications] = useState([]);
+  
+  function addMedication(newMed) {
+    // Can access medications from outer scope
+    setMedications([...medications, newMed]);
+  }
+  
+  // Rest of component...
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closures -->
+    <section class="slide">
+      <div class="content">
+        <h2>Closures</h2>
+        <div class="columns two">
+          <div>
+            <p>A closure is a function that remembers its outer variables and can access them.</p>
+            <ul>
+              <li>Functions can access variables from their containing scope</li>
+              <li>The inner function "closes over" the variables</li>
+              <li>Useful for data encapsulation and private variables</li>
+              <li>Common in event handlers and callbacks</li>
+            </ul>
+            <div class="note">
+              <p>Closures are fundamental to React hooks and state management.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic closure
+function createCounter() {
+  let count = 0;  // Private variable
+  
+  return function() {
+    count += 1;
+    return count;
+  };
+}
+
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+
+// Closures in React Native
+function useMedicationTracker() {
+  const [medications, setMedications] = useState([]);
+  
+  // This function "closes over" the medications state
+  const addMedication = (newMed) => {
+    setMedications([...medications, newMed]);
+  };
+  
+  // Returns functions that have access to the same state
+  return {
+    medications,
+    addMedication,
+    removeMedication: (id) => {
+      setMedications(medications.filter(med => med.id !== id));
+    }
+  };
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 'this' Keyword -->
+    <section class="slide">
+      <div class="content">
+        <h2>The 'this' Keyword</h2>
+        <div class="columns two">
+          <div>
+            <p>The value of <code>this</code> depends on how a function is called:</p>
+            <ul>
+              <li>In a method: refers to the object</li>
+              <li>In a function: refers to global object (or undefined in strict mode)</li>
+              <li>In an arrow function: inherits <code>this</code> from surrounding scope</li>
+              <li>With <code>call()</code>, <code>apply()</code>, or <code>bind()</code>: explicitly set</li>
+            </ul>
+            <div class="note">
+              <p>Understanding <code>this</code> is crucial for class components in React Native.</p>
+            </div>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// In a method
+const user = {
+  name: 'John',
+  greet() {
+    return `Hello, I'm ${this.name}`;
+  }
+};
+console.log(user.greet()); // "Hello, I'm John"
+
+// In a regular function (strict mode)
+function standalone() {
+  'use strict';
+  console.log(this); // undefined
+}
+
+// Arrow functions inherit 'this'
+const patient = {
+  name: 'Alice',
+  medications: ['Aspirin', 'Lisinopril'],
+  
+  displayMeds() {
+    // Arrow function inherits 'this' from displayMeds
+    this.medications.forEach(med => {
+      console.log(`${this.name} takes ${med}`);
+    });
+  }
+};
+patient.displayMeds();
+// "Alice takes Aspirin"
+// "Alice takes Lisinopril"
+
+// In React Native class components
+class MedicationList extends React.Component {
+  handlePress = () => {
+    // 'this' refers to the component instance
+    this.props.onSelect(this.state.selectedMed);
+  }
+  
+  render() {
+    return (
+      <Button onPress={this.handlePress} />
+    );
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Higher-Order Functions -->
+    <section class="slide">
+      <div class="content">
+        <h2>Higher-Order Functions</h2>
+        <div class="columns two">
+          <div>
+            <p>Higher-order functions either:</p>
+            <ul>
+              <li>Take one or more functions as arguments</li>
+              <li>Return a function as their result</li>
+              <li>Or both</li>
+            </ul>
+            <p>Common examples:</p>
+            <ul>
+              <li>Array methods: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
+              <li>Function decorators</li>
+              <li>Function factories</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Function that takes a function as an argument
+function executeWithLogging(func, ...args) {
+  console.log(`Executing with args: ${args}`);
+  const result = func(...args);
+  console.log(`Result: ${result}`);
+  return result;
+}
+
+executeWithLogging(calculateDosage, 70, 30);
+
+// Function that returns a function
+function createGreeting(greeting) {
+  return function(name) {
+    return `${greeting}, ${name}!`;
+  };
+}
+
+const sayHello = createGreeting('Hello');
+console.log(sayHello('John')); // "Hello, John!"
+
+// In React Native
+function withErrorBoundary(Component) {
+  return function ErrorBoundaryWrapper(props) {
+    try {
+      return <Component {...props} />;
+    } catch (error) {
+      return <ErrorDisplay error={error} />;
+    }
+  };
+}
+
+const SafeMedicationList = withErrorBoundary(MedicationList);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Immediately Invoked Function Expressions (IIFE) -->
+    <section class="slide">
+      <div class="content">
+        <h2>Immediately Invoked Function Expressions</h2>
+        <div class="columns two">
+          <div>
+            <p>IIFEs are functions that are executed immediately after they are defined.</p>
+            <ul>
+              <li>Create a private scope</li>
+              <li>Avoid polluting the global namespace</li>
+              <li>Execute code without creating named functions</li>
+              <li>Can return values for immediate use</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Basic IIFE
+(function() {
+  const privateVar = 'Not accessible outside';
+  console.log('IIFE executed');
+})();
+
+// IIFE with parameters
+(function(name, age) {
+  console.log(`Patient: ${name}, Age: ${age}`);
+})('John Doe', 45);
+
+// IIFE that returns a value
+const patientData = (function() {
+  const privatePatientId = 'P12345';
+  
+  function formatPatientName(first, last) {
+    return `${last}, ${first}`;
+  }
+  
+  return {
+    getFormattedName: function(first, last) {
+      return formatPatientName(first, last);
+    },
+    getPatientType: function() {
+      return privatePatientId.startsWith('P') ? 'Primary' : 'Secondary';
+    }
+  };
+})();
+
+console.log(patientData.getFormattedName('John', 'Doe')); // "Doe, John"</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Functions in React Native -->
+    <section class="slide">
+      <div class="content">
+        <h2>Functions in React Native</h2>
+        <div class="columns two">
+          <div>
+            <h3>Common Function Patterns:</h3>
+            <ul>
+              <li>Functional Components</li>
+              <li>Custom Hooks</li>
+              <li>Event Handlers</li>
+              <li>Callback Props</li>
+              <li>Higher-Order Components (HOCs)</li>
+              <li>Render Props</li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <pre><code class="language-javascript">// Functional Component
+function MedicationItem({ medication, onPress }) {
+  return (
+    <TouchableOpacity onPress={() => onPress(medication.id)}>
+      <Text>{medication.name}</Text>
+    </TouchableOpacity>
+  );
+}
+
+// Custom Hook
+function useMedicationReminders() {
+  const [reminders, setReminders] = useState([]);
+  
+  // Function returned from hook
+  const addReminder = (medication, time) => {
+    setReminders([...reminders, { medication, time }]);
+  };
+  
+  return { reminders, addReminder };
+}
+
+// Higher-Order Component
+function withMedicationData(Component) {
+  return function(props) {
+    const [medications, setMedications] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+      // Fetch medications
+      fetchMedications()
+        .then(data => {
+          setMedications(data);
+          setLoading(false);
+        });
+    }, []);
+    
+    return (
+      <Component
+        {...props}
+        medications={medications}
+        loading={loading}
+      />
+    );
+  };
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practical Example -->
+    <section class="slide">
+      <div class="content">
+        <h2>Practical Example: Medication Tracker</h2>
+        <div class="code-example full">
+          <pre><code class="language-javascript">import React, { useState, useCallback } from 'react';
+import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+
+// Custom hook using closures
+function useMedicationTracker() {
+  const [medications, setMedications] = useState([]);
+  const [history, setHistory] = useState([]);
+  
+  // Function that returns a function (higher-order function)
+  const createMedication = (name, dosage, frequency) => {
+    return {
+      id: Date.now().toString(),
+      name,
+      dosage,
+      frequency,
+      createdAt: new Date()
+    };
+  };
+  
+  // Functions that close over state
+  const addMedication = useCallback((name, dosage, frequency) => {
+    const newMed = createMedication(name, dosage, frequency);
+    setMedications(prevMeds => [...prevMeds, newMed]);
+    return newMed.id;
+  }, []);
+  
+  const takeMedication = useCallback((id) => {
+    const medication = medications.find(med => med.id === id);
+    if (medication) {
+      const entry = {
+        medicationId: id,
+        medicationName: medication.name,
+        takenAt: new Date()
+      };
+      setHistory(prevHistory => [...prevHistory, entry]);
+    }
+  }, [medications]);
+  
+  const removeMedication = useCallback((id) => {
+    setMedications(prevMeds => 
+      prevMeds.filter(med => med.id !== id)
+    );
+  }, []);
+  
+  // Return an object with data and functions
+  return {
+    medications,
+    history,
+    addMedication,
+    takeMedication,
+    removeMedication
+  };
+}
+
+// Functional component using the custom hook
+function MedicationTracker() {
+  const {
+    medications,
+    history,
+    addMedication,
+    takeMedication,
+    removeMedication
+  } = useMedicationTracker();
+  
+  // Event handler function
+  const handleAddMedication = () => {
+    // In a real app, this would come from a form
+    addMedication('Aspirin', '81mg', 'daily');
+  };
+  
+  // Render function for FlatList
+  const renderMedication = ({ item }) => (
+    <View style={styles.medicationItem}>
+      <Text style={styles.medicationName}>{item.name} - {item.dosage}</Text>
+      <Text>Take {item.frequency}</Text>
+      <View style={styles.buttonContainer}>
+        <Button 
+          title="Take" 
+          onPress={() => takeMedication(item.id)} 
+        />
+        <Button 
+          title="Remove" 
+          onPress={() => removeMedication(item.id)}
+          color="red" 
+        />
+      </View>
+    </View>
+  );
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Medication Tracker</Text>
+      
+      <Button 
+        title="Add Medication" 
+        onPress={handleAddMedication} 
+      />
+      
+      <Text style={styles.subtitle}>Your Medications</Text>
+      <FlatList
+        data={medications}
+        keyExtractor={item => item.id}
+        renderItem={renderMedication}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No medications added yet</Text>
+        }
+      />
+      
+      <Text style={styles.subtitle}>Medication History</Text>
+      <FlatList
+        data={history}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <Text style={styles.historyItem}>
+            {item.medicationName} taken at {item.takenAt.toLocaleTimeString()}
+          </Text>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No medication history</Text>
+        }
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  medicationItem: {
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  medicationName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  historyItem: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  emptyText: {
+    fontStyle: 'italic',
+    color: '#888',
+    textAlign: 'center',
+    padding: 16,
+  },
+});</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise -->
+    <section class="slide">
+      <div class="content">
+        <h2>Exercise: Medication Reminder Function</h2>
+        <div class="exercise">
+          <p>Create a set of functions to manage medication reminders:</p>
+          <ol>
+            <li>Create a function that generates a reminder object with medication name, time, and dosage</li>
+            <li>Implement a higher-order function that takes a reminder function and adds logging capabilities</li>
+            <li>Create a closure that maintains a list of reminders and provides functions to add, remove, and list them</li>
+            <li>Add a function that filters reminders by time of day (morning, afternoon, evening)</li>
+          </ol>
+          <div class="note">
+            <p>Try this exercise in a JavaScript playground like <a href="https://codepen.io/pen/" target="_blank">CodePen</a> or <a href="https://codesandbox.io/" target="_blank">CodeSandbox</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="slide">
+      <div class="content">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Functions are first-class citizens in JavaScript and can be passed around like any other value</li>
+          <li>Arrow functions provide a concise syntax and lexical <code>this</code> binding</li>
+          <li>Understanding variable scope is crucial for writing maintainable code</li>
+          <li>Closures allow functions to maintain access to their surrounding state</li>
+          <li>The value of <code>this</code> depends on how a function is called</li>
+          <li>Higher-order functions enable powerful abstractions and code reuse</li>
+          <li>Functions are the building blocks of React Native components and hooks</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="slide">
+      <div class="content">
+        <div class="navigation">
+          <a href="../section-1-javascript-fundamentals/" class="prev">Previous: JavaScript Fundamentals</a>
+          <a href="../section-3-arrays-and-objects/" class="next">Next: Arrays and Objects</a>
+          <a href="../../module-4-javascript-essentials/" class="module">Back to Module</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
