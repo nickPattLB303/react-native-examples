@@ -34,66 +34,6 @@ This course supports three distinct learning paths:
 - [React Native Internals](./module-1-react-native-fundamentals/section-3-react-native-internals/README.md)
 - [React Native Documentation](./module-1-react-native-fundamentals/section-4-react-native-documentation/README.md)
 
-### Module 2: JavaScript and React Essentials
-- JavaScript Fundamentals for React Native
-- Modern JavaScript Features
-- React Core Concepts
-- React Hooks and State Management
-
-### Module 3: React Native Basics
-- Setting Up Your Development Environment
-- Core Components and APIs
-- Styling and Layout with Flexbox
-- Handling User Input and Events
-
-### Module 4: Building React Native UIs
-- Creating Custom Components
-- Responsive Design and Adaptive Layouts
-- Cross-Platform Styling Strategies
-- UI Performance Optimization
-
-### Module 5: Navigation and Routing
-- Navigation Concepts
-- React Navigation Library
-- Navigation Patterns
-- Deep Linking and Web Integration
-
-### Module 6: State Management
-- Local Component State
-- Context API
-- Redux and Redux Toolkit
-- Persistence and Offline Support
-
-### Module 7: Networking and Data
-- Fetching Data with APIs
-- RESTful Services Integration
-- GraphQL with Apollo Client
-- Error Handling and Loading States
-
-### Module 8: Native Device Features
-- Camera and Image Picker
-- Geolocation and Maps
-- Push Notifications
-- Local Storage and Secure Storage
-
-### Module 9: Testing and Debugging
-- Debugging Tools and Techniques
-- Unit Testing with Jest
-- Component Testing with React Native Testing Library
-- End-to-End Testing
-
-### Module 10: Deployment and Publishing
-- Building for Production
-- App Store Submission
-- Google Play Submission
-- CI/CD for React Native
-
-### Module 11: Capstone Project
-- Project Planning and Setup
-- Implementing Core Features
-- Polishing and Optimization
-- Deployment and Presentation
-
 ## Prerequisites
 
 To get the most out of this course, you should have:
@@ -101,12 +41,6 @@ To get the most out of this course, you should have:
 - Basic knowledge of JavaScript
 - Familiarity with at least one of: Android, iOS, or web development (React/Angular)
 - Development environment set up according to [Expo documentation](https://docs.expo.dev/get-started/installation/)
-
-## Getting Started
-
-1. Clone this repository
-2. Follow the setup instructions in the [Environment Setup Guide](./environment-setup.md)
-3. Start with [Module 1: React Native Fundamentals](./module-1-react-native-fundamentals/README.md)
 
 ## Course Theme
 
