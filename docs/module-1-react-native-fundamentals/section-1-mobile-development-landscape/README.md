@@ -88,7 +88,7 @@ Key innovations that React Native introduced:
 4. **Hot Reloading**: Dramatically improving developer experience
 5. **Bridge Architecture**: Enabling JavaScript to communicate with native modules
 
-> 💡 **Deep Dive**: React Native fundamentally changed the cross-platform paradigm by not trying to achieve "write once, run anywhere" but instead focusing on "learn once, write anywhere." It acknowledged platform differences while providing a unified development experience.
+> 💡 **Deep Dive**: React Native fundamentally changed the cross-platform paradigm by not trying to achieve "write once, run anywhere" but instead focusing on "learn once, write anywhere." It acknowledged platform differences while providing a unified development experience. Its recent architectural improvements with the Bridgeless Architecture have significantly enhanced performance by eliminating the JavaScript bridge.
 
 ### The Modern Landscape (2015-Present)
 
@@ -96,17 +96,19 @@ Since React Native's introduction, the cross-platform landscape has continued to
 
 **Flutter (2017)**
 - Google's UI toolkit using Dart language
-- Custom rendering engine (Skia)
+- Custom rendering engine (Impeller, previously Skia)
 - Not using native components
 - Strong performance characteristics
 - Growing ecosystem
 
 **React Native (Continuous Evolution)**
-- New architecture (Fabric, TurboModules, JSI)
-- Improved performance
+- New architecture (Fabric, TurboModules, JSI, Bridgeless Architecture)
+- Improved performance through elimination of JavaScript bridge
 - Better native integration
 - Expanded ecosystem
 - Used by major companies like Facebook, Instagram, Shopify, and Microsoft
+
+> 📚 **Resource**: For a detailed comparison, see [Flutter vs. React Native](https://www.nomtek.com/blog/flutter-vs-react-native) by Nomtek. A fundamental difference is their programming languages: Flutter uses Dart, while React Native uses JavaScript. Dart is praised for its type safety and purpose-built nature for UI development. However, JavaScript's massive popularity gives React Native a significant advantage in ecosystem and talent availability. Web developers familiar with React can transition to React Native with minimal friction, creating a larger talent pool compared to Flutter, where Dart expertise is less common in the job market.
 
 **Progressive Web Apps (PWAs)**
 - Web technologies that behave more like native apps
