@@ -66,7 +66,14 @@ This document provides an overview of all the rules for the React Native Trainin
    - Visual explanations
    - Platform-specific connections
 
-7. [Tooling and Development Environment](mdc:210-Process-tooling-environment.mdc)
+7. [React Native Advocacy](mdc:070-Core-react-native-advocacy.mdc)
+   - Comparative demonstrations
+   - Skepticism addressing framework
+   - Success story integration
+   - Ecosystem exploration
+   - Developer experience highlights
+
+8. [Tooling and Development Environment](mdc:210-Process-tooling-environment.mdc)
    - Platform usage:
      - HTML, CSS, JavaScript, React: CodePen
      - React Native: Expo Snack
@@ -76,27 +83,27 @@ This document provides an overview of all the rules for the React Native Trainin
    - Repository branch structure
    - Local development instructions
 
-8. [Slide and Presentation Standards](mdc:040-Core-slide-standards.mdc)
+9. [Slide and Presentation Standards](mdc:040-Core-slide-standards.mdc)
    - HTML/CSS slide requirements
    - Slide organization in docs/slides directory
    - Design requirements
    - Content guidelines
 
-9. [Module Development Process](mdc:201-Process-module-development-process.mdc)
-   - Template-first approach
-   - Technical implementation strategy
-   - Content alignment methodology
-   - Review and testing requirements
-   - Workflow optimization
+10. [Module Development Process](mdc:201-Process-module-development-process.mdc)
+    - Template-first approach
+    - Technical implementation strategy
+    - Content alignment methodology
+    - Review and testing requirements
+    - Workflow optimization
 
-10. [Quality Assurance Checklist](mdc:050-Core-quality-assurance-checklist.mdc)
+11. [Quality Assurance Checklist](mdc:050-Core-quality-assurance-checklist.mdc)
     - Content alignment verification
     - Technical quality verification
     - Accessibility standards
     - Learning experience evaluation
     - Issue tracking and resolution
 
-11. [Content Alignment Template](mdc:120-Content-content-alignment-template.mdc)
+12. [Content Alignment Template](mdc:120-Content-content-alignment-template.mdc)
     - Learning objectives template
     - Exercise template
     - Callout template
@@ -104,20 +111,20 @@ This document provides an overview of all the rules for the React Native Trainin
     - Summary template
     - Content planning approach
 
-12. [Articulate 360 Integration](mdc:004-Core-articulate-compatibility.mdc)
+13. [Articulate 360 Integration](mdc:004-Core-articulate-compatibility.mdc)
     - Content structure and conversion
     - Interactive element mapping
     - Code example formatting
     - Pharmacy theme consistency
     - Testing and review
 
-13. [Communication Channels](mdc:005-Core-communication-channels.mdc)
+14. [Communication Channels](mdc:005-Core-communication-channels.mdc)
     - Webex channel integration
     - Collaborative exercises
     - Repository-Webex connections
     - Cross-platform knowledge management
 
-14. [Automated Validation Scripts](mdc:220-Process-automated-validation.mdc)
+15. [Automated Validation Scripts](mdc:220-Process-automated-validation.mdc)
     - ESLint configuration
     - GitHub Actions workflows
     - Documentation validation scripts

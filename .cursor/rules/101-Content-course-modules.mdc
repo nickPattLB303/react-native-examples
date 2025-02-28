@@ -19,33 +19,83 @@ alwaysApply: false
 [README.md](mdc:README.md)
 [README.md](mdc:docs/README.md)
 [Cursor Rules README](mdc:.cursor/README.md)
-[Module 1 README](mdc:docs/module-1-react-native-fundamentals/README.md)
 
 
 ## Description
 This rule defines the modules that make up the React Native Training Course. These modules represent the main topics covered in the course and provide a high-level structure for all course content.
 
 ## Rule
-The React Native Training Course consists of the following modules, which should be referenced consistently across all documentation, slides, exercises, and challenges:
+The React Native Training Course consists of the following modules:
 
-1. React Native Fundamentals
-2. Environment Setup
-3. Web Development Essentials
-4. JavaScript Essentials
-5. TypeScript Essentials
-6. React Essentials
-7. React Native UI and Styling
-8. Components and User Input
-9. Navigation and Routing
-10. State Management
-11. Performance and Debugging
-12. Advanced Features
-13. Capstone Project
+1. **Introduction to React Native**
+   - Overview of React Native
+   - Comparison with other frameworks
+   - Setting up the development environment
+   - React Native success stories and ecosystem benefits
+   - **Advocacy Focus**: Overall value proposition and ecosystem overview
 
-- All content must be organized according to this module structure
-- Module numbers must be used consistently in file paths, documentation references, and slide organization
-- Each module should have its own directory in the docs branch following the pattern `module-X-name-with-hyphens`
-- Each module should have a README.md file that provides an overview of the module, learning objectives, and links to its sections
+2. **React Native Fundamentals**
+   - Components and JSX
+   - Props and State
+   - Styling and Layout
+   - Comparative advantages over traditional approaches
+   - **Advocacy Focus**: Developer productivity and code reusability
+
+3. **Navigation and Routing**
+   - React Navigation
+   - Stack, Tab, and Drawer Navigation
+   - Deep Linking
+   - Cross-platform navigation consistency
+   - **Advocacy Focus**: Cross-platform consistency with native feel
+
+4. **Data Management**
+   - State Management
+   - Context API
+   - Redux
+   - Efficient cross-platform state solutions
+   - **Advocacy Focus**: Efficient state management across platforms
+
+5. **API Integration**
+   - Fetch API
+   - Axios
+   - GraphQL
+   - Backend connectivity patterns
+   - **Advocacy Focus**: Seamless backend connectivity
+
+6. **Native Device Features**
+   - Camera
+   - Geolocation
+   - Push Notifications
+   - Native module integration
+   - **Advocacy Focus**: Native capabilities without platform-specific code
+
+7. **Performance Optimization**
+   - Memory Management
+   - Rendering Optimization
+   - Profiling and Debugging
+   - Addressing performance concerns
+   - **Advocacy Focus**: Addressing and overcoming performance concerns
+
+8. **Deployment and Publishing**
+   - Building for Production
+   - App Store Submission
+   - Google Play Store Submission
+   - Cross-platform publishing benefits
+   - **Advocacy Focus**: Streamlined publishing to multiple platforms
+
+Each module must include:
+- Clear learning objectives
+- Comprehensive content covering all topics
+- Hands-on exercises
+- End-of-module challenge
+- React Native advocacy elements (success stories, comparative demonstrations, etc.)
+- Technical depth at surface, mid, and deep levels
+
+Module naming convention:
+- module-[number]-[name]
+- Example: module-1-react-native-fundamentals
+
+Each module should be completable within 1-2 days of training, depending on the learning path.
 
 ## Examples
 - Proper module directory naming: `module-1-react-native-fundamentals`
