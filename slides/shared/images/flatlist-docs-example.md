@@ -23,4 +23,4 @@ This image is referenced in the "Component Documentation Example" slide to show 
 
 ## Implementation Note
 
-In the actual course materials, this would be a real screenshot (PNG/JPG) of the FlatList documentation, properly sized and formatted for the slides. The image would be named `flatlist-docs-example.png` and placed in the `docs/slides/shared/images/` directory. 
+In the actual course materials, this would be a real screenshot (PNG/JPG) of the FlatList documentation, properly sized and formatted for the slides. The image would be named `flatlist-docs-example.png` and placed in the `/slides/shared/images/` directory. 

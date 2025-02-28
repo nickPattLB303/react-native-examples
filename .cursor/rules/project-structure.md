@@ -18,7 +18,7 @@ This rule defines the structure and organization of the React Native training co
   - Sub-sections (components of sections)
 
 - Slides should be organized in the docs branch under a dedicated slides directory:
-  - `/docs/slides/module-X/section-Y/`
+  - `/slides/module-X/section-Y/`
 
 - All code examples should follow the medication/pharmacy/orders theme
 - All starter and completed code must include JSDoc documentation

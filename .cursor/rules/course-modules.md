@@ -27,4 +27,4 @@ The React Native Training Course consists of the following modules, which should
 ## Examples
 - Proper module directory naming: `module-1-react-native-fundamentals`
 - Proper documentation reference: "As we covered in Module 3: Web Development Essentials..."
-- Proper slide organization: `/docs/slides/module-7-react-native-ui-and-styling/` 
+- Proper slide organization: `/slides/module-7-react-native-ui-and-styling/` 

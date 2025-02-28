@@ -42,7 +42,7 @@ This repository is organized as follows:
 
 - `main` branch: Course overview and navigation
 - `docs` branch: All text-based documentation in markdown format and HTML/CSS slides for live training sessions
-  - `/docs/slides`: Contains all presentation materials organized by module
+  - `/slides`: Contains all presentation materials organized by module
 - `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
 - `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
 - `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
