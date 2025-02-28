@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Creating Your First Expo Project | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2</h1>
+      <h2>Creating Your First Expo Project</h2>
+      <p class="metadata">Module 2 | 20-30 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Create a new React Native project using Expo</li>
+        <li>Understand the options and templates available when creating projects</li>
+        <li>Navigate and understand the project structure</li>
+        <li>Make basic modifications to the default project</li>
+        <li>Use Expo CLI commands to manage your project</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 20-30 minutes</p>
+        <p><strong>Prerequisites:</strong> Basic command line familiarity, Section 1 completion</p>
+      </div>
+    </section>
+    
+    <!-- Introduction to Expo Projects -->
+    <section class="slide content-slide">
+      <h2>Introduction to Expo Projects</h2>
+      <p>Expo provides a streamlined way to create, develop, and deploy React Native applications:</p>
+      <ul>
+        <li>Simplified project setup and configuration</li>
+        <li>Pre-configured native modules for common features</li>
+        <li>Cross-platform development with minimal setup</li>
+        <li>Easy deployment and updates</li>
+      </ul>
+      <div class="columns">
+        <div class="column">
+          <div class="platform-web">
+            <h3>For Web Developers</h3>
+            <p>Expo projects are similar to Create React App for web development, but with additional mobile-specific tools and configurations.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="platform-ios platform-android">
+            <h3>For iOS/Android Developers</h3>
+            <p>Expo abstracts away much of the native configuration you're used to, allowing you to focus on the application logic rather than build configurations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Creating a New Expo Project Slide -->
+    <section class="slide content-slide">
+      <h2>Creating a New Expo Project</h2>
+      <h3>Using create-expo-app</h3>
+      <p>The recommended way to create a new Expo project:</p>
+      <pre><code>npx create-expo-app@latest MyPharmacyApp</code></pre>
+      <p>This command:</p>
+      <ol>
+        <li>Downloads and executes the latest version of <code>create-expo-app</code></li>
+        <li>Creates a new directory called <code>MyPharmacyApp</code></li>
+        <li>Initializes a React Native project with Expo configuration</li>
+        <li>Installs all necessary dependencies</li>
+      </ol>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: npx</div>
+        <p>The <code>npx</code> command is part of npm and allows you to run Node.js packages without installing them globally. When you run <code>npx create-expo-app</code>, it downloads the latest version of the package, runs it, and then removes it from your system.</p>
+      </div>
+    </section>
+    
+    <!-- Expo Templates Slide -->
+    <section class="slide content-slide">
+      <h2>Exploring Available Templates</h2>
+      <p>Expo provides several templates as starting points for your project:</p>
+      <pre><code>npx create-expo-app@latest --template</code></pre>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Templates</h3>
+          <ul>
+            <li><strong>blank</strong>: A minimal app with just the essentials</li>
+            <li><strong>blank (TypeScript)</strong>: Same as blank but with TypeScript</li>
+            <li><strong>tabs</strong>: A tab-based navigation template</li>
+            <li><strong>navigation</strong>: A starter with React Navigation pre-configured</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Using a Specific Template</h3>
+          <pre><code>npx create-expo-app@latest MyPharmacyApp --template blank</code></pre>
+          <p>For this course, we'll use the default template, which is a good starting point for most applications.</p>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>For more complex applications, consider using a template with navigation already set up to save time on initial configuration.</p>
+      </div>
+    </section>
+    
+    <!-- Project Structure Slide -->
+    <section class="slide content-slide">
+      <h2>Understanding Project Structure</h2>
+      <div class="columns">
+        <div class="column">
+          <pre><code>MyPharmacyApp/
+├── .expo/                  # Expo configuration files
+├── .expo-shared/           # Expo shared configuration
+├── assets/                 # Static assets like images, fonts
+├── node_modules/           # External dependencies
+├── app/                    # Main application code
+│   ├── index.tsx           # Entry point of your app
+│   ├── _layout.tsx         # Layout component
+├── .gitignore              # Git ignore file
+├── app.json                # Expo configuration
+├── babel.config.js         # Babel configuration
+├── package.json            # Project metadata and deps
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Project documentation</code></pre>
+        </div>
+        <div class="column">
+          <h3>Key Directories</h3>
+          <ul>
+            <li><strong>app/</strong>: Contains your application code</li>
+            <li><strong>assets/</strong>: Contains static resources (images, fonts)</li>
+            <li><strong>node_modules/</strong>: Contains dependencies</li>
+          </ul>
+          <h3>Key Files</h3>
+          <ul>
+            <li><strong>app.json</strong>: Expo configuration</li>
+            <li><strong>package.json</strong>: Project metadata and scripts</li>
+            <li><strong>app/index.tsx</strong>: Main component/entry point</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Main Files Deep Dive Slide -->
+    <section class="slide content-slide">
+      <h2>Key Project Files</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>app/index.tsx</h3>
+          <p>The entry point of your application:</p>
+          <pre><code>import { StyleSheet, Text, View } from 'react-native';
+
+export default function Index() {
+  return (
+    <View style={styles.container}>
+      <Text>Hello world!</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});</code></pre>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Deep Dive: Components</div>
+            <p>React Native uses a component-based architecture similar to React for web, but with native components instead of DOM elements. A <code>View</code> renders as a <code>UIView</code> on iOS and as an <code>android.view</code> on Android.</p>
+          </div>
+          <h3>assets/ Directory</h3>
+          <p>Contains static resources used by your app:</p>
+          <ul>
+            <li>Images</li>
+            <li>Fonts</li>
+            <li>Audio files</li>
+            <li>Other static resources</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Configuration Files Slide -->
+    <section class="slide content-slide">
+      <h2>Configuration Files</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>app.json</h3>
+          <p>Contains configuration for your Expo project:</p>
+          <pre><code>{
+  "expo": {
+    "name": "MyPharmacyApp",
+    "slug": "MyPharmacyApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+        <div class="column">
+          <h3>package.json</h3>
+          <p>Contains metadata and scripts for your project:</p>
+          <pre><code>{
+  "name": "MyPharmacyApp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~49.0.13",
+    "expo-status-bar": "~1.6.0",
+    "react": "18.2.0",
+    "react-native": "0.72.5"
+    // ...
+  }
+}</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: app.json</div>
+        <p>The <code>app.json</code> file is used by Expo's build service to configure your app for different platforms. When you build your app for iOS, Android, or web, Expo reads this file to generate the appropriate native configuration files.</p>
+      </div>
+    </section>
+    
+    <!-- Basic Modifications Slide -->
+    <section class="slide content-slide">
+      <h2>Making Basic Modifications</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Changing App Name and Display</h3>
+          <p>Update the <code>app.json</code> file:</p>
+          <pre><code>{
+  "expo": {
+    "name": "Pharmacy Management",
+    "slug": "MyPharmacyApp",
+    // ...
+  }
+}</code></pre>
+        </div>
+        <div class="column">
+          <h3>Modifying the Default Screen</h3>
+          <p>Update <code>app/index.tsx</code>:</p>
+          <pre><code>export default function Index() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        Pharmacy Management
+      </Text>
+      <Text style={styles.subtitle}>
+        Welcome to your medication tracker
+      </Text>
+    </View>
+  );
+}</code></pre>
+        </div>
+      </div>
+      <h3>Adding Custom Styles</h3>
+      <pre><code>const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#555',
+  },
+});</code></pre>
+    </section>
+    
+    <!-- Expo CLI Commands Slide -->
+    <section class="slide content-slide">
+      <h2>Using Expo CLI Commands</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Starting Your Project</h3>
+          <pre><code>npx expo start</code></pre>
+          <p>This starts the Metro bundler and displays a QR code for the Expo Go app.</p>
+          
+          <h3>Platform-Specific Commands</h3>
+          <pre><code>npx expo start --ios     # iOS simulator
+npx expo start --android # Android emulator
+npx expo start --web     # Web browser</code></pre>
+        </div>
+        <div class="column">
+          <h3>Additional Useful Commands</h3>
+          <pre><code>npx expo doctor          # Check for issues
+npx expo upgrade         # Upgrade Expo SDK
+npx expo install         # Install packages</code></pre>
+          
+          <div class="callout tip">
+            <div class="callout-title">Tip</div>
+            <p>Always use <code>npx expo install</code> instead of <code>npm install</code> when adding packages to your Expo project. This ensures you get versions compatible with your Expo SDK version.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Deep Dive: Metro Bundler</div>
+        <p>When you run <code>npx expo start</code>, the Metro bundler creates a development server that watches your files for changes, bundles your JavaScript code, serves the bundled code to your device or simulator, and enables features like Hot Reloading and debugging.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Section Exercise: Expo Project Configuration</h2>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Objective</div>
+        <p>Explore and document Expo project configuration options.</p>
+      </div>
+      <h3>Tasks</h3>
+      <ol>
+        <li>Create a new blank Expo project named "MedicineTracker":</li>
+        <pre><code>npx create-expo-app@latest MedicineTracker</code></pre>
+        <li>Examine and document the default configuration in <code>app.json</code> in a file called <code>default-configuration.md</code></li>
+        <li>Modify the <code>app.json</code> file to include:
+          <ul>
+            <li>Custom app name and description</li>
+            <li>Support for both portrait and landscape orientations</li>
+            <li>Custom splash screen configuration</li>
+            <li>iOS configuration for tablet support</li>
+            <li>Android configuration with custom adaptive icon settings</li>
+          </ul>
+        </li>
+        <li>Create a documentation file called <code>project-configuration.md</code> explaining your configuration choices</li>
+      </ol>
+      <div class="callout example">
+        <div class="callout-title">Hint</div>
+        <p>For orientation, set <code>"orientation": "default"</code> in app.json to support both portrait and landscape</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Created a new React Native project using Expo's <code>create-expo-app</code></li>
+        <li>Explored the project structure and key files:
+          <ul>
+            <li>Application code in <code>app/</code> directory</li>
+            <li>Configuration in <code>app.json</code> and <code>package.json</code></li>
+            <li>Static assets in <code>assets/</code> directory</li>
+          </ul>
+        </li>
+        <li>Made basic modifications to customize the app</li>
+        <li>Learned Expo CLI commands for managing the project</li>
+        <li>Configured the app for cross-platform support</li>
+      </ul>
+      <div class="next-steps">
+        <strong>Next:</strong> Section 3: Debugging, Testing, and Performance
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
