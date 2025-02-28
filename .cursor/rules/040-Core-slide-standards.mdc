@@ -1,4 +1,23 @@
+---
+name: "Slide and Presentation Standards"
+version: "1.0"
+description: "defines the standards for HTML slides and presentation materials used in the instructor-led training sessions"
+priority: "high"
+type: "Core"
+globs: 
+  - "docs/slides/**/*.html"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Slide and Presentation Standards
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 
 ## Description
 This rule defines the standards for HTML slides and presentation materials used in the instructor-led training sessions.
@@ -48,12 +67,12 @@ This rule defines the standards for HTML slides and presentation materials used 
         index.html
         styles.css
         script.js
-        /images
-      /section-2-functions
+        images/
+      section-2-functions/
         index.html
         styles.css
         script.js
-        /images
+        images/
   ```
 
 - Proper slide HTML structure:

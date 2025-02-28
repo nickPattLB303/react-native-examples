@@ -1,4 +1,26 @@
+---
+name: "Tooling and Development Environment"
+version: "1.0"
+description: "defines the standards for tooling, development environments, and platforms used throughout the React Native training course"
+priority: "medium"
+type: "Process"
+globs: 
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Tooling and Development Environment
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 
 ## Description
 This rule defines the standards for tooling, development environments, and platforms used throughout the React Native training course.

@@ -1,4 +1,23 @@
+---
+name: "Module Development Process"
+version: "1.0"
+description: "defines the optimal process for developing new modules, based on lessons learned from Module 1 development"
+priority: "medium"
+type: "Process"
+globs: 
+  - "**/*"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Module Development Process
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 
 ## Description
 This rule defines the optimal process for developing new modules, based on lessons learned from Module 1 development.
@@ -101,14 +120,15 @@ Before developing Module 2, create empty templates for all sections:
 /slides/module-2-environment-setup/
   /section-1-development-environment/
     index.html (with standard slide structure but placeholder content)
-  /section-2-debugging-tools/
+  section-2-debugging-tools/
     index.html (with standard slide structure but placeholder content)
   
-/docs/module-2-environment-setup/
-  /section-1-development-environment/
-    README.md (with standard headings but placeholder content)
-  /section-2-debugging-tools/
-    README.md (with standard headings but placeholder content)
+docs/module-2-environment-setup/
+  README.md (with module overview and section links)
+  section-1-development-environment/
+    README.md (with section content and learning objectives)
+  section-2-debugging-tools/
+    README.md (with section content and learning objectives)
 ```
 
 ### Thematic Consistency Checklist Example

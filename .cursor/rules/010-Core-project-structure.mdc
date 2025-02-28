@@ -1,4 +1,15 @@
+---
+description: "defines the structure and organization of the React Native training course repository"
+globs: 
+alwaysApply: false
+---
+
 # Project Structure and Organization
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 
 ## Description
 This rule defines the structure and organization of the React Native training course repository.
@@ -13,9 +24,11 @@ This rule defines the structure and organization of the React Native training co
   - `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
 - Documentation should follow a hierarchical structure:
-  - Modules (large topics, as defined in [Course Modules](./course-modules.md))
+  - Modules (large topics, as defined in [Course Modules](mdc:101-Content-course-modules.mdc))
   - Sections (components of modules)
   - Sub-sections (components of sections)
+
+- Each module and section should have its own README.md file that provides an overview, learning objectives, and navigation links
 
 - Slides should be organized in the docs branch under a dedicated slides directory:
   - `/slides/module-X/section-Y/`
@@ -31,11 +44,14 @@ This rule defines the structure and organization of the React Native training co
   ```
   /docs
     /module-1-javascript-fundamentals
+      README.md  # Module overview, learning objectives, section links
       /section-1-variables
+        README.md  # Section overview, learning objectives, content
         variables.md
         /examples
           variable-examples.js
       /section-2-functions
+        README.md  # Section overview, learning objectives, content
         functions.md
         /examples
           function-examples.js

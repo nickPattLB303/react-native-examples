@@ -1,4 +1,24 @@
+---
+name: "Learning Paths and Educational Approach"
+version: "1.0"
+description: "defines the educational approach and learning paths for the React Native training course, ensuring content is accessible and effective for all participants regardless of their learning style or background"
+priority: "medium"
+type: "Content"
+globs: 
+  - "docs/**/*.md"
+  - "docs/slides/**/*.html"
+triggers:
+  - file_change
+  - file_open
+alwaysApply: false
+---
+
 # Learning Paths and Educational Approach
+
+[README.md](mdc:README.md)
+[README.md](mdc:docs/README.md)
+[Cursor Rules README](mdc:.cursor/README.md)
+
 
 ## Description
 This rule defines the educational approach and learning paths for the React Native training course, ensuring content is accessible and effective for all participants regardless of their learning style or background.

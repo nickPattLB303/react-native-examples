@@ -1,0 +1,77 @@
+# React Native Training Course - Cursor Ignore File
+# Files and directories to be ignored by Cursor features
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.expo/
+web-build/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Cache and logs
+.cache/
+.npm/
+.yarn/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Environment and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# Temporary files
+tmp/
+temp/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Mobile specific
+*.ipa
+*.apk
+*.aab
+
+# Generated files
+*.generated.*
+*.auto.*
+
+# Large binary files
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.mp4
+*.mov
+*.avi
+
+# Allow all documentation and training material
+!docs/**/*.md
+!docs/**/*.html 
