@@ -1,4 +1,4 @@
-c8z3vt# React Native Training Course Slides
+# React Native Training Course Slides
 
 This directory contains HTML slides for the React Native Training Course. These slides are designed to be used in instructor-led sessions but can also be used by self-led learners.
 
