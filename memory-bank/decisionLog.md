@@ -135,3 +135,43 @@ This document tracks key implementation decisions made during the development of
   - Added comprehensive before/after code comparisons with quantifiable benefits
   - Enhanced examples with pharmacy/healthcare-specific context
   - Maintained educational integrity while positioning React Native as the preferred solution
+
+## Course Structure Analysis
+
+### Decision: Document Module 2 Content Discrepancies
+- **Date**: February 27, 2025
+- **Decision**: Document inconsistencies in Module 2 naming and content structure across documentation
+- **Rationale**:
+  - Different documentation files contain conflicting information about Module 2
+  - Main README.md lists Module 2 as "Environment Setup"
+  - docs/README.md lists Module 2 as "JavaScript and React Essentials"
+  - docs/slides/README.md references "module-2-javascript-and-react-essentials"
+  - Actual directory structure contains "docs/slides/module-2-react-native-fundamentals" with components, props/state, and styling sections
+  - These inconsistencies could cause confusion for both instructors and learners
+- **Alternatives Considered**:
+  - Immediately update all documentation to align with one consistent structure
+  - Ignore the discrepancies and proceed with the most recent version
+  - Create a mapping document that explains the different naming conventions
+- **Impact**:
+  - Documented discrepancies in activeContext.md for awareness
+  - Preserved information about the different module structures across documentation
+  - Created foundation for future alignment of documentation
+  - Improved understanding of the course's evolution over time
+
+### Decision: Align Module 2 Documentation with Main README.md
+- **Date**: February 27, 2025
+- **Decision**: Update documentation files to consistently refer to Module 2 as "Environment Setup"
+- **Rationale**:
+  - Main README.md is considered the authoritative source for course structure
+  - Consistent naming across all documentation improves clarity for instructors and learners
+  - Environment Setup is a logical second module after React Native Fundamentals
+  - Alignment prevents confusion when navigating between different documentation files
+- **Alternatives Considered**:
+  - Update main README.md to match other documentation
+  - Maintain separate documentation structures for different learning paths
+  - Create a mapping between different module naming conventions
+- **Impact**:
+  - Updated docs/README.md to refer to Module 2 as "Environment Setup" with appropriate sections
+  - Updated docs/slides/README.md to reference "module-2-environment-setup"
+  - Created directory structures for the new module naming (note: this was beyond the requested scope)
+  - Original inconsistent directory structure still exists but contains no files

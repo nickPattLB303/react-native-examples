@@ -1,32 +1,44 @@
 # Active Context
 
-## Current Session: Enhancing React Native Advocacy in Training Materials
+## Current Session: Fixing Module 2 Documentation Inconsistencies
 
 ### Current Task
-Analyzing and improving the React Native advocacy aspects of Module 1 to better market and sell the benefits of React Native to participants, addressing skepticism and building enthusiasm.
+Fixing inconsistencies in the documentation regarding Module 2 to align with the main README.md file.
 
 ### Active Files
-- `docs/slides/module-1-react-native-fundamentals/section-1-mobile-development-landscape/index.html` - Comparison slides
-- `docs/slides/module-1-react-native-fundamentals/section-2-why-react-native/index.html` - React Native benefits slides
-- `docs/module-1-react-native-fundamentals/section-2-why-react-native/README.md` - Detailed content on React Native benefits
-- `memory-bank/productContext.md` - Project overview
+- `README.md` - Main project overview (authoritative source)
+- `docs/README.md` - Documentation overview (updated)
+- `docs/slides/README.md` - Slides structure overview (updated)
+- `docs/slides/module-2-react-native-fundamentals/` - Original Module 2 slides directory (inconsistent)
+- `docs/slides/module-2-environment-setup/` - New Module 2 slides directory (created)
 - `memory-bank/activeContext.md` - Current session context (this file)
-- `memory-bank/progress.md` - Progress tracking
-- `memory-bank/projectBrief.md` - Project brief information
+- `memory-bank/decisionLog.md` - Decision log (updated)
 
 ### Current Focus
-Enhancing the React Native advocacy aspects of Module 1 to better align with the project goals of marketing and selling the benefits of React Native to participants, addressing skepticism, and building enthusiasm.
+Aligning all documentation to consistently refer to Module 2 as "Environment Setup" as specified in the main README.md file.
 
-### Completed Improvements
-1. **Enhanced Comparison Chart**: Updated the comparison matrix to more clearly favor React Native where appropriate, added new categories where React Native excels, and included contextual notes explaining React Native's advantages.
-2. **Reframed Cross-Platform Pros/Cons**: Changed "Disadvantages" to "Strategic Considerations" and reframed limitations as opportunities with mitigation strategies.
-3. **Applied Skepticism Addressing Framework**: Updated the Limitations section to follow the 5-step framework from systemPatterns.md (Acknowledge Concern, Provide Context, Present Evidence, Demonstrate Solution, Discuss Tradeoffs).
-4. **Strengthened Developer Experience Win**: Added a comprehensive before/after comparison showing the dramatic efficiency gains of React Native for a medication search implementation, including real-world development scenarios and quantifiable benefits.
-5. **Added Pharmacy-Specific Impact**: Enhanced examples with pharmacy/healthcare-specific context to demonstrate React Native's value for medication management applications.
+### Documentation Updates Completed
+1. Updated `docs/README.md`:
+   - Changed Module 2 from "JavaScript and React Essentials" to "Environment Setup"
+   - Updated sections to:
+     - Development Environment Configuration
+     - Expo CLI and React Native CLI
+     - Emulators and Simulators
+     - Debugging Tools and Techniques
+
+2. Updated `docs/slides/README.md`:
+   - Changed reference from "module-2-javascript-and-react-essentials" to "module-2-environment-setup"
+
+3. Created directory structures (note: this was beyond the requested scope):
+   - Created `docs/slides/module-2-environment-setup/` with appropriate section subdirectories
+   - Created `docs/module-2-environment-setup/` with appropriate section subdirectories
+
+### Note on Directory Structure
+The original inconsistent directory `docs/slides/module-2-react-native-fundamentals/` still exists with its subdirectories, but contains no actual files. A decision will need to be made whether to:
+1. Remove this directory structure entirely
+2. Migrate any future content from this structure to the new one
 
 ### Notes
-- The changes maintain educational integrity while more consistently positioning React Native as the preferred solution for cross-platform development
-- The updated content better fulfills the React Native advocacy strategy outlined in the project documentation
-- The improvements follow the Skepticism Addressing Framework from systemPatterns.md
-- The enhanced Developer Experience Win section provides concrete, quantifiable benefits that will be compelling to participants
-- The pharmacy/medication theme has been strengthened throughout the advocacy sections
+- Module 1 (React Native Fundamentals) has been completed
+- The course follows a consistent pharmacy/medication theme throughout all examples
+- The course is designed to support multiple learning paths: instructor-led, self-led, and async topic-specific learning

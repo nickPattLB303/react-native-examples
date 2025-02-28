@@ -18,7 +18,7 @@ The slides are organized by module and section, following the same structure as 
       index.html                                # Section 3 slides
     /section-4-react-native-documentation
       index.html                                # Section 4 slides
-  /module-2-javascript-and-react-essentials
+  /module-2-environment-setup
     ...
   /shared
     styles.css                                  # Shared styles for all slides
