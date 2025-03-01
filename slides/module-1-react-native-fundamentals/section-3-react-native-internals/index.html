@@ -55,33 +55,7 @@
     <section class="slide content-slide">
       <h2>Architecture Diagram</h2>
       <div style="text-align: center; margin: 20px 0;">
-        <pre style="text-align: left; display: inline-block; font-size: 0.9rem;">
-┌─────────────────────────┐      ┌─────────────────────────┐
-│                         │      │                         │
-│    JavaScript Thread    │      │      Native Thread      │
-│                         │      │                         │
-│  ┌─────────────────┐    │      │    ┌─────────────────┐  │
-│  │                 │    │      │    │                 │  │
-│  │   React Core    │    │      │    │  Native Modules │  │
-│  │                 │    │      │    │                 │  │
-│  └────────┬────────┘    │      │    └────────┬────────┘  │
-│           │             │      │             │           │
-│  ┌────────┴────────┐    │      │    ┌────────┴────────┐  │
-│  │                 │    │      │    │                 │  │
-│  │  React Native   │    │      │    │   Native UI     │  │
-│  │  Components     │    │      │    │   Components    │  │
-│  │                 │    │      │    │                 │  │
-│  └────────┬────────┘    │      │    └────────┬────────┘  │
-│           │             │      │             │           │
-└───────────┼─────────────┘      └─────────────┼───────────┘
-            │                                  │
-            │                                  │
-            │        ┌──────────────┐          │
-            └────────▶              ◀──────────┘
-                     │    Bridge    │
-                     │              │
-                     └──────────────┘
-        </pre>
+        <img src="./images/react-native-architecture.png" alt="React Native Architecture" style="max-width: 80%; height: auto;">
       </div>
       <div class="callout info">
         <div class="callout-title">Data Flow</div>
@@ -192,18 +166,7 @@ function MedicationScreen() {
         <li>Enables asynchronous communication</li>
       </ol>
       <div style="text-align: center; margin: 20px 0;">
-        <pre style="text-align: left; display: inline-block;">
-JavaScript Thread                Bridge                 Native Thread
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│                 │      │                 │      │                 │
-│  React Code     │──────▶ JSON Messages  │──────▶  Native Modules │
-│                 │      │                 │      │                 │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-        ▲                                                  │
-        │                                                  │
-        └──────────────────────────────────────────────────┘
-                         Callbacks/Events
-        </pre>
+        <img src="./images/react-native-bridge-communication.png" alt="React Native Bridge Communication" style="max-width: 80%; height: auto;">
       </div>
       <div class="callout deep-dive">
         <div class="callout-title">Serialization Process</div>
@@ -268,45 +231,7 @@ const styles = StyleSheet.create({
       </div>
       
       <div style="text-align: center; margin: 20px 0;">
-        <pre style="text-align: left; display: inline-block; font-size: 0.9rem; background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
-┌─────────────────────────────┐     ┌─────────────────────────────┐
-│                             │     │                             │
-│      JavaScript Thread      │     │        Native Thread        │
-│                             │     │                             │
-│  ┌─────────────────────┐    │     │                             │
-│  │                     │    │     │                             │
-│  │  React Component    │    │     │                             │
-│  │  <MedicationCard/>  │    │     │                             │
-│  │                     │    │     │                             │
-│  └──────────┬──────────┘    │     │                             │
-│             │               │     │                             │
-│             ▼               │     │                             │
-│  ┌─────────────────────┐    │     │                             │
-│  │                     │    │     │                             │
-│  │    Virtual DOM      │    │     │                             │
-│  │    Reconciliation   │    │     │                             │
-│  │                     │    │     │                             │
-│  └──────────┬──────────┘    │     │                             │
-│             │               │     │                             │
-│             ▼               │     │                             │
-│  ┌─────────────────────┐    │     │                             │
-│  │                     │    │     │                             │
-│  │    Shadow Tree      │    │     │                             │
-│  │    (C++ Yoga)       │    │     │                             │
-│  │                     │    │     │                             │
-│  └──────────┬──────────┘    │     │                             │
-│             │               │     │                             │
-│             ▼               │     │                             │
-│  ┌─────────────────────┐    │     │  ┌─────────────────────┐    │
-│  │                     │    │     │  │                     │    │
-│  │  Native Commands    ├────┼─────┼─▶│  UIView (iOS)       │    │
-│  │                     │    │     │  │  or                 │    │
-│  └─────────────────────┘    │     │  │  Android.View       │    │
-│                             │     │  │                     │    │
-└─────────────────────────────┘     │  └─────────────────────┘    │
-                                    │                             │
-                                    └─────────────────────────────┘
-        </pre>
+        <img src="./images/react-native-rendering-process.png" alt="React Native Rendering Process" style="max-width: 80%; height: auto;">
       </div>
       
       <div class="platform-android">
@@ -414,6 +339,9 @@ function ScanScreen() {
     <section class="slide content-slide">
       <h2>Threading Model</h2>
       <p>React Native uses several threads to maintain responsiveness:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <img src="./images/react-native-threading-model.png" alt="React Native Threading Model" style="max-width: 80%; height: auto;">
+      </div>
       <ol>
         <li><strong>Main Thread (Native)</strong>: Handles UI updates and user interactions</li>
         <li><strong>JavaScript Thread</strong>: Runs your React code and business logic</li>
@@ -441,6 +369,9 @@ function ScanScreen() {
         <li><strong>TurboModules</strong>: More efficient native modules</li>
         <li><strong>CodeGen</strong>: Automatic generation of native code from JavaScript specifications</li>
       </ul>
+      <div style="text-align: center; margin: 20px 0;">
+        <img src="./images/react-native-new-architecture.png" alt="React Native New Architecture" style="max-width: 80%; height: auto;">
+      </div>
       <div class="callout deep-dive">
         <div class="callout-title">JSI vs Bridge</div>
         <p>The new architecture replaces the bridge with JSI (JavaScript Interface), which allows JavaScript to hold references to C++ objects and call methods on them directly. This eliminates the serialization/deserialization overhead of the bridge and enables synchronous communication between JavaScript and native code.</p>
@@ -481,29 +412,7 @@ function ScanScreen() {
       <h2>Example: Medication Reminder App</h2>
       <p>Let's trace how a medication reminder notification would flow through the React Native architecture:</p>
       <div style="text-align: center; margin: 20px 0;">
-        <pre style="text-align: left; display: inline-block; font-size: 0.9rem; background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
-┌─────────────────────┐                                      ┌─────────────────────┐
-│                     │                                      │                     │
-│   JavaScript Side   │                                      │     Native Side     │
-│                     │                                      │                     │
-│  ┌───────────────┐  │         ┌───────────────┐           │ ┌─────────────────┐ │
-│  │ Schedule      │  │         │               │           │ │ Platform         │ │
-│  │ Reminder      ├──┼────────▶│    Bridge     ├───────────┼▶│ Notification     │ │
-│  │ (10:00 AM     │  │         │  Serializes   │           │ │ System           │ │
-│  │  Lisinopril)  │  │         │    Data       │           │ │                  │ │
-│  └───────────────┘  │         └───────┬───────┘           │ └────────┬────────┘ │
-│                     │                 │                    │          │          │
-│                     │                 │                    │          │          │
-│                     │                 │                    │          │          │
-│                     │                 │                    │          ▼          │
-│  ┌───────────────┐  │         ┌───────┴───────┐           │ ┌─────────────────┐ │
-│  │ Update UI     │  │         │               │           │ │ User taps        │ │
-│  │ Mark as taken │◀─┼─────────│    Bridge     │◀──────────┼─┤ notification     │ │
-│  │ or snooze     │  │         │  Deserializes │           │ │ "Take Lisinopril"│ │
-│  └───────────────┘  │         └───────────────┘           │ └─────────────────┘ │
-│                     │                                      │                     │
-└─────────────────────┘                                      └─────────────────────┘
-        </pre>
+        <img src="./images/pharmacy-app-notification-flow.png" alt="Pharmacy App Notification Flow" style="max-width: 80%; height: auto;">
       </div>
       <div class="callout example">
         <div class="callout-title">Real-World Example: PillRemind</div>
@@ -581,4 +490,4 @@ function ScanScreen() {
   
   <script src="../../shared/script.js"></script>
 </body>
-</html> 
+</html>

@@ -38,6 +38,8 @@ When you load a webpage, the browser goes through several steps to display it:
 5. **Painting**: Renders pixels to the screen
 6. **Compositing**: Combines layers for final display
 
+![Browser Rendering Pipeline](./images/browser-rendering-pipeline.png)
+
 > 🔄 **For Android Developers**: This pipeline is similar to Android's view rendering process: measure → layout → draw. The DOM is conceptually similar to Android's View hierarchy.
 
 > 🔄 **For iOS Developers**: This process parallels iOS's view rendering cycle. The DOM is similar to UIView hierarchy, and layout calculations are like Auto Layout.
@@ -137,4 +139,4 @@ In this exercise, you'll:
 - JavaScript execution and DOM updates can affect rendering performance
 - React Native's architecture shares key concepts with browser rendering
 - Understanding browser internals provides insight into React Native's design decisions
-- Both environments must carefully manage UI thread performance 
+- Both environments must carefully manage UI thread performance

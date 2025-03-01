@@ -34,6 +34,8 @@ This approach offered the best performance and access to all platform features b
 
 As mobile became increasingly important, businesses sought ways to reduce the cost and complexity of supporting multiple platforms. This led to the first wave of cross-platform solutions:
 
+![Mobile Development Approaches](./images/mobile-development-approaches.png)
+
 #### Web-Based Approaches (2009-2012)
 
 **PhoneGap/Cordova (2009)**
@@ -93,6 +95,8 @@ Key innovations that React Native introduced:
 ### The Modern Landscape (2015-Present)
 
 Since React Native's introduction, the cross-platform landscape has continued to evolve:
+
+![Mobile Development Approaches Comparison](./images/mobile-development-approaches-comparison.png)
 
 **Flutter (2017)**
 - Google's UI toolkit using Dart language
@@ -169,4 +173,4 @@ Complete this exercise using the [Platform Selection Analysis Microsoft Form](ht
 
 The mobile development landscape has evolved from strictly native development to various cross-platform approaches, each with their own tradeoffs. React Native emerged from Facebook's need to improve their mobile development process and has since become one of the leading solutions for building cross-platform mobile applications. Understanding this history helps contextualize why React Native works the way it does and the problems it aims to solve.
 
-In the next section, we'll explore the specific advantages that React Native offers and why it might be the right choice for your projects. 
+In the next section, we'll explore the specific advantages that React Native offers and why it might be the right choice for your projects.

@@ -22,7 +22,7 @@ At its core, React Native consists of three main parts:
 2. **Native Threads**: Platform-specific (iOS/Android) threads that handle UI rendering
 3. **Bridge**: The communication layer between JavaScript and native code
 
-![React Native Architecture](./examples/architecture-diagram.png)
+![React Native Architecture](./images/react-native-architecture.png)
 
 > 💡 **Tip**: This section gets pretty technical - don't worry if it doesn't all click right away. Focus on grasping the basic idea of how JavaScript talks to native code through the bridge. The implementation details will make more sense once you've built a few components. If something feels too complex, just make a mental note and keep moving - we'll revisit these concepts in context later.
 
@@ -92,24 +92,15 @@ The bridge is the communication layer between JavaScript and native code. It:
 2. Queues and batches messages for efficiency
 3. Enables asynchronous communication
 
-```
-JavaScript Thread                Bridge                 Native Thread
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│                 │      │                 │      │                 │
-│  React Code     │──────▶ JSON Messages  │──────▶  Native Modules │
-│                 │      │                 │      │                 │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-        ▲                                                  │
-        │                                                  │
-        └──────────────────────────────────────────────────┘
-                         Callbacks/Events
-```
+![React Native Bridge Communication](./images/react-native-bridge-communication.png)
 
 > 💡 **Deep Dive**: The bridge uses a serialization/deserialization process for all communication. This means that complex objects are converted to JSON strings, sent across the bridge, and then parsed back into objects on the other side. This process introduces some overhead, which is why operations that require frequent bridge communication (like animations) can sometimes cause performance issues.
 
 ## The Rendering Process
 
 Let's follow what happens when you render a component:
+
+![React Native Rendering Process](./images/react-native-rendering-process.png)
 
 ### 1. React Reconciliation
 
@@ -287,6 +278,8 @@ function ScanScreen() {
 
 React Native uses several threads to maintain responsiveness:
 
+![React Native Threading Model](./images/react-native-threading-model.png)
+
 1. **Main Thread (Native)**: Handles UI updates and user interactions
 2. **JavaScript Thread**: Runs your React code and business logic
 3. **Shadow Thread**: Performs layout calculations
@@ -306,6 +299,8 @@ React Native is evolving with a new architecture that addresses some limitations
 2. **Fabric**: A new rendering system with synchronous operations
 3. **TurboModules**: More efficient native modules
 4. **CodeGen**: Automatic generation of native code from JavaScript specifications
+
+![React Native New Architecture](./images/react-native-new-architecture.png)
 
 > 💡 **Deep Dive**: The new architecture replaces the bridge with JSI (JavaScript Interface), which allows JavaScript to hold references to C++ objects and call methods on them directly. This eliminates the serialization/deserialization overhead of the bridge and enables synchronous communication between JavaScript and native code.
 
@@ -347,4 +342,4 @@ React Native's architecture is a sophisticated system that bridges the gap betwe
 
 The multi-threaded design allows React Native to maintain UI responsiveness while executing JavaScript code, and the component-based model enables a declarative approach to building interfaces. As React Native evolves with its new architecture, many of the current limitations around performance and synchronous native interactions are being addressed.
 
-In the next section, we'll explore the official React Native documentation and learn how to effectively use it as a resource throughout your development journey. 
+In the next section, we'll explore the official React Native documentation and learn how to effectively use it as a resource throughout your development journey.

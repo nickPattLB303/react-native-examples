@@ -31,6 +31,8 @@ Open your terminal and run the following command:
 npx create-expo-app@latest MyPharmacyApp
 ```
 
+![Create Expo App Workflow](./images/create-expo-app-workflow.png)
+
 This command does several things:
 1. Downloads and executes the latest version of `create-expo-app`
 2. Creates a new directory called `MyPharmacyApp`
@@ -355,4 +357,4 @@ In the next section, we'll explore how to run your application on simulators and
     "backgroundColor": "#ffffff"
   }
   ```
-- Read the Expo documentation on app.json configuration for additional options 
+- Read the Expo documentation on app.json configuration for additional options
