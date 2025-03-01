@@ -76,8 +76,8 @@
           <pre><code>&lt;input type="text" placeholder="Medication name"&gt;
 &lt;img src="pill.png" alt="Medication pill"&gt;</code></pre>
         </div>
-        <div class="image-placeholder">
-          <p>[HTML Element Structure Diagram]</p>
+        <div style="text-align: center; margin: 20px 0;">
+          <img src="./images/html-element-structure.png" alt="HTML Element Structure" style="height: 300px;">
         </div>
       </div>
     </section>
@@ -184,13 +184,13 @@
           <div class="column">
             <h3>Images</h3>
             <div class="code-block">
-              <pre><code>&lt;img src="images/medication.jpg" 
+              <pre><code>&lt;img src="images/medication.png" 
      alt="Prescription bottle" 
      width="200"&gt;</code></pre>
             </div>
             <div class="preview-block">
-              <div class="image-placeholder">
-                <p>[Image: Prescription bottle]</p>
+              <div style="text-align: center; margin: 20px 0;">
+                <img src="./images/medication.png" alt="Mobile Development Approaches" style="max-width: 80%; height: auto;">
               </div>
             </div>
           </div>
@@ -311,7 +311,30 @@
 &lt;/table&gt;</code></pre>
         </div>
         <div class="image-placeholder">
-          <p>[Rendered Table Example]</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Medication</th>
+                <th>Dosage</th>
+                <th>Frequency</th>
+                <th>Next Dose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Amoxicillin</td>
+                <td>500mg</td>
+                <td>Every 8 hours</td>
+                <td>2:00 PM</td>
+              </tr>
+              <tr>
+                <td>Lisinopril</td>
+                <td>10mg</td>
+                <td>Once daily</td>
+                <td>8:00 AM</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="callout platform-specific">
@@ -335,7 +358,10 @@
           <li><code>&lt;span&gt;</code> is an inline element (stays in the flow of text)</li>
         </ul>
         <div class="image-placeholder">
-          <p>[Block vs Inline Elements Visualization]</p>
+          <div class="medication-card">
+            <h3>Amoxicillin</h3>
+            <p>Take <span class="highlight">500mg</span> three times daily</p>
+          </div>
         </div>
       </div>
       <div class="callout platform-specific">
