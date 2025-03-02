@@ -248,11 +248,28 @@ The mobile development landscape continues to evolve with several notable trends
 
 ## Exercise:
 
-### Application
-This exercise simulates real-world decisions you would make when planning a pharmacy application architecture. The ability to select the right development approach for specific features is critical for creating effective healthcare applications that balance performance, development efficiency, and maintenance requirements.
+### Mobile Development Approach Quiz
+
+In this exercise, you will test your understanding of different mobile development approaches through a multiple-choice assessment.
+
+#### Exercise Description
+This quiz covers the various mobile development approaches discussed in this section, including native development, web-based approaches, and React Native. You'll be presented with both conceptual questions and scenario-based questions that require application of the concepts to real-world pharmacy app development situations.
+
+#### Learning Objectives
+- Demonstrate understanding of different mobile development approaches
+- Apply knowledge to evaluate which approach is best for specific scenarios
+- Identify the tradeoffs between different approaches for pharmacy/healthcare apps
+
+#### Instructions
+1. Access the quiz using the Microsoft Forms link provided by your instructor
+2. Answer all questions, carefully considering the requirements in each scenario
+3. Review the explanations for each answer to reinforce key concepts
+4. Submit your completed quiz
+
+#### Estimated Time: 20 minutes
 
 #### Exercise Resources
-Complete this exercise using the [Platform Selection Analysis Microsoft Form](https://forms.office.com/r/platformSelectionAnalysis) to document your analysis.
+The quiz content is available in the [Mobile Development Approaches Quiz](./mobile-development-approaches-quiz.md) file, which your instructor will use to create the Microsoft Form.
 
 ## Summary
 
