@@ -132,7 +132,7 @@ Since React Native's introduction, the cross-platform landscape has continued to
 - Expanded ecosystem
 - Used by major companies like Facebook, Instagram, Shopify, and Microsoft
 
-> 📚 **Resource**: For a detailed comparison, see [Flutter vs. React Native](https://www.nomtek.com/blog/flutter-vs-react-native) by Nomtek. A fundamental difference is their programming languages: Flutter uses Dart, while React Native uses JavaScript. Dart is praised for its type safety and purpose-built nature for UI development. However, JavaScript's massive popularity gives React Native a significant advantage in ecosystem and talent availability. Web developers familiar with React can transition to React Native with minimal friction, creating a larger talent pool compared to Flutter, where Dart expertise is less common in the job market.
+> 💡 **Recent Improvements**: Both React Native and Flutter have recently improved their performance - React Native with its Bridgeless Architecture and Flutter with its Impeller rendering engine. While Flutter has a slight advantage, both frameworks have achieved near native levels of performance.
 
 **Progressive Web Apps (PWAs)**
 - Web technologies that behave more like native apps
@@ -160,7 +160,7 @@ When comparing different mobile development approaches, several key factors need
 
 > 💡 **Rating Scale**: ★★★★★ = Excellent, ★★★★☆ = Very Good, ★★★☆☆ = Good, ★★☆☆☆ = Fair, ★☆☆☆☆ = Poor
 
-> 💡 **Recent Improvements**: Both React Native and Flutter have recently improved their performance - React Native with its Bridgeless Architecture and Flutter with its Impeller rendering engine.
+> 📚 **React Native and Flutter**: Flutter has emerged as a close competitor to React Native in the cross-platform space. While the two frameworks are neck and neck across most categories, a key difference is their programming languages: Flutter uses Dart, which is praised for its type safety and purpose-built nature for UI development. However, JavaScript and React's popularity gives React Native a significant advantage in ecosystem and talent availability. For a detailed comparison, see [Flutter vs. React Native](https://www.nomtek.com/blog/flutter-vs-react-native)
 
 ## Decision Factors
 
@@ -181,6 +181,38 @@ When choosing a mobile development approach, consider these key factors:
 - Future hiring considerations
 
 > 💡 **Decision Framework**: There's no one-size-fits-all solution. The best approach depends on your specific project requirements, team capabilities, and business constraints.
+
+## Case Study: Shopify's React Native Transformation
+
+A real-world example from a major e-commerce company helps illustrate how these decision factors play out in practice:
+
+### Shopify's React Native Journey
+In 2020, Shopify made a strategic decision to use React Native for all new mobile applications after experimenting with three separate apps: Arrive, Point of Sale, and Compass. This represented a significant shift for a company that previously built all mobile applications using native development.
+
+They faced several key challenges that led to this decision:
+- Need to support both iOS and Android platforms efficiently
+- Desire to leverage their existing React expertise from web development
+- Pressure to accelerate mobile development to keep pace with growing mobile commerce (71% of Shopify buyers purchased on mobile in Q3 2019)
+
+**Key Learnings from Their Experiments:**
+- Development teams reported being twice as productive using React Native compared to native development
+- They achieved exceptional code sharing between platforms (95-99%) far exceeding their initial 80% estimate
+- React Native performed well even on lower-power Android devices (1.5GHz vs. expected 2GHz minimum)
+- Web developers could effectively contribute to mobile development
+
+**Approach Analysis:**
+- **Native:** Previously used but created duplicate work across platforms
+- **Web/Hybrid:** Couldn't meet performance needs for complex commerce applications
+- **React Native:** Provided the right balance of performance, developer productivity, and code sharing
+- **Other Frameworks:** Evaluated but didn't align with their existing React expertise
+
+**Outcome:**
+Shopify successfully transitioned to using React Native for all new mobile app development, created dedicated React Native tooling and foundations teams, and now maintains some of the world's largest React Native codebases. Their mobile applications now serve millions of merchants with a unified development approach, while still leveraging native expertise where needed.
+
+**References:**
+- [React Native is the Future of Mobile at Shopify](https://shopify.engineering/react-native-future-mobile-shopify) - Official Shopify Engineering blog announcement
+- [Shopify in React Native Showcase](https://reactnative.dev/showcase) - Featured in React Native's official showcase
+- [Building a React Native app without React Native experience](https://shopify.engineering/building-a-react-native-app-without-react-native-experience) - Shopify Engineering follow-up on their implementation experience
 
 ## The Fragmentation Challenge
 
@@ -214,31 +246,7 @@ The mobile development landscape continues to evolve with several notable trends
 
 > 💡 **React Native's Position**: React Native continues to evolve with its new architecture (Fabric, TurboModules, JSI, and Bridgeless Architecture), addressing performance concerns and improving the developer experience, maintaining its position as a leading cross-platform solution.
 
-## Exercise: Platform Selection
-
-In this exercise, you will analyze different mobile development approaches for specific pharmacy app features to determine the most appropriate platform for each use case.
-
-### Objective
-Evaluate the strengths and limitations of native, hybrid, and cross-platform development approaches for different pharmacy app features to make informed architectural decisions.
-
-### Steps
-1. For each of the following pharmacy app features, analyze which development approach (native, hybrid, or cross-platform) would be most appropriate:
-   - **Medication barcode scanner**: Consider native device access requirements and performance needs
-   - **Medication reminder notifications**: Evaluate reliability and background processing capabilities
-   - **Pharmacy locator with maps**: Assess integration with mapping services and location APIs
-   - **Medication information database**: Consider data storage, offline access, and synchronization
-
-2. For each feature, document your recommendation and explain your reasoning based on:
-   - Performance requirements
-   - Platform API access needs
-   - Development efficiency
-   - Maintenance considerations
-
-3. Consider how each approach would impact:
-   - Patient experience with medication management
-   - Healthcare provider integration
-   - Regulatory compliance requirements
-   - Development team resources
+## Exercise:
 
 ### Application
 This exercise simulates real-world decisions you would make when planning a pharmacy application architecture. The ability to select the right development approach for specific features is critical for creating effective healthcare applications that balance performance, development efficiency, and maintenance requirements.

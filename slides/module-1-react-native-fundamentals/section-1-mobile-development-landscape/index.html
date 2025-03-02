@@ -217,10 +217,6 @@
         <div class="callout-title">The Middle Ground</div>
         <p>Cross-platform native approaches aim to balance development efficiency with native performance and capabilities.</p>
       </div>
-      <div class="callout tip">
-        <div class="callout-title">Language & Ecosystem Considerations</div>
-        <p>Programming language choice significantly impacts framework adoption: Flutter uses Dart, designed specifically for UI development with strong typing and performance optimizations. React Native leverages JavaScript's ubiquity and the vast React ecosystem. This creates a strategic tradeoff—while Dart may offer technical advantages, JavaScript's widespread use in web development creates a much larger potential talent pool for React Native projects. <a href="https://www.nomtek.com/blog/flutter-vs-react-native" target="_blank">More details</a></p>
-      </div>
     </section>
     
     <!-- Cross-Platform Native Pros and Cons Slide -->
@@ -254,12 +250,23 @@
       </div>
     </section>
     
-    <!-- Comparison Matrix Slide -->
+    <!-- Comparison Matrix Slide - Visual Overview -->
     <section class="slide content-slide">
-      <h2>Approach Comparison Matrix</h2>
-      <div style="text-align: center; margin: 20px 0;">
+      <h2>Approach Comparison Overview</h2>
+      <p>A visual overview of different mobile development approaches:</p>
+      <div style="text-align: center; margin: 30px 0;">
         <img src="./images/mobile-development-approaches-comparison.png" alt="Mobile Development Approaches Comparison" style="width: 500px; height: 500px;">
       </div>
+      <div class="callout tip">
+        <div class="callout-title">Recent Improvements</div>
+        <p>Both React Native and Flutter have recently improved their performance - React Native with its Bridgeless Architecture and Flutter with its Impeller rendering engine. While Flutter has a slight advantage, both frameworks have achieved near native levels of performance.</p>
+      </div>
+    </section>
+    
+    <!-- Comparison Matrix Slide - Detailed Table -->
+    <section class="slide content-slide">
+      <h2>Approach Comparison Matrix: Detailed Analysis</h2>
+      <p>A detailed breakdown of how each approach performs across key evaluation criteria:</p>
       <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;">
         <thead>
           <tr style="background-color: var(--primary-color); color: white;">
@@ -320,8 +327,8 @@
         <p>★★★★★ = Excellent, ★★★★☆ = Very Good, ★★★☆☆ = Good, ★★☆☆☆ = Fair, ★☆☆☆☆ = Poor</p>
       </div>
       <div class="callout tip">
-        <div class="callout-title">Recent Improvements</div>
-        <p>Note: Both React Native and Flutter have recently improved their performance - React Native with its Bridgeless Architecture and Flutter with its Impeller rendering engine.</p>
+        <div class="callout-title">React Native and Flutter</div>
+        <p>Flutter has emerged as a close competitor to React Native in the cross-platform space. While the two frameworks are neck and neck across most categories, a key difference is their programming languages: Flutter uses Dart, which is praised for its type safety and purpose-built nature for UI development. However, JavaScript and React's popularity gives React Native a significant advantage in ecosystem and talent availability. For a detailed comparison, see <a href="https://www.nomtek.com/blog/flutter-vs-react-native" target="_blank">Flutter vs. React Native</a></p>
       </div>
     </section>
     
@@ -359,38 +366,41 @@
     
     <!-- Pharmacy App Case Study Slide -->
     <section class="slide content-slide">
-      <h2>Case Study: Medication Reminder App</h2>
-      <p>Let's analyze which approach might work best for our pharmacy app:</p>
+      <h2>Case Study: Shopify's React Native Transformation</h2>
+      <p>Let's examine how a major e-commerce platform chose their mobile development approach:</p>
       <div class="columns">
         <div class="column">
-          <h3>Key Requirements</h3>
+          <h3>Key Challenges</h3>
           <ul>
-            <li>Reliable notifications</li>
-            <li>Barcode scanning</li>
-            <li>Offline data storage</li>
-            <li>Smooth UI for elderly users</li>
-            <li>Cross-platform support</li>
+            <li>Support iOS and Android efficiently</li>
+            <li>Leverage existing React web expertise</li>
+            <li>Accelerate mobile development</li>
+            <li>71% of buyers purchasing on mobile</li>
           </ul>
         </div>
         <div class="column">
-          <h3>Approach Analysis</h3>
+          <h3>Experimental Results</h3>
           <ul>
-            <li><strong>Native:</strong> Best performance, highest cost</li>
-            <li><strong>PWA/Hybrid:</strong> Limited notification reliability</li>
-            <li><strong>React Native:</strong> Good balance of features and efficiency</li>
-            <li><strong>Flutter:</strong> Strong UI consistency across platforms</li>
+            <li>2x developer productivity vs. native</li>
+            <li>95-99% code sharing between platforms</li>
+            <li>Excellent performance even on lower-end devices</li>
+            <li>Web developers could contribute effectively</li>
           </ul>
         </div>
       </div>
       <div class="callout example">
-        <div class="callout-title">Real-World Example: MedTracker</div>
-        <p>A pharmacy chain needed to build a medication tracking app for patients. They initially considered native development but faced challenges with:</p>
+        <div class="callout-title">Real-World Example: Shopify</div>
+        <p>In 2020, Shopify announced they would use React Native for all new mobile applications after experimenting with three separate apps.</p>
         <ul>
-          <li>Limited iOS developer availability in their market</li>
-          <li>6-month deadline for both platforms</li>
-          <li>Budget constraints for maintaining separate codebases</li>
+          <li>Created dedicated React Native tooling and foundations teams</li>
+          <li>Maintained native apps while adopting React Native for new development</li>
+          <li>Successfully built and deployed multiple apps serving millions of merchants</li>
         </ul>
-        <p>They chose React Native and successfully launched on both platforms in 4 months with a team of 3 developers, achieving 85% code sharing between iOS and Android.</p>
+        <p>This strategic move allowed them to unify their development approach while still leveraging their native expertise.</p>
+        <p class="references"><strong>References:</strong> 
+          <a href="https://shopify.engineering/react-native-future-mobile-shopify" target="_blank">Shopify Engineering Blog</a> | 
+          <a href="https://reactnative.dev/showcase" target="_blank">React Native Showcase</a>
+        </p>
       </div>
     </section>
     
@@ -428,30 +438,8 @@
     
     <!-- Exercise Slide -->
     <section class="slide exercise-slide">
-      <h2>Exercise: Platform Selection</h2>
+      <h2>Exercise:</h2>
       <div class="exercise-content">
-        <p>In this exercise, you will analyze different mobile development approaches for specific pharmacy app features to determine the most appropriate platform for each use case.</p>
-        
-        <h3>Objective</h3>
-        <p>Evaluate the strengths and limitations of native, hybrid, and cross-platform development approaches for different pharmacy app features to make informed architectural decisions.</p>
-        
-        <h3>Key Steps</h3>
-        <ol>
-          <li>Analyze which development approach would be most appropriate for:
-            <ul>
-              <li>Medication barcode scanner</li>
-              <li>Medication reminder notifications</li>
-              <li>Pharmacy locator with maps</li>
-              <li>Medication information database</li>
-            </ul>
-          </li>
-          <li>Document your recommendation based on performance requirements, API access needs, development efficiency, and maintenance considerations</li>
-          <li>Consider impacts on patient experience, healthcare provider integration, regulatory compliance, and development resources</li>
-        </ol>
-        
-        <div class="exercise-resources">
-          <p>Complete this exercise using the <a href="https://forms.office.com/r/platformSelectionAnalysis" target="_blank">Platform Selection Analysis Microsoft Form</a></p>
-        </div>
       </div>
       
       <div class="presenter-notes">
@@ -470,10 +458,6 @@
         <li>The best approach depends on project requirements, team skills, and business constraints</li>
         <li>React Native is well-positioned for many types of applications, especially those needing a balance of efficiency and native capabilities</li>
       </ul>
-      <div class="callout info">
-        <div class="callout-title">Connecting to Our Pharmacy App</div>
-        <p>Now that we understand the mobile development landscape, we'll explore why React Native is particularly well-suited for our pharmacy application. In the next section, we'll examine specific features of React Native that address the challenges we've identified for medication management apps.</p>
-      </div>
       <div class="next-steps">
         <a href="../section-2-why-react-native/index.html"><strong>Next:</strong> Section 2: Why React Native?</a>
       </div>
