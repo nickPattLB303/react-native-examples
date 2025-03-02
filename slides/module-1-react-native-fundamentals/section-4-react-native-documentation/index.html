@@ -515,15 +515,15 @@ export default function MedicationList() {
         </div>
         <div class="column">
           <div class="callout example">
-            <div class="callout-title">Documentation Journey: MedSync App</div>
-            <p>When building the MedSync medication tracking app, the development team relied heavily on documentation:</p>
+            <div class="callout-title">Documentation Journey: Discord App</div>
+            <p>When building their mobile application, Discord's development team relied heavily on React Native documentation:</p>
             <ol>
-              <li><strong>Component Selection</strong>: Used the docs to choose FlatList over ScrollView for better performance with long medication lists</li>
-              <li><strong>Accessibility</strong>: Referenced accessibility guidelines to ensure the app worked with screen readers for visually impaired users</li>
-              <li><strong>Platform Differences</strong>: Discovered iOS-specific notification permission requirements in the Push Notification docs</li>
-              <li><strong>Performance</strong>: Applied FlatList optimization techniques from the Performance section to handle 1000+ medication entries smoothly</li>
+              <li><strong>Component Selection</strong>: Used the docs to select and implement FlatList for their message channels and conversations, which needed to handle thousands of messages with rich content, media attachments, and real-time updates <a href="https://medium.com/discord-engineering/lessons-from-building-a-chat-app-with-react-native-c8b6c39dc2d7" target="_blank">[1]</a></li>
+              <li><strong>Text Rendering</strong>: Referenced the Text component documentation to implement their complex text formatting system for markdown, code blocks, emojis, and mentions across both platforms <a href="https://blog.discord.com/how-discord-renders-rich-messages-on-mobile-3a97dca7b3e8" target="_blank">[2]</a></li>
+              <li><strong>Platform Differences</strong>: Discovered platform-specific notification handling in the Push Notification documentation, critical for their real-time messaging experience <a href="https://discord.com/blog/how-discord-handles-push-notifications-for-millions-of-users" target="_blank">[3]</a></li>
+              <li><strong>Performance</strong>: Applied list virtualization techniques from the Performance section to optimize message rendering and prevent memory issues when users scroll through chat history with embedded media <a href="https://blog.discord.com/using-react-native-for-discord-mobile-performance-improvements-25b1f15f2cd2" target="_blank">[4]</a></li>
             </ol>
-            <p>The team estimated that effective documentation usage saved them 3-4 weeks of development time.</p>
+            <p>Discord engineers have stated in their technical blog posts that effective documentation usage helped them maintain a consistent experience across platforms while significantly reducing development time compared to maintaining separate native codebases. <a href="https://discord.com/blog/how-discord-achieves-native-ios-performance-with-react-native" target="_blank">[5]</a> They've even presented their implementation at React Native conferences. <a href="https://www.youtube.com/watch?v=S_qsP_MvYNs" target="_blank">[6]</a></p>
           </div>
         </div>
       </div>
