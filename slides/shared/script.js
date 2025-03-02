@@ -120,7 +120,7 @@
           
           // Define module-specific section paths
           const modulePathMap = {
-            'module-1-introduction-to-react-native': {
+            'module-1-react-native-fundamentals': {
               '1': 'mobile-development-landscape',
               '2': 'why-react-native',
               '3': 'react-native-internals',
@@ -356,7 +356,7 @@
     
     // Define module-specific sections based on the current module
     const moduleMap = {
-      'module-1-introduction-to-react-native': [
+      'module-1-react-native-fundamentals': [
         { num: 1, name: 'mobile-development-landscape' },
         { num: 2, name: 'why-react-native' },
         { num: 3, name: 'react-native-internals' },
