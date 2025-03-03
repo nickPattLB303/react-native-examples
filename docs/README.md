@@ -34,6 +34,21 @@ This course supports three distinct learning paths:
 - [React Native Internals](./module-1-react-native-fundamentals/section-3-react-native-internals/README.md)
 - [React Native Documentation](./module-1-react-native-fundamentals/section-4-react-native-documentation/README.md)
 
+### [Module 2: Environment Setup](./module-2-environment-setup/README.md)
+
+### [Module 3: Web Development Essentials](./module-3-web-development-essentials/README.md)
+
+### [Module 4: JavaScript Essentials](./module-4-javascript-essentials/README.md)
+
+### [Module 5: TypeScript Essentials](./module-5-typescript-essentials/README.md)
+
+### [Module 6: React Essentials](./module-6-react-essentials/README.md)
+- [Introduction to React](./module-6-react-essentials/section-1-introduction-to-react/README.md)
+- [Components and JSX](./module-6-react-essentials/section-2-components-and-jsx/README.md)
+- [Props and Component Composition](./module-6-react-essentials/section-3-props-and-component-composition/README.md)
+- [State and Hooks](./module-6-react-essentials/section-4-state-and-hooks/README.md)
+- [Component Lifecycle and Effects](./module-6-react-essentials/section-5-component-lifecycle-and-effects/README.md)
+
 ## Prerequisites
 
 To get the most out of this course, you should have:
