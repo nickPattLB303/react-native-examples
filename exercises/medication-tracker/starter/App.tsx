@@ -1,75 +1,53 @@
-/**
- * @fileoverview Medication Tracker App - Starter Code
- * @author React Native Training Course
- * @created 2023-09-01
- */
+import React from 'react';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+// ToDo: Define interface for medication reminder
 
-// TODO: Define interfaces for medication reminders and user settings
-// Interface for medication reminder
+// Sample data - this would normally come from an API or storage
+const sampleMedications = [
+  { id: 1, name: 'Aspirin', dosage: '100mg', time: '8:00 AM', taken: false },
+  { id: 2, name: 'Vitamin D', dosage: '1000 IU', time: '9:00 AM', taken: true },
+  { id: 3, name: 'Metformin', dosage: '500mg', time: '1:00 PM', taken: false },
+  { id: 4, name: 'Lisinopril', dosage: '10mg', time: '7:00 PM', taken: false },
+];
 
-// Interface for user settings
+// ToDo: Create a type-safe MedicationItem component
 
-// TODO: Define props interface for MedicationItem component
+// ToDo: Create a type-safe MedicationList component 
 
-// TODO: Create a functional component with properly typed props
-const MedicationItem = () => {
-  // TODO: Implement the medication item component
-  return (
-    <View style={styles.medicationItem}>
-      <Text>Medication Item Placeholder</Text>
-    </View>
-  );
-};
+export default function App() {
+  // ToDo: Implement the medication tracker app
+  // 1. Use proper TypeScript types for state
+  // 2. Add handlers for taking medications
+  // 3. Create a summary of medications taken/pending
 
-// TODO: Create a custom hook to fetch and manage medication data
-
-const App = () => {
-  // TODO: Implement state management with useState and TypeScript
-  
-  // TODO: Add type-safe event handlers for user interactions
-  
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Medication Tracker</Text>
-      
-      {/* TODO: Implement the medication list */}
-      <View style={styles.emptyState}>
-        <Text>No medications to display</Text>
-      </View>
-      
-      {/* TODO: Implement add medication button */}
+      <Text style={styles.title}>Medication Tracker</Text>
+      {/* Implement your medication list here */}
+      <Text style={styles.instructions}>
+        Complete the ToDo items to build a type-safe medication tracker!
+      </Text>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f5f5f5',
   },
-  header: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 20,
     color: '#0066cc',
   },
-  medicationItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    backgroundColor: 'white',
-    borderRadius: 8,
-    marginBottom: 8,
+  instructions: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
   },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default App; 
+}); 

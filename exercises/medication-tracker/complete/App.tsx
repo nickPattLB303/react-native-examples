@@ -1,293 +1,183 @@
-/**
- * @fileoverview Medication Tracker App - Completed Example
- * @author React Native Training Course
- * @created 2023-09-01
- */
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 
-import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  FlatList, 
-  TouchableOpacity, 
-  SafeAreaView,
-  Alert,
-  ActivityIndicator
-} from 'react-native';
-
-// Define interfaces for medication reminders and user settings
+// Define interface for medication reminder
 interface Medication {
   id: number;
   name: string;
   dosage: string;
-  frequency: string;
   time: string;
   taken: boolean;
 }
 
-interface UserSettings {
-  enableNotifications: boolean;
-  reminderTimes: string[];
-}
+// Sample data - this would normally come from an API or storage
+const initialMedications: Medication[] = [
+  { id: 1, name: 'Aspirin', dosage: '100mg', time: '8:00 AM', taken: false },
+  { id: 2, name: 'Vitamin D', dosage: '1000 IU', time: '9:00 AM', taken: true },
+  { id: 3, name: 'Metformin', dosage: '500mg', time: '1:00 PM', taken: false },
+  { id: 4, name: 'Lisinopril', dosage: '10mg', time: '7:00 PM', taken: false },
+];
 
-// Define props interface for MedicationItem component
+// Define props interface for MedicationItem
 interface MedicationItemProps {
   medication: Medication;
-  onTakeMedication: (id: number) => void;
-  onSkipMedication: (id: number) => void;
+  onToggle: (id: number) => void;
 }
 
-/**
- * MedicationItem component displays a single medication with actions
- * @param medication - The medication to display
- * @param onTakeMedication - Callback for when medication is taken
- * @param onSkipMedication - Callback for when medication is skipped
- */
-const MedicationItem: React.FC<MedicationItemProps> = ({ 
-  medication, 
-  onTakeMedication, 
-  onSkipMedication 
-}) => {
+// Create a type-safe MedicationItem component
+const MedicationItem: React.FC<MedicationItemProps> = ({ medication, onToggle }) => {
   return (
-    <View style={[styles.medicationItem, medication.taken && styles.medicationTaken]}>
-      <View>
+    <TouchableOpacity 
+      style={[
+        styles.medicationItem, 
+        medication.taken ? styles.medicationTaken : {}
+      ]} 
+      onPress={() => onToggle(medication.id)}
+    >
+      <View style={styles.medicationInfo}>
         <Text style={styles.medicationName}>{medication.name}</Text>
         <Text style={styles.medicationDetails}>
-          {medication.dosage}, {medication.frequency}
+          {medication.dosage} - {medication.time}
         </Text>
-        <Text style={styles.medicationTime}>Time: {medication.time}</Text>
-        {medication.taken && (
-          <Text style={styles.takenText}>✓ Taken</Text>
-        )}
       </View>
       
-      {!medication.taken && (
-        <View style={styles.actionButtons}>
-          <TouchableOpacity 
-            style={[styles.button, styles.takeButton]} 
-            onPress={() => onTakeMedication(medication.id)}
-          >
-            <Text style={styles.buttonText}>Take</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.button, styles.skipButton]}
-            onPress={() => onSkipMedication(medication.id)}
-          >
-            <Text style={styles.buttonText}>Skip</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={[
+        styles.statusIndicator, 
+        medication.taken ? styles.statusTaken : styles.statusPending
+      ]}>
+        <Text style={styles.statusText}>
+          {medication.taken ? 'TAKEN' : 'PENDING'}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+// Define props interface for MedicationList
+interface MedicationListProps {
+  medications: Medication[];
+  onToggleMedication: (id: number) => void;
+}
+
+// Create a type-safe MedicationList component
+const MedicationList: React.FC<MedicationListProps> = ({ medications, onToggleMedication }) => {
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <MedicationItem 
+          medication={item} 
+          onToggle={onToggleMedication} 
+        />
       )}
+      contentContainerStyle={styles.listContainer}
+    />
+  );
+};
+
+// Create a type-safe Summary component
+interface SummaryProps {
+  medications: Medication[];
+}
+
+const Summary: React.FC<SummaryProps> = ({ medications }) => {
+  const total = medications.length;
+  const taken = medications.filter(med => med.taken).length;
+  
+  return (
+    <View style={styles.summaryContainer}>
+      <Text style={styles.summaryText}>
+        {taken} of {total} medications taken today
+      </Text>
+      <View style={styles.progressBar}>
+        <View 
+          style={[
+            styles.progressFill, 
+            { width: `${(taken / total) * 100}%` }
+          ]} 
+        />
+      </View>
     </View>
   );
 };
 
-// Return type for the useMedications hook
-interface UseMedicationsResult {
-  medications: Medication[];
-  isLoading: boolean;
-  error: Error | null;
-  addMedication: (medication: Omit<Medication, 'id' | 'taken'>) => void;
-  takeMedication: (id: number) => void;
-  skipMedication: (id: number) => void;
-}
+export default function App() {
+  // State with TypeScript type
+  const [medications, setMedications] = useState<Medication[]>(initialMedications);
 
-/**
- * Custom hook to fetch and manage medication data
- */
-const useMedications = (): UseMedicationsResult => {
-  const [medications, setMedications] = useState<Medication[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-  
-  // Simulate fetching medications from an API
-  useEffect(() => {
-    const fetchMedications = async () => {
-      try {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock data
-        const mockMedications: Medication[] = [
-          { 
-            id: 1, 
-            name: 'Amoxicillin', 
-            dosage: '500mg', 
-            frequency: '3x daily', 
-            time: '08:00 AM',
-            taken: false 
-          },
-          { 
-            id: 2, 
-            name: 'Lisinopril', 
-            dosage: '10mg', 
-            frequency: '1x daily', 
-            time: '09:00 AM',
-            taken: false 
-          },
-          { 
-            id: 3, 
-            name: 'Metformin', 
-            dosage: '1000mg', 
-            frequency: '2x daily', 
-            time: '07:30 PM',
-            taken: true 
-          }
-        ];
-        
-        setMedications(mockMedications);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('An unknown error occurred'));
-        setIsLoading(false);
-      }
-    };
-    
-    fetchMedications();
-  }, []);
-  
-  // Function to add a new medication
-  const addMedication = (medicationData: Omit<Medication, 'id' | 'taken'>) => {
-    const newMedication: Medication = {
-      ...medicationData,
-      id: Date.now(), // Simple ID generation
-      taken: false
-    };
-    
-    setMedications(prevMedications => [...prevMedications, newMedication]);
-  };
-  
-  // Function to mark a medication as taken
-  const takeMedication = (id: number) => {
-    setMedications(prevMedications => 
-      prevMedications.map(med => 
-        med.id === id ? { ...med, taken: true } : med
+  // Toggle medication taken status
+  const handleToggleMedication = (id: number): void => {
+    setMedications(currentMeds => 
+      currentMeds.map(medication => 
+        medication.id === id 
+          ? { ...medication, taken: !medication.taken } 
+          : medication
       )
     );
   };
-  
-  // Function to skip a medication
-  const skipMedication = (id: number) => {
-    setMedications(prevMedications => 
-      prevMedications.filter(med => med.id !== id)
-    );
-  };
-  
-  return {
-    medications,
-    isLoading,
-    error,
-    addMedication,
-    takeMedication,
-    skipMedication
-  };
-};
 
-const App: React.FC = () => {
-  // Use the custom hook for medication management
-  const { 
-    medications, 
-    isLoading, 
-    error, 
-    addMedication, 
-    takeMedication, 
-    skipMedication 
-  } = useMedications();
-  
-  // User settings with typed state
-  const [settings, setSettings] = useState<UserSettings>({
-    enableNotifications: true,
-    reminderTimes: ['08:00', '12:00', '18:00']
-  });
-  
-  // Handler for adding a new medication (simulated)
-  const handleAddMedication = () => {
-    // In a real app, this would open a form
-    // For this example, we'll just add a hardcoded medication
-    const newMedication = {
-      name: 'Ibuprofen',
-      dosage: '200mg',
-      frequency: 'As needed',
-      time: '12:00 PM'
-    };
-    
-    addMedication(newMedication);
-    Alert.alert('Medication Added', `${newMedication.name} has been added to your tracker.`);
-  };
-  
-  // Render the component
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Medication Tracker</Text>
+      <Text style={styles.title}>Medication Tracker</Text>
       
-      {isLoading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0066cc" />
-          <Text style={styles.loadingText}>Loading medications...</Text>
-        </View>
-      ) : error ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Error: {error.message}</Text>
-        </View>
-      ) : medications.length === 0 ? (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyStateText}>No medications to display</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={medications}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <MedicationItem
-              medication={item}
-              onTakeMedication={takeMedication}
-              onSkipMedication={skipMedication}
-            />
-          )}
-          style={styles.list}
-        />
-      )}
+      <Summary medications={medications} />
       
-      <TouchableOpacity 
-        style={styles.addButton}
-        onPress={handleAddMedication}
-      >
-        <Text style={styles.addButtonText}>+ Add Medication</Text>
-      </TouchableOpacity>
+      <View style={styles.listHeaderContainer}>
+        <Text style={styles.listHeader}>Today's Medications</Text>
+      </View>
+      
+      <MedicationList 
+        medications={medications} 
+        onToggleMedication={handleToggleMedication} 
+      />
     </SafeAreaView>
   );
-};
+}
 
-// Type-safe styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f5f5f5',
   },
-  header: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 20,
     color: '#0066cc',
+    textAlign: 'center',
   },
-  list: {
-    flex: 1,
+  listHeaderContainer: {
+    marginVertical: 10,
+  },
+  listHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#444',
+  },
+  listContainer: {
+    paddingBottom: 20,
   },
   medicationItem: {
+    flexDirection: 'row',
     padding: 16,
-    borderWidth: 1,
-    borderColor: '#eee',
     backgroundColor: 'white',
     borderRadius: 8,
-    marginBottom: 8,
-    flexDirection: 'row',
+    marginVertical: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   medicationTaken: {
-    backgroundColor: '#f0f9ff',
-    borderColor: '#0066cc',
+    opacity: 0.7,
+  },
+  medicationInfo: {
+    flex: 1,
   },
   medicationName: {
     fontSize: 18,
@@ -299,77 +189,47 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 4,
   },
-  medicationTime: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
-  takenText: {
-    color: '#0066cc',
-    fontWeight: 'bold',
-    marginTop: 8,
-  },
-  actionButtons: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  button: {
-    paddingVertical: 6,
+  statusIndicator: {
     paddingHorizontal: 12,
-    borderRadius: 4,
-    marginLeft: 8,
-    marginBottom: 4,
+    paddingVertical: 6,
+    borderRadius: 16,
   },
-  takeButton: {
-    backgroundColor: '#0066cc',
+  statusTaken: {
+    backgroundColor: '#4caf50',
   },
-  skipButton: {
-    backgroundColor: '#999',
+  statusPending: {
+    backgroundColor: '#ff9800',
   },
-  buttonText: {
+  statusText: {
     color: 'white',
+    fontSize: 12,
     fontWeight: 'bold',
   },
-  addButton: {
-    backgroundColor: '#0066cc',
-    padding: 16,
+  summaryContainer: {
+    backgroundColor: 'white',
     borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 16,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
   },
-  addButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+  summaryText: {
     fontSize: 16,
+    color: '#444',
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  progressBar: {
+    height: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
+    overflow: 'hidden',
   },
-  emptyStateText: {
-    fontSize: 16,
-    color: '#666',
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#4caf50',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#666',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorText: {
-    fontSize: 16,
-    color: 'red',
-  },
-});
-
-export default App; 
+}); 

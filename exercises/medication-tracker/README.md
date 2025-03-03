@@ -1,57 +1,67 @@
-# TypeScript with React Native: Medication Tracker Exercise
+# Medication Tracker Exercise
 
-This exercise demonstrates how to use TypeScript with React Native to create a type-safe medication tracking application. It's designed to help you practice the concepts covered in Module 5, Section 3: TypeScript with React Native.
+This exercise will help you practice applying TypeScript concepts to a React Native application. You'll build a simple medication tracker application that allows users to mark medications as taken and see a summary of their daily medication regimen.
 
-## Exercise Structure
+## Exercise Requirements
 
-This exercise contains two directories:
+1. **Define TypeScript Interfaces**: Create interfaces for medication reminders.
 
-1. **`starter/`**: Contains the starter code that you'll use to complete the exercise. It has the basic structure and TODOs for you to implement.
+2. **TypeScript Components**: Implement type-safe React components for the medication tracker.
 
-2. **`complete/`**: Contains the complete implementation with all the TypeScript features properly applied. Use this as a reference or to check your work.
+3. **State Management**: Use proper TypeScript types with React's useState hook.
+
+4. **Type-safe Event Handlers**: Implement handlers for user interactions with correct TypeScript typing.
+
+5. **Custom Hooks (Optional)**: Create a custom hook to manage medication data.
+
+## Project Structure
+
+The starter code provides:
+- Basic app structure
+- Sample medication data
+- StyleSheet definitions
+
+## Implementation Tasks
+
+1. Define a `Medication` interface with appropriate properties:
+   - id (number)
+   - name (string)
+   - dosage (string)
+   - time (string)
+   - taken (boolean)
+
+2. Create a `MedicationItem` component with typed props:
+   - Medication data
+   - onPress callback to mark as taken/untaken
+
+3. Create a `MedicationList` component that:
+   - Renders a list of medications using FlatList
+   - Uses proper TypeScript for its props and state
+
+4. In the main App component:
+   - Use useState with proper TypeScript typing
+   - Implement a function to toggle medication taken status
+   - Add a summary showing medications taken vs. total
+
+## Tips
+
+- Review the TypeScript type definitions for React Native components
+- Pay attention to event handler types
+- Use TypeScript to make your component props explicit
+- Focus on creating a type-safe implementation
+- Look for TypeScript errors and fix them
+
+## Getting Started
+
+1. Open the starter code in `App.tsx`
+2. Work through the "ToDo" items in order
+3. Test your implementation as you go
+4. Verify the final app shows the correct UI and behavior
 
 ## Learning Objectives
 
-By completing this exercise, you'll practice:
-
-- Defining TypeScript interfaces for React Native components
-- Using TypeScript with React functional components
-- Implementing type-safe state management with useState
-- Creating custom hooks with TypeScript
-- Adding type-safe event handlers
-- Properly typing styles
-
-## How to Use This Exercise
-
-### Running on Expo Snack
-
-This exercise is designed to be run on Expo Snack, which allows you to run React Native code in your browser or on your physical device using the Expo Go app.
-
-1. Go to [snack.expo.dev](https://snack.expo.dev/)
-2. Create a new TypeScript project
-3. Copy the code from either the starter or complete example
-4. Run the project in the preview pane
-
-### Development Process
-
-1. Start with the code in the `starter/` directory
-2. Follow the TODOs in the code to implement TypeScript features
-3. Test your implementation in Expo Snack
-4. Compare your solution with the implementation in the `complete/` directory
-
-## Technical Requirements
-
-The application should:
-
-- Display a list of medications with their details
-- Allow marking medications as taken
-- Allow skipping medications
-- Support adding new medications
-- Use TypeScript for all components, props, state, and hooks
-- Handle loading, error, and empty states
-
-## Resources
-
-- [React TypeScript Cheatsheet](https://github.com/typescript-cheatsheets/react)
-- [React Native TypeScript Documentation](https://reactnative.dev/docs/typescript)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) 
+This exercise reinforces the following skills:
+- Using TypeScript with React Native components
+- Typing component props and state
+- Implementing type-safe event handlers
+- Creating maintainable, type-safe React Native code 
