@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 1</h1>
+    <p>This is the completed version showing different function syntax forms and their behavior with 'this'.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Part 1: Function Declaration</h2>
+            <p>Original function declaration:</p>
+            <pre>
+function calculateDosage(weight, age) {
+    const baseDosage = weight * 0.1;
+    const ageFactor = age < 18 ? 0.8 : 1;
+    return baseDosage * ageFactor;
+}</pre>
+            <p>Test result: <span id="declarationResult"></span></p>
+        </div>
+
+        <div class="section">
+            <h2>Part 2: Function Expression</h2>
+            <p>Function declaration converted to function expression:</p>
+            <pre>
+const calculateDosage = function(weight, age) {
+    const baseDosage = weight * 0.1;
+    const ageFactor = age < 18 ? 0.8 : 1;
+    return baseDosage * ageFactor;
+};</pre>
+            <p>Test result: <span id="expressionResult"></span></p>
+            <div class="note">
+                Note: Function expressions are not hoisted and must be defined before use.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Part 3: Arrow Function</h2>
+            <p>Function expression converted to arrow function:</p>
+            <pre>
+const calculateDosage = (weight, age) => {
+    const baseDosage = weight * 0.1;
+    const ageFactor = age < 18 ? 0.8 : 1;
+    return baseDosage * ageFactor;
+};</pre>
+            <p>Test result: <span id="arrowResult"></span></p>
+            <div class="note">
+                Note: Arrow functions don't bind their own 'this' context.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Part 4: 'this' Context Test</h2>
+            <p>Testing 'this' context in different function forms:</p>
+            <pre>
+const patient = {
+    name: "John",
+    weight: 70,
+    age: 35,
+    getDosage: function() {
+        return calculateDosage(this.weight, this.age);
+    }
+};</pre>
+            <p>Test result: <span id="thisResult"></span></p>
+            <div class="note">
+                Note: The 'this' context is preserved in the method call because we're using a regular function.
+                If we used an arrow function, 'this' would refer to the global scope.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Original function declaration
+        function calculateDosage(weight, age) {
+            const baseDosage = weight * 0.1;
+            const ageFactor = age < 18 ? 0.8 : 1;
+            return baseDosage * ageFactor;
+        }
+
+        // Function expression version
+        const calculateDosageExpression = function(weight, age) {
+            const baseDosage = weight * 0.1;
+            const ageFactor = age < 18 ? 0.8 : 1;
+            return baseDosage * ageFactor;
+        };
+
+        // Arrow function version
+        const calculateDosageArrow = (weight, age) => {
+            const baseDosage = weight * 0.1;
+            const ageFactor = age < 18 ? 0.8 : 1;
+            return baseDosage * ageFactor;
+        };
+
+        // Test the functions
+        function testFunctions() {
+            // Test declaration
+            document.getElementById('declarationResult').textContent = 
+                calculateDosage(70, 35);
+
+            // Test expression
+            document.getElementById('expressionResult').textContent = 
+                calculateDosageExpression(70, 35);
+
+            // Test arrow
+            document.getElementById('arrowResult').textContent = 
+                calculateDosageArrow(70, 35);
+
+            // Test 'this' context
+            const patient = {
+                name: "John",
+                weight: 70,
+                age: 35,
+                getDosage: function() {
+                    return calculateDosage(this.weight, this.age);
+                },
+                // Example of arrow function losing 'this' context
+                getDosageArrow: () => {
+                    return calculateDosage(this.weight, this.age);
+                }
+            };
+
+            document.getElementById('thisResult').innerHTML = `
+                Regular function: ${patient.getDosage()}<br>
+                Arrow function: ${patient.getDosageArrow()}
+            `;
+        }
+
+        // Run tests when page loads
+        window.onload = testFunctions;
+    </script>
+</body>
+</html> 

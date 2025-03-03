@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .filter-controls {
+            margin-bottom: 20px;
+        }
+        select, input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .note {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 3</h1>
+    <p>This is the completed version showing how to implement higher-order functions for medication filtering and processing.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication Filtering System</h2>
+            
+            <div class="filter-controls">
+                <select id="filterType" onchange="applyFilters()">
+                    <option value="all">All Medications</option>
+                    <option value="morning">Morning Medications</option>
+                    <option value="afternoon">Afternoon Medications</option>
+                    <option value="evening">Evening Medications</option>
+                </select>
+
+                <select id="sortBy" onchange="applyFilters()">
+                    <option value="name">Sort by Name</option>
+                    <option value="time">Sort by Time</option>
+                    <option value="type">Sort by Type</option>
+                </select>
+
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="applyFilters()">
+            </div>
+
+            <div id="medicationList" class="medication-list">
+                <!-- Filtered medications will be displayed here -->
+            </div>
+
+            <div class="note">
+                Note: This implementation uses higher-order functions (filter, map, sort) to process the medication data.
+                Each function is pure and returns a new array, following functional programming principles.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample medication data
+        const medications = [
+            { name: "Lisinopril", type: "blood pressure", time: "morning", dosage: "10mg" },
+            { name: "Metformin", type: "diabetes", time: "morning", dosage: "500mg" },
+            { name: "Amoxicillin", type: "antibiotic", time: "afternoon", dosage: "500mg" },
+            { name: "Vitamin D", type: "vitamin", time: "morning", dosage: "1000IU" },
+            { name: "Ibuprofen", type: "pain reliever", time: "evening", dosage: "400mg" },
+            { name: "Zyrtec", type: "antihistamine", time: "evening", dosage: "10mg" }
+        ];
+
+        // Filter medications by time of day
+        function filterMedications(medications, criteria) {
+            if (criteria === 'all') {
+                return medications;
+            }
+            
+            return medications.filter(med => med.time === criteria);
+        }
+
+        // Sort medications by different criteria
+        function sortMedications(medications, sortBy) {
+            return [...medications].sort((a, b) => {
+                switch (sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'time':
+                        // Define time order
+                        const timeOrder = { morning: 1, afternoon: 2, evening: 3 };
+                        return timeOrder[a.time] - timeOrder[b.time];
+                    case 'type':
+                        return a.type.localeCompare(b.type);
+                    default:
+                        return 0;
+                }
+            });
+        }
+
+        // Search medications by name or type
+        function searchMedications(medications, searchTerm) {
+            if (!searchTerm) {
+                return medications;
+            }
+            
+            return medications.filter(med => 
+                med.name.toLowerCase().includes(searchTerm) ||
+                med.type.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Function to apply all filters and update display
+        function applyFilters() {
+            const filterType = document.getElementById('filterType').value;
+            const sortBy = document.getElementById('sortBy').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            // Apply filters using function composition
+            const filteredMeds = medications
+                .filter(med => filterType === 'all' || med.time === filterType)
+                .filter(med => !searchTerm || 
+                    med.name.toLowerCase().includes(searchTerm) ||
+                    med.type.toLowerCase().includes(searchTerm))
+                .sort((a, b) => {
+                    switch (sortBy) {
+                        case 'name':
+                            return a.name.localeCompare(b.name);
+                        case 'time':
+                            const timeOrder = { morning: 1, afternoon: 2, evening: 3 };
+                            return timeOrder[a.time] - timeOrder[b.time];
+                        case 'type':
+                            return a.type.localeCompare(b.type);
+                        default:
+                            return 0;
+                    }
+                });
+
+            // Update display using map
+            const medicationList = document.getElementById('medicationList');
+            medicationList.innerHTML = filteredMeds.map(med => `
+                <div class="medication-item">
+                    <h3>${med.name}</h3>
+                    <p>Type: ${med.type}</p>
+                    <p>Time: ${med.time}</p>
+                    <p>Dosage: ${med.dosage}</p>
+                </div>
+            `).join('');
+        }
+
+        // Initial display
+        window.onload = applyFilters;
+    </script>
+</body>
+</html> 

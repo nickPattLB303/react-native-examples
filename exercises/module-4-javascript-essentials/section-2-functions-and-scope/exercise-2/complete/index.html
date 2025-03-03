@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .note {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 2</h1>
+    <p>This is the completed version showing how to implement a closure-based medication tracker.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication Tracker</h2>
+            <div class="form-group">
+                <label for="medicationName">Medication Name:</label>
+                <input type="text" id="medicationName" placeholder="Enter medication name">
+                <button onclick="createTracker()">Create New Tracker</button>
+            </div>
+
+            <div id="trackers" class="medication-list">
+                <!-- Medication trackers will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createMedicationTracker(medicationName) {
+            // Private state maintained by closure
+            let doses = [];
+            const prescribedDosesPerDay = 3; // Example: 3 doses per day
+            const hoursBetweenDoses = 8; // Example: 8 hours between doses
+
+            // Helper function to format time
+            function formatTime(date) {
+                return date.toLocaleTimeString();
+            }
+
+            // Helper function to calculate time until next dose
+            function calculateNextDoseTime() {
+                if (doses.length === 0) return 'Not scheduled';
+                
+                const lastDose = new Date(doses[doses.length - 1]);
+                const nextDose = new Date(lastDose.getTime() + (hoursBetweenDoses * 60 * 60 * 1000));
+                
+                if (nextDose < new Date()) {
+                    return 'Overdue';
+                }
+                
+                const hoursUntil = Math.round((nextDose - new Date()) / (60 * 60 * 1000));
+                return `In ${hoursUntil} hours`;
+            }
+
+            // Helper function to calculate adherence
+            function calculateAdherence() {
+                if (doses.length === 0) return 0;
+                
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const dosesToday = doses.filter(dose => {
+                    const doseDate = new Date(dose);
+                    doseDate.setHours(0, 0, 0, 0);
+                    return doseDate.getTime() === today.getTime();
+                }).length;
+                
+                return Math.round((dosesToday / prescribedDosesPerDay) * 100);
+            }
+
+            // Return public interface
+            return {
+                takeDose: function() {
+                    doses.push(new Date().toISOString());
+                },
+                
+                getDoseCount: function() {
+                    return doses.length;
+                },
+                
+                getLastDoseTime: function() {
+                    if (doses.length === 0) return 'Never';
+                    return formatTime(new Date(doses[doses.length - 1]));
+                },
+                
+                getNextDoseTime: calculateNextDoseTime,
+                
+                getAdherence: calculateAdherence,
+                
+                // Additional helper method to get all doses (for debugging)
+                getAllDoses: function() {
+                    return doses.map(dose => formatTime(new Date(dose)));
+                }
+            };
+        }
+
+        // Function to create and display a new tracker
+        function createTracker() {
+            const medicationName = document.getElementById('medicationName').value;
+            if (!medicationName) {
+                alert('Please enter a medication name');
+                return;
+            }
+
+            const tracker = createMedicationTracker(medicationName);
+            const trackerElement = document.createElement('div');
+            trackerElement.className = 'medication-item';
+            trackerElement.innerHTML = `
+                <h3>${medicationName}</h3>
+                <p>Doses taken: <span id="${medicationName}-count">0</span></p>
+                <p>Last dose: <span id="${medicationName}-last">Never</span></p>
+                <p>Next dose: <span id="${medicationName}-next">Not scheduled</span></p>
+                <p>Adherence: <span id="${medicationName}-adherence">0%</span></p>
+                <button onclick="takeDose('${medicationName}')">Take Dose</button>
+                <div class="note">
+                    Note: This tracker maintains its state using closures. Each medication has its own private state
+                    that persists between dose recordings.
+                </div>
+            `;
+
+            document.getElementById('trackers').appendChild(trackerElement);
+            window.trackers = window.trackers || {};
+            window.trackers[medicationName] = tracker;
+        }
+
+        // Function to record a dose taken
+        function takeDose(medicationName) {
+            const tracker = window.trackers[medicationName];
+            if (!tracker) return;
+
+            tracker.takeDose();
+            
+            // Update display
+            document.getElementById(`${medicationName}-count`).textContent = tracker.getDoseCount();
+            document.getElementById(`${medicationName}-last`).textContent = tracker.getLastDoseTime();
+            document.getElementById(`${medicationName}-next`).textContent = tracker.getNextDoseTime();
+            document.getElementById(`${medicationName}-adherence`).textContent = tracker.getAdherence() + '%';
+        }
+    </script>
+</body>
+</html> 

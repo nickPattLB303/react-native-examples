@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 2</h1>
+    <p>Complete the exercise by implementing a closure-based medication tracker.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication Tracker</h2>
+            <div class="form-group">
+                <label for="medicationName">Medication Name:</label>
+                <input type="text" id="medicationName" placeholder="Enter medication name">
+                <button onclick="createTracker()">Create New Tracker</button>
+            </div>
+
+            <div id="trackers" class="medication-list">
+                <!-- Medication trackers will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // TODO: Implement the createMedicationTracker function
+        // The function should:
+        // 1. Create a closure that maintains state for:
+        //    - Number of doses taken
+        //    - Array of timestamps for doses
+        //    - Medication name
+        // 2. Return an object with methods:
+        //    - takeDose(): Record a dose taken
+        //    - getDoseCount(): Get number of doses taken
+        //    - getLastDoseTime(): Get timestamp of last dose
+        //    - getNextDoseTime(): Calculate time until next dose
+        //    - getAdherence(): Calculate adherence percentage
+        
+        function createMedicationTracker(medicationName) {
+            // Your code here
+        }
+
+        // Function to create and display a new tracker
+        function createTracker() {
+            const medicationName = document.getElementById('medicationName').value;
+            if (!medicationName) {
+                alert('Please enter a medication name');
+                return;
+            }
+
+            const tracker = createMedicationTracker(medicationName);
+            const trackerElement = document.createElement('div');
+            trackerElement.className = 'medication-item';
+            trackerElement.innerHTML = `
+                <h3>${medicationName}</h3>
+                <p>Doses taken: <span id="${medicationName}-count">0</span></p>
+                <p>Last dose: <span id="${medicationName}-last">Never</span></p>
+                <p>Next dose: <span id="${medicationName}-next">Not scheduled</span></p>
+                <p>Adherence: <span id="${medicationName}-adherence">0%</span></p>
+                <button onclick="takeDose('${medicationName}')">Take Dose</button>
+            `;
+
+            document.getElementById('trackers').appendChild(trackerElement);
+            window.trackers = window.trackers || {};
+            window.trackers[medicationName] = tracker;
+        }
+
+        // Function to record a dose taken
+        function takeDose(medicationName) {
+            const tracker = window.trackers[medicationName];
+            if (!tracker) return;
+
+            tracker.takeDose();
+            
+            // Update display
+            document.getElementById(`${medicationName}-count`).textContent = tracker.getDoseCount();
+            document.getElementById(`${medicationName}-last`).textContent = tracker.getLastDoseTime();
+            document.getElementById(`${medicationName}-next`).textContent = tracker.getNextDoseTime();
+            document.getElementById(`${medicationName}-adherence`).textContent = tracker.getAdherence() + '%';
+        }
+    </script>
+</body>
+</html> 

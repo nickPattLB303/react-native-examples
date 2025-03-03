@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 1</h1>
+    <p>Complete the exercise by transforming the functions between different syntax forms and observing the behavior of 'this'.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Part 1: Function Declaration</h2>
+            <p>Original function declaration:</p>
+            <pre>
+function calculateDosage(weight, age) {
+    const baseDosage = weight * 0.1;
+    const ageFactor = age < 18 ? 0.8 : 1;
+    return baseDosage * ageFactor;
+}</pre>
+            <p>Test result: <span id="declarationResult"></span></p>
+        </div>
+
+        <div class="section">
+            <h2>Part 2: Function Expression</h2>
+            <p>Convert the function declaration to a function expression:</p>
+            <pre>
+// TODO: Convert the function declaration to a function expression
+// const calculateDosage = function(weight, age) { ... };</pre>
+            <p>Test result: <span id="expressionResult"></span></p>
+        </div>
+
+        <div class="section">
+            <h2>Part 3: Arrow Function</h2>
+            <p>Convert the function expression to an arrow function:</p>
+            <pre>
+// TODO: Convert the function expression to an arrow function
+// const calculateDosage = (weight, age) => { ... };</pre>
+            <p>Test result: <span id="arrowResult"></span></p>
+        </div>
+
+        <div class="section">
+            <h2>Part 4: 'this' Context Test</h2>
+            <p>Test the 'this' context in different function forms:</p>
+            <pre>
+const patient = {
+    name: "John",
+    weight: 70,
+    age: 35,
+    getDosage: function() {
+        return calculateDosage(this.weight, this.age);
+    }
+};</pre>
+            <p>Test result: <span id="thisResult"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Original function declaration
+        function calculateDosage(weight, age) {
+            const baseDosage = weight * 0.1;
+            const ageFactor = age < 18 ? 0.8 : 1;
+            return baseDosage * ageFactor;
+        }
+
+        // TODO: Convert to function expression
+        // const calculateDosage = function(weight, age) { ... };
+
+        // TODO: Convert to arrow function
+        // const calculateDosage = (weight, age) => { ... };
+
+        // Test the functions
+        function testFunctions() {
+            // Test declaration
+            document.getElementById('declarationResult').textContent = 
+                calculateDosage(70, 35);
+
+            // Test expression
+            document.getElementById('expressionResult').textContent = 
+                calculateDosage(70, 35);
+
+            // Test arrow
+            document.getElementById('arrowResult').textContent = 
+                calculateDosage(70, 35);
+
+            // Test 'this' context
+            const patient = {
+                name: "John",
+                weight: 70,
+                age: 35,
+                getDosage: function() {
+                    return calculateDosage(this.weight, this.age);
+                }
+            };
+
+            document.getElementById('thisResult').textContent = 
+                patient.getDosage();
+        }
+
+        // Run tests when page loads
+        window.onload = testFunctions;
+    </script>
+</body>
+</html> 

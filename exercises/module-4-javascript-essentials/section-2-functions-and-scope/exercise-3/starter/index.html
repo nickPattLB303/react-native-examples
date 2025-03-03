@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions and Scope - Exercise 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .filter-controls {
+            margin-bottom: 20px;
+        }
+        select, input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functions and Scope - Exercise 3</h1>
+    <p>Complete the exercise by implementing higher-order functions for medication filtering and processing.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication Filtering System</h2>
+            
+            <div class="filter-controls">
+                <select id="filterType" onchange="applyFilters()">
+                    <option value="all">All Medications</option>
+                    <option value="morning">Morning Medications</option>
+                    <option value="afternoon">Afternoon Medications</option>
+                    <option value="evening">Evening Medications</option>
+                </select>
+
+                <select id="sortBy" onchange="applyFilters()">
+                    <option value="name">Sort by Name</option>
+                    <option value="time">Sort by Time</option>
+                    <option value="type">Sort by Type</option>
+                </select>
+
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="applyFilters()">
+            </div>
+
+            <div id="medicationList" class="medication-list">
+                <!-- Filtered medications will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample medication data
+        const medications = [
+            { name: "Lisinopril", type: "blood pressure", time: "morning", dosage: "10mg" },
+            { name: "Metformin", type: "diabetes", time: "morning", dosage: "500mg" },
+            { name: "Amoxicillin", type: "antibiotic", time: "afternoon", dosage: "500mg" },
+            { name: "Vitamin D", type: "vitamin", time: "morning", dosage: "1000IU" },
+            { name: "Ibuprofen", type: "pain reliever", time: "evening", dosage: "400mg" },
+            { name: "Zyrtec", type: "antihistamine", time: "evening", dosage: "10mg" }
+        ];
+
+        // TODO: Implement the filterMedications function
+        // The function should:
+        // 1. Take an array of medications and filter criteria
+        // 2. Return a new array of filtered medications
+        // 3. Use higher-order functions (filter, map, sort)
+        
+        function filterMedications(medications, criteria) {
+            // Your code here
+        }
+
+        // TODO: Implement the sortMedications function
+        // The function should:
+        // 1. Take an array of medications and sort criteria
+        // 2. Return a new sorted array
+        // 3. Use the sort higher-order function
+        
+        function sortMedications(medications, sortBy) {
+            // Your code here
+        }
+
+        // TODO: Implement the searchMedications function
+        // The function should:
+        // 1. Take an array of medications and search term
+        // 2. Return a new array of matching medications
+        // 3. Use the filter higher-order function
+        
+        function searchMedications(medications, searchTerm) {
+            // Your code here
+        }
+
+        // Function to apply all filters and update display
+        function applyFilters() {
+            const filterType = document.getElementById('filterType').value;
+            const sortBy = document.getElementById('sortBy').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            // Apply filters
+            let filteredMeds = filterMedications(medications, filterType);
+            filteredMeds = searchMedications(filteredMeds, searchTerm);
+            filteredMeds = sortMedications(filteredMeds, sortBy);
+
+            // Update display
+            const medicationList = document.getElementById('medicationList');
+            medicationList.innerHTML = filteredMeds.map(med => `
+                <div class="medication-item">
+                    <h3>${med.name}</h3>
+                    <p>Type: ${med.type}</p>
+                    <p>Time: ${med.time}</p>
+                    <p>Dosage: ${med.dosage}</p>
+                </div>
+            `).join('');
+        }
+
+        // Initial display
+        window.onload = applyFilters;
+    </script>
+</body>
+</html> 
