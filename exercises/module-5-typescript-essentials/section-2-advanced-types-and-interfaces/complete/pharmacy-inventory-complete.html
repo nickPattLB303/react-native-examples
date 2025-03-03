@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacy Inventory System - Complete Solution</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #008080;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .full-width {
+      grid-column: 1 / 3;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #008080;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #006666;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .output {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #eee;
+      padding: 10px;
+      border-radius: 4px;
+      min-height: 100px;
+    }
+    .explanation {
+      background: #e7f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .note {
+      font-style: italic;
+      color: #666;
+    }
+    .key-concept {
+      background-color: #fafafa;
+      border-left: 4px solid #008080;
+      padding: 10px 15px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pharmacy Inventory System - Complete Solution</h1>
+  
+  <div class="explanation">
+    <h2>Advanced TypeScript Features Demonstrated</h2>
+    <p>This example demonstrates various advanced TypeScript features applied to a pharmacy inventory management system:</p>
+    <ul>
+      <li><strong>Generic Types</strong>: The <code>InventoryItem&lt;T&gt;</code> interface works with different product types</li>
+      <li><strong>Advanced Interfaces</strong>: Using optional and readonly properties</li>
+      <li><strong>Union Types</strong>: For different inventory actions (restock, dispense, adjust)</li>
+      <li><strong>Type Guards</strong>: To handle different inventory actions appropriately</li>
+      <li><strong>Utility Types</strong>: Creating specialized views using Pick, Readonly, and Partial</li>
+    </ul>
+  </div>
+
+  <div class="key-concept">
+    <p><strong>Try it out!</strong> This interactive demo allows you to perform different actions on the inventory and see how TypeScript's type system ensures type safety throughout the application.</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>Inventory Action</h2>
+      <div class="controls">
+        <div class="full-width">
+          <label for="actionType">Action Type:</label>
+          <select id="actionType">
+            <option value="restock">Restock</option>
+            <option value="dispense">Dispense</option>
+            <option value="adjust">Adjust</option>
+          </select>
+        </div>
+        <div>
+          <label for="itemId">Item ID:</label>
+          <input type="number" id="itemId" value="1" min="1">
+          <p class="note">Try IDs: 1, 2 (medications) or 101, 102 (supplies)</p>
+        </div>
+        <div>
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" value="50" min="1">
+        </div>
+        <div class="full-width">
+          <button id="processAction">Process Action</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Action Result</h2>
+      <div id="actionResult" class="output">
+        Click "Process Action" to see results...
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Inventory Items</h2>
+      <div id="inventoryDisplay" class="output">
+        Loading inventory...
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Low Stock Items</h2>
+      <div id="dataView" class="output">
+        Loading data view...
+      </div>
+    </div>
+  </div>
+  
+  <div class="key-concept">
+    <h3>Type Guard Example:</h3>
+    <pre>
+function isMedication(item: PharmacyItem): item is InventoryItem&lt;Medication&gt; {
+  return 'ndc' in item.data;
+}
+    </pre>
+    
+    <h3>Discriminated Union Example:</h3>
+    <pre>
+type InventoryAction = 
+  | { type: 'restock'; itemId: number; quantity: number; lotNumber: string; }
+  | { type: 'dispense'; itemId: number; quantity: number; patientId: string; }
+  | { type: 'adjust'; itemId: number; quantity: number; reason: string; };
+    </pre>
+  </div>
+  
+  <script src="pharmacy-inventory-complete.js"></script>
+</body>
+</html> 
