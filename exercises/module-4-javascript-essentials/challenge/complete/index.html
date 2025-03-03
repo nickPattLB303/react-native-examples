@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Management System - Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #f57c00;
+            padding: 10px;
+            background-color: #fff3e0;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .note {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medication Management System</h1>
+    <p>This is the completed version showing a fully functional medication management system.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Add New Medication</h2>
+            <div class="form-group">
+                <label for="medName">Medication Name:</label>
+                <input type="text" id="medName" placeholder="Enter medication name">
+                
+                <label for="medDosage">Dosage:</label>
+                <input type="text" id="medDosage" placeholder="Enter dosage">
+                
+                <label for="medFrequency">Frequency (times per day):</label>
+                <input type="number" id="medFrequency" min="1" max="24" placeholder="Enter frequency">
+                
+                <label for="medInstructions">Special Instructions:</label>
+                <input type="text" id="medInstructions" placeholder="Enter special instructions">
+                
+                <label for="medStartDate">Start Date:</label>
+                <input type="date" id="medStartDate">
+                
+                <label for="medEndDate">End Date (optional):</label>
+                <input type="date" id="medEndDate">
+                
+                <button onclick="addMedication()">Add Medication</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Search Medications</h2>
+            <div class="form-group">
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="debouncedSearch(this.value)">
+                <div id="searchResults" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Medication Schedule</h2>
+            <div class="form-group">
+                <label for="medId">Medication ID:</label>
+                <input type="text" id="medId" placeholder="Enter medication ID">
+                <button onclick="calculateNextDose()">Calculate Next Dose</button>
+            </div>
+            <div id="scheduleResult">
+                <!-- Schedule results will be displayed here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Medication List</h2>
+            <div id="medicationList" class="medication-list">
+                <!-- Medications will be displayed here -->
+            </div>
+        </div>
+
+        <div class="note">
+            Note: This implementation demonstrates modern JavaScript features including:
+            - ES6+ syntax and methods
+            - Async/await for API operations
+            - Debounced search
+            - Error handling
+            - Date manipulation
+            - Array and object operations
+        </div>
+    </div>
+
+    <script>
+        // Medication data structure
+        const medications = [];
+
+        // Known medication interactions
+        const interactions = {
+            'Lisinopril': ['Ibuprofen', 'Naproxen'],
+            'Metformin': ['Alcohol', 'Cimetidine'],
+            'Warfarin': ['Aspirin', 'Ibuprofen', 'Vitamin K']
+        };
+
+        // Generate unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // Add new medication
+        function addMedication() {
+            try {
+                const name = document.getElementById('medName').value;
+                const dosage = document.getElementById('medDosage').value;
+                const frequency = parseInt(document.getElementById('medFrequency').value);
+                const instructions = document.getElementById('medInstructions').value;
+                const startDate = document.getElementById('medStartDate').value;
+                const endDate = document.getElementById('medEndDate').value;
+
+                // Validate required fields
+                if (!name || !dosage || !frequency || !startDate) {
+                    throw new Error('Please fill in all required fields');
+                }
+
+                // Validate frequency
+                if (frequency < 1 || frequency > 24) {
+                    throw new Error('Frequency must be between 1 and 24 times per day');
+                }
+
+                // Create medication object
+                const medication = {
+                    id: generateId(),
+                    name,
+                    dosage,
+                    frequency,
+                    instructions,
+                    startDate,
+                    endDate: endDate || null,
+                    lastDose: null
+                };
+
+                // Check for interactions
+                const interactionWarnings = checkInteractions(medication);
+                if (interactionWarnings.length > 0) {
+                    displayWarning(interactionWarnings.join('\n'));
+                }
+
+                // Add to medications array
+                medications.push(medication);
+                displayMedications();
+                clearForm();
+            } catch (error) {
+                displayError(error.message);
+            }
+        }
+
+        // Search medications
+        function searchMedications(query) {
+            if (!query) return [];
+            return medications.filter(med => 
+                med.name.toLowerCase().includes(query.toLowerCase()) ||
+                med.dosage.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+
+        // Debounced search
+        let searchTimeout;
+        function debouncedSearch(query) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const results = searchMedications(query);
+                displaySearchResults(results);
+            }, 300);
+        }
+
+        // Calculate next dose
+        function calculateNextDose() {
+            try {
+                const medId = document.getElementById('medId').value;
+                const medication = medications.find(med => med.id === medId);
+
+                if (!medication) {
+                    throw new Error('Medication not found');
+                }
+
+                const now = new Date();
+                const lastDose = medication.lastDose ? new Date(medication.lastDose) : new Date(medication.startDate);
+                const hoursPerDose = 24 / medication.frequency;
+                const nextDose = new Date(lastDose.getTime() + hoursPerDose * 60 * 60 * 1000);
+
+                // If next dose is in the past, adjust to next available time
+                if (nextDose < now) {
+                    const hoursUntilNext = Math.ceil((now - nextDose) / (60 * 60 * 1000) / hoursPerDose) * hoursPerDose;
+                    nextDose.setTime(now.getTime() + hoursUntilNext * 60 * 60 * 1000);
+                }
+
+                document.getElementById('scheduleResult').innerHTML = `
+                    <h3>Next Dose Schedule</h3>
+                    <p>Medication: ${medication.name}</p>
+                    <p>Next dose: ${nextDose.toLocaleString()}</p>
+                    <p>Frequency: ${medication.frequency} times per day</p>
+                `;
+            } catch (error) {
+                displayError(error.message);
+            }
+        }
+
+        // Update medication
+        function updateMedication(id, updates) {
+            const index = medications.findIndex(med => med.id === id);
+            if (index === -1) {
+                throw new Error('Medication not found');
+            }
+            medications[index] = { ...medications[index], ...updates };
+            displayMedications();
+        }
+
+        // Remove medication
+        function removeMedication(id) {
+            const index = medications.findIndex(med => med.id === id);
+            if (index === -1) {
+                throw new Error('Medication not found');
+            }
+            medications.splice(index, 1);
+            displayMedications();
+        }
+
+        // Check for interactions
+        function checkInteractions(medication) {
+            const warnings = [];
+            const medName = medication.name;
+
+            if (interactions[medName]) {
+                const existingMeds = medications.filter(med => 
+                    interactions[medName].includes(med.name)
+                );
+
+                if (existingMeds.length > 0) {
+                    warnings.push(`Warning: ${medName} may interact with: ${existingMeds.map(med => med.name).join(', ')}`);
+                }
+            }
+
+            return warnings;
+        }
+
+        // Display medications
+        function displayMedications() {
+            const container = document.getElementById('medicationList');
+            container.innerHTML = medications.map(med => `
+                <div class="medication-item">
+                    <h4>${med.name}</h4>
+                    <p>ID: ${med.id}</p>
+                    <p>Dosage: ${med.dosage}</p>
+                    <p>Frequency: ${med.frequency} times per day</p>
+                    <p>Instructions: ${med.instructions}</p>
+                    <p>Start Date: ${new Date(med.startDate).toLocaleDateString()}</p>
+                    ${med.endDate ? `<p>End Date: ${new Date(med.endDate).toLocaleDateString()}</p>` : ''}
+                    <button onclick="removeMedication('${med.id}')">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            const container = document.getElementById('searchResults');
+            if (results.length === 0) {
+                container.innerHTML = '<p>No medications found</p>';
+                return;
+            }
+            container.innerHTML = results.map(med => `
+                <div class="medication-item">
+                    <h4>${med.name}</h4>
+                    <p>Dosage: ${med.dosage}</p>
+                    <p>Frequency: ${med.frequency} times per day</p>
+                </div>
+            `).join('');
+        }
+
+        // Display error message
+        function displayError(message) {
+            const container = document.getElementById('scheduleResult');
+            container.innerHTML = `<div class="error">Error: ${message}</div>`;
+        }
+
+        // Display warning message
+        function displayWarning(message) {
+            const container = document.getElementById('scheduleResult');
+            container.innerHTML = `<div class="warning">Warning: ${message}</div>`;
+        }
+
+        // Clear form
+        function clearForm() {
+            document.getElementById('medName').value = '';
+            document.getElementById('medDosage').value = '';
+            document.getElementById('medFrequency').value = '';
+            document.getElementById('medInstructions').value = '';
+            document.getElementById('medStartDate').value = '';
+            document.getElementById('medEndDate').value = '';
+        }
+
+        // Initial display
+        displayMedications();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Management System - Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #f57c00;
+            padding: 10px;
+            background-color: #fff3e0;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medication Management System</h1>
+    <p>Complete the challenge by implementing the medication management system functionality.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Add New Medication</h2>
+            <div class="form-group">
+                <label for="medName">Medication Name:</label>
+                <input type="text" id="medName" placeholder="Enter medication name">
+                
+                <label for="medDosage">Dosage:</label>
+                <input type="text" id="medDosage" placeholder="Enter dosage">
+                
+                <label for="medFrequency">Frequency (times per day):</label>
+                <input type="number" id="medFrequency" min="1" max="24" placeholder="Enter frequency">
+                
+                <label for="medInstructions">Special Instructions:</label>
+                <input type="text" id="medInstructions" placeholder="Enter special instructions">
+                
+                <label for="medStartDate">Start Date:</label>
+                <input type="date" id="medStartDate">
+                
+                <label for="medEndDate">End Date (optional):</label>
+                <input type="date" id="medEndDate">
+                
+                <button onclick="addMedication()">Add Medication</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Search Medications</h2>
+            <div class="form-group">
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="debouncedSearch(this.value)">
+                <div id="searchResults" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Medication Schedule</h2>
+            <div class="form-group">
+                <label for="medId">Medication ID:</label>
+                <input type="text" id="medId" placeholder="Enter medication ID">
+                <button onclick="calculateNextDose()">Calculate Next Dose</button>
+            </div>
+            <div id="scheduleResult">
+                <!-- Schedule results will be displayed here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Medication List</h2>
+            <div id="medicationList" class="medication-list">
+                <!-- Medications will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // TODO: Implement the Medication Management System
+        // 1. Create data structures for medications
+        // 2. Implement CRUD operations
+        // 3. Add search functionality with debouncing
+        // 4. Implement scheduling calculations
+        // 5. Add error handling
+
+        // Sample medication data structure
+        const medications = [];
+
+        // TODO: Implement addMedication function
+        function addMedication() {
+            // Your code here
+        }
+
+        // TODO: Implement searchMedications function
+        function searchMedications(query) {
+            // Your code here
+        }
+
+        // TODO: Implement debounced search
+        function debouncedSearch(query) {
+            // Your code here
+        }
+
+        // TODO: Implement calculateNextDose function
+        function calculateNextDose() {
+            // Your code here
+        }
+
+        // TODO: Implement updateMedication function
+        function updateMedication(id, updates) {
+            // Your code here
+        }
+
+        // TODO: Implement removeMedication function
+        function removeMedication(id) {
+            // Your code here
+        }
+
+        // TODO: Implement checkInteractions function
+        function checkInteractions(medication) {
+            // Your code here
+        }
+
+        // TODO: Implement displayMedications function
+        function displayMedications() {
+            // Your code here
+        }
+
+        // Initial display
+        displayMedications();
+    </script>
+</body>
+</html> 
