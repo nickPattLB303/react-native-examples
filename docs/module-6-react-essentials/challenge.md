@@ -21,7 +21,7 @@ You're building a medication tracking application for a pharmacy. The app needs 
 1. View a list of medications
 2. Add new medications
 3. Mark medications as taken
-4. Filter medications by status
+4. Filter medications by status 
 
 ### Core Requirements
 
