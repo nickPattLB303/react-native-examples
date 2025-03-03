@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Component Library - Complete</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Prop Types for prop validation -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for demonstration purposes */
+        .medication-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .medication-dosage {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .medication-schedule {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .refills {
+            color: #666;
+            font-style: italic;
+        }
+
+        .low-refills {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Sample medication data
+        const medications = [
+            {
+                id: "1",
+                name: "Lisinopril",
+                dosage: "10mg",
+                schedule: "Once daily",
+                refillsRemaining: 3
+            },
+            {
+                id: "2",
+                name: "Atorvastatin",
+                dosage: "20mg",
+                schedule: "Once daily at bedtime",
+                refillsRemaining: 1
+            },
+            {
+                id: "3",
+                name: "Metformin",
+                dosage: "500mg",
+                schedule: "Twice daily with meals",
+                refillsRemaining: 0
+            }
+        ];
+
+        // 1. BUTTON COMPONENT
+        function Button({ type = 'primary', size = 'medium', onPress, children }) {
+            // Implement button styles based on type and size
+            const buttonStyle = {
+                // Base styles
+                padding: size === 'small' ? '4px 8px' : size === 'medium' ? '8px 16px' : '12px 24px',
+                borderRadius: '4px',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 'medium',
+                // Type-specific styles
+                backgroundColor: 
+                    type === 'primary' ? '#007bff' : 
+                    type === 'secondary' ? '#6c757d' : 
+                    '#dc3545', // danger
+                color: 'white',
+            };
+            
+            return (
+                <button style={buttonStyle} onClick={onPress}>
+                    {children}
+                </button>
+            );
+        }
+        
+        // Add prop validation for Button component
+        Button.propTypes = {
+            type: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+            size: PropTypes.oneOf(['small', 'medium', 'large']),
+            onPress: PropTypes.func.isRequired,
+            children: PropTypes.node.isRequired,
+        };
+        
+        // 2. CARD COMPONENT
+        function Card({ title, footer, children }) {
+            const cardStyle = {
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                margin: '16px 0',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            };
+            
+            const headerStyle = {
+                backgroundColor: '#f8f9fa',
+                padding: '12px 16px',
+                borderBottom: '1px solid #ddd',
+            };
+            
+            const contentStyle = {
+                padding: '16px',
+            };
+            
+            const footerStyle = {
+                backgroundColor: '#f8f9fa',
+                padding: '12px 16px',
+                borderTop: '1px solid #ddd',
+            };
+            
+            return (
+                <div style={cardStyle}>
+                    {title && (
+                        <div style={headerStyle}>
+                            <h3 style={{ margin: 0 }}>{title}</h3>
+                        </div>
+                    )}
+                    <div style={contentStyle}>
+                        {children}
+                    </div>
+                    {footer && (
+                        <div style={footerStyle}>
+                            {footer}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+        
+        // Add prop validation for Card component
+        Card.propTypes = {
+            title: PropTypes.string,
+            footer: PropTypes.node,
+            children: PropTypes.node.isRequired,
+        };
+        
+        // 3. SPECIALIZED BUTTON COMPONENTS
+        function PrimaryButton({ children, ...props }) {
+            return (
+                <Button type="primary" {...props}>
+                    {children}
+                </Button>
+            );
+        }
+        
+        function DangerButton({ children, ...props }) {
+            return (
+                <Button type="danger" {...props}>
+                    {children}
+                </Button>
+            );
+        }
+        
+        // 4. MEDICATION CARD COMPONENT
+        function MedicationCard({ medication, onTakeMedication, onRefill }) {
+            // Create the card content with medication details
+            const cardContent = (
+                <div>
+                    <div className="medication-name">{medication.name}</div>
+                    <div className="medication-dosage">Dosage: {medication.dosage}</div>
+                    <div className="medication-schedule">Schedule: {medication.schedule}</div>
+                    <div className={`refills ${medication.refillsRemaining <= 1 ? 'low-refills' : ''}`}>
+                        Refills remaining: {medication.refillsRemaining}
+                    </div>
+                </div>
+            );
+            
+            // Create footer with action buttons
+            const cardFooter = (
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <PrimaryButton size="medium" onPress={onTakeMedication}>
+                        Take Medication
+                    </PrimaryButton>
+                    
+                    {medication.refillsRemaining === 0 && (
+                        <DangerButton size="medium" onPress={onRefill}>
+                            Request Refill
+                        </DangerButton>
+                    )}
+                </div>
+            );
+            
+            return (
+                <Card 
+                    title={`Medication: ${medication.name}`}
+                    footer={cardFooter}
+                >
+                    {cardContent}
+                </Card>
+            );
+        }
+        
+        // Add prop validation for MedicationCard component
+        MedicationCard.propTypes = {
+            medication: PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired,
+                dosage: PropTypes.string.isRequired,
+                schedule: PropTypes.string.isRequired,
+                refillsRemaining: PropTypes.number,
+            }).isRequired,
+            onTakeMedication: PropTypes.func.isRequired,
+            onRefill: PropTypes.func,
+        };
+        
+        // Main App Component
+        function App() {
+            // Handlers for demonstration
+            const handleTakeMedication = (id) => {
+                console.log(`Taking medication ${id}`);
+                alert(`Marked medication ${id} as taken!`);
+            };
+            
+            const handleRefill = (id) => {
+                console.log(`Refilling medication ${id}`);
+                alert(`Requesting refill for medication ${id}!`);
+            };
+            
+            return (
+                <div className="container">
+                    <h1>Component Library Demo</h1>
+                    
+                    <div className="instructions">
+                        <h3>Exercise: Building a Component Library (Completed)</h3>
+                        <p>This file shows the completed implementation of all components.</p>
+                        <p>Key features demonstrated:</p>
+                        <ul>
+                            <li>Props passing and validation</li>
+                            <li>Component composition patterns</li>
+                            <li>Specialized components</li>
+                            <li>Children prop usage</li>
+                        </ul>
+                    </div>
+                    
+                    <h2>Button Component Examples</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        <Button type="primary" size="medium" onPress={() => alert('Primary button clicked')}>
+                            Primary Button
+                        </Button>
+                        <Button type="secondary" size="medium" onPress={() => alert('Secondary button clicked')}>
+                            Secondary Button
+                        </Button>
+                        <Button type="danger" size="medium" onPress={() => alert('Danger button clicked')}>
+                            Danger Button
+                        </Button>
+                    </div>
+                    
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        <Button type="primary" size="small" onPress={() => alert('Small button clicked')}>
+                            Small
+                        </Button>
+                        <Button type="primary" size="medium" onPress={() => alert('Medium button clicked')}>
+                            Medium
+                        </Button>
+                        <Button type="primary" size="large" onPress={() => alert('Large button clicked')}>
+                            Large
+                        </Button>
+                    </div>
+                    
+                    <h2>Specialized Button Examples</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        <PrimaryButton onPress={() => alert('Primary button clicked')}>
+                            Primary Button
+                        </PrimaryButton>
+                        <DangerButton onPress={() => alert('Danger button clicked')}>
+                            Danger Button
+                        </DangerButton>
+                    </div>
+                    
+                    <h2>Card Component Example</h2>
+                    <Card 
+                        title="Sample Card"
+                        footer={
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button 
+                                    type="secondary" 
+                                    size="small" 
+                                    onPress={() => alert('Card action clicked')}
+                                >
+                                    Card Action
+                                </Button>
+                            </div>
+                        }
+                    >
+                        <p>This is a sample card with a title and footer.</p>
+                        <p>The Card component uses the children prop for flexible content.</p>
+                    </Card>
+                    
+                    <h2>Medications</h2>
+                    {medications.map(medication => (
+                        <MedicationCard 
+                            key={medication.id}
+                            medication={medication}
+                            onTakeMedication={() => handleTakeMedication(medication.id)}
+                            onRefill={() => handleRefill(medication.id)}
+                        />
+                    ))}
+                </div>
+            );
+        }
+        
+        // Render the App component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<App />);
+    </script>
+</body>
+</html> 

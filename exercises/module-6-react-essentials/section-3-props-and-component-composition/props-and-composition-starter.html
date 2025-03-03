@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Component Library - Starter</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Prop Types for prop validation -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for demonstration purposes */
+        .medication-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .medication-dosage {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .medication-schedule {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .refills {
+            color: #666;
+            font-style: italic;
+        }
+
+        .low-refills {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Sample medication data
+        const medications = [
+            {
+                id: "1",
+                name: "Lisinopril",
+                dosage: "10mg",
+                schedule: "Once daily",
+                refillsRemaining: 3
+            },
+            {
+                id: "2",
+                name: "Atorvastatin",
+                dosage: "20mg",
+                schedule: "Once daily at bedtime",
+                refillsRemaining: 1
+            },
+            {
+                id: "3",
+                name: "Metformin",
+                dosage: "500mg",
+                schedule: "Twice daily with meals",
+                refillsRemaining: 0
+            }
+        ];
+
+        // 1. BUTTON COMPONENT
+        // Create a flexible Button component that accepts:
+        // - type (primary, secondary, danger)
+        // - size (small, medium, large)
+        // - onPress callback
+        // - children
+        // Should render different styles based on type and size
+        function Button({ /* Your props here */ }) {
+            // Implement button styles based on type and size
+            
+            return (
+                // Implement button component
+            );
+        }
+        
+        // Add prop validation for Button component
+        Button.propTypes = {
+            // Add prop types here
+        };
+        
+        // 2. CARD COMPONENT
+        // Create a Card component that accepts:
+        // - title
+        // - footer
+        // - children
+        function Card({ /* Your props here */ }) {
+            // Implement Card component with header, content, and footer
+            
+            return (
+                // Implement card component
+            );
+        }
+        
+        // Add prop validation for Card component
+        Card.propTypes = {
+            // Add prop types here
+        };
+        
+        // 3. SPECIALIZED BUTTON COMPONENTS
+        // Create PrimaryButton and DangerButton components
+        // using composition with the Button component
+        function PrimaryButton({ /* Your props here */ }) {
+            // Implement PrimaryButton using Button component
+            
+            return (
+                // Implement primary button
+            );
+        }
+        
+        function DangerButton({ /* Your props here */ }) {
+            // Implement DangerButton using Button component
+            
+            return (
+                // Implement danger button
+            );
+        }
+        
+        // 4. MEDICATION CARD COMPONENT
+        // Create a component that uses Card and Button components
+        // to display medication details
+        function MedicationCard({ /* Your props here */ }) {
+            // Implement MedicationCard using Card and Button components
+            
+            return (
+                // Implement medication card
+            );
+        }
+        
+        // Add prop validation for MedicationCard component
+        MedicationCard.propTypes = {
+            // Add prop types here
+        };
+        
+        // Main App Component
+        function App() {
+            // Handlers for demonstration
+            const handleTakeMedication = (id) => {
+                console.log(`Taking medication ${id}`);
+                alert(`Marked medication ${id} as taken!`);
+            };
+            
+            const handleRefill = (id) => {
+                console.log(`Refilling medication ${id}`);
+                alert(`Requesting refill for medication ${id}!`);
+            };
+            
+            return (
+                <div className="container">
+                    <h1>Component Library Demo</h1>
+                    
+                    <div className="instructions">
+                        <h3>Exercise: Building a Component Library</h3>
+                        <p>Implement the components in this file following the comments.</p>
+                        <p>Focus on proper props usage and component composition patterns.</p>
+                    </div>
+                    
+                    <h2>Medications</h2>
+                    {medications.map(medication => (
+                        <div key={medication.id} style={{ marginBottom: '20px' }}>
+                            {/* Replace this with your MedicationCard component once implemented */}
+                            <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '16px' }}>
+                                <div className="medication-name">{medication.name}</div>
+                                <div className="medication-dosage">Dosage: {medication.dosage}</div>
+                                <div className="medication-schedule">Schedule: {medication.schedule}</div>
+                                <div className={`refills ${medication.refillsRemaining <= 1 ? 'low-refills' : ''}`}>
+                                    Refills remaining: {medication.refillsRemaining}
+                                </div>
+                                <div style={{ marginTop: '10px' }}>
+                                    <button 
+                                        style={{ 
+                                            marginRight: '10px', 
+                                            backgroundColor: '#007bff', 
+                                            color: 'white', 
+                                            border: 'none', 
+                                            padding: '8px 16px', 
+                                            borderRadius: '4px' 
+                                        }}
+                                        onClick={() => handleTakeMedication(medication.id)}
+                                    >
+                                        Take Medication
+                                    </button>
+                                    {medication.refillsRemaining === 0 && (
+                                        <button 
+                                            style={{ 
+                                                backgroundColor: '#dc3545', 
+                                                color: 'white', 
+                                                border: 'none', 
+                                                padding: '8px 16px', 
+                                                borderRadius: '4px' 
+                                            }}
+                                            onClick={() => handleRefill(medication.id)}
+                                        >
+                                            Request Refill
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    
+                    {/* Once you've implemented all components, comment out the code above 
+                        and uncomment this section to use your components */}
+                    {/*
+                    {medications.map(medication => (
+                        <MedicationCard 
+                            key={medication.id}
+                            medication={medication}
+                            onTakeMedication={() => handleTakeMedication(medication.id)}
+                            onRefill={() => handleRefill(medication.id)}
+                        />
+                    ))}
+                    */}
+                </div>
+            );
+        }
+        
+        // Render the App component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<App />);
+    </script>
+</body>
+</html> 
