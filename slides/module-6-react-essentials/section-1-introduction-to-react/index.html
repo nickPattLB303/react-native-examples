@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: Introduction to React | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>Introduction to React</h2>
+      <p class="metadata">Module 6 | 1 hour</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Explain the core philosophy and design principles of React</li>
+        <li>Understand the declarative nature of React's programming model</li>
+        <li>Describe the history and evolution of React</li>
+        <li>Recognize the relationship between React and React Native</li>
+        <li>Identify the key differences between React on the web and React in React Native</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 1 hour</p>
+        <p><strong>Prerequisites:</strong> Basic understanding of JavaScript (Module 4)</p>
+      </div>
+    </section>
+    
+    <!-- What is React Slide -->
+    <section class="slide content-slide">
+      <h2>What is React?</h2>
+      <p>React is a JavaScript library for building user interfaces, primarily focused on the view layer of applications.</p>
+      <ul>
+        <li>Developed and maintained by Facebook (now Meta)</li>
+        <li>First released in 2013</li>
+        <li>Used by thousands of companies including Instagram, Netflix, Airbnb</li>
+        <li>Designed to make UI development more predictable and efficient</li>
+        <li>Focused on component-based architecture</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>React is not a full-featured framework like Angular. It's a library that focuses specifically on the UI layer, allowing you to integrate it with other libraries for routing, state management, etc.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Make sure to emphasize that React is focused on the UI layer, which is why it's often combined with other libraries. This "pick what you need" philosophy is quite different from more opinionated frameworks like Angular.</p>
+      </div>
+    </section>
+    
+    <!-- React's Core Philosophy Slide -->
+    <section class="slide content-slide">
+      <h2>React's Core Philosophy</h2>
+      <p>React's design is guided by several key principles:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Component-Based</h3>
+          <ul>
+            <li>UI broken down into reusable components</li>
+            <li>Each component encapsulates its own logic, state, and appearance</li>
+            <li>Components can be composed to build complex UIs</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Declarative</h3>
+          <ul>
+            <li>Describe what the UI should look like</li>
+            <li>React handles DOM updates efficiently</li>
+            <li>Makes code more predictable and easier to debug</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout idea">
+        <div class="callout-title">Conceptual Model</div>
+        <p>Think of React as a function where your state is the input and the UI is the output: UI = F(state)</p>
+      </div>
+    </section>
+    
+    <!-- Component-Based Architecture Slide -->
+    <section class="slide content-slide">
+      <h2>Component-Based Architecture</h2>
+      <p>In React, components are the building blocks of your application:</p>
+      <ul>
+        <li><strong>Reusable</strong>: Components can be used multiple times across an application</li>
+        <li><strong>Composable</strong>: Smaller components can be combined to create more complex UIs</li>
+        <li><strong>Maintainable</strong>: Changes to one component don't affect others (when properly designed)</li>
+        <li><strong>Testable</strong>: Components can be tested in isolation</li>
+        <li><strong>Encapsulated</strong>: Components manage their own state and behavior</li>
+      </ul>
+      <div class="callout info platform-android">
+        <div class="callout-title">For Android Developers</div>
+        <p>Components are conceptually similar to custom Views in Android, but with a more formalized composition model.</p>
+      </div>
+      <div class="callout info platform-ios">
+        <div class="callout-title">For iOS Developers</div>
+        <p>Components are similar to UIViews or SwiftUI views, but with more emphasis on composition over inheritance.</p>
+      </div>
+    </section>
+    
+    <!-- Declarative Programming Slide -->
+    <section class="slide content-slide">
+      <h2>Declarative Programming</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Imperative (Traditional DOM)</h3>
+          <p>Explicitly tell the DOM what to do at each step</p>
+          <pre><code class="language-javascript">
+// Get references
+const button = document.getElementById('btn');
+const counter = document.getElementById('counter');
+let count = 0;
+
+// Add event listener
+button.addEventListener('click', () => {
+  count++;
+  counter.textContent = `Count: ${count}`;
+});
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Declarative (React)</h3>
+          <p>Describe the UI for any given state</p>
+          <pre><code class="language-jsx">
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Key Difference</div>
+        <p>With imperative code, you describe <em>how</em> to update the UI. With declarative code, you describe <em>what</em> the UI should look like based on state, and React handles the updates.</p>
+      </div>
+    </section>
+    
+    <!-- Unidirectional Data Flow Slide -->
+    <section class="slide content-slide">
+      <h2>Unidirectional Data Flow</h2>
+      <p>Data in React flows in one direction, making applications more predictable:</p>
+      <div class="diagram">
+        <div class="diagram-step">
+          <div class="diagram-element">Parent Component</div>
+          <div class="diagram-arrow">↓ props</div>
+          <div class="diagram-element">Child Component</div>
+          <div class="diagram-arrow">↑ callbacks</div>
+          <div class="diagram-element">Parent Component (state updates)</div>
+        </div>
+      </div>
+      <ul>
+        <li>Data flows down from parent components to children via props</li>
+        <li>Child components cannot directly modify parent data</li>
+        <li>Child components communicate up via callbacks provided by parents</li>
+        <li>This pattern creates a predictable data flow that's easier to debug</li>
+      </ul>
+      <div class="callout tip">
+        <div class="callout-title">Mental Model</div>
+        <p>Think of props like function parameters. They're passed in, but the function can't modify the original values directly.</p>
+      </div>
+    </section>
+    
+    <!-- React Evolution Timeline Slide -->
+    <section class="slide content-slide">
+      <h2>The Evolution of React</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2011</div>
+          <div class="timeline-content">
+            <h3>Initial Development</h3>
+            <p>Developed internally at Facebook by Jordan Walke</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2013</div>
+          <div class="timeline-content">
+            <h3>Public Release</h3>
+            <p>React open-sourced at JSConf US</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2015</div>
+          <div class="timeline-content">
+            <h3>React Native</h3>
+            <p>React model extended to mobile platforms</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2016-2018</div>
+          <div class="timeline-content">
+            <h3>Fiber Rewrite & Context API</h3>
+            <p>Complete internal rewrite for better performance</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2019</div>
+          <div class="timeline-content">
+            <h3>Hooks</h3>
+            <p>Introduced hooks for state and lifecycle in functional components</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2022+</div>
+          <div class="timeline-content">
+            <h3>Concurrent Features</h3>
+            <p>Improved rendering with concurrent mode and automatic batching</p>
+          </div>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        <p>The hooks introduction in 2019 was a pivotal moment that changed how we write React code, moving away from class components to functional components with hooks for state and lifecycle.</p>
+      </div>
+    </section>
+    
+    <!-- React vs React Native Slide -->
+    <section class="slide content-slide">
+      <h2>React vs. React Native</h2>
+      <p>React and React Native share core principles but differ in implementation:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>React (Web)</th>
+            <th>React Native</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rendering Target</td>
+            <td>DOM (browsers)</td>
+            <td>Native UI components</td>
+          </tr>
+          <tr>
+            <td>Base Components</td>
+            <td>div, span, p, etc.</td>
+            <td>View, Text, Image, etc.</td>
+          </tr>
+          <tr>
+            <td>Styling</td>
+            <td>CSS, CSS-in-JS</td>
+            <td>JavaScript objects with CSS-like properties</td>
+          </tr>
+          <tr>
+            <td>Events</td>
+            <td>Browser events (onClick, etc.)</td>
+            <td>Touch events (onPress, etc.)</td>
+          </tr>
+          <tr>
+            <td>Animation</td>
+            <td>CSS transitions, Web Animations API</td>
+            <td>Animated API</td>
+          </tr>
+          <tr>
+            <td>Navigation</td>
+            <td>React Router, etc.</td>
+            <td>React Navigation, etc.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout highlight">
+        <div class="callout-title">The Common Core</div>
+        <p>Components, props, state, and lifecycle are consistent across both platforms. If you know React, you already know 80% of React Native.</p>
+      </div>
+    </section>
+    
+    <!-- React in Modern Applications Slide -->
+    <section class="slide content-slide">
+      <h2>React in Modern Application Development</h2>
+      <p>React has influenced the broader JavaScript ecosystem:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>React Ecosystem</h3>
+          <ul>
+            <li>Meta Frameworks: Next.js, Gatsby, Remix</li>
+            <li>State Management: Redux, MobX, Recoil</li>
+            <li>UI Libraries: Material UI, Chakra UI</li>
+            <li>Testing: React Testing Library, Jest</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Influence on Development</h3>
+          <ul>
+            <li>Component-based architecture</li>
+            <li>Virtual DOM concepts</li>
+            <li>Declarative UI patterns</li>
+            <li>Composition over inheritance</li>
+            <li>Functional programming principles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Cross-Platform Impact</div>
+        <p>React's component model has been adapted for native mobile (React Native), desktop (Electron), VR (React 360), and even hardware interfaces.</p>
+      </div>
+    </section>
+    
+    <!-- Why Learn React Before React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Why Learn React Before React Native</h2>
+      <p>Understanding React fundamentals provides the foundation for effective React Native development:</p>
+      <ol>
+        <li><strong>Same Core Concepts</strong>: Components, props, state, and hooks are identical</li>
+        <li><strong>Simpler Debugging</strong>: Web React is easier to debug than React Native</li>
+        <li><strong>Focus on Concepts</strong>: Learn principles without mobile-specific complexities</li>
+        <li><strong>Larger Community</strong>: More resources and solutions available for React</li>
+        <li><strong>Transferable Skills</strong>: Skills apply directly to React Native development</li>
+      </ol>
+      <div class="callout tip platform-web">
+        <div class="callout-title">For Web Developers</div>
+        <p>Your existing React knowledge is a huge advantage! Focus on understanding the different primitive components and mobile-specific patterns.</p>
+      </div>
+      <div class="callout tip platform-android platform-ios">
+        <div class="callout-title">For Mobile Developers</div>
+        <p>Learning React fundamentals first will help you understand why React Native works the way it does, making the transition much smoother.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise: Component Breakdown Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Component Breakdown</h2>
+      <p>Identify potential components in a medication tracking interface:</p>
+      <div class="exercise-image">
+        <img src="images/medication-app-mockup.png" alt="Medication app interface mockup" />
+        <p class="caption">Sample medication tracking interface</p>
+      </div>
+      <div class="exercise-instructions">
+        <ol>
+          <li>Identify at least 5 potential components in this UI</li>
+          <li>Determine which components might be reused in different parts of the app</li>
+          <li>Consider what props each component might need</li>
+          <li>Sketch a basic component hierarchy showing parent-child relationships</li>
+        </ol>
+      </div>
+      <div class="presenter-notes">
+        <p>Possible components: Header, MedicationList, MedicationItem, StatusBadge, AddButton, SearchBar, FilterTabs, etc. Encourage discussion about component granularity and reusability.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Introduction to React</h2>
+      <ul>
+        <li>React is a JavaScript library for building user interfaces with components</li>
+        <li>Key principles: component-based architecture, declarative programming, and unidirectional data flow</li>
+        <li>React has evolved from a web library to powering multiple platforms</li>
+        <li>React and React Native share core concepts but have platform-specific implementations</li>
+        <li>Understanding React fundamentals provides a strong foundation for React Native development</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll dive deeper into React components and JSX syntax, learning how to create our first components.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../index.html" class="button">← Back to Module 6 Overview</a>
+        <a href="../section-2-components-and-jsx/index.html" class="button">Next: Components and JSX →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

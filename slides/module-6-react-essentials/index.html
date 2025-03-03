@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 6: React Essentials | React Native Training Course</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Module 6</h1>
+      <h2>React Essentials</h2>
+      <p class="metadata">React Native Training Course | 6-8 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Module Learning Objectives</h2>
+      <ul>
+        <li>Understand the core concepts of React including components, props, and state</li>
+        <li>Implement functional components with React Hooks</li>
+        <li>Explain the React component lifecycle and how it differs from class components</li>
+        <li>Apply JSX syntax effectively in React applications</li>
+        <li>Create reusable and composable components</li>
+        <li>Manage component state and side effects using hooks</li>
+      </ul>
+    </section>
+    
+    <!-- Module Structure Slide -->
+    <section class="slide content-slide">
+      <h2>Module Structure</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 1: Introduction to React</h3>
+          <p>Overview of React, its core philosophy, and relation to React Native.</p>
+          <p><strong>Duration:</strong> 1 hour</p>
+          <p class="time-breakdown"><small>Overview: 15 min | Core Concepts: 30 min | Exercise: 15 min</small></p>
+        </div>
+        <div class="column">
+          <h3>Section 2: Components and JSX</h3>
+          <p>Understanding React components and JSX syntax.</p>
+          <p><strong>Duration:</strong> 1.5 hours</p>
+          <p class="time-breakdown"><small>Components: 30 min | JSX: 30 min | Practice: 30 min</small></p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 3: Props and Component Composition</h3>
+          <p>Passing data between components and composition patterns.</p>
+          <p><strong>Duration:</strong> 1.5 hours</p>
+          <p class="time-breakdown"><small>Props: 30 min | Composition: 45 min | Exercise: 15 min</small></p>
+        </div>
+        <div class="column">
+          <h3>Section 4: State and Hooks</h3>
+          <p>Managing component state using React Hooks.</p>
+          <p><strong>Duration:</strong> 2 hours</p>
+          <p class="time-breakdown"><small>State: 45 min | Hooks: 45 min | Practice: 30 min</small></p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 5: Component Lifecycle and Effects</h3>
+          <p>Understanding the component lifecycle and side effects in React.</p>
+          <p><strong>Duration:</strong> 2 hours</p>
+          <p class="time-breakdown"><small>Lifecycle: 45 min | Effects: 45 min | Advanced hooks: 30 min</small></p>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Module Journey</div>
+        <p>This module takes you on a journey from understanding React fundamentals to mastering advanced component patterns. You'll start with the basics of React and components, then progress to data flow with props, state management with hooks, and finally lifecycle and effects for handling side effects and optimizing performance.</p>
+      </div>
+      <div class="presenter-notes">
+        <p><strong>Time Management:</strong> If running short on time, prioritize Sections 1-4 as they provide the foundational understanding of React. Section 5 can be covered at a higher level, focusing on the key lifecycle concepts rather than implementation details of all the hooks.</p>
+      </div>
+    </section>
+    
+    <!-- Target Audience Slide -->
+    <section class="slide content-slide">
+      <h2>Target Audience</h2>
+      <p>This module is designed for developers with experience in:</p>
+      <div class="columns">
+        <div class="column">
+          <div class="platform-android">
+            <h3>Android Developers</h3>
+            <ul>
+              <li>Familiar with Java/Kotlin</li>
+              <li>Experience with Android UI components</li>
+              <li>Understanding of MVVM or similar patterns</li>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="platform-ios">
+            <h3>iOS Developers</h3>
+            <ul>
+              <li>Familiar with Swift/Objective-C</li>
+              <li>Experience with UIKit or SwiftUI</li>
+              <li>Understanding of view lifecycle</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="platform-web">
+        <h3>Web Developers</h3>
+        <ul>
+          <li>Familiar with JavaScript/TypeScript</li>
+          <li>Experience with web frameworks (may already know some React)</li>
+          <li>Understanding of DOM and event handling</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Prerequisites Slide -->
+    <section class="slide content-slide">
+      <h2>Prerequisites</h2>
+      <p>Before starting this module, you should have completed:</p>
+      <ul>
+        <li>Module 4: JavaScript Essentials</li>
+        <li>Module 5: TypeScript Essentials</li>
+      </ul>
+      <p>You should be comfortable with:</p>
+      <ul>
+        <li>ES6+ syntax including arrow functions, destructuring, and modules</li>
+        <li>Basic TypeScript concepts like types, interfaces, and generics</li>
+        <li>Asynchronous programming with Promises and async/await</li>
+      </ul>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>If you're already familiar with React from web development, you may find some sections to be review, but understanding how React concepts apply specifically to React Native is still valuable.</p>
+      </div>
+    </section>
+    
+    <!-- Module Challenge Slide -->
+    <section class="slide content-slide">
+      <h2>Module Challenge</h2>
+      <p>At the end of this module, you'll complete a challenge to build a medication tracking component:</p>
+      <ol>
+        <li>Create a component hierarchy for tracking medications</li>
+        <li>Implement state management for the medication list</li>
+        <li>Add form inputs for adding new medications</li>
+        <li>Use effects for persistence and notifications</li>
+        <li>Optimize performance with useMemo and useCallback</li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">Challenge Preparation</div>
+        <p>Pay special attention to component composition patterns and state management throughout the module, as these will be essential for completing the challenge effectively.</p>
+      </div>
+    </section>
+    
+    <!-- Why React Matters for React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Why React Matters for React Native</h2>
+      <p>Understanding React fundamentals is critical for React Native development:</p>
+      <ul>
+        <li>React Native is built on React - same component model, just different primitives</li>
+        <li>Principles of component composition apply directly to mobile UIs</li>
+        <li>Hook-based state management works identically in React Native</li>
+        <li>Understanding performance considerations carries over to mobile</li>
+        <li>Most React Native issues are actually React issues</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Foundation for Success</div>
+        <p>Many React Native developers struggle because they don't fully understand React fundamentals. Mastering these concepts will make you much more effective when building React Native applications.</p>
+      </div>
+    </section>
+    
+    <!-- Getting Started Slide -->
+    <section class="slide content-slide">
+      <h2>Getting Started</h2>
+      <p>Let's begin with Section 1: Introduction to React</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Section Navigation</h3>
+          <ul>
+            <li><a href="section-1-introduction-to-react/index.html">Section 1: Introduction to React</a></li>
+            <li><a href="section-2-components-and-jsx/index.html">Section 2: Components and JSX</a></li>
+            <li><a href="section-3-props-and-component-composition/index.html">Section 3: Props and Component Composition</a></li>
+            <li><a href="section-4-state-and-hooks/index.html">Section 4: State and Hooks</a></li>
+            <li><a href="section-5-component-lifecycle-and-effects/index.html">Section 5: Component Lifecycle and Effects</a></li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout tip">
+            <div class="callout-title">Navigation Tip</div>
+            <p>Use the arrow keys to navigate through slides:</p>
+            <ul>
+              <li>→ or Space: Next slide</li>
+              <li>←: Previous slide</li>
+              <li>Home: First slide</li>
+              <li>End: Last slide</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../shared/script.js"></script>
+</body>
+</html> 

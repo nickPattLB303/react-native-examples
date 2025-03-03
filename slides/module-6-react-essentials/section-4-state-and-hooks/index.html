@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: State and Hooks | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>State and Hooks</h2>
+      <p class="metadata">Module 6 | 2 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the concept of state in React components</li>
+        <li>Use the useState hook to manage component state</li>
+        <li>Implement the useReducer hook for complex state logic</li>
+        <li>Apply state management best practices</li>
+        <li>Understand when and how to lift state up in component hierarchies</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 2 hours</p>
+        <p><strong>Prerequisites:</strong> Components and JSX (Section 2), Props and Composition (Section 3)</p>
+      </div>
+    </section>
+    
+    <!-- Understanding State Slide -->
+    <section class="slide content-slide">
+      <h2>Understanding State in React</h2>
+      <p>State represents the internal, mutable data that affects a component's rendering.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>What is State?</h3>
+          <ul>
+            <li>Internal data storage for components</li>
+            <li>Can change over time, typically from user interactions</li>
+            <li>When state changes, the component re-renders</li>
+            <li>Should contain the minimal data needed for rendering</li>
+            <li>Private to the component (unless explicitly shared)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Examples of State</h3>
+          <ul>
+            <li>Form input values</li>
+            <li>Toggle states (open/closed, visible/hidden)</li>
+            <li>Loading/error states</li>
+            <li>Selected items in a list</li>
+            <li>User authentication status</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">State vs. Props</div>
+        <p>While props are passed to a component from its parent and are read-only, state is managed within the component itself and can be changed by the component.</p>
+      </div>
+    </section>
+    
+    <!-- State Characteristics Slide -->
+    <section class="slide content-slide">
+      <h2>State Characteristics</h2>
+      <ul>
+        <li><strong>Component-Specific</strong>: State belongs to a specific component instance</li>
+        <li><strong>Private</strong>: A component's state is not accessible to other components unless explicitly passed as props</li>
+        <li><strong>Mutable</strong>: Unlike props, state can be updated (but only using the appropriate update function)</li>
+        <li><strong>Asynchronous</strong>: State updates may be batched for performance reasons</li>
+        <li><strong>Triggering</strong>: Changes to state trigger component re-renders</li>
+      </ul>
+      <div class="callout info platform-ios platform-android">
+        <div class="callout-title">For Mobile Developers</div>
+        <p>State in React is similar to state/data management in native development:
+          <br>- Android: Similar to ViewModel or state variables in Jetpack Compose
+          <br>- iOS: Similar to @State in SwiftUI or stored properties with observers</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Emphasize that React's state updates are asynchronous and batched for performance. This is why we rely on functional updates for changes that depend on the previous state.</p>
+      </div>
+    </section>
+    
+    <!-- Hooks Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Hooks</h2>
+      <p>Hooks were introduced in React 16.8 to allow functional components to use state and other React features.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>What are Hooks?</h3>
+          <ul>
+            <li>Functions that "hook into" React features</li>
+            <li>Start with "use" (e.g., useState, useEffect)</li>
+            <li>Can only be called at the top level</li>
+            <li>Can only be called from React functions</li>
+            <li>Enable stateful logic in functional components</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Built-in Hooks</h3>
+          <ul>
+            <li><code>useState</code>: Manage state</li>
+            <li><code>useEffect</code>: Perform side effects</li>
+            <li><code>useContext</code>: Access context</li>
+            <li><code>useReducer</code>: Complex state logic</li>
+            <li><code>useRef</code>: Mutable references</li>
+            <li><code>useMemo</code>, <code>useCallback</code>: Performance</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Historical Context</div>
+        <p>Before hooks, you had to use class components to manage state and lifecycle. Hooks allow functional components to do everything class components can do, with a simpler API.</p>
+      </div>
+    </section>
+    
+    <!-- Rules of Hooks Slide -->
+    <section class="slide content-slide">
+      <h2>Rules of Hooks</h2>
+      <p>Hooks must follow two important rules:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Rule 1: Only Call Hooks at the Top Level</h3>
+          <pre><code class="language-jsx">
+// ✓ Correct: Hooks at the top level
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('');
+  
+  // Rest of component...
+}
+
+// ✗ Incorrect: Hook inside a condition
+function Counter() {
+  if (someCondition) {
+    const [count, setCount] = useState(0);
+  }
+  
+  // Rest of component...
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Rule 2: Only Call Hooks from React Functions</h3>
+          <pre><code class="language-jsx">
+// ✓ Correct: Hook in a React component
+function Counter() {
+  const [count, setCount] = useState(0);
+  // ...
+}
+
+// ✓ Correct: Hook in a custom Hook
+function useFormInput(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  // ...
+  return { value, onChange };
+}
+
+// ✗ Incorrect: Hook in a regular function
+function formatCount(count) {
+  const [format, setFormat] = useState('normal');
+  // ...
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Why These Rules Matter</div>
+        <p>React relies on the order of hook calls to maintain state between renders. Breaking these rules can cause bugs that are difficult to debug.</p>
+      </div>
+    </section>
+    
+    <!-- The useState Hook Slide -->
+    <section class="slide content-slide">
+      <h2>The useState Hook</h2>
+      <p>The <code>useState</code> hook is the simplest way to add state to a functional component:</p>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+
+function Counter() {
+  // Declare a state variable 'count' with initial value 0
+  const [count, setCount] = useState(0);
+  
+  return (
+    <View>
+      <Text>Count: {count}</Text>
+      <Button title="Increment" onPress={() => setCount(count + 1)} />
+      <Button title="Decrement" onPress={() => setCount(count - 1)} />
+    </View>
+  );
+}
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">useState Syntax</div>
+        <p><code>const [state, setState] = useState(initialState);</code>
+          <br>- <code>initialState</code>: The initial value for the state variable
+          <br>- <code>state</code>: The current state value
+          <br>- <code>setState</code>: A function to update the state</p>
+      </div>
+    </section>
+    
+    <!-- Updating State Slide -->
+    <section class="slide content-slide">
+      <h2>Updating State</h2>
+      <p>There are two main ways to update state with <code>useState</code>:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>1. Direct Value Update</h3>
+          <pre><code class="language-jsx">
+// Setting state directly to a new value
+function ColorPicker() {
+  const [color, setColor] = useState('red');
+  
+  return (
+    <View>
+      <Text>Selected: {color}</Text>
+      <Button 
+        title="Blue" 
+        onPress={() => setColor('blue')} 
+      />
+      <Button 
+        title="Green" 
+        onPress={() => setColor('green')} 
+      />
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>2. Functional Update</h3>
+          <pre><code class="language-jsx">
+// Using previous state to determine new state
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <View>
+      <Text>Count: {count}</Text>
+      <Button 
+        title="+1" 
+        onPress={() => setCount(count + 1)} 
+      />
+      <Button 
+        title="+5" 
+        onPress={() => {
+          // Use functional updates for multiple updates
+          setCount(prevCount => prevCount + 1);
+          setCount(prevCount => prevCount + 1);
+          setCount(prevCount => prevCount + 1);
+          setCount(prevCount => prevCount + 1);
+          setCount(prevCount => prevCount + 1);
+        }} 
+      />
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>When new state depends on the previous state, always use the functional update form: <code>setState(prevState => ...)</code></p>
+      </div>
+    </section>
+    
+    <!-- State with Objects and Arrays Slide -->
+    <section class="slide content-slide">
+      <h2>State with Objects and Arrays</h2>
+      <p>When working with objects and arrays in state, always create new objects/arrays when updating:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Objects in State</h3>
+          <pre><code class="language-jsx">
+function UserProfile() {
+  const [user, setUser] = useState({
+    name: 'John',
+    email: 'john@example.com',
+    age: 30
+  });
+  
+  const updateEmail = (newEmail) => {
+    // Create a new object with all existing properties
+    // but with the updated email
+    setUser({
+      ...user,  // Copy all existing properties
+      email: newEmail  // Override the email
+    });
+  };
+  
+  // Component implementation
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Arrays in State</h3>
+          <pre><code class="language-jsx">
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', done: false },
+    { id: 2, text: 'Build an app', done: false }
+  ]);
+  
+  const addTodo = (text) => {
+    // Create a new array with all existing items
+    // plus the new item
+    setTodos([
+      ...todos,  // All existing todos
+      { id: Date.now(), text, done: false }  // New todo
+    ]);
+  };
+  
+  // Component implementation
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>React uses reference equality to determine if state has changed. Mutating existing objects/arrays won't trigger re-renders.</p>
+      </div>
+    </section>
+    
+    <!-- Multiple State Variables Slide -->
+    <section class="slide content-slide">
+      <h2>Multiple State Variables</h2>
+      <p>You can use <code>useState</code> multiple times in a single component:</p>
+      <pre><code class="language-jsx">
+function MedicationForm() {
+  // Multiple independent state variables
+  const [name, setName] = useState('');
+  const [dosage, setDosage] = useState('');
+  const [schedule, setSchedule] = useState('daily');
+  const [isActive, setIsActive] = useState(true);
+  
+  // Using a single state object for related data
+  const [formState, setFormState] = useState({
+    name: '',
+    dosage: '',
+    schedule: 'daily',
+    isActive: true
+  });
+  
+  // Update a single field in the object state
+  const updateFormField = (field, value) => {
+    setFormState({
+      ...formState,
+      [field]: value
+    });
+  };
+  
+  // Component implementation
+}
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Which Approach to Use</div>
+        <p>Use multiple state variables for unrelated data. Use a single object for closely related data, especially when they're updated together.</p>
+      </div>
+    </section>
+    
+    <!-- The useReducer Hook Slide -->
+    <section class="slide content-slide">
+      <h2>The useReducer Hook</h2>
+      <p>For more complex state logic, especially when state transitions depend on previous state, <code>useReducer</code> provides a more structured approach:</p>
+      <pre><code class="language-jsx">
+import React, { useReducer } from 'react';
+import { View, Text, Button } from 'react-native';
+
+// Reducer function defines how state updates in response to actions
+function counterReducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    case 'RESET':
+      return { count: 0 };
+    case 'SET':
+      return { count: action.payload };
+    default:
+      throw new Error(`Unsupported action type: ${action.type}`);
+  }
+}
+
+function Counter() {
+  // Initialize useReducer with the reducer function and initial state
+  const [state, dispatch] = useReducer(counterReducer, { count: 0 });
+  
+  return (
+    <View>
+      <Text>Count: {state.count}</Text>
+      <Button title="Increment" onPress={() => dispatch({ type: 'INCREMENT' })} />
+      <Button title="Decrement" onPress={() => dispatch({ type: 'DECREMENT' })} />
+      <Button title="Reset" onPress={() => dispatch({ type: 'RESET' })} />
+      <Button title="Set to 10" onPress={() => dispatch({ type: 'SET', payload: 10 })} />
+    </View>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- useReducer Benefits Slide -->
+    <section class="slide content-slide">
+      <h2>Benefits of useReducer</h2>
+      <ul>
+        <li><strong>Centralized Logic</strong>: All state update logic is contained in the reducer function</li>
+        <li><strong>Predictable Transitions</strong>: State changes follow a clear action → reducer → new state pattern</li>
+        <li><strong>Testing</strong>: Reducers are pure functions, making them easy to test</li>
+        <li><strong>Debugging</strong>: Action dispatches provide a clear history of state changes</li>
+        <li><strong>Complex Updates</strong>: Simplifies state logic that involves multiple sub-values or dependencies</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">When to Use useReducer</div>
+        <p>
+          <strong>Use useState when</strong>: State is simple, with few state variables that are updated independently.<br>
+          <strong>Use useReducer when</strong>: State is complex, with many fields, or when next state depends on previous state.
+        </p>
+      </div>
+      <div class="callout info platform-android">
+        <div class="callout-title">For Android Developers</div>
+        <p>This pattern is similar to Redux, and has parallels to state management in MVI (Model-View-Intent) architecture.</p>
+      </div>
+    </section>
+    
+    <!-- Lazy State Initialization Slide -->
+    <section class="slide content-slide">
+      <h2>Lazy State Initialization</h2>
+      <p>If the initial state is the result of an expensive computation, you can pass a function instead of a value:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Using useState</h3>
+          <pre><code class="language-jsx">
+function ExpensiveComponent() {
+  // This function is only called during first render
+  const [state, setState] = useState(() => {
+    console.log('Computing initial state...');
+    return computeExpensiveInitialState();
+  });
+  
+  return (
+    // Component implementation
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Using useReducer</h3>
+          <pre><code class="language-jsx">
+function ExpensiveComponent() {
+  const [state, dispatch] = useReducer(
+    reducer,
+    null, // Initial arg (will be passed to init)
+    () => {
+      console.log('Computing initial state...');
+      return computeExpensiveInitialState();
+    }
+  );
+  
+  return (
+    // Component implementation
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Performance Tip</div>
+        <p>Use lazy initialization when computing the initial state involves expensive operations like parsing large JSON objects or complex calculations.</p>
+      </div>
+    </section>
+    
+    <!-- Lifting State Up Slide -->
+    <section class="slide content-slide">
+      <h2>Lifting State Up</h2>
+      <p>When multiple components need access to the same state, you can "lift the state up" to their nearest common ancestor:</p>
+      <pre><code class="language-jsx">
+function MedicationTracker() {
+  // State is lifted up to this parent component
+  const [medications, setMedications] = useState([]);
+  
+  const addMedication = (medication) => {
+    setMedications([...medications, medication]);
+  };
+  
+  const removeMedication = (id) => {
+    setMedications(medications.filter(med => med.id !== id));
+  };
+  
+  return (
+    <View>
+      <MedicationForm onAddMedication={addMedication} />
+      <MedicationList 
+        medications={medications} 
+        onRemoveMedication={removeMedication} 
+      />
+    </View>
+  );
+}
+
+function MedicationForm({ onAddMedication }) {
+  // Form implementation that calls onAddMedication when submitted
+}
+
+function MedicationList({ medications, onRemoveMedication }) {
+  // List implementation that displays medications and allows removal
+}
+      </code></pre>
+      <div class="callout highlight">
+        <div class="callout-title">Single Source of Truth</div>
+        <p>Lifting state up follows the principle of "single source of truth." The parent manages the state and passes it down via props, ensuring all components see consistent data.</p>
+      </div>
+    </section>
+    
+    <!-- State Management Best Practices Slide 1 -->
+    <section class="slide content-slide">
+      <h2>State Management Best Practices (1/2)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>1. Keep State Minimal</h3>
+          <p>Only include in state what you absolutely need for rendering or data persistence</p>
+          <pre><code class="language-jsx">
+// Good - only tracking necessary values
+const [isSubmitting, setIsSubmitting] = useState(false);
+const [error, setError] = useState(null);
+const [user, setUser] = useState(null);
+
+// Avoid - derived values don't need to be in state
+const [isLoggedIn, setIsLoggedIn] = useState(false); 
+// Can be derived: !!user
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>2. Derive Values When Possible</h3>
+          <p>Calculate derived data during render rather than storing it in state</p>
+          <pre><code class="language-jsx">
+function MedicationList({ medications }) {
+  // Derive these values instead of storing in state
+  const activeMedications = medications.filter(
+    med => med.isActive
+  );
+  const medicationCount = medications.length;
+  const hasNoPrescriptions = medications.length === 0;
+  
+  // Component implementation
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- State Management Best Practices Slide 2 -->
+    <section class="slide content-slide">
+      <h2>State Management Best Practices (2/2)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>3. Group Related State</h3>
+          <p>Choose the appropriate approach for organizing state:</p>
+          <pre><code class="language-jsx">
+// Option 1: Multiple useState calls
+const [username, setUsername] = useState('');
+const [password, setPassword] = useState('');
+const [error, setError] = useState(null);
+
+// Option 2: Single useState with object
+const [loginForm, setLoginForm] = useState({
+  username: '',
+  password: '',
+  error: null,
+  isLoading: false
+});
+
+// Option 3: useReducer for complex logic
+const [loginState, dispatch] = useReducer(
+  loginReducer,
+  initialLoginState
+);
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>4. Avoid Duplication in State</h3>
+          <p>Don't store the same data in multiple places:</p>
+          <pre><code class="language-jsx">
+// Bad - duplicating data
+const [medications, setMedications] = useState([]);
+const [medicationCount, setMedicationCount] = 
+  useState(0);
+
+// Adding a medication requires two updates
+const addMedication = (med) => {
+  setMedications([...medications, med]);
+  setMedicationCount(medicationCount + 1); 
+  // Unnecessary duplication
+};
+
+// Good - derive count from medications
+const medicationCount = medications.length;
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Using State for Common UI Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Using State for Common UI Patterns</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Toggle Components</h3>
+          <pre><code class="language-jsx">
+function Accordion({ title, children }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity 
+        onPress={() => setIsExpanded(!isExpanded)}
+      >
+        <View style={styles.header}>
+          <Text style={styles.title}>{title}</Text>
+          <Text>{isExpanded ? '▲' : '▼'}</Text>
+        </View>
+      </TouchableOpacity>
+      
+      {isExpanded && (
+        <View style={styles.content}>
+          {children}
+        </View>
+      )}
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Form Inputs</h3>
+          <pre><code class="language-jsx">
+function MedicationForm({ onSubmit }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    dosage: '',
+    schedule: 'daily'
+  });
+  
+  const handleChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value
+    });
+  };
+  
+  return (
+    <View style={styles.form}>
+      <TextInput
+        value={formData.name}
+        onChangeText={(text) => 
+          handleChange('name', text)
+        }
+        placeholder="Medication Name"
+      />
+      {/* Other fields */}
+      <Button 
+        title="Add Medication" 
+        onPress={() => onSubmit(formData)} 
+      />
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- State Management Beyond Hooks Slide -->
+    <section class="slide content-slide">
+      <h2>State Management Beyond Hooks</h2>
+      <p>For larger applications, you might need more sophisticated state management solutions:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Context API</h3>
+          <p>For state that needs to be accessible by many components</p>
+          <pre><code class="language-jsx">
+// Create context
+const ThemeContext = createContext();
+
+// Provider component
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// Consumer component
+function ThemedButton() {
+  const { theme } = useContext(ThemeContext);
+  
+  return (
+    <Button 
+      style={theme === 'dark' ? styles.dark : styles.light}
+      title="Click me" 
+    />
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Third-Party Solutions</h3>
+          <p>For more complex state management needs:</p>
+          <ul>
+            <li><strong>Redux</strong>: Centralized state management with predictable state transitions</li>
+            <li><strong>MobX</strong>: Reactive state management with less boilerplate</li>
+            <li><strong>Recoil</strong>: Atomic state management designed for React</li>
+            <li><strong>Zustand</strong>: Simplified state management with hooks</li>
+          </ul>
+          <div class="callout info">
+            <div class="callout-title">Note</div>
+            <p>We'll explore these third-party solutions in more detail in later modules focused on state management.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Exercise: Medication Tracker with State Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Medication Tracker with State</h2>
+      <p>Build a medication tracker component with state management:</p>
+      <div class="exercise-instructions">
+        <ol>
+          <li>Create a <code>MedicationTracker</code> component that maintains a list of medications in state</li>
+          <li>Implement a form that allows adding new medications with name, dosage, and schedule</li>
+          <li>Add the ability to mark medications as taken or untaken</li>
+          <li>Implement a filter function to show active, completed, or all medications</li>
+          <li>Use <code>useState</code> for simple state and consider <code>useReducer</code> for more complex logic</li>
+        </ol>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Start by planning your state structure. What data needs to be stored? What components need access to that data? Where should the state live?</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: State and Hooks</h2>
+      <ul>
+        <li>State represents the internal, mutable data that affects a component's rendering</li>
+        <li>The <code>useState</code> hook is the primary way to add state to functional components</li>
+        <li>The <code>useReducer</code> hook provides a more structured approach for complex state logic</li>
+        <li>Lifting state up allows sharing state between components through a common ancestor</li>
+        <li>Follow best practices like keeping state minimal and avoiding duplication</li>
+        <li>For larger applications, consider Context API or third-party state management solutions</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll explore the component lifecycle and side effects, learning how to handle operations like data fetching and subscriptions.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-3-props-and-component-composition/index.html" class="button">← Previous: Props and Component Composition</a>
+        <a href="../section-5-component-lifecycle-and-effects/index.html" class="button">Next: Component Lifecycle and Effects →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

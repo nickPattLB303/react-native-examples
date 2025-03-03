@@ -385,6 +385,13 @@
         { num: 2, name: 'advanced-types-and-interfaces' },
         { num: 3, name: 'typescript-with-react-native' },
         { num: 4, name: 'managing-type-definitions' }
+      ],
+      'module-6-react-essentials': [
+        { num: 1, name: 'introduction-to-react' },
+        { num: 2, name: 'components-and-jsx' },
+        { num: 3, name: 'props-and-component-composition' },
+        { num: 4, name: 'state-and-hooks' },
+        { num: 5, name: 'component-lifecycle-and-effects' },
       ]
       // Add more modules as needed
     };

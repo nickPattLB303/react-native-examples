@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: Props and Component Composition | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>Props and Component Composition</h2>
+      <p class="metadata">Module 6 | 1.5 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the role of props in React components</li>
+        <li>Pass and receive props between components</li>
+        <li>Implement prop type validation for component safety</li>
+        <li>Apply component composition patterns</li>
+        <li>Use React's children prop for flexible component design</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 1.5 hours</p>
+        <p><strong>Prerequisites:</strong> Components and JSX (Section 2)</p>
+      </div>
+    </section>
+    
+    <!-- Understanding Props Slide -->
+    <section class="slide content-slide">
+      <h2>Understanding Props</h2>
+      <p>Props (short for "properties") are the primary way to pass data between React components.</p>
+      <ul>
+        <li><strong>Read-only</strong>: Components should never modify their own props</li>
+        <li><strong>Unidirectional</strong>: Data flows down from parent to child components</li>
+        <li><strong>Immutable</strong>: When props need to change, the parent re-renders with new props</li>
+        <li><strong>Type-safe</strong>: Can be validated with PropTypes or TypeScript</li>
+        <li><strong>Versatile</strong>: Can contain any JavaScript value (strings, numbers, functions, objects, etc.)</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Conceptual Model</div>
+        <p>Think of props like function parameters. A component receives props, uses them to determine what to render, but doesn't modify the original values.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>The immutability of props is a key concept in React's data flow model. Emphasize that if a child needs to modify data received via props, that change should happen in the parent component.</p>
+      </div>
+    </section>
+    
+    <!-- The Role of Props Slide -->
+    <section class="slide content-slide">
+      <h2>The Role of Props</h2>
+      <p>Props serve several critical purposes in React applications:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Data Passing</h3>
+          <p>Props allow parent components to pass data to child components</p>
+          <pre><code class="language-jsx">
+// Parent component
+function UserProfile({ user }) {
+  return (
+    <View>
+      <ProfileHeader
+        name={user.name}
+        avatar={user.avatar}
+      />
+      <ProfileDetails user={user} />
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Configuration</h3>
+          <p>Props enable customization of components for different use cases</p>
+          <pre><code class="language-jsx">
+<Button
+  size="large"
+  color="primary"
+  rounded={true}
+  disabled={isLoading}
+  onPress={handleSubmit}
+>
+  Submit
+</Button>
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout platform-android platform-ios">
+        <div class="callout-title">For Mobile Developers</div>
+        <p>Props are similar to constructor parameters or XML attributes in native mobile development.</p>
+      </div>
+    </section>
+    
+    <!-- The Role of Props Slide 2 -->
+    <section class="slide content-slide">
+      <h2>The Role of Props (continued)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Behavior Definition</h3>
+          <p>Props can include callback functions to define component behavior</p>
+          <pre><code class="language-jsx">
+<TextInput
+  value={name}
+  onChangeText={setName}
+  onFocus={() => setIsFocused(true)}
+  onBlur={() => setIsFocused(false)}
+/>
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Children Content</h3>
+          <p>The special <code>children</code> prop enables component composition</p>
+          <pre><code class="language-jsx">
+<Card>
+  <CardHeader title="Medication Details" />
+  <CardContent>
+    <Text>Aspirin 100mg</Text>
+  </CardContent>
+  <CardFooter>
+    <Button>View More</Button>
+  </CardFooter>
+</Card>
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Passing Props Slide -->
+    <section class="slide content-slide">
+      <h2>Passing Props to Components</h2>
+      <p>Props are passed to components as attributes in JSX:</p>
+      <pre><code class="language-jsx">
+// Passing various types of props
+<MedicationItem 
+  name="Lisinopril" 
+  dosage="10mg" 
+  schedule="Once daily" 
+  isActive={true} 
+  refills={3} 
+  prescribedDate={new Date('2023-06-15')} 
+  patient={{ id: '123', name: 'John Doe' }} 
+  onPress={() => console.log('Pressed')} 
+  renderBadge={() => <Badge type="prescription" />} 
+/>
+      </code></pre>
+      <div class="callout note">
+        <div class="callout-title">Syntax Note</div>
+        <p>String props can be passed with quotes, but all other types (numbers, booleans, objects, arrays, functions) must be passed with curly braces.</p>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Spreading Props</div>
+        <p>You can spread an object of props using the spread operator: <code>&lt;Component {...props} /&gt;</code>, but use sparingly to maintain readability.</p>
+      </div>
+    </section>
+    
+    <!-- Receiving Props Slide -->
+    <section class="slide content-slide">
+      <h2>Receiving Props in Components</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Destructuring Props</h3>
+          <pre><code class="language-jsx">
+// Destructuring props in the parameter
+function MedicationItem({ 
+  name, 
+  dosage, 
+  schedule, 
+  isActive, 
+  onPress 
+}) {
+  return (
+    <TouchableOpacity 
+      style={[
+        styles.container, 
+        isActive ? styles.active : styles.inactive
+      ]} 
+      onPress={onPress}
+    >
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.dosage}>{dosage}</Text>
+      <Text style={styles.schedule}>{schedule}</Text>
+    </TouchableOpacity>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Alternative Approaches</h3>
+          <pre><code class="language-jsx">
+// Using the props object directly
+function MedicationItem(props) {
+  return (
+    <TouchableOpacity 
+      style={[
+        styles.container, 
+        props.isActive ? styles.active : styles.inactive
+      ]} 
+      onPress={props.onPress}
+    >
+      <Text style={styles.name}>{props.name}</Text>
+      <Text style={styles.dosage}>{props.dosage}</Text>
+      <Text style={styles.schedule}>{props.schedule}</Text>
+    </TouchableOpacity>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout highlight">
+        <div class="callout-title">Best Practice</div>
+        <p>Destructuring props is generally preferred as it makes it clear which props the component is using.</p>
+      </div>
+    </section>
+    
+    <!-- Default Props Slide -->
+    <section class="slide content-slide">
+      <h2>Default Props</h2>
+      <p>You can define default values for props to handle cases where a prop isn't provided:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Using Parameter Defaults (Recommended)</h3>
+          <pre><code class="language-jsx">
+function MedicationItem({ 
+  name, 
+  dosage, 
+  schedule, 
+  isActive = true, 
+  onPress = () => {}, 
+  style = {} 
+}) {
+  // Default value for isActive is true
+  // Default value for onPress is a no-op function
+  // Default value for style is an empty object
+  
+  return (
+    // Component implementation
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Using defaultProps (Older Pattern)</h3>
+          <pre><code class="language-jsx">
+function MedicationItem(props) {
+  // Implementation
+}
+
+MedicationItem.defaultProps = {
+  isActive: true,
+  onPress: () => {},
+  style: {}
+};
+          </code></pre>
+          <div class="callout note">
+            <div class="callout-title">Note</div>
+            <p>The <code>defaultProps</code> pattern is still supported but parameter defaults are now preferred in functional components.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TypeScript and Props Slide -->
+    <section class="slide content-slide">
+      <h2>TypeScript and Props</h2>
+      <p>TypeScript provides compile-time type checking for props:</p>
+      <pre><code class="language-tsx">
+// Define prop types interface
+interface MedicationItemProps {
+  name: string;
+  dosage: string;
+  schedule: string;
+  isActive?: boolean; // Optional prop (note the ?)
+  refills: number;
+  onPress: () => void;
+  patient: {
+    id: string;
+    name: string;
+  };
+}
+
+// Use the interface with the component
+function MedicationItem({ 
+  name, 
+  dosage, 
+  schedule, 
+  isActive = true, 
+  refills,
+  onPress,
+  patient
+}: MedicationItemProps) {
+  // Component implementation
+}
+      </code></pre>
+      <div class="callout highlight">
+        <div class="callout-title">TypeScript Benefits</div>
+        <p>TypeScript helps catch prop-related errors at compile time, provides IDE autocomplete, and serves as self-documentation.</p>
+      </div>
+    </section>
+    
+    <!-- Prop Validation with PropTypes Slide -->
+    <section class="slide content-slide">
+      <h2>Prop Validation with PropTypes</h2>
+      <p>For JavaScript projects without TypeScript, PropTypes provides runtime type checking:</p>
+      <pre><code class="language-jsx">
+import PropTypes from 'prop-types';
+
+function MedicationItem({ name, dosage, schedule, isActive, onPress }) {
+  // Component implementation
+}
+
+MedicationItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  dosage: PropTypes.string.isRequired,
+  schedule: PropTypes.string.isRequired,
+  isActive: PropTypes.bool,
+  refills: PropTypes.number,
+  onPress: PropTypes.func.isRequired,
+  patient: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })
+};
+
+MedicationItem.defaultProps = {
+  isActive: true
+};
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Note</div>
+        <p>PropTypes are removed in production builds. They only run in development mode to help catch bugs.</p>
+      </div>
+    </section>
+    
+    <!-- The "children" Prop Slide -->
+    <section class="slide content-slide">
+      <h2>The "children" Prop</h2>
+      <p>The <code>children</code> prop allows components to accept and render nested JSX elements:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Creating a Wrapper Component</h3>
+          <pre><code class="language-jsx">
+function Card({ title, children }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      <View style={styles.cardContent}>
+        {children}
+      </View>
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Using the Component</h3>
+          <pre><code class="language-jsx">
+function MedicationDetail() {
+  return (
+    <Card title="Medication Details">
+      <Text>Name: Lisinopril</Text>
+      <Text>Dosage: 10mg</Text>
+      <Text>Schedule: Once daily</Text>
+      <Button 
+        title="Refill Prescription" 
+        onPress={() => {}} 
+      />
+    </Card>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout highlight">
+        <div class="callout-title">Deep Dive</div>
+        <p>The <code>children</code> prop is actually part of the props object passed to your component. When you write <code>&lt;Card&gt;Content&lt;/Card&gt;</code>, React passes "Content" as the <code>children</code> prop.</p>
+      </div>
+    </section>
+    
+    <!-- Component Composition Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Component Composition Patterns</h2>
+      <p>React emphasizes composition over inheritance for reusing code between components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Containment</h3>
+          <p>Using the children prop to pass elements to a component</p>
+          <pre><code class="language-jsx">
+<Modal>
+  <ModalHeader>Account Settings</ModalHeader>
+  <ModalBody>
+    <SettingsForm />
+  </ModalBody>
+  <ModalFooter>
+    <Button>Save</Button>
+    <Button>Cancel</Button>
+  </ModalFooter>
+</Modal>
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Specialization</h3>
+          <p>Creating specific versions of more generic components</p>
+          <pre><code class="language-jsx">
+// Generic Button
+function Button(props) {
+  // ...implementation
+}
+
+// Specialized button
+function PrimaryButton(props) {
+  return (
+    <Button 
+      {...props} 
+      color="primary" 
+      size="large"
+    />
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Advanced Composition Pattern: Specialization Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Composition: Specialization</h2>
+      <pre><code class="language-jsx">
+// Generic Button component
+function Button({ onPress, style, textStyle, children }) {
+  return (
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
+    </TouchableOpacity>
+  );
+}
+
+// Specialized PrimaryButton component
+function PrimaryButton({ onPress, children }) {
+  return (
+    <Button 
+      onPress={onPress} 
+      style={styles.primaryButton} 
+      textStyle={styles.primaryButtonText}
+    >
+      {children}
+    </Button>
+  );
+}
+
+// Specialized DangerButton component
+function DangerButton({ onPress, children }) {
+  return (
+    <Button 
+      onPress={onPress} 
+      style={styles.dangerButton} 
+      textStyle={styles.dangerButtonText}
+    >
+      {children}
+    </Button>
+  );
+}
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Reusability</div>
+        <p>This pattern allows you to create a library of UI components that share common functionality but have different visual appearances or behaviors.</p>
+      </div>
+    </section>
+    
+    <!-- Advanced Composition Pattern: Multiple Slots Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Composition: Multiple Slots</h2>
+      <p>For components that need multiple distinct "slots" for content:</p>
+      <pre><code class="language-jsx">
+function ProfileCard({ header, footer, children }) {
+  return (
+    <View style={styles.card}>
+      <View style={styles.header}>
+        {header}
+      </View>
+      <View style={styles.content}>
+        {children}
+      </View>
+      <View style={styles.footer}>
+        {footer}
+      </View>
+    </View>
+  );
+}
+
+// Usage
+function UserProfile() {
+  return (
+    <ProfileCard
+      header={<ProfileHeader user={user} />}
+      footer={<ProfileActions user={user} />}
+    >
+      <UserDetails user={user} />
+    </ProfileCard>
+  );
+}
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Flexibility</div>
+        <p>This pattern provides more flexibility than a single children prop when you need to place content in specific locations within your component.</p>
+      </div>
+    </section>
+    
+    <!-- Advanced Composition Pattern: Render Props Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Composition: Render Props</h2>
+      <p>A technique for sharing code between components using a prop whose value is a function:</p>
+      <pre><code class="language-jsx">
+function Toggler({ render }) {
+  const [isOn, setIsOn] = useState(false);
+  const toggle = () => setIsOn(!isOn);
+  
+  return render(isOn, toggle);
+}
+
+// Usage
+function App() {
+  return (
+    <Toggler
+      render={(isOn, toggle) => (
+        <View>
+          <Text>The switch is {isOn ? 'ON' : 'OFF'}</Text>
+          <Button title="Toggle" onPress={toggle} />
+        </View>
+      )}
+    />
+  );
+}
+      </code></pre>
+      <div class="callout highlight">
+        <div class="callout-title">Alternative Syntax</div>
+        <p>An alternative and more common syntax uses children as a function:</p>
+        <pre><code class="language-jsx">
+<Toggler>
+  {(isOn, toggle) => (
+    <View>
+      <Text>The switch is {isOn ? 'ON' : 'OFF'}</Text>
+      <Button title="Toggle" onPress={toggle} />
+    </View>
+  )}
+</Toggler>
+        </code></pre>
+      </div>
+    </section>
+    
+    <!-- Advanced Composition Pattern: Higher-Order Components Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Composition: Higher-Order Components</h2>
+      <p>HOCs are functions that take a component and return a new, enhanced component:</p>
+      <pre><code class="language-jsx">
+// HOC that adds loading capability to a component
+function withLoading(WrappedComponent) {
+  return function WithLoading({ isLoading, ...props }) {
+    if (isLoading) {
+      return <ActivityIndicator size="large" />;
+    }
+    return <WrappedComponent {...props} />;
+  };
+}
+
+// Basic component
+function UserProfile({ user }) {
+  return (
+    <View>
+      <Text>{user.name}</Text>
+      <Text>{user.email}</Text>
+    </View>
+  );
+}
+
+// Enhanced component with loading capability
+const UserProfileWithLoading = withLoading(UserProfile);
+
+// Usage
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  
+  // Fetch user data...
+  
+  return <UserProfileWithLoading isLoading={isLoading} user={user} />;
+}
+      </code></pre>
+      <div class="callout note">
+        <div class="callout-title">Note</div>
+        <p>Higher-Order Components were common before hooks. In modern React, custom hooks often provide a cleaner alternative.</p>
+      </div>
+    </section>
+    
+    <!-- Props vs. State Slide -->
+    <section class="slide content-slide">
+      <h2>Props vs. State</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Props</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Source</td>
+            <td>Received from parent component</td>
+            <td>Defined within the component</td>
+          </tr>
+          <tr>
+            <td>Mutability</td>
+            <td>Immutable (read-only)</td>
+            <td>Mutable (can be updated)</td>
+          </tr>
+          <tr>
+            <td>Purpose</td>
+            <td>Configuration and data passing</td>
+            <td>Internal component data</td>
+          </tr>
+          <tr>
+            <td>Data Flow</td>
+            <td>Parent to child (downward)</td>
+            <td>Contained within component</td>
+          </tr>
+          <tr>
+            <td>Updates</td>
+            <td>When parent re-renders with new props</td>
+            <td>Through set function (e.g., setState)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout highlight">
+        <div class="callout-title">Mental Model</div>
+        <p>Props are like function parameters, while state is like variables declared within the function.</p>
+      </div>
+    </section>
+    
+    <!-- Best Practices for Props Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices for Props</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Do</h3>
+          <ul>
+            <li>Use descriptive prop names</li>
+            <li>Provide sensible defaults</li>
+            <li>Validate props with PropTypes or TypeScript</li>
+            <li>Keep components pure with respect to props</li>
+            <li>Document required props and their expected types</li>
+            <li>Group related props into objects when appropriate</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Don't</h3>
+          <ul>
+            <li>Modify props directly</li>
+            <li>Use too many props (consider decomposing)</li>
+            <li>Pass unneeded props to components</li>
+            <li>Use ambiguous prop names</li>
+            <li>Spread all props blindly without considering what's needed</li>
+            <li>Use props for data that should be state</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Prop Drilling</div>
+        <p>If you find yourself passing props through many layers of components, consider alternative patterns like Context or state management libraries.</p>
+      </div>
+    </section>
+    
+    <!-- Props in React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Props in React Native</h2>
+      <p>The concept of props is identical between React for the web and React Native, with the main difference being the available component types and their specific props.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Common React Native Props</h3>
+          <ul>
+            <li><code>style</code>: For styling components</li>
+            <li><code>onPress</code>: For handling press events</li>
+            <li><code>source</code>: For Image components</li>
+            <li><code>onChangeText</code>: For TextInput</li>
+            <li><code>activeOpacity</code>: For TouchableOpacity</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example</h3>
+          <pre><code class="language-jsx">
+<TouchableOpacity
+  style={styles.button}
+  onPress={handlePress}
+  activeOpacity={0.7}
+  disabled={isDisabled}
+>
+  <Text style={styles.buttonText}>
+    {buttonTitle}
+  </Text>
+</TouchableOpacity>
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout tip platform-web">
+        <div class="callout-title">For Web Developers</div>
+        <p>Most of your knowledge about props in web React transfers directly to React Native. The main adjustments are learning the new component types and their specific props.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise: Building a Component Library Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Building a Component Library</h2>
+      <p>Create a set of reusable components for a medication tracking app:</p>
+      <div class="exercise-instructions">
+        <ol>
+          <li>Create a <code>Button</code> component that accepts <code>type</code> (primary, secondary, danger), <code>size</code>, <code>onPress</code>, and <code>children</code> props</li>
+          <li>Create a <code>Card</code> component that accepts <code>title</code>, <code>footer</code>, and <code>children</code> props</li>
+          <li>Create a <code>MedicationCard</code> component that uses your <code>Card</code> and <code>Button</code> components to display medication details</li>
+          <li>Add PropTypes or TypeScript interfaces for your components</li>
+          <li>Implement sensible defaults for all optional props</li>
+        </ol>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Extension</div>
+        <p>Try creating specialized components (PrimaryButton, DangerButton) based on your generic Button component.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Props and Component Composition</h2>
+      <ul>
+        <li>Props are the primary mechanism for passing data between components</li>
+        <li>Props are read-only and flow downward from parent to child</li>
+        <li>The <code>children</code> prop enables flexible component composition</li>
+        <li>PropTypes and TypeScript provide type checking for props</li>
+        <li>Advanced composition patterns include specialization, render props, and HOCs</li>
+        <li>Well-designed props make components more reusable and maintainable</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll explore state and hooks, learning how components can maintain and update their own internal data.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-2-components-and-jsx/index.html" class="button">← Previous: Components and JSX</a>
+        <a href="../section-4-state-and-hooks/index.html" class="button">Next: State and Hooks →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

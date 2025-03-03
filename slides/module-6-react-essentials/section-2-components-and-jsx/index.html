@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Components and JSX | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2</h1>
+      <h2>Components and JSX</h2>
+      <p class="metadata">Module 6 | 1.5 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Create functional components in React</li>
+        <li>Understand and use JSX syntax effectively</li>
+        <li>Implement conditional rendering patterns</li>
+        <li>Handle lists and keys in components</li>
+        <li>Differentiate between functional and class components</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 1.5 hours</p>
+        <p><strong>Prerequisites:</strong> JavaScript basics, Introduction to React (Section 1)</p>
+      </div>
+    </section>
+    
+    <!-- Components Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Components: The Building Blocks of React</h2>
+      <p>Components are the fundamental units of a React application:</p>
+      <ul>
+        <li>Self-contained, reusable pieces of code</li>
+        <li>Return React elements describing what should appear on screen</li>
+        <li>Accept inputs called "props"</li>
+        <li>Can maintain internal state</li>
+        <li>Can be composed to build complex UIs</li>
+      </ul>
+      <div class="callout example">
+        <div class="callout-title">Component Analogy</div>
+        <p>Think of components like LEGO blocks. Each is a standalone piece that can be combined in various ways to build something greater than the sum of its parts.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Emphasize that components can be as small as a button or as large as an entire screen. The key is that they encapsulate both the UI and the logic related to a piece of the interface.</p>
+      </div>
+    </section>
+    
+    <!-- Types of Components Slide -->
+    <section class="slide content-slide">
+      <h2>Types of Components in React</h2>
+      <p>React provides two ways to define components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Functional Components</h3>
+          <ul>
+            <li>JavaScript functions</li>
+            <li>Return JSX</li>
+            <li>Used to be called "stateless" components</li>
+            <li>Can now use state and lifecycle via Hooks (since React 16.8)</li>
+            <li>Generally preferred in modern React</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Class Components</h3>
+          <ul>
+            <li>JavaScript classes extending React.Component</li>
+            <li>Must implement a render() method</li>
+            <li>Traditionally used for stateful logic</li>
+            <li>Have lifecycle methods (componentDidMount, etc.)</li>
+            <li>Less common in modern React development</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Modern Best Practice</div>
+        <p>In modern React, functional components with hooks are preferred over class components for both simplicity and future compatibility.</p>
+      </div>
+    </section>
+    
+    <!-- Functional Components Slide -->
+    <section class="slide content-slide">
+      <h2>Functional Components</h2>
+      <div class="columns">
+        <div class="column">
+          <p>A functional component is a JavaScript function that returns JSX:</p>
+          <pre><code class="language-jsx">
+// Regular function syntax
+function Greeting() {
+  return <h1>Hello, world!</h1>;
+}
+
+// Arrow function syntax
+const Greeting = () => {
+  return <h1>Hello, world!</h1>;
+};
+
+// Implicit return with arrow functions
+const Greeting = () => <h1>Hello, world!</h1>;
+          </code></pre>
+        </div>
+        <div class="column">
+          <p>In React Native, we use platform-specific components:</p>
+          <pre><code class="language-jsx">
+import { Text } from 'react-native';
+
+// React Native component
+const Greeting = () => <Text>Hello, world!</Text>;
+
+// With multiple elements
+const ProfileHeader = () => (
+  <>
+    <Text style={styles.title}>User Profile</Text>
+    <Text style={styles.subtitle}>Personal Information</Text>
+  </>
+);
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Class Components Slide -->
+    <section class="slide content-slide">
+      <h2>Class Components</h2>
+      <div class="columns">
+        <div class="column">
+          <p>A class component is a JavaScript class that extends React.Component:</p>
+          <pre><code class="language-jsx">
+import React from 'react';
+
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, world!</h1>;
+  }
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <p>In React Native:</p>
+          <pre><code class="language-jsx">
+import React from 'react';
+import { Text, View } from 'react-native';
+
+class ProfileHeader extends React.Component {
+  render() {
+    return (
+      <View>
+        <Text style={styles.title}>User Profile</Text>
+        <Text style={styles.subtitle}>Personal Info</Text>
+      </View>
+    );
+  }
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout note">
+        <div class="callout-title">Historical Context</div>
+        <p>Before hooks were introduced, you had to use class components to manage state and lifecycle. Now, you can do everything with functional components.</p>
+      </div>
+    </section>
+    
+    <!-- JSX Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Understanding JSX</h2>
+      <p>JSX (JavaScript XML) is a syntax extension for JavaScript that looks similar to HTML:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>What JSX Is</h3>
+          <ul>
+            <li>Syntax extension for JavaScript</li>
+            <li>Describes what the UI should look like</li>
+            <li>Combines markup and JavaScript logic</li>
+            <li>Gets transformed into React.createElement() calls</li>
+            <li>Makes UI code more readable and intuitive</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>What JSX Is Not</h3>
+          <ul>
+            <li>Not a template language (like Handlebars)</li>
+            <li>Not HTML (though it looks similar)</li>
+            <li>Not a separate language</li>
+            <li>Not required for React (but commonly used)</li>
+            <li>Not interpreted by browsers directly</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info platform-android platform-ios">
+        <div class="callout-title">For Mobile Developers</div>
+        <p>JSX might seem strange at first if you're used to separate files for UI (XML layouts, storyboards), but it allows you to keep UI and logic together in a component.</p>
+      </div>
+    </section>
+    
+    <!-- JSX Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>JSX Under the Hood</h2>
+      <p>When compiled, JSX transforms into React.createElement() function calls:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>JSX Code</h3>
+          <pre><code class="language-jsx">
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+);
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Compiled JavaScript</h3>
+          <pre><code class="language-javascript">
+const element = React.createElement(
+  'h1',
+  { className: 'greeting' },
+  'Hello, world!'
+);
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">The createElement Function</div>
+        <p>React.createElement() creates a "React element" - a lightweight description of what to render. React uses these elements to build and update the DOM.</p>
+      </div>
+    </section>
+    
+    <!-- JSX Rules and Syntax Slide 1 -->
+    <section class="slide content-slide">
+      <h2>JSX Rules and Syntax (1/2)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>1. Components must start with capital letters</h3>
+          <pre><code class="language-jsx">
+// Correct - React knows this is a custom component
+<MyComponent />
+
+// Incorrect - React will think this is a DOM tag
+<myComponent />
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>2. JSX must have a single root element</h3>
+          <pre><code class="language-jsx">
+// Correct - Single root element
+return (
+  <div>
+    <h1>Title</h1>
+    <p>Paragraph</p>
+  </div>
+);
+
+// Also correct - Using React Fragment
+return (
+  <>
+    <h1>Title</h1>
+    <p>Paragraph</p>
+  </>
+);
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- JSX Rules and Syntax Slide 2 -->
+    <section class="slide content-slide">
+      <h2>JSX Rules and Syntax (2/2)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>3. JavaScript expressions in curly braces</h3>
+          <pre><code class="language-jsx">
+const name = 'John';
+return <h1>Hello, {name}!</h1>;
+
+// Can include any JavaScript expression
+return (
+  <div>
+    <p>2 + 2 = {2 + 2}</p>
+    <p>Random number: {Math.random()}</p>
+  </div>
+);
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>4. Attribute naming differences</h3>
+          <pre><code class="language-jsx">
+// HTML: class, for
+// JSX: className, htmlFor
+<div className="container">
+  <label htmlFor="username">Username:</label>
+  <input id="username" />
+</div>
+
+// camelCase attributes
+<button onClick={handleClick}>
+  Click me
+</button>
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- JSX in React Native Slide -->
+    <section class="slide content-slide">
+      <h2>JSX in React Native</h2>
+      <p>In React Native, JSX works the same way but with different components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>React (Web)</h3>
+          <pre><code class="language-jsx">
+function Profile() {
+  return (
+    <div className="profile">
+      <h1>John Doe</h1>
+      <img src="profile.jpg" alt="Profile photo" />
+      <p>Software Developer</p>
+    </div>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>React Native</h3>
+          <pre><code class="language-jsx">
+function Profile() {
+  return (
+    <View style={styles.profile}>
+      <Text style={styles.name}>John Doe</Text>
+      <Image source={require('./profile.jpg')} />
+      <Text style={styles.bio}>Software Developer</Text>
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout tip platform-web">
+        <div class="callout-title">For Web Developers</div>
+        <p>The biggest adjustment is learning the new set of core components (<code>View</code>, <code>Text</code>, etc.) that replace HTML elements.</p>
+      </div>
+    </section>
+    
+    <!-- Conditional Rendering Slide 1 -->
+    <section class="slide content-slide">
+      <h2>Conditional Rendering (1/2)</h2>
+      <p>React's declarative nature makes conditional rendering straightforward:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>If Statements (outside JSX)</h3>
+          <pre><code class="language-jsx">
+function WeatherDisplay({ temperature }) {
+  let message;
+  
+  if (temperature > 30) {
+    message = <Text>It's hot outside!</Text>;
+  } else if (temperature > 20) {
+    message = <Text>It's pleasant outside.</Text>;
+  } else {
+    message = <Text>It's cold outside.</Text>;
+  }
+  
+  return <View>{message}</View>;
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Logical && Operator</h3>
+          <pre><code class="language-jsx">
+function Notification({ hasMessages }) {
+  return (
+    <View>
+      {hasMessages && (
+        <Text>You have unread messages</Text>
+      )}
+    </View>
+  );
+}
+          </code></pre>
+          <div class="callout warning">
+            <div class="callout-title">Warning</div>
+            <p>Be careful with <code>&&</code> when the left side could be <code>0</code>, which is falsy in JavaScript but would render as <code>0</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Conditional Rendering Slide 2 -->
+    <section class="slide content-slide">
+      <h2>Conditional Rendering (2/2)</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Ternary Operator</h3>
+          <pre><code class="language-jsx">
+function UserStatus({ isLoggedIn }) {
+  return (
+    <Text>
+      {isLoggedIn
+        ? 'Welcome back!'
+        : 'Please log in'}
+    </Text>
+  );
+}
+
+// For more complex UI
+function MedicationStatus({ status }) {
+  return (
+    <View>
+      {status === 'active' ? (
+        <ActiveMedication />
+      ) : status === 'pending' ? (
+        <PendingMedication />
+      ) : (
+        <InactiveMedication />
+      )}
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Preventing Component Rendering</h3>
+          <pre><code class="language-jsx">
+function AdminPanel({ isAdmin }) {
+  if (!isAdmin) {
+    return null;  // Renders nothing
+  }
+  
+  return (
+    <View>
+      <Text>Admin Dashboard</Text>
+      {/* Admin UI components */}
+    </View>
+  );
+}
+          </code></pre>
+          <div class="callout info">
+            <div class="callout-title">Choosing a Pattern</div>
+            <p>Use the pattern that makes your code most readable. Simple conditions work well with <code>&&</code> or ternaries, while complex logic may be clearer with if statements.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Rendering Lists Slide -->
+    <section class="slide content-slide">
+      <h2>Rendering Lists</h2>
+      <p>To render lists in React, we typically map over an array of data:</p>
+      <pre><code class="language-jsx">
+function MedicationList({ medications }) {
+  return (
+    <View>
+      {medications.map(medication => (
+        <MedicationItem
+          key={medication.id}
+          name={medication.name}
+          dosage={medication.dosage}
+          schedule={medication.schedule}
+        />
+      ))}
+    </View>
+  );
+}
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">The "key" Prop is Critical</div>
+        <p>Always provide a unique "key" prop when rendering lists. Keys help React identify which items have changed, been added, or removed, and are vital for performance.</p>
+      </div>
+    </section>
+    
+    <!-- Keys in Lists Slide -->
+    <section class="slide content-slide">
+      <h2>The Importance of Keys</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What are Keys?</h3>
+          <ul>
+            <li>Unique identifiers for elements in a list</li>
+            <li>Help React identify changes in dynamic lists</li>
+            <li>Should be stable, predictable, and unique</li>
+            <li>Improve reconciliation efficiency</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Best Practices</h3>
+          <pre><code class="language-jsx">
+// Good - Using stable IDs
+{medications.map(med => (
+  <MedicationItem
+    key={med.id}
+    medication={med}
+  />
+))}
+
+// Acceptable - For static lists only
+{colors.map((color, index) => (
+  <ColorSwatch key={index} color={color} />
+))}
+
+// Bad - Using indices for dynamic lists
+{medications.map((med, index) => (
+  <MedicationItem key={index} medication={med} />
+))}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Under the Hood</div>
+        <p>Keys help React's diffing algorithm optimize rendering by identifying which items have changed, been added, or removed, rather than rebuilding the entire list.</p>
+      </div>
+    </section>
+    
+    <!-- Component Composition Slide -->
+    <section class="slide content-slide">
+      <h2>Component Composition</h2>
+      <p>React encourages composition over inheritance to build complex UIs:</p>
+      <div class="columns">
+        <div class="column">
+          <pre><code class="language-jsx">
+// Button component
+function Button({ onPress, children }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.button}
+    >
+      <Text style={styles.buttonText}>{children}</Text>
+    </TouchableOpacity>
+  );
+}
+
+// Card component
+function Card({ title, children }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      <View style={styles.cardContent}>
+        {children}
+      </View>
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <pre><code class="language-jsx">
+// Composing components together
+function MedicationCard({ medication, onPressRefill }) {
+  return (
+    <Card title={medication.name}>
+      <Text>Dosage: {medication.dosage}</Text>
+      <Text>Schedule: {medication.schedule}</Text>
+      <Button onPress={onPressRefill}>
+        Refill Prescription
+      </Button>
+    </Card>
+  );
+}
+          </code></pre>
+          <div class="callout tip">
+            <div class="callout-title">Composition Benefits</div>
+            <p>Composition gives you flexibility without the complexity of inheritance hierarchies. It makes your components more reusable and your code more maintainable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Functional vs Class Components Comparison Slide -->
+    <section class="slide content-slide">
+      <h2>Functional vs. Class Components</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Functional Components</th>
+            <th>Class Components</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Syntax</td>
+            <td>Simpler, less boilerplate</td>
+            <td>More verbose</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>Uses useState and useReducer hooks</td>
+            <td>Uses this.state and this.setState()</td>
+          </tr>
+          <tr>
+            <td>Lifecycle</td>
+            <td>Uses useEffect hook</td>
+            <td>Uses lifecycle methods</td>
+          </tr>
+          <tr>
+            <td>Performance</td>
+            <td>Generally slightly better</td>
+            <td>Slightly more overhead</td>
+          </tr>
+          <tr>
+            <td>Context</td>
+            <td>useContext hook</td>
+            <td>static contextType or Context.Consumer</td>
+          </tr>
+          <tr>
+            <td>Refs</td>
+            <td>useRef hook</td>
+            <td>createRef or callback refs</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout info">
+        <div class="callout-title">Current Best Practice</div>
+        <p>Most React and React Native applications today use functional components with hooks, which is what we'll focus on in this course.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise: Creating Components Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Creating Components</h2>
+      <p>Create functional components for a medication tracking app:</p>
+      <div class="exercise-instructions">
+        <ol>
+          <li>Create a <code>MedicationHeader</code> component that displays a title and a small description</li>
+          <li>Create a <code>MedicationItem</code> component that displays name, dosage, and schedule</li>
+          <li>Create a <code>MedicationList</code> component that renders multiple <code>MedicationItem</code> components</li>
+          <li>Implement conditional rendering to show different status indicators based on medication status</li>
+          <li>Add proper keys to the list items</li>
+        </ol>
+      </div>
+      <div class="exercise-starter">
+        <pre><code class="language-jsx">
+// Sample data to use
+const medications = [
+  { id: '1', name: 'Aspirin', dosage: '100mg', schedule: 'Daily', status: 'active' },
+  { id: '2', name: 'Ibuprofen', dosage: '200mg', schedule: 'As needed', status: 'low' },
+  { id: '3', name: 'Amoxicillin', dosage: '500mg', schedule: 'Twice daily', status: 'inactive' },
+];
+        </code></pre>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Components and JSX</h2>
+      <ul>
+        <li>Components are the building blocks of React applications</li>
+        <li>Functional components are the preferred way to write components in modern React</li>
+        <li>JSX allows you to write UI components in a syntax similar to HTML</li>
+        <li>Conditional rendering lets you create dynamic UIs based on state</li>
+        <li>Lists require unique keys for optimal performance</li>
+        <li>Component composition helps you build complex UIs from simpler pieces</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll explore props and component composition in more detail, learning how to pass data between components effectively.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-1-introduction-to-react/index.html" class="button">← Previous: Introduction to React</a>
+        <a href="../section-3-props-and-component-composition/index.html" class="button">Next: Props and Component Composition →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
