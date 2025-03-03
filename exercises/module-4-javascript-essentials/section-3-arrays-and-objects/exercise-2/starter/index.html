@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays and Objects - Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .patient-record {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arrays and Objects - Exercise 2</h1>
+    <p>Complete the exercise by implementing patient record management functions.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Patient Record Management</h2>
+            
+            <div class="form-group">
+                <h3>Add New Medication</h3>
+                <label for="medName">Medication Name:</label>
+                <input type="text" id="medName" placeholder="Enter medication name">
+                
+                <label for="medType">Type:</label>
+                <input type="text" id="medType" placeholder="Enter medication type">
+                
+                <label for="medDosage">Dosage:</label>
+                <input type="text" id="medDosage" placeholder="Enter dosage">
+                
+                <label for="medFrequency">Frequency:</label>
+                <select id="medFrequency">
+                    <option value="once daily">Once Daily</option>
+                    <option value="twice daily">Twice Daily</option>
+                    <option value="three times daily">Three Times Daily</option>
+                    <option value="as needed">As Needed</option>
+                </select>
+                
+                <button onclick="addMedication()">Add Medication</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Update Medication Dosage</h3>
+                <label for="updateMedName">Medication Name:</label>
+                <input type="text" id="updateMedName" placeholder="Enter medication name">
+                
+                <label for="newDosage">New Dosage:</label>
+                <input type="text" id="newDosage" placeholder="Enter new dosage">
+                
+                <button onclick="updateDosage()">Update Dosage</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Remove Medication</h3>
+                <label for="removeMedName">Medication Name:</label>
+                <input type="text" id="removeMedName" placeholder="Enter medication name">
+                
+                <button onclick="removeMedication()">Remove Medication</button>
+            </div>
+
+            <div class="patient-record">
+                <h3>Current Patient Record</h3>
+                <div id="patientRecord">
+                    <!-- Patient record will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample patient record
+        const patientRecord = {
+            id: "P12345",
+            name: "John Doe",
+            medications: [
+                { name: "Lisinopril", type: "blood pressure", dosage: "10mg", frequency: "once daily" },
+                { name: "Metformin", type: "diabetes", dosage: "500mg", frequency: "twice daily" }
+            ]
+        };
+
+        // TODO: Implement addMedication function
+        // Should add a new medication to the patient's record immutably
+        function addMedication(record, medication) {
+            // Your code here
+        }
+
+        // TODO: Implement updateDosage function
+        // Should update a medication's dosage immutably
+        function updateDosage(record, medicationName, newDosage) {
+            // Your code here
+        }
+
+        // TODO: Implement removeMedication function
+        // Should remove a medication from the patient's record immutably
+        function removeMedication(record, medicationName) {
+            // Your code here
+        }
+
+        // Function to update the display
+        function updateDisplay() {
+            const recordContainer = document.getElementById('patientRecord');
+            recordContainer.innerHTML = `
+                <h4>Patient: ${patientRecord.name}</h4>
+                <h5>Medications:</h5>
+                ${patientRecord.medications.map(med => `
+                    <div class="medication-item">
+                        <p>${med.name} - ${med.type}</p>
+                        <p>Dosage: ${med.dosage}</p>
+                        <p>Frequency: ${med.frequency}</p>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // Event handlers
+        function addMedication() {
+            const name = document.getElementById('medName').value;
+            const type = document.getElementById('medType').value;
+            const dosage = document.getElementById('medDosage').value;
+            const frequency = document.getElementById('medFrequency').value;
+
+            if (!name || !type || !dosage) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const newMedication = { name, type, dosage, frequency };
+            patientRecord.medications = addMedication(patientRecord, newMedication);
+            updateDisplay();
+            clearForm('medName', 'medType', 'medDosage', 'medFrequency');
+        }
+
+        function updateDosage() {
+            const name = document.getElementById('updateMedName').value;
+            const newDosage = document.getElementById('newDosage').value;
+
+            if (!name || !newDosage) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            patientRecord.medications = updateDosage(patientRecord, name, newDosage);
+            updateDisplay();
+            clearForm('updateMedName', 'newDosage');
+        }
+
+        function removeMedication() {
+            const name = document.getElementById('removeMedName').value;
+
+            if (!name) {
+                alert('Please enter a medication name');
+                return;
+            }
+
+            patientRecord.medications = removeMedication(patientRecord, name);
+            updateDisplay();
+            clearForm('removeMedName');
+        }
+
+        // Helper function to clear form fields
+        function clearForm(...fieldIds) {
+            fieldIds.forEach(id => {
+                document.getElementById(id).value = '';
+            });
+        }
+
+        // Initial display
+        window.onload = updateDisplay;
+    </script>
+</body>
+</html> 

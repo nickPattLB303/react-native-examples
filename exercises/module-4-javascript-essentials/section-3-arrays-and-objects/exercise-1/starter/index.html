@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays and Objects - Exercise 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .stats {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arrays and Objects - Exercise 1</h1>
+    <p>Complete the exercise by implementing array transformations for medication data.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication List Transformations</h2>
+            
+            <div class="stats">
+                <h3>Statistics</h3>
+                <p>Total medications: <span id="totalMeds">0</span></p>
+                <p>Total pills per day: <span id="totalPills">0</span></p>
+                <p>Unique medication types: <span id="uniqueTypes">0</span></p>
+            </div>
+
+            <div class="medication-list">
+                <h3>Medications by Type</h3>
+                <div id="medicationsByType">
+                    <!-- Medications grouped by type will be displayed here -->
+                </div>
+            </div>
+
+            <div class="medication-list">
+                <h3>Sorted Medications</h3>
+                <div id="sortedMedications">
+                    <!-- Sorted medications will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample medication data
+        const medications = [
+            { name: "Lisinopril", type: "blood pressure", frequency: "once daily", dosage: "10mg" },
+            { name: "Metformin", type: "diabetes", frequency: "twice daily", dosage: "500mg" },
+            { name: "Amoxicillin", type: "antibiotic", frequency: "three times daily", dosage: "500mg" },
+            { name: "Vitamin D", type: "vitamin", frequency: "once daily", dosage: "1000IU" },
+            { name: "Ibuprofen", type: "pain reliever", frequency: "as needed", dosage: "400mg" },
+            { name: "Zyrtec", type: "antihistamine", frequency: "once daily", dosage: "10mg" }
+        ];
+
+        // TODO: Implement getTotalPillsPerDay function
+        // Should calculate total number of pills per day based on frequency
+        function getTotalPillsPerDay(medications) {
+            // Your code here
+        }
+
+        // TODO: Implement groupByType function
+        // Should group medications by their type
+        function groupByType(medications) {
+            // Your code here
+        }
+
+        // TODO: Implement sortMedications function
+        // Should sort medications by name
+        function sortMedications(medications) {
+            // Your code here
+        }
+
+        // TODO: Implement getUniqueTypes function
+        // Should return array of unique medication types
+        function getUniqueTypes(medications) {
+            // Your code here
+        }
+
+        // Function to update the display
+        function updateDisplay() {
+            // Update statistics
+            document.getElementById('totalMeds').textContent = medications.length;
+            document.getElementById('totalPills').textContent = getTotalPillsPerDay(medications);
+            document.getElementById('uniqueTypes').textContent = getUniqueTypes(medications).length;
+
+            // Display medications grouped by type
+            const groupedMeds = groupByType(medications);
+            const typeContainer = document.getElementById('medicationsByType');
+            typeContainer.innerHTML = Object.entries(groupedMeds)
+                .map(([type, meds]) => `
+                    <div class="medication-item">
+                        <h4>${type}</h4>
+                        ${meds.map(med => `
+                            <p>${med.name} - ${med.dosage} (${med.frequency})</p>
+                        `).join('')}
+                    </div>
+                `).join('');
+
+            // Display sorted medications
+            const sortedMeds = sortMedications(medications);
+            const sortedContainer = document.getElementById('sortedMedications');
+            sortedContainer.innerHTML = sortedMeds
+                .map(med => `
+                    <div class="medication-item">
+                        <p>${med.name} - ${med.type} - ${med.dosage} (${med.frequency})</p>
+                    </div>
+                `).join('');
+        }
+
+        // Initial display
+        window.onload = updateDisplay;
+    </script>
+</body>
+</html> 
