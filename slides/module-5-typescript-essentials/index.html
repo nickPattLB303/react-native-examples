@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 5: TypeScript Essentials | React Native Training</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>TypeScript Essentials</h1>
+      <h2>Building Type-Safe React Native Applications</h2>
+      <p class="metadata">Module 5 | 4 Sections | 4-6 hours</p>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the benefits of TypeScript in React Native development</li>
+        <li>Master fundamental TypeScript concepts: types, interfaces, and type annotations</li>
+        <li>Apply advanced typing techniques for complex React Native patterns</li>
+        <li>Create type-safe React Native components, hooks, and navigation</li>
+        <li>Integrate TypeScript with API calls and state management</li>
+        <li>Manage type definitions for third-party libraries</li>
+        <li>Organize types effectively in large-scale applications</li>
+      </ul>
+      <div class="presenter-notes">
+        This module builds upon the JavaScript fundamentals from Module 4 and introduces TypeScript as a powerful tool for improving React Native development. TypeScript provides static typing that catches errors at compile time rather than runtime.
+      </div>
+    </section>
+
+    <!-- Module Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Module Overview</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Benefits of TypeScript</h3>
+          <h4>Development Experience</h4>
+          <ul>
+            <li>Better IDE tooling and autocompletion</li>
+            <li>Catch errors during development</li>
+            <li>Self-documenting code</li>
+            <li>Safer refactoring</li>
+            <li>Improved team collaboration</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h4>Code Quality</h4>
+          <ul>
+            <li>Static type checking</li>
+            <li>Reduced runtime errors</li>
+            <li>Enforced contracts between components</li>
+            <li>Clear API boundaries</li>
+            <li>Predictable behavior</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Emphasize that TypeScript is a superset of JavaScript, so all valid JavaScript is valid TypeScript. This makes the learning curve more gradual. React Native projects increasingly use TypeScript by default due to its significant benefits.
+      </div>
+    </section>
+
+    <!-- Why TypeScript for React Native Slide -->
+    <section class="slide content-slide">
+      <h2>Why TypeScript for React Native?</h2>
+      <div class="columns">
+        <div class="column">
+          <img src="../shared/images/typescript-react-native.png" alt="TypeScript with React Native" class="centered-image" style="max-width: 90%;">
+        </div>
+        <div class="column">
+          <ul>
+            <li><strong>Early Error Detection</strong><br>Catch prop and state errors before running the app</li>
+            <li><strong>Improved IDE Support</strong><br>Autocomplete, type information, and navigation</li>
+            <li><strong>Enhanced Documentation</strong><br>Types serve as living documentation</li>
+            <li><strong>Safer Refactoring</strong><br>Confidently make changes across the codebase</li>
+            <li><strong>Better Team Collaboration</strong><br>Clear interfaces between components</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        These benefits are especially valuable in React Native development, where the feedback loop for testing on device can be longer than web development. TypeScript helps catch many errors before even running the app.
+      </div>
+    </section>
+
+    <!-- Module Structure Slide -->
+    <section class="slide content-slide">
+      <h2>Module Structure</h2>
+      <div class="sections-list">
+        <div class="section-item">
+          <h3>Section 1: TypeScript Fundamentals</h3>
+          <p>Core TypeScript concepts, basic types, interfaces, and environment setup</p>
+        </div>
+        <div class="section-item">
+          <h3>Section 2: Advanced Types and Interfaces</h3>
+          <p>Generic types, utility types, union and intersection types, type guards</p>
+        </div>
+        <div class="section-item">
+          <h3>Section 3: TypeScript with React Native</h3>
+          <p>Typed components, props, hooks, contexts, navigation, and API integration</p>
+        </div>
+        <div class="section-item">
+          <h3>Section 4: Managing Type Definitions</h3>
+          <p>Working with third-party type definitions, creating declaration files, organizing types</p>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        The module progresses from basic TypeScript concepts to advanced React Native-specific type patterns. Each section builds on the previous one, culminating in a comprehensive understanding of TypeScript in React Native applications.
+      </div>
+    </section>
+
+    <!-- Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>TypeScript in React Native: A Glimpse</h2>
+      <pre><code class="language-typescript">
+// Typed component props
+interface MedicationItemProps {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  instructions?: string;
+  onPress: (id: number) => void;
+}
+
+// Functional component with TypeScript
+const MedicationItem: React.FC&lt;MedicationItemProps> = ({
+  id,
+  name,
+  dosage,
+  unit,
+  instructions,
+  onPress
+}) => {
+  return (
+    &lt;TouchableOpacity style={styles.container} onPress={() => onPress(id)}>
+      &lt;Text style={styles.nameText}>{name}&lt;/Text>
+      &lt;Text style={styles.dosageText}>{dosage} {unit}&lt;/Text>
+      {instructions && (
+        &lt;Text style={styles.instructionsText}>{instructions}&lt;/Text>
+      )}
+    &lt;/TouchableOpacity>
+  );
+};
+      </code></pre>
+      <div class="presenter-notes">
+        This simple example shows how TypeScript enhances React Native components with type-safe props. Note how TypeScript ensures that all required props are provided and have the correct types.
+      </div>
+    </section>
+
+    <!-- Platform-Specific Guidance -->
+    <section class="slide content-slide">
+      <h2>Platform-Specific Guidance</h2>
+      <div class="platform-guidance">
+        <div class="platform-guidance-item platform-android">
+          <h3>Android Developers</h3>
+          <p>If you're coming from Java or Kotlin, TypeScript's static typing will feel familiar. TypeScript interfaces are similar to Java interfaces, and TypeScript's type system has many parallels with Kotlin's type system.</p>
+        </div>
+        <div class="platform-guidance-item platform-ios">
+          <h3>iOS Developers</h3>
+          <p>For Swift developers, TypeScript provides a familiar type system with interfaces, generics, and strong type-checking. TypeScript's optional types and null safety features parallel Swift's optionals.</p>
+        </div>
+        <div class="platform-guidance-item platform-web">
+          <h3>Web Developers</h3>
+          <p>If you're already familiar with JavaScript, TypeScript adds static types with minimal overhead. The transition is gradual - you can add types incrementally to existing JavaScript code.</p>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Tailor your emphasis based on the audience's background. Native mobile developers will appreciate the parallels to their familiar type systems, while web developers may need more explanation of the benefits of static typing.
+      </div>
+    </section>
+
+    <!-- Module Challenge Slide -->
+    <section class="slide content-slide">
+      <h2>Module Challenge: Medication Inventory System</h2>
+      <p>Apply TypeScript concepts to build a comprehensive medication inventory system:</p>
+      <ul>
+        <li>Convert an existing JavaScript codebase to TypeScript</li>
+        <li>Define interfaces for medication data models</li>
+        <li>Implement type-safe React Native components</li>
+        <li>Create custom hooks with proper typing</li>
+        <li>Add TypeScript to API integrations</li>
+        <li>Create declarations for third-party libraries</li>
+        <li>Organize types in a maintainable structure</li>
+      </ul>
+      <p class="challenge-cta">The challenge reinforces the concepts covered in all sections of this module.</p>
+      <div class="presenter-notes">
+        The module challenge ties together all the concepts from the four sections. It simulates a real-world scenario where TypeScript improves a React Native application through gradual adoption and refinement.
+      </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>TypeScript adds static typing to JavaScript, improving code quality and development experience</li>
+        <li>React Native projects benefit significantly from TypeScript through early error detection</li>
+        <li>This module covers TypeScript fundamentals through advanced patterns in React Native</li>
+        <li>Each section builds on the previous, providing a comprehensive understanding</li>
+        <li>The module challenge reinforces learning through practical application</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="./section-1-typescript-fundamentals/index.html">Section 1: TypeScript Fundamentals</a></p>
+      </div>
+      <div class="presenter-notes">
+        Emphasize that TypeScript is increasingly becoming the standard for React Native development, and the skills learned in this module will be directly applicable to real-world projects.
+      </div>
+    </section>
+  </div>
+
+
+  <script src="../shared/script.js"></script>
+</body>
+</html> 

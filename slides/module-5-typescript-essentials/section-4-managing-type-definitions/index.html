@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Managing Type Definitions | React Native Training</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Managing Type Definitions</h1>
+      <h2>Organizing Types in React Native Projects</h2>
+      <p class="metadata">Module 5, Section 4 | 45-60 minutes</p>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Install and use third-party type definitions</li>
+        <li>Create custom declaration files</li>
+        <li>Organize types in a scalable project structure</li>
+        <li>Implement module augmentation for existing libraries</li>
+        <li>Understand declaration merging</li>
+        <li>Handle global types in React Native applications</li>
+        <li>Apply best practices for maintaining type definitions</li>
+      </ul>
+      <div class="presenter-notes">
+        This section focuses on practical aspects of managing type definitions in React Native projects. It addresses the common challenges of working with third-party libraries and organizing types in a maintainable way.
+      </div>
+    </section>
+
+    <!-- Third-Party Type Definitions Slide -->
+    <section class="slide code-slide">
+      <h2>Using Third-Party Type Definitions</h2>
+      <pre><code class="language-bash">
+# Installing React Native types
+npm install --save-dev @types/react @types/react-native
+
+# Installing types for a specific library
+npm install --save-dev @types/lodash
+
+# Installing types for React Navigation
+npm install --save-dev @types/react-navigation
+      </code></pre>
+      <pre><code class="language-typescript">
+// Using a library with type definitions
+import { FlatList } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import _ from 'lodash';
+
+// TypeScript recognizes these imports and provides type checking
+const sortedMedications = _.sortBy(medications, 'name');
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Most popular libraries have type definitions available through DefinitelyTyped (@types). Check the package's documentation to see if types are included directly or need to be installed separately.</p>
+      </div>
+      <div class="presenter-notes">
+        Emphasize the importance of the DefinitelyTyped repository (@types packages) and how TypeScript automatically finds these type definitions. Also mention that some libraries bundle their own type definitions.
+      </div>
+    </section>
+
+    <!-- Finding Type Definitions Slide -->
+    <section class="slide content-slide">
+      <h2>Finding and Evaluating Type Definitions</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Sources for Type Definitions</h3>
+          <ul>
+            <li><strong>Bundled with the library</strong>: Check for <code>.d.ts</code> files or a types field in package.json</li>
+            <li><strong>DefinitelyTyped (@types)</strong>: <code>npm install --save-dev @types/library-name</code></li>
+            <li><strong>Community-maintained types</strong>: Sometimes available in separate packages</li>
+            <li><strong>Custom declarations</strong>: Create your own when needed</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Evaluating Type Definition Quality</h3>
+          <ul>
+            <li><strong>Completeness</strong>: Do the types cover all APIs?</li>
+            <li><strong>Correctness</strong>: Do they match the actual behavior?</li>
+            <li><strong>Maintenance</strong>: Are they kept up to date?</li>
+            <li><strong>Documentation</strong>: Are the types well-documented?</li>
+            <li><strong>Usage</strong>: How many projects depend on them?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Warning</div>
+        <p>Not all type definitions are created equal. Some may be incomplete, outdated, or incorrect. Always evaluate the quality of third-party type definitions before relying on them.</p>
+      </div>
+      <div class="presenter-notes">
+        Discuss the importance of evaluating type definitions, especially for critical libraries. Show students how to check the quality and recency of types on DefinitelyTyped.
+      </div>
+    </section>
+
+    <!-- Creating Declaration Files Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Declaration Files</h2>
+      <pre><code class="language-typescript">
+// File: types/barcode-scanner.d.ts
+
+declare module 'react-native-medication-scanner' {
+  export interface ScanOptions {
+    barcodeTypes?: string[];
+    timeout?: number;
+    scannerResolution?: 'low' | 'medium' | 'high';
+    showViewfinder?: boolean;
+  }
+  
+  export interface ScannedMedication {
+    barcode: string;
+    medicationId: string;
+    name?: string;
+    format: string;
+    timestamp: number;
+  }
+  
+  export type ScannerErrorCode = 
+    | 'CAMERA_UNAVAILABLE' 
+    | 'PERMISSION_DENIED' 
+    | 'TIMEOUT' 
+    | 'BARCODE_DETECTION_FAILED';
+  
+  export interface ScannerError {
+    code: ScannerErrorCode;
+    message: string;
+  }
+  
+  export function scanMedication(options?: ScanOptions): Promise&lt;ScannedMedication>;
+  
+  export function isBarcodeValid(barcode: string): boolean;
+  
+  export default {
+    scanMedication,
+    isBarcodeValid
+  };
+}
+      </code></pre>
+      <div class="callout example">
+        <div class="callout-title">Example</div>
+        <p>Once the declaration file is created, make sure TypeScript can find it. Add it to the "include" array in your tsconfig.json or reference it using the <code>/// &lt;reference path="..." /></code> syntax.</p>
+      </div>
+      <div class="presenter-notes">
+        Custom declaration files are essential for working with untyped libraries. Focus on the structure of the declaration file and how to expose the module's API. This is a common task when working with native modules or third-party libraries without types.
+      </div>
+    </section>
+
+    <!-- tsconfig for Declaration Files Slide -->
+    <section class="slide code-slide">
+      <h2>Configuring TypeScript for Declaration Files</h2>
+      <pre><code class="language-json">
+// tsconfig.json
+{
+  "compilerOptions": {
+    // Standard React Native settings...
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2019"],
+    "jsx": "react-native",
+    "strict": true,
+    
+    // Type definition related settings
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*", "types/*"]
+    },
+    "declaration": false, // Generate .d.ts files for your own code
+    "declarationMap": false, // Generate sourcemaps for .d.ts files
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*",
+    "types/**/*" // Include custom type definitions
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js"
+  ]
+}
+      </code></pre>
+      <div class="presenter-notes">
+        The tsconfig.json configuration is crucial for TypeScript to properly find and use declaration files. Explain the key settings for type definitions: typeRoots, paths, declaration, and include.
+      </div>
+    </section>
+
+    <!-- Using Declaration Files Slide -->
+    <section class="slide code-slide">
+      <h2>Using Custom Declaration Files</h2>
+      <pre><code class="language-typescript">
+// After creating the declaration file, you can import the module normally
+import MedicationScanner, { 
+  ScanOptions, 
+  ScannedMedication 
+} from 'react-native-medication-scanner';
+
+// TypeScript now provides full type checking
+const scanOptions: ScanOptions = {
+  barcodeTypes: ['qr', 'code128', 'ean13'],
+  timeout: 30000,
+  scannerResolution: 'high',
+  showViewfinder: true
+};
+
+async function scanMedicationBarcode() {
+  try {
+    const result: ScannedMedication = await MedicationScanner.scanMedication(scanOptions);
+    
+    // Type-safe access to scanned medication data
+    console.log(`Scanned medication: ${result.name || 'Unknown'}`);
+    console.log(`Barcode: ${result.barcode} (${result.format})`);
+    
+    return result;
+  } catch (error) {
+    // Note: You need to type-guard to access the error properties
+    if (error && typeof error === 'object' && 'code' in error) {
+      const scannerError = error as ScannerError;
+      
+      if (scannerError.code === 'PERMISSION_DENIED') {
+        // Handle permission error
+      } else if (scannerError.code === 'TIMEOUT') {
+        // Handle timeout error
+      }
+    }
+    throw error;
+  }
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Show how to use the declaration file in a real component. Highlight the improved developer experience with autocompletion, type checking, and documentation.
+      </div>
+    </section>
+
+    <!-- Module Augmentation Slide -->
+    <section class="slide code-slide">
+      <h2>Module Augmentation</h2>
+      <pre><code class="language-typescript">
+// File: types/react-native-extensions.d.ts
+
+// Adding methods to existing modules/interfaces
+import { TextStyle } from 'react-native';
+
+// Augment React Native's TextStyle
+declare module 'react-native' {
+  interface TextStyle {
+    // Add pharmacy-specific text styling options
+    medicationHighlight?: boolean;
+    warningColor?: string;
+    prescriptionLabel?: 'primary' | 'secondary' | 'auxiliary';
+  }
+}
+
+// Augmenting a third-party library
+declare module 'react-navigation' {
+  interface NavigationScreenProp&lt;T> {
+    // Add custom navigation methods
+    navigateToMedication: (medicationId: number) => void;
+    navigateToPrescription: (prescriptionId: string) => void;
+  }
+}
+
+// Global augmentation
+declare global {
+  interface Window {
+    MedicationAPI: {
+      fetch: (medicationId: string) => Promise&lt;any>;
+    };
+  }
+  
+  // Add a utility function to the global namespace
+  function formatDosage(value: number, unit: string): string;
+}
+      </code></pre>
+      <div class="callout advanced">
+        <div class="callout-title">Advanced</div>
+        <p>Module augmentation is powerful but should be used judiciously. Only augment modules when you need to add functionality or fix incomplete type definitions.</p>
+      </div>
+      <div class="presenter-notes">
+        Module augmentation is a powerful technique for extending existing type definitions without modifying the original files. It's particularly useful for adding custom properties to React Native's style types or extending third-party libraries.
+      </div>
+    </section>
+
+    <!-- Declaration Merging Slide -->
+    <section class="slide code-slide">
+      <h2>Declaration Merging</h2>
+      <pre><code class="language-typescript">
+// Original interface in one file
+interface Medication {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+}
+
+// Extending the interface in another file
+interface Medication {
+  category: string;
+  sideEffects: string[];
+}
+
+// Result: TypeScript merges these declarations
+// The resulting type has all properties
+const medication: Medication = {
+  id: 123,
+  name: "Lisinopril",
+  dosage: 10,
+  unit: "mg",
+  category: "antihypertensive",
+  sideEffects: ["dizziness", "headache"]
+};
+
+// Merging namespaces and classes
+class MedicationAPI {
+  getById(id: number): Medication { /* ... */ }
+}
+
+// Add static methods in a namespace with the same name
+namespace MedicationAPI {
+  export function isValidDosage(dosage: number, unit: string): boolean {
+    /* ... */
+  }
+  
+  export const DEFAULT_UNITS = ["mg", "ml", "µg", "tablet"];
+}
+
+// Usage of the merged declaration
+const api = new MedicationAPI();
+const med = api.getById(123);
+const isValid = MedicationAPI.isValidDosage(10, "mg");
+console.log(MedicationAPI.DEFAULT_UNITS);
+      </code></pre>
+      <div class="presenter-notes">
+        Declaration merging is a core TypeScript feature that allows you to split type declarations across multiple files. This is especially useful for large applications or when extending existing types. Explain the different kinds of declarations that can be merged.
+      </div>
+    </section>
+
+    <!-- Global Types Slide -->
+    <section class="slide code-slide">
+      <h2>Managing Global Types</h2>
+      <pre><code class="language-typescript">
+// File: types/globals.d.ts
+
+// Basic global declarations
+declare global {
+  // Global interfaces
+  interface PharmacyApp {
+    version: string;
+    buildNumber: number;
+    environment: 'development' | 'staging' | 'production';
+  }
+  
+  // Global variables
+  const APP_CONFIG: PharmacyApp;
+  const IS_DEV_MODE: boolean;
+  
+  // Global utility functions
+  function formatCurrency(amount: number): string;
+  function formatDosage(value: number, unit: string): string;
+  
+  // Extending Window interface for React Native WebView
+  interface Window {
+    ReactNativeWebView: {
+      postMessage: (data: string) => void;
+    };
+  }
+}
+
+// File: types/images.d.ts
+// Declare module for image imports
+declare module '*.png' {
+  const value: any;
+  export default value;
+}
+
+declare module '*.jpg' {
+  const value: any;
+  export default value;
+}
+
+declare module '*.svg' {
+  import { SvgProps } from 'react-native-svg';
+  const content: React.FC&lt;SvgProps>;
+  export default content;
+}
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Warning</div>
+        <p>Global types should be used sparingly. They can make your code harder to understand and can lead to naming conflicts. Prefer module-based types when possible.</p>
+      </div>
+      <div class="presenter-notes">
+        Global types are sometimes necessary, especially for polyfills, environment variables, or global utilities. Emphasize the importance of organizing global types carefully and using them judiciously.
+      </div>
+    </section>
+
+    <!-- Organizing Types Slide -->
+    <section class="slide content-slide">
+      <h2>Organizing Types in Large Projects</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Project Structure for Types</h3>
+          <pre>
+project/
+├── src/
+│   ├── components/
+│   │   └── MedicationList/
+│   │       ├── index.tsx
+│   │       └── types.ts      # Component-specific types
+│   ├── screens/
+│   ├── api/
+│   │   ├── index.ts
+│   │   └── types.ts          # API response/request types
+│   ├── hooks/
+│   │   └── useMedications.ts
+│   ├── store/
+│   │   └── medication/
+│   │       ├── actions.ts
+│   │       ├── reducer.ts
+│   │       └── types.ts      # State types
+│   └── utils/
+├── types/
+│   ├── index.d.ts            # Re-exports
+│   ├── api.d.ts              # API types
+│   ├── models.d.ts           # Domain models
+│   ├── navigation.d.ts       # Navigation types
+│   ├── third-party/          # Custom declarations for libs
+│   └── globals.d.ts          # Global types
+└── tsconfig.json
+          </pre>
+        </div>
+        <div class="column">
+          <h3>Best Practices</h3>
+          <ul>
+            <li><strong>Co-locate types</strong> with the code that uses them</li>
+            <li>Use <strong>barrel files</strong> (index.ts) to re-export types</li>
+            <li>Create <strong>dedicated type files</strong> for complex domains</li>
+            <li>Establish <strong>naming conventions</strong> (e.g., suffix with 'Type')</li>
+            <li>Use <strong>namespaces</strong> to organize related types</li>
+            <li>Keep <strong>declaration files</strong> for third-party libraries</li>
+            <li>Document types with <strong>JSDoc comments</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Organization is key for maintainable TypeScript projects. Discuss different approaches to organizing types and when to use each approach. Emphasize the importance of consistency and documentation.
+      </div>
+    </section>
+
+    <!-- Barrel Files Slide -->
+    <section class="slide code-slide">
+      <h2>Using Barrel Files for Types</h2>
+      <pre><code class="language-typescript">
+// File: src/types/medication/index.ts (Barrel file)
+
+// Export all types from this directory
+export * from './medication';
+export * from './prescription';
+export * from './dosage';
+export * from './category';
+
+// File: src/types/medication/medication.ts
+export interface Medication {
+  id: number;
+  name: string;
+  // ...other properties
+}
+
+export type MedicationWithDetails = Medication & {
+  description: string;
+  sideEffects: string[];
+};
+
+// File: src/types/medication/prescription.ts
+import { Medication } from './medication';
+
+export interface Prescription {
+  id: string;
+  medications: Medication[];
+  // ...other properties
+}
+
+// Usage in a component
+import { 
+  Medication, 
+  MedicationWithDetails, 
+  Prescription 
+} from '../types/medication';
+
+// Clean imports with everything available
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Barrel files (index.ts files that re-export) help simplify imports and organize related types. They're especially useful for domain models and shared types.</p>
+      </div>
+      <div class="presenter-notes">
+        Barrel files are a pattern for organizing and re-exporting types. They make imports cleaner and more maintainable. This is particularly useful for complex domains with many related types.
+      </div>
+    </section>
+
+    <!-- Documentation with JSDoc Slide -->
+    <section class="slide code-slide">
+      <h2>Documenting Types with JSDoc</h2>
+      <pre><code class="language-typescript">
+/**
+ * Represents a medication in the pharmacy system.
+ * @template T - The type of the medication identifier
+ */
+export interface Medication&lt;T = number> {
+  /** Unique identifier for the medication */
+  id: T;
+  
+  /** Name of the medication */
+  name: string;
+  
+  /** 
+   * Dosage amount of the medication
+   * @example 10
+   */
+  dosage: number;
+  
+  /** 
+   * Unit of measurement for the dosage 
+   * @example "mg", "ml", "tablet"
+   */
+  unit: string;
+  
+  /** 
+   * Schedule classification for controlled substances
+   * - undefined: Not a controlled substance
+   * - 1-5: DEA Schedule classification
+   */
+  controlledSubstanceSchedule?: number;
+  
+  /** Instructions for taking the medication */
+  instructions?: string;
+  
+  /** 
+   * Date when the medication was added to the system 
+   * @format ISO date string
+   */
+  createdAt: string;
+}
+
+/**
+ * Formats a dosage with its unit for display.
+ * 
+ * @param medication - The medication object containing dosage info
+ * @param options - Formatting options
+ * @returns Formatted dosage string
+ * 
+ * @example
+ * formatDosage({ dosage: 10, unit: "mg" }, { uppercase: true })
+ * // Returns "10 MG"
+ */
+export function formatDosage(
+  medication: Pick&lt;Medication, 'dosage' | 'unit'>,
+  options?: { uppercase?: boolean }
+): string {
+  const { dosage, unit } = medication;
+  return `${dosage} ${options?.uppercase ? unit.toUpperCase() : unit}`;
+}
+      </code></pre>
+      <div class="presenter-notes">
+        JSDoc comments provide valuable documentation for TypeScript types. They appear in IDE tooltips and can generate documentation. Emphasize the importance of documenting complex types, especially those shared across the application.
+      </div>
+    </section>
+
+    <!-- Practice Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Practice Exercise: Integrating a Third-Party Library</h2>
+      <p>Integrate a medication barcode scanning library into a React Native application:</p>
+      <ol>
+        <li>Research if type definitions exist for the library</li>
+        <li>Create a custom declaration file for the library's API</li>
+        <li>Implement module augmentation to add custom functionality</li>
+        <li>Create a type-safe wrapper component around the library</li>
+        <li>Document the types with JSDoc comments</li>
+        <li>Organize the types following best practices</li>
+      </ol>
+      <div class="presenter-notes">
+        This exercise helps students apply what they've learned about managing type definitions. It simulates a real-world scenario of integrating an untyped library into a typed React Native application.
+      </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Third-party type definitions provide type safety for external libraries</li>
+        <li>Custom declaration files allow you to use untyped libraries with TypeScript</li>
+        <li>Module augmentation extends existing type definitions without modifying them</li>
+        <li>Declaration merging combines multiple declarations of the same type</li>
+        <li>Global types should be used judiciously for truly global features</li>
+        <li>Organizing types is essential for maintainable TypeScript projects</li>
+        <li>Documentation with JSDoc improves developer experience</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../index.html">Module Challenge</a></p>
+      </div>
+      <div class="presenter-notes">
+        Managing type definitions is an ongoing task in TypeScript projects. Emphasize the importance of good organization, documentation, and maintenance practices. These skills will serve them well in real-world React Native development.
+      </div>
+    </section>
+  </div>
+
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

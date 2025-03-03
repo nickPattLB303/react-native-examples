@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: TypeScript with React Native | React Native Training</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>TypeScript with React Native</h1>
+      <h2>Building Type-Safe Mobile Applications</h2>
+      <p class="metadata">Module 5, Section 3 | 45-60 minutes</p>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Create and type React Native functional components</li>
+        <li>Implement typed props and default props</li>
+        <li>Use TypeScript with common React Hooks</li>
+        <li>Apply typing to navigation parameters and routes</li>
+        <li>Create type-safe contexts and providers</li>
+        <li>Implement typed API integrations</li>
+        <li>Handle errors with TypeScript</li>
+      </ul>
+      <div class="presenter-notes">
+        This section focuses on practical applications of TypeScript in React Native development. It shows how to apply TypeScript concepts to real-world React Native code patterns.
+      </div>
+    </section>
+
+    <!-- Typing Components Slide -->
+    <section class="slide code-slide">
+      <h2>Typing React Native Components</h2>
+      <pre><code class="language-typescript">
+// Functional component with typed props
+interface MedicationItemProps {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  onPress: (id: number) => void;
+}
+
+// Type for the style prop
+import { StyleProp, ViewStyle, TextStyle } from 'react-native';
+
+// Extended props interface
+interface ExtendedMedicationItemProps extends MedicationItemProps {
+  style?: StyleProp&lt;ViewStyle>;
+  textStyle?: StyleProp&lt;TextStyle>;
+  isActive?: boolean;
+}
+
+// Functional component with TypeScript
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+const MedicationItem: React.FC&lt;ExtendedMedicationItemProps> = ({
+  id,
+  name,
+  dosage,
+  unit,
+  onPress,
+  style,
+  textStyle,
+  isActive = false
+}) => {
+  return (
+    <TouchableOpacity 
+      style={[styles.container, isActive && styles.activeContainer, style]}
+      onPress={() => onPress(id)}
+    >
+      <Text style={[styles.nameText, textStyle]}>{name}</Text>
+      <Text style={styles.dosageText}>{dosage} {unit}</Text>
+    </TouchableOpacity>
+  );
+};
+      </code></pre>
+      <div class="presenter-notes">
+        Emphasize that typing components helps document the expected props and prevent common errors. Show how TypeScript integrates with React Native's style system for enhanced type safety.
+      </div>
+    </section>
+
+    <!-- Default Props Slide -->
+    <section class="slide code-slide">
+      <h2>Default Props and Optional Props</h2>
+      <pre><code class="language-typescript">
+interface MedicationCardProps {
+  medication: {
+    id: number;
+    name: string;
+    dosage: number;
+    unit: string;
+    instructions?: string; // Optional property
+    sideEffects?: string[]; // Optional property
+  };
+  showDetails: boolean;
+  theme?: 'light' | 'dark'; // Optional with specific values
+  onPress?: (id: number) => void; // Optional function
+}
+
+// Using default props in the parameter destructuring
+const MedicationCard: React.FC&lt;MedicationCardProps> = ({
+  medication,
+  showDetails,
+  theme = 'light', // Default value
+  onPress = () => {}, // Default empty function
+}) => {
+  const { id, name, dosage, unit, instructions, sideEffects } = medication;
+  
+  // Component implementation...
+  return (
+    <View style={styles[theme]}>
+      {/* Component content */}
+      <Text>{name} - {dosage}{unit}</Text>
+      {showDetails && instructions && (
+        <Text>{instructions}</Text>
+      )}
+      {onPress && ( // Check if onPress exists before rendering
+        <TouchableOpacity onPress={() => onPress(id)}>
+          <Text>View Details</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Use optional props (with the <code>?</code> modifier) for truly optional values. Provide defaults in the parameter destructuring for props that should have fallback values.</p>
+      </div>
+      <div class="presenter-notes">
+        Discuss the different approaches to optional props and default values. Emphasize the benefits of making the component API clear through TypeScript types.
+      </div>
+    </section>
+
+    <!-- Typing React Hooks Slide -->
+    <section class="slide code-slide">
+      <h2>TypeScript with React Hooks</h2>
+      <pre><code class="language-typescript">
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+// Typed useState hook
+interface Medication {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+}
+
+const MedicationList: React.FC = () => {
+  // Simple state with inference
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Explicitly typed state
+  const [medications, setMedications] = useState&lt;Medication[]>([]);
+  
+  // State with union type
+  const [error, setError] = useState&lt;Error | null>(null);
+
+  // Typed useRef
+  const listRef = useRef&lt;FlatList&lt;Medication> | null>(null);
+  
+  // Typed useCallback
+  const handleMedicationPress = useCallback((id: number) => {
+    console.log(`Medication ${id} pressed`);
+    // Implementation...
+  }, []);
+
+  // Typed useEffect
+  useEffect(() => {
+    const fetchMedications = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://api.pharmacy.com/medications');
+        const data: Medication[] = await response.json();
+        setMedications(data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMedications();
+  }, []);
+
+  // Component rendering...
+};
+      </code></pre>
+      <div class="presenter-notes">
+        Highlight how TypeScript enhances hooks by providing type safety for state, refs, and callbacks. Note that inference often works well, but explicit typing helps in complex cases.
+      </div>
+    </section>
+
+    <!-- Custom Hooks Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Type-Safe Custom Hooks</h2>
+      <pre><code class="language-typescript">
+// Custom hook for medication management
+function useMedications(patientId: number) {
+  // State with type inference
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Explicitly typed states
+  const [medications, setMedications] = useState&lt;Medication[]>([]);
+  const [error, setError] = useState&lt;Error | null>(null);
+
+  // Function with explicit return type
+  const fetchMedications = useCallback(async (): Promise&lt;void> => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`https://api.pharmacy.com/patients/${patientId}/medications`);
+      const data: Medication[] = await response.json();
+      setMedications(data);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [patientId]);
+
+  // Typed function for adding medication
+  const addMedication = useCallback(async (medication: Omit&lt;Medication, 'id'>): Promise&lt;Medication> => {
+    // Implementation...
+    const response = await fetch(`https://api.pharmacy.com/patients/${patientId}/medications`, {
+      method: 'POST',
+      body: JSON.stringify(medication)
+    });
+    const newMedication: Medication = await response.json();
+    setMedications(prev => [...prev, newMedication]);
+    return newMedication;
+  }, [patientId]);
+
+  // Hook return type is inferred
+  return {
+    medications,
+    isLoading,
+    error,
+    fetchMedications,
+    addMedication
+  };
+}
+
+// Using the custom hook
+function PatientMedications({ patientId }: { patientId: number }) {
+  const { medications, isLoading, error, fetchMedications } = useMedications(patientId);
+
+  // Component implementation...
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Custom hooks are where TypeScript really shines in React Native. They encapsulate complex logic with clear type signatures, making them safer and more self-documenting.
+      </div>
+    </section>
+
+    <!-- Typing Navigation Slide -->
+    <section class="slide code-slide">
+      <h2>Typing React Navigation</h2>
+      <pre><code class="language-typescript">
+// Define navigation types
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
+// Define the param list for your navigation stack
+type PharmacyStackParamList = {
+  Home: undefined;
+  MedicationList: undefined;
+  MedicationDetails: { medicationId: number };
+  Prescription: { patientId: number; medicationIds: number[] };
+};
+
+// Create the navigator with typed params
+const Stack = createStackNavigator&lt;PharmacyStackParamList>();
+
+// Type for the navigation prop
+type MedicationDetailsNavigationProp = StackNavigationProp&lt;
+  PharmacyStackParamList,
+  'MedicationDetails'
+>;
+
+// Type for the route prop
+type MedicationDetailsRouteProp = RouteProp&lt;
+  PharmacyStackParamList,
+  'MedicationDetails'
+>;
+
+// Props interface for the screen component
+interface MedicationDetailsProps {
+  navigation: MedicationDetailsNavigationProp;
+  route: MedicationDetailsRouteProp;
+}
+
+// Screen component with typed props
+function MedicationDetailsScreen({ navigation, route }: MedicationDetailsProps) {
+  // Safe access to params
+  const { medicationId } = route.params;
+  
+  // Type-safe navigation
+  const navigateToPrescription = () => {
+    navigation.navigate('Prescription', {
+      patientId: 123,
+      medicationIds: [medicationId]
+    });
+  };
+
+  // Component implementation...
+}
+
+// App with navigation
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="MedicationList" component={MedicationListScreen} />
+        <Stack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
+        <Stack.Screen name="Prescription" component={PrescriptionScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+      </code></pre>
+      <div class="callout android platform-android">
+        <div class="callout-title">Android Perspective</div>
+        <p>This approach is similar to type-safe navigation in Jetpack Navigation with SafeArgs or type-safe Intents in Kotlin.</p>
+      </div>
+      <div class="presenter-notes">
+        Navigation is a common source of runtime errors in React Native apps. TypeScript provides compile-time safety for navigation parameters, preventing many common bugs.
+      </div>
+    </section>
+
+    <!-- Typed Context API Slide -->
+    <section class="slide code-slide">
+      <h2>Type-Safe Context API</h2>
+      <pre><code class="language-typescript">
+// Define the context shape
+interface MedicationContextType {
+  medications: Medication[];
+  isLoading: boolean;
+  error: Error | null;
+  fetchMedications: () => Promise&lt;void>;
+  addMedication: (medication: Omit&lt;Medication, 'id'>) => Promise&lt;Medication>;
+  updateMedication: (id: number, updates: Partial&lt;Medication>) => Promise&lt;Medication>;
+  deleteMedication: (id: number) => Promise&lt;void>;
+}
+
+// Create context with an initial value
+const MedicationContext = React.createContext&lt;MedicationContextType | undefined>(undefined);
+
+// Custom hook for using the context
+function useMedicationContext(): MedicationContextType {
+  const context = React.useContext(MedicationContext);
+  if (context === undefined) {
+    throw new Error('useMedicationContext must be used within a MedicationProvider');
+  }
+  return context;
+}
+
+// Provider component
+export const MedicationProvider: React.FC&lt;{ children: React.ReactNode }> = ({ children }) => {
+  // Implement all the context functionality...
+  const [medications, setMedications] = useState&lt;Medication[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState&lt;Error | null>(null);
+  
+  // Implement context functions...
+  const fetchMedications = async (): Promise&lt;void> => {
+    // Implementation...
+  };
+  
+  const addMedication = async (medication: Omit&lt;Medication, 'id'>): Promise&lt;Medication> => {
+    // Implementation...
+    return { ...medication, id: 123 }; // Simplified for example
+  };
+  
+  const updateMedication = async (id: number, updates: Partial&lt;Medication>): Promise&lt;Medication> => {
+    // Implementation...
+    return { id, ...updates } as Medication; // Simplified for example
+  };
+  
+  const deleteMedication = async (id: number): Promise&lt;void> => {
+    // Implementation...
+  };
+  
+  const value: MedicationContextType = {
+    medications,
+    isLoading,
+    error,
+    fetchMedications,
+    addMedication,
+    updateMedication,
+    deleteMedication
+  };
+  
+  return (
+    <MedicationContext.Provider value={value}>
+      {children}
+    </MedicationContext.Provider>
+  );
+};
+
+// Using the context in a component
+function MedicationListScreen() {
+  const { medications, isLoading, error, fetchMedications } = useMedicationContext();
+  
+  // Component implementation...
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Type-safe contexts provide a powerful way to share state across components. The pattern of creating a custom hook to access the context with proper type checking is highly recommended.
+      </div>
+    </section>
+
+    <!-- API Integration Slide -->
+    <section class="slide code-slide">
+      <h2>Typed API Integration</h2>
+      <pre><code class="language-typescript">
+// API response types
+interface MedicationResponse {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  created_at: string; // From API in snake_case
+  side_effects: string[];
+}
+
+// Application model (transformed to camelCase)
+interface Medication {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  createdAt: Date; // Transformed to Date object
+  sideEffects: string[];
+}
+
+// API error response
+interface ApiErrorResponse {
+  error: string;
+  code: number;
+  details?: string;
+}
+
+// Generic API fetcher with type parameters
+async function fetchFromApi&lt;T>(
+  endpoint: string, 
+  options?: RequestInit
+): Promise&lt;T> {
+  const response = await fetch(`https://api.pharmacy.com${endpoint}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthToken()}`
+    },
+    ...options
+  });
+  
+  if (!response.ok) {
+    const errorData: ApiErrorResponse = await response.json();
+    throw new Error(errorData.details || errorData.error);
+  }
+  
+  return response.json() as Promise&lt;T>;
+}
+
+// Transform API response to app model
+function transformMedication(data: MedicationResponse): Medication {
+  return {
+    id: data.id,
+    name: data.name,
+    dosage: data.dosage,
+    unit: data.unit,
+    createdAt: new Date(data.created_at),
+    sideEffects: data.side_effects
+  };
+}
+
+// Using the typed API client
+async function getMedications(): Promise&lt;Medication[]> {
+  const data = await fetchFromApi&lt;MedicationResponse[]>('/medications');
+  return data.map(transformMedication);
+}
+
+// POST example with request/response typing
+interface CreateMedicationRequest {
+  name: string;
+  dosage: number;
+  unit: string;
+  side_effects?: string[];
+}
+
+async function createMedication(
+  medication: Omit&lt;Medication, 'id' | 'createdAt'>
+): Promise&lt;Medication> {
+  // Transform to API request format
+  const request: CreateMedicationRequest = {
+    name: medication.name,
+    dosage: medication.dosage,
+    unit: medication.unit,
+    side_effects: medication.sideEffects
+  };
+  
+  const response = await fetchFromApi&lt;MedicationResponse>('/medications', {
+    method: 'POST',
+    body: JSON.stringify(request)
+  });
+  
+  return transformMedication(response);
+}
+      </code></pre>
+      <div class="presenter-notes">
+        API integration is one of the most error-prone areas in React Native apps. TypeScript ensures that API responses are properly typed and transformed, reducing runtime errors.
+      </div>
+    </section>
+
+    <!-- Error Handling Slide -->
+    <section class="slide code-slide">
+      <h2>Type-Safe Error Handling</h2>
+      <pre><code class="language-typescript">
+// Define error types
+class NetworkError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NetworkError';
+  }
+}
+
+class AuthenticationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'AuthenticationError';
+  }
+}
+
+class ApiError extends Error {
+  code: number;
+  
+  constructor(message: string, code: number) {
+    super(message);
+    this.name = 'ApiError';
+    this.code = code;
+  }
+}
+
+// Union type for all possible errors
+type AppError = NetworkError | AuthenticationError | ApiError | Error;
+
+// Type guard for checking error types
+function isNetworkError(error: unknown): error is NetworkError {
+  return error instanceof Error && error.name === 'NetworkError';
+}
+
+function isAuthError(error: unknown): error is AuthenticationError {
+  return error instanceof Error && error.name === 'AuthenticationError';
+}
+
+function isApiError(error: unknown): error is ApiError {
+  return error instanceof Error && error.name === 'ApiError';
+}
+
+// Error handling in a component
+function MedicationList() {
+  const [error, setError] = useState&lt;AppError | null>(null);
+  
+  // Component logic...
+  
+  // Display different error UIs based on error type
+  if (error) {
+    if (isNetworkError(error)) {
+      return <NetworkErrorView message={error.message} onRetry={fetchData} />;
+    }
+    
+    if (isAuthError(error)) {
+      return <AuthErrorView onLogin={handleLogin} />;
+    }
+    
+    if (isApiError(error)) {
+      return <ApiErrorView code={error.code} message={error.message} />;
+    }
+    
+    // Generic error fallback
+    return <ErrorView message={error.message} />;
+  }
+  
+  // Normal component rendering...
+}
+
+// Error boundary with TypeScript
+class ErrorBoundary extends React.Component&lt;
+  { children: React.ReactNode; fallback?: React.ReactNode }, 
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode; fallback?: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+  
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || <ErrorView message={this.state.error?.message} />;
+    }
+    
+    return this.props.children;
+  }
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Error handling is greatly improved with TypeScript. Custom error classes with type guards allow for more precise error handling logic, resulting in better user experiences.
+      </div>
+    </section>
+
+    <!-- Practice Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Practice Exercise: Medication Tracker Component</h2>
+      <p>Create a type-safe medication tracker component:</p>
+      <ol>
+        <li>Define interfaces for medication data, including prescription details</li>
+        <li>Create a functional component with properly typed props</li>
+        <li>Implement useState and useEffect with proper typing</li>
+        <li>Create a custom hook for medication tracking</li>
+        <li>Implement error handling with typed error classes</li>
+        <li>Use the context API to share medication data between components</li>
+      </ol>
+      <div class="presenter-notes">
+        This exercise helps students apply TypeScript to a real-world React Native component. Encourage them to focus on type safety at the boundaries: props, state, API calls, and context.
+      </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>TypeScript provides compile-time safety for React Native components</li>
+        <li>Properly typed props prevent common component errors</li>
+        <li>React Hooks can be typed for enhanced safety</li>
+        <li>Navigation can be made type-safe to prevent routing errors</li>
+        <li>Context API benefits from TypeScript's type checking</li>
+        <li>API integration is more robust with proper type definitions</li>
+        <li>Error handling becomes more precise with typed errors</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-4-managing-type-definitions/index.html">Section 4: Managing Type Definitions</a></p>
+      </div>
+      <div class="presenter-notes">
+        Emphasize that TypeScript should not be seen as an extra burden but as a tool that helps prevent bugs and improve code quality in React Native applications.
+      </div>
+    </section>
+  </div>
+
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

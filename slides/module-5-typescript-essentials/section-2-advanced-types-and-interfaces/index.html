@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Advanced Types and Interfaces | React Native Training</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Advanced Types and Interfaces</h1>
+      <h2>Building Robust Type Systems for React Native</h2>
+      <p class="metadata">Module 5, Section 2 | 45-60 minutes</p>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Extend interfaces with inheritance</li>
+        <li>Create and use generic types</li>
+        <li>Implement union and intersection types</li>
+        <li>Use utility types for type transformations</li>
+        <li>Apply type guards for runtime type checking</li>
+        <li>Understand conditional types and mapped types</li>
+        <li>Create index types and lookup types</li>
+      </ul>
+      <div class="presenter-notes">
+        This section builds upon the TypeScript fundamentals from Section 1. It introduces more advanced type features that are particularly useful in complex React Native applications.
+      </div>
+    </section>
+
+    <!-- Interface Extension Slide -->
+    <section class="slide code-slide">
+      <h2>Interface Extension</h2>
+      <pre><code class="language-typescript">
+// Base interface
+interface Medication {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+}
+
+// Extended interface
+interface PrescriptionMedication extends Medication {
+  prescriptionId: string;
+  refillsRemaining: number;
+  prescribedBy: string;
+  expirationDate: Date;
+}
+
+// Multiple inheritance
+interface ControlledMedication extends PrescriptionMedication {
+  controlledSubstanceSchedule: number; // Schedule I-V
+  specialHandling: string;
+}
+
+// Using the extended interface
+const lisinopril: PrescriptionMedication = {
+  id: 1,
+  name: "Lisinopril",
+  dosage: 10,
+  unit: "mg",
+  prescriptionId: "RX123456",
+  refillsRemaining: 3,
+  prescribedBy: "Dr. Smith",
+  expirationDate: new Date("2023-12-31")
+};
+      </code></pre>
+      <div class="presenter-notes">
+        Interface extension provides a clean way to build upon existing types, which is especially useful when modeling domain objects in healthcare applications. Point out how this reflects real-world inheritance relationships.
+      </div>
+    </section>
+
+    <!-- Generic Types Slide -->
+    <section class="slide code-slide">
+      <h2>Generic Types</h2>
+      <pre><code class="language-typescript">
+// Generic interface
+interface MedicationContainer&lt;T> {
+  item: T;
+  quantity: number;
+  expirationDate: Date;
+}
+
+// Using generics
+const pillBottle: MedicationContainer&lt;Medication> = {
+  item: { id: 1, name: "Lisinopril", dosage: 10, unit: "mg" },
+  quantity: 30,
+  expirationDate: new Date("2023-12-31")
+};
+
+// Generic functions
+function getItemById&lt;T extends { id: number }>(items: T[], id: number): T | undefined {
+  return items.find(item => item.id === id);
+}
+
+// Using the generic function
+const allMedications: Medication[] = [/* ... */];
+const foundMedication = getItemById(allMedications, 1);
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Generics are especially useful for API response handlers, state containers, and utility functions in React Native apps.</p>
+      </div>
+      <div class="presenter-notes">
+        Generics allow for reusable, type-safe code. They're particularly valuable for utilities and containers like state management solutions. The constrained generic with 'extends' shows how to add requirements to type parameters.
+      </div>
+    </section>
+
+    <!-- Union and Intersection Types Slide -->
+    <section class="slide code-slide">
+      <h2>Union and Intersection Types</h2>
+      <pre><code class="language-typescript">
+// Union types (OR)
+type MedicationIdentifier = number | string;
+
+function getMedication(id: MedicationIdentifier) {
+  // Can handle both number and string IDs
+}
+
+// Literal union types
+type MedicationFrequency = 
+  | "once daily" 
+  | "twice daily" 
+  | "three times daily" 
+  | "as needed";
+
+// Discriminated unions with type property
+type AdministerableMedication = {
+  type: "oral";
+  directions: string;
+} | {
+  type: "injection";
+  injectionSite: string;
+  needleGauge: number;
+} | {
+  type: "topical";
+  applicationArea: string;
+  isWashable: boolean;
+};
+
+// Intersection types (AND)
+type PatientInfo = {
+  id: number;
+  name: string;
+  dateOfBirth: Date;
+};
+
+type InsuranceInfo = {
+  policyNumber: string;
+  provider: string;
+  coverageType: string;
+};
+
+// Combined type with all properties from both
+type PatientRecord = PatientInfo & InsuranceInfo;
+      </code></pre>
+      <div class="presenter-notes">
+        Union types are tremendously useful in React Native for handling different data formats or component states. Discriminated unions with a 'type' property are particularly valuable for modeling different UI states.
+      </div>
+    </section>
+
+    <!-- Utility Types Slide 1 -->
+    <section class="slide code-slide">
+      <h2>Utility Types (Part 1)</h2>
+      <pre><code class="language-typescript">
+interface MedicationDetails {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  contraindications: string[];
+  sideEffects: string[];
+}
+
+// Partial - All properties become optional
+type MedicationUpdate = Partial&lt;MedicationDetails>;
+
+function updateMedication(id: number, updates: MedicationUpdate) {
+  // Can update any subset of properties
+  // implementation...
+}
+
+// Required - All properties become required
+type CompleteMedicationRecord = Required&lt;MedicationDetails>;
+
+// Pick - Select specific properties
+type MedicationBasics = Pick&lt;MedicationDetails, "id" | "name" | "dosage" | "unit">;
+
+// Omit - Remove specific properties
+type MedicationWithoutWarnings = Omit&lt;MedicationDetails, "contraindications" | "sideEffects">;
+      </code></pre>
+      <div class="callout example">
+        <div class="callout-title">Example</div>
+        <p>Utility types are extremely useful in API integrations. For example, <code>Partial</code> is perfect for PATCH API requests where only some fields are updated, while <code>Pick</code> helps create DTOs (Data Transfer Objects) for API responses.</p>
+      </div>
+      <div class="presenter-notes">
+        Utility types are built into TypeScript and save a lot of manual type manipulation. Highlight how they're especially useful in React Native for props, API calls, and form handling.
+      </div>
+    </section>
+
+    <!-- Utility Types Slide 2 -->
+    <section class="slide code-slide">
+      <h2>Utility Types (Part 2)</h2>
+      <pre><code class="language-typescript">
+interface MedicationForm {
+  name: string;
+  dosage: number | null;
+  unit: string | null;
+  quantity: number | null;
+}
+
+// Record - Key-value mapping
+type MedicationInventory = Record&lt;string, number>;
+const inventory: MedicationInventory = {
+  "Lisinopril": 200,
+  "Metformin": 150,
+  "Atorvastatin": 100
+};
+
+// NonNullable - Remove null and undefined
+type ValidatedMedicationForm = {
+  [K in keyof MedicationForm]: NonNullable&lt;MedicationForm[K]>
+};
+
+// ReturnType - Extract return type of a function
+function getMedicationStats(id: number) {
+  return {
+    remainingDoses: 30,
+    daysUntilRefill: 15,
+    adherenceRate: 0.95
+  };
+}
+
+type MedicationStats = ReturnType&lt;typeof getMedicationStats>;
+
+// Parameters - Extract parameter types from a function
+type MedicationAPICall = (id: number, options: { includeSideEffects: boolean }) => Promise&lt;MedicationDetails>;
+type MedicationAPIOptions = Parameters&lt;MedicationAPICall>[1];
+      </code></pre>
+      <div class="presenter-notes">
+        These additional utility types help with more complex type transformations. The ReturnType and Parameters utilities are particularly helpful when working with existing libraries or APIs.
+      </div>
+    </section>
+
+    <!-- Type Guards Slide -->
+    <section class="slide code-slide">
+      <h2>Type Guards and Narrowing</h2>
+      <pre><code class="language-typescript">
+// Different medication types
+interface OralMedication {
+  type: 'oral';
+  form: 'tablet' | 'capsule' | 'liquid';
+  dosage: number;
+}
+
+interface InjectionMedication {
+  type: 'injection';
+  method: 'intravenous' | 'intramuscular' | 'subcutaneous';
+  dosage: number;
+}
+
+type Medication = OralMedication | InjectionMedication;
+
+// Type guard using type predicate
+function isOralMedication(med: Medication): med is OralMedication {
+  return med.type === 'oral';
+}
+
+// Using type guards
+function getMedicationInstructions(med: Medication): string {
+  if (isOralMedication(med)) {
+    // TypeScript knows med is OralMedication here
+    return `Take ${med.dosage}mg ${med.form} by mouth`;
+  } else {
+    // TypeScript knows med is InjectionMedication here
+    return `Administer ${med.dosage}mg via ${med.method} injection`;
+  }
+}
+
+// Exhaustiveness checking with never
+function getMedicationRoute(med: Medication): string {
+  if (isOralMedication(med)) {
+    return 'oral';
+  } else if (med.type === 'injection') {
+    return med.method;
+  } else {
+    // This will error if we add a new type but forget to handle it
+    const exhaustiveCheck: never = med;
+    return exhaustiveCheck;
+  }
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Type guards are essential when working with union types in React Native, especially for handling different component states or API responses. The exhaustiveness checking pattern with 'never' is particularly useful for ensuring all cases are handled.
+      </div>
+    </section>
+
+    <!-- Conditional Types Slide -->
+    <section class="slide code-slide">
+      <h2>Conditional Types and Mapped Types</h2>
+      <pre><code class="language-typescript">
+// Conditional types
+type ExtractIdType&lt;T> = T extends { id: infer U } ? U : never;
+
+interface Medication {
+  id: string;
+  name: string;
+}
+
+interface Patient {
+  id: number;
+  name: string;
+}
+
+type MedicationIdType = ExtractIdType&lt;Medication>; // string
+type PatientIdType = ExtractIdType&lt;Patient>; // number
+
+// Mapped types
+interface MedicationDetails {
+  name: string;
+  dosage: number;
+  frequency: string;
+  startDate: Date;
+}
+
+// Make all properties optional
+type OptionalMedicationDetails = {
+  [K in keyof MedicationDetails]?: MedicationDetails[K];
+};
+
+// Add "readonly" to all properties
+type ReadonlyMedicationDetails = {
+  readonly [K in keyof MedicationDetails]: MedicationDetails[K];
+};
+
+// Convert all properties to string
+type MedicationDetailsAsStrings = {
+  [K in keyof MedicationDetails]: string;
+};
+      </code></pre>
+      <div class="callout advanced">
+        <div class="callout-title">Advanced</div>
+        <p>Conditional and mapped types create sophisticated type systems. They're useful for building type-safe libraries and components, but can be complex for beginners.</p>
+      </div>
+      <div class="presenter-notes">
+        These advanced type features allow for powerful type transformations. They're most useful for library authors or when building reusable component systems in React Native.
+      </div>
+    </section>
+
+    <!-- Index Types and Lookup Types Slide -->
+    <section class="slide code-slide">
+      <h2>Index Types and Lookup Types</h2>
+      <pre><code class="language-typescript">
+interface PatientRecord {
+  id: number;
+  name: string;
+  medications: {
+    current: string[];
+    past: string[];
+  };
+  allergies: string[];
+  vitalSigns: {
+    bloodPressure: string;
+    heartRate: number;
+    temperature: number;
+  };
+}
+
+// Index types with keyof
+function getPatientProperty(patient: PatientRecord, property: keyof PatientRecord) {
+  return patient[property];
+}
+
+// Lookup types
+type VitalSigns = PatientRecord['vitalSigns']; 
+type MedicationHistory = PatientRecord['medications'];
+type CurrentMedications = PatientRecord['medications']['current']; // string[]
+
+// Dynamic key safety
+function getNestedProperty&lt;T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+const patient: PatientRecord = {/* ... */};
+const vitalSigns = getNestedProperty(patient, 'vitalSigns');
+const heartRate = getNestedProperty(vitalSigns, 'heartRate'); // Type-safe access
+      </code></pre>
+      <div class="presenter-notes">
+        Index types and lookup types make it possible to safely access nested properties in complex objects, which is common in React Native when dealing with API responses or app state.
+      </div>
+    </section>
+
+    <!-- Practice Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Practice Exercise: Medication Inventory System</h2>
+      <p>Build a type-safe medication inventory system:</p>
+      <ol>
+        <li>Create a discriminated union type for different medication categories (oral, injection, topical)</li>
+        <li>Implement generic inventory container types that can store any medication type</li>
+        <li>Use utility types to create variations of medication types for different views (list view, detail view)</li>
+        <li>Implement type guards to safely handle different medication types</li>
+        <li>Create a mapped type to convert all numeric values to string representation for display</li>
+      </ol>
+      <div class="presenter-notes">
+        This exercise brings together multiple advanced type concepts. Suggest that students start with the discriminated union and build from there. Emphasize the real-world applications of these patterns in React Native apps.
+      </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Advanced type features enable more precise modeling of domain concepts</li>
+        <li>Generics create reusable type-safe containers and utilities</li>
+        <li>Union and intersection types combine types in powerful ways</li>
+        <li>Utility types simplify common type transformations</li>
+        <li>Type guards provide runtime type checking with compile-time benefits</li>
+        <li>Conditional and mapped types enable advanced type manipulations</li>
+        <li>Index types and lookup types enable type-safe property access</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-3-typescript-with-react-native/index.html">Section 3: TypeScript with React Native</a></p>
+      </div>
+      <div class="presenter-notes">
+        Remind students that they don't need to master all these concepts immediately. They can start with the basics and gradually incorporate more advanced features as needed.
+      </div>
+    </section>
+  </div>
+
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

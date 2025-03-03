@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: TypeScript Fundamentals | React Native Training</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>TypeScript Fundamentals</h1>
+      <h2>Building Blocks for Type-Safe React Native Apps</h2>
+      <p class="metadata">Module 5, Section 1 | 45-60 minutes</p>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Explain the primary benefits of TypeScript in React Native development</li>
+        <li>Set up a TypeScript environment for React Native projects</li>
+        <li>Understand basic TypeScript types and type annotations</li>
+        <li>Define variables with explicit and implicit typing</li>
+        <li>Create and use interfaces for object typing</li>
+        <li>Implement type aliases for complex or reused types</li>
+        <li>Configure TypeScript compiler options for React Native</li>
+      </ul>
+      <div class="presenter-notes">
+        This section introduces the fundamentals of TypeScript that serve as the foundation for the rest of the module. Focus on practical applications rather than theoretical concepts.
+      </div>
+    </section>
+
+    <!-- TypeScript Setup Slide -->
+    <section class="slide content-slide">
+      <h2>Setting Up TypeScript for React Native</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>New Project Setup</h3>
+          <pre><code class="language-bash">
+# Using React Native CLI
+npx react-native init PharmacyApp --template react-native-template-typescript
+
+# Using Expo
+expo init PharmacyApp -t expo-template-blank-typescript
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Adding to Existing Project</h3>
+          <pre><code class="language-bash">
+# Install TypeScript
+npm install --save-dev typescript @types/react @types/react-native
+
+# Generate tsconfig.json
+npx tsc --init
+          </code></pre>
+          <p>Create <code>tsconfig.json</code> with React Native settings</p>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Most React Native projects now start with TypeScript by default. For existing projects, conversion can be done incrementally by renaming files from .js to .tsx and adding types gradually.
+      </div>
+    </section>
+
+    <!-- Basic Types Slide -->
+    <section class="slide content-slide">
+      <h2>Basic TypeScript Types</h2>
+      <pre><code class="language-typescript">
+// Primitive types
+const patientName: string = "Sarah Johnson";
+const medicationCount: number = 3;
+const isPrescriptionFilled: boolean = true;
+
+// Arrays
+const medicationNames: string[] = ["Lisinopril", "Metformin", "Atorvastatin"];
+const dosages: Array&lt;number> = [10, 500, 20]; // Alternative syntax
+
+// Type inference (TypeScript can infer types)
+const pharmacyName = "Community Pharmacy"; // Inferred as string
+const refillsRemaining = 2; // Inferred as number
+
+// Union types (can be one of multiple types)
+let prescriptionId: string | number;
+prescriptionId = "RX12345"; // Valid
+prescriptionId = 12345;     // Also valid
+      </code></pre>
+      <div class="presenter-notes">
+        Emphasize that TypeScript's type inference often means you don't need to explicitly annotate every variable, which keeps the code cleaner. However, explicit types can improve readability and serve as documentation.
+      </div>
+    </section>
+
+    <!-- Tuples and Enums Slide -->
+    <section class="slide content-slide">
+      <h2>Tuples and Enums</h2>
+      <pre><code class="language-typescript">
+// Tuples (fixed-length arrays with different types)
+const medicationInfo: [string, number, string] = ["Amoxicillin", 500, "mg"];
+const [drugName, dosage, unit] = medicationInfo; // Destructuring
+
+// Enums (named constants)
+enum MedicationCategory {
+  ANTIBIOTIC = "antibiotic",
+  ANALGESIC = "analgesic",
+  ANTIHYPERTENSIVE = "antihypertensive",
+  ANTIDIABETIC = "antidiabetic"
+}
+
+// Using enums
+const amoxicillinCategory: MedicationCategory = MedicationCategory.ANTIBIOTIC;
+function getMedicationInfo(category: MedicationCategory) {
+  // Implementation...
+}
+      </code></pre>
+      <div class="callout example">
+        <div class="callout-title">Example</div>
+        <p>Tuples are useful for representing fixed structures like medication dosage (value + unit), while enums provide type-safe constants for categories, status values, etc.</p>
+      </div>
+      <div class="presenter-notes">
+        Tuples aren't commonly used in JavaScript but are valuable in TypeScript for representing fixed-structure data. Enums are particularly useful for representing a fixed set of options.
+      </div>
+    </section>
+
+    <!-- Special Types Slide -->
+    <section class="slide content-slide">
+      <h2>Special Types</h2>
+      <pre><code class="language-typescript">
+// any - opt out of type checking (avoid when possible)
+let userData: any = JSON.parse(responseFromApi);
+userData.nonExistentProperty = 123; // No type error
+
+// unknown - safer alternative to any
+let apiResponse: unknown = fetchDataFromApi();
+// apiResponse.property; // Error: Object is of type 'unknown'
+if (typeof apiResponse === 'object' && apiResponse !== null) {
+  // Now we can safely access properties
+}
+
+// void - for functions that don't return a value
+function logMedication(name: string): void {
+  console.log(`Medication logged: ${name}`);
+}
+
+// null and undefined
+let emptyValue: null = null;
+let notYetAssigned: undefined = undefined;
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Use <code>unknown</code> instead of <code>any</code> when working with values of uncertain type. It forces you to perform type checking before using the value, preventing potential runtime errors.</p>
+      </div>
+      <div class="presenter-notes">
+        Encourage students to avoid using 'any' as it defeats the purpose of TypeScript's type checking. The 'unknown' type provides a safer alternative for situations where the type isn't known in advance.
+      </div>
+    </section>
+
+    <!-- Interfaces Slide -->
+    <section class="slide code-slide">
+      <h2>Interfaces for Object Types</h2>
+      <pre><code class="language-typescript">
+// Interface definition
+interface Medication {
+  id: number;
+  name: string;
+  dosage: number;
+  unit: string;
+  frequency: string;
+  isControlled: boolean;
+}
+
+// Using the interface
+const lisinopril: Medication = {
+  id: 1,
+  name: "Lisinopril",
+  dosage: 10,
+  unit: "mg",
+  frequency: "once daily",
+  isControlled: false
+};
+
+// Optional properties with ?
+interface Patient {
+  id: number;
+  name: string;
+  dateOfBirth: Date;
+  allergies?: string[]; // Optional property
+  medications?: Medication[]; // Optional property
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Interfaces are one of the most useful features of TypeScript, especially for React Native development. They define the "shape" of objects and are particularly valuable for component props, API responses, and app state.
+      </div>
+    </section>
+
+    <!-- Type Aliases Slide -->
+    <section class="slide code-slide">
+      <h2>Type Aliases</h2>
+      <pre><code class="language-typescript">
+// Simple type alias
+type MedicationId = number;
+
+// Union type alias
+type DosageUnit = "mg" | "ml" | "µg" | "tablet";
+const amoxicillinUnit: DosageUnit = "mg";
+// const invalidUnit: DosageUnit = "pound"; // Error!
+
+// Complex type alias
+type Prescription = {
+  id: MedicationId;
+  patientId: number;
+  medications: Medication[];
+  prescribedDate: Date;
+  refillsRemaining: number;
+};
+
+// Function type alias
+type MedicationProcessor = (medication: Medication) => boolean;
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Type vs Interface</div>
+        <p>For most cases, interfaces and type aliases can be used interchangeably. Interfaces are often preferred for objects as they can be extended, while type aliases are useful for unions, primitives, and tuples.</p>
+      </div>
+      <div class="presenter-notes">
+        Type aliases can make your code more readable by giving meaningful names to complex types. They're particularly useful for reusing the same type definition in multiple places.
+      </div>
+    </section>
+
+    <!-- TypeScript Configuration Slide -->
+    <section class="slide code-slide">
+      <h2>TypeScript Configuration for React Native</h2>
+      <pre><code class="language-json">
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",         // Modern JavaScript features
+    "module": "commonjs",       // Module system
+    "lib": ["es2019"],          // Standard library definitions
+    "jsx": "react-native",      // How to handle JSX
+    "strict": true,             // Enable all strict type-checking options
+    "esModuleInterop": true,    // Better import compatibility
+    "skipLibCheck": true,       // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure case sensitivity
+    "allowJs": true,            // Allow JavaScript files
+    "allowSyntheticDefaultImports": true  // Allow default imports
+  },
+  "exclude": ["node_modules"]
+}
+      </code></pre>
+      <div class="presenter-notes">
+        The TypeScript configuration is crucial for properly integrating with React Native. Templates usually provide sensible defaults, but understanding each option helps when you need to customize the configuration.
+      </div>
+    </section>
+
+    <!-- Practice Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Practice Exercise: Medication Types</h2>
+      <p>Create TypeScript interfaces and types for a medication tracking system:</p>
+      <ol>
+        <li>Define an interface for a <code>Patient</code> with properties: <code>id</code>, <code>name</code>, <code>dateOfBirth</code>, and <code>allergies</code></li>
+        <li>Create an interface for a <code>Medication</code> with properties: <code>id</code>, <code>name</code>, <code>dosage</code>, <code>unit</code>, and <code>sideEffects</code></li>
+        <li>Define a <code>Prescription</code> interface that includes a patient, medications, and prescription details</li>
+        <li>Create a type alias for <code>DosageUnit</code> that allows only specific string values</li>
+        <li>Implement these types in a simple medication tracking system</li>
+      </ol>
+      <div class="presenter-notes">
+        This exercise helps reinforce the concepts of interfaces and type aliases in a practical context. Encourage students to think about the relationships between these entities and how to model them with TypeScript.
+      </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>TypeScript adds static typing to JavaScript to catch errors during development</li>
+        <li>Basic types include string, number, boolean, arrays, tuples, and enums</li>
+        <li>Interfaces define the shape of objects and can be used for component props</li>
+        <li>Type aliases create named types that can be reused throughout your code</li>
+        <li>TypeScript configuration needs to be tailored for React Native development</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-2-advanced-types-and-interfaces/index.html">Section 2: Advanced Types and Interfaces</a></p>
+      </div>
+      <div class="presenter-notes">
+        These fundamentals will be built upon in subsequent sections. Make sure students are comfortable with basic TypeScript concepts before moving on to more advanced topics.
+      </div>
+    </section>
+  </div>
+
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

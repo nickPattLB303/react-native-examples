@@ -379,6 +379,12 @@
         { num: 2, name: 'functions-and-scope' },
         { num: 3, name: 'arrays-and-objects' },
         { num: 4, name: 'asynchronous-javascript' }
+      ],
+      'module-5-typescript-essentials': [
+        { num: 1, name: 'typescript-fundamentals' },
+        { num: 2, name: 'advanced-types-and-interfaces' },
+        { num: 3, name: 'typescript-with-react-native' },
+        { num: 4, name: 'managing-type-definitions' }
       ]
       // Add more modules as needed
     };
