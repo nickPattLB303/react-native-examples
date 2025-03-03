@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals - Exercise 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Fundamentals - Exercise 3</h1>
+    <p>This is the completed version showing proper error handling in a medication dosage calculator.</p>
+    
+    <div class="output">
+        <h2>Medication Dosage Calculator</h2>
+        <div class="form-group">
+            <label for="patientWeight">Patient Weight (kg):</label>
+            <input type="number" id="patientWeight" step="0.1" placeholder="Enter weight in kg">
+        </div>
+
+        <div class="form-group">
+            <label for="medicationConcentration">Medication Concentration (mg/ml):</label>
+            <input type="number" id="medicationConcentration" step="0.1" placeholder="Enter concentration">
+        </div>
+
+        <button onclick="calculateDosage()">Calculate Dosage</button>
+
+        <div id="result" class="result">
+            <!-- Result will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function calculateDosage() {
+            try {
+                // Get input values
+                const weightInput = document.getElementById('patientWeight').value;
+                const concentrationInput = document.getElementById('medicationConcentration').value;
+
+                // Check for missing values
+                if (!weightInput || !concentrationInput) {
+                    throw new Error('Please enter both weight and concentration values');
+                }
+
+                // Convert to numbers and validate
+                const weight = parseFloat(weightInput);
+                const concentration = parseFloat(concentrationInput);
+
+                // Check for invalid numbers
+                if (isNaN(weight) || isNaN(concentration)) {
+                    throw new Error('Please enter valid numbers');
+                }
+
+                // Check for out of range values
+                if (weight <= 0 || weight > 500) {
+                    throw new Error('Weight must be between 0 and 500 kg');
+                }
+                if (concentration <= 0 || concentration > 1000) {
+                    throw new Error('Concentration must be between 0 and 1000 mg/ml');
+                }
+
+                // Calculate dosage (0.1 ml per kg of body weight)
+                const dosage = weight * 0.1 * concentration;
+
+                // Display result
+                document.getElementById('result').innerHTML = `
+                    <h3>Calculated Dosage:</h3>
+                    <p>Recommended dosage: ${dosage.toFixed(2)} mg</p>
+                    <p>This is based on:</p>
+                    <ul>
+                        <li>Patient weight: ${weight} kg</li>
+                        <li>Medication concentration: ${concentration} mg/ml</li>
+                        <li>Standard dosage rate: 0.1 ml/kg</li>
+                    </ul>
+                `;
+            } catch (error) {
+                // Display error message
+                document.getElementById('result').innerHTML = `
+                    <div class="error">
+                        <h3>Error:</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 

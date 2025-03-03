@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals - Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Fundamentals - Exercise 2</h1>
+    <p>This is the completed version showing how to implement conditional logic for medication instructions.</p>
+    
+    <div class="output">
+        <h2>Medication Instructions Generator</h2>
+        <div class="form-group">
+            <label for="medicationType">Medication Type:</label>
+            <select id="medicationType">
+                <option value="antibiotic">Antibiotic</option>
+                <option value="painkiller">Painkiller</option>
+                <option value="vitamin">Vitamin</option>
+                <option value="bloodPressure">Blood Pressure</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="timeOfDay">Time of Day:</label>
+            <select id="timeOfDay">
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="foodRequirement">Food Requirement:</label>
+            <select id="foodRequirement">
+                <option value="before">Before Meals</option>
+                <option value="after">After Meals</option>
+                <option value="with">With Meals</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="patientAge">Patient Age:</label>
+            <input type="number" id="patientAge" min="0" max="120" value="30">
+        </div>
+
+        <button onclick="generateInstructions()">Generate Instructions</button>
+
+        <div id="instructions" class="section">
+            <!-- Instructions will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function getMedicationInstructions(medicationType, timeOfDay, foodRequirement, patientAge) {
+            let instructions = [];
+            
+            // Determine medication-specific instructions
+            if (medicationType === 'antibiotic') {
+                instructions.push('Take the full course as prescribed, even if you feel better');
+            } else if (medicationType === 'painkiller') {
+                instructions.push('Take as needed for pain relief');
+            } else if (medicationType === 'vitamin') {
+                instructions.push('Take daily as part of your regular routine');
+            } else if (medicationType === 'bloodPressure') {
+                instructions.push('Take at the same time each day for best results');
+            }
+
+            // Add time of day instructions
+            const timeInstructions = {
+                morning: 'Take in the morning',
+                afternoon: 'Take in the afternoon',
+                evening: 'Take in the evening'
+            };
+            instructions.push(timeInstructions[timeOfDay]);
+
+            // Add food requirement instructions
+            const foodInstructions = {
+                before: 'Take 30 minutes before meals',
+                after: 'Take after meals',
+                with: 'Take with meals'
+            };
+            instructions.push(foodInstructions[foodRequirement]);
+
+            // Add age-specific instructions using ternary operator
+            const ageInstructions = patientAge >= 65 
+                ? 'Monitor for any side effects and take with extra care'
+                : patientAge < 18 
+                    ? 'Take under adult supervision'
+                    : 'Take as directed';
+
+            instructions.push(ageInstructions);
+
+            // Join all instructions with periods and proper spacing
+            return instructions.join('. ') + '.';
+        }
+
+        function generateInstructions() {
+            const medicationType = document.getElementById('medicationType').value;
+            const timeOfDay = document.getElementById('timeOfDay').value;
+            const foodRequirement = document.getElementById('foodRequirement').value;
+            const patientAge = parseInt(document.getElementById('patientAge').value);
+
+            const instructions = getMedicationInstructions(
+                medicationType,
+                timeOfDay,
+                foodRequirement,
+                patientAge
+            );
+
+            document.getElementById('instructions').innerHTML = `
+                <h3>Instructions:</h3>
+                <p>${instructions}</p>
+            `;
+        }
+    </script>
+</body>
+</html> 

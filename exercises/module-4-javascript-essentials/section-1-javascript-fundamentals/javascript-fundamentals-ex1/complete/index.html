@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals - Exercise 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Fundamentals - Exercise 1</h1>
+    <p>This is the completed version showing how to declare variables and display patient medication information.</p>
+    
+    <div class="output">
+        <h2>Patient Information</h2>
+        <div id="patientInfo" class="section">
+            <!-- Patient information will be displayed here -->
+        </div>
+
+        <h2>Medication Details</h2>
+        <div id="medicationInfo" class="section">
+            <!-- Medication details will be displayed here -->
+        </div>
+
+        <h2>Prescription Status</h2>
+        <div id="prescriptionStatus" class="section">
+            <!-- Prescription status will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Patient Information
+        const patientName = "John Smith";
+        const patientId = "P12345";
+        let patientAge = 45; // Age can change over time
+
+        // Medication Details
+        const medicationName = "Lisinopril";
+        const dosage = "10mg";
+        let timesPerDay = 1; // Could change based on doctor's orders
+
+        // Prescription Status
+        const isActive = true;
+        const expirationDate = "2024-12-31";
+        let refillsRemaining = 2; // Will change as refills are used
+
+        // Display Patient Information
+        document.getElementById('patientInfo').innerHTML = `
+            <p><strong>Name:</strong> ${patientName}</p>
+            <p><strong>ID:</strong> ${patientId}</p>
+            <p><strong>Age:</strong> ${patientAge}</p>
+        `;
+
+        // Display Medication Details
+        document.getElementById('medicationInfo').innerHTML = `
+            <p><strong>Medication:</strong> ${medicationName}</p>
+            <p><strong>Dosage:</strong> ${dosage}</p>
+            <p><strong>Times per Day:</strong> ${timesPerDay}</p>
+        `;
+
+        // Display Prescription Status
+        document.getElementById('prescriptionStatus').innerHTML = `
+            <p><strong>Status:</strong> ${isActive ? 'Active' : 'Inactive'}</p>
+            <p><strong>Expiration Date:</strong> ${expirationDate}</p>
+            <p><strong>Refills Remaining:</strong> ${refillsRemaining}</p>
+        `;
+    </script>
+</body>
+</html> 
