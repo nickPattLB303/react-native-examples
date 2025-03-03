@@ -28,7 +28,7 @@ import PrescriptionCard from './components/PrescriptionCard';
 // }
 
 // Sample data - DO NOT MODIFY
-// Note: For Expo Snack, the type assertions will be needed once you implement the types
+// You will need to add type assertions for your DosageUnit type after implementing it
 const patientData = {
   id: 12345,
   name: "Sarah Johnson",
@@ -41,21 +41,21 @@ const medicationsData = [
     id: 1,
     name: "Lisinopril",
     dosage: 10,
-    unit: "mg", // This will need a type assertion when you define DosageUnit
+    unit: "mg", // You'll need to add 'as DosageUnit' after creating the type
     sideEffects: ["Dizziness", "Cough", "Headache"]
   },
   {
     id: 2,
     name: "Metformin",
     dosage: 500,
-    unit: "mg", // This will need a type assertion when you define DosageUnit
+    unit: "mg", // You'll need to add 'as DosageUnit' after creating the type
     sideEffects: ["Nausea", "Stomach upset"]
   },
   {
     id: 3,
     name: "Vitamin D",
     dosage: 1,
-    unit: "tablet", // This will need a type assertion when you define DosageUnit
+    unit: "tablet", // You'll need to add 'as DosageUnit' after creating the type
     sideEffects: []
   }
 ];
@@ -70,7 +70,7 @@ const prescriptionData = {
 };
 
 export default function App() {
-  // TODO: Add type annotations to these variables using your interfaces
+  // TODO: Add type annotations to the variables below
   const patient = patientData;
   const medications = medicationsData;
   const prescription = prescriptionData;
