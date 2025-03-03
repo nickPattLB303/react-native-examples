@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Inventory System - TypeScript Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .inventory-list, .supplier-list {
+            margin-top: 20px;
+        }
+        .inventory-item, .supplier-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #f57c00;
+            padding: 10px;
+            background-color: #fff3e0;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .filter-section select {
+            width: auto;
+        }
+        #errorDisplay {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medication Inventory System</h1>
+    <p>Complete this challenge by implementing the medication inventory system with TypeScript. Focus on creating proper types, interfaces, and ensuring type safety throughout the application.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Add New Medication to Inventory</h2>
+            <div class="form-group">
+                <label for="medName">Medication Name:</label>
+                <input type="text" id="medName" placeholder="Enter medication name">
+                
+                <label for="medCategory">Category:</label>
+                <select id="medCategory">
+                    <option value="">Select a category</option>
+                    <option value="antibiotic">Antibiotic</option>
+                    <option value="analgesic">Analgesic</option>
+                    <option value="antihistamine">Antihistamine</option>
+                    <option value="cardiovascular">Cardiovascular</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="medDosage">Dosage:</label>
+                <input type="text" id="medDosage" placeholder="Enter dosage (e.g., 500mg)">
+                
+                <label for="medManufacturer">Manufacturer:</label>
+                <input type="text" id="medManufacturer" placeholder="Enter manufacturer">
+                
+                <label for="medQuantity">Quantity:</label>
+                <input type="number" id="medQuantity" min="1" placeholder="Enter quantity">
+                
+                <label for="medLocation">Storage Location:</label>
+                <select id="medLocation">
+                    <option value="">Select storage location</option>
+                    <option value="shelf-a">Shelf A</option>
+                    <option value="shelf-b">Shelf B</option>
+                    <option value="refrigerator">Refrigerator</option>
+                    <option value="secure-cabinet">Secure Cabinet</option>
+                </select>
+                
+                <label for="medExpiration">Expiration Date:</label>
+                <input type="date" id="medExpiration">
+                
+                <button onclick="addMedication()">Add to Inventory</button>
+            </div>
+            <div id="errorDisplay"></div>
+        </div>
+
+        <div class="section">
+            <h2>Search and Filter Inventory</h2>
+            <div class="form-group">
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="searchInventory(this.value)">
+                
+                <div class="filter-section">
+                    <label for="filterCategory">Filter by Category:</label>
+                    <select id="filterCategory" onchange="applyFilters()">
+                        <option value="">All Categories</option>
+                        <option value="antibiotic">Antibiotic</option>
+                        <option value="analgesic">Analgesic</option>
+                        <option value="antihistamine">Antihistamine</option>
+                        <option value="cardiovascular">Cardiovascular</option>
+                        <option value="other">Other</option>
+                    </select>
+                    
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy" onchange="applyFilters()">
+                        <option value="name">Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="expiration">Expiration Date</option>
+                    </select>
+                </div>
+                
+                <div id="searchResults" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Manage Suppliers</h2>
+            <div class="form-group">
+                <label for="supplierName">Supplier Name:</label>
+                <input type="text" id="supplierName" placeholder="Enter supplier name">
+                
+                <label for="supplierContact">Contact Information:</label>
+                <input type="text" id="supplierContact" placeholder="Enter contact details">
+                
+                <label for="supplierMedications">Available Medications:</label>
+                <input type="text" id="supplierMedications" placeholder="Enter medications (comma-separated)">
+                
+                <button onclick="addSupplier()">Add Supplier</button>
+            </div>
+            <div id="supplierList" class="supplier-list">
+                <!-- Suppliers will be displayed here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Inventory List</h2>
+            <div id="inventoryList" class="inventory-list">
+                <!-- Inventory items will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <script type="text/typescript">
+        // TODO: Create TypeScript interfaces for the core data models
+        
+        // TODO: Create a type for medication categories (literal type)
+        
+        // TODO: Create a type for storage locations (literal type)
+        
+        // TODO: Implement an interface for API responses
+        
+        // TODO: Create inventory and supplier data structures with proper typing
+        const inventory = [];
+        const suppliers = [];
+
+        // TODO: Implement addMedication function with proper type checking
+        function addMedication() {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement searchInventory function with proper return type
+        function searchInventory(query: string) {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement applyFilters function
+        function applyFilters() {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement addSupplier function with proper parameter types
+        function addSupplier() {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement updateInventory function with partial update type
+        function updateInventory(id, updates) {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement removeFromInventory function
+        function removeFromInventory(id) {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement displayInventory function
+        function displayInventory() {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement displaySuppliers function
+        function displaySuppliers() {
+            // Your TypeScript code here
+        }
+
+        // TODO: Implement a type guard for checking valid medication data
+        function isValidMedication(data: any): boolean {
+            // Your TypeScript code here
+            return false;
+        }
+
+        // TODO: Implement error handling with typed error objects
+        function displayError(message: string) {
+            // Your TypeScript code here
+        }
+
+        // Initial display
+        displayInventory();
+        displaySuppliers();
+    </script>
+    
+    <script>
+        // This script compiles and runs the TypeScript code
+        (function() {
+            var script = document.querySelector('script[type="text/typescript"]');
+            if (script) {
+                var transpiled = ts.transpile(script.textContent, {
+                    target: ts.ScriptTarget.ES2015,
+                    module: ts.ModuleKind.None
+                });
+                
+                var newScript = document.createElement('script');
+                newScript.textContent = transpiled;
+                document.body.appendChild(newScript);
+            }
+        })();
+    </script>
+</body>
+</html> 

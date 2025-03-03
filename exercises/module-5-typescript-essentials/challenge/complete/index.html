@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Inventory System - TypeScript Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .inventory-list, .supplier-list {
+            margin-top: 20px;
+        }
+        .inventory-item, .supplier-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #f57c00;
+            padding: 10px;
+            background-color: #fff3e0;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .filter-section select {
+            width: auto;
+        }
+        #errorDisplay {
+            margin-top: 15px;
+        }
+        .note {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .low-stock {
+            color: #f57c00;
+            font-weight: bold;
+        }
+        .expires-soon {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medication Inventory System</h1>
+    <p>This is the completed version showing a fully functional medication inventory system implemented with TypeScript.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Add New Medication to Inventory</h2>
+            <div class="form-group">
+                <label for="medName">Medication Name:</label>
+                <input type="text" id="medName" placeholder="Enter medication name">
+                
+                <label for="medCategory">Category:</label>
+                <select id="medCategory">
+                    <option value="">Select a category</option>
+                    <option value="antibiotic">Antibiotic</option>
+                    <option value="analgesic">Analgesic</option>
+                    <option value="antihistamine">Antihistamine</option>
+                    <option value="cardiovascular">Cardiovascular</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="medDosage">Dosage:</label>
+                <input type="text" id="medDosage" placeholder="Enter dosage (e.g., 500mg)">
+                
+                <label for="medManufacturer">Manufacturer:</label>
+                <input type="text" id="medManufacturer" placeholder="Enter manufacturer">
+                
+                <label for="medQuantity">Quantity:</label>
+                <input type="number" id="medQuantity" min="1" placeholder="Enter quantity">
+                
+                <label for="medLocation">Storage Location:</label>
+                <select id="medLocation">
+                    <option value="">Select storage location</option>
+                    <option value="shelf-a">Shelf A</option>
+                    <option value="shelf-b">Shelf B</option>
+                    <option value="refrigerator">Refrigerator</option>
+                    <option value="secure-cabinet">Secure Cabinet</option>
+                </select>
+                
+                <label for="medExpiration">Expiration Date:</label>
+                <input type="date" id="medExpiration">
+                
+                <button onclick="addMedication()">Add to Inventory</button>
+            </div>
+            <div id="errorDisplay"></div>
+        </div>
+
+        <div class="section">
+            <h2>Search and Filter Inventory</h2>
+            <div class="form-group">
+                <input type="text" id="searchInput" placeholder="Search medications..." oninput="searchInventory(this.value)">
+                
+                <div class="filter-section">
+                    <label for="filterCategory">Filter by Category:</label>
+                    <select id="filterCategory" onchange="applyFilters()">
+                        <option value="">All Categories</option>
+                        <option value="antibiotic">Antibiotic</option>
+                        <option value="analgesic">Analgesic</option>
+                        <option value="antihistamine">Antihistamine</option>
+                        <option value="cardiovascular">Cardiovascular</option>
+                        <option value="other">Other</option>
+                    </select>
+                    
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy" onchange="applyFilters()">
+                        <option value="name">Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="expiration">Expiration Date</option>
+                    </select>
+                </div>
+                
+                <div id="searchResults" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Manage Suppliers</h2>
+            <div class="form-group">
+                <label for="supplierName">Supplier Name:</label>
+                <input type="text" id="supplierName" placeholder="Enter supplier name">
+                
+                <label for="supplierContact">Contact Information:</label>
+                <input type="text" id="supplierContact" placeholder="Enter contact details">
+                
+                <label for="supplierMedications">Available Medications:</label>
+                <input type="text" id="supplierMedications" placeholder="Enter medications (comma-separated)">
+                
+                <button onclick="addSupplier()">Add Supplier</button>
+            </div>
+            <div id="supplierList" class="supplier-list">
+                <!-- Suppliers will be displayed here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Inventory List</h2>
+            <div id="inventoryList" class="inventory-list">
+                <!-- Inventory items will be displayed here -->
+            </div>
+        </div>
+
+        <div class="note">
+            Note: This implementation demonstrates TypeScript features including:
+            <ul>
+                <li>Interfaces and types for data models</li>
+                <li>Type literals for enumeration-like data</li>
+                <li>Generics for reusable components</li>
+                <li>Proper error typing and handling</li>
+                <li>Type guards for runtime validation</li>
+                <li>Utility types (e.g., Partial&lt;T&gt;)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://www.unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <script type="text/typescript">
+        // Define core TypeScript interfaces for the medication inventory system
+        
+        // Type for medication categories using literal types
+        type MedicationCategory = 'antibiotic' | 'analgesic' | 'antihistamine' | 'cardiovascular' | 'other';
+        
+        // Type for storage locations using literal types
+        type StorageLocation = 'shelf-a' | 'shelf-b' | 'refrigerator' | 'secure-cabinet';
+        
+        // Interface for Medication model
+        interface Medication {
+            id: string;
+            name: string;
+            category: MedicationCategory;
+            dosage: string;
+            manufacturer: string;
+        }
+        
+        // Interface for Inventory item
+        interface InventoryItem {
+            id: string;
+            medicationId: string;
+            quantity: number;
+            location: StorageLocation;
+            expirationDate: string;
+            addedDate: string;
+        }
+        
+        // Combined interface for displaying medication in inventory
+        interface MedicationInventory extends Medication {
+            quantity: number;
+            location: StorageLocation;
+            expirationDate: string;
+        }
+        
+        // Interface for Supplier model
+        interface Supplier {
+            id: string;
+            name: string;
+            contactInfo: string;
+            availableMedications: string[];
+        }
+        
+        // Interface for API responses
+        interface ApiResponse<T> {
+            success: boolean;
+            data?: T;
+            error?: string;
+        }
+        
+        // Error type
+        class InventoryError extends Error {
+            code: string;
+            
+            constructor(message: string, code: string = 'GENERIC_ERROR') {
+                super(message);
+                this.name = 'InventoryError';
+                this.code = code;
+            }
+        }
+        
+        // Type guard for checking if an object is a Medication
+        function isMedication(obj: any): obj is Medication {
+            return (
+                typeof obj === 'object' &&
+                typeof obj.id === 'string' &&
+                typeof obj.name === 'string' &&
+                typeof obj.category === 'string' &&
+                typeof obj.dosage === 'string' &&
+                typeof obj.manufacturer === 'string'
+            );
+        }
+        
+        // Generic inventory management system
+        class InventoryManager<T extends { id: string }> {
+            private items: T[] = [];
+            
+            add(item: T): void {
+                this.items.push(item);
+            }
+            
+            update(id: string, updates: Partial<T>): boolean {
+                const index = this.items.findIndex(item => item.id === id);
+                if (index !== -1) {
+                    this.items[index] = { ...this.items[index], ...updates };
+                    return true;
+                }
+                return false;
+            }
+            
+            remove(id: string): boolean {
+                const initialLength = this.items.length;
+                this.items = this.items.filter(item => item.id !== id);
+                return initialLength !== this.items.length;
+            }
+            
+            getAll(): T[] {
+                return [...this.items];
+            }
+            
+            getById(id: string): T | undefined {
+                return this.items.find(item => item.id === id);
+            }
+            
+            search(predicate: (item: T) => boolean): T[] {
+                return this.items.filter(predicate);
+            }
+        }
+        
+        // Create inventory managers for our data
+        const medicationManager = new InventoryManager<Medication>();
+        const inventoryItemManager = new InventoryManager<InventoryItem>();
+        const supplierManager = new InventoryManager<Supplier>();
+        
+        // Sample data setup
+        function initializeSampleData(): void {
+            // Add sample medications
+            const medications: Medication[] = [
+                { id: 'med1', name: 'Amoxicillin', category: 'antibiotic', dosage: '500mg', manufacturer: 'PharmaCorp' },
+                { id: 'med2', name: 'Ibuprofen', category: 'analgesic', dosage: '200mg', manufacturer: 'MediPharm' },
+                { id: 'med3', name: 'Loratadine', category: 'antihistamine', dosage: '10mg', manufacturer: 'AllerTech' },
+                { id: 'med4', name: 'Atorvastatin', category: 'cardiovascular', dosage: '20mg', manufacturer: 'HeartWell' }
+            ];
+            
+            // Add sample inventory items
+            const inventoryItems: InventoryItem[] = [
+                { id: 'inv1', medicationId: 'med1', quantity: 100, location: 'shelf-a', expirationDate: '2024-12-31', addedDate: '2023-06-15' },
+                { id: 'inv2', medicationId: 'med2', quantity: 50, location: 'shelf-b', expirationDate: '2025-03-15', addedDate: '2023-09-22' },
+                { id: 'inv3', medicationId: 'med3', quantity: 75, location: 'refrigerator', expirationDate: '2024-08-10', addedDate: '2023-10-05' },
+                { id: 'inv4', medicationId: 'med4', quantity: 25, location: 'secure-cabinet', expirationDate: '2024-05-20', addedDate: '2023-11-12' }
+            ];
+            
+            // Add sample suppliers
+            const suppliers: Supplier[] = [
+                { id: 'sup1', name: 'PharmaCorp Supplies', contactInfo: 'contact@pharmacorp.com', availableMedications: ['Amoxicillin', 'Ciprofloxacin'] },
+                { id: 'sup2', name: 'MediPharm Distributors', contactInfo: '555-123-4567', availableMedications: ['Ibuprofen', 'Acetaminophen', 'Naproxen'] }
+            ];
+            
+            // Add to respective managers
+            medications.forEach(med => medicationManager.add(med));
+            inventoryItems.forEach(item => inventoryItemManager.add(item));
+            suppliers.forEach(sup => supplierManager.add(sup));
+        }
+        
+        // Initialize data
+        initializeSampleData();
+        
+        // Generate unique ID
+        function generateId(): string {
+            return Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+        }
+        
+        // Add new medication with proper type checking
+        function addMedication(): void {
+            try {
+                const name = (document.getElementById('medName') as HTMLInputElement).value;
+                const categoryEl = document.getElementById('medCategory') as HTMLSelectElement;
+                const category = categoryEl.value as MedicationCategory;
+                const dosage = (document.getElementById('medDosage') as HTMLInputElement).value;
+                const manufacturer = (document.getElementById('medManufacturer') as HTMLInputElement).value;
+                const quantity = parseInt((document.getElementById('medQuantity') as HTMLInputElement).value);
+                const locationEl = document.getElementById('medLocation') as HTMLSelectElement;
+                const location = locationEl.value as StorageLocation;
+                const expirationDate = (document.getElementById('medExpiration') as HTMLInputElement).value;
+                
+                // Validate inputs
+                if (!name || !category || !dosage || !manufacturer || isNaN(quantity) || !location || !expirationDate) {
+                    throw new InventoryError('All fields are required', 'VALIDATION_ERROR');
+                }
+                
+                if (quantity <= 0) {
+                    throw new InventoryError('Quantity must be greater than zero', 'VALIDATION_ERROR');
+                }
+                
+                // Check if medication exists or create new one
+                let existingMed = medicationManager.search(med => med.name.toLowerCase() === name.toLowerCase())[0];
+                let medicationId: string;
+                
+                if (!existingMed) {
+                    // Create new medication
+                    const newMedication: Medication = {
+                        id: generateId(),
+                        name,
+                        category,
+                        dosage,
+                        manufacturer
+                    };
+                    
+                    medicationManager.add(newMedication);
+                    medicationId = newMedication.id;
+                } else {
+                    medicationId = existingMed.id;
+                }
+                
+                // Create inventory item
+                const inventoryItem: InventoryItem = {
+                    id: generateId(),
+                    medicationId,
+                    quantity,
+                    location,
+                    expirationDate,
+                    addedDate: new Date().toISOString().split('T')[0]
+                };
+                
+                inventoryItemManager.add(inventoryItem);
+                clearForm();
+                displayInventory();
+                
+            } catch (error) {
+                if (error instanceof InventoryError) {
+                    displayError(`${error.code}: ${error.message}`);
+                } else if (error instanceof Error) {
+                    displayError(error.message);
+                } else {
+                    displayError('An unknown error occurred');
+                }
+            }
+        }
+        
+        // Search inventory with proper return type
+        function searchInventory(query: string): void {
+            if (!query.trim()) {
+                document.getElementById('searchResults')!.innerHTML = '';
+                return;
+            }
+            
+            const results = getMedicationInventory().filter(item => 
+                item.name.toLowerCase().includes(query.toLowerCase()) || 
+                item.manufacturer.toLowerCase().includes(query.toLowerCase()) ||
+                item.dosage.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            displaySearchResults(results);
+        }
+        
+        // Function to display search results
+        function displaySearchResults(results: MedicationInventory[]): void {
+            const resultsContainer = document.getElementById('searchResults')!;
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p>No medications found matching your search.</p>';
+                return;
+            }
+            
+            let html = '<h3>Search Results</h3>';
+            
+            results.forEach(item => {
+                html += `
+                <div class="inventory-item">
+                    <h4>${item.name} (${item.dosage})</h4>
+                    <p>Category: ${item.category}</p>
+                    <p>Manufacturer: ${item.manufacturer}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                    <p>Location: ${formatLocation(item.location)}</p>
+                    <p>Expires: ${formatDate(item.expirationDate)}</p>
+                </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+        }
+        
+        // Apply filters to inventory display
+        function applyFilters(): void {
+            const category = (document.getElementById('filterCategory') as HTMLSelectElement).value;
+            const sortBy = (document.getElementById('sortBy') as HTMLSelectElement).value;
+            
+            let filtered = getMedicationInventory();
+            
+            // Apply category filter if selected
+            if (category) {
+                filtered = filtered.filter(item => item.category === category);
+            }
+            
+            // Apply sorting
+            switch(sortBy) {
+                case 'name':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'quantity':
+                    filtered.sort((a, b) => b.quantity - a.quantity);
+                    break;
+                case 'expiration':
+                    filtered.sort((a, b) => new Date(a.expirationDate).getTime() - new Date(b.expirationDate).getTime());
+                    break;
+            }
+            
+            displayInventory(filtered);
+        }
+        
+        // Add supplier with proper parameter types
+        function addSupplier(): void {
+            try {
+                const name = (document.getElementById('supplierName') as HTMLInputElement).value;
+                const contactInfo = (document.getElementById('supplierContact') as HTMLInputElement).value;
+                const medicationsInput = (document.getElementById('supplierMedications') as HTMLInputElement).value;
+                
+                if (!name || !contactInfo || !medicationsInput) {
+                    throw new InventoryError('All supplier fields are required', 'VALIDATION_ERROR');
+                }
+                
+                const availableMedications = medicationsInput.split(',').map(m => m.trim()).filter(m => m);
+                
+                const supplier: Supplier = {
+                    id: generateId(),
+                    name,
+                    contactInfo,
+                    availableMedications
+                };
+                
+                supplierManager.add(supplier);
+                
+                // Clear form
+                (document.getElementById('supplierName') as HTMLInputElement).value = '';
+                (document.getElementById('supplierContact') as HTMLInputElement).value = '';
+                (document.getElementById('supplierMedications') as HTMLInputElement).value = '';
+                
+                displaySuppliers();
+                
+            } catch (error) {
+                if (error instanceof InventoryError) {
+                    displayError(`${error.code}: ${error.message}`);
+                } else if (error instanceof Error) {
+                    displayError(error.message);
+                } else {
+                    displayError('An unknown error occurred');
+                }
+            }
+        }
+        
+        // Update inventory with partial update type
+        function updateInventory(id: string, updates: Partial<InventoryItem>): void {
+            try {
+                const success = inventoryItemManager.update(id, updates);
+                
+                if (!success) {
+                    throw new InventoryError('Inventory item not found', 'NOT_FOUND');
+                }
+                
+                displayInventory();
+                
+            } catch (error) {
+                if (error instanceof InventoryError) {
+                    displayError(`${error.code}: ${error.message}`);
+                } else if (error instanceof Error) {
+                    displayError(error.message);
+                } else {
+                    displayError('An unknown error occurred');
+                }
+            }
+        }
+        
+        // Remove from inventory
+        function removeFromInventory(id: string): void {
+            try {
+                const success = inventoryItemManager.remove(id);
+                
+                if (!success) {
+                    throw new InventoryError('Inventory item not found', 'NOT_FOUND');
+                }
+                
+                displayInventory();
+                
+            } catch (error) {
+                if (error instanceof InventoryError) {
+                    displayError(`${error.code}: ${error.message}`);
+                } else if (error instanceof Error) {
+                    displayError(error.message);
+                } else {
+                    displayError('An unknown error occurred');
+                }
+            }
+        }
+        
+        // Combine medication and inventory data
+        function getMedicationInventory(): MedicationInventory[] {
+            const inventoryItems = inventoryItemManager.getAll();
+            const result: MedicationInventory[] = [];
+            
+            for (const item of inventoryItems) {
+                const medication = medicationManager.getById(item.medicationId);
+                
+                if (medication) {
+                    result.push({
+                        ...medication,
+                        quantity: item.quantity,
+                        location: item.location,
+                        expirationDate: item.expirationDate
+                    });
+                }
+            }
+            
+            return result;
+        }
+        
+        // Display inventory
+        function displayInventory(items?: MedicationInventory[]): void {
+            const inventoryItems = items || getMedicationInventory();
+            const inventoryList = document.getElementById('inventoryList')!;
+            
+            if (inventoryItems.length === 0) {
+                inventoryList.innerHTML = '<p>No medications in inventory.</p>';
+                return;
+            }
+            
+            let html = '';
+            
+            inventoryItems.forEach(item => {
+                // Check for low stock
+                const isLowStock = item.quantity < 30;
+                
+                // Check for expiration within 30 days
+                const today = new Date();
+                const expirationDate = new Date(item.expirationDate);
+                const daysUntilExpiration = Math.ceil((expirationDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                const isExpiringSoon = daysUntilExpiration <= 30 && daysUntilExpiration > 0;
+                const isExpired = daysUntilExpiration <= 0;
+                
+                html += `
+                <div class="inventory-item">
+                    <h4>${item.name} (${item.dosage})</h4>
+                    <p>Category: ${item.category}</p>
+                    <p>Manufacturer: ${item.manufacturer}</p>
+                    <p>Quantity: <span class="${isLowStock ? 'low-stock' : ''}">${item.quantity} ${isLowStock ? '(Low Stock)' : ''}</span></p>
+                    <p>Location: ${formatLocation(item.location)}</p>
+                    <p>Expires: <span class="${isExpiringSoon || isExpired ? 'expires-soon' : ''}">${formatDate(item.expirationDate)} ${isExpired ? '(EXPIRED)' : isExpiringSoon ? `(Expires in ${daysUntilExpiration} days)` : ''}</span></p>
+                    <button onclick="removeFromInventory('${item.id}')">Remove</button>
+                </div>
+                `;
+            });
+            
+            inventoryList.innerHTML = html;
+        }
+        
+        // Display suppliers
+        function displaySuppliers(): void {
+            const suppliers = supplierManager.getAll();
+            const supplierList = document.getElementById('supplierList')!;
+            
+            if (suppliers.length === 0) {
+                supplierList.innerHTML = '<p>No suppliers registered.</p>';
+                return;
+            }
+            
+            let html = '';
+            
+            suppliers.forEach(supplier => {
+                html += `
+                <div class="supplier-item">
+                    <h4>${supplier.name}</h4>
+                    <p>Contact: ${supplier.contactInfo}</p>
+                    <p>Available Medications: ${supplier.availableMedications.join(', ')}</p>
+                    <button onclick="removeSupplier('${supplier.id}')">Remove</button>
+                </div>
+                `;
+            });
+            
+            supplierList.innerHTML = html;
+        }
+        
+        // Remove supplier
+        function removeSupplier(id: string): void {
+            try {
+                const success = supplierManager.remove(id);
+                
+                if (!success) {
+                    throw new InventoryError('Supplier not found', 'NOT_FOUND');
+                }
+                
+                displaySuppliers();
+                
+            } catch (error) {
+                if (error instanceof InventoryError) {
+                    displayError(`${error.code}: ${error.message}`);
+                } else if (error instanceof Error) {
+                    displayError(error.message);
+                } else {
+                    displayError('An unknown error occurred');
+                }
+            }
+        }
+        
+        // Error handling with typed error objects
+        function displayError(message: string): void {
+            const errorDisplay = document.getElementById('errorDisplay')!;
+            errorDisplay.innerHTML = `<div class="error">${message}</div>`;
+            
+            // Clear error after 5 seconds
+            setTimeout(() => {
+                errorDisplay.innerHTML = '';
+            }, 5000);
+        }
+        
+        // Clear form after adding medication
+        function clearForm(): void {
+            (document.getElementById('medName') as HTMLInputElement).value = '';
+            (document.getElementById('medCategory') as HTMLSelectElement).value = '';
+            (document.getElementById('medDosage') as HTMLInputElement).value = '';
+            (document.getElementById('medManufacturer') as HTMLInputElement).value = '';
+            (document.getElementById('medQuantity') as HTMLInputElement).value = '';
+            (document.getElementById('medLocation') as HTMLSelectElement).value = '';
+            (document.getElementById('medExpiration') as HTMLInputElement).value = '';
+        }
+        
+        // Format storage location for display
+        function formatLocation(location: StorageLocation): string {
+            switch(location) {
+                case 'shelf-a': return 'Shelf A';
+                case 'shelf-b': return 'Shelf B';
+                case 'refrigerator': return 'Refrigerator';
+                case 'secure-cabinet': return 'Secure Cabinet';
+                default: return location;
+            }
+        }
+        
+        // Format date for display
+        function formatDate(dateString: string): string {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+        
+        // Initial display
+        displayInventory();
+        displaySuppliers();
+    </script>
+    
+    <script>
+        // This script compiles and runs the TypeScript code
+        (function() {
+            var script = document.querySelector('script[type="text/typescript"]');
+            if (script) {
+                var transpiled = ts.transpile(script.textContent, {
+                    target: ts.ScriptTarget.ES2015,
+                    module: ts.ModuleKind.None
+                });
+                
+                var newScript = document.createElement('script');
+                newScript.textContent = transpiled;
+                document.body.appendChild(newScript);
+            }
+        })();
+    </script>
+</body>
+</html> 
