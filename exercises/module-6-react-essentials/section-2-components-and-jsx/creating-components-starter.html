@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Components Exercise - Starter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        .medication-header {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .medication-item {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .medication-item.active {
+            border-left: 4px solid #28a745;
+        }
+        .medication-item.inactive {
+            border-left: 4px solid #dc3545;
+        }
+        .medication-item h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-badge.active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-badge.low {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-badge.inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .instructions {
+            background-color: #e9f5ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="instructions">
+            <h2>Exercise Instructions</h2>
+            <p>In this exercise, you'll implement a set of React components for a medication tracking application:</p>
+            <ol>
+                <li>Complete the <code>MedicationHeader</code> component that displays a title and description</li>
+                <li>Implement the <code>StatusBadge</code> component that displays different styles based on status</li>
+                <li>Create the <code>MedicationItem</code> component that displays medication details and uses StatusBadge</li>
+                <li>Build the <code>MedicationList</code> component that renders multiple MedicationItem components with proper keys</li>
+                <li>Complete the <code>MedicationApp</code> component that brings everything together</li>
+            </ol>
+            <p>Use the sample data provided in the starter code. Focus on applying JSX syntax, conditional rendering, and proper list rendering with keys.</p>
+        </div>
+
+        <div id="root"></div>
+    </div>
+
+    <script type="text/babel">
+        // Sample data
+        const medications = [
+            { id: '1', name: 'Aspirin', dosage: '100mg', schedule: 'Daily', status: 'active' },
+            { id: '2', name: 'Ibuprofen', dosage: '200mg', schedule: 'As needed', status: 'low' },
+            { id: '3', name: 'Amoxicillin', dosage: '500mg', schedule: 'Twice daily', status: 'inactive' },
+        ];
+        
+        // 1. MedicationHeader Component
+        // Complete this component to display a title and description
+        function MedicationHeader({ title, description }) {
+            // Your implementation here
+            
+        }
+        
+        // 2. StatusBadge Component
+        // Implement this component to display a badge with different styles based on status
+        function StatusBadge({ status }) {
+            // Your implementation here
+            // Should render differently based on status (active, low, inactive)
+            
+        }
+        
+        // 3. MedicationItem Component
+        // Create this component to display a medication's details with a StatusBadge
+        function MedicationItem({ medication }) {
+            // Your implementation here
+            // Should display medication details and use StatusBadge
+            
+        }
+        
+        // 4. MedicationList Component
+        // Build this component to render a list of MedicationItem components
+        function MedicationList({ medications }) {
+            // Your implementation here
+            // Should map over medications array and render MedicationItem components
+            // Don't forget to add proper keys to list items
+            // Handle the empty list case
+            
+        }
+        
+        // 5. MedicationApp Component
+        // Integrate all components
+        function MedicationApp() {
+            // Your implementation here
+            // Should render MedicationHeader and MedicationList with appropriate props
+            
+        }
+        
+        // Main App render
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<MedicationApp />);
+    </script>
+</body>
+</html> 
