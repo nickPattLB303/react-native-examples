@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous JavaScript - Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Asynchronous JavaScript - Exercise 2</h1>
+    <p>Complete the exercise by refactoring callback-based code to use async/await.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Async/Await Refactoring</h2>
+            
+            <div class="code-block">
+                // Original callback-based code
+                function getMedicationSchedule(patientId, callback) {
+                    fetchPatient(patientId, (error, patient) => {
+                        if (error) {
+                            callback(error);
+                            return;
+                        }
+                        
+                        fetchMedications(patient.id, (error, medications) => {
+                            if (error) {
+                                callback(error);
+                                return;
+                            }
+                            
+                            generateSchedule(medications, (error, schedule) => {
+                                if (error) {
+                                    callback(error);
+                                    return;
+                                }
+                                
+                                callback(null, schedule);
+                            });
+                        });
+                    });
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="patientId">Patient ID:</label>
+                <input type="text" id="patientId" placeholder="Enter patient ID">
+                <button onclick="fetchSchedule()">Fetch Schedule</button>
+            </div>
+
+            <div class="result">
+                <h3>Result:</h3>
+                <div id="resultDisplay">
+                    <!-- Result will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated API functions with callbacks
+        function fetchPatient(id, callback) {
+            setTimeout(() => {
+                if (id === "123") {
+                    callback(null, {
+                        id: "123",
+                        name: "John Doe",
+                        age: 45
+                    });
+                } else {
+                    callback(new Error("Patient not found"));
+                }
+            }, 1000);
+        }
+
+        function fetchMedications(patientId, callback) {
+            setTimeout(() => {
+                if (patientId === "123") {
+                    callback(null, [
+                        { id: "M1", name: "Lisinopril", dosage: "10mg", frequency: "once daily" },
+                        { id: "M2", name: "Metformin", dosage: "500mg", frequency: "twice daily" }
+                    ]);
+                } else {
+                    callback(new Error("Medications not found"));
+                }
+            }, 1000);
+        }
+
+        function generateSchedule(medications, callback) {
+            setTimeout(() => {
+                try {
+                    const schedule = medications.map(med => ({
+                        ...med,
+                        schedule: med.frequency === "once daily" ? "Morning" :
+                                 med.frequency === "twice daily" ? "Morning and Evening" :
+                                 "As needed"
+                    }));
+                    callback(null, schedule);
+                } catch (error) {
+                    callback(error);
+                }
+            }, 1000);
+        }
+
+        // TODO: Refactor getMedicationSchedule to use async/await
+        // Should:
+        // 1. Convert the function to an async function
+        // 2. Replace callbacks with await
+        // 3. Use try/catch for error handling
+        // 4. Return a promise that resolves with the schedule
+        async function getMedicationSchedule(patientId) {
+            // Your code here
+        }
+
+        // Function to fetch and display schedule
+        async function fetchSchedule() {
+            const patientId = document.getElementById('patientId').value;
+            const display = document.getElementById('resultDisplay');
+            
+            display.innerHTML = '<p>Loading schedule...</p>';
+            
+            try {
+                const schedule = await getMedicationSchedule(patientId);
+                display.innerHTML = schedule.map(med => `
+                    <div>
+                        <h4>${med.name}</h4>
+                        <p>Dosage: ${med.dosage}</p>
+                        <p>Frequency: ${med.frequency}</p>
+                        <p>Schedule: ${med.schedule}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                display.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html> 

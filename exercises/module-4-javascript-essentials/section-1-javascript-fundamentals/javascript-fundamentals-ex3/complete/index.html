@@ -69,8 +69,8 @@
     <div class="output">
         <h2>Medication Dosage Calculator</h2>
         <div class="form-group">
-            <label for="patientWeight">Patient Weight (kg):</label>
-            <input type="number" id="patientWeight" step="0.1" placeholder="Enter weight in kg">
+            <label for="patientWeight">Patient Weight (lbs):</label>
+            <input type="number" id="patientWeight" step="0.1" placeholder="Enter weight in lbs">
         </div>
 
         <div class="form-group">
@@ -98,24 +98,27 @@
                 }
 
                 // Convert to numbers and validate
-                const weight = parseFloat(weightInput);
+                const weightLbs = parseFloat(weightInput);
                 const concentration = parseFloat(concentrationInput);
 
                 // Check for invalid numbers
-                if (isNaN(weight) || isNaN(concentration)) {
+                if (isNaN(weightLbs) || isNaN(concentration)) {
                     throw new Error('Please enter valid numbers');
                 }
 
                 // Check for out of range values
-                if (weight <= 0 || weight > 500) {
-                    throw new Error('Weight must be between 0 and 500 kg');
+                if (weightLbs <= 0 || weightLbs > 1100) {
+                    throw new Error('Weight must be between 0 and 1100 lbs');
                 }
                 if (concentration <= 0 || concentration > 1000) {
                     throw new Error('Concentration must be between 0 and 1000 mg/ml');
                 }
 
+                // Convert lbs to kg (1 kg = 2.20462 lbs)
+                const weightKg = weightLbs / 2.20462;
+
                 // Calculate dosage (0.1 ml per kg of body weight)
-                const dosage = weight * 0.1 * concentration;
+                const dosage = weightKg * 0.1 * concentration;
 
                 // Display result
                 document.getElementById('result').innerHTML = `
@@ -123,7 +126,7 @@
                     <p>Recommended dosage: ${dosage.toFixed(2)} mg</p>
                     <p>This is based on:</p>
                     <ul>
-                        <li>Patient weight: ${weight} kg</li>
+                        <li>Patient weight: ${weightLbs.toFixed(1)} lbs (${weightKg.toFixed(1)} kg)</li>
                         <li>Medication concentration: ${concentration} mg/ml</li>
                         <li>Standard dosage rate: 0.1 ml/kg</li>
                     </ul>

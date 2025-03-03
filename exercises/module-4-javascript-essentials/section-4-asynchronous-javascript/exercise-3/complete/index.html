@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous JavaScript - Exercise 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .medication-list {
+            margin-top: 20px;
+        }
+        .medication-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .refresh-button {
+            display: block;
+            margin: 20px auto;
+        }
+        .note {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Asynchronous JavaScript - Exercise 3</h1>
+    <p>This is the completed version showing how to implement a medication list component with API integration.</p>
+    
+    <div class="output">
+        <div class="section">
+            <h2>Medication List Component</h2>
+            
+            <div class="medication-list">
+                <div id="medicationDisplay">
+                    <!-- Medication list will be displayed here -->
+                </div>
+            </div>
+
+            <button class="refresh-button" onclick="refreshMedications()">Refresh List</button>
+
+            <div class="note">
+                Note: This implementation demonstrates proper handling of loading states, errors, and data fetching
+                in a component-based architecture. It includes a refresh mechanism and proper error boundaries.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated API function
+        function fetchMedications() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Simulate random success/failure
+                    if (Math.random() > 0.1) {
+                        resolve([
+                            { id: "M1", name: "Lisinopril", dosage: "10mg", frequency: "once daily" },
+                            { id: "M2", name: "Metformin", dosage: "500mg", frequency: "twice daily" },
+                            { id: "M3", name: "Vitamin D", dosage: "1000IU", frequency: "once daily" }
+                        ]);
+                    } else {
+                        reject(new Error("Failed to fetch medications"));
+                    }
+                }, 1000);
+            });
+        }
+
+        // Implemented MedicationList component
+        class MedicationList {
+            constructor() {
+                this.medications = [];
+                this.loading = false;
+                this.error = null;
+            }
+
+            async fetchMedications() {
+                this.loading = true;
+                this.error = null;
+                this.render(); // Show loading state
+
+                try {
+                    this.medications = await fetchMedications();
+                } catch (error) {
+                    this.error = error;
+                    console.error('Error fetching medications:', error);
+                } finally {
+                    this.loading = false;
+                    this.render(); // Update display
+                }
+            }
+
+            render() {
+                const display = document.getElementById('medicationDisplay');
+
+                if (this.loading) {
+                    display.innerHTML = '<p class="loading">Loading medications...</p>';
+                    return;
+                }
+
+                if (this.error) {
+                    display.innerHTML = `
+                        <div class="error">
+                            Error: ${this.error.message}
+                            <br>
+                            <button onclick="refreshMedications()">Try Again</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (this.medications.length === 0) {
+                    display.innerHTML = '<p>No medications found.</p>';
+                    return;
+                }
+
+                display.innerHTML = this.medications.map(med => `
+                    <div class="medication-item">
+                        <h4>${med.name}</h4>
+                        <p>Dosage: ${med.dosage}</p>
+                        <p>Frequency: ${med.frequency}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Create and initialize the component
+        const medicationList = new MedicationList();
+
+        // Function to refresh medications
+        async function refreshMedications() {
+            await medicationList.fetchMedications();
+        }
+
+        // Initial render
+        medicationList.fetchMedications();
+    </script>
+</body>
+</html> 
