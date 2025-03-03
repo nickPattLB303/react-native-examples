@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6 Challenge: Medication Tracker - Complete</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- PropTypes for prop validation -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1, h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-controls button {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .filter-controls button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .medication-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .medication-info {
+            flex: 1;
+        }
+
+        .medication-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .badge-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Import React hooks
+        const { useState, useEffect, useReducer, useMemo, useCallback, useRef } = React;
+        
+        // 1. MEDICATION ITEM COMPONENT
+        // This component renders a single medication item with actions
+        function MedicationItem({ medication, onToggleStatus, onDelete }) {
+            const { id, name, dosage, schedule, taken } = medication;
+            
+            const handleToggle = useCallback(() => {
+                onToggleStatus(id);
+            }, [id, onToggleStatus]);
+            
+            const handleDelete = useCallback(() => {
+                onDelete(id);
+            }, [id, onDelete]);
+            
+            // Determine status badge class
+            const statusBadgeClass = taken 
+                ? "badge badge-success" 
+                : "badge badge-warning";
+            
+            // Determine status text
+            const statusText = taken ? "Taken" : "Pending";
+            
+            return (
+                <div className="medication-item">
+                    <div className="medication-info">
+                        <h3>{name}</h3>
+                        <p>Dosage: {dosage}</p>
+                        <p>Schedule: {schedule}</p>
+                        <span className={statusBadgeClass}>{statusText}</span>
+                    </div>
+                    <div className="medication-actions">
+                        <button 
+                            className={taken ? "btn-secondary" : "btn-success"}
+                            onClick={handleToggle}
+                        >
+                            {taken ? "Mark as Pending" : "Mark as Taken"}
+                        </button>
+                        <button 
+                            className="btn-danger"
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        MedicationItem.propTypes = {
+            medication: PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired,
+                dosage: PropTypes.string.isRequired,
+                schedule: PropTypes.string.isRequired,
+                taken: PropTypes.bool.isRequired
+            }).isRequired,
+            onToggleStatus: PropTypes.func.isRequired,
+            onDelete: PropTypes.func.isRequired
+        };
+        
+        // 2. MEDICATION LIST COMPONENT
+        // This component renders a list of medications
+        function MedicationList({ medications, onToggleStatus, onDelete }) {
+            if (medications.length === 0) {
+                return (
+                    <div className="medication-list">
+                        <h2>Your Medications</h2>
+                        <div className="empty-state">
+                            <p>No medications found. Add some medications to get started!</p>
+                        </div>
+                    </div>
+                );
+            }
+            
+            return (
+                <div className="medication-list">
+                    <h2>Your Medications</h2>
+                    {medications.map(medication => (
+                        <MedicationItem 
+                            key={medication.id}
+                            medication={medication}
+                            onToggleStatus={onToggleStatus}
+                            onDelete={onDelete}
+                        />
+                    ))}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        MedicationList.propTypes = {
+            medications: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                    name: PropTypes.string.isRequired,
+                    dosage: PropTypes.string.isRequired,
+                    schedule: PropTypes.string.isRequired,
+                    taken: PropTypes.bool.isRequired
+                })
+            ).isRequired,
+            onToggleStatus: PropTypes.func.isRequired,
+            onDelete: PropTypes.func.isRequired
+        };
+        
+        // 3. FILTER CONTROLS COMPONENT
+        // This component provides UI to filter medications
+        function FilterControls({ activeFilter, onFilterChange }) {
+            // Define available filters
+            const filters = [
+                { id: 'all', label: 'All' },
+                { id: 'taken', label: 'Taken' },
+                { id: 'pending', label: 'Pending' }
+            ];
+            
+            return (
+                <div className="filter-controls">
+                    {filters.map(filter => (
+                        <button
+                            key={filter.id}
+                            className={activeFilter === filter.id ? 'active' : ''}
+                            onClick={() => onFilterChange(filter.id)}
+                        >
+                            {filter.label}
+                        </button>
+                    ))}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        FilterControls.propTypes = {
+            activeFilter: PropTypes.string.isRequired,
+            onFilterChange: PropTypes.func.isRequired
+        };
+        
+        // 4. ADD MEDICATION FORM COMPONENT
+        // This component provides a form to add new medications
+        function AddMedicationForm({ onAddMedication }) {
+            const [formState, setFormState] = useState({
+                name: '',
+                dosage: '',
+                schedule: 'morning'
+            });
+            
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormState(prevState => ({
+                    ...prevState,
+                    [name]: value
+                }));
+            };
+            
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                
+                // Validate form
+                if (!formState.name || !formState.dosage) {
+                    alert('Please fill out all fields');
+                    return;
+                }
+                
+                // Add medication with unique ID
+                onAddMedication({
+                    id: Date.now().toString(),
+                    ...formState,
+                    taken: false
+                });
+                
+                // Reset form
+                setFormState({
+                    name: '',
+                    dosage: '',
+                    schedule: 'morning'
+                });
+            };
+            
+            return (
+                <div className="card">
+                    <h2>Add New Medication</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="name">Medication Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={formState.name}
+                                onChange={handleChange}
+                                placeholder="Enter medication name"
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="dosage">Dosage</label>
+                            <input
+                                type="text"
+                                id="dosage"
+                                name="dosage"
+                                value={formState.dosage}
+                                onChange={handleChange}
+                                placeholder="Enter dosage (e.g., 10mg)"
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="schedule">Schedule</label>
+                            <select
+                                id="schedule"
+                                name="schedule"
+                                value={formState.schedule}
+                                onChange={handleChange}
+                            >
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                                <option value="bedtime">Bedtime</option>
+                            </select>
+                        </div>
+                        
+                        <div className="form-group">
+                            <button type="submit">Add Medication</button>
+                        </div>
+                    </form>
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        AddMedicationForm.propTypes = {
+            onAddMedication: PropTypes.func.isRequired
+        };
+        
+        // 5. NOTIFICATION COMPONENT
+        // This component displays notifications
+        function Notification({ message, onClose }) {
+            // Close notification after 3 seconds
+            useEffect(() => {
+                const timer = setTimeout(() => {
+                    onClose();
+                }, 3000);
+                
+                return () => clearTimeout(timer);
+            }, [onClose]);
+            
+            return (
+                <div className="notification">
+                    {message}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        Notification.propTypes = {
+            message: PropTypes.string.isRequired,
+            onClose: PropTypes.func.isRequired
+        };
+        
+        // 6. CUSTOM HOOK: useMedicationManager
+        // This custom hook manages medication state and operations
+        function useMedicationManager() {
+            // Define medication reducer
+            const medicationReducer = (state, action) => {
+                switch (action.type) {
+                    case 'ADD_MEDICATION':
+                        return [...state, action.payload];
+                    case 'TOGGLE_STATUS':
+                        return state.map(med => 
+                            med.id === action.payload
+                                ? { ...med, taken: !med.taken }
+                                : med
+                        );
+                    case 'DELETE_MEDICATION':
+                        return state.filter(med => med.id !== action.payload);
+                    case 'SET_MEDICATIONS':
+                        return action.payload;
+                    default:
+                        return state;
+                }
+            };
+            
+            // Initialize medications from localStorage or empty array
+            const [medications, dispatch] = useReducer(medicationReducer, [], () => {
+                try {
+                    const storedMedications = localStorage.getItem('medications');
+                    return storedMedications ? JSON.parse(storedMedications) : [];
+                } catch (error) {
+                    console.error('Error loading medications from localStorage:', error);
+                    return [];
+                }
+            });
+            
+            // Track due medication notifications
+            const [dueMedications, setDueMedications] = useState([]);
+            
+            // Persist medications to localStorage
+            useEffect(() => {
+                localStorage.setItem('medications', JSON.stringify(medications));
+            }, [medications]);
+            
+            // Check for due medications based on schedule
+            useEffect(() => {
+                // Function to determine if a medication is due based on time of day
+                const checkDueMedications = () => {
+                    const now = new Date();
+                    const hour = now.getHours();
+                    
+                    // Define time ranges for schedules
+                    const scheduleMap = {
+                        morning: hour >= 6 && hour < 12,
+                        afternoon: hour >= 12 && hour < 18,
+                        evening: hour >= 18 && hour < 22,
+                        bedtime: hour >= 22 || hour < 6
+                    };
+                    
+                    // Find medications that are due and not taken
+                    const due = medications.filter(
+                        med => !med.taken && scheduleMap[med.schedule]
+                    );
+                    
+                    setDueMedications(due);
+                };
+                
+                // Check immediately
+                checkDueMedications();
+                
+                // Then check every 30 minutes
+                const intervalId = setInterval(checkDueMedications, 30 * 60 * 1000);
+                
+                return () => clearInterval(intervalId);
+            }, [medications]);
+            
+            // Memoized functions
+            const addMedication = useCallback((medication) => {
+                dispatch({ type: 'ADD_MEDICATION', payload: medication });
+            }, []);
+            
+            const toggleMedicationStatus = useCallback((id) => {
+                dispatch({ type: 'TOGGLE_STATUS', payload: id });
+            }, []);
+            
+            const deleteMedication = useCallback((id) => {
+                dispatch({ type: 'DELETE_MEDICATION', payload: id });
+            }, []);
+            
+            return {
+                medications,
+                dueMedications,
+                addMedication,
+                toggleMedicationStatus,
+                deleteMedication
+            };
+        }
+        
+        // 7. MAIN MEDICATION TRACKER COMPONENT
+        // This is the main component that composes all other components
+        function MedicationTracker() {
+            // Use the custom hook to manage medications
+            const {
+                medications,
+                dueMedications,
+                addMedication,
+                toggleMedicationStatus,
+                deleteMedication
+            } = useMedicationManager();
+            
+            // State for filter
+            const [activeFilter, setActiveFilter] = useState('all');
+            
+            // State for notifications
+            const [notification, setNotification] = useState(null);
+            
+            // Show notification for due medications
+            useEffect(() => {
+                if (dueMedications.length > 0) {
+                    const medicationNames = dueMedications
+                        .map(med => med.name)
+                        .join(', ');
+                    
+                    setNotification(`Time to take: ${medicationNames}`);
+                }
+            }, [dueMedications]);
+            
+            // Handle notification close
+            const handleCloseNotification = useCallback(() => {
+                setNotification(null);
+            }, []);
+            
+            // Filter medications based on active filter
+            const filteredMedications = useMemo(() => {
+                switch (activeFilter) {
+                    case 'taken':
+                        return medications.filter(med => med.taken);
+                    case 'pending':
+                        return medications.filter(med => !med.taken);
+                    default:
+                        return medications;
+                }
+            }, [medications, activeFilter]);
+            
+            // Handler for adding a medication
+            const handleAddMedication = useCallback((newMedication) => {
+                addMedication(newMedication);
+                setNotification(`Added ${newMedication.name} to your medications`);
+            }, [addMedication]);
+            
+            // Handler for toggling medication status
+            const handleToggleStatus = useCallback((id) => {
+                toggleMedicationStatus(id);
+                const medication = medications.find(med => med.id === id);
+                if (medication) {
+                    const action = medication.taken ? 'marked as pending' : 'marked as taken';
+                    setNotification(`${medication.name} ${action}`);
+                }
+            }, [medications, toggleMedicationStatus]);
+            
+            // Handler for deleting a medication
+            const handleDelete = useCallback((id) => {
+                const medication = medications.find(med => med.id === id);
+                if (medication) {
+                    deleteMedication(id);
+                    setNotification(`${medication.name} removed from your medications`);
+                }
+            }, [medications, deleteMedication]);
+            
+            return (
+                <div className="container">
+                    <h1>Medication Tracker</h1>
+                    
+                    <div className="instructions">
+                        <h3>Module 6 Challenge: Medication Tracker - Complete Solution</h3>
+                        <p>This is a fully functional medication tracker that implements:</p>
+                        <ul>
+                            <li>Component composition with props</li>
+                            <li>State management with hooks including useReducer</li>
+                            <li>Side effects for persistence and notifications</li>
+                            <li>Performance optimization with useCallback and useMemo</li>
+                            <li>A custom hook for medication management</li>
+                        </ul>
+                    </div>
+                    
+                    <AddMedicationForm onAddMedication={handleAddMedication} />
+                    
+                    <FilterControls 
+                        activeFilter={activeFilter}
+                        onFilterChange={setActiveFilter}
+                    />
+                    
+                    <MedicationList 
+                        medications={filteredMedications}
+                        onToggleStatus={handleToggleStatus}
+                        onDelete={handleDelete}
+                    />
+                    
+                    {notification && (
+                        <Notification 
+                            message={notification}
+                            onClose={handleCloseNotification}
+                        />
+                    )}
+                </div>
+            );
+        }
+        
+        // Render the main component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<MedicationTracker />);
+    </script>
+</body>
+</html> 

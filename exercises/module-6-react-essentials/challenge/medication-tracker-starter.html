@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6 Challenge: Medication Tracker - Starter</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- PropTypes for prop validation -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1, h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-controls button {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .filter-controls button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .medication-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .medication-info {
+            flex: 1;
+        }
+
+        .medication-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .badge-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Import React hooks
+        const { useState, useEffect, useReducer, useMemo, useCallback, useRef } = React;
+        
+        // 1. MEDICATION ITEM COMPONENT
+        // This component renders a single medication item with actions
+        function MedicationItem({ /* TODO: Add props */ }) {
+            // TODO: Implement component logic
+            
+            return (
+                <div className="medication-item">
+                    {/* TODO: Display medication information and action buttons */}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        MedicationItem.propTypes = {
+            // TODO: Add prop types
+        };
+        
+        // 2. MEDICATION LIST COMPONENT
+        // This component renders a list of medications
+        function MedicationList({ /* TODO: Add props */ }) {
+            // TODO: Implement component logic
+            
+            return (
+                <div className="medication-list">
+                    <h2>Your Medications</h2>
+                    {/* TODO: Map through medications and render MedicationItem components */}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        MedicationList.propTypes = {
+            // TODO: Add prop types
+        };
+        
+        // 3. FILTER CONTROLS COMPONENT
+        // This component provides UI to filter medications
+        function FilterControls({ /* TODO: Add props */ }) {
+            // TODO: Implement component logic
+            
+            return (
+                <div className="filter-controls">
+                    {/* TODO: Implement filter buttons */}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        FilterControls.propTypes = {
+            // TODO: Add prop types
+        };
+        
+        // 4. ADD MEDICATION FORM COMPONENT
+        // This component provides a form to add new medications
+        function AddMedicationForm({ /* TODO: Add props */ }) {
+            // TODO: Implement form state and handlers
+            
+            return (
+                <div className="card">
+                    <h2>Add New Medication</h2>
+                    <form /* TODO: Add form submission handler */>
+                        {/* TODO: Implement form fields for name, dosage, and schedule */}
+                        <div className="form-group">
+                            <button type="submit">Add Medication</button>
+                        </div>
+                    </form>
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        AddMedicationForm.propTypes = {
+            // TODO: Add prop types
+        };
+        
+        // 5. NOTIFICATION COMPONENT
+        // This component displays notifications
+        function Notification({ message, onClose }) {
+            // Close notification after 3 seconds
+            useEffect(() => {
+                const timer = setTimeout(() => {
+                    onClose();
+                }, 3000);
+                
+                return () => clearTimeout(timer);
+            }, [onClose]);
+            
+            return (
+                <div className="notification">
+                    {message}
+                </div>
+            );
+        }
+        
+        // Add prop validation
+        Notification.propTypes = {
+            message: PropTypes.string.isRequired,
+            onClose: PropTypes.func.isRequired
+        };
+        
+        // 6. CUSTOM HOOK: useMedicationManager
+        // This custom hook manages medication state and operations
+        function useMedicationManager() {
+            // TODO: Implement state for medications
+            
+            // TODO: Implement functions to add, toggle, and delete medications
+            
+            // TODO: Implement persistence with useEffect
+            
+            // TODO: Implement notification system for due medications
+            
+            return {
+                // TODO: Return medications and functions
+            };
+        }
+        
+        // 7. MAIN MEDICATION TRACKER COMPONENT
+        // This is the main component that composes all other components
+        function MedicationTracker() {
+            // TODO: Use the custom hook to manage medications
+            
+            // TODO: Implement state for filter
+            
+            // TODO: Implement notifications state
+            
+            // TODO: Implement filtered medications with useMemo
+            
+            return (
+                <div className="container">
+                    <h1>Medication Tracker</h1>
+                    
+                    <div className="instructions">
+                        <h3>Module 6 Challenge: Medication Tracker</h3>
+                        <p>Implement the components in this challenge to create a fully functional medication tracker.</p>
+                        <p>Requirements:</p>
+                        <ul>
+                            <li>Component composition with props</li>
+                            <li>State management with hooks</li>
+                            <li>Side effects for persistence and notifications</li>
+                            <li>Performance optimization</li>
+                            <li>A custom hook for medication management</li>
+                        </ul>
+                    </div>
+                    
+                    {/* TODO: Render AddMedicationForm component */}
+                    
+                    {/* TODO: Render FilterControls component */}
+                    
+                    {/* TODO: Render MedicationList component */}
+                    
+                    {/* TODO: Render Notification component when needed */}
+                </div>
+            );
+        }
+        
+        // Render the main component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<MedicationTracker />);
+    </script>
+</body>
+</html> 
