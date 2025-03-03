@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Tracker with State - Starter</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1, h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .medication-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0069d9;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-controls button {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .filter-controls button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .medication-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .medication-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .medication-item p {
+            margin: 5px 0;
+        }
+
+        .medication-item .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .status-active {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-inactive {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Import React hooks
+        const { useState, useReducer } = React;
+        
+        // 1. MEDICATION FORM COMPONENT
+        // Create a form component to add new medications
+        function MedicationForm({ /* Your props here */ }) {
+            // Implement state for form inputs
+            
+            // Handle input changes
+            
+            // Handle form submission
+            
+            return (
+                <div className="medication-form">
+                    <h2>Add New Medication</h2>
+                    {/* Implement form here */}
+                </div>
+            );
+        }
+        
+        // 2. MEDICATION ITEM COMPONENT
+        // Create a component to display a single medication with actions
+        function MedicationItem({ /* Your props here */ }) {
+            // Render a medication with toggle status and delete actions
+            
+            return (
+                <div className="medication-item">
+                    {/* Implement medication item here */}
+                </div>
+            );
+        }
+        
+        // 3. FILTER CONTROLS COMPONENT
+        // Create filter controls to show active, taken, or all medications
+        function FilterControls({ /* Your props here */ }) {
+            // Implement filter buttons for all, active, and taken medications
+            
+            return (
+                <div className="filter-controls">
+                    {/* Implement filter controls here */}
+                </div>
+            );
+        }
+        
+        // 4. MEDICATION TRACKER COMPONENT (Main Component)
+        // Implement the main component that manages medication state
+        function MedicationTracker() {
+            // Implement state for medications and filter
+            
+            // Implement functions to:
+            // - Add a new medication
+            // - Toggle a medication's status
+            // - Delete a medication
+            // - Filter medications
+            
+            return (
+                <div className="container">
+                    <h1>Medication Tracker</h1>
+                    
+                    <div className="instructions">
+                        <h3>Exercise: Medication Tracker with State</h3>
+                        <p>Implement the components in this file to create a medication tracker.</p>
+                        <p>Focus on proper state management using hooks like useState and useReducer.</p>
+                    </div>
+                    
+                    {/* Add MedicationForm component here */}
+                    
+                    {/* Add FilterControls component here */}
+                    
+                    <h2>Your Medications</h2>
+                    <div className="medication-list">
+                        {/* Display "No medications found" message or render MedicationItem components */}
+                        <p>No medications found.</p>
+                    </div>
+                </div>
+            );
+        }
+        
+        // 5. BONUS: MEDICATION TRACKER WITH REDUCER
+        // Implement a version of MedicationTracker using useReducer
+        function medicationsReducer(state, action) {
+            // Implement reducer for medication state management
+            
+            switch (action.type) {
+                // Handle different action types:
+                // - ADD_MEDICATION
+                // - TOGGLE_STATUS
+                // - DELETE_MEDICATION
+                // - SET_FILTER
+                
+                default:
+                    return state;
+            }
+        }
+        
+        function MedicationTrackerWithReducer() {
+            // Implement using useReducer instead of useState
+            
+            return (
+                <div className="container">
+                    <h1>Medication Tracker (with useReducer)</h1>
+                    {/* Similar implementation as MedicationTracker but using useReducer */}
+                </div>
+            );
+        }
+        
+        // Render one of the components - comment/uncomment to switch between them
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<MedicationTracker />);
+        // root.render(<MedicationTrackerWithReducer />);
+    </script>
+</body>
+</html> 

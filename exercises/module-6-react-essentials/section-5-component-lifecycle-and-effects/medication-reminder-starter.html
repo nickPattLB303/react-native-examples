@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Reminder with Effects - Starter</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1, h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reminder-settings {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+        }
+
+        .setting-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .setting-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .setting-group input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .medication-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .medication-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .medication-item p {
+            margin: 5px 0;
+        }
+        
+        .next-dose {
+            font-weight: bold;
+        }
+        
+        .next-dose-soon {
+            color: #dc3545;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .logs {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Import React hooks
+        const { useState, useEffect, useRef, useCallback } = React;
+        
+        // Helper function to format dates
+        function formatNextDose(dateString) {
+            if (!dateString) return 'Not scheduled';
+            
+            const date = new Date(dateString);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // 1. MEDICATION REMINDER COMPONENT
+        function MedicationReminder() {
+            // Set up state for medications and settings
+            const [medications, setMedications] = useState([]);
+            const [isLoading, setIsLoading] = useState(true);
+            const [error, setError] = useState(null);
+            const [remindersEnabled, setRemindersEnabled] = useState(true);
+            const [reminderInterval, setReminderInterval] = useState(30); // minutes
+            const [logs, setLogs] = useState([]);
+            
+            // Add log entry helper
+            const addLog = (message) => {
+                const timestamp = new Date().toLocaleTimeString();
+                setLogs(prevLogs => [`[${timestamp}] ${message}`, ...prevLogs.slice(0, 19)]);
+            };
+            
+            // 2. IMPLEMENT DATA FETCHING WITH USEEFFECT
+            // Simulate an API fetch to get medication data
+            const fetchMedications = async () => {
+                // This would be an API call in a real app
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve([
+                            {
+                                id: '1',
+                                name: 'Lisinopril',
+                                dosage: '10mg',
+                                schedule: 'Daily',
+                                nextDose: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
+                            },
+                            {
+                                id: '2',
+                                name: 'Metformin',
+                                dosage: '500mg',
+                                schedule: 'Twice daily',
+                                nextDose: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(), // 5 hours from now
+                            },
+                            {
+                                id: '3',
+                                name: 'Aspirin',
+                                dosage: '81mg',
+                                schedule: 'Daily',
+                                nextDose: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
+                            }
+                        ]);
+                    }, 1000); // Simulate network delay
+                });
+            };
+            
+            // TODO: Implement useEffect for data fetching
+            // - Should load medications when component mounts
+            // - Should handle loading state and errors
+            // - Should clean up if component unmounts during fetch
+            
+            
+            // 3. IMPLEMENT REMINDER TIMER WITH USEEFFECT
+            // TODO: Implement useEffect for medication reminders
+            // - Should check medications at regular intervals based on reminderInterval
+            // - Should show alerts for medications that are due
+            // - Should clean up the interval when component unmounts or settings change
+            
+            
+            // 4. IMPLEMENT DATA PERSISTENCE WITH USEEFFECT
+            // TODO: Implement useEffect for persisting settings to localStorage
+            // - Should save reminderInterval and remindersEnabled to localStorage when they change
+            // - Should load settings from localStorage when component mounts
+            
+            
+            // 5. IMPLEMENT A CUSTOM HOOK (Optional)
+            // TODO: Extract some of the logic above into a custom hook
+            // For example, create a useLocalStorage hook or useReminderTimer hook
+            
+            
+            return (
+                <div className="container">
+                    <h1>Medication Reminders</h1>
+                    
+                    <div className="instructions">
+                        <h3>Exercise: Medication Reminder with Effects</h3>
+                        <p>Implement the useEffect hooks in this component to:</p>
+                        <ol>
+                            <li>Fetch medication data when the component mounts</li>
+                            <li>Set up a timer to check for due medications based on the interval</li>
+                            <li>Save and load reminder settings from localStorage</li>
+                            <li>Add proper cleanup for all effects</li>
+                        </ol>
+                    </div>
+                    
+                    {/* Settings section */}
+                    <div className="reminder-settings">
+                        <h2>Reminder Settings</h2>
+                        <div className="setting-group">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={remindersEnabled}
+                                    onChange={(e) => setRemindersEnabled(e.target.checked)}
+                                />
+                                Enable Reminders
+                            </label>
+                        </div>
+                        <div className="setting-group">
+                            <label>
+                                Check Interval:
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="60"
+                                    value={reminderInterval}
+                                    onChange={(e) => setReminderInterval(Number(e.target.value))}
+                                />
+                                minutes
+                            </label>
+                        </div>
+                    </div>
+                    
+                    {/* Loading and error states */}
+                    {isLoading && <p>Loading medications...</p>}
+                    {error && <p className="error">Error: {error}</p>}
+                    
+                    {/* Medications list */}
+                    <div className="medications-list">
+                        <h2>Your Medications</h2>
+                        {medications.length === 0 && !isLoading ? (
+                            <p>No medications scheduled.</p>
+                        ) : (
+                            medications.map(med => {
+                                const nextDose = new Date(med.nextDose);
+                                const isComingSoon = nextDose - new Date() < 60 * 60 * 1000; // Less than 1 hour
+                                
+                                return (
+                                    <div key={med.id} className="medication-item">
+                                        <h3>{med.name}</h3>
+                                        <p>Dosage: {med.dosage}</p>
+                                        <p>Schedule: {med.schedule}</p>
+                                        <p className={`next-dose ${isComingSoon ? 'next-dose-soon' : ''}`}>
+                                            Next dose: {formatNextDose(med.nextDose)}
+                                            {isComingSoon && ' (Coming soon!)'}
+                                        </p>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                    
+                    {/* Activity log */}
+                    <div className="logs">
+                        <h3>Activity Log</h3>
+                        {logs.length === 0 ? (
+                            <p>No activity yet.</p>
+                        ) : (
+                            logs.map((log, index) => (
+                                <div key={index} className="log-entry">{log}</div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        // Render the component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<MedicationReminder />);
+    </script>
+</body>
+</html> 

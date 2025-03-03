@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Reminder with Effects - Complete</title>
+    <!-- React and ReactDOM development scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            margin-top: 30px;
+        }
+        
+        h1, h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reminder-settings {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+        }
+
+        .setting-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .setting-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .setting-group input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .medication-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .medication-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .medication-item p {
+            margin: 5px 0;
+        }
+        
+        .next-dose {
+            font-weight: bold;
+        }
+        
+        .next-dose-soon {
+            color: #dc3545;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .logs {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Import React hooks
+        const { useState, useEffect, useRef, useCallback, useMemo } = React;
+        
+        // Helper function to format dates
+        function formatNextDose(dateString) {
+            if (!dateString) return 'Not scheduled';
+            
+            const date = new Date(dateString);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // CUSTOM HOOK: useLocalStorage
+        function useLocalStorage(key, initialValue) {
+            // State to store our value
+            const [storedValue, setStoredValue] = useState(() => {
+                try {
+                    // Get from local storage by key
+                    const item = window.localStorage.getItem(key);
+                    // Parse stored json or if none return initialValue
+                    return item ? JSON.parse(item) : initialValue;
+                } catch (error) {
+                    // If error also return initialValue
+                    console.error(`Error reading localStorage key "${key}":`, error);
+                    return initialValue;
+                }
+            });
+            
+            // Return a wrapped version of useState's setter function that
+            // persists the new value to localStorage
+            const setValue = (value) => {
+                try {
+                    // Allow value to be a function so we have same API as useState
+                    const valueToStore = value instanceof Function ? value(storedValue) : value;
+                    
+                    // Save state
+                    setStoredValue(valueToStore);
+                    
+                    // Save to local storage
+                    window.localStorage.setItem(key, JSON.stringify(valueToStore));
+                } catch (error) {
+                    // A more advanced implementation would handle the error case
+                    console.error(`Error setting localStorage key "${key}":`, error);
+                }
+            };
+            
+            return [storedValue, setValue];
+        }
+        
+        // CUSTOM HOOK: useReminderCheck
+        function useReminderCheck(medications, enabled, intervalMinutes, onReminder) {
+            useEffect(() => {
+                // Skip if reminders are disabled or no medications
+                if (!enabled || medications.length === 0) {
+                    return;
+                }
+                
+                const checkMedications = () => {
+                    const now = new Date();
+                    
+                    // Check each medication
+                    medications.forEach(med => {
+                        const nextDose = new Date(med.nextDose);
+                        
+                        // If the next dose is due (or overdue), trigger the reminder callback
+                        if (nextDose <= now) {
+                            onReminder(med);
+                        }
+                    });
+                };
+                
+                // Initial check
+                checkMedications();
+                
+                // Set up the interval
+                const intervalId = setInterval(checkMedications, intervalMinutes * 60 * 1000);
+                
+                // Cleanup function
+                return () => {
+                    clearInterval(intervalId);
+                };
+            }, [medications, enabled, intervalMinutes, onReminder]);
+        }
+        
+        // MAIN COMPONENT
+        function MedicationReminder() {
+            // Set up state for medications and settings
+            const [medications, setMedications] = useState([]);
+            const [isLoading, setIsLoading] = useState(true);
+            const [error, setError] = useState(null);
+            
+            // Use our custom hook for persisted state
+            const [remindersEnabled, setRemindersEnabled] = useLocalStorage('remindersEnabled', true);
+            const [reminderInterval, setReminderInterval] = useLocalStorage('reminderInterval', 30);
+            
+            // Ref for tracking if component is mounted
+            const isMounted = useRef(true);
+            
+            // Activity logs
+            const [logs, setLogs] = useState([]);
+            
+            // Add log entry helper
+            const addLog = useCallback((message) => {
+                const timestamp = new Date().toLocaleTimeString();
+                setLogs(prevLogs => [`[${timestamp}] ${message}`, ...prevLogs.slice(0, 19)]);
+            }, []);
+            
+            // Handle reminder callback (memoized to prevent unnecessary effect triggers)
+            const handleReminder = useCallback((medication) => {
+                addLog(`REMINDER: Time to take ${medication.name} (${medication.dosage})`);
+                alert(`Time to take your ${medication.name} (${medication.dosage})!`);
+                
+                // In a real app, we would update the medication's next dose time here
+                // and probably send the update to a server
+            }, [addLog]);
+            
+            // 1. DATA FETCHING EFFECT
+            // Simulate an API fetch to get medication data
+            const fetchMedications = async () => {
+                // This would be an API call in a real app
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        // Randomly fail 10% of the time to show error handling
+                        if (Math.random() < 0.1) {
+                            reject(new Error('Failed to connect to server'));
+                            return;
+                        }
+                        
+                        resolve([
+                            {
+                                id: '1',
+                                name: 'Lisinopril',
+                                dosage: '10mg',
+                                schedule: 'Daily',
+                                nextDose: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
+                            },
+                            {
+                                id: '2',
+                                name: 'Metformin',
+                                dosage: '500mg',
+                                schedule: 'Twice daily',
+                                nextDose: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(), // 5 hours from now
+                            },
+                            {
+                                id: '3',
+                                name: 'Aspirin',
+                                dosage: '81mg',
+                                schedule: 'Daily',
+                                nextDose: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
+                            }
+                        ]);
+                    }, 1000); // Simulate network delay
+                });
+            };
+            
+            // Data fetching effect
+            useEffect(() => {
+                // Track if component is mounted
+                isMounted.current = true;
+                
+                const loadMedications = async () => {
+                    try {
+                        setIsLoading(true);
+                        setError(null);
+                        addLog('Fetching medication data...');
+                        
+                        const data = await fetchMedications();
+                        
+                        // Only update state if component is still mounted
+                        if (isMounted.current) {
+                            setMedications(data);
+                            setIsLoading(false);
+                            addLog(`Loaded ${data.length} medications successfully`);
+                        }
+                    } catch (err) {
+                        if (isMounted.current) {
+                            setError(err.message || 'Failed to fetch medications');
+                            setIsLoading(false);
+                            addLog(`Error: ${err.message}`);
+                        }
+                    }
+                };
+                
+                loadMedications();
+                
+                // Cleanup function - runs when component unmounts
+                return () => {
+                    isMounted.current = false;
+                    addLog('Component unmounting, cleaning up fetch effect');
+                };
+            }, []); // Empty dependency array -> run only on mount
+            
+            // 2. USE OUR CUSTOM HOOK FOR REMINDER CHECKS
+            useReminderCheck(medications, remindersEnabled, reminderInterval, handleReminder);
+            
+            // 3. EFFECT FOR APP STATE MONITORING
+            // For browser, we can use visibility change instead of AppState from React Native
+            useEffect(() => {
+                const handleVisibilityChange = () => {
+                    const isVisible = document.visibilityState === 'visible';
+                    addLog(`App visibility changed: ${isVisible ? 'Visible' : 'Hidden'}`);
+                    
+                    // Pause reminders when app is not visible
+                    if (!isVisible) {
+                        // Store previous state to restore later
+                        // In a real app, we might use a ref or another state variable
+                        window.previousRemindersEnabled = remindersEnabled;
+                        setRemindersEnabled(false);
+                        addLog('App hidden - pausing reminders');
+                    } else if (window.previousRemindersEnabled) {
+                        // Restore previous state
+                        setRemindersEnabled(window.previousRemindersEnabled);
+                        addLog('App visible again - resuming reminders');
+                    }
+                };
+                
+                // Add event listener
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                
+                // Cleanup function
+                return () => {
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                };
+            }, [remindersEnabled, addLog, setRemindersEnabled]);
+            
+            // Calculate medication statistics (with useMemo for performance)
+            const stats = useMemo(() => {
+                if (medications.length === 0) {
+                    return {
+                        total: 0,
+                        comingSoon: 0,
+                        later: 0
+                    };
+                }
+                
+                const now = new Date();
+                let comingSoon = 0;
+                
+                medications.forEach(med => {
+                    const nextDose = new Date(med.nextDose);
+                    if (nextDose - now < 60 * 60 * 1000) { // Less than 1 hour
+                        comingSoon++;
+                    }
+                });
+                
+                return {
+                    total: medications.length,
+                    comingSoon,
+                    later: medications.length - comingSoon
+                };
+            }, [medications]);
+            
+            return (
+                <div className="container">
+                    <h1>Medication Reminders</h1>
+                    
+                    <div className="instructions">
+                        <h3>Exercise: Medication Reminder with Effects (Completed)</h3>
+                        <p>This application demonstrates the use of useEffect and custom hooks:</p>
+                        <ul>
+                            <li>Data fetching with proper cleanup</li>
+                            <li>Timer-based reminders using intervals</li>
+                            <li>Local storage persistence with a custom hook</li>
+                            <li>App state/visibility monitoring</li>
+                            <li>Performance optimization with useCallback and useMemo</li>
+                        </ul>
+                    </div>
+                    
+                    {/* Stats badges */}
+                    <div style={{ marginBottom: '20px' }}>
+                        <span className="badge badge-secondary">Total: {stats.total}</span>
+                        {stats.comingSoon > 0 && (
+                            <span className="badge badge-warning">Due soon: {stats.comingSoon}</span>
+                        )}
+                        <span className="badge badge-success">Status: {remindersEnabled ? 'Active' : 'Paused'}</span>
+                    </div>
+                    
+                    {/* Settings section */}
+                    <div className="reminder-settings">
+                        <h2>Reminder Settings</h2>
+                        <div className="setting-group">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={remindersEnabled}
+                                    onChange={(e) => {
+                                        setRemindersEnabled(e.target.checked);
+                                        addLog(`Reminders ${e.target.checked ? 'enabled' : 'disabled'}`);
+                                    }}
+                                />
+                                Enable Reminders
+                            </label>
+                        </div>
+                        <div className="setting-group">
+                            <label>
+                                Check Interval:
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="60"
+                                    value={reminderInterval}
+                                    onChange={(e) => {
+                                        const newInterval = Number(e.target.value);
+                                        setReminderInterval(newInterval);
+                                        addLog(`Reminder interval set to ${newInterval} minutes`);
+                                    }}
+                                />
+                                minutes
+                            </label>
+                        </div>
+                        <p>
+                            <small>
+                                <i>Settings are automatically saved to localStorage</i>
+                            </small>
+                        </p>
+                    </div>
+                    
+                    {/* Loading and error states */}
+                    {isLoading && <p>Loading medications...</p>}
+                    {error && <p className="error">Error: {error}</p>}
+                    
+                    {/* Medications list */}
+                    <div className="medications-list">
+                        <h2>Your Medications</h2>
+                        {medications.length === 0 && !isLoading ? (
+                            <p>No medications scheduled.</p>
+                        ) : (
+                            medications.map(med => {
+                                const nextDose = new Date(med.nextDose);
+                                const isComingSoon = nextDose - new Date() < 60 * 60 * 1000; // Less than 1 hour
+                                
+                                return (
+                                    <div key={med.id} className="medication-item">
+                                        <h3>{med.name}</h3>
+                                        <p>Dosage: {med.dosage}</p>
+                                        <p>Schedule: {med.schedule}</p>
+                                        <p className={`next-dose ${isComingSoon ? 'next-dose-soon' : ''}`}>
+                                            Next dose: {formatNextDose(med.nextDose)}
+                                            {isComingSoon && ' (Coming soon!)'}
+                                        </p>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                    
+                    {/* Activity log */}
+                    <div className="logs">
+                        <h3>Activity Log</h3>
+                        {logs.length === 0 ? (
+                            <p>No activity yet.</p>
+                        ) : (
+                            logs.map((log, index) => (
+                                <div key={index} className="log-entry">{log}</div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        // Render the component
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<MedicationReminder />);
+    </script>
+</body>
+</html> 
