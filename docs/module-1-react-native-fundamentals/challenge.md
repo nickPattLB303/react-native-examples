@@ -26,7 +26,6 @@ Create a comparison table evaluating how this app could be built using:
 - Native iOS (Swift/UIKit)
 - Native Android (Kotlin/Jetpack Compose)
 - React Native
-- Flutter
 - Progressive Web App (PWA)
 
 For each approach, consider:

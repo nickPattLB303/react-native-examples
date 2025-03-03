@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Card Exercise - Complete</title>
+</head>
+<body>
+    <!-- Example of a completed medication card using semantic HTML -->
+    <article class="medication-card">
+        <header class="medication-card__header">
+            <h2 class="medication-name">Amoxicillin</h2>
+            <span class="medication-status" aria-label="Active prescription">Active</span>
+        </header>
+
+        <div class="medication-card__content">
+            <section class="medication-details">
+                <h3 class="visually-hidden">Medication Details</h3>
+                
+                <dl>
+                    <dt>Dosage</dt>
+                    <dd>500mg capsules</dd>
+                    
+                    <dt>Schedule</dt>
+                    <dd>Take 1 capsule 3 times daily</dd>
+                    
+                    <dt>Duration</dt>
+                    <dd>10 days</dd>
+                </dl>
+            </section>
+
+            <section class="medication-notes">
+                <h3>Important Notes</h3>
+                <ul>
+                    <li>Take with food</li>
+                    <li>Complete entire prescription</li>
+                    <li>Store at room temperature</li>
+                </ul>
+            </section>
+        </div>
+
+        <footer class="medication-card__footer">
+            <p class="refill-info">
+                Refills remaining: <strong>2</strong>
+            </p>
+            <button type="button" class="refill-button" aria-label="Request refill for Amoxicillin">
+                Request Refill
+            </button>
+        </footer>
+    </article>
+
+    <!-- React Native Component Mapping Comments -->
+    <!--
+    React Native Component Structure:
+
+    <View style={styles.medicationCard}>
+        <View style={styles.header}>
+            <Text style={styles.medicationName}>Amoxicillin</Text>
+            <Text style={styles.status}>Active</Text>
+        </View>
+
+        <View style={styles.content}>
+            <View style={styles.details}>
+                <View style={styles.detailRow}>
+                    <Text style={styles.label}>Dosage</Text>
+                    <Text style={styles.value}>500mg capsules</Text>
+                </View>
+                {/* ... other detail rows ... */}
+            </View>
+
+            <View style={styles.notes}>
+                <Text style={styles.notesTitle}>Important Notes</Text>
+                <FlatList
+                    data={notes}
+                    renderItem={({ item }) => (
+                        <Text style={styles.noteItem}>{item}</Text>
+                    )}
+                />
+            </View>
+        </View>
+
+        <View style={styles.footer}>
+            <Text style={styles.refillInfo}>
+                Refills remaining: <Text style={styles.strong}>2</Text>
+            </Text>
+            <TouchableOpacity
+                style={styles.refillButton}
+                onPress={handleRefillRequest}
+            >
+                <Text style={styles.buttonText}>Request Refill</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
+    -->
+</body>
+</html> 
