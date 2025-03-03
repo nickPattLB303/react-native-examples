@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Card CSS Exercise - Complete</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            /* Color palette */
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --danger-color: #ea4335;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --background-light: #f5f5f5;
+            --border-color: #dddddd;
+            
+            /* Spacing units */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            
+            /* Typography */
+            --font-family: 'Arial', sans-serif;
+            --font-size-sm: 14px;
+            --font-size-md: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+        }
+
+        /* Base styles */
+        body {
+            font-family: var(--font-family);
+            line-height: 1.5;
+            color: var(--text-primary);
+            background-color: #ffffff;
+            margin: 0;
+            padding: var(--spacing-md);
+        }
+
+        /* Card container */
+        .medication-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Header styles */
+        .medication-card__header {
+            background-color: var(--background-light);
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .medication-name {
+            margin: 0;
+            font-size: var(--font-size-xl);
+            color: var(--primary-color);
+        }
+
+        .medication-status {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 4px;
+            font-size: var(--font-size-sm);
+        }
+
+        /* Content styles */
+        .medication-card__content {
+            padding: var(--spacing-md);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Details list styles */
+        dl {
+            margin: 0;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--spacing-sm) var(--spacing-md);
+        }
+
+        dt {
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
+        dd {
+            margin: 0;
+        }
+
+        /* Notes section styles */
+        .medication-notes {
+            margin-top: var(--spacing-lg);
+        }
+
+        .medication-notes h3 {
+            color: var(--text-secondary);
+            font-size: var(--font-size-lg);
+            margin: 0 0 var(--spacing-sm);
+        }
+
+        .medication-notes ul {
+            margin: 0;
+            padding-left: var(--spacing-lg);
+        }
+
+        .medication-notes li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Footer styles */
+        .medication-card__footer {
+            background-color: var(--background-light);
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .refill-info {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .refill-info strong {
+            color: var(--text-primary);
+        }
+
+        /* Button styles */
+        .refill-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: var(--font-size-md);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .refill-button:hover {
+            background-color: #3367d6;
+        }
+
+        .refill-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (min-width: 768px) {
+            body {
+                padding: var(--spacing-lg);
+            }
+
+            .medication-card {
+                margin: var(--spacing-lg) auto;
+            }
+
+            dl {
+                grid-template-columns: 120px 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .medication-card {
+                max-width: 800px;
+            }
+
+            .medication-card__content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .medication-notes {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="medication-card">
+        <header class="medication-card__header">
+            <h2 class="medication-name">Amoxicillin</h2>
+            <span class="medication-status" aria-label="Active prescription">Active</span>
+        </header>
+
+        <div class="medication-card__content">
+            <section class="medication-details">
+                <h3 class="visually-hidden">Medication Details</h3>
+                
+                <dl>
+                    <dt>Dosage</dt>
+                    <dd>500mg capsules</dd>
+                    
+                    <dt>Schedule</dt>
+                    <dd>Take 1 capsule 3 times daily</dd>
+                    
+                    <dt>Duration</dt>
+                    <dd>10 days</dd>
+                </dl>
+            </section>
+
+            <section class="medication-notes">
+                <h3>Important Notes</h3>
+                <ul>
+                    <li>Take with food</li>
+                    <li>Complete entire prescription</li>
+                    <li>Store at room temperature</li>
+                </ul>
+            </section>
+        </div>
+
+        <footer class="medication-card__footer">
+            <p class="refill-info">
+                Refills remaining: <strong>2</strong>
+            </p>
+            <button type="button" class="refill-button" aria-label="Request refill for Amoxicillin">
+                Request Refill
+            </button>
+        </footer>
+    </article>
+
+    <!-- React Native StyleSheet equivalent -->
+    <!--
+    const styles = StyleSheet.create({
+        medicationCard: {
+            backgroundColor: '#ffffff',
+            borderWidth: 1,
+            borderColor: '#dddddd',
+            borderRadius: 8,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 2,
+            maxWidth: 600,
+            overflow: 'hidden',
+        },
+        header: {
+            backgroundColor: '#f5f5f5',
+            padding: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderBottomColor: '#dddddd',
+        },
+        medicationName: {
+            fontSize: 24,
+            color: '#4285f4',
+            fontWeight: 'bold',
+        },
+        status: {
+            backgroundColor: '#34a853',
+            color: 'white',
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 4,
+            fontSize: 14,
+        },
+        // ... additional styles
+    });
+    -->
+</body>
+</html> 
