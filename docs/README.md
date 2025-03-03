@@ -49,6 +49,14 @@ This course supports three distinct learning paths:
 - [State and Hooks](./module-6-react-essentials/section-4-state-and-hooks/README.md)
 - [Component Lifecycle and Effects](./module-6-react-essentials/section-5-component-lifecycle-and-effects/README.md)
 
+### [Module 7: React Native UI and Styling](./module-7-react-native-ui-and-styling/README.md)
+- [React Native Core Components](./module-7-react-native-ui-and-styling/section-1-react-native-core-components/README.md)
+- [Styling Fundamentals](./module-7-react-native-ui-and-styling/section-2-styling-fundamentals/README.md)
+- [Layout with Flexbox](./module-7-react-native-ui-and-styling/section-3-layout-with-flexbox/README.md)
+- [Advanced UI Components](./module-7-react-native-ui-and-styling/section-4-advanced-ui-components/README.md)
+- [Responsive Design](./module-7-react-native-ui-and-styling/section-5-responsive-design/README.md)
+- [Animations and Transitions](./module-7-react-native-ui-and-styling/section-6-animations-and-transitions/README.md)
+
 ## Prerequisites
 
 To get the most out of this course, you should have:
