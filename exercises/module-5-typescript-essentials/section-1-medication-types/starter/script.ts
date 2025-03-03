@@ -23,7 +23,6 @@
 // }
 
 // Sample data - DO NOT MODIFY
-// Note: For CodePen, the type assertions will be needed once you implement the types
 const patientData = {
   id: 12345,
   name: "Sarah Johnson",
@@ -36,21 +35,21 @@ const medicationsData = [
     id: 1,
     name: "Lisinopril",
     dosage: 10,
-    unit: "mg", // This will need a type assertion when you define DosageUnit
+    unit: "mg",
     sideEffects: ["Dizziness", "Cough", "Headache"]
   },
   {
     id: 2,
     name: "Metformin",
     dosage: 500,
-    unit: "mg", // This will need a type assertion when you define DosageUnit
+    unit: "mg",
     sideEffects: ["Nausea", "Stomach upset"]
   },
   {
     id: 3,
     name: "Vitamin D",
     dosage: 1,
-    unit: "tablet", // This will need a type assertion when you define DosageUnit
+    unit: "tablet",
     sideEffects: []
   }
 ];

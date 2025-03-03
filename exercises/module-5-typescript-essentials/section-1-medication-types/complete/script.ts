@@ -34,39 +34,38 @@ interface Prescription {
 }
 
 // Sample data - DO NOT MODIFY
-// We're using "as DosageUnit" type assertions to ensure the string values match our type
-const patientData: Patient = {
+const patientData = {
   id: 12345,
   name: "Sarah Johnson",
   dateOfBirth: new Date("1985-05-15"),
   allergies: ["Penicillin", "Peanuts"]
 };
 
-const medicationsData: Medication[] = [
+const medicationsData = [
   {
     id: 1,
     name: "Lisinopril",
     dosage: 10,
-    unit: "mg" as DosageUnit,
+    unit: "mg",
     sideEffects: ["Dizziness", "Cough", "Headache"]
   },
   {
     id: 2,
     name: "Metformin",
     dosage: 500,
-    unit: "mg" as DosageUnit,
+    unit: "mg",
     sideEffects: ["Nausea", "Stomach upset"]
   },
   {
     id: 3,
     name: "Vitamin D",
     dosage: 1,
-    unit: "tablet" as DosageUnit,
+    unit: "tablet",
     sideEffects: []
   }
 ];
 
-const prescriptionData: Prescription = {
+const prescriptionData = {
   id: 98765,
   patient: patientData,
   medications: medicationsData,
