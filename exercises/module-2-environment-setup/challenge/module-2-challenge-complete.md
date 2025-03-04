@@ -240,7 +240,7 @@ which adb
 
 ## Environment Configuration
 1. Development:
-   ```typescript
+   ```tsx
    // config/env.ts
    const ENV = {
      dev: {
@@ -462,7 +462,7 @@ export ENABLE_LOGGING=false
    ```
 
 2. Push Notifications
-   ```typescript
+   ```tsx
    // src/services/notifications.ts
    import * as Notifications from 'expo-notifications';
 
@@ -476,7 +476,7 @@ export ENABLE_LOGGING=false
    ```
 
 3. Secure Storage
-   ```typescript
+   ```tsx
    // src/services/storage.ts
    import * as SecureStore from 'expo-secure-store';
 

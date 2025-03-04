@@ -45,7 +45,7 @@ State that is specific to a single component and doesn't need to be shared with 
 - React's `useState` hook
 - Component class state
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
 
@@ -114,7 +114,7 @@ State that needs to be accessed or modified by multiple components.
 - Zustand
 - Redux
 
-```typescript
+```tsx
 // Using Context API for theme state
 import React, { createContext, useContext, useState } from 'react';
 
@@ -180,7 +180,7 @@ State that originates from a server and needs to be synchronized with the client
 - SWR
 - Apollo Client (for GraphQL)
 
-```typescript
+```tsx
 // Using React Query for server state
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchMedications, addMedication } from '../api/medications';
@@ -246,7 +246,7 @@ State that needs to persist across app restarts.
 - SQLite
 - FileSystem
 
-```typescript
+```tsx
 // Using AsyncStorage for persistent state
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
@@ -298,7 +298,7 @@ React provides built-in mechanisms for managing state within components.
 
 The `useState` hook is the simplest way to add state to a functional component.
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 import { View, Button, Text } from 'react-native';
 
@@ -319,7 +319,7 @@ function Counter() {
 
 The `useReducer` hook is a more powerful alternative to `useState` for complex state logic.
 
-```typescript
+```tsx
 import React, { useReducer } from 'react';
 import { View, Button, Text } from 'react-native';
 
@@ -361,7 +361,7 @@ function Counter() {
 
 React's Context API provides a way to share state between components without prop drilling.
 
-```typescript
+```tsx
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 
 // Define the shape of the cart state
@@ -488,7 +488,7 @@ export function useCart() {
 
 React Query is specialized for managing server state, with built-in caching, background updates, and more.
 
-```typescript
+```tsx
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { fetchMedications, fetchMedicationById } from '../api/medications';
@@ -538,7 +538,7 @@ function MedicationDetail({ id }) {
 
 Zustand is a small, fast, and scalable state management solution with a simple API.
 
-```typescript
+```tsx
 import create from 'zustand';
 
 interface MedicationStore {

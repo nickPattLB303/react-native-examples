@@ -57,7 +57,7 @@ The TypeScript configuration for React Native typically includes:
 
 ### Typing React Native Components
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
@@ -109,7 +109,7 @@ export default MedicationItem;
 
 ### Working with State and Hooks in TypeScript
 
-```typescript
+```tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 
@@ -170,7 +170,7 @@ export default MedicationList;
 
 ### Custom Hooks with TypeScript
 
-```typescript
+```tsx
 import { useState, useEffect } from 'react';
 
 // Define return type for the hook
@@ -222,7 +222,7 @@ export function useMedications(patientId: number): UseMedicationsResult {
 
 ### Typed Navigation Parameters
 
-```typescript
+```tsx
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -273,7 +273,7 @@ const MedicationDetails: React.FC<MedicationDetailsProps> = ({
 
 ### Typing StyleSheet and Theme Properties
 
-```typescript
+```tsx
 import { StyleSheet, TextStyle, ViewStyle, ImageStyle } from 'react-native';
 
 // Define theme interface

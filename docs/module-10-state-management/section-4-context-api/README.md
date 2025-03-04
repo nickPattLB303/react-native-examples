@@ -43,7 +43,7 @@ Context is ideal for:
 
 Create a simple context for theme settings:
 
-```typescript
+```tsx
 // contexts/ThemeContext.tsx
 import React, { createContext, useState, ReactNode } from 'react';
 
@@ -97,7 +97,7 @@ export function useTheme() {
 
 ### Using the Context in Components
 
-```typescript
+```tsx
 // App.tsx
 import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 
 For more complex state management, combine Context with useReducer:
 
-```typescript
+```tsx
 // contexts/AuthContext.tsx
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 import { User } from '../types';
@@ -299,7 +299,7 @@ export function useAuth() {
 
 ### Using the Auth Context
 
-```typescript
+```tsx
 // screens/LoginScreen.tsx
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, ActivityIndicator, StyleSheet } from 'react-native';
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
 
 Split context into smaller, more focused contexts to prevent unnecessary re-renders:
 
-```typescript
+```tsx
 // contexts/UserContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { User } from '../types';
@@ -436,7 +436,7 @@ export function useAuthStatus() {
 
 Use memoization to prevent unnecessary re-renders:
 
-```typescript
+```tsx
 // contexts/ThemeContext.tsx
 import React, { createContext, useState, useMemo, ReactNode } from 'react';
 
@@ -477,7 +477,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
 Implement a selector pattern to consume only the needed parts of context:
 
-```typescript
+```tsx
 // contexts/AppContext.tsx
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 
@@ -582,7 +582,7 @@ export function useAppNotifications() {
 
 Create type-safe context with TypeScript:
 
-```typescript
+```tsx
 // contexts/MedicationContext.tsx
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 import { Medication } from '../types';
@@ -805,7 +805,7 @@ export function useMedication() {
 
 Use Context to provide React Query client:
 
-```typescript
+```tsx
 // contexts/QueryContext.tsx
 import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -829,7 +829,7 @@ export function QueryProvider({ children }: QueryProviderProps) {
 
 Use Context for UI state and Zustand for global state:
 
-```typescript
+```tsx
 // App.tsx
 import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -854,7 +854,7 @@ export default function App() {
 
 ### Theme Context
 
-```typescript
+```tsx
 // contexts/ThemeContext.tsx
 import React, { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import { colors } from '../styles/colors';
@@ -937,7 +937,7 @@ export function useTheme() {
 
 ### Authentication Context
 
-```typescript
+```tsx
 // contexts/AuthContext.tsx
 import React, { createContext, useReducer, useContext, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';

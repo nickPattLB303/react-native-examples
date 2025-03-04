@@ -24,7 +24,7 @@ Key techniques used:
 - Adding JSDoc comments for documentation
 - Providing type definitions for the library's functions
 
-```typescript
+```tsx
 declare module 'medication-barcode-scanner' {
   export type BarcodeType = 'NDC' | 'RxNorm' | 'GTIN' | 'UPC' | 'QR' | 'DataMatrix';
   
@@ -48,7 +48,7 @@ Key techniques used:
 - Extending existing interfaces with new pharmacy-specific properties
 - Adding new types and functions for pharmacy-specific use cases
 
-```typescript
+```tsx
 import 'medication-barcode-scanner';
 
 declare module 'medication-barcode-scanner' {
@@ -75,7 +75,7 @@ Key techniques used:
 - Type guards to handle different result types
 - Comprehensive interface definitions for hook parameters and return values
 
-```typescript
+```tsx
 export type ScanResultType<T extends ScanOptions> = 
   T extends PharmacyScanOptions ? PharmacyScanResult : ScanResult;
 
@@ -104,7 +104,7 @@ Key techniques used:
 - Type narrowing to handle different result types
 - Component props with TypeScript interfaces
 
-```typescript
+```tsx
 // Use our custom hook with TypeScript safety
 const {
   state,

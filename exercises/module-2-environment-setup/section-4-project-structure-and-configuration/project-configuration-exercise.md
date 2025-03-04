@@ -48,7 +48,7 @@ PharmacyApp/
 ### Task 2: Component Organization
 Create template files for key components:
 
-```typescript
+```tsx
 // src/components/common/Button.tsx
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 ### Task 1: Environment Configuration
 Create environment configuration files:
 
-```typescript
+```tsx
 // config/env/index.ts
 import Constants from 'expo-constants';
 
@@ -159,7 +159,7 @@ export default ({ config }) => {
 ### Task 1: Create Base Types
 Set up core type definitions:
 
-```typescript
+```tsx
 // src/types/index.ts
 
 // API Response Types
@@ -199,7 +199,7 @@ export interface CardProps {
 ### Task 2: Environment Types
 Create type definitions for environment configuration:
 
-```typescript
+```tsx
 // src/types/environment.ts
 export interface Environment {
   apiUrl: string;

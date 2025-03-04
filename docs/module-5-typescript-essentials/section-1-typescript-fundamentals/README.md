@@ -26,7 +26,7 @@ This section introduces the fundamentals of TypeScript and how it enhances JavaS
 - **Team Collaboration**: Makes code intent clearer and helps new developers understand the codebase
 
 ### Basic TypeScript Types
-```typescript
+```tsx
 // Primitive types
 const patientName: string = "Sarah Johnson";
 const medicationCount: number = 3;
@@ -62,7 +62,7 @@ const amoxicillinUnit: DosageUnit = "mg";
 ```
 
 ### Interfaces for Object Typing
-```typescript
+```tsx
 interface Medication {
   id: number;
   name: string;
@@ -83,7 +83,7 @@ const lisinopril: Medication = {
 ```
 
 ### Type Aliases
-```typescript
+```tsx
 // Simple type alias
 type MedicationId = number;
 

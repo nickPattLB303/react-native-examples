@@ -29,7 +29,7 @@ Tab-based navigation is one of the most common patterns in mobile apps, allowing
 
 **Implementation:**
 
-```typescript
+```tsx
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
@@ -91,7 +91,7 @@ Stack navigation creates a hierarchy of screens where users can navigate deeper 
 
 **Implementation:**
 
-```typescript
+```tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import MedicationsListScreen from './screens/MedicationsListScreen';
 import MedicationDetailScreen from './screens/MedicationDetailScreen';
@@ -127,7 +127,7 @@ Drawer navigation provides a side menu that can be pulled out from the edge of t
 
 **Implementation:**
 
-```typescript
+```tsx
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
@@ -199,7 +199,7 @@ Modal navigation presents screens that overlay the current screen, often used fo
 
 **Implementation:**
 
-```typescript
+```tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AddMedicationScreen from './screens/AddMedicationScreen';
@@ -232,7 +232,7 @@ function RootNavigator() {
 
 Complex apps often require combining multiple navigation patterns. Here's how to nest navigators effectively:
 
-```typescript
+```tsx
 // App.tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -361,7 +361,7 @@ export default function App() {
 
 Implementing a secure authentication flow with protected routes:
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState, useEffect } from 'react';
@@ -428,7 +428,7 @@ export default function App() {
 
 Implementing an onboarding flow for first-time users:
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState, useEffect } from 'react';
@@ -483,7 +483,7 @@ export default function App() {
 
 Implementing deep linking to allow users to open specific screens from external links:
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { linking } from './linking';
 
@@ -541,7 +541,7 @@ export default function App() {
 
 1. **Lazy Loading**: Use lazy loading for screens to improve initial load time
 
-```typescript
+```tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import { lazy, Suspense } from 'react';
 
@@ -574,7 +574,7 @@ function AppNavigator() {
 
 2. **Minimize Re-renders**: Use memoization to prevent unnecessary re-renders
 
-```typescript
+```tsx
 import React, { useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -601,7 +601,7 @@ function App() {
 
 3. **Screen Options**: Define screen options at the navigator level when possible
 
-```typescript
+```tsx
 <Stack.Navigator
   screenOptions={{
     headerStyle: {
@@ -621,7 +621,7 @@ function App() {
 
 1. **Screen Reader Support**: Ensure navigation elements work with screen readers
 
-```typescript
+```tsx
 <TouchableOpacity
   accessible={true}
   accessibilityLabel="Go to home screen"
@@ -634,7 +634,7 @@ function App() {
 
 2. **Focus Management**: Manage focus when navigating between screens
 
-```typescript
+```tsx
 function ScreenWithFocus() {
   const ref = useRef(null);
   
@@ -663,7 +663,7 @@ function ScreenWithFocus() {
 
 Creating a custom tab bar component:
 
-```typescript
+```tsx
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -755,7 +755,7 @@ export default CustomTabBar;
 
 Creating a custom header component:
 
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

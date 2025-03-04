@@ -47,7 +47,7 @@ MyPharmacyApp/
 
 This is where your application code lives when using Expo Router. Each file in this directory becomes a route in your application.
 
-```typescript
+```tsx
 // app/index.tsx - Main entry point
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -436,7 +436,7 @@ TypeScript provides type safety for your React Native application. Here's how to
 
 With this configuration, you can use path aliases for cleaner imports:
 
-```typescript
+```tsx
 // Instead of this
 import { Button } from '../../../../components/common/Button';
 

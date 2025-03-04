@@ -58,7 +58,7 @@ yarn add zustand
 
 Create a store using the `create` function:
 
-```typescript
+```tsx
 // stores/useCounterStore.ts
 import { create } from 'zustand';
 
@@ -83,7 +83,7 @@ export default useCounterStore;
 
 Use the store in your components with the hook:
 
-```typescript
+```tsx
 // components/Counter.tsx
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 
 Implement asynchronous actions in your store:
 
-```typescript
+```tsx
 // stores/useMedicationStore.ts
 import { create } from 'zustand';
 import { fetchMedications, addMedication, updateMedication, deleteMedication } from '../api/medications';
@@ -210,7 +210,7 @@ export default useMedicationStore;
 
 Use the `get` function to access the current state and compute derived values:
 
-```typescript
+```tsx
 // stores/useCartStore.ts
 import { create } from 'zustand';
 
@@ -296,7 +296,7 @@ export default useCartStore;
 
 For complex stores, you can organize state into slices:
 
-```typescript
+```tsx
 // stores/useAppStore.ts
 import { create } from 'zustand';
 import { Medication, Prescription, User } from '../types';
@@ -380,7 +380,7 @@ export default useAppStore;
 
 Use selectors to prevent unnecessary re-renders:
 
-```typescript
+```tsx
 // Using selectors in components
 import useAppStore from '../stores/useAppStore';
 
@@ -407,7 +407,7 @@ function UserProfile() {
 
 Use shallow equality to compare objects:
 
-```typescript
+```tsx
 import { shallow } from 'zustand/shallow';
 import useAppStore from '../stores/useAppStore';
 
@@ -433,7 +433,7 @@ function UserInfo() {
 
 Use the `persist` middleware to persist state:
 
-```typescript
+```tsx
 // stores/useSettingsStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -475,7 +475,7 @@ export default useSettingsStore;
 
 Handle hydration state to prevent rendering before state is loaded:
 
-```typescript
+```tsx
 // components/SettingsScreen.tsx
 import React from 'react';
 import { View, Text, Switch, ActivityIndicator, StyleSheet } from 'react-native';
@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
 
 Create custom middleware for logging, validation, etc.:
 
-```typescript
+```tsx
 // middleware/logger.ts
 const logger = (config) => (set, get, api) => 
   config(
@@ -571,7 +571,7 @@ const useStore = create(
 
 Combine multiple middleware:
 
-```typescript
+```tsx
 // stores/useAuthStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -623,7 +623,7 @@ export default useAuthStore;
 
 Create type-safe stores with TypeScript:
 
-```typescript
+```tsx
 // types/index.ts
 export interface Medication {
   id: string;
@@ -691,7 +691,7 @@ export default useMedicationStore;
 
 Create type-safe selectors:
 
-```typescript
+```tsx
 // selectors/medicationSelectors.ts
 import { Medication } from '../types';
 import useMedicationStore from '../stores/useMedicationStore';
@@ -718,7 +718,7 @@ export const useMedicationsByFrequency = (frequency: string): Medication[] => {
 
 Zustand works well with React Query for a complete state management solution:
 
-```typescript
+```tsx
 // stores/useAppStore.ts
 import { create } from 'zustand';
 import { QueryClient } from '@tanstack/react-query';

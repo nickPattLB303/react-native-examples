@@ -54,7 +54,7 @@ yarn add @react-native-async-storage/async-storage
 
 ### Basic Usage
 
-```typescript
+```tsx
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Storing data
@@ -92,7 +92,7 @@ const removeData = async (key: string) => {
 
 ### Working with Multiple Items
 
-```typescript
+```tsx
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Storing multiple items
@@ -146,7 +146,7 @@ const removeMultipleData = async () => {
 
 Create a custom hook for easier usage of AsyncStorage:
 
-```typescript
+```tsx
 // hooks/useAsyncStorage.ts
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -207,7 +207,7 @@ export function useAsyncStorage<T>(key: string, initialValue: T) {
 
 ### Using the Custom Hook
 
-```typescript
+```tsx
 // components/UserPreferences.tsx
 import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
@@ -319,7 +319,7 @@ npx expo install expo-secure-store
 
 ### Basic Usage
 
-```typescript
+```tsx
 import * as SecureStore from 'expo-secure-store';
 
 // Storing data
@@ -358,7 +358,7 @@ const deleteSecureValue = async (key: string) => {
 
 Create a custom hook for easier usage of SecureStore:
 
-```typescript
+```tsx
 // hooks/useSecureStore.ts
 import { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
@@ -418,7 +418,7 @@ export function useSecureStore(key: string, initialValue: string = '') {
 
 ### Using the Custom Hook
 
-```typescript
+```tsx
 // components/AuthToken.tsx
 import React, { useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
@@ -477,7 +477,7 @@ npx expo install expo-file-system
 
 ### Basic Usage
 
-```typescript
+```tsx
 import * as FileSystem from 'expo-file-system';
 
 // Writing to a file
@@ -531,7 +531,7 @@ const deleteFile = async (fileName: string) => {
 
 ### Working with Directories
 
-```typescript
+```tsx
 import * as FileSystem from 'expo-file-system';
 
 // Creating a directory
@@ -567,7 +567,7 @@ const readDirectory = async (dirName: string) => {
 
 ### Downloading Files
 
-```typescript
+```tsx
 import * as FileSystem from 'expo-file-system';
 
 const downloadFile = async (url: string, fileName: string) => {
@@ -598,7 +598,7 @@ const downloadFile = async (url: string, fileName: string) => {
 
 Create a custom hook for managing files:
 
-```typescript
+```tsx
 // hooks/useFileSystem.ts
 import { useState, useEffect } from 'react';
 import * as FileSystem from 'expo-file-system';
@@ -668,7 +668,7 @@ export function useFileSystem(fileName: string) {
 
 ### Using the Custom Hook
 
-```typescript
+```tsx
 // components/NoteEditor.tsx
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
@@ -766,7 +766,7 @@ npx expo install expo-sqlite
 
 ### Basic Usage
 
-```typescript
+```tsx
 import * as SQLite from 'expo-sqlite';
 
 // Open or create a database
@@ -866,7 +866,7 @@ const deleteMedication = (id: number) => {
 
 Create a service for managing the database:
 
-```typescript
+```tsx
 // services/DatabaseService.ts
 import * as SQLite from 'expo-sqlite';
 import { Medication } from '../types';
@@ -1035,7 +1035,7 @@ export const databaseService = new DatabaseService();
 
 Create a custom hook for managing medications:
 
-```typescript
+```tsx
 // hooks/useMedicationsDatabase.ts
 import { useState, useEffect, useCallback } from 'react';
 import { databaseService } from '../services/DatabaseService';
@@ -1138,7 +1138,7 @@ export function useMedicationsDatabase() {
 
 ### Using the Custom Hook
 
-```typescript
+```tsx
 // screens/MedicationsScreen.tsx
 import React, { useState } from 'react';
 import { View, Text, FlatList, Button, ActivityIndicator, StyleSheet } from 'react-native';
@@ -1239,7 +1239,7 @@ In real-world applications, you'll often need to combine multiple storage soluti
 
 ### Example: Comprehensive Storage Strategy
 
-```typescript
+```tsx
 // services/StorageService.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
@@ -1373,7 +1373,7 @@ Implementing offline capabilities in your React Native application:
 
 ### Offline-First Approach
 
-```typescript
+```tsx
 // services/SyncService.ts
 import NetInfo from '@react-native-community/netinfo';
 import { databaseService } from './DatabaseService';
@@ -1507,7 +1507,7 @@ export const syncService = new SyncService();
 
 ### Using the Sync Service
 
-```typescript
+```tsx
 // hooks/useMedications.ts
 import { useState, useEffect, useCallback } from 'react';
 import { syncService } from '../services/SyncService';

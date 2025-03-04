@@ -34,7 +34,7 @@ Mobile applications typically use several standard navigation patterns:
 
 Stack navigation is the most fundamental navigation pattern, where screens are stacked on top of each other. When a user navigates to a new screen, it's pushed onto the stack. When they go back, the top screen is popped off the stack.
 
-```typescript
+```tsx
 // Conceptual example of stack navigation
 const Stack = createStackNavigator();
 
@@ -52,7 +52,7 @@ function MedicationStack() {
 
 Tab navigation allows users to switch between different sections of an app using tabs, typically displayed at the bottom of the screen.
 
-```typescript
+```tsx
 // Conceptual example of tab navigation
 const Tab = createBottomTabNavigator();
 
@@ -71,7 +71,7 @@ function MainTabs() {
 
 Drawer navigation provides a side menu that can be pulled out from the edge of the screen, typically containing less frequently used navigation options.
 
-```typescript
+```tsx
 // Conceptual example of drawer navigation
 const Drawer = createDrawerNavigator();
 
@@ -90,7 +90,7 @@ function AppDrawer() {
 
 Modal navigation presents screens that overlay the current screen, often used for focused tasks or quick actions.
 
-```typescript
+```tsx
 // Conceptual example of modal navigation
 <Stack.Navigator mode="modal">
   <Stack.Screen name="Home" component={HomeScreen} />
@@ -164,7 +164,7 @@ In React Navigation and Expo Router, screens receive navigation props that allow
 - Modify the navigation header
 - Listen to navigation events
 
-```typescript
+```tsx
 // Example of using navigation props
 function MedicationDetailScreen({ navigation, route }) {
   const { medicationId } = route.params;

@@ -16,7 +16,7 @@ The Medication Tracker app demonstrates how to use TypeScript with React Native 
 
 We start by defining a `Medication` interface that specifies the shape of our medication data:
 
-```typescript
+```tsx
 interface Medication {
   id: number;
   name: string;
@@ -32,21 +32,21 @@ This interface ensures that all medication objects in our app have the required 
 
 For each component, we define explicit interfaces for their props:
 
-```typescript
+```tsx
 interface MedicationItemProps {
   medication: Medication;
   onToggle: (id: number) => void;
 }
 ```
 
-```typescript
+```tsx
 interface MedicationListProps {
   medications: Medication[];
   onToggleMedication: (id: number) => void;
 }
 ```
 
-```typescript
+```tsx
 interface SummaryProps {
   medications: Medication[];
 }
@@ -58,7 +58,7 @@ These interfaces make it clear what props each component expects and their types
 
 For each component, we use the `React.FC` (FunctionComponent) generic type with our prop interfaces:
 
-```typescript
+```tsx
 const MedicationItem: React.FC<MedicationItemProps> = ({ medication, onToggle }) => {
   // Component implementation
 };
@@ -70,7 +70,7 @@ This pattern provides proper type checking for the component props and ensures t
 
 In the App component, we use the useState hook with TypeScript generics to ensure type safety for our state:
 
-```typescript
+```tsx
 const [medications, setMedications] = useState<Medication[]>(initialMedications);
 ```
 
@@ -82,7 +82,7 @@ This ensures that:
 
 The `handleToggleMedication` function is explicitly typed with a return type:
 
-```typescript
+```tsx
 const handleToggleMedication = (id: number): void => {
   // Implementation
 };
@@ -94,11 +94,11 @@ This makes it clear that the function takes a number parameter and doesn't retur
 
 Throughout the code, we explicitly type function parameters to ensure type safety:
 
-```typescript
+```tsx
 keyExtractor={(item) => item.id.toString()}
 ```
 
-```typescript
+```tsx
 const taken = medications.filter(med => med.taken).length;
 ```
 
@@ -120,7 +120,7 @@ TypeScript automatically infers many of these types, but the explicit typing in 
 
 While not explicitly using TypeScript for styles in this example, TypeScript can also be used to type StyleSheet properties:
 
-```typescript
+```tsx
 interface Styles {
   container: ViewStyle;
   title: TextStyle;

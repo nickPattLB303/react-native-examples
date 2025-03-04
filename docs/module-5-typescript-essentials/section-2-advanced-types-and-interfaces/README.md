@@ -19,7 +19,7 @@ This section builds upon the TypeScript fundamentals by exploring more advanced 
 ## Key Concepts
 
 ### Advanced Interface Features
-```typescript
+```tsx
 interface Medication {
   id: number;
   name: string;
@@ -47,7 +47,7 @@ interface ControlledMedication extends Medication {
 ```
 
 ### Union and Intersection Types
-```typescript
+```tsx
 // Union type (can be one of several types)
 type MedicationIdentifier = number | string;
 
@@ -72,7 +72,7 @@ const pharmacist: AdministrativePerson = {
 ```
 
 ### Type Guards and Type Assertions
-```typescript
+```tsx
 // Type guard using typeof
 function processIdentifier(id: string | number) {
   if (typeof id === "string") {
@@ -103,7 +103,7 @@ const medication = medicationData as Medication;
 ```
 
 ### Generic Types
-```typescript
+```tsx
 // Generic interface
 interface MedicationContainer<T> {
   data: T;
@@ -134,7 +134,7 @@ const firstMedication = getFirstItem<Medication>(medications);
 ```
 
 ### Utility Types
-```typescript
+```tsx
 // Partial - makes all properties optional
 function updateMedication(id: number, changes: Partial<Medication>) {
   // Implementation updates only the provided fields
@@ -154,7 +154,7 @@ type MedicationSchedule = Record<string, Medication[]>;
 ```
 
 ### Literal Types and Type Narrowing
-```typescript
+```tsx
 // String literal types
 type DosageUnit = "mg" | "ml" | "ug" | "tablet" | "capsule";
 

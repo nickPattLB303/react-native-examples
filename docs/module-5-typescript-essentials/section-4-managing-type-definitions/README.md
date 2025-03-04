@@ -34,7 +34,7 @@ npm install --save-dev @types/react-native
 
 When working with libraries that don't have type definitions, you can create your own:
 
-```typescript
+```tsx
 // types/medication-scheduler/index.d.ts
 
 declare module 'medication-scheduler' {
@@ -83,7 +83,7 @@ Add the type declaration path to your `tsconfig.json`:
 
 You can extend existing types from libraries using module augmentation:
 
-```typescript
+```tsx
 // types/react-native-augmentation.d.ts
 
 // Augment the React Navigation module
@@ -124,7 +124,7 @@ declare module 'react-native' {
 
 For application-wide types, create a central types file:
 
-```typescript
+```tsx
 // types/global.d.ts
 
 // Global type definitions available throughout your app
@@ -183,7 +183,7 @@ For larger React Native projects, use a structured approach to types:
 
 Example of a well-organized types structure:
 
-```typescript
+```tsx
 // src/types/models/medication.ts
 export interface Medication {
   id: string;
@@ -223,14 +223,14 @@ When working with untyped libraries, you have several options:
 
 1. Use the `any` type as a temporary solution (not recommended for long-term):
 
-```typescript
+```tsx
 // Using any (avoid when possible)
 const result = untypedLibrary.doSomething() as any;
 ```
 
 2. Create minimal type definitions for just the parts you use:
 
-```typescript
+```tsx
 // Minimal type definitions
 interface UntypedLibraryMethods {
   doSomething(): { success: boolean; data?: unknown };
@@ -244,7 +244,7 @@ const result = typedLibrary.doSomething();
 
 3. Use utility types to safely handle unknown data:
 
-```typescript
+```tsx
 import { z } from 'zod'; // A TypeScript-first schema validation library
 
 // Define a schema for the expected data

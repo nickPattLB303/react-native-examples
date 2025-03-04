@@ -51,7 +51,7 @@ npx expo install expo-router react-native-safe-area-context react-native-screens
 
 3. Create an initial route file at `app/index.tsx`:
 
-```typescript
+```tsx
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Home() {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 
 4. Create a root layout file at `app/_layout.tsx`:
 
-```typescript
+```tsx
 import { Stack } from 'expo-router';
 
 export default function RootLayout() {
@@ -134,7 +134,7 @@ app/
 
 Stack navigation is implemented using the `Stack` component from Expo Router:
 
-```typescript
+```tsx
 // app/_layout.tsx
 import { Stack } from 'expo-router';
 
@@ -168,7 +168,7 @@ export default function RootLayout() {
 
 Tab navigation is implemented using the `Tabs` component:
 
-```typescript
+```tsx
 // app/(tabs)/_layout.tsx
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -212,7 +212,7 @@ export default function TabsLayout() {
 
 Drawer navigation is implemented using the `Drawer` component:
 
-```typescript
+```tsx
 // app/_layout.tsx
 import { Drawer } from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
@@ -256,7 +256,7 @@ export default function DrawerLayout() {
 
 Modal screens can be implemented using the `(modal)` directory convention:
 
-```typescript
+```tsx
 // app/(modal)/add-medication.tsx
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
 
 Expo Router provides the `router` object for programmatic navigation:
 
-```typescript
+```tsx
 import { router } from 'expo-router';
 
 // Navigate to a specific route
@@ -314,7 +314,7 @@ router.back();
 
 For declarative navigation, use the `Link` component:
 
-```typescript
+```tsx
 import { Link } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
 
 Route parameters can be accessed using the `useLocalSearchParams` hook:
 
-```typescript
+```tsx
 // app/medications/[id].tsx
 import { View, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
@@ -452,7 +452,7 @@ You can test deep links using the following formats:
 
 Create a type definition file for your routes:
 
-```typescript
+```tsx
 // app/types.ts
 export type AppRoutes = {
   '/': undefined;
@@ -468,7 +468,7 @@ export type AppRoutes = {
 
 Use the route types with the router:
 
-```typescript
+```tsx
 import { router } from 'expo-router';
 import type { AppRoutes } from './types';
 
@@ -485,7 +485,7 @@ function navigateToMedication(id: string) {
 
 Use the route types with the `useLocalSearchParams` hook:
 
-```typescript
+```tsx
 import { useLocalSearchParams } from 'expo-router';
 import type { AppRoutes } from './types';
 

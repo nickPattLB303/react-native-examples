@@ -128,7 +128,7 @@ Update tsconfig.json with appropriate settings:
 ### Task 1: Create Layout Component
 Create a basic layout component in `app/_layout.tsx`:
 
-```typescript
+```tsx
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 
@@ -151,7 +151,7 @@ export default function Layout() {
 ### Task 2: Create Home Screen
 Create a basic home screen in `app/(tabs)/home.tsx`:
 
-```typescript
+```tsx
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {

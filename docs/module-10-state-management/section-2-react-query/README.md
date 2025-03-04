@@ -58,7 +58,7 @@ yarn add @tanstack/react-query
 
 Set up React Query by wrapping your application with the `QueryClientProvider`:
 
-```typescript
+```tsx
 // App.tsx
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -92,7 +92,7 @@ export default function App() {
 
 The `useQuery` hook is the primary way to fetch data with React Query:
 
-```typescript
+```tsx
 // hooks/useMedications.ts
 import { useQuery } from '@tanstack/react-query';
 import { fetchMedications } from '../api/medications';
@@ -109,7 +109,7 @@ export function useMedications() {
 
 Define your API functions separately from your React components:
 
-```typescript
+```tsx
 // api/medications.ts
 import axios from 'axios';
 
@@ -138,7 +138,7 @@ export async function fetchMedicationById(id: string): Promise<Medication> {
 
 Use the query hooks in your components:
 
-```typescript
+```tsx
 // screens/MedicationsScreen.tsx
 import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
 
 Query keys are used to identify and manage queries in the cache:
 
-```typescript
+```tsx
 // Simple query key
 useQuery({ queryKey: ['medications'], queryFn: fetchMedications });
 
@@ -223,7 +223,7 @@ useQuery({
 
 Query functions can be defined in various ways:
 
-```typescript
+```tsx
 // Direct function reference
 useQuery({ queryKey: ['medications'], queryFn: fetchMedications });
 
@@ -247,7 +247,7 @@ useQuery({
 
 React Query provides many options to customize query behavior:
 
-```typescript
+```tsx
 useQuery({
   queryKey: ['medications'],
   queryFn: fetchMedications,
@@ -287,7 +287,7 @@ useQuery({
 
 Sometimes queries depend on the results of other queries:
 
-```typescript
+```tsx
 // First query
 const { data: user } = useQuery({
   queryKey: ['user'],
@@ -306,7 +306,7 @@ const { data: prescriptions } = useQuery({
 
 Mutations are used to create, update, or delete data:
 
-```typescript
+```tsx
 // hooks/useMedicationMutations.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMedication, updateMedication, deleteMedication } from '../api/medications';
@@ -357,7 +357,7 @@ export function useDeleteMedication() {
 
 ### Using Mutations in Components
 
-```typescript
+```tsx
 // screens/AddMedicationScreen.tsx
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
 
 Optimistic updates improve the user experience by updating the UI before the server confirms the change:
 
-```typescript
+```tsx
 export function useUpdateMedication() {
   const queryClient = useQueryClient();
   
@@ -511,7 +511,7 @@ export function useUpdateMedication() {
 
 For paginated data:
 
-```typescript
+```tsx
 // api/medications.ts
 export async function fetchMedicationsPage(page = 0, limit = 10) {
   const response = await axios.get(`${API_URL}/medications`, {
@@ -576,7 +576,7 @@ export default function PaginatedMedicationsScreen() {
 
 For infinite scrolling:
 
-```typescript
+```tsx
 // hooks/useInfiniteMedications.ts
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchMedicationsPage } from '../api/medications';
@@ -640,7 +640,7 @@ export default function InfiniteMedicationsScreen() {
 
 Invalidate queries to refetch data:
 
-```typescript
+```tsx
 const queryClient = useQueryClient();
 
 // Invalidate specific query
@@ -657,7 +657,7 @@ queryClient.invalidateQueries();
 
 Manually refetch queries:
 
-```typescript
+```tsx
 const { data, refetch } = useQuery({
   queryKey: ['medications'],
   queryFn: fetchMedications,
@@ -671,7 +671,7 @@ const { data, refetch } = useQuery({
 
 Prefetch data before it's needed:
 
-```typescript
+```tsx
 const queryClient = useQueryClient();
 
 // Prefetch a single medication
@@ -695,7 +695,7 @@ useEffect(() => {
 
 ### Defining Types
 
-```typescript
+```tsx
 // types/index.ts
 export interface Medication {
   id: string;
@@ -718,7 +718,7 @@ export interface PaginatedResponse<T> {
 
 ### Type-Safe Queries
 
-```typescript
+```tsx
 // hooks/useMedications.ts
 import { useQuery } from '@tanstack/react-query';
 import { fetchMedications } from '../api/medications';
@@ -747,7 +747,7 @@ export function useMedication(id: string) {
 
 ### Type-Safe Mutations
 
-```typescript
+```tsx
 // hooks/useMedicationMutations.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMedication, updateMedication, deleteMedication } from '../api/medications';
@@ -775,7 +775,7 @@ export function useAddMedication() {
 
 React Native apps can move between foreground and background states. Configure React Query to handle this:
 
-```typescript
+```tsx
 import { AppState, Platform } from 'react-native';
 import { focusManager } from '@tanstack/react-query';
 
@@ -797,7 +797,7 @@ AppState.addEventListener('change', onAppStateChange);
 
 React Native apps need to handle network connectivity changes:
 
-```typescript
+```tsx
 import NetInfo from '@react-native-community/netinfo';
 import { onlineManager } from '@tanstack/react-query';
 

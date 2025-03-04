@@ -57,7 +57,7 @@ npm install react-native-gesture-handler react-native-reanimated
 
 1. Wrap your app with the `NavigationContainer`:
 
-```typescript
+```tsx
 // App.tsx
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -73,7 +73,7 @@ export default function App() {
 
 2. Set up a basic stack navigator:
 
-```typescript
+```tsx
 // App.tsx
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -109,7 +109,7 @@ export default function App() {
 
 Stack navigation is the most basic form of navigation, where screens are stacked on top of each other.
 
-```typescript
+```tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import MedicationsListScreen from './screens/MedicationsListScreen';
 import MedicationDetailScreen from './screens/MedicationDetailScreen';
@@ -151,7 +151,7 @@ function MedicationsNavigator() {
 
 Tab navigation allows users to switch between different sections of an app using tabs.
 
-```typescript
+```tsx
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
@@ -195,7 +195,7 @@ function MainTabs() {
 
 Drawer navigation provides a side menu that can be pulled out from the edge of the screen.
 
-```typescript
+```tsx
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
@@ -249,7 +249,7 @@ function AppDrawer() {
 
 Modal screens can be implemented using a separate stack navigator with a modal presentation style.
 
-```typescript
+```tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import MainTabs from './navigators/MainTabs';
 import AddMedicationScreen from './screens/AddMedicationScreen';
@@ -281,7 +281,7 @@ function RootNavigator() {
 
 React Navigation allows for nesting navigators to create complex navigation structures.
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -417,7 +417,7 @@ export default function App() {
 
 React Navigation provides the `navigation` prop to all screen components, which can be used for programmatic navigation:
 
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
@@ -482,7 +482,7 @@ React Navigation provides several methods for navigation:
 
 Route parameters can be accessed using the `route` prop:
 
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
@@ -530,7 +530,7 @@ export default MedicationDetailScreen;
 
 React Navigation allows for extensive header customization:
 
-```typescript
+```tsx
 <Stack.Navigator
   screenOptions={{
     headerStyle: {
@@ -557,7 +557,7 @@ React Navigation allows for extensive header customization:
 
 You can create custom components for navigation elements:
 
-```typescript
+```tsx
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -627,7 +627,7 @@ const styles = StyleSheet.create({
 
 React Navigation provides lifecycle events that you can subscribe to:
 
-```typescript
+```tsx
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 
@@ -664,7 +664,7 @@ function ProfileScreen({ navigation }) {
 
 React Navigation provides built-in support for deep linking:
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { linking } from './linking';
 
@@ -711,7 +711,7 @@ function App() {
 
 Create a type definition file for your navigation structure:
 
-```typescript
+```tsx
 // navigation/types.ts
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -761,7 +761,7 @@ export type MedicationDetailScreenProps = {
 
 Use the defined types in your screen components:
 
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { MedicationDetailScreenProps } from '../navigation/types';
@@ -808,7 +808,7 @@ export default MedicationDetailScreen;
 
 Use the defined types for navigation actions:
 
-```typescript
+```tsx
 import { useNavigation } from '@react-navigation/native';
 import { MedicationDetailNavigationProp } from '../navigation/types';
 
