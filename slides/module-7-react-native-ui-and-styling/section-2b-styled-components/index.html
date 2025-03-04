@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2b: Styled Components | Module 7 | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2b</h1>
+      <h2>Styled Components</h2>
+      <p class="metadata">Module 7: React Native UI and Styling | 1 hour</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the concept of CSS-in-JS and its benefits in React Native</li>
+        <li>Implement styled-components in React Native applications</li>
+        <li>Create reusable, component-based styling systems</li>
+        <li>Implement dynamic styling based on props and themes</li>
+        <li>Apply styled-components best practices in pharmaceutical applications</li>
+      </ul>
+    </section>
+    
+    <!-- Introduction to Styled Components Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Styled Components</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What is Styled Components?</h3>
+          <ul>
+            <li>CSS-in-JS library for styling React/React Native components</li>
+            <li>Uses tagged template literals to style components</li>
+            <li>Component-based styling approach</li>
+            <li>Popular alternative to StyleSheet API</li>
+            <li>Supports theming and dynamic styling</li>
+          </ul>
+          
+          <h3>Benefits in React Native</h3>
+          <ul>
+            <li><strong>Component-centric</strong>: Style and component logic in one place</li>
+            <li><strong>Dynamic styling</strong>: Styles that adapt based on props</li>
+            <li><strong>Theme support</strong>: Consistent styling across components</li>
+            <li><strong>Better organization</strong>: Reduces style object bloat</li>
+            <li><strong>Developer experience</strong>: Familiar CSS-like syntax</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">// Installing styled-components
+// npm install styled-components
+
+// Basic usage example
+import styled from 'styled-components/native';
+
+// Create a styled View component
+const Container = styled.View`
+  flex: 1;
+  padding: 16px;
+  background-color: #f8f8f8;
+`;
+
+// Create a styled Text component
+const Title = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+`;
+
+// Usage in a component
+const MedicationScreen = () => {
+  return (
+    &lt;Container>
+      &lt;Title>My Medications&lt;/Title>
+      {/* Other components */}
+    &lt;/Container>
+  );
+};</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Note</div>
+        <p>For React Native, we use <code>styled-components/native</code> import to ensure we're using React Native components as the base.</p>
+      </div>
+    </section>
+    
+    <!-- Basic Syntax Slide -->
+    <section class="slide content-slide">
+      <h2>Basic Syntax and Usage</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Creating Styled Components</h3>
+          <pre><code class="jsx">import styled from 'styled-components/native';
+
+// Basic styling
+const Card = styled.View`
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-vertical: 8px;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-radius: 4px;
+  shadow-offset: 0px 2px;
+  elevation: 2;
+`;
+
+// With nested components
+const MedicationItem = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const MedicationImage = styled.Image`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin-right: 12px;
+`;
+
+const MedicationInfo = styled.View`
+  flex: 1;
+`;</code></pre>
+        </div>
+        <div class="column">
+          <h3>Tagged Template Literals</h3>
+          <ul>
+            <li>Uses ES6 template literals with backticks (`)</li>
+            <li>CSS properties use camelCase (like React Native)</li>
+            <li>Units are generally not needed (like React Native)</li>
+            <li>Can interpolate JavaScript expressions with ${}</li>
+          </ul>
+          
+          <h3>Available Component Types</h3>
+          <pre><code class="jsx">// Common styled component types
+const StyledView = styled.View``;
+const StyledText = styled.Text``;
+const StyledImage = styled.Image``;
+const StyledTouchableOpacity = styled.TouchableOpacity``;
+const StyledScrollView = styled.ScrollView``;
+const StyledTextInput = styled.TextInput``;
+const StyledFlatList = styled.FlatList``;
+
+// Can style any React Native component
+const StyledSafeAreaView = styled.SafeAreaView``;
+const StyledActivityIndicator = styled.ActivityIndicator``;</code></pre>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Styling Tip</div>
+        <p>Keep styled component definitions at the bottom of your file or in separate files to make your component logic easier to find.</p>
+      </div>
+    </section>
+    
+    <!-- Dynamic Styling Slide -->
+    <section class="slide content-slide">
+      <h2>Dynamic Styling with Props</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Props-Based Styling</h3>
+          <pre><code class="jsx">// Component with prop-based styling
+const StatusIndicator = styled.View`
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: ${props => 
+    props.status === 'active' ? '#4cd964' :
+    props.status === 'inactive' ? '#8e8e93' :
+    props.status === 'warning' ? '#ffcc00' : 
+    '#ff3b30'
+  };
+`;
+
+// Usage
+&lt;StatusIndicator status="active" />
+&lt;StatusIndicator status="warning" /></code></pre>
+          
+          <h3>Extending Styles</h3>
+          <pre><code class="jsx">// Base Button
+const Button = styled.TouchableOpacity`
+  padding: 12px 16px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Primary Button extends Base Button
+const PrimaryButton = styled(Button)`
+  background-color: #3498db;
+`;
+
+// Secondary Button extends Base Button
+const SecondaryButton = styled(Button)`
+  background-color: transparent;
+  border-width: 1px;
+  border-color: #3498db;
+`;</code></pre>
+        </div>
+        <div class="column">
+          <h3>Complex Conditional Styling</h3>
+          <pre><code class="jsx">// Medication card with multiple dynamic styles
+const MedicationCard = styled.View`
+  padding: ${props => props.compact ? '8px' : '16px'};
+  background-color: white;
+  border-radius: 8px;
+  border-left-width: 4px;
+  border-left-color: ${props => {
+    switch(props.category) {
+      case 'painkillers':
+        return '#e74c3c';
+      case 'antibiotics':
+        return '#3498db';
+      case 'vitamins':
+        return '#2ecc71';
+      case 'heart':
+        return '#9b59b6';
+      default:
+        return '#95a5a6';
+    }
+  }};
+  opacity: ${props => props.isExpired ? 0.6 : 1};
+  margin-bottom: 12px;
+`;
+
+// Usage
+&lt;MedicationCard 
+  category="antibiotics"
+  compact={false}
+  isExpired={false}
+>
+  {/* Card content */}
+&lt;/MedicationCard></code></pre>
+          
+          <h3>Helper Functions</h3>
+          <pre><code class="jsx">// Helper for medication status colors
+const getStatusColor = (status) => {
+  const colors = {
+    active: '#4cd964',
+    inactive: '#8e8e93',
+    warning: '#ffcc00',
+    error: '#ff3b30',
+    refill: '#5ac8fa'
+  };
+  return colors[status] || colors.inactive;
+};
+
+const StatusBadge = styled.View`
+  background-color: ${props => getStatusColor(props.status)};
+  padding: 4px 8px;
+  border-radius: 4px;
+`;</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Pharmaceutical Application</div>
+        <p>Using dynamic styling based on medication categories, status, or importance helps users quickly identify critical information.</p>
+      </div>
+    </section>
+    
+    <!-- Theming Slide -->
+    <section class="slide content-slide">
+      <h2>Theming with Styled Components</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Theme Provider</h3>
+          <pre><code class="jsx">// App.js
+import { ThemeProvider } from 'styled-components/native';
+
+// Define theme object
+const theme = {
+  colors: {
+    primary: '#3498db',
+    secondary: '#2ecc71',
+    danger: '#e74c3c',
+    warning: '#f39c12',
+    text: {
+      primary: '#333333',
+      secondary: '#666666',
+      light: '#999999',
+    },
+    background: {
+      main: '#f9f9f9',
+      card: '#ffffff',
+    }
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
+  typography: {
+    fontSize: {
+      small: 12,
+      body: 14,
+      subheading: 16,
+      heading: 20,
+      title: 24,
+    },
+    fontWeight: {
+      regular: 'normal',
+      medium: '500',
+      bold: 'bold',
+    }
+  },
+  borderRadius: {
+    small: 4,
+    medium: 8,
+    large: 16,
+  }
+};
+
+// Wrap app with ThemeProvider
+export default function App() {
+  return (
+    &lt;ThemeProvider theme={theme}>
+      &lt;AppContent />
+    &lt;/ThemeProvider>
+  );
+}</code></pre>
+        </div>
+        <div class="column">
+          <h3>Using Theme in Components</h3>
+          <pre><code class="jsx">// Accessing theme in styled components
+const Card = styled.View`
+  background-color: ${props => props.theme.colors.background.card};
+  padding: ${props => props.theme.spacing.md}px;
+  border-radius: ${props => props.theme.borderRadius.medium}px;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+`;
+
+const Title = styled.Text`
+  font-size: ${props => props.theme.typography.fontSize.heading}px;
+  font-weight: ${props => props.theme.typography.fontWeight.bold};
+  color: ${props => props.theme.colors.text.primary};
+  margin-bottom: ${props => props.theme.spacing.sm}px;
+`;
+
+const Button = styled.TouchableOpacity`
+  background-color: ${props => 
+    props.variant === 'secondary' 
+      ? props.theme.colors.secondary 
+      : props.theme.colors.primary
+  };
+  padding: ${props => props.theme.spacing.sm}px ${props => props.theme.spacing.md}px;
+  border-radius: ${props => props.theme.borderRadius.small}px;
+`;
+
+// Component using themed styled-components
+const MedicationItem = () => (
+  &lt;Card>
+    &lt;Title>Metformin&lt;/Title>
+    &lt;Button>
+      &lt;ButtonText>Take Now&lt;/ButtonText>
+    &lt;/Button>
+  &lt;/Card>
+);</code></pre>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Pharma App Theme</div>
+        <p>For pharmaceutical apps, include medication category colors in your theme to maintain consistent visual coding across the app.</p>
+      </div>
+    </section>
+    
+    <!-- Advanced Techniques Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Techniques</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Styling Existing Components</h3>
+          <pre><code class="jsx">// Import a third-party component
+import { Calendar } from 'react-native-calendars';
+
+// Style a third-party component
+const StyledCalendar = styled(Calendar)`
+  border-radius: 8px;
+  overflow: hidden;
+  margin-vertical: 16px;
+`;
+
+// Style your own component
+const DosageCounter = ({ count, onIncrement, onDecrement }) => (
+  &lt;View>
+    &lt;Button onPress={onDecrement}>-&lt;/Button>
+    &lt;Text>{count}&lt;/Text>
+    &lt;Button onPress={onIncrement}>+&lt;/Button>
+  &lt;/View>
+);
+
+const StyledDosageCounter = styled(DosageCounter)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+`;</code></pre>
+          
+          <h3>Attrs Method</h3>
+          <pre><code class="jsx">// Setting default props with attrs
+const Input = styled.TextInput.attrs(props => ({
+  placeholderTextColor: props.theme.colors.text.light,
+  autoCapitalize: 'none',
+  autoCorrect: false,
+}))`
+  height: 48px;
+  border-width: 1px;
+  border-color: ${props => props.theme.colors.text.light};
+  border-radius: ${props => props.theme.borderRadius.medium}px;
+  padding-horizontal: ${props => props.theme.spacing.md}px;
+  font-size: ${props => props.theme.typography.fontSize.body}px;
+  color: ${props => props.theme.colors.text.primary};
+`;</code></pre>
+        </div>
+        <div class="column">
+          <h3>Global Styles</h3>
+          <pre><code class="jsx">// Creating global style components
+export const Typography = {
+  Title: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.title}px;
+    font-weight: ${props => props.theme.typography.fontWeight.bold};
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  Heading: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.heading}px;
+    font-weight: ${props => props.theme.typography.fontWeight.bold};
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  Subheading: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.subheading}px;
+    font-weight: ${props => props.theme.typography.fontWeight.medium};
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  Body: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.body}px;
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  Caption: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.small}px;
+    color: ${props => props.theme.colors.text.secondary};
+  `,
+};
+
+// Usage
+const MedicationDetail = () => (
+  &lt;Container>
+    &lt;Typography.Title>Lisinopril&lt;/Typography.Title>
+    &lt;Typography.Subheading>10mg Tablet&lt;/Typography.Subheading>
+    &lt;Typography.Body>
+      Take one tablet daily with or without food.
+    &lt;/Typography.Body>
+    &lt;Typography.Caption>
+      Last refilled: June 15, 2023
+    &lt;/Typography.Caption>
+  &lt;/Container>
+);</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Organisation Tip</div>
+        <p>For larger apps, create a <code>styles</code> directory with themed components organized by type (typography, containers, buttons, inputs, etc.).</p>
+      </div>
+    </section>
+    
+    <!-- Styled Components in Practice Slide -->
+    <section class="slide content-slide">
+      <h2>Styled Components in Practice</h2>
+      <p>Creating a medication detail screen with styled-components:</p>
+      <pre><code class="jsx">import React from 'react';
+import styled from 'styled-components/native';
+import { ThemeProvider } from 'styled-components/native';
+
+// Theme definition
+const theme = {
+  colors: {
+    primary: '#3498db',
+    background: '#f9f9f9',
+    card: '#ffffff',
+    text: '#333333',
+    textSecondary: '#666666',
+    border: '#e1e1e1',
+    success: '#2ecc71',
+    danger: '#e74c3c',
+    warning: '#f39c12',
+  },
+  spacing: {
+    sm: 8,
+    md: 16,
+    lg: 24,
+  },
+};
+
+// Styled components
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${props => props.theme.colors.background};
+`;
+
+const ScrollContainer = styled.ScrollView`
+  flex: 1;
+  padding: ${props => props.theme.spacing.md}px;
+`;
+
+const Card = styled.View`
+  background-color: ${props => props.theme.colors.card};
+  border-radius: 12px;
+  padding: ${props => props.theme.spacing.md}px;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-radius: 4px;
+  shadow-offset: 0px 2px;
+  elevation: 2;
+`;
+
+const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+`;
+
+const MedicationImage = styled.Image`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  margin-right: ${props => props.theme.spacing.md}px;
+`;
+
+const HeaderContent = styled.View`
+  flex: 1;
+`;
+
+const Title = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: ${props => props.theme.colors.text};
+  margin-bottom: 4px;
+`;
+
+const Subtitle = styled.Text`
+  font-size: 16px;
+  color: ${props => props.theme.colors.textSecondary};
+`;
+
+const InfoRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom-width: 1px;
+  border-bottom-color: ${props => props.theme.colors.border};
+  padding-vertical: ${props => props.theme.spacing.sm}px;
+`;
+
+const InfoLabel = styled.Text`
+  font-size: 14px;
+  color: ${props => props.theme.colors.textSecondary};
+  font-weight: 500;
+`;
+
+const InfoValue = styled.Text`
+  font-size: 14px;
+  color: ${props => props.theme.colors.text};
+`;
+
+const Button = styled.TouchableOpacity`
+  background-color: ${props => props.variant === 'danger' 
+    ? props.theme.colors.danger 
+    : props.theme.colors.primary
+  };
+  padding: ${props => props.theme.spacing.md}px;
+  border-radius: 8px;
+  align-items: center;
+  margin-top: ${props => props.theme.spacing.md}px;
+`;
+
+const ButtonText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const StatusBadge = styled.View`
+  background-color: ${props => 
+    props.status === 'active' ? props.theme.colors.success :
+    props.status === 'refill' ? props.theme.colors.warning :
+    props.theme.colors.danger
+  };
+  padding: 4px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+`;
+
+const StatusText = styled.Text`
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+`;
+
+// Main component
+const MedicationDetailScreen = ({ medication }) => {
+  // Example medication data
+  const med = medication || {
+    name: 'Metformin',
+    dosage: '500mg',
+    type: 'Tablet',
+    schedule: 'Twice daily with meals',
+    refills: 3,
+    status: 'active',
+    prescriber: 'Dr. Sarah Johnson',
+    pharmacy: 'MedPlus Pharmacy',
+    expiry: '12/31/2023',
+    image: 'https://example.com/medication-image.jpg',
+  };
+
+  return (
+    &lt;ThemeProvider theme={theme}>
+      &lt;Container>
+        &lt;ScrollContainer>
+          &lt;Card>
+            &lt;Header>
+              &lt;MedicationImage 
+                source={{ uri: med.image }}
+                defaultSource={require('./assets/pill-placeholder.png')}
+              />
+              &lt;HeaderContent>
+                &lt;Title>{med.name}&lt;/Title>
+                &lt;Subtitle>{med.dosage} {med.type}&lt;/Subtitle>
+                &lt;StatusBadge status={med.status}>
+                  &lt;StatusText>
+                    {med.status === 'active' ? 'Active' : 
+                     med.status === 'refill' ? 'Needs Refill' : 
+                     'Expired'}
+                  &lt;/StatusText>
+                &lt;/StatusBadge>
+              &lt;/HeaderContent>
+            &lt;/Header>
+            
+            &lt;InfoRow>
+              &lt;InfoLabel>Schedule&lt;/InfoLabel>
+              &lt;InfoValue>{med.schedule}&lt;/InfoValue>
+            &lt;/InfoRow>
+            
+            &lt;InfoRow>
+              &lt;InfoLabel>Refills Remaining&lt;/InfoLabel>
+              &lt;InfoValue>{med.refills}&lt;/InfoValue>
+            &lt;/InfoRow>
+            
+            &lt;InfoRow>
+              &lt;InfoLabel>Prescriber&lt;/InfoLabel>
+              &lt;InfoValue>{med.prescriber}&lt;/InfoValue>
+            &lt;/InfoRow>
+            
+            &lt;InfoRow>
+              &lt;InfoLabel>Pharmacy&lt;/InfoLabel>
+              &lt;InfoValue>{med.pharmacy}&lt;/InfoValue>
+            &lt;/InfoRow>
+            
+            &lt;InfoRow>
+              &lt;InfoLabel>Expiration&lt;/InfoLabel>
+              &lt;InfoValue>{med.expiry}&lt;/InfoValue>
+            &lt;/InfoRow>
+            
+            &lt;Button>
+              &lt;ButtonText>Take Medication&lt;/ButtonText>
+            &lt;/Button>
+            
+            &lt;Button variant="danger">
+              &lt;ButtonText>Request Refill&lt;/ButtonText>
+            &lt;/Button>
+          &lt;/Card>
+        &lt;/ScrollContainer>
+      &lt;/Container>
+    &lt;/ThemeProvider>
+  );
+};</code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Performance Note</div>
+        <p>Don't define styled components inside your render method. Define them outside or in separate files to prevent recreation on each render.</p>
+      </div>
+    </section>
+    
+    <!-- Comparison Slide -->
+    <section class="slide content-slide">
+      <h2>Styled Components vs StyleSheet API</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Styled Components Advantages</h3>
+          <ul>
+            <li><strong>Component Focus</strong>: Styles tied directly to components</li>
+            <li><strong>CSS-like Syntax</strong>: More familiar for web developers</li>
+            <li><strong>Theming</strong>: Powerful theming with context</li>
+            <li><strong>Dynamic Styling</strong>: Easier prop-based styling</li>
+            <li><strong>Organization</strong>: Better separation of styled components</li>
+            <li><strong>Composition</strong>: Easy to extend existing components</li>
+          </ul>
+          
+          <h3>StyleSheet API Advantages</h3>
+          <ul>
+            <li><strong>Built-in</strong>: No additional dependencies</li>
+            <li><strong>Performance</strong>: Potentially better for simpler apps</li>
+            <li><strong>TypeScript Support</strong>: Better type checking for styles</li>
+            <li><strong>Community Examples</strong>: More documentation examples</li>
+            <li><strong>Simplicity</strong>: Less abstraction for beginners</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>When to Choose Styled Components</h3>
+          <ul>
+            <li>Working with a team familiar with CSS-in-JS</li>
+            <li>Building larger applications with complex UI</li>
+            <li>Need for robust theming capabilities</li>
+            <li>Heavy use of dynamic, prop-based styling</li>
+            <li>Preference for component-based architecture</li>
+          </ul>
+          
+          <h3>When to Choose StyleSheet API</h3>
+          <ul>
+            <li>Simple applications with basic styling needs</li>
+            <li>Concern about bundle size and dependencies</li>
+            <li>Maximum performance is a priority</li>
+            <li>Strong preference for TypeScript style definitions</li>
+            <li>Following official React Native documentation closely</li>
+          </ul>
+          
+          <div class="callout info">
+            <div class="callout-title">Mixed Approach</div>
+            <p>Many teams use a hybrid approach: StyleSheet API for simple components and styled-components for more complex UI elements with dynamic styling needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Code Organization</h3>
+          <ul>
+            <li><strong>File Structure</strong>: Create separate files for complex components</li>
+            <li><strong>Component Position</strong>: Define styled components after main component</li>
+            <li><strong>Theme Organization</strong>: Keep theme definitions in a central file</li>
+            <li><strong>Naming Convention</strong>: Use clear, descriptive component names</li>
+          </ul>
+          
+          <h3>Performance</h3>
+          <ul>
+            <li><strong>Component Definition</strong>: Keep styled components outside render functions</li>
+            <li><strong>Props</strong>: Avoid unnecessary prop computations</li>
+            <li><strong>Memoization</strong>: Use React.memo for pure styled components</li>
+            <li><strong>Theme Access</strong>: Avoid deep theme object access in hot paths</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Component Design</h3>
+          <ul>
+            <li><strong>Granularity</strong>: Create small, reusable components</li>
+            <li><strong>Composition</strong>: Favor composition over complex styling logic</li>
+            <li><strong>Inheritance</strong>: Use styled(Component) for component variations</li>
+            <li><strong>Abstraction</strong>: Create abstract components for consistent UI</li>
+          </ul>
+          
+          <h3>For Pharmaceutical Apps</h3>
+          <ul>
+            <li><strong>Consistency</strong>: Use ThemeProvider for consistent medical styling</li>
+            <li><strong>Accessibility</strong>: Include proper contrast in theme colors</li>
+            <li><strong>Color Coding</strong>: Use consistent medication status colors</li>
+            <li><strong>Information Hierarchy</strong>: Style critical info prominently</li>
+            <li><strong>Error States</strong>: Clear visual feedback for warnings</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Developer Tip</div>
+        <p>Create and document a component library of common pharmaceutical UI elements with styled-components to maintain consistency across your app.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Medication UI with Styled Components</h2>
+      <p>In this exercise, you'll practice creating a medication tracker UI using styled-components:</p>
+      <ol>
+        <li>Set up a React Native project with styled-components</li>
+        <li>Create a theme with appropriate colors for a pharmaceutical app</li>
+        <li>Build a medication card component using styled-components</li>
+        <li>Implement dynamic styling based on medication status</li>
+        <li>Create a medication list with proper spacing and layout</li>
+      </ol>
+      <p>The exercise will focus on applying styled-components to create a cohesive and dynamic medication tracking interface.</p>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Tip</div>
+        <p>Start by defining your theme and base components, then compose them into more complex UI elements. Focus on making the components adaptable through props.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Styled-components provides a component-based approach to styling in React Native</li>
+        <li>It offers CSS-like syntax with the power of JavaScript for dynamic styling</li>
+        <li>Props can be used to create conditional styling based on component state</li>
+        <li>The ThemeProvider enables consistent styling across the application</li>
+        <li>Advanced techniques like component extension and attrs method enhance reusability</li>
+        <li>Styled-components can be particularly effective for pharmaceutical apps where visual consistency and information hierarchy are crucial</li>
+        <li>Best practices include proper organization, performance considerations, and thoughtful component design</li>
+      </ul>
+      <div class="next-steps">
+        <p>Next: Section 3: Layout with Flexbox</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

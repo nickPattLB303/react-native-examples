@@ -21,6 +21,7 @@ This module explores the essential concepts of UI development and styling in Rea
 ## Sections
 1. [React Native Core Components](./section-1-react-native-core-components/README.md)
 2. [Styling Fundamentals](./section-2-styling-fundamentals/README.md)
+2b. [Styled Components](./section-2b-styled-components/README.md)
 3. [Layout with Flexbox](./section-3-layout-with-flexbox/README.md)
 4. [Advanced UI Components](./section-4-advanced-ui-components/README.md)
 5. [Responsive Design](./section-5-responsive-design/README.md)
