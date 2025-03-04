@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: Core UI Components | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>Core UI Components in React Native</h2>
+      <p class="metadata">Module 7 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Identify and use the key built-in React Native components</li>
+        <li>Understand the structure and purpose of each core UI component</li>
+        <li>Compare React Native components to their web equivalents</li>
+        <li>Implement basic UI layouts using core components</li>
+        <li>Apply basic styling to React Native components</li>
+        <li>Understand platform-specific component behavior</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Basic React components from Module 6</p>
+      </div>
+    </section>
+    
+    <!-- Core UI Components Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Core UI Components Overview</h2>
+      <p>Unlike the web where we have HTML elements, React Native provides a set of built-in components that map to native UI elements on each platform.</p>
+      <ul>
+        <li>React Native components render to native UI elements</li>
+        <li>Components have consistent cross-platform APIs</li>
+        <li>Styling is handled through JavaScript objects, not CSS</li>
+        <li>Components may have platform-specific behavior or appearance</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>React Native's component-based approach ensures your app feels native on each platform while providing a consistent API for developers.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Emphasize that while the API is consistent across platforms, the actual rendering utilizes native UI components, which is why a React Native app looks and feels like a native app on each platform.</p>
+      </div>
+    </section>
+    
+    <!-- View Component Slide -->
+    <section class="slide content-slide">
+      <h2>The View Component</h2>
+      <p>The <code>View</code> component is the most fundamental building block in React Native.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Similar to <code>&lt;div&gt;</code> in web</li>
+            <li>Used for layout containers</li>
+            <li>Can be nested to create complex UIs</li>
+            <li>Supports flexbox layout</li>
+            <li>No direct styling inheritance</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform Implementation</h3>
+          <ul>
+            <li><strong>iOS:</strong> Maps to <code>UIView</code></li>
+            <li><strong>Android:</strong> Maps to <code>ViewGroup</code></li>
+            <li><strong>Web:</strong> Maps to <code>div</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- View Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>View Component Example</h2>
+      <pre><code class="language-jsx">
+import { View, StyleSheet } from 'react-native';
+
+const MedicationContainer = () => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        {/* Child components go here */}
+      </View>
+      <View style={styles.footer}>
+        {/* Footer content goes here */}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3, // Android shadow
+  },
+  footer: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: 'white',
+    borderRadius: 8,
+  },
+});
+      </code></pre>
+      <div class="callout platform-android platform-ios">
+        <div class="callout-title">Platform-Specific Note</div>
+        <p>Notice how shadows are implemented differently for iOS (shadowProperties) vs. Android (elevation).</p>
+      </div>
+    </section>
+    
+    <!-- Text Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Text Component</h2>
+      <p>The <code>Text</code> component is used to display text in React Native.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>All text must be inside a <code>Text</code> component</li>
+            <li>Can be nested for styled text spans</li>
+            <li>Text styles can be inherited when nested</li>
+            <li>Can handle user interactions (press events)</li>
+            <li>Automatically adjusts for platform typography</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform Implementation</h3>
+          <ul>
+            <li><strong>iOS:</strong> Maps to <code>UILabel</code> or <code>NSAttributedString</code></li>
+            <li><strong>Android:</strong> Maps to <code>TextView</code></li>
+            <li><strong>Web:</strong> Maps to <code>span</code> or <code>p</code></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning platform-web">
+        <div class="callout-title">For Web Developers</div>
+        <p>Unlike HTML where text can be placed directly in many elements, in React Native <strong>all</strong> text must be wrapped in a <code>Text</code> component.</p>
+      </div>
+    </section>
+    
+    <!-- Text Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>Text Component Example</h2>
+      <pre><code class="language-jsx">
+import { Text, StyleSheet } from 'react-native';
+
+const MedicationDetails = ({ name, dosage, instructions }) => {
+  return (
+    <>
+      <Text style={styles.medicationName}>
+        {name} <Text style={styles.dosage}>{dosage}</Text>
+      </Text>
+      <Text style={styles.instructions}>
+        <Text style={styles.label}>Instructions: </Text>
+        {instructions}
+      </Text>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  medicationName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333333',
+    marginBottom: 8,
+  },
+  dosage: {
+    fontWeight: 'normal',
+    fontSize: 16,
+    color: '#666666',
+  },
+  instructions: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#444444',
+  },
+  label: {
+    fontWeight: 'bold',
+  },
+});
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Nested Text</div>
+        <p>Note how <code>Text</code> components can be nested to apply different styles to parts of the text, similar to using <code>&lt;span&gt;</code> in HTML.</p>
+      </div>
+    </section>
+    
+    <!-- Image Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Image Component</h2>
+      <p>The <code>Image</code> component is used to display images in React Native.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Can display images from multiple sources</li>
+            <li>Requires explicit dimensions</li>
+            <li>Supports different resize modes</li>
+            <li>Can display loading indicators</li>
+            <li>Handles image caching automatically</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Image Sources</h3>
+          <ul>
+            <li><strong>Local static images:</strong> <code>require('./image.png')</code></li>
+            <li><strong>Network images:</strong> <code>{uri: 'https://...'}</code></li>
+            <li><strong>Base64 images:</strong> <code>{uri: 'data:image/png;base64,...'}</code></li>
+            <li><strong>Local files:</strong> <code>{uri: 'file://...'}</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Image Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>Image Component Example</h2>
+      <pre><code class="language-jsx">
+import { Image, View, StyleSheet } from 'react-native';
+
+const MedicationImage = ({ uri, localImage }) => {
+  // Different ways to load images
+  return (
+    <View style={styles.container}>
+      {/* Network image */}
+      <Image
+        source={{ uri }}
+        style={styles.networkImage}
+        resizeMode="contain"
+        onLoad={() => console.log('Image loaded')}
+      />
+      
+      {/* Local static image */}
+      <Image
+        source={localImage || require('./assets/default-pill.png')}
+        style={styles.localImage}
+        resizeMode="cover"
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  networkImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+  },
+  localImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+});
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>Always specify width and height for images. React Native cannot automatically determine image dimensions for network images like the web can.</p>
+      </div>
+    </section>
+    
+    <!-- ScrollView Component Slide -->
+    <section class="slide content-slide">
+      <h2>The ScrollView Component</h2>
+      <p>The <code>ScrollView</code> component provides a scrollable container for multiple components and views.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Generic scrollable container</li>
+            <li>Renders all children at once</li>
+            <li>Supports vertical and horizontal scrolling</li>
+            <li>Can handle keyboard dismissal</li>
+            <li>Supports "pull to refresh" functionality</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>When to Use</h3>
+          <ul>
+            <li>For content with fixed or small number of items</li>
+            <li>When all elements need to be rendered immediately</li>
+            <li>For forms that may exceed screen height</li>
+            <li>For complex layouts that need scrolling</li>
+            <li>For horizontal carousels or pagers</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Performance Note</div>
+        <p>For long lists, use <code>FlatList</code> instead of <code>ScrollView</code> to avoid performance issues.</p>
+      </div>
+    </section>
+    
+    <!-- FlatList Component Slide -->
+    <section class="slide content-slide">
+      <h2>The FlatList Component</h2>
+      <p>The <code>FlatList</code> component is a high-performance way to render scrollable lists.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Only renders items currently visible</li>
+            <li>Recycles list items for better performance</li>
+            <li>Built-in pull to refresh and load more</li>
+            <li>Supports horizontal or vertical orientation</li>
+            <li>Handles large data sets efficiently</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Key Props</h3>
+          <ul>
+            <li><code>data</code>: Array of items to render</li>
+            <li><code>renderItem</code>: Function to render each item</li>
+            <li><code>keyExtractor</code>: Function to extract unique key</li>
+            <li><code>onRefresh/refreshing</code>: Pull to refresh</li>
+            <li><code>onEndReached</code>: Load more when scrolled to end</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- FlatList Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>FlatList Component Example</h2>
+      <pre><code class="language-jsx">
+import { FlatList, Text, View, StyleSheet } from 'react-native';
+
+const MedicationList = ({ medications, onRefresh, refreshing }) => {
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <View style={styles.medicationItem}>
+          <Text style={styles.medicationName}>{item.name}</Text>
+          <Text style={styles.medicationInfo}>{item.dosage}, {item.frequency}</Text>
+        </View>
+      )}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      ListEmptyComponent={
+        <Text style={styles.emptyMessage}>No medications found</Text>
+      }
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      contentContainerStyle={styles.listContent}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  medicationItem: {
+    padding: 16,
+  },
+  medicationName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  medicationInfo: {
+    fontSize: 14,
+    color: '#666',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+  },
+  emptyMessage: {
+    padding: 20,
+    textAlign: 'center',
+    color: '#888',
+  },
+  listContent: {
+    flexGrow: 1,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Pressable Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Pressable Component</h2>
+      <p>The <code>Pressable</code> component is used to create interactive elements that respond to touch.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Detects press interactions on any component</li>
+            <li>Can respond to various press states</li>
+            <li>More flexible than older Touchable components</li>
+            <li>Can customize feedback appearance</li>
+            <li>Works on both Android and iOS</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Interaction States</h3>
+          <ul>
+            <li><code>onPressIn</code>: Touch begins</li>
+            <li><code>onPressOut</code>: Touch ends</li>
+            <li><code>onPress</code>: Successful press</li>
+            <li><code>onLongPress</code>: Press held for a duration</li>
+            <li><code>pressed</code>: Boolean state for styling</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Pressable Code Example Slide -->
+    <section class="slide code-slide">
+      <h2>Pressable Component Example</h2>
+      <pre><code class="language-jsx">
+import { Pressable, Text, StyleSheet } from 'react-native';
+
+const MedicationButton = ({ onPress, title, danger }) => {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.button,
+        danger && styles.dangerButton,
+        pressed && styles.buttonPressed
+      ]}
+      android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
+    >
+      {({ pressed }) => (
+        <Text style={[
+          styles.buttonText,
+          danger && styles.dangerText,
+          pressed && styles.buttonTextPressed
+        ]}>
+          {title}
+        </Text>
+      )}
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonPressed: {
+    backgroundColor: '#0056B3',
+    opacity: 0.9,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  buttonTextPressed: {
+    color: 'rgba(255, 255, 255, 0.8)',
+  },
+  dangerButton: {
+    backgroundColor: '#FF3B30',
+  },
+  dangerText: {
+    color: 'white',
+  },
+});
+      </code></pre>
+      <div class="callout info platform-android">
+        <div class="callout-title">Android Specific</div>
+        <p>Notice the <code>android_ripple</code> prop that provides the material design ripple effect on Android.</p>
+      </div>
+    </section>
+    
+    <!-- Platform Specific Components Slide -->
+    <section class="slide content-slide">
+      <h2>Platform-Specific Components</h2>
+      <p>React Native provides ways to handle platform-specific code and components:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Platform Module</h3>
+          <pre><code class="language-jsx">
+import { Platform } from 'react-native';
+
+// Conditional code
+if (Platform.OS === 'ios') {
+  // iOS-specific code
+} else {
+  // Android-specific code
+}
+
+// Platform.select
+const styles = {
+  container: {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+};
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Platform-Specific Extensions</h3>
+          <ul>
+            <li>Create separate files with <code>.ios.js</code> or <code>.android.js</code> extensions</li>
+            <li>Import normally without specifying platform:</li>
+          </ul>
+          <pre><code class="language-jsx">
+// Import automatically selects the right file
+import MedicationCard from './MedicationCard';
+
+// Will resolve to:
+// - MedicationCard.ios.js on iOS
+// - MedicationCard.android.js on Android
+// - MedicationCard.js as fallback
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Web vs React Native Component Comparison Slide -->
+    <section class="slide content-slide">
+      <h2>Web vs React Native Component Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Web Element</th>
+            <th>React Native Equivalent</th>
+            <th>Key Differences</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>&lt;div&gt;</code></td>
+            <td><code>&lt;View&gt;</code></td>
+            <td>No direct styling inheritance, no background transparency by default</td>
+          </tr>
+          <tr>
+            <td><code>&lt;span&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code></td>
+            <td><code>&lt;Text&gt;</code></td>
+            <td>All text must be inside a Text component</td>
+          </tr>
+          <tr>
+            <td><code>&lt;img&gt;</code></td>
+            <td><code>&lt;Image&gt;</code></td>
+            <td>Requires explicit dimensions, more loading states</td>
+          </tr>
+          <tr>
+            <td><code>&lt;button&gt;</code></td>
+            <td><code>&lt;Pressable&gt;</code>, <code>&lt;TouchableOpacity&gt;</code></td>
+            <td>Different press states, no built-in styling</td>
+          </tr>
+          <tr>
+            <td><code>&lt;input&gt;</code></td>
+            <td><code>&lt;TextInput&gt;</code></td>
+            <td>Different keyboard types, no built-in validation</td>
+          </tr>
+          <tr>
+            <td><code>&lt;select&gt;</code></td>
+            <td><code>&lt;Picker&gt;</code></td>
+            <td>Platform-specific appearance and behavior</td>
+          </tr>
+          <tr>
+            <td><code>overflow: auto</code></td>
+            <td><code>&lt;ScrollView&gt;</code>, <code>&lt;FlatList&gt;</code></td>
+            <td>Separate components for scrolling</td>
+          </tr>
+          <tr>
+            <td>CSS</td>
+            <td>StyleSheet API</td>
+            <td>JavaScript object-based styling with a subset of CSS properties</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Basic Pharmacy UI Layout</h2>
+      <p>Create a basic medicine details screen using React Native core components:</p>
+      <ol>
+        <li>A header with the medication name</li>
+        <li>An image of the medication</li>
+        <li>Basic details (dosage, form, etc.)</li>
+        <li>A description section</li>
+        <li>A button to add to cart</li>
+      </ol>
+      <div class="exercise-instructions">
+        <p>Use the following code as a starting point:</p>
+        <pre><code class="language-jsx">
+import React from 'react';
+import { View, Text, Image, ScrollView, Pressable, StyleSheet } from 'react-native';
+
+const MedicationDetailScreen = () => {
+  // Replace with your code
+  return (
+    <View style={styles.container}>
+      <Text>Medication Detail Screen</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  // Add your styles here
+});
+
+export default MedicationDetailScreen;
+        </code></pre>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Core UI Components</h2>
+      <ul>
+        <li>React Native provides a set of core components that map to native UI elements</li>
+        <li>View, Text, and Image are the fundamental building blocks</li>
+        <li>ScrollView and FlatList enable scrollable content</li>
+        <li>Pressable allows for creating interactive elements</li>
+        <li>React Native components differ from web components in important ways</li>
+        <li>Platform-specific code can be handled in several ways</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll learn about text input and keyboard management in React Native.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../index.html" class="button">← Back to Module 7 Overview</a>
+        <a href="../section-2-text-input-and-keyboard/index.html" class="button">Next: Text Input and Keyboard →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

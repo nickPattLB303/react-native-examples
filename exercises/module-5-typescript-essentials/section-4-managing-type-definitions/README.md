@@ -23,30 +23,29 @@ The starter code provides:
 
 ## Implementation Tasks
 
-1. Create a declaration file (`types/medication-barcode-scanner/index.d.ts`) with:
-   - Type definitions for the scanner's functions
-   - Interfaces for scan options, result data, and settings
-   - JSDoc comments explaining the type definitions
+1. **Create Declaration Files**:
+   - Create a `types` directory
+   - Add declaration files for the barcode scanner library
+   - Define interfaces for all library functions and data structures
 
-2. Implement module augmentation to add pharmacy-specific functionality:
-   - Add pharmacy-specific barcode types (NDC, RxNorm, etc.)
-   - Add additional medication details specific to your pharmacy app
+2. **Type Library Methods**:
+   - Type the `scanBarcode` function with proper parameters and return types
+   - Create interfaces for scan options and results
+   - Add error handling types
 
-3. Create a custom `useBarcodeScanner` hook that:
-   - Provides a type-safe interface to the scanner
-   - Returns properly typed scan results and error states
-   - Handles the scanning lifecycle (idle, scanning, completed, error)
+3. **Module Augmentation**:
+   - Add pharmacy-specific functionality to the library
+   - Implement extended types for medication data
 
-4. In the main App component:
-   - Update state variables with proper TypeScript typing
-   - Add proper type annotations to the handleScan function
-   - Use your custom hook to handle scanning
+4. **Custom Hook**:
+   - Create a `useBarcodeScanner` hook with proper TypeScript typing
+   - Type all states and functions in the hook
+   - Handle error scenarios in a type-safe way
 
-## Tips
+## Best Practices
 
-- Use TypeScript's declaration merging capabilities for module augmentation
-- Think about how to make your type definitions both accurate and flexible
-- Use conditional types where appropriate to handle different scan result types
+- Use descriptive interface and type names
+- Create separate declaration files for different parts of the library
 - Consider using JSDoc to provide additional context for your types
 - Remember to handle all potential error cases in a type-safe way
 
@@ -57,6 +56,24 @@ The starter code provides:
 3. Work through the "ToDo" items in order
 4. Test your implementation to ensure type safety
 
+## Running on Expo Snack
+
+This exercise is designed to run on Expo Snack. Note that configuration files like package.json and tsconfig.json are deliberately excluded as Expo Snack handles these configurations automatically.
+
+### Option 1: Upload to Expo Snack
+
+1. Go to [Expo Snack](https://snack.expo.dev/)
+2. Click "Import git repository"
+3. Enter the GitHub URL for this repository
+4. Navigate to this exercise directory
+
+### Option 2: Manual Setup
+
+1. Go to [Expo Snack](https://snack.expo.dev/)
+2. Create a new Snack with TypeScript
+3. Replace the default `App.tsx` file with the content from the `App.tsx` in either the `starter` or `complete` directory
+4. Run the Snack on your device using the Expo Go app or in the embedded simulator
+
 ## Learning Objectives
 
 This exercise reinforces the following skills:
@@ -64,4 +81,4 @@ This exercise reinforces the following skills:
 - Using module augmentation to extend existing types
 - Implementing custom hooks with proper TypeScript definitions
 - Handling type safety with third-party libraries
-- Documenting type definitions with JSDoc 
+- Documenting type definitions with JSDoc

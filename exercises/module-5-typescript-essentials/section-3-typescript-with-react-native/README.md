@@ -23,30 +23,26 @@ The starter code provides:
 
 ## Implementation Tasks
 
-1. Define a `Medication` interface with appropriate properties:
-   - id (number)
-   - name (string)
-   - dosage (string)
-   - time (string)
-   - taken (boolean)
+1. **Create the Medication Interface**:
+   - Define properties for medication items
+   - Use appropriate TypeScript types for each property
 
-2. Create a `MedicationItem` component with typed props:
-   - Medication data
-   - onPress callback to mark as taken/untaken
+2. **Implement Type-Safe Components**:
+   - Create a MedicationItem component with proper prop types
+   - Create a MedicationList component with proper prop types
+   - Implement a Summary component that displays statistics
 
-3. Create a `MedicationList` component that:
-   - Renders a list of medications using FlatList
-   - Uses proper TypeScript for its props and state
+3. **Manage State with TypeScript**:
+   - Define the correct types for useState hooks
+   - Properly type the medication data array
 
-4. In the main App component:
-   - Use useState with proper TypeScript typing
-   - Implement a function to toggle medication taken status
-   - Add a summary showing medications taken vs. total
+4. **Handle User Interactions**:
+   - Create type-safe functions for toggling medication status
+   - Implement proper event handler types
 
-## Tips
+## Best Practices
 
-- Review the TypeScript type definitions for React Native components
-- Pay attention to event handler types
+- Create reusable interfaces
 - Use TypeScript to make your component props explicit
 - Focus on creating a type-safe implementation
 - Look for TypeScript errors and fix them
@@ -58,10 +54,28 @@ The starter code provides:
 3. Test your implementation as you go
 4. Verify the final app shows the correct UI and behavior
 
+## Running on Expo Snack
+
+This exercise is designed to run on Expo Snack. Note that configuration files like package.json and tsconfig.json are deliberately excluded as Expo Snack handles these configurations automatically.
+
+### Option 1: Upload to Expo Snack
+
+1. Go to [Expo Snack](https://snack.expo.dev/)
+2. Click "Import git repository"
+3. Enter the GitHub URL for this repository
+4. Navigate to this exercise directory
+
+### Option 2: Manual Setup
+
+1. Go to [Expo Snack](https://snack.expo.dev/)
+2. Create a new Snack with TypeScript
+3. Replace the default `App.tsx` file with the content from the `App.tsx` in either the `starter` or `complete` directory
+4. Run the Snack on your device using the Expo Go app or in the embedded simulator
+
 ## Learning Objectives
 
 This exercise reinforces the following skills:
 - Using TypeScript with React Native components
 - Typing component props and state
 - Implementing type-safe event handlers
-- Creating maintainable, type-safe React Native code 
+- Creating maintainable, type-safe React Native code

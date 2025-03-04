@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: Selection Components | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>Selection Components</h2>
+      <p class="metadata">Module 7 | 1 hour</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement selection components for capturing user choices</li>
+        <li>Use the Picker component for dropdown-style selections</li>
+        <li>Implement Switch components for boolean choices</li>
+        <li>Create custom selection interfaces using touchable components</li>
+        <li>Handle selection changes and maintain component state</li>
+        <li>Integrate selection components with form data</li>
+        <li>Address platform-specific considerations for selection components</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 1 hour</p>
+        <p><strong>Prerequisites:</strong> Core UI components from Section 1</p>
+      </div>
+    </section>
+    
+    <!-- Selection Components Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Selection Components Overview</h2>
+      <p>Selection components allow users to choose from predefined options rather than entering free-form text.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Types of Selection Components</h3>
+          <ul>
+            <li><strong>Picker</strong>: Dropdown-style selection from a list</li>
+            <li><strong>Switch</strong>: Toggle between two states (on/off)</li>
+            <li><strong>CheckBox</strong>: Select multiple options (community component)</li>
+            <li><strong>RadioButton</strong>: Select one from several options (community component)</li>
+            <li><strong>Slider</strong>: Select a value from a continuous range</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Selection Component Benefits</h3>
+          <ul>
+            <li>Prevent input errors by limiting choices</li>
+            <li>Improve UX by showing available options</li>
+            <li>Reduce cognitive load for users</li>
+            <li>Enable faster input for common selections</li>
+            <li>Support accessibility through clear choices</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Core Concept</div>
+        <p>Selection components should always be used when input options are from a finite, predefined set of values.</p>
+      </div>
+    </section>
+    
+    <!-- Picker Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Picker Component</h2>
+      <p>The <code>Picker</code> component provides a dropdown-style selection interface.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Native dropdown on each platform</li>
+            <li>Select one value from multiple options</li>
+            <li>Uses platform-specific UI conventions</li>
+            <li>Different appearance on iOS vs Android</li>
+            <li>Requires community package installation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform Implementation</h3>
+          <ul>
+            <li><strong>iOS:</strong> Spinning wheel picker UI</li>
+            <li><strong>Android:</strong> Dropdown menu</li>
+            <li><strong>Web:</strong> Similar to <code>&lt;select&gt;</code> element</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Important Note</div>
+        <p>As of React Native 0.70+, Picker has been moved to a separate library. Install it with:<br/><code>npm install @react-native-picker/picker</code></p>
+      </div>
+    </section>
+    
+    <!-- Picker Implementation Slide -->
+    <section class="slide code-slide">
+      <h2>Basic Picker Implementation</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+
+const MedicationFrequencyPicker = () => {
+  const [frequency, setFrequency] = useState('daily');
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Medication Frequency:</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={frequency}
+          onValueChange={(itemValue) => setFrequency(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Once daily" value="daily" />
+          <Picker.Item label="Twice daily" value="twice_daily" />
+          <Picker.Item label="Three times daily" value="thrice_daily" />
+          <Picker.Item label="Every other day" value="alt_day" />
+          <Picker.Item label="Once weekly" value="weekly" />
+          <Picker.Item label="As needed" value="prn" />
+        </Picker>
+      </View>
+      <Text style={styles.preview}>
+        Selected: {frequency === 'daily' ? 'Once daily' : 
+                  frequency === 'twice_daily' ? 'Twice daily' : 
+                  frequency === 'thrice_daily' ? 'Three times daily' :
+                  frequency === 'alt_day' ? 'Every other day' :
+                  frequency === 'weekly' ? 'Once weekly' : 'As needed'}
+      </Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    backgroundColor: 'white',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
+  preview: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#666',
+    fontStyle: 'italic',
+  },
+});
+      </code></pre>
+      <div class="callout tip platform-ios platform-android">
+        <div class="callout-title">Platform-Specific Styling</div>
+        <p>The Picker's appearance varies significantly between platforms. iOS shows a wheel picker, while Android shows a dropdown menu.</p>
+      </div>
+    </section>
+    
+    <!-- iOS Picker Dialog Slide -->
+    <section class="slide code-slide">
+      <h2>iOS Picker with Input Accessory View</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+
+const IOSMedicationPicker = () => {
+  const [frequency, setFrequency] = useState('daily');
+  const [showPicker, setShowPicker] = useState(false);
+  
+  // iOS specific picker implementation
+  if (Platform.OS === 'ios') {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.label}>Medication Frequency:</Text>
+        
+        <Button 
+          title={showPicker ? "Done" : "Select Frequency"} 
+          onPress={() => setShowPicker(!showPicker)} 
+        />
+        
+        <Text style={styles.selectedValue}>
+          Selected: {frequency === 'daily' ? 'Once daily' : 
+                    frequency === 'twice_daily' ? 'Twice daily' : 
+                    frequency === 'thrice_daily' ? 'Three times daily' :
+                    frequency === 'alt_day' ? 'Every other day' :
+                    frequency === 'weekly' ? 'Once weekly' : 'As needed'}
+        </Text>
+        
+        {showPicker && (
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={frequency}
+              onValueChange={(itemValue) => setFrequency(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Once daily" value="daily" />
+              <Picker.Item label="Twice daily" value="twice_daily" />
+              <Picker.Item label="Three times daily" value="thrice_daily" />
+              <Picker.Item label="Every other day" value="alt_day" />
+              <Picker.Item label="Once weekly" value="weekly" />
+              <Picker.Item label="As needed" value="prn" />
+            </Picker>
+          </View>
+        )}
+      </View>
+    );
+  }
+  
+  // Regular implementation for other platforms
+  return (
+    <View style={styles.container}>
+      {/* Default picker for other platforms */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    padding: 16,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+  pickerContainer: {
+    borderTopWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f9f9f9',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  picker: {
+    height: 216,  // Standard iOS picker height
+    width: '100%',
+  },
+  selectedValue: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#333',
+  },
+});
+      </code></pre>
+      <div class="callout info platform-ios">
+        <div class="callout-title">iOS UX Pattern</div>
+        <p>On iOS, it's common to show a picker in response to a button tap rather than displaying it inline, and to provide a "Done" button to dismiss it.</p>
+      </div>
+    </section>
+    
+    <!-- Switch Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Switch Component</h2>
+      <p>The <code>Switch</code> component is used for binary (on/off) selections.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Toggle between two states (true/false)</li>
+            <li>Native appearance on each platform</li>
+            <li>Simple API with value and onValueChange</li>
+            <li>Can be customized with colors</li>
+            <li>No manual styling of shape/size</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform Implementation</h3>
+          <ul>
+            <li><strong>iOS:</strong> Maps to <code>UISwitch</code></li>
+            <li><strong>Android:</strong> Maps to <code>SwitchCompat</code></li>
+            <li><strong>Web:</strong> No direct equivalent (custom styled checkbox)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Usage Guidance</div>
+        <p>Switches are best for toggles that take immediate effect, while checkboxes are better for selections that apply after form submission.</p>
+      </div>
+    </section>
+    
+    <!-- Switch Example Slide -->
+    <section class="slide code-slide">
+      <h2>Switch Component Example</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, Switch, StyleSheet } from 'react-native';
+
+const MedicationSettings = () => {
+  const [notifications, setNotifications] = useState(true);
+  const [autoRefill, setAutoRefill] = useState(false);
+  const [genericSubstitution, setGenericSubstitution] = useState(true);
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Medication Settings</Text>
+      
+      <View style={styles.settingRow}>
+        <Text style={styles.settingLabel}>Reminder Notifications</Text>
+        <Switch
+          value={notifications}
+          onValueChange={setNotifications}
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={notifications ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+        />
+      </View>
+      
+      <View style={styles.settingRow}>
+        <Text style={styles.settingLabel}>Automatic Refill</Text>
+        <Switch
+          value={autoRefill}
+          onValueChange={setAutoRefill}
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={autoRefill ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+        />
+      </View>
+      
+      <View style={styles.settingRow}>
+        <Text style={styles.settingLabel}>Allow Generic Substitution</Text>
+        <Switch
+          value={genericSubstitution}
+          onValueChange={setGenericSubstitution}
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={genericSubstitution ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+        />
+      </View>
+      
+      <View style={styles.summary}>
+        <Text style={styles.summaryText}>
+          You will {notifications ? '' : 'not '}receive medication reminders.
+        </Text>
+        <Text style={styles.summaryText}>
+          Your prescription will {autoRefill ? '' : 'not '}be automatically refilled.
+        </Text>
+        <Text style={styles.summaryText}>
+          Generic substitution is {genericSubstitution ? 'allowed' : 'not allowed'}.
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  settingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eeeeee',
+  },
+  settingLabel: {
+    fontSize: 16,
+    color: '#333333',
+  },
+  summary: {
+    marginTop: 24,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+  },
+  summaryText: {
+    fontSize: 14,
+    marginBottom: 8,
+    color: '#555555',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- CheckBox Implementation Slide -->
+    <section class="slide content-slide">
+      <h2>Implementing CheckBox Components</h2>
+      <p>React Native doesn't include a built-in CheckBox component, but we can use community libraries or create our own.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Community Libraries</h3>
+          <ul>
+            <li><code>@react-native-community/checkbox</code></li>
+            <li><code>react-native-paper</code>'s Checkbox</li>
+            <li><code>react-native-elements</code>'s CheckBox</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Custom Implementation</h3>
+          <ul>
+            <li>Use <code>Pressable</code> with icon/image</li>
+            <li>Toggle state on press</li>
+            <li>Show different icons for checked/unchecked</li>
+            <li>Implement accessibility properties</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Decision Point</div>
+        <p>Consider whether to use a community library or implement your own checkbox based on your app's design system and requirements.</p>
+      </div>
+    </section>
+    
+    <!-- Custom CheckBox Slide -->
+    <section class="slide code-slide">
+      <h2>Custom CheckBox Implementation</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+// A simple custom checkbox component
+const CustomCheckbox = ({ label, value, onValueChange }) => {
+  return (
+    <Pressable 
+      style={styles.checkboxContainer}
+      onPress={() => onValueChange(!value)}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: value }}
+    >
+      <View style={[styles.checkbox, value && styles.checkboxChecked]}>
+        {value && <Text style={styles.checkMark}>✓</Text>}
+      </View>
+      <Text style={styles.checkboxLabel}>{label}</Text>
+    </Pressable>
+  );
+};
+
+const MedicationAllergies = () => {
+  const [allergies, setAllergies] = useState({
+    penicillin: false,
+    nsaids: false,
+    sulfa: false,
+    aspirin: false,
+  });
+  
+  const toggleAllergy = (allergy) => {
+    setAllergies(prev => ({
+      ...prev,
+      [allergy]: !prev[allergy]
+    }));
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Patient Allergies</Text>
+      
+      <CustomCheckbox 
+        label="Penicillin" 
+        value={allergies.penicillin} 
+        onValueChange={() => toggleAllergy('penicillin')} 
+      />
+      
+      <CustomCheckbox 
+        label="NSAIDs (Ibuprofen, Naproxen)" 
+        value={allergies.nsaids} 
+        onValueChange={() => toggleAllergy('nsaids')} 
+      />
+      
+      <CustomCheckbox 
+        label="Sulfa Drugs" 
+        value={allergies.sulfa} 
+        onValueChange={() => toggleAllergy('sulfa')} 
+      />
+      
+      <CustomCheckbox 
+        label="Aspirin" 
+        value={allergies.aspirin} 
+        onValueChange={() => toggleAllergy('aspirin')} 
+      />
+      
+      <View style={styles.summary}>
+        <Text style={styles.summaryTitle}>Summary of Allergies:</Text>
+        {!allergies.penicillin && !allergies.nsaids && 
+          !allergies.sulfa && !allergies.aspirin ? (
+          <Text style={styles.summaryText}>No allergies reported</Text>
+        ) : (
+          <>
+            {allergies.penicillin && <Text style={styles.summaryText}>• Penicillin</Text>}
+            {allergies.nsaids && <Text style={styles.summaryText}>• NSAIDs (Ibuprofen, Naproxen)</Text>}
+            {allergies.sulfa && <Text style={styles.summaryText}>• Sulfa Drugs</Text>}
+            {allergies.aspirin && <Text style={styles.summaryText}>• Aspirin</Text>}
+          </>
+        )}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: '#555',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
+  checkboxChecked: {
+    backgroundColor: '#007AFF',
+    borderColor: '#007AFF',
+  },
+  checkMark: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  checkboxLabel: {
+    fontSize: 16,
+    color: '#333',
+  },
+  summary: {
+    marginTop: 24,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+  },
+  summaryTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  summaryText: {
+    fontSize: 14,
+    marginBottom: 4,
+    color: '#555',
+  },
+});
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Accessibility Tip</div>
+        <p>Always include <code>accessibilityRole="checkbox"</code> and <code>accessibilityState={{ checked: value }}</code> for screen reader support.</p>
+      </div>
+    </section>
+    
+    <!-- Radio Buttons Slide -->
+    <section class="slide code-slide">
+      <h2>Custom Radio Button Implementation</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+// A simple custom radio button component
+const RadioButton = ({ label, selected, onSelect }) => {
+  return (
+    <Pressable 
+      style={styles.radioContainer}
+      onPress={onSelect}
+      accessibilityRole="radio"
+      accessibilityState={{ checked: selected }}
+    >
+      <View style={styles.radioOuter}>
+        {selected && <View style={styles.radioInner} />}
+      </View>
+      <Text style={styles.radioLabel}>{label}</Text>
+    </Pressable>
+  );
+};
+
+const MedicationForm = () => {
+  const [selectedRoute, setSelectedRoute] = useState('oral');
+  
+  const routes = [
+    { key: 'oral', label: 'Oral (by mouth)' },
+    { key: 'topical', label: 'Topical (applied to skin)' },
+    { key: 'inhalation', label: 'Inhalation (breathed in)' },
+    { key: 'injection', label: 'Injection' },
+  ];
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Administration Route</Text>
+      
+      {routes.map((route) => (
+        <RadioButton
+          key={route.key}
+          label={route.label}
+          selected={selectedRoute === route.key}
+          onSelect={() => setSelectedRoute(route.key)}
+        />
+      ))}
+      
+      <View style={styles.selectedRoute}>
+        <Text style={styles.selectedRouteText}>
+          Selected route: {routes.find(r => r.key === selectedRoute)?.label || 'None'}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  radioOuter: {
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#555',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
+  radioInner: {
+    height: 12,
+    width: 12,
+    borderRadius: 6,
+    backgroundColor: '#007AFF',
+  },
+  radioLabel: {
+    fontSize: 16,
+    color: '#333',
+  },
+  selectedRoute: {
+    marginTop: 24,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+  },
+  selectedRouteText: {
+    fontSize: 16,
+    color: '#555',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Slider Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Slider Component</h2>
+      <p>The <code>Slider</code> component allows users to select a value from a continuous range.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Characteristics</h3>
+          <ul>
+            <li>Visual representation of a range</li>
+            <li>Continuous or stepped value selection</li>
+            <li>Requires community package</li>
+            <li>Customizable track and thumb</li>
+            <li>Supports accessibility</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>When to Use Sliders</h3>
+          <ul>
+            <li>Selecting from a continuous range</li>
+            <li>Visual representation is important</li>
+            <li>Value precision can be approximate</li>
+            <li>Ranges with minimum/maximum values</li>
+            <li>Settings that benefit from visual position</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Important Note</div>
+        <p>Slider has been moved to a separate community package. Install it with:<br/><code>npm install @react-native-community/slider</code></p>
+      </div>
+    </section>
+    
+    <!-- Slider Example Slide -->
+    <section class="slide code-slide">
+      <h2>Slider Component Example</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Slider from '@react-native-community/slider';
+
+const PainAssessment = () => {
+  const [painLevel, setPainLevel] = useState(0);
+  const [dosage, setDosage] = useState(100);
+  
+  // Function to get description based on pain level
+  const getPainDescription = (level) => {
+    if (level < 1) return 'No pain';
+    if (level < 3) return 'Mild pain';
+    if (level < 6) return 'Moderate pain';
+    if (level < 9) return 'Severe pain';
+    return 'Worst possible pain';
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Pain Assessment</Text>
+      
+      <Text style={styles.label}>
+        Pain Level: {painLevel.toFixed(1)} - {getPainDescription(painLevel)}
+      </Text>
+      <Slider
+        style={styles.slider}
+        minimumValue={0}
+        maximumValue={10}
+        step={0.5}
+        value={painLevel}
+        onValueChange={setPainLevel}
+        minimumTrackTintColor="#FF6B6B"
+        maximumTrackTintColor="#d3d3d3"
+        thumbTintColor="#FF6B6B"
+      />
+      <View style={styles.scaleLabels}>
+        <Text style={styles.scaleText}>No Pain</Text>
+        <Text style={styles.scaleText}>Worst Pain</Text>
+      </View>
+      
+      <Text style={styles.label}>Medication Dosage: {dosage} mg</Text>
+      <Slider
+        style={styles.slider}
+        minimumValue={50}
+        maximumValue={500}
+        step={50}
+        value={dosage}
+        onValueChange={setDosage}
+        minimumTrackTintColor="#4682B4"
+        maximumTrackTintColor="#d3d3d3"
+        thumbTintColor="#4682B4"
+      />
+      <View style={styles.scaleLabels}>
+        <Text style={styles.scaleText}>50 mg</Text>
+        <Text style={styles.scaleText}>500 mg</Text>
+      </View>
+      
+      <View style={styles.summary}>
+        <Text style={styles.summaryText}>
+          Patient reports {getPainDescription(painLevel).toLowerCase()} ({painLevel.toFixed(1)}/10).
+        </Text>
+        <Text style={styles.summaryText}>
+          Recommended dosage: {dosage} mg
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+  slider: {
+    width: '100%',
+    height: 40,
+  },
+  scaleLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  scaleText: {
+    fontSize: 12,
+    color: '#666',
+  },
+  summary: {
+    marginTop: 24,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+  },
+  summaryText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Combining Components Slide -->
+    <section class="slide content-slide">
+      <h2>Combining Selection Components</h2>
+      <p>In real applications, you'll often combine multiple selection components in forms.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Component Selection Guidelines</h3>
+          <ul>
+            <li>Use <strong>Switch</strong> for boolean options</li>
+            <li>Use <strong>Picker</strong> for single selection from many options</li>
+            <li>Use <strong>Checkbox</strong> for multiple selections</li>
+            <li>Use <strong>Radio Buttons</strong> for mutually exclusive options (few choices)</li>
+            <li>Use <strong>Slider</strong> for ranges and visual values</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Practical Examples</h3>
+          <ul>
+            <li><strong>Medication Form</strong>: Radio buttons for route, picker for frequency</li>
+            <li><strong>Patient Preferences</strong>: Switches for notification settings</li>
+            <li><strong>Allergy Information</strong>: Checkboxes for selecting multiple allergies</li>
+            <li><strong>Pain Assessment</strong>: Slider for pain level</li>
+            <li><strong>Provider Selection</strong>: Radio buttons or picker depending on number</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Platform Differences Slide -->
+    <section class="slide content-slide">
+      <h2>Platform Differences in Selection Components</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>iOS</th>
+            <th>Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Picker</td>
+            <td>Wheel picker, typically shown as modal</td>
+            <td>Dropdown menu, opens in place</td>
+          </tr>
+          <tr>
+            <td>Switch</td>
+            <td>Sliding toggle with clear on/off positions</td>
+            <td>Material Design toggle with color change</td>
+          </tr>
+          <tr>
+            <td>Slider</td>
+            <td>Rounded thumb, subtle appearance</td>
+            <td>Material Design thumb, more pronounced</td>
+          </tr>
+          <tr>
+            <td>Radio Button</td>
+            <td>Not native, requires custom implementation</td>
+            <td>Not native, requires custom implementation</td>
+          </tr>
+          <tr>
+            <td>Checkbox</td>
+            <td>Not native, requires custom implementation</td>
+            <td>Not native, requires custom implementation</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout info">
+        <div class="callout-title">Design Strategy</div>
+        <p>For native feel, use platform-specific patterns. For consistent cross-platform UI, use custom components or a UI library like React Native Paper.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Medication Form Selection Components</h2>
+      <p>Create a medication preferences form with the following requirements:</p>
+      <ol>
+        <li>Use a Picker for medication form (tablets, capsules, liquid, etc.)</li>
+        <li>Implement a Switch for setting up reminders</li>
+        <li>Add custom checkboxes for selecting days of the week for medication</li>
+        <li>Use a slider for dosage amount</li>
+        <li>Implement radio buttons for selecting the time of day (morning, noon, evening, bedtime)</li>
+      </ol>
+      <div class="exercise-instructions">
+        <p>Start with this boilerplate code:</p>
+        <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+// Import necessary components
+
+const MedicationPreferencesForm = () => {
+  // TODO: Implement state for form fields
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Medication Preferences</Text>
+      
+      {/* TODO: Implement selection components */}
+      
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  // Add your styles here
+});
+
+export default MedicationPreferencesForm;
+        </code></pre>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Selection Components</h2>
+      <ul>
+        <li>Selection components provide constrained input options for users</li>
+        <li>Picker components allow selection from dropdown-style lists</li>
+        <li>Switch components provide binary on/off toggles</li>
+        <li>Custom components can be created for checkboxes and radio buttons</li>
+        <li>Sliders allow selection from a continuous range of values</li>
+        <li>Selection component appearance varies by platform</li>
+        <li>Choose components based on the type of selection needed</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll learn about form management in React Native, including organizing and handling form data.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-2-text-input-and-keyboard/index.html" class="button">← Back to Text Input and Keyboard</a>
+        <a href="../index.html" class="button">Module 7 Overview</a>
+        <a href="../section-4-form-management/index.html" class="button">Next: Form Management →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

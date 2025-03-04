@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 7: React Native Components and User Input | React Native Training Course</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Module 7</h1>
+      <h2>React Native Components and User Input</h2>
+      <p class="metadata">React Native Training Course | 6-8 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Module Learning Objectives</h2>
+      <ul>
+        <li>Identify and use core React Native UI components</li>
+        <li>Understand the differences between React Native and web components</li>
+        <li>Implement form elements and capture user input</li>
+        <li>Handle different input types (text, numeric, selection, etc.)</li>
+        <li>Validate user input and provide appropriate feedback</li>
+        <li>Create accessible forms using React Native</li>
+        <li>Implement platform-specific input behaviors when necessary</li>
+        <li>Optimize input components for mobile interactions</li>
+      </ul>
+    </section>
+    
+    <!-- Module Structure Slide -->
+    <section class="slide content-slide">
+      <h2>Module Structure</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 1: Core UI Components</h3>
+          <p>Introduction to fundamental React Native UI components.</p>
+          <p><strong>Duration:</strong> 45-60 minutes</p>
+          <p class="time-breakdown"><small>Overview: 15 min | Components: 30 min | Exercise: 15 min</small></p>
+        </div>
+        <div class="column">
+          <h3>Section 2: Text Input and Keyboard</h3>
+          <p>Working with text input and managing the mobile keyboard.</p>
+          <p><strong>Duration:</strong> 1 hour</p>
+          <p class="time-breakdown"><small>TextInput: 20 min | Keyboard: 25 min | Practice: 15 min</small></p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 3: Selection Components</h3>
+          <p>Implementing selection-based inputs like pickers and switches.</p>
+          <p><strong>Duration:</strong> 1 hour</p>
+          <p class="time-breakdown"><small>Pickers: 25 min | Switches: 20 min | Exercise: 15 min</small></p>
+        </div>
+        <div class="column">
+          <h3>Section 4: Form Management</h3>
+          <p>Organizing and managing form data in React Native.</p>
+          <p><strong>Duration:</strong> 1-1.5 hours</p>
+          <p class="time-breakdown"><small>Form State: 30 min | Libraries: 30 min | Practice: 30 min</small></p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 5: Input Validation</h3>
+          <p>Implementing validation strategies for user input.</p>
+          <p><strong>Duration:</strong> 1-1.5 hours</p>
+          <p class="time-breakdown"><small>Strategies: 30 min | Implementation: 30 min | Practice: 30 min</small></p>
+        </div>
+        <div class="column">
+          <h3>Section 6: Accessibility</h3>
+          <p>Making form components accessible to all users.</p>
+          <p><strong>Duration:</strong> 1 hour</p>
+          <p class="time-breakdown"><small>Guidelines: 20 min | Implementation: 25 min | Testing: 15 min</small></p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Section 7: Custom Input Components</h3>
+          <p>Building reusable, custom input components.</p>
+          <p><strong>Duration:</strong> 1-1.5 hours</p>
+          <p class="time-breakdown"><small>Design: 30 min | Implementation: 45 min | Testing: 15 min</small></p>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Module Journey</div>
+        <p>This module takes you from the foundational UI components to sophisticated form management and custom input components. You'll start with basic components, then learn to capture and validate different types of user input, and finally build accessible, platform-optimized form experiences.</p>
+      </div>
+      <div class="presenter-notes">
+        <p><strong>Time Management:</strong> If running short on time, prioritize Sections 1-4 as they provide the essential knowledge for implementing forms. Sections 5-7 can be covered at a higher level or as self-study topics.</p>
+      </div>
+    </section>
+    
+    <!-- Target Audience Slide -->
+    <section class="slide content-slide">
+      <h2>Target Audience</h2>
+      <p>This module is designed for developers with experience in:</p>
+      <div class="columns">
+        <div class="column">
+          <div class="platform-android">
+            <h3>Android Developers</h3>
+            <ul>
+              <li>Familiar with Android UI components</li>
+              <li>Experience with EditText, Spinners, etc.</li>
+              <li>Understanding of input validation</li>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="platform-ios">
+            <h3>iOS Developers</h3>
+            <ul>
+              <li>Familiar with UIKit or SwiftUI</li>
+              <li>Experience with UITextField, UIPickerView, etc.</li>
+              <li>Understanding of form data handling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="platform-web">
+        <h3>Web Developers</h3>
+        <ul>
+          <li>Familiar with HTML form elements</li>
+          <li>Experience with form libraries like Formik or React Hook Form</li>
+          <li>Understanding of input validation techniques</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Prerequisites Slide -->
+    <section class="slide content-slide">
+      <h2>Prerequisites</h2>
+      <p>Before starting this module, you should have completed:</p>
+      <ul>
+        <li>Module 6: React Essentials</li>
+      </ul>
+      <p>You should be comfortable with:</p>
+      <ul>
+        <li>Creating React components</li>
+        <li>Using state and props</li>
+        <li>Working with hooks (useState, useEffect)</li>
+        <li>Event handling in React</li>
+      </ul>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>This module introduces React Native-specific components that may look familiar to web developers but behave differently. Pay close attention to these differences for a smooth transition to mobile development.</p>
+      </div>
+    </section>
+    
+    <!-- Mobile vs Web Input Slide -->
+    <section class="slide content-slide">
+      <h2>Mobile vs Web Input</h2>
+      <p>Mobile form input differs from web input in several important ways:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Mobile Challenges</h3>
+          <ul>
+            <li>Limited screen space for form elements</li>
+            <li>Touch-based input instead of mouse/keyboard</li>
+            <li>Virtual keyboard takes up significant screen space</li>
+            <li>Platform-specific input behaviors and expectations</li>
+            <li>Different validation timing (often as-you-type)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>React Native Solutions</h3>
+          <ul>
+            <li>Specialized components optimized for touch</li>
+            <li>Keyboard management tools</li>
+            <li>Input-specific keyboard types</li>
+            <li>Platform-specific rendering options</li>
+            <li>Flexible validation approaches</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">UX Consideration</div>
+        <p>Mobile users expect forms to be quick and easy to complete. Minimize required input, use appropriate keyboard types, and provide clear feedback to create a seamless experience.</p>
+      </div>
+    </section>
+    
+    <!-- Module Challenge Slide -->
+    <section class="slide content-slide">
+      <h2>Module Challenge</h2>
+      <p>At the end of this module, you'll complete a challenge to implement a medication order form:</p>
+      <ol>
+        <li>Create a multi-step form for ordering medications</li>
+        <li>Implement different input types (text, numeric, selection)</li>
+        <li>Add validation with appropriate error messages</li>
+        <li>Optimize keyboard behavior for a smooth experience</li>
+        <li>Make the form accessible to all users</li>
+        <li>Handle platform-specific differences appropriately</li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">Challenge Preparation</div>
+        <p>Throughout this module, pay special attention to form layout, keyboard management, and validation strategies, as these will be essential for completing the challenge effectively.</p>
+      </div>
+    </section>
+    
+    <!-- Getting Started Slide -->
+    <section class="slide content-slide">
+      <h2>Getting Started</h2>
+      <p>Let's begin with Section 1: Core UI Components in React Native</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Section Navigation</h3>
+          <ul>
+            <li><a href="section-1-core-ui-components/index.html">Section 1: Core UI Components</a></li>
+            <li><a href="section-2-text-input-and-keyboard/index.html">Section 2: Text Input and Keyboard</a></li>
+            <li><a href="section-3-selection-components/index.html">Section 3: Selection Components</a></li>
+            <li><a href="section-4-form-management/index.html">Section 4: Form Management</a></li>
+            <li><a href="section-5-input-validation/index.html">Section 5: Input Validation</a></li>
+            <li><a href="section-6-accessibility/index.html">Section 6: Accessibility</a></li>
+            <li><a href="section-7-custom-input-components/index.html">Section 7: Custom Input Components</a></li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout tip">
+            <div class="callout-title">Navigation Tip</div>
+            <p>Use the arrow keys to navigate through slides:</p>
+            <ul>
+              <li>→ or Space: Next slide</li>
+              <li>←: Previous slide</li>
+              <li>Home: First slide</li>
+              <li>End: Last slide</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../shared/script.js"></script>
+</body>
+</html> 
