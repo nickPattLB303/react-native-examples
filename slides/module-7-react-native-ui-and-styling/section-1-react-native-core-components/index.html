@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: React Native Core Components | Module 7 | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>React Native Core Components</h2>
+      <p class="metadata">Module 7: React Native UI and Styling | 1.5 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the purpose and usage of React Native core components</li>
+        <li>Implement View, Text, Image, TextInput, and other essential components</li>
+        <li>Create touchable elements with different feedback types</li>
+        <li>Apply scrolling and list capabilities to your UI</li>
+        <li>Recognize when to use each component for specific UI requirements</li>
+      </ul>
+    </section>
+    
+    <!-- Core Components Overview Slide -->
+    <section class="slide content-slide">
+      <h2>React Native Core Components</h2>
+      <p>React Native provides a set of built-in components that map directly to native UI elements:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Basic Components</h3>
+          <ul>
+            <li><strong>View</strong>: Basic container (like div)</li>
+            <li><strong>Text</strong>: Display text (like span/p)</li>
+            <li><strong>Image</strong>: Display images</li>
+            <li><strong>TextInput</strong>: Text input fields</li>
+            <li><strong>ScrollView</strong>: Scrollable container</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Interactive Components</h3>
+          <ul>
+            <li><strong>Button</strong>: Simple button</li>
+            <li><strong>TouchableOpacity</strong>: Touchable with opacity feedback</li>
+            <li><strong>TouchableHighlight</strong>: Touchable with highlight feedback</li>
+            <li><strong>Pressable</strong>: Flexible touchable area (newer API)</li>
+            <li><strong>Switch</strong>: Toggle switch</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Component Philosophy</div>
+        <p>Unlike the web, React Native has a limited set of core components. This is intentional—these components map directly to native UI elements on iOS and Android.</p>
+      </div>
+    </section>
+    
+    <!-- View Component Slide -->
+    <section class="slide content-slide">
+      <h2>The View Component</h2>
+      <p>View is the fundamental building block in React Native, similar to <code>div</code> in web:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>style</strong>: Styling (layout, color, etc.)</li>
+            <li><strong>onLayout</strong>: Event when layout changes</li>
+            <li><strong>pointerEvents</strong>: Control touch handling</li>
+            <li><strong>testID</strong>: For UI testing</li>
+            <li><strong>accessibilityLabel</strong>: For accessibility</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import { View, StyleSheet } from 'react-native';
+
+const MedicationContainer = () => {
+  return (
+    &lt;View style={styles.container}>
+      &lt;View style={styles.card}>
+        {/* Medication info goes here */}
+      &lt;/View>
+    &lt;/View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Common Mistake</div>
+        <p>Unlike web divs, Views do not have any intrinsic styling. They don't support text content directly—text must be inside a Text component.</p>
+      </div>
+    </section>
+    
+    <!-- Text Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Text Component</h2>
+      <p>Text is used for displaying text content in React Native:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>style</strong>: Typography styling</li>
+            <li><strong>numberOfLines</strong>: Truncate text</li>
+            <li><strong>ellipsizeMode</strong>: How to truncate</li>
+            <li><strong>selectable</strong>: Allow text selection</li>
+            <li><strong>onPress</strong>: Handle text press</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import { Text, StyleSheet, View } from 'react-native';
+
+const MedicationHeader = ({ name, dosage }) => {
+  return (
+    &lt;View style={styles.header}>
+      &lt;Text style={styles.title} numberOfLines={1}>
+        {name}
+      &lt;/Text>
+      &lt;Text style={styles.dosage}>
+        {dosage}
+      &lt;/Text>
+      &lt;Text style={styles.instruction} numberOfLines={2}>
+        Take with food. Avoid alcohol while using this medication.
+      &lt;/Text>
+    &lt;/View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  dosage: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 8,
+  },
+  instruction: {
+    fontSize: 14,
+    color: '#888',
+    fontStyle: 'italic',
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Text Nesting</div>
+        <p>Unlike web, Text components can be nested to inherit and override styles, which is useful for inline styling.</p>
+      </div>
+    </section>
+    
+    <!-- Image Component Slide -->
+    <section class="slide content-slide">
+      <h2>The Image Component</h2>
+      <p>Image displays different types of images in React Native:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>source</strong>: URI or local image source</li>
+            <li><strong>style</strong>: Style the image (width, height)</li>
+            <li><strong>resizeMode</strong>: How to resize (cover, contain, etc.)</li>
+            <li><strong>onLoad/onError</strong>: Image loading events</li>
+            <li><strong>blurRadius</strong>: Add blur effect</li>
+          </ul>
+          <h3>Image Sources</h3>
+          <ul>
+            <li><strong>Local assets</strong>: <code>require('./image.png')</code></li>
+            <li><strong>Remote URLs</strong>: <code>{{ uri: 'https://...' }}</code></li>
+            <li><strong>Base64</strong>: <code>{{ uri: 'data:image/png;base64,..'}}</code></li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import { Image, StyleSheet, View } from 'react-native';
+
+const MedicationImage = ({ imageUri }) => {
+  return (
+    &lt;View style={styles.imageContainer}>
+      &lt;Image
+        source={{ uri: imageUri }}
+        style={styles.image}
+        resizeMode="cover"
+      />
+    &lt;/View>
+  );
+};
+
+// Using local image
+const MedicationIcon = () => (
+  &lt;Image
+    source={require('../assets/pill-icon.png')}
+    style={styles.icon}
+  />
+);
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Important</div>
+        <p>Unlike the web, Image components require explicit width and height in styles, or they won't be visible.</p>
+      </div>
+    </section>
+    
+    <!-- TextInput Component Slide -->
+    <section class="slide content-slide">
+      <h2>The TextInput Component</h2>
+      <p>TextInput allows users to input text in React Native:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>value/onChangeText</strong>: Control input value</li>
+            <li><strong>placeholder</strong>: Placeholder text</li>
+            <li><strong>secureTextEntry</strong>: For passwords</li>
+            <li><strong>keyboardType</strong>: Type of keyboard</li>
+            <li><strong>multiline</strong>: Allow multiple lines</li>
+            <li><strong>autoCapitalize</strong>: Auto-capitalization</li>
+            <li><strong>autoCorrect</strong>: Auto-correction</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React, { useState } from 'react';
+import { TextInput, StyleSheet, View, Text } from 'react-native';
+
+const MedicationSearch = () => {
+  const [searchText, setSearchText] = useState('');
+  
+  return (
+    &lt;View style={styles.container}>
+      &lt;Text style={styles.label}>Search Medications:&lt;/Text>
+      &lt;TextInput
+        style={styles.input}
+        value={searchText}
+        onChangeText={setSearchText}
+        placeholder="Enter medication name"
+        placeholderTextColor="#999"
+        autoCapitalize="none"
+        autoCorrect={false}
+        clearButtonMode="while-editing"
+      />
+    &lt;/View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    fontSize: 16,
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Platform Differences</div>
+        <p>TextInput behavior and appearance can vary between iOS and Android. Test on both platforms and use platform-specific props when needed.</p>
+      </div>
+    </section>
+    
+    <!-- TouchableComponents Slide -->
+    <section class="slide content-slide">
+      <h2>Touchable Components</h2>
+      <p>React Native provides several components for creating touchable elements:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Touchable Types</h3>
+          <ul>
+            <li><strong>Button</strong>: Simple button with platform styling</li>
+            <li><strong>TouchableOpacity</strong>: Fades when pressed</li>
+            <li><strong>TouchableHighlight</strong>: Highlights when pressed</li>
+            <li><strong>TouchableWithoutFeedback</strong>: No visual feedback</li>
+            <li><strong>Pressable</strong>: Modern API with more control</li>
+          </ul>
+          <h3>Common Props</h3>
+          <ul>
+            <li><strong>onPress</strong>: Function when pressed</li>
+            <li><strong>onLongPress</strong>: Function on long press</li>
+            <li><strong>disabled</strong>: Disable touch events</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import {
+  Button,
+  TouchableOpacity,
+  TouchableHighlight,
+  Pressable,
+  Text,
+  StyleSheet,
+  View
+} from 'react-native';
+
+const MedicationActions = ({ onTake, onRefill }) => {
+  return (
+    &lt;View style={styles.container}>
+      {/* Simple Button */}
+      &lt;Button
+        title="Refill Medication"
+        onPress={onRefill}
+        color="#3498db"
+      />
+      
+      {/* TouchableOpacity */}
+      &lt;TouchableOpacity
+        style={styles.takeButton}
+        onPress={onTake}
+        activeOpacity={0.7}
+      >
+        &lt;Text style={styles.buttonText}>Take Medication&lt;/Text>
+      &lt;/TouchableOpacity>
+      
+      {/* Modern Pressable */}
+      &lt;Pressable
+        style={({ pressed }) => [
+          styles.infoButton,
+          pressed && styles.buttonPressed
+        ]}
+        onPress={() => console.log('Info pressed')}
+      >
+        &lt;Text style={styles.infoText}>View Information&lt;/Text>
+      &lt;/Pressable>
+    &lt;/View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 12,
+  },
+  takeButton: {
+    backgroundColor: '#2ecc71',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  infoButton: {
+    borderWidth: 1,
+    borderColor: '#3498db',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonPressed: {
+    backgroundColor: '#e6f7ff',
+  },
+  infoText: {
+    color: '#3498db',
+    fontSize: 14,
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Best Practice</div>
+        <p>Pressable is the newest and most flexible touchable component, offering the most control over interaction states.</p>
+      </div>
+    </section>
+    
+    <!-- ScrollView Component Slide -->
+    <section class="slide content-slide">
+      <h2>ScrollView Component</h2>
+      <p>ScrollView provides scrolling capabilities for content that exceeds screen size:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>horizontal</strong>: Horizontal scrolling</li>
+            <li><strong>showsVerticalScrollIndicator</strong>: Show scroll bars</li>
+            <li><strong>contentContainerStyle</strong>: Style the content</li>
+            <li><strong>refreshControl</strong>: Add pull-to-refresh</li>
+            <li><strong>pagingEnabled</strong>: Page-based scrolling</li>
+            <li><strong>keyboardShouldPersistTaps</strong>: Keyboard behavior</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  RefreshControl
+} from 'react-native';
+
+const MedicationDetails = ({ medication }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    // Fetch updated medication data
+    setTimeout(() => setRefreshing(false), 2000);
+  }, []);
+
+  return (
+    &lt;ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        &lt;RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={['#3498db']}
+        />
+      }
+    >
+      &lt;Text style={styles.name}>{medication.name}&lt;/Text>
+      &lt;Text style={styles.dosage}>{medication.dosage}&lt;/Text>
+      
+      &lt;View style={styles.section}>
+        &lt;Text style={styles.sectionTitle}>Description&lt;/Text>
+        &lt;Text>{medication.description}&lt;/Text>
+      &lt;/View>
+      
+      &lt;View style={styles.section}>
+        &lt;Text style={styles.sectionTitle}>Side Effects&lt;/Text>
+        &lt;Text>{medication.sideEffects}&lt;/Text>
+      &lt;/View>
+      
+      &lt;View style={styles.section}>
+        &lt;Text style={styles.sectionTitle}>Precautions&lt;/Text>
+        &lt;Text>{medication.precautions}&lt;/Text>
+      &lt;/View>
+    &lt;/ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    padding: 16,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  dosage: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 16,
+  },
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#333',
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Performance Note</div>
+        <p>ScrollView renders all its content at once, which can lead to performance issues with large lists. For long lists, use FlatList instead.</p>
+      </div>
+    </section>
+    
+    <!-- FlatList Component Slide -->
+    <section class="slide content-slide">
+      <h2>FlatList Component</h2>
+      <p>FlatList efficiently renders large lists by only rendering items visible on screen:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Properties</h3>
+          <ul>
+            <li><strong>data</strong>: Array of data to render</li>
+            <li><strong>renderItem</strong>: Render each item</li>
+            <li><strong>keyExtractor</strong>: Generate unique keys</li>
+            <li><strong>ItemSeparatorComponent</strong>: Render separators</li>
+            <li><strong>ListHeaderComponent/Footer</strong>: Header/footer</li>
+            <li><strong>onRefresh/refreshing</strong>: Pull to refresh</li>
+            <li><strong>onEndReached</strong>: Called when end reached</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity
+} from 'react-native';
+
+const MedicationList = ({ medications, onSelect }) => {
+  const renderItem = ({ item }) => (
+    &lt;TouchableOpacity
+      style={styles.item}
+      onPress={() => onSelect(item)}
+    >
+      &lt;View>
+        &lt;Text style={styles.name}>{item.name}&lt;/Text>
+        &lt;Text style={styles.dosage}>{item.dosage}&lt;/Text>
+        &lt;Text style={styles.schedule}>{item.schedule}&lt;/Text>
+      &lt;/View>
+    &lt;/TouchableOpacity>
+  );
+  
+  const renderSeparator = () => (
+    &lt;View style={styles.separator} />
+  );
+  
+  const renderHeader = () => (
+    &lt;View style={styles.header}>
+      &lt;Text style={styles.headerText}>Your Medications&lt;/Text>
+    &lt;/View>
+  );
+
+  return (
+    &lt;FlatList
+      data={medications}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={renderSeparator}
+      ListHeaderComponent={renderHeader}
+      contentContainerStyle={styles.list}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  list: {
+    padding: 16,
+  },
+  header: {
+    marginBottom: 16,
+  },
+  headerText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  item: {
+    paddingVertical: 12,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  dosage: {
+    fontSize: 16,
+    color: '#666',
+  },
+  schedule: {
+    fontSize: 14,
+    color: '#888',
+    marginTop: 4,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#eee',
+  },
+});</code></pre>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">When to Use FlatList</div>
+        <p>Use FlatList when rendering lists with many items (10+) or an unknown number of items (like data from an API).</p>
+      </div>
+    </section>
+    
+    <!-- Other Core Components Slide -->
+    <section class="slide content-slide">
+      <h2>Other Important Components</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>ActivityIndicator</h3>
+          <p>Shows a loading spinner:</p>
+          <pre><code class="jsx">import { ActivityIndicator } from 'react-native';
+
+// Simple usage
+&lt;ActivityIndicator size="large" color="#3498db" />
+
+// With loading state
+{isLoading ? (
+  &lt;ActivityIndicator size="small" color="#999" />
+) : (
+  &lt;Text>Data loaded&lt;/Text>
+)}</code></pre>
+          
+          <h3>Switch</h3>
+          <p>Toggle switch component:</p>
+          <pre><code class="jsx">import { Switch } from 'react-native';
+
+// Controlled component
+&lt;Switch
+  value={isEnabled}
+  onValueChange={setIsEnabled}
+  trackColor={{ false: '#767577', true: '#81b0ff' }}
+  thumbColor={isEnabled ? '#3498db' : '#f4f3f4'}
+/></code></pre>
+        </div>
+        <div class="column">
+          <h3>Modal</h3>
+          <p>Presents content above the current screen:</p>
+          <pre><code class="jsx">import { Modal, View, Text } from 'react-native';
+
+&lt;Modal
+  visible={modalVisible}
+  animationType="slide"
+  transparent={true}
+  onRequestClose={() => setModalVisible(false)}
+>
+  &lt;View style={styles.modalContainer}>
+    &lt;View style={styles.modalContent}>
+      &lt;Text>Medication details&lt;/Text>
+    &lt;/View>
+  &lt;/View>
+&lt;/Modal></code></pre>
+
+          <h3>Alert</h3>
+          <p>Show native alert dialogs:</p>
+          <pre><code class="jsx">import { Alert } from 'react-native';
+
+// Simple alert
+Alert.alert(
+  "Medication Reminder",
+  "Time to take your medication!",
+  [
+    { text: "Dismiss", style: "cancel" },
+    { text: "Take Now", onPress: () => markAsTaken() }
+  ]
+);</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Component Selection Guidelines Slide -->
+    <section class="slide content-slide">
+      <h2>Component Selection Guidelines</h2>
+      <p>How to choose the right component for your UI needs:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>For Layout</h3>
+          <ul>
+            <li><strong>View</strong>: General containers and layouts</li>
+            <li><strong>ScrollView</strong>: Scrollable content (moderate size)</li>
+            <li><strong>FlatList/SectionList</strong>: Long lists of data</li>
+            <li><strong>SafeAreaView</strong>: Content inside safe area (notch)</li>
+          </ul>
+          
+          <h3>For User Input</h3>
+          <ul>
+            <li><strong>TextInput</strong>: Text entry</li>
+            <li><strong>Switch</strong>: Boolean toggles</li>
+            <li><strong>Pressable/TouchableOpacity</strong>: Custom buttons</li>
+            <li><strong>Button</strong>: Simple platform buttons</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>For Display</h3>
+          <ul>
+            <li><strong>Text</strong>: Any textual content</li>
+            <li><strong>Image</strong>: Photos and icons</li>
+            <li><strong>ImageBackground</strong>: Background images</li>
+          </ul>
+          
+          <h3>For Utility</h3>
+          <ul>
+            <li><strong>ActivityIndicator</strong>: Loading states</li>
+            <li><strong>Modal</strong>: Overlay content</li>
+            <li><strong>Alert</strong>: System alerts</li>
+            <li><strong>StatusBar</strong>: Customize status bar</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Component Philosophy</div>
+        <p>Start with the simplest component that meets your needs, then add complexity as required. Compose components to create more complex UI patterns.</p>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices</h2>
+      <ul>
+        <li><strong>Component Composition</strong>: Create reusable UI components by composing core components</li>
+        <li><strong>Proper Nesting</strong>: Always put text in Text components, not directly in View</li>
+        <li><strong>Consistent Styling</strong>: Use a consistent styling approach across your app</li>
+        <li><strong>Performance Awareness</strong>: Use FlatList for long lists instead of ScrollView</li>
+        <li><strong>Accessibility</strong>: Add accessibility props like accessibilityLabel and accessibilityHint</li>
+        <li><strong>Platform Adaptation</strong>: Test on both iOS and Android and adapt as needed</li>
+        <li><strong>Error Handling</strong>: Add appropriate error handling for images and network requests</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Practical Tip</div>
+        <p>Start by building a component library of common UI elements specific to your pharmaceutical app (pill displays, dosage indicators, etc.) using these core components as building blocks.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Pharmacy Component Playground</h2>
+      <p>In this exercise, you'll practice implementing a variety of React Native core components by creating parts of a pharmacy app:</p>
+      <ol>
+        <li>Create a medication card using View, Text, and Image</li>
+        <li>Implement a search bar with TextInput</li>
+        <li>Build interactive buttons using different Touchable components</li>
+        <li>Display a scrollable list of medications using ScrollView</li>
+        <li>Use a FlatList to show a more efficient medication list</li>
+      </ol>
+      <p>The exercise will be available in your workspace after this session.</p>
+      <div class="callout tip">
+        <div class="callout-title">Exercise Preparation</div>
+        <p>Review the code examples from this section, as you'll apply many of the same patterns in the exercise.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>React Native provides a set of core components that map to native UI elements</li>
+        <li>View is the fundamental building block for layout and container needs</li>
+        <li>Text is required for displaying any textual content</li>
+        <li>Image displays images from various sources with sizing controls</li>
+        <li>TextInput allows for user text entry with multiple configuration options</li>
+        <li>Touchable components provide different feedback types for user interaction</li>
+        <li>ScrollView and FlatList provide solutions for scrollable content</li>
+        <li>Component composition is key to building complex, reusable UI patterns</li>
+      </ul>
+      <div class="next-steps">
+        <p>Next: Section 2: Styling Fundamentals</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
