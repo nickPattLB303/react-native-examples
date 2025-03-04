@@ -500,6 +500,222 @@ function ParentComponent() {
 
 > 🚀 **Self-Led Learners**: Experiment with combining state and props by building a more complex component, such as a medication tracker that allows adding, removing, and toggling the active status of medications.
 
+## Practice Exercise: Simple Medication Tracker
+
+### Objective
+Build a simple medication tracker component with state management, applying the useState hook and implementing state management best practices.
+
+### Duration
+20-30 minutes
+
+### Exercise Description
+
+In this exercise, you'll implement a basic medication tracking application that allows users to add medications to a list and toggle their status.
+
+#### Requirements
+
+You'll create the following components:
+
+1. **MedicationTracker**: The main component that manages the medication list state
+2. **MedicationForm**: A form component for adding new medications 
+3. **MedicationItem**: A component to display a single medication with actions
+
+#### Implementation Steps
+
+##### 1. Set Up Basic State Structure
+
+First, determine what state you need to track:
+
+```jsx
+function MedicationTracker() {
+  // State for the medication list
+  const [medications, setMedications] = useState([
+    {
+      id: '1',
+      name: 'Lisinopril',
+      dosage: '10mg',
+      schedule: 'Daily',
+      isActive: true
+    },
+    {
+      id: '2',
+      name: 'Metformin',
+      dosage: '500mg',
+      schedule: 'Twice daily',
+      isActive: true
+    }
+  ]);
+  
+  // Rest of the component...
+}
+```
+
+##### 2. Implement MedicationForm Component
+
+Create a form component to add new medications:
+
+```jsx
+function MedicationForm({ onAddMedication }) {
+  // State for form inputs
+  const [name, setName] = useState('');
+  const [dosage, setDosage] = useState('');
+  const [schedule, setSchedule] = useState('Daily');
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!name || !dosage) return; // Basic validation
+    
+    // Generate a unique ID
+    const newMedication = {
+      id: Date.now().toString(),
+      name,
+      dosage,
+      schedule,
+      isActive: true
+    };
+    
+    onAddMedication(newMedication);
+    
+    // Reset form
+    setName('');
+    setDosage('');
+    setSchedule('Daily');
+  };
+
+  // Form JSX
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Medication Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Dosage"
+        value={dosage}
+        onChange={(e) => setDosage(e.target.value)}
+        required
+      />
+      <select 
+        value={schedule} 
+        onChange={(e) => setSchedule(e.target.value)}
+      >
+        <option value="Daily">Daily</option>
+        <option value="Twice daily">Twice daily</option>
+        <option value="As needed">As needed</option>
+      </select>
+      <button type="submit">Add Medication</button>
+    </form>
+  );
+}
+```
+
+##### 3. Implement MedicationItem Component
+
+Create a component to display a single medication:
+
+```jsx
+function MedicationItem({ medication, onToggleStatus, onDelete }) {
+  return (
+    <div className={`medication-item ${medication.isActive ? 'active' : 'inactive'}`}>
+      <h3>{medication.name}</h3>
+      <p>Dosage: {medication.dosage}</p>
+      <p>Schedule: {medication.schedule}</p>
+      <p>Status: {medication.isActive ? 'Active' : 'Inactive'}</p>
+      
+      <button onClick={() => onToggleStatus(medication.id)}>
+        {medication.isActive ? 'Mark as Inactive' : 'Mark as Active'}
+      </button>
+      
+      <button onClick={() => onDelete(medication.id)}>
+        Delete
+      </button>
+    </div>
+  );
+}
+```
+
+##### 4. Implement Main MedicationTracker Component
+
+Combine all components and implement state management functions:
+
+```jsx
+function MedicationTracker() {
+  // State as defined earlier
+  // ...
+  
+  // Add a new medication
+  const addMedication = (medication) => {
+    setMedications([...medications, medication]);
+  };
+  
+  // Toggle a medication's status
+  const toggleMedicationStatus = (id) => {
+    setMedications(medications.map(med => {
+      if (med.id === id) {
+        return { ...med, isActive: !med.isActive };
+      }
+      return med;
+    }));
+  };
+  
+  // Delete a medication
+  const deleteMedication = (id) => {
+    setMedications(medications.filter(med => med.id !== id));
+  };
+  
+  // Render the components
+  return (
+    <div className="medication-tracker">
+      <h1>Medication Tracker</h1>
+      
+      <MedicationForm onAddMedication={addMedication} />
+      
+      <div className="medication-list">
+        {medications.length === 0 ? (
+          <p>No medications found.</p>
+        ) : (
+          medications.map(medication => (
+            <MedicationItem
+              key={medication.id}
+              medication={medication}
+              onToggleStatus={toggleMedicationStatus}
+              onDelete={deleteMedication}
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+### Deliverables
+
+1. Functional medication tracker application with useState for state management
+2. Components that demonstrate proper state usage and updates
+3. Ability to add, toggle status, and delete medications
+
+### Bonus Challenges
+
+If you finish early, try implementing these enhancements:
+
+1. **Filtering**: Add filter controls to show active or inactive medications
+2. **useReducer**: Refactor the application to use useReducer instead of useState
+3. **Local Storage**: Persist the medications using localStorage (web) or AsyncStorage (React Native)
+
+### Tips
+
+- Keep components focused on a single responsibility
+- Use functional updates when new state depends on previous state
+- Avoid direct mutations of state objects
+- Consider which state should be local vs. lifted up
+
 ## State Management Beyond Hooks
 
 For larger applications, you might need more sophisticated state management solutions:

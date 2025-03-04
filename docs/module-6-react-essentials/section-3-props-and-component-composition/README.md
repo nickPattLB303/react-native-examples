@@ -384,3 +384,151 @@ The concept of props is identical between React for the web and React Native, wi
 > - iOS: Properties and initializer parameters for UIViews or SwiftUI views
 
 In the next section, we'll build on our understanding of props by exploring state and hooks, which allow components to manage their own data and respond to user interactions. 
+
+## Practice Exercise: Building a Component Library
+
+### Objective
+Create a set of reusable components for a medication tracking app, focusing on proper props usage and component composition patterns.
+
+### Duration
+25-30 minutes
+
+### Exercise Description
+
+In this exercise, you'll build a small component library for a medication tracking application. You'll practice passing props between components, implementing prop validation, and using different component composition patterns.
+
+#### Requirements
+
+You'll create the following components:
+
+1. **Button**: A reusable button component with different variants
+2. **Card**: A container component that uses the children prop
+
+#### Implementation Steps
+
+##### 1. Button Component
+
+Create a flexible Button component that:
+- Accepts `type` (primary, secondary, danger), `size` (small, medium, large), `onPress`, and `children` props
+- Renders a button with different styles based on the type and size
+- Handles the onPress event
+- Includes prop validation
+
+```jsx
+import PropTypes from 'prop-types';
+// For React Native:
+// import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+function Button({ type = 'primary', size = 'medium', onPress, children }) {
+  // Implement button styles based on type and size
+  // For web:
+  const buttonStyle = {
+    // Base styles
+    padding: size === 'small' ? '4px 8px' : size === 'medium' ? '8px 16px' : '12px 24px',
+    borderRadius: '4px',
+    border: 'none',
+    cursor: 'pointer',
+    // Type-specific styles
+    backgroundColor: 
+      type === 'primary' ? '#007bff' : 
+      type === 'secondary' ? '#6c757d' : 
+      '#dc3545', // danger
+    color: 'white',
+  };
+  
+  return (
+    <button style={buttonStyle} onClick={onPress}>
+      {children}
+    </button>
+  );
+}
+
+Button.propTypes = {
+  type: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  onPress: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+```
+
+##### 2. Card Component
+
+Create a Card component that:
+- Accepts `title`, `footer`, and `children` props
+- Renders a card with a header (title), content (children), and optional footer
+- Uses composition to create a flexible container
+
+```jsx
+import PropTypes from 'prop-types';
+
+function Card({ title, footer, children }) {
+  // Implement your Card component
+  const cardStyle = {
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    margin: '16px 0',
+  };
+  
+  const headerStyle = {
+    backgroundColor: '#f8f9fa',
+    padding: '12px 16px',
+    borderBottom: '1px solid #ddd',
+  };
+  
+  const contentStyle = {
+    padding: '16px',
+  };
+  
+  const footerStyle = {
+    backgroundColor: '#f8f9fa',
+    padding: '12px 16px',
+    borderTop: '1px solid #ddd',
+  };
+  
+  return (
+    <div style={cardStyle}>
+      {title && (
+        <div style={headerStyle}>
+          <h3 style={{ margin: 0 }}>{title}</h3>
+        </div>
+      )}
+      <div style={contentStyle}>
+        {children}
+      </div>
+      {footer && (
+        <div style={footerStyle}>
+          {footer}
+        </div>
+      )}
+    </div>
+  );
+}
+
+Card.propTypes = {
+  title: PropTypes.string,
+  footer: PropTypes.node,
+  children: PropTypes.node.isRequired,
+};
+```
+
+### Deliverables
+
+1. Implement the Button and Card components with appropriate props and validation
+2. Create examples of component composition using your library
+
+### Bonus Challenges
+
+If you finish early, try implementing these additional components:
+
+1. **Specialized Button Components**: Create PrimaryButton and DangerButton components using composition
+2. **MedicationCard**: A specialized component built from Card and Button components to display medication details
+3. **Render Props Pattern**: Implement a component that uses the render props pattern
+
+### Tips
+
+- Focus on making your components reusable and generic where appropriate
+- Use default prop values to make components easier to use
+- Consider which props are required vs. optional
+- Think about the component API from the user's perspective
+- Follow the principle of "composition over inheritance" 

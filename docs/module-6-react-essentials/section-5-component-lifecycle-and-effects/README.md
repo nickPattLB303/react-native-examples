@@ -712,4 +712,275 @@ function AppStateMonitor() {
    }, [someCondition]);
    ```
 
+## Practice Exercise: Medication Reminder with Effects
+
+### Objective
+Build a simple medication reminder component that demonstrates understanding of the component lifecycle and side effects with useEffect.
+
+### Duration
+20-30 minutes
+
+### Exercise Description
+
+In this exercise, you'll implement a basic medication reminder component that fetches medication data and manages a timer for checking due medications.
+
+#### Requirements
+
+You'll implement the following functionality:
+
+1. **Data Fetching**: Fetch medication data from a simulated API
+2. **Reminder Timer**: Implement a timer that checks for due medications
+3. **Custom Hook**: Extract reminder logic into a custom hook
+
+#### Implementation Steps
+
+##### 1. Set Up the MedicationReminder Component
+
+Start by creating the main component structure:
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function MedicationReminder() {
+  // State for medications and settings
+  const [medications, setMedications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [remindersEnabled, setRemindersEnabled] = useState(true);
+  
+  // Component implementation will go here
+  
+  return (
+    <div className="medication-reminder">
+      <h1>Medication Reminders</h1>
+      
+      {/* Loading and error states */}
+      {isLoading && <p>Loading medications...</p>}
+      {error && <p className="error">Error: {error}</p>}
+      
+      {/* Settings section */}
+      <div className="reminder-settings">
+        <h2>Reminder Settings</h2>
+        <label>
+          Enable Reminders:
+          <input
+            type="checkbox"
+            checked={remindersEnabled}
+            onChange={(e) => setRemindersEnabled(e.target.checked)}
+          />
+        </label>
+      </div>
+      
+      {/* Medications list */}
+      <div className="medications-list">
+        <h2>Your Medications</h2>
+        {medications.length === 0 ? (
+          <p>No medications scheduled.</p>
+        ) : (
+          <ul>
+            {medications.map(med => (
+              <li key={med.id}>
+                <strong>{med.name}</strong> - {med.dosage}
+                <p>Next dose: {formatNextDose(med.nextDose)}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Helper function to format dates
+function formatNextDose(dateString) {
+  if (!dateString) return 'Not scheduled';
+  
+  const date = new Date(dateString);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+```
+
+##### 2. Implement Data Fetching with useEffect
+
+Add the effect to fetch medication data:
+
+```jsx
+// Inside MedicationReminder component
+
+// Simulate an API fetch
+const fetchMedications = async () => {
+  // In a real app, this would be an API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        {
+          id: '1',
+          name: 'Lisinopril',
+          dosage: '10mg',
+          schedule: 'Daily',
+          nextDose: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
+        },
+        {
+          id: '2',
+          name: 'Metformin',
+          dosage: '500mg',
+          schedule: 'Twice daily',
+          nextDose: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(), // 5 hours from now
+        },
+        {
+          id: '3',
+          name: 'Aspirin',
+          dosage: '81mg',
+          schedule: 'Daily',
+          nextDose: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
+        }
+      ]);
+    }, 1000); // Simulate network delay
+  });
+};
+
+// Data fetching effect
+useEffect(() => {
+  let isMounted = true;
+  
+  const loadMedications = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await fetchMedications();
+      
+      // Only update state if component is still mounted
+      if (isMounted) {
+        setMedications(data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      if (isMounted) {
+        setError(err.message || 'Failed to fetch medications');
+        setIsLoading(false);
+      }
+    }
+  };
+  
+  loadMedications();
+  
+  // Cleanup function
+  return () => {
+    isMounted = false;
+  };
+}, []); // Empty dependency array -> run only on mount
+```
+
+##### 3. Implement Reminder Timer with useEffect
+
+Add an effect to check for medications that need to be taken:
+
+```jsx
+// Inside MedicationReminder component
+
+// Reminder timer effect
+useEffect(() => {
+  // Skip if reminders are disabled or no medications
+  if (!remindersEnabled || medications.length === 0) return;
+  
+  console.log('Setting up reminder timer');
+  
+  // Set up the interval
+  const intervalId = setInterval(() => {
+    const now = new Date();
+    
+    // Check each medication
+    medications.forEach(med => {
+      const nextDose = new Date(med.nextDose);
+      
+      // If the next dose is due (or overdue), show a reminder
+      if (nextDose <= now) {
+        alert(`Time to take your ${med.name} (${med.dosage})!`);
+      }
+    });
+  }, 60 * 1000); // Check every minute
+  
+  // Cleanup function
+  return () => {
+    console.log('Cleaning up reminder timer');
+    clearInterval(intervalId);
+  };
+}, [medications, remindersEnabled]); // Dependencies
+```
+
+##### 4. Create a Custom Hook (Bonus)
+
+Extract the reminder logic into a custom hook:
+
+```jsx
+// In a separate file or above the component
+function useReminderTimer(medications, enabled) {
+  const [dueReminders, setDueReminders] = useState([]);
+  
+  useEffect(() => {
+    if (!enabled || medications.length === 0) return;
+    
+    const checkReminders = () => {
+      const now = new Date();
+      const due = medications.filter(med => new Date(med.nextDose) <= now);
+      
+      if (due.length > 0) {
+        setDueReminders(due);
+      }
+    };
+    
+    // Check immediately
+    checkReminders();
+    
+    // Then set up interval
+    const intervalId = setInterval(checkReminders, 60 * 1000);
+    
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [medications, enabled]);
+  
+  return dueReminders;
+}
+
+// Use the custom hook in the component
+function MedicationReminder() {
+  // Earlier state definitions...
+  
+  // Use the custom hook
+  const dueReminders = useReminderTimer(medications, remindersEnabled);
+  
+  // Effect to show alerts for due reminders
+  useEffect(() => {
+    dueReminders.forEach(med => {
+      // Show alert for each due reminder
+      alert(`Time to take your ${med.name} (${med.dosage})!`);
+    });
+  }, [dueReminders]);
+  
+  // Rest of the component...
+}
+```
+
+### Deliverables
+
+1. MedicationReminder component with data fetching and timer functionality
+2. Proper use of useEffect with cleanup functions
+3. Optional: Custom hook for reminder logic
+
+### Bonus Challenges
+
+If you finish early, try implementing these enhancements:
+
+1. **Settings Persistence**: Save and load reminder settings using localStorage
+2. **Sorting**: Sort medications by next dose time using useMemo
+3. **Countdown**: Display a countdown timer to the next medication dose
+
+### Tips
+
+- Focus on the cleanup functions in your effects to prevent memory leaks
+- Use the effect dependency array carefully to avoid infinite loops
+- Consider edge cases like what happens if the component unmounts during a fetch
+- Remember that effects run after render, not during it
+
 In this section, we've explored React's component lifecycle and how to handle side effects with the `useEffect` hook. We've also looked at the Context API for sharing state across components and additional hooks for performance optimization. These concepts form the foundation for building sophisticated React and React Native applications that manage state, handle side effects, and optimize performance effectively. 

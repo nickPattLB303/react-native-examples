@@ -352,3 +352,107 @@ Most React Native applications built today use functional components with hooks,
 > - iOS: SwiftUI views with @State and other property wrappers
 
 In the next section, we'll explore props and component composition patterns in more detail, focusing on how data flows through a React application. 
+
+## Practice Exercise: Creating Components
+
+### Objective
+Practice creating functional components for a medication tracking app, applying JSX syntax, conditional rendering, and list rendering patterns.
+
+### Duration
+20-30 minutes
+
+### Exercise Description
+
+In this exercise, you'll implement a set of React components for a medication tracking application. You'll create several components with different responsibilities and make them work together.
+
+#### Requirements
+
+You'll create the following components:
+
+1. **MedicationHeader**: Displays a title and a small description
+2. **StatusBadge**: Shows the status of a medication (taken, pending, skipped)
+3. **MedicationItem**: Displays information about a single medication and uses the StatusBadge component
+4. **MedicationList**: Renders multiple MedicationItem components
+
+#### Sample Data
+
+Use this sample data for your implementation:
+
+```jsx
+// Sample medication data
+const medications = [
+  { id: '1', name: 'Aspirin', dosage: '100mg', schedule: 'Daily', status: 'active' },
+  { id: '2', name: 'Ibuprofen', dosage: '200mg', schedule: 'As needed', status: 'low' },
+  { id: '3', name: 'Amoxicillin', dosage: '500mg', schedule: 'Twice daily', status: 'inactive' },
+];
+```
+
+#### Implementation Steps
+
+1. **MedicationHeader Component**
+
+Create a component that:
+- Accepts `title` and `description` props
+- Renders the title in an h1 tag
+- Renders the description in a paragraph tag
+
+```jsx
+function MedicationHeader({ title, description }) {
+  return (
+    <div>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+  );
+}
+```
+
+2. **StatusBadge Component**
+
+Create a component that:
+- Accepts a `status` prop
+- Renders different text/styling based on the status value
+- Implements conditional rendering based on the status
+
+3. **MedicationItem Component**
+
+Create a component that:
+- Accepts a `medication` object as a prop
+- Displays the medication name, dosage, and schedule
+- Uses the StatusBadge component to display the status
+
+4. **MedicationList Component**
+
+Create a component that:
+- Accepts an array of `medications` as a prop
+- Maps over the array to render a MedicationItem for each medication
+- Adds proper keys to the list items
+- Handles the empty list case
+
+### Deliverables
+
+Create a file with the 4 components implemented as described above.
+
+### Bonus Challenges
+
+If you finish early, try these extra challenges:
+
+1. Add the ability to filter medications by status
+2. Implement a search input that filters medications by name
+3. Use React.Fragment where appropriate to avoid unnecessary wrapper divs
+
+### Evaluation Criteria
+
+- Correct implementation of functional components
+- Proper use of JSX syntax
+- Effective use of conditional rendering patterns
+- Correct implementation of list rendering with keys
+- Appropriate component composition
+
+### Tips
+
+- Remember to follow React naming conventions (PascalCase for components)
+- Use destructuring for props where appropriate
+- Consider what should be conditional vs. what should always render
+- Remember to include key props when rendering lists
+- Consider which components should be presentational (receive props) vs. which might need state 
