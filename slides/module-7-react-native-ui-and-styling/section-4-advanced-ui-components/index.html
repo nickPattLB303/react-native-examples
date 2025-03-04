@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Advanced UI Components | Module 7 | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>Advanced UI Components</h2>
+      <p class="metadata">Module 7: React Native UI and Styling | 1.5-2 hours</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement advanced UI components for lists, forms, and navigation</li>
+        <li>Customize and style complex interactive components</li>
+        <li>Create reusable UI component libraries for consistent design</li>
+        <li>Choose the appropriate component for different UI requirements</li>
+        <li>Implement platform-specific component variations</li>
+      </ul>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Advanced UI Components</h2>
+      <p>Building modern mobile applications requires sophisticated UI elements beyond basic components.</p>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Why Advanced Components?</h3>
+          <ul>
+            <li>Improved user experience</li>
+            <li>Consistent design language</li>
+            <li>Better performance for complex interfaces</li>
+            <li>Code reusability and maintainability</li>
+            <li>Support for complex interaction patterns</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Categories We'll Cover</h3>
+          <ul>
+            <li><strong>List Components</strong>: FlatList, SectionList</li>
+            <li><strong>Form Components</strong>: Validated inputs, Custom pickers</li>
+            <li><strong>Interactive Components</strong>: Checkboxes, Switches</li>
+            <li><strong>Card Components</strong>: Info cards, Content containers</li>
+            <li><strong>Component Libraries</strong>: Building a theme system</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="callout info">
+        <div class="callout-title">Pharmaceutical Application Focus</div>
+        <p>Throughout this section, we'll implement components particularly useful for pharmaceutical applications, such as medication lists, dosage forms, and reminder interfaces.</p>
+      </div>
+    </section>
+    
+    <!-- FlatList Slide -->
+    <section class="slide content-slide">
+      <h2>List Components: FlatList</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li><strong>Performance optimized</strong> for large lists</li>
+            <li>Only renders items currently visible ("windowing")</li>
+            <li>Built-in support for pull-to-refresh</li>
+            <li>Handles item separators elegantly</li>
+            <li>Supports headers and footers</li>
+            <li>Easy pagination with <code>onEndReached</code></li>
+          </ul>
+          
+          <h3>Key Properties</h3>
+          <ul>
+            <li><code>data</code>: Array of items to display</li>
+            <li><code>renderItem</code>: Function to render each item</li>
+            <li><code>keyExtractor</code>: Function to extract unique keys</li>
+            <li><code>ItemSeparatorComponent</code>: Component between items</li>
+            <li><code>ListHeaderComponent</code>: Header component</li>
+            <li><code>ListFooterComponent</code>: Footer component</li>
+            <li><code>onEndReached</code>: Called when end of list is reached</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+
+const MedicationList = () => {
+  const medications = [
+    { id: '1', name: 'Lisinopril', dosage: '10mg', 
+      schedule: 'Once daily' },
+    { id: '2', name: 'Metformin', dosage: '500mg', 
+      schedule: 'Twice daily' },
+    { id: '3', name: 'Atorvastatin', dosage: '20mg', 
+      schedule: 'Once daily' },
+    // More medications...
+  ];
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.medicationName}>{item.name}</Text>
+      <Text style={styles.medicationDetails}>
+        {item.dosage} - {item.schedule}
+      </Text>
+    </View>
+  );
+
+  return (
+    <FlatList
+      data={medications}
+      renderItem={renderItem}
+      keyExtractor={item => item.id}
+      contentContainerStyle={styles.list}
+    />
+  );
+};</code></pre>
+        </div>
+      </div>
+      
+      <div class="callout tip">
+        <div class="callout-title">Performance Tip</div>
+        <p>Always provide a <code>keyExtractor</code> that returns a stable, unique string for each item to optimize rendering performance.</p>
+      </div>
+    </section>
+    
+    <!-- SectionList Slide -->
+    <section class="slide content-slide">
+      <h2>List Components: SectionList</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Renders data in sections with headers</li>
+            <li>Perfect for categorized data</li>
+            <li>Same performance optimizations as FlatList</li>
+            <li>Supports sticky section headers</li>
+            <li>Handles different data shapes elegantly</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Grouping medications by category</li>
+            <li>Organizing prescriptions by doctor</li>
+            <li>Displaying medications by time of day</li>
+            <li>Categorizing by active/inactive status</li>
+          </ul>
+          
+          <h3>Key Properties</h3>
+          <ul>
+            <li><code>sections</code>: Array of section objects</li>
+            <li><code>renderItem</code>: Function to render each item</li>
+            <li><code>renderSectionHeader</code>: Function to render section headers</li>
+            <li><code>stickySectionHeadersEnabled</code>: Boolean for sticky headers</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import { SectionList, View, Text, StyleSheet } from 'react-native';
+
+const MedicationsByCategory = () => {
+  const DATA = [
+    {
+      title: 'Heart Medications',
+      data: [
+        { id: '1', name: 'Lisinopril', dosage: '10mg' },
+        { id: '2', name: 'Metoprolol', dosage: '25mg' },
+      ],
+    },
+    {
+      title: 'Diabetic Medications',
+      data: [
+        { id: '3', name: 'Metformin', dosage: '500mg' },
+        { id: '4', name: 'Glipizide', dosage: '5mg' },
+      ],
+    },
+    {
+      title: 'Cholesterol Medications',
+      data: [
+        { id: '5', name: 'Atorvastatin', dosage: '20mg' },
+        { id: '6', name: 'Rosuvastatin', dosage: '10mg' },
+      ],
+    },
+  ];
+
+  return (
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.item}>
+          <Text style={styles.medicationName}>{item.name}</Text>
+          <Text style={styles.medicationDosage}>{item.dosage}</Text>
+        </View>
+      )}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.sectionHeader}>{title}</Text>
+      )}
+      contentContainerStyle={styles.list}
+    />
+  );
+};</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TextInput with Validation Slide -->
+    <section class="slide content-slide">
+      <h2>Form Components: TextInput with Validation</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Real-time validation feedback</li>
+            <li>Visual indication of input state</li>
+            <li>Error messages for invalid input</li>
+            <li>Support for different input types</li>
+            <li>Customizable validation rules</li>
+          </ul>
+          
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Uses React's <code>useState</code> for tracking input state</li>
+            <li>Validates on blur for better user experience</li>
+            <li>Custom validator function passed as prop</li>
+            <li>Supports all TextInput props</li>
+            <li>Styled error states</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Dosage input with format validation</li>
+            <li>Prescription number validation</li>
+            <li>Date format validation for refills</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+
+const ValidatedInput = ({ 
+  label, 
+  placeholder, 
+  value, 
+  onChangeText, 
+  validator, 
+  errorMessage,
+  keyboardType = 'default',
+  secureTextEntry = false,
+}) => {
+  const [touched, setTouched] = useState(false);
+  const isValid = !validator || validator(value);
+  const showError = touched && !isValid;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput
+        style={[
+          styles.input,
+          showError && styles.inputError
+        ]}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+        onBlur={() => setTouched(true)}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+      />
+      {showError && (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      )}
+    </View>
+  );
+};</code></pre>
+          
+          <div class="callout info" style="margin-top: 10px">
+            <div class="callout-title">Example Usage</div>
+            <pre><code class="jsx">// For dosage validation
+const validateDosage = (value) => {
+  // Must be a number followed by units (mg, ml, etc.)
+  return /^\d+(\.\d+)?\s*(mg|ml|g|mcg)$/i.test(value);
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Custom Picker Slide -->
+    <section class="slide content-slide">
+      <h2>Form Components: Custom Picker</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Enhanced styling over default picker</li>
+            <li>Modal-based selection interface</li>
+            <li>Visual feedback for selected item</li>
+            <li>Customizable appearance</li>
+            <li>Better cross-platform consistency</li>
+          </ul>
+          
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Uses <code>Modal</code> for the selection interface</li>
+            <li>FlatList for rendering options</li>
+            <li>Visual indication of selected item</li>
+            <li>Support for placeholder text</li>
+            <li>Cancel button for dismissing modal</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Medication frequency selection</li>
+            <li>Pharmacy location picker</li>
+            <li>Doctor/prescriber selection</li>
+            <li>Medication category selection</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Modal, 
+  FlatList, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const CustomPicker = ({ 
+  label, 
+  value, 
+  onValueChange, 
+  items, 
+  placeholder = 'Select an option',
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  const selectedItem = items.find(item => item.value === value);
+  const displayText = selectedItem ? selectedItem.label : placeholder;
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      
+      <TouchableOpacity 
+        style={styles.pickerButton} 
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={[
+          styles.pickerText, 
+          !selectedItem && styles.placeholderText
+        ]}>
+          {displayText}
+        </Text>
+        <Ionicons name="chevron-down" size={20} color="#666" />
+      </TouchableOpacity>
+      
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+      >
+        {/* Modal content with option list */}
+      </Modal>
+    </View>
+  );
+};</code></pre>
+          
+          <div class="callout info" style="margin-top: 10px">
+            <div class="callout-title">Example Usage</div>
+            <pre><code class="jsx">// Medication frequency options
+const frequencyOptions = [
+  { label: 'Once daily', value: 'daily' },
+  { label: 'Twice daily', value: 'twice_daily' },
+  { label: 'Three times daily', value: 'thrice_daily' },
+  { label: 'Every other day', value: 'alternate_days' },
+  { label: 'Weekly', value: 'weekly' },
+];</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Custom Checkbox Slide -->
+    <section class="slide content-slide">
+      <h2>Interactive Components: Custom Checkbox</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Enhanced styling over standard checkbox</li>
+            <li>Support for disabled state</li>
+            <li>Customizable appearance</li>
+            <li>Label integration</li>
+            <li>Touch feedback</li>
+          </ul>
+          
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Built with <code>TouchableOpacity</code> for press handling</li>
+            <li>Uses icon library for checkmark</li>
+            <li>Conditional styling based on state</li>
+            <li>Support for accessibility</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Medication reminder settings</li>
+            <li>Symptom checklists</li>
+            <li>Medication intake tracking</li>
+            <li>Side effect reporting</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const CustomCheckbox = ({ 
+  label, 
+  checked, 
+  onChange, 
+  disabled = false 
+}) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.container,
+        disabled && styles.disabledContainer
+      ]}
+      onPress={() => !disabled && onChange(!checked)}
+      disabled={disabled}
+    >
+      <View style={[
+        styles.checkbox,
+        checked && styles.checked,
+        disabled && styles.disabledCheckbox
+      ]}>
+        {checked && <Ionicons 
+          name="checkmark" 
+          size={16} 
+          color="white" 
+        />}
+      </View>
+      <Text style={[
+        styles.label,
+        disabled && styles.disabledLabel
+      ]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+};</code></pre>
+          
+          <div class="callout info" style="margin-top: 10px">
+            <div class="callout-title">Example Usage</div>
+            <pre><code class="jsx">// Medication reminders
+const MedicationReminders = () => {
+  const [reminders, setReminders] = useState({
+    morning: true,
+    afternoon: false,
+    evening: true,
+    bedtime: false,
+  });
+  
+  const toggleReminder = (time) => {
+    setReminders(prev => ({
+      ...prev,
+      [time]: !prev[time]
+    }));
+  };
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Custom Switch Slide -->
+    <section class="slide content-slide">
+      <h2>Interactive Components: Custom Switch</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Animated toggle with smooth transitions</li>
+            <li>Customizable colors for on/off states</li>
+            <li>Support for disabled state</li>
+            <li>Integrated label</li>
+            <li>Better cross-platform consistency</li>
+          </ul>
+          
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Uses <code>Animated</code> API for smooth transitions</li>
+            <li>Transforms the thumb based on state</li>
+            <li>Customizable track and thumb colors</li>
+            <li>Built with <code>TouchableOpacity</code> for press handling</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Notification settings</li>
+            <li>Medication reminder toggles</li>
+            <li>Privacy settings</li>
+            <li>Feature toggles for medication tracking</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import { TouchableOpacity, View, Text, 
+  Animated, StyleSheet } from 'react-native';
+
+const CustomSwitch = ({ 
+  value, 
+  onValueChange, 
+  label,
+  disabled = false,
+  activeColor = '#4CAF50',
+  inactiveColor = '#f5f5f5'
+}) => {
+  // Animation value for the position of the thumb
+  const thumbPosition = React.useRef(
+    new Animated.Value(value ? 28 : 2)
+  ).current;
+  
+  // Animation function
+  const toggleSwitch = () => {
+    if (disabled) return;
+    
+    Animated.timing(thumbPosition, {
+      toValue: value ? 2 : 28,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+    
+    onValueChange(!value);
+  };
+  
+  return (
+    <TouchableOpacity
+      style={styles.container}
+      onPress={toggleSwitch}
+      disabled={disabled}
+      activeOpacity={0.8}
+    >
+      <Text style={styles.label}>{label}</Text>
+      
+      <View style={[
+        styles.track,
+        { backgroundColor: value ? activeColor : inactiveColor },
+        disabled && styles.disabledTrack
+      ]}>
+        <Animated.View
+          style={[
+            styles.thumb,
+            { transform: [{ translateX: thumbPosition }] }
+          ]}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+};</code></pre>
+        </div>
+      </div>
+      
+      <div class="callout tip">
+        <div class="callout-title">Animation Tip</div>
+        <p>Use the <code>useNativeDriver: true</code> option when possible to offload animations to the native thread for better performance.</p>
+      </div>
+    </section>
+    
+    <!-- Information Card Slide -->
+    <section class="slide content-slide">
+      <h2>Card Components: Information Card</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Structured content presentation</li>
+            <li>Support for icons and visual indicators</li>
+            <li>Action buttons for user interaction</li>
+            <li>Consistent styling across the app</li>
+            <li>Support for both string and component content</li>
+          </ul>
+          
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Header with icon, title, and subtitle</li>
+            <li>Flexible content area</li>
+            <li>Optional action button with callback</li>
+            <li>Customizable styling</li>
+            <li>Elevation and shadows for visual hierarchy</li>
+          </ul>
+          
+          <h3>Pharmaceutical Applications</h3>
+          <ul>
+            <li>Medication information display</li>
+            <li>Prescription details</li>
+            <li>Pharmacy location cards</li>
+            <li>Doctor information</li>
+            <li>Medication interaction warnings</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const InfoCard = ({ 
+  title, 
+  subtitle, 
+  content, 
+  icon,
+  iconColor = '#2196F3',
+  action,
+  actionLabel,
+  onPress,
+  style
+}) => {
+  return (
+    <View style={[styles.card, style]}>
+      <View style={styles.cardHeader}>
+        {icon && (
+          <View style={[styles.iconContainer, 
+            { backgroundColor: iconColor + '20' }]}>
+            <Ionicons name={icon} size={24} color={iconColor} />
+          </View>
+        )}
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+          {subtitle && <Text style={styles.subtitle}>
+            {subtitle}
+          </Text>}
+        </View>
+      </View>
+      
+      <View style={styles.cardContent}>
+        {typeof content === 'string' ? (
+          <Text style={styles.contentText}>{content}</Text>
+        ) : (
+          content
+        )}
+      </View>
+      
+      {action && (
+        <TouchableOpacity 
+          style={styles.actionButton} 
+          onPress={onPress}
+        >
+          <Text style={styles.actionText}>{actionLabel}</Text>
+          <Ionicons name="chevron-forward" size={16} color="#2196F3" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};</code></pre>
+        </div>
+      </div>
+      
+      <div class="callout info">
+        <div class="callout-title">Example Usage</div>
+        <p>Use InfoCard for displaying medication information, dosage instructions, side effects, and providing action buttons for refills or detailed views.</p>
+      </div>
+    </section>
+    
+    <!-- Component Library Theme Slide -->
+    <section class="slide content-slide">
+      <h2>Creating a Component Library: Theme</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Theme Constants</h3>
+          <ul>
+            <li><strong>Colors</strong>: Primary, secondary, status colors</li>
+            <li><strong>Typography</strong>: Font sizes, families, weights</li>
+            <li><strong>Spacing</strong>: Consistent spacing units</li>
+            <li><strong>Border Radius</strong>: Standard corner roundness</li>
+            <li><strong>Shadows</strong>: Elevation levels</li>
+          </ul>
+          
+          <h3>Benefits of a Theme System</h3>
+          <ul>
+            <li>Consistent visual language</li>
+            <li>Easier updates (change once, apply everywhere)</li>
+            <li>Support for light/dark modes</li>
+            <li>Better code organization</li>
+            <li>Simplified component development</li>
+          </ul>
+          
+          <h3>Pharmaceutical Theming Considerations</h3>
+          <ul>
+            <li>Medication category color coding</li>
+            <li>Status colors for prescriptions</li>
+            <li>Clear typography for important information</li>
+            <li>Accessible color contrasts</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">// theme.js - Define your theme constants
+export const colors = {
+  primary: '#2196F3',
+  secondary: '#4CAF50',
+  accent: '#FF9800',
+  error: '#F44336',
+  warning: '#FFEB3B',
+  info: '#2196F3',
+  success: '#4CAF50',
+  text: {
+    primary: '#212121',
+    secondary: '#757575',
+    disabled: '#9E9E9E',
+    hint: '#9E9E9E',
+  },
+  background: {
+    default: '#FFFFFF',
+    paper: '#F5F5F5',
+  },
+  divider: '#EEEEEE',
+};
+
+export const typography = {
+  fontFamily: {
+    regular: 'System',
+    medium: 'System',
+    bold: 'System',
+  },
+  fontSize: {
+    xs: 12,
+    small: 14,
+    medium: 16,
+    large: 18,
+    xl: 20,
+    xxl: 24,
+    xxxl: 30,
+  },
+  lineHeight: {
+    xs: 16,
+    small: 20,
+    medium: 24,
+    large: 28,
+    xl: 30,
+    xxl: 36,
+  },
+};
+
+export const spacing = {
+  xs: 4,
+  small: 8,
+  medium: 16,
+  large: 24,
+  xl: 32,
+  xxl: 48,
+};</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Component Library Button Slide -->
+    <section class="slide content-slide">
+      <h2>Creating a Component Library: Button Component</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>Button Variants</h3>
+          <ul>
+            <li><strong>Contained</strong>: Solid background color</li>
+            <li><strong>Outlined</strong>: Border with transparent background</li>
+            <li><strong>Text</strong>: Text-only button</li>
+          </ul>
+          
+          <h3>Button States</h3>
+          <ul>
+            <li><strong>Normal</strong>: Default appearance</li>
+            <li><strong>Pressed</strong>: Visual feedback when touched</li>
+            <li><strong>Disabled</strong>: Indicates non-interactive state</li>
+            <li><strong>Loading</strong>: Shows activity indicator</li>
+          </ul>
+          
+          <h3>Button Props</h3>
+          <ul>
+            <li><code>title</code>: Button label text</li>
+            <li><code>onPress</code>: Press handler function</li>
+            <li><code>variant</code>: Visual style variant</li>
+            <li><code>color</code>: Theme color to use</li>
+            <li><code>size</code>: Button size (small, medium, large)</li>
+            <li><code>disabled</code>: Whether button is interactive</li>
+            <li><code>loading</code>: Whether to show loading state</li>
+            <li><code>fullWidth</code>: Whether to stretch to container width</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="jsx">// components/Button.js
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet, 
+  ActivityIndicator } from 'react-native';
+import { colors, typography, spacing, 
+  borderRadius } from '../theme';
+
+const Button = ({
+  title,
+  onPress,
+  variant = 'contained', // 'contained', 'outlined', 'text'
+  color = 'primary', // 'primary', 'secondary', 'error'
+  size = 'medium', // 'small', 'medium', 'large'
+  disabled = false,
+  loading = false,
+  fullWidth = false,
+  style,
+  textStyle,
+}) => {
+  const getButtonStyle = () => {
+    let buttonStyle = [styles.button, styles[size]];
+    
+    if (variant === 'contained') {
+      buttonStyle.push({
+        backgroundColor: colors[color],
+      });
+    } else if (variant === 'outlined') {
+      buttonStyle.push({
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: colors[color],
+      });
+    }
+    
+    if (fullWidth) {
+      buttonStyle.push(styles.fullWidth);
+    }
+    
+    if (disabled) {
+      buttonStyle.push(styles.disabled);
+    }
+    
+    if (style) {
+      buttonStyle.push(style);
+    }
+    
+    return buttonStyle;
+  };
+  
+  // Return TouchableOpacity with appropriate styles
+  // and loading indicator or text
+};</code></pre>
+        </div>
+      </div>
+      
+      <div class="callout tip">
+        <div class="callout-title">Component Library Tip</div>
+        <p>Document your components thoroughly with prop descriptions, examples, and usage guidelines to make them easier for your team to use.</p>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices for UI Components</h2>
+      
+      <div class="columns">
+        <div class="column">
+          <h3>1. Create Consistent Theme</h3>
+          <p>Define color palettes, typography, spacing, and border radius constants for consistent visual language.</p>
+          
+          <h3>2. Build Reusable Components</h3>
+          <p>Create a library of reusable components with clear props API and consistent behavior.</p>
+          
+          <h3>3. Separate Logic from Presentation</h3>
+          <p>Use container/presenter pattern or custom hooks to separate business logic from UI components.</p>
+          
+          <h3>4. Accessibility</h3>
+          <p>Make all components accessible with appropriate props for screen readers and support for larger text sizes.</p>
+        </div>
+        <div class="column">
+          <h3>5. Performance</h3>
+          <p>Optimize render performance with memoization, virtualized lists, and proper key management.</p>
+          
+          <h3>6. Platform Adaptation</h3>
+          <p>Provide platform-specific variants when appropriate to match native platform conventions.</p>
+          
+          <h3>7. Documentation</h3>
+          <p>Document component usage, props, and examples to make them easier for your team to use.</p>
+          
+          <h3>Pharmaceutical UI Considerations</h3>
+          <ul>
+            <li>Clear information hierarchy for medication details</li>
+            <li>Consistent status indicators for prescriptions</li>
+            <li>Accessible interfaces for all users</li>
+            <li>Error prevention for dosage inputs</li>
+            <li>Clear visual feedback for actions</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="callout warning">
+        <div class="callout-title">Important Reminder</div>
+        <p>For pharmaceutical applications, prioritize clarity and accuracy in UI components displaying critical medication information. Always validate user inputs for safety.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Advanced UI components are essential for creating polished and performant React Native applications</li>
+        <li>List components like FlatList and SectionList optimize performance for long scrollable content</li>
+        <li>Form components with validation help prevent errors and improve user experience</li>
+        <li>Custom interactive components provide better aesthetics and consistent behavior</li>
+        <li>Card components help structure and present information clearly</li>
+        <li>Creating a component library with a theme system ensures consistency across your app</li>
+        <li>Following best practices for component development leads to maintainable, accessible, and performant applications</li>
+      </ul>
+      <div class="next-steps">
+        <p>Next: Section 5: Responsive Design</p>
+      </div>
+    </section>
+    
+    <!-- Further Reading Slide -->
+    <section class="slide content-slide">
+      <h2>Further Reading</h2>
+      <ul>
+        <li><a href="https://reactnative.dev/docs/flatlist">FlatList Documentation</a> - Official React Native documentation</li>
+        <li><a href="https://reactnative.dev/docs/sectionlist">SectionList Documentation</a> - Official React Native documentation</li>
+        <li><a href="https://reactnativeelements.com/">React Native Elements</a> - A popular UI library</li>
+        <li><a href="https://callstack.github.io/react-native-paper/">React Native Paper</a> - Material Design components</li>
+        <li><a href="https://styled-components.com/docs/basics#react-native">Styled Components</a> - CSS-in-JS styling for React Native</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Exercise Preview</div>
+        <p>The upcoming exercise will challenge you to build a comprehensive medication card component that incorporates many of the advanced UI techniques covered in this section.</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 
