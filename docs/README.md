@@ -26,37 +26,6 @@ This course supports three distinct learning paths:
 
 > 🔄 **Async Learners**: Use the module and section titles to locate specific topics you need to learn.
 
-## Course Modules
-
-### [Module 1: React Native Fundamentals](./module-1-react-native-fundamentals/README.md)
-- [The Mobile Development Landscape](./module-1-react-native-fundamentals/section-1-mobile-development-landscape/README.md)
-- [Why React Native?](./module-1-react-native-fundamentals/section-2-why-react-native/README.md)
-- [React Native Internals](./module-1-react-native-fundamentals/section-3-react-native-internals/README.md)
-- [React Native Documentation](./module-1-react-native-fundamentals/section-4-react-native-documentation/README.md)
-
-### [Module 2: Environment Setup](./module-2-environment-setup/README.md)
-
-### [Module 3: Web Development Essentials](./module-3-web-development-essentials/README.md)
-
-### [Module 4: JavaScript Essentials](./module-4-javascript-essentials/README.md)
-
-### [Module 5: TypeScript Essentials](./module-5-typescript-essentials/README.md)
-
-### [Module 6: React Essentials](./module-6-react-essentials/README.md)
-- [Introduction to React](./module-6-react-essentials/section-1-introduction-to-react/README.md)
-- [Components and JSX](./module-6-react-essentials/section-2-components-and-jsx/README.md)
-- [Props and Component Composition](./module-6-react-essentials/section-3-props-and-component-composition/README.md)
-- [State and Hooks](./module-6-react-essentials/section-4-state-and-hooks/README.md)
-- [Component Lifecycle and Effects](./module-6-react-essentials/section-5-component-lifecycle-and-effects/README.md)
-
-### [Module 7: React Native UI and Styling](./module-7-react-native-ui-and-styling/README.md)
-- [React Native Core Components](./module-7-react-native-ui-and-styling/section-1-react-native-core-components/README.md)
-- [Styling Fundamentals](./module-7-react-native-ui-and-styling/section-2-styling-fundamentals/README.md)
-- [Layout with Flexbox](./module-7-react-native-ui-and-styling/section-3-layout-with-flexbox/README.md)
-- [Advanced UI Components](./module-7-react-native-ui-and-styling/section-4-advanced-ui-components/README.md)
-- [Responsive Design](./module-7-react-native-ui-and-styling/section-5-responsive-design/README.md)
-- [Animations and Transitions](./module-7-react-native-ui-and-styling/section-6-animations-and-transitions/README.md)
-
 ## Prerequisites
 
 To get the most out of this course, you should have:

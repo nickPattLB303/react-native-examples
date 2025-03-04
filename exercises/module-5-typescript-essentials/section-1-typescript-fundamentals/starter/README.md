@@ -12,7 +12,7 @@ After completing this exercise, you will be able to:
 In this exercise, you'll be implementing TypeScript interfaces and types for a medication tracking system. The application displays information about a patient, their medications, and prescription details.
 
 ### Task 1: Define the Types
-1. Create a type alias for `DosageUnit` that only allows these specific string values: "mg", "ml", "µg", and "tablet"
+1. Create a type alias for `DosageUnit` that only allows these specific string values: "mg", "ml", "ug", and "tablet"
 2. Define an interface for a `Patient` with these properties:
    - `id`: number
    - `name`: string

@@ -6,7 +6,7 @@ This is the completed example of the TypeScript Fundamentals exercise on medicat
 
 The completed solution includes:
 
-1. A type alias for `DosageUnit` that restricts values to "mg", "ml", "µg", and "tablet"
+1. A type alias for `DosageUnit` that restricts values to "mg", "ml", "ug", and "tablet"
 2. An interface for `Patient` with properties:
    - `id`: number
    - `name`: string

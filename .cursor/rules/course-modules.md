@@ -12,8 +12,8 @@ The React Native Training Course consists of the following modules, which should
 4. JavaScript Essentials
 5. TypeScript Essentials
 6. React Essentials
-7. React Native UI and Styling
-8. Components and User Input
+7. React Native Components and User Input
+8. React Native UI and Styling
 9. Navigation and Routing
 10. State Management
 11. Performance and Debugging
@@ -27,4 +27,4 @@ The React Native Training Course consists of the following modules, which should
 ## Examples
 - Proper module directory naming: `module-1-react-native-fundamentals`
 - Proper documentation reference: "As we covered in Module 3: Web Development Essentials..."
-- Proper slide organization: `/slides/module-7-react-native-ui-and-styling/` 
+- Proper slide organization: `/slides/module-7-react-native-components-and-user-input/` 

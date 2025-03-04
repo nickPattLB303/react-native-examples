@@ -156,7 +156,7 @@ type MedicationSchedule = Record<string, Medication[]>;
 ### Literal Types and Type Narrowing
 ```typescript
 // String literal types
-type DosageUnit = "mg" | "ml" | "µg" | "tablet" | "capsule";
+type DosageUnit = "mg" | "ml" | "ug" | "tablet" | "capsule";
 
 // Numeric literal types
 type ControlledSubstanceSchedule = 1 | 2 | 3 | 4 | 5;

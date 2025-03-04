@@ -4,7 +4,7 @@
  */
 
 // TODO: Create a type alias for DosageUnit that only allows specific string values
-// Hint: Use union types to allow only "mg", "ml", "µg", and "tablet"
+// Hint: Use union types to allow only "mg", "ml", "ug", and "tablet"
 // type DosageUnit = ...
 
 // TODO: Define an interface for a Patient with properties: id, name, dateOfBirth, and allergies

@@ -57,7 +57,7 @@ function logMedication(name: string): void {
 }
 
 // Union types
-type DosageUnit = "mg" | "ml" | "µg" | "tablet";
+type DosageUnit = "mg" | "ml" | "ug" | "tablet";
 const amoxicillinUnit: DosageUnit = "mg";
 ```
 

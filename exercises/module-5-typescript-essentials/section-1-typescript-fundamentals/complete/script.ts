@@ -4,7 +4,7 @@
  */
 
 // Type alias for DosageUnit using union types
-type DosageUnit = "mg" | "ml" | "µg" | "tablet";
+type DosageUnit = "mg" | "ml" | "ug" | "tablet";
 
 // Interface for Patient with required properties
 interface Patient {

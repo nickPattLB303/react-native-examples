@@ -20,8 +20,8 @@ This 4-week intensive training course is designed to take developers from differ
 4. JavaScript Essentials
 5. TypeScript Essentials
 6. React Essentials
-7. React Native UI and Styling
-8. Components and User Input
+7. React Native Components and User Input
+8. React Native UI and Styling
 9. Navigation and Routing
 10. State Management
 11. Performance and Debugging

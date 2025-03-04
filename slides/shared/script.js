@@ -392,13 +392,6 @@
         { num: 3, name: 'props-and-component-composition' },
         { num: 4, name: 'state-and-hooks' },
         { num: 5, name: 'component-lifecycle-and-effects' },
-      ],
-      'module-7-react-native-ui-and-styling': [
-        { num: 1, name: 'react-native-core-components' },
-        { num: 2, name: 'styling-fundamentals' },
-        { num: 3, name: 'styled-components' },
-        { num: 4, name: 'layout-with-flexbox' },
-        { num: 5, name: 'responsive-design' },
       ]
       // Add more modules as needed
     };
