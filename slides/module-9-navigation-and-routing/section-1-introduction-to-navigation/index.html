@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: Introduction to Navigation | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>Introduction to Navigation</h2>
+      <p class="metadata">Module 9 | 30-45 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand navigation concepts in mobile applications</li>
+        <li>Compare different navigation patterns (stack, tab, drawer, modal)</li>
+        <li>Learn about navigation state management</li>
+        <li>Understand navigation lifecycle</li>
+        <li>Explore deep linking fundamentals</li>
+        <li>Apply navigation best practices</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 30-45 minutes</p>
+        <p><strong>Prerequisites:</strong> Basic understanding of React Native components</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Concepts Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Concepts</h2>
+      <p>Navigation is a fundamental aspect of mobile applications that allows users to move between different screens and features:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Navigation Concepts</h3>
+          <ul>
+            <li><strong>Screens/Routes</strong>: Individual views in your app</li>
+            <li><strong>Navigation State</strong>: Current screen and history</li>
+            <li><strong>Transitions</strong>: Animations between screens</li>
+            <li><strong>Parameters</strong>: Data passed between screens</li>
+            <li><strong>Deep Links</strong>: External links to specific screens</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Navigation Challenges</h3>
+          <ul>
+            <li>Platform-specific navigation patterns</li>
+            <li>Complex navigation hierarchies</li>
+            <li>State persistence across app restarts</li>
+            <li>Handling back navigation</li>
+            <li>Authentication flows</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Navigation in React Native</div>
+        <p>React Native doesn't include a built-in navigation solution. Instead, developers can choose from several third-party libraries, with Expo Router and React Navigation being the most popular options.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Patterns</h2>
+      <p>Mobile applications use several common navigation patterns:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Stack Navigation</h3>
+          <ul>
+            <li>Screens are stacked on top of each other</li>
+            <li>Back button returns to previous screen</li>
+            <li>Common for hierarchical content</li>
+            <li>Example: Medication list → Medication details</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Tab Navigation</h3>
+          <ul>
+            <li>Tabs at bottom or top of screen</li>
+            <li>Quick switching between main sections</li>
+            <li>Persistent across the app</li>
+            <li>Example: Home, Medications, Cart, Profile</li>
+          </ul>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Drawer Navigation</h3>
+          <ul>
+            <li>Side menu that slides in from edge</li>
+            <li>Good for many navigation options</li>
+            <li>Less frequently accessed features</li>
+            <li>Example: Settings, Help, About</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Modal Navigation</h3>
+          <ul>
+            <li>Screen appears on top of current view</li>
+            <li>Often used for temporary tasks</li>
+            <li>Dismissible by swiping or tapping</li>
+            <li>Example: Add medication, Filter options</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Navigation Pattern Examples Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Pattern Examples</h2>
+      <p>Examples of navigation patterns in a pharmacy application:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Stack Navigation Example</h3>
+          <pre><code>// Medication stack
+Home
+└── Medications List
+    └── Medication Details
+        └── Prescription Information
+            └── Refill Request</code></pre>
+        </div>
+        <div class="column">
+          <h3>Tab Navigation Example</h3>
+          <pre><code>// Main tabs
+[Home] [Medications] [Cart] [Orders] [Profile]</code></pre>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h3>Drawer Navigation Example</h3>
+          <pre><code>// Drawer menu
+☰ Menu
+  ├── Home
+  ├── My Medications
+  ├── Prescriptions
+  ├── Order History
+  ├── Payment Methods
+  ├── Settings
+  └── Help & Support</code></pre>
+        </div>
+        <div class="column">
+          <h3>Modal Navigation Example</h3>
+          <pre><code>// Modal screens
+Medications List
+└── [Modal] Add Medication
+└── [Modal] Filter Medications</code></pre>
+        </div>
+      </div>
+      <div class="callout example">
+        <div class="callout-title">Combined Navigation Example</div>
+        <p>In real applications, these patterns are often combined. For example, a tab-based app might have stack navigation within each tab, and a drawer for additional options.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation State Management Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation State Management</h2>
+      <p>Navigation state represents the current screen and navigation history:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Navigation State Components</h3>
+          <ul>
+            <li><strong>Routes</strong>: Array of screens in the stack</li>
+            <li><strong>Index</strong>: Current screen index</li>
+            <li><strong>Key</strong>: Unique identifier for each route</li>
+            <li><strong>Params</strong>: Data passed to each route</li>
+            <li><strong>Type</strong>: Navigation action type</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>State Management Challenges</h3>
+          <ul>
+            <li>Preserving state during navigation</li>
+            <li>Handling deep linking</li>
+            <li>Persisting navigation state</li>
+            <li>Synchronizing with app state</li>
+            <li>Type safety for route parameters</li>
+          </ul>
+        </div>
+      </div>
+      <pre><code>// Example navigation state
+{
+  "index": 1,
+  "routes": [
+    {
+      "name": "MedicationsList",
+      "key": "medications-1"
+    },
+    {
+      "name": "MedicationDetails",
+      "key": "medication-details-1",
+      "params": {
+        "id": "med-123",
+        "name": "Ibuprofen"
+      }
+    }
+  ]
+}</code></pre>
+    </section>
+    
+    <!-- Navigation Lifecycle Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Lifecycle</h2>
+      <p>Understanding the navigation lifecycle is crucial for managing component state and effects:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Screen Lifecycle Events</h3>
+          <ul>
+            <li><strong>focus</strong>: Screen comes into view</li>
+            <li><strong>blur</strong>: Screen goes out of view</li>
+            <li><strong>beforeRemove</strong>: Screen is about to be removed</li>
+            <li><strong>state</strong>: Navigation state changes</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Common Lifecycle Use Cases</h3>
+          <ul>
+            <li>Fetching data when screen focuses</li>
+            <li>Pausing/resuming animations</li>
+            <li>Saving form data before navigating away</li>
+            <li>Confirming navigation with unsaved changes</li>
+            <li>Cleaning up resources when screen blurs</li>
+          </ul>
+        </div>
+      </div>
+      <pre><code>// Example of using navigation lifecycle events
+import { useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+
+function MedicationScreen({ navigation }) {
+  // Run when component mounts and on navigation focus
+  useFocusEffect(
+    React.useCallback(() => {
+      // Fetch medication data
+      fetchMedications();
+      
+      // Clean up when screen loses focus
+      return () => {
+        // Cancel any pending requests
+        cancelPendingRequests();
+      };
+    }, [])
+  );
+  
+  // Listen for navigation events
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      // Prevent leaving with unsaved changes
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        // Show confirmation dialog
+        confirmNavigation(e.data.action);
+      }
+    });
+    
+    return unsubscribe;
+  }, [navigation, hasUnsavedChanges]);
+}</code></pre>
+    </section>
+    
+    <!-- Deep Linking Slide -->
+    <section class="slide content-slide">
+      <h2>Deep Linking</h2>
+      <p>Deep linking allows users to navigate directly to specific screens in your app from external sources:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Types of Deep Links</h3>
+          <ul>
+            <li><strong>URL Scheme Links</strong>: Custom protocol (e.g., <code>pharmeasy://</code>)</li>
+            <li><strong>Universal Links</strong>: Standard web URLs that open in your app (iOS)</li>
+            <li><strong>App Links</strong>: Verified web URLs that open in your app (Android)</li>
+            <li><strong>Deferred Deep Links</strong>: Links that work even if the app isn't installed</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Deep Linking Use Cases</h3>
+          <ul>
+            <li>Sharing medication information</li>
+            <li>Email/SMS notifications</li>
+            <li>Push notification navigation</li>
+            <li>Marketing campaigns</li>
+            <li>QR code scanning</li>
+          </ul>
+        </div>
+      </div>
+      <pre><code>// Example deep link URLs
+pharmeasy://medications/123                 // URL Scheme
+https://pharmeasy.example.com/medications/123  // Universal/App Link
+
+// Deep link configuration (simplified)
+{
+  "prefixes": [
+    "pharmeasy://",
+    "https://pharmeasy.example.com"
+  ],
+  "config": {
+    "screens": {
+      "Medications": {
+        "path": "medications",
+        "screens": {
+          "MedicationDetails": {
+            "path": ":id",
+            "parse": {
+              "id": (id) => id
+            }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+    </section>
+    
+    <!-- Navigation Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Best Practices</h2>
+      <p>Follow these best practices for a better user experience and maintainable code:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>User Experience</h3>
+          <ul>
+            <li>Follow platform-specific patterns</li>
+            <li>Keep navigation consistent</li>
+            <li>Provide clear navigation cues</li>
+            <li>Optimize transitions for smoothness</li>
+            <li>Handle back navigation intuitively</li>
+            <li>Preserve state during navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Code Organization</h3>
+          <ul>
+            <li>Centralize navigation configuration</li>
+            <li>Type route parameters with TypeScript</li>
+            <li>Separate navigation logic from UI</li>
+            <li>Create reusable navigation components</li>
+            <li>Test navigation flows</li>
+            <li>Document navigation structure</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">TypeScript Integration</div>
+        <p>Use TypeScript to define route parameters for type safety and better developer experience:</p>
+        <pre><code>// Type-safe route parameters
+type RootStackParamList = {
+  MedicationsList: undefined;
+  MedicationDetails: { id: string; name: string };
+  Checkout: { items: CartItem[] };
+};
+
+// Type-safe navigation hook
+const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+// Type-safe navigation
+navigation.navigate('MedicationDetails', { id: 'med-123', name: 'Ibuprofen' });</code></pre>
+      </div>
+    </section>
+    
+    <!-- Navigation Libraries Comparison Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Libraries Comparison</h2>
+      <p>React Native has several navigation libraries, with Expo Router and React Navigation being the most popular:</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="background-color: var(--primary-color); color: white;">
+            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Feature</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Expo Router</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">React Navigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Approach</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">File-based routing</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Component-based routing</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Configuration</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Minimal (based on file structure)</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Explicit (navigator components)</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Deep Linking</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Built-in (based on file structure)</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Requires configuration</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>TypeScript Support</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Good</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Excellent</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Flexibility</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Medium (conventions-based)</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">High (fully customizable)</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Learning Curve</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Lower (familiar to Next.js users)</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Higher (more concepts to learn)</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Expo Integration</strong></td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Native (part of Expo SDK)</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">Good (works well with Expo)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout info">
+        <div class="callout-title">Which One to Choose?</div>
+        <p>For new projects, especially those using Expo, Expo Router is recommended due to its simplicity and built-in deep linking support. For more complex navigation requirements or existing projects, React Navigation offers more flexibility and customization options.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Navigation Planning</h2>
+      <div class="exercise-content">
+        <h3>Pharmacy App Navigation Structure</h3>
+        <p>Design a navigation structure for a pharmacy application with the following features:</p>
+        
+        <h4>Requirements:</h4>
+        <ul>
+          <li>User authentication (login/register)</li>
+          <li>Medication browsing and search</li>
+          <li>Medication details with prescription information</li>
+          <li>Shopping cart and checkout</li>
+          <li>Order history and tracking</li>
+          <li>User profile and settings</li>
+        </ul>
+        
+        <h4>Tasks:</h4>
+        <ol>
+          <li>Identify the main navigation patterns to use (stack, tab, drawer, modal)</li>
+          <li>Create a navigation map showing the relationship between screens</li>
+          <li>Define the route parameters for each screen</li>
+          <li>Identify potential deep linking scenarios</li>
+        </ol>
+        
+        <div class="callout info">
+          <div class="callout-title">Estimated Time</div>
+          <p>Allow approximately 15 minutes to complete this exercise.</p>
+        </div>
+      </div>
+      
+      <div class="presenter-notes">
+        <p>Guide participants through the exercise, allowing approximately 15 minutes. Encourage them to think about the user experience and how different navigation patterns can be combined. This exercise helps reinforce the concepts from the section and prepares them for implementing navigation in the upcoming sections.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Navigation is a fundamental aspect of mobile applications</li>
+        <li>Common navigation patterns include stack, tab, drawer, and modal navigation</li>
+        <li>Navigation state represents the current screen and navigation history</li>
+        <li>The navigation lifecycle includes events like focus, blur, and beforeRemove</li>
+        <li>Deep linking allows users to navigate directly to specific screens</li>
+        <li>Best practices include following platform patterns and using TypeScript for type safety</li>
+        <li>Expo Router and React Navigation are the most popular navigation libraries</li>
+      </ul>
+      <div class="next-steps">
+        <a href="../section-2-expo-router/index.html"><strong>Next:</strong> Section 2: Expo Router</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>
