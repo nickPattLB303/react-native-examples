@@ -49,155 +49,141 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-right: 10px;
         }
         button:hover {
             background-color: #45a049;
         }
-        .medication-list {
-            margin-top: 20px;
+        .pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            background-color: #e0e0e0;
         }
         .medication-item {
-            padding: 10px;
-            border: 1px solid #eee;
-            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            margin-bottom: 8px;
+            background-color: white;
         }
-        .error {
-            color: #d32f2f;
-            padding: 10px;
-            background-color: #ffebee;
-            border-radius: 4px;
-            margin-top: 10px;
+        .medication-item h3 {
+            margin-top: 0;
         }
-        .warning {
-            color: #f57c00;
-            padding: 10px;
-            background-color: #fff3e0;
-            border-radius: 4px;
-            margin-top: 10px;
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
         }
-        .search-results {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
+        .filter-group input, .filter-group select {
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
     <h1>Medication Management System</h1>
-    <p>Complete the challenge by implementing the medication management system functionality.</p>
-    
-    <div class="output">
-        <div class="section">
-            <h2>Add New Medication</h2>
-            <div class="form-group">
-                <label for="medName">Medication Name:</label>
-                <input type="text" id="medName" placeholder="Enter medication name">
-                
-                <label for="medDosage">Dosage:</label>
-                <input type="text" id="medDosage" placeholder="Enter dosage">
-                
-                <label for="medFrequency">Frequency (times per day):</label>
-                <input type="number" id="medFrequency" min="1" max="24" placeholder="Enter frequency">
-                
-                <label for="medInstructions">Special Instructions:</label>
-                <input type="text" id="medInstructions" placeholder="Enter special instructions">
-                
-                <label for="medStartDate">Start Date:</label>
-                <input type="date" id="medStartDate">
-                
-                <label for="medEndDate">End Date (optional):</label>
-                <input type="date" id="medEndDate">
-                
-                <button onclick="addMedication()">Add Medication</button>
-            </div>
-        </div>
+    <p>This challenge focuses on applying modern JavaScript concepts to build a medication management system. Complete the code in <code>medications.js</code> and <code>app.js</code> to implement the required functionality.</p>
 
-        <div class="section">
-            <h2>Search Medications</h2>
-            <div class="form-group">
-                <input type="text" id="searchInput" placeholder="Search medications..." oninput="debouncedSearch(this.value)">
-                <div id="searchResults" class="search-results">
-                    <!-- Search results will be displayed here -->
-                </div>
-            </div>
+    <div class="section">
+        <h2>Data Structures and Management</h2>
+        <p>Implement functions to add, update, remove, and find medications.</p>
+        <div class="form-group">
+            <h3>Add New Medication</h3>
+            <label for="medication-name">Name:</label>
+            <input type="text" id="medication-name" placeholder="Medication name">
+            
+            <label for="medication-dosage">Dosage:</label>
+            <input type="number" id="medication-dosage" placeholder="Dosage amount">
+            
+            <label for="medication-unit">Unit:</label>
+            <select id="medication-unit">
+                <option value="mg">mg</option>
+                <option value="mcg">mcg</option>
+                <option value="ml">ml</option>
+                <option value="tablet">tablet(s)</option>
+                <option value="capsule">capsule(s)</option>
+            </select>
+            
+            <label for="medication-frequency">Frequency:</label>
+            <select id="medication-frequency">
+                <option value="once">Once daily</option>
+                <option value="twice">Twice daily</option>
+                <option value="three">Three times daily</option>
+                <option value="four">Four times daily</option>
+                <option value="asNeeded">As needed</option>
+            </select>
+            
+            <label for="medication-instructions">Instructions:</label>
+            <input type="text" id="medication-instructions" placeholder="Special instructions">
+            
+            <button id="add-medication">Add Medication</button>
         </div>
-
-        <div class="section">
-            <h2>Medication Schedule</h2>
-            <div class="form-group">
-                <label for="medId">Medication ID:</label>
-                <input type="text" id="medId" placeholder="Enter medication ID">
-                <button onclick="calculateNextDose()">Calculate Next Dose</button>
-            </div>
-            <div id="scheduleResult">
-                <!-- Schedule results will be displayed here -->
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Medication List</h2>
-            <div id="medicationList" class="medication-list">
+        
+        <div class="output" id="medications-list">
+            <h3>Current Medications</h3>
+            <div id="medications-container">
                 <!-- Medications will be displayed here -->
+                <p>No medications added yet.</p>
             </div>
         </div>
     </div>
 
+    <div class="section">
+        <h2>Filtering and Sorting</h2>
+        <p>Implement functions to filter and sort medications based on different criteria.</p>
+        
+        <div class="filter-group">
+            <input type="text" id="search-input" placeholder="Search by name...">
+            
+            <select id="filter-frequency">
+                <option value="">All frequencies</option>
+                <option value="once">Once daily</option>
+                <option value="twice">Twice daily</option>
+                <option value="three">Three times daily</option>
+                <option value="four">Four times daily</option>
+                <option value="asNeeded">As needed</option>
+            </select>
+            
+            <select id="sort-by">
+                <option value="name">Sort by Name</option>
+                <option value="dosage">Sort by Dosage</option>
+                <option value="frequency">Sort by Frequency</option>
+                <option value="nextDose">Sort by Next Dose</option>
+            </select>
+        </div>
+        
+        <div class="output" id="filtered-medications">
+            <h3>Filtered Medications</h3>
+            <div id="filtered-container">
+                <!-- Filtered medications will be displayed here -->
+                <p>No results to display.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dosing Schedule Calculation</h2>
+        <p>Implement functions to calculate and display next dose times.</p>
+        
+        <div class="output" id="dosing-schedule">
+            <h3>Upcoming Doses</h3>
+            <div id="schedule-container">
+                <!-- Dosing schedule will be displayed here -->
+                <p>No upcoming doses to display.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add your JavaScript files here -->
+    <script src="medications.js"></script>
+    <script src="app.js"></script>
+
     <script>
-        // TODO: Implement the Medication Management System
-        // 1. Create data structures for medications
-        // 2. Implement CRUD operations
-        // 3. Add search functionality with debouncing
-        // 4. Implement scheduling calculations
-        // 5. Add error handling
-
-        // Sample medication data structure
-        const medications = [];
-
-        // TODO: Implement addMedication function
-        function addMedication() {
-            // Your code here
-        }
-
-        // TODO: Implement searchMedications function
-        function searchMedications(query) {
-            // Your code here
-        }
-
-        // TODO: Implement debounced search
-        function debouncedSearch(query) {
-            // Your code here
-        }
-
-        // TODO: Implement calculateNextDose function
-        function calculateNextDose() {
-            // Your code here
-        }
-
-        // TODO: Implement updateMedication function
-        function updateMedication(id, updates) {
-            // Your code here
-        }
-
-        // TODO: Implement removeMedication function
-        function removeMedication(id) {
-            // Your code here
-        }
-
-        // TODO: Implement checkInteractions function
-        function checkInteractions(medication) {
-            // Your code here
-        }
-
-        // TODO: Implement displayMedications function
-        function displayMedications() {
-            // Your code here
-        }
-
-        // Initial display
-        displayMedications();
+        // This script contains sample code to get you started
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Application initialized. Complete the JavaScript files to implement functionality.');
+        });
     </script>
 </body>
 </html> 

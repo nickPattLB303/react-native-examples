@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication Inventory System - TypeScript Challenge</title>
+    <title>Medication Types System - TypeScript Challenge</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,267 +24,175 @@
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            background-color: white;
         }
         h1, h2 {
             color: #333;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
             border-radius: 4px;
+            overflow: auto;
+            border: 1px solid #e0e0e0;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
+        code {
+            font-family: 'Courier New', Courier, monospace;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        .inventory-list, .supplier-list {
-            margin-top: 20px;
-        }
-        .inventory-item, .supplier-item {
+        .example {
+            background-color: #e8f5e9;
             padding: 10px;
-            border: 1px solid #eee;
-            margin-bottom: 10px;
             border-radius: 4px;
+            margin: 10px 0;
         }
-        .error {
-            color: #d32f2f;
+        .note {
+            background-color: #e3f2fd;
             padding: 10px;
-            background-color: #ffebee;
             border-radius: 4px;
-            margin-top: 10px;
-        }
-        .warning {
-            color: #f57c00;
-            padding: 10px;
-            background-color: #fff3e0;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .search-results {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-        }
-        .filter-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .filter-section select {
-            width: auto;
-        }
-        #errorDisplay {
-            margin-top: 15px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Medication Inventory System</h1>
-    <p>Complete this challenge by implementing the medication inventory system with TypeScript. Focus on creating proper types, interfaces, and ensuring type safety throughout the application.</p>
-    
-    <div class="output">
-        <div class="section">
-            <h2>Add New Medication to Inventory</h2>
-            <div class="form-group">
-                <label for="medName">Medication Name:</label>
-                <input type="text" id="medName" placeholder="Enter medication name">
-                
-                <label for="medCategory">Category:</label>
-                <select id="medCategory">
-                    <option value="">Select a category</option>
-                    <option value="antibiotic">Antibiotic</option>
-                    <option value="analgesic">Analgesic</option>
-                    <option value="antihistamine">Antihistamine</option>
-                    <option value="cardiovascular">Cardiovascular</option>
-                    <option value="other">Other</option>
-                </select>
-                
-                <label for="medDosage">Dosage:</label>
-                <input type="text" id="medDosage" placeholder="Enter dosage (e.g., 500mg)">
-                
-                <label for="medManufacturer">Manufacturer:</label>
-                <input type="text" id="medManufacturer" placeholder="Enter manufacturer">
-                
-                <label for="medQuantity">Quantity:</label>
-                <input type="number" id="medQuantity" min="1" placeholder="Enter quantity">
-                
-                <label for="medLocation">Storage Location:</label>
-                <select id="medLocation">
-                    <option value="">Select storage location</option>
-                    <option value="shelf-a">Shelf A</option>
-                    <option value="shelf-b">Shelf B</option>
-                    <option value="refrigerator">Refrigerator</option>
-                    <option value="secure-cabinet">Secure Cabinet</option>
-                </select>
-                
-                <label for="medExpiration">Expiration Date:</label>
-                <input type="date" id="medExpiration">
-                
-                <button onclick="addMedication()">Add to Inventory</button>
-            </div>
-            <div id="errorDisplay"></div>
-        </div>
+    <h1>Medication Types System - TypeScript Challenge</h1>
+    <p>This challenge focuses on creating well-defined TypeScript interfaces and types that could be used in a React Native medication tracking application.</p>
 
-        <div class="section">
-            <h2>Search and Filter Inventory</h2>
-            <div class="form-group">
-                <input type="text" id="searchInput" placeholder="Search medications..." oninput="searchInventory(this.value)">
-                
-                <div class="filter-section">
-                    <label for="filterCategory">Filter by Category:</label>
-                    <select id="filterCategory" onchange="applyFilters()">
-                        <option value="">All Categories</option>
-                        <option value="antibiotic">Antibiotic</option>
-                        <option value="analgesic">Analgesic</option>
-                        <option value="antihistamine">Antihistamine</option>
-                        <option value="cardiovascular">Cardiovascular</option>
-                        <option value="other">Other</option>
-                    </select>
-                    
-                    <label for="sortBy">Sort by:</label>
-                    <select id="sortBy" onchange="applyFilters()">
-                        <option value="name">Name</option>
-                        <option value="quantity">Quantity</option>
-                        <option value="expiration">Expiration Date</option>
-                    </select>
-                </div>
-                
-                <div id="searchResults" class="search-results">
-                    <!-- Search results will be displayed here -->
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Manage Suppliers</h2>
-            <div class="form-group">
-                <label for="supplierName">Supplier Name:</label>
-                <input type="text" id="supplierName" placeholder="Enter supplier name">
-                
-                <label for="supplierContact">Contact Information:</label>
-                <input type="text" id="supplierContact" placeholder="Enter contact details">
-                
-                <label for="supplierMedications">Available Medications:</label>
-                <input type="text" id="supplierMedications" placeholder="Enter medications (comma-separated)">
-                
-                <button onclick="addSupplier()">Add Supplier</button>
-            </div>
-            <div id="supplierList" class="supplier-list">
-                <!-- Suppliers will be displayed here -->
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Inventory List</h2>
-            <div id="inventoryList" class="inventory-list">
-                <!-- Inventory items will be displayed here -->
-            </div>
+    <div class="section">
+        <h2>Challenge Overview</h2>
+        <p>Create a comprehensive type system for a medication tracking application. Focus only on defining the types, interfaces, and function signatures, not on implementing the actual functionality.</p>
+        
+        <div class="note">
+            <strong>Note:</strong> You do not need to implement any functionality. This challenge is focused on creating a well-structured type system.
         </div>
     </div>
 
-    <script src="https://www.unpkg.com/typescript@latest/lib/typescript.js"></script>
-    <script type="text/typescript">
-        // TODO: Create TypeScript interfaces for the core data models
+    <div class="section">
+        <h2>Part 1: Core Medication Types</h2>
+        <p>Create a <code>types.ts</code> file with the core data models.</p>
         
-        // TODO: Create a type for medication categories (literal type)
+        <p>Define interfaces for:</p>
+        <ul>
+            <li><code>Medication</code> - Include properties like id, name, manufacturer, dosage, etc.</li>
+            <li><code>Prescription</code> - Information about who prescribed the medication</li>
+            <li><code>DosageSchedule</code> - When and how the medication should be taken</li>
+        </ul>
         
-        // TODO: Create a type for storage locations (literal type)
+        <p>Example starter structure:</p>
+        <pre><code>// types.ts
+
+// Define medication category literals
+type MedicationCategory = 'antibiotic' | 'analgesic' | 'antihistamine' | 'antidepressant' | 'other';
+
+// Define dosage unit literals
+type DosageUnit = 'mg' | 'ml' | 'mcg' | 'tablet' | 'capsule';
+
+// Define the Medication interface
+interface Medication {
+    // Add properties here
+}
+
+// Define the Prescription interface
+interface Prescription {
+    // Add properties here
+}
+
+// Define the DosageSchedule interface
+interface DosageSchedule {
+    // Add properties here
+}
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Type Relationships and Utilities</h2>
+        <p>Create type relationships and utility types.</p>
         
-        // TODO: Implement an interface for API responses
+        <ul>
+            <li>Create a <code>MedicationWithHistory</code> type that extends the basic medication type</li>
+            <li>Define a <code>DosageRecord</code> type to track when doses were taken</li>
+            <li>Create union types for medication status</li>
+            <li>Define utility types for common operations</li>
+        </ul>
         
-        // TODO: Create inventory and supplier data structures with proper typing
-        const inventory = [];
-        const suppliers = [];
+        <p>Example starter structure:</p>
+        <pre><code>// Add to types.ts
 
-        // TODO: Implement addMedication function with proper type checking
-        function addMedication() {
-            // Your TypeScript code here
-        }
+// Define medication status
+type MedicationStatus = 'active' | 'discontinued' | 'completed' | 'on-hold';
 
-        // TODO: Implement searchInventory function with proper return type
-        function searchInventory(query: string) {
-            // Your TypeScript code here
-        }
+// Create a type for tracking medication history
+interface DosageRecord {
+    // Add properties here
+}
 
-        // TODO: Implement applyFilters function
-        function applyFilters() {
-            // Your TypeScript code here
-        }
+// Create a type that extends Medication to include history
+interface MedicationWithHistory extends Medication {
+    // Add properties here
+}
 
-        // TODO: Implement addSupplier function with proper parameter types
-        function addSupplier() {
-            // Your TypeScript code here
-        }
+// Create simplified types for different views
+type MedicationListItem = {
+    // Add properties here (subset of Medication properties)
+};
 
-        // TODO: Implement updateInventory function with partial update type
-        function updateInventory(id, updates) {
-            // Your TypeScript code here
-        }
+// Create a type for form data when adding medications
+type MedicationFormData = {
+    // Add properties here
+};
+</code></pre>
+    </div>
 
-        // TODO: Implement removeFromInventory function
-        function removeFromInventory(id) {
-            // Your TypeScript code here
-        }
+    <div class="section">
+        <h2>Part 3: Function Type Signatures</h2>
+        <p>Define type signatures for key functions.</p>
+        
+        <ul>
+            <li><code>searchMedications</code>: A function to search for medications by name</li>
+            <li><code>calculateNextDose</code>: A function to calculate the next dose time</li>
+            <li><code>addMedication</code>: A function to add a new medication to a patient's list</li>
+            <li><code>checkInteractions</code>: A function to check for potential medication interactions</li>
+        </ul>
+        
+        <p>Example starter structure:</p>
+        <pre><code>// functions.ts
 
-        // TODO: Implement displayInventory function
-        function displayInventory() {
-            // Your TypeScript code here
-        }
+// Import your types
+import { Medication, MedicationFormData, DosageSchedule, MedicationWithHistory } from './types';
 
-        // TODO: Implement displaySuppliers function
-        function displaySuppliers() {
-            // Your TypeScript code here
-        }
+// Search function signature
+function searchMedications(query: string, medications: Medication[]): Medication[];
 
-        // TODO: Implement a type guard for checking valid medication data
-        function isValidMedication(data: any): boolean {
-            // Your TypeScript code here
-            return false;
-        }
+// Calculate next dose function signature
+function calculateNextDose(medication: Medication, lastDoseTaken?: Date): Date;
 
-        // TODO: Implement error handling with typed error objects
-        function displayError(message: string) {
-            // Your TypeScript code here
-        }
+// Add medication function signature
+function addMedication(formData: MedicationFormData): Medication;
 
-        // Initial display
-        displayInventory();
-        displaySuppliers();
-    </script>
-    
-    <script>
-        // This script compiles and runs the TypeScript code
-        (function() {
-            var script = document.querySelector('script[type="text/typescript"]');
-            if (script) {
-                var transpiled = ts.transpile(script.textContent, {
-                    target: ts.ScriptTarget.ES2015,
-                    module: ts.ModuleKind.None
-                });
-                
-                var newScript = document.createElement('script');
-                newScript.textContent = transpiled;
-                document.body.appendChild(newScript);
-            }
-        })();
-    </script>
+// Check for interactions function signature
+function checkInteractions(medications: Medication[]): Array<{
+    // Define return type here
+}>;
+
+// Example of a generic utility function
+function sortMedications<T extends Medication>(
+    medications: T[], 
+    sortBy: keyof T
+): T[];
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Submission Instructions</h2>
+        <p>Create the following files:</p>
+        <ul>
+            <li><code>types.ts</code> - Contains all type definitions and interfaces</li>
+            <li><code>functions.ts</code> - Contains function type signatures</li>
+            <li><code>README.md</code> - A brief explanation of your type system design</li>
+        </ul>
+        
+        <div class="note">
+            <strong>Remember:</strong> This challenge is focused on building a well-structured type system. You are not required to implement any functionality.
+        </div>
+    </div>
 </body>
 </html> 

@@ -53,17 +53,82 @@
     </div>
 
     <script>
+        /**
+         * @fileoverview JavaScript Fundamentals Exercise - Variable Declaration and DOM Manipulation
+         * @module module-4-javascript-essentials
+         * @version 1.0.0
+         * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Declarations
+         */
+
         // TODO: Declare variables for patient information
         // Use const for values that won't change
         // Use let for values that might change
         
+        /**
+         * Key Concept: Variable Declaration
+         * 
+         * JavaScript has three ways to declare variables:
+         * - var: Function-scoped, older way (avoid using)
+         * - let: Block-scoped, use for values that will change
+         * - const: Block-scoped, use for values that won't change
+         * 
+         * Example:
+         * const patientName = "John Doe";  // Won't change
+         * let refillsRemaining = 3;        // Might change
+         * 
+         * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Declarations
+         */
+        
         // TODO: Declare variables for medication details
         
+        /**
+         * Key Concept: Data Types in JavaScript
+         *
+         * JavaScript has several primitive data types:
+         * - String: Text values in quotes, e.g., "Aspirin"
+         * - Number: Numeric values, e.g., 500 (for dosage in mg)
+         * - Boolean: true or false, e.g., isGeneric = true
+         * - Object: Complex data with properties, e.g., { name: "Aspirin", dosage: 500 }
+         * - Array: Lists of items, e.g., ["Headache", "Fever"]
+         * 
+         * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+         */
+        
         // TODO: Declare variables for prescription status
+        
+        /**
+         * Key Concept: DOM Manipulation
+         * 
+         * The Document Object Model (DOM) is a programming interface for web documents.
+         * It represents the page so JavaScript can change document structure, style, and content.
+         * 
+         * Common DOM methods:
+         * - document.getElementById(): Finds an element by its ID
+         * - element.innerHTML: Gets or sets the HTML content inside an element
+         * 
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction
+         */
         
         // TODO: Display the information in the appropriate divs
         // Use template literals for string formatting
         // Example: document.getElementById('patientInfo').innerHTML = `Name: ${patientName}`;
+        
+        /**
+         * Key Concept: Template Literals
+         * 
+         * Template literals (backticks) allow embedding expressions in strings and
+         * creating multi-line strings easily.
+         * 
+         * Syntax: `string text ${expression} more text`
+         * 
+         * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+         */
     </script>
+    
+    <!-- Learn more resources:
+    - JavaScript Variables: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Variables
+    - Working with the DOM: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction
+    - JavaScript Data Types: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+    -->
 </body>
 </html> 

@@ -1,21 +1,76 @@
 /**
  * @fileoverview Medication Types Exercise - TypeScript Fundamentals
+ * @module module-5-typescript-essentials
+ * @version 1.1.0
  * @created 2023-08-15
+ * @see https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
+ */
+
+/**
+ * Key Concept: Type Aliases
+ * 
+ * Type aliases create a new name for a type. They're similar to interfaces,
+ * but can name primitive types, unions, tuples, and other types that you'd
+ * otherwise have to write by hand.
+ * 
+ * @example
+ * type ID = string | number;
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
  */
 
 // TODO: Create a type alias for DosageUnit that only allows specific string values
 // Hint: Use union types to allow only "mg", "ml", "ug", and "tablet"
 // type DosageUnit = ...
 
+/**
+ * Key Concept: Interfaces
+ * 
+ * Interfaces are a powerful way to define contracts in your code as well as contracts
+ * with code outside of your project. They're used to define object types with specific
+ * properties and their corresponding types.
+ * 
+ * @example
+ * interface User {
+ *   id: number;
+ *   name: string;
+ *   isActive: boolean;
+ * }
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
+ */
+
 // TODO: Define an interface for a Patient with properties: id, name, dateOfBirth, and allergies
 // interface Patient {
 //   ...
 // }
 
+/**
+ * Key Concept: Property Types
+ * 
+ * When defining interfaces, each property can have its own type.
+ * Common types include:
+ * - Primitive types: string, number, boolean
+ * - Object types: Object, interface, class
+ * - Array types: string[], Array<string>
+ * - Special types: Date, any, unknown
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/objects.html
+ */
+
 // TODO: Create an interface for a Medication with properties: id, name, dosage, unit, and sideEffects
 // interface Medication {
 //   ...
 // }
+
+/**
+ * Key Concept: Interface Composition
+ * 
+ * Interfaces can be composed to build more complex types by including
+ * properties from multiple interfaces or nested objects.
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types
+ */
 
 // TODO: Define a Prescription interface that includes a patient, medications, and prescription details
 // interface Prescription {
@@ -65,7 +120,14 @@ const prescriptionData = {
 
 /**
  * Renders patient information to the DOM
+ * 
+ * This function takes a patient object and displays its properties
+ * in the patient-details element of the DOM.
+ * 
  * @param patient The patient object containing all patient details
+ * @returns {void} Does not return a value
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/functions.html
  */
 function renderPatient(patient: any): void {
   const patientEl = document.getElementById('patient-details');
@@ -91,7 +153,14 @@ function renderPatient(patient: any): void {
 
 /**
  * Renders medication list to the DOM
+ * 
+ * Iterates through the medications array and creates HTML elements
+ * for each medication with its details.
+ * 
  * @param medications Array of medication objects
+ * @returns {void} Does not return a value
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/objects.html#array-types
  */
 function renderMedications(medications: any[]): void {
   const medicationsEl = document.getElementById('medications');
@@ -113,7 +182,14 @@ function renderMedications(medications: any[]): void {
 
 /**
  * Renders prescription details to the DOM
+ * 
+ * Takes a prescription object and displays its properties
+ * in the prescription-details element.
+ * 
  * @param prescription The prescription object containing all details
+ * @returns {void} Does not return a value
+ * 
+ * @see https://www.typescriptlang.org/docs/handbook/2/objects.html#interfaces-vs-intersections
  */
 function renderPrescription(prescription: any): void {
   const prescriptionEl = document.getElementById('prescription-details');
@@ -136,6 +212,15 @@ function renderPrescription(prescription: any): void {
   `;
 }
 
+/**
+ * Key Concept: Event Listeners
+ * 
+ * The DOMContentLoaded event fires when the initial HTML document has been
+ * completely loaded and parsed, without waiting for stylesheets, images,
+ * and subframes to finish loading.
+ * 
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
+ */
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
   // TODO: Add type annotations to these variables using your interfaces
@@ -147,4 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPatient(patient);
   renderMedications(medications);
   renderPrescription(prescription);
-}); 
+});
+
+/**
+ * Learn more about TypeScript:
+ * - TypeScript Handbook: https://www.typescriptlang.org/docs/handbook/intro.html
+ * - TypeScript with React: https://www.typescriptlang.org/docs/handbook/react.html
+ * - TypeScript Playground: https://www.typescriptlang.org/play
+ * - TypeScript Type Declaration: https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
+ */ 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creating Components Exercise - Starter</title>
+    <!-- React library and ReactDOM scripts -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -107,6 +108,15 @@
     </div>
 
     <script type="text/babel">
+        /**
+         * @fileoverview Creating Components Exercise - React Fundamentals
+         * @module module-6-react-essentials
+         * @requires react
+         * @requires react-dom
+         * @version 1.0.0
+         * @see https://reactjs.org/docs/components-and-props.html
+         */
+
         // Sample data
         const medications = [
             { id: '1', name: 'Aspirin', dosage: '100mg', schedule: 'Daily', status: 'active' },
@@ -119,31 +129,125 @@
         // =====================================================
         // Complete the following core components:
         
-        // 1. MedicationHeader Component
-        // Complete this component to display a title and description
+        /**
+         * Key Concept: Functional Components
+         * 
+         * React components are reusable pieces of code that return React elements.
+         * Functional components are JavaScript functions that accept props as arguments
+         * and return JSX elements describing what should appear on the screen.
+         * 
+         * @see https://reactjs.org/docs/components-and-props.html
+         */
+        
+        /**
+         * MedicationHeader Component
+         * 
+         * Displays a header with title and description for the medication list.
+         * 
+         * @param {Object} props - Component props
+         * @param {string} props.title - The header title
+         * @param {string} props.description - The header description
+         * @returns {JSX.Element} A JSX element representing the medication header
+         * 
+         * @example
+         * <MedicationHeader 
+         *   title="Current Medications" 
+         *   description="List of medications with their details" 
+         * />
+         * 
+         * @see https://reactjs.org/docs/rendering-elements.html
+         */
         function MedicationHeader({ title, description }) {
             // Your implementation here
             
         }
         
-        // 2. StatusBadge Component
-        // Implement this component to display a badge with different styles based on status
+        /**
+         * Key Concept: Conditional Rendering
+         * 
+         * Conditional rendering in React works the same way as conditions in JavaScript.
+         * You can use if statements, ternary operators, and logical && operators to 
+         * create elements representing the current state of your component.
+         * 
+         * @see https://reactjs.org/docs/conditional-rendering.html
+         */
+        
+        /**
+         * StatusBadge Component
+         * 
+         * Displays a badge with styling based on medication status.
+         * 
+         * @param {Object} props - Component props
+         * @param {string} props.status - The medication status ('active', 'low', or 'inactive')
+         * @returns {JSX.Element} A JSX element representing the status badge
+         * 
+         * @example
+         * <StatusBadge status="active" />
+         * 
+         * @see https://reactjs.org/docs/conditional-rendering.html
+         */
         function StatusBadge({ status }) {
             // Your implementation here
             // Should render differently based on status (active, low, inactive)
             
         }
         
-        // 3. MedicationItem Component
-        // Create this component to display a medication's details with a StatusBadge
+        /**
+         * Key Concept: Composing Components
+         * 
+         * Components can refer to other components in their output, allowing us to
+         * build complex UIs from simple, reusable components.
+         * 
+         * @see https://reactjs.org/docs/composition-vs-inheritance.html
+         */
+        
+        /**
+         * MedicationItem Component
+         * 
+         * Displays information about a single medication including its name,
+         * dosage, schedule, and status.
+         * 
+         * @param {Object} props - Component props
+         * @param {Object} props.medication - The medication object
+         * @param {string} props.medication.id - Unique identifier for the medication
+         * @param {string} props.medication.name - Name of the medication
+         * @param {string} props.medication.dosage - Dosage amount
+         * @param {string} props.medication.schedule - When to take the medication
+         * @param {string} props.medication.status - Current status ('active', 'low', 'inactive')
+         * @returns {JSX.Element} A JSX element representing a medication item
+         * 
+         * @example
+         * <MedicationItem medication={medications[0]} />
+         */
         function MedicationItem({ medication }) {
             // Your implementation here
             // Should display medication details and use StatusBadge
             
         }
         
-        // 4. MedicationList Component
-        // Build this component to render a list of MedicationItem components
+        /**
+         * Key Concept: Lists and Keys
+         * 
+         * Keys help React identify which items have changed, are added, or are removed.
+         * Keys should be given to the elements inside the array to give the elements
+         * a stable identity. The best way to pick a key is to use a string that uniquely
+         * identifies a list item among its siblings, such as an ID.
+         * 
+         * @see https://reactjs.org/docs/lists-and-keys.html
+         */
+        
+        /**
+         * MedicationList Component
+         * 
+         * Renders a list of medication items from an array of medication data.
+         * 
+         * @param {Object} props - Component props
+         * @param {Array} props.medications - Array of medication objects
+         * @returns {JSX.Element} A JSX element representing the medication list
+         * 
+         * @example
+         * <MedicationList medications={medications} />
+         */
         function MedicationList({ medications }) {
             // Your implementation here
             // Should map over medications array and render MedicationItem components
@@ -152,8 +256,13 @@
             
         }
         
-        // 5. MedicationApp Component
-        // Integrate all components
+        /**
+         * MedicationApp Component
+         * 
+         * Root component that composes the entire application.
+         * 
+         * @returns {JSX.Element} A JSX element representing the entire application
+         */
         function MedicationApp() {
             // Your implementation here
             // Should render MedicationHeader and MedicationList with appropriate props
@@ -167,9 +276,43 @@
         // 2. Implement a search input that filters medications by name
         // 3. Use React.Fragment where appropriate to avoid unnecessary wrapper divs
         
+        /**
+         * Key Concept: React.Fragment
+         * 
+         * React.Fragment lets you group elements without adding extra nodes to the DOM.
+         * This is useful when you need to return multiple elements from a component
+         * but don't want to add an unnecessary div wrapper.
+         * 
+         * @example
+         * return (
+         *   <React.Fragment>
+         *     <ChildA />
+         *     <ChildB />
+         *   </React.Fragment>
+         * );
+         * 
+         * // Or using the shorthand syntax:
+         * return (
+         *   <>
+         *     <ChildA />
+         *     <ChildB />
+         *   </>
+         * );
+         * 
+         * @see https://reactjs.org/docs/fragments.html
+         */
+        
         // Main App render
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<MedicationApp />);
+        
+        /**
+         * Learn more about React Components:
+         * - Component Basics: https://reactjs.org/docs/components-and-props.html
+         * - JSX In Depth: https://reactjs.org/docs/jsx-in-depth.html
+         * - Composition vs Inheritance: https://reactjs.org/docs/composition-vs-inheritance.html
+         * - React Component API Reference: https://reactjs.org/docs/react-component.html
+         */
     </script>
 </body>
 </html> 
