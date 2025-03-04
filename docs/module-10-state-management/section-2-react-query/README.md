@@ -49,7 +49,7 @@ React Query is ideal for:
 To add React Query to your React Native project:
 
 ```bash
-npm install @tanstack/react-query
+npx expo install @tanstack/react-query
 # or
 yarn add @tanstack/react-query
 ```

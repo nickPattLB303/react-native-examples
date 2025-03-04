@@ -36,21 +36,21 @@ React Navigation is the most widely used navigation library for React Native. It
 To add React Navigation to a React Native project:
 
 ```bash
-npm install @react-navigation/native
+npx expo install @react-navigation/native
 
 # Install dependencies
-npm install react-native-screens react-native-safe-area-context
+npx expo install react-native-screens react-native-safe-area-context
 
 # For stack navigation
-npm install @react-navigation/stack
-npm install react-native-gesture-handler
+npx expo install @react-navigation/stack
+npx expo install react-native-gesture-handler
 
 # For tab navigation
-npm install @react-navigation/bottom-tabs
+npx expo install @react-navigation/bottom-tabs
 
 # For drawer navigation
-npm install @react-navigation/drawer
-npm install react-native-gesture-handler react-native-reanimated
+npx expo install @react-navigation/drawer
+npx expo install react-native-gesture-handler react-native-reanimated
 ```
 
 ### Basic Setup

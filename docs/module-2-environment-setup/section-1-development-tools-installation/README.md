@@ -177,13 +177,13 @@ source ~/.zshrc  # Or the appropriate file for your shell
 Expo CLI is a command-line utility for creating and managing Expo projects:
 
 ```bash
-npm install -g expo-cli
+npx expo install expo-cli
 ```
 
 Verify the installation:
 
 ```bash
-expo --version
+npx expo --version
 ```
 
 ### 9. Install Expo Go on Your Mobile Devices
@@ -343,4 +343,4 @@ fi
 # Add your code here
 
 echo "===== Verification Complete ====="
-``` 
+```

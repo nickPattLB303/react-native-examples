@@ -49,7 +49,7 @@ Zustand is ideal for:
 To add Zustand to your React Native project:
 
 ```bash
-npm install zustand
+npx expo install zustand
 # or
 yarn add zustand
 ```

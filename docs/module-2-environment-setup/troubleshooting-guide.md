@@ -26,7 +26,7 @@ Before diving into specific issues, try these general troubleshooting steps:
 2. **Verify npm is working** - Check if npm can install packages:
    ```bash
    npm -v
-   npm install -g expo-cli
+   npx expo install expo-cli
    ```
 
 3. **Clear npm cache** - Try clearing the npm cache:
@@ -74,8 +74,8 @@ nvm use 16.13.0
 sudo chown -R $(whoami) ~/.npm
 sudo chown -R $(whoami) /usr/local/lib/node_modules
 
-# Alternative: Use npm with sudo (not recommended for security)
-sudo npm install -g expo-cli
+# Alternative: Use npx with sudo (not recommended for security)
+sudo npx expo install expo-cli
 ```
 
 ### Package Installation Hangs
@@ -104,7 +104,7 @@ npm install --legacy-peer-deps
 ```bash
 # Reinstall Expo CLI
 npm uninstall -g expo-cli
-npm install -g expo-cli
+npx expo install expo-cli
 
 # Verify installation
 npx expo --version
@@ -497,4 +497,4 @@ If this guide doesn't solve your issue:
 4. **File a bug report**:
    - Include detailed environment information
    - Provide clear steps to reproduce
-   - Share relevant logs and error messages 
+   - Share relevant logs and error messages
