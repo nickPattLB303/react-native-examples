@@ -4,6 +4,8 @@
 
 In this challenge, you'll implement a comprehensive navigation system for a pharmacy application called "PharmEasy". The application will allow users to browse medications, view details, place orders, and manage their profile. You'll create various navigation patterns, handle authentication flows, and implement deep linking.
 
+**Estimated Time**: 30-60 minutes
+
 ## Learning Objectives
 
 By completing this challenge, you will demonstrate your ability to:

@@ -1,7 +1,7 @@
 # Module 4: JavaScript Essentials
 
 ## Learning Objectives
-After completing this module, you will be able to:
+After completing this module, you can:
 - Understand JavaScript's core concepts and features essential for React Native development
 - Work with JavaScript data types, variables, and expressions
 - Implement control flow statements and handle errors efficiently

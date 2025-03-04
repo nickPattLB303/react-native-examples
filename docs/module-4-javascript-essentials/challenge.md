@@ -4,7 +4,7 @@
 Build a medication management system using modern JavaScript that demonstrates your understanding of core JavaScript concepts, data manipulation, and asynchronous programming.
 
 **Prerequisite Knowledge**: Module 4 content
-**Estimated Time**: 90-120 minutes
+**Estimated Time**: 30-60 minutes
 
 > 💡 **Tip**: Focus on applying ES6+ features and asynchronous patterns that would be useful in a React Native application. Think about how these concepts will translate to component-based development later.
 

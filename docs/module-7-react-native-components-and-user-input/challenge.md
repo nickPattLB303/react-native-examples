@@ -3,6 +3,8 @@
 ## Overview
 In this challenge, you will apply your knowledge of React Native components and user input by building a comprehensive medication order form for a pharmacy application. This form will allow healthcare providers to submit medication orders for patients, capturing all necessary information while providing a smooth, accessible user experience.
 
+**Estimated Time**: 30-60 minutes
+
 ## Learning Objectives
 This challenge tests your ability to:
 - Implement various React Native input components

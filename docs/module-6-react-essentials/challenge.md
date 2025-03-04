@@ -4,6 +4,8 @@
 
 In this challenge, you'll apply the React concepts you've learned by building a medication tracking component using functional components and hooks. This challenge will test your understanding of components, props, state, effects, and composition.
 
+**Estimated Time**: 30-60 minutes
+
 ## Learning Objectives
 
 This challenge reinforces the following skills:

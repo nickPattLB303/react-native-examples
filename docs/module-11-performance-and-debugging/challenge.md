@@ -4,6 +4,8 @@
 
 In this challenge, you'll apply the performance optimization and debugging techniques learned in this module to a medication tracking application. You'll identify and fix performance bottlenecks, debug complex issues, and implement a comprehensive performance monitoring and error reporting system.
 
+**Estimated Time**: 30-60 minutes
+
 ## Learning Objectives
 
 By completing this challenge, you will demonstrate your ability to:

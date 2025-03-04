@@ -3,7 +3,7 @@
 ## Challenge Overview
 In this challenge, you will redesign and enhance the medication order application from Module 7 with advanced styling, responsive layouts, custom UI components, and animations. Your goal is to create a polished, professional, and user-friendly interface that improves the overall user experience.
 
-**Estimated Time**: 2-3 hours
+**Estimated Time**: 30-60 minutes
 **Prerequisite Knowledge**: All sections of Module 8
 
 ## Learning Objectives

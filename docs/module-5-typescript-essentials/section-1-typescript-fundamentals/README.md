@@ -1,5 +1,7 @@
 # Section 1: TypeScript Fundamentals
 
+> 🔍 **Instructor Note**: This section lays the foundation for TypeScript in React Native development. Focus on practical applications rather than theoretical type system concepts. Students often struggle with the transition from JavaScript to TypeScript, so emphasize the benefits and provide plenty of examples in the context of React Native components.
+
 ## Learning Objectives
 After completing this section, you will be able to:
 - Explain the primary benefits of TypeScript in React Native development
@@ -16,6 +18,8 @@ After completing this section, you will be able to:
 ## Section Overview
 This section introduces the fundamentals of TypeScript and how it enhances JavaScript with static typing. You'll learn why TypeScript is valuable for React Native development and how to implement basic types to make your code more robust. We'll cover the TypeScript features most relevant to React Native development while focusing on practical applications rather than theoretical concepts.
 
+> 🚀 **Quick Start**: If you're already familiar with TypeScript, you can skim the basic type definitions and focus on the React Native-specific TypeScript patterns. Pay special attention to the sections on typing component props, handling navigation types, and working with third-party libraries.
+
 ## Key Concepts
 
 ### Why TypeScript for React Native?
@@ -24,6 +28,10 @@ This section introduces the fundamentals of TypeScript and how it enhances JavaS
 - **Enhanced Code Documentation**: Types serve as living documentation of your code
 - **Safer Refactoring**: Type checking helps ensure changes don't break existing functionality
 - **Team Collaboration**: Makes code intent clearer and helps new developers understand the codebase
+
+> 🔄 **For Android Developers**: TypeScript's type system is similar to Kotlin's in many ways. Both provide null safety, generics, and type inference. If you're familiar with Kotlin's type system, you'll find many parallels in TypeScript, though TypeScript is generally more flexible due to its structural typing.
+
+> 🔄 **For iOS Developers**: If you're coming from Swift, TypeScript's type system will feel familiar. Both languages support type inference, generics, and protocol/interface-based programming. TypeScript's optional types are similar to Swift's optionals, though TypeScript uses the `?` suffix rather than Swift's `?` prefix.
 
 ### Basic TypeScript Types
 ```tsx
@@ -50,6 +58,8 @@ const category: MedicationCategory = MedicationCategory.ANTIBIOTIC;
 
 // Any type (avoid when possible)
 let userData: any = JSON.parse(dataFromApi);
+
+> 💡 **Deep Dive**: TypeScript uses structural typing (also called "duck typing") rather than nominal typing. This means TypeScript compares the shape of objects rather than their declared type names. The TypeScript compiler performs type erasure during compilation, removing all type annotations to produce clean JavaScript. This erasure is why TypeScript has no runtime type checking - all type checking happens during development and build time, with zero performance impact at runtime.
 
 // Void type (no return value)
 function logMedication(name: string): void {

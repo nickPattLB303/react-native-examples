@@ -1,5 +1,7 @@
 # Section 1: Performance Fundamentals
 
+> 🔍 **Instructor Note**: This section covers critical performance concepts that affect user experience. Emphasize the importance of measuring before optimizing and help students understand the relationship between the JavaScript thread and native UI thread.
+
 ## Overview
 
 Performance is a critical aspect of React Native applications that directly impacts user experience. This section covers the fundamental concepts of performance in React Native, including how to measure, analyze, and optimize your application's performance.
@@ -104,6 +106,8 @@ Systrace is a tool for analyzing the execution of your application at the system
 2. Perform the actions you want to analyze
 3. Stop the trace and analyze the results
 
+> 💡 **Deep Dive**: Systrace works by capturing a complete snapshot of system events across all processes. When you run React Native with Systrace enabled, it adds markers in the native code that appear in the trace. These markers help you identify when JavaScript is executing, when native modules are being called, and when UI updates are happening. The trace data shows you exactly how long each operation takes at the system level, helping you pinpoint bottlenecks in the JavaScript thread, UI thread, or bridge communication.
+
 ### Custom Performance Measurements
 
 You can add custom performance measurements to your code:
@@ -135,6 +139,10 @@ function measureFunction() {
 ```
 
 ## Analyzing Performance Issues
+
+> 🔄 **For Android Developers**: These performance measurement techniques are similar to Android's Systrace and TraceView tools. If you're familiar with Android profiling, you'll find React Native's performance tools follow similar principles but with JavaScript-specific considerations.
+
+> 🔄 **For iOS Developers**: If you've used Instruments in Xcode for performance profiling, you'll notice similarities in the approach. React Native's tools provide visibility into both the JavaScript execution and native rendering, similar to how Instruments shows you CPU, memory, and graphics performance.
 
 ### Identifying Render Performance Issues
 

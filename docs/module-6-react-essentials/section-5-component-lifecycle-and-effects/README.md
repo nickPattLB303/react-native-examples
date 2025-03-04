@@ -15,9 +15,9 @@ After completing this section, you will be able to:
 
 Every React component goes through a series of phases during its existence:
 
-1. **Mounting**: The component is being created and inserted into the DOM
-2. **Updating**: The component is re-rendering due to changes in props or state
-3. **Unmounting**: The component is being removed from the DOM
+1. **Mounting**: When React creates the component and inserts it into the DOM
+2. **Updating**: When the component re-renders due to changes in props or state
+3. **Unmounting**: When React removes the component from the DOM
 
 In class components, these phases were handled with specific lifecycle methods like `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`. In modern React with functional components, the `useEffect` hook provides a more unified way to handle these lifecycle events.
 

@@ -1,4 +1,4 @@
-typescript# Section 5: Local Storage
+# Section 5: Local Storage
 
 ## Overview
 

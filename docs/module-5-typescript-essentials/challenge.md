@@ -3,7 +3,7 @@
 ## Overview
 In this challenge, you will build a TypeScript-powered medication inventory system for a pharmacy. You'll refactor an existing JavaScript-based system to use TypeScript, adding proper typing, interfaces, and type safety throughout the application. This challenge will test your understanding of TypeScript concepts and their application in a React Native environment.
 
-**Estimated Time**: 60-90 minutes
+**Estimated Time**: 30-60 minutes
 
 ## Learning Objectives
 This challenge will test your ability to:
@@ -115,4 +115,7 @@ If you complete the main challenge early, try implementing these advanced featur
 1. Add a state management system (like Redux) with full TypeScript support
 2. Implement an inventory search feature with properly typed filters and sorting options
 3. Create a barcode scanning system that validates medication information against your type definitions
-4. Add complex form validation using TypeScript to ensure type safety of user inputs 
+4. Add complex form validation using TypeScript to ensure type safety of user inputs
+
+## Objective
+Design and implement a medication inventory system using TypeScript that tracks medication details, inventory levels, and expiration dates. 

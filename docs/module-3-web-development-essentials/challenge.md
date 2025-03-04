@@ -1,10 +1,10 @@
 # Module 3 Challenge: Medication List Web Page vs. React Native
 
 ## Objective
-Create a medication list interface using HTML and CSS, and then analyze how the same interface would be built in React Native, comparing the approaches.
+Compare and contrast web development and React Native development by creating both a web version and a React Native version of a simple medication list interface.
 
 **Prerequisite Knowledge**: Module 3 content
-**Estimated Time**: 60-90 minutes
+**Estimated Time**: 30-60 minutes
 
 > 💡 **Tip**: Focus on identifying the parallels between HTML/CSS and React Native's component/styling system. This exercise is about understanding the conceptual links between web development and React Native.
 

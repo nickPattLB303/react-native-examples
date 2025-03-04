@@ -101,7 +101,7 @@ This is where your application code lives. The main components and screens of yo
 
 #### `index.tsx`
 
-This is the entry point of your application. It defines the main screen or component that is displayed when your app starts.
+This is the entry point of your application. It defines the main screen or component that appears when your app starts.
 
 ```jsx
 import { StyleSheet, Text, View } from 'react-native';

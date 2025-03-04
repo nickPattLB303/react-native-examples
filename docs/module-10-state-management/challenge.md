@@ -4,6 +4,8 @@
 
 In this challenge, you'll implement a comprehensive state management system for a medication tracking application called "MedTracker". The application will allow users to track their medications, set reminders, and view medication history. You'll use React Query for server state, Zustand for client state, Context API for shared state, and implement data persistence for offline capabilities.
 
+**Estimated Time**: 30-60 minutes
+
 ## Learning Objectives
 
 By completing this challenge, you will demonstrate your ability to:

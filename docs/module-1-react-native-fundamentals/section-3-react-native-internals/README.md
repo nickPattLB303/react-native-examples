@@ -340,6 +340,6 @@ Complete this exercise using the [Architecture Diagram Microsoft Whiteboard](htt
 
 React Native's architecture is a sophisticated system that bridges the gap between JavaScript and native mobile platforms. By understanding how the JavaScript thread communicates with native components through the bridge, you can better optimize your applications and debug issues when they arise.
 
-The multi-threaded design allows React Native to maintain UI responsiveness while executing JavaScript code, and the component-based model enables a declarative approach to building interfaces. As React Native evolves with its new architecture, many of the current limitations around performance and synchronous native interactions are being addressed.
+The multi-threaded design allows React Native to maintain UI responsiveness while executing JavaScript code, and the component-based model enables a declarative approach to building interfaces. As React Native evolves with its new architecture, it addresses many of the current limitations around performance and synchronous native interactions.
 
 In the next section, we'll explore the official React Native documentation and learn how to effectively use it as a resource throughout your development journey.
