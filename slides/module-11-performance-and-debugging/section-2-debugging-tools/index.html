@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debugging Tools | Module 11: Performance and Debugging</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link rel="stylesheet" href="../../shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Debugging Tools</h1>
+      <h2>Essential Tools for React Native Debugging</h2>
+      <p class="metadata">Module 11, Section 2 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Set up a comprehensive debugging environment for React Native</li>
+        <li>Master JavaScript debugging techniques in React Native</li>
+        <li>Learn methods for debugging native code in React Native apps</li>
+        <li>Implement effective error handling and reporting strategies</li>
+        <li>Create an organized approach to debugging common issues</li>
+      </ul>
+    </section>
+    
+    <!-- Debugging Environment Setup Slide -->
+    <section class="slide content-slide">
+      <h2>Setting Up Your Debugging Environment</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Essential Tools</h3>
+          <ul>
+            <li>Chrome/Safari DevTools</li>
+            <li>React DevTools</li>
+            <li>Flipper</li>
+            <li>Expo DevTools (for Expo apps)</li>
+            <li>VS Code Debug Extension</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Platform-Specific Tools</h3>
+          <ul>
+            <li><strong>iOS:</strong> Xcode Debugger</li>
+            <li><strong>Android:</strong> Android Studio Debugger, adb</li>
+            <li><strong>Both:</strong> Native crash reporters, Sentry/Bugsnag</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- In-App Developer Menu Slide -->
+    <section class="slide content-slide">
+      <h2>React Native Developer Menu</h2>
+      <div class="content-box">
+        <p>Access with:</p>
+        <ul>
+          <li><strong>iOS Simulator:</strong> Cmd + D</li>
+          <li><strong>iOS Device:</strong> Shake device</li>
+          <li><strong>Android Emulator:</strong> Cmd + M or Ctrl + M</li>
+          <li><strong>Android Device:</strong> Shake device</li>
+        </ul>
+        <p>Key Options:</p>
+        <ul>
+          <li><strong>Reload:</strong> Reload JavaScript bundle</li>
+          <li><strong>Debug JS Remotely:</strong> Connect to JS debugger</li>
+          <li><strong>Enable Hot Reloading:</strong> Auto-refresh on save</li>
+          <li><strong>Enable Fast Refresh:</strong> Preserve state during reload</li>
+          <li><strong>Toggle Inspector:</strong> View component hierarchy</li>
+          <li><strong>Show Performance Monitor:</strong> View FPS metrics</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- JavaScript Debugging Slide -->
+    <section class="slide content-slide">
+      <h2>JavaScript Debugging Techniques</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Basic Techniques</h3>
+          <ul>
+            <li>console.log() statements</li>
+            <li>Chrome/Safari DevTools</li>
+            <li>Breakpoints</li>
+            <li>Conditional breakpoints</li>
+            <li>Watch expressions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Advanced Techniques</h3>
+          <ul>
+            <li>Network request inspection</li>
+            <li>React DevTools component inspector</li>
+            <li>Redux DevTools (if using Redux)</li>
+            <li>Performance profiling</li>
+            <li>Memory snapshots</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Chrome DevTools Slide -->
+    <section class="slide code-slide">
+      <h2>Debugging with Chrome DevTools</h2>
+      <pre><code class="language-javascript">
+// 1. Enable remote debugging in Dev Menu
+// 2. Chrome will open a debugging window
+
+// Set breakpoints in Chrome DevTools or in code:
+function MedicationList({ medications }) {
+  debugger; // JavaScript will pause here when DevTools is connected
+  
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <MedicationItem medication={item} />
+      )}
+    />
+  );
+}
+
+// Access console in Chrome DevTools
+console.log('Medications:', medications);
+console.warn('Potential issue with data');
+console.error('Critical error occurred');
+console.table(medications); // Displays tabular data
+      </code></pre>
+    </section>
+    
+    <!-- Flipper Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging with Flipper</h2>
+      <div class="content-box">
+        <p>Flipper is a powerful debugging platform for React Native apps</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Core Features</h3>
+            <ul>
+              <li>Network inspection</li>
+              <li>Layout inspector</li>
+              <li>Device logs</li>
+              <li>Crash reporter</li>
+              <li>React DevTools integration</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Useful Plugins</h3>
+            <ul>
+              <li>Async Storage Explorer</li>
+              <li>Redux Inspector</li>
+              <li>Navigation Inspector</li>
+              <li>Database Browser</li>
+              <li>Images Plugin</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Native Code Debugging Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging Native Code</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>iOS Debugging</h3>
+          <ul>
+            <li>Open project in Xcode</li>
+            <li>Set breakpoints in Swift/Objective-C</li>
+            <li>Use LLDB debugger commands</li>
+            <li>View device logs in Console app</li>
+            <li>Use Xcode Instruments for profiling</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Android Debugging</h3>
+          <ul>
+            <li>Open project in Android Studio</li>
+            <li>Set breakpoints in Java/Kotlin</li>
+            <li>Use Android Profiler</li>
+            <li>View logs with Logcat</li>
+            <li>Debug with adb commands</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- ADB Commands Slide -->
+    <section class="slide code-slide">
+      <h2>Useful ADB Commands for Debugging</h2>
+      <pre><code class="language-bash">
+# List connected devices
+adb devices
+
+# View logs
+adb logcat
+
+# Filter logs for React Native
+adb logcat *:S ReactNative:V ReactNativeJS:V
+
+# Install app directly to device
+adb install ./android/app/build/outputs/apk/debug/app-debug.apk
+
+# Clear app data (useful for testing fresh state)
+adb shell pm clear com.yourcompany.medicationapp
+
+# Take screenshots
+adb shell screencap -p /sdcard/screenshot.png
+adb pull /sdcard/screenshot.png ./screenshot.png
+
+# Restart adb server (if connection issues)
+adb kill-server
+adb start-server
+      </code></pre>
+    </section>
+    
+    <!-- Error Handling Slide -->
+    <section class="slide content-slide">
+      <h2>Error Handling and Reporting</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>React Error Boundaries</h3>
+          <ul>
+            <li>Catch and handle JavaScript errors</li>
+            <li>Prevent entire app from crashing</li>
+            <li>Display fallback UI</li>
+            <li>Log errors for debugging</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Error Monitoring Services</h3>
+          <ul>
+            <li>Sentry</li>
+            <li>Bugsnag</li>
+            <li>Firebase Crashlytics</li>
+            <li>AppCenter Diagnostics</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Error Boundaries Example Slide -->
+    <section class="slide code-slide">
+      <h2>Implementing Error Boundaries</h2>
+      <pre><code class="language-jsx">
+// ErrorBoundary.tsx
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    // Update state so the next render shows the fallback UI
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // Log error to error reporting service
+    console.error('Error boundary caught an error:', error, errorInfo);
+    // logErrorToService(error, errorInfo);
+  }
+
+  resetError = () => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      // Render fallback UI or default error component
+      return this.props.fallback || (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorTitle}>Something went wrong</Text>
+          <Text style={styles.errorMessage}>{this.state.error?.message}</Text>
+          <Button title="Try again" onPress={this.resetError} />
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    padding: 20,
+    backgroundColor: '#ffdddd',
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  errorTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#d32f2f',
+    marginBottom: 10,
+  },
+  errorMessage: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 15,
+  },
+});
+
+export default ErrorBoundary;
+      </code></pre>
+    </section>
+    
+    <!-- Sentry Integration Slide -->
+    <section class="slide code-slide">
+      <h2>Integrating Error Reporting with Sentry</h2>
+      <pre><code class="language-javascript">
+// Install Sentry SDK
+// npm install @sentry/react-native
+
+// App.tsx
+import * as Sentry from "@sentry/react-native";
+
+// Initialize Sentry
+Sentry.init({
+  dsn: "https://examplePublicKey@o0.ingest.sentry.io/0",
+  // Set environment
+  environment: __DEV__ ? "development" : "production",
+  // Set release version
+  release: "medicationapp@1.0.0",
+  // Enable auto session tracking
+  enableAutoSessionTracking: true,
+  // Session timeout
+  sessionTrackingIntervalMillis: 30000,
+  // Before send callback (modify/filter events)
+  beforeSend(event) {
+    // Remove sensitive data if needed
+    if (event.request && event.request.headers) {
+      delete event.request.headers.Authorization;
+    }
+    return event;
+  },
+});
+
+// Manual error capture
+try {
+  processMedication(medication);
+} catch (error) {
+  Sentry.captureException(error);
+}
+
+// Custom context information
+Sentry.setUser({
+  id: '123',
+  email: 'pharmacist@example.com',
+  role: 'pharmacist',
+});
+      </code></pre>
+    </section>
+    
+    <!-- Effective Logging Slide -->
+    <section class="slide content-slide">
+      <h2>Effective Logging Strategies</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>Logging Best Practices</h3>
+            <ul>
+              <li>Use different log levels appropriately</li>
+              <li>Include contextual information</li>
+              <li>Log state values and function parameters</li>
+              <li>Structure logs for easy filtering</li>
+              <li>Disable verbose logs in production</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Logging Libraries</h3>
+            <pre><code class="language-javascript">
+// react-native-logs
+import { logger } from 'react-native-logs';
+
+const log = logger.createLogger({
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3
+  },
+  severity: __DEV__ ? 'debug' : 'error',
+  transport: (props) => {
+    console.log(props.level, props.message);
+    
+    // Also send to remote service in production
+    if (!__DEV__ && props.level === 'error') {
+      sendToRemoteService(props);
+    }
+  },
+});
+
+log.info('Medication fetched', { id: med.id });
+log.error('API request failed', { error });
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Common Debugging Challenges Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging Common Issues</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Issue Type</th>
+            <th>Common Signs</th>
+            <th>Debugging Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>UI Rendering Issues</td>
+            <td>Blank screens, layout issues</td>
+            <td>React DevTools, Layout Inspector</td>
+          </tr>
+          <tr>
+            <td>State Management</td>
+            <td>UI doesn't update, stale data</td>
+            <td>Redux DevTools, React DevTools</td>
+          </tr>
+          <tr>
+            <td>API/Network Issues</td>
+            <td>Data not loading, timeouts</td>
+            <td>Network Inspector, API debugger</td>
+          </tr>
+          <tr>
+            <td>Navigation Issues</td>
+            <td>Incorrect screens, back issues</td>
+            <td>Navigation state logs, Navigation Inspector</td>
+          </tr>
+          <tr>
+            <td>Performance Issues</td>
+            <td>Slow UI, stuttering</td>
+            <td>Performance Monitor, Systrace</td>
+          </tr>
+          <tr>
+            <td>Native Module Issues</td>
+            <td>Module not found, crashes</td>
+            <td>Native debuggers, library linking check</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Systematic Debugging Approach Slide -->
+    <section class="slide content-slide">
+      <h2>Systematic Debugging Approach</h2>
+      <ol class="steps">
+        <li><strong>Reproduce the Issue</strong>
+          <ul>
+            <li>Create a reliable test case</li>
+            <li>Document exact steps to reproduce</li>
+            <li>Note environment details (device, OS, app version)</li>
+          </ul>
+        </li>
+        <li><strong>Gather Information</strong>
+          <ul>
+            <li>Check logs and error reports</li>
+            <li>Examine state at time of error</li>
+            <li>Review recent code changes</li>
+          </ul>
+        </li>
+        <li><strong>Form Hypotheses</strong>
+          <ul>
+            <li>Identify potential causes</li>
+            <li>Prioritize by likelihood</li>
+          </ul>
+        </li>
+        <li><strong>Test Hypotheses</strong>
+          <ul>
+            <li>Add strategic logging or breakpoints</li>
+            <li>Isolate components or functionality</li>
+            <li>Verify with controlled tests</li>
+          </ul>
+        </li>
+        <li><strong>Implement and Verify Fix</strong>
+          <ul>
+            <li>Make minimal necessary changes</li>
+            <li>Test fix thoroughly</li>
+            <li>Document the solution</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+    
+    <!-- Debugging Toolbox Slide -->
+    <section class="slide content-slide">
+      <h2>Your Debugging Toolbox Checklist</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>Development Setup</h3>
+            <ul class="checklist">
+              <li>React DevTools installed</li>
+              <li>Flipper configured</li>
+              <li>Source maps enabled</li>
+              <li>Error reporting integrated</li>
+              <li>Logging strategy implemented</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Debugging Process</h3>
+            <ul class="checklist">
+              <li>Reproduce and document issue</li>
+              <li>Check console and error logs</li>
+              <li>Inspect component hierarchy</li>
+              <li>Examine network requests</li>
+              <li>Review and debug state/props</li>
+              <li>Test on different devices</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Set up a comprehensive debugging environment with DevTools, Flipper, and platform-specific tools</li>
+        <li>Master JavaScript debugging with Chrome/Safari DevTools and React DevTools</li>
+        <li>Debug native code using Xcode and Android Studio</li>
+        <li>Implement error boundaries and integrate error reporting services</li>
+        <li>Develop effective logging strategies for different environments</li>
+        <li>Follow a systematic approach to troubleshooting issues</li>
+        <li>Build and maintain your debugging toolbox</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-3-advanced-debugging/index.html">Section 3: Advanced Debugging</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/highlight.js"></script>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

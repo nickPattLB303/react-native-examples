@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoring and Analytics | Module 11: Performance and Debugging</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link rel="stylesheet" href="../../shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Monitoring and Analytics</h1>
+      <h2>Track Performance and Errors in Production</h2>
+      <p class="metadata">Module 11, Section 4 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement comprehensive performance monitoring in production</li>
+        <li>Set up error tracking and analysis systems</li>
+        <li>Create custom metrics for business-specific measurements</li>
+        <li>Build dashboards for visualizing app health</li>
+        <li>Develop alerting systems for critical issues</li>
+        <li>Implement user feedback mechanisms</li>
+      </ul>
+    </section>
+    
+    <!-- Monitoring Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Monitoring in Production</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Why Monitor Production?</h3>
+          <ul>
+            <li>Real-world conditions differ from testing</li>
+            <li>Device variety is impossible to test fully</li>
+            <li>Network conditions vary widely</li>
+            <li>Some issues only appear at scale</li>
+            <li>User behavior is unpredictable</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Types of Monitoring</h3>
+          <ul>
+            <li>Performance metrics</li>
+            <li>Error tracking</li>
+            <li>User behavior analytics</li>
+            <li>API/backend monitoring</li>
+            <li>Device/environment statistics</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Monitoring Tools Slide -->
+    <section class="slide content-slide">
+      <h2>Monitoring Tool Ecosystem</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Tools</th>
+            <th>Key Capabilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Performance Monitoring</td>
+            <td>Firebase Performance, Datadog Mobile RUM</td>
+            <td>Trace tracking, startup time, UI responsiveness</td>
+          </tr>
+          <tr>
+            <td>Error Tracking</td>
+            <td>Sentry, Crashlytics, Bugsnag</td>
+            <td>Stack traces, error grouping, context capture</td>
+          </tr>
+          <tr>
+            <td>User Analytics</td>
+            <td>Google Analytics, Mixpanel, Amplitude</td>
+            <td>User journeys, conversion funnels, retention</td>
+          </tr>
+          <tr>
+            <td>Network Monitoring</td>
+            <td>New Relic, Dynatrace, custom solutions</td>
+            <td>API latency, error rates, payload analysis</td>
+          </tr>
+          <tr>
+            <td>All-in-One</td>
+            <td>AppCenter, Firebase, Datadog</td>
+            <td>Combined monitoring capabilities</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Firebase Performance Slide -->
+    <section class="slide code-slide">
+      <h2>Firebase Performance Monitoring</h2>
+      <pre><code class="language-javascript">
+// Install dependencies
+// npm install @react-native-firebase/app @react-native-firebase/perf
+
+import perf from '@react-native-firebase/perf';
+
+// Custom trace for monitoring specific operations
+async function fetchMedications() {
+  // Start custom trace
+  const trace = await perf().startTrace('fetch_medications_trace');
+  
+  // Add custom metrics or attributes
+  trace.putAttribute('user_role', 'pharmacist');
+  trace.putMetric('medication_count', 25);
+  
+  try {
+    // Perform the operation you want to trace
+    const response = await fetch('https://api.example.com/medications');
+    const data = await response.json();
+    
+    // Add result metrics
+    trace.putMetric('item_count', data.medications.length);
+    
+    return data;
+  } catch (error) {
+    // Track errors in your trace
+    trace.putAttribute('error', error.message);
+    throw error;
+  } finally {
+    // Always stop the trace when operation completes
+    await trace.stop();
+  }
+}
+
+// Automatically trace HTTP requests
+async function monitoredAPIRequest() {
+  // Create a custom HTTP metric
+  const httpMetric = await perf().newHttpMetric(
+    'https://api.example.com/prescriptions', 
+    'GET'
+  );
+  
+  // Add custom attributes
+  httpMetric.putAttribute('query_size', 'large');
+  
+  try {
+    // Start the metric before the request
+    await httpMetric.start();
+    
+    // Perform the request
+    const response = await fetch('https://api.example.com/prescriptions');
+    const data = await response.json();
+    
+    // Set response details
+    httpMetric.setHttpResponseCode(response.status);
+    httpMetric.setResponseContentType(response.headers.get('Content-Type'));
+    httpMetric.setResponsePayloadSize(JSON.stringify(data).length);
+    
+    return data;
+  } finally {
+    // Always stop the metric
+    await httpMetric.stop();
+  }
+}
+      </code></pre>
+    </section>
+    
+    <!-- Sentry Error Tracking Slide -->
+    <section class="slide code-slide">
+      <h2>Advanced Error Tracking with Sentry</h2>
+      <pre><code class="language-javascript">
+// Install dependencies
+// npm install @sentry/react-native 
+
+import * as Sentry from '@sentry/react-native';
+
+// Initialize Sentry with advanced configuration
+Sentry.init({
+  dsn: 'https://examplePublicKey@o0.ingest.sentry.io/0',
+  
+  // Control which errors are reported
+  beforeSend(event, hint) {
+    // Don't send certain network errors in poor connectivity
+    if (
+      event.exception &&
+      event.exception.values &&
+      event.exception.values[0].type === 'NetworkError' &&
+      navigator.connection &&
+      (navigator.connection.effectiveType === '2g' || navigator.connection.effectiveType === 'slow-2g')
+    ) {
+      return null;
+    }
+    
+    // Remove PII from error data
+    if (event.request && event.request.cookies) {
+      delete event.request.cookies;
+    }
+    
+    // Add medication-specific context
+    if (event.tags && event.tags.medicationId) {
+      event.contexts = event.contexts || {};
+      event.contexts.medication = {
+        id: event.tags.medicationId,
+        lastUpdated: new Date().toISOString(),
+      };
+    }
+    
+    return event;
+  },
+  
+  // Set custom sampling rates
+  tracesSampleRate: 0.2,
+  // Different sample rates by environment
+  tracesSampler: (samplingContext) => {
+    if (samplingContext.transactionContext.name.includes('critical_path')) {
+      return 1.0; // Always capture critical paths
+    }
+    if (samplingContext.transactionContext.name.includes('background_sync')) {
+      return 0.1; // Sample only 10% of background operations
+    }
+    return 0.2; // Default sample rate
+  },
+});
+
+// Track user navigation as transactions
+function trackScreenNavigation(screenName, routeParams) {
+  const transaction = Sentry.startTransaction({
+    name: `navigation:${screenName}`,
+    op: 'navigation',
+  });
+  
+  Sentry.configureScope(scope => {
+    scope.setTransactionName(`navigation:${screenName}`);
+    scope.setSpan(transaction);
+    
+    // Add screen context
+    scope.setContext('screen', {
+      name: screenName,
+      params: routeParams,
+      timestamp: new Date().toISOString(),
+    });
+  });
+  
+  // Return transaction to finish later
+  return transaction;
+}
+
+// Finish the transaction when screen is fully loaded
+function finishScreenLoadTransaction(transaction, success = true) {
+  if (transaction) {
+    if (!success) {
+      transaction.setStatus('internal_error');
+    }
+    transaction.finish();
+  }
+}
+      </code></pre>
+    </section>
+    
+    <!-- Custom Metrics Slide -->
+    <section class="slide content-slide">
+      <h2>Creating Custom Metrics</h2>
+      <div class="content-box">
+        <p>Custom metrics provide business-specific insights beyond standard performance data.</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Types of Custom Metrics</h3>
+            <ul>
+              <li><strong>Business Metrics:</strong> Conversions, order completions</li>
+              <li><strong>UX Metrics:</strong> Time to first action, interaction delays</li>
+              <li><strong>Resource Metrics:</strong> Memory usage, battery impact</li>
+              <li><strong>Feature Usage:</strong> Feature adoption, action frequency</li>
+              <li><strong>Custom Performance:</strong> Business-specific operations</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Implementation Best Practices</h3>
+            <ul>
+              <li>Focus on metrics that drive decisions</li>
+              <li>Balance precision with overhead</li>
+              <li>Consider baseline and target values</li>
+              <li>Create context-aware metrics</li>
+              <li>Keep personally identifiable information separate</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Custom Metrics Implementation Slide -->
+    <section class="slide code-slide">
+      <h2>Custom Metrics Implementation</h2>
+      <pre><code class="language-javascript">
+// metrics.js - Centralized metrics tracking
+import analytics from '@react-native-firebase/analytics';
+import perf from '@react-native-firebase/perf';
+
+class MetricsService {
+  // Business metrics
+  trackPrescriptionFilled(prescriptionId, fillTime) {
+    analytics().logEvent('prescription_filled', {
+      prescription_id: prescriptionId,
+      fill_time_seconds: fillTime,
+      timestamp: Date.now(),
+    });
+  }
+  
+  // UX metrics
+  async trackSearchExperience(query, resultCount, timeToResults) {
+    const trace = await perf().startTrace('medication_search');
+    
+    trace.putAttribute('query_term', query);
+    trace.putMetric('result_count', resultCount);
+    trace.putMetric('search_time_ms', timeToResults);
+    
+    await trace.stop();
+    
+    // Also track as an analytics event for funnel analysis
+    analytics().logEvent('medication_search', {
+      query,
+      result_count: resultCount,
+      search_time_ms: timeToResults,
+    });
+  }
+  
+  // Resource metrics
+  trackMemoryWarning() {
+    analytics().logEvent('memory_warning', {
+      screen: this.currentScreen,
+      free_memory: this.getAvailableMemory(),
+      timestamp: Date.now(),
+    });
+  }
+  
+  // Feature usage
+  trackFeatureUsage(featureName, usageDetails = {}) {
+    analytics().logEvent('feature_used', {
+      feature_name: featureName,
+      ...usageDetails,
+    });
+  }
+  
+  // Custom performance for pharmacy operations
+  async trackInventorySync(medicationCount) {
+    const trace = await perf().startTrace('inventory_sync');
+    trace.putMetric('medication_count', medicationCount);
+    
+    const startTime = Date.now();
+    let success = false;
+    
+    try {
+      // Perform inventory sync
+      await performInventorySync();
+      success = true;
+      return true;
+    } catch (error) {
+      trace.putAttribute('error', error.message);
+      return false;
+    } finally {
+      const duration = Date.now() - startTime;
+      trace.putMetric('duration_ms', duration);
+      trace.putAttribute('success', success.toString());
+      await trace.stop();
+    }
+  }
+}
+
+export default new MetricsService();
+      </code></pre>
+    </section>
+    
+    <!-- Dashboard Creation Slide -->
+    <section class="slide content-slide">
+      <h2>Creating Effective Dashboards</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Dashboard Types</h3>
+          <ul>
+            <li><strong>Executive:</strong> High-level health metrics</li>
+            <li><strong>Technical:</strong> Detailed performance and errors</li>
+            <li><strong>Feature:</strong> Specific feature performance</li>
+            <li><strong>Release:</strong> Compare before/after releases</li>
+            <li><strong>User Experience:</strong> Focus on user-perceived metrics</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Design Principles</h3>
+          <ul>
+            <li>Focus on actionable metrics</li>
+            <li>Provide context and benchmarks</li>
+            <li>Highlight trends over time</li>
+            <li>Group related metrics</li>
+            <li>Create hierarchical views</li>
+            <li>Use appropriate visualizations</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-box">
+        <p>Popular dashboard tools: Grafana, Datadog, Firebase Console, custom solutions</p>
+      </div>
+    </section>
+    
+    <!-- Alert Systems Slide -->
+    <section class="slide content-slide">
+      <h2>Building Alert Systems</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>Alert Strategies</h3>
+            <ul>
+              <li><strong>Threshold-based:</strong> Alert when metrics cross thresholds</li>
+              <li><strong>Anomaly detection:</strong> Alert on unusual patterns</li>
+              <li><strong>Trend-based:</strong> Alert on negative trends over time</li>
+              <li><strong>Composite alerts:</strong> Multiple conditions</li>
+              <li><strong>User-impact focused:</strong> Based on user experience metrics</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Alert Implementation</h3>
+            <pre><code class="language-javascript">
+// Firebase alerting example
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+// Monitor for crash spikes
+exports.monitorCrashRate = functions.pubsub
+  .schedule('every 15 minutes')
+  .onRun(async (context) => {
+    const db = admin.firestore();
+    
+    // Get crash data for the last hour
+    const hourAgo = Date.now() - (60 * 60 * 1000);
+    const crashes = await db
+      .collection('crashes')
+      .where('timestamp', '>', hourAgo)
+      .get();
+    
+    // Get session count for the same period
+    const sessions = await db
+      .collection('sessions')
+      .where('start_time', '>', hourAgo)
+      .get();
+    
+    // Calculate crash rate
+    const crashRate = 
+      crashes.size / Math.max(sessions.size, 1);
+    
+    // Alert if crash rate exceeds threshold
+    if (crashRate > 0.05) { // > 5% sessions crash
+      await sendAlert(
+        'Critical: High Crash Rate',
+        `Crash rate of ${(crashRate * 100).toFixed(2)}% 
+        detected in the last hour.`
+      );
+    }
+  });
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- User Feedback Mechanisms Slide -->
+    <section class="slide content-slide">
+      <h2>User Feedback Mechanisms</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Types of Feedback</h3>
+          <ul>
+            <li>In-app bug reporting</li>
+            <li>Crash reporting with user context</li>
+            <li>Performance issue reporting</li>
+            <li>Feature feedback forms</li>
+            <li>User satisfaction surveys</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Implementation Considerations</h3>
+          <ul>
+            <li>Make reporting non-intrusive</li>
+            <li>Collect relevant context automatically</li>
+            <li>Allow screenshot attachments</li>
+            <li>Integrate with your issue tracking</li>
+            <li>Close the feedback loop with users</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- In-App Bug Reporting Slide -->
+    <section class="slide code-slide">
+      <h2>Implementing In-App Bug Reporting</h2>
+      <pre><code class="language-jsx">
+// BugReportModal.tsx
+import React, { useState, useRef } from 'react';
+import { 
+  Modal, View, Text, TextInput, Button, 
+  StyleSheet, ScrollView, Switch, ViewShot 
+} from 'react-native';
+import ViewShot from 'react-native-view-shot';
+import * as Device from 'expo-device';
+import * as Application from 'expo-application';
+import NetInfo from '@react-native-community/netinfo';
+import { captureException } from './monitoring';
+
+const BugReportModal = ({ visible, onClose, currentScreen }) => {
+  const [description, setDescription] = useState('');
+  const [includeScreenshot, setIncludeScreenshot] = useState(true);
+  const [includeDeviceInfo, setIncludeDeviceInfo] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const viewShotRef = useRef(null);
+  
+  const submitBugReport = async () => {
+    try {
+      setSubmitting(true);
+      
+      // Collect bug data
+      const bugData = {
+        description,
+        timestamp: new Date().toISOString(),
+        screen: currentScreen,
+      };
+      
+      // Add screenshot if enabled
+      if (includeScreenshot && viewShotRef.current) {
+        const uri = await viewShotRef.current.capture();
+        bugData.screenshot = uri;
+      }
+      
+      // Add device info if enabled
+      if (includeDeviceInfo) {
+        const netInfo = await NetInfo.fetch();
+        
+        bugData.deviceInfo = {
+          brand: Device.brand,
+          modelName: Device.modelName,
+          osName: Device.osName,
+          osVersion: Device.osVersion,
+          appVersion: Application.nativeApplicationVersion,
+          buildVersion: Application.nativeBuildVersion,
+          networkType: netInfo.type,
+          isConnected: netInfo.isConnected,
+        };
+      }
+      
+      // Send report to your backend
+      await sendBugReportToBackend(bugData);
+      
+      // Show success and close
+      alert('Bug report submitted successfully');
+      onClose();
+    } catch (error) {
+      captureException(error);
+      alert('Failed to submit bug report');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent={true}
+      onRequestClose={onClose}
+    >
+      <ViewShot ref={viewShotRef} style={styles.container}>
+        <View style={styles.modalContent}>
+          <Text style={styles.title}>Report a Problem</Text>
+          
+          <ScrollView style={styles.form}>
+            <Text style={styles.label}>What happened?</Text>
+            <TextInput
+              style={styles.input}
+              multiline
+              numberOfLines={4}
+              placeholder="Describe the issue you experienced..."
+              value={description}
+              onChangeText={setDescription}
+            />
+            
+            <View style={styles.toggleRow}>
+              <Text style={styles.toggleLabel}>Include screenshot</Text>
+              <Switch
+                value={includeScreenshot}
+                onValueChange={setIncludeScreenshot}
+              />
+            </View>
+            
+            <View style={styles.toggleRow}>
+              <Text style={styles.toggleLabel}>Include device info</Text>
+              <Switch
+                value={includeDeviceInfo}
+                onValueChange={setIncludeDeviceInfo}
+              />
+            </View>
+            
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Cancel"
+                onPress={onClose}
+                disabled={submitting}
+              />
+              <Button
+                title={submitting ? "Submitting..." : "Submit Report"}
+                onPress={submitBugReport}
+                disabled={submitting || !description.trim()}
+              />
+            </View>
+          </ScrollView>
+        </View>
+      </ViewShot>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    margin: 20,
+    borderRadius: 8,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  // Additional styles omitted for brevity
+});
+
+export default BugReportModal;
+      </code></pre>
+    </section>
+    
+    <!-- Performance Budget Slide -->
+    <section class="slide content-slide">
+      <h2>Establishing Performance Budgets</h2>
+      <div class="content-box">
+        <p>Performance budgets are quantifiable limits for metrics that affect user experience.</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Types of Budgets</h3>
+            <ul>
+              <li><strong>Time-based:</strong> Load times, interaction delays</li>
+              <li><strong>Resource-based:</strong> Bundle size, image size, memory usage</li>
+              <li><strong>Rule-based:</strong> Performance scores, custom metrics</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Example Budgets</h3>
+            <table>
+              <tr>
+                <th>Metric</th>
+                <th>Budget</th>
+              </tr>
+              <tr>
+                <td>App startup time</td>
+                <td>&lt; 2 seconds</td>
+              </tr>
+              <tr>
+                <td>JavaScript bundle size</td>
+                <td>&lt; 1 MB</td>
+              </tr>
+              <tr>
+                <td>Time to interactive</td>
+                <td>&lt; 3.5 seconds</td>
+              </tr>
+              <tr>
+                <td>Memory usage</td>
+                <td>&lt; 150 MB</td>
+              </tr>
+              <tr>
+                <td>API response processing</td>
+                <td>&lt; 500 ms</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Continuous Monitoring Workflow Slide -->
+    <section class="slide content-slide">
+      <h2>Continuous Monitoring Workflow</h2>
+      <div class="content-box">
+        <div class="workflow-diagram">
+          <ol class="steps">
+            <li>
+              <strong>Define Key Metrics</strong>
+              <p>Select metrics aligned with business and user experience goals</p>
+            </li>
+            <li>
+              <strong>Establish Baselines</strong>
+              <p>Measure current performance to set reference points</p>
+            </li>
+            <li>
+              <strong>Set Targets &amp; Alerts</strong>
+              <p>Define acceptable thresholds and alert conditions</p>
+            </li>
+            <li>
+              <strong>Implement Instrumentation</strong>
+              <p>Add code for tracking metrics in your application</p>
+            </li>
+            <li>
+              <strong>Build Dashboards</strong>
+              <p>Create visualizations for monitoring metrics</p>
+            </li>
+            <li>
+              <strong>Analyze &amp; Act</strong>
+              <p>Review data regularly and respond to issues</p>
+            </li>
+            <li>
+              <strong>Refine &amp; Iterate</strong>
+              <p>Continuously improve monitoring based on findings</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Case Study Slide -->
+    <section class="slide content-slide">
+      <h2>Case Study: Pharmacy App Monitoring</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>Initial Situation</h3>
+            <ul>
+              <li>Growing user reports of timeouts</li>
+              <li>Inconsistent performance on older devices</li>
+              <li>No visibility into production issues</li>
+              <li>Difficult to prioritize optimizations</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Monitoring Solution</h3>
+            <ul>
+              <li>Implemented Firebase Performance</li>
+              <li>Added Sentry error tracking</li>
+              <li>Created custom medication handling metrics</li>
+              <li>Built executive and technical dashboards</li>
+              <li>Set up alerts for critical issues</li>
+            </ul>
+          </div>
+        </div>
+        <div class="results-section">
+          <h3>Results</h3>
+          <ul>
+            <li><strong>40% reduction</strong> in unresolved crashes</li>
+            <li><strong>2.5x faster</strong> identification of critical issues</li>
+            <li><strong>30% improvement</strong> in medication search performance</li>
+            <li>Enhanced visibility for both developers and stakeholders</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Implement comprehensive performance monitoring in production environments</li>
+        <li>Set up error tracking systems to capture and analyze production errors</li>
+        <li>Create custom metrics that align with business goals and user experience</li>
+        <li>Build dashboards that provide actionable insights for different stakeholders</li>
+        <li>Develop alerting systems to quickly identify and respond to critical issues</li>
+        <li>Implement user feedback mechanisms to gather qualitative data</li>
+        <li>Establish performance budgets to maintain app quality</li>
+        <li>Create a continuous monitoring workflow to systematically improve app performance</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Module Challenge:</strong> <a href="../../index.html">Return to Module Overview</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/highlight.js"></script>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

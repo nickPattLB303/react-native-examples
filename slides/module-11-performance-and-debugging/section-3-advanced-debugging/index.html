@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Debugging | Module 11: Performance and Debugging</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link rel="stylesheet" href="../../shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Advanced Debugging</h1>
+      <h2>Tackling Complex Issues in React Native</h2>
+      <p class="metadata">Module 11, Section 3 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Debug native modules and third-party libraries</li>
+        <li>Implement production debugging with source maps</li>
+        <li>Set up remote logging and crash reporting for production apps</li>
+        <li>Apply advanced memory debugging techniques</li>
+        <li>Debug complex UI and performance issues</li>
+        <li>Develop a comprehensive debugging strategy</li>
+      </ul>
+    </section>
+    
+    <!-- Debugging Native Modules Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging Native Modules</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Issues</h3>
+          <ul>
+            <li>Module not found errors</li>
+            <li>Linking problems</li>
+            <li>Method implementation errors</li>
+            <li>Thread management issues</li>
+            <li>Memory management problems</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Debugging Techniques</h3>
+          <ul>
+            <li>Check native build logs</li>
+            <li>Verify module registration</li>
+            <li>Debug bridge communication</li>
+            <li>Use platform-specific debuggers</li>
+            <li>Test module in isolation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Native Module Debugging Example Slide -->
+    <section class="slide code-slide">
+      <h2>Debugging a Native Module</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Android (Java)</h3>
+          <pre><code class="language-java">
+// Add debug logs in native code
+public class MedicationScannerModule extends ReactContextBaseJavaModule {
+  private static final String TAG = "MedicationScanner";
+
+  @ReactMethod
+  public void scanBarcode(String type, Promise promise) {
+    try {
+      Log.d(TAG, "Starting barcode scan for type: " + type);
+      
+      // Verify parameters
+      if (type == null || type.isEmpty()) {
+        Log.e(TAG, "Invalid barcode type provided");
+        promise.reject("INVALID_TYPE", "Barcode type is required");
+        return;
+      }
+      
+      // Test scanner initialization
+      BarcodeScanner scanner = initializeScanner();
+      if (scanner == null) {
+        Log.e(TAG, "Failed to initialize scanner");
+        promise.reject("SCANNER_INIT_FAILED", "Could not initialize scanner");
+        return;
+      }
+      
+      // ... rest of the method
+      String result = scanner.scan();
+      Log.d(TAG, "Scan completed successfully: " + result);
+      promise.resolve(result);
+    } catch (Exception e) {
+      Log.e(TAG, "Exception during scan: " + e.getMessage(), e);
+      promise.reject("SCAN_FAILED", e.getMessage(), e);
+    }
+  }
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>iOS (Objective-C)</h3>
+          <pre><code class="language-objectivec">
+// Add debug logs in native code
+@implementation RCTMedicationScanner
+
+RCT_EXPORT_METHOD(scanBarcode:(NSString *)type
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+{
+  NSLog(@"[MedicationScanner] Starting barcode scan for type: %@", type);
+  
+  // Verify parameters
+  if (type.length == 0) {
+    NSLog(@"[MedicationScanner] Invalid barcode type provided");
+    reject(@"INVALID_TYPE", @"Barcode type is required", nil);
+    return;
+  }
+  
+  // Test scanner initialization
+  BarcodeScanner *scanner = [self initializeScanner];
+  if (!scanner) {
+    NSLog(@"[MedicationScanner] Failed to initialize scanner");
+    reject(@"SCANNER_INIT_FAILED", @"Could not initialize scanner", nil);
+    return;
+  }
+  
+  // ... rest of the method
+  @try {
+    NSString *result = [scanner scan];
+    NSLog(@"[MedicationScanner] Scan completed successfully: %@", result);
+    resolve(result);
+  } @catch (NSException *exception) {
+    NSLog(@"[MedicationScanner] Exception during scan: %@", exception);
+    reject(@"SCAN_FAILED", exception.reason, nil);
+  }
+}
+
+@end
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Debugging Third-Party Libraries Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging Third-Party Libraries</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>Investigation Approach</h3>
+            <ol>
+              <li>Check GitHub issues for known problems</li>
+              <li>Review library documentation for correct usage</li>
+              <li>Examine package.json for version compatibility</li>
+              <li>Test with minimal reproduction case</li>
+              <li>Debug the library source code</li>
+            </ol>
+          </div>
+          <div class="column">
+            <h3>Common Issues</h3>
+            <ul>
+              <li>Version incompatibilities</li>
+              <li>Improper initialization</li>
+              <li>Platform-specific bugs</li>
+              <li>Conflicts with other libraries</li>
+              <li>Incorrect usage patterns</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Source Map Debugging Slide -->
+    <section class="slide code-slide">
+      <h2>Production Debugging with Source Maps</h2>
+      <div class="content-box">
+        <p>Source maps allow you to map minified production code back to your original source code for debugging.</p>
+      </div>
+      <pre><code class="language-javascript">
+// In metro.config.js
+module.exports = {
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
+      },
+    }),
+  },
+  // Configure source map generation
+  serializer: {
+    // Create source maps for release builds
+    createModuleIdFactory: require('metro-bundler/src/lib/createModuleIdFactory'),
+    processModuleFilter: () => true,
+    // Enable source maps in production
+    sourcemapUseAbsolutePath: false,
+    getPolyfills: () => [],
+    getModulesRunBeforeMainModule: () => [],
+    getRunModuleStatement: (moduleId) => `__r(${moduleId});`,
+    // For production apps - upload these to your error reporting service
+    sourcemapOutput: './main.map',
+  },
+};
+
+// In app.json (Expo)
+{
+  "expo": {
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "your-sentry-org",
+            "project": "your-sentry-project",
+            "authToken": "your-auth-token"
+          }
+        }
+      ]
+    }
+  }
+}
+      </code></pre>
+    </section>
+    
+    <!-- Remote Logging and Crash Reporting Slide -->
+    <section class="slide content-slide">
+      <h2>Remote Logging and Crash Reporting</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Implementation Strategy</h3>
+          <ul>
+            <li>Set up breadcrumbs for user actions</li>
+            <li>Capture context information</li>
+            <li>Track app state during crashes</li>
+            <li>Implement log rotation and batching</li>
+            <li>Balance detail vs. performance</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Tools and Services</h3>
+          <ul>
+            <li><strong>Sentry:</strong> Error monitoring with source maps</li>
+            <li><strong>Crashlytics:</strong> Detailed crash reporting</li>
+            <li><strong>LogRocket:</strong> Session replay and logging</li>
+            <li><strong>Bugsnag:</strong> Error monitoring and stability</li>
+            <li><strong>Custom Solutions:</strong> For specialized needs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Advanced Crash Reporting Slide -->
+    <section class="slide code-slide">
+      <h2>Advanced Crash Reporting with Breadcrumbs</h2>
+      <pre><code class="language-javascript">
+// Initialize crash reporting early in your app
+import * as Sentry from '@sentry/react-native';
+import { RewriteFrames } from '@sentry/integrations';
+
+// Enhanced setup with breadcrumbs and context
+Sentry.init({
+  dsn: 'https://examplePublicKey@o0.ingest.sentry.io/0',
+  // Add integrations for enhanced data
+  integrations: [
+    new RewriteFrames({
+      root: '/',
+    }),
+  ],
+  beforeBreadcrumb(breadcrumb, hint) {
+    // Filter out sensitive data
+    if (breadcrumb.category === 'xhr' || breadcrumb.category === 'fetch') {
+      // Sanitize URLs and payloads
+      if (breadcrumb.data && breadcrumb.data.url) {
+        const url = new URL(breadcrumb.data.url);
+        if (url.pathname.includes('patient') || url.pathname.includes('prescription')) {
+          breadcrumb.data.url = url.origin + url.pathname; // Remove query params
+        }
+      }
+    }
+    return breadcrumb;
+  },
+  // Only capture severe errors in production
+  tracesSampleRate: __DEV__ ? 1.0 : 0.2,
+});
+
+// Add navigation breadcrumbs
+function addNavigationBreadcrumb(routeName) {
+  Sentry.addBreadcrumb({
+    category: 'navigation',
+    message: `Navigated to ${routeName}`,
+    level: 'info',
+  });
+}
+
+// Add API call breadcrumbs
+function addAPIBreadcrumb(endpoint, status, duration) {
+  Sentry.addBreadcrumb({
+    category: 'api',
+    message: `API call to ${endpoint}`,
+    data: {
+      status,
+      duration,
+      timestamp: new Date().toISOString(),
+    },
+    level: status >= 400 ? 'error' : 'info',
+  });
+}
+
+// Add user interaction breadcrumbs
+function addUserActionBreadcrumb(action, details) {
+  Sentry.addBreadcrumb({
+    category: 'ui.click',
+    message: `User performed: ${action}`,
+    data: details,
+    level: 'info',
+  });
+}
+      </code></pre>
+    </section>
+    
+    <!-- Advanced Memory Debugging Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Memory Debugging</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Memory Issues</h3>
+          <ul>
+            <li>Leaked component instances</li>
+            <li>Event listener leaks</li>
+            <li>Closure-captured variables</li>
+            <li>Large cached data structures</li>
+            <li>Unbounded collections growth</li>
+            <li>Image and asset leaks</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Investigation Tools</h3>
+          <ul>
+            <li>Chrome DevTools Memory tab</li>
+            <li>Heap snapshots</li>
+            <li>Allocation timelines</li>
+            <li>Memory instrumentation</li>
+            <li>Native memory profilers</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Memory Leak Examples Slide -->
+    <section class="slide code-slide">
+      <h2>Memory Leak Examples and Fixes</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Memory Leak</h3>
+          <pre><code class="language-jsx">
+const MedicationDetail = ({ id }) => {
+  // Global variable causing a leak
+  window.currentMedicationId = id;
+  
+  // Leaking event listener
+  useEffect(() => {
+    const handler = () => {
+      console.log('Device rotated, med id:', id);
+    };
+    
+    // Adding listener without cleanup
+    Dimensions.addEventListener('change', handler);
+    
+    // Missing return cleanup function
+  }, [id]);
+  
+  // Leaking interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMedicationUpdates(id);
+    }, 5000);
+    
+    // Missing cleanup
+  }, []);
+  
+  return <Text>Medication: {id}</Text>;
+};
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Fixed Version</h3>
+          <pre><code class="language-jsx">
+const MedicationDetail = ({ id }) => {
+  // Use component state instead of global
+  const [medicationId] = useState(id);
+  
+  // Properly cleaning up event listener
+  useEffect(() => {
+    const handler = () => {
+      console.log('Device rotated, med id:', medicationId);
+    };
+    
+    const subscription = Dimensions.addEventListener(
+      'change', 
+      handler
+    );
+    
+    // Clean up event listener
+    return () => subscription.remove();
+  }, [medicationId]);
+  
+  // Properly cleaning up interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMedicationUpdates(medicationId);
+    }, 5000);
+    
+    // Clean up interval
+    return () => clearInterval(interval);
+  }, [medicationId]);
+  
+  return <Text>Medication: {medicationId}</Text>;
+};
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Advanced Performance Debugging Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Performance Debugging</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Frame Drops Investigation</h3>
+          <ul>
+            <li>Use Systrace to identify frame drops</li>
+            <li>Analyze JS and UI thread activity</li>
+            <li>Look for long-running operations</li>
+            <li>Identify bridge congestion</li>
+            <li>Find expensive render operations</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Startup Time Investigation</h3>
+          <ul>
+            <li>Measure JS bundle loading time</li>
+            <li>Profile initialization sequence</li>
+            <li>Check dependency loading order</li>
+            <li>Analyze native module initialization</li>
+            <li>Measure time to first meaningful paint</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Systrace Analysis Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Analysis with Systrace</h2>
+      <div class="content-box">
+        <p>Systrace provides detailed timeline of events across JS and native threads</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Running Systrace</h3>
+            <pre><code class="language-bash">
+# For apps not using Hermes:
+npx react-native profile-hermes
+            
+# Manual approach with Android:
+npx react-native run-android
+adb shell "cat /proc/81473/cmdline" # find pid
+python $ANDROID_HOME/platform-tools/systrace/systrace.py \
+  -a [your-package-name] \
+  -b 16000 \
+  chromium-trace
+            </code></pre>
+          </div>
+          <div class="column">
+            <h3>Interpreting Results</h3>
+            <ul>
+              <li>Look for large gaps between VSync</li>
+              <li>Identify JS thread execution blocks</li>
+              <li>Look for UI thread stalls during animations</li>
+              <li>Check bridge traffic during interactions</li>
+              <li>Correlate with user interactions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Complex UI Debugging Slide -->
+    <section class="slide content-slide">
+      <h2>Debugging Complex UI Issues</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>UI Issue</th>
+            <th>Symptoms</th>
+            <th>Investigation Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Layout Thrashing</td>
+            <td>Rapid layout recalculations, UI jank</td>
+            <td>Instrument layout operations, identify repeated recalculations</td>
+          </tr>
+          <tr>
+            <td>Z-Index Issues</td>
+            <td>Elements appear behind/in front incorrectly</td>
+            <td>Use View Inspector, check elevation/zIndex, check render order</td>
+          </tr>
+          <tr>
+            <td>Shadow Rendering</td>
+            <td>Shadows missing or rendering incorrectly</td>
+            <td>Check platform-specific shadow implementations, verify style properties</td>
+          </tr>
+          <tr>
+            <td>Text Truncation</td>
+            <td>Text displayed incorrectly, ellipsis issues</td>
+            <td>Check text measurements, font scaling, numberOfLines prop</td>
+          </tr>
+          <tr>
+            <td>Image Resizing</td>
+            <td>Blurry images, incorrect scaling</td>
+            <td>Verify image dimensions, resizeMode, check image source quality</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Debugging Strategy Slide -->
+    <section class="slide content-slide">
+      <h2>Creating a Comprehensive Debugging Strategy</h2>
+      <div class="content-box">
+        <h3>Elements of an Effective Strategy</h3>
+        <ol>
+          <li><strong>Prevention:</strong> Code reviews, typing, tests, linting</li>
+          <li><strong>Monitoring:</strong> Performance metrics, error tracking</li>
+          <li><strong>Detection:</strong> Alerts, dashboards, user feedback</li>
+          <li><strong>Analysis:</strong> Structured debugging flow, root cause analysis</li>
+          <li><strong>Resolution:</strong> Fix verification, regression testing</li>
+          <li><strong>Documentation:</strong> Knowledge base of issues and solutions</li>
+        </ol>
+        <div class="note">
+          <p>A comprehensive strategy combines proactive measures with responsive techniques.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Debugging Workflow Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Debugging Workflow</h2>
+      <div class="content-box">
+        <div class="columns">
+          <div class="column">
+            <h3>For Production Issues</h3>
+            <ol>
+              <li>Capture context from error reports</li>
+              <li>Reproduce in development environment</li>
+              <li>Create minimal test case</li>
+              <li>Use source maps to locate exact code</li>
+              <li>Deploy hotfix if critical</li>
+              <li>Document root cause</li>
+            </ol>
+          </div>
+          <div class="column">
+            <h3>For Complex Performance Issues</h3>
+            <ol>
+              <li>Measure baseline performance</li>
+              <li>Profile target scenarios</li>
+              <li>Isolate components for testing</li>
+              <li>Eliminate variables one by one</li>
+              <li>Verify optimizations independently</li>
+              <li>Create performance regression tests</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Debugging Tools Matrix Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Debugging Tools Matrix</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Issue Category</th>
+            <th>Development Tools</th>
+            <th>Production Tools</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Crashes</td>
+            <td>LogBox, native debuggers</td>
+            <td>Crashlytics, Sentry, Bugsnag</td>
+          </tr>
+          <tr>
+            <td>Performance</td>
+            <td>Profiler, Systrace, React DevTools</td>
+            <td>Firebase Performance, custom metrics</td>
+          </tr>
+          <tr>
+            <td>UI Issues</td>
+            <td>Flipper Layout Inspector, React DevTools</td>
+            <td>Session recordings, screenshot reporting</td>
+          </tr>
+          <tr>
+            <td>Network Issues</td>
+            <td>Network Inspector, API mocks</td>
+            <td>Network monitoring, request logging</td>
+          </tr>
+          <tr>
+            <td>State Management</td>
+            <td>Redux DevTools, React DevTools</td>
+            <td>State snapshots, action logging</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Debug native modules with platform-specific tools and detailed logging</li>
+        <li>Troubleshoot third-party libraries systematically</li>
+        <li>Implement source maps for production debugging</li>
+        <li>Set up comprehensive remote logging and crash reporting</li>
+        <li>Apply advanced memory debugging techniques to identify and fix leaks</li>
+        <li>Use advanced performance tools like Systrace for complex performance issues</li>
+        <li>Develop structured approaches to debug complex UI problems</li>
+        <li>Create a comprehensive debugging strategy that covers prevention to resolution</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-4-monitoring-and-analytics/index.html">Section 4: Monitoring and Analytics</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/highlight.js"></script>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

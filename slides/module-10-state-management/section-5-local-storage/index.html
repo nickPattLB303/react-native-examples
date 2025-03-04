@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Storage for Data Persistence | Module 10, Section 5</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Local Storage</h1>
+      <h2>Data Persistence in React Native</h2>
+      <p class="metadata">Module 10, Section 5 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the importance of local data persistence in React Native</li>
+        <li>Implement AsyncStorage for basic data persistence</li>
+        <li>Use MMKV for high-performance storage</li>
+        <li>Implement encrypted storage for sensitive data</li>
+        <li>Create storage hooks and abstractions</li>
+        <li>Integrate persistence with state management solutions</li>
+        <li>Handle data migration and versioning</li>
+      </ul>
+    </section>
+    
+    <!-- Introduction to Local Storage Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Local Storage</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Why Local Storage Matters</h3>
+          <ul>
+            <li>Persists data between app launches</li>
+            <li>Supports offline functionality</li>
+            <li>Reduces unnecessary API calls</li>
+            <li>Improves app responsiveness</li>
+            <li>Enhances user experience</li>
+            <li>Preserves user preferences and settings</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Storage Options in React Native</h3>
+          <ul>
+            <li><strong>AsyncStorage</strong>: Simple key-value storage</li>
+            <li><strong>MMKV</strong>: High-performance alternative</li>
+            <li><strong>Encrypted Storage</strong>: For sensitive data</li>
+            <li><strong>Realm</strong>: Object database (covered in another module)</li>
+            <li><strong>SQLite</strong>: Relational database (covered in another module)</li>
+            <li><strong>Firebase</strong>: Cloud-synced storage</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Storage Comparison Slide -->
+    <section class="slide content-slide">
+      <h2>Comparing Storage Solutions</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>AsyncStorage</th>
+            <th>MMKV</th>
+            <th>Encrypted Storage</th>
+            <th>SQLite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Performance</td>
+            <td>Moderate</td>
+            <td>Very Fast</td>
+            <td>Moderate</td>
+            <td>Fast for queries</td>
+          </tr>
+          <tr>
+            <td>Security</td>
+            <td>None</td>
+            <td>None</td>
+            <td>High</td>
+            <td>Basic</td>
+          </tr>
+          <tr>
+            <td>Complexity</td>
+            <td>Low</td>
+            <td>Low</td>
+            <td>Medium</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Data Types</td>
+            <td>String only</td>
+            <td>Multiple</td>
+            <td>String only</td>
+            <td>Full DB types</td>
+          </tr>
+          <tr>
+            <td>Best For</td>
+            <td>Simple data</td>
+            <td>Performance</td>
+            <td>Sensitive data</td>
+            <td>Relational data</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">Note: Choose the right storage solution based on your app's specific requirements.</p>
+    </section>
+    
+    <!-- AsyncStorage Slide -->
+    <section class="slide code-slide">
+      <h2>AsyncStorage Basics</h2>
+      <div class="note">
+        <p>AsyncStorage has been moved to a separate package: <code>@react-native-async-storage/async-storage</code></p>
+      </div>
+      <pre><code class="language-bash">
+# Installation
+npm install @react-native-async-storage/async-storage
+# or
+yarn add @react-native-async-storage/async-storage</code></pre>
+      <pre><code class="language-tsx">
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Storing string value
+const storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+    console.log('Data stored successfully');
+  } catch (error) {
+    console.error('Error storing data:', error);
+  }
+};
+
+// Retrieving string value
+const getData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      console.log('Retrieved data:', value);
+      return value;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    return null;
+  }
+};</code></pre>
+    </section>
+    
+    <!-- AsyncStorage for Objects Slide -->
+    <section class="slide code-slide">
+      <h2>Working with Objects in AsyncStorage</h2>
+      <pre><code class="language-tsx">
+// Storing object value
+const storeObjectData = async (key, value) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(key, jsonValue);
+    console.log('Object stored successfully');
+  } catch (error) {
+    console.error('Error storing object:', error);
+  }
+};
+
+// Retrieving object value
+const getObjectData = async (key) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (error) {
+    console.error('Error retrieving object:', error);
+    return null;
+  }
+};
+
+// Example usage
+const saveUserPreferences = async () => {
+  const userPrefs = {
+    theme: 'dark',
+    notifications: true,
+    fontSize: 'medium',
+    lastUpdated: new Date().toISOString()
+  };
+  
+  await storeObjectData('@user_preferences', userPrefs);
+};
+
+const loadUserPreferences = async () => {
+  const userPrefs = await getObjectData('@user_preferences');
+  if (userPrefs) {
+    // Apply preferences to app
+    applyTheme(userPrefs.theme);
+    setNotificationSettings(userPrefs.notifications);
+    setFontSize(userPrefs.fontSize);
+  }
+};</code></pre>
+    </section>
+    
+    <!-- AsyncStorage Operations Slide -->
+    <section class="slide code-slide">
+      <h2>AsyncStorage Operations</h2>
+      <pre><code class="language-tsx">
+// Removing an item
+const removeData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    console.log('Data removed successfully');
+  } catch (error) {
+    console.error('Error removing data:', error);
+  }
+};
+
+// Checking if a key exists
+const hasKey = async (key) => {
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    return keys.includes(key);
+  } catch (error) {
+    console.error('Error checking keys:', error);
+    return false;
+  }
+};
+
+// Getting multiple items
+const getMultipleItems = async (keys) => {
+  try {
+    const values = await AsyncStorage.multiGet(keys);
+    const result = {};
+    values.forEach(([key, value]) => {
+      result[key] = value;
+    });
+    return result;
+  } catch (error) {
+    console.error('Error retrieving multiple items:', error);
+    return {};
+  }
+};
+
+// Storing multiple items
+const storeMultipleItems = async (items) => {
+  try {
+    const pairs = items.map(([key, value]) => [key, value]);
+    await AsyncStorage.multiSet(pairs);
+    console.log('Multiple items stored successfully');
+  } catch (error) {
+    console.error('Error storing multiple items:', error);
+  }
+};
+
+// Clearing all data
+const clearStorage = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log('Storage cleared successfully');
+  } catch (error) {
+    console.error('Error clearing storage:', error);
+  }
+};</code></pre>
+    </section>
+    
+    <!-- AsyncStorage Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>AsyncStorage Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Do's</h3>
+          <ul>
+            <li>Use prefix for keys (e.g., <code>@myapp:key</code>)</li>
+            <li>Handle errors and edge cases</li>
+            <li>Batch operations when possible</li>
+            <li>Create utility functions for common operations</li>
+            <li>Use async/await for better readability</li>
+            <li>Limit storage to essential data</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Don'ts</h3>
+          <ul>
+            <li>Store sensitive data without encryption</li>
+            <li>Store very large objects</li>
+            <li>Use for high-frequency updates</li>
+            <li>Neglect error handling</li>
+            <li>Block UI thread during storage operations</li>
+            <li>Depend on immediate data availability</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        <p>AsyncStorage operations are asynchronous and should be treated accordingly in your application flow.</p>
+      </div>
+    </section>
+    
+    <!-- MMKV Storage Slide -->
+    <section class="slide code-slide">
+      <h2>MMKV Storage</h2>
+      <p>MMKV is a key-value storage framework developed by WeChat. It's an alternative to AsyncStorage with better performance.</p>
+      <pre><code class="language-bash">
+# Installation
+npm install react-native-mmkv
+# or
+yarn add react-native-mmkv</code></pre>
+      <pre><code class="language-tsx">
+import { MMKV } from 'react-native-mmkv';
+
+// Create an instance
+export const storage = new MMKV({
+  id: 'medication-app-storage',
+  // Optional: encryption
+  // encryptionKey: 'encryption-key'
+});
+
+// Store values (synchronous API)
+storage.set('username', 'johndoe');
+storage.set('isLoggedIn', true);
+storage.set('lastLogin', new Date().getTime());
+storage.set('user', JSON.stringify({ id: 1, name: 'John' }));
+
+// Read values (synchronous API)
+const username = storage.getString('username'); // 'johndoe'
+const isLoggedIn = storage.getBoolean('isLoggedIn'); // true
+const lastLogin = storage.getNumber('lastLogin'); // timestamp
+const userJson = storage.getString('user');
+const user = userJson ? JSON.parse(userJson) : null;
+
+// Delete values
+storage.delete('username');
+
+// Check if key exists
+const hasUsername = storage.contains('username'); // false
+
+// Get all keys
+const allKeys = storage.getAllKeys(); // ['isLoggedIn', 'lastLogin', 'user']
+
+// Clear all data
+storage.clearAll();</code></pre>
+    </section>
+    
+    <!-- MMKV with Hooks Slide -->
+    <section class="slide code-slide">
+      <h2>MMKV with React Hooks</h2>
+      <pre><code class="language-tsx">
+import { useState, useEffect, useCallback } from 'react';
+import { MMKV } from 'react-native-mmkv';
+
+const storage = new MMKV({ id: 'app-storage' });
+
+// Custom hook for using MMKV with React
+export function useMMKVStorage(key, initialValue) {
+  // Get the stored value
+  const readStoredValue = useCallback(() => {
+    if (typeof initialValue === 'string') {
+      return storage.getString(key) || initialValue;
+    }
+    
+    if (typeof initialValue === 'number') {
+      return storage.getNumber(key) ?? initialValue;
+    }
+    
+    if (typeof initialValue === 'boolean') {
+      return storage.getBoolean(key) ?? initialValue;
+    }
+    
+    // For objects and arrays
+    const jsonValue = storage.getString(key);
+    if (jsonValue != null) {
+      try {
+        return JSON.parse(jsonValue);
+      } catch (e) {
+        console.error('Error parsing stored json:', e);
+      }
+    }
+    
+    return initialValue;
+  }, [key, initialValue]);
+
+  // State to hold the value
+  const [storedValue, setStoredValue] = useState(readStoredValue);
+
+  // Return a wrapped version of useState's setter function
+  const setValue = useCallback((value) => {
+    // Allow value to be a function
+    const valueToStore = value instanceof Function ? value(storedValue) : value;
+    
+    // Save state
+    setStoredValue(valueToStore);
+    
+    // Save to storage based on type
+    if (valueToStore === null || valueToStore === undefined) {
+      storage.delete(key);
+    } else if (typeof valueToStore === 'string') {
+      storage.set(key, valueToStore);
+    } else if (typeof valueToStore === 'number') {
+      storage.set(key, valueToStore);
+    } else if (typeof valueToStore === 'boolean') {
+      storage.set(key, valueToStore);
+    } else {
+      // For objects and arrays
+      storage.set(key, JSON.stringify(valueToStore));
+    }
+  }, [key, storedValue]);
+
+  return [storedValue, setValue];
+}</code></pre>
+    </section>
+    
+    <!-- Using Storage Hooks Slide -->
+    <section class="slide code-slide">
+      <h2>Using Storage Hooks in Components</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { View, Text, Switch, Button } from 'react-native';
+import { useMMKVStorage } from '../hooks/useMMKVStorage';
+
+function SettingsScreen() {
+  // Use our custom hook
+  const [darkMode, setDarkMode] = useMMKVStorage('darkMode', false);
+  const [fontSize, setFontSize] = useMMKVStorage('fontSize', 'medium');
+  const [notificationsEnabled, setNotificationsEnabled] = useMMKVStorage('notifications', true);
+  const [user, setUser] = useMMKVStorage('user', null);
+  
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+  
+  const changeFontSize = (size) => setFontSize(size);
+  
+  const toggleNotifications = () => setNotificationsEnabled(!notificationsEnabled);
+  
+  const logout = () => setUser(null);
+  
+  return (
+    <View style={{ 
+      backgroundColor: darkMode ? '#333' : '#fff',
+      padding: 20,
+    }}>
+      <Text style={{ 
+        color: darkMode ? '#fff' : '#333',
+        fontSize: fontSize === 'small' ? 14 : fontSize === 'medium' ? 16 : 18
+      }}>
+        Settings
+      </Text>
+      
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+        <Text style={{ color: darkMode ? '#fff' : '#333' }}>Dark Mode</Text>
+        <Switch value={darkMode} onValueChange={toggleDarkMode} />
+      </View>
+      
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ color: darkMode ? '#fff' : '#333' }}>Font Size</Text>
+        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+          <Button 
+            title="Small" 
+            onPress={() => changeFontSize('small')} 
+            color={fontSize === 'small' ? '#007AFF' : '#ccc'}
+          />
+          <Button 
+            title="Medium" 
+            onPress={() => changeFontSize('medium')} 
+            color={fontSize === 'medium' ? '#007AFF' : '#ccc'}
+          />
+          <Button 
+            title="Large" 
+            onPress={() => changeFontSize('large')} 
+            color={fontSize === 'large' ? '#007AFF' : '#ccc'}
+          />
+        </View>
+      </View>
+      
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+        <Text style={{ color: darkMode ? '#fff' : '#333' }}>Notifications</Text>
+        <Switch value={notificationsEnabled} onValueChange={toggleNotifications} />
+      </View>
+      
+      {user && (
+        <Button title="Logout" onPress={logout} style={{ marginTop: 20 }} />
+      )}
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Encrypted Storage Slide -->
+    <section class="slide code-slide">
+      <h2>Encrypted Storage</h2>
+      <p>For sensitive information like auth tokens and personal data, use an encrypted storage solution.</p>
+      <pre><code class="language-bash">
+# Installation
+npm install react-native-encrypted-storage
+# or
+yarn add react-native-encrypted-storage</code></pre>
+      <pre><code class="language-tsx">
+import EncryptedStorage from 'react-native-encrypted-storage';
+
+// Store data securely
+const storeSecureData = async (key, value) => {
+  try {
+    await EncryptedStorage.setItem(
+      key,
+      typeof value === 'string' ? value : JSON.stringify(value)
+    );
+    console.log('Data encrypted and stored successfully');
+  } catch (error) {
+    console.error('Error storing encrypted data:', error);
+  }
+};
+
+// Retrieve encrypted data
+const getSecureData = async (key) => {
+  try {
+    const data = await EncryptedStorage.getItem(key);
+    if (data) {
+      try {
+        // Try to parse as JSON
+        return JSON.parse(data);
+      } catch {
+        // If not valid JSON, return as string
+        return data;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error('Error retrieving encrypted data:', error);
+    return null;
+  }
+};
+
+// Remove secure data
+const removeSecureData = async (key) => {
+  try {
+    await EncryptedStorage.removeItem(key);
+    console.log('Encrypted data removed successfully');
+  } catch (error) {
+    console.error('Error removing encrypted data:', error);
+  }
+};
+
+// Clear all secure data
+const clearSecureStorage = async () => {
+  try {
+    await EncryptedStorage.clear();
+    console.log('Encrypted storage cleared successfully');
+  } catch (error) {
+    console.error('Error clearing encrypted storage:', error);
+  }
+};</code></pre>
+    </section>
+    
+    <!-- Storage Abstractions Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Storage Abstractions</h2>
+      <pre><code class="language-tsx">
+// storage.service.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { MMKV } from 'react-native-mmkv';
+
+// MMKV instance for high-performance storage
+const mmkvStorage = new MMKV({ id: 'app-storage' });
+
+// Key prefixes for better organization
+const KEYS = {
+  PREFERENCES: '@app:preferences:',
+  USER: '@app:user:',
+  AUTH: '@app:auth:',
+  APP_STATE: '@app:state:',
+};
+
+/**
+ * Storage service that provides unified access to different storage methods
+ */
+export class StorageService {
+  /**
+   * Store user preferences (using MMKV for performance)
+   */
+  static async setPreference(key, value) {
+    const fullKey = KEYS.PREFERENCES + key;
+    
+    if (value === null || value === undefined) {
+      mmkvStorage.delete(fullKey);
+      return;
+    }
+    
+    if (typeof value === 'string') {
+      mmkvStorage.set(fullKey, value);
+    } else if (typeof value === 'number') {
+      mmkvStorage.set(fullKey, value);
+    } else if (typeof value === 'boolean') {
+      mmkvStorage.set(fullKey, value);
+    } else {
+      mmkvStorage.set(fullKey, JSON.stringify(value));
+    }
+  }
+  
+  /**
+   * Get user preference
+   */
+  static getPreference(key, defaultValue = null) {
+    const fullKey = KEYS.PREFERENCES + key;
+    
+    if (!mmkvStorage.contains(fullKey)) {
+      return defaultValue;
+    }
+    
+    if (typeof defaultValue === 'string') {
+      return mmkvStorage.getString(fullKey) || defaultValue;
+    }
+    
+    if (typeof defaultValue === 'number') {
+      return mmkvStorage.getNumber(fullKey) ?? defaultValue;
+    }
+    
+    if (typeof defaultValue === 'boolean') {
+      return mmkvStorage.getBoolean(fullKey) ?? defaultValue;
+    }
+    
+    // Object or array
+    const value = mmkvStorage.getString(fullKey);
+    if (!value) return defaultValue;
+    
+    try {
+      return JSON.parse(value);
+    } catch {
+      return defaultValue;
+    }
+  }
+  
+  /**
+   * Store sensitive authentication data (using encrypted storage)
+   */
+  static async setAuthData(key, value) {
+    try {
+      await EncryptedStorage.setItem(
+        KEYS.AUTH + key,
+        typeof value === 'string' ? value : JSON.stringify(value)
+      );
+    } catch (error) {
+      console.error('Error storing auth data:', error);
+      throw error;
+    }
+  }
+  
+  /**
+   * Get sensitive authentication data
+   */
+  static async getAuthData(key) {
+    try {
+      const data = await EncryptedStorage.getItem(KEYS.AUTH + key);
+      if (!data) return null;
+      
+      try {
+        return JSON.parse(data);
+      } catch {
+        return data;
+      }
+    } catch (error) {
+      console.error('Error retrieving auth data:', error);
+      return null;
+    }
+  }
+  
+  /**
+   * Store user data (using AsyncStorage for compatibility)
+   */
+  static async setUserData(key, value) {
+    try {
+      await AsyncStorage.setItem(
+        KEYS.USER + key,
+        typeof value === 'string' ? value : JSON.stringify(value)
+      );
+    } catch (error) {
+      console.error('Error storing user data:', error);
+      throw error;
+    }
+  }
+  
+  /**
+   * Get user data
+   */
+  static async getUserData(key) {
+    try {
+      const data = await AsyncStorage.getItem(KEYS.USER + key);
+      if (!data) return null;
+      
+      try {
+        return JSON.parse(data);
+      } catch {
+        return data;
+      }
+    } catch (error) {
+      console.error('Error retrieving user data:', error);
+      return null;
+    }
+  }
+  
+  // Add other methods as needed
+}</code></pre>
+    </section>
+    
+    <!-- Integrating with State Management Slide -->
+    <section class="slide code-slide">
+      <h2>Integrating Storage with State Management</h2>
+      <pre><code class="language-tsx">
+// Example with Zustand and persistence middleware
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Define your store with persistence
+const useMedicationStore = create(
+  persist(
+    (set, get) => ({
+      medications: [],
+      addMedication: (medication) => set((state) => ({
+        medications: [...state.medications, {
+          ...medication,
+          id: Date.now(),
+        }]
+      })),
+      updateMedication: (id, updates) => set((state) => ({
+        medications: state.medications.map(med => 
+          med.id === id ? { ...med, ...updates } : med
+        )
+      })),
+      deleteMedication: (id) => set((state) => ({
+        medications: state.medications.filter(med => med.id !== id)
+      })),
+      clearMedications: () => set({ medications: [] }),
+    }),
+    {
+      name: 'medication-storage', // Storage key
+      storage: createJSONStorage(() => AsyncStorage), // Use AsyncStorage
+      // Optional: Whitelist specific state keys to persist
+      partialize: (state) => ({ 
+        medications: state.medications 
+      }),
+    }
+  )
+);
+
+// Example with React Query and persisted queries
+import { QueryClient, QueryCache } from '@tanstack/react-query';
+import { persistQueryClient } from '@tanstack/react-query-persist-client';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+    },
+  },
+});
+
+// Create a persister
+const asyncStoragePersister = createAsyncStoragePersister({
+  storage: AsyncStorage,
+  key: 'REACT_QUERY_CACHE',
+});
+
+// Setup persistence
+persistQueryClient({
+  queryClient,
+  persister: asyncStoragePersister,
+  // Only persist queries that were used
+  dehydrateQueries: true,
+  // Maximum age of persisted queries
+  maxAge: 1000 * 60 * 60 * 24, // 24 hours
+});</code></pre>
+    </section>
+    
+    <!-- Data Migration Slide -->
+    <section class="slide code-slide">
+      <h2>Data Migration and Versioning</h2>
+      <pre><code class="language-tsx">
+// Import storage utilities
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
+
+const mmkvStorage = new MMKV({ id: 'app-storage' });
+
+// Migration utilities
+const APP_VERSION_KEY = '@app:version';
+const CURRENT_VERSION = '2.0.0'; // App version
+
+// Check if migration is needed
+const checkAndMigrateData = async () => {
+  try {
+    // Get the stored version
+    const storedVersion = await AsyncStorage.getItem(APP_VERSION_KEY) || '1.0.0';
+    
+    // Compare versions and migrate if needed
+    if (storedVersion !== CURRENT_VERSION) {
+      console.log(`Migrating data from ${storedVersion} to ${CURRENT_VERSION}`);
+      
+      // Handle migrations based on version differences
+      if (storedVersion === '1.0.0') {
+        await migrateFrom1To2();
+      }
+      
+      // Update the stored version
+      await AsyncStorage.setItem(APP_VERSION_KEY, CURRENT_VERSION);
+      console.log('Migration completed successfully');
+    }
+  } catch (error) {
+    console.error('Error during migration check:', error);
+  }
+};
+
+// Migration from v1 to v2
+const migrateFrom1To2 = async () => {
+  try {
+    // Example: Migrate preferences from AsyncStorage to MMKV
+    const preferenceKeys = [
+      '@app:preferences:theme',
+      '@app:preferences:fontSize',
+      '@app:preferences:notifications',
+    ];
+    
+    // Get all preferences from AsyncStorage
+    const preferences = await AsyncStorage.multiGet(preferenceKeys);
+    
+    // Store in MMKV for better performance
+    for (const [key, value] of preferences) {
+      if (value) {
+        // Try to parse JSON values
+        try {
+          const parsedValue = JSON.parse(value);
+          if (typeof parsedValue === 'boolean') {
+            mmkvStorage.set(key, parsedValue);
+          } else if (typeof parsedValue === 'number') {
+            mmkvStorage.set(key, parsedValue);
+          } else {
+            mmkvStorage.set(key, value);
+          }
+        } catch {
+          // If not JSON, store as string
+          mmkvStorage.set(key, value);
+        }
+      }
+    }
+    
+    // Example: Update data structure
+    const medicationsString = await AsyncStorage.getItem('@app:medications');
+    if (medicationsString) {
+      try {
+        const medications = JSON.parse(medicationsString);
+        
+        // Transform data structure (example: adding new fields)
+        const updatedMedications = medications.map(med => ({
+          ...med,
+          // Add new fields needed in v2
+          lastUpdated: new Date().toISOString(),
+          notificationsEnabled: true,
+        }));
+        
+        // Store updated structure
+        await AsyncStorage.setItem(
+          '@app:medications', 
+          JSON.stringify(updatedMedications)
+        );
+      } catch (error) {
+        console.error('Error migrating medications:', error);
+      }
+    }
+  } catch (error) {
+    console.error('Migration error:', error);
+    throw error;
+  }
+};</code></pre>
+    </section>
+    
+    <!-- Performance Considerations Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Considerations</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Storage Performance Tips</h3>
+          <ul>
+            <li>Use MMKV for frequently accessed data</li>
+            <li>Minimize storage operations in render methods</li>
+            <li>Batch storage operations when possible</li>
+            <li>Store only what you need</li>
+            <li>Consider lazy loading for large datasets</li>
+            <li>Throttle updates for rapidly changing values</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Memory and Storage Tradeoffs</h3>
+          <ul>
+            <li>Cache strategically to balance memory and storage</li>
+            <li>Implement cleanup routines for old data</li>
+            <li>Use pagination for large lists</li>
+            <li>Consider data expiration policies</li>
+            <li>Monitor storage size in development</li>
+            <li>Implement data compression for large objects</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Storage Security Slide -->
+    <section class="slide content-slide">
+      <h2>Storage Security Best Practices</h2>
+      <ul>
+        <li><strong>Never store sensitive data</strong> in plain text</li>
+        <li><strong>Use encrypted storage</strong> for authentication tokens, personal information</li>
+        <li><strong>Consider data sensitivity</strong> when choosing storage methods</li>
+        <li><strong>Implement timeout policies</strong> for sensitive data</li>
+        <li><strong>Apply the principle of least privilege</strong> - only store what you need</li>
+        <li><strong>Sanitize data</strong> before storage</li>
+        <li><strong>Implement secure deletion</strong> for sensitive information</li>
+        <li><strong>Test storage security</strong> as part of your QA process</li>
+      </ul>
+      <div class="note">
+        <p>Remember that no storage method on a device is 100% secure if the device is compromised.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Local Storage</h2>
+      <ul>
+        <li>Local storage provides data persistence between app launches</li>
+        <li>AsyncStorage offers simple key-value storage for basic needs</li>
+        <li>MMKV provides high-performance storage for frequent access</li>
+        <li>Encrypted storage protects sensitive information</li>
+        <li>Custom hooks simplify storage integration with React components</li>
+        <li>Middleware allows integration with state management solutions</li>
+        <li>Data migration frameworks help manage storage across app versions</li>
+        <li>Consider performance, security, and user experience when designing storage</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Module Summary and Final Exercise</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Implementing Persistent Medications</h2>
+      <div class="exercise-description">
+        <p>Create a medication tracker that:</p>
+        <ol>
+          <li>Uses MMKV to persist medication data</li>
+          <li>Stores user preferences with AsyncStorage</li>
+          <li>Secures authentication data with encrypted storage</li>
+          <li>Integrates with a state management solution of your choice</li>
+          <li>Implements a custom hook for storage access</li>
+        </ol>
+        <p>Time: 20 minutes</p>
+        <p>Resources: Starter code provided in Expo Snack</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

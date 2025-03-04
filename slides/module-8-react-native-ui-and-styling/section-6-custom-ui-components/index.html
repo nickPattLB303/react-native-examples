@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 6: Custom UI Components | React Native UI and Styling</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 6</h1>
+      <h2>Custom UI Components</h2>
+      <p class="metadata">Module 8 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the structure of reusable custom components in React Native</li>
+        <li>Apply component composition patterns for creating flexible UI elements</li>
+        <li>Implement prop-driven styling for customizable components</li>
+        <li>Create compound components with consistent styling</li>
+        <li>Build accessible UI components following best practices</li>
+        <li>Optimize performance of custom UI components</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Theming and Design Systems (Section 5)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Why Custom UI Components?</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Benefits</h3>
+          <ul>
+            <li>Create a consistent user experience</li>
+            <li>Reduce redundant code (DRY)</li>
+            <li>Simplify complex UI development</li>
+            <li>Enable team scalability</li>
+            <li>Centralize styling and behavior logic</li>
+            <li>Improve maintainability</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Component Categories</h3>
+          <ul>
+            <li><strong>Core Components</strong>: Atomic, primitive elements</li>
+            <li><strong>Composite Components</strong>: Combinations of core components</li>
+            <li><strong>Container Components</strong>: Layout and structural components</li>
+            <li><strong>Feature Components</strong>: Domain-specific UI elements</li>
+            <li><strong>Screen Templates</strong>: Full-screen UI patterns</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>Well-designed custom components can significantly reduce development time and improve code quality by encapsulating complex UI logic and styling.</p>
+      </div>
+    </section>
+    
+    <!-- Component Structure Slide -->
+    <section class="slide code-slide">
+      <h2>Anatomy of a Custom Component</h2>
+      <p>A well-structured custom component includes:</p>
+      <pre><code class="language-jsx">
+// components/Button.js
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+
+// 1. Props interface with defaults and documentation
+/**
+ * Primary button component for common actions
+ */
+export function Button({
+  title,                    // Button text
+  onPress,                  // Press handler function
+  variant = 'primary',      // Visual style: 'primary', 'secondary', 'outline'
+  size = 'medium',          // Button size: 'small', 'medium', 'large'
+  disabled = false,         // Disabled state
+  loading = false,          // Loading state
+  leftIcon,                 // Optional left icon component
+  rightIcon,                // Optional right icon component
+  style,                    // Additional container styles
+  textStyle,                // Additional text styles
+  ...otherProps            // Pass through other props to TouchableOpacity
+}) {
+  // 2. Internal component logic
+  const getButtonStyles = () => {
+    const baseStyle = styles.button;
+    const variantStyle = styles[`${variant}Button`] || {};
+    const sizeStyle = styles[`${size}Button`] || {};
+    const disabledStyle = disabled ? styles.disabledButton : {};
+    
+    return [baseStyle, variantStyle, sizeStyle, disabledStyle, style];
+  };
+  
+  const getTextStyles = () => {
+    const baseStyle = styles.text;
+    const variantStyle = styles[`${variant}Text`] || {};
+    const sizeStyle = styles[`${size}Text`] || {};
+    const disabledStyle = disabled ? styles.disabledText : {};
+    
+    return [baseStyle, variantStyle, sizeStyle, disabledStyle, textStyle];
+  };
+  
+  // 3. Component rendering with conditional elements
+  return (
+    <TouchableOpacity
+      style={getButtonStyles()}
+      onPress={onPress}
+      disabled={disabled || loading}
+      activeOpacity={0.7}
+      {...otherProps}
+    >
+      {leftIcon && !loading && (
+        <View style={styles.leftIconContainer}>
+          {leftIcon}
+        </View>
+      )}
+      
+      {loading ? (
+        <ActivityIndicator 
+          color={variant === 'primary' ? 'white' : '#007AFF'} 
+          size="small" 
+        />
+      ) : (
+        <Text style={getTextStyles()}>{title}</Text>
+      )}
+      
+      {rightIcon && !loading && (
+        <View style={styles.rightIconContainer}>
+          {rightIcon}
+        </View>
+      )}
+    </TouchableOpacity>
+  );
+}
+
+// 4. Component styles
+const styles = StyleSheet.create({
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
+  // Variant styles
+  primaryButton: {
+    backgroundColor: '#007AFF',
+  },
+  secondaryButton: {
+    backgroundColor: '#F2F2F7',
+  },
+  outlineButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#007AFF',
+  },
+  // Size styles
+  smallButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  mediumButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  largeButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  // State styles
+  disabledButton: {
+    opacity: 0.5,
+  },
+  // Text styles
+  text: {
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  primaryText: {
+    color: 'white',
+  },
+  secondaryText: {
+    color: '#007AFF',
+  },
+  outlineText: {
+    color: '#007AFF',
+  },
+  smallText: {
+    fontSize: 14,
+  },
+  mediumText: {
+    fontSize: 16,
+  },
+  largeText: {
+    fontSize: 18,
+  },
+  disabledText: {
+    opacity: 0.6,
+  },
+  // Icon container styles
+  leftIconContainer: {
+    marginRight: 8,
+  },
+  rightIconContainer: {
+    marginLeft: 8,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Composable API Pattern Slide -->
+    <section class="slide code-slide">
+      <h2>Props vs. Children: Composable API Patterns</h2>
+      <p>Consider different component API patterns for flexibility:</p>
+      <pre><code class="language-jsx">
+// Pattern 1: Props-based API (configuration-driven)
+<Card 
+  title="Medication Reminder" 
+  subtitle="3 medications due today"
+  icon={<PillIcon />}
+  onPress={handlePress}
+  footer="Updated 5 min ago"
+/>
+
+// Pattern 2: Children-based API (composition-driven)
+<Card onPress={handlePress}>
+  <Card.Icon><PillIcon /></Card.Icon>
+  <Card.Title>Medication Reminder</Card.Title>
+  <Card.Subtitle>3 medications due today</Card.Subtitle>
+  <Card.Footer>Updated 5 min ago</Card.Footer>
+</Card>
+
+// Pattern 3: Hybrid approach
+<Card 
+  onPress={handlePress}
+  icon={<PillIcon />}
+  footer="Updated 5 min ago"
+>
+  <View>
+    <Text style={styles.title}>Medication Reminder</Text>
+    <Text style={styles.subtitle}>3 medications due today</Text>
+  </View>
+</Card>
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">API Design Choice</div>
+        <p>Props-based APIs are simpler to use but less flexible. Children-based APIs offer maximum flexibility but require more boilerplate. Hybrid approaches balance both.</p>
+      </div>
+    </section>
+    
+    <!-- Compound Components Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Compound Components</h2>
+      <p>Compound components share implicit state and provide a flexible API:</p>
+      <pre><code class="language-jsx">
+// components/Card/index.js
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+// Card container component
+function Card({ children, onPress, style }) {
+  const Container = onPress ? TouchableOpacity : View;
+  
+  return (
+    <Container 
+      style={[styles.card, style]} 
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
+      {children}
+    </Container>
+  );
+}
+
+// Card subcomponents
+Card.Header = function CardHeader({ children, style }) {
+  return <View style={[styles.header, style]}>{children}</View>;
+};
+
+Card.Title = function CardTitle({ children, style }) {
+  return <Text style={[styles.title, style]}>{children}</Text>;
+};
+
+Card.Content = function CardContent({ children, style }) {
+  return <View style={[styles.content, style]}>{children}</View>;
+};
+
+Card.Footer = function CardFooter({ children, style }) {
+  return <View style={[styles.footer, style]}>{children}</View>;
+};
+
+// Usage example
+export function MedicationCard({ medication, onPress }) {
+  return (
+    <Card onPress={onPress}>
+      <Card.Header>
+        <View style={styles.row}>
+          <PillIcon style={styles.icon} />
+          <Card.Title>{medication.name}</Card.Title>
+        </View>
+      </Card.Header>
+      
+      <Card.Content>
+        <Text style={styles.dosage}>{medication.dosage}</Text>
+        <Text style={styles.instructions}>{medication.instructions}</Text>
+      </Card.Content>
+      
+      <Card.Footer>
+        <Text style={styles.nextDose}>Next dose: {medication.nextDose}</Text>
+      </Card.Footer>
+    </Card>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
+    marginVertical: 8,
+    overflow: 'hidden',
+  },
+  header: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  content: {
+    padding: 16,
+  },
+  footer: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#F0F0F0',
+    backgroundColor: '#FAFAFA',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 8,
+  },
+  dosage: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  instructions: {
+    color: '#666',
+  },
+  nextDose: {
+    fontSize: 14,
+    color: '#666',
+  },
+});
+
+export default Card;
+      </code></pre>
+    </section>
+    
+    <!-- Prop-Driven Styling Slide -->
+    <section class="slide code-slide">
+      <h2>Prop-Driven Styling</h2>
+      <p>Create flexible components that adapt based on props:</p>
+      <pre><code class="language-jsx">
+// components/Badge.js
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export function Badge({ 
+  label, 
+  color = 'primary',   // 'primary', 'success', 'warning', 'error', or custom color
+  size = 'medium',     // 'small', 'medium', 'large'
+  variant = 'filled',  // 'filled', 'outlined', 'minimal'
+  rounded = false,     // pill-shaped when true
+  style,
+  textStyle,
+}) {
+  // Predefined colors
+  const colors = {
+    primary: '#007AFF',
+    success: '#34C759',
+    warning: '#FF9500',
+    error: '#FF3B30',
+  };
+  
+  // Determine background color
+  const backgroundColor = colors[color] || color;
+  
+  // Generate styles based on props
+  const badgeStyles = [
+    styles.badge,
+    styles[`${size}Badge`],
+    rounded && styles.roundedBadge,
+    variant === 'filled' && { backgroundColor },
+    variant === 'outlined' && { 
+      backgroundColor: 'transparent', 
+      borderWidth: 1, 
+      borderColor: backgroundColor 
+    },
+    variant === 'minimal' && { 
+      backgroundColor: `${backgroundColor}20` // 20% opacity
+    },
+    style,
+  ];
+  
+  // Generate text styles based on props
+  const textStyles = [
+    styles.text,
+    styles[`${size}Text`],
+    variant === 'filled' && { color: 'white' },
+    (variant === 'outlined' || variant === 'minimal') && { color: backgroundColor },
+    textStyle,
+  ];
+  
+  return (
+    <View style={badgeStyles}>
+      <Text style={textStyles}>{label}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  badge: {
+    alignSelf: 'flex-start',
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  roundedBadge: {
+    borderRadius: 100, // Large value for pill shape
+  },
+  // Size variations
+  smallBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  mediumBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  largeBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  // Text styles
+  text: {
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  smallText: {
+    fontSize: 10,
+  },
+  mediumText: {
+    fontSize: 12,
+  },
+  largeText: {
+    fontSize: 14,
+  },
+});
+
+// Usage examples
+function BadgeExamples() {
+  return (
+    <View style={{ gap: 10 }}>
+      <Badge label="New" />
+      <Badge label="Completed" color="success" rounded />
+      <Badge label="Due soon" color="warning" variant="outlined" />
+      <Badge label="Missed" color="error" size="large" />
+      <Badge label="Premium" color="#8E44AD" variant="minimal" />
+    </View>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Theme Integration Slide -->
+    <section class="slide code-slide">
+      <h2>Integrating Components with Themes</h2>
+      <p>Connect custom components to your theme system:</p>
+      <pre><code class="language-jsx">
+// components/Avatar.js
+import React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { useTheme } from '../theme/ThemeContext';
+
+export function Avatar({ 
+  source, 
+  name, 
+  size = 'medium', 
+  showBorder = false,
+  status,  // 'online', 'offline', 'busy', 'away'
+  style,
+}) {
+  // Get theme from context
+  const { theme } = useTheme();
+  
+  // Determine size in pixels
+  const sizeMap = {
+    small: theme.spacing.lg,    // 24px
+    medium: theme.spacing.xl,   // 32px
+    large: theme.spacing.xxl,   // 48px
+    xlarge: theme.spacing.xxl * 1.5, // 72px
+  };
+  
+  const sizePx = sizeMap[size] || sizeMap.medium;
+  const fontSize = sizePx * 0.4;
+  
+  // Get status color from theme
+  const statusColors = {
+    online: theme.colors.success,
+    offline: theme.colors.text.secondary,
+    busy: theme.colors.error,
+    away: theme.colors.warning,
+  };
+  
+  // Generate initials from name
+  const getInitials = () => {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+  };
+  
+  // Component styles
+  const avatarStyle = {
+    width: sizePx,
+    height: sizePx,
+    borderRadius: sizePx / 2,
+    backgroundColor: source ? 'transparent' : theme.colors.primary + '20',
+    borderWidth: showBorder ? 2 : 0,
+    borderColor: theme.colors.background,
+  };
+  
+  const statusDotSize = sizePx * 0.3;
+  
+  return (
+    <View style={[styles.container, style]}>
+      <View style={[styles.avatar, avatarStyle]}>
+        {source ? (
+          <Image 
+            source={source} 
+            style={styles.image} 
+            resizeMode="cover" 
+          />
+        ) : (
+          <Text style={[styles.initials, { fontSize, color: theme.colors.primary }]}>
+            {getInitials()}
+          </Text>
+        )}
+      </View>
+      
+      {status && (
+        <View 
+          style={[
+            styles.statusDot, 
+            { 
+              width: statusDotSize, 
+              height: statusDotSize,
+              backgroundColor: statusColors[status] || statusColors.offline,
+              borderColor: theme.colors.background,
+            }
+          ]} 
+        />
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
+  avatar: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  initials: {
+    fontWeight: 'bold',
+  },
+  statusDot: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 100,
+    borderWidth: 2,
+  }
+});
+
+// Usage examples
+function AvatarExamples() {
+  return (
+    <View style={{ flexDirection: 'row', gap: 16 }}>
+      <Avatar 
+        source={{ uri: 'https://example.com/avatar.jpg' }} 
+        size="medium" 
+        status="online" 
+      />
+      <Avatar name="John Doe" size="large" status="busy" />
+      <Avatar name="Alice Smith" size="small" />
+    </View>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Interactive Components Slide -->
+    <section class="slide code-slide">
+      <h2>Building Interactive Components</h2>
+      <p>Create components that handle user interactions smoothly:</p>
+      <pre><code class="language-jsx">
+// components/ToggleButton.js
+import React, { useState } from 'react';
+import { Pressable, Text, StyleSheet, Animated } from 'react-native';
+
+export function ToggleButton({ 
+  value, 
+  onValueChange, 
+  leftText, 
+  rightText,
+  activeColor = '#007AFF',
+  inactiveColor = '#8E8E93',
+  animationDuration = 200,
+  style,
+}) {
+  // Use controlled or uncontrolled state
+  const [internalValue, setInternalValue] = useState(false);
+  const isActive = value !== undefined ? value : internalValue;
+  
+  // Animation value for toggle translation
+  const translateX = React.useRef(new Animated.Value(isActive ? 1 : 0)).current;
+  
+  // Handle toggle action
+  const toggle = () => {
+    const newValue = !isActive;
+    
+    // Animate the toggle
+    Animated.timing(translateX, {
+      toValue: newValue ? 1 : 0,
+      duration: animationDuration,
+      useNativeDriver: true,
+    }).start();
+    
+    // Update state if uncontrolled
+    if (value === undefined) {
+      setInternalValue(newValue);
+    }
+    
+    // Notify parent via callback
+    if (onValueChange) {
+      onValueChange(newValue);
+    }
+  };
+  
+  // Interpolate animation for toggle position
+  const togglePosition = translateX.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 100],
+  });
+  
+  return (
+    <Pressable 
+      style={[styles.container, style]} 
+      onPress={toggle}
+    >
+      {/* Toggle background */}
+      <Animated.View 
+        style={[
+          styles.toggleBackground,
+          {
+            backgroundColor: translateX.interpolate({
+              inputRange: [0, 1],
+              outputRange: [inactiveColor + '30', activeColor + '30'],
+            }),
+          }
+        ]}
+      />
+      
+      {/* Active toggle indicator */}
+      <Animated.View 
+        style={[
+          styles.toggle,
+          {
+            transform: [
+              { 
+                translateX: togglePosition.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ['0%', '100%'],
+                }) 
+              }
+            ],
+            backgroundColor: translateX.interpolate({
+              inputRange: [0, 1],
+              outputRange: [inactiveColor, activeColor],
+            }),
+          }
+        ]}
+      />
+      
+      {/* Text labels */}
+      <Text style={[
+        styles.text, 
+        styles.leftText,
+        isActive ? styles.activeText : styles.inactiveText,
+        { color: isActive ? activeColor : inactiveColor }
+      ]}>
+        {leftText}
+      </Text>
+      
+      <Text style={[
+        styles.text, 
+        styles.rightText,
+        !isActive ? styles.activeText : styles.inactiveText,
+        { color: !isActive ? activeColor : inactiveColor }
+      ]}>
+        {rightText}
+      </Text>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    height: 40,
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    position: 'relative',
+    paddingHorizontal: 4,
+    width: 200,
+  },
+  toggleBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 20,
+  },
+  toggle: {
+    position: 'absolute',
+    width: '50%',
+    height: 32,
+    borderRadius: 16,
+    margin: 4,
+  },
+  text: {
+    width: '50%',
+    textAlign: 'center',
+    fontWeight: '600',
+    zIndex: 1,
+  },
+  leftText: {
+    paddingLeft: 4,
+  },
+  rightText: {
+    paddingRight: 4,
+  },
+  activeText: {
+    fontWeight: '700',
+  },
+  inactiveText: {
+    opacity: 0.7,
+  },
+});
+
+// Usage example
+function ToggleExample() {
+  const [isMetric, setIsMetric] = useState(true);
+  
+  return (
+    <ToggleButton
+      value={isMetric}
+      onValueChange={setIsMetric}
+      leftText="Metric"
+      rightText="Imperial"
+      activeColor="#34C759"
+    />
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Accessibility Slide -->
+    <section class="slide content-slide">
+      <h2>Making Components Accessible</h2>
+      <p>Ensure your custom components work for all users:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Accessibility Attributes</h3>
+          <ul>
+            <li><strong>accessible</strong>: Mark as accessibility element</li>
+            <li><strong>accessibilityLabel</strong>: Screen reader text</li>
+            <li><strong>accessibilityHint</strong>: Action description</li>
+            <li><strong>accessibilityRole</strong>: Element role</li>
+            <li><strong>accessibilityState</strong>: Current state</li>
+            <li><strong>accessibilityActions</strong>: Available actions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example Implementation</h3>
+          <pre><code class="language-jsx">
+function AccessibleButton({ 
+  title, 
+  onPress, 
+  disabled, 
+  accessibilityLabel,
+}) {
+  return (
+    <TouchableOpacity
+      accessible={true}
+      accessibilityLabel={
+        accessibilityLabel || title
+      }
+      accessibilityHint={`Activates ${title} action`}
+      accessibilityRole="button"
+      accessibilityState={{
+        disabled: !!disabled,
+      }}
+      onPress={onPress}
+      disabled={disabled}
+      style={styles.button}
+    >
+      <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Accessibility Best Practice</div>
+        <p>Always ensure interactive elements have appropriate touch targets (at least 44×44 dp), sufficient color contrast, and meaningful labels for screen readers.</p>
+      </div>
+    </section>
+    
+    <!-- Memoization Slide -->
+    <section class="slide code-slide">
+      <h2>Optimizing Component Performance</h2>
+      <p>Use memoization to prevent unnecessary re-renders:</p>
+      <pre><code class="language-jsx">
+// components/MedicationListItem.js
+import React, { memo, useMemo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+// Wrap component with memo to skip re-renders when props don't change
+const MedicationListItem = memo(function MedicationListItem({
+  medication,
+  onPress,
+  selected,
+  style,
+}) {
+  // Calculate formatted time only when medication changes
+  const formattedTime = useMemo(() => {
+    return formatMedicationTime(medication.time);
+  }, [medication.time]);
+  
+  // Memoize style arrays to prevent new object references on each render
+  const containerStyle = useMemo(() => {
+    return [
+      styles.container,
+      selected && styles.selectedContainer,
+      style,
+    ];
+  }, [selected, style]);
+  
+  // Expensive calculation memoized
+  const statusIndicator = useMemo(() => {
+    return calculateMedicationStatus(medication);
+  }, [medication.status, medication.lastTaken]);
+  
+  return (
+    <TouchableOpacity 
+      style={containerStyle}
+      onPress={() => onPress(medication.id)}
+    >
+      <View style={styles.leftContent}>
+        <Text style={styles.name}>{medication.name}</Text>
+        <Text style={styles.dosage}>{medication.dosage}</Text>
+      </View>
+      
+      <View style={styles.rightContent}>
+        <Text style={styles.time}>{formattedTime}</Text>
+        {statusIndicator}
+      </View>
+    </TouchableOpacity>
+  );
+  
+  // Helper functions
+  function formatMedicationTime(time) {
+    // Time formatting logic here
+    return time;
+  }
+  
+  function calculateMedicationStatus(med) {
+    // Status calculation logic here
+    return <View style={styles.statusDot} />;
+  }
+}, arePropsEqual);
+
+// Custom comparison function for deeper equality check
+function arePropsEqual(prevProps, nextProps) {
+  // Check basic equality
+  if (prevProps.selected !== nextProps.selected) {
+    return false;
+  }
+  
+  // Deep compare medication objects
+  const prevMed = prevProps.medication;
+  const nextMed = nextProps.medication;
+  
+  return (
+    prevMed.id === nextMed.id &&
+    prevMed.name === nextMed.name &&
+    prevMed.dosage === nextMed.dosage &&
+    prevMed.time === nextMed.time &&
+    prevMed.status === nextMed.status &&
+    prevMed.lastTaken === nextMed.lastTaken
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+    backgroundColor: 'white',
+  },
+  selectedContainer: {
+    backgroundColor: '#F0F8FF',
+  },
+  leftContent: {
+    flex: 1,
+  },
+  rightContent: {
+    alignItems: 'flex-end',
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  dosage: {
+    fontSize: 14,
+    color: '#666',
+  },
+  time: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#34C759',
+  },
+});
+
+export default MedicationListItem;
+      </code></pre>
+    </section>
+    
+    <!-- Component Testing Slide -->
+    <section class="slide content-slide">
+      <h2>Testing Custom Components</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Testing Strategies</h3>
+          <ul>
+            <li>Unit tests for props and rendering</li>
+            <li>Snapshot tests for UI consistency</li>
+            <li>Interaction tests for user events</li>
+            <li>Accessibility tests</li>
+            <li>Visual regression tests</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Testing Example</h3>
+          <pre><code class="language-jsx">
+// Button.test.js
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { Button } from './Button';
+
+describe('Button Component', () => {
+  it('renders correctly with default props', () => {
+    const { getByText } = render(
+      <Button title="Press Me" onPress={() => {}} />
+    );
+    
+    expect(getByText('Press Me')).toBeTruthy();
+  });
+  
+  it('calls onPress when pressed', () => {
+    const onPressMock = jest.fn();
+    const { getByText } = render(
+      <Button title="Press Me" onPress={onPressMock} />
+    );
+    
+    fireEvent.press(getByText('Press Me'));
+    
+    expect(onPressMock).toHaveBeenCalledTimes(1);
+  });
+  
+  it('applies disabled styling when disabled', () => {
+    const { getByText } = render(
+      <Button 
+        title="Press Me" 
+        onPress={() => {}} 
+        disabled 
+      />
+    );
+    
+    const buttonElement = getByText('Press Me');
+    const buttonStyle = buttonElement.parent.props.style;
+    
+    // Check for disabled styling
+    expect(buttonStyle).toContainEqual(
+      expect.objectContaining({ opacity: 0.5 })
+    );
+  });
+});
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Component Library Slide -->
+    <section class="slide content-slide">
+      <h2>Organizing a Component Library</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Directory Structure</h3>
+          <pre><code class="language-text">
+/components
+  /core                 # Primitive components
+    /Button
+      Button.js
+      Button.test.js
+      styles.js
+      index.js
+    /Card
+    /Avatar
+    /Typography
+  
+  /feedback             # Feedback components
+    /Toast
+    /Alert
+    /ProgressIndicator
+    
+  /input                # Input components
+    /TextField
+    /Select
+    /Checkbox
+    
+  /layout               # Layout components
+    /Container
+    /Section
+    /Grid
+    
+  /navigation           # Navigation components
+    /Tabs
+    /Drawer
+    /BottomNav
+    
+  index.js              # Main exports
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Documentation Practices</h3>
+          <ul>
+            <li>Use JSDoc comments for props documentation</li>
+            <li>Create README for each component</li>
+            <li>Include usage examples</li>
+            <li>Document prop types and defaults</li>
+            <li>Add visual examples (screenshots/GIFs)</li>
+            <li>Mention accessibility considerations</li>
+            <li>Consider using Storybook for visual documentation</li>
+          </ul>
+          <pre><code class="language-jsx">
+/**
+ * Primary button component for common actions.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.title - Button text
+ * @param {function} props.onPress - Press handler
+ * @param {boolean} [props.disabled=false] - Disabled state
+ * @param {string} [props.variant='primary'] - Visual style
+ */
+export function Button({ ... }) { ... }
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Create a Custom Input Component</h2>
+      <p>Build a reusable text input component with the following features:</p>
+      <ol>
+        <li>Label and placeholder text</li>
+        <li>Error state and error message display</li>
+        <li>Optional left and right icons</li>
+        <li>Theme integration (using the theme context from Section 5)</li>
+        <li>Support for different input types (text, email, password, etc.)</li>
+        <li>Accessibility support</li>
+      </ol>
+      <pre><code class="language-jsx">
+// Starter code
+import React from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../theme/ThemeContext'; // Import from your theme context
+
+export function Input({
+  // Add your props here
+}) {
+  // Implement your component logic
+  
+  return (
+    <View style={styles.container}>
+      {/* Implement your component UI */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  // Add your styles here
+});
+      </code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Custom UI components improve code reusability and maintainability</li>
+        <li>Well-structured components include clear props, internal logic, and consistent styling</li>
+        <li>Component composition patterns (props vs. children) offer different flexibility tradeoffs</li>
+        <li>Compound components provide a flexible API for complex UI elements</li>
+        <li>Prop-driven styling makes components adaptable to different use cases</li>
+        <li>Theme integration connects components to your design system</li>
+        <li>Accessibility and performance optimization are essential for production-quality components</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 7 - Animation and Gestures</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Navigation Patterns | Navigation and Routing</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>Navigation Patterns</h2>
+      <p class="metadata">Module 9 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement advanced navigation patterns for complex applications</li>
+        <li>Create authenticated navigation flows with protected routes</li>
+        <li>Build effective onboarding experiences with navigation</li>
+        <li>Implement deep linking strategies for external navigation</li>
+        <li>Design and implement navigation state persistence</li>
+        <li>Create accessible navigation experiences</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> React Navigation or Expo Router (Sections 2-3)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Navigation Patterns</h2>
+      <p>Navigation patterns are standard solutions to common navigation problems in mobile applications.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Navigation Challenges</h3>
+          <ul>
+            <li>Organizing complex app hierarchies</li>
+            <li>Managing authentication state</li>
+            <li>Creating intuitive user flows</li>
+            <li>Implementing onboarding experiences</li>
+            <li>Supporting deep linking</li>
+            <li>Persisting navigation state</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Why Patterns Matter</div>
+            <p>Navigation patterns provide tested solutions to common problems, improve user experience through familiarity, and make code more maintainable through standard approaches.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Authentication Flow Slide -->
+    <section class="slide content-slide">
+      <h2>Authentication Flow Pattern</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Requirements</h3>
+          <ul>
+            <li>Protected routes requiring authentication</li>
+            <li>Login/signup flow</li>
+            <li>Password reset flow</li>
+            <li>Maintaining auth state across app restarts</li>
+            <li>Handling token expiration</li>
+            <li>Redirecting unauthenticated users</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="diagram">
+            <div class="flow-diagram">
+              <div class="flow-node">App Launch</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-decision">Authenticated?</div>
+              <div class="flow-branch">
+                <div class="flow-yes">Yes →</div>
+                <div class="flow-no">No ↓</div>
+              </div>
+              <div class="flow-node-right">Main App</div>
+              <div class="flow-node">Auth Stack</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>
+        .flow-diagram {
+          text-align: center;
+          margin-top: 20px;
+        }
+        .flow-node, .flow-decision, .flow-node-right {
+          padding: 10px;
+          margin: 10px auto;
+          background: #f0f0f0;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          width: 150px;
+        }
+        .flow-node-right {
+          margin-left: 100px;
+        }
+        .flow-decision {
+          border-radius: 50%;
+          width: 130px;
+          height: 130px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .flow-arrow {
+          font-weight: bold;
+          font-size: 20px;
+        }
+        .flow-branch {
+          display: flex;
+          justify-content: center;
+        }
+        .flow-yes, .flow-no {
+          margin: 0 10px;
+          font-weight: bold;
+        }
+      </style>
+    </section>
+    
+    <!-- Authentication Code Slide -->
+    <section class="slide code-slide">
+      <h2>Authentication Flow Implementation</h2>
+      <pre><code class="language-tsx">
+// NavigationRoot.tsx
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Stacks
+import AuthStack from './AuthStack';
+import MainAppStack from './MainAppStack';
+
+// Context
+import { AuthContext } from './AuthContext';
+
+const RootStack = createStackNavigator();
+
+export default function NavigationRoot() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
+  
+  // Auth actions for context
+  const authContext = {
+    signIn: async (token) => {
+      await AsyncStorage.setItem('userToken', token);
+      setUserToken(token);
+    },
+    signOut: async () => {
+      await AsyncStorage.removeItem('userToken');
+      setUserToken(null);
+    },
+    signUp: async (token) => {
+      await AsyncStorage.setItem('userToken', token);
+      setUserToken(token);
+    }
+  };
+  
+  // Check for stored token on startup
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      let token;
+      try {
+        token = await AsyncStorage.getItem('userToken');
+      } catch (e) {
+        console.error('Failed to load token');
+      }
+      setUserToken(token);
+      setIsLoading(false);
+    };
+    
+    bootstrapAsync();
+  }, []);
+  
+  if (isLoading) {
+    return &lt;SplashScreen /&gt;; // Show loading screen
+  }
+  
+  return (
+    &lt;AuthContext.Provider value={authContext}&gt;
+      &lt;NavigationContainer&gt;
+        &lt;RootStack.Navigator screenOptions={{ headerShown: false }}&gt;
+          {userToken ? (
+            &lt;RootStack.Screen name="Main" component={MainAppStack} /&gt;
+          ) : (
+            &lt;RootStack.Screen name="Auth" component={AuthStack} /&gt;
+          )}
+        &lt;/RootStack.Navigator&gt;
+      &lt;/NavigationContainer&gt;
+    &lt;/AuthContext.Provider&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Onboarding Flow Slide -->
+    <section class="slide content-slide">
+      <h2>Onboarding Flow Pattern</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Considerations</h3>
+          <ul>
+            <li>First-time user experience</li>
+            <li>Step-by-step introduction to app features</li>
+            <li>Permission requests at appropriate times</li>
+            <li>Skip option for returning users</li>
+            <li>State persistence to avoid repeated onboarding</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="onboarding-visual">
+            <div class="onboarding-screen">Welcome</div>
+            <div class="onboarding-arrow">→</div>
+            <div class="onboarding-screen">Feature 1</div>
+            <div class="onboarding-arrow">→</div>
+            <div class="onboarding-screen">Feature 2</div>
+            <div class="onboarding-arrow">→</div>
+            <div class="onboarding-screen">Get Started</div>
+          </div>
+          <div class="callout info">
+            <div class="callout-title">Best Practice</div>
+            <p>Combine onboarding with authentication flows to create a smooth initial experience that leads users to either sign up or log in.</p>
+          </div>
+        </div>
+      </div>
+      <style>
+        .onboarding-visual {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+        .onboarding-screen {
+          background: #e0e0ff;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: center;
+          width: 80px;
+          font-size: 0.8em;
+        }
+        .onboarding-arrow {
+          margin: 0 5px;
+          font-weight: bold;
+        }
+      </style>
+    </section>
+    
+    <!-- Onboarding Code Slide -->
+    <section class="slide code-slide">
+      <h2>Onboarding Flow Implementation</h2>
+      <pre><code class="language-tsx">
+// App.tsx
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Screens and stacks
+import OnboardingStack from './OnboardingStack';
+import AuthStack from './AuthStack';
+import MainAppStack from './MainAppStack';
+
+const RootStack = createStackNavigator();
+
+export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasOnboarded, setHasOnboarded] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Check for onboarding and auth status
+  useEffect(() => {
+    const checkInitialState = async () => {
+      try {
+        const onboardingComplete = await AsyncStorage.getItem('onboardingComplete');
+        const userToken = await AsyncStorage.getItem('userToken');
+        
+        setHasOnboarded(onboardingComplete === 'true');
+        setIsAuthenticated(userToken !== null);
+      } catch (e) {
+        console.error('Error loading initial state');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    checkInitialState();
+  }, []);
+  
+  // Complete onboarding function
+  const completeOnboarding = async () => {
+    await AsyncStorage.setItem('onboardingComplete', 'true');
+    setHasOnboarded(true);
+  };
+  
+  if (isLoading) {
+    return &lt;SplashScreen /&gt;;
+  }
+  
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;RootStack.Navigator screenOptions={{ headerShown: false }}&gt;
+        {!hasOnboarded ? (
+          &lt;RootStack.Screen 
+            name="Onboarding" 
+            component={OnboardingStack}
+            initialParams={{ completeOnboarding }}
+          /&gt;
+        ) : !isAuthenticated ? (
+          &lt;RootStack.Screen name="Auth" component={AuthStack} /&gt;
+        ) : (
+          &lt;RootStack.Screen name="Main" component={MainAppStack} /&gt;
+        )}
+      &lt;/RootStack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Deep Linking Pattern Slide -->
+    <section class="slide content-slide">
+      <h2>Deep Linking Pattern</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Use Cases</h3>
+          <ul>
+            <li>Opening the app from notifications</li>
+            <li>Sharing links to specific content</li>
+            <li>Marketing campaigns with direct app links</li>
+            <li>Integration with other apps</li>
+            <li>QR code scanning to specific screens</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Link Structure Examples</h3>
+          <ul>
+            <li><code>medtrack://medications/123</code></li>
+            <li><code>medtrack://prescriptions/refill/456</code></li>
+            <li><code>medtrack://reminders/create</code></li>
+            <li><code>https://medtrack.app/medications/123</code> (universal link)</li>
+          </ul>
+          <div class="callout warning">
+            <div class="callout-title">Important Consideration</div>
+            <p>Always handle the case where a deep link points to authenticated content when the user is not logged in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Deep Linking Code Slide -->
+    <section class="slide code-slide">
+      <h2>Deep Linking Implementation</h2>
+      <pre><code class="language-tsx">
+// App.tsx with Deep Linking
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as Linking from 'expo-linking';
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  // Configure linking
+  const linking = {
+    prefixes: ['medtrack://', 'https://medtrack.app'],
+    config: {
+      screens: {
+        // Map path segments to screens
+        Home: '',
+        Medications: {
+          path: 'medications',
+          screens: {
+            MedicationsList: '',
+            MedicationDetails: {
+              path: ':id',
+              parse: {
+                id: (id) => String(id)
+              }
+            }
+          }
+        },
+        Prescriptions: {
+          path: 'prescriptions',
+          screens: {
+            PrescriptionsList: '',
+            PrescriptionDetails: ':id',
+            RefillRequest: 'refill/:id'
+          }
+        },
+        Reminders: {
+          path: 'reminders',
+          screens: {
+            RemindersList: '',
+            CreateReminder: 'create',
+            EditReminder: 'edit/:id'
+          }
+        },
+        NotFound: '*'
+      }
+    },
+    
+    // Handle non-matched links
+    getStateFromPath: (path, options) => {
+      // Custom path parsing logic here
+      return getStateFromPath(path, options);
+    }
+  };
+  
+  return (
+    &lt;NavigationContainer linking={linking}&gt;
+      &lt;Stack.Navigator&gt;
+        {/* App screens */}
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Nested Navigation Pattern Slide -->
+    <section class="slide content-slide">
+      <h2>Nested Navigation Patterns</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Nested Structures</h3>
+          <ul>
+            <li>Tabs with internal stacks</li>
+            <li>Drawer with tabs inside</li>
+            <li>Stack with tabs at specific levels</li>
+            <li>Modal stacks over main navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="nested-nav-diagram">
+            <div class="nav-root">Root Navigator</div>
+            <div class="nav-tabs">Tab Navigator</div>
+            <div class="nav-stacks">
+              <div class="nav-stack">Tab 1 Stack</div>
+              <div class="nav-stack">Tab 2 Stack</div>
+              <div class="nav-stack">Tab 3 Stack</div>
+            </div>
+            <div class="nav-screens">
+              <div class="nav-screen">Stack Screens</div>
+              <div class="nav-screen">Stack Screens</div>
+              <div class="nav-screen">Stack Screens</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Best Practice</div>
+        <p>Limit nesting to 3-4 levels maximum to avoid confusion and performance issues. Each level of nesting adds complexity to both the code and the user experience.</p>
+      </div>
+      <style>
+        .nested-nav-diagram {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .nav-root, .nav-tabs, .nav-stack, .nav-screen {
+          background: #f0f0f0;
+          border: 1px solid #ddd;
+          padding: 8px;
+          margin: 5px;
+          border-radius: 5px;
+          text-align: center;
+        }
+        .nav-root {
+          width: 90%;
+          background: #e6f7ff;
+        }
+        .nav-tabs {
+          width: 80%;
+          background: #e6ffe6;
+        }
+        .nav-stacks, .nav-screens {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+        }
+        .nav-stack {
+          width: 30%;
+          background: #fff0e6;
+        }
+        .nav-screen {
+          width: 30%;
+          background: #f0e6ff;
+        }
+      </style>
+    </section>
+    
+    <!-- Nested Navigation Code Slide -->
+    <section class="slide code-slide">
+      <h2>Nested Navigation Implementation</h2>
+      <pre><code class="language-tsx">
+// App structure with nested navigators
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+
+// Navigators
+const RootStack = createStackNavigator();
+const MainStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const Tabs = createBottomTabNavigator();
+const MedicationsStack = createStackNavigator();
+const PrescriptionsStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+
+// Tab-specific stacks
+function MedicationsStackScreen() {
+  return (
+    &lt;MedicationsStack.Navigator&gt;
+      &lt;MedicationsStack.Screen name="MedicationsList" component={MedicationsListScreen} /&gt;
+      &lt;MedicationsStack.Screen name="MedicationDetails" component={MedicationDetailsScreen} /&gt;
+      &lt;MedicationsStack.Screen name="AddMedication" component={AddMedicationScreen} /&gt;
+    &lt;/MedicationsStack.Navigator&gt;
+  );
+}
+
+// Similar stacks for other tabs...
+
+// Main tab navigator
+function MainTabs() {
+  return (
+    &lt;Tabs.Navigator&gt;
+      &lt;Tabs.Screen 
+        name="Medications" 
+        component={MedicationsStackScreen}
+        options={{
+          tabBarIcon: ({ color }) => &lt;Ionicons name="medical" size={24} color={color} /&gt;
+        }}
+      /&gt;
+      &lt;Tabs.Screen 
+        name="Prescriptions" 
+        component={PrescriptionsStackScreen}
+        options={{
+          tabBarIcon: ({ color }) => &lt;Ionicons name="document-text" size={24} color={color} /&gt;
+        }}
+      /&gt;
+      &lt;Tabs.Screen 
+        name="Profile" 
+        component={ProfileStackScreen}
+        options={{
+          tabBarIcon: ({ color }) => &lt;Ionicons name="person" size={24} color={color} /&gt;
+        }}
+      /&gt;
+    &lt;/Tabs.Navigator&gt;
+  );
+}
+
+// Drawer with tabs inside
+function MainDrawer() {
+  return (
+    &lt;Drawer.Navigator&gt;
+      &lt;Drawer.Screen name="Home" component={MainTabs} /&gt;
+      &lt;Drawer.Screen name="Settings" component={SettingsScreen} /&gt;
+      &lt;Drawer.Screen name="Help" component={HelpScreen} /&gt;
+    &lt;/Drawer.Navigator&gt;
+  );
+}
+
+// Root stack with modals
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;RootStack.Navigator mode="modal"&gt;
+        &lt;RootStack.Screen 
+          name="Main" 
+          component={MainDrawer} 
+          options={{ headerShown: false }}
+        /&gt;
+        &lt;RootStack.Screen 
+          name="MedicationModal" 
+          component={MedicationModalScreen}
+          options={{ presentation: 'modal' }}
+        /&gt;
+      &lt;/RootStack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- State Persistence Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation State Persistence</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Benefits</h3>
+          <ul>
+            <li>Preserve navigation state across app restarts</li>
+            <li>Return users to where they left off</li>
+            <li>Maintain tab selection and scroll position</li>
+            <li>Improve user experience after interruptions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Implementation Options</h3>
+          <ul>
+            <li>React Navigation's built-in persistence</li>
+            <li>Custom state persistence with AsyncStorage</li>
+            <li>Redux persistence for navigation state</li>
+            <li>Selective state restoration</li>
+          </ul>
+          <div class="callout warning">
+            <div class="callout-title">Important Consideration</div>
+            <p>Be careful with persisting sensitive screens (like payment forms). Some screens should always start fresh.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- State Persistence Code Slide -->
+    <section class="slide code-slide">
+      <h2>Navigation State Persistence Implementation</h2>
+      <pre><code class="language-tsx">
+// App.tsx with state persistence
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+// Create a reference for navigation
+const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
+
+export default function App() {
+  const [isReady, setIsReady] = useState(false);
+  const [initialState, setInitialState] = useState();
+
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+        const state = savedStateString ? JSON.parse(savedStateString) : undefined;
+        
+        if (state !== undefined) {
+          setInitialState(state);
+        }
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    if (!isReady) {
+      restoreState();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
+
+  return (
+    &lt;NavigationContainer
+      initialState={initialState}
+      onStateChange={(state) =>
+        AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+      }
+    &gt;
+      &lt;Stack.Navigator&gt;
+        {/* App screens */}
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Accessibility in Navigation Slide -->
+    <section class="slide content-slide">
+      <h2>Accessible Navigation</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Considerations</h3>
+          <ul>
+            <li>Proper screen reader support</li>
+            <li>Sufficient touch targets (44×44 points)</li>
+            <li>Clear navigation hierarchy</li>
+            <li>Keyboard navigation support</li>
+            <li>Focus management between screens</li>
+            <li>Color contrast for navigation elements</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Implementation Tips</h3>
+          <ul>
+            <li>Use <code>accessibilityLabel</code> and <code>accessibilityHint</code></li>
+            <li>Test with VoiceOver (iOS) and TalkBack (Android)</li>
+            <li>Use <code>accessible</code> prop for composite components</li>
+            <li>Ensure header titles are descriptive</li>
+            <li>Provide text alternatives for icon-only navigation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Best Practice</div>
+        <p>Navigation is often the foundation of app interaction - making it accessible ensures all users can use your app effectively.</p>
+      </div>
+    </section>
+    
+    <!-- Accessibility Code Slide -->
+    <section class="slide code-slide">
+      <h2>Accessible Navigation Implementation</h2>
+      <pre><code class="language-tsx">
+// Accessible tab navigation
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
+
+function AccessibleTabs() {
+  return (
+    &lt;Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#0066CC',
+        tabBarInactiveTintColor: '#666666',
+      }}
+    &gt;
+      &lt;Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            &lt;Ionicons 
+              name="home" 
+              size={size} 
+              color={color}
+              accessibilityLabel="Home tab"
+            /&gt;
+          ),
+          tabBarAccessibilityLabel: "Home screen",
+          // iOS specific
+          tabBarLabel: ({ focused }) => (
+            &lt;Text style={{ 
+              color: focused ? '#0066CC' : '#666666',
+              fontWeight: focused ? 'bold' : 'normal'
+            }}&gt;
+              Home
+            &lt;/Text&gt;
+          ),
+        }}
+      /&gt;
+      
+      &lt;Tab.Screen
+        name="Medications"
+        component={MedicationsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            &lt;Ionicons 
+              name="medical" 
+              size={size} 
+              color={color} 
+              accessibilityLabel="Medications tab"
+            /&gt;
+          ),
+          tabBarAccessibilityLabel: "Medications list",
+        }}
+      /&gt;
+      
+      {/* Additional tabs */}
+    &lt;/Tab.Navigator&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Pharmacy App Navigation Patterns</h2>
+      <div class="exercise-content">
+        <p>Enhance a pharmacy app by implementing advanced navigation patterns:</p>
+        <ol>
+          <li>Create an authentication flow with login, signup, and password reset</li>
+          <li>Implement a first-time onboarding experience</li>
+          <li>Set up deep linking for medication details and refill requests</li>
+          <li>Create a nested navigation structure with tabs and stacks</li>
+          <li>Implement state persistence for the navigation</li>
+          <li>Apply accessibility best practices to the navigation</li>
+        </ol>
+        <div class="time-estimate">
+          <p><strong>Time:</strong> 30-40 minutes</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Pattern Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Design Considerations</h3>
+          <ul>
+            <li>Follow platform conventions when possible</li>
+            <li>Keep navigation hierarchy shallow (3-4 levels max)</li>
+            <li>Provide clear visual indicators of location</li>
+            <li>Maintain consistent navigation patterns</li>
+            <li>Consider one-handed use for primary navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Technical Considerations</h3>
+          <ul>
+            <li>Minimize re-renders during navigation</li>
+            <li>Handle state persistence appropriately</li>
+            <li>Implement proper type safety</li>
+            <li>Test on multiple device sizes</li>
+            <li>Consider navigation behavior during low connectivity</li>
+            <li>Ensure smooth transitions between screens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Common Pitfalls Slide -->
+    <section class="slide content-slide">
+      <h2>Common Navigation Pitfalls</h2>
+      <table>
+        <tr>
+          <th>Pitfall</th>
+          <th>Solution</th>
+        </tr>
+        <tr>
+          <td>Overly complex nested navigation</td>
+          <td>Simplify structure, limit to 3-4 levels max</td>
+        </tr>
+        <tr>
+          <td>Memory leaks in screen components</td>
+          <td>Clean up listeners and subscriptions when screens unmount</td>
+        </tr>
+        <tr>
+          <td>Inconsistent back behavior</td>
+          <td>Follow platform conventions, test extensively</td>
+        </tr>
+        <tr>
+          <td>Over-animating transitions</td>
+          <td>Use subtle, quick animations that don't impede usability</td>
+        </tr>
+        <tr>
+          <td>Lost state during navigation</td>
+          <td>Implement proper state management and persistence</td>
+        </tr>
+        <tr>
+          <td>Poor deep linking implementation</td>
+          <td>Design app with deep linking in mind from the start</td>
+        </tr>
+      </table>
+    </section>
+    
+    <!-- Navigation Testing Slide -->
+    <section class="slide content-slide">
+      <h2>Testing Navigation</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What to Test</h3>
+          <ul>
+            <li>Basic navigation flows</li>
+            <li>State persistence across app restarts</li>
+            <li>Deep linking behavior</li>
+            <li>Authentication flows</li>
+            <li>Edge cases like network failures</li>
+            <li>Accessibility of navigation elements</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Testing Approaches</h3>
+          <ul>
+            <li>Unit tests for navigation logic</li>
+            <li>Integration tests for screen transitions</li>
+            <li>End-to-end tests for complete flows</li>
+            <li>Manual testing on different devices</li>
+            <li>Accessibility testing with screen readers</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Testing Tip</div>
+        <p>Create a "Developer Menu" in your app that allows direct access to specific screens and states for testing purposes.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Advanced navigation patterns address common challenges in complex apps</li>
+        <li>Authentication flows manage protected content and user sessions</li>
+        <li>Onboarding experiences guide first-time users through app features</li>
+        <li>Deep linking enables external navigation into specific app screens</li>
+        <li>Nested navigation combines different navigation patterns for rich experiences</li>
+        <li>State persistence improves user experience across app sessions</li>
+        <li>Accessible navigation ensures all users can effectively navigate your app</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Module Challenge - Building a Comprehensive Pharmacy App Navigation</p>
+      </div>
+    </section>
+    
+    <!-- Resources Slide -->
+    <section class="slide resources-slide">
+      <h2>Additional Resources</h2>
+      <ul>
+        <li><a href="https://reactnavigation.org/docs/auth-flow" target="_blank">Authentication Flows in React Navigation</a></li>
+        <li><a href="https://docs.expo.dev/guides/deep-linking/" target="_blank">Deep Linking in Expo</a></li>
+        <li><a href="https://reactnavigation.org/docs/state-persistence" target="_blank">Navigation State Persistence</a></li>
+        <li><a href="https://reactnative.dev/docs/accessibility" target="_blank">React Native Accessibility</a></li>
+        <li><a href="https://material.io/design/navigation/understanding-navigation.html" target="_blank">Material Design Navigation Patterns</a></li>
+      </ul>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Fundamentals | Module 11: Performance and Debugging</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link rel="stylesheet" href="../../shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Performance Fundamentals</h1>
+      <h2>Understanding React Native Performance</h2>
+      <p class="metadata">Module 11, Section 1 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand key performance metrics in React Native applications</li>
+        <li>Identify common performance bottlenecks</li>
+        <li>Learn to measure performance using built-in and third-party tools</li>
+        <li>Analyze performance issues systematically</li>
+        <li>Apply performance best practices to React Native development</li>
+      </ul>
+    </section>
+    
+    <!-- Performance Overview Slide -->
+    <section class="slide content-slide">
+      <h2>React Native Performance Overview</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What Makes an App "Fast"?</h3>
+          <ul>
+            <li>Responsive to user interactions</li>
+            <li>Smooth animations (60fps)</li>
+            <li>Fast startup time</li>
+            <li>Minimal memory usage</li>
+            <li>Battery efficient</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Why is RN Performance Different?</h3>
+          <ul>
+            <li>JavaScript runs on a separate thread</li>
+            <li>Bridge communication overhead</li>
+            <li>Needs to work across platforms</li>
+            <li>Balances native performance with cross-platform code</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Architecture Slide -->
+    <section class="slide content-slide">
+      <h2>React Native Architecture & Performance</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Threading Model</h3>
+          <ul>
+            <li><strong>JS Thread:</strong> Where your React code runs</li>
+            <li><strong>Main/UI Thread:</strong> Native UI updates</li>
+            <li><strong>Shadow Thread:</strong> Layout calculations</li>
+            <li><strong>Native Modules Thread:</strong> Native API calls</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>The Bridge</h3>
+          <ul>
+            <li>Facilitates JS-to-Native communication</li>
+            <li>Serializes all data (JSON)</li>
+            <li>Asynchronous by design</li>
+            <li>Can become a bottleneck</li>
+            <li>Being replaced by JSI in new architecture</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Explain that the separation of threads is both a strength and weakness. It provides safety but creates overhead.
+      </div>
+    </section>
+    
+    <!-- Key Metrics Slide -->
+    <section class="slide content-slide">
+      <h2>Key Performance Metrics</h2>
+      <ul>
+        <li><strong>FPS (Frames Per Second):</strong> Target 60fps for smooth animations</li>
+        <li><strong>TTI (Time to Interactive):</strong> How quickly app becomes responsive</li>
+        <li><strong>Memory Usage:</strong> RAM consumption over time</li>
+        <li><strong>App Size:</strong> Download size of the application</li>
+        <li><strong>CPU Usage:</strong> Processor load during operation</li>
+        <li><strong>Battery Consumption:</strong> Energy efficiency of the app</li>
+        <li><strong>Network Performance:</strong> Efficiency of data transfer</li>
+      </ul>
+    </section>
+    
+    <!-- Common Bottlenecks Slide -->
+    <section class="slide content-slide">
+      <h2>Common Performance Bottlenecks</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>JavaScript Thread</h3>
+          <ul>
+            <li>Excessive re-renders</li>
+            <li>Complex component trees</li>
+            <li>Inefficient list rendering</li>
+            <li>Heavy computations</li>
+            <li>Memory leaks from closures</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Native Thread</h3>
+          <ul>
+            <li>Bridge congestion</li>
+            <li>Expensive native operations</li>
+            <li>Image processing/loading</li>
+            <li>Complex animations</li>
+            <li>Too many native module calls</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Measuring Performance Slide -->
+    <section class="slide content-slide">
+      <h2>Measuring Performance</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Built-in Tools</h3>
+          <ul>
+            <li>React DevTools Profiler</li>
+            <li>Performance Monitor</li>
+            <li>Systrace</li>
+            <li>In-app FPS monitor</li>
+            <li>Chrome DevTools</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Third-party Tools</h3>
+          <ul>
+            <li>Flipper</li>
+            <li>Hermes Sampling Profiler</li>
+            <li>Xcode Instruments</li>
+            <li>Android Profiler</li>
+            <li>Firebase Performance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- React DevTools Profiler Slide -->
+    <section class="slide code-slide">
+      <h2>React DevTools Profiler</h2>
+      <pre><code class="language-javascript">
+// Install the package
+npm install --save-dev react-devtools
+
+// Add to package.json scripts
+"scripts": {
+  "devtools": "react-devtools"
+}
+
+// Run with
+npm run devtools
+      </code></pre>
+      <div class="content-box">
+        <p>The React DevTools Profiler helps you:</p>
+        <ul>
+          <li>Identify components that re-render unnecessarily</li>
+          <li>Measure render times of each component</li>
+          <li>Find commit causes (what triggered re-renders)</li>
+          <li>Analyze component prop changes</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Performance Monitor Slide -->
+    <section class="slide code-slide">
+      <h2>Performance Monitor</h2>
+      <pre><code class="language-javascript">
+import { PerformanceMonitor } from 'react-native';
+
+// Enable the performance monitor in development
+if (__DEV__) {
+  const subscription = PerformanceMonitor.onPerformanceMetrics(
+    ({ jsFps, nativeFps }) => {
+      console.log(`JS FPS: ${jsFps}, Native FPS: ${nativeFps}`);
+      
+      if (jsFps < 30) {
+        // Log warning about low JS thread performance
+      }
+    }
+  );
+  
+  // Don't forget to unsubscribe when component unmounts
+  return () => subscription.remove();
+}
+      </code></pre>
+    </section>
+    
+    <!-- Analyzing Performance Issues Slide -->
+    <section class="slide content-slide">
+      <h2>Analyzing Performance Issues</h2>
+      <ol>
+        <li><strong>Reproduce the Issue:</strong> Create a consistent test case</li>
+        <li><strong>Measure Baseline:</strong> Establish current performance metrics</li>
+        <li><strong>Isolate Bottlenecks:</strong> Use profilers to identify hot spots</li>
+        <li><strong>Apply Targeted Optimizations:</strong> Focus on biggest impact areas first</li>
+        <li><strong>Re-measure:</strong> Verify improvements</li>
+        <li><strong>Document:</strong> Record findings for future reference</li>
+      </ol>
+      <p>Always follow a systematic approach rather than making random optimizations!</p>
+    </section>
+    
+    <!-- JS Performance Optimization Slide -->
+    <section class="slide code-slide">
+      <h2>JavaScript Optimization Examples</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Before Optimization</h3>
+          <pre><code class="language-jsx">
+function MedicationList({ medications }) {
+  // Expensive calculation on every render
+  const sortedMeds = medications
+    .map(med => ({
+      ...med,
+      expiryDays: daysBetween(
+        new Date(), 
+        new Date(med.expiryDate)
+      )
+    }))
+    .sort((a, b) => a.expiryDays - b.expiryDays);
+  
+  return (
+    <View>
+      {sortedMeds.map(med => (
+        <MedicationItem 
+          key={med.id}
+          medication={med}
+          onPress={() => handlePress(med)}
+        />
+      ))}
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>After Optimization</h3>
+          <pre><code class="language-jsx">
+function MedicationList({ medications }) {
+  // Memoized calculation only when dependencies change
+  const sortedMeds = useMemo(() => {
+    return medications
+      .map(med => ({
+        ...med,
+        expiryDays: daysBetween(
+          new Date(), 
+          new Date(med.expiryDate)
+        )
+      }))
+      .sort((a, b) => a.expiryDays - b.expiryDays);
+  }, [medications]);
+  
+  // Memoized callback
+  const handleItemPress = useCallback((med) => {
+    handlePress(med);
+  }, [handlePress]);
+  
+  return (
+    <View>
+      {sortedMeds.map(med => (
+        <MedicationItem 
+          key={med.id}
+          medication={med}
+          onPress={() => handleItemPress(med)}
+        />
+      ))}
+    </View>
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Performance Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>JavaScript</h3>
+          <ul>
+            <li>Use appropriate memoization (useMemo, useCallback)</li>
+            <li>Virtualize long lists (FlatList, SectionList)</li>
+            <li>Optimize renders with React.memo</li>
+            <li>Move expensive calculations to web workers</li>
+            <li>Avoid anonymous function props</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Native Integration</h3>
+          <ul>
+            <li>Reduce bridge traffic</li>
+            <li>Use native driver for animations</li>
+            <li>Optimize images (resize, cache, progressive loading)</li>
+            <li>Lazy load components and assets</li>
+            <li>Minimize native module calls</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TypeScript and Performance Slide -->
+    <section class="slide content-slide">
+      <h2>TypeScript and Performance</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Benefits</h3>
+          <ul>
+            <li>Catches type errors at compile time</li>
+            <li>Improves code quality (fewer runtime errors)</li>
+            <li>Better editor tooling and refactoring</li>
+            <li>Self-documenting props and state</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Considerations</h3>
+          <ul>
+            <li>Slightly longer build times</li>
+            <li>No runtime performance impact (stripped in build)</li>
+            <li>Type definitions add to bundle size in development</li>
+            <li>Complex types can slow down IDE</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Hermes and Performance Slide -->
+    <section class="slide content-slide">
+      <h2>Hermes JavaScript Engine</h2>
+      <div class="content-box">
+        <p>Hermes is a JavaScript engine optimized for React Native</p>
+        <div class="columns">
+          <div class="column">
+            <h3>Key Benefits</h3>
+            <ul>
+              <li>Faster startup time</li>
+              <li>Decreased memory usage</li>
+              <li>Smaller app size</li>
+              <li>Advanced optimizations (AOT)</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3>Enabling Hermes</h3>
+            <pre><code class="language-javascript">
+// In app.json for Expo
+{
+  "expo": {
+    "jsEngine": "hermes"
+  }
+}
+
+// In android/app/build.gradle
+project.ext.react = [
+  enableHermes: true
+]
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Production Performance Monitoring Slide -->
+    <section class="slide content-slide">
+      <h2>Production Performance Monitoring</h2>
+      <div class="content-box">
+        <p>Monitoring real user metrics is essential for understanding actual performance</p>
+        <ul>
+          <li><strong>Firebase Performance Monitoring:</strong> Collects and analyzes performance data</li>
+          <li><strong>Custom Metrics API:</strong> Track custom performance metrics specific to your app</li>
+          <li><strong>Crash Analytics:</strong> Monitor performance-related crashes</li>
+          <li><strong>User-centric Metrics:</strong> Measure user-perceived performance (e.g., time to first meaningful paint)</li>
+        </ul>
+        <p class="note">Remember: Lab testing is important, but real-world performance often differs!</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>React Native performance is influenced by both JavaScript and native code</li>
+        <li>Key metrics include FPS, TTI, memory usage, and app size</li>
+        <li>Common bottlenecks include excessive renders, bridge congestion, and inefficient list rendering</li>
+        <li>Use appropriate tools like React DevTools Profiler, Performance Monitor, and Flipper to measure performance</li>
+        <li>Apply systematic analysis to identify and fix performance issues</li>
+        <li>Follow best practices for both JavaScript and native integration</li>
+        <li>Monitor performance in production with real-user metrics</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> <a href="../section-2-debugging-tools/index.html">Section 2: Debugging Tools</a></p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/highlight.js"></script>
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

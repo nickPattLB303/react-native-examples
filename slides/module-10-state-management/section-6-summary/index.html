@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module Summary | Module 10, Section 6</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Module 10 Summary</h1>
+      <h2>State Management in React Native</h2>
+      <p class="metadata">Module 10, Section 6 | 30 minutes</p>
+    </section>
+    
+    <!-- Summary of State Management Options Slide -->
+    <section class="slide content-slide">
+      <h2>State Management Solutions Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>Best For</th>
+            <th>Key Features</th>
+            <th>Considerations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>React Query</td>
+            <td>Server/API state</td>
+            <td>Caching, automatic refetching, data synchronization</td>
+            <td>Focused on remote data, not local state</td>
+          </tr>
+          <tr>
+            <td>Zustand</td>
+            <td>Global client state</td>
+            <td>Minimal API, no providers, high performance</td>
+            <td>Less ecosystem than Redux, newer library</td>
+          </tr>
+          <tr>
+            <td>Context API</td>
+            <td>Shared component state</td>
+            <td>Built-in to React, simple for moderate needs</td>
+            <td>Performance issues with large state or frequent updates</td>
+          </tr>
+          <tr>
+            <td>Local Storage</td>
+            <td>Persistence across sessions</td>
+            <td>Data survival between app launches, offline support</td>
+            <td>Async nature, need for synchronization with state</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Decision Making Framework Slide -->
+    <section class="slide content-slide">
+      <h2>Choosing the Right Solution</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Decision Framework</h3>
+          <ol>
+            <li><strong>Identify the state type</strong>
+              <ul>
+                <li>Server state vs. client state</li>
+                <li>Global vs. local scope</li>
+                <li>Persistence requirements</li>
+              </ul>
+            </li>
+            <li><strong>Consider performance needs</strong>
+              <ul>
+                <li>Update frequency</li>
+                <li>Data volume</li>
+                <li>Component re-renders</li>
+              </ul>
+            </li>
+            <li><strong>Evaluate team factors</strong>
+              <ul>
+                <li>Learning curve</li>
+                <li>Maintenance overhead</li>
+                <li>Future extensibility</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Common Patterns</h3>
+          <ul>
+            <li><strong>React Query + Zustand</strong>: For apps with significant API interaction and client state</li>
+            <li><strong>Context + useState/useReducer</strong>: For simpler apps with moderate state sharing</li>
+            <li><strong>Context + AsyncStorage</strong>: For apps needing simple persistence</li>
+            <li><strong>Zustand + MMKV</strong>: For high-performance apps with persistence needs</li>
+            <li><strong>React Query + Context</strong>: For apps with server state and UI preferences</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Combining Solutions Slide -->
+    <section class="slide code-slide">
+      <h2>Combining State Management Solutions</h2>
+      <pre><code class="language-tsx">
+// App.tsx - Combining multiple state management approaches
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { AppNavigator } from './navigation/AppNavigator';
+import { initializeStorage } from './services/storage';
+
+// Initialize storage on app start
+initializeStorage();
+
+// Create a query client for server state
+const queryClient = new QueryClient();
+
+export default function App() {
+  return (
+    // Server state with React Query
+    <QueryClientProvider client={queryClient}>
+      {/* UI theme with Context API */}
+      <ThemeProvider>
+        {/* Authentication with Context + AsyncStorage */}
+        <AuthProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+}
+
+// MedicationScreen.js - Using multiple state solutions in a component
+import React from 'react';
+import { View, Text } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
+import { useSettingsStore } from '../stores/settingsStore';
+import { useMedicationStore } from '../stores/medicationStore';
+
+export function MedicationScreen() {
+  // Context API for theme
+  const { theme } = useTheme();
+  
+  // Context API for auth
+  const { user } = useAuth();
+  
+  // Zustand for app settings
+  const { notificationsEnabled, medicationReminders } = useSettingsStore();
+  
+  // Zustand for local medication state
+  const { medications, addMedication, deleteMedication } = useMedicationStore();
+  
+  // React Query for API data
+  const { data, isLoading } = useQuery({
+    queryKey: ['medications', user.id],
+    queryFn: () => fetchMedications(user.id),
+    enabled: !!user.id
+  });
+  
+  // Component logic combining all state sources
+  // ...
+}</code></pre>
+    </section>
+    
+    <!-- State Management Architecture Slide -->
+    <section class="slide content-slide">
+      <h2>State Management Architecture</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Layer Architecture</h3>
+          <ul>
+            <li><strong>Persistence Layer</strong>
+              <ul>
+                <li>AsyncStorage / MMKV</li>
+                <li>Encrypted Storage</li>
+                <li>API / Network Services</li>
+              </ul>
+            </li>
+            <li><strong>State Management Layer</strong>
+              <ul>
+                <li>React Query for server state</li>
+                <li>Zustand for client state</li>
+                <li>Context for UI state</li>
+              </ul>
+            </li>
+            <li><strong>Component Layer</strong>
+              <ul>
+                <li>Custom hooks</li>
+                <li>UI Components</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Best Practices</h3>
+          <ul>
+            <li>Create clear boundaries between state types</li>
+            <li>Implement custom hooks to abstract state access</li>
+            <li>Maintain single sources of truth</li>
+            <li>Minimize prop drilling with strategic context usage</li>
+            <li>Separate read operations from write operations</li>
+            <li>Document state management decisions</li>
+            <li>Consider testing implications in your design</li>
+          </ul>
+          <div class="image-placeholder">
+            [Diagram: State Management Architecture Flow]
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Testing State Management Slide -->
+    <section class="slide content-slide">
+      <h2>Testing State Management</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Testing Approaches</h3>
+          <ul>
+            <li><strong>Unit Tests</strong>: Test isolated state logic</li>
+            <li><strong>Integration Tests</strong>: Test state management with components</li>
+            <li><strong>E2E Tests</strong>: Test full application with real state</li>
+          </ul>
+          <h3>Testing Frameworks</h3>
+          <ul>
+            <li>Jest for unit/integration testing</li>
+            <li>React Testing Library for component testing</li>
+            <li>Detox for E2E React Native testing</li>
+            <li>Mock Service Worker for API mocking</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Testing Tips</h3>
+          <pre><code class="language-tsx">
+// Testing a Zustand store
+import { renderHook, act } from '@testing-library/react-hooks';
+import { useSettingsStore } from './settingsStore';
+
+test('should update theme', () => {
+  const { result } = renderHook(() => useSettingsStore());
+  
+  act(() => {
+    result.current.setTheme('dark');
+  });
+  
+  expect(result.current.theme).toBe('dark');
+});
+
+// Testing Context with React Testing Library
+test('ThemeProvider provides correct theme', () => {
+  const { result } = render(
+    <ThemeProvider>
+      <ThemeConsumer />
+    </ThemeProvider>
+  );
+  
+  expect(screen.getByTestId('theme-value'))
+    .toHaveTextContent('light');
+    
+  fireEvent.click(screen.getByText('Toggle Theme'));
+  
+  expect(screen.getByTestId('theme-value'))
+    .toHaveTextContent('dark');
+});</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Performance Optimization Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Optimization</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Performance Issues</h3>
+          <ul>
+            <li>Excessive re-renders</li>
+            <li>Large state objects</li>
+            <li>Frequent state updates</li>
+            <li>Redundant API calls</li>
+            <li>Blocking UI thread with operations</li>
+            <li>Memory leaks from unmanaged subscriptions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Optimization Techniques</h3>
+          <ul>
+            <li><strong>Memoization</strong>: React.memo, useMemo, useCallback</li>
+            <li><strong>Selectors</strong>: Select minimal state from stores</li>
+            <li><strong>Debounce/Throttle</strong>: Limit update frequency</li>
+            <li><strong>Virtualization</strong>: Render only visible items</li>
+            <li><strong>State Normalization</strong>: Avoid nested state objects</li>
+            <li><strong>Batch Updates</strong>: Combine multiple state changes</li>
+          </ul>
+        </div>
+      </div>
+      <pre><code class="language-tsx">
+// Performance optimization example
+import React, { memo, useMemo, useCallback } from 'react';
+import { FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+
+// Memoized selector
+const selectVisibleTodos = state => 
+  state.todos.filter(todo => 
+    todo.completed === state.visibilityFilter);
+
+// Memoized component with optimized props
+export const TodoList = memo(() => {
+  // Only re-renders when visible todos change
+  const visibleTodos = useSelector(selectVisibleTodos);
+  
+  // Stable function reference
+  const renderItem = useCallback(({ item }) => (
+    <TodoItem todo={item} />
+  ), []);
+  
+  // Stable key extractor
+  const keyExtractor = useCallback(item => 
+    item.id.toString(), []);
+  
+  return (
+    <FlatList
+      data={visibleTodos}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+    />
+  );
+});</code></pre>
+    </section>
+    
+    <!-- Advanced Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced State Management Patterns</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Command Pattern</h3>
+          <pre><code class="language-tsx">
+// Command pattern with state management
+const useCommandStore = create((set) => ({
+  commands: [],
+  history: [],
+  
+  executeCommand: (command) => {
+    command.execute();
+    set(state => ({
+      commands: [...state.commands, command],
+      history: [...state.history, {
+        type: 'execute',
+        command,
+        timestamp: Date.now()
+      }]
+    }));
+  },
+  
+  undoCommand: () => set(state => {
+    const lastCommand = state.commands.pop();
+    if (lastCommand) {
+      lastCommand.undo();
+      return {
+        commands: [...state.commands],
+        history: [...state.history, {
+          type: 'undo',
+          command: lastCommand,
+          timestamp: Date.now()
+        }]
+      };
+    }
+    return state;
+  })
+}));</code></pre>
+        </div>
+        <div class="column">
+          <h3>Event Sourcing</h3>
+          <pre><code class="language-tsx">
+// Event sourcing pattern
+const useEventStore = create((set, get) => ({
+  events: [],
+  currentState: initialState,
+  
+  dispatch: (event) => set(state => {
+    const newEvents = [...state.events, {
+      ...event,
+      timestamp: Date.now()
+    }];
+    
+    // Recalculate state from all events
+    const newState = newEvents.reduce(
+      (state, event) => reducers[event.type](state, event),
+      initialState
+    );
+    
+    return {
+      events: newEvents,
+      currentState: newState
+    };
+  }),
+  
+  // Time-travel to a specific point
+  travelToEvent: (eventIndex) => set(state => {
+    const eventsToApply = state.events
+      .slice(0, eventIndex + 1);
+      
+    const newState = eventsToApply.reduce(
+      (state, event) => reducers[event.type](state, event),
+      initialState
+    );
+    
+    return { currentState: newState };
+  })
+}));</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- State Management in Large Applications Slide -->
+    <section class="slide content-slide">
+      <h2>State Management in Large Applications</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Scaling Challenges</h3>
+          <ul>
+            <li>State growing too large and complex</li>
+            <li>Multiple teams working on same state</li>
+            <li>Performance bottlenecks as app grows</li>
+            <li>Maintaining consistency across features</li>
+            <li>Managing data flow between modules</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Scaling Strategies</h3>
+          <ul>
+            <li><strong>Feature-based state organization</strong>: Split state by feature</li>
+            <li><strong>Domain-driven design</strong>: Organize by business domains</li>
+            <li><strong>Module federation</strong>: Allow teams to own their state</li>
+            <li><strong>State hierarchies</strong>: Global, feature, and component state</li>
+            <li><strong>Middleware standardization</strong>: Consistent patterns</li>
+          </ul>
+        </div>
+      </div>
+      <pre><code class="language-tsx">
+// Example of domain-based state organization
+// auth/store.js
+export const useAuthStore = create(() => ({ /* auth state */ }));
+
+// medications/store.js
+export const useMedicationStore = create(() => ({ /* medication state */ }));
+
+// appointments/store.js
+export const useAppointmentStore = create(() => ({ /* appointment state */ }));
+
+// Feature that accesses multiple domains
+function MedicationReminder() {
+  const { user } = useAuthStore();
+  const { medications } = useMedicationStore();
+  const { appointments } = useAppointmentStore();
+  
+  // Logic that combines multiple domains
+}</code></pre>
+    </section>
+    
+    <!-- Future Trends Slide -->
+    <section class="slide content-slide">
+      <h2>Future Trends in State Management</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Emerging Approaches</h3>
+          <ul>
+            <li><strong>Server Components</strong>: Moving state to the server</li>
+            <li><strong>Signals/Observables</strong>: Fine-grained reactivity</li>
+            <li><strong>State Machines</strong>: Explicit state transitions</li>
+            <li><strong>Tearing-free state</strong>: Avoiding inconsistent UI</li>
+            <li><strong>Immutable/Persistent Data Structures</strong>: Efficient state updates</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>React Native Specific</h3>
+          <ul>
+            <li><strong>Native state bridges</strong>: Better native integration</li>
+            <li><strong>Offline-first architectures</strong>: Built-in synchronization</li>
+            <li><strong>Edge computing</strong>: State distributed between device and edge</li>
+            <li><strong>AI-assisted state management</strong>: Smart caching, prefetching</li>
+            <li><strong>Cross-platform state</strong>: Unified Web/Mobile state</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Module Review Slide -->
+    <section class="slide content-slide">
+      <h2>Module Review</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What We've Learned</h3>
+          <ul>
+            <li>The different types of state in React Native apps</li>
+            <li>Server state management with React Query</li>
+            <li>Client state management with Zustand</li>
+            <li>Shared state using Context API</li>
+            <li>Persistent state with AsyncStorage and alternatives</li>
+            <li>Architectural patterns for complex applications</li>
+            <li>Performance optimization techniques</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Next Steps</h3>
+          <ul>
+            <li>Apply state management patterns to your projects</li>
+            <li>Explore advanced state management libraries</li>
+            <li>Practice migrating between state solutions</li>
+            <li>Analyze performance impacts of different approaches</li>
+            <li>Implement testing strategies for state</li>
+            <li>Create reusable state management templates</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Final Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Final Exercise: Comprehensive Medication Tracker</h2>
+      <div class="exercise-description">
+        <p>Create a medication tracker application that:</p>
+        <ol>
+          <li>Uses React Query to fetch medication data from an API</li>
+          <li>Implements Zustand for managing application state</li>
+          <li>Uses Context API for theme and user preferences</li>
+          <li>Implements AsyncStorage/MMKV for data persistence</li>
+          <li>Follows performance best practices</li>
+          <li>Includes proper error handling and loading states</li>
+        </ol>
+        <p>Time: 45 minutes</p>
+        <p>Resources: Starter code and API documentation provided in GitHub repository</p>
+      </div>
+    </section>
+    
+    <!-- Resources Slide -->
+    <section class="slide resources-slide">
+      <h2>Additional Resources</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Official Documentation</h3>
+          <ul>
+            <li><a href="https://tanstack.com/query/latest">React Query Documentation</a></li>
+            <li><a href="https://github.com/pmndrs/zustand">Zustand GitHub Repository</a></li>
+            <li><a href="https://reactjs.org/docs/context.html">React Context API Documentation</a></li>
+            <li><a href="https://github.com/mrousavy/react-native-mmkv">React Native MMKV</a></li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Learning Resources</h3>
+          <ul>
+            <li><a href="#">State Management Patterns eBook</a></li>
+            <li><a href="#">React Query in Action Course</a></li>
+            <li><a href="#">Advanced React State Management Workshop</a></li>
+            <li><a href="#">React Native Performance Optimization Guide</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="thank-you">
+        <h3>Thank You!</h3>
+        <p>Questions? Feel free to reach out to the instructor.</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html> 
