@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Native Training - Accessibility</title>
+    <link rel="stylesheet" href="../../shared/css/style.css">
+    <link rel="stylesheet" href="../../shared/css/prism.css">
+</head>
+<body class="slide-container">
+    <!-- Title Slide -->
+    <section class="slide visible" id="title-slide">
+        <div class="slide-header">
+            <div class="slide-meta">
+                <p>Module 7: React Native Components and User Input</p>
+                <p>Section 6: Accessibility</p>
+                <p>Duration: 45 minutes</p>
+            </div>
+        </div>
+        <div class="slide-content centered-content">
+            <h1>Accessibility in Forms</h1>
+            <h3>Creating Inclusive React Native User Interfaces</h3>
+        </div>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide" id="learning-objectives">
+        <div class="slide-content">
+            <h2>Learning Objectives</h2>
+            <p>By the end of this section, you will be able to:</p>
+            <ul>
+                <li>Implement accessible form components in React Native with TypeScript</li>
+                <li>Understand the importance of accessibility in mobile applications</li>
+                <li>Apply proper accessibility labels, roles, and hints to form elements</li>
+                <li>Create forms compatible with screen readers like VoiceOver and TalkBack</li>
+                <li>Test form accessibility on iOS and Android</li>
+                <li>Address common accessibility issues in mobile forms</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Accessibility Overview Slide -->
+    <section class="slide" id="accessibility-overview">
+        <div class="slide-content">
+            <h2>Why Accessibility Matters</h2>
+            <div class="two-column">
+                <div>
+                    <ul>
+                        <li>
+                            <strong>Legal Requirements:</strong> Many countries require digital accessibility compliance
+                        </li>
+                        <li>
+                            <strong>Broader User Base:</strong> 15% of the world population lives with some form of disability
+                        </li>
+                        <li>
+                            <strong>Better User Experience:</strong> Accessible apps are often more usable for everyone
+                        </li>
+                        <li>
+                            <strong>Ethical Responsibility:</strong> Ensuring everyone can use your healthcare applications
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="image-container">
+                        <img src="images/accessibility.png" alt="Visual representation of accessibility features">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basic Accessibility Properties Slide -->
+    <section class="slide" id="accessibility-properties">
+        <div class="slide-content">
+            <h2>React Native Accessibility Properties</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>accessible</code></td>
+                        <td>Indicates if the element should be treated as accessible (default: true)</td>
+                    </tr>
+                    <tr>
+                        <td><code>accessibilityLabel</code></td>
+                        <td>Text read by screen readers when the element is focused</td>
+                    </tr>
+                    <tr>
+                        <td><code>accessibilityHint</code></td>
+                        <td>Describes the action that will occur when interacting with the element</td>
+                    </tr>
+                    <tr>
+                        <td><code>accessibilityRole</code></td>
+                        <td>Communicates the purpose of the element (button, link, header, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><code>accessibilityState</code></td>
+                        <td>Describes the current state of the element (disabled, selected, checked, etc.)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Basic Accessibility Example Slide -->
+    <section class="slide" id="accessibility-example">
+        <div class="slide-content">
+            <h2>Basic Accessibility Example</h2>
+            <pre><code class="language-tsx">import React from 'react';
+import { Pressable, Text, StyleSheet } from 'react-native';
+
+interface AccessibleButtonProps {
+  onPress: () => void;
+  label: string;
+  hint?: string;
+}
+
+const AccessibleButton = ({ 
+  onPress, 
+  label, 
+  hint 
+}: AccessibleButtonProps) => {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={styles.button}
+      accessible={true}
+      accessibilityLabel={label}
+      accessibilityHint={hint}
+      accessibilityRole="button"
+    >
+      <Text style={styles.buttonText}>{label}</Text>
+    </Pressable>
+  );
+};
+</code></pre>
+        </div>
+    </section>
+
+    <!-- Form Accessibility: Labeling Slide -->
+    <section class="slide" id="accessibility-labeling">
+        <div class="slide-content">
+            <h2>Form Accessibility: Labeling</h2>
+            <div class="two-column">
+                <div>
+                    <p>Proper labeling is essential for form accessibility:</p>
+                    <ul>
+                        <li>Use <code>accessibilityLabelledBy</code> to associate labels with inputs</li>
+                        <li>Use <code>nativeID</code> to create label associations</li>
+                        <li>Ensure labels are descriptive and clear</li>
+                        <li>Position labels where they make sense visually</li>
+                    </ul>
+                </div>
+                <div>
+                    <pre><code class="language-tsx">// Label association example
+<Text 
+  nativeID="medicationLabel"
+  style={styles.label}
+>
+  Medication Name
+</Text>
+      
+<TextInput
+  style={styles.input}
+  accessibilityLabelledBy="medicationLabel"
+/>
+</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Accessibility: Grouping Slide -->
+    <section class="slide" id="accessibility-grouping">
+        <div class="slide-content">
+            <h2>Form Accessibility: Grouping</h2>
+            <pre><code class="language-tsx">import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+const AccessibleRadioGroup = ({ options, onChange, label }) => {
+  const [selected, setSelected] = useState(null);
+  
+  return (
+    <View 
+      style={styles.container}
+      accessibilityRole="radiogroup"
+      accessibilityLabel={label}
+    >
+      <Text style={styles.groupLabel}>{label}</Text>
+      
+      {options.map((option) => (
+        <Pressable
+          key={option.value}
+          style={styles.option}
+          onPress={() => {
+            setSelected(option.value);
+            onChange(option.value);
+          }}
+          accessibilityRole="radio"
+          accessibilityState={{ checked: selected === option.value }}
+        >
+          <View style={[
+            styles.radioOuter,
+            selected === option.value && styles.radioOuterSelected
+          ]}>
+            {selected === option.value && <View style={styles.radioInner} />}
+          </View>
+          <Text style={styles.optionLabel}>{option.label}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+</code></pre>
+        </div>
+    </section>
+
+    <!-- Form Accessibility: Error Feedback Slide -->
+    <section class="slide" id="accessibility-error-feedback">
+        <div class="slide-content">
+            <h2>Form Accessibility: Error Feedback</h2>
+            <div class="two-column">
+                <div>
+                    <p>Accessible error handling requires:</p>
+                    <ul>
+                        <li>Announce errors to screen readers</li>
+                        <li>Use <code>accessibilityLiveRegion</code> to announce updates</li>
+                        <li>Mark invalid inputs with <code>accessibilityInvalid</code></li>
+                        <li>Provide clear, actionable error messages</li>
+                        <li>Use color AND text/icon indicators for errors</li>
+                    </ul>
+                </div>
+                <div>
+                    <pre><code class="language-tsx">{error && (
+  <Text 
+    style={styles.errorText}
+    accessibilityLiveRegion="polite"
+    accessibilityRole="alert"
+  >
+    {error}
+  </Text>
+)}
+
+<TextInput
+  style={[
+    styles.input, 
+    error && styles.errorInput
+  ]}
+  accessibilityInvalid={!!error}
+/>
+</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Accessibility: Focus Management Slide -->
+    <section class="slide" id="accessibility-focus">
+        <div class="slide-content">
+            <h2>Form Accessibility: Focus Management</h2>
+            <div class="two-column">
+                <div>
+                    <p>Proper focus management enhances form usability:</p>
+                    <ul>
+                        <li>Use <code>useRef</code> to manage input references</li>
+                        <li>Control focus flow with <code>focus()</code> method</li>
+                        <li>Use <code>returnKeyType</code> to indicate actions</li>
+                        <li>Handle <code>onSubmitEditing</code> to move focus</li>
+                        <li>Set <code>blurOnSubmit</code> to control behavior</li>
+                    </ul>
+                </div>
+                <div>
+                    <pre><code class="language-tsx">const nameInputRef = useRef<TextInput>(null);
+const emailInputRef = useRef<TextInput>(null);
+
+// ...
+
+<TextInput
+  ref={nameInputRef}
+  returnKeyType="next"
+  onSubmitEditing={() => 
+    emailInputRef.current?.focus()
+  }
+  blurOnSubmit={false}
+  accessibilityHint="Enter name, then press next"
+/>
+
+<TextInput
+  ref={emailInputRef}
+  returnKeyType="done"
+  accessibilityHint="Enter email, then press done"
+/>
+</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Accessible Components Slide -->
+    <section class="slide" id="accessible-custom-components">
+        <div class="slide-content">
+            <h2>Creating Accessible Custom Form Components</h2>
+            <pre><code class="language-tsx">const AccessibleSegmentedControl = ({ options, onChange, defaultValue }) => {
+  const [selectedValue, setSelectedValue] = useState(defaultValue || options[0].value);
+  
+  return (
+    <View 
+      style={styles.container}
+      accessibilityRole="radiogroup"
+      accessibilityLabel="Select an option"
+    >
+      {options.map((option) => {
+        const isSelected = selectedValue === option.value;
+        
+        return (
+          <Pressable
+            key={option.value}
+            style={[styles.option, isSelected && styles.selectedOption]}
+            onPress={() => {
+              setSelectedValue(option.value);
+              if (onChange) onChange(option.value);
+            }}
+            accessibilityRole="radio"
+            accessibilityState={{ checked: isSelected }}
+            accessibilityLabel={`${option.label}, ${isSelected ? 'selected' : 'not selected'}`}
+          >
+            <Text style={[styles.optionText, isSelected && styles.selectedOptionText]}>
+              {option.label}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+};
+</code></pre>
+        </div>
+    </section>
+
+    <!-- Platform-Specific Considerations Slide -->
+    <section class="slide" id="platform-specific">
+        <div class="slide-content">
+            <h2>Platform-Specific Accessibility Considerations</h2>
+            <div class="two-column">
+                <div>
+                    <h3>iOS</h3>
+                    <ul>
+                        <li>VoiceOver is the built-in screen reader</li>
+                        <li>Supports dynamic type for font scaling</li>
+                        <li>Has specific gestures for navigation</li>
+                        <li>Test with: Settings > Accessibility > VoiceOver</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Android</h3>
+                    <ul>
+                        <li>TalkBack is the built-in screen reader</li>
+                        <li>Supports font scaling through system settings</li>
+                        <li>Has different navigation gestures than iOS</li>
+                        <li>Test with: Settings > Accessibility > TalkBack</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="centered"><strong>Important:</strong> Test your forms with both VoiceOver and TalkBack whenever possible!</p>
+        </div>
+    </section>
+
+    <!-- Testing Accessibility Slide -->
+    <section class="slide" id="testing-accessibility">
+        <div class="slide-content">
+            <h2>Testing Form Accessibility</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Manual Testing</h3>
+                    <ol>
+                        <li>Enable screen readers (VoiceOver/TalkBack)</li>
+                        <li>Navigate using screen reader gestures:
+                            <ul>
+                                <li>Swipe to move between elements</li>
+                                <li>Double-tap to activate</li>
+                                <li>Three-finger swipe to scroll</li>
+                            </ul>
+                        </li>
+                        <li>Check reading order and element descriptions</li>
+                        <li>Verify error announcements</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3>Automated Testing Tools</h3>
+                    <ul>
+                        <li>iOS: Xcode Accessibility Inspector</li>
+                        <li>Android: Accessibility Scanner</li>
+                        <li>Jest with accessibility-specific tests</li>
+                        <li>Detox for E2E testing with accessibility</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Slide -->
+    <section class="slide" id="accessibility-best-practices">
+        <div class="slide-content">
+            <h2>Accessible Form Best Practices</h2>
+            <div class="two-column">
+                <div>
+                    <ol start="1">
+                        <li><strong>Provide Clear Labels:</strong> Every input needs a descriptive label</li>
+                        <li><strong>Use Proper Input Types:</strong> Match the keyboard to the data type</li>
+                        <li><strong>Group Related Elements:</strong> Organize inputs logically</li>
+                        <li><strong>Sufficient Contrast:</strong> Text must be readable</li>
+                        <li><strong>Large Touch Targets:</strong> At least 44×44 points</li>
+                    </ol>
+                </div>
+                <div>
+                    <ol start="6">
+                        <li><strong>Descriptive Button Text:</strong> Avoid vague labels like "Click Here"</li>
+                        <li><strong>Accessible Error Feedback:</strong> Announce errors to screen readers</li>
+                        <li><strong>Keyboard Navigation:</strong> Ensure proper tab order</li>
+                        <li><strong>Test with Screen Readers:</strong> Use VoiceOver and TalkBack</li>
+                        <li><strong>Support Font Scaling:</strong> Allow text to resize with settings</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exercise Slide -->
+    <section class="slide" id="accessibility-exercise">
+        <div class="slide-content">
+            <h2>Exercise: Create an Accessible Medication Form</h2>
+            <p>Create a fully accessible medication intake form with:</p>
+            <ul>
+                <li>Proper accessibility labels, roles, and hints for all elements</li>
+                <li>Form validation errors that are properly announced to screen readers</li>
+                <li>Focus management allowing easy navigation between fields</li>
+                <li>Complete usability with just a screen reader (VoiceOver/TalkBack)</li>
+            </ul>
+            <p>Starting code is provided in the exercise files.</p>
+            <div class="code-container">
+                <pre><code class="language-tsx">// Exercise: Build an accessible medication form
+// See exercise files for starter code and requirements</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide" id="summary">
+        <div class="slide-content">
+            <h2>Summary: Accessibility in Forms</h2>
+            <div class="summary-points">
+                <div class="summary-point">
+                    <h3>Key Accessibility Properties</h3>
+                    <p>accessibilityLabel, accessibilityRole, accessibilityHint, accessibilityState</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Form Elements</h3>
+                    <p>Proper labeling, grouping, error feedback, focus management</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Platform Considerations</h3>
+                    <p>Test on both iOS (VoiceOver) and Android (TalkBack)</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Best Practices</h3>
+                    <p>Clear labels, proper input types, sufficient contrast, large touch targets</p>
+                </div>
+            </div>
+            <p class="centered">Creating accessible forms is not just a legal requirement or best practice—it's about creating inclusive applications that everyone can use.</p>
+        </div>
+    </section>
+
+    <!-- Navigation Slide -->
+    <section class="slide" id="navigation">
+        <div class="slide-content centered-content">
+            <h2>Navigation</h2>
+            <div class="navigation-buttons">
+                <a href="../section-5-input-validation/index.html" class="button">Previous: Input Validation</a>
+                <a href="../section-7-custom-input-components/index.html" class="button">Next: Custom Input Components</a>
+                <a href="../../index.html" class="button">Module Overview</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="../../shared/js/prism.js"></script>
+    <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

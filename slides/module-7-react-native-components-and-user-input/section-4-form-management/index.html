@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Form Management | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>Form Management</h2>
+      <p class="metadata">Module 7 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement structured form state management in React Native</li>
+        <li>Organize complex multi-step forms with proper state handling</li>
+        <li>Use various approaches for managing form state (local state, useReducer, form libraries)</li>
+        <li>Navigate between form steps while preserving data</li>
+        <li>Implement form submission and error handling</li>
+        <li>Create consistent form patterns for your application</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Basic React hooks (useState, useEffect) from Module 6</p>
+      </div>
+    </section>
+    
+    <!-- Form Management Challenges Slide -->
+    <section class="slide content-slide">
+      <h2>Form Management Challenges in React Native</h2>
+      <p>React Native form management differs significantly from web development:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Challenges</h3>
+          <ul>
+            <li>No native HTML form element equivalent</li>
+            <li>Multiple input types with different behaviors</li>
+            <li>Mobile-specific considerations (keyboard, screen size)</li>
+            <li>Complex validation requirements</li>
+            <li>Multi-step forms common in mobile apps</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Solution Approaches</h3>
+          <ul>
+            <li>Component composition for form structure</li>
+            <li>Various state management techniques</li>
+            <li>Form libraries for complex forms</li>
+            <li>Custom validation strategies</li>
+            <li>Step-by-step data collection patterns</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Core Concept</div>
+        <p>Effective form management increases user experience, data quality, and developer productivity.</p>
+      </div>
+    </section>
+    
+    <!-- Basic Form State Management Slide -->
+    <section class="slide content-slide">
+      <h2>Basic Form State Management with useState</h2>
+      <p>For simpler forms, managing state with <code>useState</code> is often sufficient.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Implementation Pattern</h3>
+          <ul>
+            <li>Store form data as a single state object</li>
+            <li>Create update handlers for each field</li>
+            <li>Validate before submission</li>
+            <li>Maintain loading states during submission</li>
+            <li>Handle and display form errors</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Best Practices</h3>
+          <ul>
+            <li>Use a single state object for related fields</li>
+            <li>Implement reusable input components</li>
+            <li>Validate inputs during blur or submit</li>
+            <li>Provide clear feedback on errors</li>
+            <li>Disable submit during processing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Basic Form Implementation Slide -->
+    <section class="slide code-slide">
+      <h2>Basic Patient Information Form</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+const SimplePatientForm = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    dob: '',
+    email: '',
+  });
+  
+  const handleChange = (field, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+  
+  const handleSubmit = () => {
+    console.log('Form submitted:', formData);
+    // Process form submission
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Patient Information</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="First Name"
+        value={formData.firstName}
+        onChangeText={(value) => handleChange('firstName', value)}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name"
+        value={formData.lastName}
+        onChangeText={(value) => handleChange('lastName', value)}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Date of Birth (MM/DD/YYYY)"
+        value={formData.dob}
+        onChangeText={(value) => handleChange('dob', value)}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={formData.email}
+        onChangeText={(value) => handleChange('email', value)}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      
+      <Button title="Submit" onPress={handleSubmit} />
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- useReducer Form Management Slide -->
+    <section class="slide content-slide">
+      <h2>Advanced Form Management with useReducer</h2>
+      <p>For complex forms with multiple states and validations, <code>useReducer</code> provides better organization.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Advantages</h3>
+          <ul>
+            <li>Centralized state updates in reducer</li>
+            <li>More predictable state transitions</li>
+            <li>Easier to handle complex validation</li>
+            <li>Better separation of concerns</li>
+            <li>Simplified testing of state logic</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Implementation Pattern</h3>
+          <ul>
+            <li>Define initial state object</li>
+            <li>Create reducer with action types</li>
+            <li>Handle form updates, validation, and submission</li>
+            <li>Dispatch actions for state changes</li>
+            <li>Separate UI from state management</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">When to Use</div>
+        <p>Choose useReducer when your form has complex validation logic, multiple related state transitions, or when state updates depend on previous state.</p>
+      </div>
+    </section>
+    
+    <!-- useReducer Example Slide -->
+    <section class="slide code-slide">
+      <h2>Form Management with useReducer</h2>
+      <pre><code class="language-jsx">
+import React, { useReducer } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+// Define initial state
+const initialState = {
+  medication: {
+    name: '',
+    dosage: '',
+    frequency: '',
+    duration: '',
+  },
+  errors: {},
+  isSubmitting: false,
+};
+
+// Define reducer function
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case 'UPDATE_FIELD':
+      return {
+        ...state,
+        medication: {
+          ...state.medication,
+          [action.field]: action.value,
+        },
+        errors: {
+          ...state.errors,
+          [action.field]: null, // Clear field error when updated
+        },
+      };
+    case 'VALIDATE':
+      const errors = {};
+      // Perform validation
+      if (!state.medication.name) errors.name = 'Medication name is required';
+      if (!state.medication.dosage) errors.dosage = 'Dosage is required';
+      if (!state.medication.frequency) errors.frequency = 'Frequency is required';
+      
+      return {
+        ...state,
+        errors,
+        isValid: Object.keys(errors).length === 0,
+      };
+    case 'SUBMIT_START':
+      return { ...state, isSubmitting: true };
+    case 'SUBMIT_SUCCESS':
+      return {
+        ...state,
+        isSubmitting: false,
+        medication: initialState.medication, // Reset form
+      };
+    case 'SUBMIT_ERROR':
+      return {
+        ...state,
+        isSubmitting: false,
+        submitError: action.error,
+      };
+    default:
+      return state;
+  }
+};
+      </code></pre>
+    </section>
+    
+    <!-- useReducer Implementation Slide -->
+    <section class="slide code-slide">
+      <h2>Using the Reducer Component</h2>
+      <pre><code class="language-jsx">
+const MedicationForm = () => {
+  const [state, dispatch] = useReducer(formReducer, initialState);
+  const { medication, errors, isSubmitting } = state;
+  
+  const handleChange = (field, value) => {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      field,
+      value,
+    });
+  };
+  
+  const handleSubmit = async () => {
+    // Validate form
+    dispatch({ type: 'VALIDATE' });
+    
+    // Check if form is valid
+    if (Object.keys(errors).length === 0) {
+      try {
+        dispatch({ type: 'SUBMIT_START' });
+        
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Handle successful submission
+        dispatch({ type: 'SUBMIT_SUCCESS' });
+        
+      } catch (error) {
+        dispatch({ 
+          type: 'SUBMIT_ERROR',
+          error: error.message || 'Failed to submit medication information'
+        });
+      }
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Add Medication</Text>
+      
+      <TextInput
+        style={[styles.input, errors.name && styles.errorInput]}
+        placeholder="Medication Name"
+        value={medication.name}
+        onChangeText={(value) => handleChange('name', value)}
+      />
+      {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+      
+      {/* Other input fields omitted for brevity */}
+      
+      <Button 
+        title={isSubmitting ? "Submitting..." : "Add Medication"}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      />
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Multi-Step Forms Slide -->
+    <section class="slide content-slide">
+      <h2>Multi-Step Forms</h2>
+      <p>Multi-step forms break complex forms into manageable sections for better user experience.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Components</h3>
+          <ul>
+            <li>Step counter to track current position</li>
+            <li>Centralized state for all form steps</li>
+            <li>Step navigation controls</li>
+            <li>Progress indicator</li>
+            <li>Step-specific validation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Best Practices</h3>
+          <ul>
+            <li>Validate each step before proceeding</li>
+            <li>Preserve entered data between steps</li>
+            <li>Show clear progress indication</li>
+            <li>Allow users to navigate back</li>
+            <li>Provide summary before final submission</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">UX Tip</div>
+        <p>Group related information in each step and provide clear navigation cues to help users understand their progress.</p>
+      </div>
+    </section>
+    
+    <!-- Multi-Step Form Example Slide -->
+    <section class="slide code-slide">
+      <h2>Multi-Step Form Implementation</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+const MultiStepMedicationForm = () => {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    // Step 1: Basic Information
+    name: '',
+    dosage: '',
+    
+    // Step 2: Schedule
+    frequency: '',
+    timeOfDay: '',
+    
+    // Step 3: Additional Details
+    startDate: '',
+    endDate: '',
+    notes: '',
+  });
+  
+  const handleChange = (field, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+  
+  const nextStep = () => setStep(prevStep => prevStep + 1);
+  const prevStep = () => setStep(prevStep => prevStep - 1);
+  
+  // Render different form steps based on current step
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <View>
+            <Text style={styles.stepTitle}>Basic Information</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Medication Name"
+              value={formData.name}
+              onChangeText={(value) => handleChange('name', value)}
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Dosage (e.g., 500mg)"
+              value={formData.dosage}
+              onChangeText={(value) => handleChange('dosage', value)}
+            />
+            
+            <Button title="Next" onPress={nextStep} />
+          </View>
+        );
+      // Additional steps omitted for brevity
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Add Medication</Text>
+      
+      <View style={styles.progressContainer}>
+        <View style={[styles.progressDot, step >= 1 && styles.activeDot]} />
+        <View style={styles.progressLine} />
+        <View style={[styles.progressDot, step >= 2 && styles.activeDot]} />
+        <View style={styles.progressLine} />
+        <View style={[styles.progressDot, step >= 3 && styles.activeDot]} />
+      </View>
+      
+      {renderStep()}
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Form Libraries Slide -->
+    <section class="slide content-slide">
+      <h2>Using Form Libraries</h2>
+      <p>Form libraries provide robust solutions for complex form management.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Popular Form Libraries</h3>
+          <ul>
+            <li><strong>Formik</strong>: Complete form solution</li>
+            <li><strong>React Hook Form</strong>: Performance-focused</li>
+            <li><strong>Final Form</strong>: Framework agnostic</li>
+          </ul>
+          <h3>Validation Libraries</h3>
+          <ul>
+            <li><strong>Yup</strong>: Schema-based validation</li>
+            <li><strong>Joi</strong>: Powerful validation language</li>
+            <li><strong>Zod</strong>: TypeScript-first schema validation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Key Benefits</h3>
+          <ul>
+            <li>Reduce boilerplate code</li>
+            <li>Built-in validation systems</li>
+            <li>Error handling patterns</li>
+            <li>Performance optimizations</li>
+            <li>Consistent patterns across projects</li>
+            <li>Field array support</li>
+            <li>Form state tracking</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Consideration</div>
+        <p>Libraries add bundle size. For very simple forms, native React state management might be sufficient.</p>
+      </div>
+    </section>
+    
+    <!-- Formik Example Slide -->
+    <section class="slide code-slide">
+      <h2>Formik Implementation</h2>
+      <pre><code class="language-jsx">
+import React from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+// Validation schema
+const PatientSchema = Yup.object().shape({
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
+  dob: Yup.string().matches(
+    /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/,
+    'Date must be in MM/DD/YYYY format'
+  ).required('Date of birth is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+});
+
+const FormikPatientForm = () => {
+  return (
+    <Formik
+      initialValues={{
+        firstName: '',
+        lastName: '',
+        dob: '',
+        email: '',
+      }}
+      validationSchema={PatientSchema}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        setTimeout(() => {
+          console.log('Form submitted:', values);
+          setSubmitting(false);
+          resetForm();
+        }, 1000);
+      }}
+    >
+      {({ 
+        values, errors, touched, handleChange, 
+        handleBlur, handleSubmit, isSubmitting 
+      }) => (
+        <View style={styles.container}>
+          <Text style={styles.header}>Patient Registration</Text>
+          
+          <TextInput
+            style={[
+              styles.input,
+              touched.firstName && errors.firstName && styles.errorInput
+            ]}
+            placeholder="First Name"
+            value={values.firstName}
+            onChangeText={handleChange('firstName')}
+            onBlur={handleBlur('firstName')}
+          />
+          {touched.firstName && errors.firstName && (
+            <Text style={styles.errorText}>{errors.firstName}</Text>
+          )}
+          
+          {/* Other fields omitted for brevity */}
+          
+          <Button 
+            title={isSubmitting ? "Submitting..." : "Register Patient"}
+            onPress={handleSubmit}
+            disabled={isSubmitting}
+          />
+        </View>
+      )}
+    </Formik>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Form Submission and Error Handling Slide -->
+    <section class="slide content-slide">
+      <h2>Form Submission and Error Handling</h2>
+      <p>Effective submission processing improves user confidence and experience.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Submission Best Practices</h3>
+          <ul>
+            <li>Validate before submission</li>
+            <li>Show loading indicators during submission</li>
+            <li>Disable submit button while processing</li>
+            <li>Handle network errors gracefully</li>
+            <li>Provide clear success feedback</li>
+            <li>Offer retry options for failures</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Error Handling Patterns</h3>
+          <ul>
+            <li>Field-level error messages</li>
+            <li>Form-level error summaries</li>
+            <li>Visual error indicators</li>
+            <li>Accessible error announcements</li>
+            <li>Clear error recovery paths</li>
+            <li>Persistent error state until addressed</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Form Submission Example Slide -->
+    <section class="slide code-slide">
+      <h2>Form Submission and Error Handling</h2>
+      <pre><code class="language-jsx">
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, ActivityIndicator, StyleSheet, Alert } from 'react-native';
+
+const FormWithSubmission = () => {
+  const [formData, setFormData] = useState({
+    medicationName: '',
+    prescription: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  const handleChange = (field, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      [field]: value,
+    }));
+    
+    // Clear error when user starts typing again
+    if (error) setError(null);
+  };
+  
+  const handleSubmit = async () => {
+    // Basic validation
+    if (!formData.medicationName.trim() || !formData.prescription.trim()) {
+      setError('Please fill in all fields');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Success
+      setLoading(false);
+      Alert.alert(
+        'Success',
+        'Prescription submitted successfully',
+        [{ text: 'OK', onPress: () => resetForm() }]
+      );
+      
+    } catch (err) {
+      setLoading(false);
+      setError(err.message || 'An error occurred');
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Submit Prescription</Text>
+      
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
+      
+      {/* Form inputs omitted for brevity */}
+      
+      {loading ? (
+        <ActivityIndicator size="large" color="#007AFF" style={styles.loader} />
+      ) : (
+        <Button title="Submit Prescription" onPress={handleSubmit} />
+      )}
+    </View>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Form Management Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Form Management Patterns and Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Architecture Patterns</h3>
+          <ul>
+            <li>Separate form logic from UI components</li>
+            <li>Create reusable form field components</li>
+            <li>Implement form context for complex forms</li>
+            <li>Use controlled components consistently</li>
+            <li>Organize multi-step forms with clear navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Performance Considerations</h3>
+          <ul>
+            <li>Debounce validation for text inputs</li>
+            <li>Only validate on blur or submission for better UX</li>
+            <li>Use memoization for expensive validation</li>
+            <li>Optimize rendering with useMemo/useCallback</li>
+            <li>Consider uncontrolled components for simple forms</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Consistency Tip</div>
+        <p>Create a form component library with standardized input styles, error displays, and validation patterns to maintain consistency across your app.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Multi-Step Medication Order Form</h2>
+      <p>Create a multi-step medication order form with the following steps:</p>
+      <ol>
+        <li>Patient information (name, ID, DOB)</li>
+        <li>Medication selection (medication name, form, strength)</li>
+        <li>Prescription details (dosage, frequency, duration)</li>
+        <li>Review and submit</li>
+      </ol>
+      <div class="exercise-instructions">
+        <p>Implementation requirements:</p>
+        <ul>
+          <li>Use either useState, useReducer, or a form library of your choice</li>
+          <li>Implement validation for each step</li>
+          <li>Show a progress indicator</li>
+          <li>Allow navigation between steps</li>
+          <li>Display a summary before final submission</li>
+          <li>Handle loading state during submission</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Form Management</h2>
+      <ul>
+        <li>Form state management is critical for complex mobile applications</li>
+        <li>Choose the appropriate state management approach based on form complexity</li>
+        <li>Use useState for simple forms, useReducer for complex state transitions</li>
+        <li>Consider form libraries for enterprise-level applications</li>
+        <li>Implement multi-step forms for complex data collection</li>
+        <li>Handle form submission with proper loading and error states</li>
+        <li>Apply consistent patterns across your application</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll learn about input validation techniques to ensure data quality.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-3-selection-components/index.html" class="button">← Back to Selection Components</a>
+        <a href="../index.html" class="button">Module 7 Overview</a>
+        <a href="../section-5-input-validation/index.html" class="button">Next: Input Validation →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

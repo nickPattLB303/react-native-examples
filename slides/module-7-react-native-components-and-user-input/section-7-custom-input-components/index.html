@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Native Training - Custom Input Components</title>
+    <link rel="stylesheet" href="../../shared/css/style.css">
+    <link rel="stylesheet" href="../../shared/css/prism.css">
+</head>
+<body class="slide-container">
+    <!-- Title Slide -->
+    <section class="slide visible" id="title-slide">
+        <div class="slide-header">
+            <div class="slide-meta">
+                <p>Module 7: React Native Components and User Input</p>
+                <p>Section 7: Custom Input Components</p>
+                <p>Duration: 45-60 minutes</p>
+            </div>
+        </div>
+        <div class="slide-content centered-content">
+            <h1>Custom Components</h1>
+            <h3>Creating Reusable UI Elements with TypeScript</h3>
+        </div>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide" id="learning-objectives">
+        <div class="slide-content">
+            <h2>Learning Objectives</h2>
+            <p>By the end of this section, you will be able to:</p>
+            <ul>
+                <li>Create reusable custom components in React Native using TypeScript</li>
+                <li>Apply best practices for component composition and props design with strong typing</li>
+                <li>Implement custom UI components specific to your application needs</li>
+                <li>Create components that handle both appearance and behavior</li>
+                <li>Properly document custom components for reuse</li>
+                <li>Test custom components to ensure they work as expected</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Custom Components Overview Slide -->
+    <section class="slide" id="custom-components-overview">
+        <div class="slide-content">
+            <h2>Custom Components Overview</h2>
+            <div class="two-column">
+                <div>
+                    <p>Custom components allow you to encapsulate and reuse UI elements and logic throughout your application, with added benefits from TypeScript:</p>
+                    <ul>
+                        <li>More consistent user experience</li>
+                        <li>Reduced code duplication</li>
+                        <li>Simplified maintenance</li>
+                        <li>Better organization and readability</li>
+                        <li>Easier testing</li>
+                        <li>Type safety and better developer experience</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="image-container">
+                        <img src="images/component-hierarchy.png" alt="Illustration of component hierarchy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basic Component Structure Slide -->
+    <section class="slide" id="component-structure">
+        <div class="slide-content">
+            <h2>Basic Custom Component Structure</h2>
+            <pre><code class="language-tsx">import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+// Define the component props interface
+interface CustomComponentProps {
+  title: string;
+  subtitle?: string;
+  backgroundColor?: string;
+  onPress?: () => void;
+  children?: React.ReactNode;
+}
+
+const CustomComponent: React.FC<CustomComponentProps> = ({
+  title,
+  subtitle,
+  backgroundColor = '#ffffff',
+  onPress,
+  children
+}) => {
+  return (
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={styles.title}>{title}</Text>
+      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      <View style={styles.content}>
+        {children}
+      </View>
+    </View>
+  );
+};</code></pre>
+        </div>
+    </section>
+
+    <!-- Custom Text Input Slide -->
+    <section class="slide" id="custom-text-input">
+        <div class="slide-content">
+            <h2>Custom Text Input Component</h2>
+            <pre><code class="language-tsx">interface CustomTextInputProps extends Omit<TextInputProps, 'style'> {
+  label: string;
+  error?: string;
+  required?: boolean;
+}
+
+const CustomTextInput: React.FC<CustomTextInputProps> = ({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  error,
+  keyboardType = 'default',
+  secureTextEntry = false,
+  maxLength,
+  required = false,
+  ...rest
+}) => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>
+        {label}
+        {required && <Text style={styles.required}> *</Text>}
+      </Text>
+      
+      <TextInput
+        style={[
+          styles.input,
+          isFocused && styles.focusedInput,
+          error && styles.errorInput
+        ]}
+        value={value}
+        onChangeText={onChangeText}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder={placeholder}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        maxLength={maxLength}
+        placeholderTextColor="#999"
+        {...rest}
+      />
+      
+      {error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
+  );
+};</code></pre>
+        </div>
+    </section>
+
+    <!-- Custom Quantity Selector Slide -->
+    <section class="slide" id="quantity-selector">
+        <div class="slide-content">
+            <h2>Custom Quantity Selector Component</h2>
+            <pre><code class="language-tsx">interface QuantitySelectorProps {
+  label?: string;
+  value: number;
+  onChange: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+}
+
+const QuantitySelector: React.FC<QuantitySelectorProps> = ({
+  label,
+  value,
+  onChange,
+  min = 1,
+  max = 100,
+  step = 1,
+  disabled = false,
+}) => {
+  const increment = () => {
+    if (value < max) {
+      onChange(value + step);
+    }
+  };
+  
+  const decrement = () => {
+    if (value > min) {
+      onChange(value - step);
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
+      
+      <View style={styles.controlsContainer}>
+        <TouchableOpacity 
+          style={[styles.button, value <= min && styles.disabledButton]}
+          onPress={decrement}
+          disabled={value <= min || disabled}
+        >
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+        
+        <View style={styles.valueContainer}>
+          <Text style={styles.value}>{value}</Text>
+        </View>
+        
+        <TouchableOpacity 
+          style={[styles.button, value >= max && styles.disabledButton]}
+          onPress={increment}
+          disabled={value >= max || disabled}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};</code></pre>
+        </div>
+    </section>
+
+    <!-- Custom UI Cards Slide -->
+    <section class="slide" id="custom-card">
+        <div class="slide-content">
+            <h2>Custom Card Component</h2>
+            <div class="two-column">
+                <div>
+                    <pre><code class="language-tsx">interface MedicationCardProps {
+  name: string;
+  dosage: string;
+  description: string;
+  onPress: () => void;
+  isActive?: boolean;
+}
+
+const MedicationCard: React.FC<MedicationCardProps> = ({
+  name,
+  dosage,
+  description,
+  onPress,
+  isActive = false,
+}) => {
+  return (
+    <TouchableOpacity
+      style={[styles.card, isActive && styles.activeCard]}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
+      <View style={styles.header}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.dosage}>{dosage}</Text>
+      </View>
+      
+      <Text style={styles.description} numberOfLines={2}>
+        {description}
+      </Text>
+      
+      <View style={styles.footer}>
+        <Text style={styles.actionText}>Tap for details</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};</code></pre>
+                </div>
+                <div>
+                    <div class="image-container">
+                        <img src="images/medication-card.png" alt="Example of a medication card component">
+                    </div>
+                    <p>Custom cards can display application-specific information in a consistent, reusable format</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Badge Component Slide -->
+    <section class="slide" id="status-badge">
+        <div class="slide-content">
+            <h2>Custom Status Badge Component</h2>
+            <div class="two-column">
+                <div>
+                    <pre><code class="language-tsx">type StatusType = 'active' | 'pending' | 
+  'completed' | 'expired' | string;
+
+interface StatusBadgeProps {
+  status: StatusType;
+  customStyle?: ViewStyle;
+  textStyle?: TextStyle;
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({ 
+  status, 
+  customStyle, 
+  textStyle 
+}) => {
+  const getStatusColor = (): { bg: string; text: string } => {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return { bg: '#DEFFEE', text: '#00A36A' };
+      case 'pending':
+        return { bg: '#FFF5DD', text: '#D9A000' };
+      case 'completed':
+        return { bg: '#E5F5FF', text: '#007AFF' };
+      case 'expired':
+        return { bg: '#FFEBEB', text: '#FF3B30' };
+      default:
+        return { bg: '#F0F0F0', text: '#777777' };
+    }
+  };
+  
+  const { bg, text } = getStatusColor();
+  
+  return (
+    <View style={[styles.badge, { backgroundColor: bg }]}>
+      <Text style={[styles.text, { color: text }]}>
+        {status}
+      </Text>
+    </View>
+  );
+};</code></pre>
+                </div>
+                <div>
+                    <div class="image-container">
+                        <img src="images/status-badges.png" alt="Examples of status badges">
+                    </div>
+                    <p>Small, focused components make your UI consistent and easy to maintain</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Functional Components Slide -->
+    <section class="slide" id="functional-components">
+        <div class="slide-content">
+            <h2>Custom Functional Components</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Loading Overlay</h3>
+                    <pre><code class="language-tsx">interface LoadingOverlayProps {
+  isLoading: boolean;
+  message?: string;
+  transparent?: boolean;
+  children?: React.ReactNode;
+}
+
+const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
+  isLoading,
+  message = 'Loading...',
+  transparent = true,
+  children,
+}) => {
+  if (!isLoading) return <>{children}</>;
+  
+  return (
+    <View style={styles.container}>
+      {children && <View style={transparent ? 
+        styles.contentBlurred : styles.content}>
+        {children}
+      </View>}
+      
+      <View style={[styles.overlay, 
+        transparent && styles.transparentOverlay]}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.message}>{message}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};</code></pre>
+                </div>
+                <div>
+                    <h3>Error Boundary</h3>
+                    <pre><code class="language-tsx">interface ErrorBoundaryProps {
+  children: ReactNode;
+  onReset?: () => void;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends 
+  Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  
+  static getDerivedStateFromError(error: Error): 
+    ErrorBoundaryState {
+    // Update state so the next render will show 
+    // the fallback UI
+    return { hasError: true, error };
+  }
+  
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): 
+    void {
+    // You can log the error to an error reporting service
+    console.log('Error caught by boundary:', 
+      error, errorInfo);
+  }
+  
+  render(): ReactNode {
+    if (this.state.hasError) {
+      // Render fallback UI
+      return (
+        <View style={styles.container}>
+          <Text style={styles.header}>Something went wrong</Text>
+          <Button title="Try Again" onPress={this.resetError} />
+        </View>
+      );
+    }
+    
+    return this.props.children;
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Component Design Principles Slide -->
+    <section class="slide" id="design-principles">
+        <div class="slide-content">
+            <h2>Component Design Principles</h2>
+            <div class="two-column">
+                <div>
+                    <h3>General Principles</h3>
+                    <ul>
+                        <li><strong>Single Responsibility:</strong> Each component should focus on doing one thing well</li>
+                        <li><strong>Composability:</strong> Components should be easily combined with other components</li>
+                        <li><strong>Reusability:</strong> Components should be designed to be reused across the application</li>
+                        <li><strong>Customizability:</strong> Components should accept props for customization</li>
+                        <li><strong>Self-Contained:</strong> Components should manage their own state when appropriate</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Props Design</h3>
+                    <ul>
+                        <li><strong>Provide Defaults:</strong> Set sensible default values for optional props</li>
+                        <li><strong>Use TypeScript Types:</strong> Define proper interfaces for component props</li>
+                        <li><strong>Consistent Naming:</strong> Use consistent naming conventions for props</li>
+                        <li><strong>Minimal Props Interface:</strong> Only expose what's necessary</li>
+                        <li><strong>Props Extension:</strong> Extend existing types when appropriate (e.g., extending TextInputProps)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Component Documentation Slide -->
+    <section class="slide" id="component-documentation">
+        <div class="slide-content">
+            <h2>Component Documentation</h2>
+            <pre><code class="language-tsx">/**
+ * MedicationCard - Displays medication information in a card format
+ * 
+ * @param props - Component props
+ * @param props.name - The name of the medication
+ * @param props.dosage - The dosage information
+ * @param props.description - Description or instructions
+ * @param props.onPress - Function to call when card is pressed
+ * @param props.isActive - Whether the card is in active state
+ * 
+ * @example
+ * <MedicationCard
+ *   name="Ibuprofen"
+ *   dosage="200mg"
+ *   description="Take with food, twice daily"
+ *   onPress={() => handlePress(medication.id)}
+ * />
+ */
+interface MedicationCardProps {
+  name: string;
+  dosage: string;
+  description: string;
+  onPress: () => void;
+  isActive?: boolean;
+}</code></pre>
+            <p class="centered">With TypeScript, your component props are self-documenting, but additional JSDoc comments provide context and usage examples.</p>
+        </div>
+    </section>
+
+    <!-- Component Library Structure Slide -->
+    <section class="slide" id="component-library">
+        <div class="slide-content">
+            <h2>Creating a Custom Component Library</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Folder Structure</h3>
+                    <pre><code class="language-text">/components
+  /inputs
+    CustomTextInput.tsx
+    QuantitySelector.tsx
+    ...
+  /ui
+    MedicationCard.tsx
+    StatusBadge.tsx
+    ...
+  /layout
+    Container.tsx
+    Row.tsx
+    Column.tsx
+    ...
+  /feedback
+    ErrorBoundary.tsx
+    LoadingOverlay.tsx
+    ...
+  index.ts  // Export all components</code></pre>
+                </div>
+                <div>
+                    <h3>Export All Components</h3>
+                    <pre><code class="language-tsx">// index.ts
+
+// Input components
+export { default as CustomTextInput } from 
+  './inputs/CustomTextInput';
+export { default as QuantitySelector } from 
+  './inputs/QuantitySelector';
+
+// UI components
+export { default as MedicationCard } from 
+  './ui/MedicationCard';
+export { default as StatusBadge } from 
+  './ui/StatusBadge';
+
+// Layout components
+export { default as Container } from 
+  './layout/Container';
+export { default as Row } from 
+  './layout/Row';
+
+// Feedback components
+export { default as ErrorBoundary } from 
+  './feedback/ErrorBoundary';
+export { default as LoadingOverlay } from 
+  './feedback/LoadingOverlay';</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exercise Slide -->
+    <section class="slide" id="exercise">
+        <div class="slide-content">
+            <h2>Exercise: Build a Pharmacy-Specific Component Library</h2>
+            <p>Create a small pharmacy-specific component library with the following components:</p>
+            <ol>
+                <li>
+                    <strong>Medication List Item component</strong> showing:
+                    <ul>
+                        <li>Medication name and strength</li>
+                        <li>Prescription status (active, expired, etc.)</li>
+                        <li>Days remaining</li>
+                        <li>Quick action buttons (refill, details)</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Dosage Scheduler component</strong> allowing:
+                    <ul>
+                        <li>Selecting time of day (morning, afternoon, evening, bedtime)</li>
+                        <li>Selecting frequency (daily, specific days, etc.)</li>
+                        <li>Displaying the next scheduled dose</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Prescription Summary component</strong> showing:
+                    <ul>
+                        <li>Patient name</li>
+                        <li>Medication details</li>
+                        <li>Prescribing doctor</li>
+                        <li>Pharmacy location</li>
+                        <li>Fill history</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide" id="summary">
+        <div class="slide-content">
+            <h2>Summary: Custom Components</h2>
+            <div class="summary-points">
+                <div class="summary-point">
+                    <h3>Component Structure</h3>
+                    <p>Props interface, component implementation, and styles</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Component Types</h3>
+                    <p>Input components, UI components, and functional components</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Design Principles</h3>
+                    <p>Single responsibility, composability, reusability, and customizability</p>
+                </div>
+                <div class="summary-point">
+                    <h3>Component Library</h3>
+                    <p>Organized structure and consistent exports</p>
+                </div>
+            </div>
+            <p class="centered">Custom components allow you to build consistent, reusable UI elements that are specific to your application's needs.</p>
+        </div>
+    </section>
+
+    <!-- Navigation Slide -->
+    <section class="slide" id="navigation">
+        <div class="slide-content centered-content">
+            <h2>Navigation</h2>
+            <div class="navigation-buttons">
+                <a href="../section-6-accessibility/index.html" class="button">Previous: Accessibility</a>
+                <a href="../../index.html" class="button">Module Overview</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="../../shared/js/prism.js"></script>
+    <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

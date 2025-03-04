@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 5: Input Validation Strategies | React Native Training Course</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 5</h1>
+      <h2>Input Validation Strategies</h2>
+      <p class="metadata">Module 7 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Implement client-side validation for React Native forms with TypeScript</li>
+        <li>Choose appropriate validation timing (real-time, on blur, on submit)</li>
+        <li>Provide meaningful error feedback to users</li>
+        <li>Implement different validation strategies for various data types</li>
+        <li>Use validation libraries effectively in React Native with TypeScript</li>
+        <li>Create reusable validation patterns for your application</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Text Input and Form Management (Sections 2 and 4)</p>
+      </div>
+    </section>
+    
+    <!-- Input Validation Overview Slide -->
+    <section class="slide content-slide">
+      <h2>Input Validation Overview</h2>
+      <p>Validation ensures that user inputs meet the expected format and requirements before processing.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Why Validation Matters</h3>
+          <ul>
+            <li>Prevents invalid data submission</li>
+            <li>Provides immediate feedback to users</li>
+            <li>Enhances the user experience</li>
+            <li>Reduces server-side processing</li>
+            <li>Maintains data integrity</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Validation Components</h3>
+          <ul>
+            <li>Input constraints (required, min/max)</li>
+            <li>Format validation (email, phone, etc.)</li>
+            <li>Error messaging</li>
+            <li>Visual feedback</li>
+            <li>Validation timing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Core Concept</div>
+        <p>Client-side validation improves UX but should always be accompanied by server-side validation for security.</p>
+      </div>
+    </section>
+    
+    <!-- Validation Timing Slide -->
+    <section class="slide content-slide">
+      <h2>Validation Timing Strategies</h2>
+      <p>When to validate is as important as how to validate.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Real-Time Validation</h3>
+          <ul>
+            <li>Validates as the user types</li>
+            <li>Immediate feedback for critical fields</li>
+            <li>Best for password strength, character limits</li>
+            <li>Can be distracting if overused</li>
+            <li>May cause performance issues</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Blur Validation</h3>
+          <ul>
+            <li>Validates when user leaves the field</li>
+            <li>Less intrusive than real-time</li>
+            <li>Good for email, required fields</li>
+            <li>Allows users to complete their input</li>
+            <li>Balanced approach for most fields</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Submit Validation</h3>
+          <ul>
+            <li>Validates when form is submitted</li>
+            <li>Least intrusive approach</li>
+            <li>Good for related field validation</li>
+            <li>Can be frustrating if errors are numerous</li>
+            <li>Should be combined with other strategies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Real-Time Validation Example Slide -->
+    <section class="slide code-slide">
+      <h2>Real-Time Validation Example</h2>
+      <pre><code class="language-tsx">
+import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+
+const PasswordInput: React.FC = () => {
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  
+  const validatePassword = (value: string): void => {
+    setPassword(value);
+    
+    if (value.length === 0) {
+      setError(null); // Don't show error for empty field
+    } else if (value.length < 8) {
+      setError('Password must be at least 8 characters');
+    } else if (!/[A-Z]/.test(value)) {
+      setError('Password must contain at least one uppercase letter');
+    } else if (!/[0-9]/.test(value)) {
+      setError('Password must contain at least one number');
+    } else {
+      setError(null);
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={[styles.input, error && styles.errorInput]}
+        value={password}
+        onChangeText={validatePassword}
+        placeholder="Password"
+        secureTextEntry
+      />
+      {error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
+  );
+};
+      </code></pre>
+      <div class="callout tip">
+        <div class="callout-title">Best Practice</div>
+        <p>For real-time validation, consider debouncing to avoid excessive validations during rapid typing.</p>
+      </div>
+    </section>
+    
+    <!-- Blur Validation Example Slide -->
+    <section class="slide code-slide">
+      <h2>Blur Validation Example</h2>
+      <pre><code class="language-tsx">
+import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+
+const EmailInput: React.FC = () => {
+  const [email, setEmail] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState<boolean>(false);
+  
+  const validateEmail = (value: string): string | null => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value) {
+      return 'Email is required';
+    } else if (!emailRegex.test(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  };
+  
+  const handleBlur = (): void => {
+    setTouched(true);
+    setError(validateEmail(email));
+  };
+  
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={[styles.input, touched && error && styles.errorInput]}
+        value={email}
+        onChangeText={setEmail}
+        onBlur={handleBlur}
+        placeholder="Email Address"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      {touched && error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
+  );
+};
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">UX Tip</div>
+        <p>Only show validation errors after the user has interacted with the field to avoid overwhelming them initially.</p>
+      </div>
+    </section>
+    
+    <!-- Submit Validation Example Slide -->
+    <section class="slide code-slide">
+      <h2>Submit Validation Example</h2>
+      <pre><code class="language-tsx">
+import React, { useState } from 'react';
+import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+
+interface PatientFormData {
+  name: string;
+  age: string;
+  weight: string;
+}
+
+interface Errors {
+  name?: string;
+  age?: string;
+  weight?: string;
+}
+
+const PatientForm: React.FC = () => {
+  const [formData, setFormData] = useState<PatientFormData>({
+    name: '',
+    age: '',
+    weight: '',
+  });
+  const [errors, setErrors] = useState<Errors>({});
+  
+  const handleChange = (field: keyof PatientFormData, value: string): void => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  
+  const validateForm = (): boolean => {
+    const newErrors: Errors = {};
+    
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    
+    // Age validation
+    if (!formData.age) {
+      newErrors.age = 'Age is required';
+    } else if (isNaN(Number(formData.age)) || parseInt(formData.age) <= 0) {
+      newErrors.age = 'Please enter a valid age';
+    }
+    
+    // Weight validation (optional field)
+    if (formData.weight && (isNaN(Number(formData.weight)) || parseFloat(formData.weight) <= 0)) {
+      newErrors.weight = 'Please enter a valid weight';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
+  const handleSubmit = (): void => {
+    if (validateForm()) {
+      console.log('Form is valid, submitting:', formData);
+      // Submit form data
+    }
+  };
+  
+  // Return form JSX (omitted for brevity)
+};
+      </code></pre>
+    </section>
+    
+    <!-- Common Validation Patterns Slide -->
+    <section class="slide content-slide">
+      <h2>Common Validation Patterns</h2>
+      <p>Standard validation functions for different data types.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Basic Validations</h3>
+          <ul>
+            <li>Required fields</li>
+            <li>Minimum/maximum length</li>
+            <li>Numeric values</li>
+            <li>Alphanumeric input</li>
+            <li>Case sensitivity</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Format Validations</h3>
+          <ul>
+            <li>Email addresses</li>
+            <li>Phone numbers</li>
+            <li>Dates and times</li>
+            <li>URLs</li>
+            <li>Postal codes</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Complex Validations</h3>
+          <ul>
+            <li>Password strength</li>
+            <li>Cross-field validation</li>
+            <li>Conditional validation</li>
+            <li>Async validation (API checks)</li>
+            <li>File type/size validation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Reusability</div>
+        <p>Create reusable validation functions to maintain consistency and reduce code duplication across your app.</p>
+      </div>
+    </section>
+    
+    <!-- Validation Examples: Required and Numeric Slide -->
+    <section class="slide code-slide">
+      <h2>Common Validation Functions</h2>
+      <pre><code class="language-tsx">
+// Required field validation
+const validateRequired = (value: string, fieldName: string): string | null => {
+  if (!value || value.trim() === '') {
+    return `${fieldName} is required`;
+  }
+  return null;
+};
+
+// Numeric value validation
+const validateNumeric = (value: string, fieldName: string): string | null => {
+  if (!value) return null; // Skip if empty and not required
+  
+  if (isNaN(Number(value)) || parseFloat(value) <= 0) {
+    return `${fieldName} must be a positive number`;
+  }
+  return null;
+};
+
+// Email validation
+const validateEmail = (value: string): string | null => {
+  if (!value) return null; // Skip if empty and not required
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(value)) {
+    return 'Please enter a valid email address';
+  }
+  return null;
+};
+
+// Phone number validation
+const validatePhone = (value: string): string | null => {
+  if (!value) return null; // Skip if empty and not required
+  
+  // Simple phone format: at least 10 digits
+  const phoneRegex = /^\d{10,}$/;
+  if (!phoneRegex.test(value.replace(/\D/g, ''))) {
+    return 'Please enter a valid phone number';
+  }
+  return null;
+};
+      </code></pre>
+    </section>
+    
+    <!-- Date Validation Example Slide -->
+    <section class="slide code-slide">
+      <h2>Date Validation Example</h2>
+      <pre><code class="language-tsx">
+// Date validation (MM/DD/YYYY format)
+const validateDate = (value: string, format: string = 'MM/DD/YYYY'): string | null => {
+  if (!value) return null; // Skip if empty and not required
+  
+  // Check if in MM/DD/YYYY format
+  const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+  if (!dateRegex.test(value)) {
+    return 'Please enter a valid date in MM/DD/YYYY format';
+  }
+  
+  // Check if the date is valid (handling edge cases like 02/31/2023)
+  const [month, day, year] = value.split('/').map(Number);
+  const date = new Date(year, month - 1, day);
+  
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return 'Please enter a valid date';
+  }
+  
+  return null;
+};
+
+// Usage example
+const validateBirthDate = (dob: string): string | null => {
+  const formatError = validateDate(dob);
+  if (formatError) return formatError;
+  
+  // Additional validation for birthdate (must be in the past)
+  const dobDate = new Date(dob);
+  const today = new Date();
+  
+  if (dobDate > today) {
+    return 'Birth date cannot be in the future';
+  }
+  
+  return null;
+};
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Date Complexity</div>
+        <p>Consider using a date library like date-fns or Moment.js for more complex date validation requirements.</p>
+      </div>
+    </section>
+    
+    <!-- Validation Libraries Slide -->
+    <section class="slide content-slide">
+      <h2>Validation Libraries</h2>
+      <p>Libraries provide robust solutions for complex validation needs.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Popular Libraries</h3>
+          <ul>
+            <li><strong>Yup</strong>: Schema-based validation</li>
+            <li><strong>Zod</strong>: TypeScript-first schema validation</li>
+            <li><strong>Joi</strong>: Powerful validation language</li>
+            <li><strong>validator.js</strong>: String validation utilities</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Key Benefits</h3>
+          <ul>
+            <li>Declarative validation schemas</li>
+            <li>Type safety with TypeScript</li>
+            <li>Reduced boilerplate code</li>
+            <li>Complex validation rules</li>
+            <li>Internationalization support</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Integration Options</h3>
+          <ul>
+            <li>Direct use with useState</li>
+            <li>Integration with Formik</li>
+            <li>Integration with React Hook Form</li>
+            <li>Custom validation hooks</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Library Selection</div>
+        <p>Choose a validation library based on your specific needs: Yup for easy integration with Formik, Zod for robust TypeScript integration, or Joi for complex validation rules.</p>
+      </div>
+    </section>
+    
+    <!-- Yup with Formik Slide -->
+    <section class="slide code-slide">
+      <h2>Yup with Formik Example</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { Formik, FormikProps } from 'formik';
+import * as Yup from 'yup';
+
+// Define form values interface
+interface MedicationFormValues {
+  name: string;
+  dosage: string;
+  frequency: string;
+  duration: string;
+}
+
+// Define validation schema
+const MedicationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Medication name is required'),
+  dosage: Yup.number()
+    .required('Dosage is required')
+    .positive('Dosage must be a positive number'),
+  frequency: Yup.string()
+    .required('Frequency is required'),
+  duration: Yup.number()
+    .integer('Duration must be a whole number')
+    .positive('Duration must be a positive number')
+    .required('Duration is required'),
+});
+
+const MedicationValidationForm: React.FC = () => {
+  return (
+    <Formik<MedicationFormValues>
+      initialValues={{
+        name: '',
+        dosage: '',
+        frequency: '',
+        duration: '',
+      }}
+      validationSchema={MedicationSchema}
+      onSubmit={(values) => {
+        console.log('Valid form submitted:', values);
+      }}
+    >
+      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        <View style={styles.container}>
+          <TextInput
+            style={[styles.input, touched.name && errors.name && styles.errorInput]}
+            value={values.name}
+            onChangeText={handleChange('name')}
+            onBlur={handleBlur('name')}
+            placeholder="Medication Name"
+          />
+          {touched.name && errors.name && (
+            <Text style={styles.errorText}>{errors.name}</Text>
+          )}
+          
+          {/* Other fields omitted for brevity */}
+          
+          <Button title="Submit" onPress={() => handleSubmit()} />
+        </View>
+      )}
+    </Formik>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Reusable Validation System Slide -->
+    <section class="slide content-slide">
+      <h2>Creating a Reusable Validation System</h2>
+      <p>For large applications, a centralized validation system improves maintainability.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>System Components</h3>
+          <ul>
+            <li>Modular validation functions</li>
+            <li>Type-safe interfaces</li>
+            <li>Consistent error messaging</li>
+            <li>Composition pattern for complex validations</li>
+            <li>Centralized validation rules</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Implementation Benefits</h3>
+          <ul>
+            <li>Reduced code duplication</li>
+            <li>Consistent UI feedback</li>
+            <li>Easier to maintain and update</li>
+            <li>Simplified testing of validation logic</li>
+            <li>Reusable across projects</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Organization Tip</div>
+        <p>Group validation functions by domain (user data, medical data, etc.) for better organization in larger applications.</p>
+      </div>
+    </section>
+    
+    <!-- Reusable Validation System Example Slide -->
+    <section class="slide code-slide">
+      <h2>Reusable Validation System Example</h2>
+      <pre><code class="language-tsx">
+// validation.ts - Utility file with validation functions
+type ValidationResult = string | null;
+
+export const validate = {
+  required: (value: string, fieldName: string): ValidationResult => 
+    !value || value.trim() === '' ? `${fieldName} is required` : null,
+    
+  minLength: (value: string, min: number, fieldName: string): ValidationResult => 
+    value && value.length < min ? `${fieldName} must be at least ${min} characters` : null,
+    
+  maxLength: (value: string, max: number, fieldName: string): ValidationResult => 
+    value && value.length > max ? `${fieldName} must be at most ${max} characters` : null,
+    
+  numeric: (value: string, fieldName: string): ValidationResult => 
+    value && (isNaN(Number(value)) || parseFloat(value) <= 0) ? 
+      `${fieldName} must be a positive number` : null,
+    
+  email: (value: string): ValidationResult => {
+    if (!value) return null;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(value) ? 'Please enter a valid email address' : null;
+  },
+  
+  // Additional validation functions omitted for brevity
+};
+
+// Using the validation system
+import { validate } from './validation';
+
+interface PatientFormValues {
+  name: string;
+  age: string;
+  email: string;
+}
+
+const validatePatientForm = (values: PatientFormValues) => {
+  const errors: Record<string, string> = {};
+  
+  // Validate name
+  const nameError = validate.required(values.name, 'Name');
+  if (nameError) errors.name = nameError;
+  
+  // Validate age and email
+  // ... additional validation code
+  
+  return errors;
+};
+      </code></pre>
+    </section>
+    
+    <!-- User Feedback Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>User Feedback Best Practices</h2>
+      <p>Effective error messaging improves form completion rates and user satisfaction.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Message Content</h3>
+          <ul>
+            <li>Be specific and clear</li>
+            <li>Explain what's wrong</li>
+            <li>Provide instructions to fix it</li>
+            <li>Use plain, non-technical language</li>
+            <li>Keep messages concise</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Visual Presentation</h3>
+          <ul>
+            <li>Use consistent error styling</li>
+            <li>Place messages near relevant fields</li>
+            <li>Use appropriate colors (red for errors)</li>
+            <li>Include error icons when appropriate</li>
+            <li>Consider positive validation indicators</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Accessibility</h3>
+          <ul>
+            <li>Ensure error states are screen reader accessible</li>
+            <li>Use appropriate ARIA attributes</li>
+            <li>Don't rely solely on color for error indication</li>
+            <li>Consider announcement of errors</li>
+            <li>Maintain sufficient color contrast</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Validated Input Component Slide -->
+    <section class="slide code-slide">
+      <h2>Validated Input Component Example</h2>
+      <pre><code class="language-tsx">
+import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; // If using Expo
+
+interface ValidatedInputProps extends Omit<TextInputProps, 'style'> {
+  label: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  validate: (value: string) => string | null;
+  placeholder?: string;
+}
+
+const ValidatedInput: React.FC<ValidatedInputProps> = ({ 
+  label, 
+  value, 
+  onChangeText, 
+  validate, 
+  placeholder, 
+  ...props 
+}) => {
+  const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState<boolean>(false);
+  const [valid, setValid] = useState<boolean>(false);
+  
+  const handleChangeText = (text: string): void => {
+    onChangeText(text);
+    
+    if (touched) {
+      const validationError = validate(text);
+      setError(validationError);
+      setValid(!validationError && text.length > 0);
+    }
+  };
+  
+  const handleBlur = (): void => {
+    setTouched(true);
+    const validationError = validate(value);
+    setError(validationError);
+    setValid(!validationError && value.length > 0);
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[
+            styles.input,
+            error && styles.errorInput,
+            valid && styles.validInput,
+          ]}
+          value={value}
+          onChangeText={handleChangeText}
+          onBlur={handleBlur}
+          placeholder={placeholder}
+          {...props}
+        />
+        
+        {valid && (
+          <MaterialIcons 
+            name="check-circle" 
+            size={24} 
+            color="#34C759" 
+            style={styles.icon} 
+          />
+        )}
+        
+        {error && touched && (
+          <MaterialIcons 
+            name="error" 
+            size={24} 
+            color="#FF3B30" 
+            style={styles.icon} 
+          />
+        )}
+      </View>
+      
+      {error && touched && (
+        <Text 
+          style={styles.errorText}
+          accessibilityLiveRegion="polite"
+        >
+          {error}
+        </Text>
+      )}
+    </View>
+  );
+};
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Accessibility Note</div>
+        <p>Using <code>accessibilityLiveRegion="polite"</code> ensures screen readers announce error messages when they appear.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Pharmacy Form Validation</h2>
+      <p>Create a prescription form with the following validated fields:</p>
+      <ol>
+        <li>Patient name (required)</li>
+        <li>Patient ID (required, alphanumeric, minimum 6 characters)</li>
+        <li>Medication (required)</li>
+        <li>Dosage (required, numeric, positive value)</li>
+        <li>Frequency (required)</li>
+        <li>Duration (required, numeric, whole number)</li>
+        <li>Special instructions (optional, maximum 200 characters)</li>
+      </ol>
+      <div class="exercise-instructions">
+        <p>Implementation requirements:</p>
+        <ul>
+          <li>Implement appropriate validation timing for each field</li>
+          <li>Provide clear error messages</li>
+          <li>Use visual indicators for valid/invalid state</li>
+          <li>Ensure validation occurs before form submission</li>
+          <li>Create reusable validation functions</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Input Validation Strategies</h2>
+      <ul>
+        <li>Choose appropriate validation timing based on field importance and complexity</li>
+        <li>Implement common validation patterns for different data types</li>
+        <li>Provide clear, helpful error messages at the right time</li>
+        <li>Consider using validation libraries for complex forms</li>
+        <li>Create reusable validation systems for consistency</li>
+        <li>Follow accessibility best practices in error presentation</li>
+        <li>Balance validation thoroughness with user experience</li>
+      </ul>
+      <div class="callout next-steps">
+        <div class="callout-title">Next Steps</div>
+        <p>In the next section, we'll explore accessibility considerations for forms and input components.</p>
+      </div>
+    </section>
+    
+    <!-- Navigation Slide -->
+    <section class="slide navigation-slide">
+      <h2>Section Navigation</h2>
+      <div class="navigation-buttons">
+        <a href="../section-4-form-management/index.html" class="button">← Back to Form Management</a>
+        <a href="../index.html" class="button">Module 7 Overview</a>
+        <a href="../section-6-accessibility/index.html" class="button">Next: Accessibility →</a>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>
