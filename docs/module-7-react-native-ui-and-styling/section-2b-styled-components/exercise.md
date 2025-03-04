@@ -12,9 +12,14 @@ By completing this exercise, you will be able to:
 - Build reusable, prop-based dynamic components
 - Apply styled-components best practices in a pharmaceutical application
 
+## Duration
+30 minutes for main challenge, additional time for bonus tasks
+
 ## Requirements
 
-### Part 1: Project Setup
+### MAIN CHALLENGE (30 minutes)
+
+#### Part 1: Project Setup
 
 1. Create a new React Native project using Expo or React Native CLI
 2. Install styled-components:
@@ -31,7 +36,7 @@ By completing this exercise, you will be able to:
      /screens
    ```
 
-### Part 2: Create a Theme
+#### Part 2: Create a Theme
 
 Create a theme file in `/src/styles/theme.js` with the following structure:
 
@@ -42,20 +47,11 @@ export const theme = {
     primary: '#3498db',
     secondary: '#2ecc71',
     danger: '#e74c3c',
-    warning: '#f39c12',
-    
-    // Medication categories
-    painkillers: '#e74c3c',
-    antibiotics: '#3498db',
-    vitamins: '#2ecc71',
-    heart: '#9b59b6',
-    allergy: '#f39c12',
     
     // Text
     text: {
       primary: '#333333',
       secondary: '#666666',
-      light: '#999999',
     },
     
     // Backgrounds
@@ -68,32 +64,22 @@ export const theme = {
     status: {
       active: '#4cd964',
       inactive: '#8e8e93',
-      warning: '#ffcc00',
-      error: '#ff3b30',
-      refill: '#5ac8fa',
     }
   },
   
   spacing: {
-    xs: 4,
     sm: 8,
     md: 16,
     lg: 24,
-    xl: 32,
-    xxl: 48,
   },
   
   typography: {
     fontSize: {
-      small: 12,
       body: 14,
-      subheading: 16,
       heading: 20,
-      title: 24,
     },
     fontWeight: {
       regular: 'normal',
-      medium: '500',
       bold: 'bold',
     }
   },
@@ -101,20 +87,16 @@ export const theme = {
   borderRadius: {
     small: 4,
     medium: 8,
-    large: 16,
-    pill: 999,
   },
-  
-  // Add any other theme properties you think would be useful
 };
 ```
 
-### Part 3: Create Base Components
+#### Part 3: Create Base Components
 
 1. Create a `/src/components/styled` directory for your styled components
 2. Implement the following base components:
 
-#### Text Components (`/src/components/styled/Typography.js`)
+##### Text Components (`/src/components/styled/Typography.js`)
 
 Create a set of text components with different styles:
 
@@ -122,21 +104,9 @@ Create a set of text components with different styles:
 import styled from 'styled-components/native';
 
 export const Typography = {
-  Title: styled.Text`
-    font-size: ${props => props.theme.typography.fontSize.title}px;
-    font-weight: ${props => props.theme.typography.fontWeight.bold};
-    color: ${props => props.theme.colors.text.primary};
-  `,
-  
   Heading: styled.Text`
     font-size: ${props => props.theme.typography.fontSize.heading}px;
     font-weight: ${props => props.theme.typography.fontWeight.bold};
-    color: ${props => props.theme.colors.text.primary};
-  `,
-  
-  Subheading: styled.Text`
-    font-size: ${props => props.theme.typography.fontSize.subheading}px;
-    font-weight: ${props => props.theme.typography.fontWeight.medium};
     color: ${props => props.theme.colors.text.primary};
   `,
   
@@ -144,17 +114,12 @@ export const Typography = {
     font-size: ${props => props.theme.typography.fontSize.body}px;
     color: ${props => props.theme.colors.text.primary};
   `,
-  
-  Caption: styled.Text`
-    font-size: ${props => props.theme.typography.fontSize.small}px;
-    color: ${props => props.theme.colors.text.secondary};
-  `,
 };
 ```
 
-#### Button Components (`/src/components/styled/Buttons.js`)
+##### Button Component (`/src/components/styled/Buttons.js`)
 
-Create different types of buttons:
+Create a basic button:
 
 ```jsx
 import styled from 'styled-components/native';
@@ -171,20 +136,244 @@ export const Button = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   color: white;
   font-size: ${props => props.theme.typography.fontSize.body}px;
-  font-weight: ${props => props.theme.typography.fontWeight.medium};
+  font-weight: ${props => props.theme.typography.fontWeight.bold};
 `;
-
-// Implement variations of Button (PrimaryButton, SecondaryButton, DangerButton)
-// and add any other button styles you think would be useful
 ```
 
-### Part 4: Build Medication Components
+#### Part 4: Create a Simple Medication Card
 
-Create the following medication-related components:
-
-#### Status Badge Component (`/src/components/StatusBadge.js`)
+Create a basic medication card component (`/src/components/MedicationCard.js`):
 
 ```jsx
+import React from 'react';
+import styled from 'styled-components/native';
+import { Typography } from './styled/Typography';
+import { Button, ButtonText } from './styled/Buttons';
+
+const Card = styled.View`
+  background-color: ${props => props.theme.colors.background.card};
+  border-radius: ${props => props.theme.borderRadius.medium}px;
+  padding: ${props => props.theme.spacing.md}px;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+`;
+
+const MedicationCard = ({ medication }) => {
+  return (
+    <Card>
+      <Typography.Heading>{medication.name}</Typography.Heading>
+      <Typography.Body>{medication.dosage}</Typography.Body>
+      <Typography.Body>{medication.schedule}</Typography.Body>
+      
+      <Button style={{ marginTop: 16 }}>
+        <ButtonText>Take Medication</ButtonText>
+      </Button>
+    </Card>
+  );
+};
+
+export default MedicationCard;
+```
+
+#### Part 5: Create a Simple Home Screen
+
+Create a home screen to display a list of medications (`/src/screens/HomeScreen.js`):
+
+```jsx
+import React from 'react';
+import { FlatList, SafeAreaView } from 'react-native';
+import styled from 'styled-components/native';
+import MedicationCard from '../components/MedicationCard';
+import { Typography } from '../components/styled/Typography';
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${props => props.theme.colors.background.main};
+  padding: ${props => props.theme.spacing.md}px;
+`;
+
+const Header = styled.View`
+  margin-bottom: ${props => props.theme.spacing.lg}px;
+`;
+
+const medications = [
+  {
+    id: '1',
+    name: 'Lisinopril',
+    dosage: '10mg',
+    schedule: 'Once daily',
+    status: 'active',
+  },
+  {
+    id: '2',
+    name: 'Metformin',
+    dosage: '500mg',
+    schedule: 'Twice daily',
+    status: 'active',
+  },
+];
+
+const HomeScreen = () => {
+  return (
+    <Container>
+      <Header>
+        <Typography.Heading>My Medications</Typography.Heading>
+      </Header>
+      <FlatList
+        data={medications}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => <MedicationCard medication={item} />}
+      />
+    </Container>
+  );
+};
+
+export default HomeScreen;
+```
+
+#### Part 6: Set Up ThemeProvider
+
+Finally, wrap your application with the ThemeProvider in your main App.js file:
+
+```jsx
+import React from 'react';
+import { ThemeProvider } from 'styled-components/native';
+import { theme } from './src/styles/theme';
+import HomeScreen from './src/screens/HomeScreen';
+
+const App = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <HomeScreen />
+    </ThemeProvider>
+  );
+};
+
+export default App;
+```
+
+### BONUS CHALLENGES (if you finish early)
+
+#### Part 1: Enhanced Theme
+
+Expand your theme with additional properties:
+
+```jsx
+export const theme = {
+  // ... existing theme properties
+  
+  // Add the following:
+  colors: {
+    // ... existing colors
+    
+    // Medication categories
+    painkillers: '#e74c3c',
+    antibiotics: '#3498db',
+    vitamins: '#2ecc71',
+    heart: '#9b59b6',
+    allergy: '#f39c12',
+    
+    // Additional status colors
+    status: {
+      // ... existing status colors
+      warning: '#ffcc00',
+      error: '#ff3b30',
+      refill: '#5ac8fa',
+    }
+  },
+  
+  spacing: {
+    // ... existing spacing
+    xs: 4,
+    xl: 32,
+    xxl: 48,
+  },
+  
+  typography: {
+    // ... existing typography
+    fontSize: {
+      // ... existing font sizes
+      small: 12,
+      subheading: 16,
+      title: 24,
+    },
+    fontWeight: {
+      // ... existing font weights
+      medium: '500',
+    }
+  },
+  
+  borderRadius: {
+    // ... existing border radius
+    large: 16,
+    pill: 999,
+  },
+};
+```
+
+#### Part 2: Enhanced Typography Components
+
+Add more text components:
+
+```jsx
+export const Typography = {
+  // ... existing components
+  
+  Title: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.title}px;
+    font-weight: ${props => props.theme.typography.fontWeight.bold};
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  
+  Subheading: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.subheading}px;
+    font-weight: ${props => props.theme.typography.fontWeight.medium};
+    color: ${props => props.theme.colors.text.primary};
+  `,
+  
+  Caption: styled.Text`
+    font-size: ${props => props.theme.typography.fontSize.small}px;
+    color: ${props => props.theme.colors.text.secondary};
+  `,
+};
+```
+
+#### Part 3: Button Variations
+
+Create different button variations:
+
+```jsx
+// Primary Button (already defined)
+export const PrimaryButton = styled(Button)`
+  background-color: ${props => props.theme.colors.primary};
+`;
+
+// Secondary Button
+export const SecondaryButton = styled(Button)`
+  background-color: ${props => props.theme.colors.secondary};
+`;
+
+// Danger Button
+export const DangerButton = styled(Button)`
+  background-color: ${props => props.theme.colors.danger};
+`;
+
+// Outline Button
+export const OutlineButton = styled(Button)`
+  background-color: transparent;
+  border: 1px solid ${props => props.theme.colors.primary};
+`;
+
+export const OutlineButtonText = styled(ButtonText)`
+  color: ${props => props.theme.colors.primary};
+`;
+```
+
+#### Part 4: Enhanced MedicationCard with StatusBadge
+
+Create a StatusBadge component:
+
+```jsx
+// StatusBadge.js
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -208,13 +397,19 @@ const BadgeText = styled.Text`
 `;
 
 const StatusBadge = ({ status }) => {
-  // Implement a component that displays different text based on status
-  // For example: "Active", "Inactive", "Refill Needed", etc.
+  const getStatusText = () => {
+    switch(status) {
+      case 'active': return 'Active';
+      case 'inactive': return 'Inactive';
+      case 'warning': return 'Warning';
+      case 'refill': return 'Refill Needed';
+      default: return 'Unknown';
+    }
+  };
+  
   return (
     <Badge status={status}>
-      <BadgeText>
-        {/* Add code to display appropriate text based on status */}
-      </BadgeText>
+      <BadgeText>{getStatusText()}</BadgeText>
     </Badge>
   );
 };
@@ -222,179 +417,95 @@ const StatusBadge = ({ status }) => {
 export default StatusBadge;
 ```
 
-#### Medication Card Component (`/src/components/MedicationCard.js`)
+Then enhance the MedicationCard to use it and add category styling:
 
 ```jsx
+// Enhanced MedicationCard.js
 import React from 'react';
 import styled from 'styled-components/native';
 import { Typography } from './styled/Typography';
+import { Button, ButtonText } from './styled/Buttons';
 import StatusBadge from './StatusBadge';
 
-// Implement a styled medication card component 
-// It should:
-// 1. Accept props for medication name, dosage, category, status, etc.
-// 2. Use conditional styling based on the medication category
-// 3. Include the StatusBadge component
-// 4. Have a take/skip medication button
-
-// Example styled components you might need:
 const Card = styled.View`
   background-color: ${props => props.theme.colors.background.card};
   border-radius: ${props => props.theme.borderRadius.medium}px;
   padding: ${props => props.theme.spacing.md}px;
   margin-bottom: ${props => props.theme.spacing.md}px;
   
-  /* Add conditional styling based on category, e.g., a colored left border */
+  /* Category styling */
   border-left-width: 4px;
   border-left-color: ${props => {
-    // Implement color selection based on the category prop
+    switch(props.category) {
+      case 'heart': return props.theme.colors.heart;
+      case 'painkillers': return props.theme.colors.painkillers;
+      case 'antibiotics': return props.theme.colors.antibiotics;
+      case 'vitamins': return props.theme.colors.vitamins;
+      case 'allergy': return props.theme.colors.allergy;
+      default: return props.theme.colors.primary;
+    }
   }};
-  
-  /* Add shadows for iOS and elevation for Android */
-  shadow-color: #000;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  shadow-offset: 0px 2px;
-  elevation: 2;
-`;
-
-// Implement the rest of the component with proper structure
-```
-
-### Part 5: Create a Medication List Screen
-
-Create a screen that displays a list of medications using your styled components:
-
-```jsx
-import React from 'react';
-import { FlatList } from 'react-native';
-import styled from 'styled-components/native';
-import { ThemeProvider } from 'styled-components/native';
-import { theme } from '../styles/theme';
-import MedicationCard from '../components/MedicationCard';
-import { Typography } from '../components/styled/Typography';
-
-// Create styled components for the screen
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${props => props.theme.colors.background.main};
 `;
 
 const Header = styled.View`
-  padding: ${props => props.theme.spacing.md}px;
-  border-bottom-width: 1px;
-  border-bottom-color: #eee;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: ${props => props.theme.spacing.sm}px;
 `;
 
-const Content = styled.View`
-  flex: 1;
-  padding: ${props => props.theme.spacing.md}px;
+const InfoContainer = styled.View`
+  margin-bottom: ${props => props.theme.spacing.md}px;
 `;
 
-// Sample medication data
-const medications = [
-  {
-    id: '1',
-    name: 'Lisinopril',
-    dosage: '10mg',
-    category: 'heart',
-    status: 'active',
-    schedule: 'Once daily',
-    timeOfDay: 'Morning',
-  },
-  {
-    id: '2',
-    name: 'Ibuprofen',
-    dosage: '400mg',
-    category: 'painkillers',
-    status: 'inactive',
-    schedule: 'As needed',
-    timeOfDay: 'Any',
-  },
-  {
-    id: '3',
-    name: 'Amoxicillin',
-    dosage: '500mg',
-    category: 'antibiotics',
-    status: 'active',
-    schedule: 'Three times daily',
-    timeOfDay: 'Morning, Afternoon, Evening',
-  },
-  {
-    id: '4',
-    name: 'Vitamin D',
-    dosage: '1000 IU',
-    category: 'vitamins',
-    status: 'refill',
-    schedule: 'Once daily',
-    timeOfDay: 'Morning',
-  },
-  // Add more medications if you wish
-];
+const ActionContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-const MedicationsScreen = () => {
+const MedicationCard = ({ medication }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <Header>
-          <Typography.Title>My Medications</Typography.Title>
-        </Header>
-        <Content>
-          <FlatList
-            data={medications}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <MedicationCard 
-                name={item.name}
-                dosage={item.dosage}
-                category={item.category}
-                status={item.status}
-                schedule={item.schedule}
-                timeOfDay={item.timeOfDay}
-                onPress={() => console.log(`Pressed ${item.name}`)}
-                onTakeMedication={() => console.log(`Take ${item.name}`)}
-              />
-            )}
-          />
-        </Content>
-      </Container>
-    </ThemeProvider>
+    <Card category={medication.category}>
+      <Header>
+        <Typography.Heading>{medication.name}</Typography.Heading>
+        <StatusBadge status={medication.status} />
+      </Header>
+      
+      <InfoContainer>
+        <Typography.Body>Dosage: {medication.dosage}</Typography.Body>
+        <Typography.Body>Schedule: {medication.schedule}</Typography.Body>
+      </InfoContainer>
+      
+      <ActionContainer>
+        <Button>
+          <ButtonText>Take Medication</ButtonText>
+        </Button>
+      </ActionContainer>
+    </Card>
   );
 };
 
-export default MedicationsScreen;
+export default MedicationCard;
 ```
 
-### Part 6: Bonus Challenges
+## Final Result
 
-If you complete the above requirements, try implementing some bonus features:
+When complete, you should have a styled medication tracker application that:
+1. Uses a consistent theme throughout
+2. Has reusable styled components
+3. Displays a list of medications with proper styling
+4. Demonstrates the power of styled-components for creating maintainable UI code
 
-1. **Theme Switching**: Add light and dark themes and a toggle to switch between them
-2. **Responsive Sizing**: Make your components adjust their size based on screen dimensions
-3. **Animation**: Add a simple animation (e.g., scale) to cards when pressed using the Animated API
-4. **Improved MedicationCard**: Add more functionality to the MedicationCard (e.g., expandable details, time indicators)
-5. **Filter Controls**: Create styled filter buttons to filter medications by category or status
+## Submission
 
-## Submission Guidelines
+Take screenshots of your application showing the styled components in action. Include:
+1. The home screen with the medication list
+2. (If completed) The different button variations
+3. (If completed) The enhanced medication card with status badge
 
-1. Make sure your code is well-organized and follows best practices
-2. Test your application on both iOS and Android simulators if possible
-3. Take screenshots of your completed UI
-4. Submit your code along with the screenshots
+## Helpful Resources
 
-## Evaluation Criteria
-
-Your solution will be evaluated based on:
-1. Correct implementation of styled-components
-2. Proper use of theming
-3. Implementation of dynamic styling based on props
-4. Code organization and best practices
-5. UI design and attention to detail
-
-## Resources
-
-- [Styled Components Documentation](https://styled-components.com/docs)
-- [React Native Style Guide](https://github.com/airbnb/javascript/tree/master/react)
-- [React Native Layout Props](https://reactnative.dev/docs/layout-props)
-
-Good luck with your styled-components implementation! 
+- [styled-components Documentation](https://styled-components.com/docs)
+- [styled-components for React Native](https://styled-components.com/docs/basics#react-native)
+- [ThemeProvider Documentation](https://styled-components.com/docs/api#themeprovider) 

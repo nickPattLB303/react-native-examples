@@ -4,7 +4,7 @@
 Practice using React Native core components by building a simple medication information card.
 
 ## Duration
-30-45 minutes
+30 minutes for main challenge, additional time for bonus tasks
 
 ## Exercise Description
 
@@ -12,12 +12,12 @@ In this exercise, you'll create a basic medication card component using React Na
 
 ### Requirements
 
+#### MAIN CHALLENGE (30 minutes)
 Create a `MedicationCard` component that displays:
 1. The medication name (Text)
 2. An image of the medication (Image)
 3. Dosage information (Text)
 4. A button to mark as "Taken" (Button)
-5. A toggle to set a reminder (using TouchableOpacity and state)
 
 ### Step 1: Set Up Your Environment
 
@@ -25,7 +25,7 @@ Create a new component file in your React Native project. If you don't have a pr
 
 ```jsx
 import React, { useState } from 'react';
-import { View, Text, Image, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, Button, StyleSheet } from 'react-native';
 
 const MedicationCard = () => {
   // Your code will go here
@@ -40,7 +40,7 @@ Build the basic structure of your component using View containers:
 
 ```jsx
 const MedicationCard = () => {
-  const [reminderSet, setReminderSet] = useState(false);
+  const [taken, setTaken] = useState(false);
   
   return (
     <View style={styles.card}>
@@ -58,7 +58,6 @@ const MedicationCard = () => {
       {/* Footer section */}
       <View style={styles.footer}>
         {/* Button will go here */}
-        {/* Toggle will go here */}
       </View>
     </View>
   );
@@ -71,7 +70,6 @@ Fill in the component with all required elements:
 
 ```jsx
 const MedicationCard = () => {
-  const [reminderSet, setReminderSet] = useState(false);
   const [taken, setTaken] = useState(false);
   
   return (
@@ -98,14 +96,6 @@ const MedicationCard = () => {
           onPress={() => setTaken(!taken)} 
           disabled={taken}
         />
-        <TouchableOpacity 
-          style={[styles.reminderToggle, reminderSet && styles.reminderActive]} 
-          onPress={() => setReminderSet(!reminderSet)}
-        >
-          <Text style={styles.reminderText}>
-            {reminderSet ? "Reminder Set" : "Set Reminder"}
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -157,20 +147,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  reminderToggle: {
-    padding: 8,
-    borderRadius: 4,
-    backgroundColor: '#e0e0e0',
-  },
-  reminderActive: {
-    backgroundColor: '#4CAF50',
-  },
-  reminderText: {
-    color: '#333',
-    fontWeight: '500',
   },
 });
 ```
@@ -208,21 +186,25 @@ const styles = StyleSheet.create({
 export default App;
 ```
 
-## Bonus Challenges
+## BONUS CHALLENGES (if you finish early)
 
 If you finish early or want to further enhance your component:
 
-1. **Add Platform-Specific Styling**:
+1. **Add a Reminder Toggle**:
+   - Add a toggle to set a reminder (using TouchableOpacity and state)
+   - Style it differently when active vs. inactive
+
+2. **Add Platform-Specific Styling**:
    - Use the Platform API to apply different styles or behavior based on iOS or Android
 
-2. **Implement a List of Medications**:
+3. **Implement a List of Medications**:
    - Create an array of medication data
    - Use the .map() function to render multiple MedicationCard components
 
-3. **Add Animation**:
+4. **Add Animation**:
    - Add a simple animation when marking a medication as taken
 
-4. **Implement Error Handling**:
+5. **Implement Error Handling**:
    - Add error handling for the image loading
    - Show a placeholder if the image fails to load
 

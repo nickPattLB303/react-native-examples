@@ -4,19 +4,17 @@
 Apply Flexbox concepts to create common UI layouts used in pharmacy applications.
 
 ## Duration
-45-60 minutes
+30 minutes for main challenge, additional time for bonus tasks
 
 ## Exercise Description
 
 In this exercise, you'll practice implementing various layouts using Flexbox in React Native. You'll create several common UI patterns found in pharmacy applications, focusing on proper component arrangement and spacing.
 
-### Requirements
+### MAIN CHALLENGE (30 minutes)
 
-You will implement four different layout patterns:
+Implement two essential layouts:
 1. A medication list item with multiple sections
-2. A dashboard grid of medication categories
-3. A split-screen medication details view
-4. A prescription form with proper label and input alignment
+2. A medication categories grid
 
 ### Setup
 
@@ -24,7 +22,7 @@ Create a new React Native project or use a sandbox environment like Expo Snack (
 
 ```jsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 
 const FlexboxExercise = () => {
   return (
@@ -67,26 +65,78 @@ Create a list item component that displays medication information with the follo
 const MedicationListItem = () => {
   return (
     <View style={listItemStyles.container}>
-      {/* Implement the list item layout here */}
-      {/* Use proper flexbox properties to align items */}
+      {/* Left: Image */}
+      <Image 
+        source={{ uri: 'https://via.placeholder.com/50' }} 
+        style={listItemStyles.image} 
+      />
+      
+      {/* Middle: Text content */}
+      <View style={listItemStyles.textContainer}>
+        <Text style={listItemStyles.title}>Lisinopril 10mg</Text>
+        <Text style={listItemStyles.description}>Take once daily with water</Text>
+      </View>
+      
+      {/* Right: Status and button */}
+      <View style={listItemStyles.rightContainer}>
+        <Text style={listItemStyles.status}>ACTIVE</Text>
+        <TouchableOpacity style={listItemStyles.button}>
+          <Text style={listItemStyles.buttonText}>Refill</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const listItemStyles = StyleSheet.create({
   container: {
-    // Add your styles here
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    alignItems: 'center',
   },
-  // Add more styles as needed
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 16,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
+  },
+  rightContainer: {
+    alignItems: 'flex-end',
+  },
+  status: {
+    color: '#28a745',
+    fontWeight: 'bold',
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  button: {
+    backgroundColor: '#007bff',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
 });
-```
-
-Expected result:
-```
-+------------------------------------------------+
-| [Image]  Lisinopril 10mg              [ACTIVE] |
-|          Take once daily with water    [Refill]|
-+------------------------------------------------+
 ```
 
 #### Task 2: Medication Categories Grid
@@ -107,32 +157,81 @@ const MedicationCategoriesGrid = () => {
 
   return (
     <View style={gridStyles.container}>
-      {/* Implement the grid layout here */}
-      {/* Use flexDirection and flexWrap appropriately */}
+      {categories.map(category => (
+        <View key={category.id} style={gridStyles.item}>
+          <Text style={gridStyles.icon}>{category.icon}</Text>
+          <Text style={gridStyles.name}>{category.name}</Text>
+        </View>
+      ))}
     </View>
   );
 };
 
 const gridStyles = StyleSheet.create({
   container: {
-    // Add your styles here
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -8, // To offset the padding of items
   },
-  // Add more styles as needed
+  item: {
+    width: '50%',
+    padding: 8,
+  },
+  itemContent: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    aspectRatio: 1, // Create a square
+  },
+  icon: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  name: {
+    textAlign: 'center',
+    fontWeight: '500',
+  },
 });
 ```
 
-Expected result:
-```
-+----------------+----------------+
-|      ❤️        |       💊       |
-| Heart Medicines|   Pain Relief  |
-+----------------+----------------+
-|      🦠        |       🤧       |
-|   Antibiotics  | Allergy Relief |
-+----------------+----------------+
+### Completion of Main Challenge
+
+After implementing both layouts, integrate them into the main component:
+
+```jsx
+const FlexboxExercise = () => {
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Flexbox Exercise</Text>
+      
+      <Text style={styles.sectionTitle}>1. Medication List Item</Text>
+      <MedicationListItem />
+      
+      <Text style={styles.sectionTitle}>2. Medication Categories Grid</Text>
+      <MedicationCategoriesGrid />
+    </ScrollView>
+  );
+};
+
+// Add this to your styles
+const styles = StyleSheet.create({
+  // ... existing styles
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 24,
+    marginBottom: 16,
+  },
+});
 ```
 
-#### Task 3: Split Screen Medication Details
+## BONUS CHALLENGES (if you finish early)
+
+If you complete the main tasks and have time, implement these additional layouts:
+
+### Bonus Task 1: Split Screen Medication Details
 
 Create a split-screen layout that:
 - Divides the screen into top and bottom sections
@@ -143,42 +242,92 @@ Create a split-screen layout that:
 const MedicationDetailsSplit = () => {
   return (
     <View style={splitStyles.container}>
-      {/* Implement the split screen layout here */}
-      {/* Use flex proportions to divide the screen */}
+      {/* Top section */}
+      <View style={splitStyles.topSection}>
+        <Image 
+          source={{ uri: 'https://via.placeholder.com/100' }} 
+          style={splitStyles.image} 
+        />
+        <Text style={splitStyles.title}>Lisinopril</Text>
+      </View>
+      
+      {/* Bottom section */}
+      <View style={splitStyles.bottomSection}>
+        <ScrollView style={splitStyles.scrollView}>
+          <View style={splitStyles.detailItem}>
+            <Text style={splitStyles.detailLabel}>Description:</Text>
+            <Text style={splitStyles.detailText}>
+              Used to treat high blood pressure and heart failure. It belongs to a class of drugs known as ACE inhibitors.
+            </Text>
+          </View>
+          
+          <View style={splitStyles.detailItem}>
+            <Text style={splitStyles.detailLabel}>Dosage:</Text>
+            <Text style={splitStyles.detailText}>
+              Take 1 tablet once daily.
+            </Text>
+          </View>
+          
+          <View style={splitStyles.detailItem}>
+            <Text style={splitStyles.detailLabel}>Side Effects:</Text>
+            <Text style={splitStyles.detailText}>
+              May cause dizziness, headache, or cough. Contact your doctor if you experience swelling of face/lips/tongue.
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 const splitStyles = StyleSheet.create({
   container: {
-    // Add your styles here
+    height: 500, // Fixed height for demonstration
+    backgroundColor: 'white',
+    borderRadius: 8,
+    overflow: 'hidden',
   },
-  // Add more styles as needed
+  topSection: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  bottomSection: {
+    flex: 2,
+    padding: 16,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  detailItem: {
+    marginBottom: 16,
+  },
+  detailLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  detailText: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#333',
+  },
 });
 ```
 
-Expected result:
-```
-+------------------------------------------------+
-|                                                |
-|               [Medication Image]               |
-|                  Lisinopril                    |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|  Description:                                  |
-|  Used to treat high blood pressure and...      |
-|                                                |
-|  Dosage:                                       |
-|  Take 1 tablet once daily.                     |
-|                                                |
-|  Side Effects:                                 |
-|  May cause dizziness, headache, or...          |
-|                                                |
-+------------------------------------------------+
-```
-
-#### Task 4: Prescription Form
+### Bonus Task 2: Prescription Form with Flexbox
 
 Create a form layout with:
 - Labels aligned on the left
@@ -189,38 +338,87 @@ Create a form layout with:
 const PrescriptionForm = () => {
   return (
     <View style={formStyles.container}>
-      {/* Implement the form layout here */}
-      {/* Align labels and inputs properly */}
+      <View style={formStyles.formRow}>
+        <Text style={formStyles.label}>Medication:</Text>
+        <View style={formStyles.inputContainer}>
+          <Text style={formStyles.input}>Lisinopril</Text>
+        </View>
+      </View>
+      
+      <View style={formStyles.formRow}>
+        <Text style={formStyles.label}>Dosage:</Text>
+        <View style={formStyles.inputContainer}>
+          <Text style={formStyles.input}>10mg</Text>
+        </View>
+      </View>
+      
+      <View style={formStyles.formRow}>
+        <Text style={formStyles.label}>Frequency:</Text>
+        <View style={formStyles.inputContainer}>
+          <Text style={formStyles.input}>Once daily</Text>
+        </View>
+      </View>
+      
+      <View style={formStyles.formRow}>
+        <Text style={formStyles.label}>Duration:</Text>
+        <View style={formStyles.inputContainer}>
+          <Text style={formStyles.input}>30 days</Text>
+        </View>
+      </View>
+      
+      <TouchableOpacity style={formStyles.submitButton}>
+        <Text style={formStyles.submitButtonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const formStyles = StyleSheet.create({
   container: {
-    // Add your styles here
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
   },
-  // Add more styles as needed
+  formRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  label: {
+    width: 100,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  inputContainer: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  input: {
+    fontSize: 16,
+  },
+  submitButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 12,
+    borderRadius: 4,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 ```
 
-Expected result:
-```
-+------------------------------------------------+
-| Medication:  [                            ]    |
-|                                                |
-| Dosage:      [                            ]    |
-|                                                |
-| Frequency:   [                            ]    |
-|                                                |
-| Duration:    [                            ]    |
-|                                                |
-|                    [Submit]                    |
-+------------------------------------------------+
-```
+### Bonus Task 3: Complete the Application
 
-### Completion
-
-After implementing all four layouts, integrate them into the main component:
+If you've implemented all the layouts, add them to the main component:
 
 ```jsx
 const FlexboxExercise = () => {
@@ -242,351 +440,15 @@ const FlexboxExercise = () => {
     </ScrollView>
   );
 };
-
-// Add this to your styles
-const styles = StyleSheet.create({
-  // ... existing styles
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 24,
-    marginBottom: 12,
-  },
-});
 ```
 
-## Sample Solutions
+## Submission Guidelines
 
-Here are sample solutions for each task:
-
-### Task 1: Medication List Item Solution
-
-```jsx
-const MedicationListItem = () => {
-  return (
-    <View style={listItemStyles.container}>
-      <Image 
-        source={{ uri: 'https://via.placeholder.com/50' }} 
-        style={listItemStyles.image} 
-      />
-      <View style={listItemStyles.infoContainer}>
-        <Text style={listItemStyles.title}>Lisinopril 10mg</Text>
-        <Text style={listItemStyles.description}>Take once daily with water</Text>
-      </View>
-      <View style={listItemStyles.actionContainer}>
-        <View style={listItemStyles.statusBadge}>
-          <Text style={listItemStyles.statusText}>ACTIVE</Text>
-        </View>
-        <TouchableOpacity style={listItemStyles.button}>
-          <Text style={listItemStyles.buttonText}>Refill</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
-const listItemStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 8,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.5,
-    elevation: 2,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 12,
-  },
-  infoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-  },
-  actionContainer: {
-    alignItems: 'flex-end',
-  },
-  statusBadge: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 4,
-    marginBottom: 6,
-  },
-  statusText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  button: {
-    backgroundColor: '#2196F3',
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 12,
-  },
-});
-```
-
-### Task 2: Medication Categories Grid Solution
-
-```jsx
-const MedicationCategoriesGrid = () => {
-  const categories = [
-    { id: '1', name: 'Heart Medications', icon: '❤️' },
-    { id: '2', name: 'Pain Relief', icon: '💊' },
-    { id: '3', name: 'Antibiotics', icon: '🦠' },
-    { id: '4', name: 'Allergy Relief', icon: '🤧' },
-  ];
-
-  return (
-    <View style={gridStyles.container}>
-      {categories.map(category => (
-        <View key={category.id} style={gridStyles.gridItem}>
-          <Text style={gridStyles.icon}>{category.icon}</Text>
-          <Text style={gridStyles.name}>{category.name}</Text>
-        </View>
-      ))}
-    </View>
-  );
-};
-
-const gridStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -8, // Compensate for gridItem margin
-  },
-  gridItem: {
-    width: '50%', // Two columns
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxSizing: 'border-box',
-  },
-  icon: {
-    fontSize: 32,
-    marginBottom: 8,
-  },
-  name: {
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-});
-```
-
-### Task 3: Split Screen Medication Details Solution
-
-```jsx
-const MedicationDetailsSplit = () => {
-  return (
-    <View style={splitStyles.container}>
-      <View style={splitStyles.topSection}>
-        <Image 
-          source={{ uri: 'https://via.placeholder.com/120' }} 
-          style={splitStyles.image} 
-        />
-        <Text style={splitStyles.title}>Lisinopril</Text>
-      </View>
-      
-      <View style={splitStyles.bottomSection}>
-        <ScrollView>
-          <Text style={splitStyles.sectionTitle}>Description:</Text>
-          <Text style={splitStyles.sectionContent}>
-            Used to treat high blood pressure and heart failure. It helps to prevent future heart attacks and strokes.
-          </Text>
-          
-          <Text style={splitStyles.sectionTitle}>Dosage:</Text>
-          <Text style={splitStyles.sectionContent}>
-            Take 1 tablet once daily.
-          </Text>
-          
-          <Text style={splitStyles.sectionTitle}>Side Effects:</Text>
-          <Text style={splitStyles.sectionContent}>
-            May cause dizziness, headache, or dry cough. Contact your doctor if you experience swelling of the face, lips, or throat.
-          </Text>
-        </ScrollView>
-      </View>
-    </View>
-  );
-};
-
-const splitStyles = StyleSheet.create({
-  container: {
-    height: 500, // Fixed height for demo purposes
-    backgroundColor: 'white',
-    borderRadius: 8,
-    overflow: 'hidden',
-    marginVertical: 16,
-  },
-  topSection: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  image: {
-    width: 120,
-    height: 120,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  bottomSection: {
-    flex: 2,
-    padding: 16,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  sectionContent: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#333',
-  },
-});
-```
-
-### Task 4: Prescription Form Solution
-
-```jsx
-const PrescriptionForm = () => {
-  return (
-    <View style={formStyles.container}>
-      <View style={formStyles.formRow}>
-        <Text style={formStyles.label}>Medication:</Text>
-        <TextInput 
-          style={formStyles.input} 
-          placeholder="Enter medication name"
-        />
-      </View>
-      
-      <View style={formStyles.formRow}>
-        <Text style={formStyles.label}>Dosage:</Text>
-        <TextInput 
-          style={formStyles.input} 
-          placeholder="Enter dosage"
-        />
-      </View>
-      
-      <View style={formStyles.formRow}>
-        <Text style={formStyles.label}>Frequency:</Text>
-        <TextInput 
-          style={formStyles.input} 
-          placeholder="How often to take"
-        />
-      </View>
-      
-      <View style={formStyles.formRow}>
-        <Text style={formStyles.label}>Duration:</Text>
-        <TextInput 
-          style={formStyles.input} 
-          placeholder="How long to take"
-        />
-      </View>
-      
-      <TouchableOpacity style={formStyles.submitButton}>
-        <Text style={formStyles.submitButtonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const formStyles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 16,
-    marginVertical: 8,
-  },
-  formRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  label: {
-    width: 100,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
-    paddingHorizontal: 8,
-  },
-  submitButton: {
-    backgroundColor: '#4CAF50',
-    borderRadius: 4,
-    padding: 12,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  submitButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-});
-```
-
-## Bonus Challenges
-
-1. **Responsive Layout**: Modify your layouts to respond to different screen sizes using the Dimensions API
-   ```jsx
-   import { Dimensions } from 'react-native';
-   const windowWidth = Dimensions.get('window').width;
-   ```
-
-2. **Platform-Specific Styling**: Add platform-specific styles for iOS and Android
-   ```jsx
-   import { Platform } from 'react-native';
-   const platformStyles = {
-     shadow: Platform.OS === 'ios' 
-       ? { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2 }
-       : { elevation: 2 }
-   }
-   ```
-
-3. **Dynamic Grid Columns**: Make the grid show more columns on larger screens
-   ```jsx
-   const numColumns = windowWidth > 600 ? 3 : 2; // Tablet vs phone
-   ```
-
-4. **Animated Expandable Section**: Add an expandable section to one of your layouts using animation and flexbox
-
-## Submission
-
-Take screenshots of each completed layout on both iOS and Android simulators if possible. Submit these along with your code.
+Take a screenshot of your completed layouts running in a simulator or device. If you completed any bonus challenges, include those as well.
 
 ## Helpful Resources
 
-- [Flexbox Cheatsheet for React Native](https://reactnative.dev/docs/flexbox)
-- [Layout Props Documentation](https://reactnative.dev/docs/layout-props)
-- [React Native Dimensions API](https://reactnative.dev/docs/dimensions) 
+- [React Native Flexbox Layout Guide](https://reactnative.dev/docs/flexbox)
+- [Yoga Layout Engine Documentation](https://yogalayout.com/docs/)
+- [React Native Layout Props](https://reactnative.dev/docs/layout-props)
+- [Visual Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 
