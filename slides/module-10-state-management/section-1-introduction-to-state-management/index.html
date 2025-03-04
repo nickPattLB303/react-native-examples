@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to State Management | Module 10, Section 1</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Introduction to State Management</h1>
+      <h2>Fundamentals and Approaches</h2>
+      <p class="metadata">Module 10, Section 1 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the concept of state in React Native applications</li>
+        <li>Identify different types of state and their management strategies</li>
+        <li>Compare various state management solutions</li>
+        <li>Choose the right state management approach for different scenarios</li>
+        <li>Implement basic state management using React's built-in features</li>
+      </ul>
+    </section>
+    
+    <!-- What is State Slide -->
+    <section class="slide content-slide">
+      <h2>What is State?</h2>
+      <p>State in React Native applications refers to any data that can change over time and affects the rendering of components.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Characteristics of State</h3>
+          <ul>
+            <li><strong>Mutable</strong>: Can change over time</li>
+            <li><strong>Persistent</strong>: Persists across renders</li>
+            <li><strong>Influential</strong>: Affects component rendering</li>
+            <li><strong>Hierarchical</strong>: Can be passed down to children</li>
+            <li><strong>Distributed</strong>: Can exist at different levels</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="image-placeholder">
+            [State Flow Diagram]
+          </div>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Emphasize that understanding state is fundamental to building reactive applications. The diagram illustrates how state flows through a React Native application.
+      </div>
+    </section>
+    
+    <!-- Types of State by Scope Slide -->
+    <section class="slide content-slide">
+      <h2>Types of State by Scope</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Local Component State</h3>
+          <ul>
+            <li>Specific to a single component</li>
+            <li>Not shared with other components</li>
+            <li>Examples: form inputs, toggle states</li>
+            <li>Managed with useState or class state</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Shared State</h3>
+          <ul>
+            <li>Accessed by multiple components</li>
+            <li>Examples: auth status, theme settings</li>
+            <li>Management approaches:</li>
+            <li>- Context API</li>
+            <li>- Zustand</li>
+            <li>- Redux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Local State Example Slide -->
+    <section class="slide code-slide">
+      <h2>Local Component State Example</h2>
+      <pre><code class="language-tsx">
+import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+
+function MedicationForm() {
+  const [name, setName] = useState('');
+  const [dosage, setDosage] = useState('');
+  const [isValid, setIsValid] = useState(true);
+  
+  const validateForm = () => {
+    const valid = name.length > 0 && dosage.length > 0;
+    setIsValid(valid);
+    return valid;
+  };
+  
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+        placeholder="Medication Name"
+      />
+      <TextInput
+        style={styles.input}
+        value={dosage}
+        onChangeText={setDosage}
+        placeholder="Dosage"
+        keyboardType="numeric"
+      />
+      {!isValid && (
+        <Text style={styles.error}>Please fill in all fields</Text>
+      )}
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Types of State by Origin Slide -->
+    <section class="slide content-slide">
+      <h2>Types of State by Origin</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Client State</h3>
+          <ul>
+            <li>Originates on the client side</li>
+            <li>Examples: UI state, form state</li>
+            <li>Management approaches:</li>
+            <li>- React's built-in state</li>
+            <li>- Zustand</li>
+            <li>- Context API</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Server State</h3>
+          <ul>
+            <li>Originates from a server</li>
+            <li>Needs synchronization with client</li>
+            <li>Examples: API data, user profiles</li>
+            <li>Management approaches:</li>
+            <li>- React Query</li>
+            <li>- SWR</li>
+            <li>- Apollo Client (GraphQL)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Server State Example Slide -->
+    <section class="slide code-slide">
+      <h2>Server State Example (React Query)</h2>
+      <pre><code class="language-tsx">
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchMedications, addMedication } from '../api/medications';
+
+function useMedications() {
+  // Query for fetching medications
+  const medicationsQuery = useQuery({
+    queryKey: ['medications'],
+    queryFn: fetchMedications,
+  });
+  
+  // Query client for invalidation
+  const queryClient = useQueryClient();
+  
+  // Mutation for adding a medication
+  const addMedicationMutation = useMutation({
+    mutationFn: addMedication,
+    onSuccess: () => {
+      // Invalidate and refetch medications query
+      queryClient.invalidateQueries({ queryKey: ['medications'] });
+    },
+  });
+  
+  return {
+    medications: medicationsQuery.data || [],
+    isLoading: medicationsQuery.isLoading,
+    isError: medicationsQuery.isError,
+    error: medicationsQuery.error,
+    addMedication: addMedicationMutation.mutate,
+    isAdding: addMedicationMutation.isPending,
+  };
+}</code></pre>
+    </section>
+    
+    <!-- Types of State by Persistence Slide -->
+    <section class="slide content-slide">
+      <h2>Types of State by Persistence</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Ephemeral State</h3>
+          <ul>
+            <li>Exists only during current session</li>
+            <li>Examples: form values, UI state</li>
+            <li>Management approaches:</li>
+            <li>- React's built-in state</li>
+            <li>- Context API</li>
+            <li>- Zustand</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Persistent State</h3>
+          <ul>
+            <li>Persists across app restarts</li>
+            <li>Examples: user preferences, auth tokens</li>
+            <li>Management approaches:</li>
+            <li>- AsyncStorage</li>
+            <li>- SecureStore</li>
+            <li>- SQLite</li>
+            <li>- FileSystem</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- State Management Solutions Slide -->
+    <section class="slide content-slide">
+      <h2>State Management Solutions</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Built-in Solutions</h3>
+          <ul>
+            <li>useState / useReducer</li>
+            <li>Context API</li>
+            <li>Pros: No additional dependencies</li>
+            <li>Cons: Limited features for complex state</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>External Libraries</h3>
+          <ul>
+            <li>React Query: Server state</li>
+            <li>Zustand: Client state (lightweight)</li>
+            <li>Redux: Complex app state</li>
+            <li>MobX: Observable patterns</li>
+            <li>Jotai/Recoil: Atomic state</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Mention that we'll be covering React Query, Zustand, and Context API in detail in the upcoming sections. Emphasize that there's no "one size fits all" solution.
+      </div>
+    </section>
+    
+    <!-- Choosing the Right Approach Slide -->
+    <section class="slide content-slide">
+      <h2>Choosing the Right Approach</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Recommended Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Simple component state</td>
+            <td>useState / useReducer</td>
+          </tr>
+          <tr>
+            <td>Shared state between components</td>
+            <td>Context API, Zustand</td>
+          </tr>
+          <tr>
+            <td>Server data management</td>
+            <td>React Query, SWR</td>
+          </tr>
+          <tr>
+            <td>Complex state with many actions</td>
+            <td>Zustand, Redux</td>
+          </tr>
+          <tr>
+            <td>Persistent state</td>
+            <td>AsyncStorage + state solution</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: React State</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>State Updates in React Native</h3>
+          <ol>
+            <li>State update is scheduled</li>
+            <li>React reconciles virtual DOM</li>
+            <li>Changes cross the JS-Native bridge</li>
+            <li>Native UI components update</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Performance Considerations</h3>
+          <ul>
+            <li>Minimize bridge traffic</li>
+            <li>Batch state updates</li>
+            <li>Use memo and callbacks for optimization</li>
+            <li>Consider component re-renders</li>
+            <li>State structure affects performance</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Explain that the JS bridge is a potential bottleneck in React Native, so state management strategies should consider minimizing bridge traffic.
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>State Management Best Practices</h2>
+      <ul>
+        <li><strong>Keep state as local as possible</strong> - Only elevate when needed</li>
+        <li><strong>Separate UI state from business logic</strong> - Different concerns</li>
+        <li><strong>Categorize your state</strong> - Server state vs. client state</li>
+        <li><strong>Use the right tool for the job</strong> - Match solution to needs</li>
+        <li><strong>Normalize complex data</strong> - Avoid nested structures</li>
+        <li><strong>Write testable state logic</strong> - Separate from UI</li>
+        <li><strong>Consider persistence needs early</strong> - Plan for offline use</li>
+      </ul>
+    </section>
+    
+    <!-- Common Pitfalls Slide -->
+    <section class="slide content-slide">
+      <h2>Common State Management Pitfalls</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Architectural Issues</h3>
+          <ul>
+            <li>Over-centralizing state</li>
+            <li>Prop drilling instead of context</li>
+            <li>Mixing server and client state</li>
+            <li>Deeply nested state objects</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Performance Issues</h3>
+          <ul>
+            <li>Unnecessary re-renders</li>
+            <li>Too much data over the bridge</li>
+            <li>Incorrect dependency arrays</li>
+            <li>Not memoizing selectors</li>
+            <li>Poor state structure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Introduction to State Management</h2>
+      <ul>
+        <li>State is any data that changes over time and affects rendering</li>
+        <li>Different types of state: local vs. shared, client vs. server, ephemeral vs. persistent</li>
+        <li>Various state management solutions for different needs</li>
+        <li>Choose the right approach based on your specific requirements</li>
+        <li>Follow best practices to avoid common pitfalls</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 2 - React Query for Server State Management</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: State Types Analysis</h2>
+      <div class="exercise-description">
+        <p>Analyze a pharmacy application mockup and identify:</p>
+        <ol>
+          <li>Different types of state present in the application</li>
+          <li>The appropriate state management approach for each</li>
+          <li>Potential performance considerations</li>
+        </ol>
+        <p>Time: 15 minutes</p>
+        <p>Resources: Pharmacy app mockup provided in Microsoft Whiteboard</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

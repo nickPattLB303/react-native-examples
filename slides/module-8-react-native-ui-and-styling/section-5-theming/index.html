@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 5: Theming and Design Systems | React Native UI and Styling</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 5</h1>
+      <h2>Theming and Design Systems</h2>
+      <p class="metadata">Module 8 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the concept of themes and design systems in React Native</li>
+        <li>Implement a theme provider using React Context</li>
+        <li>Create a consistent design language with reusable style tokens</li>
+        <li>Apply dark mode and other theme variations</li>
+        <li>Create theme-aware components</li>
+        <li>Integrate with third-party theming libraries</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Responsive Design and Device Adaptation (Section 4)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>What are Themes and Design Systems?</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Themes</h3>
+          <ul>
+            <li>A collection of styles and visual properties</li>
+            <li>Define the look and feel of an application</li>
+            <li>Can be switched dynamically (e.g., dark/light mode)</li>
+            <li>Provide consistent visual experience</li>
+            <li>Centralize style definitions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Design Systems</h3>
+          <ul>
+            <li>A comprehensive set of UI components</li>
+            <li>Includes styling guidelines and principles</li>
+            <li>Defines patterns for composition</li>
+            <li>Ensures consistency across the application</li>
+            <li>Improves developer velocity and UX quality</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>Design systems help teams build consistent user interfaces efficiently while themes allow for visual customization and adaptation.</p>
+      </div>
+    </section>
+    
+    <!-- Design Tokens Slide -->
+    <section class="slide content-slide">
+      <h2>Design Tokens: Building Blocks of Design Systems</h2>
+      <p>Design tokens are named values that store visual design attributes:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Design Tokens</h3>
+          <ul>
+            <li><strong>Colors</strong>: primary, secondary, accent</li>
+            <li><strong>Typography</strong>: font families, sizes, weights</li>
+            <li><strong>Spacing</strong>: margins, paddings, gaps</li>
+            <li><strong>Borders</strong>: widths, radii, colors</li>
+            <li><strong>Shadows</strong>: elevations, depths</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example in React Native</h3>
+          <pre><code class="language-jsx">
+// design/tokens.js
+export const colors = {
+  primary: '#007AFF',
+  secondary: '#5856D6',
+  accent: '#FF2D55',
+  background: '#FFFFFF',
+  text: {
+    primary: '#000000',
+    secondary: '#8E8E93',
+  },
+  border: '#CECED2',
+};
+
+export const spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+};
+
+export const typography = {
+  family: {
+    regular: 'System',
+    bold: 'System',
+  },
+  size: {
+    small: 14,
+    body: 16,
+    subheading: 18,
+    heading: 22,
+    title: 28,
+  },
+};
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Theme Context Slide -->
+    <section class="slide code-slide">
+      <h2>Creating a Theme Provider with React Context</h2>
+      <p>Use React Context to make theme available throughout your application:</p>
+      <pre><code class="language-jsx">
+// theme/ThemeContext.js
+import React, { createContext, useContext, useState } from 'react';
+import { lightTheme, darkTheme } from './themes';
+
+// Create context with default value
+const ThemeContext = createContext({
+  theme: lightTheme,
+  isDark: false,
+  toggleTheme: () => {},
+});
+
+// Create provider component
+export function ThemeProvider({ children }) {
+  const [isDark, setIsDark] = useState(false);
+  const theme = isDark ? darkTheme : lightTheme;
+  
+  // Toggle between light and dark themes
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+  };
+  
+  return (
+    <ThemeContext.Provider value={{ theme, isDark, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// Custom hook for accessing theme
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+}
+      </code></pre>
+    </section>
+    
+    <!-- Theme Definition Slide -->
+    <section class="slide code-slide">
+      <h2>Defining Theme Variations</h2>
+      <p>Create different theme objects with consistent structure:</p>
+      <pre><code class="language-jsx">
+// theme/themes.js
+import { colors as baseColors, spacing, typography } from '../design/tokens';
+
+// Light theme
+export const lightTheme = {
+  colors: {
+    ...baseColors,
+    background: '#FFFFFF',
+    surface: '#F2F2F7',
+    text: {
+      primary: '#000000',
+      secondary: '#3C3C43',
+    },
+    divider: 'rgba(0, 0, 0, 0.12)',
+  },
+  spacing,
+  typography,
+  // Additional theme properties
+  statusBar: 'dark-content',
+  shadowColor: '#000000',
+};
+
+// Dark theme
+export const darkTheme = {
+  colors: {
+    ...baseColors,
+    primary: '#0A84FF', // Adjusted for dark mode
+    background: '#000000',
+    surface: '#1C1C1E',
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#EBEBF5',
+    },
+    divider: 'rgba(255, 255, 255, 0.12)',
+  },
+  spacing,
+  typography, // Typography remains the same
+  // Additional theme properties
+  statusBar: 'light-content',
+  shadowColor: '#FFFFFF',
+};
+      </code></pre>
+    </section>
+    
+    <!-- Using Theme in Components Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Theme-Aware Components</h2>
+      <p>Consume the theme context in your components:</p>
+      <pre><code class="language-jsx">
+// components/Button.js
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../theme/ThemeContext';
+
+export function Button({ title, variant = 'primary', onPress, disabled }) {
+  const { theme } = useTheme();
+  
+  // Determine button style based on variant and theme
+  const getButtonStyle = () => {
+    switch (variant) {
+      case 'primary':
+        return {
+          backgroundColor: theme.colors.primary,
+          borderColor: theme.colors.primary,
+        };
+      case 'secondary':
+        return {
+          backgroundColor: 'transparent',
+          borderColor: theme.colors.primary,
+          borderWidth: 1,
+        };
+      case 'outline':
+        return {
+          backgroundColor: 'transparent',
+          borderColor: theme.colors.border,
+          borderWidth: 1,
+        };
+      default:
+        return {};
+    }
+  };
+  
+  // Determine text style based on variant and theme
+  const getTextStyle = () => {
+    switch (variant) {
+      case 'primary':
+        return {
+          color: '#FFFFFF',
+        };
+      case 'secondary':
+      case 'outline':
+        return {
+          color: theme.colors.primary,
+        };
+      default:
+        return {};
+    }
+  };
+  
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        { padding: theme.spacing.md },
+        getButtonStyle(),
+        disabled && styles.disabled,
+      ]}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      <Text 
+        style={[
+          styles.text, 
+          { fontSize: theme.typography.size.body },
+          getTextStyle(),
+          disabled && styles.disabledText,
+        ]}
+      >
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontWeight: '600',
+  },
+  disabled: {
+    opacity: 0.6,
+  },
+  disabledText: {
+    opacity: 0.8,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Applying Theme to App Slide -->
+    <section class="slide code-slide">
+      <h2>Applying Theme to Your Application</h2>
+      <p>Wrap your application with the ThemeProvider:</p>
+      <pre><code class="language-jsx">
+// App.js
+import React from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider, useTheme } from './theme/ThemeContext';
+import MainNavigator from './navigation/MainNavigator';
+
+// Theme-aware status bar
+function ThemedStatusBar() {
+  const { theme } = useTheme();
+  return <StatusBar barStyle={theme.statusBar} backgroundColor={theme.colors.background} />;
+}
+
+// Theme-aware navigation container
+function ThemedApp() {
+  const { theme } = useTheme();
+  
+  // Define navigation theme based on app theme
+  const navTheme = {
+    dark: theme === darkTheme,
+    colors: {
+      primary: theme.colors.primary,
+      background: theme.colors.background,
+      card: theme.colors.surface,
+      text: theme.colors.text.primary,
+      border: theme.colors.divider,
+      notification: theme.colors.accent,
+    },
+  };
+  
+  return (
+    <>
+      <ThemedStatusBar />
+      <NavigationContainer theme={navTheme}>
+        <MainNavigator />
+      </NavigationContainer>
+    </>
+  );
+}
+
+// Root component with ThemeProvider
+export default function App() {
+  // Optional: Use system preference for initial theme
+  const colorScheme = useColorScheme();
+  
+  return (
+    <ThemeProvider initialTheme={colorScheme === 'dark' ? 'dark' : 'light'}>
+      <ThemedApp />
+    </ThemeProvider>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- System Dark Mode Slide -->
+    <section class="slide code-slide">
+      <h2>Supporting System Dark Mode</h2>
+      <p>React to system theme changes with the <code>useColorScheme</code> hook:</p>
+      <pre><code class="language-jsx">
+// theme/ThemeContext.js (updated)
+import { useColorScheme } from 'react-native';
+
+export function ThemeProvider({ children }) {
+  // Get system color scheme
+  const systemColorScheme = useColorScheme();
+  
+  // Initialize with system preference
+  const [themeMode, setThemeMode] = useState(systemColorScheme || 'light');
+  
+  // Update when system preference changes
+  useEffect(() => {
+    if (systemColorScheme) {
+      setThemeMode(systemColorScheme);
+    }
+  }, [systemColorScheme]);
+  
+  const isDark = themeMode === 'dark';
+  const theme = isDark ? darkTheme : lightTheme;
+  
+  // Methods to control theme
+  const setDarkTheme = () => setThemeMode('dark');
+  const setLightTheme = () => setThemeMode('light');
+  const setSystemTheme = () => setThemeMode(systemColorScheme);
+  
+  const value = {
+    theme,
+    isDark,
+    themeMode,
+    setDarkTheme,
+    setLightTheme,
+    setSystemTheme,
+    toggleTheme: () => setThemeMode(isDark ? 'light' : 'dark'),
+  };
+  
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Note</div>
+        <p>The <code>useColorScheme</code> hook is only available in React Native 0.62 and above.</p>
+      </div>
+    </section>
+    
+    <!-- Styled Components Slide -->
+    <section class="slide code-slide">
+      <h2>Using Styled Components with Themes</h2>
+      <p>Styled Components can access the theme directly:</p>
+      <pre><code class="language-jsx">
+// Install: npm install styled-components
+import React from 'react';
+import styled, { ThemeProvider } from 'styled-components/native';
+import { lightTheme, darkTheme } from './theme/themes';
+import { useColorScheme } from 'react-native';
+
+// Create styled components that use theme values
+const Container = styled.View`
+  flex: 1;
+  background-color: ${props => props.theme.colors.background};
+  padding: ${props => props.theme.spacing.md}px;
+`;
+
+const Heading = styled.Text`
+  font-size: ${props => props.theme.typography.size.heading}px;
+  color: ${props => props.theme.colors.text.primary};
+  font-weight: bold;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+`;
+
+const Card = styled.View`
+  background-color: ${props => props.theme.colors.surface};
+  border-radius: 8px;
+  padding: ${props => props.theme.spacing.md}px;
+  margin-bottom: ${props => props.theme.spacing.md}px;
+  shadow-color: ${props => props.theme.shadowColor};
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.1;
+  shadow-radius: 4px;
+  elevation: 2;
+`;
+
+// App with styled-components theming
+function App() {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Heading>Medications</Heading>
+        <Card>
+          <CardContent>Card content here</CardContent>
+        </Card>
+      </Container>
+    </ThemeProvider>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Multiple Themes Slide -->
+    <section class="slide code-slide">
+      <h2>Supporting Multiple Themes</h2>
+      <p>Extend your theme system to support more than just light and dark:</p>
+      <pre><code class="language-jsx">
+// theme/themes.js
+import { baseTokens } from './tokens';
+
+// Base theme with shared structure
+const createTheme = (options) => ({
+  colors: {
+    primary: options.primaryColor,
+    secondary: options.secondaryColor,
+    background: options.backgroundColor,
+    surface: options.surfaceColor,
+    text: {
+      primary: options.textPrimaryColor,
+      secondary: options.textSecondaryColor,
+    },
+    border: options.borderColor,
+    error: options.errorColor,
+    success: options.successColor,
+  },
+  spacing: baseTokens.spacing,
+  typography: {
+    ...baseTokens.typography,
+    family: options.fontFamily || baseTokens.typography.family,
+  },
+  statusBar: options.statusBar,
+  // Other theme properties
+});
+
+// Define themes
+export const themes = {
+  light: createTheme({
+    primaryColor: '#007AFF',
+    secondaryColor: '#5856D6',
+    backgroundColor: '#FFFFFF',
+    surfaceColor: '#F2F2F7',
+    textPrimaryColor: '#000000',
+    textSecondaryColor: '#3C3C43',
+    borderColor: '#CECED2',
+    errorColor: '#FF3B30',
+    successColor: '#34C759',
+    statusBar: 'dark-content',
+  }),
+  
+  dark: createTheme({
+    primaryColor: '#0A84FF',
+    secondaryColor: '#5E5CE6',
+    backgroundColor: '#000000',
+    surfaceColor: '#1C1C1E',
+    textPrimaryColor: '#FFFFFF',
+    textSecondaryColor: '#EBEBF5',
+    borderColor: '#38383A',
+    errorColor: '#FF453A',
+    successColor: '#30D158',
+    statusBar: 'light-content',
+  }),
+  
+  blue: createTheme({
+    primaryColor: '#00539C',
+    secondaryColor: '#EEA47F',
+    backgroundColor: '#F4FAFF',
+    surfaceColor: '#FFFFFF',
+    textPrimaryColor: '#00539C',
+    textSecondaryColor: '#666666',
+    borderColor: '#DDDDDD',
+    errorColor: '#D32F2F',
+    successColor: '#388E3C',
+    statusBar: 'dark-content',
+  }),
+  
+  highContrast: createTheme({
+    primaryColor: '#FFFF00',
+    secondaryColor: '#00FFFF',
+    backgroundColor: '#000000',
+    surfaceColor: '#0F0F0F',
+    textPrimaryColor: '#FFFFFF',
+    textSecondaryColor: '#FFFF00',
+    borderColor: '#FFFFFF',
+    errorColor: '#FF0000',
+    successColor: '#00FF00',
+    statusBar: 'light-content',
+    // Larger font sizes for accessibility
+    typography: {
+      ...baseTokens.typography,
+      size: {
+        small: 16,
+        body: 18,
+        subheading: 20,
+        heading: 24,
+        title: 32,
+      },
+    },
+  }),
+};
+
+// Updated context to support multiple themes
+export function ThemeProvider({ children, initialTheme = 'light' }) {
+  const [currentTheme, setCurrentTheme] = useState(initialTheme);
+  const theme = themes[currentTheme] || themes.light;
+  
+  const setTheme = (themeName) => {
+    if (themes[themeName]) {
+      setCurrentTheme(themeName);
+    }
+  };
+  
+  return (
+    <ThemeContext.Provider value={{ theme, currentTheme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Theme Switching UI Slide -->
+    <section class="slide code-slide">
+      <h2>Creating a Theme Switcher UI</h2>
+      <p>Build a user interface for theme selection:</p>
+      <pre><code class="language-jsx">
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useTheme } from '../theme/ThemeContext';
+
+export function ThemeSettings() {
+  const { currentTheme, setTheme, theme } = useTheme();
+  
+  const themeOptions = [
+    { id: 'light', label: 'Light Theme' },
+    { id: 'dark', label: 'Dark Theme' },
+    { id: 'blue', label: 'Blue Theme' },
+    { id: 'highContrast', label: 'High Contrast' },
+    { id: 'system', label: 'Use System Setting' },
+  ];
+  
+  return (
+    <ScrollView 
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      contentContainerStyle={{ padding: theme.spacing.md }}
+    >
+      <Text style={[
+        styles.title,
+        { 
+          color: theme.colors.text.primary,
+          fontSize: theme.typography.size.heading,
+          marginBottom: theme.spacing.lg,
+        }
+      ]}>
+        Appearance Settings
+      </Text>
+      
+      <View style={styles.optionsContainer}>
+        {themeOptions.map((option) => (
+          <TouchableOpacity
+            key={option.id}
+            style={[
+              styles.optionButton,
+              { 
+                backgroundColor: theme.colors.surface,
+                borderColor: theme.colors.border,
+                padding: theme.spacing.md,
+                borderWidth: 1,
+                marginBottom: theme.spacing.sm,
+                borderRadius: 8,
+                borderLeftWidth: currentTheme === option.id ? 4 : 1,
+                borderLeftColor: currentTheme === option.id 
+                  ? theme.colors.primary 
+                  : theme.colors.border,
+              }
+            ]}
+            onPress={() => setTheme(option.id)}
+          >
+            <Text style={[
+              styles.optionText,
+              { 
+                color: theme.colors.text.primary,
+                fontSize: theme.typography.size.body,
+              }
+            ]}>
+              {option.label}
+            </Text>
+            
+            {currentTheme === option.id && (
+              <Text style={{ color: theme.colors.primary }}>✓</Text>
+            )}
+          </TouchableOpacity>
+        ))}
+      </View>
+      
+      <Text style={[
+        styles.note,
+        { 
+          color: theme.colors.text.secondary,
+          fontSize: theme.typography.size.small,
+          marginTop: theme.spacing.lg,
+        }
+      ]}>
+        Theme changes will apply immediately across the entire app.
+      </Text>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontWeight: 'bold',
+  },
+  optionsContainer: {
+    marginVertical: 8,
+  },
+  optionButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  optionText: {
+    fontWeight: '500',
+  },
+  note: {
+    fontStyle: 'italic',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Third-Party Libraries Slide -->
+    <section class="slide content-slide">
+      <h2>Third-Party Theming Libraries</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Popular Theming Libraries</h3>
+          <ul>
+            <li><strong>React Native Paper</strong>: Material Design components with theming</li>
+            <li><strong>Native Base</strong>: Comprehensive UI library with theming support</li>
+            <li><strong>Restyle</strong>: Type-safe styling and theming by Shopify</li>
+            <li><strong>Styled Components</strong>: CSS-in-JS with theme support</li>
+            <li><strong>UI Kitten</strong>: UI library with multi-brand theming</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Library Selection Criteria</h3>
+          <ul>
+            <li>Component library needs</li>
+            <li>Customization requirements</li>
+            <li>Design system compatibility</li>
+            <li>TypeScript support</li>
+            <li>Bundle size considerations</li>
+            <li>Active maintenance</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Decision Point</div>
+        <p>Consider if you need a full UI library with theming or just a theming system for custom components.</p>
+      </div>
+    </section>
+    
+    <!-- Using Restyle Example -->
+    <section class="slide code-slide">
+      <h2>Type-Safe Theming with Restyle</h2>
+      <p>Shopify's Restyle library provides type-safe theming:</p>
+      <pre><code class="language-jsx">
+// Install: npm install @shopify/restyle
+import React from 'react';
+import { ThemeProvider, createTheme, createText, createBox } from '@shopify/restyle';
+
+// Define the theme and its types
+const theme = createTheme({
+  colors: {
+    primary: '#007AFF',
+    background: '#FFFFFF',
+    foreground: '#000000',
+    text: '#000000',
+    error: '#FF3B30',
+    // ...other colors
+  },
+  spacing: {
+    s: 8,
+    m: 16,
+    l: 24,
+    xl: 40,
+  },
+  textVariants: {
+    header: {
+      fontWeight: 'bold',
+      fontSize: 22,
+      lineHeight: 28,
+    },
+    subheader: {
+      fontWeight: '600',
+      fontSize: 18,
+      lineHeight: 24,
+    },
+    body: {
+      fontSize: 16,
+      lineHeight: 22,
+    },
+    // ...other text variants
+  },
+  breakpoints: {
+    phone: 0,
+    tablet: 768,
+  },
+});
+
+// Create typed components
+const Box = createBox();
+const Text = createText();
+
+// Type the theme for TypeScript
+type Theme = typeof theme;
+
+// Use in component with strong typing
+const Card = () => (
+  <Box
+    backgroundColor="background"
+    padding="m"
+    margin="s"
+    borderRadius={8}
+    shadowColor="foreground"
+    shadowOpacity={0.1}
+    shadowRadius={4}
+    shadowOffset={{ width: 0, height: 2 }}
+  >
+    <Text variant="header" color="text" marginBottom="s">
+      Medication Reminder
+    </Text>
+    <Text variant="body" color="text">
+      Take your medication at 8:00 AM
+    </Text>
+  </Box>
+);
+
+// Theme provider at app root
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Box flex={1} backgroundColor="background" padding="m">
+      <Card />
+    </Box>
+  </ThemeProvider>
+);
+      </code></pre>
+    </section>
+    
+    <!-- Design System Architecture Slide -->
+    <section class="slide content-slide">
+      <h2>Building a Complete Design System</h2>
+      <p>Structure of a comprehensive React Native design system:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Core Components</h3>
+          <ul>
+            <li><strong>Layout</strong>: Container, Box, Grid</li>
+            <li><strong>Typography</strong>: Text, Heading</li>
+            <li><strong>Inputs</strong>: Button, Input, Select</li>
+            <li><strong>Feedback</strong>: Alert, Toast, Progress</li>
+            <li><strong>Navigation</strong>: Tabs, Drawer</li>
+            <li><strong>Media</strong>: Avatar, Icon, Image</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Design System Structure</h3>
+          <pre><code class="language-text">
+/design-system
+  /themes
+    - tokens.js        # Design tokens
+    - lightTheme.js    # Light theme
+    - darkTheme.js     # Dark theme
+  /components
+    /core              # Primitive components
+    /composite         # Composed components
+    /layout            # Layout components
+  /hooks               # Custom hooks
+  /utils               # Utility functions
+  index.js             # Public API
+          </code></pre>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Implementation Note</div>
+        <p>Start small with core components and add complexity gradually as your design system matures.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Create a Theme Provider and Themed Components</h2>
+      <ol>
+        <li>Create a basic theme with colors, typography, and spacing tokens</li>
+        <li>Implement a ThemeProvider using React Context</li>
+        <li>Build light and dark theme variations</li>
+        <li>Create a theme-aware Button component</li>
+        <li>Add a theme toggle switch in the app</li>
+      </ol>
+      <pre><code class="language-jsx">
+// Starter code
+import React, { createContext, useContext, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+
+// 1. Define your theme tokens and themes
+
+// 2. Create a ThemeContext and Provider
+
+// 3. Create a theme-aware Button component
+
+// 4. Create a theme toggle component
+
+// 5. Implement the App with ThemeProvider
+export default function App() {
+  return (
+    // Wrap with your ThemeProvider
+    <View style={styles.container}>
+      <Text>Themed App</Text>
+      {/* Add theme toggle and themed button */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Themes are collections of visual styles that define the look and feel of an application</li>
+        <li>Design systems provide a comprehensive set of UI components and guidelines</li>
+        <li>Design tokens are reusable style values that ensure consistency</li>
+        <li>React Context is a powerful way to implement theming in React Native</li>
+        <li>Dark mode can be implemented with theme switching</li>
+        <li>Styled-components and other libraries provide additional theming capabilities</li>
+        <li>A well-structured design system improves development efficiency and UI consistency</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 6 - Custom UI Components</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

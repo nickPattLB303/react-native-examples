@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context API for Shared State | Module 10, Section 4</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Context API</h1>
+      <h2>Shared State Management in React Native</h2>
+      <p class="metadata">Module 10, Section 4 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the React Context API and its purpose</li>
+        <li>Create and use context providers and consumers</li>
+        <li>Implement the useContext hook for accessing shared state</li>
+        <li>Combine Context with useReducer for complex state logic</li>
+        <li>Understand context performance considerations</li>
+        <li>Apply TypeScript with Context API</li>
+        <li>Follow best practices for using Context in React Native</li>
+      </ul>
+    </section>
+    
+    <!-- Introduction to Context API Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Context API</h2>
+      <div class="columns">
+        <div class="column">
+          <p>Context provides a way to share values like themes, user data, or other state between components without having to explicitly pass props through every level of the component tree.</p>
+          <h3>When to Use Context</h3>
+          <ul>
+            <li>Shared state across multiple components</li>
+            <li>Themes and UI preferences</li>
+            <li>Current user and authentication</li>
+            <li>Localization and translations</li>
+            <li>Avoiding prop drilling</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Prop Drilling vs Context</h3>
+          <div class="image-placeholder">
+            [Diagram: Prop Drilling vs Context Flow]
+          </div>
+          <p>Context allows you to provide state to deeply nested components without passing props through intermediate components.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Creating Context Slide -->
+    <section class="slide code-slide">
+      <h2>Creating a Context</h2>
+      <pre><code class="language-tsx">
+// MedicationContext.tsx
+import React, { createContext, useState, ReactNode } from 'react';
+
+// Define the shape of the context state
+interface Medication {
+  id: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  taken: boolean;
+}
+
+// Define the shape of the context value
+interface MedicationContextType {
+  medications: Medication[];
+  addMedication: (medication: Omit<Medication, 'id'>) => void;
+  updateMedication: (id: number, updates: Partial<Medication>) => void;
+  deleteMedication: (id: number) => void;
+  markAsTaken: (id: number, taken: boolean) => void;
+}
+
+// Create the context with a default value
+export const MedicationContext = createContext<MedicationContextType | undefined>(undefined);
+
+// Provider component
+interface MedicationProviderProps {
+  children: ReactNode;
+}
+
+export const MedicationProvider: React.FC<MedicationProviderProps> = ({ children }) => {
+  const [medications, setMedications] = useState<Medication[]>([]);
+  
+  const addMedication = (medicationData: Omit<Medication, 'id'>) => {
+    const newMedication = {
+      ...medicationData,
+      id: Date.now(), // Simple ID generation
+    };
+    setMedications([...medications, newMedication]);
+  };
+  
+  const updateMedication = (id: number, updates: Partial<Medication>) => {
+    setMedications(
+      medications.map(med => 
+        med.id === id ? { ...med, ...updates } : med
+      )
+    );
+  };
+  
+  const deleteMedication = (id: number) => {
+    setMedications(medications.filter(med => med.id !== id));
+  };
+  
+  const markAsTaken = (id: number, taken: boolean) => {
+    updateMedication(id, { taken });
+  };
+  
+  // The value that will be provided to consumers
+  const contextValue: MedicationContextType = {
+    medications,
+    addMedication,
+    updateMedication,
+    deleteMedication,
+    markAsTaken,
+  };
+  
+  return (
+    <MedicationContext.Provider value={contextValue}>
+      {children}
+    </MedicationContext.Provider>
+  );
+};</code></pre>
+    </section>
+    
+    <!-- Using Context with useContext Hook Slide -->
+    <section class="slide code-slide">
+      <h2>Consuming Context with useContext</h2>
+      <pre><code class="language-tsx">
+// MedicationList.tsx
+import React, { useContext } from 'react';
+import { View, Text, FlatList, Button } from 'react-native';
+import { MedicationContext } from './MedicationContext';
+
+// Custom hook for using the medication context
+export const useMedicationContext = () => {
+  const context = useContext(MedicationContext);
+  if (context === undefined) {
+    throw new Error('useMedicationContext must be used within a MedicationProvider');
+  }
+  return context;
+};
+
+export const MedicationList = () => {
+  // Use our custom hook to access the context
+  const { medications, deleteMedication, markAsTaken } = useMedicationContext();
+  
+  return (
+    <View>
+      <FlatList
+        data={medications}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={{ flexDirection: 'row', padding: 10 }}>
+            <Text style={{ flex: 1 }}>{item.name} - {item.dosage}</Text>
+            <Button
+              title={item.taken ? "Taken" : "Mark Taken"}
+              onPress={() => markAsTaken(item.id, !item.taken)}
+              color={item.taken ? "green" : "blue"}
+            />
+            <Button
+              title="Delete"
+              onPress={() => deleteMedication(item.id)}
+              color="red"
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+};</code></pre>
+    </section>
+    
+    <!-- Setting Up the Provider Slide -->
+    <section class="slide code-slide">
+      <h2>Setting Up the Provider</h2>
+      <pre><code class="language-tsx">
+// App.tsx
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { MedicationProvider } from './MedicationContext';
+import { HomeScreen } from './screens/HomeScreen';
+import { AddMedicationScreen } from './screens/AddMedicationScreen';
+import { MedicationDetailScreen } from './screens/MedicationDetailScreen';
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <MedicationProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="AddMedication" component={AddMedicationScreen} />
+          <Stack.Screen name="MedicationDetail" component={MedicationDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </MedicationProvider>
+  );
+}</code></pre>
+
+      <pre><code class="language-tsx">
+// AddMedicationScreen.tsx
+import React, { useState } from 'react';
+import { View, TextInput, Button } from 'react-native';
+import { useMedicationContext } from './MedicationContext';
+
+export const AddMedicationScreen = ({ navigation }) => {
+  const [name, setName] = useState('');
+  const [dosage, setDosage] = useState('');
+  const [frequency, setFrequency] = useState('');
+  
+  const { addMedication } = useMedicationContext();
+  
+  const handleSubmit = () => {
+    if (name && dosage && frequency) {
+      addMedication({
+        name,
+        dosage,
+        frequency,
+        taken: false,
+      });
+      navigation.goBack();
+    }
+  };
+  
+  return (
+    <View>
+      <TextInput
+        placeholder="Medication Name"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        placeholder="Dosage"
+        value={dosage}
+        onChangeText={setDosage}
+      />
+      <TextInput
+        placeholder="Frequency"
+        value={frequency}
+        onChangeText={setFrequency}
+      />
+      <Button title="Add Medication" onPress={handleSubmit} />
+    </View>
+  );
+};</code></pre>
+    </section>
+    
+    <!-- Multiple Contexts Slide -->
+    <section class="slide content-slide">
+      <h2>Working with Multiple Contexts</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Nesting Contexts</h3>
+          <pre><code class="language-tsx">
+// App.tsx
+return (
+  <AuthProvider>
+    <ThemeProvider>
+      <MedicationProvider>
+        <NotificationProvider>
+          <App />
+        </NotificationProvider>
+      </MedicationProvider>
+    </ThemeProvider>
+  </AuthProvider>
+);</code></pre>
+        </div>
+        <div class="column">
+          <h3>Consuming Multiple Contexts</h3>
+          <pre><code class="language-tsx">
+// Component using multiple contexts
+const MedicationItem = ({ medication }) => {
+  const { theme } = useThemeContext();
+  const { user } = useAuthContext();
+  const { markAsTaken } = useMedicationContext();
+  
+  return (
+    <View style={{ 
+      backgroundColor: theme.cardBackground 
+    }}>
+      <Text style={{ color: theme.textColor }}>
+        {medication.name}
+      </Text>
+      {user.isDoctor && (
+        <Button 
+          title="Medical Override" 
+          onPress={() => {/* ... */}} 
+        />
+      )}
+      <Button 
+        title="Mark as Taken" 
+        onPress={() => markAsTaken(medication.id, true)} 
+      />
+    </View>
+  );
+};</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Context with useReducer Slide -->
+    <section class="slide code-slide">
+      <h2>Combining Context with useReducer</h2>
+      <pre><code class="language-tsx">
+// MedicationContext.tsx with useReducer
+import React, { createContext, useReducer, useContext } from 'react';
+
+// Define types for state and actions
+interface Medication {
+  id: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  taken: boolean;
+}
+
+interface MedicationState {
+  medications: Medication[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+type MedicationAction =
+  | { type: 'FETCH_START' }
+  | { type: 'FETCH_SUCCESS'; payload: Medication[] }
+  | { type: 'FETCH_ERROR'; payload: string }
+  | { type: 'ADD_MEDICATION'; payload: Medication }
+  | { type: 'UPDATE_MEDICATION'; payload: { id: number; updates: Partial<Medication> } }
+  | { type: 'DELETE_MEDICATION'; payload: number }
+  | { type: 'MARK_TAKEN'; payload: { id: number; taken: boolean } };
+
+// Create initial state
+const initialState: MedicationState = {
+  medications: [],
+  isLoading: false,
+  error: null,
+};
+
+// Create reducer function
+const medicationReducer = (state: MedicationState, action: MedicationAction): MedicationState => {
+  switch (action.type) {
+    case 'FETCH_START':
+      return { ...state, isLoading: true, error: null };
+    case 'FETCH_SUCCESS':
+      return { ...state, medications: action.payload, isLoading: false };
+    case 'FETCH_ERROR':
+      return { ...state, error: action.payload, isLoading: false };
+    case 'ADD_MEDICATION':
+      return {
+        ...state,
+        medications: [...state.medications, action.payload],
+      };
+    case 'UPDATE_MEDICATION':
+      return {
+        ...state,
+        medications: state.medications.map(med =>
+          med.id === action.payload.id
+            ? { ...med, ...action.payload.updates }
+            : med
+        ),
+      };
+    case 'DELETE_MEDICATION':
+      return {
+        ...state,
+        medications: state.medications.filter(med => med.id !== action.payload),
+      };
+    case 'MARK_TAKEN':
+      return {
+        ...state,
+        medications: state.medications.map(med =>
+          med.id === action.payload.id
+            ? { ...med, taken: action.payload.taken }
+            : med
+        ),
+      };
+    default:
+      return state;
+  }
+};</code></pre>
+    </section>
+    
+    <!-- useReducer Provider Slide -->
+    <section class="slide code-slide">
+      <h2>Context Provider with useReducer</h2>
+      <pre><code class="language-tsx">
+// Create the context
+interface MedicationContextType {
+  state: MedicationState;
+  dispatch: React.Dispatch<MedicationAction>;
+}
+
+const MedicationContext = createContext<MedicationContextType | undefined>(undefined);
+
+// Create provider component
+export const MedicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [state, dispatch] = useReducer(medicationReducer, initialState);
+  
+  return (
+    <MedicationContext.Provider value={{ state, dispatch }}>
+      {children}
+    </MedicationContext.Provider>
+  );
+};
+
+// Custom hook for using the context
+export const useMedicationContext = () => {
+  const context = useContext(MedicationContext);
+  if (context === undefined) {
+    throw new Error('useMedicationContext must be used within a MedicationProvider');
+  }
+  return context;
+};
+
+// Example usage in a component
+const MedicationList = () => {
+  const { state, dispatch } = useMedicationContext();
+  const { medications, isLoading, error } = state;
+  
+  const handleDelete = (id: number) => {
+    dispatch({ type: 'DELETE_MEDICATION', payload: id });
+  };
+  
+  const handleMarkTaken = (id: number, taken: boolean) => {
+    dispatch({ type: 'MARK_TAKEN', payload: { id, taken } });
+  };
+  
+  if (isLoading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error}</Text>;
+  
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <View>
+          <Text>{item.name}</Text>
+          <Button
+            title={item.taken ? "Taken" : "Mark Taken"}
+            onPress={() => handleMarkTaken(item.id, !item.taken)}
+          />
+          <Button
+            title="Delete"
+            onPress={() => handleDelete(item.id)}
+          />
+        </View>
+      )}
+    />
+  );
+};</code></pre>
+    </section>
+    
+    <!-- Action Creators Slide -->
+    <section class="slide code-slide">
+      <h2>Using Action Creators with Context</h2>
+      <pre><code class="language-tsx">
+// Action creators for better organization and type safety
+const medicationActions = {
+  fetchStart: () => ({ 
+    type: 'FETCH_START' as const 
+  }),
+  
+  fetchSuccess: (medications: Medication[]) => ({ 
+    type: 'FETCH_SUCCESS' as const, 
+    payload: medications 
+  }),
+  
+  fetchError: (error: string) => ({ 
+    type: 'FETCH_ERROR' as const, 
+    payload: error 
+  }),
+  
+  addMedication: (medication: Medication) => ({ 
+    type: 'ADD_MEDICATION' as const, 
+    payload: medication 
+  }),
+  
+  updateMedication: (id: number, updates: Partial<Medication>) => ({ 
+    type: 'UPDATE_MEDICATION' as const, 
+    payload: { id, updates } 
+  }),
+  
+  deleteMedication: (id: number) => ({ 
+    type: 'DELETE_MEDICATION' as const, 
+    payload: id 
+  }),
+  
+  markTaken: (id: number, taken: boolean) => ({ 
+    type: 'MARK_TAKEN' as const, 
+    payload: { id, taken } 
+  }),
+};
+
+// Helper hooks for better API
+export const useMedicationActions = () => {
+  const { dispatch } = useMedicationContext();
+  
+  return {
+    fetchMedications: async () => {
+      dispatch(medicationActions.fetchStart());
+      try {
+        const response = await fetch('https://api.pharmacy.com/medications');
+        if (!response.ok) throw new Error('Failed to fetch medications');
+        const data = await response.json();
+        dispatch(medicationActions.fetchSuccess(data));
+      } catch (error) {
+        dispatch(medicationActions.fetchError(error.message));
+      }
+    },
+    
+    addMedication: (medicationData: Omit<Medication, 'id'>) => {
+      const newMedication = {
+        ...medicationData,
+        id: Date.now(),
+      };
+      dispatch(medicationActions.addMedication(newMedication));
+    },
+    
+    updateMedication: (id: number, updates: Partial<Medication>) => {
+      dispatch(medicationActions.updateMedication(id, updates));
+    },
+    
+    deleteMedication: (id: number) => {
+      dispatch(medicationActions.deleteMedication(id));
+    },
+    
+    markAsTaken: (id: number, taken: boolean) => {
+      dispatch(medicationActions.markTaken(id, taken));
+    },
+  };
+};</code></pre>
+    </section>
+    
+    <!-- Performance Considerations Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Considerations</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Context Performance Issues</h3>
+          <ul>
+            <li>All context consumers re-render when context value changes</li>
+            <li>Re-renders even if component only uses part of the context</li>
+            <li>New object references cause unnecessary re-renders</li>
+            <li>Large contexts can impact performance</li>
+            <li>Deeply nested providers can slow initial render</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Optimization Strategies</h3>
+          <ul>
+            <li>Split contexts by domain/concern</li>
+            <li>Memoize context values with useMemo</li>
+            <li>Use React.memo for consumer components</li>
+            <li>Create separate contexts for frequently changing data</li>
+            <li>Use context selectors (similar to Redux)</li>
+            <li>Consider Zustand for performance-critical state</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Performance Optimizations Slide -->
+    <section class="slide code-slide">
+      <h2>Optimizing Context Performance</h2>
+      <pre><code class="language-tsx">
+// Splitting contexts by concern
+const MedicationStateContext = createContext<MedicationState | undefined>(undefined);
+const MedicationDispatchContext = createContext<React.Dispatch<MedicationAction> | undefined>(undefined);
+
+// Memoizing context values
+export const MedicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [state, dispatch] = useReducer(medicationReducer, initialState);
+  
+  // Memoize the value to prevent unnecessary re-renders
+  const memoizedState = useMemo(() => state, [state]);
+  
+  return (
+    <MedicationStateContext.Provider value={memoizedState}>
+      <MedicationDispatchContext.Provider value={dispatch}>
+        {children}
+      </MedicationDispatchContext.Provider>
+    </MedicationStateContext.Provider>
+  );
+};
+
+// Custom hooks for using specific parts of context
+export const useMedicationState = () => {
+  const context = useContext(MedicationStateContext);
+  if (context === undefined) {
+    throw new Error('useMedicationState must be used within a MedicationProvider');
+  }
+  return context;
+};
+
+export const useMedicationDispatch = () => {
+  const context = useContext(MedicationDispatchContext);
+  if (context === undefined) {
+    throw new Error('useMedicationDispatch must be used within a MedicationProvider');
+  }
+  return context;
+};
+
+// Optimized component only using what it needs
+const MedicationCounter = () => {
+  // Only re-renders when medication count changes
+  const { medications } = useMedicationState();
+  return <Text>Total Medications: {medications.length}</Text>;
+};
+
+// Using React.memo for further optimization
+const MedicationItem = React.memo(({ medication, onDelete, onMarkTaken }) => {
+  return (
+    <View>
+      <Text>{medication.name}</Text>
+      <Button
+        title={medication.taken ? "Taken" : "Mark Taken"}
+        onPress={() => onMarkTaken(medication.id, !medication.taken)}
+      />
+      <Button
+        title="Delete"
+        onPress={() => onDelete(medication.id)}
+      />
+    </View>
+  );
+});</code></pre>
+    </section>
+    
+    <!-- Context vs Other State Solutions Slide -->
+    <section class="slide content-slide">
+      <h2>Context API vs Other State Solutions</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Criteria</th>
+            <th>Context API</th>
+            <th>Zustand</th>
+            <th>Redux</th>
+            <th>React Query</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Built-in to React</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Complexity</td>
+            <td>Low-Medium</td>
+            <td>Low</td>
+            <td>High</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Performance</td>
+            <td>Good for small state</td>
+            <td>Better</td>
+            <td>Better</td>
+            <td>Best for server state</td>
+          </tr>
+          <tr>
+            <td>Ecosystem</td>
+            <td>Core React</td>
+            <td>Small but growing</td>
+            <td>Large</td>
+            <td>Growing</td>
+          </tr>
+          <tr>
+            <td>Best Use Case</td>
+            <td>Simple shared state</td>
+            <td>Global client state</td>
+            <td>Complex state logic</td>
+            <td>Server/API state</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="presenter-notes">
+        Explain that Context API is best for simple shared state like themes, authentication, or localization. For more complex or performance-critical state, other libraries may be better choices.
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Context API Best Practices</h2>
+      <ul>
+        <li><strong>Create separate contexts</strong> for unrelated state</li>
+        <li><strong>Keep context values small</strong> to minimize re-renders</li>
+        <li><strong>Create custom hooks</strong> for using context</li>
+        <li><strong>Combine with useReducer</strong> for complex state logic</li>
+        <li><strong>Memoize context values</strong> with useMemo</li>
+        <li><strong>Avoid deeply nested providers</strong> when possible</li>
+        <li><strong>Use TypeScript</strong> to ensure type safety</li>
+        <li><strong>Consider performance implications</strong> for frequently updating state</li>
+      </ul>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: Context API</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>How Context Works</h3>
+          <ol>
+            <li>Context uses React's internal tree traversal</li>
+            <li>Provider stores value in React's fiber nodes</li>
+            <li>Consumers find closest ancestor provider</li>
+            <li>When provider value changes, all consuming components re-render</li>
+            <li>Each provider forms its own subscription tree</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Context Limitations</h3>
+          <ul>
+            <li>No built-in selectors for partial updates</li>
+            <li>No middleware or enhancers</li>
+            <li>No time-travel debugging</li>
+            <li>No optimized re-rendering strategy</li>
+            <li>No built-in persistence</li>
+            <li>Not optimized for frequent updates</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Context API</h2>
+      <ul>
+        <li>Context API provides a way to share state across components</li>
+        <li>createContext creates a context, Provider shares values, useContext consumes values</li>
+        <li>Combining with useReducer handles complex state logic</li>
+        <li>Performance considerations are important for large applications</li>
+        <li>Custom hooks improve the developer experience</li>
+        <li>Context works well for simple shared state scenarios</li>
+        <li>Consider alternative solutions for performance-critical or complex state</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 5 - Local Storage for Data Persistence</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Theme Provider with Context API</h2>
+      <div class="exercise-description">
+        <p>Create a theme provider using Context API that:</p>
+        <ol>
+          <li>Provides light and dark theme options</li>
+          <li>Allows toggling between themes</li>
+          <li>Provides themed styling for common UI components</li>
+          <li>Uses TypeScript for type safety</li>
+          <li>Demonstrates proper performance optimization</li>
+        </ol>
+        <p>Time: 20 minutes</p>
+        <p>Resources: Starter code provided in Expo Snack</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

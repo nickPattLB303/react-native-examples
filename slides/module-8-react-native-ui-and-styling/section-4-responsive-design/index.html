@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 4: Responsive Design | React Native UI and Styling</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 4</h1>
+      <h2>Responsive Design and Device Adaptation</h2>
+      <p class="metadata">Module 8 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the challenges of responsive design in React Native</li>
+        <li>Implement layouts that adapt to different screen sizes and orientations</li>
+        <li>Use the Dimensions API to retrieve device information</li>
+        <li>Apply platform-specific styling for iOS and Android</li>
+        <li>Create responsive typography and spacing systems</li>
+        <li>Implement safe area insets for modern devices</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Flexbox Layout in React Native (Section 3)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Responsive Design in React Native</h2>
+      <p>Responsive design in React Native involves adapting your UI to different:</p>
+      <ul>
+        <li>Device screen sizes (phone vs tablet)</li>
+        <li>Screen orientations (portrait vs landscape)</li>
+        <li>Platform variations (iOS vs Android)</li>
+        <li>Device features (notches, rounded corners)</li>
+        <li>Display densities (pixel ratios)</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Key Concept</div>
+        <p>Unlike the web where media queries are common, React Native responsive design often relies on <em>programmatic adaptation</em> using device dimensions and platform information.</p>
+      </div>
+    </section>
+    
+    <!-- Screen Dimensions Slide -->
+    <section class="slide code-slide">
+      <h2>Accessing Device Dimensions</h2>
+      <p>React Native's <code>Dimensions</code> API provides access to the device's screen information:</p>
+      <pre><code class="language-jsx">
+import { Dimensions, StyleSheet, View, Text } from 'react-native';
+
+// Get the window dimensions
+const windowDimensions = Dimensions.get('window');
+const { width: windowWidth, height: windowHeight } = windowDimensions;
+
+// Get the screen dimensions (may include areas not visible to the app)
+const screenDimensions = Dimensions.get('screen');
+const { width: screenWidth, height: screenHeight } = screenDimensions;
+
+function DimensionsExample() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Window: {windowWidth} x {windowHeight}</Text>
+      <Text style={styles.text}>Screen: {screenWidth} x {screenHeight}</Text>
+      <View 
+        style={[
+          styles.box, 
+          { width: windowWidth * 0.8, height: windowWidth * 0.4 }
+        ]} 
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  box: {
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Dimensions Events Slide -->
+    <section class="slide code-slide">
+      <h2>Responding to Dimension Changes</h2>
+      <p>To handle device rotation or foldable device changes, listen to dimension updates:</p>
+      <pre><code class="language-jsx">
+import React, { useState, useEffect } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
+
+function ResponsiveLayout() {
+  const [dimensions, setDimensions] = useState({
+    window: Dimensions.get('window'),
+  });
+  
+  useEffect(() => {
+    // Set up event listener for dimension changes
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions({ window });
+    });
+    
+    // Clean up event listener on unmount
+    return () => subscription.remove();
+  }, []);
+  
+  const isLandscape = dimensions.window.width > dimensions.window.height;
+  
+  return (
+    <View style={[
+      styles.container,
+      isLandscape ? styles.landscapeLayout : styles.portraitLayout
+    ]}>
+      {/* Your UI components */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  portraitLayout: {
+    flexDirection: 'column',
+  },
+  landscapeLayout: {
+    flexDirection: 'row',
+  },
+});
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Note</div>
+        <p>For React Native < 0.65, use <code>Dimensions.addEventListener</code> with a callback. For 0.65 and above, the API returns a subscription object you need to remove.</p>
+      </div>
+    </section>
+    
+    <!-- Responsive Layouts Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Responsive Layouts</h2>
+      <p>Use relative sizing and Flexbox for responsive layouts:</p>
+      <pre><code class="language-jsx">
+import { StyleSheet, View, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+function ProductGrid() {
+  // Calculate number of columns based on screen width
+  const numColumns = Math.floor(width / 150); // Show one item per 150dp
+  const cardSize = width / numColumns - 16; // Account for margins
+  
+  return (
+    <View style={styles.container}>
+      {products.map((product) => (
+        <View 
+          key={product.id} 
+          style={[styles.card, { width: cardSize, height: cardSize * 1.5 }]}
+        >
+          {/* Product card content */}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    padding: 8,
+  },
+  card: {
+    margin: 8,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Pixel Ratio Slide -->
+    <section class="slide content-slide">
+      <h2>Understanding Pixel Ratio</h2>
+      <p>The <code>PixelRatio</code> API helps with adapting to different screen densities:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Concepts</h3>
+          <ul>
+            <li>Physical pixels vs logical pixels (dp/pt)</li>
+            <li>React Native works with logical pixels</li>
+            <li>Pixel Ratio = physical pixels / logical pixels</li>
+            <li>Useful for selecting appropriate image resolutions</li>
+            <li>Affects border width on high-density screens</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example</h3>
+          <pre><code class="language-jsx">
+import { PixelRatio } from 'react-native';
+
+// Get the device pixel ratio
+const pixelRatio = PixelRatio.get();
+
+// Adjust sizes based on pixel ratio
+const getAdjustedFontSize = (size) => {
+  if (pixelRatio >= 3) {
+    return size * 0.95; // Smaller text for very high density
+  } else if (pixelRatio >= 2) {
+    return size; // Standard size
+  } else {
+    return size * 1.05; // Larger text for low density
+  }
+};
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Platform Specific Styling Slide -->
+    <section class="slide code-slide">
+      <h2>Platform-Specific Styling</h2>
+      <p>React Native offers multiple ways to create platform-specific styles:</p>
+      <pre><code class="language-jsx">
+import { StyleSheet, Platform, View, Text } from 'react-native';
+
+function MedicationButton() {
+  return (
+    <View>
+      {/* Method 1: Platform.select */}
+      <View style={styles.buttonContainer}>
+        <Text style={styles.buttonText}>Take Medication</Text>
+      </View>
+      
+      {/* Method 2: Platform-specific file extensions */}
+      {/* Create Button.ios.js and Button.android.js */}
+      
+      {/* Method 3: Inline platform checks */}
+      <View
+        style={{
+          ...styles.card,
+          marginTop: Platform.OS === 'ios' ? 30 : 20,
+          elevation: Platform.OS === 'android' ? 4 : 0,
+          shadowOpacity: Platform.OS === 'ios' ? 0.2 : 0,
+        }}
+      >
+        <Text>Medication Details</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: '#007AFF',
+        borderRadius: 10,
+        paddingVertical: 12,
+      },
+      android: {
+        backgroundColor: '#2196F3',
+        borderRadius: 4,
+        paddingVertical: 8,
+        elevation: 4,
+      },
+      default: {
+        // Other platforms like web
+        backgroundColor: '#0000FF',
+        borderRadius: 8,
+        paddingVertical: 10,
+      },
+    }),
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+  },
+  card: {
+    padding: 16,
+    backgroundColor: 'white',
+    borderRadius: 8,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Safe Area Slide -->
+    <section class="slide code-slide">
+      <h2>Handling Safe Areas</h2>
+      <p>Use <code>SafeAreaView</code> or <code>useSafeAreaInsets</code> hook to handle device notches and system UI:</p>
+      <pre><code class="language-jsx">
+import React from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Option 1: SafeAreaView component
+function AppWithSafeAreaView() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.headerText}>Medication Tracker</Text>
+      {/* Content */}
+    </SafeAreaView>
+  );
+}
+
+// Option 2: Manual insets with useSafeAreaInsets hook
+function AppWithInsets() {
+  const insets = useSafeAreaInsets();
+  
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}
+    >
+      <Text style={styles.headerText}>Medication Tracker</Text>
+      {/* Content */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 16,
+  },
+});
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Setup Note</div>
+        <p>For Option 2, you need to install <code>react-native-safe-area-context</code> and wrap your app with <code>SafeAreaProvider</code>.</p>
+      </div>
+    </section>
+    
+    <!-- Responsive Typography Slide -->
+    <section class="slide code-slide">
+      <h2>Responsive Typography</h2>
+      <p>Create a responsive typography system:</p>
+      <pre><code class="language-jsx">
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
+const baseWidth = 375; // Standard iPhone width
+const scale = width / baseWidth;
+
+// Scale fonts based on screen width
+export function normalize(size) {
+  const newSize = size * scale;
+  
+  // Prevent fonts from getting too large or too small
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
+
+// Typography styles using normalized sizes
+export const Typography = StyleSheet.create({
+  h1: {
+    fontSize: normalize(24),
+    fontWeight: 'bold',
+    marginBottom: normalize(10),
+  },
+  h2: {
+    fontSize: normalize(20),
+    fontWeight: '600',
+    marginBottom: normalize(8),
+  },
+  body: {
+    fontSize: normalize(16),
+    lineHeight: normalize(24),
+  },
+  caption: {
+    fontSize: normalize(14),
+    color: '#666666',
+  },
+});
+
+// Usage
+function MedicationDetail() {
+  return (
+    <View style={styles.container}>
+      <Text style={Typography.h1}>Amoxicillin</Text>
+      <Text style={Typography.h2}>Dosage Instructions</Text>
+      <Text style={Typography.body}>
+        Take one 500mg pill every 8 hours with food.
+      </Text>
+      <Text style={Typography.caption}>
+        Last updated: Today at 9:00 AM
+      </Text>
+    </View>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Responsive Spacing System Slide -->
+    <section class="slide code-slide">
+      <h2>Responsive Spacing System</h2>
+      <p>Create a consistent spacing system that adapts to different screen sizes:</p>
+      <pre><code class="language-jsx">
+import { Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
+const baseWidth = 375; // Base width for scaling
+
+// Creates a responsive spacing system
+export const spacing = {
+  xs: Math.round((4 / baseWidth) * width),
+  sm: Math.round((8 / baseWidth) * width),
+  md: Math.round((16 / baseWidth) * width),
+  lg: Math.round((24 / baseWidth) * width),
+  xl: Math.round((32 / baseWidth) * width),
+  xxl: Math.round((48 / baseWidth) * width),
+};
+
+// Responsive styles using the spacing system
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: spacing.md,
+  },
+  card: {
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+    borderRadius: spacing.sm,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: spacing.xl,
+  },
+  buttonSpacing: {
+    marginRight: spacing.sm,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- useWindowDimensions Slide -->
+    <section class="slide code-slide">
+      <h2>useWindowDimensions Hook</h2>
+      <p>React Native provides a built-in hook for responsive layouts that automatically updates on dimension changes:</p>
+      <pre><code class="language-jsx">
+import React from 'react';
+import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
+
+function AdaptiveLayout() {
+  // This hook automatically updates when dimensions change
+  const { width, height, scale, fontScale } = useWindowDimensions();
+  
+  // Determine layout based on dimensions
+  const isLandscape = width > height;
+  const isMobile = width < 768;
+  const isTablet = width >= 768 && width < 1024;
+  const isDesktop = width >= 1024;
+  
+  return (
+    <View style={[
+      styles.container,
+      isLandscape ? styles.landscapeContainer : styles.portraitContainer
+    ]}>
+      <View style={[
+        styles.sidebar,
+        isLandscape ? styles.landscapeSidebar : styles.portraitSidebar
+      ]}>
+        <Text>Navigation</Text>
+      </View>
+      
+      <View style={styles.content}>
+        <Text style={{ fontSize: 18 * fontScale }}>
+          Window dimensions: {width} x {height}
+        </Text>
+        <Text>Device type: {isMobile ? 'Mobile' : isTablet ? 'Tablet' : 'Desktop'}</Text>
+        <Text>Orientation: {isLandscape ? 'Landscape' : 'Portrait'}</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  portraitContainer: {
+    flexDirection: 'column',
+  },
+  landscapeContainer: {
+    flexDirection: 'row',
+  },
+  sidebar: {
+    backgroundColor: '#f0f0f0',
+    padding: 16,
+  },
+  portraitSidebar: {
+    height: 100,
+    width: '100%',
+  },
+  landscapeSidebar: {
+    width: 200,
+    height: '100%',
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Device-Specific Adaptations Slide -->
+    <section class="slide code-slide">
+      <h2>Device-Specific Adaptations</h2>
+      <p>Using <code>Platform.isPad</code>, <code>Platform.isTV</code>, and other device detection:</p>
+      <pre><code class="language-jsx">
+import { Platform, StyleSheet, View, Text } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+
+function DeviceAdaptiveUI() {
+  // Basic platform detection
+  const isIOS = Platform.OS === 'ios';
+  const isAndroid = Platform.OS === 'android';
+  
+  // Advanced device detection (requires react-native-device-info)
+  const isTablet = DeviceInfo.isTablet();
+  const hasNotch = DeviceInfo.hasNotch();
+  const deviceType = isTablet ? 'tablet' : 'phone';
+  
+  // Apply layout based on device type
+  return (
+    <View style={styles.container}>
+      <View style={[
+        styles.header,
+        hasNotch && styles.notchHeader,
+        isTablet && styles.tabletHeader
+      ]}>
+        <Text style={styles.headerText}>
+          Medication Dashboard
+        </Text>
+      </View>
+      
+      <View style={[
+        styles.content,
+        isTablet && styles.tabletContent
+      ]}>
+        {isTablet ? (
+          // Tablet-specific layout with multiple panels
+          <View style={styles.tabletLayout}>
+            <View style={styles.sidePanel}>
+              {/* Navigation menu */}
+            </View>
+            <View style={styles.mainPanel}>
+              {/* Main content */}
+            </View>
+          </View>
+        ) : (
+          // Phone layout - single panel with navigation at bottom
+          <View style={styles.phoneLayout}>
+            {/* Main content */}
+          </View>
+        )}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notchHeader: {
+    paddingTop: 30, // Extra space for notch
+  },
+  tabletHeader: {
+    height: 80, // Taller header on tablets
+  },
+  tabletLayout: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  phoneLayout: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+  // Other styles...
+});
+      </code></pre>
+    </section>
+    
+    <!-- Breakpoints System Slide -->
+    <section class="slide code-slide">
+      <h2>Creating a Breakpoints System</h2>
+      <p>Implement a web-like breakpoints system for React Native:</p>
+      <pre><code class="language-jsx">
+import { Dimensions } from 'react-native';
+import { useState, useEffect } from 'react';
+
+// Breakpoint definitions
+const breakpoints = {
+  xs: 0,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+};
+
+// Hook for responsive design
+export function useBreakpoint() {
+  const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+  
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setWindowWidth(window.width);
+    });
+    
+    return () => subscription.remove();
+  }, []);
+  
+  // Calculate current breakpoint
+  let currentBreakpoint = 'xs';
+  for (const breakpoint in breakpoints) {
+    if (windowWidth >= breakpoints[breakpoint]) {
+      currentBreakpoint = breakpoint;
+    }
+  }
+  
+  // Helper functions for comparing breakpoints
+  const greaterThan = (breakpoint) => {
+    return windowWidth >= breakpoints[breakpoint];
+  };
+  
+  const lessThan = (breakpoint) => {
+    return windowWidth < breakpoints[breakpoint];
+  };
+  
+  return {
+    windowWidth,
+    breakpoint: currentBreakpoint,
+    greaterThan,
+    lessThan,
+  };
+}
+
+// Usage example
+function ResponsiveComponent() {
+  const { breakpoint, greaterThan } = useBreakpoint();
+  
+  // Responsive sizing
+  const getColumnsCount = () => {
+    if (greaterThan('lg')) return 3;
+    if (greaterThan('md')) return 2;
+    return 1;
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Text>Current breakpoint: {breakpoint}</Text>
+      <View style={{ 
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      }}>
+        {/* Render card grid based on columns count */}
+        {[1, 2, 3, 4, 5, 6].map((item) => (
+          <View
+            key={item}
+            style={{
+              width: `${100 / getColumnsCount()}%`,
+              padding: 8,
+            }}
+          >
+            <View style={styles.card}>
+              <Text>Card {item}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Create a Responsive Medication Detail Screen</h2>
+      <p>Implement a medication detail screen that adapts to different devices and orientations:</p>
+      <ol>
+        <li>Create a component that displays medication details</li>
+        <li>In portrait mode, display information in a vertical layout</li>
+        <li>In landscape mode, use a two-column layout</li>
+        <li>Include safe area handling for notched devices</li>
+        <li>Use responsive typography that scales with device size</li>
+        <li>Implement platform-specific UI elements (iOS vs Android styling)</li>
+      </ol>
+      <pre><code class="language-jsx">
+// Starter code
+import React from 'react';
+import { View, Text, StyleSheet, useWindowDimensions, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const medication = {
+  name: 'Lisinopril',
+  dosage: '10mg',
+  instructions: 'Take 1 tablet by mouth once daily',
+  sideEffects: 'Dizziness, headache, cough',
+  refills: 3,
+  nextRefillDate: 'June 15, 2023',
+};
+
+function MedicationDetailScreen() {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+  
+  // Implement your responsive layout here
+  
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Your code here */}
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  // Add your styles here
+});
+      </code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Responsive design in React Native requires adaptations for device size, orientation, and platform</li>
+        <li>Use <code>Dimensions</code> API or <code>useWindowDimensions</code> hook to access and respond to screen dimensions</li>
+        <li>Platform-specific styling can be achieved using <code>Platform.select</code> or platform-specific files</li>
+        <li>Implement safe area handling for modern devices with notches using <code>SafeAreaView</code></li>
+        <li>Create responsive typography and spacing systems that scale with device size</li>
+        <li>Use breakpoint systems for more complex responsive layouts</li>
+        <li>Always test on multiple device sizes and orientations</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 5 - Theming and Design Systems</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

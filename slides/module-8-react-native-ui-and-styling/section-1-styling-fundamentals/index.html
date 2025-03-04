@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 1: Styling Fundamentals | React Native UI and Styling</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 1</h1>
+      <h2>Styling Fundamentals in React Native</h2>
+      <p class="metadata">Module 8 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand how styling in React Native differs from web CSS</li>
+        <li>Apply inline styles to React Native components</li>
+        <li>Use the style prop effectively with different component types</li>
+        <li>Combine and merge styles in React Native</li>
+        <li>Identify supported style properties and their limitations</li>
+        <li>Apply platform-specific styles when needed</li>
+        <li>Use styled-components for React Native styling</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> React Native Components (Module 7)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to React Native Styling</h2>
+      <p>React Native uses a styling approach that is similar to CSS but with some important differences:</p>
+      <ul>
+        <li>Styles are written in JavaScript, not CSS</li>
+        <li>Uses a subset of CSS properties with camelCase naming</li>
+        <li>No cascading or inheritance (except for text)</li>
+        <li>Layout primarily uses Flexbox</li>
+        <li>Units are unitless numbers (no px, em, rem, etc.)</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>React Native styles are not actual CSS. They are JavaScript objects that resemble CSS, but with limitations and differences in behavior.</p>
+      </div>
+      <div class="presenter-notes">
+        <p>Emphasize that the mental model from web CSS needs to be adjusted when working with React Native styling.</p>
+      </div>
+    </section>
+    
+    <!-- Style Objects Slide -->
+    <section class="slide content-slide">
+      <h2>Style Objects in React Native</h2>
+      <p>The most basic way to style a component is by passing a style object to the component's <code>style</code> prop:</p>
+      <pre><code class="language-jsx">
+import { View, Text } from 'react-native';
+
+function BasicStyling() {
+  return (
+    <View style={{ 
+      padding: 16,
+      backgroundColor: '#ffffff',
+      borderRadius: 8
+    }}>
+      <Text style={{ 
+        fontSize: 18,
+        color: '#333333',
+        fontWeight: 'bold'
+      }}>
+        Amoxicillin 500mg
+      </Text>
+    </View>
+  );
+}
+      </code></pre>
+      <div class="callout warning">
+        <div class="callout-title">Performance Note</div>
+        <p>Inline style objects are recreated on each render, which can impact performance in complex UIs.</p>
+      </div>
+    </section>
+    
+    <!-- Style Properties Slide -->
+    <section class="slide content-slide">
+      <h2>Common Style Properties</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Layout Properties</h3>
+          <ul>
+            <li><code>flex</code>, <code>flexDirection</code></li>
+            <li><code>justifyContent</code>, <code>alignItems</code></li>
+            <li><code>width</code>, <code>height</code></li>
+            <li><code>margin</code>, <code>padding</code></li>
+            <li><code>position</code> (relative/absolute)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Visual Properties</h3>
+          <ul>
+            <li><code>backgroundColor</code>, <code>color</code></li>
+            <li><code>borderRadius</code>, <code>borderWidth</code></li>
+            <li><code>opacity</code>, <code>elevation</code> (Android)</li>
+            <li><code>shadowColor</code>, <code>shadowOffset</code> (iOS)</li>
+            <li><code>fontWeight</code>, <code>fontSize</code></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Web vs. React Native</div>
+        <p>Property names use camelCase instead of kebab-case: <code>background-color</code> → <code>backgroundColor</code>.</p>
+      </div>
+    </section>
+    
+    <!-- Component-Specific Styles Slide -->
+    <section class="slide content-slide">
+      <h2>Component-Specific Styles</h2>
+      <p>Different components accept different style properties:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>View Styles</h3>
+          <ul>
+            <li>Layout properties (flexbox)</li>
+            <li>Background styles</li>
+            <li>Border styles</li>
+            <li>Shadow properties</li>
+            <li>Transform properties</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Text Styles</h3>
+          <ul>
+            <li>Font properties</li>
+            <li>Text alignment and decoration</li>
+            <li>Line height and letter spacing</li>
+            <li>Text color and shadow</li>
+            <li><strong>Note:</strong> Text styles cascade to nested Text</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Common Mistake</div>
+        <p>You cannot apply text styling properties (like <code>fontSize</code>) to a View component.</p>
+      </div>
+    </section>
+    
+    <!-- Combining Styles Slide -->
+    <section class="slide code-slide">
+      <h2>Combining and Merging Styles</h2>
+      <p>Styles can be combined using array syntax:</p>
+      <pre><code class="language-jsx">
+function MedicationItem({ highlighted }) {
+  const baseStyle = {
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#ffffff'
+  };
+  
+  const highlightStyle = {
+    backgroundColor: '#f0f8ff',
+    borderWidth: 1,
+    borderColor: '#007aff'
+  };
+  
+  return (
+    <View style={[
+      baseStyle,
+      highlighted && highlightStyle // Conditionally apply style
+    ]}>
+      <Text>Amoxicillin 500mg</Text>
+    </View>
+  );
+}
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Style Precedence</div>
+        <p>Later styles in the array override earlier ones with the same properties.</p>
+      </div>
+    </section>
+    
+    <!-- Platform-Specific Styles Slide -->
+    <section class="slide code-slide">
+      <h2>Platform-Specific Styles</h2>
+      <p>Apply different styles based on platform using the Platform API:</p>
+      <pre><code class="language-jsx">
+import { View, StyleSheet, Platform } from 'react-native';
+
+function MedicationCard() {
+  return (
+    <View style={styles.card}>
+      {/* Card contents */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: 'white',
+    margin: 8,
+    // Platform-specific shadow styles
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Style Limitations Slide -->
+    <section class="slide content-slide">
+      <h2>Style Limitations in React Native</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Not Supported in React Native</h3>
+          <ul>
+            <li>CSS selectors (:hover, :active, etc.)</li>
+            <li>CSS animations and transitions</li>
+            <li>Grid layout</li>
+            <li>Most CSS units (rem, em, vh, etc.)</li>
+            <li>Automatic styling inheritance</li>
+            <li>Media queries (handled differently)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>React Native Alternatives</h3>
+          <ul>
+            <li>State-based styling</li>
+            <li>Animated API</li>
+            <li>Flexbox for layouts</li>
+            <li>Dimensions API for responsive design</li>
+            <li>Explicit style propagation</li>
+            <li>Programmatic adaptation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Styled Components Slide -->
+    <section class="slide code-slide">
+      <h2>Using Styled Components in React Native</h2>
+      <p>Styled-components provides a more CSS-like approach to styling React Native:</p>
+      <pre><code class="language-jsx">
+import styled from 'styled-components/native';
+
+// Create styled components
+const CardContainer = styled.View`
+  padding: 16px;
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px;
+  ${Platform.OS === 'ios' ? `
+    shadow-color: #000;
+    shadow-offset: 0px 2px;
+    shadow-opacity: 0.2;
+    shadow-radius: 4px;
+  ` : `
+    elevation: 4;
+  `}
+`;
+
+const MedicationName = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+`;
+
+// Use the components
+function MedicationCard({ name }) {
+  return (
+    <CardContainer>
+      <MedicationName>{name}</MedicationName>
+      {/* Other content */}
+    </CardContainer>
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: How React Native Styling Works</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>The JavaScript Thread</h3>
+          <ul>
+            <li>Style objects are defined in JS</li>
+            <li>StyleSheet.create optimizes by creating style IDs</li>
+            <li>Style resolution happens in JS</li>
+            <li>Resolved styles sent across the bridge</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>The Native UI Thread</h3>
+          <ul>
+            <li>Receives style information from JS</li>
+            <li>Converts to platform-specific styles</li>
+            <li>iOS: YogaKit + UIKit styling</li>
+            <li>Android: Yoga + View styling</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Performance Insight</div>
+        <p>The JavaScript-to-Native bridge can be a performance bottleneck. Using StyleSheet.create() creates IDs for styles rather than sending full style objects across the bridge repeatedly.</p>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Styling Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Performance</h3>
+          <ul>
+            <li>Use StyleSheet.create instead of inline styles</li>
+            <li>Avoid complex style computations in render</li>
+            <li>Memoize dynamic styles when possible</li>
+            <li>Keep style objects outside component functions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Organization</h3>
+          <ul>
+            <li>Group related styles together</li>
+            <li>Use meaningful style names</li>
+            <li>Separate component logic from styling</li>
+            <li>Consider a theming approach for consistency</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Basic Medication Card Styling</h2>
+      <p>Create a styled medication card component with:</p>
+      <ol>
+        <li>A container with proper padding, background color, and border radius</li>
+        <li>Styled text for medication name, dosage, and instructions</li>
+        <li>Platform-specific shadow styling (elevation on Android, shadow properties on iOS)</li>
+        <li>A highlighted state that changes the appearance when a medication is selected</li>
+      </ol>
+      <pre><code class="language-jsx">
+// Starter code
+import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet, Platform } from 'react-native';
+
+const MedicationCard = ({ medication }) => {
+  const [selected, setSelected] = useState(false);
+  
+  // Add your styling here
+  
+  return (
+    <Pressable onPress={() => setSelected(!selected)}>
+      <View>
+        <Text>{medication.name}</Text>
+        <Text>{medication.dosage}</Text>
+        <Text>{medication.instructions}</Text>
+      </View>
+    </Pressable>
+  );
+};
+      </code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>React Native uses JavaScript objects for styling, not CSS</li>
+        <li>Styles can be inline or created with StyleSheet.create()</li>
+        <li>Different components accept different style properties</li>
+        <li>Styles can be combined, merged, and conditionally applied</li>
+        <li>Platform.select() allows for platform-specific styling</li>
+        <li>Styled-components provides an alternative CSS-like styling approach</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 2 - StyleSheet API and Performance</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

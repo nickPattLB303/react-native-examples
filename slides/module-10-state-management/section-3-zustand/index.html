@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zustand for Client State | Module 10, Section 3</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Zustand</h1>
+      <h2>Lightweight Client State Management</h2>
+      <p class="metadata">Module 10, Section 3 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the principles behind Zustand</li>
+        <li>Set up Zustand in a React Native application</li>
+        <li>Create and use stores for state management</li>
+        <li>Implement state updates and actions</li>
+        <li>Work with derived state and selectors</li>
+        <li>Use middleware for enhanced functionality</li>
+        <li>Integrate TypeScript with Zustand</li>
+      </ul>
+    </section>
+    
+    <!-- Introduction to Zustand Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Zustand</h2>
+      <div class="columns">
+        <div class="column">
+          <p>Zustand is a small, fast, and scalable state-management solution for React applications, with a simple API based on hooks.</p>
+          <h3>Key Benefits</h3>
+          <ul>
+            <li>Minimal boilerplate compared to Redux</li>
+            <li>No providers needed - use stores directly</li>
+            <li>Simple and intuitive API</li>
+            <li>Selective component updates</li>
+            <li>TypeScript friendly</li>
+            <li>Small bundle size (~1KB)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>When to Use Zustand</h3>
+          <ul>
+            <li>Global application state</li>
+            <li>Shared state between components</li>
+            <li>Persisting client state</li>
+            <li>Complex state updates</li>
+            <li>Middleware requirements</li>
+            <li>Replacing Redux with something simpler</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Zustand vs Other State Solutions Slide -->
+    <section class="slide content-slide">
+      <h2>Zustand vs Other State Solutions</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Zustand</th>
+            <th>Redux</th>
+            <th>Context API</th>
+            <th>MobX</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Boilerplate</td>
+            <td>Minimal</td>
+            <td>Substantial</td>
+            <td>Moderate</td>
+            <td>Moderate</td>
+          </tr>
+          <tr>
+            <td>Provider Required</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Bundle Size</td>
+            <td>Very Small</td>
+            <td>Large</td>
+            <td>Built-in</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Paradigm</td>
+            <td>Hook-based</td>
+            <td>Action-based</td>
+            <td>Provider-based</td>
+            <td>Observable</td>
+          </tr>
+          <tr>
+            <td>Learning Curve</td>
+            <td>Low</td>
+            <td>High</td>
+            <td>Medium</td>
+            <td>Medium</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Setting Up Zustand Slide -->
+    <section class="slide code-slide">
+      <h2>Setting Up Zustand</h2>
+      <pre><code class="language-bash">
+# Install Zustand
+npm install zustand
+# or
+yarn add zustand</code></pre>
+      <pre><code class="language-tsx">
+// Basic store setup
+import { create } from 'zustand';
+
+// Define a store
+interface MedicationStore {
+  medications: Medication[];
+  isLoading: boolean;
+  error: string | null;
+  // Actions
+  fetchMedications: () => Promise<void>;
+  addMedication: (medication: Medication) => void;
+  updateMedication: (id: number, updates: Partial<Medication>) => void;
+  deleteMedication: (id: number) => void;
+}
+
+// Create a store
+const useMedicationStore = create<MedicationStore>((set, get) => ({
+  medications: [],
+  isLoading: false,
+  error: null,
+  
+  // Define actions
+  fetchMedications: async () => {
+    // Implementation will follow
+  },
+  addMedication: (medication) => {
+    // Implementation will follow
+  },
+  updateMedication: (id, updates) => {
+    // Implementation will follow
+  },
+  deleteMedication: (id) => {
+    // Implementation will follow
+  },
+}));</code></pre>
+    </section>
+    
+    <!-- Basic Store Usage Slide -->
+    <section class="slide code-slide">
+      <h2>Using a Zustand Store</h2>
+      <pre><code class="language-tsx">
+import React, { useEffect } from 'react';
+import { View, Text, FlatList, Button } from 'react-native';
+import { useMedicationStore } from '../stores/medicationStore';
+
+function MedicationList() {
+  // Pull only what you need from the store
+  const { 
+    medications, 
+    isLoading, 
+    error, 
+    fetchMedications,
+    deleteMedication
+  } = useMedicationStore();
+  
+  // Fetch medications when component mounts
+  useEffect(() => {
+    fetchMedications();
+  }, []);
+  
+  if (isLoading) return <Text>Loading medications...</Text>;
+  if (error) return <Text>Error: {error}</Text>;
+  
+  return (
+    <View>
+      <FlatList
+        data={medications}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.name}</Text>
+            <Button 
+              title="Delete" 
+              onPress={() => deleteMedication(item.id)} 
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Implementing Actions Slide -->
+    <section class="slide code-slide">
+      <h2>Implementing Store Actions</h2>
+      <pre><code class="language-tsx">
+const useMedicationStore = create<MedicationStore>((set, get) => ({
+  medications: [],
+  isLoading: false,
+  error: null,
+  
+  // Fetch medications from API
+  fetchMedications: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await fetch('https://api.pharmacy.com/medications');
+      if (!response.ok) throw new Error('Failed to fetch medications');
+      const data = await response.json();
+      set({ medications: data, isLoading: false });
+    } catch (error) {
+      set({ error: error.message, isLoading: false });
+    }
+  },
+  
+  // Add a new medication
+  addMedication: (medication) => {
+    set((state) => ({
+      medications: [...state.medications, medication]
+    }));
+  },
+  
+  // Update an existing medication
+  updateMedication: (id, updates) => {
+    set((state) => ({
+      medications: state.medications.map((med) => 
+        med.id === id ? { ...med, ...updates } : med
+      )
+    }));
+  },
+  
+  // Delete a medication
+  deleteMedication: (id) => {
+    set((state) => ({
+      medications: state.medications.filter((med) => med.id !== id)
+    }));
+  },
+}));</code></pre>
+    </section>
+    
+    <!-- Selectors Slide -->
+    <section class="slide code-slide">
+      <h2>Working with Selectors</h2>
+      <pre><code class="language-tsx">
+// Instead of pulling the entire state, use selectors for better performance
+function MedicationStats() {
+  // Only re-renders when these specific values change
+  const totalCount = useMedicationStore((state) => state.medications.length);
+  const takenCount = useMedicationStore(
+    (state) => state.medications.filter(med => med.taken).length
+  );
+  const percentageTaken = useMedicationStore(
+    (state) => {
+      const total = state.medications.length;
+      if (total === 0) return 0;
+      const taken = state.medications.filter(med => med.taken).length;
+      return Math.round((taken / total) * 100);
+    }
+  );
+  
+  return (
+    <View>
+      <Text>Total Medications: {totalCount}</Text>
+      <Text>Taken: {takenCount}</Text>
+      <Text>Progress: {percentageTaken}%</Text>
+    </View>
+  );
+}
+
+// You can also define reusable selectors
+const selectPrescriptionMedications = (state) => 
+  state.medications.filter(med => med.isPrescription);
+
+function PrescriptionList() {
+  const prescriptionMeds = useMedicationStore(selectPrescriptionMedications);
+  
+  return (
+    <FlatList
+      data={prescriptionMeds}
+      renderItem={({ item }) => <Text>{item.name}</Text>}
+    />
+  );
+}</code></pre>
+    </section>
+    
+    <!-- State Updates Deep Dive Slide -->
+    <section class="slide content-slide">
+      <h2>State Updates Deep Dive</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Updating State</h3>
+          <pre><code class="language-tsx">
+// Direct state update
+set({ count: 1 });
+
+// Function state update (preferred)
+set((state) => ({ count: state.count + 1 }));
+
+// Partial state updates
+set((state) => ({ 
+  user: { ...state.user, name: 'New Name' }
+}));
+
+// Nested state updates (avoid!)
+set((state) => ({
+  settings: {
+    ...state.settings,
+    theme: {
+      ...state.settings.theme,
+      darkMode: true
+    }
+  }
+}));</code></pre>
+        </div>
+        <div class="column">
+          <h3>Tips and Best Practices</h3>
+          <ul>
+            <li>Use function updates for state-dependent changes</li>
+            <li>Keep state flat to avoid deep nesting</li>
+            <li>Use immer middleware for complex updates</li>
+            <li>Use the get function to access state in actions</li>
+            <li>Avoid storing derived data in state</li>
+            <li>Break large stores into smaller ones</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Middleware Slide -->
+    <section class="slide code-slide">
+      <h2>Enhancing Stores with Middleware</h2>
+      <pre><code class="language-tsx">
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const useMedicationStore = create(
+  // Add persist middleware for storage
+  persist(
+    // Add immer middleware for easier state updates
+    immer((set) => ({
+      medications: [],
+      
+      addMedication: (medication) => set((state) => {
+        // With immer, you can mutate state directly
+        state.medications.push(medication);
+      }),
+      
+      updateMedication: (id, updates) => set((state) => {
+        const index = state.medications.findIndex(med => med.id === id);
+        if (index !== -1) {
+          // Mutate the object directly
+          Object.assign(state.medications[index], updates);
+        }
+      }),
+      
+      deleteMedication: (id) => set((state) => {
+        const index = state.medications.findIndex(med => med.id === id);
+        if (index !== -1) {
+          // Remove the item directly
+          state.medications.splice(index, 1);
+        }
+      }),
+    })),
+    {
+      name: 'medication-storage', // unique name for storage
+      storage: createJSONStorage(() => AsyncStorage), // Use AsyncStorage
+    }
+  )
+);</code></pre>
+    </section>
+    
+    <!-- Combining Stores Slide -->
+    <section class="slide code-slide">
+      <h2>Breaking Down and Combining Stores</h2>
+      <pre><code class="language-tsx">
+// Separate stores for different domains
+const useUserStore = create((set) => ({
+  user: null,
+  isAuthenticated: false,
+  login: (userData) => set({ user: userData, isAuthenticated: true }),
+  logout: () => set({ user: null, isAuthenticated: false })
+}));
+
+const useMedicationStore = create((set) => ({
+  medications: [],
+  addMedication: (medication) => set((state) => ({
+    medications: [...state.medications, medication]
+  })),
+  // other medication-related actions
+}));
+
+const useSettingsStore = create((set) => ({
+  darkMode: false,
+  notificationsEnabled: true,
+  toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
+  setNotifications: (enabled) => set({ notificationsEnabled: enabled })
+}));
+
+// Component using multiple stores
+function ProfileScreen() {
+  const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+  const darkMode = useSettingsStore((state) => state.darkMode);
+  const toggleDarkMode = useSettingsStore((state) => state.toggleDarkMode);
+  
+  return (
+    <View style={{ backgroundColor: darkMode ? 'black' : 'white' }}>
+      <Text>Welcome, {user?.name}</Text>
+      <Button title="Toggle Dark Mode" onPress={toggleDarkMode} />
+      <Button title="Logout" onPress={logout} />
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Async Actions Slide -->
+    <section class="slide code-slide">
+      <h2>Handling Async Actions</h2>
+      <pre><code class="language-tsx">
+const useMedicationStore = create((set, get) => ({
+  medications: [],
+  isLoading: false,
+  error: null,
+  
+  // Fetch medications from API
+  fetchMedications: async () => {
+    set({ isLoading: true, error: null });
+    
+    try {
+      const response = await fetch('https://api.pharmacy.com/medications');
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      set({ medications: data, isLoading: false });
+    } catch (error) {
+      console.error('Failed to fetch medications:', error);
+      set({ error: error.message, isLoading: false });
+    }
+  },
+  
+  // Add medication with API call
+  addMedication: async (medication) => {
+    set({ isLoading: true, error: null });
+    
+    try {
+      const response = await fetch('https://api.pharmacy.com/medications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(medication)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const newMedication = await response.json();
+      
+      // Update state with the response from the server
+      set((state) => ({
+        medications: [...state.medications, newMedication],
+        isLoading: false
+      }));
+    } catch (error) {
+      console.error('Failed to add medication:', error);
+      set({ error: error.message, isLoading: false });
+    }
+  }
+}));</code></pre>
+    </section>
+    
+    <!-- TypeScript Integration Slide -->
+    <section class="slide code-slide">
+      <h2>TypeScript Integration</h2>
+      <pre><code class="language-tsx">
+// Define types for your state and actions
+interface Medication {
+  id: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  taken: boolean;
+  isPrescription: boolean;
+}
+
+interface MedicationState {
+  medications: Medication[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+interface MedicationActions {
+  fetchMedications: () => Promise<void>;
+  addMedication: (medication: Omit<Medication, 'id'>) => Promise<void>;
+  updateMedication: (id: number, updates: Partial<Medication>) => void;
+  deleteMedication: (id: number) => void;
+  markAsTaken: (id: number, taken: boolean) => void;
+}
+
+// Combine state and actions
+type MedicationStore = MedicationState & MedicationActions;
+
+// Create the store with proper typing
+const useMedicationStore = create<MedicationStore>((set, get) => ({
+  medications: [],
+  isLoading: false,
+  error: null,
+  
+  fetchMedications: async () => {
+    // Implementation with proper type safety
+  },
+  
+  addMedication: async (medication) => {
+    // Implementation with proper type safety
+  },
+  
+  updateMedication: (id, updates) => {
+    // Implementation with proper type safety
+  },
+  
+  deleteMedication: (id) => {
+    set((state) => ({
+      medications: state.medications.filter(med => med.id !== id)
+    }));
+  },
+  
+  markAsTaken: (id, taken) => {
+    set((state) => ({
+      medications: state.medications.map(med => 
+        med.id === id ? { ...med, taken } : med
+      )
+    }));
+  }
+}));</code></pre>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: Zustand</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>How Zustand Works</h3>
+          <ol>
+            <li>A store is a hook that returns state and actions</li>
+            <li>State is stored outside React's component tree</li>
+            <li>Updates use a publish-subscribe model</li>
+            <li>Only components that select changed values re-render</li>
+            <li>Selectors implement memoization for performance</li>
+            <li>No context providers or reducers required</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Performance Considerations</h3>
+          <ul>
+            <li>Use selectors to minimize re-renders</li>
+            <li>Set immutable updates correctly</li>
+            <li>Avoid unnecessary object creations</li>
+            <li>Consider shallow equality for complex objects</li>
+            <li>Use React.memo for listing components</li>
+            <li>Avoid storing too much in a single store</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Zustand Best Practices</h2>
+      <ul>
+        <li><strong>Keep state minimal</strong> - Only store what you need</li>
+        <li><strong>Use multiple small stores</strong> - Instead of one large store</li>
+        <li><strong>Separate concerns</strong> - Different domains in different stores</li>
+        <li><strong>Use selectors</strong> - For optimized rendering</li>
+        <li><strong>Leverage middleware</strong> - For complex updates and persistence</li>
+        <li><strong>Normalize data</strong> - For complex relational data</li>
+        <li><strong>Create typed custom hooks</strong> - For encapsulated store access</li>
+        <li><strong>Use API boundaries</strong> - To abstract store implementation details</li>
+      </ul>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: Zustand</h2>
+      <ul>
+        <li>Zustand provides simple and performant state management</li>
+        <li>Minimal API with hook-based access to state</li>
+        <li>No providers needed - direct access to state</li>
+        <li>Actions encapsulate state updates</li>
+        <li>Middleware extends functionality</li>
+        <li>TypeScript integration for type safety</li>
+        <li>Excellent for global client state in React Native apps</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 4 - Context API for Shared State</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Medication Tracker with Zustand</h2>
+      <div class="exercise-description">
+        <p>Create a medication tracker that:</p>
+        <ol>
+          <li>Implements a Zustand store for medication management</li>
+          <li>Includes actions for adding, updating, and deleting medications</li>
+          <li>Uses selectors to optimize component rendering</li>
+          <li>Implements persistence with the persist middleware</li>
+          <li>Provides a simple UI for testing store functionality</li>
+        </ol>
+        <p>Time: 20 minutes</p>
+        <p>Resources: Starter code provided in Expo Snack</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

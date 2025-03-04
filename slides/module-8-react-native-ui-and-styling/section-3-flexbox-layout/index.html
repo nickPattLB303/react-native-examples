@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: Flexbox Layout | React Native UI and Styling</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>Flexbox Layout in React Native</h2>
+      <p class="metadata">Module 8 | 60-75 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand how Flexbox layout works in React Native</li>
+        <li>Apply Flexbox properties to create responsive layouts</li>
+        <li>Use flex direction, justification, and alignment effectively</li>
+        <li>Create complex layouts using nested Flex containers</li>
+        <li>Implement common UI patterns with Flexbox</li>
+        <li>Apply Flexbox with both StyleSheet API and styled-components</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 60-75 minutes</p>
+        <p><strong>Prerequisites:</strong> Styling Fundamentals in React Native (Section 1)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction to Flexbox Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Flexbox in React Native</h2>
+      <p>Flexbox is the primary layout system in React Native, providing a consistent way to arrange components:</p>
+      <ul>
+        <li>All View components in React Native use Flexbox by default</li>
+        <li>Flexbox makes responsive layouts easier to create</li>
+        <li>Works similarly to CSS Flexbox on the web, with some differences</li>
+        <li>Allows elements to fill available space or shrink to prevent overflow</li>
+        <li>Enables alignment on both primary and cross axes</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-title">Key Insight</div>
+        <p>Unlike web CSS where you need to set <code>display: flex</code>, React Native components use Flexbox automatically.</p>
+      </div>
+    </section>
+    
+    <!-- Flexbox Differences Slide -->
+    <section class="slide content-slide">
+      <h2>React Native Flexbox vs Web CSS Flexbox</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Differences</h3>
+          <ul>
+            <li>Default flexDirection is <code>column</code> (not <code>row</code>)</li>
+            <li>Default alignItems is <code>stretch</code> (same as web)</li>
+            <li>No flex-wrap by default (need to set <code>flexWrap: 'wrap'</code>)</li>
+            <li>flex: 1 makes an item fill available space</li>
+            <li>Units are unitless numbers (no %, em, etc.)</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Not Supported</h3>
+          <ul>
+            <li>No <code>flex-basis</code> or <code>flex-flow</code></li>
+            <li>No <code>align-content</code> property</li>
+            <li>No <code>flex-grow</code> or <code>flex-shrink</code></li>
+            <li>No negative margins for Flexbox</li>
+            <li>Limited flex shorthand (just a number)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">For Web Developers</div>
+        <p>If you're coming from web, be mindful of these differences when implementing layouts.</p>
+      </div>
+    </section>
+    
+    <!-- Flex Direction Slide -->
+    <section class="slide content-slide">
+      <h2>Flex Direction</h2>
+      <p>The <code>flexDirection</code> property determines the primary axis of layout:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Column (Default)</h3>
+          <pre><code class="language-jsx">
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    // Items are placed from top to bottom
+  },
+});
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Row</h3>
+          <pre><code class="language-jsx">
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    // Items are placed from left to right
+  },
+});
+          </code></pre>
+        </div>
+      </div>
+      <p>Other options: <code>column-reverse</code> (bottom to top) and <code>row-reverse</code> (right to left)</p>
+      <div class="callout info">
+        <div class="callout-title">For Arabic/RTL Languages</div>
+        <p>Use <code>flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'</code> for proper RTL support.</p>
+      </div>
+    </section>
+    
+    <!-- Flex Property Slide -->
+    <section class="slide code-slide">
+      <h2>The Flex Property</h2>
+      <p>The <code>flex</code> property determines how items grow or shrink within a container:</p>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationSection() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.sidebar}>
+        <Text>Filters</Text>
+      </View>
+      <View style={styles.mainContent}>
+        <Text>Medication List</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    height: 300,
+  },
+  sidebar: {
+    flex: 1, // Takes up 1 part of available space
+    backgroundColor: '#f0f0f0',
+    padding: 16,
+  },
+  mainContent: {
+    flex: 3, // Takes up 3 parts of available space
+    backgroundColor: '#ffffff',
+    padding: 16,
+  },
+});
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Under the Hood</div>
+        <p>In React Native, <code>flex: n</code> is equivalent to setting <code>flexGrow: n</code>, <code>flexShrink: 1</code>, and <code>flexBasis: 0</code>.</p>
+      </div>
+    </section>
+    
+    <!-- Flex Direction Example Slide -->
+    <section class="slide code-slide">
+      <h2>Flex Direction Examples</h2>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationDetails() {
+  return (
+    <View>
+      {/* Row layout for medication header */}
+      <View style={styles.header}>
+        <Text style={styles.name}>Amoxicillin</Text>
+        <Text style={styles.dosage}>500mg</Text>
+      </View>
+      
+      {/* Column layout for medication details */}
+      <View style={styles.details}>
+        <Text style={styles.label}>Instructions:</Text>
+        <Text style={styles.value}>Take 1 tablet 3 times daily with food.</Text>
+        <Text style={styles.label}>Side Effects:</Text>
+        <Text style={styles.value}>Nausea, diarrhea, rash</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#f8f8f8',
+  },
+  details: {
+    flexDirection: 'column',
+    padding: 16,
+  },
+  // Other styles...
+});
+      </code></pre>
+    </section>
+    
+    <!-- Justification Slide -->
+    <section class="slide content-slide">
+      <h2>Justifying Content</h2>
+      <p>The <code>justifyContent</code> property aligns items along the main axis:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Options</h3>
+          <ul>
+            <li><code>flex-start</code> (default): Items at start</li>
+            <li><code>flex-end</code>: Items at end</li>
+            <li><code>center</code>: Items at center</li>
+            <li><code>space-between</code>: Space between items</li>
+            <li><code>space-around</code>: Space around items</li>
+            <li><code>space-evenly</code>: Equal spacing</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example</h3>
+          <pre><code class="language-jsx">
+const styles = StyleSheet.create({
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  centeredContent: {
+    flex: 1,
+    justifyContent: 'center',
+    // Centers content vertically 
+    // when flexDirection is column
+  },
+});
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Alignment Slide -->
+    <section class="slide content-slide">
+      <h2>Aligning Items</h2>
+      <p>The <code>alignItems</code> property aligns items along the cross axis:</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Options</h3>
+          <ul>
+            <li><code>stretch</code> (default): Items stretch to fill</li>
+            <li><code>flex-start</code>: Items at start of cross axis</li>
+            <li><code>flex-end</code>: Items at end of cross axis</li>
+            <li><code>center</code>: Items centered on cross axis</li>
+            <li><code>baseline</code>: Items aligned by text baseline</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Example</h3>
+          <pre><code class="language-jsx">
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // Centers items vertically when 
+    // flexDirection is row
+  },
+  header: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    // Aligns items to the left when
+    // flexDirection is column
+  },
+});
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Self Alignment Slide -->
+    <section class="slide code-slide">
+      <h2>alignSelf: Overriding Alignment for Individual Items</h2>
+      <p>The <code>alignSelf</code> property allows individual items to override the container's <code>alignItems</code>:</p>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationItem() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.name}>Amoxicillin</Text>
+      <Text style={styles.dosage}>500mg</Text>
+      <Text style={styles.warning}>IMPORTANT: Take with food</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    alignItems: 'flex-start', // All items left-aligned by default
+    padding: 16,
+    backgroundColor: '#ffffff',
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  dosage: {
+    fontSize: 16,
+  },
+  warning: {
+    alignSelf: 'center', // This item is center-aligned, overriding container
+    marginTop: 8,
+    color: 'red',
+    fontWeight: 'bold',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Flexbox Common Layouts Slide -->
+    <section class="slide content-slide">
+      <h2>Common Layout Patterns with Flexbox</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Center Content</h3>
+          <pre><code class="language-jsx">
+const centeredContent = {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+          </code></pre>
+          <h3>Card Layout</h3>
+          <pre><code class="language-jsx">
+const card = {
+  flexDirection: 'column',
+  padding: 16,
+  borderRadius: 8,
+};
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Toolbar</h3>
+          <pre><code class="language-jsx">
+const toolbar = {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  height: 56,
+};
+          </code></pre>
+          <h3>Form Elements</h3>
+          <pre><code class="language-jsx">
+const formRow = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: 16,
+};
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- FlexWrap Slide -->
+    <section class="slide code-slide">
+      <h2>Using flexWrap for Multi-line Layouts</h2>
+      <p>By default, flex items are forced into a single line. Use <code>flexWrap: 'wrap'</code> to allow multiple lines:</p>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationTags({ tags }) {
+  return (
+    <View style={styles.container}>
+      {tags.map((tag, index) => (
+        <View key={index} style={styles.tag}>
+          <Text style={styles.tagText}>{tag}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap', // Allow items to wrap to multiple lines
+    marginVertical: 8,
+  },
+  tag: {
+    backgroundColor: '#e1f5fe',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    margin: 4,
+  },
+  tagText: {
+    color: '#0288d1',
+    fontSize: 14,
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Absolute Positioning with Flexbox Slide -->
+    <section class="slide code-slide">
+      <h2>Combining Flexbox and Absolute Positioning</h2>
+      <p>You can use absolute positioning within a flex container:</p>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationCard({ isNew }) {
+  return (
+    <View style={styles.card}>
+      {isNew && <View style={styles.badge}>
+        <Text style={styles.badgeText}>NEW</Text>
+      </View>}
+      
+      <Text style={styles.title}>Amoxicillin</Text>
+      <Text style={styles.subtitle}>500mg capsules</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    position: 'relative', // Establishes a positioning context
+    flexDirection: 'column',
+    padding: 16,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginVertical: 8,
+  },
+  badge: {
+    position: 'absolute',
+    top: -10,
+    right: -10,
+    backgroundColor: '#4CAF50',
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Nested Flex Containers Slide -->
+    <section class="slide code-slide">
+      <h2>Nested Flex Containers for Complex Layouts</h2>
+      <pre><code class="language-jsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+function MedicationApp() {
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Pharmacy App</Text>
+      </View>
+      
+      {/* Content with sidebar and main area */}
+      <View style={styles.content}>
+        {/* Sidebar */}
+        <View style={styles.sidebar}>
+          <Text style={styles.sidebarTitle}>Categories</Text>
+          {/* Sidebar items */}
+        </View>
+        
+        {/* Main content area */}
+        <View style={styles.main}>
+          {/* Medication list header */}
+          <View style={styles.listHeader}>
+            <Text style={styles.listTitle}>Medications</Text>
+            <View style={styles.filterRow}>
+              {/* Filter controls */}
+            </View>
+          </View>
+          
+          {/* Medication list would go here */}
+        </View>
+      </View>
+      
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>© 2023 Pharmacy App</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  header: {
+    height: 60,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    backgroundColor: '#007AFF',
+  },
+  content: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  sidebar: {
+    width: 200,
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+  },
+  main: {
+    flex: 1,
+    padding: 16,
+  },
+  listHeader: {
+    flexDirection: 'column',
+    marginBottom: 16,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  footer: {
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  // Text styles...
+});
+      </code></pre>
+    </section>
+    
+    <!-- Aspect Ratio with Flexbox Slide -->
+    <section class="slide code-slide">
+      <h2>Creating Fixed Aspect Ratio Containers</h2>
+      <p>Achieving a fixed aspect ratio using a combination of flexbox and padding:</p>
+      <pre><code class="language-jsx">
+import { View, Image, StyleSheet } from 'react-native';
+
+function MedicationImage({ uri }) {
+  return (
+    <View style={styles.aspectRatioContainer}>
+      <Image
+        source={{ uri }}
+        style={styles.image}
+        resizeMode="cover"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  aspectRatioContainer: {
+    width: '100%',
+    aspectRatio: 16 / 9, // Creates a 16:9 aspect ratio container
+    // OR alternatively:
+    // paddingTop: '75%', // Creates a 4:3 aspect ratio (75% = 3/4)
+    position: 'relative',
+    backgroundColor: '#f0f0f0',
+    overflow: 'hidden',
+    borderRadius: 8,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject, // Fill the container completely
+  },
+});
+      </code></pre>
+      <div class="callout info">
+        <div class="callout-title">Note</div>
+        <p>The <code>aspectRatio</code> property is supported in React Native 0.66 and later. For earlier versions, use the paddingTop percentage approach.</p>
+      </div>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: Yoga Layout Engine</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>What is Yoga?</h3>
+          <ul>
+            <li>Cross-platform layout engine</li>
+            <li>Implements Flexbox in C++</li>
+            <li>Used by React Native to calculate layouts</li>
+            <li>Ensures consistent layouts across platforms</li>
+            <li>Optimized for mobile performance</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Layout Process</h3>
+          <ul>
+            <li>Style properties defined in JS</li>
+            <li>Layout calculation happens on native thread</li>
+            <li>Yoga converts flexbox properties to platform layouts</li>
+            <li>Results in UIView frames (iOS) or View bounds (Android)</li>
+            <li>Runs asynchronously for performance</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout info">
+        <div class="callout-title">Performance Insight</div>
+        <p>Layout calculations can be expensive. Minimize deep nesting and complex dynamic layouts for better performance.</p>
+      </div>
+    </section>
+    
+    <!-- Performance Considerations Slide -->
+    <section class="slide content-slide">
+      <h2>Flexbox Performance Considerations</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Best Practices</h3>
+          <ul>
+            <li>Minimize deep nesting of flex containers</li>
+            <li>Use fixed dimensions when possible</li>
+            <li>Use percentage dimensions sparingly</li>
+            <li>Flatten component hierarchies when possible</li>
+            <li>Memoize complex layout components</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Common Performance Issues</h3>
+          <ul>
+            <li>Dynamic flex values causing repeated layouts</li>
+            <li>Excessive nested flex containers</li>
+            <li>Frequent layout changes triggering calculations</li>
+            <li>Long lists with complex flex layouts</li>
+            <li>Animations changing flex properties</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-title">Performance Tip</div>
+        <p>Use the Performance Monitor in React Native DevTools to watch for unexpected layout calculations.</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Exercise: Medication Dashboard Layout</h2>
+      <p>Create a medication dashboard layout with the following components:</p>
+      <ol>
+        <li>A header bar with title and user icon (row layout)</li>
+        <li>A sidebar with medication categories (column layout)</li>
+        <li>A main content area with:
+          <ul>
+            <li>Filter and sort controls at the top (row layout)</li>
+            <li>Medication cards in a grid layout (row with wrap)</li>
+          </ul>
+        </li>
+        <li>A footer with copyright and links (row layout with space-between)</li>
+      </ol>
+      <pre><code class="language-jsx">
+// Starter code
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const PharmacyDashboard = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      {/* Implement your layout here */}
+    </View>
+  );
+};
+
+// Create your styles using StyleSheet.create
+      </code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Section Summary</h2>
+      <ul>
+        <li>Flexbox is the primary layout system in React Native</li>
+        <li>All View components use Flexbox layout by default</li>
+        <li>The default flex direction in React Native is column (not row)</li>
+        <li>Flex properties control how items grow and shrink</li>
+        <li>justifyContent aligns items on the main axis</li>
+        <li>alignItems aligns items on the cross axis</li>
+        <li>Complex layouts can be created with nested flex containers</li>
+        <li>Understanding Flexbox is essential for creating responsive React Native UIs</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 4 - Responsive Design and Device Adaptation</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

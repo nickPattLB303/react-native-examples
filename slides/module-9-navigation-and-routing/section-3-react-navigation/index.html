@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 3: React Navigation | Navigation and Routing</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 3</h1>
+      <h2>React Navigation</h2>
+      <p class="metadata">Module 9 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Set up React Navigation in a React Native project</li>
+        <li>Implement various navigation patterns using React Navigation</li>
+        <li>Customize navigation appearance and behavior</li>
+        <li>Handle navigation events and lifecycle</li>
+        <li>Pass parameters between screens</li>
+        <li>Configure deep linking</li>
+        <li>Implement type-safe navigation with TypeScript</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Introduction to Navigation (Section 1)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to React Navigation</h2>
+      <p>React Navigation is the most widely used navigation library for React Native.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Component-based API</li>
+            <li>Multiple navigation patterns</li>
+            <li>Extensive customization options</li>
+            <li>Native-feeling transitions</li>
+            <li>Deep linking support</li>
+            <li>TypeScript support</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Under the Hood</div>
+            <p>React Navigation is built entirely in JavaScript without native dependencies, using React Native's Animated API for transitions. It bridges the gap between JavaScript navigation logic and native-feeling navigation experiences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Setup Slide -->
+    <section class="slide content-slide">
+      <h2>Setting Up React Navigation</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Base Installation</h3>
+          <pre><code class="language-bash">
+npx expo install @react-navigation/native
+
+# Required dependencies
+npx expo install react-native-screens react-native-safe-area-context
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Navigator Types</h3>
+          <pre><code class="language-bash">
+# For stack navigation
+npx expo install @react-navigation/stack
+npx expo install react-native-gesture-handler
+
+# For tab navigation
+npx expo install @react-navigation/bottom-tabs
+
+# For drawer navigation
+npx expo install @react-navigation/drawer
+npx expo install react-native-gesture-handler react-native-reanimated
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Basic Setup Code Slide -->
+    <section class="slide code-slide">
+      <h2>Basic Setup</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import MedicationDetailScreen from './screens/MedicationDetailScreen';
+
+// Define the type for stack navigation parameters
+type RootStackParamList = {
+  Home: undefined;
+  MedicationDetail: { medicationId: string };
+};
+
+// Create stack navigator
+const Stack = createStackNavigator&lt;RootStackParamList&gt;();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator initialRouteName="Home"&gt;
+        &lt;Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ title: 'MedTrack' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="MedicationDetail" 
+          component={MedicationDetailScreen}
+          options={{ title: 'Medication Details' }}
+        /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Explain that NavigationContainer is the root component that manages navigation state, while each navigator type (Stack, Tabs, Drawer) defines a specific navigation pattern.
+      </div>
+    </section>
+    
+    <!-- Stack Navigator Slide -->
+    <section class="slide content-slide">
+      <h2>Stack Navigator</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Screen stacking (push/pop)</li>
+            <li>Back button navigation</li>
+            <li>Header customization</li>
+            <li>Transition animations</li>
+            <li>Modal presentations</li>
+            <li>Gesture-based navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Common Options</h3>
+          <pre><code class="language-tsx">
+&lt;Stack.Screen
+  name="MedicationDetail"
+  component={MedicationDetailScreen}
+  options={{
+    title: 'Medication Details',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    headerRight: () => (
+      &lt;Button title="Edit" /&gt;
+    ),
+    // Animation
+    cardStyleInterpolator: 
+      CardStyleInterpolators.forHorizontalIOS,
+  }}
+/&gt;
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Stack Navigation Code Slide -->
+    <section class="slide code-slide">
+      <h2>Stack Navigator Screen Component</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+
+// Define the param list type
+type RootStackParamList = {
+  Home: undefined;
+  MedicationDetail: { medicationId: string };
+};
+
+// Create prop type for this specific screen
+type Props = StackScreenProps&lt;RootStackParamList, 'MedicationDetail'&gt;;
+
+function MedicationDetailScreen({ route, navigation }: Props) {
+  // Access the route parameter
+  const { medicationId } = route.params;
+  
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Medication Detail&lt;/Text&gt;
+      &lt;Text&gt;Medication ID: {medicationId}&lt;/Text&gt;
+      
+      &lt;Button
+        title="Go Back"
+        onPress={() => navigation.goBack()}
+      /&gt;
+      
+      {/* Navigate and replace the current screen */}
+      &lt;Button
+        title="Replace with Home"
+        onPress={() => navigation.replace('Home')}
+      /&gt;
+      
+      {/* Navigate back to the first screen in the stack */}
+      &lt;Button
+        title="Go to Home"
+        onPress={() => navigation.popToTop()}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Tab Navigator Slide -->
+    <section class="slide content-slide">
+      <h2>Tab Navigator</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Bottom (or top) tab bar</li>
+            <li>Icon and label customization</li>
+            <li>Badge support for notifications</li>
+            <li>Tab switching animations</li>
+            <li>Tab bar customization</li>
+            <li>Event handling for tab press</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Usage Scenarios</div>
+            <p>Use Tab Navigator for:</p>
+            <ul>
+              <li>Top-level navigation between main app sections</li>
+              <li>Parallel navigation structures</li>
+              <li>When users need to switch frequently between views</li>
+              <li>When content categories are clear and distinct</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Tab Navigation Code Slide -->
+    <section class="slide code-slide">
+      <h2>Tab Navigator Implementation</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+import HomeScreen from './screens/HomeScreen';
+import MedicationsScreen from './screens/MedicationsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+
+const Tab = createBottomTabNavigator();
+
+function MainTabNavigator() {
+  return (
+    &lt;Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Medications') {
+            iconName = focused ? 'medical' : 'medical-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+          
+          return &lt;Ionicons name={iconName} size={size} color={color} /&gt;;
+        },
+        tabBarActiveTintColor: '#f4511e',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    &gt;
+      &lt;Tab.Screen name="Home" component={HomeScreen} /&gt;
+      &lt;Tab.Screen name="Medications" component={MedicationsScreen} /&gt;
+      &lt;Tab.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+        options={{
+          tabBarBadge: 3, // Notification badge
+        }}
+      /&gt;
+    &lt;/Tab.Navigator&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Drawer Navigator Slide -->
+    <section class="slide content-slide">
+      <h2>Drawer Navigator</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Side drawer (left or right)</li>
+            <li>Gesture to open/close</li>
+            <li>Custom drawer content</li>
+            <li>Multiple drawer types</li>
+            <li>Header integration with drawer button</li>
+            <li>Drawer state management</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Usage Scenarios</div>
+            <p>Use Drawer Navigator for:</p>
+            <ul>
+              <li>Secondary navigation options</li>
+              <li>Less frequently used features</li>
+              <li>Settings, help, or account-related screens</li>
+              <li>When screen space is limited for tab bars</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Drawer Navigation Code Slide -->
+    <section class="slide code-slide">
+      <h2>Drawer Navigator Implementation</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { 
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer';
+
+import HomeScreen from './screens/HomeScreen';
+import MedicationsScreen from './screens/MedicationsScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
+const Drawer = createDrawerNavigator();
+
+// Custom drawer content component
+function CustomDrawerContent(props) {
+  return (
+    &lt;DrawerContentScrollView {...props}&gt;
+      &lt;View style={styles.drawerHeader}&gt;
+        &lt;Text style={styles.drawerTitle}&gt;MedTrack&lt;/Text&gt;
+        &lt;Text style={styles.drawerSubtitle}&gt;Medication Tracker&lt;/Text&gt;
+      &lt;/View&gt;
+      
+      &lt;DrawerItemList {...props} /&gt;
+      
+      &lt;DrawerItem 
+        label="Help"
+        onPress={() => {
+          // Navigate or open help documentation
+        }}
+      /&gt;
+      
+      &lt;DrawerItem 
+        label="Logout"
+        onPress={() => {
+          // Logout functionality
+        }}
+      /&gt;
+    &lt;/DrawerContentScrollView&gt;
+  );
+}
+
+function AppDrawer() {
+  return (
+    &lt;Drawer.Navigator
+      drawerContent={(props) => &lt;CustomDrawerContent {...props} /&gt;}
+      screenOptions={{
+        drawerStyle: {
+          width: 240,
+        },
+        drawerActiveTintColor: '#f4511e',
+      }}
+    &gt;
+      &lt;Drawer.Screen name="Home" component={HomeScreen} /&gt;
+      &lt;Drawer.Screen name="Medications" component={MedicationsScreen} /&gt;
+      &lt;Drawer.Screen name="Settings" component={SettingsScreen} /&gt;
+    &lt;/Drawer.Navigator&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Nested Navigators Slide -->
+    <section class="slide content-slide">
+      <h2>Nested Navigators</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Common Patterns</h3>
+          <ul>
+            <li>Tabs with stacks inside each tab</li>
+            <li>Drawer with tabs or stacks</li>
+            <li>Stack with modal navigation</li>
+            <li>Authentication flow with separate stacks</li>
+          </ul>
+          <p>Nesting enables complex navigation structures while keeping code organized.</p>
+        </div>
+        <div class="column">
+          <div class="diagram">
+            <div class="diagram-box root" style="top: 0; left: 50%; transform: translateX(-50%);">Drawer Navigator</div>
+            <div class="diagram-box tab" style="top: 80px; left: 50%; transform: translateX(-50%);">Tab Navigator</div>
+            <div class="diagram-line" style="top: 45px; left: 50%; height: 35px;"></div>
+            <div class="diagram-box stack1" style="top: 160px; left: 25%;">Stack Navigator 1</div>
+            <div class="diagram-box stack2" style="top: 160px; left: 50%;">Stack Navigator 2</div>
+            <div class="diagram-box stack3" style="top: 160px; left: 75%;">Stack Navigator 3</div>
+            <div class="diagram-line" style="top: 125px; left: 25%; height: 35px;"></div>
+            <div class="diagram-line" style="top: 125px; left: 50%; height: 35px;"></div>
+            <div class="diagram-line" style="top: 125px; left: 75%; height: 35px;"></div>
+          </div>
+        </div>
+      </div>
+      <style>
+        .diagram {
+          position: relative;
+          height: 220px;
+          width: 100%;
+        }
+        .diagram-box {
+          position: absolute;
+          padding: 10px;
+          background-color: #f0f0f0;
+          border: 2px solid #666;
+          border-radius: 8px;
+          text-align: center;
+          min-width: 150px;
+          transform: translateX(-50%);
+        }
+        .diagram-line {
+          position: absolute;
+          width: 2px;
+          background-color: #666;
+          transform: translateX(-50%);
+        }
+        .root {
+          background-color: #e1f5fe;
+        }
+        .tab {
+          background-color: #e8f5e9;
+        }
+        .stack1, .stack2, .stack3 {
+          background-color: #fff3e0;
+        }
+      </style>
+    </section>
+    
+    <!-- Nested Navigators Code Slide -->
+    <section class="slide code-slide">
+      <h2>Nested Navigators Example</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Stack navigators for each tab
+const HomeStack = createStackNavigator();
+function HomeStackScreen() {
+  return (
+    &lt;HomeStack.Navigator&gt;
+      &lt;HomeStack.Screen name="Home" component={HomeScreen} /&gt;
+      &lt;HomeStack.Screen name="Details" component={DetailsScreen} /&gt;
+    &lt;/HomeStack.Navigator&gt;
+  );
+}
+
+const MedStack = createStackNavigator();
+function MedicationsStackScreen() {
+  return (
+    &lt;MedStack.Navigator&gt;
+      &lt;MedStack.Screen name="MedicationList" component={MedicationListScreen} /&gt;
+      &lt;MedStack.Screen name="MedicationDetail" component={MedicationDetailScreen} /&gt;
+    &lt;/MedStack.Navigator&gt;
+  );
+}
+
+// Tab navigator containing stack navigators
+const Tab = createBottomTabNavigator();
+function MainTabScreen() {
+  return (
+    &lt;Tab.Navigator&gt;
+      &lt;Tab.Screen 
+        name="HomeTab" 
+        component={HomeStackScreen}
+        options={{ headerShown: false }}
+      /&gt;
+      &lt;Tab.Screen 
+        name="MedicationsTab" 
+        component={MedicationsStackScreen}
+        options={{ headerShown: false }}
+      /&gt;
+    &lt;/Tab.Navigator&gt;
+  );
+}
+
+// Drawer navigator with tabs inside
+const Drawer = createDrawerNavigator();
+function AppNavigator() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Drawer.Navigator&gt;
+        &lt;Drawer.Screen 
+          name="Main" 
+          component={MainTabScreen}
+          options={{ headerShown: false }}
+        /&gt;
+        &lt;Drawer.Screen name="Settings" component={SettingsScreen} /&gt;
+        &lt;Drawer.Screen name="Help" component={HelpScreen} /&gt;
+      &lt;/Drawer.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Passing Parameters Slide -->
+    <section class="slide code-slide">
+      <h2>Passing and Reading Parameters</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Passing Parameters</h3>
+          <pre><code class="language-tsx">
+// From any screen with navigation prop
+function MedicationListScreen({ navigation }) {
+  return (
+    &lt;View&gt;
+      &lt;Button
+        title="View Medication"
+        onPress={() => {
+          // Pass parameters to the destination screen
+          navigation.navigate('MedicationDetail', {
+            medicationId: '123',
+            name: 'Amoxicillin',
+            dosage: '500mg',
+            frequency: '3x daily'
+          });
+        }}
+      /&gt;
+      
+      {/* Update params of the current screen */}
+      &lt;Button
+        title="Update List Filters"
+        onPress={() => {
+          navigation.setParams({
+            filter: 'active',
+            sort: 'name'
+          });
+        }}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Reading Parameters</h3>
+          <pre><code class="language-tsx">
+function MedicationDetailScreen({ route, navigation }) {
+  // Access route parameters
+  const { medicationId, name, dosage, frequency } = route.params;
+  
+  // You can also set the screen title dynamically
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: name || 'Medication Detail',
+    });
+  }, [navigation, name]);
+  
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;ID: {medicationId}&lt;/Text&gt;
+      &lt;Text&gt;Name: {name}&lt;/Text&gt;
+      &lt;Text&gt;Dosage: {dosage}&lt;/Text&gt;
+      &lt;Text&gt;Frequency: {frequency}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Navigation Lifecycle Slide -->
+    <section class="slide content-slide">
+      <h2>Navigation Lifecycle Events</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Screen Events</h3>
+          <ul>
+            <li><code>useFocusEffect</code>: Run effects when screen is focused</li>
+            <li><code>useIsFocused</code>: Check if screen is currently focused</li>
+            <li><code>addListener</code>: Listen for specific navigation events</li>
+          </ul>
+          <p>Events help manage screen state based on navigation.</p>
+        </div>
+        <div class="column">
+          <pre><code class="language-tsx">
+import { useFocusEffect } from '@react-navigation/native';
+
+function MedicationScreen() {
+  // This effect runs when screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      // Refresh data when screen is focused
+      fetchMedications();
+      
+      // Optional cleanup function
+      return () => {
+        // Clean up subscriptions, timers, etc.
+        cancelPendingRequests();
+      };
+    }, [])
+  );
+  
+  // Rest of the component
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Deep Linking Slide -->
+    <section class="slide content-slide">
+      <h2>Deep Linking Configuration</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Setting Up Deep Links</h3>
+          <p>Define linking configuration:</p>
+          <pre><code class="language-tsx">
+const linking = {
+  prefixes: ['medtrack://', 'https://medtrack.app'],
+  config: {
+    screens: {
+      Home: 'home',
+      Medications: {
+        path: 'medications',
+        screens: {
+          MedicationList: '',
+          MedicationDetail: ':id',
+        },
+      },
+      Profile: 'profile',
+      NotFound: '*',
+    },
+  },
+};
+
+// In your NavigationContainer
+&lt;NavigationContainer linking={linking}&gt;
+  {/* Your navigator structure */}
+&lt;/NavigationContainer&gt;
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>URL Mapping Examples</h3>
+          <table>
+            <tr>
+              <th>URL</th>
+              <th>Screen</th>
+              <th>Params</th>
+            </tr>
+            <tr>
+              <td><code>medtrack://home</code></td>
+              <td>Home</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td><code>medtrack://medications</code></td>
+              <td>MedicationList</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td><code>medtrack://medications/123</code></td>
+              <td>MedicationDetail</td>
+              <td><code>{ id: '123' }</code></td>
+            </tr>
+            <tr>
+              <td><code>medtrack://profile?tab=settings</code></td>
+              <td>Profile</td>
+              <td><code>{ tab: 'settings' }</code></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TypeScript Integration Slide -->
+    <section class="slide code-slide">
+      <h2>Type-Safe Navigation with TypeScript</h2>
+      <pre><code class="language-tsx">
+// Define navigation parameter types
+type RootStackParamList = {
+  Home: undefined;
+  MedicationList: { filter?: string };
+  MedicationDetail: { medicationId: string; name: string };
+  Profile: { userId: string } | undefined;
+};
+
+// Create typed navigator
+const Stack = createStackNavigator&lt;RootStackParamList&gt;();
+
+// In your screen component, use the types
+import { StackScreenProps } from '@react-navigation/stack';
+
+type MedicationDetailProps = StackScreenProps&lt;RootStackParamList, 'MedicationDetail'&gt;;
+
+function MedicationDetailScreen({ route, navigation }: MedicationDetailProps) {
+  // route.params is now typed
+  const { medicationId, name } = route.params;
+  
+  // Type-safe navigation
+  const goToProfile = () => {
+    // This would cause a TypeScript error if parameters are wrong
+    navigation.navigate('Profile', { userId: '123' });
+  };
+  
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Medication: {name}&lt;/Text&gt;
+      &lt;Button title="Go to Profile" onPress={goToProfile} /&gt;
+    &lt;/View&gt;
+  );
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Emphasize the importance of type safety in navigation to prevent runtime errors. TypeScript can catch navigation errors during development rather than having them appear when the app is running.
+      </div>
+    </section>
+    
+    <!-- Authentication Flow Slide -->
+    <section class="slide code-slide">
+      <h2>Authentication Flows</h2>
+      <pre><code class="language-tsx">
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Create separate stacks for authenticated and unauthenticated states
+const AuthStack = createStackNavigator();
+const AppStack = createStackNavigator();
+
+// Auth context for managing authentication state
+const AuthContext = React.createContext();
+
+export default function App() {
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case 'RESTORE_TOKEN':
+          return {
+            ...prevState,
+            userToken: action.token,
+            isLoading: false,
+          };
+        case 'SIGN_IN':
+          return {
+            ...prevState,
+            userToken: action.token,
+          };
+        case 'SIGN_OUT':
+          return {
+            ...prevState,
+            userToken: null,
+          };
+      }
+    },
+    {
+      isLoading: true,
+      userToken: null,
+    }
+  );
+
+  // Effect to check for token on app launch
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken;
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      } catch (e) {
+        // Error restoring token
+      }
+      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  // Auth context actions
+  const authContext = React.useMemo(
+    () => ({
+      signIn: async (data) => {
+        // Perform sign in logic
+        const token = 'dummy-auth-token';
+        await AsyncStorage.setItem('userToken', token);
+        dispatch({ type: 'SIGN_IN', token });
+      },
+      signOut: async () => {
+        await AsyncStorage.removeItem('userToken');
+        dispatch({ type: 'SIGN_OUT' });
+      },
+      signUp: async (data) => {
+        // Perform signup logic
+        const token = 'dummy-auth-token';
+        await AsyncStorage.setItem('userToken', token);
+        dispatch({ type: 'SIGN_IN', token });
+      },
+    }),
+    []
+  );
+
+  // Render different stack based on authentication state
+  return (
+    &lt;AuthContext.Provider value={authContext}&gt;
+      &lt;NavigationContainer&gt;
+        {state.userToken == null ? (
+          &lt;AuthStack.Navigator&gt;
+            &lt;AuthStack.Screen name="SignIn" component={SignInScreen} /&gt;
+            &lt;AuthStack.Screen name="SignUp" component={SignUpScreen} /&gt;
+          &lt;/AuthStack.Navigator&gt;
+        ) : (
+          &lt;AppStack.Navigator&gt;
+            &lt;AppStack.Screen name="Home" component={HomeScreen} /&gt;
+            &lt;AppStack.Screen name="Profile" component={ProfileScreen} /&gt;
+          &lt;/AppStack.Navigator&gt;
+        )}
+      &lt;/NavigationContainer&gt;
+    &lt;/AuthContext.Provider&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Create a Pharmacy App Navigator</h2>
+      <div class="exercise-content">
+        <p>Create a navigation structure for a pharmacy app using React Navigation:</p>
+        <ol>
+          <li>Set up a bottom tab navigator with Home, Medications, and Profile tabs</li>
+          <li>Implement a stack navigator for the Medications tab with list and detail screens</li>
+          <li>Add a drawer navigator with Settings and Help options</li>
+          <li>Configure proper type safety with TypeScript</li>
+          <li>Implement a basic authentication flow with login/signup screens</li>
+        </ol>
+        <div class="time-estimate">
+          <p><strong>Time:</strong> 25-30 minutes</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>React Navigation Best Practices</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Structure & Organization</h3>
+          <ul>
+            <li>Separate navigator configurations into modules</li>
+            <li>Keep navigator nesting to a reasonable level</li>
+            <li>Define navigation types in a central location</li>
+            <li>Use consistent naming for screens and routes</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Performance & UX</h3>
+          <ul>
+            <li>Handle screen focus/blur appropriately</li>
+            <li>Use <code>React.memo</code> for screen components</li>
+            <li>Implement proper loading states during navigation</li>
+            <li>Test navigation on both platforms (iOS/Android)</li>
+            <li>Consider accessibility in navigation design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Common Pitfalls Slide -->
+    <section class="slide content-slide">
+      <h2>Common Pitfalls and Solutions</h2>
+      <table>
+        <tr>
+          <th>Problem</th>
+          <th>Solution</th>
+        </tr>
+        <tr>
+          <td>Navigator rerenders all screens</td>
+          <td>Use <code>React.memo</code> and <code>useFocusEffect</code></td>
+        </tr>
+        <tr>
+          <td>Type errors with nested navigators</td>
+          <td>Define comprehensive navigation type hierarchy</td>
+        </tr>
+        <tr>
+          <td>Header customization issues</td>
+          <td>Use <code>headerLeft</code>, <code>headerRight</code>, and <code>headerTitle</code> options</td>
+        </tr>
+        <tr>
+          <td>State loss on navigation</td>
+          <td>Use React Context or state management libraries</td>
+        </tr>
+        <tr>
+          <td>Navigation performance issues</td>
+          <td>Lazy load screens and optimize renders</td>
+        </tr>
+      </table>
+      <div class="callout warning">
+        <div class="callout-title">Common Mistake</div>
+        <p>Avoid accessing navigation prop outside of screen components. Instead, use React Navigation's helper functions like <code>CommonActions</code> or pass the navigation prop down to child components.</p>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>React Navigation provides a flexible, component-based navigation system</li>
+        <li>Stack, Tab, and Drawer navigators handle different navigation patterns</li>
+        <li>Navigators can be nested to create complex navigation structures</li>
+        <li>Screen parameters allow passing data between screens</li>
+        <li>Navigation lifecycle events manage screen state during navigation</li>
+        <li>Deep linking configuration maps URLs to screens</li>
+        <li>TypeScript integration enables type-safe navigation</li>
+        <li>Authentication flows can be implemented using conditional rendering</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 4 - Navigation Patterns</p>
+      </div>
+    </section>
+    
+    <!-- Resources Slide -->
+    <section class="slide resources-slide">
+      <h2>Additional Resources</h2>
+      <ul>
+        <li><a href="https://reactnavigation.org/docs/getting-started" target="_blank">React Navigation Documentation</a></li>
+        <li><a href="https://reactnavigation.org/docs/typescript/" target="_blank">TypeScript and React Navigation</a></li>
+        <li><a href="https://reactnavigation.org/docs/deep-linking" target="_blank">Deep Linking Configuration</a></li>
+        <li><a href="https://reactnavigation.org/docs/auth-flow" target="_blank">Authentication Flows</a></li>
+        <li><a href="https://reactnavigation.org/docs/navigating-without-navigation-prop/" target="_blank">Navigating Without the Navigation Prop</a></li>
+      </ul>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html> 

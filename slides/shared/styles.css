@@ -1,40 +1,20 @@
-/**
- * React Native Training Course Slides
- * Shared styles with pharmacy/medication theme
- */
-
-/* Variables */
+/* Base Styles */
 :root {
-  /* Primary colors - pharmacy/medication theme */
-  --primary-color: #0066cc;        /* Blue - pharmacy cross color */
-  --primary-color-rgb: 0, 102, 204; /* RGB values for primary color */
-  --secondary-color: #4caf50;      /* Green - health/wellness */
-  --accent-color: #ff5722;         /* Orange - prescription label */
-  --light-color: #e3f2fd;          /* Light blue background */
-  --dark-color: #1a237e;           /* Dark blue for headers */
-  
-  /* Neutral colors */
-  --text-color: #333333;
-  --background-color: #ffffff;
-  --border-color: #dddddd;
-  
-  /* Typography */
-  --font-family-sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
-  --font-family-mono: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
-  
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  
-  /* Slide dimensions */
-  --slide-width: 100%;
-  --slide-height: 100vh;
+  --primary-color: #007AFF;
+  --secondary-color: #5AC8FA;
+  --accent-color: #FF9500;
+  --text-color: #1C1C1E;
+  --text-light: #8E8E93;
+  --background-color: #FFFFFF;
+  --code-background: #F7F7F7;
+  --border-color: #CECED2;
+  --success-color: #34C759;
+  --error-color: #FF3B30;
+  --spacing-unit: 8px;
+  --font-normal: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
 
-/* Reset and base styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -42,545 +22,255 @@
 }
 
 html, body {
-  font-family: var(--font-family-sans);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-normal);
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-color);
-  height: 100%;
-  overflow: hidden;
 }
 
-/* Slide container */
+/* Slide Layout */
 .slides {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
-/* Individual slide */
 .slide {
-  width: var(--slide-width);
-  height: var(--slide-height);
-  padding: var(--spacing-xl);
-  padding-left: calc(var(--spacing-xl) + 50px); /* Extra padding on the left for the nav menu */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  overflow-y: auto;
-  background-color: var(--background-color);
-  transition: transform 0.5s ease;
+  padding: calc(var(--spacing-unit) * 4);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-/* Slide number */
-.slide-number {
-  position: absolute;
-  bottom: var(--spacing-md);
-  right: var(--spacing-md);
-  font-size: 14px;
-  color: #999;
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Title slide */
-.title-slide {
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(135deg, var(--light-color) 0%, var(--background-color) 100%);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.title-slide h1 {
+/* Typography */
+h1 {
   font-size: 3rem;
+  margin-bottom: calc(var(--spacing-unit) * 2);
   color: var(--primary-color);
-  margin-bottom: var(--spacing-md);
+  text-align: center;
 }
 
-.title-slide h2 {
-  font-size: 1.8rem;
-  color: var(--dark-color);
-  margin-bottom: var(--spacing-xl);
+h2 {
+  font-size: 2rem;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  color: var(--primary-color);
+  text-align: center;
+  width: 100%;
 }
 
-.title-slide .metadata {
-  font-size: 1.2rem;
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: calc(var(--spacing-unit) * 2);
   color: var(--text-color);
-  opacity: 0.7;
-  margin-top: var(--spacing-xl);
 }
 
-/* Learning objectives slide */
-.objectives-slide {
-  background-color: var(--light-color);
-}
-
-.objectives-slide h2 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-lg);
-  align-self: flex-start;
-}
-
-.objectives-slide ul {
-  align-self: flex-start;
+p {
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  text-align: left;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
-.objectives-slide li {
-  margin-bottom: var(--spacing-md);
-  font-size: 1.3rem;
-}
-
-/* Content slide */
-.content-slide h2 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-lg);
-  align-self: flex-start;
-}
-
-.content-slide h3 {
-  color: var(--dark-color);
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  align-self: flex-start;
-}
-
-.content-slide p, 
-.content-slide ul, 
-.content-slide ol {
-  align-self: flex-start;
+ul, ol {
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  margin-left: calc(var(--spacing-unit) * 3);
   width: 100%;
-  max-width: 900px;
-  margin-bottom: var(--spacing-md);
+  max-width: 1000px;
 }
 
-.content-slide li {
-  margin-left: var(--spacing-xl);
-  margin-bottom: var(--spacing-sm);
-}
-
-/* Summary slide */
-.summary-slide {
-  background-color: var(--light-color);
-}
-
-.summary-slide h2 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-lg);
-  align-self: flex-start;
-}
-
-.summary-slide ul {
-  align-self: flex-start;
-  width: 100%;
-  max-width: 800px;
-}
-
-.summary-slide li {
-  margin-bottom: var(--spacing-md);
-  font-size: 1.2rem;
-}
-
-.next-steps {
-  margin-top: var(--spacing-xl);
-  padding: var(--spacing-md);
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 4px;
-  align-self: flex-start;
-}
-
-/* Code blocks */
-pre {
-  width: 100%;
-  max-width: 900px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  overflow-x: auto;
-  font-family: var(--font-family-mono);
-  font-size: 0.9rem;
-  line-height: 1.4;
-  border-left: 4px solid var(--primary-color);
+li {
+  margin-bottom: calc(var(--spacing-unit));
 }
 
 code {
-  font-family: var(--font-family-mono);
-  background-color: #f5f5f5;
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-size: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  background-color: var(--code-background);
+  padding: calc(var(--spacing-unit) * 0.5);
+  border-radius: 4px;
+}
+
+pre {
+  width: 100%;
+  max-width: 1000px;
+  overflow: auto;
+  background-color: var(--code-background);
+  border-radius: 8px;
+  padding: calc(var(--spacing-unit) * 2);
+  margin-bottom: calc(var(--spacing-unit) * 3);
 }
 
 pre code {
   background-color: transparent;
   padding: 0;
-  border-radius: 0;
-  white-space: pre;
-  tab-size: 2;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-/* Add some basic syntax coloring */
-.code-block {
-  color: #333;
+/* Specific Slide Types */
+.title-slide {
+  justify-content: center;
+  text-align: center;
 }
 
-.code-block .comment, .code-block .hljs-comment {
-  color: #6a9955;
+.title-slide h1 {
+  font-size: 4rem;
+  margin-bottom: calc(var(--spacing-unit) * 3);
 }
 
-.code-block .string, .code-block .hljs-string {
-  color: #ce9178;
+.title-slide h2 {
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: calc(var(--spacing-unit) * 6);
 }
 
-.code-block .keyword, .code-block .hljs-keyword {
-  color: #569cd6;
+.metadata {
+  position: absolute;
+  bottom: calc(var(--spacing-unit) * 4);
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
 }
 
-.code-block .function, .code-block .hljs-function {
-  color: #dcdcaa;
+.presenter-notes {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: calc(var(--spacing-unit) * 2);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-color);
 }
 
-.code-block .tag, .code-block .hljs-tag {
-  color: #569cd6;
-}
-
-.code-block .attr, .code-block .hljs-attr {
-  color: #9cdcfe;
-}
-
-.code-block .number, .code-block .hljs-number {
-  color: #b5cea8;
-}
-
-/* Columns layout */
+/* Layout Components */
 .columns {
   display: flex;
   width: 100%;
-  max-width: 900px;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  align-self: flex-start;
+  max-width: 1200px;
+  gap: calc(var(--spacing-unit) * 4);
+  margin-bottom: calc(var(--spacing-unit) * 3);
 }
 
 .column {
   flex: 1;
 }
 
-/* Callouts */
-.callout {
+.image-placeholder {
   width: 100%;
-  max-width: 900px;
-  margin: var(--spacing-md) 0;
-  padding: var(--spacing-md);
-  border-radius: 4px;
-  align-self: flex-start;
-}
-
-.callout-title {
-  font-weight: bold;
-  margin-bottom: var(--spacing-xs);
-}
-
-.callout.info {
-  background-color: rgba(0, 102, 204, 0.1);
-  border-left: 4px solid var(--primary-color);
-}
-
-.callout.tip {
-  background-color: rgba(76, 175, 80, 0.1);
-  border-left: 4px solid var(--secondary-color);
-}
-
-.callout.example {
-  background-color: rgba(255, 87, 34, 0.1);
-  border-left: 4px solid var(--accent-color);
-}
-
-.callout.deep-dive {
-  background-color: rgba(26, 35, 126, 0.1);
-  border-left: 4px solid var(--dark-color);
-}
-
-/* Platform-specific content */
-.platform-android,
-.platform-ios,
-.platform-web {
-  margin: var(--spacing-md) 0;
-  padding: var(--spacing-md);
-  border-radius: 4px;
-  width: 100%;
-  max-width: 900px;
-  align-self: flex-start;
-}
-
-.platform-android {
-  background-color: rgba(164, 198, 57, 0.1);
-  border-left: 4px solid #a4c639; /* Android green */
-}
-
-.platform-ios {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #000000; /* iOS black */
-}
-
-.platform-web {
-  background-color: rgba(33, 150, 243, 0.1);
-  border-left: 4px solid #2196f3; /* Web blue */
-}
-
-/* Presenter notes */
-.presenter-notes {
-  background-color: #fffde7;
-  border: 1px solid #fff9c4;
-  padding: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-  border-radius: 4px;
-  width: 100%;
-  max-width: 900px;
-  align-self: flex-start;
-  display: none; /* Hide by default */
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: relative;
-}
-
-.presenter-notes::before {
-  content: "Presenter Notes";
-  display: block;
-  font-weight: bold;
-  margin-bottom: var(--spacing-sm);
-  color: var(--accent-color);
-}
-
-body.presenter-mode .presenter-notes {
-  display: block !important;
-}
-
-/* Platform selector */
-.platform-selector {
-  position: fixed;
-  top: var(--spacing-md);
-  right: var(--spacing-md);
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-  z-index: 1000;
+  height: 300px;
+  background-color: var(--code-background);
+  border: 1px dashed var(--border-color);
   display: flex;
   align-items: center;
-  font-size: 0.8rem;
+  justify-content: center;
+  color: var(--text-light);
+  font-style: italic;
 }
 
-.platform-selector label {
-  margin-right: var(--spacing-xs);
+/* Tables */
+table {
+  width: 100%;
+  max-width: 1000px;
+  border-collapse: collapse;
+  margin-bottom: calc(var(--spacing-unit) * 3);
 }
 
-.platform-selector select {
-  padding: 2px 4px;
+th, td {
   border: 1px solid var(--border-color);
-  border-radius: 3px;
+  padding: calc(var(--spacing-unit));
+  text-align: left;
 }
 
-/* Print button */
-.print-button {
-  position: fixed;
-  bottom: var(--spacing-md);
-  left: var(--spacing-md);
+th {
   background-color: var(--primary-color);
   color: white;
-  border: none;
-  border-radius: 4px;
-  padding: var(--spacing-xs) var(--spacing-md);
-  cursor: pointer;
-  z-index: 1000;
 }
 
-.print-button:hover {
-  background-color: var(--dark-color);
+tr:nth-child(even) {
+  background-color: var(--code-background);
 }
 
-/* Print styles */
-@media print {
-  .slide {
-    position: relative;
-    page-break-after: always;
-    page-break-inside: avoid;
-    height: auto;
-    overflow: visible;
-  }
-  
-  .platform-selector,
-  .print-button {
-    display: none;
-  }
-  
-  .presenter-notes {
-    display: none !important;
-  }
+/* Exercise Slide */
+.exercise-slide {
+  justify-content: flex-start;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  :root {
-    font-size: 14px;
-  }
-  
-  .slide {
-    padding: var(--spacing-md);
-  }
-  
-  .columns {
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .title-slide h1 {
-    font-size: 2.5rem;
-  }
-  
-  .title-slide h2 {
-    font-size: 1.5rem;
-  }
+.exercise-description {
+  background-color: var(--code-background);
+  border-left: 4px solid var(--accent-color);
+  padding: calc(var(--spacing-unit) * 2);
+  width: 100%;
+  max-width: 1000px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Summary Slide */
+.summary-slide .next-steps {
+  margin-top: calc(var(--spacing-unit) * 4);
+  padding: calc(var(--spacing-unit) * 2);
+  background-color: var(--code-background);
+  border-left: 4px solid var(--primary-color);
+  width: 100%;
+  max-width: 1000px;
 }
 
-.slide {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Navigation buttons */
-.slide-navigation {
+/* Navigation */
+.navigation {
   position: fixed;
-  right: var(--spacing-md);
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: calc(var(--spacing-unit) * 2);
+  right: calc(var(--spacing-unit) * 2);
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  z-index: 1000;
+  gap: calc(var(--spacing-unit));
 }
 
 .nav-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background-color: var(--primary-color);
   color: white;
   border: none;
-  font-size: 1.2rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+  font-size: 1.2rem;
+  transition: background-color 0.2s;
 }
 
 .nav-button:hover {
-  opacity: 1;
+  background-color: var(--secondary-color);
 }
 
-.presenter-button {
-  background-color: var(--accent-color);
-}
-
-/* Next steps links */
-.next-steps a {
-  color: var(--primary-color);
-  text-decoration: none;
-  display: inline-block;
-  padding: var(--spacing-xs) 0;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.next-steps a:hover {
-  color: var(--dark-color);
-  text-decoration: underline;
-}
-
-/* Section Navigation Menu */
-.section-nav-menu {
+/* Progress Indicator */
+.progress {
   position: fixed;
-  top: var(--spacing-md);
-  left: var(--spacing-md);
-  z-index: 1500;
-  font-size: 0.9rem;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  width: auto;
-  min-width: 40px; /* Smaller when collapsed */
-  max-width: 300px;
-  transition: all 0.3s ease;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
 }
-
-.section-nav-toggle {
-  width: 40px;
-  height: 40px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: var(--spacing-sm);
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-}
-
-.section-nav-toggle:hover {
-  background-color: var(--dark-color);
-}
-
-.section-nav-content {
-  max-height: 80vh;
-  overflow-y: auto;
-  background-color: white;
-  border-top: 1px solid var(--border-color);
-}
-
-/* Hide content when menu is collapsed */
-.section-nav-menu.collapsed .section-nav-content {
-  display: none;
-}
-
-.section-nav-menu.collapsed {
-  min-width: 40px;
-  max-width: 40px;
-}
-
-.section-nav-link {
-  display: block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: var(--dark-color);
-  text-decoration: none;
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s ease;
-}
-
-.section-nav-link:hover {
-  background-color: var(--light-color);
-  text-decoration: none;
-}
-
-.section-nav-link.current-section {
-  background-color: rgba(var(--primary-color-rgb), 0.1);
-  font-weight: bold;
-  border-left: 3px solid var(--primary-color);
-}
-
-.section-nav-link.module-link {
-  background-color: var(--light-color);
-  font-weight: bold;
-} 

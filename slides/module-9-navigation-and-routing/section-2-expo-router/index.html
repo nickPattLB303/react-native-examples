@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 2: Expo Router | Navigation and Routing</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>Section 2</h1>
+      <h2>Expo Router</h2>
+      <p class="metadata">Module 9 | 45-60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Set up Expo Router in a React Native project</li>
+        <li>Create a file-based navigation structure</li>
+        <li>Implement various navigation patterns using Expo Router</li>
+        <li>Handle route parameters and dynamic routes</li>
+        <li>Configure deep linking</li>
+        <li>Implement type-safe navigation with TypeScript</li>
+      </ul>
+      <div class="metadata">
+        <p><strong>Time:</strong> 45-60 minutes</p>
+        <p><strong>Prerequisites:</strong> Introduction to Navigation (Section 1)</p>
+      </div>
+    </section>
+    
+    <!-- Introduction Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to Expo Router</h2>
+      <p>Expo Router is a file-based routing system for React Native applications, built on top of React Navigation.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>File-based routing (similar to Next.js)</li>
+            <li>Automatic route generation based on file structure</li>
+            <li>URL pattern matching and dynamic routes</li>
+            <li>Built-in support for deep linking</li>
+            <li>TypeScript support for type-safe navigation</li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="callout info">
+            <div class="callout-title">Under the Hood</div>
+            <p>Expo Router uses React Navigation internally but abstracts away its component-based API in favor of a file system-based approach. This reduces boilerplate and makes navigation more declarative.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Setup Slide -->
+    <section class="slide content-slide">
+      <h2>Setting Up Expo Router</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Installation</h3>
+          <pre><code class="language-bash">
+npx expo install expo-router react-native-safe-area-context 
+react-native-screens expo-linking expo-constants expo-status-bar
+          </code></pre>
+          <p>Update your <code>package.json</code>:</p>
+          <pre><code class="language-json">
+{
+  "main": "expo-router/entry"
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Folder Structure</h3>
+          <pre><code class="language-text">
+app/
+├── _layout.tsx      # Root layout
+├── index.tsx        # Home screen (/)
+├── medications/
+│   ├── _layout.tsx  # Medications layout
+│   ├── index.tsx    # List (/medications)
+│   └── [id].tsx     # Detail (/medications/123)
+└── profile.tsx      # Profile screen (/profile)
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Basic Setup Code Slide -->
+    <section class="slide code-slide">
+      <h2>Basic Setup</h2>
+      <p>1. Create an initial route file at <code>app/index.tsx</code>:</p>
+      <pre><code class="language-tsx">
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function Home() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Welcome to MedTrack&lt;/Text&gt;
+      &lt;Text style={styles.subtitle}&gt;Your medication tracking app&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#666',
+  },
+});
+      </code></pre>
+    </section>
+    
+    <!-- Root Layout Slide -->
+    <section class="slide code-slide">
+      <h2>Root Layout</h2>
+      <p>2. Create a root layout file at <code>app/_layout.tsx</code>:</p>
+      <pre><code class="language-tsx">
+import { Stack } from 'expo-router';
+
+export default function RootLayout() {
+  return (
+    &lt;Stack&gt;
+      &lt;Stack.Screen name="index" options={{ title: 'Home' }} /&gt;
+    &lt;/Stack&gt;
+  );
+}
+      </code></pre>
+      <div class="presenter-notes">
+        Explain that the Stack component from expo-router provides stack navigation for the app. Unlike React Navigation, we don't need to manually register each screen - they're automatically registered based on the file structure.
+      </div>
+    </section>
+    
+    <!-- File Structure and Routing Slide -->
+    <section class="slide content-slide">
+      <h2>File Structure and Routing</h2>
+      <table>
+        <tr>
+          <th>File Path</th>
+          <th>URL Path</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><code>app/index.tsx</code></td>
+          <td><code>/</code></td>
+          <td>Home screen</td>
+        </tr>
+        <tr>
+          <td><code>app/profile.tsx</code></td>
+          <td><code>/profile</code></td>
+          <td>Profile screen</td>
+        </tr>
+        <tr>
+          <td><code>app/medications/index.tsx</code></td>
+          <td><code>/medications</code></td>
+          <td>Medications list</td>
+        </tr>
+        <tr>
+          <td><code>app/medications/[id].tsx</code></td>
+          <td><code>/medications/123</code></td>
+          <td>Dynamic route with parameter</td>
+        </tr>
+        <tr>
+          <td><code>app/medications/[...rest].tsx</code></td>
+          <td><code>/medications/anything/here</code></td>
+          <td>Catch-all route</td>
+        </tr>
+      </table>
+      <div class="callout info">
+        <div class="callout-title">Special Files</div>
+        <p><code>_layout.tsx</code> defines the layout for the current directory and its children. Each directory can have its own layout file.</p>
+      </div>
+    </section>
+    
+    <!-- Stack Navigation Slide -->
+    <section class="slide code-slide">
+      <h2>Stack Navigation with Expo Router</h2>
+      <pre><code class="language-tsx">
+// app/_layout.tsx
+import { Stack } from 'expo-router';
+
+export default function RootLayout() {
+  return (
+    &lt;Stack&gt;
+      &lt;Stack.Screen 
+        name="index" 
+        options={{ 
+          title: 'Home',
+          headerStyle: { backgroundColor: '#f4511e' },
+          headerTintColor: '#fff',
+        }} 
+      /&gt;
+      &lt;Stack.Screen 
+        name="profile" 
+        options={{ 
+          title: 'Your Profile',
+          presentation: 'modal',
+        }} 
+      /&gt;
+      &lt;Stack.Screen 
+        name="medications" 
+        options={{ 
+          headerShown: false, // Hide header for nested navigator
+        }} 
+      /&gt;
+    &lt;/Stack&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Tab Navigation Slide -->
+    <section class="slide code-slide">
+      <h2>Tab Navigation with Expo Router</h2>
+      <pre><code class="language-tsx">
+// app/_layout.tsx
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function TabsLayout() {
+  return (
+    &lt;Tabs&gt;
+      &lt;Tabs.Screen
+        name="index"
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color }) => 
+            &lt;Ionicons name="home" size={24} color={color} /&gt;,
+        }}
+      /&gt;
+      &lt;Tabs.Screen
+        name="medications"
+        options={{
+          title: 'Medications',
+          tabBarIcon: ({ color }) => 
+            &lt;Ionicons name="medical" size={24} color={color} /&gt;,
+        }}
+      /&gt;
+      &lt;Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => 
+            &lt;Ionicons name="person" size={24} color={color} /&gt;,
+        }}
+      /&gt;
+    &lt;/Tabs&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Nested Navigation Slide -->
+    <section class="slide content-slide">
+      <h2>Nested Navigation</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>File Structure</h3>
+          <pre><code class="language-text">
+app/
+├── _layout.tsx       # Root tabs layout
+├── index.tsx         # Home screen
+├── medications/
+│   ├── _layout.tsx   # Medications stack
+│   ├── index.tsx     # Medications list
+│   └── [id].tsx      # Medication detail
+├── prescriptions/
+│   ├── _layout.tsx   # Prescriptions stack
+│   ├── index.tsx     # Prescriptions list
+│   └── [id].tsx      # Prescription detail
+└── profile.tsx       # Profile screen
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Nested Layout</h3>
+          <p>Create a nested stack in <code>app/medications/_layout.tsx</code>:</p>
+          <pre><code class="language-tsx">
+import { Stack } from 'expo-router';
+
+export default function MedicationsLayout() {
+  return (
+    &lt;Stack&gt;
+      &lt;Stack.Screen
+        name="index"
+        options={{ title: 'Medications' }}
+      /&gt;
+      &lt;Stack.Screen
+        name="[id]"
+        options={({ route }) => ({
+          title: `Medication ${route.params.id}`,
+        })}
+      /&gt;
+    &lt;/Stack&gt;
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Navigation Between Screens Slide -->
+    <section class="slide code-slide">
+      <h2>Navigation Between Screens</h2>
+      <pre><code class="language-tsx">
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+
+export default function MedicationList() {
+  const router = useRouter();
+  const medications = [
+    { id: '1', name: 'Amoxicillin' },
+    { id: '2', name: 'Lisinopril' },
+    { id: '3', name: 'Metformin' }
+  ];
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Medications&lt;/Text&gt;
+      
+      {/* Using Link component */}
+      &lt;Link href="/medications/1" style={styles.link}&gt;
+        View Amoxicillin
+      &lt;/Link&gt;
+      
+      {/* Using useRouter hook */}
+      &lt;Button
+        title="View Lisinopril"
+        onPress={() => {
+          router.push('/medications/2');
+        }}
+      /&gt;
+      
+      {/* With params */}
+      &lt;Button
+        title="View Metformin"
+        onPress={() => {
+          router.push({
+            pathname: '/medications/[id]',
+            params: { id: '3' }
+          });
+        }}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Dynamic Routes Slide -->
+    <section class="slide code-slide">
+      <h2>Dynamic Routes and Parameters</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Define Dynamic Route</h3>
+          <p><code>app/medications/[id].tsx</code></p>
+          <pre><code class="language-tsx">
+import { View, Text, StyleSheet } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+
+export default function MedicationDetail() {
+  // Access route parameters
+  const { id } = useLocalSearchParams();
+  
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;
+        Medication Detail
+      &lt;/Text&gt;
+      &lt;Text&gt;ID: {id}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+          </code></pre>
+        </div>
+        <div class="column">
+          <h3>Access as Search Params</h3>
+          <p><code>app/search.tsx</code></p>
+          <pre><code class="language-tsx">
+import { View, Text } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+
+export default function SearchScreen() {
+  // Access query parameters
+  // URL: /search?term=aspirin&filter=otc
+  const { term, filter } = useLocalSearchParams();
+  
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Search Term: {term}&lt;/Text&gt;
+      &lt;Text&gt;Filter: {filter}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Deep Linking Slide -->
+    <section class="slide content-slide">
+      <h2>Deep Linking with Expo Router</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Benefits</h3>
+          <ul>
+            <li>Automatic URL mapping to screens</li>
+            <li>Universal links (iOS) and app links (Android)</li>
+            <li>Simplified configuration compared to React Navigation</li>
+            <li>Supports web URLs for universal apps</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Configuration</h3>
+          <p>Update <code>app.json</code>:</p>
+          <pre><code class="language-json">
+{
+  "expo": {
+    "scheme": "myapp",
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
+          </code></pre>
+          <p>This allows links like:</p>
+          <ul>
+            <li><code>myapp:///</code></li>
+            <li><code>myapp:///medications/123</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Authentication Flow Slide -->
+    <section class="slide code-slide">
+      <h2>Authentication Flows</h2>
+      <pre><code class="language-tsx">
+// app/_layout.tsx
+import { Stack, useRouter, useSegments } from 'expo-router';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+// Auth context
+const AuthContext = createContext(null);
+
+// Auth provider component
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const segments = useSegments();
+  const router = useRouter();
+
+  // Check if user is authenticated when route changes
+  useEffect(() => {
+    const inAuthGroup = segments[0] === '(auth)';
+    
+    if (!user && !inAuthGroup) {
+      // Redirect to login if not authenticated
+      router.replace('/login');
+    } else if (user && inAuthGroup) {
+      // Redirect to home if already authenticated
+      router.replace('/');
+    }
+  }, [user, segments]);
+
+  return (
+    &lt;AuthContext.Provider value={{ user, signIn: setUser }}&gt;
+      {children}
+    &lt;/AuthContext.Provider&gt;
+  );
+}
+
+// Root layout with auth provider
+export default function RootLayout() {
+  return (
+    &lt;AuthProvider&gt;
+      &lt;Stack&gt;
+        &lt;Stack.Screen name="(auth)/login" options={{ headerShown: false }} /&gt;
+        &lt;Stack.Screen name="index" options={{ title: "Home" }} /&gt;
+        &lt;Stack.Screen name="profile" options={{ title: "Profile" }} /&gt;
+      &lt;/Stack&gt;
+    &lt;/AuthProvider&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- TypeScript Support Slide -->
+    <section class="slide code-slide">
+      <h2>Type-Safe Navigation with TypeScript</h2>
+      <pre><code class="language-tsx">
+// app/types.ts
+export type AppParamList = {
+  medications: undefined;
+  'medications/[id]': { id: string };
+  'prescriptions/[id]': { id: string };
+  profile: { tab?: string };
+};
+
+// Using type-safe navigation
+import { Link, useRouter } from 'expo-router';
+import { AppParamList } from './types';
+
+export default function HomeScreen() {
+  // Type-safe router
+  const router = useRouter&lt;AppParamList&gt;();
+  
+  const navigateToMedication = () => {
+    // Type-checked parameters
+    router.push({
+      pathname: 'medications/[id]',
+      params: { id: '123' }
+    });
+  };
+  
+  return (
+    &lt;View&gt;
+      &lt;Button title="Go to Medication" onPress={navigateToMedication} /&gt;
+      
+      {/* Type-safe Link component */}
+      &lt;Link href={{ 
+        pathname: 'profile',
+        params: { tab: 'settings' }
+      }}&gt;
+        Go to Profile Settings
+      &lt;/Link&gt;
+    &lt;/View&gt;
+  );
+}
+      </code></pre>
+    </section>
+    
+    <!-- Performance Optimization Slide -->
+    <section class="slide content-slide">
+      <h2>Performance Optimization</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Strategies</h3>
+          <ul>
+            <li>Lazy loading routes</li>
+            <li>Optimizing route transitions</li>
+            <li>Avoiding unnecessary re-renders</li>
+            <li>Proper state management</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Lazy Loading Example</h3>
+          <pre><code class="language-tsx">
+// app/_layout.tsx
+import { Stack, SplashScreen } from 'expo-router';
+import { useEffect, useState } from 'react';
+
+// Prevent auto-hiding splash screen
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [loaded, setLoaded] = useState(false);
+  
+  useEffect(() => {
+    // Load resources, auth state, etc.
+    async function loadResources() {
+      try {
+        // Load fonts, cache images, etc.
+        await Promise.all([
+          /* your loading logic */
+        ]);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setLoaded(true);
+      }
+    }
+    
+    loadResources();
+  }, []);
+  
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+  
+  if (!loaded) {
+    return null;
+  }
+  
+  return &lt;Stack /&gt;;
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Exercise Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Create a Simple MedTrack Navigator</h2>
+      <div class="exercise-content">
+        <p>Create a basic navigation structure for a medication tracking app using Expo Router:</p>
+        <ol>
+          <li>Set up a new Expo project with Expo Router</li>
+          <li>Create a tab navigation with Home, Medications, and Profile tabs</li>
+          <li>Implement a stack navigator for the Medications tab</li>
+          <li>Add a dynamic route for medication details</li>
+          <li>Create navigation between screens with proper type safety</li>
+        </ol>
+        <div class="time-estimate">
+          <p><strong>Time:</strong> 25-30 minutes</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>Best Practices for Expo Router</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>File Organization</h3>
+          <ul>
+            <li>Group related routes in directories</li>
+            <li>Use route groups (folders in parentheses) for logical separation</li>
+            <li>Keep layouts as simple as possible</li>
+            <li>Use consistent naming conventions</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Development Tips</h3>
+          <ul>
+            <li>Use TypeScript for type-safe navigation</li>
+            <li>Implement error boundaries for route-specific errors</li>
+            <li>Test deep linking thoroughly</li>
+            <li>Consider progressive web app (PWA) implications if targeting web</li>
+            <li>Handle loading and error states within each route</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary</h2>
+      <ul>
+        <li>Expo Router provides a file-based routing system for React Native applications</li>
+        <li>Routes are automatically generated based on file structure in the <code>app</code> directory</li>
+        <li>Special files like <code>_layout.tsx</code> define navigation containers</li>
+        <li>Dynamic routes use brackets syntax <code>[param].tsx</code></li>
+        <li>The <code>Link</code> component and <code>useRouter</code> hook provide navigation capabilities</li>
+        <li>Deep linking is simplified with automatic URL mapping</li>
+        <li>TypeScript support enables type-safe navigation</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 3 - React Navigation</p>
+      </div>
+    </section>
+    
+    <!-- Resources Slide -->
+    <section class="slide resources-slide">
+      <h2>Additional Resources</h2>
+      <ul>
+        <li><a href="https://docs.expo.dev/router/introduction/" target="_blank">Expo Router Documentation</a></li>
+        <li><a href="https://docs.expo.dev/router/reference/link/" target="_blank">Link Component Reference</a></li>
+        <li><a href="https://docs.expo.dev/guides/deep-linking/" target="_blank">Deep Linking in Expo</a></li>
+        <li><a href="https://docs.expo.dev/guides/typescript/" target="_blank">TypeScript in Expo</a></li>
+      </ul>
+    </section>
+  </div>
+  
+  <script src="../../shared/script.js"></script>
+</body>
+</html>

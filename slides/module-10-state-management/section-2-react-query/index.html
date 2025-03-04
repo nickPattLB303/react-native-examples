@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Query for Server State | Module 10, Section 2</title>
+  <link rel="stylesheet" href="../../../slides/shared/styles.css">
+  <link rel="stylesheet" href="../../../slides/shared/highlight.css">
+</head>
+<body>
+  <div class="slides">
+    <!-- Title Slide -->
+    <section class="slide title-slide">
+      <h1>React Query</h1>
+      <h2>Managing Server State in React Native</h2>
+      <p class="metadata">Module 10, Section 2 | 45 - 60 minutes</p>
+    </section>
+    
+    <!-- Learning Objectives Slide -->
+    <section class="slide objectives-slide">
+      <h2>Learning Objectives</h2>
+      <ul>
+        <li>Understand the challenges of server state management</li>
+        <li>Set up React Query in a React Native application</li>
+        <li>Fetch data with useQuery hook</li>
+        <li>Implement mutations with useMutation</li>
+        <li>Handle query invalidation and refetching</li>
+        <li>Implement pagination and infinite queries</li>
+        <li>Implement optimistic updates for better UX</li>
+      </ul>
+    </section>
+    
+    <!-- Server State Challenges Slide -->
+    <section class="slide content-slide">
+      <h2>Server State Challenges</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Client State vs. Server State</h3>
+          <ul>
+            <li>Server state is remote and not fully controlled by client</li>
+            <li>Can become outdated without proper synchronization</li>
+            <li>Requires asynchronous APIs for updates</li>
+            <li>May need authentication and authorization</li>
+            <li>Requires error handling for network issues</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Common Server State Issues</h3>
+          <ul>
+            <li>Caching and invalidation complexity</li>
+            <li>Duplicate network requests</li>
+            <li>Background updates and refetching</li>
+            <li>Pagination and infinite loading</li>
+            <li>Race conditions and out-of-date data</li>
+            <li>Performance optimization</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Introduction to React Query Slide -->
+    <section class="slide content-slide">
+      <h2>Introduction to React Query</h2>
+      <p>React Query is a server-state management library that provides tools for fetching, caching, synchronizing, and updating server state in React applications.</p>
+      <div class="columns">
+        <div class="column">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Declarative data fetching</li>
+            <li>Automatic caching and stale-while-revalidate</li>
+            <li>Parallel and dependent queries</li>
+            <li>Pagination and infinite scroll</li>
+            <li>Prefetching and background updates</li>
+            <li>Optimistic updates and rollbacks</li>
+            <li>Server state synchronization</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Benefits for React Native</h3>
+          <ul>
+            <li>Reduces network requests on limited mobile data</li>
+            <li>Improves performance in low-connectivity situations</li>
+            <li>Provides consistent UI during app backgrounding</li>
+            <li>Simplifies complex data fetching patterns</li>
+            <li>Handles offline/online transitions gracefully</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Setup and Configuration Slide -->
+    <section class="slide code-slide">
+      <h2>Setting Up React Query</h2>
+      <pre><code class="language-tsx">
+// Installation
+// npm install @tanstack/react-query
+// or
+// yarn add @tanstack/react-query
+
+// App.tsx
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+      retry: 1,
+      refetchOnWindowFocus: false, // Set to true in web
+      refetchOnReconnect: true,
+      refetchOnMount: true,
+    },
+  },
+});
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* Your app components */}
+      <MedicationApp />
+    </QueryClientProvider>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Basic Query Slide -->
+    <section class="slide code-slide">
+      <h2>Basic Data Fetching with useQuery</h2>
+      <pre><code class="language-tsx">
+import { useQuery } from '@tanstack/react-query';
+
+// API function
+const fetchMedications = async () => {
+  const response = await fetch('https://api.pharmacy.com/medications');
+  if (!response.ok) {
+    throw new Error('Failed to fetch medications');
+  }
+  return response.json();
+};
+
+function MedicationList() {
+  const { 
+    data, 
+    isLoading, 
+    isError, 
+    error 
+  } = useQuery({
+    queryKey: ['medications'],
+    queryFn: fetchMedications,
+  });
+  
+  if (isLoading) return <Text>Loading medications...</Text>;
+  if (isError) return <Text>Error: {error.message}</Text>;
+  
+  return (
+    <FlatList
+      data={data}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <Text>{item.name} - {item.dosage}</Text>
+      )}
+    />
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Query Keys Slide -->
+    <section class="slide content-slide">
+      <h2>Query Keys and Caching</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Query Keys</h3>
+          <ul>
+            <li>Unique identifiers for queries</li>
+            <li>Used for caching and deduplication</li>
+            <li>Can be a simple string or an array</li>
+            <li>Arrays create namespaces for related queries</li>
+            <li>Order matters - key items must be stably sorted</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Examples</h3>
+          <pre><code class="language-tsx">
+// Simple key
+useQuery({ queryKey: ['medications'], ... })
+
+// With parameters
+useQuery({ 
+  queryKey: ['medication', medicationId],
+  ... 
+})
+
+// With filters
+useQuery({ 
+  queryKey: [
+    'medications', 
+    { category, status, search }
+  ],
+  ... 
+})</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Dynamic Queries Slide -->
+    <section class="slide code-slide">
+      <h2>Dynamic Queries</h2>
+      <pre><code class="language-tsx">
+// Dependent query - Only runs when medicationId is available
+const fetchMedicationDetails = async (medicationId) => {
+  const response = await fetch(`https://api.pharmacy.com/medications/${medicationId}`);
+  if (!response.ok) throw new Error('Failed to fetch medication details');
+  return response.json();
+};
+
+function MedicationDetails({ medicationId }) {
+  const {
+    data: medication,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['medication', medicationId],
+    queryFn: () => fetchMedicationDetails(medicationId),
+    // The query will not execute until medicationId exists
+    enabled: !!medicationId,
+  });
+  
+  if (!medicationId) return <Text>Select a medication</Text>;
+  if (isLoading) return <Text>Loading details...</Text>;
+  if (isError) return <Text>Error loading details</Text>;
+  
+  return (
+    <View>
+      <Text>{medication.name}</Text>
+      <Text>{medication.description}</Text>
+      <Text>{medication.dosage}</Text>
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Mutations Slide -->
+    <section class="slide code-slide">
+      <h2>Mutations with useMutation</h2>
+      <pre><code class="language-tsx">
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+// API function for adding a medication
+const addMedication = async (newMedication) => {
+  const response = await fetch('https://api.pharmacy.com/medications', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newMedication),
+  });
+  
+  if (!response.ok) throw new Error('Failed to add medication');
+  return response.json();
+};
+
+function AddMedicationForm() {
+  const [name, setName] = useState('');
+  const [dosage, setDosage] = useState('');
+  const queryClient = useQueryClient();
+  
+  const mutation = useMutation({
+    mutationFn: addMedication,
+    onSuccess: () => {
+      // Invalidate and refetch the medications list
+      queryClient.invalidateQueries({ queryKey: ['medications'] });
+      setName('');
+      setDosage('');
+    },
+  });
+  
+  const handleSubmit = () => {
+    mutation.mutate({ name, dosage });
+  };
+  
+  return (
+    <View>
+      <TextInput value={name} onChangeText={setName} placeholder="Medication Name" />
+      <TextInput value={dosage} onChangeText={setDosage} placeholder="Dosage" />
+      <Button 
+        title="Add Medication" 
+        onPress={handleSubmit} 
+        disabled={mutation.isPending}
+      />
+      {mutation.isError && <Text>Error: {mutation.error.message}</Text>}
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Query Invalidation Slide -->
+    <section class="slide content-slide">
+      <h2>Query Invalidation and Refetching</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Invalidation Strategies</h3>
+          <ul>
+            <li>Invalidate specific queries</li>
+            <li>Invalidate query collections by prefix</li>
+            <li>Invalidate all queries</li>
+            <li>Refetch without invalidating</li>
+            <li>Selective invalidation with filters</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="language-tsx">
+// Invalidate a specific query
+queryClient.invalidateQueries({ 
+  queryKey: ['medication', id] 
+});
+
+// Invalidate all medications queries
+queryClient.invalidateQueries({ 
+  queryKey: ['medications'] 
+});
+
+// Invalidate all queries
+queryClient.invalidateQueries();
+
+// Refetch without invalidating
+queryClient.refetchQueries({ 
+  queryKey: ['medications'] 
+});</code></pre>
+        </div>
+      </div>
+      <div class="presenter-notes">
+        Explain that invalidation marks data as stale and triggers refetching. Point out that overly aggressive invalidation can cause performance issues in React Native.
+      </div>
+    </section>
+    
+    <!-- Pagination and Infinite Queries Slide -->
+    <section class="slide code-slide">
+      <h2>Pagination and Infinite Queries</h2>
+      <pre><code class="language-tsx">
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+const fetchMedicationsPage = async ({ pageParam = 1 }) => {
+  const response = await fetch(
+    `https://api.pharmacy.com/medications?page=${pageParam}&limit=20`
+  );
+  if (!response.ok) throw new Error('Failed to fetch medications');
+  return response.json();
+};
+
+function MedicationInfiniteList() {
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ['medications', 'infinite'],
+    queryFn: fetchMedicationsPage,
+    getNextPageParam: (lastPage) => lastPage.nextPage || undefined,
+  });
+  
+  if (status === 'pending') return <Text>Loading...</Text>;
+  if (status === 'error') return <Text>Error loading medications</Text>;
+  
+  // Flatten the pages data
+  const medications = data.pages.flatMap(page => page.data);
+  
+  return (
+    <FlatList
+      data={medications}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <Text>{item.name} - {item.dosage}</Text>
+      )}
+      onEndReached={() => hasNextPage && fetchNextPage()}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={
+        isFetchingNextPage ? <Text>Loading more...</Text> : null
+      }
+    />
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Optimistic Updates Slide -->
+    <section class="slide code-slide">
+      <h2>Optimistic Updates</h2>
+      <pre><code class="language-tsx">
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+const updateMedicationStatus = async ({ id, taken }) => {
+  const response = await fetch(`https://api.pharmacy.com/medications/${id}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ taken }),
+  });
+  
+  if (!response.ok) throw new Error('Failed to update status');
+  return response.json();
+};
+
+function MedicationItem({ medication }) {
+  const queryClient = useQueryClient();
+  
+  const mutation = useMutation({
+    mutationFn: updateMedicationStatus,
+    // Update the medication optimistically
+    onMutate: async (newStatus) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ 
+        queryKey: ['medications'] 
+      });
+      
+      // Snapshot the previous value
+      const previousMedications = queryClient.getQueryData(['medications']);
+      
+      // Optimistically update to the new value
+      queryClient.setQueryData(['medications'], old => {
+        return old.map(med => 
+          med.id === newStatus.id 
+            ? { ...med, taken: newStatus.taken } 
+            : med
+        );
+      });
+      
+      // Return context with the previous value
+      return { previousMedications };
+    },
+    // If mutation fails, rollback to the previous value
+    onError: (err, newStatus, context) => {
+      queryClient.setQueryData(
+        ['medications'],
+        context.previousMedications
+      );
+    },
+    // Always refetch after error or success
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['medications'] });
+    },
+  });
+  
+  return (
+    <View>
+      <Text>{medication.name}</Text>
+      <Switch
+        value={medication.taken}
+        onValueChange={(taken) => 
+          mutation.mutate({ id: medication.id, taken })
+        }
+      />
+    </View>
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Error Handling Slide -->
+    <section class="slide content-slide">
+      <h2>Error Handling</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Query Error Handling</h3>
+          <ul>
+            <li>Automatic retries with configurable strategy</li>
+            <li>Error states exposed via hooks</li>
+            <li>Global error handling</li>
+            <li>Error boundaries integration</li>
+            <li>Custom error handling</li>
+          </ul>
+        </div>
+        <div class="column">
+          <pre><code class="language-tsx">
+// Query with custom error handling
+const { data, error, isError } = useQuery({
+  queryKey: ['medications'],
+  queryFn: fetchMedications,
+  retry: 3,
+  retryDelay: (attemptIndex) => 
+    Math.min(1000 * 2 ** attemptIndex, 30000),
+  onError: (error) => {
+    // Report to error tracking service
+    reportError(error);
+    
+    // Show notification to user
+    showErrorNotification(
+      'Failed to fetch medications'
+    );
+  }
+});</code></pre>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Under the Hood Slide -->
+    <section class="slide content-slide">
+      <h2>Under the Hood: React Query</h2>
+      <div class="columns">
+        <div class="column">
+          <h3>Query Lifecycle</h3>
+          <ol>
+            <li>Mount component with useQuery</li>
+            <li>Check cache for data with matching key</li>
+            <li>If fresh data exists, return immediately</li>
+            <li>If stale data exists, return and refetch</li>
+            <li>If no data, show loading state and fetch</li>
+            <li>Store results in cache with TTL</li>
+            <li>Subscribe to query cache for updates</li>
+            <li>Garbage collect inactive queries</li>
+          </ol>
+        </div>
+        <div class="column">
+          <h3>Performance Considerations</h3>
+          <ul>
+            <li>Adjust staleTime to reduce refetches</li>
+            <li>Increase cacheTime for longer persistence</li>
+            <li>Use structure sharing for efficient updates</li>
+            <li>Configure query deduplication window</li>
+            <li>Use suspense mode with suspense boundaries</li>
+            <li>Measure and optimize bundle size</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Best Practices Slide -->
+    <section class="slide content-slide">
+      <h2>React Query Best Practices</h2>
+      <ul>
+        <li><strong>Separate query functions</strong> from components for reusability</li>
+        <li><strong>Use custom hooks</strong> to encapsulate query logic</li>
+        <li><strong>Design query keys</strong> with a consistent structure</li>
+        <li><strong>Prefer staleTime over refetchInterval</strong> for most cases</li>
+        <li><strong>Set appropriate staleTime</strong> based on data volatility</li>
+        <li><strong>Handle loading and error states</strong> consistently</li>
+        <li><strong>Prefetch data</strong> for anticipated user actions</li>
+        <li><strong>Implement optimistic updates</strong> for better UX</li>
+        <li><strong>Monitor network usage</strong> in React Native applications</li>
+      </ul>
+    </section>
+    
+    <!-- TypeScript Integration Slide -->
+    <section class="slide code-slide">
+      <h2>TypeScript Integration</h2>
+      <pre><code class="language-tsx">
+// Define your data types
+interface Medication {
+  id: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  taken: boolean;
+}
+
+interface MedicationsResponse {
+  data: Medication[];
+  nextPage: number | null;
+  totalCount: number;
+}
+
+// API function with types
+const fetchMedications = async (): Promise<MedicationsResponse> => {
+  const response = await fetch('https://api.pharmacy.com/medications');
+  if (!response.ok) throw new Error('Failed to fetch medications');
+  return response.json();
+};
+
+// Typed custom hook
+function useMedicationsQuery() {
+  return useQuery<MedicationsResponse, Error>({
+    queryKey: ['medications'],
+    queryFn: fetchMedications,
+  });
+}
+
+// In component
+function MedicationList() {
+  const { data, isLoading, error } = useMedicationsQuery();
+  
+  // TypeScript knows that data.data is Medication[]
+  const medications = data?.data || [];
+  
+  return (
+    <FlatList
+      data={medications}
+      renderItem={({ item }) => (
+        <Text>{item.name} - {item.dosage}</Text>
+      )}
+    />
+  );
+}</code></pre>
+    </section>
+    
+    <!-- Summary Slide -->
+    <section class="slide summary-slide">
+      <h2>Summary: React Query</h2>
+      <ul>
+        <li>React Query simplifies server state management in React Native</li>
+        <li>useQuery for fetching and caching data</li>
+        <li>useMutation for updating data</li>
+        <li>Query invalidation for keeping data fresh</li>
+        <li>Pagination and infinite scroll support</li>
+        <li>Optimistic updates for improved UX</li>
+        <li>TypeScript integration for type safety</li>
+      </ul>
+      <div class="next-steps">
+        <p><strong>Next:</strong> Section 3 - Zustand for Client State Management</p>
+      </div>
+    </section>
+    
+    <!-- Exercise Introduction Slide -->
+    <section class="slide exercise-slide">
+      <h2>Exercise: Medication List with React Query</h2>
+      <div class="exercise-description">
+        <p>Create a medication list screen that:</p>
+        <ol>
+          <li>Fetches and displays a list of medications using React Query</li>
+          <li>Implements a "Mark as Taken" feature with useMutation</li>
+          <li>Shows loading and error states appropriately</li>
+          <li>Implements pull-to-refresh for manual refetching</li>
+        </ol>
+        <p>Time: 20 minutes</p>
+        <p>Resources: Starter code provided in Expo Snack</p>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../../../slides/shared/highlight.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
