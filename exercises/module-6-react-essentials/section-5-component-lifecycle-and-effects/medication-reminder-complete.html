@@ -394,15 +394,23 @@
                     <h1>Medication Reminders</h1>
                     
                     <div className="instructions">
-                        <h3>Exercise: Medication Reminder with Effects (Completed)</h3>
-                        <p>This application demonstrates the use of useEffect and custom hooks:</p>
-                        <ul>
-                            <li>Data fetching with proper cleanup</li>
-                            <li>Timer-based reminders using intervals</li>
-                            <li>Local storage persistence with a custom hook</li>
-                            <li>App state/visibility monitoring</li>
-                            <li>Performance optimization with useCallback and useMemo</li>
-                        </ul>
+                        <h3>Exercise: Medication Reminder with Effects</h3>
+                        <p>This is the completed solution with all challenge implementations:</p>
+                        <div style={{ backgroundColor: '#e3f2fd', padding: '10px', border: '1px solid #90caf9', borderRadius: '4px', marginBottom: '10px' }}>
+                            <h4 style={{ margin: '0 0 8px 0' }}>MAIN CHALLENGE SOLUTION:</h4>
+                            <ul style={{ marginBottom: '0' }}>
+                                <li>Data fetching with useEffect (lines ~280-310)</li>
+                            </ul>
+                        </div>
+                        <div style={{ backgroundColor: '#f1f8e9', padding: '10px', border: '1px solid #c5e1a5', borderRadius: '4px' }}>
+                            <h4 style={{ margin: '0 0 8px 0' }}>BONUS IMPLEMENTATIONS:</h4>
+                            <ul style={{ marginBottom: '0' }}>
+                                <li>Reminder timer with useEffect (lines ~320-340)</li>
+                                <li>Settings persistence with localStorage (lines ~350-360)</li>
+                                <li>Proper cleanup for all effects</li>
+                                <li>Custom hooks (useLocalStorage and useReminderCheck)</li>
+                            </ul>
+                        </div>
                     </div>
                     
                     {/* Stats badges */}

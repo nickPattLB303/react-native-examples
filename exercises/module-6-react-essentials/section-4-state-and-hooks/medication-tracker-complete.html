@@ -156,6 +156,10 @@
         // Import React hooks
         const { useState, useReducer, useEffect } = React;
         
+        // =====================================================
+        // MAIN CHALLENGE SOLUTION (30 minutes)
+        // =====================================================
+        
         // 1. MEDICATION FORM COMPONENT
         function MedicationForm({ onAddMedication }) {
             // State for form inputs
@@ -248,32 +252,27 @@
             );
         }
         
-        // 2. MEDICATION ITEM COMPONENT
+        // 2. MEDICATION ITEM COMPONENT - BASIC VERSION
         function MedicationItem({ medication, onToggleStatus, onDelete }) {
-            // Format date helper
-            const formatDate = (dateString) => {
-                if (!dateString) return 'Never';
-                
-                const date = new Date(dateString);
-                return date.toLocaleString();
-            };
-            
             return (
                 <div className="medication-item">
                     <h3>{medication.name}</h3>
-                    <p>Dosage: {medication.dosage}</p>
-                    <p>Schedule: {medication.schedule}</p>
-                    <p>Status: <span className={medication.isActive ? 'status-active' : 'status-inactive'}>
-                        {medication.isActive ? 'Active' : 'Inactive'}
-                    </span></p>
-                    <p>Last Taken: {formatDate(medication.lastTaken)}</p>
+                    <p><strong>Dosage:</strong> {medication.dosage}</p>
+                    <p><strong>Schedule:</strong> {medication.schedule}</p>
+                    <p>
+                        <strong>Status:</strong> 
+                        <span className={medication.isActive ? 'status-active' : 'status-inactive'}>
+                            {medication.isActive ? ' Active' : ' Inactive'}
+                        </span>
+                    </p>
                     
                     <div className="actions">
                         <button onClick={() => onToggleStatus(medication.id)}>
-                            {medication.isActive ? 'Mark as Taken' : 'Mark as Active'}
+                            {medication.isActive ? 'Mark as Inactive' : 'Mark as Active'}
                         </button>
+                        
                         <button 
-                            className="delete-button" 
+                            className="delete-button"
                             onClick={() => onDelete(medication.id)}
                         >
                             Delete
@@ -282,6 +281,77 @@
                 </div>
             );
         }
+        
+        // Basic MedicationTracker Component (Without Filtering)
+        function BasicMedicationTracker() {
+            // State for medications
+            const [medications, setMedications] = useState([
+                {
+                    id: '1',
+                    name: 'Lisinopril',
+                    dosage: '10mg',
+                    schedule: 'Daily',
+                    isActive: true,
+                    lastTaken: null
+                },
+                {
+                    id: '2',
+                    name: 'Atorvastatin',
+                    dosage: '20mg',
+                    schedule: 'Daily at bedtime',
+                    isActive: true,
+                    lastTaken: null
+                }
+            ]);
+            
+            // Add a new medication
+            const addMedication = (medication) => {
+                setMedications([...medications, medication]);
+            };
+            
+            // Toggle a medication's status
+            const toggleMedicationStatus = (id) => {
+                setMedications(medications.map(med => {
+                    if (med.id === id) {
+                        return { ...med, isActive: !med.isActive };
+                    }
+                    return med;
+                }));
+            };
+            
+            // Delete a medication
+            const deleteMedication = (id) => {
+                setMedications(medications.filter(med => med.id !== id));
+            };
+            
+            return (
+                <div className="container">
+                    <h1>Medication Tracker</h1>
+                    
+                    <MedicationForm onAddMedication={addMedication} />
+                    
+                    <h2>Your Medications</h2>
+                    <div className="medication-list">
+                        {medications.length === 0 ? (
+                            <p>No medications found.</p>
+                        ) : (
+                            medications.map(medication => (
+                                <MedicationItem 
+                                    key={medication.id}
+                                    medication={medication}
+                                    onToggleStatus={toggleMedicationStatus}
+                                    onDelete={deleteMedication}
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        // =====================================================
+        // BONUS CHALLENGES IMPLEMENTATION
+        // =====================================================
         
         // 3. FILTER CONTROLS COMPONENT
         function FilterControls({ activeFilter, onFilterChange }) {

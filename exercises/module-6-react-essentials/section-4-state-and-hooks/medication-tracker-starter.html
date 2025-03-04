@@ -137,6 +137,10 @@
         // Import React hooks
         const { useState, useReducer } = React;
         
+        // =====================================================
+        // MAIN CHALLENGE (30 minutes)
+        // =====================================================
+        
         // 1. MEDICATION FORM COMPONENT
         // Create a form component to add new medications
         function MedicationForm({ /* Your props here */ }) {
@@ -166,28 +170,12 @@
             );
         }
         
-        // 3. FILTER CONTROLS COMPONENT
-        // Create filter controls to show active, taken, or all medications
-        function FilterControls({ /* Your props here */ }) {
-            // Implement filter buttons for all, active, and taken medications
-            
-            return (
-                <div className="filter-controls">
-                    {/* Implement filter controls here */}
-                </div>
-            );
-        }
-        
         // 4. MEDICATION TRACKER COMPONENT (Main Component)
         // Implement the main component that manages medication state
         function MedicationTracker() {
-            // Implement state for medications and filter
+            // Implement state for medications list
             
-            // Implement functions to:
-            // - Add a new medication
-            // - Toggle a medication's status
-            // - Delete a medication
-            // - Filter medications
+            // Implement function to add a new medication
             
             return (
                 <div className="container">
@@ -201,8 +189,6 @@
                     
                     {/* Add MedicationForm component here */}
                     
-                    {/* Add FilterControls component here */}
-                    
                     <h2>Your Medications</h2>
                     <div className="medication-list">
                         {/* Display "No medications found" message or render MedicationItem components */}
@@ -212,7 +198,28 @@
             );
         }
         
-        // 5. BONUS: MEDICATION TRACKER WITH REDUCER
+        // =====================================================
+        // BONUS CHALLENGES (if you finish early)
+        // =====================================================
+        
+        // 3. FILTER CONTROLS COMPONENT
+        // Create filter controls to show active, taken, or all medications
+        function FilterControls({ /* Your props here */ }) {
+            // Implement filter buttons for all, active, and taken medications
+            
+            return (
+                <div className="filter-controls">
+                    {/* Implement filter controls here */}
+                </div>
+            );
+        }
+        
+        // Add functions to the MedicationTracker component:
+        // - Toggle a medication's status
+        // - Delete a medication
+        // - Filter medications
+        
+        // 5. MEDICATION TRACKER WITH REDUCER
         // Implement a version of MedicationTracker using useReducer
         function medicationsReducer(state, action) {
             // Implement reducer for medication state management
