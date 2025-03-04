@@ -101,7 +101,7 @@ public void myMethod(String param, Callback callback) {
 
 1. **Monitor Bridge Traffic**:
 
-```javascript
+```jsx
 // In your JavaScript code
 if (__DEV__) {
   const MessageQueue = require('react-native/Libraries/BatchedBridge/MessageQueue');
@@ -138,7 +138,7 @@ if (__DEV__) {
 
 1. **Monkey Patching**:
 
-```javascript
+```jsx
 // Original library function
 const originalFunction = ThirdPartyLibrary.someFunction;
 
@@ -211,7 +211,7 @@ npx react-native bundle --platform android --dev false --entry-file index.js --b
 
 1. **Sentry Integration**:
 
-```javascript
+```jsx
 import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
@@ -419,7 +419,7 @@ export function startTransaction(name: string, op: string): Sentry.Transaction {
 
 1. **Event Listeners**:
 
-```javascript
+```jsx
 // Bad: Event listener not removed
 componentDidMount() {
   AppState.addEventListener('change', this.handleAppStateChange);
@@ -439,7 +439,7 @@ componentWillUnmount() {
 
 2. **Timers**:
 
-```javascript
+```jsx
 // Bad: Timer not cleared
 componentDidMount() {
   this.timer = setInterval(() => {
@@ -463,7 +463,7 @@ componentWillUnmount() {
 
 3. **Closures**:
 
-```javascript
+```jsx
 // Bad: Closure capturing component instance
 fetchData = () => {
   api.getData().then(data => {
@@ -569,7 +569,7 @@ componentWillUnmount() {
 
 1. **Using the Animated API Debugger**:
 
-```javascript
+```jsx
 if (__DEV__) {
   require('react-native').Animated.setUseNativeDriver(false);
   require('react-native').Animated.addListener('change', (state) => {
@@ -580,7 +580,7 @@ if (__DEV__) {
 
 2. **Debugging Reanimated**:
 
-```javascript
+```jsx
 import { useAnimatedReaction } from 'react-native-reanimated';
 
 // In your component

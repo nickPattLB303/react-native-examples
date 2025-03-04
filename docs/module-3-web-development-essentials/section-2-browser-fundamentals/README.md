@@ -86,7 +86,7 @@ JavaScript uses an event loop to handle asynchronous operations without blocking
 2. Event queue - holds callbacks waiting to be processed
 3. Event loop - moves callbacks from the queue to the stack when the stack is empty
 
-```javascript
+```jsx
 function getPrescriptionData() {
   // Simulated API call
   setTimeout(() => {

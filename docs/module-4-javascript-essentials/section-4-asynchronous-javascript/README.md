@@ -17,7 +17,7 @@ JavaScript is single-threaded, meaning it can only execute one operation at a ti
 
 ### Synchronous vs. Asynchronous Code
 
-```javascript
+```jsx
 // Synchronous code executes in sequence
 console.log("First");
 console.log("Second");
@@ -41,7 +41,7 @@ Callbacks are functions passed as arguments to other functions, to be executed a
 
 ### Basic Callback Pattern
 
-```javascript
+```jsx
 function fetchMedication(id, callback) {
   // Simulate API request with setTimeout
   setTimeout(() => {
@@ -70,7 +70,7 @@ console.log("Fetching medication...");
 
 When multiple asynchronous operations depend on each other, callbacks can lead to deeply nested code known as "callback hell":
 
-```javascript
+```jsx
 fetchPatient(patientId, (patient) => {
   fetchMedications(patient.id, (medications) => {
     fetchPharmacy(medications[0].pharmacyId, (pharmacy) => {
@@ -91,7 +91,7 @@ Promises represent the eventual completion (or failure) of an asynchronous opera
 
 ### Promise Basics
 
-```javascript
+```jsx
 // Creating a promise
 function fetchMedicationPromise(id) {
   return new Promise((resolve, reject) => {
@@ -141,7 +141,7 @@ A Promise can be in one of three states:
 
 Promises can be chained to handle sequences of asynchronous operations:
 
-```javascript
+```jsx
 // Refactoring the callback hell example with promises
 fetchPatientPromise(patientId)
   .then(patient => {
@@ -168,7 +168,7 @@ fetchPatientPromise(patientId)
 
 For handling multiple promises that can run concurrently:
 
-```javascript
+```jsx
 // Fetch multiple medications in parallel
 const medicationPromises = [
   fetchMedicationPromise(1),
@@ -191,7 +191,7 @@ Promise.all(medicationPromises)
 
 ### Other Promise Methods
 
-```javascript
+```jsx
 // Promise.race - resolves or rejects as soon as one promise resolves/rejects
 Promise.race([
   fetchMedicationPromise(1),
@@ -235,7 +235,7 @@ Async/await is syntactic sugar built on top of promises, making asynchronous cod
 
 ### Basic Syntax
 
-```javascript
+```jsx
 // Async function declaration
 async function fetchMedicationData(id) {
   try {
@@ -266,7 +266,7 @@ const fetchPatientData = async (id) => {
 
 ### Sequential vs. Parallel Execution
 
-```javascript
+```jsx
 // Sequential execution (each await waits for the previous to complete)
 async function fetchSequential() {
   console.time("sequential");
@@ -312,7 +312,7 @@ async function fetchParallelWithPromiseAll() {
 
 ### Error Handling with Async/Await
 
-```javascript
+```jsx
 // Using try/catch
 async function fetchWithErrorHandling() {
   try {
@@ -372,7 +372,7 @@ The Fetch API is commonly used in React Native for making HTTP requests.
 
 ### Basic Fetch Request
 
-```javascript
+```jsx
 // GET request
 fetch('https://api.example.com/medications')
   .then(response => {
@@ -408,7 +408,7 @@ async function fetchMedications() {
 
 ### POST Request with Fetch
 
-```javascript
+```jsx
 async function createMedication(medicationData) {
   try {
     const response = await fetch('https://api.example.com/medications', {
@@ -450,7 +450,7 @@ createMedication({
 
 ### Component Data Fetching
 
-```javascript
+```jsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 
@@ -514,7 +514,7 @@ function MedicationList() {
 
 When multiple asynchronous operations are in flight, you need to ensure that responses are handled in the correct order:
 
-```javascript
+```jsx
 function MedicationDetail({ medicationId }) {
   const [medication, setMedication] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -559,7 +559,7 @@ function MedicationDetail({ medicationId }) {
 
 For search inputs or other frequently changing values, debouncing prevents excessive API calls:
 
-```javascript
+```jsx
 import { useState, useEffect } from 'react';
 
 // Custom hook for debounced API calls
@@ -617,7 +617,7 @@ function MedicationSearch() {
 
 ### Global Error Handling
 
-```javascript
+```jsx
 // Set up global error handler for unhandled promise rejections
 if (typeof process !== 'undefined') {
   process.on('unhandledRejection', (reason, promise) => {
@@ -642,7 +642,7 @@ if (global.ErrorUtils) {
 
 ### Retry Pattern
 
-```javascript
+```jsx
 async function fetchWithRetry(url, options = {}, maxRetries = 3) {
   let lastError;
   
@@ -676,7 +676,7 @@ fetchWithRetry('https://api.example.com/medications')
 
 ### Timeout Pattern
 
-```javascript
+```jsx
 function fetchWithTimeout(url, options = {}, timeout = 5000) {
   return Promise.race([
     fetch(url, options),
@@ -711,7 +711,7 @@ Create a series of functions that simulate:
 ### Exercise 2: Async/Await Refactoring
 Take the following callback-based code and refactor it using async/await:
 
-```javascript
+```jsx
 function getMedicationSchedule(patientId, callback) {
   fetchPatient(patientId, (error, patient) => {
     if (error) {

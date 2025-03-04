@@ -28,7 +28,7 @@ Let's explore the different ways to create and use functions in JavaScript.
 
 The most traditional way to create a function:
 
-```javascript
+```jsx
 function calculateDosage(weight, age) {
   const baseDosage = weight * 0.1;
   const ageFactor = age < 18 ? 0.8 : 1;
@@ -48,7 +48,7 @@ const dosage = calculateDosage(70, 35); // 7
 
 Functions can also be assigned to variables:
 
-```javascript
+```jsx
 const calculateDosage = function(weight, age) {
   const baseDosage = weight * 0.1;
   const ageFactor = age < 18 ? 0.8 : 1;
@@ -68,7 +68,7 @@ const dosage = calculateDosage(70, 35); // 7
 
 A more concise syntax introduced in ES6:
 
-```javascript
+```jsx
 const calculateDosage = (weight, age) => {
   const baseDosage = weight * 0.1;
   const ageFactor = age < 18 ? 0.8 : 1;
@@ -97,7 +97,7 @@ const adultDosage = weight => weight * 0.1;
 
 ES6 introduced default parameter values:
 
-```javascript
+```jsx
 function medicationSchedule(medName, doseCount = 3, instructions = "Take with water") {
   return `${medName}: Take ${doseCount} times daily. ${instructions}`;
 }
@@ -115,7 +115,7 @@ console.log(medicationSchedule("Ibuprofen", 2, "Take after meals"));
 
 The rest parameter syntax allows handling multiple arguments as an array:
 
-```javascript
+```jsx
 function listMedications(patientName, ...medications) {
   return `${patientName}'s medications: ${medications.join(", ")}`;
 }
@@ -132,7 +132,7 @@ JavaScript has different types of scope that determine where variables can be ac
 
 Variables declared outside any function or block:
 
-```javascript
+```jsx
 const hospitalName = "General Hospital"; // Global scope
 
 function getPatientInfo() {
@@ -146,7 +146,7 @@ function getPatientInfo() {
 
 Variables declared within a function:
 
-```javascript
+```jsx
 function calculateMedicationDays() {
   const pillsPerDay = 3; // Function scoped
   const totalPills = 90;
@@ -161,7 +161,7 @@ function calculateMedicationDays() {
 
 Variables declared with `let` and `const` are block-scoped:
 
-```javascript
+```jsx
 if (patientAge > 18) {
   const adultDosage = weightKg * 0.1; // Block scoped
   console.log(`Adult dosage: ${adultDosage}mg`);
@@ -175,7 +175,7 @@ if (patientAge > 18) {
 
 Closures occur when a function "remembers" its lexical scope even when executed outside that scope:
 
-```javascript
+```jsx
 function createMedicationTracker(medicationName) {
   let count = 0; // This variable is "enclosed" in the returned function
   
@@ -204,7 +204,7 @@ The `this` keyword in JavaScript refers to the execution context of a function, 
 
 ### 'this' in Regular Functions
 
-```javascript
+```jsx
 const patient = {
   name: "John",
   medications: ["Aspirin", "Lisinopril"],
@@ -235,7 +235,7 @@ const patient = {
 
 Higher-order functions either take a function as an argument or return a function. They are fundamental to functional programming and React:
 
-```javascript
+```jsx
 // Function that returns a function
 function medicationDosageCalculator(baseMultiplier) {
   return function(weight) {
@@ -269,7 +269,7 @@ React Native heavily uses higher-order components and hooks, which are based on 
 
 An IIFE is a function that runs as soon as it is defined:
 
-```javascript
+```jsx
 (function() {
   const privateData = "Sensitive patient information";
   console.log("IIFE executed");
@@ -288,7 +288,7 @@ IIFEs are useful for creating private scopes and avoiding global namespace pollu
 
 In React Native, functions are used extensively:
 
-```javascript
+```jsx
 // Functional component
 const MedicationItem = ({ name, dosage, instructions }) => {
   // Event handler function

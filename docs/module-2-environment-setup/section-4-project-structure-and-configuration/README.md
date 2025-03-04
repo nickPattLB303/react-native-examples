@@ -87,7 +87,7 @@ The assets folder contains static resources such as:
 
 These are bundled with your application and can be accessed via imports or the `require` function:
 
-```javascript
+```jsx
 // Importing an image
 import logo from '../assets/logo.png';
 
@@ -219,7 +219,7 @@ DEBUG_MODE=false
 ```
 
 3. Configure babel to use these files:
-```javascript
+```jsx
 // babel.config.js
 module.exports = function(api) {
   api.cache(true);
@@ -242,7 +242,7 @@ module.exports = function(api) {
 ```
 
 4. Use environment variables in your code:
-```javascript
+```jsx
 import { API_URL, DEBUG_MODE } from '@env';
 
 console.log(`API URL: ${API_URL}`);
@@ -255,7 +255,7 @@ console.log(`Debug Mode: ${DEBUG_MODE}`);
 
 For more dynamic configuration, you can use app.config.js instead of app.json:
 
-```javascript
+```jsx
 // app.config.js
 export default {
   name: "MyPharmacyApp",
@@ -273,7 +273,7 @@ export default {
 
 Access this configuration in your app using Expo's Constants:
 
-```javascript
+```jsx
 import Constants from 'expo-constants';
 
 const { apiUrl, debugMode } = Constants.expoConfig.extra;
@@ -285,7 +285,7 @@ console.log(`Debug Mode: ${debugMode}`);
 
 You can configure different behavior for iOS and Android:
 
-```javascript
+```jsx
 // app.config.js
 export default {
   // Common configuration...
@@ -314,7 +314,7 @@ export default {
 
 Expo 42+ introduced a powerful plugins system that allows for native code configuration without ejecting:
 
-```javascript
+```jsx
 // app.json or app.config.js
 {
   "expo": {
@@ -341,7 +341,7 @@ Expo 42+ introduced a powerful plugins system that allows for native code config
 
 For advanced scenarios, you can customize the native build process:
 
-```javascript
+```jsx
 // app.config.js
 export default {
   // Other configuration...
@@ -409,7 +409,7 @@ This structured approach offers several advantages:
 
 TypeScript provides type safety for your React Native application. Here's how to configure it optimally:
 
-```javascript
+```jsx
 // tsconfig.json
 {
   "extends": "expo/tsconfig.base",
@@ -446,7 +446,7 @@ import { Button } from '@components/common/Button';
 
 To make these path aliases work with Babel, add the following to your babel.config.js:
 
-```javascript
+```jsx
 // babel.config.js
 module.exports = function(api) {
   api.cache(true);
@@ -483,7 +483,7 @@ Here are some additional configurations to enhance your development workflow:
 
 Metro is React Native's JavaScript bundler. You can customize it for better performance:
 
-```javascript
+```jsx
 // metro.config.js
 const { getDefaultConfig } = require('expo/metro-config');
 
@@ -499,7 +499,7 @@ module.exports = config;
 
 Set up ESLint for consistent code quality:
 
-```javascript
+```jsx
 // .eslintrc.js
 module.exports = {
   root: true,

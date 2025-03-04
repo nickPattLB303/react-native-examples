@@ -16,7 +16,7 @@ This rule defines the standards for all code examples, exercises, challenges, an
   - Component documentation with props and state descriptions
 
 - Platform-specific code must be clearly marked and explained:
-  ```javascript
+  ```jsx
   // iOS-specific implementation
   if (Platform.OS === 'ios') {
     // Implementation with explanation of iOS-specific behavior
@@ -45,7 +45,7 @@ This rule defines the standards for all code examples, exercises, challenges, an
 
 ## Examples
 - Proper JSDoc documentation:
-  ```javascript
+  ```jsx
   /**
    * @fileoverview Component for displaying a list of medications
    * @author Training Course Author
@@ -67,7 +67,7 @@ This rule defines the standards for all code examples, exercises, challenges, an
   ```
 
 - Improper JSDoc documentation:
-  ```javascript
+  ```jsx
   // Function to calculate dosage
   function calculateDosage(weight, concentration) {
     return weight * 0.001 * concentration;
@@ -75,7 +75,7 @@ This rule defines the standards for all code examples, exercises, challenges, an
   ```
 
 - Proper themed example:
-  ```javascript
+  ```jsx
   const medications = [
     { id: 1, name: 'Amoxicillin', dosage: '500mg', frequency: '3x daily' },
     { id: 2, name: 'Lisinopril', dosage: '10mg', frequency: '1x daily' },

@@ -106,7 +106,7 @@ Breakpoints allow you to pause execution at specific points in your code:
 
 You can also add breakpoints directly in your code using the `debugger` statement:
 
-```javascript
+```jsx
 function handleSubmit() {
   const data = prepareData();
   debugger; // Execution will pause here when debugging is enabled
@@ -126,7 +126,7 @@ When execution is paused at a breakpoint, you can inspect variables:
 
 The console provides various methods for debugging:
 
-```javascript
+```jsx
 // Basic logging
 console.log('User data:', userData);
 
@@ -195,7 +195,7 @@ If your app uses Redux, you can debug Redux state and actions:
 1. Install the Redux plugin in Flipper
 2. Connect your Redux store to Flipper:
 
-```javascript
+```jsx
 import { createStore } from 'redux';
 import { addPlugin } from 'react-native-flipper';
 import { createDebugger } from 'redux-flipper';

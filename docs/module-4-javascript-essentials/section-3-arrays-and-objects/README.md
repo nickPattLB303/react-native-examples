@@ -18,7 +18,7 @@ Arrays are ordered collections of values that are fundamental to handling lists 
 
 ### Array Creation and Access
 
-```javascript
+```jsx
 // Array creation
 const medications = ["Aspirin", "Lisinopril", "Metformin"];
 
@@ -40,7 +40,7 @@ JavaScript arrays have many built-in methods that make data manipulation easier:
 
 #### Adding and Removing Elements
 
-```javascript
+```jsx
 const prescriptions = ["Aspirin", "Lisinopril"];
 
 // Adding elements
@@ -71,7 +71,7 @@ console.log(prescriptions);            // ["Amlodipine", "Lisinopril"]
 
 #### Finding Elements
 
-```javascript
+```jsx
 const medications = [
   { id: 1, name: "Aspirin", type: "pain" },
   { id: 2, name: "Amoxicillin", type: "antibiotic" },
@@ -99,7 +99,7 @@ These methods are crucial for React Native development as they support the funct
 
 Creates a new array by transforming each element:
 
-```javascript
+```jsx
 const medicationNames = medications.map(med => med.name);
 console.log(medicationNames); // ["Aspirin", "Amoxicillin", "Lisinopril"]
 
@@ -119,7 +119,7 @@ const medicationInfo = medications.map(med => {
 
 Creates a new array with elements that pass a test:
 
-```javascript
+```jsx
 const nonPainMeds = medications.filter(med => med.type !== "pain");
 console.log(nonPainMeds.length); // 2
 
@@ -134,7 +134,7 @@ console.log(antibioticNames); // ["Amoxicillin"]
 
 Accumulates array values into a single result:
 
-```javascript
+```jsx
 const medicationTypes = medications.reduce((types, med) => {
   if (!types.includes(med.type)) {
     types.push(med.type);
@@ -160,7 +160,7 @@ console.log(groupedByType.pain); // [{ id: 1, name: "Aspirin", type: "pain" }]
 
 Sorts array elements in place:
 
-```javascript
+```jsx
 // Warning: sort() mutates the original array
 const medNames = [...medicationNames]; // Create a copy first
 medNames.sort();
@@ -181,7 +181,7 @@ console.log(doses); // [5, 10, 15, 25]
 
 The spread operator (`...`) allows for powerful array manipulations:
 
-```javascript
+```jsx
 const morningMeds = ["Lisinopril", "Vitamin D"];
 const eveningMeds = ["Aspirin", "Simvastatin"];
 
@@ -211,7 +211,7 @@ Objects are collections of key-value pairs that are essential for representing s
 
 ### Object Creation and Access
 
-```javascript
+```jsx
 // Object literal
 const medication = {
   id: 1,
@@ -242,7 +242,7 @@ console.log(medication.hasOwnProperty("price")); // false
 
 Objects can contain functions as properties, known as methods:
 
-```javascript
+```jsx
 const patient = {
   firstName: "John",
   lastName: "Doe",
@@ -274,7 +274,7 @@ console.log(patient.getMedications()); // "Aspirin, Lisinopril"
 
 Object destructuring allows you to extract properties into variables concisely:
 
-```javascript
+```jsx
 const { name, dosage, instructions } = medication;
 console.log(name); // "Aspirin"
 console.log(instructions); // "Take with food"
@@ -310,7 +310,7 @@ console.log(patientName); // "Jane Smith"
 
 The spread operator works with objects too:
 
-```javascript
+```jsx
 // Creating a copy of an object
 const medicationCopy = { ...medication };
 
@@ -331,7 +331,7 @@ const medicationWithId = { id: 123, ...baseInfo };
 ```
 
 > 💡 **React Native Tip**: Object spread is invaluable for state updates in React Native:
-> ```javascript
+> ```jsx
 > this.setState(prevState => ({ ...prevState, count: prevState.count + 1 }));
 > // or with hooks
 > setMedication(prev => ({ ...prev, dosage: "81mg" }));
@@ -341,7 +341,7 @@ const medicationWithId = { id: 123, ...baseInfo };
 
 ES6 introduced the ability to use expressions as property names:
 
-```javascript
+```jsx
 const propertyName = "dosageInfo";
 const timeOfDay = "evening";
 
@@ -359,7 +359,7 @@ console.log(medicationSchedule.eveningDose); // true
 
 Arrays of objects are a common data structure in React Native applications:
 
-```javascript
+```jsx
 const medicationList = [
   { id: 1, name: "Aspirin", type: "pain", dosage: "325mg" },
   { id: 2, name: "Lisinopril", type: "blood pressure", dosage: "10mg" },
@@ -395,7 +395,7 @@ const withInstructions = medicationList.map(med => ({
 
 In React Native, maintaining immutability when updating state is essential for correct functioning:
 
-```javascript
+```jsx
 // ❌ Incorrect way to update state (mutating)
 const updateMedicationDosage = (medications, id, newDosage) => {
   const med = medications.find(m => m.id === id);
@@ -423,7 +423,7 @@ const updateMedication = (id, newDosage) => {
 
 Real-world React Native applications often require complex data transformations:
 
-```javascript
+```jsx
 const patientData = {
   id: "P12345",
   name: "John Doe",

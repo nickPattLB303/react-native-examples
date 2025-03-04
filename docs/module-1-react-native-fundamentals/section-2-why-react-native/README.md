@@ -24,7 +24,7 @@ One of the most compelling reasons to use React Native is the ability to share c
 - Easier maintenance and feature parity
 - Smaller team size requirements
 
-```javascript
+```jsx
 // This component works on both iOS and Android
 const MedicationReminder = ({ medication, time, dosage }) => {
   return (
@@ -65,7 +65,7 @@ React Native offers one of the best developer experiences in the mobile developm
 - **Excellent Debugging Tools**: React DevTools, Flipper integration
 - **Strong TypeScript Support**: Type safety and better IDE integration
 
-```javascript
+```jsx
 // Make a change, save the file, and see it instantly with hot reloading
 const styles = StyleSheet.create({
   reminderCard: {
@@ -116,7 +116,7 @@ For organizations with existing web applications, React Native offers a smoother
 - Familiar tooling and ecosystem
 - Potential for code sharing between web and mobile (with React Native Web)
 
-```javascript
+```jsx
 // This component could work in both React (web) and React Native with minimal changes
 const MedicationDetails = ({ medication }) => {
   return (

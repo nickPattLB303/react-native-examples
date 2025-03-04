@@ -38,7 +38,7 @@ The JavaScript thread is where most of your application code runs. It includes:
 - Event handling
 - Network requests
 
-```javascript
+```jsx
 // This code runs in the JavaScript thread
 function MedicationScreen() {
   const [medications, setMedications] = useState([]);
@@ -106,7 +106,7 @@ Let's follow what happens when you render a component:
 
 When your component's state or props change, React's reconciliation algorithm (also known as the Virtual DOM) determines what needs to update.
 
-```javascript
+```jsx
 // State update triggers reconciliation
 const [selectedMedication, setSelectedMedication] = useState(null);
 
@@ -124,7 +124,7 @@ React Native maintains a "shadow tree" in C++ that mirrors your component hierar
 
 The Yoga layout engine calculates positions and dimensions for all components based on their flexbox properties.
 
-```javascript
+```jsx
 // These style properties are processed by the Yoga layout engine
 const styles = StyleSheet.create({
   container: {
@@ -210,7 +210,7 @@ public class MedicationScannerModule extends ReactContextBaseJavaModule {
 ```
 
 **JavaScript Usage:**
-```javascript
+```jsx
 import { NativeModules } from 'react-native';
 const { MedicationScanner } = NativeModules;
 
@@ -258,7 +258,7 @@ public class MedicationBarcodeScannerManager extends SimpleViewManager<BarcodeSc
 ```
 
 **JavaScript Usage:**
-```javascript
+```jsx
 import { requireNativeComponent } from 'react-native';
 const MedicationBarcodeScanner = requireNativeComponent('MedicationBarcodeScanner');
 

@@ -126,7 +126,7 @@ set PATH=%PATH%;%ANDROID_HOME%\platform-tools
 
 ### Dynamic app.config.js
 
-```javascript
+```jsx
 export default ({config}) => {
   return {
     ...config,
@@ -155,7 +155,7 @@ DEBUG_MODE=false
 
 ### babel.config.js for Environment Variables
 
-```javascript
+```jsx
 module.exports = function(api) {
   api.cache(true);
   return {
@@ -266,7 +266,7 @@ echo "Clean completed successfully!"
 
 ### Metro Config (metro.config.js)
 
-```javascript
+```jsx
 const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
@@ -279,7 +279,7 @@ module.exports = config;
 
 ### TypeScript Config (tsconfig.json)
 
-```javascript
+```jsx
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {

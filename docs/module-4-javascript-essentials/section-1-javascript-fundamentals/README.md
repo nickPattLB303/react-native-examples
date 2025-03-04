@@ -26,7 +26,7 @@ JavaScript is the programming language used to build React Native applications. 
 
 JavaScript offers three ways to declare variables:
 
-```javascript
+```jsx
 // var - function scoped (older, less recommended)
 var patientName = "John Doe";
 
@@ -47,7 +47,7 @@ When working with React Native, prefer:
 
 JavaScript has seven primitive data types:
 
-```javascript
+```jsx
 // String
 const medicationName = "Aspirin";
 
@@ -76,7 +76,7 @@ const largeNumber = 9007199254740991n;
 
 The main non-primitive type in JavaScript is Object, which includes arrays and functions:
 
-```javascript
+```jsx
 // Object
 const medication = {
   name: "Aspirin",
@@ -97,7 +97,7 @@ function calculateDosage(weight, age) {
 
 ### Arithmetic Operators
 
-```javascript
+```jsx
 const a = 10;
 const b = 3;
 
@@ -111,7 +111,7 @@ console.log(a ** b); // 1000 (Exponentiation)
 
 ### Comparison Operators
 
-```javascript
+```jsx
 console.log(a > b);   // true (Greater than)
 console.log(a < b);   // false (Less than)
 console.log(a >= 10); // true (Greater than or equal)
@@ -128,7 +128,7 @@ console.log(a !== "10"); // true (Not equal value or type)
 
 ### Logical Operators
 
-```javascript
+```jsx
 const hasInsurance = true;
 const needsPrescription = false;
 
@@ -145,7 +145,7 @@ const status = needsPrescription || "Over the counter"; // "Over the counter"
 
 ### Conditional Statements
 
-```javascript
+```jsx
 // if-else statement
 if (patientAge >= 18) {
   console.log("Adult dosage");
@@ -176,7 +176,7 @@ switch (medicationCategory) {
 
 ### Loops
 
-```javascript
+```jsx
 // for loop
 for (let i = 0; i < medications.length; i++) {
   console.log(`Medication ${i+1}: ${medications[i]}`);
@@ -211,7 +211,7 @@ do {
 
 Template literals (introduced in ES6) allow for more readable string concatenation and multiline strings:
 
-```javascript
+```jsx
 const patient = "Jane";
 const medName = "Lisinopril";
 const dose = "10mg";
@@ -236,7 +236,7 @@ const fullInstructions = `
 
 Error handling is crucial for robust applications:
 
-```javascript
+```jsx
 try {
   // Code that might throw an error
   const response = fetchPatientMedications(patientId);
@@ -255,7 +255,7 @@ try {
 
 JavaScript performs automatic type conversion in certain contexts, which can sometimes lead to unexpected results:
 
-```javascript
+```jsx
 console.log("5" + 3);      // "53" (string concatenation)
 console.log("5" - 3);      // 2 (numeric subtraction)
 console.log("5" == 5);     // true (loose equality with type coercion)

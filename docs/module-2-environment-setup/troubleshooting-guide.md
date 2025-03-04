@@ -340,7 +340,7 @@ npm install
 
 **Solution**:
 1. Create or update metro.config.js:
-   ```javascript
+   ```jsx
    const { getDefaultConfig } = require('expo/metro-config');
    
    const config = getDefaultConfig(__dirname);

@@ -352,7 +352,7 @@ React Native styling is heavily inspired by CSS, but with some key differences:
 
 ### React Native StyleSheet Example:
 
-```javascript
+```jsx
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({

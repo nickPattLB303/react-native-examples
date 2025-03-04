@@ -122,7 +122,7 @@ export default function getEnvironment() {
 ### Task 2: App Configuration
 Set up app.config.js for dynamic configuration:
 
-```javascript
+```jsx
 // app.config.js
 export default ({ config }) => {
   return {

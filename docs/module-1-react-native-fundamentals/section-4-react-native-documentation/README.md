@@ -49,7 +49,7 @@ These sections cover the fundamental building blocks of React Native application
 - AppState
 - And many more
 
-```javascript
+```jsx
 // Example from the documentation showing core components
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
@@ -126,7 +126,7 @@ The documentation includes a powerful search feature that can help you quickly f
 
 Many components and APIs have platform-specific behavior or limitations. Always check the "Platform Compatibility" section on documentation pages.
 
-```javascript
+```jsx
 // Example of platform-specific code from the documentation
 import { Platform, StyleSheet } from 'react-native';
 
