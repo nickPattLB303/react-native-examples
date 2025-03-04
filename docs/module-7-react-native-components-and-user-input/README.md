@@ -26,7 +26,7 @@ This module focuses on the building blocks of React Native applications - compon
 4. [Form Management in React Native](./section-4-form-management/README.md)
 5. [Input Validation Strategies](./section-5-input-validation/README.md)
 6. [Accessibility in Forms](./section-6-accessibility/README.md)
-7. [Custom Input Components](./section-7-custom-input-components/README.md)
+7. [Custom Input Components](./section-7-custom-components/README.md)
 
 ## Module Challenge
 At the end of this module, you'll complete a challenge that tests your understanding of React Native components and user input by implementing a medication order form. The form will include various input types, validation, accessibility features, and appropriate keyboard management to create a smooth user experience.

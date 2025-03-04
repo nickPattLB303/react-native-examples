@@ -392,6 +392,15 @@
         { num: 3, name: 'props-and-component-composition' },
         { num: 4, name: 'state-and-hooks' },
         { num: 5, name: 'component-lifecycle-and-effects' },
+      ],
+      'module-7-react-native-components-and-user-input': [
+        { num: 1, name: 'core-ui-components' },
+        { num: 2, name: 'text-input-and-keyboard' },
+        { num: 3, name: 'selection-components' },
+        { num: 4, name: 'form-management' },
+        { num: 5, name: 'input-validation' },
+        { num: 6, name: 'custom-components' },
+        { num: 7, name: 'custom-input-components' }
       ]
       // Add more modules as needed
     };
