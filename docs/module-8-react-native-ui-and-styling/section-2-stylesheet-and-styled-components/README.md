@@ -1,4 +1,4 @@
-# Section 2: StyleSheet API and Performance
+# Section 2: StyleSheet API and Styled Components
 
 ## Learning Objectives
 After completing this section, you will be able to:
