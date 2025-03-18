@@ -246,30 +246,30 @@ The mobile development landscape continues to evolve with several notable trends
 
 > 💡 **React Native's Position**: React Native continues to evolve with its new architecture (Fabric, TurboModules, JSI, and Bridgeless Architecture), addressing performance concerns and improving the developer experience, maintaining its position as a leading cross-platform solution.
 
-## Exercise:
+## Exercise: Mobile Development Approaches Quiz
 
-### Mobile Development Approach Quiz
+In this exercise, you will test your understanding of different mobile development approaches through a comprehensive quiz that covers both theoretical concepts and practical application scenarios.
 
-In this exercise, you will test your understanding of different mobile development approaches through a multiple-choice assessment.
+### Exercise Description
+This Microsoft Forms quiz will assess your knowledge of the mobile development landscape, including native, hybrid, and cross-platform approaches. You'll be challenged to apply what you've learned to real-world scenarios, evaluating which approach would be most suitable based on specific requirements and constraints.
 
-#### Exercise Description
-This quiz covers the various mobile development approaches discussed in this section, including native development, web-based approaches, and React Native. You'll be presented with both conceptual questions and scenario-based questions that require application of the concepts to real-world pharmacy app development situations.
+### Learning Objectives
+- Demonstrate understanding of the evolution of mobile development approaches
+- Compare and contrast different mobile development strategies
+- Apply decision-making frameworks to select appropriate approaches for specific scenarios
+- Identify key tradeoffs between performance, development speed, and code sharing
 
-#### Learning Objectives
-- Demonstrate understanding of different mobile development approaches
-- Apply knowledge to evaluate which approach is best for specific scenarios
-- Identify the tradeoffs between different approaches for pharmacy/healthcare apps
+### Instructions
+1. Complete the Microsoft Forms quiz, which includes multiple choice, ranking, and scenario-based questions
+2. For each scenario question, carefully consider the project requirements, team factors, and business constraints
+3. Review the explanations provided after submitting your answers to reinforce key concepts
+4. Reflect on how these concepts might apply to your own development projects
 
-#### Instructions
-1. Access the quiz using the Microsoft Forms link provided by your instructor
-2. Answer all questions, carefully considering the requirements in each scenario
-3. Review the explanations for each answer to reinforce key concepts
-4. Submit your completed quiz
+### Estimated Time: 15-20 minutes
 
-#### Estimated Time: 20 minutes
-
-#### Exercise Resources
-The quiz content is available in the [Mobile Development Approaches Quiz](./mobile-development-approaches-quiz.md) file, which your instructor will use to create the Microsoft Form.
+### Resources
+- The quiz will reference material covered in this section
+- No additional resources are needed to complete this exercise
 
 ## Summary
 
