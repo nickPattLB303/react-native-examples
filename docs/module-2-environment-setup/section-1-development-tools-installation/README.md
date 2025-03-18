@@ -280,67 +280,43 @@ Understanding the purpose of each tool is crucial for troubleshooting issues tha
 
 In the next section, we'll use these tools to create our first Expo project and start the React Native development process.
 
-## Section 1 Exercise: Development Tools Verification
+## Exercise: Development Environment Verification Script
 
-**Objective**: Verify that all required development tools are correctly installed and configured.
+In this exercise, you will create a shell script that verifies your React Native development environment is correctly set up.
 
-**Tasks**:
-1. Create a script named `env-check.sh` (macOS/Linux) or `env-check.bat` (Windows) that performs the following checks:
-   - Verify Node.js installation and version (should be 14.0.0 or higher)
-   - Verify npm installation and version
-   - Verify Expo CLI installation and version
-   - Verify Android SDK installation (for Android development)
-   - Verify Xcode installation (for iOS development on macOS)
-   - Check if Watchman is installed (for macOS)
-   - Output all results in a formatted way
+### Exercise Description
+You'll develop a comprehensive verification script that checks for all required development tools, their versions, and proper configuration. This script will help you identify any installation issues that need to be resolved before you begin development.
 
-2. Run the script and fix any issues detected.
+### Learning Objectives
+- Apply shell scripting skills to automate environment verification
+- Understand the required components of a React Native development environment
+- Learn how to programmatically check for installed software and configurations
+- Develop troubleshooting skills for common installation issues
 
-3. Document the process in a file called `environment-verification.md`, including:
-   - Commands used to check each tool
-   - Any issues encountered and how you resolved them
+### Instructions
+1. Create a shell script named `env-check.sh` (macOS/Linux) that performs the following checks:
+   - Node.js installation and version (should be 16.0.0 or higher)
+   - npm installation and version
+   - Watchman installation
+   - Xcode and Command Line Tools installation (for macOS)
+   - Android SDK installation and environment variables
+   - Expo CLI accessibility
+   - Git installation
+
+2. For each tool, your script should:
+   - Check if the tool is installed
+   - Verify the version meets requirements
+   - Validate any necessary configurations
+   - Output results with clear formatting (using colors if possible)
+   - Provide troubleshooting suggestions for any failed checks
+
+3. Document your verification process in a markdown file, including:
+   - The commands used to check each tool
    - Screenshots of successful verification
+   - Any issues encountered and how you resolved them
 
-**Expected Output**:
-- A working verification script
-- A documentation file describing the process and results
+### Estimated Time: 15-20 minutes
 
-**Hint**: Here's a starter template for your verification script (macOS/Linux):
-
-```bash
-#!/bin/bash
-
-# Function to check if a command exists
-command_exists() {
-  command -v "$1" >/dev/null 2>&1
-}
-
-echo "===== React Native Environment Verification ====="
-echo "Checking development tools..."
-
-# Check Node.js
-if command_exists node; then
-  node_version=$(node -v)
-  echo "✅ Node.js is installed: $node_version"
-  # Add version check logic here
-else
-  echo "❌ Node.js is not installed"
-fi
-
-# Check npm
-# Add your code here
-
-# Check Expo CLI
-# Add your code here
-
-# Check Watchman (macOS only)
-# Add your code here
-
-# Check Xcode (macOS only)
-# Add your code here
-
-# Check Android SDK
-# Add your code here
-
-echo "===== Verification Complete ====="
-```
+### Resources
+- A starter template is provided in the exercise files
+- Reference the installation commands from this section

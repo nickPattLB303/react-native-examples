@@ -162,33 +162,39 @@ While React Native offers many advantages, it's important to understand its limi
 
 > 🔄 **Platform Specific**: For iOS developers, be aware that React Native abstracts away some of the fine-grained control you might be used to with UIKit. For Android developers, the component lifecycle differs from the Activity/Fragment lifecycle you're familiar with.
 
-## Exercise: React Native Advantages Analysis
+## Exercise: React Native Decision Framework Analysis
 
-In this exercise, you will evaluate the benefits and challenges of using React Native for a pharmacy application with specific features.
+In this exercise, you will analyze the advantages and limitations of React Native for specific application scenarios, applying a structured decision framework to evaluate when React Native is the appropriate choice.
 
-### Objective
-Analyze how React Native's capabilities align with pharmacy app requirements and identify potential advantages and limitations compared to native development.
+### Exercise Description
+This Microsoft Forms research exercise challenges you to evaluate React Native's suitability for different types of mobile applications. You'll analyze several app scenarios, identify the key factors that would influence the technology decision, and provide a recommendation with supporting rationale.
 
-### Steps
-1. For a pharmacy app that needs to display medication information, refill prescriptions, and send reminders:
-   - List three specific features that would benefit from React Native's approach and explain why
-   - Identify any potential challenges or limitations you might face when implementing these features
-   - Compare the development approach, timeline, and resource requirements with native iOS and Android development
+### Learning Objectives
+- Apply a structured framework for evaluating mobile development approaches
+- Identify which app features benefit most from React Native's capabilities
+- Recognize potential challenges when using React Native for specific requirements
+- Articulate the business and technical tradeoffs in cross-platform development decisions
 
-2. Consider factors such as:
-   - Development speed and efficiency
-   - User experience and performance
-   - Access to device features
-   - Maintenance and updates
-   - Team composition and skills
+### Instructions
+1. Complete the Microsoft Forms research exercise, which includes:
+   - Analysis of several application scenarios with different requirements
+   - Evaluation of React Native's strengths and limitations for each scenario
+   - Consideration of factors like development efficiency, performance needs, and team composition
+   - Recommendations with supporting rationale for each scenario
 
-3. Create a brief recommendation on whether React Native would be appropriate for this pharmacy app, with supporting rationale.
+2. For each scenario, consider:
+   - How the app's requirements align with React Native's capabilities
+   - Potential performance considerations and their impact
+   - Development timeline and resource implications
+   - Long-term maintenance and update considerations
 
-### Application
-This exercise simulates the technology selection process that occurs at the beginning of real-world healthcare app projects. The ability to evaluate framework strengths and weaknesses in the context of specific application requirements is essential for making sound architectural decisions that impact development efficiency, user experience, and long-term maintenance.
+3. Document your analysis using the structured framework provided in the form
 
-#### Exercise Resources
-Complete this exercise using the [React Native Advantages Analysis Microsoft Form](https://forms.office.com/r/reactNativeAdvantages) to document your analysis.
+### Estimated Time: 15-20 minutes
+
+### Resources
+- The form will reference material covered in this section
+- No additional resources are needed to complete this exercise
 
 ## Summary
 
@@ -196,4 +202,4 @@ React Native offers a compelling combination of cross-platform efficiency, near-
 
 While not perfect for every use case, React Native's flexibility and escape hatches make it adaptable to a wide range of applications. Understanding both its strengths and limitations will help you make informed decisions about when to use it for your projects.
 
-In the next section, we'll dive deeper into how React Native actually works under the hood, giving you a better understanding of its architecture and execution model. 
+In the next section, we'll dive deeper into how React Native actually works under the hood, giving you a better understanding of its architecture and execution model.

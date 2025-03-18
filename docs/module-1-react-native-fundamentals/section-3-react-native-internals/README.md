@@ -304,37 +304,45 @@ React Native is evolving with a new architecture that addresses some limitations
 
 > 💡 **Deep Dive**: The new architecture replaces the bridge with JSI (JavaScript Interface), which allows JavaScript to hold references to C++ objects and call methods on them directly. This eliminates the serialization/deserialization overhead of the bridge and enables synchronous communication between JavaScript and native code.
 
-## Exercise: React Native Architecture Diagram
+## Exercise: React Native Architecture Flow Diagram
 
-In this exercise, you will create a visual representation of React Native's architecture to understand how data flows through the system when a user interacts with a pharmacy app.
+In this exercise, you will create a visual representation of React Native's architecture to understand how data flows through the system when a user interacts with an application.
 
-### Objective
-Visualize and explain the complete data flow in a React Native application from user interaction to UI updates, identifying potential performance bottlenecks.
+### Exercise Description
+Using Microsoft Whiteboard, you will diagram the complete flow of data in a React Native application from user interaction to UI updates. This exercise will help you visualize the complex interactions between the JavaScript thread, bridge, native modules, and UI components that make React Native work.
 
-### Steps
-1. Create a diagram that illustrates the flow of data and control in a React Native application:
-   - Start with a user interaction (e.g., tapping a "Refill Prescription" button)
-   - Show how the event travels through the React Native architecture
-   - Illustrate how data flows back to update the UI
-   - Identify potential performance bottlenecks in this flow
+### Learning Objectives
+- Visualize the complete data flow in a React Native application
+- Identify the key architectural components and their relationships
+- Understand potential performance bottlenecks in the React Native architecture
+- Recognize how the threading model affects application responsiveness
 
-2. Include the following components in your diagram:
-   - The JavaScript thread processing the event
-   - The bridge serializing/deserializing messages
-   - The native modules handling platform-specific operations
-   - The UI components being updated
-   - The threading model and how it affects the flow
+### Instructions
+1. Create a diagram in Microsoft Whiteboard that illustrates:
+   - A user interaction (e.g., tapping a button)
+   - The event flow through the React Native architecture
+   - The data flow back to update the UI
+   - The threading model and how it affects the process
 
-3. Add annotations explaining:
-   - Where potential delays might occur
-   - How the architecture handles asynchronous operations
-   - What happens when multiple UI updates are triggered simultaneously
+2. Your diagram should include and clearly label:
+   - The JavaScript thread
+   - The native thread(s)
+   - The bridge (or JSI in the new architecture)
+   - Shadow tree and layout calculations
+   - Native modules and components
+   - UI components
 
-### Application
-This exercise simulates the architectural analysis needed when optimizing a pharmacy app's performance. Understanding React Native's internal architecture is crucial when debugging performance issues in medication management features, implementing smooth prescription refill workflows, or optimizing medication reminder notifications that require interaction with native device capabilities.
+3. Add annotations to your diagram explaining:
+   - Where serialization/deserialization occurs
+   - Where potential performance bottlenecks exist
+   - How asynchronous operations are handled
+   - How the new architecture improves on the current design
 
-#### Exercise Resources
-Complete this exercise using the [Architecture Diagram Microsoft Whiteboard](https://whiteboard.microsoft.com/architectureDiagram) to create your diagram.
+### Estimated Time: 15-20 minutes
+
+### Resources
+- Reference the architectural diagrams provided in this section
+- You may use any diagramming style, but ensure the flow of data is clearly indicated with arrows and labels
 
 ## Summary
 

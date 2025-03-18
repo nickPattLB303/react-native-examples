@@ -198,31 +198,41 @@ A powerful approach to learning React Native is "documentation-driven developmen
 
 This approach helps you build a solid understanding of React Native concepts while creating practical implementations.
 
-## Exercise: Documentation Scavenger Hunt
+## Exercise: React Native Documentation Scavenger Hunt
 
-In this exercise, you will practice finding specific information in the React Native documentation that will be essential for building mobile healthcare applications.
+In this exercise, you will practice finding specific information in the React Native documentation that will be essential for your future development work.
 
-### Objective
-Develop effective documentation search strategies to quickly locate specific React Native features and APIs needed for pharmacy app development.
+### Exercise Description
+This Microsoft Forms scavenger hunt will test your ability to navigate the React Native documentation efficiently. You'll be given a series of challenges that require you to locate specific information about components, APIs, and best practices in the official documentation and related resources.
 
-### Steps
-1. Find the props for the `Image` component that handle loading states and placeholders
-2. Locate information about how to implement deep linking in a React Native app
-3. Find the API for accessing device information like OS version and device model
-4. Discover how to implement pull-to-refresh in a `FlatList`
-5. Find information about optimizing JavaScript bundle size for better app performance
+### Learning Objectives
+- Develop effective documentation search strategies
+- Become familiar with the structure of the React Native documentation
+- Learn to quickly locate specific API details and usage examples
+- Identify which documentation resources are best for different types of questions
 
-For each task, use a different search strategy:
-- Try the built-in documentation search
-- Navigate through documentation sections
-- Use Google with site-specific search (site:reactnative.dev)
-- Check GitHub issues for edge cases
+### Instructions
+1. Complete the Microsoft Forms scavenger hunt, which includes challenges such as:
+   - Finding specific component props and their descriptions
+   - Locating information about platform-specific features
+   - Discovering how to implement common UI patterns
+   - Finding performance optimization techniques
+   - Identifying community resources for specific needs
 
-### Application
-This exercise simulates real-world development scenarios where you need to quickly find solutions in the documentation. These documentation skills will be directly applicable when building our pharmacy app, where you'll need to implement medication image loading with proper states, create deep links for prescription refill notifications, adapt the UI based on the user's device, build a refreshable medication list, and optimize performance for a large medication database.
+2. For each challenge, record:
+   - The exact location (URL or documentation section) where you found the information
+   - The search strategy you used (documentation search, navigation, Google, etc.)
+   - A brief summary of what you found
 
-#### Exercise Resources
-Complete this exercise using the [Documentation Scavenger Hunt Microsoft Form](https://forms.office.com/r/documentationScavengerHunt) to record your findings.
+3. Try different search strategies for different challenges to develop a well-rounded approach
+
+### Estimated Time: 15-20 minutes
+
+### Resources
+- [React Native Documentation](https://reactnative.dev/)
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Navigation Documentation](https://reactnavigation.org/)
+- [React Native Directory](https://reactnative.directory/)
 
 ## Summary
 
@@ -230,4 +240,4 @@ The official React Native documentation is a comprehensive resource that should 
 
 Remember that the React Native ecosystem extends beyond the official documentation, with many community resources available to supplement your learning. As you progress in your React Native journey, you'll develop a toolkit of resources that help you solve problems efficiently.
 
-In the next module, we'll start building our first React Native application, putting into practice the concepts we've learned so far. 
+In the next module, we'll start building our first React Native application, putting into practice the concepts we've learned so far.
