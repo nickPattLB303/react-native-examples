@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Native Fundamentals - React Native Training Course</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Prism.js for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.css">
+</head>
+<body>
+    <!-- Title Slide -->
+    <section class="slide bg-primary">
+        <div class="slide-content text-center">
+            <h1 class="text-light">React Native Fundamentals</h1>
+            <h3 class="text-light">React Native Training Course</h3>
+            <div class="mt-4">
+                <p class="text-light">Module 1 of 12</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Learning Objectives Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Learning Objectives</h2>
+        </div>
+        <div class="slide-content">
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Explain the evolution of mobile development approaches leading to React Native</li>
+                <li>Describe the key advantages and potential limitations of React Native</li>
+                <li>Understand how React Native works under the hood</li>
+                <li>Navigate and utilize the React Native documentation effectively</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Module Overview Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Module Overview</h2>
+        </div>
+        <div class="slide-content">
+            <div class="card">
+                <h3 class="mt-0">In this module, we'll cover:</h3>
+                <ol>
+                    <li><strong>Mobile Development Evolution</strong> - From native to cross-platform approaches</li>
+                    <li><strong>Why React Native?</strong> - Advantages and considerations</li>
+                    <li><strong>React Native Architecture</strong> - How it works under the hood</li>
+                    <li><strong>React Native Documentation</strong> - Navigating resources effectively</li>
+                </ol>
+                <div class="alert info mt-3">
+                    <strong>Note:</strong> This module focuses on concepts and background. We'll start coding in Module 2.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Section 1 Intro Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Section 1: Mobile Development Evolution</h2>
+        </div>
+        <div class="slide-content">
+            <p>Let's explore how mobile development has evolved over time:</p>
+            <ul>
+                <li>Native development (iOS and Android)</li>
+                <li>Web-based mobile solutions</li>
+                <li>Hybrid frameworks</li>
+                <li>Modern cross-platform approaches</li>
+            </ul>
+            <div class="mt-4">
+                <p>Understanding this evolution helps us appreciate React Native's place in the ecosystem and why it was created.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Native Development Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Native Development</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>iOS Development</h3>
+                    <ul>
+                        <li>Objective-C (1980s) → Swift (2014)</li>
+                        <li>UIKit → SwiftUI</li>
+                        <li>Xcode IDE</li>
+                        <li>App Store distribution</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="language-label">Swift</div>
+                        <pre class="line-numbers"><code class="language-swift">
+import UIKit
+
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let label = UILabel()
+        label.text = "Hello, iOS!"
+        label.frame = CGRect(x: 150, y: 200, width: 200, height: 20)
+        view.addSubview(label)
+    }
+}
+                        </code></pre>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3>Android Development</h3>
+                    <ul>
+                        <li>Java → Kotlin (2017)</li>
+                        <li>XML layouts → Jetpack Compose</li>
+                        <li>Android Studio IDE</li>
+                        <li>Google Play distribution</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="language-label">Kotlin</div>
+                        <pre class="line-numbers"><code class="language-kotlin">
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView = TextView(this)
+        textView.text = "Hello, Android!"
+        setContentView(textView)
+    }
+}
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Native Development Pros and Cons -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Native Development: Pros and Cons</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-primary">Advantages</h3>
+                    <ul>
+                        <li>Best performance</li>
+                        <li>Full access to platform features</li>
+                        <li>Platform-specific design patterns</li>
+                        <li>First-class support for new OS features</li>
+                        <li>No abstraction layer overhead</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3 class="text-accent">Challenges</h3>
+                    <ul>
+                        <li>Separate codebases for iOS and Android</li>
+                        <li>Different programming languages</li>
+                        <li>Duplicate development effort</li>
+                        <li>Higher maintenance costs</li>
+                        <li>Need for specialized developers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="alert info mt-3">
+                <strong>Key Insight:</strong> Native development offers the best performance and platform integration but at the cost of maintaining separate codebases and teams.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Web and Hybrid Approaches -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Web and Hybrid Approaches</h2>
+        </div>
+        <div class="slide-content">
+            <h3>Web-Based Mobile Solutions</h3>
+            <ul>
+                <li>Mobile websites and responsive design</li>
+                <li>Progressive Web Apps (PWAs)</li>
+                <li>Limited access to native features</li>
+            </ul>
+            
+            <h3 class="mt-3">Hybrid Frameworks</h3>
+            <ul>
+                <li>PhoneGap/Cordova (2009)</li>
+                <li>Ionic (2013)</li>
+                <li>Web technologies (HTML, CSS, JS) in a WebView</li>
+                <li>Native plugins for device features</li>
+            </ul>
+            
+            <div class="alert warning mt-3">
+                <strong>Performance Consideration:</strong> WebView-based approaches often suffered from performance issues, especially for complex UIs and animations.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Modern Cross-Platform Approaches -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Modern Cross-Platform Approaches</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>React Native (2015)</h3>
+                    <ul>
+                        <li>JavaScript/TypeScript</li>
+                        <li>React paradigm</li>
+                        <li>Uses native components</li>
+                        <li>Bridge architecture</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Flutter (2017)</h3>
+                    <ul>
+                        <li>Dart language</li>
+                        <li>Custom rendering engine</li>
+                        <li>Widget-based UI</li>
+                        <li>Ahead-of-time compilation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <h3>Xamarin (2011)</h3>
+                    <ul>
+                        <li>C# language</li>
+                        <li>.NET framework</li>
+                        <li>Native UI components</li>
+                        <li>Microsoft ecosystem</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Key Differences</h3>
+                    <ul>
+                        <li>Programming language</li>
+                        <li>UI rendering approach</li>
+                        <li>Performance characteristics</li>
+                        <li>Developer experience</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Platform-Specific Callouts -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Platform-Specific Considerations</h2>
+        </div>
+        <div class="slide-content">
+            <div class="platform-callout platform-android">
+                <h4>Android Developers</h4>
+                <p>You'll recognize similarities between React Native's component-based architecture and Android's View system, though with significant differences in implementation. The declarative approach differs from imperative Android UI development.</p>
+            </div>
+            
+            <div class="platform-callout platform-ios">
+                <h4>iOS Developers</h4>
+                <p>The declarative UI approach in React Native differs from UIKit's imperative style but shares conceptual similarities with SwiftUI. Component lifecycle is different from UIViewController lifecycle.</p>
+            </div>
+            
+            <div class="platform-callout platform-react">
+                <h4>React Developers</h4>
+                <p>You'll find the component model familiar, though React Native components map to native UI elements rather than DOM elements. Navigation patterns and styling are different from web development.</p>
+            </div>
+            
+            <div class="platform-callout platform-angular">
+                <h4>Angular Developers</h4>
+                <p>React's unidirectional data flow differs from Angular's two-way binding, but the component-based architecture will feel familiar. React's JSX is different from Angular's template syntax.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Section 2 Intro Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Section 2: Why React Native?</h2>
+        </div>
+        <div class="slide-content">
+            <p>Let's explore the advantages and considerations of using React Native:</p>
+            <ul>
+                <li>Performance vs. development speed</li>
+                <li>"Learn once, write anywhere" philosophy</li>
+                <li>Community and ecosystem</li>
+                <li>Business advantages</li>
+            </ul>
+            <div class="mt-4">
+                <p>Understanding these factors helps us make informed decisions about when React Native is the right choice for a project.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Performance vs Development Speed -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Performance vs. Development Speed</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>Near-native performance for most use cases</li>
+                        <li>Uses actual native UI components</li>
+                        <li>JavaScript runs in separate thread</li>
+                        <li>Performance bottlenecks at the bridge</li>
+                        <li>Hermes engine improves JS performance</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Development Speed</h3>
+                    <ul>
+                        <li>Single codebase for multiple platforms</li>
+                        <li>Hot reloading for rapid iteration</li>
+                        <li>Large ecosystem of libraries</li>
+                        <li>Familiar web development paradigms</li>
+                        <li>Expo tools for faster setup</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="alert info mt-3">
+                <strong>Key Insight:</strong> React Native offers a compelling balance between performance and development speed for most applications. It's not as fast as fully native code, but the performance difference is negligible for many use cases, while development speed is significantly improved.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Learn Once, Write Anywhere -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>"Learn Once, Write Anywhere"</h2>
+        </div>
+        <div class="slide-content">
+            <div class="card">
+                <h3 class="mt-0">React Native Philosophy</h3>
+                <p>Unlike "write once, run anywhere" approaches that often lead to lowest-common-denominator UIs, React Native embraces platform differences while sharing core logic.</p>
+                
+                <h4 class="mt-3">What this means in practice:</h4>
+                <ul>
+                    <li>Core business logic and components are shared</li>
+                    <li>Platform-specific code when needed</li>
+                    <li>Platform-specific file extensions (.ios.js, .android.js)</li>
+                    <li>Platform module for conditional logic</li>
+                </ul>
+                
+                <div class="code-example mt-3">
+                    <div class="language-label">TypeScript</div>
+                    <pre class="line-numbers"><code class="language-typescript">
+import { Platform, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    // Shared styles
+    flex: 1,
+    alignItems: 'center',
+    
+    // Platform-specific styles
+    ...Platform.select({
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+});
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Community and Ecosystem -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Community and Ecosystem</h2>
+        </div>
+        <div class="slide-content">
+            <h3>React Native Benefits From:</h3>
+            <ul>
+                <li>Large and active community</li>
+                <li>Backed by Facebook/Meta</li>
+                <li>NPM ecosystem integration</li>
+                <li>Thousands of third-party libraries</li>
+                <li>Regular updates and improvements</li>
+            </ul>
+            
+            <h3 class="mt-3">Key Ecosystem Components:</h3>
+            <ul>
+                <li><strong>Expo</strong> - Toolchain and services for React Native</li>
+                <li><strong>React Navigation</strong> - Navigation library</li>
+                <li><strong>React Native Elements</strong> - UI component library</li>
+                <li><strong>React Native Paper</strong> - Material Design components</li>
+                <li><strong>React Native Reanimated</strong> - Animation library</li>
+            </ul>
+            
+            <div class="alert success mt-3">
+                <strong>Advantage:</strong> The mature ecosystem means you rarely need to build complex functionality from scratch.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Business Advantages -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Business Advantages</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>Cost Efficiency</h3>
+                    <ul>
+                        <li>Single team vs. separate iOS/Android teams</li>
+                        <li>60-80% code sharing between platforms</li>
+                        <li>Faster time-to-market</li>
+                        <li>Reduced maintenance costs</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Talent Considerations</h3>
+                    <ul>
+                        <li>Larger pool of JavaScript developers</li>
+                        <li>Web developers can transition to mobile</li>
+                        <li>Lower specialization requirements</li>
+                        <li>Shared knowledge across platforms</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="mt-3">Success Stories:</h3>
+            <ul>
+                <li><strong>Instagram</strong> - Integrated React Native into existing native app</li>
+                <li><strong>Walmart</strong> - Rewrote mobile apps in React Native</li>
+                <li><strong>Microsoft</strong> - Uses React Native for multiple apps</li>
+                <li><strong>Shopify</strong> - Migrated mobile apps to React Native</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Section 3 Intro Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Section 3: React Native Architecture</h2>
+        </div>
+        <div class="slide-content">
+            <p>Let's explore how React Native works under the hood:</p>
+            <ul>
+                <li>JavaScript thread and native thread</li>
+                <li>Bridge architecture</li>
+                <li>The new architecture (Fabric and TurboModules)</li>
+                <li>Just-in-time vs. ahead-of-time compilation</li>
+            </ul>
+            <div class="mt-4">
+                <p>Understanding the architecture helps us write more performant applications and debug issues more effectively.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- JavaScript and Native Threads -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>JavaScript and Native Threads</h2>
+        </div>
+        <div class="slide-content">
+            <div class="card">
+                <h3 class="mt-0">React Native's Threading Model</h3>
+                <p>React Native runs on three separate threads:</p>
+                
+                <div class="row">
+                    <div class="col">
+                        <h4>Main Thread (UI Thread)</h4>
+                        <ul>
+                            <li>Native UI rendering</li>
+                            <li>Native modules execution</li>
+                            <li>User interactions</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h4>JavaScript Thread</h4>
+                        <ul>
+                            <li>React component logic</li>
+                            <li>Business logic</li>
+                            <li>Virtual DOM diffing</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h4>Shadow Thread</h4>
+                        <ul>
+                            <li>Layout calculations</li>
+                            <li>Yoga layout engine</li>
+                            <li>Flexbox implementation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert info mt-3">
+                    <strong>Key Insight:</strong> This separation allows React Native to perform complex JavaScript operations without blocking the UI thread, but communication between threads can become a performance bottleneck.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Bridge Architecture -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Bridge Architecture</h2>
+        </div>
+        <div class="slide-content">
+            <h3>How the Bridge Works</h3>
+            <ul>
+                <li>Asynchronous communication between JS and native code</li>
+                <li>JSON messages passed between threads</li>
+                <li>Serialization and batching of messages</li>
+                <li>Bidirectional communication</li>
+            </ul>
+            
+            <div class="code-example mt-3">
+                <div class="language-label">JavaScript to Native Flow</div>
+                <pre><code class="language-text">
+1. React component calls native module method
+2. JS Bridge serializes the call into JSON
+3. Message is queued for native side
+4. Native bridge deserializes the message
+5. Native module executes the requested method
+6. Results are serialized and sent back (if needed)
+                </code></pre>
+            </div>
+            
+            <div class="alert warning mt-3">
+                <strong>Performance Consideration:</strong> The bridge can become a bottleneck when passing large amounts of data (e.g., long lists, images, complex animations) due to serialization overhead.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- New Architecture -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>The New Architecture</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>Fabric (UI Layer)</h3>
+                    <ul>
+                        <li>Reimplementation of rendering system</li>
+                        <li>Synchronous rendering capabilities</li>
+                        <li>Improved interoperability with native code</li>
+                        <li>Better support for concurrent features</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>TurboModules</h3>
+                    <ul>
+                        <li>Lazy loading of native modules</li>
+                        <li>Direct, synchronous communication</li>
+                        <li>Type-safe interface</li>
+                        <li>Improved startup performance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="mt-3">JavaScript Interface (JSI)</h3>
+            <ul>
+                <li>Direct references to native objects from JavaScript</li>
+                <li>No serialization/deserialization overhead</li>
+                <li>Enables synchronous communication</li>
+                <li>Foundation for both Fabric and TurboModules</li>
+            </ul>
+            
+            <div class="alert info mt-3">
+                <strong>Status:</strong> The new architecture is being gradually rolled out. It represents a significant improvement but requires migration effort for existing apps.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- JavaScript Execution -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>JavaScript Execution</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>JavaScript Engines</h3>
+                    <ul>
+                        <li><strong>JavaScriptCore</strong> - Default engine</li>
+                        <li><strong>Hermes</strong> - Optimized for React Native</li>
+                        <li><strong>V8</strong> - Used in development (Chrome)</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Hermes Benefits</h3>
+                    <ul>
+                        <li>Faster startup time</li>
+                        <li>Reduced memory usage</li>
+                        <li>Smaller app size</li>
+                        <li>Better performance on low-end devices</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="mt-3">Compilation Approaches</h3>
+            <ul>
+                <li><strong>Just-in-Time (JIT)</strong> - Compiles JavaScript at runtime (JavaScriptCore)</li>
+                <li><strong>Ahead-of-Time (AOT)</strong> - Pre-compiles JavaScript (Hermes)</li>
+                <li><strong>Bytecode</strong> - Hermes uses bytecode format for better performance</li>
+            </ul>
+            
+            <div class="alert success mt-3">
+                <strong>Recommendation:</strong> For production apps, Hermes is generally recommended for its performance benefits, especially on Android.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Section 4 Intro Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Section 4: React Native Documentation</h2>
+        </div>
+        <div class="slide-content">
+            <p>Let's explore how to effectively use React Native's documentation:</p>
+            <ul>
+                <li>Official documentation structure</li>
+                <li>Community resources</li>
+                <li>Keeping up with React Native updates</li>
+            </ul>
+            <div class="mt-4">
+                <p>Knowing how to find information efficiently will make you more productive as a React Native developer.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Official Documentation -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Official Documentation</h2>
+        </div>
+        <div class="slide-content">
+            <h3>Key Sections of React Native Docs</h3>
+            <ul>
+                <li><strong>Getting Started</strong> - Setup guides for different environments</li>
+                <li><strong>Core Components and APIs</strong> - Built-in UI elements and functionality</li>
+                <li><strong>Guides</strong> - How-to articles for common tasks</li>
+                <li><strong>Architecture</strong> - Technical details about how React Native works</li>
+                <li><strong>Contributing</strong> - How to contribute to React Native</li>
+            </ul>
+            
+            <h3 class="mt-3">Documentation Tips</h3>
+            <ul>
+                <li>Check the version selector for your React Native version</li>
+                <li>Use the search function for quick access</li>
+                <li>Look for interactive examples in component docs</li>
+                <li>Pay attention to platform-specific notes</li>
+                <li>Follow links to related concepts</li>
+            </ul>
+            
+            <div class="alert info mt-3">
+                <strong>URL:</strong> <a href="https://reactnative.dev/docs/getting-started" target="_blank">https://reactnative.dev/docs/getting-started</a>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Community Resources -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Community Resources</h2>
+        </div>
+        <div class="slide-content">
+            <div class="row">
+                <div class="col">
+                    <h3>Official Resources</h3>
+                    <ul>
+                        <li><strong>GitHub Repository</strong> - Source code and issues</li>
+                        <li><strong>React Native Blog</strong> - Official announcements</li>
+                        <li><strong>React Native Twitter</strong> - Updates and news</li>
+                        <li><strong>React Native Community</strong> - Maintained packages</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Community Resources</h3>
+                    <ul>
+                        <li><strong>Stack Overflow</strong> - Q&A for specific issues</li>
+                        <li><strong>React Native Directory</strong> - Library catalog</li>
+                        <li><strong>Reactiflux Discord</strong> - Chat community</li>
+                        <li><strong>React Native Newsletter</strong> - Weekly updates</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="alert info mt-3">
+                <strong>Tip:</strong> When searching for solutions, check the date of the information. React Native evolves quickly, and older solutions may no longer be relevant.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Keeping Up with Updates -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Keeping Up with React Native Updates</h2>
+        </div>
+        <div class="slide-content">
+            <h3>Release Cycle</h3>
+            <ul>
+                <li>Monthly releases (0.XX.0)</li>
+                <li>Semantic versioning</li>
+                <li>Release candidates before stable releases</li>
+                <li>Breaking changes noted in release notes</li>
+            </ul>
+            
+            <h3 class="mt-3">Upgrade Strategies</h3>
+            <ul>
+                <li>Read release notes carefully</li>
+                <li>Use the Upgrade Helper tool</li>
+                <li>Test thoroughly after upgrades</li>
+                <li>Consider gradual upgrades for large version jumps</li>
+            </ul>
+            
+            <div class="alert warning mt-3">
+                <strong>Important:</strong> Expo SDK has its own versioning that maps to specific React Native versions. When using Expo, follow their upgrade guides.
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Exercise Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Exercise: Pharmacy App Vision</h2>
+        </div>
+        <div class="slide-content">
+            <div class="card">
+                <h3 class="mt-0">Exercise: Pharmacy App Vision</h3>
+                <p><strong>Duration:</strong> 15-20 minutes</p>
+                <p><strong>Objective:</strong> Create a document outlining the requirements for a pharmacy app that will be developed throughout the course.</p>
+                
+                <h4>Instructions:</h4>
+                <ol>
+                    <li>Define 5-8 core features for a pharmacy mobile app</li>
+                    <li>Identify platform-specific considerations for each feature</li>
+                    <li>Create a development roadmap prioritizing features</li>
+                    <li>Explain why React Native is suitable for this pharmacy app</li>
+                </ol>
+                
+                <div class="alert info">
+                    <strong>Tip:</strong> Focus on the user experience and business requirements rather than implementation details at this stage.
+                </div>
+            </div>
+            
+            <p class="mt-3">Complete details for this exercise can be found in the <a href="../../exercises/01-pharmacy-app-vision.md">exercise document</a>.</p>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Challenge Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Challenge: React Native Comparison</h2>
+        </div>
+        <div class="slide-content">
+            <div class="card">
+                <h3 class="mt-0">Challenge: React Native Comparison</h3>
+                <p><strong>Duration:</strong> 30-60 minutes</p>
+                <p><strong>Objective:</strong> Research and compare React Native with other mobile development approaches, focusing on a pharmacy app use case.</p>
+                
+                <h4>Requirements:</h4>
+                <ul>
+                    <li>Compare React Native with native iOS, native Android, and at least one other cross-platform solution</li>
+                    <li>Evaluate based on development efficiency, performance, UX capabilities, and more</li>
+                    <li>Include specific examples for key pharmacy app features</li>
+                    <li>Provide a clear recommendation with justification</li>
+                </ul>
+                
+                <div class="alert warning">
+                    <strong>Note:</strong> Base your comparison on current, factual information and consider the specific needs of a pharmacy application.
+                </div>
+            </div>
+            
+            <p class="mt-3">Complete details for this challenge can be found in the <a href="../../challenges/01-react-native-comparison.md">challenge document</a>.</p>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Summary Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Summary</h2>
+        </div>
+        <div class="slide-content">
+            <p>In this module, we covered:</p>
+            <ul>
+                <li>The evolution of mobile development approaches leading to React Native</li>
+                <li>The key advantages and considerations of using React Native</li>
+                <li>How React Native works under the hood with its bridge architecture</li>
+                <li>How to navigate and utilize React Native documentation effectively</li>
+            </ul>
+            
+            <div class="mt-4">
+                <h4>Next Steps:</h4>
+                <p>In the next module, we'll set up our React Native development environment using Expo and create our first application.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Additional Resources Slide -->
+    <section class="slide">
+        <div class="slide-title">
+            <h2>Additional Resources</h2>
+        </div>
+        <div class="slide-content">
+            <h4>Official Documentation:</h4>
+            <ul>
+                <li><a href="https://reactnative.dev/" target="_blank">React Native Official Website</a> - Main documentation hub</li>
+                <li><a href="https://reactnative.dev/docs/getting-started" target="_blank">Getting Started Guide</a> - Official introduction</li>
+                <li><a href="https://github.com/facebook/react-native" target="_blank">React Native GitHub Repository</a> - Source code and issues</li>
+            </ul>
+            
+            <h4>Articles and Videos:</h4>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=UcqRXTriUVI" target="_blank">React Native Architecture Overview</a> - Video explanation by React Native team</li>
+                <li><a href="https://hackernoon.com/understanding-react-native-bridge-concept-e9526066ddb8" target="_blank">Understanding the React Native Bridge Concept</a> - In-depth article</li>
+                <li><a href="https://formidable.com/blog/2019/react-native-new-architecture/" target="_blank">The New React Native Architecture Explained</a> - Overview of Fabric and TurboModules</li>
+            </ul>
+            
+            <h4>Books:</h4>
+            <ul>
+                <li>"Learning React Native" by Bonnie Eisenman</li>
+                <li>"React Native in Action" by Nader Dabit</li>
+                <li>"Fullstack React Native" by Devin Abbott, et al.</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <div>React Native Training Course</div>
+            <div>Module 1: React Native Fundamentals</div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+</body>
+</html>
