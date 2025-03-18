@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medication Card - Completed Example</title>
+</head>
+<body>
+  <!-- 
+    This is a completed example of the Medication Card HTML Structure exercise.
+    It demonstrates proper use of semantic HTML elements and structure.
+  -->
+  
+  <!-- 
+    Using article as the main container because a medication card represents
+    a self-contained, independently distributable piece of content.
+    
+    In React Native, this would be a custom component, likely using a View as the container.
+  -->
+  <article class="medication-card">
+    <!-- 
+      Using header for the top section of the card that identifies the medication.
+      In React Native, this would be a View component with specific styling.
+    -->
+    <header>
+      <!-- 
+        Using h2 assuming this card might be part of a larger page with an h1.
+        In React Native, this would be a Text component with heading styling.
+      -->
+      <h2>Lisinopril</h2>
+      <!-- 
+        Using p with a class for the generic name.
+        In React Native, this would be a Text component with specific styling.
+      -->
+      <p class="generic-name">Generic for: Prinivil, Zestril</p>
+    </header>
+    
+    <!-- 
+      Using main to contain the primary content of the card.
+      In React Native, this would be a View component.
+    -->
+    <main>
+      <!-- 
+        Using section to group related content about dosage.
+        In React Native, this would be a View component.
+      -->
+      <section class="dosage-info">
+        <h3>Dosage Information</h3>
+        <!-- 
+          Using dl (description list) for name-value pairs.
+          In React Native, this might be implemented as a series of View components
+          with Text components for the terms and descriptions.
+        -->
+        <dl>
+          <dt>Strength:</dt>
+          <dd>10mg</dd>
+          
+          <dt>Form:</dt>
+          <dd>Tablet</dd>
+          
+          <dt>Route:</dt>
+          <dd>Oral</dd>
+        </dl>
+      </section>
+      
+      <!-- 
+        Using section to group related content about schedule.
+        In React Native, this would be a View component.
+      -->
+      <section class="schedule-info">
+        <h3>Administration Schedule</h3>
+        <!-- 
+          Using ul for the administration times since they don't have a specific order.
+          In React Native, this might be implemented as a FlatList component.
+        -->
+        <ul>
+          <li>Take 1 tablet once daily in the morning</li>
+          <li>Take with or without food</li>
+          <li>Take at the same time each day</li>
+        </ul>
+      </section>
+      
+      <!-- 
+        Using section with a warning class for important notices.
+        In React Native, this would be a View component with specific styling for warnings.
+      -->
+      <section class="warnings">
+        <h3>Important Warnings</h3>
+        <!-- 
+          Using strong to emphasize important warnings.
+          In React Native, this would be a Text component with bold styling.
+        -->
+        <p><strong>Do not stop taking without consulting your doctor.</strong></p>
+        <p>May cause dizziness. Monitor blood pressure regularly.</p>
+        <!-- 
+          Using a details/summary element for expandable content.
+          In React Native, this would be implemented with a custom collapsible component.
+        -->
+        <details>
+          <summary>Possible Side Effects</summary>
+          <ul>
+            <li>Dry cough</li>
+            <li>Dizziness or lightheadedness</li>
+            <li>High potassium levels</li>
+            <li>Headache</li>
+          </ul>
+        </details>
+      </section>
+      
+      <!-- 
+        Using section for refill information.
+        In React Native, this would be a View component.
+      -->
+      <section class="refill-info">
+        <h3>Refill Information</h3>
+        <p>Prescription #: <span>RX29501-3</span></p>
+        <p>Refills Remaining: <span>3</span></p>
+        <p>Next Refill Date: <span>04/15/2025</span></p>
+      </section>
+    </main>
+    
+    <!-- 
+      Using footer for the prescriber information at the bottom of the card.
+      In React Native, this would be a View component with specific styling.
+    -->
+    <footer>
+      <h3>Prescribing Doctor</h3>
+      <p>Dr. Sarah Johnson</p>
+      <!-- 
+        Using address for contact information.
+        In React Native, this would be a View with Text components.
+      -->
+      <address>
+        <p>Internal Medicine Associates</p>
+        <p>Phone: <a href="tel:+15555551234">(555) 555-1234</a></p>
+      </address>
+    </footer>
+  </article>
+  
+  <!-- 
+    Additional comments about React Native translation:
+    
+    1. In React Native, we would create a MedicationCard component that encapsulates all this structure
+    2. Instead of semantic HTML elements, we would use View and Text components
+    3. For lists, we might use FlatList or just map over an array to render items
+    4. Styling would be applied using StyleSheet instead of CSS classes
+    5. Interactive elements like the collapsible details would use state hooks
+    6. Links would use the Linking API or navigation components
+  -->
+</body>
+</html>

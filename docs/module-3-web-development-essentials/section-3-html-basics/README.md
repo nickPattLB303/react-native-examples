@@ -259,23 +259,43 @@ HTML concepts have direct parallels in React Native:
 
 > 💡 **Deep Dive**: While HTML separates structure (HTML) from presentation (CSS) and behavior (JavaScript), React Native combines these concerns into components. Each component encapsulates its structure, styling, and behavior, following a component-based architecture.
 
-## Exercise: Building a Medication Card in HTML
+## Exercise: Medication Card HTML Structure
 
-Using CodePen, create an HTML structure for a medication card component that displays:
-- Medication name
-- Dosage information
-- Schedule/frequency
-- Important notes
+In this exercise, you will create a semantic HTML structure for a medication card component that displays essential medication information.
 
-**CodePen Link**: [Medication Card HTML Exercise](https://codepen.io/your-username/pen/create)
+### Exercise Description
+Using CodePen, you will build an HTML-only version of a medication card that organizes information in a clear, structured way using appropriate semantic HTML elements. This exercise focuses on proper HTML structure before adding any styling (which will be covered in the next section).
 
-In this exercise, you'll:
-1. Create a semantic HTML structure
-2. Include all required information
-3. Use appropriate HTML elements for each piece of content
-4. Add simple attributes (we'll style it in the next section)
+### Learning Objectives
+- Apply semantic HTML elements appropriately
+- Create well-structured, accessible HTML
+- Organize content in a logical hierarchy
+- Understand how HTML structure translates to React Native components
 
-> 🚀 **Self-Led Learners**: After creating the HTML structure, think about how you would translate this to React Native components.
+### Instructions
+1. Create a medication card in CodePen that includes:
+   - A header with the medication name
+   - Dosage information (amount and form)
+   - Administration schedule/frequency
+   - Important warnings or notes
+   - Refill information
+   - Prescribing doctor
+
+2. Your HTML structure should:
+   - Use semantic elements where appropriate (header, section, article, etc.)
+   - Include proper heading hierarchy (h1, h2, h3, etc.)
+   - Use lists for multiple items (like administration times)
+   - Include appropriate attributes for accessibility
+
+3. After completing the HTML structure, add comments explaining:
+   - Why you chose specific semantic elements
+   - How each part might translate to React Native components
+
+### Estimated Time: 15-20 minutes
+
+### Resources
+- You can use the HTML examples from this section as reference
+- No CSS or JavaScript is required for this exercise
 
 ## Key Takeaways
 
@@ -283,4 +303,4 @@ In this exercise, you'll:
 - Semantic HTML improves accessibility and code readability
 - HTML elements have direct parallels in React Native components
 - Both HTML and React Native organize UI elements in a hierarchical tree
-- Understanding HTML concepts provides a foundation for working with React Native 
+- Understanding HTML concepts provides a foundation for working with React Native

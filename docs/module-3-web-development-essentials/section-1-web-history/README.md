@@ -89,22 +89,42 @@ React Native's approach is deeply influenced by web development history:
 
 > 💡 **Deep Dive**: React Native essentially takes the mental model of web development but outputs native UI components instead of DOM elements. This allows developers to use familiar web development concepts while creating truly native mobile applications.
 
-## Exercise: Web Development Timeline Analysis
+## Exercise: Web Development Evolution Analysis
 
-Using Microsoft Forms, analyze how the evolution of web development has influenced modern mobile development approaches.
+In this exercise, you will analyze how the evolution of web development has influenced modern mobile development approaches, particularly React Native.
 
-**Microsoft Forms Link**: [Web Development Timeline Analysis](https://link-to-form)
+### Exercise Description
+This Microsoft Forms exercise challenges you to think critically about the historical connections between web development milestones and modern mobile development paradigms. You'll identify key technological shifts and analyze their impact on how we build mobile applications today.
 
-In this exercise, you'll:
-1. Identify the most significant milestones in web development history
-2. Analyze how these milestones influenced React Native's design
-3. Compare the evolution of web and mobile development approaches
+### Learning Objectives
+- Recognize the most significant milestones in web development history
+- Analyze how web development concepts have influenced React Native's design
+- Identify parallels between web and mobile development evolution
+- Understand how historical context shapes current development approaches
 
-> 🚀 **Self-Led Learners**: After completing the form, review the history of any mobile platforms you're familiar with (iOS, Android) and note the parallels with web development evolution.
+### Instructions
+1. Complete the Microsoft Forms analysis, which includes:
+   - Matching key web technologies to their historical periods
+   - Identifying how specific web concepts translated to React Native
+   - Analyzing how separation of concerns evolved across platforms
+   - Evaluating which historical shifts had the greatest impact on modern development
+
+2. For each question, consider:
+   - The technological limitations that existed at the time
+   - The problems each innovation was trying to solve
+   - How these solutions influenced future development approaches
+
+3. After completing the form, reflect on how understanding this history helps you as a React Native developer
+
+### Estimated Time: 15-20 minutes
+
+### Resources
+- The content covered in this section
+- Your own experience with web and mobile development (if applicable)
 
 ## Key Takeaways
 
 - The web has evolved from static documents to complex, interactive applications
 - Modern web development emphasizes component-based architecture and declarative UI
 - React Native leverages web development concepts for building native mobile apps
-- Understanding web development history provides valuable context for React Native's approach 
+- Understanding web development history provides valuable context for React Native's approach

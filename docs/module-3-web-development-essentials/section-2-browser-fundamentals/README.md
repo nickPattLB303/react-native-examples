@@ -119,19 +119,42 @@ React Native's architecture shares several concepts with browser rendering:
 
 > 💡 **Deep Dive**: While browsers render to the DOM, React Native renders to native UI components. However, the process of determining what to render follows similar principles. The new React Native architecture (Fabric) makes this process even more efficient.
 
-## Exercise: Browser Rendering Diagram
+## Exercise: Browser and React Native Rendering Comparison
 
-Using Microsoft Whiteboard, create a diagram of the browser rendering process and compare it to React Native's rendering process.
+In this exercise, you will create a visual comparison of browser rendering and React Native rendering processes to understand their similarities and differences.
 
-**Microsoft Whiteboard Link**: [Browser vs React Native Rendering](https://link-to-whiteboard)
+### Exercise Description
+Using Microsoft Whiteboard, you will diagram both the browser rendering pipeline and React Native's rendering process, highlighting the parallel concepts and architectural differences. This visual comparison will help you understand how React Native's approach evolved from web rendering concepts.
 
-In this exercise, you'll:
-1. Draw the browser rendering pipeline
-2. Draw React Native's rendering pipeline
-3. Identify similarities and differences
-4. Note how these approaches affect performance
+### Learning Objectives
+- Visualize the complete browser rendering pipeline
+- Understand React Native's rendering process
+- Identify similarities and differences between the two approaches
+- Recognize how these architectural designs affect performance
 
-> 🚀 **Self-Led Learners**: After completing the diagram, try to identify potential performance bottlenecks in both rendering processes.
+### Instructions
+1. Create a diagram in Microsoft Whiteboard that illustrates:
+   - The browser rendering pipeline (HTML → DOM → CSSOM → Render Tree → Layout → Paint → Composite)
+   - React Native's rendering pipeline (JSX → Virtual DOM → Native Components → Layout → Rendering)
+   - The data and control flow in each process
+   - The threading model for each approach
+
+2. For each step in both pipelines, include:
+   - A brief description of what happens at that stage
+   - The key components or systems involved
+   - Potential performance implications
+
+3. Highlight the similarities and differences between the two approaches, particularly:
+   - How the Virtual DOM concept relates to the browser DOM
+   - How layout calculations compare
+   - How JavaScript execution affects rendering in both environments
+   - How each handles UI updates
+
+### Estimated Time: 15-20 minutes
+
+### Resources
+- The content covered in this section
+- The browser rendering pipeline diagram provided
 
 ## Key Takeaways
 
