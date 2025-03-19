@@ -84,7 +84,7 @@ In document mode, it appears as a continuation of the content.
 
 ## Images and Diagrams
 
-![Alt text for image](../../assets/placeholder-image.png)
+<iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
 
 ---
 

@@ -84,7 +84,7 @@ Facebook's solution to mobile development challenges:
 
 ## The React Native Architecture
 
-![React Native Architecture](../../assets/placeholder-image.png)
+<iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
 
 - JavaScript Thread: Runs your React/JavaScript code
 - Native Thread: Handles UI rendering and native modules

@@ -12,7 +12,6 @@ react-native-course/
 │   ├── 02-environment-setup/
 │   ├── ...
 │   └── 12-advanced-features/
-├── reveal.js/              # Reveal.js library for presentations
 ├── templates/              # Templates for creating new modules
 └── index.html              # Course home page
 ```
@@ -71,36 +70,27 @@ The content is written in Markdown and structured to work both as slides and as 
 <div class="angular-dev">Angular Developer</div>
 ```
 
-## Reveal.js Features
+## Technical Implementation
 
-This course uses [Reveal.js](https://revealjs.com/) for presentations. Key features include:
+This project uses:
 
-- **Navigation**: Use arrow keys to navigate between slides
-- **Overview Mode**: Press 'Esc' or 'o' to see an overview of all slides
-- **Speaker Notes**: Press 'S' to open speaker notes
-- **Fullscreen**: Press 'F' to enter fullscreen mode
-- **Zoom**: Alt+click (or Ctrl+click) on any element to zoom in
+- **reveal.js**: For presentations, loaded via CDN for simplicity
+- **Markdown**: For content that works as both slides and documentation
+- **Custom CSS**: For styling and visual indicators
 
-## Development
-
-### Prerequisites
-
-- A modern web browser
-- Optional: Node.js and npm for running a local server
-
-### Running Locally
+## Running Locally
 
 For the best experience, serve the files using a local web server:
 
 ```bash
-# If you have Node.js installed
-npx http-server
+# Using the included server script
+node serve.js
 
-# If you have Python installed
+# Or if you have Python installed
 # Python 3
 python -m http.server
 # Python 2
 python -m SimpleHTTPServer
 ```
 
-Then open `http://localhost:8080` in your browser.
+Then open `http://localhost:8080/` in your browser.
