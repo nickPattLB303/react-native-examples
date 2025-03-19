@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module X: Title - React Native Training Course</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.min.css">
+  
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.min.css">
+  
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  
+  <!-- Additional module-specific styles can be added here -->
+  <style>
+    /* Module-specific styles */
+  </style>
+</head>
+<body data-module="X">
+  <!-- Header -->
+  <div class="slide-header">
+    <div class="header-logo">React Native Training Course</div>
+    <div class="header-title">Module X: Title</div>
+    
+    <!-- Learning Path Toggles -->
+    <div class="learning-path-toggles">
+      <button class="path-toggle instructor-led" data-path="instructor">Instructor-Led</button>
+      <button class="path-toggle self-led" data-path="self">Self-Led</button>
+      <button class="path-toggle asynchronous" data-path="async">Asynchronous</button>
+    </div>
+    
+    <!-- Platform Toggles -->
+    <div class="platform-toggles">
+      <button class="platform-toggle" data-platform="android">Android</button>
+      <button class="platform-toggle" data-platform="ios">iOS</button>
+      <button class="platform-toggle" data-platform="react">React</button>
+      <button class="platform-toggle" data-platform="angular">Angular</button>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="slide-footer">
+    <div class="footer-left">React Native Training Course</div>
+    <div class="slide-number">Slide 1/1</div>
+    <div class="footer-right">Module X: Title</div>
+  </div>
+  
+  <!-- Presentation container -->
+  <div class="reveal">
+    <div class="slides">
+      <!-- Title Slide -->
+      <section>
+        <h1>Module X: Title</h1>
+        <h3>React Native Training Course</h3>
+        <p>
+          <small>
+            <span class="learning-path instructor-led">Instructor-Led</span>
+            <span class="learning-path self-led">Self-Led</span>
+            <span class="learning-path asynchronous">Asynchronous</span>
+          </small>
+        </p>
+      </section>
+      
+      <!-- Introduction -->
+      <section>
+        <h2>Introduction</h2>
+        <p>Module introduction goes here...</p>
+        
+        <aside class="notes">
+          Instructor notes: This section provides an overview of the module.
+        </aside>
+      </section>
+      
+      <!-- Learning Objectives -->
+      <section>
+        <h2>Learning Objectives</h2>
+        <ul>
+          <li>Objective 1</li>
+          <li>Objective 2</li>
+          <li>Objective 3</li>
+        </ul>
+        
+        <aside class="notes">
+          Instructor notes: Review the learning objectives with participants.
+        </aside>
+      </section>
+      
+      <!-- Content Section Example -->
+      <section>
+        <h2>Section Title</h2>
+        
+        <!-- Regular content visible to all learning paths -->
+        <div data-path="all">
+          <p>This content is visible to all learning paths.</p>
+        </div>
+        
+        <!-- Instructor-led specific content -->
+        <div data-path="instructor">
+          <div class="info-box">
+            <p><strong>Instructor Note:</strong> This content is only visible in the instructor-led path.</p>
+          </div>
+        </div>
+        
+        <!-- Self-led specific content -->
+        <div data-path="self">
+          <div class="info-box">
+            <p><strong>Self-Led Note:</strong> This content is only visible in the self-led path.</p>
+          </div>
+        </div>
+        
+        <!-- Asynchronous specific content -->
+        <div data-path="async">
+          <div class="info-box">
+            <p><strong>Async Note:</strong> This content is only visible in the asynchronous path.</p>
+          </div>
+        </div>
+        
+        <aside class="notes">
+          Instructor notes: Additional context for the instructor.
+        </aside>
+      </section>
+      
+      <!-- Platform-Specific Callout Example -->
+      <section>
+        <h2>Platform-Specific Callouts</h2>
+        
+        <p>React Native concepts can be related to your existing knowledge:</p>
+        
+        <div class="android-callout">
+          <p><strong>For Android Developers:</strong> This is similar to Android's concept of...</p>
+        </div>
+        
+        <div class="ios-callout">
+          <p><strong>For iOS Developers:</strong> This is similar to iOS's concept of...</p>
+        </div>
+        
+        <div class="react-callout">
+          <p><strong>For React Developers:</strong> This is similar to React's concept of...</p>
+        </div>
+        
+        <div class="angular-callout">
+          <p><strong>For Angular Developers:</strong> This is similar to Angular's concept of...</p>
+        </div>
+        
+        <aside class="notes">
+          Instructor notes: Highlight the relevant platform comparisons based on your audience.
+        </aside>
+      </section>
+      
+      <!-- Code Example -->
+      <section>
+        <h2>Code Example</h2>
+        
+        <pre><code class="typescript">/**
+ * A simple React Native component
+ * 
+ * This component displays a medication reminder with a title and description.
+ * 
+ * @param {object} props - Component properties
+ * @param {string} props.title - The medication name
+ * @param {string} props.description - Instructions for taking the medication
+ * @returns {JSX.Element} - The rendered component
+ */
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const MedicationReminder = ({ title, description }) => {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;{title}&lt;/Text&gt;
+      &lt;Text style={styles.description}&gt;{description}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    marginVertical: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#3498db',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#2c3e50',
+  },
+  description: {
+    fontSize: 14,
+    color: '#7f8c8d',
+  },
+});
+
+export default MedicationReminder;</code></pre>
+        
+        <aside class="notes">
+          Instructor notes: Walk through this code example, highlighting the JSDoc comments and the pharmacy theme.
+        </aside>
+      </section>
+      
+      <!-- Interactive Example (placeholder) -->
+      <section>
+        <h2>Interactive Example</h2>
+        
+        <div id="interactive-example" class="code-editor-wrapper">
+          <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <aside class="notes">
+          Instructor notes: This is an interactive example that participants can modify and run.
+        </aside>
+      </section>
+      
+      <!-- Exercise Example -->
+      <section>
+        <h2>Exercise</h2>
+        
+        <div class="exercise-box">
+          <h3>Exercise: Title</h3>
+          <p><strong>Duration:</strong> 15-20 minutes</p>
+          <p><strong>Objective:</strong> What participants will learn</p>
+          
+          <h4>Instructions:</h4>
+          <ol>
+            <li>Step 1</li>
+            <li>Step 2</li>
+            <li>Step 3</li>
+          </ol>
+          
+          <div data-path="instructor">
+            <div class="info-box">
+              <p><strong>Instructor Note:</strong> Additional guidance for instructors.</p>
+            </div>
+          </div>
+        </div>
+        
+        <aside class="notes">
+          Instructor notes: Guide participants through this exercise, providing assistance as needed.
+        </aside>
+      </section>
+      
+      <!-- Summary -->
+      <section>
+        <h2>Summary</h2>
+        <ul>
+          <li>Key point 1</li>
+          <li>Key point 2</li>
+          <li>Key point 3</li>
+        </ul>
+        
+        <p><strong>Next:</strong> Module X+1: Next Module Title</p>
+        
+        <aside class="notes">
+          Instructor notes: Summarize the key points and preview the next module.
+        </aside>
+      </section>
+      
+      <!-- Resources -->
+      <section>
+        <h2>Additional Resources</h2>
+        <ul>
+          <li><a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Documentation</a></li>
+          <li><a href="#" target="_blank">Resource 2</a></li>
+          <li><a href="#" target="_blank">Resource 3</a></li>
+        </ul>
+        
+        <aside class="notes">
+          Instructor notes: Encourage participants to explore these resources for further learning.
+        </aside>
+      </section>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/highlight.min.js"></script>
+  
+  <!-- Custom scripts -->
+  <script src="../assets/js/slides.js"></script>
+  
+  <!-- Example of interactive code editor initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Example code for the interactive editor
+      const initialCode = `import React from 'react';
+import { Text, View } from 'react-native';
+
+const MedicationApp = () => {
+  return (
+    <View style={{ padding: 20 }}>
+      <Text style={{ fontSize: 24 }}>
+        Hello Pharmacy World!
+      </Text>
+    </View>
+  );
+};
+
+export default MedicationApp;`;
+      
+      // Initialize the code editor when Reveal.js is ready
+      Reveal.addEventListener('ready', function() {
+        const editor = createCodeEditor('interactive-example', 'typescript', initialCode, function(code) {
+          // This function runs when the "Run" button is clicked
+          try {
+            // In a real implementation, this would run the code or show a preview
+            // For this template, we'll just show the code
+            editor.showResult(`<pre>${code}</pre>`);
+          } catch (error) {
+            editor.showResult(`<div class="error">${error.message}</div>`);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
