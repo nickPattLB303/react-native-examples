@@ -84,8 +84,6 @@ Facebook's solution to mobile development challenges:
 
 ## The React Native Architecture
 
-<iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
-
 ```mermaid
 flowchart LR
     A[JavaScript Thread] -->|Bridge| B[Native Thread]
@@ -105,6 +103,8 @@ flowchart LR
 - Native Thread: Handles UI rendering and native modules
 - Bridge: Facilitates communication between JS and native code
 - Native Modules: Access platform-specific features
+
+
 
 Note: The architecture diagram should show the JS thread, native thread, and the bridge connecting them. Emphasize that this architecture is evolving with the new architecture initiatives.
 

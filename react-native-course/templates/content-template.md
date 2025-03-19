@@ -82,10 +82,6 @@ In document mode, it appears as a continuation of the content.
 
 ---
 
-## Images and Diagrams
-
-<iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
-
 ## Mermaid Diagrams
 
 ```mermaid
