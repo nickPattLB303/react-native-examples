@@ -53,6 +53,26 @@ The content is written in Markdown and structured to work both as slides and as 
   <div class="challenge">Challenge content.</div>
   ```
 
+### Mermaid Diagrams
+
+You can create diagrams using [Mermaid](https://mermaid.js.org/) syntax:
+
+```
+​```mermaid
+flowchart LR
+    A[JavaScript Code] --> B[Bridge]
+    B --> C[Native Modules]
+    C --> D[Native UI]
+​```
+```
+
+Examples of diagram types:
+- Flowcharts
+- Sequence diagrams
+- Class diagrams
+- Entity Relationship diagrams
+- State diagrams
+
 ### Learning Path Indicators
 
 ```html

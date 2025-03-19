@@ -86,6 +86,21 @@ Facebook's solution to mobile development challenges:
 
 <iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
 
+```mermaid
+flowchart LR
+    A[JavaScript Thread] -->|Bridge| B[Native Thread]
+    subgraph JS Side
+        A --> C[React Components]
+        A --> D[Business Logic]
+        A --> E[Virtual DOM]
+    end
+    subgraph Native Side
+        B --> F[Native UI Components]
+        B --> G[Native Modules]
+        B --> H[Platform APIs]
+    end
+```
+
 - JavaScript Thread: Runs your React/JavaScript code
 - Native Thread: Handles UI rendering and native modules
 - Bridge: Facilitates communication between JS and native code

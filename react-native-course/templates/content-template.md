@@ -86,6 +86,19 @@ In document mode, it appears as a continuation of the content.
 
 <iframe src="../../assets/placeholder-image.html" width="100%" height="400" frameborder="0"></iframe>
 
+## Mermaid Diagrams
+
+```mermaid
+flowchart LR
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process 1]
+    B -->|No| D[Process 2]
+    C --> E[End]
+    D --> E
+```
+
+You can create various types of diagrams using Mermaid syntax.
+
 ---
 
 ## Links to Documentation
