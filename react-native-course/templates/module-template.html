@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module Title - React Native Training Course</title>
+  <link rel="stylesheet" href="../../reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../reveal.js/dist/theme/white.css">
+  <link rel="stylesheet" href="../../assets/custom.css">
+  <link rel="stylesheet" href="../../reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Use data-markdown for the slides content -->
+      <section data-markdown="content.md"
+               data-separator="^\n---\n"
+               data-separator-vertical="^\n--\n"
+               data-separator-notes="^Note:"
+               data-charset="utf-8">
+      </section>
+    </div>
+  </div>
+
+  <script src="../../reveal.js/dist/reveal.js"></script>
+  <script src="../../reveal.js/plugin/markdown/markdown.js"></script>
+  <script src="../../reveal.js/plugin/highlight/highlight.js"></script>
+  <script src="../../reveal.js/plugin/notes/notes.js"></script>
+  <script src="../../reveal.js/plugin/zoom/zoom.js"></script>
+  
+  <script>
+    Reveal.initialize({
+      hash: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ],
+      // Display controls in the bottom right corner
+      controls: true,
+      // Display a presentation progress bar
+      progress: true,
+      // Display the page number of the current slide
+      slideNumber: true,
+      // Add a menu button to slides
+      menu: false,
+      // Enable the slide overview mode
+      overview: true,
+      // Enable keyboard shortcuts for navigation
+      keyboard: true,
+      // Loop the presentation
+      loop: false,
+      // Change the presentation direction to be RTL
+      rtl: false,
+      // See https://revealjs.com/vertical-slides/
+      navigationMode: 'default',
+      // Randomizes the order of slides each time the presentation loads
+      shuffle: false,
+      // Turns fragments on and off globally
+      fragments: true,
+      // Flags whether to include the current fragment in the URL
+      fragmentInURL: false,
+      // Flags if we should show a help overlay when the questionmark key is pressed
+      help: true,
+      // Flags if speaker notes should be visible to all viewers
+      showNotes: false,
+      // Global override for autoplaying embedded media (video/audio/iframe)
+      autoPlayMedia: false,
+      // Number of milliseconds between automatically proceeding to the next slide
+      autoSlide: 0,
+      // Stop auto-sliding after user input
+      autoSlideStoppable: true,
+      // Enable slide navigation via mouse wheel
+      mouseWheel: false,
+      // Apply a 3D roll to links on hover
+      rollingLinks: false,
+      // Hides the address bar on mobile devices
+      hideAddressBar: true,
+      // Transition style
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+      // Transition speed
+      transitionSpeed: 'default', // default/fast/slow
+      // Transition style for full page slide backgrounds
+      backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+      // The maximum number of pages a single slide can expand to when printing to PDF
+      pdfMaxPagesPerSlide: 1,
+      // Offset used to reduce the height of content within exported PDF pages
+      pdfPageHeightOffset: -1,
+      // Prints each fragment on a separate slide
+      pdfSeparateFragments: true,
+      // Offset slides horizontally
+      center: true,
+      // Factor of the display size that should remain empty around the content
+      margin: 0.1,
+      // Bounds for smallest/largest possible scale to apply to content
+      minScale: 0.2,
+      maxScale: 2.0,
+      // PDF Export Options
+      // Show a help overlay when ? is pressed
+      showHelp: true,
+      // Add a "View as Document" link
+      showDocumentLink: true,
+      documentLinkText: 'View as Document',
+      documentLinkUrl: 'content.md'
+    });
+  </script>
+</body>
+</html>

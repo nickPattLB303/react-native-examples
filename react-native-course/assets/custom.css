@@ -1,0 +1,200 @@
+/* Custom styles for React Native Training Course */
+
+:root {
+  --main-color: #61dafb;
+  --secondary-color: #282c34;
+  --text-color: #333;
+  --link-color: #2a76dd;
+  --code-bg: #f5f5f5;
+}
+
+.reveal {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.reveal h1, 
+.reveal h2, 
+.reveal h3, 
+.reveal h4, 
+.reveal h5, 
+.reveal h6 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--secondary-color);
+  margin-bottom: 0.5em;
+}
+
+.reveal h1 {
+  font-size: 2.5em;
+}
+
+.reveal h2 {
+  font-size: 1.8em;
+}
+
+.reveal h3 {
+  font-size: 1.4em;
+}
+
+.reveal a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  text-decoration: underline;
+}
+
+.reveal code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  background-color: var(--code-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.reveal pre {
+  background-color: var(--code-bg);
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 1em 0;
+}
+
+.reveal pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Custom classes */
+.note {
+  background-color: #fffde7;
+  border-left: 4px solid #ffeb3b;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.warning {
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.platform-specific {
+  background-color: #e8f5e9;
+  border-left: 4px solid #4caf50;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.exercise {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.challenge {
+  background-color: #f3e5f5;
+  border-left: 4px solid #9c27b0;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+/* Learning path indicators */
+.instructor-led {
+  background-color: #e8f5e9;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #2e7d32;
+}
+
+.self-led {
+  background-color: #e3f2fd;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #1565c0;
+}
+
+.asynchronous {
+  background-color: #fff3e0;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #e65100;
+}
+
+/* Experience level indicators */
+.android-dev {
+  background-color: #e8f5e9;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #2e7d32;
+}
+
+.ios-dev {
+  background-color: #e3f2fd;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #1565c0;
+}
+
+.react-dev {
+  background-color: #e1f5fe;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #0277bd;
+}
+
+.angular-dev {
+  background-color: #fce4ec;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  color: #c2185b;
+}
+
+/* Print styles for documentation view */
+@media print {
+  .reveal .slides {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+  
+  .reveal .slides > section,
+  .reveal .slides > section > section {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    padding: 20px;
+    transform: none !important;
+    overflow: visible;
+    page-break-inside: avoid;
+  }
+  
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+    page-break-after: avoid;
+  }
+  
+  .reveal pre,
+  .reveal code {
+    page-break-inside: avoid;
+  }
+}
