@@ -84,6 +84,27 @@ The "better developer experience" through improved autocomplete and IntelliSense
 
 ---
 
+## TypeScript vs. JavaScript
+
+Key differences between TypeScript and JavaScript:
+
+- **Type System**: TypeScript adds static typing to JavaScript's dynamic typing
+- **Error Detection**: TypeScript catches errors at compile-time vs. runtime
+- **Developer Experience**: Enhanced autocomplete and IntelliSense
+- **Learning Curve**: Requires understanding the type system
+- **Code Safety**: Prevents common type-related bugs
+- **Tooling**: Better refactoring and code navigation
+
+Note: When comparing TypeScript and JavaScript, it's important to highlight both the advantages and the learning investment required. TypeScript's static typing system fundamentally changes how developers write and maintain code, shifting error detection from runtime to compile time. This is particularly valuable in larger codebases and team environments where catching errors early saves significant debugging time.
+
+For native mobile developers coming from Swift or Kotlin, TypeScript's type system will feel familiar and provide the structure they're accustomed to. For JavaScript developers, TypeScript represents an evolution that preserves their existing knowledge while adding safety guardrails.
+
+The learning curve is an important consideration - while TypeScript is a superset of JavaScript, mastering its type system takes time. However, the investment pays dividends through improved code quality, better tooling support, and enhanced team collaboration. TypeScript can be adopted incrementally, allowing teams to gradually introduce typing to their codebase.
+
+When teaching this comparison, use concrete examples to demonstrate how TypeScript prevents common JavaScript errors, such as accessing properties on undefined objects or passing incorrect argument types to functions. These practical demonstrations help students immediately see the value proposition of TypeScript in their daily development work.
+
+---
+
 ## TypeScript vs. JavaScript: Code Example
 
 ```typescript
