@@ -109,7 +109,7 @@ When teaching this comparison, use concrete examples to demonstrate how TypeScri
 
 ## TypeScript vs. JavaScript: Code Example
 
-```typescript
+```tsx
 // JavaScript - No type safety
 function calculateDosage(weight, concentration) {
   return weight * concentration / 100; // Potential runtime errors
@@ -334,7 +334,7 @@ When teaching primitive types, emphasize that TypeScript's type checking happens
 
 ## Basic Types: Code Example
 
-```typescript
+```tsx
 // Primitive types
 const patientName: string = "John Smith";
 const patientAge: number = 45;
@@ -417,7 +417,7 @@ When teaching inference, demonstrate both successful cases where TypeScript corr
 
 ## Type Inference: Code Example
 
-```typescript
+```tsx
 // TypeScript infers these types automatically
 let patientName = "John Smith";          // inferred as string
 let patientAge = 45;                     // inferred as number
@@ -440,7 +440,7 @@ In the first four variable declarations, TypeScript automatically infers the typ
 - `medications` is inferred as `string[]` (an array of strings) because it's initialized with an array containing only string literals.
 
 These inferences are exactly the same as if we had explicitly written the types:
-```typescript
+```tsx
 let patientName: string = "John Smith";
 let patientAge: number = 45;
 // etc.
@@ -451,7 +451,7 @@ The function example demonstrates more complex inference. While we explicitly an
 2. The function returns `result`, so the return type is inferred to be the same as `result`'s type.
 
 This is equivalent to explicitly declaring the return type:
-```typescript
+```tsx
 const calculateDosage = (weight: number, multiplier: number): number => {
   // ...
 };
@@ -502,7 +502,7 @@ When teaching interfaces and type aliases, demonstrate how they improve code qua
 
 ## Interfaces and Type Aliases: Code Example
 
-```typescript
+```tsx
 // Interface definition
 interface Medication {
   id: string;
@@ -609,7 +609,7 @@ Exhaustiveness checking is a technique that ensures you've handled all possible 
 
 ## Union and Intersection Types: Code Example
 
-```typescript
+```tsx
 // Union type (OR)
 type MedicationIdentifier = string | number;
 
@@ -669,7 +669,7 @@ In a React Native context, you might discuss how union types are particularly us
 
 You could also discuss type narrowing - the process of refining a union type to a more specific type within a conditional block, which is essential when working with union types:
 
-```typescript
+```tsx
 function processMedication(id: MedicationIdentifier) {
   if (typeof id === 'string') {
     // In this block, TypeScript knows id is a string
@@ -724,7 +724,7 @@ For React Native applications, string enums are often the best choice because th
 
 ## Enums and Literal Types: Code Example
 
-```typescript
+```tsx
 // Enum definition
 enum MedicationCategory {
   Analgesic = "analgesic",
@@ -852,7 +852,7 @@ For React Native specifically, typed props are particularly valuable when workin
 
 ## Typing Component Props: Code Example
 
-```typescript
+```tsx
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
@@ -987,7 +987,7 @@ Also note that while TypeScript ensures type safety for props that are provided,
 
 ## Optional and Default Props: Code Example
 
-```typescript
+```tsx
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
@@ -1133,7 +1133,7 @@ When teaching this concept, emphasize that while adding types to state requires 
 
 ## Typing Component State: Code Example
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
@@ -1340,7 +1340,7 @@ For students transitioning from JavaScript to TypeScript, highlight that while a
 
 ## Typing Event Handlers: Code Example
 
-```typescript
+```tsx
 import React from 'react';
 import { 
   View, 
@@ -1510,7 +1510,7 @@ For students transitioning from JavaScript to TypeScript, emphasize that while a
 
 ## Typing Styles: Code Example
 
-```typescript
+```tsx
 import React from 'react';
 import { 
   View, 
@@ -1744,7 +1744,7 @@ In React Native, generics are commonly used with hooks like useState and useRedu
 
 ## Generic Types: Code Example
 
-```typescript
+```tsx
 // Generic function
 function getFirstItem<T>(items: T[]): T | undefined {
   return items.length > 0 ? items[0] : undefined;
@@ -1893,7 +1893,7 @@ Exhaustiveness checking is another important concept to cover. By using a switch
 
 ## Generic Types: Code Example
 
-```typescript
+```tsx
 // Generic function
 function getFirstItem<T>(items: T[]): T | undefined {
   return items.length > 0 ? items[0] : undefined;
@@ -1996,52 +1996,9 @@ Generics are powerful for creating flexible, reusable code while maintaining typ
 
 ---
 
-## Type Guards and Type Narrowing
-
-Type guards help TypeScript understand the type of a variable within a certain scope:
-
-- **typeof guards**: Check primitive types (`typeof x === "string"`)
-- **instanceof guards**: Check class instances (`x instanceof Date`)
-- **Property checks**: Verify property existence (`'property' in object`)
-- **Discriminated unions**: Use a common property to distinguish types
-- **User-defined type guards**: Custom functions with type predicates
-- **Assertion functions**: Functions that throw errors for invalid types
-- **The `in` operator**: Check for property existence
-- **Exhaustiveness checking**: Ensure all cases are handled
-
-
-Note: Type guards and type narrowing are essential concepts in TypeScript that enable you to work safely with union types and polymorphic data. When teaching these concepts, it's important to emphasize how they allow TypeScript to understand the specific type of a variable within a particular code block, enabling type-safe access to properties and methods that might not be available on all possible types.
-
-In TypeScript, when you have a variable that could be one of several types (a union type), you need a way to determine which specific type you're working with at runtime. Type guards provide this capability by performing runtime checks that inform TypeScript about the type of a variable within a specific scope. This process of refining a variable from a more general type to a more specific type is called type narrowing.
-
-There are several kinds of type guards in TypeScript:
-
-1. **typeof guards** check for JavaScript primitive types like string, number, boolean, etc.
-2. **instanceof guards** check if an object is an instance of a specific class or constructor function.
-3. **Property checks** verify the existence of properties on an object.
-4. **Discriminated unions** use a common property (often called a "tag" or "discriminant") to distinguish between different object shapes.
-5. **User-defined type guards** are custom functions that return a type predicate, allowing you to define your own type checking logic.
-
-In React Native development, type guards are particularly valuable when working with:
-
-1. **Component props** that can accept different types of data
-2. **API responses** that might have different structures based on success or error states
-3. **Navigation parameters** that vary between screens
-4. **State management** where state can take different shapes based on application conditions
-
-When explaining type guards to students, it's helpful to start with simple examples using typeof and instanceof, then move to more complex patterns like discriminated unions and user-defined type guards. Emphasize that type guards not only prevent runtime errors but also enable better developer experience through improved autocompletion and type checking.
-
-For students coming from other typed languages, you can draw parallels to pattern matching or switch statements with type checking. For JavaScript developers, emphasize how type guards formalize and enhance the kind of type checking they might already be doing with conditional statements.
-
-When teaching type guards in React Native specifically, highlight how they enable safer handling of component props, state transitions, and API responses. Show examples of components that can render different UI based on the specific type of data they receive, all while maintaining type safety.
-
-Finally, discuss best practices such as using discriminated unions for complex object types, creating reusable type guard functions for common patterns, and avoiding type assertions (as) when type guards can be used instead.
-
----
-
 ## Type Guards and Type Narrowing: Code Example
 
-```typescript
+```tsx
 // Union type
 type MedicationDosage = {
   type: 'tablet';
@@ -2189,7 +2146,7 @@ When teaching utility types, emphasize that they're not just syntactic sugar - t
 
 ## Utility Types: Code Example
 
-```typescript
+```tsx
 // Original interface
 interface Medication {
   id: string;
@@ -2326,7 +2283,7 @@ When teaching this concept, emphasize that while declaration merging is powerful
 
 A common use case in React Native is extending the global theme type when using styled-components or other styling libraries. For example, you might want to add custom color or spacing properties to the theme:
 
-```typescript
+```tsx
 // theme.d.ts
 import 'styled-components';
 
@@ -2349,7 +2306,7 @@ declare module 'styled-components' {
 
 Another valuable use case is extending React Navigation's parameter lists across different files, allowing you to maintain type safety while keeping your navigation types modular:
 
-```typescript
+```tsx
 // In navigation-types.ts
 declare global {
   namespace ReactNavigation {
@@ -2366,7 +2323,7 @@ declare global {
 
 ## Declaration Merging: Code Example
 
-```typescript
+```tsx
 // Original interface
 interface Medication {
   id: string;
@@ -2490,7 +2447,7 @@ For students coming from other typed languages, highlight that mapped types prov
 
 A particularly powerful feature of mapped types in TypeScript 4.1+ is key remapping via the `as` clause. This allows you to not just transform the types of properties but also their names. For example, you could create getter methods for all properties of a type:
 
-```typescript
+```tsx
 type Getters<T> = {
   [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K]
 };
@@ -2516,7 +2473,7 @@ This capability is especially useful in React Native when creating derived types
 
 ## Mapped Types: Code Example
 
-```typescript
+```tsx
 // Original interface
 interface Medication {
   id: string;
@@ -2639,7 +2596,7 @@ Best practices:
 - Keep type definitions close to where they're used
 
 Example of a barrel file (types/index.ts):
-```typescript
+```tsx
 // Re-export all types for easier imports
 export * from './medication';
 export * from './patient';
@@ -2712,7 +2669,7 @@ Also discuss error handling in the context of typed API calls. TypeScript can he
 
 A best practice to emphasize is the creation of a type-safe API client that encapsulates all API calls and their type definitions. This approach centralizes API logic and types, making it easier to maintain and update as the API evolves. For example:
 
-```typescript
+```tsx
 // api-client.ts
 class ApiClient {
   async getMedications(): Promise<Medication[]> {
@@ -2737,7 +2694,7 @@ This pattern is particularly valuable in larger applications where multiple comp
 
 ## Type-Safe API Calls: Code Example
 
-```typescript
+```tsx
 // Define API response types
 interface ApiResponse<T> {
   data: T;
@@ -2858,7 +2815,7 @@ Note: When teaching TypeScript with React Navigation, emphasize how static typin
 
 ## Type-Safe API Calls: Code Example
 
-```typescript
+```tsx
 // Define API response types
 interface ApiResponse<T> {
   data: T;
@@ -3006,7 +2963,7 @@ For students transitioning from JavaScript to TypeScript, highlight that while s
 
 ## TypeScript with React Navigation: Code Example
 
-```typescript
+```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -3138,7 +3095,7 @@ Avoid these common TypeScript issues in React Native projects:
 
 ### Type Assertions vs. Type Declarations
 
-```typescript
+```tsx
 // ❌ Incorrect: Type assertion without verification
 const userData = JSON.parse(response) as UserData;
 
@@ -3165,7 +3122,7 @@ Note: Type assertions can be dangerous when used without proper validation. This
 
 ### Overusing `any`
 
-```typescript
+```tsx
 // ❌ Avoid: Losing type safety with any
 function processMedication(medication: any) {
   return medication.dosage * 2; // No type checking!
@@ -3191,7 +3148,7 @@ Note: The `any` type is often used as a quick fix to bypass TypeScript's type ch
 
 ### Not Handling Null/Undefined
 
-```typescript
+```tsx
 // ❌ Risky: Not handling potential null/undefined
 function getMedicationName(medication?: Medication): string {
   return medication.name; // Potential runtime error!
@@ -3209,7 +3166,7 @@ Note: Null and undefined values are common sources of runtime errors in JavaScri
 
 ### Forgetting to Type React.useState
 
-```typescript
+```tsx
 // ❌ Suboptimal: Implicit any[] type
 const [medications, setMedications] = useState([]);
 
@@ -3223,7 +3180,7 @@ Note: This example highlights a common mistake when using React's useState hook 
 
 ### Incorrect Event Handler Types
 
-```typescript
+```tsx
 // ❌ Incorrect: Wrong event type
 const handleChange = (event: any) => {
   setValue(event.target.value); // 'target' doesn't exist on React Native events!
