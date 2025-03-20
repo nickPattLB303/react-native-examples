@@ -304,6 +304,14 @@ When teaching about `tsconfig.json`, emphasize that these settings can be adjust
 
 TypeScript provides several basic types that form the foundation of its type system:
 
+- **Primitive types**: string, number, boolean
+- **Special types**: null, undefined, any, never
+- **Arrays**: string[], number[], Array<Type>
+- **Tuples**: fixed-length arrays with specific types for each position
+- **Object types**: interfaces and type aliases (covered in later slides)
+- **Enum types**: named sets of numeric or string values
+- **Union and intersection types**: combining types with | and &
+
 Note: TypeScript's type system is the cornerstone of its value proposition. When teaching basic types, it's important to emphasize that TypeScript's type system is designed to be intuitive for developers coming from both JavaScript and statically-typed languages. The basic types in TypeScript closely mirror JavaScript's runtime types, making the transition smoother for JavaScript developers.
 
 For primitive types (string, number, boolean), explain that these correspond directly to JavaScript's primitive types but with compile-time checking. This means that once a variable is declared as a string, TypeScript will prevent operations that aren't valid for strings, like mathematical operations (except concatenation).
@@ -314,7 +322,11 @@ Arrays in TypeScript can be typed in two ways: using the `Type[]` syntax or the 
 
 Tuples are a TypeScript-specific feature not present in JavaScript. They allow you to express an array with a fixed number of elements where each element may have a different type. This is particularly useful for representing pairs or triplets of related values, like coordinates or key-value pairs.
 
-When discussing these types with students, provide real-world examples relevant to medication management to make the concepts more concrete and applicable to their domain.
+When discussing these types with students, provide real-world examples relevant to medication management to make the concepts more concrete and applicable to their domain. For example, you might demonstrate how a patient record could use various types: strings for names and IDs, numbers for ages and dosages, booleans for allergies and medication status, arrays for medication lists, and tuples for medication-dosage pairs.
+
+It's also important to discuss type inference in this context - TypeScript can often infer the correct type without explicit annotations, but there are cases where explicit typing provides better documentation and prevents errors. Encourage students to find the right balance between relying on inference and adding explicit type annotations.
+
+When teaching primitive types, emphasize that TypeScript's type checking happens at compile time, not runtime. This means that while TypeScript prevents type errors during development, the compiled JavaScript doesn't include any type checking. This is why runtime validation is still important for data from external sources like API responses or user input.
 
 ---
 
@@ -369,6 +381,14 @@ When teaching this code, you might ask students to consider what would happen if
 
 TypeScript can often infer types without explicit annotations:
 
+- **Variable initialization**: Types inferred from assigned values
+- **Function return types**: Inferred from return statements
+- **Context typing**: Types determined from the surrounding code
+- **Best-practice balance**: Know when to rely on inference vs. explicit types
+- **Type widening**: How TypeScript generalizes literal types
+- **Const assertions**: Using `as const` to prevent widening
+- **Generic inference**: How TypeScript determines type parameters
+
 Note: Type inference is one of TypeScript's most powerful features, allowing developers to benefit from static typing without having to explicitly annotate every variable. When teaching type inference, emphasize that it's not about avoiding type annotations entirely, but about using them strategically where they add the most value.
 
 TypeScript's type inference system is contextual and sophisticated. It can determine types not just from initialization values, but also from how variables are used throughout the code. This bidirectional type inference is particularly powerful in function contexts.
@@ -382,6 +402,14 @@ However, there are important cases where explicit type annotations are still rec
 4. Empty arrays or objects, where TypeScript can't infer the intended element types
 
 When discussing type inference with students, emphasize that it's about finding the right balance. Too few annotations can make code harder to understand and maintain, while too many can create unnecessary verbosity. The goal is to use type annotations where they provide the most value for documentation, error prevention, and developer experience.
+
+Type widening is an important concept to cover when teaching inference. When you initialize a variable with a literal value, TypeScript might "widen" the type to be more general. For example, `let x = 42` infers `x` as `number`, not specifically the literal `42`. This widening behavior can be controlled with const assertions (`as const`), which tell TypeScript to use the most specific type possible.
+
+Context typing is another powerful aspect of TypeScript's inference system. When a function is used in a context where the type is known (like passing a callback to `Array.map()`), TypeScript can infer the parameter types without explicit annotations. This makes code more concise while maintaining type safety.
+
+For React Native developers, type inference is particularly valuable when working with component props, state, and event handlers. TypeScript can often infer the correct types for these elements based on their usage, reducing the need for explicit annotations while still providing type safety.
+
+When teaching inference, demonstrate both successful cases where TypeScript correctly infers types and edge cases where inference fails or produces unexpected results. This helps students develop an intuition for when explicit annotations are necessary.
 
 ---
 
@@ -439,6 +467,15 @@ Also point out that type inference becomes particularly valuable when working wi
 
 Interfaces and type aliases help define complex object shapes:
 
+- **Interfaces**: Define object structures with required and optional properties
+- **Type aliases**: Create named types for any type expression
+- **Extension**: Interfaces can extend other interfaces with `extends`
+- **Intersection**: Type aliases can combine types with `&`
+- **Declaration merging**: Interfaces can be augmented across multiple declarations
+- **Readonly properties**: Prevent modification with `readonly` modifier
+- **Index signatures**: Define types for dynamic property access
+- **Call signatures**: Define function types within interfaces
+
 Note: Interfaces and type aliases are fundamental tools for creating custom types in TypeScript, allowing developers to define the shape of objects and create reusable type definitions. When teaching these concepts, it's important to explain both their similarities and differences.
 
 Interfaces in TypeScript define contracts that objects must adhere to. They're particularly useful for defining the shape of objects, especially when those objects represent entities in your domain model or API responses. Interfaces can be extended (using the `extends` keyword) and implemented by classes, making them ideal for object-oriented programming patterns.
@@ -448,6 +485,16 @@ Type aliases, on the other hand, create new names for types. They can represent 
 A key difference to highlight is that interfaces can be augmented after their initial declaration (through declaration merging), while type aliases cannot be changed after being defined. This makes interfaces more flexible in certain scenarios, particularly when working with third-party code or when you need to gradually build up a type definition.
 
 When discussing these concepts with students, emphasize that the choice between interfaces and type aliases often comes down to the specific use case and team preferences. In React Native development, both are commonly used, with interfaces often preferred for component props and API responses, and type aliases often used for unions, intersections, and other complex types.
+
+In a React Native context, interfaces are commonly used to define component props, state shapes, and API response structures. For example, you might create an interface for a medication component's props that specifies what data the component needs to render correctly. This creates a clear contract that both the component and its consumers must follow.
+
+Optional properties, denoted with a question mark (`?`), are particularly useful in React Native development. They allow you to create flexible interfaces where some properties aren't required, which is common in component props where you want to provide sensible defaults for some values.
+
+Readonly properties, marked with the `readonly` modifier, prevent accidental modification of properties after an object is created. This is valuable for immutable data patterns, which are recommended in React Native for performance and predictability.
+
+Index signatures (e.g., `[key: string]: any`) allow you to define types for objects with dynamic property names, which is useful when working with data from APIs or user input where the exact property names aren't known in advance.
+
+When teaching interfaces and type aliases, demonstrate how they improve code quality through better documentation, error prevention, and IDE support. Show examples of how TypeScript can catch errors when an object doesn't conform to an interface, and how interfaces make refactoring safer by identifying all places that need to be updated when an interface changes.
 
 ---
 
@@ -529,6 +576,15 @@ You might also discuss how these types would be used in a React Native applicati
 
 Union types allow a value to be one of several types, while intersection types combine multiple types:
 
+- **Union types**: Combine types with the `|` operator (OR relationship)
+- **Intersection types**: Combine types with the `&` operator (AND relationship)
+- **Type narrowing**: Refining union types within conditional blocks
+- **Discriminated unions**: Using a common property to distinguish between union members
+- **Type guards**: Functions that check and narrow types at runtime
+- **Type predicates**: Custom type guards with `paramName is Type` return types
+- **Exhaustiveness checking**: Ensuring all variants of a union are handled
+- **Distributive conditional types**: How unions distribute in conditional types
+
 Note: Union and intersection types are powerful features in TypeScript that enable more flexible and precise type definitions. When teaching these concepts, it's helpful to use analogies from set theory: union types represent the union of sets (A OR B), while intersection types represent the intersection of sets (A AND B).
 
 Union types, denoted by the `|` operator, allow a value to be one of several types. This is particularly useful for functions that can accept different types of input or for variables that might hold different types of values at different times. In React Native development, union types are commonly used for component props that can accept multiple types of values, such as a string or a number for a size prop.
@@ -536,6 +592,16 @@ Union types, denoted by the `|` operator, allow a value to be one of several typ
 Intersection types, denoted by the `&` operator, combine multiple types into one. This is useful for composing complex types from simpler ones, particularly when you want to merge the properties of multiple interfaces. In React Native, intersection types are often used to combine multiple prop types or to extend existing types with additional properties.
 
 When discussing these concepts with students, emphasize that union and intersection types provide a way to model complex relationships between types that would be difficult or impossible to express with just interfaces or classes. They're particularly valuable in functional programming patterns and when working with complex data structures.
+
+Type narrowing is a crucial concept to teach alongside union types. When you have a variable of a union type, you often need to determine which specific type you're working with before you can safely use type-specific operations. TypeScript uses control flow analysis to narrow types within conditional blocks based on type guards like `typeof`, `instanceof`, or property checks.
+
+Discriminated unions (also called tagged unions) are a powerful pattern where each member of a union contains a common property (the "tag") that can be used to distinguish between them. This pattern is particularly valuable in React Native for modeling different states of a component or different types of API responses.
+
+For example, in a medication tracking app, you might use a discriminated union to represent different types of medications (tablets, liquids, inhalers) where each type has its own specific properties but shares a common `type` property that identifies it.
+
+Type guards and type predicates allow you to create custom functions that help TypeScript narrow types. This is especially useful for complex type checking that can't be expressed with simple operators like `typeof`. Type predicates (functions that return `paramName is Type`) tell TypeScript that if the function returns true, the parameter is of the specified type.
+
+Exhaustiveness checking is a technique that ensures you've handled all possible variants of a union type. By using a switch statement with a default case that assigns a value to a variable of type `never`, TypeScript will raise an error if you haven't covered all possibilities. This is invaluable for ensuring robust code that handles all potential cases.
 
 ---
 
@@ -619,6 +685,15 @@ function processMedication(id: MedicationIdentifier) {
 
 Enums and literal types help define a fixed set of allowed values:
 
+- **Enums**: Named sets of numeric or string values
+- **Numeric enums**: Auto-incremented numeric values (default)
+- **String enums**: Explicitly assigned string values
+- **Const enums**: Inlined at compile time for better performance
+- **String literal types**: Exact string values (e.g., `"small" | "medium" | "large"`)
+- **Numeric literal types**: Exact number values (e.g., `1 | 2 | 3`)
+- **Boolean literal types**: `true` or `false` specifically
+- **Template literal types**: Generate string literals from patterns
+
 Note: Enums and literal types are powerful features in TypeScript for restricting values to a specific set of options. When teaching these concepts, emphasize that they provide both type safety and semantic meaning to your code.
 
 Enums in TypeScript create named constants that can make code more readable and self-documenting. They're particularly useful for representing a fixed set of related values, such as status codes, categories, or modes. In a medication context, enums might represent medication categories, dosage forms, or frequency patterns.
@@ -634,6 +709,14 @@ String enums (as shown in the example) are often preferred because they provide 
 Literal types, on the other hand, allow you to specify the exact values a variable can have. They can be string literals, number literals, boolean literals, or even object literals. Literal types are particularly useful when you want to restrict a value to a specific set of strings or numbers without creating a full enum.
 
 When discussing these concepts with students, highlight that both enums and literal types serve similar purposes but have different use cases. Enums are better for related constants that might be used throughout the codebase, while literal types are often more lightweight and flexible, especially for function parameters or return types.
+
+In React Native development, enums and literal types are particularly valuable for component props that should only accept specific values. For example, a `Button` component might have a `size` prop that only accepts "small", "medium", or "large", which could be defined as a string literal type: `type ButtonSize = "small" | "medium" | "large"`.
+
+Template literal types, introduced in TypeScript 4.1, allow you to create more complex string literal types by combining existing string literals. For example, you could define a type for valid CSS color names: `type Color = "red" | "green" | "blue"` and then create a type for button variants: `type ButtonVariant = `${Color}Button``, which would generate "redButton", "greenButton", and "blueButton".
+
+When teaching enums, it's important to discuss their runtime behavior. Unlike most TypeScript features that are erased during compilation, enums generate actual JavaScript code. This can be an advantage (the enum values are available at runtime) or a disadvantage (they increase bundle size). Const enums address this by being completely inlined at compile time, but they can't be used in all scenarios.
+
+For React Native applications, string enums are often the best choice because they provide meaningful values in logs and debugging tools, making it easier to understand the application state during development and troubleshooting.
 
 ---
 
@@ -1569,6 +1652,15 @@ Using TypeScript with styles helps catch errors like:
 
 Generics allow you to create reusable components and functions:
 
+- **Type parameters**: Placeholders for types (e.g., `<T>`)
+- **Generic functions**: Functions that work with multiple types
+- **Generic interfaces**: Interfaces with type parameters
+- **Generic classes**: Classes with type parameters
+- **Generic constraints**: Limiting type parameters with `extends`
+- **Default type parameters**: Providing fallback types with `<T = DefaultType>`
+- **Generic type inference**: How TypeScript determines type arguments
+- **Multiple type parameters**: Using `<T, U, V>` for complex relationships
+
 Note: Generics are one of TypeScript's most powerful features, enabling developers to create flexible, reusable code without sacrificing type safety. When teaching generics, it's important to emphasize that they allow you to write code that works with a variety of types while still maintaining strong type checking.
 
 The core concept of generics is type parameters, which act as placeholders for types that will be specified later when the code is used. This is similar to function parameters, but instead of passing values, you're passing types. This abstraction allows you to create components, functions, and interfaces that can work with different data types while still preserving type information throughout your code.
@@ -1591,7 +1683,160 @@ For students coming from other typed languages like Swift or Kotlin, you can dra
 
 When teaching generics in React Native specifically, highlight how they enable type-safe component props, navigation parameters, and API calls. Show examples of generic components like lists or forms that can work with different data types while still providing proper type checking and autocompletion.
 
-Finally, discuss common pitfalls and best practices, such as avoiding overuse of generics for simple cases, using constraints to limit the types that can be used with a generic, and providing good default types when appropriate.
+Generic constraints, specified with the `extends` keyword, are an important concept to cover. They allow you to limit what types can be used with a generic, ensuring that the type parameter has certain properties or methods. For example, `<T extends { id: string }>` ensures that T must be an object with at least an id property of type string.
+
+Default type parameters provide fallback types when a type argument isn't explicitly provided. This is useful for creating APIs that are both flexible and easy to use, as consumers don't need to specify common type arguments.
+
+In React Native, generics are commonly used with hooks like useState and useReducer to provide type safety for state management. They're also valuable for typing context providers and consumers, ensuring that the context value maintains its type throughout the application.
+
+---
+
+## Generic Types: Code Example
+
+```typescript
+// Generic function
+function getFirstItem<T>(items: T[]): T | undefined {
+  return items.length > 0 ? items[0] : undefined;
+}
+
+const medications = ["Aspirin", "Ibuprofen", "Acetaminophen"];
+const firstMedication = getFirstItem<string>(medications); // Type: string | undefined
+
+const dosages = [100, 200, 500];
+const firstDosage = getFirstItem<number>(dosages); // Type: number | undefined
+
+// Generic interface
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+  timestamp: string;
+}
+
+// Using the generic interface
+interface Medication {
+  id: string;
+  name: string;
+  dosage: number;
+}
+
+// The response type is now ApiResponse<Medication>
+function fetchMedication(id: string): Promise<ApiResponse<Medication>> {
+  return fetch(`/api/medications/${id}`)
+    .then(response => response.json());
+}
+
+// Generic component
+interface ListProps<T> {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+  keyExtractor: (item: T) => string;
+}
+
+function List<T>({ items, renderItem, keyExtractor }: ListProps<T>) {
+  return (
+    <View>
+      {items.map(item => (
+        <View key={keyExtractor(item)}>
+          {renderItem(item)}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// Using the generic component
+function MedicationList() {
+  const medications: Medication[] = [
+    { id: '1', name: 'Aspirin', dosage: 100 },
+    { id: '2', name: 'Ibuprofen', dosage: 200 }
+  ];
+  
+  return (
+    <List<Medication>
+      items={medications}
+      renderItem={(med) => (
+        <Text>{med.name} - {med.dosage}mg</Text>
+      )}
+      keyExtractor={(med) => med.id}
+    />
+  );
+}
+```
+
+Note: This example demonstrates three common uses of generics in a React Native application: generic functions, generic interfaces, and generic components. Let's analyze each part in detail to understand how generics enable type-safe, reusable code.
+
+First, we define a generic function `getFirstItem<T>` that works with arrays of any type. The type parameter `T` acts as a placeholder that will be replaced with an actual type when the function is used. The function returns either the first item in the array (of type `T`) or `undefined` if the array is empty.
+
+We then use this function with two different array types:
+- An array of strings (`medications`), where `T` is inferred as `string`
+- An array of numbers (`dosages`), where `T` is inferred as `number`
+
+In both cases, TypeScript ensures type safety - `firstMedication` has type `string | undefined` and `firstDosage` has type `number | undefined`. This demonstrates how a single generic function can work with different data types while preserving type information.
+
+Next, we define a generic interface `ApiResponse<T>` that represents a common API response structure. The generic parameter `T` represents the type of data returned by the API, which will vary depending on the endpoint. The interface includes common fields like `status` and `message` that are present in all responses, along with a `data` field of type `T`.
+
+We then use this generic interface with a specific data type `Medication` to create a type-safe API function `fetchMedication`. This function returns a Promise that resolves to an `ApiResponse<Medication>`, ensuring that the data property of the response will be of type `Medication`. This pattern is extremely valuable in React Native applications that interact with APIs, as it provides type safety for API responses without duplicating response structure definitions.
+
+Finally, we demonstrate a generic component pattern with the `List<T>` component. This component can display a list of items of any type, with the type parameter `T` representing the item type. The component accepts three props:
+- `items`: An array of items of type `T`
+- `renderItem`: A function that takes an item of type `T` and returns a React node
+- `keyExtractor`: A function that takes an item of type `T` and returns a string key
+
+The `MedicationList` component shows how to use this generic component with a specific type `Medication`. By specifying `<Medication>` when using the `List` component, we ensure that:
+1. The `items` prop must be an array of `Medication` objects
+2. The `renderItem` function receives a `Medication` object as its parameter
+3. The `keyExtractor` function receives a `Medication` object as its parameter
+
+This pattern is particularly valuable in React Native for creating reusable list components, form components, or any component that needs to work with different data types.
+
+When teaching this example, emphasize how generics provide both flexibility and type safety. Without generics, we would either need to create separate functions and components for each data type (leading to code duplication) or use `any` (losing type safety). Generics give us the best of both worlds - reusable code that maintains type information.
+
+Generics are powerful for creating flexible, reusable code while maintaining type safety.
+
+---
+
+## Type Guards and Type Narrowing
+
+Type guards help TypeScript understand the type of a variable within a certain scope:
+
+- **typeof guards**: Check primitive types (`typeof x === "string"`)
+- **instanceof guards**: Check class instances (`x instanceof Date`)
+- **Property checks**: Verify property existence (`'property' in object`)
+- **Discriminated unions**: Use a common property to distinguish types
+- **User-defined type guards**: Custom functions with type predicates
+- **Assertion functions**: Functions that throw errors for invalid types
+- **The `in` operator**: Check for property existence
+- **Exhaustiveness checking**: Ensure all cases are handled
+
+Note: Type guards and type narrowing are essential concepts in TypeScript that enable you to work safely with union types and polymorphic data. When teaching these concepts, it's important to emphasize how they allow TypeScript to understand the specific type of a variable within a particular code block, enabling type-safe access to properties and methods that might not be available on all possible types.
+
+In TypeScript, when you have a variable that could be one of several types (a union type), you need a way to determine which specific type you're working with at runtime. Type guards provide this capability by performing runtime checks that inform TypeScript about the type of a variable within a specific scope. This process of refining a variable from a more general type to a more specific type is called type narrowing.
+
+There are several kinds of type guards in TypeScript:
+
+1. **typeof guards** check for JavaScript primitive types like string, number, boolean, etc.
+2. **instanceof guards** check if an object is an instance of a specific class or constructor function.
+3. **Property checks** verify the existence of properties on an object.
+4. **Discriminated unions** use a common property (often called a "tag" or "discriminant") to distinguish between different object shapes.
+5. **User-defined type guards** are custom functions that return a type predicate, allowing you to define your own type checking logic.
+
+In React Native development, type guards are particularly valuable when working with:
+
+1. **Component props** that can accept different types of data
+2. **API responses** that might have different structures based on success or error states
+3. **Navigation parameters** that vary between screens
+4. **State management** where state can take different shapes based on application conditions
+
+When explaining type guards to students, it's helpful to start with simple examples using typeof and instanceof, then move to more complex patterns like discriminated unions and user-defined type guards. Emphasize that type guards not only prevent runtime errors but also enable better developer experience through improved autocompletion and type checking.
+
+For students coming from other typed languages, you can draw parallels to pattern matching or switch statements with type checking. For JavaScript developers, emphasize how type guards formalize and enhance the kind of type checking they might already be doing with conditional statements.
+
+When teaching type guards in React Native specifically, highlight how they enable safer handling of component props, state transitions, and API responses. Show examples of components that can render different UI based on the specific type of data they receive, all while maintaining type safety.
+
+Discriminated unions are particularly powerful in React Native applications. For example, you might use them to model different states of a screen (loading, error, success), different types of notifications, or different variants of a component. By using a common property like "type" or "status", you can create a union type that TypeScript can narrow based on that property.
+
+Exhaustiveness checking is another important concept to cover. By using a switch statement with a default case that assigns to a variable of type `never`, you can ensure that you've handled all possible variants of a union type. This is invaluable for ensuring that your code remains type-safe even as you add new variants to a union type in the future.
 
 ---
 
@@ -1830,6 +2075,17 @@ Type guards are especially useful when working with union types in React Native 
 
 TypeScript provides built-in utility types to transform existing types:
 
+- **Partial<T>**: Makes all properties optional
+- **Required<T>**: Makes all properties required
+- **Readonly<T>**: Makes all properties read-only
+- **Pick<T, K>**: Creates a type with only the specified properties
+- **Omit<T, K>**: Creates a type without the specified properties
+- **Record<K, T>**: Creates a type with keys K and values T
+- **Exclude<T, U>**: Excludes types in U from T
+- **Extract<T, U>**: Extracts types in U from T
+- **NonNullable<T>**: Removes null and undefined from T
+- **ReturnType<T>**: Extracts the return type of a function type
+
 Note: Utility types are one of TypeScript's most powerful features, allowing developers to transform existing types into new ones without duplicating type definitions. When teaching utility types, it's important to emphasize how they promote code reuse and maintainability by providing standardized ways to modify types.
 
 TypeScript includes several built-in utility types that solve common type manipulation needs. These utility types operate on existing type definitions, creating new types with modified characteristics. This is particularly valuable in React Native development, where you often need variations of the same base types for different contexts.
@@ -1856,7 +2112,17 @@ It's also important to explain that utility types can be combined and nested to 
 
 For students coming from other typed languages, highlight that utility types provide a level of type manipulation that might not be available in their previous experience. For JavaScript developers, emphasize how utility types help formalize common patterns they might have implemented manually.
 
-Finally, discuss how utility types improve code maintainability by centralizing type definitions. When a base type changes, all derived types automatically reflect those changes, reducing the risk of inconsistencies and making refactoring safer.
+In React Native development, utility types are particularly valuable for several common scenarios:
+
+1. **Form handling**: Using `Partial<T>` for form state that's gradually filled in, and `Required<T>` for validation before submission.
+
+2. **API interactions**: Using `Pick<T, K>` to select only the fields needed for a specific API request, or `Omit<T, K>` to exclude sensitive fields.
+
+3. **State management**: Using `Readonly<T>` to ensure state immutability, and `Record<K, T>` for normalized state structures.
+
+4. **Component props**: Using utility types to derive prop types from state types or to create variations of prop types for different component configurations.
+
+When teaching utility types, emphasize that they're not just syntactic sugar - they provide real type safety benefits by ensuring that transformations are complete and correct. For example, if you add a required property to a base type, `Partial<T>` will automatically make that property optional in the derived type, preventing potential runtime errors.
 
 ---
 
@@ -1966,6 +2232,15 @@ These utility types help create derived types without duplicating type definitio
 
 TypeScript allows you to extend existing types through declaration merging:
 
+- **Interface merging**: Define the same interface multiple times to add properties
+- **Module augmentation**: Extend types from external modules
+- **Global augmentation**: Add declarations to the global scope
+- **Namespace merging**: Combine multiple namespace declarations
+- **Enum merging**: Add members to enums across multiple declarations
+- **Function and variable merging**: Combine overloads with implementations
+- **Class and interface merging**: Add static and instance members to classes
+- **Merging limitations**: Not all declarations can be merged (e.g., types)
+
 Note: Declaration merging is a powerful TypeScript feature that allows you to add properties to existing types across multiple declarations. When teaching this concept, it's important to emphasize how it enables extending and augmenting types in ways that would be difficult or impossible in other type systems.
 
 Declaration merging is the process by which TypeScript combines multiple declarations with the same name into a single definition. This is particularly useful in several scenarios:
@@ -1987,6 +2262,44 @@ For React Native development specifically, declaration merging is particularly v
 4. Augmenting third-party library types to better match how they're used in your application
 
 When teaching this concept, emphasize that while declaration merging is powerful, it should be used judiciously. Overusing it can make it difficult to track where properties are defined and can lead to confusion. It's generally best used for extending third-party types or for gradually building up interfaces that are logically related but defined in different parts of the codebase.
+
+A common use case in React Native is extending the global theme type when using styled-components or other styling libraries. For example, you might want to add custom color or spacing properties to the theme:
+
+```typescript
+// theme.d.ts
+import 'styled-components';
+
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    colors: {
+      primary: string;
+      secondary: string;
+      background: string;
+      text: string;
+    };
+    spacing: {
+      small: number;
+      medium: number;
+      large: number;
+    };
+  }
+}
+```
+
+Another valuable use case is extending React Navigation's parameter lists across different files, allowing you to maintain type safety while keeping your navigation types modular:
+
+```typescript
+// In navigation-types.ts
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList {
+      Home: undefined;
+      Profile: { userId: string };
+      Settings: undefined;
+    }
+  }
+}
+```
 
 ---
 
@@ -2068,6 +2381,15 @@ Declaration merging is powerful for extending existing types, especially from th
 
 Mapped types allow you to create new types by transforming properties of existing types:
 
+- **Basic syntax**: `{ [K in keyof T]: T[K] }`
+- **Adding modifiers**: `{ [K in keyof T]?: T[K] }` or `{ readonly [K in keyof T]: T[K] }`
+- **Removing modifiers**: `{ [K in keyof T]-?: T[K] }` or `{ -readonly [K in keyof T]: T[K] }`
+- **Remapping keys**: `{ [K in keyof T as NewKeyType]: T[K] }`
+- **Filtering properties**: `{ [K in keyof T as Condition<K>]: T[K] }`
+- **Conditional property types**: `{ [K in keyof T]: T[K] extends Condition ? TrueType : FalseType }`
+- **Template literal key remapping**: `{ [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] }`
+- **Key constraints**: `{ [K in MyKeys]: T[K] }` where MyKeys is a subset of keyof T
+
 Note: Mapped types are one of TypeScript's most powerful and flexible type manipulation features. When teaching mapped types, it's important to emphasize how they enable systematic transformations of existing types, creating new types with modified characteristics while maintaining the structure of the original type.
 
 Mapped types work by iterating over the properties of an existing type and applying a transformation to each property. This is conceptually similar to how array map methods work in JavaScript - just as `array.map()` transforms each element of an array, mapped types transform each property of a type. This makes them particularly valuable for creating variations of existing types without duplicating type definitions.
@@ -2096,7 +2418,29 @@ When teaching mapped types, it's helpful to start with simple examples like maki
 
 For students coming from other typed languages, highlight that mapped types provide a level of type manipulation that might not be available in their previous experience. For JavaScript developers, draw parallels to functional programming patterns like map, filter, and reduce, but applied to types rather than values.
 
-Finally, discuss how mapped types improve code maintainability by centralizing type transformations. When a base type changes, all derived mapped types automatically reflect those changes, reducing the risk of inconsistencies and making refactoring safer.
+A particularly powerful feature of mapped types in TypeScript 4.1+ is key remapping via the `as` clause. This allows you to not just transform the types of properties but also their names. For example, you could create getter methods for all properties of a type:
+
+```typescript
+type Getters<T> = {
+  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K]
+};
+
+// Applied to a User type
+interface User {
+  id: string;
+  name: string;
+  age: number;
+}
+
+// Results in:
+// {
+//   getId: () => string;
+//   getName: () => string;
+//   getAge: () => number;
+// }
+```
+
+This capability is especially useful in React Native when creating derived types for different contexts, such as transforming a data model into form state, validation schema, or display format.
 
 ---
 
@@ -2261,6 +2605,15 @@ export * from './navigation';
 
 TypeScript helps ensure API calls are type-safe:
 
+- **Response type definitions**: Define interfaces for API response structures
+- **Request type definitions**: Define types for API request parameters
+- **Data Transfer Objects (DTOs)**: Create types that match the exact API data format
+- **Model transformations**: Define types for converting between API and application formats
+- **Generic API clients**: Create reusable, type-safe API utilities
+- **Error handling types**: Define types for different error responses
+- **Runtime validation**: Combine TypeScript with runtime validation libraries
+- **Async/await typing**: Properly type Promise-based API calls
+
 Note: API interactions are a critical part of most React Native applications, and TypeScript can significantly enhance the safety and maintainability of API code. When teaching type-safe API calls, it's important to emphasize how TypeScript helps prevent common API-related errors and improves the developer experience when working with external data.
 
 In React Native applications, API calls often involve fetching data from a server, transforming that data into a format suitable for the application, and then using it to update the UI. Without TypeScript, this process can be error-prone, as there's no guarantee that the data received from the API matches what the application expects. TypeScript addresses this by providing a way to define the expected shape of API responses and ensuring that data transformations maintain type safety.
@@ -2279,7 +2632,147 @@ When teaching this concept, it's helpful to demonstrate a complete API interacti
 
 Also discuss error handling in the context of typed API calls. TypeScript can help ensure that error responses are handled correctly, but it's important to remember that runtime type checking is still necessary for data received from external sources. Type assertions should be used carefully and ideally combined with runtime validation.
 
-For students transitioning from JavaScript to TypeScript, highlight that while adding types to API calls requires some additional code, the benefits in terms of error prevention, code clarity, and maintainability are substantial. The time saved by catching API-related errors during development rather than debugging them at runtime more than compensates for the initial investment in typing.
+A best practice to emphasize is the creation of a type-safe API client that encapsulates all API calls and their type definitions. This approach centralizes API logic and types, making it easier to maintain and update as the API evolves. For example:
+
+```typescript
+// api-client.ts
+class ApiClient {
+  async getMedications(): Promise<Medication[]> {
+    // Implementation
+  }
+  
+  async getMedicationById(id: string): Promise<Medication> {
+    // Implementation
+  }
+  
+  async createMedication(data: CreateMedicationRequest): Promise<Medication> {
+    // Implementation
+  }
+  
+  // etc.
+}
+```
+
+This pattern is particularly valuable in larger applications where multiple components need to interact with the same API endpoints. It ensures consistent typing across the application and makes it easier to handle changes to the API.
+
+---
+
+## Type-Safe API Calls: Code Example
+
+```typescript
+// Define API response types
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+interface MedicationDTO {
+  id: string;
+  name: string;
+  dosage_mg: number; // Note: API uses snake_case
+  frequency_per_day: number;
+}
+
+// Transform API data to application model
+interface Medication {
+  id: string;
+  name: string;
+  dosage: number; // Note: Application uses camelCase
+  frequency: number;
+}
+
+// Type-safe API function
+async function fetchMedications(): Promise<Medication[]> {
+  try {
+    const response = await fetch('https://api.example.com/medications');
+    const json = await response.json() as ApiResponse<MedicationDTO[]>;
+    
+    // Transform API data to application model
+    return json.data.map(item => ({
+      id: item.id,
+      name: item.name,
+      dosage: item.dosage_mg,
+      frequency: item.frequency_per_day
+    }));
+  } catch (error) {
+    console.error('Error fetching medications:', error);
+    return [];
+  }
+}
+
+// Usage in a component
+function MedicationScreen() {
+  const [medications, setMedications] = useState<Medication[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      const data = await fetchMedications();
+      setMedications(data);
+      setLoading(false);
+    }
+    
+    loadData();
+  }, []);
+  
+  // Component rendering...
+}
+```
+
+Note: This example demonstrates how to implement type-safe API calls in a React Native application using TypeScript. Let's analyze the key aspects of this code to understand how TypeScript enhances API interactions.
+
+First, we define a generic interface `ApiResponse<T>` that represents the common structure of our API responses. This interface includes:
+- `data`: The actual response data, with a generic type `T` that will vary depending on the endpoint
+- `status`: A number representing the HTTP status code
+- `message`: A string providing additional information about the response
+
+This generic interface allows us to reuse the same response structure across different endpoints while varying the data type.
+
+Next, we define a `MedicationDTO` interface that represents the structure of medication data as it comes from the API. The "DTO" suffix stands for Data Transfer Object, indicating that this type represents data as transferred over the network. Notice that this interface uses snake_case property names (`dosage_mg`, `frequency_per_day`) to match the API's naming convention.
+
+We then define a separate `Medication` interface that represents how we want to use medication data within our application. This interface uses camelCase property names (`dosage`, `frequency`) to match JavaScript/React Native conventions. Separating these interfaces allows us to clearly distinguish between the external API format and our internal application format.
+
+The `fetchMedications` function demonstrates a type-safe API call:
+1. It returns a `Promise<Medication[]>`, clearly indicating that it will asynchronously provide an array of Medication objects.
+2. It uses a type assertion (`as ApiResponse<MedicationDTO[]>`) to tell TypeScript that the parsed JSON matches our expected response format. In a production application, you might want to add runtime validation to ensure this is actually true.
+3. It transforms the data from the API format to the application format, mapping snake_case properties to camelCase properties. TypeScript ensures that this transformation is complete and correct.
+
+Finally, the `MedicationScreen` component shows how to use this typed API function in a React component:
+1. It declares state with explicit types: `useState<Medication[]>([])` ensures that `medications` will always be an array of Medication objects.
+2. It calls the API function in a useEffect hook and updates the state with the typed result.
+
+When teaching this example, emphasize several key points:
+1. The separation of API types (DTOs) from application types allows for clean transformations and adaptation to different naming conventions.
+2. Generic types like `ApiResponse<T>` enable code reuse while maintaining type safety.
+3. Explicit return types for API functions (`Promise<Medication[]>`) create clear contracts about what data will be provided.
+4. Type assertions should be used carefully and ideally combined with runtime validation for data from external sources.
+5. Typed state ensures that components correctly handle the data received from APIs.
+
+In a larger application, you might extend this pattern by:
+- Creating a dedicated API client with typed methods for each endpoint
+- Adding more sophisticated error handling with typed error responses
+- Implementing runtime validation using libraries like Zod or io-ts
+- Using code generation tools to create TypeScript types from API specifications (e.g., OpenAPI/Swagger)
+
+Benefits of type-safe API calls:
+- Clear contract between frontend and backend
+- Automatic documentation of API responses
+- Easier refactoring when API changes
+- Runtime type safety through transformation
+
+---
+
+## TypeScript with React Navigation
+
+TypeScript enhances React Navigation with type-safe routes and params:
+
+- **ParamList types**: Define the screens and their parameters
+- **NavigationProp**: Type-safe navigation methods
+- **RouteProp**: Type-safe access to route parameters
+- **Nested navigators**: Type composition for complex navigation structures
+- **useNavigation hook**: Typed with
 
 ---
 
