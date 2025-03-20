@@ -3159,6 +3159,8 @@ if (isUserData(responseData)) {
 }
 ```
 
+Note: Type assertions can be dangerous when used without proper validation. This slide demonstrates how to safely handle type assertions by implementing a type guard function. The type guard ensures that the data actually matches the expected structure before we assert its type. This is particularly important when dealing with external data sources like APIs, where we can't guarantee the shape of the data at compile time.
+
 ---
 
 ### Overusing `any`
@@ -3183,6 +3185,8 @@ function processMedication(medication: unknown): number {
 }
 ```
 
+Note: The `any` type is often used as a quick fix to bypass TypeScript's type checking, but it completely defeats the purpose of using TypeScript. This slide shows how to properly handle unknown data types using type narrowing with the `unknown` type. The example demonstrates a safer approach that maintains type safety while still allowing for flexible data handling. This is especially important in healthcare applications where type safety is crucial.
+
 ---
 
 ### Not Handling Null/Undefined
@@ -3199,6 +3203,8 @@ function getMedicationName(medication?: Medication): string {
 }
 ```
 
+Note: Null and undefined values are common sources of runtime errors in JavaScript applications. This slide demonstrates the importance of defensive programming when working with potentially null or undefined values. In TypeScript, the optional parameter syntax (?) indicates that a parameter might be undefined, but it doesn't automatically protect you from accessing properties on that undefined value. The example shows how to use the optional chaining operator (?.) and nullish coalescing operator (??) to safely handle these cases. Optional chaining allows you to safely access nested properties without checking each level for null/undefined, while nullish coalescing provides a default value when the expression evaluates to null or undefined. This pattern is particularly important in healthcare applications where missing data should be handled gracefully rather than causing crashes. When teaching this concept, emphasize that TypeScript can warn about potential null/undefined issues at compile time, but you still need to write code that handles these cases properly at runtime.
+
 ---
 
 ### Forgetting to Type React.useState
@@ -3210,6 +3216,8 @@ const [medications, setMedications] = useState([]);
 // ✅ Better: Explicit type annotation
 const [medications, setMedications] = useState<Medication[]>([]);
 ```
+
+Note: This example highlights a common mistake when using React's useState hook with TypeScript. When the type parameter is omitted, TypeScript will infer the type based on the initial value. In this case, an empty array results in an implicit `any[]` type, which loses type safety. This can lead to runtime errors when you try to access properties of items in the array or when you add items of different types to the array. By explicitly providing the type parameter `<Medication[]>`, you ensure that TypeScript enforces that only Medication objects can be added to the array. This provides better autocomplete support, catches type errors during development, and serves as self-documentation. For healthcare applications where data consistency is critical, properly typing state is especially important. When teaching this concept, demonstrate how explicit typing prevents common errors like adding incompatible objects to the array or accessing non-existent properties. This pattern should be consistently applied to all useState calls in a React Native application.
 
 ---
 
@@ -3229,6 +3237,8 @@ const handleChange = (text: string) => {
 // Usage
 <TextInput onChangeText={handleChange} />
 ```
+
+Note: This example highlights a critical difference between web React and React Native event handling. In web React, event handlers receive synthetic event objects with properties like 'target', but React Native components use different patterns. TextInput's onChangeText directly provides the text string rather than an event object. Using 'any' type masks this platform difference, leading to runtime errors. Always use platform-specific event types in React Native - TextInput events receive text strings, TouchableOpacity's onPress has no parameters, and gesture handlers have their own specific types. This pattern is especially important when converting web React code to React Native, as event handling is one of the most significant differences between platforms.
 
 ---
 
