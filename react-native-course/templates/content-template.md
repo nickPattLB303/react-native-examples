@@ -4,6 +4,8 @@
 <div class="self-led">Self-Led</div>
 <div class="asynchronous">Asynchronous</div>
 
+---
+
 ## Overview
 
 Brief introduction to the module and what will be covered.
