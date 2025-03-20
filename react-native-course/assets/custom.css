@@ -1,7 +1,7 @@
 /* Custom styles for React Native Training Course */
 
 .reveal {
-  font-size: 32px;
+  font-size: 30px;
   overflow: scroll;
 }
 
@@ -33,11 +33,13 @@
 }
 
 .exercise {
+  font-size: 16px;
   padding: 0.5em 1em;
   margin: 1em 0;
 }
 
 .challenge {
+  font-size: 16px;
   padding: 0.5em 1em;
   margin: 1em 0;
 }

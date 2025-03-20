@@ -4,11 +4,13 @@
 <div class="self-led">Self-Led</div>
 <div class="asynchronous">Asynchronous</div>
 
+Note: This module builds on JavaScript knowledge. Web and JavaScript developers may find some concepts familiar, while native mobile developers may want to pay special attention to TypeScript's type system which provides structure similar to strongly-typed languages like Swift or Kotlin.
+
+---
+
 ## Overview
 
 TypeScript is a powerful superset of JavaScript that adds static typing to the language. In this module, we'll explore TypeScript fundamentals and how they enhance React Native development by catching errors early, improving code quality, and providing better tooling support. TypeScript has become the standard in modern React Native development, making it an essential skill for building robust mobile applications.
-
-Note: This module builds on JavaScript knowledge. Web and JavaScript developers may find some concepts familiar, while native mobile developers may want to pay special attention to TypeScript's type system which provides structure similar to strongly-typed languages like Swift or Kotlin.
 
 Note: TypeScript represents a significant evolution in JavaScript development. As we explore this module, we'll see how TypeScript addresses many of the pain points developers face when building large-scale applications with JavaScript. The static typing system helps catch errors during development rather than at runtime, which is particularly valuable in mobile app development where user experience is critical. For instructors, emphasize that while TypeScript adds some initial complexity, the long-term benefits in code quality, maintainability, and developer productivity are substantial. This module serves as a foundation for all subsequent modules, as we'll be using TypeScript throughout the rest of the course.
 
@@ -818,6 +820,18 @@ You could also discuss how these types integrate with TypeScript's autocomplete 
 
 TypeScript enhances React Native components with prop type checking:
 
+- **Interface definition**: Define prop types with interfaces
+- **Required vs optional**: Mark optional props with `?`
+- **Function props**: Type function props with parameter and return types
+- **React.FC<Props>**: Use generic type for function components
+- **Prop destructuring**: Destructure props with proper types
+- **Default props**: Type-safe default prop values
+- **Prop validation**: Catch invalid props at compile time
+- **Children prop**: Type the children prop appropriately
+- **Generic components**: Create reusable components with type parameters
+- **Prop composition**: Combine multiple prop interfaces
+
+
 Note: Typing component props is one of the most immediate benefits of using TypeScript with React Native. When teaching this concept, emphasize that properly typed props create a clear contract between components, making them more maintainable and less prone to errors.
 
 In React Native, components often accept a variety of props that control their appearance and behavior. Without TypeScript, it's easy to pass incorrect prop types or forget required props, leading to runtime errors or unexpected behavior. TypeScript helps prevent these issues by checking prop types at compile time.
@@ -942,6 +956,16 @@ This pattern of defining prop interfaces and typed components is fundamental to 
 ## Optional and Default Props
 
 TypeScript allows you to specify optional props and default values:
+
+- **Optional props**: Use the `?` modifier to mark props as optional
+- **Default values**: Provide fallback values for optional props
+- **Required vs optional**: Balance between enforcing requirements and flexibility
+- **Type safety**: TypeScript ensures optional props are used correctly when provided
+- **Documentation**: Optional props are self-documenting in the type definition
+- **Prop spreading**: Safely pass optional props to child components
+- **Conditional rendering**: Handle optional props in component logic
+- **Prop groups**: Organize related optional props into nested objects
+
 
 Note: Optional props and default values are essential features in TypeScript React Native development that provide flexibility and improve component reusability. When teaching these concepts, emphasize that they allow components to be more adaptable to different use cases while maintaining type safety.
 
@@ -1079,6 +1103,15 @@ When teaching this pattern, emphasize that it's a best practice to make props th
 ## Typing Component State
 
 TypeScript helps ensure state updates are type-safe:
+
+- **useState hook**: Type-safe state initialization and updates
+- **State interfaces**: Define the shape of complex state objects
+- **Generic types**: Type-safe state with generics
+- **State updates**: Type-safe state update functions
+- **Form state**: Type-safe form handling and validation
+- **Error state**: Type-safe error handling in state
+- **Loading state**: Type-safe loading state management
+- **State composition**: Combining multiple state pieces
 
 Note: Managing state is a critical aspect of React Native development, and TypeScript adds an extra layer of safety and clarity to this process. When teaching about typing component state, it's important to emphasize how TypeScript helps prevent common state-related bugs and improves the developer experience.
 
@@ -1278,6 +1311,15 @@ Key TypeScript features demonstrated:
 
 TypeScript helps ensure event handlers are properly typed:
 
+- **GestureResponderEvent**: Type for touch events
+- **TextInputChangeEventData**: Type for text input changes
+- **NativeSyntheticEvent**: Base type for native events
+- **Event handler props**: Type-safe event handler props
+- **Custom event types**: Creating custom event types
+- **Event transformation**: Type-safe event data transformation
+- **Event parameter typing**: Proper typing of event parameters
+- **Event handler composition**: Combining multiple handlers
+
 Note: Event handling is a fundamental aspect of React Native development, and TypeScript adds significant value by ensuring that event handlers are correctly typed. When teaching this concept, it's important to emphasize how TypeScript's type system helps prevent common errors and improves the developer experience when working with events.
 
 React Native's event system differs from web React in several important ways. While web React uses synthetic events that closely mirror DOM events, React Native has its own set of event types that are specific to mobile interactions. This makes TypeScript particularly valuable, as it can be difficult to remember the exact structure of these event objects without type assistance.
@@ -1436,6 +1478,15 @@ React Native provides specific event types that help ensure your event handlers 
 ## Typing Styles
 
 TypeScript can help ensure your styles are valid:
+
+- **ViewStyle**: Type for View component styles
+- **TextStyle**: Type for Text component styles
+- **ImageStyle**: Type for Image component styles
+- **StyleSheet.create**: Type-safe style creation
+- **Style composition**: Combining multiple styles
+- **Conditional styles**: Type-safe dynamic styling
+- **Style inheritance**: TextStyle extends ViewStyle
+- **Style validation**: Catch invalid properties at compile time
 
 Note: Styling is a critical aspect of React Native development, and TypeScript can significantly enhance the styling experience by providing type safety for style objects. When teaching this concept, emphasize how TypeScript helps prevent common styling errors and improves the developer experience when working with React Native's styling system.
 
@@ -1949,6 +2000,16 @@ Generics are powerful for creating flexible, reusable code while maintaining typ
 
 Type guards help TypeScript understand the type of a variable within a certain scope:
 
+- **typeof guards**: Check primitive types (`typeof x === "string"`)
+- **instanceof guards**: Check class instances (`x instanceof Date`)
+- **Property checks**: Verify property existence (`'property' in object`)
+- **Discriminated unions**: Use a common property to distinguish types
+- **User-defined type guards**: Custom functions with type predicates
+- **Assertion functions**: Functions that throw errors for invalid types
+- **The `in` operator**: Check for property existence
+- **Exhaustiveness checking**: Ensure all cases are handled
+
+
 Note: Type guards and type narrowing are essential concepts in TypeScript that enable you to work safely with union types and polymorphic data. When teaching these concepts, it's important to emphasize how they allow TypeScript to understand the specific type of a variable within a particular code block, enabling type-safe access to properties and methods that might not be available on all possible types.
 
 In TypeScript, when you have a variable that could be one of several types (a union type), you need a way to determine which specific type you're working with at runtime. Type guards provide this capability by performing runtime checks that inform TypeScript about the type of a variable within a specific scope. This process of refining a variable from a more general type to a more specific type is called type narrowing.
@@ -2381,14 +2442,23 @@ Declaration merging is powerful for extending existing types, especially from th
 
 Mapped types allow you to create new types by transforming properties of existing types:
 
-- **Basic syntax**: `{ [K in keyof T]: T[K] }`
-- **Adding modifiers**: `{ [K in keyof T]?: T[K] }` or `{ readonly [K in keyof T]: T[K] }`
-- **Removing modifiers**: `{ [K in keyof T]-?: T[K] }` or `{ -readonly [K in keyof T]: T[K] }`
-- **Remapping keys**: `{ [K in keyof T as NewKeyType]: T[K] }`
-- **Filtering properties**: `{ [K in keyof T as Condition<K>]: T[K] }`
-- **Conditional property types**: `{ [K in keyof T]: T[K] extends Condition ? TrueType : FalseType }`
-- **Template literal key remapping**: `{ [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] }`
-- **Key constraints**: `{ [K in MyKeys]: T[K] }` where MyKeys is a subset of keyof T
+```
+Basic syntax: { [K in keyof T]: T[K] }
+
+Adding modifiers: { [K in keyof T]?: T[K] }
+
+Removing modifiers: { [K in keyof T]-?: T[K] }
+
+Remapping keys: { [K in keyof T as NewKeyType]: T[K] }
+
+Filtering properties: { [K in keyof T as Condition<K>]: T[K] }
+
+Conditional property types: { [K in keyof T]: T[K] extends Condition ? TrueType : FalseType }
+
+Template literal key remapping: { [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] }
+
+Key constraints: { [K in MyKeys]: T[K] } where MyKeys is a subset of keyof T
+```
 
 Note: Mapped types are one of TypeScript's most powerful and flexible type manipulation features. When teaching mapped types, it's important to emphasize how they enable systematic transformations of existing types, creating new types with modified characteristics while maintaining the structure of the original type.
 
@@ -2562,6 +2632,27 @@ Mapped types are powerful for creating consistent transformations of existing ty
 
 ## Organizing Types in React Native Projects
 
+Best practices:
+- Group related types in dedicated files
+- Co-locate component-specific types with components
+- Use barrel files (index.ts) to simplify imports
+- Keep type definitions close to where they're used
+
+Example of a barrel file (types/index.ts):
+```typescript
+// Re-export all types for easier imports
+export * from './medication';
+export * from './patient';
+export * from './api';
+export * from './navigation';
+```
+
+Note: Organizing types effectively is crucial for maintaining large React Native projects. When teaching this concept, emphasize that there's no one-size-fits-all approach, but rather principles that teams should adapt to their specific needs. The barrel file pattern shown here is particularly valuable as projects grow, as it simplifies imports and creates a cleaner API for accessing types throughout the codebase. Encourage students to consider the tradeoff between centralized type definitions (easier to find and maintain consistency) versus co-located types (better for component encapsulation). For pharmacy/healthcare applications, demonstrate how organizing medication, patient, and prescription types in dedicated files creates a more intuitive codebase structure. Also highlight that TypeScript's module system makes it easy to split types across files while maintaining their relationships through imports and exports. This organization becomes especially important when working with complex domain models or when multiple developers collaborate on the same codebase.
+
+---
+
+## Organizing Types in React Native Projects: Example
+
 Proper organization of TypeScript types improves maintainability:
 
 ```
@@ -2584,20 +2675,7 @@ src/
     └── ...
 ```
 
-Best practices:
-- Group related types in dedicated files
-- Co-locate component-specific types with components
-- Use barrel files (index.ts) to simplify imports
-- Keep type definitions close to where they're used
-
-Example of a barrel file (types/index.ts):
-```typescript
-// Re-export all types for easier imports
-export * from './medication';
-export * from './patient';
-export * from './api';
-export * from './navigation';
-```
+Note: This example illustrates a well-organized TypeScript project structure for a React Native application. When teaching this concept, emphasize how this organization improves maintainability and collaboration. The central `/types` directory houses domain-specific type definitions that are shared across the application, while component-specific types remain co-located with their components. This balances centralization with encapsulation. The barrel file pattern (index.ts) simplifies imports by providing a single entry point for all shared types. For healthcare applications, point out how separating medication, patient, and API types creates a more intuitive mental model of the domain. Discuss how this structure scales as applications grow - larger projects might introduce subdirectories within the types folder for feature areas. Encourage students to adapt this pattern to their team's needs rather than following it rigidly. This organization becomes particularly valuable when multiple developers work on the same codebase, as it creates clear conventions for where types should be defined and imported from.
 
 ---
 
@@ -2774,6 +2852,8 @@ TypeScript enhances React Navigation with type-safe routes and params:
 - **Nested navigators**: Type composition for complex navigation structures
 - **useNavigation hook**: Typed with
 
+Note: When teaching TypeScript with React Navigation, emphasize how static typing improves the navigation experience. React Navigation is a core library in React Native development, and TypeScript integration provides significant safety benefits. The ParamList type defines the structure of all screens and their parameters, creating a single source of truth for the navigation structure. NavigationProp and RouteProp types ensure that navigation actions and parameter access are type-safe, preventing common errors like typos in route names or accessing non-existent parameters. For healthcare applications, demonstrate how this prevents critical errors like navigating to the wrong patient record or medication detail screen. Show how TypeScript catches these errors at compile time rather than runtime. The useNavigation hook with proper typing provides autocomplete for available screens and required parameters. This is particularly valuable in large applications with complex navigation structures. Nested navigators benefit greatly from TypeScript's ability to compose types, allowing for type safety even in deeply nested navigation structures.
+
 ---
 
 ## Type-Safe API Calls: Code Example
@@ -2886,6 +2966,12 @@ Benefits of type-safe API calls:
 ## TypeScript with React Navigation
 
 TypeScript enhances React Navigation with type-safe routes and params:
+
+- **ParamList types**: Define the screens and their parameters
+- **NavigationProp**: Type-safe navigation methods
+- **RouteProp**: Type-safe access to route parameters
+- **Nested navigators**: Type composition for complex navigation structures
+- **useNavigation hook**: Typed with
 
 Note: Navigation is a critical aspect of React Native applications, and TypeScript can significantly improve the safety and developer experience of navigation code. When teaching TypeScript with React Navigation, it's important to emphasize how type safety prevents common navigation errors and improves maintainability as applications grow.
 
@@ -3042,7 +3128,15 @@ Benefits of typed navigation:
 
 Avoid these common TypeScript issues in React Native projects:
 
-### 1. Type Assertions vs. Type Declarations
+1. Type Assertions vs. Type Declarations
+2. Overusing `any`
+3. Not Handling Null/Undefined
+4. Forgetting to Type React.useState
+5. Incorrect Event Handler Types
+
+---
+
+### Type Assertions vs. Type Declarations
 
 ```typescript
 // ❌ Incorrect: Type assertion without verification
@@ -3065,7 +3159,9 @@ if (isUserData(responseData)) {
 }
 ```
 
-### 2. Overusing `any`
+---
+
+### Overusing `any`
 
 ```typescript
 // ❌ Avoid: Losing type safety with any
@@ -3087,7 +3183,9 @@ function processMedication(medication: unknown): number {
 }
 ```
 
-### 3. Not Handling Null/Undefined
+---
+
+### Not Handling Null/Undefined
 
 ```typescript
 // ❌ Risky: Not handling potential null/undefined
@@ -3101,7 +3199,9 @@ function getMedicationName(medication?: Medication): string {
 }
 ```
 
-### 4. Forgetting to Type React.useState
+---
+
+### Forgetting to Type React.useState
 
 ```typescript
 // ❌ Suboptimal: Implicit any[] type
@@ -3111,7 +3211,9 @@ const [medications, setMedications] = useState([]);
 const [medications, setMedications] = useState<Medication[]>([]);
 ```
 
-### 5. Incorrect Event Handler Types
+---
+
+### Incorrect Event Handler Types
 
 ```typescript
 // ❌ Incorrect: Wrong event type
