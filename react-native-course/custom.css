@@ -49,6 +49,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
+  margin: 1em 0;
 }
 
 .self-led {
@@ -56,6 +57,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
+  margin: 1em 0;
 }
 
 .asynchronous {
@@ -63,7 +65,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
-
+  margin: 1em 0; 
 }
 
 
@@ -72,6 +74,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
+  margin: 1em 0;
 }
 
 .ios-dev {
@@ -79,6 +82,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
+  margin: 1em 0;
 }
 
 .react-dev {
@@ -86,7 +90,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
-  color: #0277bd;
+  margin: 1em 0;
 }
 
 .angular-dev {
@@ -94,6 +98,7 @@
   border-radius: 3px;
   padding: 0.2em 0.5em;
   font-size: 0.8em;
+  margin: 1em 0;
 }
 
 
