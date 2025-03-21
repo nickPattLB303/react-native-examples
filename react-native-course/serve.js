@@ -4,7 +4,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-
+const { exec } = require('child_process');
 const PORT = process.env.PORT || 8080;
 
 const MIME_TYPES = {
@@ -76,7 +76,9 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
-  console.log(`View the course at http://localhost:${PORT}/react-native-course/`);
-  console.log(`View the first module at http://localhost:${PORT}/react-native-course/modules/01-react-native-fundamentals/`);
   console.log('Press Ctrl+C to stop the server');
+  // open the course in the browser with node
+  exec(`open http://localhost:${PORT}/`);
 });
+
+
