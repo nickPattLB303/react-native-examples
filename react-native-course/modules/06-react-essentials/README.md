@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" href="../../custom.css">
 
+</details></blockquote>
+
 ---
 
 ## Overview
@@ -13,6 +15,7 @@
 In this module, we'll explore the fundamentals of React, the foundation of React Native development.
 
 <blockquote><details>
+
 React forms the foundation of React Native, making it essential to master React concepts before diving into mobile development. This module covers core principles and patterns that transfer directly to React Native applications.
 
 React was designed with a component-based architecture that naturally extends to mobile development. The core concepts - components, props, state, and lifecycle - are identical between React and React Native. The main difference is the rendering targets: DOM elements in React versus native components in React Native.
@@ -20,6 +23,7 @@ React was designed with a component-based architecture that naturally extends to
 Understanding React hooks is particularly important as they're used extensively in modern React Native applications. Similarly, the Context API provides a consistent approach to state management across both platforms.
 
 Even developers with prior React experience will benefit from this module, as it emphasizes the aspects of React that are most relevant to React Native development. Throughout the module, we'll highlight specific parallels and differences between web and mobile implementations to reinforce how these concepts apply in both contexts.
+
 </details></blockquote>
 
 ---
@@ -35,7 +39,8 @@ By the end of this module, you will be able to:
 - Apply performance optimization techniques
 - Build reusable component architectures
 
-Note:
+<blockquote><details>
+
 These learning objectives build on each other to provide a comprehensive foundation in React development that directly transfers to React Native. The objectives are carefully sequenced to start with fundamental concepts and progressively move toward more advanced techniques.
 
 Understanding React's core concepts is essential as these same principles apply in React Native. This includes the component model, JSX syntax, and the declarative approach to UI development. Creating and managing components effectively ensures you can build well-structured interfaces with clear separation of concerns.
@@ -45,6 +50,8 @@ Data flow implementation through props and state is identical in React and React
 Performance optimization techniques are especially important for mobile applications where resources are more constrained. Building reusable component architectures leads to maintainable codebases and allows for sharing logic between web and mobile applications.
 
 As we progress through this module, each objective builds upon previous ones, creating a solid mental model of React that will serve as the foundation for React Native development.
+
+</details></blockquote>
 
 ---
 
@@ -56,7 +63,8 @@ As we progress through this module, each objective builds upon previous ones, cr
 
 <div class="react-dev">If you're already familiar with React, you can skim this module for review</div>
 
-Note:
+<blockquote><details>
+
 The prerequisites for this module ensure participants can effectively learn and apply React concepts. These foundational skills are necessary to understand React's approach to UI development.
 
 **JavaScript ES6+** knowledge is essential as React makes heavy use of modern JavaScript features. Specifically, you should be comfortable with arrow functions, destructuring, spread operators, template literals, classes, and array methods like map, filter, and reduce. React's component patterns and JSX syntax rely on these modern JavaScript features.
@@ -72,6 +80,8 @@ For participants with different backgrounds, certain prerequisites may require m
 
 The module is designed to accommodate different levels of experience, with additional resources available for those needing to strengthen specific prerequisite areas.
 
+</details></blockquote>
+
 ---
 
 ## Introduction to React
@@ -86,7 +96,8 @@ React is a JavaScript library for building user interfaces, particularly single-
 - One-way data flow
 - Extensive ecosystem
 
-Note:
+<blockquote><details>
+
 React revolutionized front-end development when it was introduced by Facebook (now Meta) in 2013. Initially created to solve specific problems with building complex, data-driven interfaces, React has since become one of the most popular JavaScript libraries for building user interfaces.
 
 The core innovation of React is its **declarative approach** to UI development. Rather than manipulating the DOM directly (imperative programming), React lets developers describe what the UI should look like for a given state, and handles the DOM updates efficiently behind the scenes. This approach leads to more predictable code that's easier to debug and maintain.
@@ -100,6 +111,8 @@ The **Virtual DOM** is a key performance optimization in React. Instead of updat
 React's **extensive ecosystem** includes state management solutions (Redux, Context API), routing libraries, testing utilities, and of course, React Native for mobile development. Learning React gives you access to this vast ecosystem of tools and libraries.
 
 These fundamental concepts form the foundation of React Native development, with the primary difference being that React Native renders to native mobile components rather than DOM elements.
+
+</details></blockquote>
 
 ---
 
@@ -116,7 +129,8 @@ React focuses on:
 - Declarative vs imperative programming
 - Component reusability
 
-Note:
+<blockquote><details>
+
 React's philosophy is encapsulated in the phrase "Learn once, write anywhere," which stands in deliberate contrast to the "write once, run anywhere" approach promoted by other frameworks. This distinction reveals much about React's approach to cross-platform development.
 
 Rather than trying to abstract away all platform differences behind a unified API, React acknowledges that different platforms have unique characteristics, constraints, and best practices. Instead of forcing developers to write a single codebase that runs everywhere (often leading to a "lowest common denominator" experience), React encourages learning a consistent mental model and component paradigm, then applying those principles appropriately for each target platform.
@@ -133,6 +147,8 @@ The preference for **composition over inheritance** reflects a fundamental archi
 
 Understanding this philosophy helps developers approach React Native with the right mindset: leveraging their React knowledge while respecting the unique aspects of mobile development.
 
+</details></blockquote>
+
 ---
 
 ## React vs React Native
@@ -145,7 +161,8 @@ Understanding this philosophy helps developers approach React Native with the ri
 | Web platform APIs | Native platform APIs |
 | Single-threaded | Multi-threaded (JS and native) |
 
-Note:
+<blockquote><details>
+
 Understanding the relationship between React and React Native is crucial for developers working across platforms. While they share the same core principles and component model, they differ significantly in their implementation details and target platforms.
 
 **Rendering Targets**: The most fundamental difference is what they render to. React renders to the browser's DOM using HTML elements like `<div>`, `<span>`, and `<p>`. React Native, on the other hand, renders to native mobile components provided by iOS and Android platforms. Instead of HTML elements, you use platform-agnostic components like `<View>`, `<Text>`, and `<Image>` that map to their native counterparts (UIView/android.View, UIText/TextView, etc.). This key difference means React Native applications have truly native performance and feel, rather than running in a WebView.
@@ -159,6 +176,8 @@ Understanding the relationship between React and React Native is crucial for dev
 **Development Workflow**: Both use similar tooling (npm/yarn, Babel, webpack, etc.), but React Native introduces additional complexity with native development tools (Xcode, Android Studio) and device simulators/emulators.
 
 Despite these differences, the mental model of building with components, managing state, and handling lifecycle is remarkably consistent across both technologies. This consistency is what makes React Native so approachable for React developers and enables code sharing between web and mobile applications, particularly for business logic and state management.
+
+</details></blockquote>
 
 ---
 
@@ -174,7 +193,8 @@ const element = <h1>Hello, world!</h1>;
 const element = React.createElement('h1', null, 'Hello, world!');
 ```
 
-Note:
+<blockquote><details>
+
 JSX (JavaScript XML) is a syntax extension for JavaScript that looks remarkably like HTML but provides the full power of JavaScript. It's a key part of what makes React intuitive and productive for UI development.
 
 JSX may initially appear to be a templating language, but it's fundamentally different - it's a syntax extension that's transformed into regular JavaScript function calls during the build process. When you write a JSX expression like `<h1>Hello, world!</h1>`, a transpiler (typically Babel) converts it into a call to `React.createElement('h1', null, 'Hello, world!')`. This function creates a "React element" - a lightweight description of what should be rendered.
@@ -192,6 +212,8 @@ In React Native, JSX works exactly the same way but creates native component ins
 When working with JSX, it's important to remember that it represents JavaScript objects, not strings. This means you can store JSX in variables, pass it as arguments to functions, return it from functions, and include it in if statements and for loops. This flexibility makes JSX much more powerful than traditional template languages.
 
 The combination of declarative UI description through JSX and React's component model creates a powerful paradigm for building user interfaces that extends seamlessly from web to mobile development with React Native.
+
+</details></blockquote>
 
 ---
 
@@ -215,7 +237,8 @@ function Greeting({ name, age }: { name: string; age: number }) {
 - Attributes use camelCase (`className` not `class`)
 - Self-closing tags must end with `/>`
 
-Note:
+<blockquote><details>
+
 JSX becomes truly powerful when combined with JavaScript expressions, allowing you to create dynamic, data-driven user interfaces. The curly braces `{}` in JSX create a "window" back into JavaScript, letting you embed expressions directly in your markup.
 
 The example demonstrates several key features of JSX with TypeScript. The function component `Greeting` accepts props with explicit type definitions, providing compile-time type safety. Inside the JSX, we see three uses of embedded expressions: interpolating the `name` prop into text content, displaying the `age` prop, and using a ternary expression to conditionally render either an `AdultDosage` or `ChildDosage` component based on the patient's age.
@@ -234,6 +257,8 @@ Self-closing tags in JSX must include a closing slash (`<img />` not `<img>`), f
 When using TypeScript with JSX (sometimes called TSX), you gain additional benefits: props and state can be typed, preventing common errors like misspelled prop names or incorrect data types. The example uses inline type annotation, but in larger applications, you'd typically define interfaces for your prop types.
 
 In React Native, these same JSX features apply, though the available components and their props differ. For example, `<div>` becomes `<View>` and `className` becomes `style`, but the expression syntax, attribute naming conventions, and TypeScript integration remain identical. This consistency makes the transition between React and React Native more seamless, as the core syntax and patterns are the same across both platforms.
+
+</details></blockquote>
 
 ---
 
@@ -276,7 +301,8 @@ class Medication extends React.Component<MedicationProps> {
 </div>
 </div>
 
-Note:
+<blockquote><details>
+
 React provides two approaches to defining components: functional and class-based. While both produce the same result, they differ significantly in syntax, capabilities, and modern best practices. Understanding both types is important, particularly when working with existing codebases, though functional components are now strongly preferred for new development.
 
 **Functional components** are JavaScript functions that accept props as an argument and return React elements. The example shows a simple `Medication` component that receives `name` and `dosage` props and renders them within appropriate HTML elements. Functional components offer several advantages:
@@ -305,6 +331,8 @@ In React Native, the same component patterns apply - you can use either function
 
 For new development in both React and React Native, functional components with hooks are strongly recommended as they represent the future direction of React development. However, understanding class components remains important for maintaining existing codebases and understanding legacy patterns in documentation and examples.
 
+</details></blockquote>
+
 ---
 
 ## Component Lifecycle
@@ -325,7 +353,8 @@ graph TD
     H --> I[ComponentWillUnmount/useEffect cleanup]
 ```
 
-Note:
+<blockquote><details>
+
 Understanding the component lifecycle is fundamental to working effectively with React and React Native. Components go through a series of predictable phases from creation to destruction, and React provides hooks into these phases to allow developers to execute code at specific times.
 
 The diagram illustrates the main phases of the component lifecycle and how they map between class components and hooks in functional components. This lifecycle is identical in both React and React Native, providing a consistent mental model across platforms.
@@ -341,6 +370,10 @@ When props or state change, the component enters the "**updating**" phase. React
 Finally, when a component is removed from the UI, it enters the "**unmounting**" phase. Class components use `componentWillUnmount` for cleanup, while functional components handle cleanup in the return function of `useEffect`. This is crucial for cleaning up resources like timers, event listeners, or subscriptions to prevent memory leaks.
 
 Understanding this lifecycle is essential for correctly implementing features like data fetching, DOM manipulations, and resource management. It helps determine when to execute code based on the component's state in its lifecycle, ensuring efficient and correct behavior in both React and React Native applications.
+
+</details></blockquote>
+
+</details></blockquote>
 
 --
 
@@ -383,7 +416,8 @@ function MedicationTimer({ medicine }: { medicine: string }) {
 }
 ```
 
-Note:
+<blockquote><details>
+
 The introduction of hooks in React 16.8 revolutionized how developers manage component lifecycle events. The `useEffect` hook in particular provides a unified API for handling effects that were previously spread across multiple lifecycle methods in class components.
 
 This `MedicationTimer` example demonstrates how hooks map to the traditional component lifecycle. The component creates a timer that tracks how long since a medication was taken, with the ability to start and pause the timer.
@@ -412,6 +446,8 @@ This hook-based approach offers several advantages over class lifecycle methods:
 In React Native, `useEffect` works identically, though platform-specific APIs would replace browser-specific ones (for example, using a native timer API instead of `window.setInterval`).
 
 Understanding the relationship between hooks and the component lifecycle is crucial for building robust React and React Native applications that manage resources efficiently and respond correctly to state and prop changes.
+
+</details></blockquote>
 
 ---
 
@@ -456,7 +492,8 @@ function Medication({ name, dosage, frequency, maxDose }: MedicationProps) {
 }
 ```
 
-Note:
+<blockquote><details>
+
 Props are the primary mechanism for passing data between components in React and React Native, forming the foundation of component communication and reusability. Think of props as the arguments to a component function - they allow parent components to configure their children, creating a unidirectional data flow that makes applications more predictable and easier to debug.
 
 In the example, we see a complete props implementation with TypeScript. The parent `Prescription` component renders a child `Medication` component, passing four props: `name`, `dosage`, `frequency`, and `maxDose`. String values are passed with quotes, while the number value `maxDose` is passed in curly braces to evaluate it as a JavaScript expression.
@@ -476,6 +513,8 @@ Props follow several important principles in React:
 In React Native, props work identically, though the component types and available props differ. For example, instead of `className` for styling, React Native components use the `style` prop, but the concept of passing data from parent to child remains the same.
 
 When working with props, common patterns include providing default values (using default parameters or defaultProps), prop validation (through TypeScript or PropTypes), and passing event handlers as props to allow child-to-parent communication. These patterns are consistent across both React and React Native, reinforcing the "learn once, write anywhere" philosophy that makes React Native so accessible to React developers.
+
+</details></blockquote>
 
 ---
 
@@ -510,7 +549,8 @@ function MedicationTracker() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 State is the mechanism that allows React components to remember information between renders and respond to user interactions, network responses, or other events. While props are passed from parent components and remain read-only, state is internally managed within a component and can be modified over time.
 
 The `MedicationTracker` example demonstrates modern state management using the `useState` hook in a functional component. This component tracks medication usage with two separate state variables: `taken` (a counter for doses taken) and `lastTaken` (a timestamp for when the medication was last taken).
@@ -534,6 +574,8 @@ Several key aspects of state management with hooks are important to understand:
 State should be used for data that affects rendering and can change over time, such as user input values, toggle states, loading states, or locally managed data. Data that doesn't affect rendering should be stored in regular variables or refs.
 
 In React Native, state works exactly the same way, though the UI components and event handling differ slightly. This consistent state management model between React and React Native is one of the key benefits of the shared architecture.
+
+</details></blockquote>
 
 ---
 
@@ -559,7 +601,8 @@ Hooks follow specific rules:
 - Only call hooks from React functions
 </div>
 
-Note:
+<blockquote><details>
+
 Hooks represent one of the most significant evolutions in React's history, fundamentally changing how developers write and organize components. Introduced in React 16.8, hooks allow functional components to use features that were previously only available to class components, such as state, lifecycle methods, and context.
 
 Before hooks, developers had to choose between functional components (simpler but limited) and class components (more powerful but verbose). Hooks eliminated this tradeoff, allowing functional components to access all React features while maintaining their concise syntax. This innovation has led to more readable, reusable, and testable code across the React ecosystem.
@@ -585,6 +628,8 @@ Hooks follow specific rules that must be observed: they can only be called at th
 Beyond these core hooks, the React community has embraced custom hooks as a powerful pattern for extracting and reusing stateful logic across components. Custom hooks are regular JavaScript functions that may call other hooks and usually start with "use".
 
 In React Native, hooks work identically to their React counterparts, providing the same benefits of simplified component logic and improved code organization. This consistency between platforms is another example of React's "learn once, write anywhere" philosophy.
+
+</details></blockquote>
 
 ---
 
@@ -623,7 +668,8 @@ function MedicationCounter() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 The `useState` hook is the foundation of state management in modern React components, enabling functional components to maintain and update local state that persists between renders. It provides a simpler and more direct API compared to the class-based setState approach, while maintaining the same capabilities.
 
 In this `MedicationCounter` example, we're using `useState` to track the number of pills remaining in a medication. The hook is initialized with `useState(30)`, providing an initial value of 30 pills. When called, `useState` returns an array with exactly two elements, which we immediately destructure: `count` is the current state value, and `setCount` is a function to update that value.
@@ -646,6 +692,8 @@ Several important patterns to understand when using `useState`:
 4. **Lazy initialization** - For expensive initial calculations, pass a function to `useState`: `useState(() => expensiveComputation())`
 
 In React Native, `useState` functions identically, though the UI components would differ. This consistent state management model is a key part of what makes moving between React and React Native relatively seamless.
+
+</details></blockquote>
 
 ---
 
@@ -701,7 +749,8 @@ function MedicationReminder({ medicationName, hourInterval }:
 }
 ```
 
-Note:
+<blockquote><details>
+
 The `useEffect` hook is a powerful tool for handling side effects in React components - operations that don't directly relate to rendering but are necessary for functionality, such as data fetching, subscriptions, manual DOM manipulations, or logging. It provides a unified way to handle operations that were previously spread across multiple lifecycle methods in class components.
 
 This `MedicationReminder` example demonstrates a practical use of `useEffect` to implement a medication reminder system that tracks when medications are due and notifies the user when doses are overdue. Let's break down the key aspects:
@@ -734,6 +783,8 @@ Several important patterns to understand with `useEffect`:
 4. **Conditional execution** - Use early returns inside effects for conditional logic
 
 In React Native, `useEffect` works identically, though you would use platform-specific APIs for things like notifications instead of browser-specific features. This consistent effect model is a key part of what makes moving between React and React Native relatively seamless.
+
+</details></blockquote>
 
 ---
 
@@ -784,7 +835,8 @@ function MedicationAdherence() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 The `useRef` hook serves two primary purposes in React: providing direct access to DOM elements and preserving values between renders without triggering re-renders when those values change. It's an essential part of the React hooks ecosystem that bridges the gap between React's declarative approach and imperative operations.
 
 This `MedicationAdherence` component demonstrates both key use cases of `useRef`:
@@ -809,6 +861,8 @@ Common use cases for `useRef` include:
 4. Implementing imperative methods on function components via forwardRef
 
 By understanding both aspects of `useRef` - DOM access and value persistence - you can handle cases where React's declarative model needs to interface with imperative code or where you need to maintain values across renders without triggering UI updates.
+
+</details></blockquote>
 
 ---
 
@@ -886,7 +940,8 @@ function MedicationTracker() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 Custom hooks represent one of the most powerful patterns in modern React development. They enable developers to extract, reuse, and share stateful logic between components without introducing unnecessary component nesting or prop drilling. Custom hooks build on React's built-in hooks to create specialized, domain-specific hooks that encapsulate related functionality.
 
 The `useMedicationReminder` custom hook demonstrates this pattern by encapsulating complete logic for tracking medication doses, calculating next due times, and determining if doses are overdue. By extracting this logic into a custom hook, it becomes reusable across multiple components and easier to test and maintain.
@@ -915,6 +970,8 @@ Custom hooks offer several major benefits:
 In React Native, custom hooks work identically and are especially valuable for encapsulating platform-specific APIs or behaviors. For example, you might create hooks like `useDeviceOrientation`, `useNetworkStatus`, or `useAppState` that abstract away the details of native APIs while providing a consistent interface to your components.
 
 Custom hooks represent a paradigm shift in how we organize and share code in React applications, moving from class-based inheritance and higher-order components to function composition and hook composition. This approach typically leads to more maintainable and easier-to-understand code in both React and React Native.
+
+</details></blockquote>
 
 ---
 
@@ -949,7 +1006,8 @@ function MedicationList({ medications }: { medications: Medication[] }) {
 }
 ```
 
-Note:
+<blockquote><details>
+
 Rendering lists of data is a fundamental pattern in both React and React Native applications. From simple menus to complex data tables, the ability to efficiently render collections of items is essential. React's declarative approach makes this straightforward through array methods like `map()`, but it introduces an important concept: keys.
 
 In this `MedicationList` example, we're rendering a list of medications, each with properties like name, dosage, and schedule. The component accepts an array of `Medication` objects (with TypeScript interface definition) and maps over them to create list items.
@@ -981,6 +1039,8 @@ For high-performance rendering of large lists:
 3. In both environments, make sure list items have a consistent structure and stable keys
 
 Understanding keys is essential for both correctness and performance when rendering lists, making it a core concept to master in both React and React Native development.
+
+</details></blockquote>
 
 ---
 
@@ -1039,7 +1099,8 @@ function MedicationDetails({
 }
 ```
 
-Note:
+<blockquote><details>
+
 Conditional rendering is a core technique in React that allows components to display different content based on the current state, props, or other conditions. This ability to dynamically alter what's rendered creates interactive, responsive UIs that adapt to user inputs and application state.
 
 The `MedicationDetails` example demonstrates four different approaches to conditional rendering, each with its own use cases and trade-offs.
@@ -1062,6 +1123,8 @@ Several principles to keep in mind when implementing conditional rendering:
 4. **Readability** - Choose the approach that makes your code most readable - extract complex conditions to separate functions or components if needed
 
 In React Native, these same conditional rendering patterns apply, though the components being rendered would be native-specific (`<View>`, `<Text>`, etc.). The ability to conditionally render different UI elements based on application state is equally important in mobile apps, making this a transferable skill between React and React Native development.
+
+</details></blockquote>
 
 ---
 
@@ -1122,7 +1185,8 @@ function Prescription() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 Component composition is a fundamental design pattern in React that emphasizes building complex UIs by combining smaller, focused components. This approach stems from React's core philosophy of "composition over inheritance" and leads to more maintainable, reusable, and testable code.
 
 In this example, we're demonstrating a common composition pattern: a generic container component (`Card`) that provides structure and styling, combined with more specialized content components. This pattern allows for separation of concerns while promoting reusability.
@@ -1153,6 +1217,8 @@ Common composition patterns include:
 In React Native, these same composition patterns apply, though you would use platform-specific components like `View` and `Text` instead of `div` and `p`. The principles of building UIs through component composition remain consistent across both platforms.
 
 Understanding and applying component composition effectively is key to building maintainable React and React Native applications, particularly as they grow in complexity. It allows teams to work on different parts of an application independently while ensuring the pieces fit together cohesively.
+
+</details></blockquote>
 
 ---
 
@@ -1286,7 +1352,8 @@ function MedicationApp() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 The Context API provides a way to share data across the component tree without passing props explicitly at every level, effectively solving the "prop drilling" problem. It's particularly useful for global application state like user authentication, themes, or shared data that many components need to access.
 
 This example demonstrates a complete implementation of the Context API to manage a list of medications. The pattern involves four key steps that represent best practices for using context effectively:
@@ -1318,6 +1385,8 @@ In React Native, context works exactly the same way, making it an excellent tool
 
 Combining context with other hooks like `useReducer` for more complex state logic or `useMemo` to optimize context values can create powerful, efficient state management solutions without third-party libraries, though libraries like Redux or MobX still have their place for very complex applications.
 
+</details></blockquote>
+
 ---
 
 ## Performance Optimization
@@ -1340,7 +1409,8 @@ graph TD
     F --> K[Code Splitting]
 ```
 
-Note:
+<blockquote><details>
+
 Performance optimization is critical for creating responsive, smooth React and React Native applications, especially as they grow in complexity. Understanding what triggers renders and how to prevent unnecessary work is key to maintaining good performance, particularly on mobile devices with limited resources.
 
 The diagram illustrates the main causes of component re-renders and the primary optimization techniques available in React. Let's explore both aspects:
@@ -1384,6 +1454,8 @@ In React Native, performance optimization is even more critical due to the const
 - Using InteractionManager to defer non-critical work
 
 By understanding what causes components to re-render and applying appropriate optimization techniques, you can build highly performant applications in both React and React Native environments.
+
+</details></blockquote>
 
 ---
 
@@ -1443,7 +1515,8 @@ const MedicationCalculator = React.memo(
 );
 ```
 
-Note:
+<blockquote><details>
+
 React.memo and useMemo are two powerful optimization techniques that can significantly improve performance by preventing unnecessary re-renders and recalculations. They both implement memoization - a programming technique that stores the results of expensive function calls and returns the cached result when the same inputs occur again.
 
 In this `MedicationCalculator` example, we're demonstrating both techniques in a component that performs potentially expensive calculations on medication data.
@@ -1478,6 +1551,8 @@ Some important considerations when using these optimization techniques:
 In React Native, these same optimization techniques apply and are often even more important due to the performance constraints of mobile devices. The patterns and usage are identical, making these skills directly transferable between React and React Native development.
 
 Both React.memo and useMemo address different aspects of performance optimization - component rendering and computation respectively - and when used appropriately, they can significantly improve the responsiveness and efficiency of your applications.
+
+</details></blockquote>
 
 ---
 
@@ -1543,7 +1618,8 @@ function MedicationList() {
 }
 ```
 
-Note:
+<blockquote><details>
+
 The `useCallback` hook is a performance optimization tool that memoizes function references between renders. It's particularly important when passing callback functions as props to child components that are optimized with React.memo, as new function references would cause these optimized components to re-render unnecessarily.
 
 In this example, we demonstrate the proper use of `useCallback` in combination with React.memo to optimize a list rendering pattern. Let's break down what's happening:
@@ -1576,6 +1652,8 @@ Some important considerations when using `useCallback`:
 In React Native, this optimization can be even more important due to performance constraints on mobile devices. The pattern and usage are identical, making this skill directly transferable between React and React Native development.
 
 Understanding when and how to use `useCallback` is an important part of building performant React applications, particularly as they grow in complexity and scale.
+
+</details></blockquote>
 
 ---
 
@@ -1623,7 +1701,8 @@ A functional component that:
 
 </div>
 
-Note:
+<blockquote><details>
+
 This exercise brings together multiple concepts covered in the module, giving participants a chance to apply their knowledge in a practical scenario. The medication tracker component combines state management, side effects, TypeScript typing, and conditional rendering - all key skills for both React and React Native development.
 
 To complete this exercise, participants will need to:
@@ -1654,6 +1733,8 @@ For those with more experience, encourage extensions like:
 - Adding notifications or reminders
 
 The exercise deliberately uses a medication theme to match the pharmacy/medication theme specified in the course requirements, making it relevant to the overall course context.
+
+</details></blockquote>
 
 ---
 
@@ -1690,7 +1771,8 @@ Build a more complex pharmacy management interface with multiple components, sta
 
 </div>
 
-Note:
+<blockquote><details>
+
 This challenge is designed as a capstone project that integrates all the key React concepts covered throughout the module. It pushes participants to apply their knowledge in a more complex, real-world scenario that closely mimics actual development tasks they'll encounter when building React or React Native applications.
 
 The challenge involves building a comprehensive pharmacy management system with multiple interacting components, shared state, and advanced features. This multi-component application requires understanding of component composition, state management, context, and performance optimization.
@@ -1720,6 +1802,8 @@ Optional advanced features like local storage persistence, filtering/sorting, an
 
 This challenge is intentionally open-ended to encourage creativity and problem-solving. There's no single "correct" implementation, but solutions should demonstrate understanding of React principles and best practices. The pharmacy theme aligns with the course's specified medication/pharmacy examples requirement.
 
+</details></blockquote>
+
 ---
 
 ## Key Takeaways
@@ -1731,7 +1815,8 @@ This challenge is intentionally open-ended to encourage creativity and problem-s
 - Composition is preferred over inheritance for component reuse
 - Performance optimizations should be applied judiciously
 
-Note:
+<blockquote><details>
+
 These key takeaways summarize the most important concepts and principles covered in this module. Understanding these fundamentals provides a solid foundation for React development that transfers directly to React Native.
 
 **Component-based architecture with unidirectional data flow** is the cornerstone of React's design philosophy. Breaking UIs into composable components makes applications easier to develop, understand, and maintain. The unidirectional data flow (props down, events up) creates predictable behavior and makes debugging simpler.
@@ -1750,6 +1835,8 @@ These principles apply equally to React and React Native development. While the 
 
 By mastering these fundamentals, developers gain the ability to build well-structured, maintainable, and performant applications on both web and mobile platforms.
 
+</details></blockquote>
+
 ---
 
 ## Additional Resources
@@ -1760,7 +1847,8 @@ By mastering these fundamentals, developers gain the ability to build well-struc
 - [Performance Optimization in React](https://reactjs.org/docs/optimizing-performance.html)
 - [React TypeScript Guide](https://react-typescript-cheatsheet.netlify.app/)
 
-Note:
+<blockquote><details>
+
 These additional resources provide valuable references for expanding your knowledge of React and applying the concepts covered in this module. They're carefully selected to support both immediate learning needs and ongoing professional development.
 
 The **React Official Documentation** is the authoritative source for learning React. It includes comprehensive guides, API references, and tutorials that cover everything from basic concepts to advanced patterns. The documentation is well-maintained and regularly updated with the latest React features and best practices. It's particularly valuable for understanding React's design philosophy and intended usage patterns.
