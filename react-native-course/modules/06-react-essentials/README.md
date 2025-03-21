@@ -2,8 +2,6 @@
 
 <link rel="stylesheet" href="../../custom.css">
 
-</details></blockquote>
-
 ---
 
 ## Overview
