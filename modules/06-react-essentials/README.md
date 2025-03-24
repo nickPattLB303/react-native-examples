@@ -1728,8 +1728,6 @@ For those with more experience, encourage extensions like:
 - Creating more sophisticated scheduling rules
 - Adding notifications or reminders
 
-The exercise deliberately uses a medication theme to match the pharmacy/medication theme specified in the course requirements, making it relevant to the overall course context.
-
 </details></blockquote>
 
 ---
