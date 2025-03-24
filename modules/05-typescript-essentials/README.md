@@ -1,5 +1,7 @@
 # Module 5: TypeScript Essentials
 
+<link rel="stylesheet" href="../../custom.css">
+
 <div class="instructor-led">Instructor-Led</div>
 <div class="self-led">Self-Led</div>
 <div class="asynchronous">Asynchronous</div>
