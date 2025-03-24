@@ -371,8 +371,6 @@ Understanding this lifecycle is essential for correctly implementing features li
 
 </details></blockquote>
 
-</details></blockquote>
-
 --
 
 ### Functional Component Lifecycle with Hooks
