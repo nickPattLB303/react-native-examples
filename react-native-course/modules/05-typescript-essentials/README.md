@@ -2594,7 +2594,7 @@ In React Native development, mapped types excel at:
 
 When combined with conditional types, mapped types enable complex transformations based on property characteristics. For example, you can create different field types depending on whether a property is a string, number, or object.
 
-Key remapping with the `as` clause (TypeScript 4.1+) takes this further by transforming property names:
+</details></blockquote>
 
 ---
 
@@ -3585,11 +3585,3 @@ Using `any` type hides these platform differences and leads to runtime errors. A
 - TypeScript enhances collaboration by providing clear contracts between components and functions
 
 </details></blockquote>
-
----
-
-# Thank You!
-
-Questions?
-
-[Back to Course Home](../../index.html)
