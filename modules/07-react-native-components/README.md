@@ -134,6 +134,8 @@ Understanding these foundational concepts is crucial for effectively working wit
 
 React Native provides several essential built-in components for building UIs:
 
+<div style="font-size: 0.7em;">
+
 | Web                | React Native       | Description                               |
 |--------------------|--------------------|-------------------------------------------|
 | `<div>`            | `<View>`           | Container for other components            |
@@ -143,6 +145,8 @@ React Native provides several essential built-in components for building UIs:
 | `<ul>`, `<ol>`, `<li>` | `<FlatList>`, `<SectionList>` | Efficient list rendering   |
 | `<a>`              | `<Pressable>`, `<TouchableOpacity>` | Handles touch interactions |
 | `<div class="scrollable">` | `<ScrollView>` | Scrollable container                  |
+
+</div>
 
 <blockquote><details>
 
@@ -637,6 +641,8 @@ React Native provides several approaches to styling components:
 - **Inline styles**: Simple but less performant
 - **Platform-specific styles**: Customize for iOS and Android
 - **Third-party solutions**: Styled-components, Emotion, etc.
+
+--
 
 ```tsx
 import React from 'react';
@@ -4623,6 +4629,9 @@ Build a complete medication tracker app UI with the following components:
 Apply all the styling techniques covered in this module to create a cohesive, well-designed UI.
 
 Bonus: Add animations to enhance the user experience.
+
+---
+
 ## Summary and Key Takeaways
 
 This module covered the essential concepts and techniques for styling React Native applications to create professional, responsive, and visually appealing user interfaces.
