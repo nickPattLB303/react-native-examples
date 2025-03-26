@@ -1,93 +1,6 @@
 # Module 7: React Native UI and Styling
 
-<style>
-.note {
-  background-color: coral;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.warning {
-  background-color: darkgoldenrod;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.platform-specific {
-  background-color: darkcyan;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.exercise {
-  font-size: 16px;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.challenge {
-  font-size: 16px;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.instructor-led {
-  background-color: aquamarine;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-
-.self-led {
-  background-color: cornflowerblue;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-
-.asynchronous {
-  background-color: royalblue;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0; 
-}
-
-
-.android-dev {
-  background-color: green;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-
-.ios-dev {
-  background-color: black;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-
-.react-dev {
-  background-color: cadetblue;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-
-.angular-dev {
-  background-color: darkred;
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin: 1em 0;
-}
-</style>
+<link rel="stylesheet" href="../../custom.css">
 
 --
 
@@ -253,7 +166,8 @@ React Native provides several essential built-in components for building UIs
 
 --
 
-### React Native Core Components
+### Core Components Comparison
+
 <div style="font-size: 0.7em;">
 
 | Web                | React Native       | Android               | iOS                   |
@@ -402,9 +316,39 @@ The example illustrates several important styling capabilities:
 
 ---
 
-## Text Component
+### Text Component
 
-The `Text` component is the only way to display text in React Native:
+The `<Text>` component is the only way to display text in React Native.
+
+--
+
+#### Key Takeaways
+
+- Only component that can display text content
+- Maps to native text elements: `UILabel` on iOS and `TextView` on Android
+- Text components can be nested for styled substrings
+- Supports text-specific styling like `fontSize`, `fontWeight`, and `lineHeight`
+- Inherits styles when nested (unlike other React Native components)
+- Can handle press events directly for interactive text
+- Offers control over text truncation and number of lines
+
+<blockquote><details>
+
+Unlike web development where text can be placed directly in many elements, React Native requires all text to be wrapped in a Text component. This strict enforcement reflects how native mobile platforms handle text rendering and enables React Native to optimize performance.
+
+Text components have unique nesting capabilities not found in other React Native components. When Text components are nested, child Text components inherit styles from their parent Text component, though they can override specific styles. This inheritance model differs from the normal React Native styling paradigm where styles don't cascade between components.
+
+The Text component includes mobile-specific behaviors like controlling the number of lines displayed with ellipsis truncation, specifying whether text is selectable, and adjusting letter spacing. These capabilities reflect the text rendering features available in native platforms.
+
+For accessibility, Text components support screen reader features and can be configured to adjust based on the user's preferred font size settings. This ensures your application remains usable for all users, including those with visual impairments.
+
+While the Text component might seem simple, its proper usage is crucial for creating readable, accessible, and visually consistent mobile interfaces. Understanding Text's unique styling behavior and mobile-specific features helps developers avoid common pitfalls in text presentation.
+
+</details></blockquote>
+
+--
+
+#### Code Example
 
 ```tsx
 import React from 'react';
@@ -466,29 +410,65 @@ const styles = StyleSheet.create({
 
 <blockquote><details>
 
-The `Text` component is a fundamental building block in React Native that serves as the only way to display textual content in your applications. Unlike web development where text can exist directly inside many HTML elements, in React Native all text must be wrapped in a Text component. This strict requirement reflects the architecture of native mobile platforms and helps React Native optimize rendering.
+In this example, we're creating a medication label that demonstrates several key Text component capabilities. The component structures information in a hierarchical way that clearly communicates important medication details to the user.
 
-In the provided example, we see a `MedicationLabel` component that showcases several important features of the Text component:
+The example showcases style inheritance through nested Text components. Notice how the `frequency` text is nested inside the `dosage` text, allowing it to inherit the font size while applying its own italic style and color. Similarly, the `sideEffect` texts are nested within the `warning` text, inheriting the red warning color while adding bold emphasis.
 
-**Nesting Text components** is a powerful pattern uniquely supported in React Native. In the example, we nest Text components to apply different styles to portions of text within the same paragraph. For instance, the frequency "(Take 3 times daily)" has a different style from the dosage it's attached to, and the side effects are bold while the rest of the warning text is not. This nesting capability is similar to how `<span>` elements might be used within paragraphs in HTML.
+This nesting approach is unique to the Text component in React Native and makes it possible to apply different styles to portions of text without breaking them into separate visual elements, creating a more cohesive reading experience.
 
-**Text-specific styling properties** are demonstrated throughout the example. Properties like `fontSize`, `fontWeight`, `fontStyle`, `color`, and `lineHeight` control the appearance of text. These properties are applied specifically to the Text component and its nested children. Text also inherits styles from parent Text components, but not from View components - an important distinction from web development's CSS inheritance.
+</details></blockquote>
 
-**Layout and spacing** for Text follows the same Flexbox rules as other components, but with some text-specific behaviors. The example shows how marginVertical creates space before and after paragraphs, while lineHeight controls the spacing between lines of text within a paragraph.
+--
 
-**Platform considerations** are important when working with Text. While not explicitly shown in the example, fonts and text rendering behave differently between iOS and Android. React Native handles many of these differences automatically, but for perfect text rendering across platforms, you might need platform-specific adjustments.
+The example illustrates several important Text capabilities:
 
-Text components also support important functionality not shown in this basic example:
+1. **Typography hierarchy**: Different text styles create visual hierarchy with the drug name prominent at the top, followed by dosage information, warnings, and instructions.
 
-1. **Accessibility features** like adjustable font sizes for users with visual impairments
-2. **Text selection** controls to enable or disable user selection
-3. **Number of lines** limitations with ellipsis truncation
-4. **Press handling** directly on Text components for interactive text
-5. **Text breaking strategies** for different languages and writing systems
+2. **Style inheritance**: Nested Text components like frequency and side effects inherit styles from their parent texts while adding their own specific styling.
 
-Unlike some other React Native components, Text has built-in support for limited nested styling without requiring additional container elements. This makes it particularly flexible for creating rich text layouts like the medication label shown in the example.
+3. **Text-specific properties**: The component uses text-specific style properties like `fontWeight`, `fontStyle`, `lineHeight`, and `color` to control the appearance.
 
-Understanding Text is essential for React Native development as virtually every screen will contain textual elements, from simple labels to complex formatted content. Mastering Text styling and nesting patterns enables the creation of readable, accessible, and visually consistent textual interfaces.
+4. **Spacing control**: Different margin values create appropriate spacing between text sections, while `lineHeight` controls spacing within multi-line text.
+
+5. **Visual emphasis**: Important information is highlighted through color and weight changes, drawing attention to critical details like side effects.
+
+---
+
+### Image Component
+
+The `<Image>` component handles displaying various types of images in React Native.
+
+--
+
+#### Key Takeaways
+
+- Displays images from multiple sources: local assets, remote URLs, and base64 data
+- Requires explicit width and height dimensions (unlike web)
+- Maps to native image views: `UIImageView` on iOS and `ImageView` on Android
+- Supports different resize modes: cover, contain, stretch, repeat, center
+- Can act as a container for other components (like text overlays)
+- Offers loading states and error handling
+- Provides performance optimizations like caching
+
+<blockquote><details>
+
+The Image component is a fundamental building block for displaying visual content in React Native applications. Unlike web development where images can automatically size based on their content, React Native requires explicit dimensions for images to ensure proper layout calculation and performance.
+
+When working with images in React Native, you'll typically use three types of image sources:
+
+**Local static images** are bundled with your application, making them instantly available and work offline. They're referenced using the `require()` syntax with a static string path. The bundler processes these during build time and optimizes them for each platform.
+
+**Remote images** are loaded from the network using a URI. These require explicit dimensions and can benefit from loading indicators while they download. React Native provides caching mechanisms to improve performance for frequently accessed remote images.
+
+**Base64 encoded images** can be embedded directly in your code, though this is typically only recommended for very small images due to bundle size considerations.
+
+The `resizeMode` property is particularly important for controlling how images fill their containers, with options that parallel web development concepts but with some mobile-specific behaviors. The most commonly used modes are 'cover' (fills the entire space, potentially cropping the image) and 'contain' (ensures the entire image is visible, potentially leaving empty space).
+
+Performance optimization is crucial when working with images in mobile applications. React Native provides several tools to improve image performance, including automatic caching of remote images, progressive loading, and blur-up techniques. Using appropriate image dimensions and formats can significantly impact your application's performance and user experience.
+
+Accessibility is another important consideration for images. React Native provides props like `accessibilityLabel` to ensure images are properly described for users with visual impairments using screen readers.
+
+Understanding these fundamentals ensures you can use images effectively in your React Native applications, balancing visual appeal with performance considerations.
 
 </details></blockquote>
 
