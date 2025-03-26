@@ -553,7 +553,149 @@ The container styling with padding, background color, and border radius creates 
 
 ---
 
+### Image Component
 
+The `<Image>` component is used to display different types of images in React Native.
+
+> 🌠 The Image component renders images from various sources, including local assets, network resources, and temporary local images. It handles image loading, caching, and various display modes.
+
+--
+
+#### Core Capabilities
+
+- Displays images from multiple sources (local assets, network, base64)
+- Handles image loading states and errors gracefully
+- Supports various resize modes to control how images fit their containers
+- Provides background image functionality for content overlays
+- Controls image caching behavior for performance optimization
+- Supports platform-specific image formats and resolutions
+- Renders as native image components:
+  - iOS: `UIImageView`
+  - Android: `ImageView`
+- Offers methods for prefetching and image manipulation
+- Provides events for load start, progress, completion, and errors
+
+--
+
+#### Key Considerations
+
+- **Source specification**: Different syntax for local vs remote images
+- **Image resizing**: Must specify dimensions for all images (no auto-sizing)
+- **Network images**: Require explicit width and height styles
+- **Default behavior**: No content displayed during loading without placeholders
+- **Memory usage**: Large or numerous images can cause performance issues
+- **Cache management**: Remote images are cached but may need manual control
+- **Resolution handling**: Uses resolution-specific assets through asset scaling
+- **Security concerns**: HTTPS required for remote images on some configurations
+- **Accessibility**: Requires manual addition of accessibility attributes
+- **Animation support**: GIF support varies by platform
+- **Background images**: Support child components but layout differs from web
+
+--
+
+#### Code Example
+
+```tsx
+import React from 'react';
+import { Image, StyleSheet, View, Text } from 'react-native';
+
+function PharmacyProduct() {
+  return (
+    <View style={styles.container}>
+      {/* Local static image */}
+      <Image 
+        source={require('../assets/medication.png')}
+        style={styles.productImage}
+      />
+      
+      {/* Remote image with resize mode */}
+      <Image
+        source={{ uri: 'https://example.com/medication-photo.jpg' }}
+        style={styles.productPhoto}
+        resizeMode="cover"
+        // Loading indicator
+        loadingIndicatorSource={require('../assets/image-loading.gif')}
+      />
+      
+      {/* Background image pattern */}
+      <Image 
+        source={require('../assets/pill-pattern.png')}
+        style={styles.backgroundPattern}
+        resizeMode="repeat"
+      >
+        <Text style={styles.overlayText}>Medication Information</Text>
+      </Image>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+  productImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  productPhoto: {
+    width: '100%',
+    height: 200,
+    borderRadius: 5,
+    marginVertical: 15,
+  },
+  backgroundPattern: {
+    width: '100%',
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayText: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  }
+});
+```
+
+<blockquote><details>
+This example demonstrates a comprehensive implementation of the Image component in React Native for a pharmacy product display. The component showcases three different image usage patterns, each highlighting distinct capabilities of the React Native Image component.
+
+The example includes:
+
+**Local Static Image Loading**
+The first Image component loads a local image from the project's assets directory using the require function. This approach is optimized for bundling static images with your application. The image is styled with specific dimensions and rounded corners, demonstrating basic image styling capabilities.
+
+**Remote Image with Enhanced Features**
+The second Image component loads a remote image from a URL, showing the different syntax required for network resources. It demonstrates:
+- The proper way to specify remote image sources using the uri property
+- Setting a resize mode to control how the image fits its container
+- Implementing a loading indicator to improve user experience during image loading
+- Applying more complex styling including percentage-based width and vertical margins
+
+**Background Image with Content Overlay**
+The third implementation showcases the Image component's ability to function as a container with a background image. This pattern allows:
+- Text or other components to be overlaid on top of an image
+- Setting a repeat resize mode for pattern backgrounds
+- Centering overlay content using flexbox alignment properties
+- Applying text shadow effects to ensure readability of overlay text
+
+The styling implementation demonstrates several important React Native image handling techniques:
+1. **Proper dimensioning** - Setting explicit dimensions for all images
+2. **Border radius** - Creating rounded corners for a modern UI appearance
+3. **Flexible sizing** - Using percentage widths to create responsive layouts
+4. **Content positioning** - Centering content within container images
+5. **Text enhancement** - Using shadows to improve text visibility on image backgrounds
+
+This pattern is particularly valuable in e-commerce or catalog applications where product imagery is critical. The component structure makes it easy to handle different image types and sources while maintaining consistent presentation.
+
+From a performance perspective, the component demonstrates good practices by specifying image dimensions and providing loading indicators, though in a production environment it should be enhanced with error handling and accessibility attributes.
+</details></blockquote>
 
 ---
 
