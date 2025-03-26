@@ -61,14 +61,14 @@
     <!-- Module selector dropdown -->
     <div class="module-selector">
       <select id="module-selector">
-        <option value="05-typescript-essentials">
+        <!-- <option value="05-typescript-essentials">
           Module 5: TypeScript Essentials
         </option>
         <option value="06-react-essentials">
           Module 6: React Essentials
-        </option>
-        <option value="07-react-native-components">
-          Module 7: React Native Components
+        </option> -->
+        <option value="07-react-native-ui-and-styling">
+          Module 7: React Native UI and Styling
         </option>
       </select>
     </div>
@@ -386,24 +386,51 @@
       // Function to load markdown content
       async function loadModule(moduleName) {
         try {
-          // Fetch the markdown content
-          const response = await fetch(`./modules/${moduleName}/README.md`);
-
-          if (!response.ok) {
+          // Fetch the module configuration
+          const configResponse = await fetch(`./modules-config.json`);
+          
+          if (!configResponse.ok) {
             throw new Error(
-              `Failed to load module: ${response.status} ${response.statusText}`
+              `Failed to load module configuration: ${configResponse.status} ${configResponse.statusText}`
             );
           }
-
-          const markdown = await response.text();
-
-          // Update the slide container with the new markdown
+          
+          const config = await configResponse.json();
+          
+          // Get list of files for this module
+          const moduleFiles = config[moduleName] || ["README.md"];
+          
+          // Fetch and concatenate all files for the module
+          let combinedMarkdown = "";
+          
+          for (const file of moduleFiles) {
+            const filePath = `./modules/${moduleName}/${file}`;
+            const response = await fetch(filePath);
+            
+            if (!response.ok) {
+              throw new Error(
+                `Failed to load file ${file}: ${response.status} ${response.statusText}`
+              );
+            }
+            
+            const markdown = await response.text();
+            
+            // Add a horizontal slide separator between files unless it's the first file
+            if (combinedMarkdown) {
+              combinedMarkdown += "\n\n---\n\n";
+            }
+            
+            combinedMarkdown += markdown;
+          }
+          
+          // Create a Blob for the combined markdown
+          const blob = new Blob([combinedMarkdown], { type: 'text/markdown' });
+          const blobUrl = URL.createObjectURL(blob);
+          
+          // Update the slide container with the blob URL
           const slideContainer = document.getElementById("slide-container");
-          slideContainer.setAttribute(
-            "data-markdown",
-            `./modules/${moduleName}/README.md`
-          );
-
+          slideContainer.setAttribute("data-markdown", blobUrl);
+          
           // Update document title
           const moduleTitle =
             document.getElementById("module-selector").options[
