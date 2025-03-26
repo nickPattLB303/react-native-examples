@@ -907,7 +907,7 @@ From an accessibility perspective, in a production environment these components 
 
 ---
 
-## Introduction to Styling
+## Section 2: Styling
 
 React Native provides several approaches to styling components:
 
