@@ -1,33 +1,140 @@
 # Module 7: React Native UI and Styling
 
-<link rel="stylesheet" href="../../custom.css">
+<style>
+.note {
+  background-color: coral;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
 
----
+.warning {
+  background-color: darkgoldenrod;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
 
-## Overview
+.platform-specific {
+  background-color: darkcyan;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.exercise {
+  font-size: 16px;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.challenge {
+  font-size: 16px;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.instructor-led {
+  background-color: aquamarine;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.self-led {
+  background-color: cornflowerblue;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.asynchronous {
+  background-color: royalblue;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0; 
+}
+
+
+.android-dev {
+  background-color: green;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.ios-dev {
+  background-color: black;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.react-dev {
+  background-color: cadetblue;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.angular-dev {
+  background-color: darkred;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+</style>
+
+--
+
+## Learning Paths
+
+This Module is recommended for all learning paths.
 
 <div class="instructor-led">Instructor-led content</div>
 <div class="self-led">Self-led content</div>
 <div class="asynchronous">Asynchronous learning</div>
 
+--
+
+## Development Backgrounds
+
+This Module is recommended for all development backgrounds.
+
+<div class="android-dev">🤖 Android Developers</div>
+<div class="ios-dev">🍏 iOS Developers</div>
+<div class="angular-dev">𝐀 Angular Developers</div>
+<div class="react-dev">⚛ React Developers</div>
+
+---
+
+## Overview
+
 In this module, we'll explore how to create visually appealing and responsive user interfaces in React Native using various styling techniques and UI components.
 
-<blockquote><details>
+> 🎨 This module covers both the foundational styling mechanisms in React Native like StyleSheet and more advanced approaches like styled-components.
 
-React Native provides a powerful and flexible approach to building mobile user interfaces that work consistently across both iOS and Android platforms. Unlike traditional mobile development where UI is defined separately for each platform, React Native allows developers to create a unified UI codebase while still respecting platform-specific behaviors and aesthetics.
+--
 
-Understanding React Native's styling and UI approach is essential for creating professional-quality mobile applications. While React Native styling is based on CSS, it has important differences that mobile developers need to master. The styling system is implemented in JavaScript and uses a subset of CSS properties with some mobile-specific additions.
+<div class="android-dev">🤖 Android Developers</div>
+<div class="ios-dev">🍏 iOS Developers</div>
 
-This module covers both the foundational styling mechanisms in React Native (like StyleSheet) and more advanced approaches (like styled-components). You'll learn how to handle different screen sizes, orientations, and platform-specific adaptations to ensure your applications look great on any device.
+Native mobile developers will learn how React Native's declarative approach differs from imperative UI programming.
 
-For developers coming from different backgrounds, this module provides important connections:
-- Web developers will see similarities to CSS but with mobile-specific adaptations
-- Native mobile developers will learn how React Native's declarative approach differs from imperative UI programming
-- React developers will understand how React Native's component model extends to mobile platforms with specific UI primitives
+> 📲 Unlike traditional mobile development where UI is defined separately for each platform, React Native allows developers to create a unified UI codebase while still respecting platform-specific behaviors and aesthetics.
 
-By the end of this module, you'll have comprehensive knowledge of React Native's UI capabilities and styling approaches, enabling you to create visually consistent, responsive, and platform-appropriate mobile interfaces.
+--
 
-</details></blockquote>
+<div class="angular-dev">𝐀 Angular Developers</div>
+<div class="react-dev">⚛ React Developers</div>
+
+Web developers will see similarities to CSS but with mobile-specific adaptations
+
+> 🎨 While React Native styling is based on CSS, it has important differences that mobile developers need to master. The styling system is implemented in JavaScript and uses a subset of CSS properties with some mobile-specific additions.
 
 ---
 
@@ -74,13 +181,9 @@ Together, these objectives provide a comprehensive skill set for creating profes
 - Completion of Module 6: React Essentials
 - TypeScript fundamentals
 
-<div class="android-dev">Android developers will recognize some UI patterns but should focus on the declarative paradigm</div>
-<div class="ios-dev">iOS developers should note the cross-platform abstractions of common UIKit components</div>
-<div class="web-dev">Web developers will find similarities to CSS but should pay attention to mobile-specific differences</div>
+> 🚨 Before diving into React Native UI and styling, certain foundational knowledge is necessary to ensure you can effectively apply the concepts presented in this module.
 
 <blockquote><details>
-
-Before diving into React Native UI and styling, certain foundational knowledge is necessary to ensure you can effectively apply the concepts presented in this module.
 
 A **basic understanding of React components** is essential, as React Native builds directly on React's component model. You should be comfortable with concepts like props, state, and component lifecycle. The previous module on React Essentials covers these topics in detail, making it an important prerequisite.
 
@@ -88,17 +191,23 @@ A **basic understanding of React components** is essential, as React Native buil
 
 **TypeScript fundamentals** become increasingly important when defining prop types for UI components and creating type-safe styles. TypeScript helps catch styling errors at compile time rather than runtime, which is particularly valuable when working with dynamic styles that depend on props or state.
 
-For participants with different backgrounds, certain aspects of the module may require more attention:
-
-**Android developers** will recognize similarities to Android's layout systems (particularly ConstraintLayout and LinearLayout), but should focus on adapting to React Native's declarative approach instead of the imperative style common in native Android development. The component reuse patterns and styling approaches differ significantly from traditional Android development.
-
-**iOS developers** will see familiar concepts mapped from UIKit components but implemented through React Native's cross-platform abstractions. Understanding how React Native components translate to native UIKit elements helps leverage existing iOS knowledge while adapting to the React Native paradigm.
-
-**Web developers** have an advantage with CSS knowledge but need to pay careful attention to mobile-specific concerns such as touch interactions, screen size variations, and platform-specific UI conventions. The absence of certain CSS features (like cascading) and the addition of mobile-specific properties represent important differences from web styling.
-
 This module builds directly on the foundation established in Module 6: React Essentials, extending those concepts to mobile-specific UI development. While participants can be successful with varying levels of prerequisite knowledge, a solid understanding of these fundamentals will ensure a smoother learning experience.
 
 </details></blockquote>
+
+--
+
+<div class="android-dev">
+<strong>Android developers</strong> will recognize similarities to Android's layout systems (particularly ConstraintLayout and LinearLayout), but should focus on adapting to React Native's declarative approach instead of the imperative style common in native Android development. The component reuse patterns and styling approaches differ significantly from traditional Android development.
+</div>
+
+<div class="ios-dev">
+<strong>iOS developers</strong> will see familiar concepts mapped from UIKit components but implemented through React Native's cross-platform abstractions. Understanding how React Native components translate to native UIKit elements helps leverage existing iOS knowledge while adapting to the React Native paradigm.
+</div>
+
+<div class="react-dev">
+<strong>Web developers</strong> have an advantage with CSS knowledge but need to pay careful attention to mobile-specific concerns such as touch interactions, screen size variations, and platform-specific UI conventions. The absence of certain CSS features (like cascading) and the addition of mobile-specific properties represent important differences from web styling.
+</div>
 
 ---
 
@@ -106,21 +215,22 @@ This module builds directly on the foundation established in Module 6: React Ess
 
 React Native provides a set of built-in UI components that render to native platform UI elements, offering better performance than WebView-based solutions.
 
-Key concepts:
+> 📢 React Native represents a paradigm shift in mobile development by enabling developers to build mobile applications using React's component-based architecture while rendering to truly native UI elements.
+
+--
+
+### Key Takeaways
+
 - Core components map to native UI controls
 - Cross-platform consistency with platform-specific adaptations
 - Declarative UI instead of imperative manipulation
 - Component-based architecture for reusability
 
+> 📲 At the heart of React Native's UI system is a set of built-in components that map directly to platform-specific native UI controls. When you use a `<Text>` component in React Native, it renders as a `UILabel` on iOS and a `TextView` on Android.
+
 <blockquote><details>
 
-React Native represents a paradigm shift in mobile development by enabling developers to build mobile applications using React's component-based architecture while rendering to truly native UI elements rather than WebViews. This approach combines the development efficiency of JavaScript with the performance and feel of native applications.
-
-At the heart of React Native's UI system is a set of built-in components that map directly to platform-specific native UI controls. When you use a `<Text>` component in React Native, it renders as a `UILabel` on iOS and a `TextView` on Android. This mapping to native components is what distinguishes React Native from hybrid solutions that render HTML in a WebView, resulting in better performance and a more authentic native feel.
-
 React Native strikes a balance between cross-platform consistency and platform-specific authenticity. While the same component API works across platforms, React Native respects platform conventions by adapting certain behaviors and appearances automatically. For example, a `<Button>` component will look and behave differently on iOS and Android without requiring developer intervention, matching user expectations on each platform.
-
-The declarative nature of React Native UI is a fundamental shift for developers accustomed to imperative UI programming in traditional native development. Instead of directly manipulating UI elements (like `view.setBackgroundColor(red)`), React Native developers describe what the UI should look like for a given state, and the framework handles the updates when state changes. This declarative approach leads to more predictable code with fewer UI-related bugs.
 
 React Native's component-based architecture encourages reusability and separation of concerns. UI elements are broken down into components that can be composed to create complex interfaces. This modularity makes code easier to understand, test, and maintain, especially as applications grow in complexity.
 
@@ -128,23 +238,33 @@ Understanding these foundational concepts is crucial for effectively working wit
 
 </details></blockquote>
 
+--
+
+<div class="android-dev">🤖 Android Developers</div>
+<div class="ios-dev">🍏 iOS Developers</div>
+
+The declarative nature of React Native UI is a fundamental shift for developers accustomed to imperative UI programming in traditional native development. Instead of directly manipulating UI elements (like `view.setBackgroundColor(red)`), React Native developers describe what the UI should look like for a given state, and the framework handles the updates when state changes. This declarative approach leads to more predictable code with fewer UI-related bugs.
+
 ---
 
-## Core Components Overview
+## Section 1: Core Components
 
-React Native provides several essential built-in components for building UIs:
+React Native provides several essential built-in components for building UIs
 
+--
+
+### React Native Core Components
 <div style="font-size: 0.7em;">
 
-| Web                | React Native       | Description                               |
-|--------------------|--------------------|-------------------------------------------|
-| `<div>`            | `<View>`           | Container for other components            |
-| `<span>`, `<p>`    | `<Text>`           | Displays text                             |
-| `<img>`            | `<Image>`          | Displays images                           |
-| `<input>`, `<button>` | `<TextInput>`, `<Button>` | User input controls             |
-| `<ul>`, `<ol>`, `<li>` | `<FlatList>`, `<SectionList>` | Efficient list rendering   |
-| `<a>`              | `<Pressable>`, `<TouchableOpacity>` | Handles touch interactions |
-| `<div class="scrollable">` | `<ScrollView>` | Scrollable container                  |
+| Web                | React Native       | Android               | iOS                   |
+|--------------------|--------------------|----------------------|------------------------|
+| `<div>`            | `<View>`           | `ViewGroup`          | `UIView`              |
+| `<span>`, `<p>`    | `<Text>`           | `TextView`           | `UILabel`             |
+| `<img>`            | `<Image>`          | `ImageView`          | `UIImageView`         |
+| `<input>`, `<button>` | `<TextInput>`, `<Button>` | `EditText`, `Button` | `UITextField`, `UIButton` |
+| `<ul>`, `<ol>`, `<li>` | `<FlatList>`, `<SectionList>` | `RecyclerView` | `UITableView` |
+| `<a>`              | `<Pressable>`, `<TouchableOpacity>` | `View` with click listener | `UIControl` |
+| `<div class="scrollable">` | `<ScrollView>` | `ScrollView`      | `UIScrollView`       |
 
 </div>
 
@@ -172,9 +292,38 @@ These core components form the foundation of React Native UI development. While 
 
 ---
 
-## View Component
+### View Component
 
-The `View` component is the fundamental building block for UI in React Native:
+The `<View>` component is the fundamental building block of UI in React Native.
+
+--
+
+#### Key Takeaways
+
+- React Native's primary container element
+- Similar to a `<div>` in web development
+- Translated to platform-specific native UI elements:
+  - `UIView` on iOS and `android.view` on Android
+- Used to build layouts, group content, and apply styles
+- Supports Flexbox, touch handling, and accessibility controls
+- Can be nested to create complex hierarchies
+- Foundation of most React Native layouts
+
+<blockquote><details>
+
+Views by themselves don't render any visible content unless styled with background colors or borders. They're invisible containers by default, focusing on layout and structure rather than presentation. This is different from web divs which might have browser-specific default styling.
+
+One important distinction from web development is that Views don't have scrolling capabilities by default. If content might exceed the available space, you'll need to wrap Views in a ScrollView or use a list component like FlatList.
+
+Views also don't directly display text content - all text must be wrapped in Text components, even if the View has other styling applied. This strict separation is part of React Native's optimization strategy and reflects how native UI elements work.
+
+Like all React Native components, Views are translated to platform-specific native UI elements: `UIView` on iOS and `android.view` on Android. This ensures optimal performance while maintaining a consistent developer experience across platforms.
+
+</details></blockquote>
+
+--
+
+#### Code Example
 
 ```tsx
 import React from 'react';
@@ -231,11 +380,15 @@ const styles = StyleSheet.create({
 
 <blockquote><details>
 
-The `View` component is the fundamental building block of UI in React Native, serving as the equivalent to `div` elements in web development. It's a container that supports layout with Flexbox, style, touch handling, and accessibility controls. Understanding View is essential as it forms the structural foundation of nearly every React Native interface.
-
 In the provided example, we see a `MedicationCard` component that uses nested Views to create a structured card layout with a header, content area (with two columns), and footer. This hierarchical structure demonstrates how Views are used to organize the visual elements of an interface.
 
-Views are highly flexible and can be styled extensively. The example illustrates several important styling capabilities:
+The nested structure of Views in this example demonstrates React Native's compositional approach to building interfaces, allowing complex UI to be broken down into manageable, reusable pieces.
+
+</details></blockquote>
+
+--
+
+The example illustrates several important styling capabilities:
 
 1. **Shape and appearance**: The outer card View has rounded corners (`borderRadius`), background color, and shadow effects.
 
@@ -246,18 +399,6 @@ Views are highly flexible and can be styled extensively. The example illustrates
 4. **Spacing**: Various padding and margin properties create appropriate spacing between elements.
 
 5. **Platform-specific styling**: Notice the use of both `shadowProperties` (for iOS) and `elevation` (for Android) to create consistent card shadowing across platforms.
-
-Views by themselves don't render any visible content unless styled with background colors or borders. They're invisible containers by default, focusing on layout and structure rather than presentation. This is different from web divs which might have browser-specific default styling.
-
-One important distinction from web development is that Views don't have scrolling capabilities by default. If content might exceed the available space, you'll need to wrap Views in a ScrollView or use a list component like FlatList.
-
-Views also don't directly display text content - all text must be wrapped in Text components, even if the View has other styling applied. This strict separation is part of React Native's optimization strategy and reflects how native UI elements work.
-
-Like all React Native components, Views are translated to platform-specific native UI elements: `UIView` on iOS and `android.view` on Android. This ensures optimal performance while maintaining a consistent developer experience across platforms.
-
-The nested structure of Views in this example demonstrates React Native's compositional approach to building interfaces, allowing complex UI to be broken down into manageable, reusable pieces.
-
-</details></blockquote>
 
 ---
 
