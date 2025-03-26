@@ -162,7 +162,7 @@ The declarative nature of React Native UI is a fundamental shift for developers 
 
 ## Section 1: Core Components
 
-React Native provides several essential built-in components for building UIs
+React Native provides several essential built-in components for building UIs.
 
 --
 
@@ -210,28 +210,83 @@ These core components form the foundation of React Native UI development. While 
 
 The `<View>` component is the fundamental building block of UI in React Native.
 
+> 👀 The View component serves as a container that supports layout with flexbox, style, touch handling, and accessibility controls. It maps directly to the fundamental native UI building blocks on each platform.
+
 --
 
-#### Key Takeaways
+#### Core Capabilities
 
-- React Native's primary container element
-- Similar to a `<div>` in web development
-- Translated to platform-specific native UI elements:
-  - `UIView` on iOS and `android.view` on Android
-- Used to build layouts, group content, and apply styles
-- Supports Flexbox, touch handling, and accessibility controls
-- Can be nested to create complex hierarchies
-- Foundation of most React Native layouts
+- Functions as the primary container component in React Native
+- Conceptually equivalent to HTML `<div>` elements
+- Renders as native UI components:
+  - iOS: `UIView`
+  - Android: `android.view`
+- Enables layout construction, content organization, and style application
+- Provides built-in support for:
+  - Flexbox layout system
+  - Touch event handling
+  - Accessibility features
+- Supports nesting for complex UI hierarchies
+- Serves as the foundation for React Native interface design
+
+<blockquote><details>
+The View component is the cornerstone of React Native's UI system, serving as a versatile container that forms the foundation for most interface elements. Let's explore each of the key capabilities in more detail:
+
+**Functions as the primary container component in React Native**
+The View component is React Native's most fundamental UI building block. Nearly every visual interface in React Native applications is constructed using View components or specialized components that build upon View. It's the essential container that holds and organizes other components.
+
+**Conceptually equivalent to HTML `<div>` elements**
+For developers coming from web development, the View component serves a similar purpose to HTML's div element. Just as divs are used to create structure and layout on the web, Views perform this function in React Native. However, Views have important differences in behavior and capabilities compared to divs.
+
+**Renders as native UI components: iOS: `UIView`, Android: `android.view`**
+One of React Native's core strengths is that it maps JavaScript components to actual native UI elements. When your app renders, View components don't create web-based containers but translate directly to the fundamental building blocks of each platform's UI system: UIView on iOS and android.view on Android. This provides native performance and appearance.
+
+**Enables layout construction, content organization, and style application**
+Views are the primary tool for creating visual structure in your application. They can be configured with various layout properties (like flex, padding, margin) to position and organize content. They also accept styling properties for visual customization (colors, borders, shadows).
+
+**Provides built-in support for: Flexbox layout system, Touch event handling, Accessibility features**
+Views come with integrated capabilities that are essential for mobile applications:
+- The flexbox layout system allows for responsive designs that work across different screen sizes
+- Touch handling lets Views respond to user interactions through props like onPress
+- Accessibility support ensures applications can be used by people with disabilities through screen readers and other assistive technologies
+
+**Supports nesting for complex UI hierarchies**
+Views can contain other Views, creating parent-child relationships that form the component tree of your application. This nesting capability allows for the creation of complex layouts and component hierarchies, from simple cards to entire screen layouts.
+
+**Serves as the foundation for React Native interface design**
+Many specialized React Native components (like ScrollView, FlatList, etc.) are built on top of the View component, extending its functionality for specific use cases. Understanding View is essential because its principles apply throughout the React Native component ecosystem.
+
+</details><blockquote>
+
+--
+
+#### Key Considerations
+
+- **Invisible by default**: Views have no visual appearance without explicit styling
+- **No direct text display**: All text must be wrapped in `<Text>` components
+- **No automatic scrolling**: Content exceeding the View's bounds will be clipped
+- **Layout container**: Primary purpose is structure and positioning, not presentation
+- **Platform-specific rendering**: Automatically uses the appropriate native UI component
+- **Accessibility support**: Can be configured with accessibility properties
+- **Performance optimized**: Efficiently maps to native components for optimal rendering
+- **Style isolation**: Styles don't cascade like CSS in web development
+
 
 <blockquote><details>
 
-Views by themselves don't render any visible content unless styled with background colors or borders. They're invisible containers by default, focusing on layout and structure rather than presentation. This is different from web divs which might have browser-specific default styling.
+Views by themselves don't render any visible content unless styled with background colors or borders. They're **invisible by default**, focusing on layout and structure rather than presentation. This is different from web divs which might have browser-specific default styling.
 
-One important distinction from web development is that Views don't have scrolling capabilities by default. If content might exceed the available space, you'll need to wrap Views in a ScrollView or use a list component like FlatList.
+One important distinction from web development is that Views have **no automatic scrolling** capabilities. If content exceeds the available space, it will be clipped rather than scrollable. For scrollable content, you'll need to wrap Views in a ScrollView or use a list component like FlatList.
 
-Views also don't directly display text content - all text must be wrapped in Text components, even if the View has other styling applied. This strict separation is part of React Native's optimization strategy and reflects how native UI elements work.
+Views also don't directly display text content - all text must be wrapped in `<Text>` components, even if the View has other styling applied. This **no direct text display** rule is part of React Native's optimization strategy and reflects how native UI elements work.
 
-Like all React Native components, Views are translated to platform-specific native UI elements: `UIView` on iOS and `android.view` on Android. This ensures optimal performance while maintaining a consistent developer experience across platforms.
+As a **layout container**, Views excel at structure and positioning rather than content presentation. Their primary purpose is to organize other components using the **flexbox layout system** that comes built-in.
+
+For **platform-specific rendering**, Views are translated to native UI elements: `UIView` on iOS and `android.view` on Android. This ensures optimal performance while maintaining a consistent developer experience across platforms.
+
+Views also provide comprehensive **accessibility support** through properties like `accessible`, `accessibilityLabel`, and `accessibilityHint`, making your app usable for people with disabilities.
+
+The **performance optimized** nature of Views comes from their efficient mapping to native components, avoiding the overhead of web views. Additionally, Views maintain **style isolation** - unlike CSS on the web, styles don't automatically cascade to children, providing better encapsulation.
 
 </details></blockquote>
 
@@ -294,25 +349,23 @@ const styles = StyleSheet.create({
 
 <blockquote><details>
 
-In the provided example, we see a `MedicationCard` component that uses nested Views to create a structured card layout with a header, content area (with two columns), and footer. This hierarchical structure demonstrates how Views are used to organize the visual elements of an interface.
+In the provided example, we see a `MedicationLabel` component that demonstrates the unique capabilities of the Text component in React Native. This example showcases how Text components can be used to create a structured medication label with different text styles and nested text elements.
 
-The nested structure of Views in this example demonstrates React Native's compositional approach to building interfaces, allowing complex UI to be broken down into manageable, reusable pieces.
+The component structure reveals several important Text component features:
+
+1. **Text nesting**: The example demonstrates how Text components can be nested within each other, as seen in the dosage section where "500mg" and "(Take 3 times daily)" appear as a single line but with different styles. This nesting capability is unique to the Text component in React Native and allows for inline styling of specific text segments.
+
+2. **Style inheritance**: When Text components are nested, the child Text components inherit styles from their parent. In this case, the frequency text inherits base styles from its parent dosage Text component while applying its own specific styles.
+
+3. **Text-specific styling**: The example uses text-specific style properties like `fontSize`, `fontWeight`, and potentially `lineHeight` to create visual hierarchy between the drug name, dosage information, and other text elements.
+
+4. **Semantic structure**: By separating different pieces of information into distinct Text components, the code creates a semantic structure that improves readability and maintenance. This separation also facilitates accessibility features like screen readers.
+
+5. **Container context**: The Text components are placed within a View container, demonstrating how Text must always be contained within a Text or View component, unlike web development where text can exist directly in many elements.
+
+This example illustrates React Native's strict approach to text rendering, where all textual content must be explicitly wrapped in Text components. This approach reflects how native mobile platforms handle text rendering and enables React Native to properly map these components to their native counterparts (`UILabel` on iOS and `TextView` on Android). The structured approach to text also helps maintain consistent text rendering across different device sizes and platforms, which is crucial for medical information display where clarity and accuracy are essential.
 
 </details></blockquote>
-
---
-
-The example illustrates several important styling capabilities:
-
-1. **Shape and appearance**: The outer card View has rounded corners (`borderRadius`), background color, and shadow effects.
-
-2. **Borders**: The header and footer Views use border properties to create separator lines.
-
-3. **Layout**: The content View uses `flexDirection: 'row'` to arrange its children horizontally instead of the default vertical stacking.
-
-4. **Spacing**: Various padding and margin properties create appropriate spacing between elements.
-
-5. **Platform-specific styling**: Notice the use of both `shadowProperties` (for iOS) and `elevation` (for Android) to create consistent card shadowing across platforms.
 
 ---
 
