@@ -1172,7 +1172,7 @@ function Prescription() {
         instructions="Take 1 tablet 3 times daily with food."
         sideEffects={[
           "Nausea",
-          "Diarrhea",
+          "Heartburn",
           "Skin rash"
         ]}
       />
