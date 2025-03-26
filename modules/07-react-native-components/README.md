@@ -374,7 +374,7 @@ This example illustrates React Native's strict approach to text rendering, where
 
 The `<Text>` component is the only way to display text in React Native.
 
-> 👀 The Text component is used to display text in React Native applications. Unlike web development, all text must be wrapped in a Text component - even within other components.
+> 𝑻 The Text component is used to display text in React Native applications. Unlike web development, all text must be wrapped in a Text component - even within other components.
 
 --
 
@@ -525,163 +525,35 @@ const styles = StyleSheet.create({
 });
 ```
 
-</details>
-
-</blockquote>
-
----
-
-### Image Component
-
-The `<Image>` component handles displaying various types of images in React Native.
-
---
-
-#### Key Takeaways
-
-- Displays images from multiple sources: local assets, remote URLs, and base64 data
-- Requires explicit width and height dimensions (unlike web)
-- Maps to native image views: `UIImageView` on iOS and `ImageView` on Android
-- Supports different resize modes: cover, contain, stretch, repeat, center
-- Can act as a container for other components (like text overlays)
-- Offers loading states and error handling
-- Provides performance optimizations like caching
-
 <blockquote><details>
+This example demonstrates a comprehensive medication information card using React Native's Text component with nested styling. The component effectively organizes critical medication information in a visually structured and accessible format.
 
-The Image component is a fundamental building block for displaying visual content in React Native applications. Unlike web development where images can automatically size based on their content, React Native requires explicit dimensions for images to ensure proper layout calculation and performance.
+The `MedicationInfo` component presents a complete medication profile with several key elements:
+- A prominent drug name using larger, bold typography to establish visual hierarchy
+- Dosage information presented clearly with appropriate sizing
+- Frequency details styled in italics with a subdued color to differentiate it from primary information
+- Warning information highlighted in red to draw attention to potential risks
+- Side effects emphasized with bold styling within the warning text
+- Detailed instructions with increased line height for better readability
 
-When working with images in React Native, you'll typically use three types of image sources:
+The styling implementation showcases several important React Native styling techniques:
+1. **Nested Text components** - Allowing different styling within a single text block
+2. **Style inheritance** - Child Text components inherit and extend parent styles
+3. **Visual hierarchy** - Using size, weight, and color to prioritize information
+4. **Semantic styling** - Styles that reflect the meaning of the content (warnings in red, etc.)
+5. **Spacing control** - Careful use of margin properties to create visual breathing room
 
-**Local static images** are bundled with your application, making them instantly available and work offline. They're referenced using the `require()` syntax with a static string path. The bundler processes these during build time and optimizes them for each platform.
+This pattern is particularly valuable in healthcare applications where information hierarchy and clarity are critical. The component structure makes it easy to maintain and update, while the styling approach ensures consistent presentation across different medications.
 
-**Remote images** are loaded from the network using a URI. These require explicit dimensions and can benefit from loading indicators while they download. React Native provides caching mechanisms to improve performance for frequently accessed remote images.
+From an accessibility perspective, the component uses appropriate text sizing and contrast, though in a production environment it should be enhanced with proper accessibility attributes to support screen readers.
 
-**Base64 encoded images** can be embedded directly in your code, though this is typically only recommended for very small images due to bundle size considerations.
-
-The `resizeMode` property is particularly important for controlling how images fill their containers, with options that parallel web development concepts but with some mobile-specific behaviors. The most commonly used modes are 'cover' (fills the entire space, potentially cropping the image) and 'contain' (ensures the entire image is visible, potentially leaving empty space).
-
-Performance optimization is crucial when working with images in mobile applications. React Native provides several tools to improve image performance, including automatic caching of remote images, progressive loading, and blur-up techniques. Using appropriate image dimensions and formats can significantly impact your application's performance and user experience.
-
-Accessibility is another important consideration for images. React Native provides props like `accessibilityLabel` to ensure images are properly described for users with visual impairments using screen readers.
-
-Understanding these fundamentals ensures you can use images effectively in your React Native applications, balancing visual appeal with performance considerations.
+The container styling with padding, background color, and border radius creates a card-like appearance that visually groups the related medication information, improving the overall user experience by clearly delineating different medication entries when multiple would be displayed.
 
 </details></blockquote>
 
 ---
 
-## Image Component
 
-The `Image` component handles displaying various types of images:
-
-```tsx
-import React from 'react';
-import { Image, StyleSheet, View, Text } from 'react-native';
-
-function PharmacyProduct() {
-  return (
-    <View style={styles.container}>
-      {/* Local static image */}
-      <Image 
-        source={require('../assets/medication.png')}
-        style={styles.productImage}
-      />
-      
-      {/* Remote image with resize mode */}
-      <Image
-        source={{ uri: 'https://example.com/medication-photo.jpg' }}
-        style={styles.productPhoto}
-        resizeMode="cover"
-        // Loading indicator
-        loadingIndicatorSource={require('../assets/image-loading.gif')}
-      />
-      
-      {/* Background image pattern */}
-      <Image 
-        source={require('../assets/pill-pattern.png')}
-        style={styles.backgroundPattern}
-        resizeMode="repeat"
-      >
-        <Text style={styles.overlayText}>Medication Information</Text>
-      </Image>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 20,
-  },
-  productImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-  productPhoto: {
-    width: '100%',
-    height: 200,
-    borderRadius: 5,
-    marginVertical: 15,
-  },
-  backgroundPattern: {
-    width: '100%',
-    height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlayText: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  }
-});
-```
-
-<blockquote><details>
-
-The `Image` component in React Native is essential for displaying visual content in your applications. It handles rendering various types of images, from local assets to remote network resources. Understanding the Image component is crucial for creating visually engaging mobile interfaces.
-
-The example demonstrates three common use cases for the Image component:
-
-**1. Local static images** are included in your application bundle during the build process. Using `require('../assets/medication.png')` with a relative path referencing the image file is the recommended approach for static assets. These images are available immediately without network requests and work offline. The require statement is evaluated at build time, so the path must be a string literal, not a variable.
-
-**2. Remote images** must be loaded from a network source using the `{ uri: 'https://example.com/image.jpg' }` format. Unlike web development, React Native requires you to explicitly specify dimensions for remote images - they won't automatically size themselves based on content. The example shows how to display a loading indicator while the remote image is being fetched, enhancing the user experience during loading states.
-
-**3. Background images with content** can be created by nesting other components inside an Image component. In the example, a repeating pill pattern serves as the background for text content. This pattern is common for headers, cards, or promotional sections that need visually rich backgrounds with overlaid content.
-
-The example also demonstrates several important Image properties:
-
-**`resizeMode`** controls how the image should be resized to fit its container:
-- `'cover'`: (used for the product photo) scales the image to cover the entire container, potentially cropping parts of the image
-- `'repeat'`: (used for the background pattern) tiles the image to fill the container
-- Other options include `'contain'`, `'stretch'`, and `'center'`
-
-**Styling images** follows general React Native styling patterns with some image-specific considerations:
-- `width` and `height` are required for most images
-- `borderRadius` creates rounded corners (particularly common in mobile UIs)
-- Percentage widths (like `width: '100%'`) make images responsive to container size
-
-Important considerations not explicitly shown in the example include:
-
-1. **Performance optimization**: Large or numerous images can impact performance. React Native provides tools like caching and progressive loading to optimize image display.
-
-2. **Platform differences**: Image rendering can vary slightly between iOS and Android, particularly for tinted images or certain resize modes.
-
-3. **Accessibility**: Images should include appropriate accessibility attributes to support screen readers and other assistive technologies.
-
-4. **Error handling**: The Image component can specify a fallback for when images fail to load using the `onError` prop.
-
-5. **Animation**: Images can be animated using the Animated API, allowing for fade-ins, transitions, and other visual effects.
-
-Effective use of the Image component is key to creating polished, professional-looking React Native applications. Whether displaying product photos, user avatars, icons, or background patterns, understanding image handling ensures optimal performance and visual quality.
-
-</details></blockquote>
 
 ---
 
