@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" font-family="sans-serif" width="375" height="812">
+  <!-- Force full canvas size for renderers -->
+  <rect width="375" height="812" fill="transparent"/>
+  <!-- Background -->
+  <rect width="375" height="812" fill="#F8F9FA" />
+
+  <!-- Header -->
+  <rect x="0" y="0" width="375" height="80" fill="#B0E0E6" />
+  <!-- Removed circle, adjusted text -->
+  <text x="20" y="50" font-size="18" font-weight="bold" fill="#495057">Welcome!</text>
+
+  <!-- Quick Info Section -->
+  <g transform="translate(0, 15)"> <!-- Added group for easier translation -->
+    <rect x="15" y="95" width="345" height="70" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <text x="30" y="120" font-size="14" fill="#6C757D">Current Balance</text>
+    <text x="30" y="145" font-size="18" font-weight="bold" fill="#495057">$0.00 Due</text>
+    <!-- Updated Button to Outline Style -->
+    <rect x="230" y="115" width="115" height="35" rx="4" ry="4" fill="#FFFFFF" stroke="#5EADD3" stroke-width="1"/>
+    <text x="287.5" y="137.5" font-size="14" font-weight="500" fill="#5EADD3" text-anchor="middle">Pay Now</text>
+  </g>
+
+  <!-- Grid Layout for Features -->
+  <g transform="translate(0, 15)"> <!-- Added group for easier translation -->
+    <!-- Row 1 -->
+    <!-- Prescriptions Card -->
+    <rect x="15" y="180" width="165" height="125" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <!-- Updated Icon: Outline Capsule -->
+    <path d="M50 225 A 10 10 0 0 1 50 205 A 10 10 0 0 1 50 225 M 45 215 L 55 215 M 50 210 L 50 220" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(10, 0)"/>
+    <text x="85" y="215" font-size="14" font-weight="bold" fill="#495057">Prescriptions</text>
+    <text x="30" y="240" font-size="12" fill="#6C757D">View your medicines</text>
+
+    <!-- Recent Orders Card -->
+    <rect x="195" y="180" width="165" height="125" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <!-- Updated Icon: Outline Truck -->
+     <g transform="translate(210, 200)">
+        <path d="M1 3h15v13H1z M16 8h4l3 3v5h-7V8z" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="5.5" cy="18.5" r="2.5" stroke="#5EADD3" stroke-width="1.5" fill="none"/>
+        <circle cx="18.5" cy="18.5" r="2.5" stroke="#5EADD3" stroke-width="1.5" fill="none"/>
+     </g>
+    <text x="255" y="215" font-size="14" font-weight="bold" fill="#495057">Orders</text>
+    <text x="210" y="240" font-size="12" fill="#6C757D">Track deliveries</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(0, 15)"> <!-- Added group for easier translation -->
+    <!-- Delivery Card -->
+    <rect x="15" y="320" width="165" height="125" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <!-- Updated Icon: Outline Pin -->
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(48, 345) scale(0.8)"/>
+    <circle cx="12" cy="10" r="3" stroke="#5EADD3" stroke-width="1.5" fill="none" transform="translate(48, 345) scale(0.8)"/>
+    <text x="85" y="355" font-size="14" font-weight="bold" fill="#495057">Delivery</text>
+    <text x="30" y="380" font-size="12" fill="#6C757D">Set preferences</text>
+
+    <!-- Health Resources Card -->
+    <rect x="195" y="320" width="165" height="125" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <!-- Updated Icon: Outline Book -->
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(218, 345) scale(0.9)"/>
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(218, 345) scale(0.9)"/>
+    <text x="255" y="355" font-size="14" font-weight="bold" fill="#495057">Resources</text>
+    <text x="210" y="380" font-size="12" fill="#6C757D">Health info</text>
+  </g>
+
+  <!-- Large Reminders Card -->
+  <g transform="translate(0, 15)"> <!-- Added group for easier translation -->
+    <rect x="15" y="460" width="345" height="160" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" />
+    <!-- Removed side color bar -->
+    <text x="30" y="485" font-size="16" font-weight="bold" fill="#495057">Medication Reminders</text>
+
+    <!-- Reminder Item 1 -->
+    <rect x="30" y="500" width="315" height="40" rx="5" ry="5" fill="#F8F9FA" /> <!-- Lighter background -->
+    <!-- Updated Icon: Outline Bell -->
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(35, 508) scale(0.8)"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(35, 508) scale(0.8)"/>
+    <text x="70" y="524" font-size="14" fill="#495057">Morning Medication</text>
+    <text x="330" y="524" font-size="14" font-weight="bold" fill="#495057" text-anchor="end">9:00 AM</text> <!-- Adjusted color and anchor -->
+
+    <!-- Reminder Item 2 -->
+    <rect x="30" y="550" width="315" height="40" rx="5" ry="5" fill="#F8F9FA" /> <!-- Lighter background -->
+     <!-- Updated Icon: Outline Bell -->
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(35, 558) scale(0.8)"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(35, 558) scale(0.8)"/>
+    <text x="70" y="574" font-size="14" fill="#495057">Evening Medication</text>
+    <text x="330" y="574" font-size="14" font-weight="bold" fill="#495057" text-anchor="end">8:00 PM</text> <!-- Adjusted color and anchor -->
+  </g>
+
+  <!-- Bottom Navigation -->
+  <!-- Using the same structure and icons as calm_clear_prescriptions.svg -->
+  <g id="bottom-nav" transform="translate(0, 728)">
+    <rect width="375" height="84" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+    <!-- Icons -->
+    <g transform="translate(36.875, 15)"> <!-- Home (Active) -->
+       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <polyline points="9 22 9 12 15 12 15 22" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <text x="10" y="35" font-size="10" fill="#5EADD3" text-anchor="middle" font-weight="bold">Home</text>
+    </g>
+     <g transform="translate(130.625, 15)"> <!-- Prescriptions -->
+       <path d="M10.5 20.5 A 10 10 0 0 1 10.5 0.5 A 10 10 0 0 1 10.5 20.5 M 5 10 L 16 10 M 10.5 5 L 10.5 15" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/> <!-- Capsule Icon -->
+       <text x="10" y="35" font-size="10" fill="#6C757D" text-anchor="middle">Prescriptions</text>
+    </g>
+     <g transform="translate(224.375, 15)"> <!-- Orders -->
+        <path d="M1 3h15v13H1z M16 8h4l3 3v5h-7V8z" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/> <!-- Truck Icon -->
+        <circle cx="5.5" cy="18.5" r="2.5" stroke="#6C757D" stroke-width="1.5" fill="none"/>
+        <circle cx="18.5" cy="18.5" r="2.5" stroke="#6C757D" stroke-width="1.5" fill="none"/>
+       <text x="10" y="35" font-size="10" fill="#6C757D" text-anchor="middle">Orders</text>
+    </g>
+     <g transform="translate(318.125, 15)"> <!-- Account -->
+       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <circle cx="12" cy="7" r="4" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <text x="10" y="35" font-size="10" fill="#6C757D" text-anchor="middle">Account</text>
+    </g>
+    <!-- Home indicator -->
+    <rect x="121" y="70" width="134" height="5" rx="2.5" fill="#495057"/>
+  </g>
+</svg>
