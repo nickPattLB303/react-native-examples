@@ -65,8 +65,8 @@ This document outlines the planned development phases and key milestones for the
     *   [ ] Write tests for Zustand stores (actions, selectors).
     *   [ ] Set up `TanStack Query` (React Query) for data fetching simulation.
     *   [ ] Integrate `faker.js` to generate mock data for API responses.
-    *   [ ] Write tests for custom hooks using React Query.
-    *   [ ] Rebuild Screens based on mockups and requirements outlined in `README.md`:
+    *   [ ] Write tests for custom data-fetching hooks using React Query.
+    *   [ ] Rebuild Screens based on mockups and requirements outlined in `README.md` (using custom hooks for logic where appropriate):
         *   [ ] Dashboard Screen
         *   [ ] Prescriptions Screen (List View)
         *   [ ] Prescription Detail Screen (if applicable, not explicitly mocked but likely needed)
@@ -74,12 +74,12 @@ This document outlines the planned development phases and key milestones for the
         *   [ ] Order Detail Screen (`assets/images/orders.svg`)
         *   [ ] Account Screen (`assets/images/account.svg`)
         *   [ ] Screens for Account sub-sections (Personal Info, Payment, etc. - requires design/definition)
-    *   [ ] Write comprehensive unit and integration tests for all screens and key components using React Native Testing Library.
-    *   [ ] Implement simulated data fetching using React Query and Faker.js for all relevant screens.
-    *   [ ] Manage application state (user info, potentially UI state) using Zustand and Context where appropriate.
-    *   [ ] Implement form handling for account updates (using libraries like `react-hook-form` if desired).
+    *   [ ] Write comprehensive unit and integration tests for all screens, custom hooks, and key components using React Native Testing Library.
+    *   [ ] Implement simulated data fetching using React Query (likely within custom hooks) and Faker.js for all relevant screens.
+    *   [ ] Manage application state (user info, potentially UI state) using Zustand and Context where appropriate (potentially accessed via custom hooks).
+    *   [ ] Implement form handling for account updates (using libraries like `react-hook-form` if desired, potentially with custom form hooks).
     *   [ ] Write tests for form validation and submission logic.
-    *   [ ] Add basic error handling and loading states for simulated fetches.
+    *   [ ] Add basic error handling and loading states for simulated fetches (often managed within custom data-fetching hooks).
     *   [ ] Refine styling and ensure consistency across the application.
 
 ## Future Considerations (Beyond Course Scope)

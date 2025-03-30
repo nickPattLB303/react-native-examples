@@ -62,7 +62,8 @@ Once your feature or fix is complete:
 *   **Styling:** Adhere to the "Calm & Clear" visual style. Use `StyleSheet` for Phase 2 and `react-native-paper`/`styled-components` for Phase 3 as directed.
 *   **Linting/Formatting:** Follow the rules defined by ESLint and Prettier (once configured). Ensure your code passes linting checks (`npx eslint .` and `npx prettier --check .`) before creating a PR.
 *   **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
-*   **Testing:** Write unit tests using Jest and React Native Testing Library for new components, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
+*   **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.
+*   **Testing:** Write unit tests using Jest and React Native Testing Library for new components, custom hooks, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
 
 ## Code Reviews
 
