@@ -9,32 +9,36 @@ and this project adheres to Semantic Versioning (though formal versioning might 
 
 ### Added
 - Initial project setup using Expo `blank-typescript` template.
-- SVG mockups for Dashboard, Prescriptions, Order Detail, and Account screens.
+- SVG mockups for Dashboard, Prescriptions, Order Detail, and Account screens (`assets/images/`).
 - Initial `README.md` outlining project goals, setup, and workflow.
 - Initial `CONTRIBUTING.md` defining contribution guidelines.
 - Initial `CHANGELOG.md` (this file).
-- `functional_requirements.md` derived from mockups.
+- Initial `SETUP.md` with detailed environment setup instructions.
+- Initial `USAGE.md` placeholder.
+- Initial `ROADMAP.md` outlining project phases.
+- GitHub templates (`.github/PULL_REQUEST_TEMPLATE.md`, `.github/ISSUE_TEMPLATE/`).
 
 ### Changed
-- Updated `README.md` with comprehensive project information.
+- Updated `README.md` with comprehensive project information, key features, and refined instructions.
+- Updated `CONTRIBUTING.md` with refined instructions and links.
 
 ### Fixed
 - (Nothing yet)
 
 ### Removed
-- (Nothing yet)
+- Separate `functional_requirements.md` (content integrated into other docs like `README.md` and `ROADMAP.md`).
 
-## [Phase 1 - Project Setup] - YYYY-MM-DD (To be updated upon completion)
+## [Phase 1 - Project Setup] - YYYY-MM-DD
 
 ### Added
 - (List setup tasks completed, e.g., ESLint/Prettier config, Expo config updates)
 
-## [Phase 2 - Simple Screens] - YYYY-MM-DD (To be updated upon completion)
+## [Phase 2 - Simple Screens] - YYYY-MM-DD
 
 ### Added
 - (List simple screens and features completed, e.g., Basic Dashboard, StyleSheet Theme, Account Screen)
 
-## [Phase 3 - Full Project] - YYYY-MM-DD (To be updated upon completion)
+## [Phase 3 - Full Project] - YYYY-MM-DD
 
 ### Added
 - (List features added during the full rebuild, e.g., React Navigation setup, React Native Paper integration, specific screen implementations)

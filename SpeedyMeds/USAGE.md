@@ -8,7 +8,7 @@ To run the application in a development environment (using Expo Go, iOS Simulato
 
 ## Key Features (Overview)
 
-As the application is developed, you will be able to interact with the following core features:
+As the application is developed, you will be able to interact with the following core features (based on the mockups in `assets/images/` and the project [ROADMAP.md](./ROADMAP.md)):
 
 *   **Dashboard:** Get an overview and navigate to other sections.
 *   **Prescriptions:** View and manage your medication list.
@@ -18,6 +18,8 @@ As the application is developed, you will be able to interact with the following
 *(This section will be updated with more specific usage examples and screenshots as features are implemented during the course phases.)*
 
 ## Development Phases
+
+Refer to the [ROADMAP.md](./ROADMAP.md) for details on the features planned for each development phase.
 
 *   **Phase 1 (Setup):** Focuses on environment configuration. No interactive application usage yet.
 *   **Phase 2 (Simple Screens):** Basic versions of screens will become available for interaction. Specific usage instructions for these simple versions may be added here.

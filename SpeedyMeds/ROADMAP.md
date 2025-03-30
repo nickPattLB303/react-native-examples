@@ -14,8 +14,10 @@ This document outlines the planned development phases and key milestones for the
 *   **Goal:** Establish a solid foundation for development.
 *   **Tasks:**
     *   [x] Initialize Expo project with TypeScript (`create-expo-app --template blank-typescript`).
-    *   [x] Create initial documentation (`README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `SETUP.md`, `USAGE.md`, `ROADMAP.md`).
-    *   [x] Define functional requirements based on mockups (`functional_requirements.md`).
+    *   [x] Create/Update initial documentation (`README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `SETUP.md`, `USAGE.md`, `ROADMAP.md`).
+    *   [x] Create SVG mockups (`assets/images/`).
+    *   [x] Define key features based on mockups (integrated into `README.md`).
+    *   [x] Set up GitHub Issue/PR templates (`.github/`).
     *   [ ] Configure Expo settings (`app.json`).
     *   [ ] Configure TypeScript (`tsconfig.json`).
     *   [ ] Set up ESLint for code linting.
@@ -23,7 +25,6 @@ This document outlines the planned development phases and key milestones for the
     *   [ ] Integrate ESLint and Prettier with VS Code.
     *   [ ] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
     *   [ ] Set up GitHub repository, branch protection rules (instructor task).
-    *   [ ] Set up GitHub Issue/PR templates (instructor task).
 
 ## Phase 2: Simple Screens
 
@@ -55,13 +56,13 @@ This document outlines the planned development phases and key milestones for the
     *   [ ] Set up `zustand` for global state management.
     *   [ ] Set up `TanStack Query` (React Query) for data fetching simulation.
     *   [ ] Integrate `faker.js` to generate mock data for API responses.
-    *   [ ] Rebuild Screens based on mockups and requirements:
+    *   [ ] Rebuild Screens based on mockups and requirements outlined in `README.md`:
         *   [ ] Dashboard Screen
         *   [ ] Prescriptions Screen (List View)
         *   [ ] Prescription Detail Screen (if applicable, not explicitly mocked but likely needed)
         *   [ ] Orders Screen (List View - implied)
-        *   [ ] Order Detail Screen (`alternate_order_detail.svg`)
-        *   [ ] Account Screen (`account_screen.svg`)
+        *   [ ] Order Detail Screen (`assets/images/orders.svg`)
+        *   [ ] Account Screen (`assets/images/account.svg`)
         *   [ ] Screens for Account sub-sections (Personal Info, Payment, etc. - requires design/definition)
     *   [ ] Implement simulated data fetching using React Query and Faker.js for all relevant screens.
     *   [ ] Manage application state (user info, potentially UI state) using Zustand and Context where appropriate.

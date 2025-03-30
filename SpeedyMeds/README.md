@@ -2,29 +2,32 @@
 
 ## Overview
 
-Welcome to the SpeedyMeds project! This application serves as the capstone project for the [Your Company Name] React Native training course. Its primary purpose is to provide a hands-on learning experience, allowing participants to apply React Native concepts by building a functional mobile pharmacy application from the ground up.
+Welcome to the SpeedyMeds project! This application serves as the capstone project for the React Native training course. Its primary purpose is to provide a hands-on learning experience, allowing participants to apply React Native concepts by building a functional mobile pharmacy application from the ground up.
 
 We will simulate a professional development environment, utilizing standard workflows like GitHub Flow, Pull Requests (PRs), code reviews, and issue tracking.
 
+*(View the UI mockups: [Dashboard](./assets/images/dashboard.svg), [Prescriptions](./assets/images/prescriptions.svg), [Order Detail](./assets/images/orders.svg), [Account](./assets/images/account.svg))*
+
 ## Target Audience
 
-This repository is intended for developers participating in the [Your Company Name] React Native training course.
+This repository is intended for developers participating in the React Native training course.
 
 ## Key Features (Based on Mockups)
 
-*   **Dashboard:** Overview of key information and navigation.
-*   **Prescription Management:** View prescription details, status, and related actions.
-*   **Order Tracking:** Track medication order status and details.
-*   **Account Management:** View and manage user profile and settings.
+*   **Home Dashboard:** Displays welcome message, current balance, quick navigation cards (Prescriptions, Orders, Delivery, Resources), and medication reminders.
+*   **Prescriptions Screen:** Allows searching/filtering prescriptions and displays a list including drug info, dosage, days supply, patient, refills, alerts, and actions.
+*   **Order Detail Screen:** Shows details for a specific order (drug info, order date/number), a status tracker (Placed, Processing, Shipped, Delivered), tracking number with a tracking button, and shipping address.
+*   **Account Screen:** Displays user profile summary (avatar, name, ID) and provides navigation to manage Personal Information, Payment Methods, Communication Preferences, Security, Help & Support, along with a Log Out button.
+*   **Global Navigation:** Consistent bottom tab bar for Home, Prescriptions, Orders, and Account sections.
 
 ## Technology Stack
 
 This project utilizes the following core technologies:
 
-*   **React Native:** Framework for building native mobile apps using React.
-*   **Expo:** Platform and toolset for React Native development, simplifying builds and development workflows.
-*   **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability.
-*   **React Navigation:** Routing and navigation solution (Phase 3).
+*   **React Native:** Framework for building native mobile apps using React. ([Official Docs](https://reactnative.dev/docs/getting-started))
+*   **Expo:** Platform and toolset for React Native development, simplifying builds and development workflows. ([Official Docs](https://docs.expo.dev/))
+*   **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability. ([Official Docs](https://www.typescriptlang.org/docs/))
+*   **React Navigation:** Routing and navigation solution (Phase 3). ([Official Docs](https://reactnavigation.org/))
 *   **ESLint & Prettier:** Code linting and formatting (to be configured).
 *   **(Phase 3 Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
 
@@ -40,18 +43,20 @@ This project utilizes the following core technologies:
 *   **(Optional) iOS Simulator:** Requires Xcode (macOS only).
 *   **(Optional) Android Emulator:** Requires Android Studio. [Download Android Studio](https://developer.android.com/studio)
 
+*(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions.)*
+
 ### Setup
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [Your Repository URL]
+    git clone [Your Repository URL] # <-- Replace with actual repo URL
     cd SpeedyMeds
     ```
-2.  **Install Dependencies:**
+2.  **Install Dependencies:** Use `npx expo install` which ensures compatible versions for Expo projects.
     ```bash
-    npm install
+    npx expo install
     ```
-    *(Note: While we use `npx expo` for running Expo-specific commands, `npm install` is the standard way to install all project dependencies listed in `package.json`.)*
+    *(This command wraps `npm install` or `yarn add` and checks for version compatibility within the Expo ecosystem.)*
 
 ### Running the App
 
@@ -64,51 +69,49 @@ This project utilizes the following core technologies:
     *   **On Android Emulator:** Press `a` in the terminal.
     *   **On Physical Device:** Scan the QR code displayed in the terminal or browser window using the Expo Go app.
 
+*(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)*
+
 ## Project Structure (Initial)
 
 ```
 SpeedyMeds/
-├── assets/             # Static assets like images, fonts, SVGs
-│   ├── images/         # SVG mockups
-│   └── ...             # Default Expo icons/splash
-├── App.tsx             # Main application component (entry point)
-├── index.ts            # Entry point for Metro bundler
-├── app.json            # Expo configuration file
-├── package.json        # Project dependencies and scripts
-├── tsconfig.json       # TypeScript configuration
-└── README.md           # This file
+├── .github/              # GitHub specific files (templates)
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── assets/               # Static assets like images, fonts, SVGs
+│   ├── images/           # SVG mockups (dashboard, prescriptions, etc.)
+│   └── ...               # Default Expo icons/splash
+├── App.tsx               # Main application component (entry point)
+├── index.ts              # Entry point for Metro bundler
+├── app.json              # Expo configuration file
+├── package.json          # Project dependencies and scripts
+├── tsconfig.json         # TypeScript configuration
+├── .gitignore            # Git ignore file
+├── CHANGELOG.md          # Record of project changes
+├── CONTRIBUTING.md       # Contribution guidelines
+├── README.md             # This file
+├── ROADMAP.md            # Project development plan
+├── SETUP.md              # Detailed environment setup guide
+└── USAGE.md              # Application usage guide
 ```
 *(Note: This structure will evolve as we add screens, components, and other features.)*
 
 ## Development Workflow
 
-We will follow the **GitHub Flow** branching strategy:
-
-1.  Create a new branch from `main` for each feature or bug fix (e.g., `feature/add-login-screen`, `fix/dashboard-layout`).
-2.  Commit your changes regularly with clear messages.
-3.  Push your branch to the GitHub repository.
-4.  Create a Pull Request (PR) targeting the `main` branch.
-5.  Request code reviews from instructors or peers.
-6.  Address feedback and make necessary changes.
-7.  Once approved, the PR will be merged into `main`.
-
-Please refer to `CONTRIBUTING.md` (to be created) for detailed contribution guidelines, coding standards, and PR processes.
+We follow the **GitHub Flow** branching strategy. Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines, coding standards, and PR processes.
 
 ## Project Phases
 
-This project is structured in two main phases:
-
-1.  **Phase 1: Project Setup:** Configuring the development environment (Expo, TypeScript, Linting, Debugging).
-2.  **Phase 2: Simple Screens:** Building basic versions of key screens using core React Native concepts (Core Components, StyleSheet, Flexbox, basic state/props).
-3.  **Phase 3: Full Project:** Rebuilding the application using a more advanced stack (React Navigation, UI libraries, state management, data fetching) to implement the full functionality based on mockups.
+This project is structured in multiple phases as outlined in the [ROADMAP.md](./ROADMAP.md).
 
 ## Documentation
 
-*   [CONTRIBUTING.md](./CONTRIBUTING.md) (To be created)
-*   [CHANGELOG.md](./CHANGELOG.md) (To be created)
-*   [functional_requirements.md](../functional_requirements.md) (Based on mockups)
-*   *(Other documents will be linked here as created)*
+*   [SETUP.md](./SETUP.md)
+*   [CONTRIBUTING.md](./CONTRIBUTING.md)
+*   [USAGE.md](./USAGE.md)
+*   [ROADMAP.md](./ROADMAP.md)
+*   [CHANGELOG.md](./CHANGELOG.md)
 
 ## Contact & Support
 
-For questions related to the course or this project, please use the designated **[Your WebEx Channel Name]** WebEx channel.
+For questions related to the course or this project, please use the designated course communication channel (e.g., WebEx, Slack).

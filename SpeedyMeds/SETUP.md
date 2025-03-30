@@ -1,6 +1,6 @@
 # SpeedyMeds Development Environment Setup
 
-This guide provides detailed instructions for setting up your development environment to work on the SpeedyMeds project. Please ensure you have followed the basic steps in the main [README.md](./README.md) first (cloning the repo, `npm install`).
+This guide provides detailed instructions for setting up your development environment to work on the SpeedyMeds project. Please ensure you have followed the basic steps in the main [README.md](./README.md) first (cloning the repo, installing dependencies).
 
 ## Prerequisites Recap
 
@@ -21,7 +21,7 @@ This guide provides detailed instructions for setting up your development enviro
 
 Install these extensions in VS Code for a better development experience:
 
-*   **ESLint:** Integrates ESLint into VS Code (we will configure ESLint later). Search for `dbaeumer.vscode-eslint`.
+*   **ESLint:** Integrates ESLint into VS Code (we will configure ESLint later). Search for `dbaeumer.vscode-eslint` in the Extensions view (Ctrl+Shift+X or Cmd+Shift+X).
 *   **Prettier - Code formatter:** Integrates Prettier for automatic code formatting (we will configure Prettier later). Search for `esbenp.prettier-vscode`.
 *   **React Native Tools:** Provides debugging, IntelliSense, and command integration for React Native. Search for `msjsdiag.vscode-react-native`.
 *   **(Optional) GitLens — Git supercharged:** Enhances Git capabilities within VS Code (viewing history, blame, etc.). Search for `eamodio.gitlens`.
@@ -32,7 +32,11 @@ Install these extensions in VS Code for a better development experience:
     ```bash
     cd path/to/SpeedyMeds
     ```
-2.  **Start Metro Bundler:** Run the Expo development server:
+2.  **Install Dependencies (if not done yet):** Ensure all dependencies are installed using the Expo-recommended command:
+    ```bash
+    npx expo install
+    ```
+3.  **Start Metro Bundler:** Run the Expo development server:
     ```bash
     npx expo start
     ```
@@ -40,7 +44,7 @@ Install these extensions in VS Code for a better development experience:
 
 ### Option 1: Expo Go App (Physical Device - Recommended for Beginners)
 
-1.  **Install Expo Go:** Download the "Expo Go" app from the App Store (iOS) or Google Play Store (Android) onto your physical device.
+1.  **Install Expo Go:** Download the "Expo Go" app from the App Store (iOS) or Google Play Store (Android) onto your physical device. ([Expo Go Info](https://expo.dev/go))
 2.  **Connect:** Ensure your computer and physical device are on the **same Wi-Fi network**.
 3.  **Scan QR Code:** Open the Expo Go app on your device and scan the QR code displayed in the terminal or the browser window opened by `npx expo start`.
 4.  The app bundle will be downloaded and run on your device.
@@ -57,22 +61,22 @@ Install these extensions in VS Code for a better development experience:
 1.  **Install Android Studio:** Download and install Android Studio from the [official Android Developers site](https://developer.android.com/studio).
 2.  **Configure Emulator:**
     *   Open Android Studio.
-    *   Go to `Tools` > `Device Manager` (or look for the Device Manager icon).
+    *   Go to `Tools` > `Device Manager` (or look for the Device Manager icon/menu item).
     *   Click `Create device`.
     *   Choose a device definition (e.g., Pixel 6) and click `Next`.
     *   Select a system image (choose a recent API level, download if necessary) and click `Next`.
     *   Verify configuration and click `Finish`.
-3.  **Launch Emulator:** In the Device Manager, click the "Play" button next to the virtual device you created. Wait for the emulator to boot up completely.
+3.  **Launch Emulator:** In the Device Manager, click the "Play" (triangle) button next to the virtual device you created. Wait for the emulator to boot up completely.
 4.  **Run on Emulator:** While the Metro Bundler is running (`npx expo start`), press `a` in the terminal. Expo CLI will attempt to install the Expo Go app onto the emulator and launch your project.
 
 ## Troubleshooting Common Issues
 
-*   **Watchman Issues (macOS):** If you encounter errors related to Watchman, try installing or reinstalling it: `brew install watchman`.
+*   **Watchman Issues (macOS):** If you encounter errors related to Watchman (a file watching service), try installing or reinstalling it using Homebrew: `brew install watchman`.
 *   **Emulator/Simulator Connection Problems:**
     *   Ensure the emulator/simulator is fully booted before pressing `a` or `i`.
     *   Verify your computer and device/emulator are on the same network (less relevant for simulators/emulators but crucial for physical devices).
     *   Try restarting the Metro Bundler (`Ctrl+C` then `npx expo start`).
-    *   Try clearing the Expo Go cache (inside Expo Go app settings) or reinstalling Expo Go on the simulator/emulator (`npx expo run:ios --no-build` or `npx expo run:android --no-build` might help reset it).
-*   **Android SDK Issues:** Ensure necessary SDK components are installed via Android Studio's SDK Manager (`Tools` > `SDK Manager`).
+    *   Try clearing the Expo Go cache (inside Expo Go app settings) or reinstalling Expo Go on the simulator/emulator. You might need to wipe emulator data or uninstall/reinstall Expo Go via Expo CLI commands if issues persist.
+*   **Android SDK Issues:** Ensure necessary SDK components are installed via Android Studio's SDK Manager (`Tools` > `SDK Manager`). You might need specific "Android SDK Platform" versions or "Android SDK Build-Tools".
 
-Refer to the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#install-the-expo-go-app) for more comprehensive troubleshooting.
+Refer to the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#set-up-your-environment) for more comprehensive troubleshooting.
