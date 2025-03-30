@@ -2,6 +2,8 @@
 
 This guide provides detailed instructions for setting up your development environment to work on the SpeedyMeds project. Please ensure you have followed the basic steps in the main [README.md](./README.md) first (cloning the repo, installing dependencies).
 
+**The primary development workflow for this course utilizes iOS Simulators (macOS) or Android Emulators.** Using physical devices with Expo Go is possible but secondary.
+
 ## Prerequisites Recap
 
 *   **Node.js & npm:** Required for running JavaScript, managing packages, and using Expo CLI. Verify installation:
@@ -16,6 +18,8 @@ This guide provides detailed instructions for setting up your development enviro
     ```
     If not installed, download from [git-scm.com](https://git-scm.com/).
 *   **Code Editor:** VS Code is highly recommended due to its excellent TypeScript and React Native support. Download from [code.visualstudio.com](https://code.visualstudio.com/).
+*   **iOS Simulator (macOS Only):** Requires Xcode.
+*   **Android Emulator:** Requires Android Studio.
 
 ## Recommended VS Code Extensions
 
@@ -25,6 +29,26 @@ Install these extensions in VS Code for a better development experience:
 *   **Prettier - Code formatter:** Integrates Prettier for automatic code formatting (we will configure Prettier later). Search for `esbenp.prettier-vscode`.
 *   **React Native Tools:** Provides debugging, IntelliSense, and command integration for React Native. Search for `msjsdiag.vscode-react-native`.
 *   **(Optional) GitLens — Git supercharged:** Enhances Git capabilities within VS Code (viewing history, blame, etc.). Search for `eamodio.gitlens`.
+
+## Simulator / Emulator Setup
+
+### iOS Simulator (macOS Only)
+
+1.  **Install Xcode:** Download and install Xcode from the Mac App Store. This is a large download and installation can take time.
+2.  **Install Xcode Command Line Tools:** Open Xcode, go to `Xcode` > `Settings` (or `Preferences`) > `Locations`. Ensure a version is selected in the "Command Line Tools" dropdown. If not, Xcode might prompt you to install them, or you can run `xcode-select --install` in your terminal.
+3.  **Launch Simulator:** You can open the Simulator app directly (`Applications` > `Xcode` > `Open Developer Tool` > `Simulator`). It's recommended to launch it before running the Expo start command. Choose a recent iPhone model.
+
+### Android Emulator
+
+1.  **Install Android Studio:** Download and install Android Studio from the [official Android Developers site](https://developer.android.com/studio).
+2.  **Configure Emulator:**
+    *   Open Android Studio.
+    *   Go to `Tools` > `Device Manager` (or look for the Device Manager icon/menu item).
+    *   Click `Create device`.
+    *   Choose a device definition (e.g., Pixel 6 or similar) and click `Next`.
+    *   Select a system image (choose a recent API level, download if necessary) and click `Next`.
+    *   Verify configuration and click `Finish`.
+3.  **Launch Emulator:** In the Device Manager, click the "Play" (triangle) button next to the virtual device you created. Wait for the emulator to boot up completely before running the Expo start command.
 
 ## Running the App (Detailed)
 
@@ -36,47 +60,31 @@ Install these extensions in VS Code for a better development experience:
     ```bash
     npx expo install
     ```
-3.  **Start Metro Bundler:** Run the Expo development server:
+3.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
+4.  **Start Metro Bundler:** Run the Expo development server:
     ```bash
     npx expo start
     ```
     This command starts the Metro Bundler, which compiles your JavaScript code and serves it to the Expo Go app or simulators/emulators. It will also display a QR code and provide options in the terminal.
+5.  **Run on Simulator/Emulator:**
+    *   **iOS Simulator:** Press `i` in the terminal where Metro Bundler is running.
+    *   **Android Emulator:** Press `a` in the terminal.
+    Expo CLI will attempt to install the Expo Go app onto the simulator/emulator (if needed) and launch your project.
 
-### Option 1: Expo Go App (Physical Device - Recommended for Beginners)
+### (Optional) Running on Physical Device
 
 1.  **Install Expo Go:** Download the "Expo Go" app from the App Store (iOS) or Google Play Store (Android) onto your physical device. ([Expo Go Info](https://expo.dev/go))
 2.  **Connect:** Ensure your computer and physical device are on the **same Wi-Fi network**.
 3.  **Scan QR Code:** Open the Expo Go app on your device and scan the QR code displayed in the terminal or the browser window opened by `npx expo start`.
 4.  The app bundle will be downloaded and run on your device.
 
-### Option 2: iOS Simulator (macOS Only)
-
-1.  **Install Xcode:** Download and install Xcode from the Mac App Store. This is a large download and installation can take time.
-2.  **Install Xcode Command Line Tools:** Open Xcode, go to `Xcode` > `Settings` (or `Preferences`) > `Locations`. Ensure a version is selected in the "Command Line Tools" dropdown. If not, Xcode might prompt you to install them, or you can run `xcode-select --install` in your terminal.
-3.  **Launch Simulator:** You can open the Simulator app directly (`Applications` > `Xcode` > `Open Developer Tool` > `Simulator`) or let Expo launch it.
-4.  **Run on Simulator:** While the Metro Bundler is running (`npx expo start`), press `i` in the terminal. Expo CLI will attempt to install the Expo Go app onto the simulator and launch your project.
-
-### Option 3: Android Emulator
-
-1.  **Install Android Studio:** Download and install Android Studio from the [official Android Developers site](https://developer.android.com/studio).
-2.  **Configure Emulator:**
-    *   Open Android Studio.
-    *   Go to `Tools` > `Device Manager` (or look for the Device Manager icon/menu item).
-    *   Click `Create device`.
-    *   Choose a device definition (e.g., Pixel 6) and click `Next`.
-    *   Select a system image (choose a recent API level, download if necessary) and click `Next`.
-    *   Verify configuration and click `Finish`.
-3.  **Launch Emulator:** In the Device Manager, click the "Play" (triangle) button next to the virtual device you created. Wait for the emulator to boot up completely.
-4.  **Run on Emulator:** While the Metro Bundler is running (`npx expo start`), press `a` in the terminal. Expo CLI will attempt to install the Expo Go app onto the emulator and launch your project.
-
 ## Troubleshooting Common Issues
 
 *   **Watchman Issues (macOS):** If you encounter errors related to Watchman (a file watching service), try installing or reinstalling it using Homebrew: `brew install watchman`.
 *   **Emulator/Simulator Connection Problems:**
-    *   Ensure the emulator/simulator is fully booted before pressing `a` or `i`.
-    *   Verify your computer and device/emulator are on the same network (less relevant for simulators/emulators but crucial for physical devices).
+    *   Ensure the emulator/simulator is fully booted *before* pressing `a` or `i`.
     *   Try restarting the Metro Bundler (`Ctrl+C` then `npx expo start`).
-    *   Try clearing the Expo Go cache (inside Expo Go app settings) or reinstalling Expo Go on the simulator/emulator. You might need to wipe emulator data or uninstall/reinstall Expo Go via Expo CLI commands if issues persist.
+    *   Try clearing the Expo Go cache (inside Expo Go app settings on the device/emulator) or reinstalling Expo Go on the simulator/emulator. You might need to wipe emulator data or uninstall/reinstall Expo Go via Expo CLI commands if issues persist.
 *   **Android SDK Issues:** Ensure necessary SDK components are installed via Android Studio's SDK Manager (`Tools` > `SDK Manager`). You might need specific "Android SDK Platform" versions or "Android SDK Build-Tools".
 
 Refer to the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#set-up-your-environment) for more comprehensive troubleshooting.

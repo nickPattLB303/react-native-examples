@@ -6,7 +6,21 @@ Welcome to the SpeedyMeds project! This application serves as the capstone proje
 
 We will simulate a professional development environment, utilizing standard workflows like GitHub Flow, Pull Requests (PRs), code reviews, and issue tracking.
 
-*(View the UI mockups: [Dashboard](./assets/images/dashboard.svg), [Prescriptions](./assets/images/prescriptions.svg), [Order Detail](./assets/images/orders.svg), [Account](./assets/images/account.svg))*
+### UI Mockups
+
+*(These represent the target design for the application)*
+
+**Dashboard:**
+![Dashboard](./assets/images/dashboard.svg)
+
+**Prescriptions:**
+![Prescriptions](./assets/images/prescriptions.svg)
+
+**Order Detail:**
+![Order Detail](./assets/images/orders.svg)
+
+**Account:**
+![Account](./assets/images/account.svg)
 
 ## Target Audience
 
@@ -38,12 +52,12 @@ This project utilizes the following core technologies:
 *   **Node.js:** LTS version recommended. [Download Node.js](https://nodejs.org/)
 *   **npm:** Comes bundled with Node.js.
 *   **Git:** For version control. [Download Git](https://git-scm.com/)
-*   **Expo Go App:** Install on your physical iOS or Android device. [Expo Go](https://expo.dev/go)
 *   **Code Editor:** VS Code is recommended. [Download VS Code](https://code.visualstudio.com/)
-*   **(Optional) iOS Simulator:** Requires Xcode (macOS only).
-*   **(Optional) Android Emulator:** Requires Android Studio. [Download Android Studio](https://developer.android.com/studio)
+*   **iOS Simulator:** Requires Xcode (macOS only).
+*   **Android Emulator:** Requires Android Studio.
+*   **(Optional) Expo Go App:** For testing on physical devices. [Expo Go](https://expo.dev/go)
 
-*(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions.)*
+*(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions for simulators/emulators.)*
 
 ### Setup
 
@@ -58,16 +72,17 @@ This project utilizes the following core technologies:
     ```
     *(This command wraps `npm install` or `yarn add` and checks for version compatibility within the Expo ecosystem.)*
 
-### Running the App
+### Running the App (Simulators/Emulators Recommended)
 
-1.  **Start the Development Server:**
+1.  **Ensure Simulator/Emulator is Running:** Launch your preferred iOS Simulator (via Xcode) or Android Emulator (via Android Studio). See [SETUP.md](./SETUP.md) for details.
+2.  **Start the Development Server:**
     ```bash
     npx expo start
     ```
-2.  **Open the App:**
+3.  **Open the App:**
     *   **On iOS Simulator:** Press `i` in the terminal where Expo Metro Bundler is running.
     *   **On Android Emulator:** Press `a` in the terminal.
-    *   **On Physical Device:** Scan the QR code displayed in the terminal or browser window using the Expo Go app.
+    *   **(Optional) On Physical Device:** Ensure the Expo Go app is installed and scan the QR code displayed in the terminal using the app. Your computer and device must be on the same Wi-Fi network.
 
 *(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)*
 
@@ -79,7 +94,7 @@ SpeedyMeds/
 │   ├── ISSUE_TEMPLATE/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── assets/               # Static assets like images, fonts, SVGs
-│   ├── images/           # SVG mockups (dashboard, prescriptions, etc.)
+│   ├── images/           # SVG mockups (dashboard.svg, etc.)
 │   └── ...               # Default Expo icons/splash
 ├── App.tsx               # Main application component (entry point)
 ├── index.ts              # Entry point for Metro bundler
