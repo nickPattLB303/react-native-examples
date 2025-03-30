@@ -4,7 +4,7 @@
 
 Welcome to the SpeedyMeds project! This application serves as the capstone project for the React Native training course. Its primary purpose is to provide a hands-on learning experience, allowing participants to apply React Native concepts by building a functional mobile pharmacy application from the ground up.
 
-We will simulate a professional development environment, utilizing standard workflows like GitHub Flow, Pull Requests (PRs), code reviews, and issue tracking.
+We will simulate a professional development environment, utilizing standard workflows like GitHub Flow, Pull Requests (PRs), code reviews, issue tracking, and unit testing.
 
 ### UI Mockups
 
@@ -41,6 +41,8 @@ This project utilizes the following core technologies:
 *   **React Native:** Framework for building native mobile apps using React. ([Official Docs](https://reactnative.dev/docs/getting-started))
 *   **Expo:** Platform and toolset for React Native development, simplifying builds and development workflows. ([Official Docs](https://docs.expo.dev/))
 *   **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability. ([Official Docs](https://www.typescriptlang.org/docs/))
+*   **Jest:** JavaScript testing framework (comes configured with Expo). ([Official Docs](https://jestjs.io/docs/getting-started))
+*   **React Native Testing Library:** Utilities for testing React Native components. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
 *   **React Navigation:** Routing and navigation solution (Phase 3). ([Official Docs](https://reactnavigation.org/))
 *   **ESLint & Prettier:** Code linting and formatting (to be configured).
 *   **(Phase 3 Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
@@ -84,6 +86,14 @@ This project utilizes the following core technologies:
     *   **On Android Emulator:** Press `a` in the terminal.
     *   **(Optional) On Physical Device:** Ensure the Expo Go app is installed and scan the QR code displayed in the terminal using the app. Your computer and device must be on the same Wi-Fi network.
 
+### Running Tests
+
+Unit tests are run using Jest.
+```bash
+npx expo run:test # Or potentially 'npm test' or 'yarn test' depending on package.json scripts
+```
+*(Note: Test scripts and configuration will be refined during Phase 1/2.)*
+
 *(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)*
 
 ## Project Structure (Initial)
@@ -96,6 +106,7 @@ SpeedyMeds/
 ├── assets/               # Static assets like images, fonts, SVGs
 │   ├── images/           # SVG mockups (dashboard.svg, etc.)
 │   └── ...               # Default Expo icons/splash
+├── __tests__/            # Unit and integration tests (using Jest)
 ├── App.tsx               # Main application component (entry point)
 ├── index.ts              # Entry point for Metro bundler
 ├── app.json              # Expo configuration file
@@ -113,7 +124,7 @@ SpeedyMeds/
 
 ## Development Workflow
 
-We follow the **GitHub Flow** branching strategy. Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines, coding standards, and PR processes.
+We follow the **GitHub Flow** branching strategy. Writing unit tests for new features and bug fixes is encouraged. Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines, coding standards, testing expectations, and PR processes.
 
 ## Project Phases
 
