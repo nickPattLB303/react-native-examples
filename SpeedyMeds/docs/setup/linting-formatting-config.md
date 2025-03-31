@@ -32,53 +32,66 @@ _(Note: `npx expo install` is used even for dev dependencies to ensure compatibi
 
 ## Configuration Files
 
-### 1. ESLint (`.eslintrc.js`)
+### 1. ESLint (`eslint.config.mjs`)
 
-This file configures ESLint rules and plugins.
+This project uses ESLint's newer "flat config" format, configured in `eslint.config.mjs`. This format uses modern ES modules and provides a more explicit way to define configurations.
 
 ```javascript
-// Planned .eslintrc.js
-module.exports = {
-  root: true, // Prevent ESLint from looking further up the directory tree
-  extends: [
-    'eslint:recommended', // Base ESLint recommended rules
-    'plugin:@typescript-eslint/recommended', // TypeScript recommended rules
-    'plugin:react/recommended', // React recommended rules
-    'plugin:react-hooks/recommended', // Rules of Hooks
-    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier
-  ],
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser for TypeScript
-  plugins: [
-    '@typescript-eslint', // Loads the TypeScript plugin
-    'react', // Loads the React plugin
-    'react-hooks', // Loads the React Hooks plugin
-  ],
-  parserOptions: {
-    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
-    ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
+// Current eslint.config.mjs (simplified representation)
+import { defineConfig, globalIgnores } from 'eslint/config';
+import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+// ... other imports (plugins, parser, globals)
+
+export default defineConfig([
+  // 1. Global Ignores: Define files/patterns ESLint should ignore
+  globalIgnores([
+    '**/node_modules/',
+    '**/build/',
+    '**/.expo/',
+    // ... other ignores
+  ]),
+  // 2. Main Configuration Object(s): An array of config objects
+  {
+    // Extends base recommended rulesets using compatibility tools
+    extends: fixupConfigRules(
+      compat.extends(
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:prettier/recommended' // Integrates Prettier rules
+      )
+    ),
+    // Defines plugins used
+    plugins: {
+      '@typescript-eslint': fixupPluginRules(typescriptEslint),
+      react: fixupPluginRules(react),
+      'react-hooks': fixupPluginRules(reactHooks),
+    },
+    // Language Options: Configure parser, globals, etc.
+    languageOptions: {
+      globals: { ...globals.node, ...globals.jest },
+      parser: tsParser, // Use TypeScript parser
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+      // ... other options
+    },
+    // Settings for plugins (e.g., React version detection)
+    settings: {
+      react: { version: 'detect' },
+    },
+    // Specific Rule Overrides
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      // ... other rules
     },
   },
-  settings: {
-    react: {
-      version: 'detect', // Automatically detect the React version
-    },
-  },
-  env: {
-    node: true, // Enables Node.js global variables and Node.js scoping.
-    es6: true, // Enables ES6 globals (Promise, etc.)
-    jest: true, // Enables Jest global variables.
-  },
-  rules: {
-    // Add custom rules or overrides here if needed later
-    'react/react-in-jsx-scope': 'off', // Not needed with modern React/JSX transform
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Warn about unused vars, allow underscore prefix
-    // Add other specific rules as the team/instructor sees fit
-  },
-  ignorePatterns: ['node_modules/', 'build/', '.expo/', '*.config.js'], // Ignore specific files/dirs
-};
+  // ... potentially more config objects for specific file types/overrides
+]);
 ```
+*(Note: The actual file uses compatibility helpers (`fixupConfigRules`, `fixupPluginRules`, `FlatCompat`) to bridge older eslintrc-style plugins/configs with the new flat config format.)*
 
 ### 2. Prettier (`.prettierrc.js`)
 
@@ -138,7 +151,7 @@ Navigate to the `SpeedyMeds` directory in your terminal and use the scripts defi
   # or yarn lint
   ```
 
-  This command runs ESLint and reports any errors or warnings found based on the `.eslintrc.js` configuration.
+  This command runs ESLint and reports any errors or warnings found based on the `eslint.config.mjs` configuration.
 
 - **Automatically Format Code:**
   ```bash
