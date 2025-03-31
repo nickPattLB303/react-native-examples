@@ -123,6 +123,28 @@ Add scripts for easy linting and formatting:
 },
 ```
 
+## Running Linters and Formatters Manually
+
+While VS Code integration provides real-time feedback and format-on-save, you can also run these tools manually across the entire project from your terminal. This is useful for checking everything before committing or as part of CI/CD checks later.
+
+Navigate to the `SpeedyMeds` directory in your terminal and use the scripts defined in `package.json`:
+
+*   **Check for Lint Errors:**
+    ```bash
+    npm run lint
+    # or yarn lint
+    ```
+    This command runs ESLint and reports any errors or warnings found based on the `.eslintrc.js` configuration.
+
+*   **Automatically Format Code:**
+    ```bash
+    npm run format
+    # or yarn format
+    ```
+    This command runs Prettier and modifies files in place to match the formatting rules defined in `.prettierrc.js`.
+
+*(Note: We use `npm run` or `yarn` here because these are custom scripts defined in `package.json`, not direct Expo commands.)*
+
 ## VS Code Integration
 
 To get the most benefit, integrate these tools with VS Code:
