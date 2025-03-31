@@ -1,5 +1,5 @@
-// Import built-in Jest matchers from RNTL
-import '@testing-library/react-native/extend-expect';
+// Import built-in Jest matchers
+import '@testing-library/jest-native/extend-expect';
 
 // Add any other global setup items here if needed later
 // e.g., mocking native modules, setting up mocks for libraries
