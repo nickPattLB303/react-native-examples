@@ -47,7 +47,7 @@ To use the helpful matchers from `@testing-library/jest-native` (like `toBeVisib
   ```javascript
   // Planned jest.setup.js
   // Import Jest Native matchers
-  import '@testing-library/jest-native/extend-expect';
+  import "@testing-library/jest-native/extend-expect";
 
   // Add any other global setup items here if needed later
   // e.g., mocking native modules, setting up mocks for libraries
@@ -58,7 +58,7 @@ To use the helpful matchers from `@testing-library/jest-native` (like `toBeVisib
   // Example addition to jest.config.js
   module.exports = {
     // ... other Jest config (likely preset: 'jest-expo')
-    setupFilesAfterEnv: ['./jest.setup.js'], // Or .ts if using TypeScript
+    setupFilesAfterEnv: ["./jest.setup.js"], // Or .ts if using TypeScript
   };
   ```
 

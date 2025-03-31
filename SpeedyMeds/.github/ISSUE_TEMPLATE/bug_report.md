@@ -1,9 +1,9 @@
 ---
 name: Bug Report
 about: Create a report to help us improve SpeedyMeds
-title: '[BUG] Brief description of the bug'
+title: "[BUG] Brief description of the bug"
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
 **Describe the bug**

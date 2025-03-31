@@ -1,6 +1,6 @@
 module.exports = {
-  preset: 'jest-expo',
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  preset: "jest-expo",
+  setupFilesAfterEnv: ["./jest.setup.js"],
   // Optional: Add moduleNameMapper if needed for path aliases later
   // moduleNameMapper: {
   //   '^@components/(.*)$': '<rootDir>/src/components/$1',

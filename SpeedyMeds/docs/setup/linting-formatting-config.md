@@ -38,16 +38,16 @@ This project uses ESLint's newer "flat config" format, configured in `eslint.con
 
 ```javascript
 // Current eslint.config.mjs (simplified representation)
-import { defineConfig, globalIgnores } from 'eslint/config';
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
 // ... other imports (plugins, parser, globals)
 
 export default defineConfig([
   // 1. Global Ignores: Define files/patterns ESLint should ignore
   globalIgnores([
-    '**/node_modules/',
-    '**/build/',
-    '**/.expo/',
+    "**/node_modules/",
+    "**/build/",
+    "**/.expo/",
     // ... other ignores
   ]),
   // 2. Main Configuration Object(s): An array of config objects
@@ -55,18 +55,18 @@ export default defineConfig([
     // Extends base recommended rulesets using compatibility tools
     extends: fixupConfigRules(
       compat.extends(
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended',
-        'plugin:react-hooks/recommended',
-        'plugin:prettier/recommended' // Integrates Prettier rules
-      )
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended", // Integrates Prettier rules
+      ),
     ),
     // Defines plugins used
     plugins: {
-      '@typescript-eslint': fixupPluginRules(typescriptEslint),
+      "@typescript-eslint": fixupPluginRules(typescriptEslint),
       react: fixupPluginRules(react),
-      'react-hooks': fixupPluginRules(reactHooks),
+      "react-hooks": fixupPluginRules(reactHooks),
     },
     // Language Options: Configure parser, globals, etc.
     languageOptions: {
@@ -79,19 +79,23 @@ export default defineConfig([
     },
     // Settings for plugins (e.g., React version detection)
     settings: {
-      react: { version: 'detect' },
+      react: { version: "detect" },
     },
     // Specific Rule Overrides
     rules: {
-      'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ],
       // ... other rules
     },
   },
   // ... potentially more config objects for specific file types/overrides
 ]);
 ```
-*(Note: The actual file uses compatibility helpers (`fixupConfigRules`, `fixupPluginRules`, `FlatCompat`) to bridge older eslintrc-style plugins/configs with the new flat config format.)*
+
+_(Note: The actual file uses compatibility helpers (`fixupConfigRules`, `fixupPluginRules`, `FlatCompat`) to bridge older eslintrc-style plugins/configs with the new flat config format.)_
 
 ### 2. Prettier (`.prettierrc.js`)
 
@@ -103,10 +107,10 @@ module.exports = {
   semi: true, // Add semicolons at the end of statements
   singleQuote: true, // Use single quotes instead of double quotes
   jsxSingleQuote: false, // Use double quotes in JSX
-  trailingComma: 'es5', // Add trailing commas where valid in ES5 (objects, arrays, etc.)
+  trailingComma: "es5", // Add trailing commas where valid in ES5 (objects, arrays, etc.)
   tabWidth: 2, // Number of spaces per indentation-level
   printWidth: 80, // Specify the line length that the printer will wrap on
-  arrowParens: 'always', // Include parentheses around a sole arrow function parameter
+  arrowParens: "always", // Include parentheses around a sole arrow function parameter
 };
 ```
 
