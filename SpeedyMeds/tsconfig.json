@@ -1,6 +1,10 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "noUnusedLocals": true, // Disallow unused local variables
+    "noUnusedParameters": true, // Disallow unused function parameters
+    "noImplicitReturns": true, // Ensure all code paths return a value if expected
+    "forceConsistentCasingInFileNames": true // Ensure imports match file name casing
   }
 }
