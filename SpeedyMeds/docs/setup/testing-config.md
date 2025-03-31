@@ -31,9 +31,9 @@ We will verify these exist. The default `jest-expo` preset often handles much of
 
 We need to add RNTL and the Jest Native matchers.
 
-Command (to be run in Code mode):
+Command :
 ```bash
-npx expo install --save-dev @testing-library/react-native @testing-library/jest-native
+npx expo install @testing-library/react-native @testing-library/jest-native -- --save-dev
 ```
 
 ### 3. Configure Jest for RNTL Matchers

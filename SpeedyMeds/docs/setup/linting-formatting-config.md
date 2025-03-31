@@ -22,9 +22,9 @@ We will install the following development dependencies:
 *   **`eslint-config-prettier`**: Disables ESLint rules that conflict with Prettier.
 *   **`eslint-plugin-prettier`**: Runs Prettier as an ESLint rule and reports differences as ESLint issues.
 
-Command (to be run in Code mode):
+Command:
 ```bash
-npx expo install --save-dev eslint prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier
+npx expo install eslint prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier -- --save-dev
 ```
 *(Note: `npx expo install` is used even for dev dependencies to ensure compatibility within the Expo ecosystem where possible, although `npm install --save-dev` would also work.)*
 
