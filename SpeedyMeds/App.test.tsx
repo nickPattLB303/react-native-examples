@@ -8,7 +8,9 @@ describe('<App />', () => {
 
     // Check if the default text from the Expo template is present
     // Adjust this text if you have already modified App.tsx
-    const messageElement = screen.getByText(/Open up App.tsx to start working on your app!/i);
+    const messageElement = screen.getByText(
+      /Open up App.tsx to start working on your app!/i
+    );
     expect(messageElement).toBeVisible();
   });
 

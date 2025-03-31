@@ -31,10 +31,10 @@
 
 **Test Configuration:**
 
-*   Expo Go Version:
-*   React Native Version:
-*   Device(s)/Emulator(s):
-*   Operating System:
+- Expo Go Version:
+- React Native Version:
+- Device(s)/Emulator(s):
+- Operating System:
 
 ## Screenshots (if applicable)
 

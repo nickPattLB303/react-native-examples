@@ -8,7 +8,7 @@ We will simulate a professional development environment, utilizing standard work
 
 ### UI Mockups
 
-*(These represent the target design for the application)*
+_(These represent the target design for the application)_
 
 **Dashboard:**
 ![Dashboard](./assets/images/dashboard.svg)
@@ -28,38 +28,38 @@ This repository is intended for developers participating in the React Native tra
 
 ## Key Features (Based on Mockups)
 
-*   **Home Dashboard:** Displays welcome message, current balance, quick navigation cards (Prescriptions, Orders, Delivery, Resources), and medication reminders.
-*   **Prescriptions Screen:** Allows searching/filtering prescriptions and displays a list including drug info, dosage, days supply, patient, refills, alerts, and actions.
-*   **Order Detail Screen:** Shows details for a specific order (drug info, order date/number), a status tracker (Placed, Processing, Shipped, Delivered), tracking number with a tracking button, and shipping address.
-*   **Account Screen:** Displays user profile summary (avatar, name, ID) and provides navigation to manage Personal Information, Payment Methods, Communication Preferences, Security, Help & Support, along with a Log Out button.
-*   **Global Navigation:** Consistent bottom tab bar for Home, Prescriptions, Orders, and Account sections.
+- **Home Dashboard:** Displays welcome message, current balance, quick navigation cards (Prescriptions, Orders, Delivery, Resources), and medication reminders.
+- **Prescriptions Screen:** Allows searching/filtering prescriptions and displays a list including drug info, dosage, days supply, patient, refills, alerts, and actions.
+- **Order Detail Screen:** Shows details for a specific order (drug info, order date/number), a status tracker (Placed, Processing, Shipped, Delivered), tracking number with a tracking button, and shipping address.
+- **Account Screen:** Displays user profile summary (avatar, name, ID) and provides navigation to manage Personal Information, Payment Methods, Communication Preferences, Security, Help & Support, along with a Log Out button.
+- **Global Navigation:** Consistent bottom tab bar for Home, Prescriptions, Orders, and Account sections.
 
 ## Technology Stack
 
 This project utilizes the following core technologies:
 
-*   **React Native:** Framework for building native mobile apps using React. ([Official Docs](https://reactnative.dev/docs/getting-started))
-*   **Expo:** Platform and toolset for React Native development, simplifying builds and development workflows. ([Official Docs](https://docs.expo.dev/))
-*   **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability. ([Official Docs](https://www.typescriptlang.org/docs/))
-*   **Jest:** JavaScript testing framework (comes configured with Expo). ([Official Docs](https://jestjs.io/docs/getting-started))
-*   **React Native Testing Library:** Utilities for testing React Native components. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
-*   **React Navigation:** Routing and navigation solution (Phase 3). ([Official Docs](https://reactnavigation.org/))
-*   **ESLint & Prettier:** Code linting and formatting (to be configured).
-*   **(Phase 3 Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
+- **React Native:** Framework for building native mobile apps using React. ([Official Docs](https://reactnative.dev/docs/getting-started))
+- **Expo:** Platform and toolset for React Native development, simplifying builds and development workflows. ([Official Docs](https://docs.expo.dev/))
+- **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability. ([Official Docs](https://www.typescriptlang.org/docs/))
+- **Jest:** JavaScript testing framework (comes configured with Expo). ([Official Docs](https://jestjs.io/docs/getting-started))
+- **React Native Testing Library:** Utilities for testing React Native components. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
+- **React Navigation:** Routing and navigation solution (Phase 3). ([Official Docs](https://reactnavigation.org/))
+- **ESLint & Prettier:** Code linting and formatting (to be configured).
+- **(Phase 3 Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
 
 ## Getting Started
 
 ### Prerequisites
 
-*   **Node.js:** LTS version recommended. [Download Node.js](https://nodejs.org/)
-*   **npm:** Comes bundled with Node.js.
-*   **Git:** For version control. [Download Git](https://git-scm.com/)
-*   **Code Editor:** VS Code is recommended. [Download VS Code](https://code.visualstudio.com/)
-*   **iOS Simulator:** Requires Xcode (macOS only).
-*   **Android Emulator:** Requires Android Studio.
-*   **(Optional) Expo Go App:** For testing on physical devices. [Expo Go](https://expo.dev/go)
+- **Node.js:** LTS version recommended. [Download Node.js](https://nodejs.org/)
+- **npm:** Comes bundled with Node.js.
+- **Git:** For version control. [Download Git](https://git-scm.com/)
+- **Code Editor:** VS Code is recommended. [Download VS Code](https://code.visualstudio.com/)
+- **iOS Simulator:** Requires Xcode (macOS only).
+- **Android Emulator:** Requires Android Studio.
+- **(Optional) Expo Go App:** For testing on physical devices. [Expo Go](https://expo.dev/go)
 
-*(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions for simulators/emulators.)*
+_(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions for simulators/emulators.)_
 
 ### Setup
 
@@ -72,7 +72,7 @@ This project utilizes the following core technologies:
     ```bash
     npx expo install
     ```
-    *(This command wraps `npm install` or `yarn add` and checks for version compatibility within the Expo ecosystem.)*
+    _(This command wraps `npm install` or `yarn add` and checks for version compatibility within the Expo ecosystem.)_
 
 ### Running the App (Simulators/Emulators Recommended)
 
@@ -82,19 +82,21 @@ This project utilizes the following core technologies:
     npx expo start
     ```
 3.  **Open the App:**
-    *   **On iOS Simulator:** Press `i` in the terminal where Expo Metro Bundler is running.
-    *   **On Android Emulator:** Press `a` in the terminal.
-    *   **(Optional) On Physical Device:** Ensure the Expo Go app is installed and scan the QR code displayed in the terminal using the app. Your computer and device must be on the same Wi-Fi network.
+    - **On iOS Simulator:** Press `i` in the terminal where Expo Metro Bundler is running.
+    - **On Android Emulator:** Press `a` in the terminal.
+    - **(Optional) On Physical Device:** Ensure the Expo Go app is installed and scan the QR code displayed in the terminal using the app. Your computer and device must be on the same Wi-Fi network.
 
 ### Running Tests
 
 Unit tests are run using Jest.
+
 ```bash
 npx expo run:test # Or potentially 'npm test' or 'yarn test' depending on package.json scripts
 ```
-*(Note: Test scripts and configuration will be refined during Phase 1/2.)*
 
-*(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)*
+_(Note: Test scripts and configuration will be refined during Phase 1/2.)_
+
+_(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)_
 
 ## Project Structure (Initial)
 
@@ -120,7 +122,8 @@ SpeedyMeds/
 ├── SETUP.md              # Detailed environment setup guide
 └── USAGE.md              # Application usage guide
 ```
-*(Note: This structure will evolve as we add screens, components, and other features.)*
+
+_(Note: This structure will evolve as we add screens, components, and other features.)_
 
 ## Development Workflow
 
@@ -132,11 +135,11 @@ This project is structured in multiple phases as outlined in the [ROADMAP.md](./
 
 ## Documentation
 
-*   [SETUP.md](./SETUP.md)
-*   [CONTRIBUTING.md](./CONTRIBUTING.md)
-*   [USAGE.md](./USAGE.md)
-*   [ROADMAP.md](./ROADMAP.md)
-*   [CHANGELOG.md](./CHANGELOG.md)
+- [SETUP.md](./SETUP.md)
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [USAGE.md](./USAGE.md)
+- [ROADMAP.md](./ROADMAP.md)
+- [CHANGELOG.md](./CHANGELOG.md)
 
 ## Contact & Support
 

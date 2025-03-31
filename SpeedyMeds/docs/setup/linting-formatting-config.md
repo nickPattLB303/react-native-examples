@@ -4,29 +4,31 @@ This document outlines the setup for ESLint (code linting) and Prettier (code fo
 
 ## Goals
 
-*   **Enforce Code Quality:** Catch common JavaScript/TypeScript errors and potential bugs.
-*   **Maintain Consistent Style:** Ensure all code follows the same formatting rules, reducing cognitive load and simplifying code reviews.
-*   **Automate Formatting:** Allow developers to automatically format code on save or via a command.
-*   **Integrate Tools:** Make ESLint and Prettier work together seamlessly.
+- **Enforce Code Quality:** Catch common JavaScript/TypeScript errors and potential bugs.
+- **Maintain Consistent Style:** Ensure all code follows the same formatting rules, reducing cognitive load and simplifying code reviews.
+- **Automate Formatting:** Allow developers to automatically format code on save or via a command.
+- **Integrate Tools:** Make ESLint and Prettier work together seamlessly.
 
 ## Tools & Packages
 
 We will install the following development dependencies:
 
-*   **`eslint`**: The core linting tool.
-*   **`prettier`**: The core code formatter.
-*   **`@typescript-eslint/parser`**: Allows ESLint to understand TypeScript syntax.
-*   **`@typescript-eslint/eslint-plugin`**: Provides TypeScript-specific linting rules.
-*   **`eslint-plugin-react`**: Provides React-specific linting rules.
-*   **`eslint-plugin-react-hooks`**: Enforces Rules of Hooks.
-*   **`eslint-config-prettier`**: Disables ESLint rules that conflict with Prettier.
-*   **`eslint-plugin-prettier`**: Runs Prettier as an ESLint rule and reports differences as ESLint issues.
+- **`eslint`**: The core linting tool.
+- **`prettier`**: The core code formatter.
+- **`@typescript-eslint/parser`**: Allows ESLint to understand TypeScript syntax.
+- **`@typescript-eslint/eslint-plugin`**: Provides TypeScript-specific linting rules.
+- **`eslint-plugin-react`**: Provides React-specific linting rules.
+- **`eslint-plugin-react-hooks`**: Enforces Rules of Hooks.
+- **`eslint-config-prettier`**: Disables ESLint rules that conflict with Prettier.
+- **`eslint-plugin-prettier`**: Runs Prettier as an ESLint rule and reports differences as ESLint issues.
 
 Command:
+
 ```bash
 npx expo install eslint prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier -- --save-dev
 ```
-*(Note: `npx expo install` is used even for dev dependencies to ensure compatibility within the Expo ecosystem where possible, although `npm install --save-dev` would also work.)*
+
+_(Note: `npx expo install` is used even for dev dependencies to ensure compatibility within the Expo ecosystem where possible, although `npm install --save-dev` would also work.)_
 
 ## Configuration Files
 
@@ -71,7 +73,7 @@ module.exports = {
   rules: {
     // Add custom rules or overrides here if needed later
     'react/react-in-jsx-scope': 'off', // Not needed with modern React/JSX transform
-    '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }], // Warn about unused vars, allow underscore prefix
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Warn about unused vars, allow underscore prefix
     // Add other specific rules as the team/instructor sees fit
   },
   ignorePatterns: ['node_modules/', 'build/', '.expo/', '*.config.js'], // Ignore specific files/dirs
@@ -129,29 +131,31 @@ While VS Code integration provides real-time feedback and format-on-save, you ca
 
 Navigate to the `SpeedyMeds` directory in your terminal and use the scripts defined in `package.json`:
 
-*   **Check for Lint Errors:**
-    ```bash
-    npm run lint
-    # or yarn lint
-    ```
-    This command runs ESLint and reports any errors or warnings found based on the `.eslintrc.js` configuration.
+- **Check for Lint Errors:**
 
-*   **Automatically Format Code:**
-    ```bash
-    npm run format
-    # or yarn format
-    ```
-    This command runs Prettier and modifies files in place to match the formatting rules defined in `.prettierrc.js`.
+  ```bash
+  npm run lint
+  # or yarn lint
+  ```
 
-*(Note: We use `npm run` or `yarn` here because these are custom scripts defined in `package.json`, not direct Expo commands.)*
+  This command runs ESLint and reports any errors or warnings found based on the `.eslintrc.js` configuration.
+
+- **Automatically Format Code:**
+  ```bash
+  npm run format
+  # or yarn format
+  ```
+  This command runs Prettier and modifies files in place to match the formatting rules defined in `.prettierrc.js`.
+
+_(Note: We use `npm run` or `yarn` here because these are custom scripts defined in `package.json`, not direct Expo commands.)_
 
 ## VS Code Integration
 
 To get the most benefit, integrate these tools with VS Code:
 
 1.  **Install Extensions:** Ensure you have installed the recommended extensions mentioned in `SETUP.md`:
-    *   `dbaeumer.vscode-eslint`
-    *   `esbenp.prettier-vscode`
+    - `dbaeumer.vscode-eslint`
+    - `esbenp.prettier-vscode`
 2.  **Configure Settings (`.vscode/settings.json`):** Create a `.vscode` folder in the `SpeedyMeds` root and add a `settings.json` file with the following content. This enables format-on-save using Prettier and ESLint auto-fixing.
     ```json
     // .vscode/settings.json

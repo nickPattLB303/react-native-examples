@@ -23,17 +23,17 @@ We use a simple GitHub Flow approach:
     git pull origin main
     ```
 2.  **Create a Feature Branch:** Create a new branch off `main` for your specific task (feature, bug fix, chore). Use a descriptive naming convention:
-    *   `feature/short-description` (e.g., `feature/dashboard-layout`)
-    *   `fix/short-description` (e.g., `fix/login-button-alignment`)
-    *   `chore/short-description` (e.g., `chore/update-dependencies`)
-    *   `test/short-description` (e.g., `test/add-button-tests`)
+    - `feature/short-description` (e.g., `feature/dashboard-layout`)
+    - `fix/short-description` (e.g., `fix/login-button-alignment`)
+    - `chore/short-description` (e.g., `chore/update-dependencies`)
+    - `test/short-description` (e.g., `test/add-button-tests`)
     ```bash
     git checkout -b feature/your-feature-name
     ```
 3.  **Commit Changes:** Make your code changes. Commit frequently with clear, concise messages. We recommend following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification:
-    *   Start with a type (`feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`, `test:`).
-    *   Follow with a short description in the present tense.
-    *   Example: `feat: add user profile avatar to account screen`
+    - Start with a type (`feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`, `test:`).
+    - Follow with a short description in the present tense.
+    - Example: `feat: add user profile avatar to account screen`
     ```bash
     git add .
     git commit -m "feat: add user profile avatar to account screen"
@@ -58,22 +58,22 @@ Once your feature or fix is complete:
 
 ## Code Standards
 
-*   **Language:** Use TypeScript. Follow best practices taught in the course.
-*   **Styling:** Adhere to the "Calm & Clear" visual style. Use `StyleSheet` for Phase 2 and `react-native-paper`/`styled-components` for Phase 3 as directed.
-*   **Linting/Formatting:** Follow the rules defined by ESLint and Prettier (once configured). Ensure your code passes linting checks (`npx eslint .` and `npx prettier --check .`) before creating a PR.
-*   **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
-*   **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.
-*   **Testing:** Write unit tests using Jest and React Native Testing Library for new components, custom hooks, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
+- **Language:** Use TypeScript. Follow best practices taught in the course.
+- **Styling:** Adhere to the "Calm & Clear" visual style. Use `StyleSheet` for Phase 2 and `react-native-paper`/`styled-components` for Phase 3 as directed.
+- **Linting/Formatting:** Follow the rules defined by ESLint and Prettier (once configured). Ensure your code passes linting checks (`npx eslint .` and `npx prettier --check .`) before creating a PR.
+- **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
+- **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.
+- **Testing:** Write unit tests using Jest and React Native Testing Library for new components, custom hooks, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
 
 ## Code Reviews
 
-*   **Reviewers:** Provide constructive, respectful feedback focused on correctness, clarity, adherence to standards (including testing), and learning opportunities. Use GitHub's review comment features. Check if tests pass and cover the changes adequately.
-*   **Authors:** Be receptive to feedback. Discuss suggestions respectfully and make necessary updates to your branch, including adding or modifying tests as needed. Push the changes to update the PR. Address all comments before requesting re-review or merging.
+- **Reviewers:** Provide constructive, respectful feedback focused on correctness, clarity, adherence to standards (including testing), and learning opportunities. Use GitHub's review comment features. Check if tests pass and cover the changes adequately.
+- **Authors:** Be receptive to feedback. Discuss suggestions respectfully and make necessary updates to your branch, including adding or modifying tests as needed. Push the changes to update the PR. Address all comments before requesting re-review or merging.
 
 ## Communication
 
-*   Use the designated course communication channel (e.g., WebEx, Slack) for general questions, discussions, and coordination.
-*   Use GitHub PR comments for specific feedback related to code changes.
-*   Use GitHub Issues for tracking specific tasks, bugs, and feature requests.
+- Use the designated course communication channel (e.g., WebEx, Slack) for general questions, discussions, and coordination.
+- Use GitHub PR comments for specific feedback related to code changes.
+- Use GitHub Issues for tracking specific tasks, bugs, and feature requests.
 
 Thank you for contributing to a positive and productive learning environment!

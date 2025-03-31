@@ -6,29 +6,29 @@ This guide provides detailed instructions for setting up your development enviro
 
 ## Prerequisites Recap
 
-*   **Node.js & npm:** Required for running JavaScript, managing packages, and using Expo CLI. Verify installation:
-    ```bash
-    node -v
-    npm -v
-    ```
-    If not installed, download from [nodejs.org](https://nodejs.org/). LTS version is recommended.
-*   **Git:** Required for version control. Verify installation:
-    ```bash
-    git --version
-    ```
-    If not installed, download from [git-scm.com](https://git-scm.com/).
-*   **Code Editor:** VS Code is highly recommended due to its excellent TypeScript and React Native support. Download from [code.visualstudio.com](https://code.visualstudio.com/).
-*   **iOS Simulator (macOS Only):** Requires Xcode.
-*   **Android Emulator:** Requires Android Studio.
+- **Node.js & npm:** Required for running JavaScript, managing packages, and using Expo CLI. Verify installation:
+  ```bash
+  node -v
+  npm -v
+  ```
+  If not installed, download from [nodejs.org](https://nodejs.org/). LTS version is recommended.
+- **Git:** Required for version control. Verify installation:
+  ```bash
+  git --version
+  ```
+  If not installed, download from [git-scm.com](https://git-scm.com/).
+- **Code Editor:** VS Code is highly recommended due to its excellent TypeScript and React Native support. Download from [code.visualstudio.com](https://code.visualstudio.com/).
+- **iOS Simulator (macOS Only):** Requires Xcode.
+- **Android Emulator:** Requires Android Studio.
 
 ## Recommended VS Code Extensions
 
 Install these extensions in VS Code for a better development experience:
 
-*   **ESLint:** Integrates ESLint into VS Code (we will configure ESLint later). Search for `dbaeumer.vscode-eslint` in the Extensions view (Ctrl+Shift+X or Cmd+Shift+X).
-*   **Prettier - Code formatter:** Integrates Prettier for automatic code formatting (we will configure Prettier later). Search for `esbenp.prettier-vscode`.
-*   **React Native Tools:** Provides debugging, IntelliSense, and command integration for React Native. Search for `msjsdiag.vscode-react-native`.
-*   **(Optional) GitLens — Git supercharged:** Enhances Git capabilities within VS Code (viewing history, blame, etc.). Search for `eamodio.gitlens`.
+- **ESLint:** Integrates ESLint into VS Code (we will configure ESLint later). Search for `dbaeumer.vscode-eslint` in the Extensions view (Ctrl+Shift+X or Cmd+Shift+X).
+- **Prettier - Code formatter:** Integrates Prettier for automatic code formatting (we will configure Prettier later). Search for `esbenp.prettier-vscode`.
+- **React Native Tools:** Provides debugging, IntelliSense, and command integration for React Native. Search for `msjsdiag.vscode-react-native`.
+- **(Optional) GitLens — Git supercharged:** Enhances Git capabilities within VS Code (viewing history, blame, etc.). Search for `eamodio.gitlens`.
 
 ## Simulator / Emulator Setup
 
@@ -42,12 +42,12 @@ Install these extensions in VS Code for a better development experience:
 
 1.  **Install Android Studio:** Download and install Android Studio from the [official Android Developers site](https://developer.android.com/studio).
 2.  **Configure Emulator:**
-    *   Open Android Studio.
-    *   Go to `Tools` > `Device Manager` (or look for the Device Manager icon/menu item).
-    *   Click `Create device`.
-    *   Choose a device definition (e.g., Pixel 6 or similar) and click `Next`.
-    *   Select a system image (choose a recent API level, download if necessary) and click `Next`.
-    *   Verify configuration and click `Finish`.
+    - Open Android Studio.
+    - Go to `Tools` > `Device Manager` (or look for the Device Manager icon/menu item).
+    - Click `Create device`.
+    - Choose a device definition (e.g., Pixel 6 or similar) and click `Next`.
+    - Select a system image (choose a recent API level, download if necessary) and click `Next`.
+    - Verify configuration and click `Finish`.
 3.  **Launch Emulator:** In the Device Manager, click the "Play" (triangle) button next to the virtual device you created. Wait for the emulator to boot up completely before running the Expo start command.
 
 ## Running the App (Detailed)
@@ -67,9 +67,9 @@ Install these extensions in VS Code for a better development experience:
     ```
     This command starts the Metro Bundler, which compiles your JavaScript code and serves it to the Expo Go app or simulators/emulators. It will also display a QR code and provide options in the terminal.
 5.  **Run on Simulator/Emulator:**
-    *   **iOS Simulator:** Press `i` in the terminal where Metro Bundler is running.
-    *   **Android Emulator:** Press `a` in the terminal.
-    Expo CLI will attempt to install the Expo Go app onto the simulator/emulator (if needed) and launch your project.
+    - **iOS Simulator:** Press `i` in the terminal where Metro Bundler is running.
+    - **Android Emulator:** Press `a` in the terminal.
+      Expo CLI will attempt to install the Expo Go app onto the simulator/emulator (if needed) and launch your project.
 
 ### (Optional) Running on Physical Device
 
@@ -80,11 +80,11 @@ Install these extensions in VS Code for a better development experience:
 
 ## Troubleshooting Common Issues
 
-*   **Watchman Issues (macOS):** If you encounter errors related to Watchman (a file watching service), try installing or reinstalling it using Homebrew: `brew install watchman`.
-*   **Emulator/Simulator Connection Problems:**
-    *   Ensure the emulator/simulator is fully booted *before* pressing `a` or `i`.
-    *   Try restarting the Metro Bundler (`Ctrl+C` then `npx expo start`).
-    *   Try clearing the Expo Go cache (inside Expo Go app settings on the device/emulator) or reinstalling Expo Go on the simulator/emulator. You might need to wipe emulator data or uninstall/reinstall Expo Go via Expo CLI commands if issues persist.
-*   **Android SDK Issues:** Ensure necessary SDK components are installed via Android Studio's SDK Manager (`Tools` > `SDK Manager`). You might need specific "Android SDK Platform" versions or "Android SDK Build-Tools".
+- **Watchman Issues (macOS):** If you encounter errors related to Watchman (a file watching service), try installing or reinstalling it using Homebrew: `brew install watchman`.
+- **Emulator/Simulator Connection Problems:**
+  - Ensure the emulator/simulator is fully booted _before_ pressing `a` or `i`.
+  - Try restarting the Metro Bundler (`Ctrl+C` then `npx expo start`).
+  - Try clearing the Expo Go cache (inside Expo Go app settings on the device/emulator) or reinstalling Expo Go on the simulator/emulator. You might need to wipe emulator data or uninstall/reinstall Expo Go via Expo CLI commands if issues persist.
+- **Android SDK Issues:** Ensure necessary SDK components are installed via Android Studio's SDK Manager (`Tools` > `SDK Manager`). You might need specific "Android SDK Platform" versions or "Android SDK Build-Tools".
 
 Refer to the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#set-up-your-environment) for more comprehensive troubleshooting.
