@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import App from './App'; // Import the component to test
+import App from '../App'; // Import the component to test
 
 describe('<App />', () => {
   it('renders default message', () => {
