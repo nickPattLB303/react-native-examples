@@ -1,13 +1,20 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './src/navigation/AppNavigator'; // Import the navigator
+import { Provider as PaperProvider } from 'react-native-paper';
+import { ThemeProvider } from 'styled-components/native';
+import AppNavigator from './src/navigation/AppNavigator';
+
+// TODO: Define or import theme later
+const theme = {}; // Placeholder theme
 
 export default function App() {
+
   return (
-    <>
-      {/* The NavigationContainer is now inside AppNavigator */}
-      <AppNavigator />
-      <StatusBar style="auto" />
-    </>
+    <PaperProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <AppNavigator />
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </PaperProvider>
   );
 }
