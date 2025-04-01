@@ -48,6 +48,7 @@ We use a simple GitHub Flow approach:
 Once your feature or fix is complete:
 
 1.  **Run Linters & Tests:** Ensure your code passes linting checks and all unit tests pass locally:
+
     ```bash
     # Check for linting errors
     npm run lint
@@ -57,6 +58,7 @@ Once your feature or fix is complete:
     npm run test
     # or yarn test
     ```
+
 2.  **Create a Pull Request:** Go to the GitHub repository and create a new Pull Request from your feature branch targeting the `main` branch.
 3.  **Use the Template:** Fill out the PR template (`.github/PULL_REQUEST_TEMPLATE.md`) providing details about the changes, motivation, testing steps, and test results.
 4.  **Link Issues:** If your PR addresses a specific issue, link it in the PR description (e.g., "Closes #123").

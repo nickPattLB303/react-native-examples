@@ -65,15 +65,18 @@ Install these extensions in VS Code for a better development experience:
     ```bash
     npx expo install
     ```
-3.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
-4.  **Start Metro Bundler:** Run the Expo development server using the `--localhost` flag:
+4.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
+5.  **Start Metro Bundler:** Run the Expo development server using the `--localhost` flag:
+
     ```bash
     npx expo start --localhost
     ```
+
     **Why `--localhost`?** This flag forces the Metro bundler to serve the app using your computer's local IP address instead of potentially using a tunnel service (like `ngrok`). This is often necessary in specific network environments or when using the `NODE_TLS_REJECT_UNAUTHORIZED=0` setting from the `.env` file.
 
     This command starts the Metro Bundler, which compiles your JavaScript code and serves it to the Expo Go app or simulators/emulators. It will also display a QR code and provide options in the terminal.
-5.  **Run on Simulator/Emulator:**
+
+6.  **Run on Simulator/Emulator:**
     - **iOS Simulator:** Press `i` in the terminal where Metro Bundler is running.
     - **Android Emulator:** Press `a` in the terminal.
       Expo CLI will attempt to install the Expo Go app onto the simulator/emulator (if needed) and launch your project.
@@ -90,7 +93,8 @@ Use `npx expo install` **without arguments** after cloning the repository or del
 # Installs all dependencies based on package.json and ensures compatibility
 npx expo install
 ```
-*   **Why:** This command ensures that the versions installed (and recorded in `package-lock.json`) are compatible with your project's Expo SDK version. It's the recommended way to perform the initial install for an Expo project.
+
+- **Why:** This command ensures that the versions installed (and recorded in `package-lock.json`) are compatible with your project's Expo SDK version. It's the recommended way to perform the initial install for an Expo project.
 
 ### Adding NEW Individual Dependencies
 
@@ -104,8 +108,9 @@ npx expo install some-new-library
 npx expo install some-dev-library --dev
 # Note: On Windows, you might need "--" before --dev: npx expo install some-dev-library -- --dev
 ```
-*   **Why:** `npx expo install [package-name]` checks the compatibility of the specific package version with your project's Expo SDK version, especially important for libraries with native code or those interacting closely with React Native APIs (like navigation, maps, gestures). It helps prevent common native module mismatches and other dependency conflicts. Using `npm install [package-name]` or `yarn add [package-name]` directly bypasses this check and might install an incompatible version.
-*   **When is `npm install [package-name] --save-dev` okay?** For development tools that *don't* interact with the Expo/React Native runtime (like `eslint`, `prettier`, most `@types/` packages) or pure JS utilities (`lodash`, `date-fns`), using `npm install --save-dev` is generally acceptable, as Expo's compatibility check isn't strictly necessary for them. However, using `npx expo install --dev` is still a safe default.
+
+- **Why:** `npx expo install [package-name]` checks the compatibility of the specific package version with your project's Expo SDK version, especially important for libraries with native code or those interacting closely with React Native APIs (like navigation, maps, gestures). It helps prevent common native module mismatches and other dependency conflicts. Using `npm install [package-name]` or `yarn add [package-name]` directly bypasses this check and might install an incompatible version.
+- **When is `npm install [package-name] --save-dev` okay?** For development tools that _don't_ interact with the Expo/React Native runtime (like `eslint`, `prettier`, most `@types/` packages) or pure JS utilities (`lodash`, `date-fns`), using `npm install --save-dev` is generally acceptable, as Expo's compatibility check isn't strictly necessary for them. However, using `npx expo install --dev` is still a safe default.
 
 For more details, see this article: [Why You Should Use “npx expo install” instead of “npm install” in Expo React Native App](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a)
 

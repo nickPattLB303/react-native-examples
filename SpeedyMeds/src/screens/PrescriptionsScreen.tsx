@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 const PrescriptionsScreen = () => {
   return (
@@ -12,12 +12,12 @@ const PrescriptionsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 20,
   },
 });
 
-export default PrescriptionsScreen; 
+export default PrescriptionsScreen;

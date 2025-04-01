@@ -32,12 +32,13 @@ npx expo lint
 ```
 
 This command:
+
 - Installs `eslint` and `eslint-config-expo` if not already present.
 - Creates a `.eslintrc.js` file at the project root with the basic Expo configuration:
   ```javascript
   // .eslintrc.js (Initial setup)
   module.exports = {
-    extends: 'expo',
+    extends: "expo",
   };
   ```
 - May prompt you to add a `lint` script to your `package.json` if one doesn't exist.
@@ -58,14 +59,15 @@ Update the `.eslintrc.js` file generated in Step 1 to include Prettier configura
 ```javascript
 // .eslintrc.js (Updated for Prettier)
 module.exports = {
-  extends: ['expo', 'prettier'], // Add 'prettier' to the end
-  plugins: ['prettier'],        // Add 'prettier' plugin
+  extends: ["expo", "prettier"], // Add 'prettier' to the end
+  plugins: ["prettier"], // Add 'prettier' plugin
   rules: {
-    'prettier/prettier': 'error', // Report Prettier differences as ESLint errors
+    "prettier/prettier": "error", // Report Prettier differences as ESLint errors
     // Add any other project-specific rule overrides here
   },
 };
 ```
+
 _(Note: You can use `'prettier/prettier': 'warn'` if you prefer formatting issues to be warnings.)_
 
 ### 4. Configure Prettier (Optional)
@@ -78,10 +80,10 @@ module.exports = {
   semi: true,
   singleQuote: true,
   jsxSingleQuote: false,
-  trailingComma: 'es5',
+  trailingComma: "es5",
   tabWidth: 2,
   printWidth: 80,
-  arrowParens: 'always',
+  arrowParens: "always",
 };
 ```
 

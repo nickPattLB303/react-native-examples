@@ -1,7 +1,7 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import styled from 'styled-components/native';
+import React from "react";
+import { View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import styled from "styled-components/native";
 
 const ScreenContainer = styled(View)`
   flex: 1;
@@ -31,4 +31,4 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-export default HomeScreen; 
+export default HomeScreen;

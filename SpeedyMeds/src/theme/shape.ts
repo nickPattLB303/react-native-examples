@@ -15,4 +15,4 @@ export const shape = {
 /**
  * @description Represents the keys available in the `shape` object.
  */
-export type ShapeKeys = keyof typeof shape; 
+export type ShapeKeys = keyof typeof shape;

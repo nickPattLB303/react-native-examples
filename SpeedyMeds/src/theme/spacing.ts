@@ -25,4 +25,4 @@ export const spacing = {
  * @description Represents the keys available in the `spacing` object.
  * Useful for creating types that accept only valid spacing keys.
  */
-export type SpacingKeys = keyof typeof spacing; 
+export type SpacingKeys = keyof typeof spacing;

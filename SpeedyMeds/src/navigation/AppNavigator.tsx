@@ -1,14 +1,14 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Import your placeholder screens
-import HomeScreen from '../screens/HomeScreen';
-import PrescriptionsScreen from '../screens/PrescriptionsScreen';
-import OrdersScreen from '../screens/OrdersScreen';
-import AccountScreen from '../screens/AccountScreen';
-import OrderDetailScreen from '../screens/OrderDetailScreen';
+import HomeScreen from "../screens/HomeScreen";
+import PrescriptionsScreen from "../screens/PrescriptionsScreen";
+import OrdersScreen from "../screens/OrdersScreen";
+import AccountScreen from "../screens/AccountScreen";
+import OrderDetailScreen from "../screens/OrderDetailScreen";
 
 // Define type checking for the navigators
 // Root stack includes the main TabNavigator and any screens outside the tabs (like OrderDetail)
@@ -58,7 +58,7 @@ function AppNavigator() {
         <Stack.Screen
           name="OrderDetail"
           component={OrderDetailScreen}
-          options={{ headerShown: true, title: 'Order Details' }} // Show header for this screen
+          options={{ headerShown: true, title: "Order Details" }} // Show header for this screen
         />
         {/* Add other stack screens (modals, etc.) here */}
       </Stack.Navigator>
@@ -66,4 +66,4 @@ function AppNavigator() {
   );
 }
 
-export default AppNavigator; 
+export default AppNavigator;

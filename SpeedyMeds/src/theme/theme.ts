@@ -1,9 +1,9 @@
-import { DefaultTheme } from 'react-native-paper';
-import type { MD3Theme } from 'react-native-paper'; // Import the type for Paper's Material Design 3 theme structure.
-import { colors } from './colors';
-import { spacing } from './spacing';
-import { fontSizes, fontWeights, fonts } from './typography';
-import { shape } from './shape';
+import { DefaultTheme } from "react-native-paper";
+import type { MD3Theme } from "react-native-paper"; // Import the type for Paper's Material Design 3 theme structure.
+import { colors } from "./colors";
+import { spacing } from "./spacing";
+import { fontSizes, fontWeights, fonts } from "./typography";
+import { shape } from "./shape";
 
 /**
  * @description Raw custom theme values, organized logically.
@@ -24,7 +24,11 @@ export const customTheme = {
  * mapping them to the expected properties of Paper's `MD3Theme` structure.
  * Includes custom properties (`customSpacing`, `customFontSizes`, etc.) for direct access in Styled Components.
  */
-export const theme: MD3Theme & { customSpacing: typeof spacing, customFontSizes: typeof fontSizes, customShape: typeof shape } = {
+export const theme: MD3Theme & {
+  customSpacing: typeof spacing;
+  customFontSizes: typeof fontSizes;
+  customShape: typeof shape;
+} = {
   ...DefaultTheme, // Start with Paper's default theme as a base
   colors: {
     ...DefaultTheme.colors, // Include default Paper colors
@@ -53,8 +57,8 @@ export const theme: MD3Theme & { customSpacing: typeof spacing, customFontSizes:
     // Error
     error: colors.error,
     onError: colors.textLight,
-    errorContainer: '#FFDAD6', // Default MD3 light error container, can customize
-    onErrorContainer: '#410002', // Default MD3 light on-error container, can customize
+    errorContainer: "#FFDAD6", // Default MD3 light error container, can customize
+    onErrorContainer: "#410002", // Default MD3 light on-error container, can customize
 
     // Backgrounds & Surfaces
     background: colors.background,
@@ -96,7 +100,7 @@ export const theme: MD3Theme & { customSpacing: typeof spacing, customFontSizes:
     },
     thin: {
       fontFamily: fonts.regular, // Assuming thin uses regular family
-      fontWeight: '100', // MD default thin weight
+      fontWeight: "100", // MD default thin weight
     },
     // It's often better to configure fonts using configureFonts (see Paper docs)
     // for full MD3 type scale support if needed.
@@ -116,4 +120,4 @@ export default theme;
 
 // Re-export the individual custom theme parts for potentially easier direct import
 // in styled-components, though accessing via `theme.customSpacing.m` is standard.
-export { colors, spacing, fontSizes, fontWeights, fonts, shape }; 
+export { colors, spacing, fontSizes, fontWeights, fonts, shape };

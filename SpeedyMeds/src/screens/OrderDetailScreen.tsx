@@ -1,10 +1,13 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator'; // Adjust path as needed
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/AppNavigator"; // Adjust path as needed
 
 // Define the props type using the RootStackParamList and the screen name
-type OrderDetailProps = NativeStackScreenProps<RootStackParamList, 'OrderDetail'>;
+type OrderDetailProps = NativeStackScreenProps<
+  RootStackParamList,
+  "OrderDetail"
+>;
 
 const OrderDetailScreen: React.FC<OrderDetailProps> = ({ route }) => {
   // Access the route params
@@ -21,8 +24,8 @@ const OrderDetailScreen: React.FC<OrderDetailProps> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 20,
@@ -30,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderDetailScreen; 
+export default OrderDetailScreen;
