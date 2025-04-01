@@ -1,6 +1,16 @@
-import { DefaultTheme } from "react-native-paper";
-import type { MD3Theme } from "react-native-paper"; // Import the type for Paper's Material Design 3 theme structure.
-import { colors } from "./colors";
+import {
+  MD3LightTheme,
+  MD3DarkTheme,
+  adaptNavigationTheme,
+} from "react-native-paper";
+import type { MD3Theme } from "react-native-paper";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import merge from "lodash.merge"; // Use lodash merge for deep merging
+
+import { colors as customColors } from "./colors"; // Keep custom base colors
 import { spacing } from "./spacing";
 import { fontSizes, fontWeights, fonts } from "./typography";
 import { shape } from "./shape";
@@ -10,7 +20,7 @@ import { shape } from "./shape";
  * This object holds our defined palette, spacing, typography, etc., before mapping to Paper's theme structure.
  */
 export const customTheme = {
-  colors,
+  colors: customColors,
   spacing,
   fontSizes,
   fontWeights,
@@ -18,74 +28,17 @@ export const customTheme = {
   shape,
 };
 
-/**
- * @description The final theme object used by both React Native Paper and Styled Components.
- * It merges React Native Paper's `DefaultTheme` with our custom values,
- * mapping them to the expected properties of Paper's `MD3Theme` structure.
- * Includes custom properties (`customSpacing`, `customFontSizes`, etc.) for direct access in Styled Components.
- */
-export const theme: MD3Theme & {
-  customSpacing: typeof spacing;
-  customFontSizes: typeof fontSizes;
-  customShape: typeof shape;
-} = {
-  ...DefaultTheme, // Start with Paper's default theme as a base
-  colors: {
-    ...DefaultTheme.colors, // Include default Paper colors
-
-    // --- Map custom colors to Paper's MD3 theme properties ---
-    // See: https://callstack.github.io/react-native-paper/docs/guides/theming/#theme-properties
-
-    // Primary
-    primary: colors.primary,
-    onPrimary: colors.textLight, // Text/icons on primary background
-    primaryContainer: colors.primaryLight, // Background for elements needing less emphasis than primary
-    onPrimaryContainer: colors.primaryDark, // Text/icons on primaryContainer
-
-    // Secondary
-    secondary: colors.secondary,
-    onSecondary: colors.textLight,
-    secondaryContainer: colors.secondaryLight,
-    onSecondaryContainer: colors.secondaryDark,
-
-    // Tertiary (Using Accent as Tertiary for now)
-    tertiary: colors.accent,
-    onTertiary: colors.textLight,
-    tertiaryContainer: colors.accent, // Example, adjust as needed
-    onTertiaryContainer: colors.textLight, // Example, adjust as needed
-
-    // Error
-    error: colors.error,
-    onError: colors.textLight,
-    errorContainer: "#FFDAD6", // Default MD3 light error container, can customize
-    onErrorContainer: "#410002", // Default MD3 light on-error container, can customize
-
-    // Backgrounds & Surfaces
-    background: colors.background,
-    onBackground: colors.textPrimary,
-    surface: colors.backgroundPaper, // General surface color (cards, sheets)
-    onSurface: colors.textPrimary,
-    surfaceVariant: colors.grey100, // Surface with slightly different emphasis
-    onSurfaceVariant: colors.textPrimary,
-    surfaceDisabled: colors.backgroundDisabled,
-    onSurfaceDisabled: colors.textDisabled,
-
-    // Outlines & Dividers
-    outline: colors.border,
-    outlineVariant: colors.grey200,
-
-    // Other common mappings
-    placeholder: colors.textSecondary,
-    disabled: colors.textDisabled, // Deprecated in v3, use onSurfaceDisabled
-    notification: colors.primary, // Often uses primary or error color
-
-    // Add any other specific MD3 color mappings needed
-  },
+// --- Reusable custom properties ---
+// These don't change between light/dark mode usually
+const customProperties = {
+  customSpacing: spacing,
+  customFontSizes: fontSizes,
+  customShape: shape,
+  // Note: We don't include base 'colors' here, map them per theme
+  // Note: fonts config might need adjustments based on light/dark if desired,
+  // but often the base font config remains the same.
   fonts: {
-    ...DefaultTheme.fonts,
-    // Map our custom fonts to the structure Paper expects.
-    // Paper v3 uses variants like bodySmall, bodyMedium, bodyLarge, titleSmall, etc.
-    // Mapping basic weights here for simplicity, can be expanded.
+    ...MD3LightTheme.fonts, // Start with base fonts
     regular: {
       fontFamily: fonts.regular,
       fontWeight: fontWeights.normal,
@@ -95,29 +48,142 @@ export const theme: MD3Theme & {
       fontWeight: fontWeights.medium,
     },
     light: {
-      fontFamily: fonts.regular, // Assuming light uses regular family
+      fontFamily: fonts.regular,
       fontWeight: fontWeights.light,
     },
     thin: {
-      fontFamily: fonts.regular, // Assuming thin uses regular family
-      fontWeight: "100", // MD default thin weight
+      fontFamily: fonts.regular,
+      fontWeight: "100",
     },
-    // It's often better to configure fonts using configureFonts (see Paper docs)
-    // for full MD3 type scale support if needed.
   },
-  // --- Map other theme properties ---
-  roundness: shape.borderRadiusMedium, // Base roundness for components
-
-  // --- Add Custom properties for Styled Components access ---
-  // These are not used by Paper directly but are available via the theme prop
-  customSpacing: spacing,
-  customFontSizes: fontSizes,
-  customShape: shape,
+  roundness: shape.borderRadiusMedium,
 };
 
-// Export the merged theme as the default export for App.tsx
-export default theme;
+// --- Base Theme Type ---
+// Define a type that includes Paper's MD3Theme and our custom properties
+type AppTheme = MD3Theme & typeof customProperties;
 
-// Re-export the individual custom theme parts for potentially easier direct import
-// in styled-components, though accessing via `theme.customSpacing.m` is standard.
-export { colors, spacing, fontSizes, fontWeights, fonts, shape };
+// --- Light Theme Definition ---
+export const lightTheme: AppTheme = merge({}, MD3LightTheme, {
+  colors: {
+    // Start with MD3 Light colors and override/map our custom ones
+    ...MD3LightTheme.colors,
+    primary: customColors.primary,
+    onPrimary: customColors.textLight, // Usually white/light text on primary
+    primaryContainer: customColors.primaryLight,
+    onPrimaryContainer: customColors.primaryDark, // Darker text on light container
+
+    secondary: customColors.secondary,
+    onSecondary: customColors.textLight,
+    secondaryContainer: customColors.secondaryLight,
+    onSecondaryContainer: customColors.secondaryDark,
+
+    tertiary: customColors.accent,
+    onTertiary: customColors.textLight,
+    tertiaryContainer: customColors.accent, // Revisit if specific light/dark needed
+    onTertiaryContainer: customColors.textLight, // Revisit
+
+    error: customColors.error,
+    onError: customColors.textLight,
+    errorContainer: "#FFDAD6", // Default MD3 light
+    onErrorContainer: "#410002", // Default MD3 light
+
+    background: customColors.background, // Our light background
+    onBackground: customColors.textPrimary, // Our dark text on light background
+    surface: customColors.backgroundPaper, // Light surface (cards)
+    onSurface: customColors.textPrimary, // Dark text on light surface
+    surfaceVariant: customColors.grey100, // Light variant
+    onSurfaceVariant: customColors.textPrimary,
+    surfaceDisabled: customColors.backgroundDisabled,
+    onSurfaceDisabled: customColors.textDisabled,
+
+    outline: customColors.border,
+    outlineVariant: customColors.grey200,
+
+    // Ensure text colors are mapped correctly
+    textPrimary: customColors.textPrimary, // Main text color for light theme
+    textSecondary: customColors.textSecondary, // Secondary text color for light theme
+    textLight: customColors.textLight, // Explicitly light text
+    textDisabled: customColors.textDisabled,
+
+    // Map other colors as needed from customColors or MD3 defaults
+    placeholder: customColors.textSecondary, // Usually secondary text
+    disabled: customColors.textDisabled, // Deprecated, use onSurfaceDisabled
+    notification: customColors.primary,
+  },
+  ...customProperties, // Spread the rest of the custom properties
+});
+
+// --- Dark Theme Definition ---
+export const darkTheme: AppTheme = merge({}, MD3DarkTheme, {
+  colors: {
+    // Start with MD3 Dark colors and override/map our custom ones
+    ...MD3DarkTheme.colors,
+    primary: customColors.primaryDark, // Use a darker primary for dark mode if available, or adjust primary
+    onPrimary: customColors.textLight, // Light text on dark primary often works
+    primaryContainer: customColors.primary, // Could be the original primary
+    onPrimaryContainer: customColors.textLight, // Light text on the container
+
+    secondary: customColors.secondaryDark, // Darker secondary
+    onSecondary: customColors.textLight,
+    secondaryContainer: customColors.secondary,
+    onSecondaryContainer: customColors.textLight,
+
+    tertiary: customColors.accent, // Accent might stay the same or need adjustment
+    onTertiary: customColors.textDark, // Dark text might be needed if accent is light
+    tertiaryContainer: customColors.accent,
+    onTertiaryContainer: customColors.textDark,
+
+    error: customColors.error, // Error color might stay the same
+    onError: customColors.textLight, // Text on error
+    errorContainer: "#93000A", // Default MD3 dark
+    onErrorContainer: "#FFDAD6", // Default MD3 dark
+
+    background: customColors.darkBackground, // Dark background
+    onBackground: customColors.textLight, // Light text on dark background
+    surface: customColors.darkSurface, // Dark surface (cards)
+    onSurface: customColors.textLight, // Light text on dark surface
+    surfaceVariant: customColors.grey800, // Darker variant
+    onSurfaceVariant: customColors.textLight, // Light text on dark variant
+    surfaceDisabled: customColors.darkBackgroundDisabled, // Dark disabled background
+    onSurfaceDisabled: customColors.textDisabledDark, // Dark disabled text
+
+    outline: customColors.grey600, // Lighter outline for dark mode
+    outlineVariant: customColors.grey700,
+
+    // Ensure text colors are mapped correctly
+    textPrimary: customColors.textLight, // Main text color for dark theme is light
+    textSecondary: customColors.grey300, // Secondary text color for dark theme (lighter grey)
+    textLight: customColors.textLight, // Explicitly light text
+    textDisabled: customColors.textDisabledDark, // Use dark disabled text
+
+    // Map other colors as needed
+    placeholder: customColors.grey500, // Placeholder text for dark theme
+    disabled: customColors.textDisabledDark, // Deprecated
+    notification: customColors.primaryDark, // Darker notification color
+  },
+  ...customProperties, // Spread the rest of the custom properties
+});
+
+// --- Navigation Themes ---
+// Adapt the Paper themes for React Navigation
+// See: https://callstack.github.io/react-native-paper/docs/guides/theming-with-react-navigation/
+const { LightTheme: NavLightTheme, DarkTheme: NavDarkTheme } =
+  adaptNavigationTheme({
+    reactNavigationLight: NavigationDefaultTheme,
+    reactNavigationDark: NavigationDarkTheme,
+  });
+
+// Merge Paper navigation themes with our custom themes to ensure consistency
+export const CombinedNavLightTheme = merge({}, NavLightTheme, lightTheme);
+export const CombinedNavDarkTheme = merge({}, NavDarkTheme, darkTheme);
+
+// Re-export base colors/spacing etc. if needed elsewhere, though theme access is preferred.
+export {
+  customColors as colors,
+  spacing,
+  fontSizes,
+  fontWeights,
+  fonts,
+  shape,
+};
