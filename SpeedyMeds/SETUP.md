@@ -56,15 +56,22 @@ Install these extensions in VS Code for a better development experience:
     ```bash
     cd path/to/SpeedyMeds
     ```
-2.  **Install Dependencies (if not done yet):** Ensure all dependencies are installed using the Expo-recommended command:
+2.  **Create Environment File (`.env`):** Due to specific network/security configurations required for this course environment, create a file named `.env` in the `SpeedyMeds` project root directory. Add the following line to it:
+    ```
+    NODE_TLS_REJECT_UNAUTHORIZED=0
+    ```
+    **Important Security Note:** This setting bypasses TLS certificate verification. It should **only** be used in controlled development/training environments where you understand the risks and **never** in production. Ensure this `.env` file is listed in your `.gitignore` file (it usually is by default) to prevent accidentally committing it.
+3.  **Install Dependencies (if not done yet):** Ensure all dependencies are installed using the Expo-recommended command:
     ```bash
     npx expo install
     ```
 3.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
-4.  **Start Metro Bundler:** Run the Expo development server:
+4.  **Start Metro Bundler:** Run the Expo development server using the `--localhost` flag:
     ```bash
-    npx expo start
+    npx expo start --localhost
     ```
+    **Why `--localhost`?** This flag forces the Metro bundler to serve the app using your computer's local IP address instead of potentially using a tunnel service (like `ngrok`). This is often necessary in specific network environments or when using the `NODE_TLS_REJECT_UNAUTHORIZED=0` setting from the `.env` file.
+
     This command starts the Metro Bundler, which compiles your JavaScript code and serves it to the Expo Go app or simulators/emulators. It will also display a QR code and provide options in the terminal.
 5.  **Run on Simulator/Emulator:**
     - **iOS Simulator:** Press `i` in the terminal where Metro Bundler is running.

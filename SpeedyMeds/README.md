@@ -77,11 +77,12 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
 ### Running the App (Simulators/Emulators Recommended)
 
 1.  **Ensure Simulator/Emulator is Running:** Launch your preferred iOS Simulator (via Xcode) or Android Emulator (via Android Studio). See [SETUP.md](./SETUP.md) for details.
-2.  **Start the Development Server:**
+2.  **Create `.env` File:** Ensure you have a `.env` file in the `SpeedyMeds` root with `NODE_TLS_REJECT_UNAUTHORIZED=0` as explained in [SETUP.md](./SETUP.md).
+3.  **Start the Development Server:** Use the `--localhost` flag.
     ```bash
-    npx expo start
+    npx expo start --localhost
     ```
-3.  **Open the App:**
+4.  **Open the App:**
     *   **On iOS Simulator:** Press `i` in the terminal where Expo Metro Bundler is running.
     *   **On Android Emulator:** Press `a` in the terminal.
     *   **(Optional) On Physical Device:** Ensure the Expo Go app is installed and scan the QR code displayed in the terminal using the app. Your computer and device must be on the same Wi-Fi network.
@@ -89,7 +90,7 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
 ### Debugging
 
 The primary debugging tool is the **React Native DevTools**.
-1.  With the Metro server running (`npx expo start`), press `j` in the terminal.
+1.  With the Metro server running (`npx expo start --localhost`), press `j` in the terminal.
 2.  This opens a browser tab with integrated tools for inspecting the console, component hierarchy (React DevTools), network requests, and setting breakpoints.
 
 See [docs/setup/debugging-config.md](./docs/setup/debugging-config.md) for more details on debugging options.
