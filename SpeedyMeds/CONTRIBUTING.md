@@ -47,9 +47,15 @@ We use a simple GitHub Flow approach:
 
 Once your feature or fix is complete:
 
-1.  **Run Tests:** Ensure all unit tests pass locally:
+1.  **Run Linters & Tests:** Ensure your code passes linting checks and all unit tests pass locally:
     ```bash
-    npx expo run:test # Or 'npm test' / 'yarn test'
+    # Check for linting errors
+    npm run lint
+    # or yarn lint
+
+    # Run unit tests (likely in watch mode, press 'a' to run all)
+    npm run test
+    # or yarn test
     ```
 2.  **Create a Pull Request:** Go to the GitHub repository and create a new Pull Request from your feature branch targeting the `main` branch.
 3.  **Use the Template:** Fill out the PR template (`.github/PULL_REQUEST_TEMPLATE.md`) providing details about the changes, motivation, testing steps, and test results.
@@ -60,7 +66,7 @@ Once your feature or fix is complete:
 
 - **Language:** Use TypeScript. Follow best practices taught in the course.
 - **Styling:** Adhere to the "Calm & Clear" visual style. Use `StyleSheet` for Phase 2 and `react-native-paper`/`styled-components` for Phase 3 as directed.
-- **Linting/Formatting:** Follow the rules defined by ESLint and Prettier (once configured). Ensure your code passes linting checks (`npx eslint .` and `npx prettier --check .`) before creating a PR.
+- **Linting/Formatting:** Follow the rules defined by ESLint and Prettier. Ensure your code passes linting checks (`npm run lint`) before creating a PR. Use format-on-save or run `npm run format` to maintain consistent style.
 - **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
 - **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.
 - **Testing:** Write unit tests using Jest and React Native Testing Library for new components, custom hooks, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
