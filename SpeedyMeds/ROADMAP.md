@@ -27,15 +27,20 @@ This document outlines the planned development phases and key milestones for the
   - [x] Install React Native Testing Library (`npx expo install @testing-library/react-native`).
   - [x] Configure Jest for React Native Testing Library (e.g., setup file).
   - [x] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
-  - [x] Set up GitHub repository, branch protection rules (instructor task).
+
 
 ## Phase 2: Simple Screens
 
 - **Goal:** Learn and apply fundamental React Native concepts, including basic testing.
 - **Tasks:**
+  - [ ] Introduce a basic theme structure (e.g., `styles/theme.ts`).
+  - [ ] Implement basic bottom tab navigation using Expo Router.
   - [ ] Create a simple Dashboard screen (`screens/SimpleDashboard.tsx`):
     - Use core components (`View`, `Text`, `Button`, `Image`).
     - Apply inline styles.
+    - Use core React Native components (`View`, `Text`, `Button`, `Image`, etc.).
+    - Create reusable custom components for Dashboard elements (e.g., `components/FeatureCard.tsx`).
+    - Apply styles using `StyleSheet.create` and theme.
     - Implement layout using Flexbox.
     - Utilize basic TypeScript (props, state if needed).
   - [ ] Write basic unit tests for the Dashboard screen (e.g., rendering text).
@@ -43,10 +48,12 @@ This document outlines the planned development phases and key milestones for the
   - [ ] Introduce a basic theme structure (e.g., `styles/theme.ts`).
   - [ ] Create reusable custom components for Dashboard elements (e.g., `components/FeatureCard.tsx`).
   - [ ] Write unit tests for custom components.
-  - [ ] Implement basic navigation using Expo Router (or initial React Navigation setup if preferred for simplicity here).
+  - [ ] Write basic unit tests for the Dashboard screen and custom components (e.g., rendering text).
   - [ ] Create a simple Account screen (`screens/SimpleAccount.tsx`):
     - Use custom components, Flexbox, and `StyleSheet` theme.
   - [ ] Write basic unit tests for the Account screen.
+    - Use the same patterns established in creating the Dashboard.
+  - [ ] Write basic unit tests for the Account screen and it's components.
   - [ ] Implement a simple form for updating mock user information on the Account screen (using basic state).
   - [ ] Write tests for form interaction/state updates.
   - [ ] Introduce React Context API for managing simple shared state (e.g., mock user info).
