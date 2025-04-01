@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, Theme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -45,10 +45,15 @@ function MainTabNavigator() {
   );
 }
 
-// Define the Root Stack Navigator component
-function AppNavigator() {
+// Define props for AppNavigator, including the navigation theme
+interface AppNavigatorProps {
+  navigationTheme: Theme;
+}
+
+// Update AppNavigator to accept and use the navigationTheme prop
+function AppNavigator({ navigationTheme }: AppNavigatorProps) {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false, // Hide root stack header, tabs will show their own

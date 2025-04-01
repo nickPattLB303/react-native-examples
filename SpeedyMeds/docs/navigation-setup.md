@@ -1,13 +1,14 @@
 # Navigation Setup
 
-This document details the setup of navigation using React Navigation for the SpeedyMeds project.
+This document details the setup of navigation using React Navigation for the SpeedyMeds project, including integration with the application theme.
 
 ## Approach
 
 We are implementing a common mobile navigation pattern combining:
 
-1.  **Bottom Tab Navigator:** For the primary sections of the app (Home, Prescriptions, Orders, Account).
-2.  **Native Stack Navigator:** As the root navigator. This allows screens (like Order Details) to be pushed _on top_ of the tab bar, providing a standard modal/detail view behavior.
+1.  **Bottom Tab Navigator:** For the primary sections (Home, Prescriptions, Orders, Account).
+2.  **Native Stack Navigator:** As the root navigator, allowing screens (like Order Details) to be pushed on top of the tabs.
+3.  **Theming:** The appearance of the navigators (headers, tab bar, background) is controlled by the application's theme.
 
 ## Implementation Details
 
@@ -24,20 +25,29 @@ We are implementing a common mobile navigation pattern combining:
     - Navigation logic resides in `src/navigation/`.
     - Screen components reside in `src/screens/`.
 
-3.  **Core Files:**
+3.  **Core Files & Theming Integration:**
 
-    - **`src/navigation/AppNavigator.tsx`**: Defines both the `RootStackParamList` and `BottomTabParamList` TypeScript types, creates the stack and tab navigators, defines a `MainTabNavigator` component containing the tab screens, and exports the main `AppNavigator` component which nests `MainTabNavigator` within the root `Stack.Navigator`. It also includes the `NavigationContainer`.
-    - **`src/screens/*.tsx`**: Placeholder functional components were created for `HomeScreen`, `PrescriptionsScreen`, `OrdersScreen`, `AccountScreen`, and `OrderDetailScreen`.
-    - **`App.tsx`**: Modified to render the `<AppNavigator />` component.
+    - **`src/theme/theme.ts`**: Defines `CombinedNavLightTheme` and `CombinedNavDarkTheme` by merging base React Navigation themes with our custom Paper themes using `adaptNavigationTheme`.
+    - **`src/context/ThemeContext.tsx`**: Manages the overall application theme (light/dark/system) and provides the active theme object and an `isDark` boolean.
+    - **`App.tsx`**: Wraps the entire application in our custom `ThemeProvider`. An inner `AppContent` component:
+      - Gets the active theme and `isDark` flag from `useThemeContext`.
+      - Selects the appropriate navigation theme (`CombinedNavLightTheme` or `CombinedNavDarkTheme`) based on `isDark`.
+      - Renders the `AppNavigator`, passing the selected `navigationTheme` as a prop.
+    - **`src/navigation/AppNavigator.tsx`**:
+      - Defines `RootStackParamList` and `BottomTabParamList` types.
+      - Creates stack and tab navigators.
+      - The exported `AppNavigator` component now accepts the `navigationTheme` prop.
+      - The `NavigationContainer` inside `AppNavigator` receives the `navigationTheme` prop, ensuring navigators match the app's light/dark mode.
+    - **`src/screens/*.tsx`**: Placeholder screens (HomeScreen, PrescriptionsScreen, OrdersScreen, AccountScreen, OrderDetailScreen).
 
 4.  **Type Safety:**
-    - `RootStackParamList` defines the routes available in the root stack navigator, including the nested `MainTabs` navigator and any screens pushed above it (e.g., `OrderDetail`). It also defines expected parameters (`OrderDetail: { orderId: string }`).
-    - `BottomTabParamList` defines the routes available within the bottom tab navigator.
-    - These types are used with `createNativeStackNavigator<RootStackParamList>()` and `createBottomTabNavigator<BottomTabParamList>()`.
-    - Screen components use `NativeStackScreenProps` (imported from `@react-navigation/native-stack`) along with the appropriate ParamList and screen name to type their `navigation` and `route` props (e.g., `NativeStackScreenProps<RootStackParamList, 'OrderDetail'>`).
+    - `RootStackParamList` defines routes/params for the root stack.
+    - `BottomTabParamList` defines routes for the bottom tabs.
+    - Used with `createNativeStackNavigator` and `createBottomTabNavigator`.
+    - Screen components use `NativeStackScreenProps` for typed props.
 
 ## Usage
 
-- The `AppNavigator` is rendered in `App.tsx`.
-- The default view shows the `MainTabNavigator`.
-- Navigation between stack screens outside the tabs (like navigating from `OrdersScreen` to `OrderDetailScreen`) is done using the `navigation.navigate('ScreenName', {params})` method available in screen component props.
+- The `AppNavigator` is rendered within the theme providers in `App.tsx`.
+- The `NavigationContainer` and its navigators automatically adopt the light or dark theme based on the selection made via the `ThemeContext` (e.g., using the switcher in `HomeScreen`).
+- Navigation between screens remains the same (`navigation.navigate('ScreenName', {params})`).

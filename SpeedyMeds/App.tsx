@@ -7,15 +7,21 @@ import {
   ThemeProvider as CustomThemeProvider,
   useThemeContext,
 } from "./src/context/ThemeContext"; // Import our custom provider
+// Import the combined navigation themes
+import { CombinedNavLightTheme, CombinedNavDarkTheme } from "./src/theme/theme";
 
 // Inner component to access the theme context
 const AppContent = () => {
   const { theme, isDark } = useThemeContext(); // Get theme from our context
 
+  // Determine navigation theme based on isDark
+  const navigationTheme = isDark ? CombinedNavDarkTheme : CombinedNavLightTheme;
+
   return (
     <PaperProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
-        <AppNavigator />
+        {/* Pass navigationTheme to AppNavigator */}
+        <AppNavigator navigationTheme={navigationTheme} />
         {/* Adjust StatusBar based on theme */}
         <StatusBar style={isDark ? "light" : "dark"} />
       </StyledThemeProvider>
