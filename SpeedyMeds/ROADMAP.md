@@ -9,10 +9,8 @@ This document outlines the planned development phases and key milestones for the
 - **Iterative Development:** Build functionality incrementally across phases.
 - **Collaboration:** Follow defined contribution workflows (see `CONTRIBUTING.md`).
 
-## Phase 1: Project Setup (Current Focus)
 
-- **Goal:** Establish a solid foundation for development.
-- **Tasks:**
+## Tasks
   - [x] Initialize Expo project with TypeScript (`create-expo-app --template blank-typescript`).
   - [x] Create/Update initial documentation (`README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `SETUP.md`, `USAGE.md`, `ROADMAP.md`).
   - [x] Create SVG mockups (`assets/images/`).
@@ -27,57 +25,20 @@ This document outlines the planned development phases and key milestones for the
   - [x] Install React Native Testing Library (`npx expo install @testing-library/react-native`).
   - [x] Configure Jest for React Native Testing Library (e.g., setup file).
   - [x] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
-
-
-## Phase 2: Simple Screens
-
-- **Goal:** Learn and apply fundamental React Native concepts, including basic testing.
-- **Tasks:**
-  - [ ] Introduce a basic theme structure (e.g., `styles/theme.ts`).
-  - [ ] Implement basic bottom tab navigation using Expo Router.
-  - [ ] Create a simple Dashboard screen (`screens/SimpleDashboard.tsx`):
-    - Use core components (`View`, `Text`, `Button`, `Image`).
-    - Apply inline styles.
-    - Use core React Native components (`View`, `Text`, `Button`, `Image`, etc.).
-    - Create reusable custom components for Dashboard elements (e.g., `components/FeatureCard.tsx`).
-    - Apply styles using `StyleSheet.create` and theme.
-    - Implement layout using Flexbox.
-    - Utilize basic TypeScript (props, state if needed).
-  - [ ] Write basic unit tests for the Dashboard screen (e.g., rendering text).
-  - [ ] Refactor Dashboard styles using `StyleSheet.create`.
-  - [ ] Introduce a basic theme structure (e.g., `styles/theme.ts`).
-  - [ ] Create reusable custom components for Dashboard elements (e.g., `components/FeatureCard.tsx`).
-  - [ ] Write unit tests for custom components.
-  - [ ] Write basic unit tests for the Dashboard screen and custom components (e.g., rendering text).
-  - [ ] Create a simple Account screen (`screens/SimpleAccount.tsx`):
-    - Use custom components, Flexbox, and `StyleSheet` theme.
-  - [ ] Write basic unit tests for the Account screen.
-    - Use the same patterns established in creating the Dashboard.
-  - [ ] Write basic unit tests for the Account screen and it's components.
-  - [ ] Implement a simple form for updating mock user information on the Account screen (using basic state).
-  - [ ] Write tests for form interaction/state updates.
-  - [ ] Introduce React Context API for managing simple shared state (e.g., mock user info).
-  - [ ] Write tests for context provider/consumer interactions (if feasible).
-  - [ ] Archive Phase 2 code into a dedicated folder (e.g., `archive/phase2_simple_screens/`).
-
-## Phase 3: Full Project Rebuild
-
-- **Goal:** Build the complete application functionality using a more advanced and scalable tech stack, with comprehensive testing.
-- **Tasks:**
   - [ ] Set up React Navigation (Bottom Tab Navigator, Stack Navigator).
   - [ ] Integrate `react-native-paper` as the UI component library.
-  - [ ] Set up `styled-components` (or alternative like `twrnc`) for customizing `react-native-paper` components and layout styling.
-  - [ ] Implement theme switching (if desired) using `react-native-paper`'s theme provider.
+  - [ ] Set up `styled-components` for customizing `react-native-paper` components and layout styling.
+  - [ ] Implement theme switching using `react-native-paper`'s theme provider.
   - [ ] Set up `zustand` for global state management.
   - [ ] Write tests for Zustand stores (actions, selectors).
   - [ ] Set up `TanStack Query` (React Query) for data fetching simulation.
   - [ ] Integrate `faker.js` to generate mock data for API responses.
   - [ ] Write tests for custom data-fetching hooks using React Query.
-  - [ ] Rebuild Screens based on mockups and requirements outlined in `README.md` (using custom hooks for logic where appropriate):
-    - [ ] Dashboard Screen
-    - [ ] Prescriptions Screen (List View)
-    - [ ] Prescription Detail Screen (if applicable, not explicitly mocked but likely needed)
-    - [ ] Orders Screen (List View - implied)
+  - [ ] Build Screens based on mockups and requirements outlined in `README.md` (using custom hooks for logic where appropriate):
+    - [ ] Dashboard Screen (`assets/images/dashboard.svg`)
+    - [ ] Prescriptions Screen (`assets/images/prescriptions.svg`)
+    - [ ] Prescription Detail Screen
+    - [ ] Orders Screen
     - [ ] Order Detail Screen (`assets/images/orders.svg`)
     - [ ] Account Screen (`assets/images/account.svg`)
     - [ ] Screens for Account sub-sections (Personal Info, Payment, etc. - requires design/definition)
