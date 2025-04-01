@@ -18,16 +18,16 @@ This document outlines the planned development phases and key milestones for the
   - [x] Create SVG mockups (`assets/images/`).
   - [x] Define key features based on mockups (integrated into `README.md`).
   - [x] Set up GitHub Issue/PR templates (`.github/`).
-  - [ ] Configure Expo settings (`app.json`).
-  - [ ] Configure TypeScript (`tsconfig.json`).
-  - [ ] Set up ESLint for code linting.
-  - [ ] Set up Prettier for code formatting.
-  - [ ] Integrate ESLint and Prettier with VS Code.
-  - [ ] Verify Jest setup (comes with Expo) and configure if needed.
-  - [ ] Install React Native Testing Library (`npx expo install @testing-library/react-native`).
-  - [ ] Configure Jest for React Native Testing Library (e.g., setup file).
-  - [ ] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
-  - [ ] Set up GitHub repository, branch protection rules (instructor task).
+  - [x] Configure Expo settings (`app.json`).
+  - [x] Configure TypeScript (`tsconfig.json`).
+  - [x] Set up ESLint for code linting.
+  - [x] Set up Prettier for code formatting.
+  - [x] Integrate ESLint and Prettier with VS Code.
+  - [x] Verify Jest setup (comes with Expo) and configure if needed.
+  - [x] Install React Native Testing Library (`npx expo install @testing-library/react-native`).
+  - [x] Configure Jest for React Native Testing Library (e.g., setup file).
+  - [x] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
+  - [x] Set up GitHub repository, branch protection rules (instructor task).
 
 ## Phase 2: Simple Screens
 
