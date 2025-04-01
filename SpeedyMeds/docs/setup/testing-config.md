@@ -1,6 +1,6 @@
 # Testing Configuration (Jest & React Native Testing Library)
 
-This document outlines the setup for unit and component testing in the SpeedyMeds project using Jest and React Native Testing Library (RNTL). Writing tests is essential for ensuring code correctness, preventing regressions, and facilitating refactoring.
+This document outlines the setup for unit and component testing in the SpeedyMeds project using Jest and React Native Testing Library (RNTL), following the standard practices recommended by Expo. Writing tests is essential for ensuring code correctness, preventing regressions, and facilitating refactoring.
 
 ## Goals
 
@@ -11,34 +11,63 @@ This document outlines the setup for unit and component testing in the SpeedyMed
 
 ## Tools & Packages
 
-- **Jest:** A JavaScript testing framework. Expo projects typically include a basic Jest setup. ([Official Docs](https://jestjs.io/))
-- **React Native Testing Library (`@testing-library/react-native`):** Provides utilities to test React Native components in a user-centric way, focusing on how users interact with the UI rather than implementation details. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
-- **`@testing-library/jest-native`**: Provides custom Jest matchers for React Native (e.g., `toBeVisible()`, `toHaveStyle()`). ([GitHub Repo](https://github.com/testing-library/jest-native))
-- **`ts-jest`** (Implicit): Usually included via Expo's Jest preset, allows Jest to work with TypeScript.
-- **`react-test-renderer`** (Implicit): Often used under the hood by RNTL for rendering components in tests.
+The primary tools used are based on the standard Expo testing setup:
+
+- **Jest:** A JavaScript testing framework. Expo projects created with default templates include a Jest setup. ([Official Docs](https://jestjs.io/))
+- **`jest-expo`:** A Jest preset included by default in Expo projects. It configures Jest to work correctly with the Expo and React Native environment, mocking native modules and handling transpilation. ([Expo Docs Reference](https://docs.expo.dev/develop/unit-testing/#installation-and-configuration))
+- **React Native Testing Library (`@testing-library/react-native`):** The recommended library for testing React Native components in a user-centric way. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
+- **`@testing-library/jest-native`**: Provides useful custom Jest matchers specific to React Native (e.g., `toBeVisible()`, `toHaveStyle()`). ([GitHub Repo](https://github.com/testing-library/jest-native))
+- **`@types/jest`** (Optional): Provides TypeScript types for Jest. Install if using TypeScript.
+- **`react-test-renderer`** (Deprecated): Previously common, but now deprecated by React and **should be uninstalled** if present in favor of RNTL. ([Expo Docs Note](https://docs.expo.dev/develop/unit-testing/#install-react-native-testing-library))
 
 ## Verification & Setup Steps
 
-### 1. Verify Existing Jest Setup
+### 1. Verify/Ensure Base Jest Setup (`jest-expo`)
 
-Expo's default template usually includes:
+Expo's default template (`npx create-expo-app`) typically includes the necessary Jest setup:
 
-- A `jest.config.js` file (or Jest configuration within `package.json`).
-- A basic test script in `package.json` (e.g., `"test": "jest"`).
-- Necessary Jest dependencies (`jest`, `jest-expo`, `ts-jest`, etc.).
-  We will verify these exist. The default `jest-expo` preset often handles much of the basic React Native environment setup for Jest.
+- A `jest.config.js` file (or Jest configuration within `package.json`). The key part is `"preset": "jest-expo"`.
+- Necessary dev dependencies (`jest`, `jest-expo`).
+- If using TypeScript, `@types/jest` might be included or can be added.
+
+If starting from a non-standard template or needing to verify:
+
+```bash
+# Install base dependencies if missing (use --dev for Windows)
+npx expo install jest-expo jest @types/jest --dev
+```
+
+Ensure your `package.json` includes the Jest preset:
+
+```json
+// package.json
+{
+  // ... other config
+  "jest": {
+    "preset": "jest-expo"
+    // Add other Jest config overrides here if needed
+  }
+}
+```
 
 ### 2. Install Testing Library Packages
 
-We need to add RNTL and the Jest Native matchers.
-
-Command :
+Install RNTL and the Jest Native matchers:
 
 ```bash
-npx expo install @testing-library/react-native @testing-library/jest-native -- --save-dev
+# Use "--" --save-dev on Windows if needed
+npx expo install @testing-library/react-native @testing-library/jest-native --dev
 ```
 
-### 3. Configure Jest for RNTL Matchers
+**(Optional but Recommended): Uninstall `react-test-renderer` if it exists:**
+
+```bash
+npm uninstall react-test-renderer @types/react-test-renderer --save-dev
+# or
+yarn remove react-test-renderer @types/react-test-renderer --dev
+```
+
+### 3. Configure Jest for RNTL Matchers (`jest-native`)
 
 To use the helpful matchers from `@testing-library/jest-native` (like `toBeVisible`), we need to tell Jest to load them before tests run. This is typically done via a setup file.
 
@@ -50,7 +79,7 @@ To use the helpful matchers from `@testing-library/jest-native` (like `toBeVisib
   import "@testing-library/jest-native/extend-expect";
 
   // Add any other global setup items here if needed later
-  // e.g., mocking native modules, setting up mocks for libraries
+  // e.g., mocking native modules, setting up mocks for libraries like react-native-gesture-handler
   ```
 
 - **Update Jest Config:** Modify `jest.config.js` (or wherever Jest is configured) to point to this setup file using the `setupFilesAfterEnv` option.
@@ -62,19 +91,19 @@ To use the helpful matchers from `@testing-library/jest-native` (like `toBeVisib
   };
   ```
 
-### 4. Add Test Script (if missing)
+### 4. Update Test Script
 
-Ensure a test script exists in `package.json`:
+Ensure the test script in `package.json` uses a modern Jest command, like `jest --watchAll` for interactive testing:
 
 ```json
-// Ensure this exists in "scripts" in package.json
+// package.json
 "scripts": {
   // ... existing scripts
-  "test": "jest"
+  "test": "jest --watchAll"
 },
 ```
 
-_(Note: `npx expo run:test` might also be available and potentially preferable as it could incorporate Expo-specific test environment logic.)_
+You can add other scripts for different testing flows (e.g., coverage, CI) as needed. See [Jest CLI Options](https://jestjs.io/docs/cli).
 
 ## Writing Tests
 
@@ -85,6 +114,7 @@ _(Note: `npx expo run:test` might also be available and potentially preferable a
 
 ## Conclusion
 
-This setup integrates Jest with React Native Testing Library, providing a powerful and user-centric approach to testing React Native components and logic. It encourages writing maintainable tests and building confidence in the application's correctness.
+This setup aligns the SpeedyMeds project with the standard Expo testing configuration using Jest, `jest-expo`, and React Native Testing Library. It provides a robust and user-centric approach to testing React Native components and logic.
 
-_(Reference: [React Native Testing Library Setup](https://callstack.github.io/react-native-testing-library/docs/getting-started))_
+_(Primary Reference: [Expo Unit Testing Docs](https://docs.expo.dev/develop/unit-testing/))_
+_(RNTL Reference: [React Native Testing Library Docs](https://callstack.github.io/react-native-testing-library/docs/getting-started))_

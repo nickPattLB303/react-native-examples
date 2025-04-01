@@ -1,6 +1,6 @@
 # ESLint & Prettier Configuration
 
-This document outlines the setup for ESLint (code linting) and Prettier (code formatting) in the SpeedyMeds project. Consistent code style and early error detection are crucial for collaboration and maintainability, especially in a training environment.
+This document outlines the setup for ESLint (code linting) and Prettier (code formatting) in the SpeedyMeds project, following the standard practices recommended by Expo. Consistent code style and early error detection are crucial for collaboration and maintainability.
 
 ## Goals
 
@@ -11,133 +11,115 @@ This document outlines the setup for ESLint (code linting) and Prettier (code fo
 
 ## Tools & Packages
 
-We will install the following development dependencies:
+The setup primarily relies on the following development dependencies, managed largely by Expo tooling:
 
-- **`eslint`**: The core linting tool.
+- **`eslint`**: The core linting tool. (Installed via `npx expo lint`)
+- **`eslint-config-expo`**: Expo's base ESLint configuration, providing recommended rules for React Native/Expo projects. (Installed via `npx expo lint`)
 - **`prettier`**: The core code formatter.
-- **`@typescript-eslint/parser`**: Allows ESLint to understand TypeScript syntax.
-- **`@typescript-eslint/eslint-plugin`**: Provides TypeScript-specific linting rules.
-- **`eslint-plugin-react`**: Provides React-specific linting rules.
-- **`eslint-plugin-react-hooks`**: Enforces Rules of Hooks.
-- **`eslint-config-prettier`**: Disables ESLint rules that conflict with Prettier.
-- **`eslint-plugin-prettier`**: Runs Prettier as an ESLint rule and reports differences as ESLint issues.
+- **`eslint-config-prettier`**: Disables ESLint rules that conflict with Prettier, allowing Prettier to handle formatting.
+- **`eslint-plugin-prettier`**: Runs Prettier as an ESLint rule and reports differences as ESLint issues, integrating formatting checks into the linting process.
 
-Command:
+_(Note: `eslint-config-expo` includes configurations for TypeScript, React, and React Hooks, so explicit installation of `@typescript-eslint/parser`, `@typescript-eslint/eslint-plugin`, `eslint-plugin-react`, `eslint-plugin-react-hooks` is often not needed when using the Expo preset.)_
+
+## Setup Steps
+
+### 1. Initialize ESLint with Expo Configuration
+
+Expo CLI provides a convenient command to install and configure ESLint with the recommended base settings. Run this in the `SpeedyMeds` project root:
 
 ```bash
-npx expo install eslint prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier -- --save-dev
+npx expo lint
 ```
 
-_(Note: `npx expo install` is used even for dev dependencies to ensure compatibility within the Expo ecosystem where possible, although `npm install --save-dev` would also work.)_
+This command:
+- Installs `eslint` and `eslint-config-expo` if not already present.
+- Creates a `.eslintrc.js` file at the project root with the basic Expo configuration:
+  ```javascript
+  // .eslintrc.js (Initial setup)
+  module.exports = {
+    extends: 'expo',
+  };
+  ```
+- May prompt you to add a `lint` script to your `package.json` if one doesn't exist.
 
-## Configuration Files
+### 2. Install Prettier and ESLint Integration Packages
 
-### 1. ESLint (`eslint.config.mjs`)
+Add Prettier and the necessary ESLint plugins to integrate it:
 
-This project uses ESLint's newer "flat config" format, configured in `eslint.config.mjs`. This format uses modern ES modules and provides a more explicit way to define configurations.
-
-```javascript
-// Current eslint.config.mjs (simplified representation)
-import { defineConfig, globalIgnores } from "eslint/config";
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-// ... other imports (plugins, parser, globals)
-
-export default defineConfig([
-  // 1. Global Ignores: Define files/patterns ESLint should ignore
-  globalIgnores([
-    "**/node_modules/",
-    "**/build/",
-    "**/.expo/",
-    // ... other ignores
-  ]),
-  // 2. Main Configuration Object(s): An array of config objects
-  {
-    // Extends base recommended rulesets using compatibility tools
-    extends: fixupConfigRules(
-      compat.extends(
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:prettier/recommended", // Integrates Prettier rules
-      ),
-    ),
-    // Defines plugins used
-    plugins: {
-      "@typescript-eslint": fixupPluginRules(typescriptEslint),
-      react: fixupPluginRules(react),
-      "react-hooks": fixupPluginRules(reactHooks),
-    },
-    // Language Options: Configure parser, globals, etc.
-    languageOptions: {
-      globals: { ...globals.node, ...globals.jest },
-      parser: tsParser, // Use TypeScript parser
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
-      // ... other options
-    },
-    // Settings for plugins (e.g., React version detection)
-    settings: {
-      react: { version: "detect" },
-    },
-    // Specific Rule Overrides
-    rules: {
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
-      // ... other rules
-    },
-  },
-  // ... potentially more config objects for specific file types/overrides
-]);
+```bash
+# Use "--" --dev on Windows if needed
+npx expo install prettier eslint-config-prettier eslint-plugin-prettier --dev
 ```
 
-_(Note: The actual file uses compatibility helpers (`fixupConfigRules`, `fixupPluginRules`, `FlatCompat`) to bridge older eslintrc-style plugins/configs with the new flat config format.)_
+### 3. Configure ESLint for Prettier Integration
 
-### 2. Prettier (`.prettierrc.js`)
-
-This file defines the code formatting style.
+Update the `.eslintrc.js` file generated in Step 1 to include Prettier configuration. This ensures ESLint uses Prettier for formatting rules and doesn't report conflicting style issues.
 
 ```javascript
-// Planned .prettierrc.js
+// .eslintrc.js (Updated for Prettier)
 module.exports = {
-  semi: true, // Add semicolons at the end of statements
-  singleQuote: true, // Use single quotes instead of double quotes
-  jsxSingleQuote: false, // Use double quotes in JSX
-  trailingComma: "es5", // Add trailing commas where valid in ES5 (objects, arrays, etc.)
-  tabWidth: 2, // Number of spaces per indentation-level
-  printWidth: 80, // Specify the line length that the printer will wrap on
-  arrowParens: "always", // Include parentheses around a sole arrow function parameter
+  extends: ['expo', 'prettier'], // Add 'prettier' to the end
+  plugins: ['prettier'],        // Add 'prettier' plugin
+  rules: {
+    'prettier/prettier': 'error', // Report Prettier differences as ESLint errors
+    // Add any other project-specific rule overrides here
+  },
+};
+```
+_(Note: You can use `'prettier/prettier': 'warn'` if you prefer formatting issues to be warnings.)_
+
+### 4. Configure Prettier (Optional)
+
+Create a `.prettierrc.js` file (or `.prettierrc`) in the project root to customize Prettier's formatting rules.
+
+```javascript
+// Example .prettierrc.js
+module.exports = {
+  semi: true,
+  singleQuote: true,
+  jsxSingleQuote: false,
+  trailingComma: 'es5',
+  tabWidth: 2,
+  printWidth: 80,
+  arrowParens: 'always',
 };
 ```
 
-### 3. Prettier Ignore (`.prettierignore`)
+### 5. Create Ignore Files
 
-Specifies files/directories that Prettier should not format.
-
-```
-# Planned .prettierignore
-node_modules
-build
-dist
-.expo
-coverage
-*.lock
-# Add any other generated files or directories to ignore
-```
+- **`.eslintignore`**: Tell ESLint which files/directories to ignore. Create this file in the root if it doesn't exist.
+  ```
+  # .eslintignore
+  node_modules
+  .expo
+  dist
+  build
+  coverage
+  *.lock
+  ```
+- **`.prettierignore`**: Tell Prettier which files/directories to ignore (often similar to `.eslintignore`).
+  ```
+  # .prettierignore
+  node_modules
+  .expo
+  dist
+  build
+  coverage
+  *.lock
+  package-lock.json
+  yarn.lock
+  ```
 
 ## `package.json` Scripts
 
-Add scripts for easy linting and formatting:
+Ensure you have scripts for linting and formatting in your `package.json`:
 
 ```json
-// Additions to "scripts" in package.json
+// Ensure these exist in "scripts" in package.json
 "scripts": {
   // ... existing scripts
-  "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+  "lint": "expo lint", // Recommended for SDK 51+
+  // or "lint": "eslint . --ext .js,.jsx,.ts,.tsx", // Alternative/fallback
   "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
 },
 ```
@@ -148,14 +130,12 @@ While VS Code integration provides real-time feedback and format-on-save, you ca
 
 Navigate to the `SpeedyMeds` directory in your terminal and use the scripts defined in `package.json`:
 
-- **Check for Lint Errors:**
+- **Check for Lint Errors (and Prettier consistency):**
 
   ```bash
-  npm run lint
-  # or yarn lint
+  npx expo lint
+  # or npm run lint / yarn lint (depending on your script)
   ```
-
-  This command runs ESLint and reports any errors or warnings found based on the `eslint.config.mjs` configuration.
 
 - **Automatically Format Code:**
   ```bash
@@ -200,4 +180,6 @@ To get the most benefit, integrate these tools with VS Code:
 
 ## Conclusion
 
-This setup provides a robust linting and formatting foundation using industry-standard tools. It helps maintain code quality and consistency, which is highly beneficial for the collaborative learning environment of this training project.
+This setup aligns the SpeedyMeds project with the standard Expo configuration for ESLint and Prettier, providing a robust linting and formatting foundation. It helps maintain code quality and consistency using integrated, industry-standard tools.
+
+_(Primary Reference: [Expo Using ESLint Guide](https://docs.expo.dev/guides/using-eslint/))_

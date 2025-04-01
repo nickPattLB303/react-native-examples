@@ -1,0 +1,16 @@
+# Ignore artifacts:
+node_modules
+build
+dist
+.expo
+coverage
+*.lock
+
+# Ignore configuration files handled elsewhere:
+# (Prettier usually ignores dotfiles by default, but explicit is fine)
+.eslintrc.js
+# .prettierrc.js (no need to format itself)
+
+# Ignore generated files (if any later):
+# ios/
+# android/
