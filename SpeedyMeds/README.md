@@ -68,11 +68,11 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
     git clone [Your Repository URL] # <-- Replace with actual repo URL
     cd SpeedyMeds
     ```
-2.  **Install Dependencies:** Use `npx expo install` which ensures compatible versions for Expo projects.
+2.  **Install Dependencies:** Use `npx expo install` to install dependencies listed in `package.json`, ensuring compatible versions for Expo projects.
     ```bash
     npx expo install
     ```
-    _(This command wraps `npm install` or `yarn add` and checks for version compatibility within the Expo ecosystem.)_
+    _(This command ensures compatibility. For adding **new** dependencies later, **always** use `npx expo install [package-name]` instead of `npm install`. See [SETUP.md](./SETUP.md) for the full explanation and the linked article: [Why Use "npx expo install"](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a))_
 
 ### Running the App (Simulators/Emulators Recommended)
 

@@ -71,6 +71,41 @@ Install these extensions in VS Code for a better development experience:
     - **Android Emulator:** Press `a` in the terminal.
       Expo CLI will attempt to install the Expo Go app onto the simulator/emulator (if needed) and launch your project.
 
+## Managing Dependencies (Important!)
+
+Understanding how to install dependencies correctly is crucial in Expo projects to maintain compatibility.
+
+### Installing All Project Dependencies (Initial Setup / Clean Install)
+
+Use `npx expo install` **without arguments** after cloning the repository or deleting `node_modules` and `package-lock.json`.
+
+```bash
+# Installs all dependencies based on package.json and ensures compatibility
+npx expo install
+```
+*   **Why:** This command ensures that the versions installed (and recorded in `package-lock.json`) are compatible with your project's Expo SDK version. It's the recommended way to perform the initial install for an Expo project.
+
+### Adding NEW Individual Dependencies
+
+When adding **new** libraries or dependencies to the project later, **always prefer `npx expo install [package-name]`**.
+
+```bash
+# Correct way to add a new runtime dependency (e.g., a UI library, utility)
+npx expo install some-new-library
+
+# Correct way to add a new dev dependency (e.g., a testing tool, types)
+npx expo install some-dev-library --dev
+# Note: On Windows, you might need "--" before --dev: npx expo install some-dev-library -- --dev
+```
+*   **Why:** `npx expo install [package-name]` checks the compatibility of the specific package version with your project's Expo SDK version, especially important for libraries with native code or those interacting closely with React Native APIs (like navigation, maps, gestures). It helps prevent common native module mismatches and other dependency conflicts. Using `npm install [package-name]` or `yarn add [package-name]` directly bypasses this check and might install an incompatible version.
+*   **When is `npm install [package-name] --save-dev` okay?** For development tools that *don't* interact with the Expo/React Native runtime (like `eslint`, `prettier`, most `@types/` packages) or pure JS utilities (`lodash`, `date-fns`), using `npm install --save-dev` is generally acceptable, as Expo's compatibility check isn't strictly necessary for them. However, using `npx expo install --dev` is still a safe default.
+
+For more details, see this article: [Why You Should Use “npx expo install” instead of “npm install” in Expo React Native App](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a)
+
+### Running Project Scripts
+
+Use `npm run <script-name>` (or `yarn <script-name>`) to execute scripts defined in the `"scripts"` section of your `package.json` (e.g., `npm run start`, `npm run test`, `npm run lint`).
+
 ### (Optional) Running on Physical Device
 
 1.  **Install Expo Go:** Download the "Expo Go" app from the App Store (iOS) or Google Play Store (Android) onto your physical device. ([Expo Go Info](https://expo.dev/go))
