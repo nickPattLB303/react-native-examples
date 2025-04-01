@@ -15,12 +15,4 @@ As the application is developed, you will be able to interact with the following
 - **Orders:** Track the status of your medication orders.
 - **Account:** Manage your profile and application settings.
 
-_(This section will be updated with more specific usage examples and screenshots as features are implemented during the course phases.)_
-
-## Development Phases
-
-Refer to the [ROADMAP.md](./ROADMAP.md) for details on the features planned for each development phase.
-
-- **Phase 1 (Setup):** Focuses on environment configuration. No interactive application usage yet.
-- **Phase 2 (Simple Screens):** Basic versions of screens will become available for interaction. Specific usage instructions for these simple versions may be added here.
-- **Phase 3 (Full Project):** The complete application functionality based on mockups will be implemented. Detailed usage guides for all features will be relevant at this stage.
+_(This section will be updated with more specific usage examples and screenshots as features are implemented.)_

@@ -43,9 +43,9 @@ This project utilizes the following core technologies:
 *   **TypeScript:** Superset of JavaScript adding static typing for improved code quality and maintainability. ([Official Docs](https://www.typescriptlang.org/docs/))
 *   **Jest:** JavaScript testing framework (configured via `jest-expo` preset). ([Official Docs](https://jestjs.io/docs/getting-started))
 *   **React Native Testing Library:** Utilities for testing React Native components. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
-*   **React Navigation:** Routing and navigation solution (Phase 3). ([Official Docs](https://reactnavigation.org/))
+*   **React Navigation:** Routing and navigation solution. ([Official Docs](https://reactnavigation.org/))
 *   **ESLint & Prettier:** Code linting and formatting (configured via `eslint-config-expo` and Prettier plugins).
-*   **(Phase 3 Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
+*   **(Planned Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
 
 ## Getting Started
 
@@ -107,7 +107,7 @@ See [docs/setup/testing-config.md](./docs/setup/testing-config.md) for more deta
 
 _(See [USAGE.md](./USAGE.md) for more details on using the application as features are built.)_
 
-## Project Structure (Initial)
+## Project Structure (Evolving)
 
 ```
 SpeedyMeds/
@@ -122,7 +122,16 @@ SpeedyMeds/
 │   └── ...               # Default Expo icons/splash
 ├── docs/                 # Project documentation
 │   └── setup/            # Setup guides (linting, testing, etc.)
-├── App.tsx               # Main application component (entry point)
+├── src/                  # Source code
+│   ├── navigation/       # Navigation setup (React Navigation)
+│   │   └── AppNavigator.tsx
+│   └── screens/          # Application screens
+│       ├── HomeScreen.tsx
+│       ├── PrescriptionsScreen.tsx
+│       ├── OrdersScreen.tsx
+│       ├── AccountScreen.tsx
+│       └── OrderDetailScreen.tsx
+├── App.tsx               # Main application component (renders Navigator)
 ├── index.ts              # Entry point for Metro bundler
 ├── app.json              # Expo configuration file
 ├── jest.config.js        # Jest configuration
@@ -140,15 +149,11 @@ SpeedyMeds/
 ├── SETUP.md              # Detailed environment setup guide
 └── USAGE.md              # Application usage guide
 ```
-_(Note: This structure will evolve as we add screens, components, and other features.)_
+_(Note: React Navigation (Stack + Tabs) is now configured. This structure will continue to evolve.)_
 
 ## Development Workflow
 
 We follow the **GitHub Flow** branching strategy. Writing unit tests for new features and bug fixes is encouraged. Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines, coding standards, testing expectations, and PR processes.
-
-## Project Phases
-
-This project is structured in multiple phases as outlined in the [ROADMAP.md](./ROADMAP.md).
 
 ## Documentation
 
@@ -158,6 +163,7 @@ This project is structured in multiple phases as outlined in the [ROADMAP.md](./
 *   [ROADMAP.md](./ROADMAP.md)
 *   [CHANGELOG.md](./CHANGELOG.md)
 *   Setup Guides:
+    *   [Navigation Setup (React Navigation)](./docs/navigation-setup.md)
     *   [Expo Config (`app.json`)](./docs/setup/app-json-config.md)
     *   [TypeScript Config (`tsconfig.json`)](./docs/setup/tsconfig-config.md)
     *   [Linting & Formatting](./docs/setup/linting-formatting-config.md)

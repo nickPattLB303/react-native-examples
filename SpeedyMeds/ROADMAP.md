@@ -1,54 +1,66 @@
 # SpeedyMeds Project Roadmap
 
-This document outlines the planned development phases and key milestones for the SpeedyMeds React Native training project.
+This document outlines the planned development milestones for the SpeedyMeds React Native training project.
 
 ## Guiding Principles
 
 - **Learning Focus:** Prioritize applying concepts taught in the React Native course.
 - **Best Practices:** Adhere to modern React Native development standards, including testing.
-- **Iterative Development:** Build functionality incrementally across phases.
+- **Iterative Development:** Build functionality incrementally.
 - **Collaboration:** Follow defined contribution workflows (see `CONTRIBUTING.md`).
 
+## Project Tasks / Milestones
 
-## Tasks
-  - [x] Initialize Expo project with TypeScript (`create-expo-app --template blank-typescript`).
-  - [x] Create/Update initial documentation (`README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `SETUP.md`, `USAGE.md`, `ROADMAP.md`).
-  - [x] Create SVG mockups (`assets/images/`).
-  - [x] Define key features based on mockups (integrated into `README.md`).
-  - [x] Set up GitHub Issue/PR templates (`.github/`).
+- **Setup & Configuration:**
+  - [x] Initialize Expo project with TypeScript.
+  - [x] Create/Update initial documentation.
+  - [x] Create SVG mockups.
+  - [x] Define key features based on mockups.
+  - [x] Set up GitHub Issue/PR templates.
   - [x] Configure Expo settings (`app.json`).
   - [x] Configure TypeScript (`tsconfig.json`).
   - [x] Set up ESLint for code linting.
   - [x] Set up Prettier for code formatting.
   - [x] Integrate ESLint and Prettier with VS Code.
-  - [x] Verify Jest setup (comes with Expo) and configure if needed.
-  - [x] Install React Native Testing Library (`npx expo install @testing-library/react-native`).
-  - [x] Configure Jest for React Native Testing Library (e.g., setup file).
-  - [x] Explore and set up debugging tools (React Native Debugger, Flipper if applicable).
-  - [ ] Set up React Navigation (Bottom Tab Navigator, Stack Navigator).
+  - [x] Verify/Configure Jest setup.
+  - [x] Install React Native Testing Library.
+  - [x] Configure Jest for React Native Testing Library.
+  - [x] Explore and set up debugging tools.
+
+- **Core App Structure & UI:**
+  - [x] Set up React Navigation (Bottom Tab Navigator, Stack Navigator).
   - [ ] Integrate `react-native-paper` as the UI component library.
-  - [ ] Set up `styled-components` for customizing `react-native-paper` components and layout styling.
-  - [ ] Implement theme switching using `react-native-paper`'s theme provider.
+  - [ ] Set up `styled-components` for customizing `react-native-paper`.
+  - [ ] Implement theme switching using `react-native-paper`.
+
+- **State Management & Data Handling:**
   - [ ] Set up `zustand` for global state management.
-  - [ ] Write tests for Zustand stores (actions, selectors).
   - [ ] Set up `TanStack Query` (React Query) for data fetching simulation.
-  - [ ] Integrate `faker.js` to generate mock data for API responses.
-  - [ ] Write tests for custom data-fetching hooks using React Query.
-  - [ ] Build Screens based on mockups and requirements outlined in `README.md` (using custom hooks for logic where appropriate):
-    - [ ] Dashboard Screen (`assets/images/dashboard.svg`)
-    - [ ] Prescriptions Screen (`assets/images/prescriptions.svg`)
-    - [ ] Prescription Detail Screen
-    - [ ] Orders Screen
-    - [ ] Order Detail Screen (`assets/images/orders.svg`)
-    - [ ] Account Screen (`assets/images/account.svg`)
-    - [ ] Screens for Account sub-sections (Personal Info, Payment, etc. - requires design/definition)
-  - [ ] Write comprehensive unit and integration tests for all screens, custom hooks, and key components using React Native Testing Library.
-  - [ ] Implement simulated data fetching using React Query (likely within custom hooks) and Faker.js for all relevant screens.
-  - [ ] Manage application state (user info, potentially UI state) using Zustand and Context where appropriate (potentially accessed via custom hooks).
-  - [ ] Implement form handling for account updates (using libraries like `react-hook-form` if desired, potentially with custom form hooks).
+  - [ ] Integrate `faker.js` to generate mock data.
+
+- **Screen Implementation (Based on Mockups):**
+  - [ ] Dashboard Screen
+  - [ ] Prescriptions Screen
+  - [ ] Prescription Detail Screen
+  - [ ] Orders Screen
+  - [ ] Order Detail Screen
+  - [ ] Account Screen
+  - [ ] Account Sub-Sections (Personal Info, Payment, etc.)
+
+- **Functionality & Logic:**
+  - [ ] Implement simulated data fetching using React Query + Faker.js.
+  - [ ] Manage application state using Zustand/Context.
+  - [ ] Implement form handling for account updates (e.g., using `react-hook-form`).
+  - [ ] Add basic error handling and loading states for fetches.
+
+- **Testing:**
+  - [ ] Write tests for Zustand stores.
+  - [ ] Write tests for custom data-fetching hooks.
+  - [ ] Write comprehensive unit/integration tests for screens, hooks, components.
   - [ ] Write tests for form validation and submission logic.
-  - [ ] Add basic error handling and loading states for simulated fetches (often managed within custom data-fetching hooks).
-  - [ ] Refine styling and ensure consistency across the application.
+
+- **Final Touches:**
+  - [ ] Refine styling and ensure consistency.
 
 ## Future Considerations (Beyond Course Scope)
 
@@ -56,7 +68,7 @@ This document outlines the planned development phases and key milestones for the
 - Real API Integration
 - Push Notifications
 - Offline Support
-- Integration & E2E Testing (e.g., using Detox or Maestro)
-- CI/CD Pipeline (including automated testing)
+- Integration & E2E Testing (e.g., Detox, Maestro)
+- CI/CD Pipeline
 
 _(This roadmap is a living document and may be adjusted based on course progress and learning objectives.)_
