@@ -44,8 +44,10 @@ This project utilizes the following core technologies:
 *   **Jest:** JavaScript testing framework (configured via `jest-expo` preset). ([Official Docs](https://jestjs.io/docs/getting-started))
 *   **React Native Testing Library:** Utilities for testing React Native components. ([Official Docs](https://callstack.github.io/react-native-testing-library/))
 *   **React Navigation:** Routing and navigation solution. ([Official Docs](https://reactnavigation.org/))
+*   **React Native Paper:** UI component library & theming. ([Official Docs](https://callstack.github.io/react-native-paper/))
+*   **Styled Components:** CSS-in-JS for component styling/customization. ([Official Docs](https://styled-components.com/))
 *   **ESLint & Prettier:** Code linting and formatting (configured via `eslint-config-expo` and Prettier plugins).
-*   **(Planned Additions):** React Native Paper, Styled Components, React Query (TanStack Query), Zustand, Faker.js.
+*   **(Planned Additions):** React Query (TanStack Query), Zustand, Faker.js.
 
 ## Getting Started
 
@@ -164,6 +166,7 @@ We follow the **GitHub Flow** branching strategy. Writing unit tests for new fea
 *   [CHANGELOG.md](./CHANGELOG.md)
 *   Setup Guides:
     *   [Navigation Setup (React Navigation)](./docs/navigation-setup.md)
+    *   [UI Library & Styling Setup](./docs/ui-styling-setup.md)
     *   [Expo Config (`app.json`)](./docs/setup/app-json-config.md)
     *   [TypeScript Config (`tsconfig.json`)](./docs/setup/tsconfig-config.md)
     *   [Linting & Formatting](./docs/setup/linting-formatting-config.md)
