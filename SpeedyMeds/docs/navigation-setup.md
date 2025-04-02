@@ -44,7 +44,7 @@ We are implementing a common mobile navigation pattern combining:
     - `RootStackParamList` defines routes/params for the root stack.
     - `BottomTabParamList` defines routes for the bottom tabs.
     - Used with `createNativeStackNavigator` and `createBottomTabNavigator`.
-    - Screen components use `NativeStackScreenProps` for typed props.
+    - Screen components use appropriate props types: `BottomTabScreenProps` for screens within the tab navigator (Home, Orders, etc.) and `NativeStackScreenProps` for screens directly in the stack navigator (OrderDetail).
 
 ## Usage
 

@@ -67,7 +67,7 @@ Once your feature or fix is complete:
 ## Code Standards
 
 - **Language:** Use TypeScript. Follow best practices.
-- **Styling:** Adhere to the "Calm & Clear" visual style. Use `react-native-paper` for components and theming and `styled-components`for further customization.
+- **Styling:** Adhere to the "Calm & Clear" visual style. Use `react-native-paper` for base components and `styled-components` consistently for applying theme-based custom styles and layout.
 - **Linting/Formatting:** Follow the rules defined by ESLint and Prettier. Ensure your code passes linting checks (`npm run lint`) before creating a PR. Use format-on-save or run `npm run format` to maintain consistent style.
 - **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
 - **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.

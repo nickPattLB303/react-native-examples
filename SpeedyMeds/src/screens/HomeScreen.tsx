@@ -4,27 +4,29 @@ import { Text, SegmentedButtons } from "react-native-paper";
 import styled from "styled-components/native";
 import { useThemeContext } from "../context/ThemeContext";
 import type { ThemePreference } from "../context/ThemeContext";
+import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**
  * @description A styled `View` component serving as the main container for the screen.
  * Centers content and applies theme-based padding and background color.
  */
-const ScreenContainer = styled(View)`
+const ScreenContainer = styled(View)<{ theme: AppTheme }>`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: ${({ theme }) => theme.customSpacing.m}px;
-  background-color: ${({ theme }) => theme.colors.background};
+  padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
+  background-color: ${({ theme }: { theme: AppTheme }) =>
+    theme.colors.background};
 `;
 
 /**
  * @description A styled `Text` component for the screen's main title.
  * Applies theme-based primary color, font size, and bottom margin.
  */
-const TitleText = styled(Text)`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.customFontSizes.xxl}px;
-  margin-bottom: ${({ theme }) => theme.customSpacing.m}px;
+const TitleText = styled(Text)<{ theme: AppTheme }>`
+  color: ${({ theme }: { theme: AppTheme }) => theme.colors.primary};
+  font-size: ${({ theme }: { theme: AppTheme }) => theme.customFontSizes.xxl}px;
+  margin-bottom: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
 `;
 
 /**

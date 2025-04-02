@@ -6,7 +6,7 @@ This document outlines the setup for the UI component library (`react-native-pap
 
 - **UI Components:** `react-native-paper` (v5, MD3) is used for pre-built Material Design components.
 - **Theming:** `react-native-paper` provides a robust theming system. We define separate `lightTheme` and `darkTheme` objects based on Paper's `MD3LightTheme` and `MD3DarkTheme`, merged with our custom values.
-- **Custom Styling:** `styled-components` is used for creating custom components and overriding/extending styles, leveraging the same theme object.
+- **Custom Styling:** `styled-components` is used consistently across all screens for creating custom components and overriding/extending styles, leveraging the same theme object provided by the context.
 - **Theme Switching:** A React Context (`ThemeContext`) manages the active theme, allowing users to choose between 'light', 'dark', or 'system' preferences. It uses React Native's `useColorScheme` hook to detect the system setting.
 
 ## Implementation Details
@@ -32,7 +32,7 @@ This document outlines the setup for the UI component library (`react-native-pap
 
     - Creates `ThemeContext` and a `ThemeProvider` component.
     - Uses the `useColorScheme` hook from `react-native` to detect the system preference.
-    - Manages the user's selected preference (`'light'`, `'dark'`, or `'system'`) using `useState` (defaulting to `'system'`). _Persistence via AsyncStorage is marked as a TODO._
+    - Manages the user's selected preference (`'light'`, `'dark'`, or `'system'`) using `useState` (defaulting to `'system'`). _Persistence of this preference is not currently implemented._
     - Determines the `effectiveMode` ('light' or 'dark') based on user preference and system setting.
     - Provides the corresponding `theme` object (`lightTheme` or `darkTheme`), the current `themePreference`, the `setThemePreference` function, and an `isDark` boolean via the context.
     - Exports a `useThemeContext` hook for easy consumption.
@@ -83,7 +83,7 @@ This document outlines the setup for the UI component library (`react-native-pap
 
     - A declaration file (`src/styled.d.ts`) extends the `DefaultTheme` interface from `styled-components/native`.
     - It sets `DefaultTheme` to be equivalent to our `AppTheme` type (exported from `src/theme/theme.ts`).
-    - This enables type checking and autocompletion for all theme properties (MD3 + custom) within styled components.
+    - This enables type checking and autocompletion for theme properties. However, due to potential type inference issues, explicit typing of the destructured `theme` prop within template literals (e.g., `({ theme }: { theme: AppTheme }) => ...`) is currently used for robustness.
 
     ```typescript
     // src/styled.d.ts
@@ -99,5 +99,5 @@ This document outlines the setup for the UI component library (`react-native-pap
 
 - **Accessing Theme:** Use the `useThemeContext` hook in functional components to get the current `theme` object, `isDark` boolean, `themePreference`, and `setThemePreference` function.
 - **Paper Components:** Import and use components directly from `react-native-paper`. They automatically use the theme from `PaperProvider`.
-- **Styled Components:** Access theme properties via the `theme` prop: `${({ theme }) => theme.colors.primary}` or `${({ theme }) => theme.customSpacing.m}`.
+- **Styled Components:** Access theme properties via the `theme` prop, using explicit typing for the destructured parameter: `${({ theme }: { theme: AppTheme }) => theme.colors.primary}`.
 - **Theme Switching:** Use the `setThemePreference` function (obtained from `useThemeContext`) to change the theme mode ('light', 'dark', 'system'). (Example using `SegmentedButtons` added to `HomeScreen.tsx`).

@@ -22,11 +22,14 @@ and this project adheres to Semantic Versioning (though formal versioning might 
 ### Changed
 
 - Updated `README.md` with comprehensive project information, key features, and refined instructions.
+- Updated `README.md` with comprehensive project information, key features, and refined instructions.
 - Updated `CONTRIBUTING.md` with refined instructions and links.
+- Refactored styling across all screens (`OrderDetailScreen`, `AccountScreen`, `PrescriptionsScreen`) to consistently use `styled-components` and the shared theme context.
 
 ### Fixed
 
-- (Nothing yet)
+- Corrected navigation prop types in `OrdersScreen` (using `BottomTabScreenProps` instead of `NativeStackScreenProps`) and updated navigation logic.
+- Resolved TypeScript errors related to implicit `any` type for the `theme` prop in styled components across all screens by using explicit type annotations.
 
 ### Removed
 

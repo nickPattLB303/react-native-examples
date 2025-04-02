@@ -31,8 +31,8 @@ This document outlines the planned development milestones for the SpeedyMeds Rea
 - **Core App Structure & UI:**
 
   - [x] Set up React Navigation (Bottom Tab Navigator, Stack Navigator).
-  - [x] Integrate `react-native-paper` as the UI component library. // Theme setup done
-  - [x] Set up `styled-components` for customizing `react-native-paper`. // Theme setup done
+  - [x] Integrate `react-native-paper` as the UI component library.
+  - [x] Set up `styled-components` and integrate with `react-native-paper` theme.
   - [x] Implement theme switching using `react-native-paper`.
 
 - **State Management & Data Handling:**
@@ -66,7 +66,8 @@ This document outlines the planned development milestones for the SpeedyMeds Rea
   - [ ] Write tests for form validation and submission logic.
 
 - **Final Touches:**
-  - [ ] Refine styling and ensure consistency.
+  - [x] Standardize styling approach using `styled-components` across screens.
+  - [ ] Further refine styling details for consistency.
 
 ## Future Considerations (Beyond Course Scope)
 

@@ -130,12 +130,17 @@ SpeedyMeds/
 ├── src/                  # Source code
 │   ├── navigation/       # Navigation setup (React Navigation)
 │   │   └── AppNavigator.tsx
-│   └── screens/          # Application screens
-│       ├── HomeScreen.tsx
-│       ├── PrescriptionsScreen.tsx
-│       ├── OrdersScreen.tsx
-│       ├── AccountScreen.tsx
-│       └── OrderDetailScreen.tsx
+│   ├── context/          # React Context providers (e.g., ThemeContext)
+│   │   └── ThemeContext.tsx
+│   ├── screens/          # Application screens
+│   │   ├── HomeScreen.tsx
+│   │   ├── PrescriptionsScreen.tsx
+│   │   ├── OrdersScreen.tsx
+│   │   ├── AccountScreen.tsx
+│   │   └── OrderDetailScreen.tsx
+│   └── theme/            # Theme definitions (colors, spacing, etc.)
+│       ├── theme.ts
+│       └── ...
 ├── App.tsx               # Main application component (renders Navigator)
 ├── index.ts              # Entry point for Metro bundler
 ├── app.json              # Expo configuration file

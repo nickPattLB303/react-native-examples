@@ -1,7 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View } from "react-native";
+import { Text } from "react-native-paper"; // Use Paper Text for consistency
+import styled from "styled-components/native"; // Import styled
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/AppNavigator"; // Adjust path as needed
+import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**
  * @description Props for the OrderDetailScreen.
@@ -17,6 +20,39 @@ type OrderDetailProps = NativeStackScreenProps<
 >;
 
 /**
+ * @description Styled container for the screen content.
+ * Applies theme-based padding and background color, centers content.
+ */
+const ScreenContainer = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
+  background-color: ${({ theme }: { theme: AppTheme }) =>
+    theme.colors.background};
+`;
+
+/**
+ * @description Styled text component for the screen title.
+ * Uses theme for font size and margin.
+ */
+const TitleText = styled(Text)`
+  font-size: ${({ theme }: { theme: AppTheme }) =>
+    theme.customFontSizes.xl}px; /* Example theme usage */
+  margin-bottom: ${({ theme }: { theme: AppTheme }) =>
+    theme.customSpacing.m}px; /* Example theme usage */
+`;
+
+/**
+ * @description Styled text component for displaying information.
+ * Uses theme for font size.
+ */
+const InfoText = styled(Text)`
+  font-size: ${({ theme }: { theme: AppTheme }) =>
+    theme.customFontSizes.m}px; /* Example theme usage */
+`;
+
+/**
  * @description Screen component to display details for a specific order.
  * Retrieves the `orderId` from the route parameters passed during navigation.
  * @param {OrderDetailProps} props - The component props.
@@ -30,23 +66,13 @@ const OrderDetailScreen: React.FC<OrderDetailProps> = ({ route }) => {
   const { orderId } = route.params;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Order Detail Screen</Text>
-      <Text>Order ID: {orderId}</Text>
-    </View>
+    <ScreenContainer>
+      <TitleText variant="headlineMedium">Order Detail Screen</TitleText>
+      <InfoText variant="bodyLarge">Order ID: {orderId}</InfoText>
+    </ScreenContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-});
+// Removed StyleSheet.create
 
 export default OrderDetailScreen;
