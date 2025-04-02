@@ -5,7 +5,10 @@ import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
 
-// Styled container using theme
+/**
+ * @description A styled `View` component serving as the main container for the screen.
+ * Centers content and applies theme-based padding and background color.
+ */
 const ScreenContainer = styled(View)`
   flex: 1;
   justify-content: center;
@@ -14,12 +17,21 @@ const ScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-// Define the props type using the RootStackParamList and the screen name
+/**
+ * @description Props for the OrdersScreen.
+ * Includes navigation props provided by React Navigation's NativeStackScreenProps
+ * for the 'Orders' screen within the `RootStackParamList`.
+ * @typedef {NativeStackScreenProps<RootStackParamList, "Orders">} OrdersProps
+ */
 type OrdersProps = NativeStackScreenProps<RootStackParamList, "Orders">;
 
 /**
- * @description Screen to display a list of orders or order-related actions.
+ * @description Screen component for displaying user orders or related actions.
+ * Includes a button to navigate to a specific order's detail screen.
  * Uses React Native Paper components and styled-components with the shared theme.
+ * @param {OrdersProps} props - The component props.
+ * @param {OrdersProps['navigation']} props.navigation - Navigation object provided by React Navigation.
+ * @returns {React.ReactElement} The rendered Orders screen.
  */
 const OrdersScreen: React.FC<OrdersProps> = ({ navigation }) => {
   /**

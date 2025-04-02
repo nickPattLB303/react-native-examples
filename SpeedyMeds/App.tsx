@@ -10,7 +10,12 @@ import {
 // Import the combined navigation themes
 import { CombinedNavLightTheme, CombinedNavDarkTheme } from "./src/theme/theme";
 
-// Inner component to access the theme context
+/**
+ * @description Inner component responsible for setting up theme providers (Paper, Styled Components)
+ * and rendering the main AppNavigator. It consumes the theme context provided by CustomThemeProvider.
+ * It also determines the correct navigation theme and status bar style based on the current theme mode.
+ * @returns {React.ReactElement} The themed application content including the navigator and status bar.
+ */
 const AppContent = () => {
   const { theme, isDark } = useThemeContext(); // Get theme from our context
 
@@ -29,7 +34,13 @@ const AppContent = () => {
   );
 };
 
-// Main App component wraps everything in our custom ThemeProvider
+/**
+ * @description The root component of the application.
+ * Wraps the entire application within the `CustomThemeProvider` to provide
+ * theme context to all descendants. It renders the `AppContent` component
+ * which handles the setup of other providers and the main navigator.
+ * @returns {React.ReactElement} The root application component.
+ */
 export default function App() {
   return (
     <CustomThemeProvider>

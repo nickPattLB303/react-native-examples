@@ -1,6 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+/**
+ * @description Screen component for displaying user account information and settings.
+ * Currently a placeholder.
+ * @returns {React.ReactElement} The rendered Account screen.
+ */
 const AccountScreen = () => {
   return (
     <View style={styles.container}>

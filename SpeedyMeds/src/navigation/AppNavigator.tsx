@@ -10,15 +10,27 @@ import OrdersScreen from "../screens/OrdersScreen";
 import AccountScreen from "../screens/AccountScreen";
 import OrderDetailScreen from "../screens/OrderDetailScreen";
 
-// Define type checking for the navigators
-// Root stack includes the main TabNavigator and any screens outside the tabs (like OrderDetail)
+/**
+ * @description Defines the parameters expected by each screen in the root Native Stack Navigator.
+ * The root stack contains the main `MainTabs` navigator and any screens presented
+ * modally or pushed on top of the tab navigator, such as `OrderDetail`.
+ * @property {undefined} MainTabs - Represents the nested Bottom Tab Navigator. No parameters are passed to it directly.
+ * @property {{ orderId: string }} OrderDetail - The Order Detail screen requires an `orderId` string parameter.
+ */
 export type RootStackParamList = {
   MainTabs: undefined; // No params expected for the main tab navigator itself
   OrderDetail: { orderId: string }; // Expect an orderId parameter
   // Add other modal/full-screen views here if needed outside tabs
 };
 
-// Define type checking for the screens within the Bottom Tab Navigator
+/**
+ * @description Defines the parameters expected by each screen within the Bottom Tab Navigator (`MainTabs`).
+ * Currently, none of the tab screens expect any parameters.
+ * @property {undefined} Home - The Home/Dashboard screen.
+ * @property {undefined} Prescriptions - The Prescriptions screen.
+ * @property {undefined} Orders - The Orders screen.
+ * @property {undefined} Account - The Account screen.
+ */
 export type BottomTabParamList = {
   Home: undefined;
   Prescriptions: undefined;
@@ -29,7 +41,12 @@ export type BottomTabParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-// Define the Bottom Tab Navigator component
+/**
+ * @description Component defining the main Bottom Tab Navigator structure.
+ * It includes screens for Home, Prescriptions, Orders, and Account.
+ * Headers are shown for screens within this navigator.
+ * @returns {React.ReactElement} The configured Bottom Tab Navigator.
+ */
 function MainTabNavigator() {
   return (
     <Tab.Navigator
@@ -45,12 +62,24 @@ function MainTabNavigator() {
   );
 }
 
-// Define props for AppNavigator, including the navigation theme
+/**
+ * @description Props for the main AppNavigator component.
+ * @property {Theme} navigationTheme - The navigation theme object (from `@react-navigation/native`)
+ *                                     to be applied to the NavigationContainer.
+ */
 interface AppNavigatorProps {
   navigationTheme: Theme;
 }
 
-// Update AppNavigator to accept and use the navigationTheme prop
+/**
+ * @description The main application navigator component.
+ * Sets up the `NavigationContainer` with the provided theme and defines the
+ * root `NativeStackNavigator`. The root stack contains the `MainTabNavigator`
+ * and other screens like `OrderDetail`.
+ * @param {AppNavigatorProps} props - Component props.
+ * @param {Theme} props.navigationTheme - The theme to apply to the NavigationContainer.
+ * @returns {React.ReactElement} The main application navigator.
+ */
 function AppNavigator({ navigationTheme }: AppNavigatorProps) {
   return (
     <NavigationContainer theme={navigationTheme}>

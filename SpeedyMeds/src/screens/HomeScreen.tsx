@@ -5,6 +5,10 @@ import styled from "styled-components/native";
 import { useThemeContext } from "../context/ThemeContext";
 import type { ThemePreference } from "../context/ThemeContext";
 
+/**
+ * @description A styled `View` component serving as the main container for the screen.
+ * Centers content and applies theme-based padding and background color.
+ */
 const ScreenContainer = styled(View)`
   flex: 1;
   justify-content: center;
@@ -13,6 +17,10 @@ const ScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
+/**
+ * @description A styled `Text` component for the screen's main title.
+ * Applies theme-based primary color, font size, and bottom margin.
+ */
 const TitleText = styled(Text)`
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.customFontSizes.xxl}px;
@@ -21,8 +29,10 @@ const TitleText = styled(Text)`
 
 /**
  * @description The main dashboard/home screen of the application.
- * Displays a welcome message and theme selection controls.
+ * Displays a welcome message and theme selection controls using SegmentedButtons.
+ * Consumes the theme context to display and update the theme preference.
  * Uses React Native Paper components and styled-components with the shared theme.
+ * @returns {React.ReactElement} The rendered Home screen.
  */
 const HomeScreen: React.FC = () => {
   const { themePreference, setThemePreference, theme } = useThemeContext();
