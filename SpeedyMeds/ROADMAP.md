@@ -31,9 +31,9 @@ This document outlines the planned development milestones for the SpeedyMeds Rea
 - **Core App Structure & UI:**
 
   - [x] Set up React Navigation (Bottom Tab Navigator, Stack Navigator).
-  - [ ] Integrate `react-native-paper` as the UI component library. // Theme setup done
-  - [ ] Set up `styled-components` for customizing `react-native-paper`. // Theme setup done
-  - [ ] Implement theme switching using `react-native-paper`.
+  - [x] Integrate `react-native-paper` as the UI component library. // Theme setup done
+  - [x] Set up `styled-components` for customizing `react-native-paper`. // Theme setup done
+  - [x] Implement theme switching using `react-native-paper`.
 
 - **State Management & Data Handling:**
 

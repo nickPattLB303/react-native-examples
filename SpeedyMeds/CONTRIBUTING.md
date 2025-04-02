@@ -66,12 +66,18 @@ Once your feature or fix is complete:
 
 ## Code Standards
 
-- **Language:** Use TypeScript. Follow best practices taught in the course.
-- **Styling:** Adhere to the "Calm & Clear" visual style. Use `StyleSheet` for Phase 2 and `react-native-paper`/`styled-components` for Phase 3 as directed.
+- **Language:** Use TypeScript. Follow best practices.
+- **Styling:** Adhere to the "Calm & Clear" visual style. Use `react-native-paper` for components and theming and `styled-components`for further customization.
 - **Linting/Formatting:** Follow the rules defined by ESLint and Prettier. Ensure your code passes linting checks (`npm run lint`) before creating a PR. Use format-on-save or run `npm run format` to maintain consistent style.
 - **Components:** Create reusable components where appropriate. Keep components focused on a single responsibility.
 - **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching), or complex component logic within custom hooks (e.g., `useUserProfile`, `useOrderTracking`). Follow the `use` naming convention.
 - **Testing:** Write unit tests using Jest and React Native Testing Library for new components, custom hooks, utility functions, and complex logic. Aim for reasonable test coverage for the functionality you add or modify. Tests should be placed in a `__tests__` directory alongside the code they are testing or in a central `__tests__` directory.
+- **State Management:** Use Zustand by default with Context API as a fallback for specific use cases.
+- **Data Fetching:** Use `TanStack Query` (React Query).
+- **Navigation:** Use React Navigation.
+- **Code Documentation:** Use JSDoc and code comments to document code.
+- **Accessibility:** Ensure all components are accessible. Use appropriate ARIA roles, labels, and semantic elements. Test with screen readers and keyboard navigation. Follow React Native's accessibility guidelines and use built-in accessibility props (e.g., `accessibilityLabel`, `accessibilityHint`, `accessibilityRole`). Consider color contrast ratios (minimum 4.5:1 for normal text) and touch target sizes (minimum 44x44 points).
+
 
 ## Code Reviews
 
