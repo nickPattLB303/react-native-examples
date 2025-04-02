@@ -5,23 +5,23 @@
 export const colors = {
   // --- Primary Palette ---
   /** Application's main brand color. Used for primary actions, highlights, etc. */
-  primary: "#007AFF", // Apple's standard blue - chosen for its clean and trustworthy feel.
+  primary: "#007AFF", // Bright blue
   /** Lighter shade of the primary color, useful for hover states or backgrounds. */
-  primaryLight: "#E6F2FF",
+  primaryLight: "#EBF5FF", // Very light blue
   /** Darker shade of the primary color, useful for pressed states or contrast. */
-  primaryDark: "#0056B3",
+  primaryDark: "#0056B3", // Darker blue
 
   // --- Secondary Palette (Optional) ---
   /** Secondary brand color, used for less prominent actions or accents. */
-  secondary: "#5AC8FA", // A lighter, friendly blue.
+  secondary: "#34C759", // Bright green
   /** Lighter shade of the secondary color. */
-  secondaryLight: "#EBF8FF",
+  secondaryLight: "#EAFBF0", // Very light green
   /** Darker shade of the secondary color. */
-  secondaryDark: "#009AEE",
+  secondaryDark: "#228B22", // Forest green
 
   // --- Accent Palette (Optional) ---
   /** Accent color, used sparingly for highlights or calls to action. */
-  accent: "#FF9500", // Orange for attention.
+  accent: "#FF9500", // Orange
 
   // --- Neutrals ---
   /** Pure white. */
@@ -29,57 +29,66 @@ export const colors = {
   /** Pure black. */
   black: "#000000",
   /** Extremely light grey, often used for subtle backgrounds or dividers. */
-  grey50: "#F9FAFB",
+  grey50: "#F8F9FA", // Very light grey
   /** Very light grey, common for page backgrounds or card backgrounds. */
-  grey100: "#F3F4F6",
+  grey100: "#E9ECEF", // Light grey
   /** Light grey. */
-  grey200: "#E5E7EB",
+  grey200: "#DEE2E6",
   /** Slightly darker light grey, often used for borders. */
-  grey300: "#D1D5DB",
+  grey300: "#CED4DA",
   /** Medium-light grey, suitable for disabled states or secondary text. */
-  grey400: "#9CA3AF",
+  grey400: "#ADB5BD",
   /** Standard medium grey, good for secondary text or icons. */
-  grey500: "#6B7280",
+  grey500: "#6C757D", // Medium grey
   /** Medium-dark grey. */
-  grey600: "#4B5563",
+  grey600: "#495057",
   /** Dark grey, suitable for primary text. */
-  grey700: "#374151",
+  grey700: "#343A40", // Dark grey
   /** Very dark grey, close to black. */
-  grey800: "#1F2937",
+  grey800: "#212529",
   /** Almost black, often used for primary text for strong contrast. */
-  grey900: "#111827",
+  grey900: "#121212", // Near black
 
   // --- Functional Colors ---
   /** Color indicating success operations or states. */
-  success: "#34C759", // Standard green for success.
+  success: "#34C759", // Bright green
   /** Color indicating warnings or potentially problematic states. */
   warning: "#FFCC00", // Standard yellow/orange for warnings.
   /** Color indicating errors or failed operations. */
   error: "#FF3B30", // Standard red for errors.
   /** Color for informational messages or highlights. */
-  info: "#5AC8FA", // Using secondary blue for info messages.
+  info: "#007AFF", // Using primary blue for info messages.
 
   // --- Text Colors ---
   /** Default text color for primary content. */
-  textPrimary: "#111827",
+  textPrimary: "#1C1C1E", // Almost black
   /** Text color for secondary information, captions, etc. */
-  textSecondary: "#6B7280",
+  textSecondary: "#6C757D", // Medium grey
   /** Text color for disabled elements. */
-  textDisabled: "#9CA3AF",
+  textDisabled: "#AEAEB2", // Lighter grey for disabled state
   /** Text color for use on dark backgrounds (e.g., on primary buttons). */
-  textLight: "#FFFFFF",
+  textLight: "#FFFFFF", // White text (for use on dark backgrounds)
 
   // --- Background Colors ---
   /** Default background color for most screens. */
-  background: "#FFFFFF",
+  background: "#F2F2F7", // Very light grey background
   /** Background color for elements like cards, modals, or paper surfaces. */
-  backgroundPaper: "#F3F4F6",
+  backgroundPaper: "#FFFFFF", // White for cards, modals, etc.
   /** Background color for disabled input fields or components. */
-  backgroundDisabled: "#E5E7EB",
+  backgroundDisabled: "#E9ECEF", // Disabled background (similar to light grey)
 
   // --- Border Colors ---
   /** Default border color for inputs, dividers, etc. */
-  border: "#D1D5DB",
+  border: "#CED4DA", // Light grey border
+
+  // --- Dark Mode Colors ---
+  darkBackground: "#000000", // Black background
+  darkSurface: "#1C1C1E", // Very dark grey for surfaces (cards)
+  textDarkPrimary: "#FFFFFF", // White text
+  textDarkSecondary: "#8E8E93", // Lighter grey for secondary text
+  textDarkDisabled: "#48484A", // Darker grey for disabled text
+  darkBackgroundDisabled: "#2C2C2E", // Dark disabled background
+  darkBorder: "#38383A", // Dark grey border
 };
 
 /**

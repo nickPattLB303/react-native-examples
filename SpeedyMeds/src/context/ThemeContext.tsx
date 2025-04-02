@@ -5,9 +5,8 @@ import React, {
   useContext,
   useCallback,
   ReactNode,
-  useEffect,
 } from "react";
-import { useColorScheme, Appearance } from "react-native";
+import { useColorScheme } from "react-native";
 import { lightTheme, darkTheme } from "../theme/theme"; // Adjust path as needed
 // Import the AppTheme type which includes MD3Theme and custom properties
 import type { AppTheme } from "../theme/theme";

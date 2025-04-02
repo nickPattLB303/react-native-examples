@@ -61,7 +61,7 @@ const customProperties = {
 
 // --- Base Theme Type ---
 // Define a type that includes Paper's MD3Theme and our custom properties
-type AppTheme = MD3Theme & typeof customProperties;
+export type AppTheme = MD3Theme & typeof customProperties;
 
 // --- Light Theme Definition ---
 export const lightTheme: AppTheme = merge({}, MD3LightTheme, {
@@ -69,100 +69,90 @@ export const lightTheme: AppTheme = merge({}, MD3LightTheme, {
     // Start with MD3 Light colors and override/map our custom ones
     ...MD3LightTheme.colors,
     primary: customColors.primary,
-    onPrimary: customColors.textLight, // Usually white/light text on primary
+    onPrimary: customColors.textLight,
     primaryContainer: customColors.primaryLight,
-    onPrimaryContainer: customColors.primaryDark, // Darker text on light container
-
+    onPrimaryContainer: customColors.primaryDark,
     secondary: customColors.secondary,
     onSecondary: customColors.textLight,
     secondaryContainer: customColors.secondaryLight,
     onSecondaryContainer: customColors.secondaryDark,
-
     tertiary: customColors.accent,
     onTertiary: customColors.textLight,
-    tertiaryContainer: customColors.accent, // Revisit if specific light/dark needed
-    onTertiaryContainer: customColors.textLight, // Revisit
-
+    tertiaryContainer: customColors.accent,
+    onTertiaryContainer: customColors.textLight,
     error: customColors.error,
     onError: customColors.textLight,
-    errorContainer: "#FFDAD6", // Default MD3 light
-    onErrorContainer: "#410002", // Default MD3 light
-
-    background: customColors.background, // Our light background
-    onBackground: customColors.textPrimary, // Our dark text on light background
-    surface: customColors.backgroundPaper, // Light surface (cards)
-    onSurface: customColors.textPrimary, // Dark text on light surface
-    surfaceVariant: customColors.grey100, // Light variant
+    errorContainer: "#FFDAD6",
+    onErrorContainer: "#410002",
+    background: customColors.background,
+    onBackground: customColors.textPrimary,
+    surface: customColors.backgroundPaper,
+    onSurface: customColors.textPrimary,
+    surfaceVariant: customColors.grey100,
     onSurfaceVariant: customColors.textPrimary,
     surfaceDisabled: customColors.backgroundDisabled,
     onSurfaceDisabled: customColors.textDisabled,
-
     outline: customColors.border,
     outlineVariant: customColors.grey200,
-
-    // Ensure text colors are mapped correctly
-    textPrimary: customColors.textPrimary, // Main text color for light theme
-    textSecondary: customColors.textSecondary, // Secondary text color for light theme
-    textLight: customColors.textLight, // Explicitly light text
+    textPrimary: customColors.textPrimary,
+    textSecondary: customColors.textSecondary,
+    textLight: customColors.textLight,
     textDisabled: customColors.textDisabled,
-
-    // Map other colors as needed from customColors or MD3 defaults
-    placeholder: customColors.textSecondary, // Usually secondary text
-    disabled: customColors.textDisabled, // Deprecated, use onSurfaceDisabled
+    placeholder: customColors.textSecondary,
+    disabled: customColors.textDisabled,
     notification: customColors.primary,
   },
-  ...customProperties, // Spread the rest of the custom properties
+  ...customProperties,
 });
 
 // --- Dark Theme Definition ---
 export const darkTheme: AppTheme = merge({}, MD3DarkTheme, {
   colors: {
-    // Start with MD3 Dark colors and override/map our custom ones
+    // Start with MD3 Dark colors and override/map our custom dark colors
     ...MD3DarkTheme.colors,
-    primary: customColors.primaryDark, // Use a darker primary for dark mode if available, or adjust primary
-    onPrimary: customColors.textLight, // Light text on dark primary often works
-    primaryContainer: customColors.primary, // Could be the original primary
-    onPrimaryContainer: customColors.textLight, // Light text on the container
+    primary: customColors.primary, // Keep primary, adjust if needed
+    onPrimary: customColors.textLight,
+    primaryContainer: customColors.primaryDark, // Use darker variant for container
+    onPrimaryContainer: customColors.textLight,
 
-    secondary: customColors.secondaryDark, // Darker secondary
+    secondary: customColors.secondary, // Keep secondary, adjust if needed
     onSecondary: customColors.textLight,
-    secondaryContainer: customColors.secondary,
+    secondaryContainer: customColors.secondaryDark,
     onSecondaryContainer: customColors.textLight,
 
-    tertiary: customColors.accent, // Accent might stay the same or need adjustment
-    onTertiary: customColors.textDark, // Dark text might be needed if accent is light
+    tertiary: customColors.accent,
+    onTertiary: customColors.textDarkPrimary, // Use primary dark text on accent
     tertiaryContainer: customColors.accent,
-    onTertiaryContainer: customColors.textDark,
+    onTertiaryContainer: customColors.textDarkPrimary,
 
-    error: customColors.error, // Error color might stay the same
-    onError: customColors.textLight, // Text on error
-    errorContainer: "#93000A", // Default MD3 dark
-    onErrorContainer: "#FFDAD6", // Default MD3 dark
+    error: customColors.error,
+    onError: customColors.textLight,
+    errorContainer: "#93000A",
+    onErrorContainer: "#FFDAD6",
 
-    background: customColors.darkBackground, // Dark background
-    onBackground: customColors.textLight, // Light text on dark background
-    surface: customColors.darkSurface, // Dark surface (cards)
-    onSurface: customColors.textLight, // Light text on dark surface
-    surfaceVariant: customColors.grey800, // Darker variant
-    onSurfaceVariant: customColors.textLight, // Light text on dark variant
-    surfaceDisabled: customColors.darkBackgroundDisabled, // Dark disabled background
-    onSurfaceDisabled: customColors.textDisabledDark, // Dark disabled text
+    background: customColors.darkBackground, // Use dark background
+    onBackground: customColors.textDarkPrimary, // Use dark primary text
+    surface: customColors.darkSurface, // Use dark surface
+    onSurface: customColors.textDarkPrimary,
+    surfaceVariant: customColors.grey800, // Use dark grey variant
+    onSurfaceVariant: customColors.textDarkSecondary, // Use dark secondary text
+    surfaceDisabled: customColors.darkBackgroundDisabled, // Use dark disabled background
+    onSurfaceDisabled: customColors.textDarkDisabled, // Use dark disabled text
 
-    outline: customColors.grey600, // Lighter outline for dark mode
+    outline: customColors.darkBorder, // Use dark border
     outlineVariant: customColors.grey700,
 
-    // Ensure text colors are mapped correctly
-    textPrimary: customColors.textLight, // Main text color for dark theme is light
-    textSecondary: customColors.grey300, // Secondary text color for dark theme (lighter grey)
-    textLight: customColors.textLight, // Explicitly light text
-    textDisabled: customColors.textDisabledDark, // Use dark disabled text
+    // Explicitly map text colors for dark theme
+    textPrimary: customColors.textDarkPrimary,
+    textSecondary: customColors.textDarkSecondary,
+    textLight: customColors.textLight, // This remains white
+    textDisabled: customColors.textDarkDisabled,
 
-    // Map other colors as needed
-    placeholder: customColors.grey500, // Placeholder text for dark theme
-    disabled: customColors.textDisabledDark, // Deprecated
-    notification: customColors.primaryDark, // Darker notification color
+    placeholder: customColors.textDarkSecondary, // Use dark secondary text for placeholder
+    disabled: customColors.textDarkDisabled, // Deprecated, use onSurfaceDisabled
+    notification: customColors.primaryDark, // Use darker primary for notifications
   },
-  ...customProperties, // Spread the rest of the custom properties
+  ...customProperties,
 });
 
 // --- Navigation Themes ---

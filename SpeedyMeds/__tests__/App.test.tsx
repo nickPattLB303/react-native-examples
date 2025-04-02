@@ -1,18 +1,23 @@
 import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import App from "../App"; // Import the component to test
+import { render, screen, waitFor } from "@testing-library/react-native";
+import App from "../App"; // Import the main App component
+
+// Mock AsyncStorage if needed for theme persistence later
+// jest.mock('@react-native-async-storage/async-storage', () => require('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 
 describe("<App />", () => {
-  it("renders default message", () => {
+  it("renders the initial Home screen", async () => {
     render(<App />);
 
-    // Check if the default text from the Expo template is present
-    // Adjust this text if you have already modified App.tsx
-    const messageElement = screen.getByText(
-      /Open up App.tsx to start working on your app!/i,
+    // Wait for the HomeScreen title to appear
+    // The exact text might depend on how HomeScreen renders its title
+    // Using findByText which handles asynchronous rendering
+    const homeScreenTitle = await screen.findByText(
+      /Home Screen \(Dashboard\)/i,
     );
-    expect(messageElement).toBeVisible();
+
+    expect(homeScreenTitle).toBeVisible();
   });
 
-  // Add more tests here later
+  // Add more tests here later, potentially testing theme switching
 });
