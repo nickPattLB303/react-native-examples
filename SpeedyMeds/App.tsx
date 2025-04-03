@@ -18,6 +18,7 @@ import {
   focusManager,
 } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
+import { useInitializeAppData } from "./src/hooks/useInitializeAppData"; // Import the hook
 
 /**
  * @description Inner component responsible for setting up theme providers (Paper, Styled Components)
@@ -30,6 +31,9 @@ const AppContent = () => {
 
   // Determine navigation theme based on isDark
   const navigationTheme = isDark ? CombinedNavDarkTheme : CombinedNavLightTheme;
+
+  // Initialize app data fetching
+  useInitializeAppData();
 
   return (
     <PaperProvider theme={theme}>
