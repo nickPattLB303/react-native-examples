@@ -37,9 +37,8 @@ This document outlines the planned development milestones for the SpeedyMeds Rea
 
 - **State Management & Data Handling:**
 
-  - [ ] Set up `zustand` for global state management.
-  - [ ] Set up `TanStack Query` (React Query) for data fetching simulation.
-  - [ ] Integrate `faker.js` to generate mock data.
+  - [x] Set up `zustand` for global state management.
+  - [x] Integrate `faker.js` to generate mock data.
 
 - **Screen Implementation (Based on Mockups):**
 
@@ -79,3 +78,18 @@ This document outlines the planned development milestones for the SpeedyMeds Rea
 - CI/CD Pipeline
 
 _(This roadmap is a living document and may be adjusted based on course progress and learning objectives.)_
+
+## Core Functionality & Architecture
+
+- [x] **Project Initialization:** Expo + TypeScript template.
+- [x] **Basic Navigation:** Setup React Navigation (Bottom Tabs + Stack).
+- [x] **UI Library:** Integrate React Native Paper for components and theming.
+- [x] **Styling:** Setup Styled Components for custom component styling.
+- [x] **Linting/Formatting:** Configure ESLint and Prettier for code quality.
+- [x] **Testing:** Configure Jest and React Native Testing Library.
+- [ ] **Data Fetching:** ~~Integrate TanStack Query (React Query) for server state.~~ **DONE**
+- [ ] **State Management:** ~~Integrate Zustand for global client state.~~ **DONE**
+- [ ] **Mock Data:** ~~Set up Faker.js to generate realistic data for development.~~ **DONE**
+- [ ] **API Simulation:** Create mock API functions to simulate backend interaction.
+- [ ] **Error Handling:** Implement global error handling/display.
+- [ ] **Type Safety:** Define comprehensive TypeScript types for API data and props.

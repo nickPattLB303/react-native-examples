@@ -61,10 +61,37 @@ Install these extensions in VS Code for a better development experience:
     NODE_TLS_REJECT_UNAUTHORIZED=0
     ```
     **Important Security Note:** This setting bypasses TLS certificate verification. It should **only** be used in controlled development/training environments where you understand the risks and **never** in production. Ensure this `.env` file is listed in your `.gitignore` file (it usually is by default) to prevent accidentally committing it.
-3.  **Install Dependencies (if not done yet):** Ensure all dependencies are installed using the Expo-recommended command:
+3.  **Install Dependencies:** Navigate into the `SpeedyMeds` directory and install the necessary packages using `npx expo install`. This command is crucial for Expo projects as it ensures that you install versions of libraries that are compatible with your project's Expo SDK version.
     ```bash
+    cd SpeedyMeds
     npx expo install
     ```
+
+    **Important Note on Peer Dependencies:**
+    You might encounter errors related to "peer dependencies" during installation (e.g., `ERESOLVE unable to resolve dependency tree`). This often happens due to differing version requirements between libraries (like React versions needed by `jest-expo`, `styled-components`, etc.).
+
+    If `npx expo install` fails due to peer dependency conflicts, you often need to pass the `--legacy-peer-deps` flag down to the underlying `npm install` command. Expo provides a specific syntax for this:
+    ```bash
+    # If installing a specific package fails:
+    npx expo install <package-name> -- --legacy-peer-deps
+
+    # If the initial 'npx expo install' or a general 'npm install' fails:
+    npm install --legacy-peer-deps
+    ```
+    This flag tells npm to ignore the peer dependency conflicts and proceed with the installation. While generally necessary for this project setup, be aware that it bypasses some dependency version checks.
+
+    **Key Dependencies Installed:**
+    *   React Native & Expo core libraries
+    *   React Navigation (Stack, Bottom Tabs)
+    *   React Native Paper (UI Components)
+    *   Styled Components (Styling)
+    *   TanStack Query (React Query) (Data Fetching/Caching)
+    *   Zustand (Global State)
+    *   @react-native-community/netinfo (Network status for React Query)
+    *   @faker-js/faker (Dev Dependency for Mock Data)
+    *   Jest, React Native Testing Library (Testing)
+    *   ESLint, Prettier (Linting/Formatting)
+    *   TypeScript
 4.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
 5.  **Start Metro Bundler:** Run the Expo development server using the `--localhost` flag:
 
@@ -112,7 +139,7 @@ npx expo install some-dev-library --dev
 - **Why:** `npx expo install [package-name]` checks the compatibility of the specific package version with your project's Expo SDK version, especially important for libraries with native code or those interacting closely with React Native APIs (like navigation, maps, gestures). It helps prevent common native module mismatches and other dependency conflicts. Using `npm install [package-name]` or `yarn add [package-name]` directly bypasses this check and might install an incompatible version.
 - **When is `npm install [package-name] --save-dev` okay?** For development tools that _don't_ interact with the Expo/React Native runtime (like `eslint`, `prettier`, most `@types/` packages) or pure JS utilities (`lodash`, `date-fns`), using `npm install --save-dev` is generally acceptable, as Expo's compatibility check isn't strictly necessary for them. However, using `npx expo install --dev` is still a safe default.
 
-For more details, see this article: [Why You Should Use “npx expo install” instead of “npm install” in Expo React Native App](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a)
+For more details, see this article: [Why You Should Use "npx expo install" instead of "npm install" in Expo React Native App](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a)
 
 ### Running Project Scripts
 

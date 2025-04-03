@@ -47,7 +47,10 @@ This project utilizes the following core technologies:
 - **React Native Paper:** UI component library & theming. ([Official Docs](https://callstack.github.io/react-native-paper/))
 - **Styled Components:** CSS-in-JS for component styling/customization. ([Official Docs](https://styled-components.com/))
 - **ESLint & Prettier:** Code linting and formatting (configured via `eslint-config-expo` and Prettier plugins).
-- **(Planned Additions):** React Query (TanStack Query), Zustand, Faker.js.
+- **TanStack Query (React Query):** Data fetching, caching, and state synchronization. ([Official Docs](https://tanstack.com/query/latest))
+- **Zustand:** Minimalist global state management. ([Official Docs](https://zustand.docs.pmnd.rs/))
+- **Faker.js:** Library for generating realistic mock data (dev dependency). ([Official Docs](https://fakerjs.dev/))
+- **@react-native-community/netinfo:** Detects network connection status (used by React Query).
 
 ## Getting Started
 
@@ -74,7 +77,17 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
     ```bash
     npx expo install
     ```
-    _(This command ensures compatibility. For adding **new** dependencies later, **always** use `npx expo install [package-name]` instead of `npm install`. See [SETUP.md](./SETUP.md) for the full explanation and the linked article: [Why Use "npx expo install"](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a))_
+    _(This command ensures compatibility. For adding **new** dependencies later, **always** prefer `npx expo install [package-name]` over `npm install`. See [SETUP.md](./SETUP.md) for the full explanation and the linked article: [Why Use "npx expo install"](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a))_
+
+    **Note:** Due to potential version conflicts between dependencies (especially related to React versions required by libraries like `jest-expo` or `styled-components`), you might encounter "peer dependency" errors during installation, even when using `npx expo install`. If this happens, you may need to pass the `--legacy-peer-deps` flag to the underlying npm command:
+    ```bash
+    # Example for installing a new package with the flag
+    npx expo install [package-name] -- --legacy-peer-deps
+
+    # Example for reinstalling all packages if needed
+    npm install --legacy-peer-deps
+    ```
+    Using this flag instructs npm to ignore these conflicts and proceed. While generally safe for these types of conflicts, be mindful that it bypasses dependency checks.
 
 ### Running the App (Simulators/Emulators Recommended)
 
@@ -126,21 +139,32 @@ SpeedyMeds/
 │   ├── images/           # SVG mockups (dashboard.svg, etc.)
 │   └── ...               # Default Expo icons/splash
 ├── docs/                 # Project documentation
-│   └── setup/            # Setup guides (linting, testing, etc.)
+│   └── setup/            # Setup guides (linting, testing, data, state, etc.)
 ├── src/                  # Source code
-│   ├── navigation/       # Navigation setup (React Navigation)
-│   │   └── AppNavigator.tsx
+│   ├── api/              # API simulation, mock data generation, query keys
+│   │   ├── mockData.ts
+│   │   ├── queryKeys.ts
+│   │   └── index.ts
 │   ├── context/          # React Context providers (e.g., ThemeContext)
 │   │   └── ThemeContext.tsx
+│   ├── hooks/            # Custom React hooks
+│   │   └── useInitializeAppData.ts
+│   ├── navigation/       # Navigation setup (React Navigation)
+│   │   └── AppNavigator.tsx
 │   ├── screens/          # Application screens
 │   │   ├── HomeScreen.tsx
 │   │   ├── PrescriptionsScreen.tsx
 │   │   ├── OrdersScreen.tsx
 │   │   ├── AccountScreen.tsx
 │   │   └── OrderDetailScreen.tsx
-│   └── theme/            # Theme definitions (colors, spacing, etc.)
-│       ├── theme.ts
-│       └── ...
+│   ├── stores/           # Zustand state management stores
+│   │   ├── appDataStore.ts
+│   │   └── bearStore.ts  # Example store (can be removed later)
+│   ├── theme/            # Theme definitions (colors, spacing, etc.)
+│   │   ├── theme.ts
+│   │   └── ...
+│   └── types/            # Shared TypeScript interfaces and types
+│       └── index.ts
 ├── App.tsx               # Main application component (renders Navigator)
 ├── index.ts              # Entry point for Metro bundler
 ├── app.json              # Expo configuration file
@@ -174,8 +198,11 @@ We follow the **GitHub Flow** branching strategy. Writing unit tests for new fea
 - [ROADMAP.md](./ROADMAP.md)
 - [CHANGELOG.md](./CHANGELOG.md)
 - Setup Guides:
-  - [Navigation Setup (React Navigation)](./docs/navigation-setup.md)
-  - [UI Library & Styling Setup](./docs/ui-styling-setup.md)
+  - [Navigation Setup (React Navigation)](./docs/setup/navigation-setup.md)
+  - [UI Library & Styling Setup](./docs/setup/ui-styling-setup.md)
+  - [Mock Data Generation (Faker.js)](./docs/setup/mock-data-faker-setup.md)
+  - [Data Fetching & Caching (React Query)](./docs/setup/data-fetching-react-query-setup.md)
+  - [State Management (Zustand)](./docs/setup/state-management-zustand-setup.md)
   - [Expo Config (`app.json`)](./docs/setup/app-json-config.md)
   - [TypeScript Config (`tsconfig.json`)](./docs/setup/tsconfig-config.md)
   - [Linting & Formatting](./docs/setup/linting-formatting-config.md)
