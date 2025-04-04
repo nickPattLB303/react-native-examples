@@ -6,8 +6,8 @@ This document details the setup of navigation using [React Navigation](https://r
 
 We are implementing a common mobile navigation pattern combining:
 
-1.  **[Bottom Tab Navigator](https://reactnavigation.org/docs/bottom-tab-navigator):** For the primary sections (Home, Prescriptions, Orders, Account).
-2.  **[Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator):** As the root navigator, allowing screens (like Order Details) to be pushed on top of the tabs, providing native platform navigation animations and headers.
+1.  **[Bottom Tab Navigator](https://reactnavigation.org/docs/bottom-tab-navigator):** For the primary sections (Home, Prescriptions, Orders, Account), now including icons.
+2.  **[Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator):** Used as the root navigator and also nested within the 'Orders' tab to handle navigation between the orders list and order details. This provides native platform navigation animations and headers within each section.
 3.  **Theming:** The appearance of the navigators (headers, tab bar, background) is controlled by the application's theme.
 
 ## Implementation Details
@@ -19,6 +19,7 @@ We are implementing a common mobile navigation pattern combining:
     - `@react-navigation/bottom-tabs`
     - `react-native-screens`
     - `react-native-safe-area-context`
+    - `@expo/vector-icons` (implicitly included with Expo, used for tab icons)
 
 2.  **Directory Structure:**
 
@@ -34,17 +35,20 @@ We are implementing a common mobile navigation pattern combining:
       - Selects the appropriate navigation theme (`CombinedNavLightTheme` or `CombinedNavDarkTheme`) based on `isDark`.
       - Renders the `AppNavigator`, passing the selected `navigationTheme` as a prop.
     - **`src/navigation/AppNavigator.tsx`**:
-      - Defines `RootStackParamList` and `BottomTabParamList` types.
-      - Creates stack and tab navigators.
-      - The exported `AppNavigator` component now accepts the `navigationTheme` prop.
+      - Defines `RootStackParamList`, `BottomTabParamList`, and `OrdersStackParamList` types.
+      - Creates the root stack, bottom tab, and nested orders stack navigators.
+      - Implements the `OrdersNavigator` component for the nested stack.
+      - Configures the `MainTabNavigator` with screens and `tabBarIcon` options using `MaterialCommunityIcons`.
+      - The exported `AppNavigator` component accepts the `navigationTheme` prop.
       - The `NavigationContainer` inside `AppNavigator` receives the `navigationTheme` prop, ensuring navigators match the app's light/dark mode.
     - **`src/screens/*.tsx`**: Placeholder screens (HomeScreen, PrescriptionsScreen, OrdersScreen, AccountScreen, OrderDetailScreen).
 
 4.  **Type Safety:**
-    - `RootStackParamList` defines routes/params for the root stack.
-    - `BottomTabParamList` defines routes for the bottom tabs.
+    - `RootStackParamList` defines routes/params for the root stack (primarily just the `MainTabs`).
+    - `BottomTabParamList` defines routes for the bottom tabs (Home, Prescriptions, Orders, Account).
+    - `OrdersStackParamList` defines routes/params for the nested stack within the Orders tab (`OrdersList`, `OrderDetail`).
     - Used with `createNativeStackNavigator` and `createBottomTabNavigator`.
-    - Screen components use appropriate props types: `BottomTabScreenProps` for screens within the tab navigator (Home, Orders, etc.) and `NativeStackScreenProps` for screens directly in the stack navigator (OrderDetail).
+    - Screen components use appropriate props types: `BottomTabScreenProps` for screens directly within the tab navigator (Home, Prescriptions, Account), and `NativeStackScreenProps` for screens within the nested `OrdersStackNavigator` (`OrdersScreen` as `OrdersList`, `OrderDetailScreen`).
 
 ## Usage
 
@@ -54,14 +58,41 @@ We are implementing a common mobile navigation pattern combining:
 
 ## Navigation Structure Visualization
 
-The following diagram shows the relationship between the Root Stack Navigator and the Bottom Tab Navigator:
+The following diagram shows the updated navigation structure with the nested Orders stack:
 
 ```mermaid
 graph TD
-    RootStack(Native Stack Navigator) --> TabNav(Bottom Tab Navigator);
-    RootStack --> OrderDetail(OrderDetail Screen);
-    TabNav --> HomeScreen(Home Screen);
-    TabNav --> PrescriptionsScreen(Prescriptions Screen);
-    TabNav --> OrdersScreen(Orders Screen);
-    TabNav --> AccountScreen(Account Screen);
+    subgraph RootStack [Root Native Stack Navigator]
+        direction TB
+        TabNav(Bottom Tab Navigator)
+    end
+
+    subgraph TabNav [Bottom Tab Navigator]
+        direction LR
+        HomeScreen(Home Screen)
+        PrescriptionsScreen(Prescriptions Screen)
+        OrdersStackNav(Orders Stack)
+        AccountScreen(Account Screen)
+    end
+
+    subgraph OrdersStackNav [Orders Native Stack Navigator]
+        direction TB
+        OrdersListScreen(Orders List Screen) --> OrderDetailScreen(Order Detail Screen)
+    end
+
+    %% Define connections explicitly if needed, though subgraph implies hierarchy
+    %% RootStack --> TabNav; (Implied by subgraph)
+    %% TabNav --> HomeScreen; (Implied by subgraph)
+    %% TabNav --> PrescriptionsScreen; (Implied by subgraph)
+    %% TabNav --> OrdersStackNav; (Implied by subgraph)
+    %% TabNav --> AccountScreen; (Implied by subgraph)
+    %% OrdersStackNav --> OrdersListScreen; (Implied by subgraph)
+    %% OrdersListScreen --> OrderDetailScreen; (Implied by subgraph)
+
 ```
+
+**Key Changes:**
+
+-   The `Orders` tab now renders the `OrdersStackNav`.
+-   `OrdersListScreen` (formerly `OrdersScreen`) and `OrderDetailScreen` are now part of the `OrdersStackNav`.
+-   Icons are displayed for each tab in the `TabNav`.

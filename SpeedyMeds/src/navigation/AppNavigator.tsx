@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer, Theme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"; // Import icons
 // Import your placeholder screens
 import HomeScreen from "../screens/HomeScreen";
 import PrescriptionsScreen from "../screens/PrescriptionsScreen";
@@ -15,12 +15,11 @@ import OrderDetailScreen from "../screens/OrderDetailScreen";
  * The root stack contains the main `MainTabs` navigator and any screens presented
  * modally or pushed on top of the tab navigator, such as `OrderDetail`.
  * @property {undefined} MainTabs - Represents the nested Bottom Tab Navigator. No parameters are passed to it directly.
- * @property {{ orderId: string }} OrderDetail - The Order Detail screen requires an `orderId` string parameter.
+ * // OrderDetail is now nested within the Orders stack inside MainTabs
  */
 export type RootStackParamList = {
   MainTabs: undefined; // No params expected for the main tab navigator itself
-  OrderDetail: { orderId: string }; // Expect an orderId parameter
-  // Add other modal/full-screen views here if needed outside tabs
+  // Add other modal/full-screen views here if needed outside tabs (e.g., SettingsModal)
 };
 
 /**
@@ -38,25 +37,88 @@ export type BottomTabParamList = {
   Account: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<BottomTabParamList>();
+// Define ParamList for the new Orders Stack
+export type OrdersStackParamList = {
+  OrdersList: undefined; // The main Orders screen
+  OrderDetail: { orderId: string }; // The Order Detail screen
+};
 
+const RootStack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
+const OrdersStack = createNativeStackNavigator<OrdersStackParamList>();
+
+// --- Orders Stack Navigator ---
+/**
+ * @description Navigator specifically for the Orders section, containing the list and detail screens.
+ * @returns {React.ReactElement} The configured Orders Stack Navigator.
+ */
+function OrdersNavigator() {
+  return (
+    <OrdersStack.Navigator
+      // Keep headers consistent with other tabs, or customize as needed
+      screenOptions={{
+        headerShown: true, // Or false if the tab navigator shows the header
+      }}
+    >
+      <OrdersStack.Screen
+        name="OrdersList"
+        component={OrdersScreen}
+        options={{ title: "Your Orders" }} // Set header title for the list screen
+      />
+      <OrdersStack.Screen
+        name="OrderDetail"
+        component={OrderDetailScreen}
+        options={{ title: "Order Details" }} // Set header title for the detail screen
+      />
+    </OrdersStack.Navigator>
+  );
+}
+
+// --- Bottom Tab Navigator ---
 /**
  * @description Component defining the main Bottom Tab Navigator structure.
- * It includes screens for Home, Prescriptions, Orders, and Account.
- * Headers are shown for screens within this navigator.
+ * It includes screens for Home, Prescriptions, the Orders stack, and Account.
+ * Configures icons for each tab.
  * @returns {React.ReactElement} The configured Bottom Tab Navigator.
  */
 function MainTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: true, // Show headers for tab screens (can customize per tab)
-      }}
+      screenOptions={({ route }) => ({
+        headerShown: true, // Show headers for tab screens (Orders stack manages its own)
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: React.ComponentProps<
+            typeof MaterialCommunityIcons
+          >["name"] = "help-circle"; // Default icon
+
+          if (route.name === "Home") {
+            iconName = focused ? "view-dashboard" : "view-dashboard-outline";
+          } else if (route.name === "Prescriptions") {
+            iconName = focused ? "pill" : "pill"; // Using same for focused/unfocused
+          } else if (route.name === "Orders") {
+            iconName = focused ? "receipt" : "script-text-outline"; // Use script-text-outline for unfocused
+          } else if (route.name === "Account") {
+            iconName = focused ? "account-circle" : "account-circle-outline";
+          }
+
+          // You can return any component that you like here!
+          return (
+            <MaterialCommunityIcons name={iconName} size={size} color={color} />
+          );
+        },
+        // Optional: Customize active/inactive tint colors if needed
+        // tabBarActiveTintColor: 'tomato',
+        // tabBarInactiveTintColor: 'gray',
+      })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Prescriptions" component={PrescriptionsScreen} />
-      <Tab.Screen name="Orders" component={OrdersScreen} />
+      {/* Orders tab now renders the OrdersNavigator stack */}
+      <Tab.Screen
+        name="Orders"
+        component={OrdersNavigator}
+        options={{ headerShown: false }} // Important: Hide Tab header for the Orders stack
+      />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
@@ -83,19 +145,15 @@ interface AppNavigatorProps {
 function AppNavigator({ navigationTheme }: AppNavigatorProps) {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator
+      <RootStack.Navigator
         screenOptions={{
-          headerShown: false, // Hide root stack header, tabs will show their own
+          headerShown: false, // Hide root stack header; headers managed by nested navigators
         }}
       >
-        <Stack.Screen name="MainTabs" component={MainTabNavigator} />
-        <Stack.Screen
-          name="OrderDetail"
-          component={OrderDetailScreen}
-          options={{ headerShown: true, title: "Order Details" }} // Show header for this screen
-        />
-        {/* Add other stack screens (modals, etc.) here */}
-      </Stack.Navigator>
+        <RootStack.Screen name="MainTabs" component={MainTabNavigator} />
+        {/* OrderDetail Screen is removed from here - it's inside OrdersNavigator now */}
+        {/* Add other root stack screens (modals, etc.) here if needed */}
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }

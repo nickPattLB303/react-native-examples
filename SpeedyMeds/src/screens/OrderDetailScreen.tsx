@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Text } from "react-native-paper"; // Use Paper Text for consistency
 import styled from "styled-components/native"; // Import styled
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/AppNavigator"; // Adjust path as needed
+import { OrdersStackParamList } from "../navigation/AppNavigator"; // Use the new Orders stack param list
 import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**
@@ -11,11 +11,11 @@ import type { AppTheme } from "../theme/theme"; // Import AppTheme type
  * Includes navigation props provided by React Navigation's NativeStackScreenProps
  * and expects an `orderId` string within the route parameters.
  * @typedef {object} OrderDetailProps
- * @property {NativeStackScreenProps<RootStackParamList, "OrderDetail">['route']} route - Route object containing parameters.
- * @property {NativeStackScreenProps<RootStackParamList, "OrderDetail">['navigation']} navigation - Navigation object.
+ * @property {NativeStackScreenProps<OrdersStackParamList, "OrderDetail">['route']} route - Route object containing parameters.
+ * @property {NativeStackScreenProps<OrdersStackParamList, "OrderDetail">['navigation']} navigation - Navigation object.
  */
 type OrderDetailProps = NativeStackScreenProps<
-  RootStackParamList,
+  OrdersStackParamList, // Use OrdersStackParamList
   "OrderDetail"
 >;
 
