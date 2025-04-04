@@ -103,12 +103,11 @@ const ErrorText = styled(Text)`
  */
 const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
   // Access the global state from the Zustand store.
-  // Select only the slices needed for this screen: orders, isLoading, error.
-  const { orders, isLoading, error } = useAppDataStore((state) => ({
-    orders: state.orders,
-    isLoading: state.isLoading,
-    error: state.error,
-  }));
+  // Select only the slices needed for this screen using individual selectors
+  // to prevent unnecessary re-renders.
+  const orders = useAppDataStore((state) => state.orders);
+  const isLoading = useAppDataStore((state) => state.isLoading);
+  const error = useAppDataStore((state) => state.error);
 
   // Access the theme object.
   const theme = useTheme<AppTheme>();

@@ -156,12 +156,11 @@ const StatusBadge = styled(Badge)<{
 const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
   _props: PrescriptionsScreenProps,
 ) => {
-  // Access the global state from the Zustand store.
-  const { prescriptions, isLoading, error } = useAppDataStore((state) => ({
-    prescriptions: state.prescriptions,
-    isLoading: state.isLoading,
-    error: state.error,
-  }));
+  // Access the global state from the Zustand store using individual selectors.
+  // This prevents unnecessary re-renders caused by creating new objects in the selector.
+  const prescriptions = useAppDataStore((state) => state.prescriptions);
+  const isLoading = useAppDataStore((state) => state.isLoading);
+  const error = useAppDataStore((state) => state.error);
 
   // Access the theme object.
   // Access the theme object, explicitly providing the AppTheme type to the hook.
