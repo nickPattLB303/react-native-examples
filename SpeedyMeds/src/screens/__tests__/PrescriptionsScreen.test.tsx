@@ -68,14 +68,26 @@ const defaultStoreState = {
 describe("PrescriptionsScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseAppDataStore.mockReturnValue(defaultStoreState);
+    // Set default mock implementation using mockImplementation
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(defaultStoreState);
+      }
+      return defaultStoreState;
+    });
   });
 
   it("renders loading indicator when loading and no prescriptions", () => {
-    mockUseAppDataStore.mockReturnValue({
+    const loadingState = {
       ...defaultStoreState,
       isLoading: true,
       prescriptions: [],
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(loadingState);
+      }
+      return loadingState;
     });
     render(<PrescriptionsScreen {...(mockProps as any)} />);
     expect(screen.getByText("Loading Prescriptions...")).toBeVisible();
@@ -83,10 +95,16 @@ describe("PrescriptionsScreen", () => {
 
   it("renders error display when there is an error", () => {
     const error = new Error("Failed to fetch prescriptions");
-    mockUseAppDataStore.mockReturnValue({
+    const errorState = {
       ...defaultStoreState,
       isLoading: false,
       error: error,
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(errorState);
+      }
+      return errorState;
     });
     render(<PrescriptionsScreen {...(mockProps as any)} />);
     expect(screen.getByText("An Error Occurred")).toBeVisible();
@@ -94,10 +112,16 @@ describe("PrescriptionsScreen", () => {
   });
 
   it("renders empty state message when no prescriptions are available", () => {
-    mockUseAppDataStore.mockReturnValue({
+    const emptyState = {
       ...defaultStoreState,
       isLoading: false,
       prescriptions: [],
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(emptyState);
+      }
+      return emptyState;
     });
     render(<PrescriptionsScreen {...(mockProps as any)} />);
     // Search bar should NOT be visible in empty state based on current logic
@@ -150,5 +174,28 @@ describe("PrescriptionsScreen", () => {
     // Check if the input value updated (reflecting state change)
     expect(searchInput.props.value).toBe(testQuery);
     // Note: This test doesn't check filtering logic, only that the state updates.
+  });
+
+  it("filters prescriptions based on search query", () => {
+    render(<PrescriptionsScreen {...(mockProps as any)} />);
+    const searchInput = screen.getByPlaceholderText("Search Prescriptions");
+
+    // Initially, both prescriptions should be visible
+    expect(screen.getByText(/Atorvastatin/)).toBeVisible();
+    expect(screen.getByText(/Amoxicillin/)).toBeVisible();
+
+    // Filter for "Atorva"
+    fireEvent.changeText(searchInput, "Atorva");
+
+    // Only Atorvastatin should be visible
+    expect(screen.getByText(/Atorvastatin/)).toBeVisible();
+    expect(screen.queryByText(/Amoxicillin/)).toBeNull();
+
+    // Clear the search
+    fireEvent.changeText(searchInput, "");
+
+    // Both should be visible again
+    expect(screen.getByText(/Atorvastatin/)).toBeVisible();
+    expect(screen.getByText(/Amoxicillin/)).toBeVisible();
   });
 });

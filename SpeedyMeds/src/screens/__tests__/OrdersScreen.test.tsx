@@ -79,15 +79,26 @@ const defaultStoreState = {
 describe("OrdersScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Set default mock implementations for Zustand store
-    mockUseAppDataStore.mockReturnValue(defaultStoreState);
+    // Set default mock implementation for Zustand store using mockImplementation
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(defaultStoreState);
+      }
+      return defaultStoreState;
+    });
   });
 
   it("renders loading indicator when loading and no orders", () => {
-    mockUseAppDataStore.mockReturnValue({
+    const loadingState = {
       ...defaultStoreState,
       isLoading: true,
       orders: [], // Ensure orders are empty for initial loading state
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(loadingState);
+      }
+      return loadingState;
     });
     render(<OrdersScreen {...(mockProps as any)} />);
     expect(screen.getByText("Loading Orders...")).toBeVisible();
@@ -95,10 +106,16 @@ describe("OrdersScreen", () => {
 
   it("renders error display when there is an error", () => {
     const error = new Error("Failed to fetch orders");
-    mockUseAppDataStore.mockReturnValue({
+    const errorState = {
       ...defaultStoreState,
       isLoading: false,
       error: error,
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(errorState);
+      }
+      return errorState;
     });
     render(<OrdersScreen {...(mockProps as any)} />);
     expect(screen.getByText("An Error Occurred")).toBeVisible(); // From ErrorDisplay
@@ -106,10 +123,16 @@ describe("OrdersScreen", () => {
   });
 
   it("renders empty state message when no orders are available", () => {
-    mockUseAppDataStore.mockReturnValue({
+    const emptyState = {
       ...defaultStoreState,
       isLoading: false,
       orders: [], // Empty orders array
+    };
+    mockUseAppDataStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(emptyState);
+      }
+      return emptyState;
     });
     render(<OrdersScreen {...(mockProps as any)} />);
     expect(screen.getByText("No Orders Found")).toBeVisible();

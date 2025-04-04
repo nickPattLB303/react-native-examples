@@ -10,7 +10,7 @@
  * @see types/index - Defines the `Prescription` type.
  */
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react"; // Import useMemo
 import { FlatList, View } from "react-native"; // Import FlatList for list rendering (Keep View for renderPrescriptionItem)
 // Import UI components from React Native Paper
 import {
@@ -144,6 +144,17 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
   const theme: AppTheme = useTheme<AppTheme>();
   // State for the search query
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter prescriptions based on search query
+  const filteredPrescriptions = useMemo(() => {
+    if (!searchQuery) {
+      return prescriptions; // Return all if search is empty
+    }
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    return prescriptions.filter((rx) =>
+      rx.drugName.toLowerCase().includes(lowerCaseQuery),
+    );
+  }, [prescriptions, searchQuery]); // Recalculate only when these change
 
   /**
    * @description Renders the alert icon and text based on the prescription's alert status.
@@ -283,7 +294,7 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
       />
       {/* @see https://reactnative.dev/docs/flatlist */}
       <FlatList
-        data={prescriptions}
+        data={filteredPrescriptions} // Use the filtered list
         renderItem={renderPrescriptionItem}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <Divider />} // Add dividers between items

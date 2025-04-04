@@ -43,7 +43,8 @@ import type {
  * It also defines the signatures for the action functions used to modify the state.
  * @interface AppDataState
  */
-interface AppDataState {
+export interface AppDataState {
+  // Add export keyword
   // --- State Slices ---
   /** The currently logged-in user's profile information. Null if not loaded or error. */
   userProfile: UserProfile | null;

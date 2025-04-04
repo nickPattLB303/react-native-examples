@@ -130,7 +130,35 @@ describe("AccountScreen", () => {
     expect(consoleSpy).toHaveBeenCalledWith("Navigate to Personal Info screen");
   });
 
-  // Add similar tests for other list items...
+  it("logs message when Payment Methods item is pressed", () => {
+    render(<AccountScreen {...(mockProps as any)} />);
+    fireEvent.press(screen.getByText("Payment Methods"));
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Navigate to Payment Methods screen",
+    );
+  });
+
+  it("logs message when Communication Preferences item is pressed", () => {
+    render(<AccountScreen {...(mockProps as any)} />);
+    fireEvent.press(screen.getByText("Communication Preferences"));
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Navigate to Communication Preferences screen",
+    );
+  });
+
+  it("logs message when Security item is pressed", () => {
+    render(<AccountScreen {...(mockProps as any)} />);
+    fireEvent.press(screen.getByText("Security"));
+    expect(consoleSpy).toHaveBeenCalledWith("Navigate to Security screen");
+  });
+
+  it("logs message when Help & Support item is pressed", () => {
+    render(<AccountScreen {...(mockProps as any)} />);
+    fireEvent.press(screen.getByText("Help & Support"));
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Navigate to Help & Support screen",
+    );
+  });
 
   it("logs message when Log Out button is pressed", () => {
     render(<AccountScreen {...(mockProps as any)} />);

@@ -40,6 +40,14 @@ jest.mock("@expo/vector-icons", () => {
   };
 });
 
+// Mock expo-font
+jest.mock("expo-font", () => ({
+  loadAsync: jest.fn().mockResolvedValue(undefined), // Mock loadAsync to resolve immediately
+  isLoaded: jest.fn().mockReturnValue(true), // Mock isLoaded to always return true
+  // Add mocks for other functions if needed, e.g., useFonts
+  useFonts: jest.fn().mockReturnValue([true, null]), // Mock useFonts hook
+}));
+
 // --- Optional: Add other global setup below ---
 
 // Example: Mocking a native module like AsyncStorage (if needed globally)
