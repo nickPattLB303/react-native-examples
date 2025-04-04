@@ -1,16 +1,38 @@
-# Ignore artifacts:
+# Prettier Ignore File
+# --------------------
+# Specifies files and directories that Prettier should ignore when running formatting commands
+# (e.g., `npx prettier --write .` or `npm run format`).
+# This prevents Prettier from trying to format files that shouldn't be touched,
+# such as dependency directories, build artifacts, lock files, or certain config files.
+#
+# Syntax is similar to .gitignore.
+# See: https://prettier.io/docs/en/ignore.html
+
+# Ignore dependency directories and build artifacts:
+# These are typically large, generated, or managed by package managers.
 node_modules
 build
 dist
 .expo
 coverage
+
+# Ignore lock files:
+# These are auto-generated and have a strict format; formatting them can cause issues.
 *.lock
+# Explicitly ignore specific lock files (often redundant with *.lock but clear)
+package-lock.json
+yarn.lock
 
-# Ignore configuration files handled elsewhere:
-# (Prettier usually ignores dotfiles by default, but explicit is fine)
-.eslintrc.js
-# .prettierrc.js (no need to format itself)
+# Ignore configuration files handled elsewhere or that shouldn't be formatted:
+# (Prettier often ignores dotfiles by default, but being explicit can be helpful)
+# .eslintrc.js # Let ESLint manage this if needed, though formatting is usually fine.
+# .prettierrc.js # No need for Prettier to format its own config file.
 
-# Ignore generated files (if any later):
+# Ignore native project directories (if/when ejected or using dev clients):
+# These contain native code (Swift/Objective-C/Kotlin/Java) that Prettier doesn't handle.
 # ios/
 # android/
+
+# Ignore other generated files or assets if necessary:
+# e.g., specific large data files, generated documentation, etc.
+# assets/large-data.json

@@ -1,0 +1,56 @@
+{
+  // --- Editor Formatting ---
+  // Enable format on save for all files handled by a formatter.
+  "editor.formatOnSave": true,
+  // Set Prettier as the default formatter for most file types.
+  // This ensures consistency when multiple formatters might be available.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // --- Language-Specific Default Formatters ---
+  // Explicitly set Prettier as the default formatter for JS/TS related files.
+  // While the global default might cover this, being explicit avoids potential conflicts.
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    // For JSX files
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    // For TSX files
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // --- Code Actions on Save (Linting) ---
+  // Configure actions to run when a file is saved.
+  "editor.codeActionsOnSave": {
+    // Run ESLint's "fix all auto-fixable problems" action on save.
+    // "explicit" means it runs when explicitly triggered by save, not continuously.
+    // This helps automatically fix simple linting issues (like unused imports if configured).
+    "source.fixAll.eslint": "explicit"
+    // You could add other source actions here if needed, e.g., for Stylelint.
+    // "source.fixAll.stylelint": "explicit"
+  },
+
+  // --- ESLint Specific Settings ---
+  // Tell the ESLint extension which languages it should validate.
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+
+  // --- Other Potential Settings ---
+  // "files.eol": "\n", // Enforce LF line endings
+  // "typescript.tsdk": "node_modules/typescript/lib", // Point to workspace TypeScript version
+}
