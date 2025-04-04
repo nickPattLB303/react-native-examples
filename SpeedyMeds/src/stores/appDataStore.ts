@@ -106,13 +106,12 @@ const useAppDataStore = create<AppDataState>((set) => ({
 
   // --- Action Implementations ---
   // Each action calls the `set` function provided by Zustand to update state.
-  // Note: When setting data, we often also reset isLoading to false and error to null,
-  // assuming a successful data fetch implies loading is done and previous errors are resolved
-  // for that specific data type. The global isLoading/error might still be true/set if
-  // other fetches are ongoing or failed.
+  // Note: Individual data setters (`setUserProfile`, `setMedicationReminders`, etc.)
+  // only update their specific slice of the state. The global `isLoading` and `error`
+  // states are managed separately by the `setLoading` and `setError` actions,
+  // typically driven by the `useInitializeAppData` hook based on the overall fetch status.
 
-  setUserProfile: (profile) =>
-    set({ userProfile: profile, isLoading: false, error: null }), // Example: Setting profile clears error/loading
+  setUserProfile: (profile) => set({ userProfile: profile }),
 
   setMedicationReminders: (reminders) =>
     set({ medicationReminders: reminders }), // Example: Just setting reminders

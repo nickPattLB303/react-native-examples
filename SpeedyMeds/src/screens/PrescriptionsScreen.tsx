@@ -10,16 +10,16 @@
  * @see types/index - Defines the `Prescription` type.
  */
 
-import React from "react";
-import { View, FlatList } from "react-native"; // Import FlatList for list rendering
+import React, { useState } from "react";
+import { FlatList, View } from "react-native"; // Import FlatList for list rendering (Keep View for renderPrescriptionItem)
 // Import UI components from React Native Paper
 import {
   Text,
   List,
-  ActivityIndicator,
   Divider,
   useTheme,
   Badge, // Import Badge for supply status
+  Searchbar, // Import Searchbar
 } from "react-native-paper";
 // Import styled-components for creating theme-aware styled native components
 import styled from "styled-components/native";
@@ -35,6 +35,10 @@ import useAppDataStore from "../stores/appDataStore";
 // Import the Prescription type and related enums
 import type { Prescription } from "../types";
 import { PrescriptionSupplyStatus, PrescriptionAlert } from "../types";
+// Import reusable components
+import LoadingIndicator from "../components/LoadingIndicator";
+import ErrorDisplay from "../components/ErrorDisplay";
+import ScreenContainer from "../components/ScreenContainer";
 
 // ============================================================================
 // Navigation Props Type
@@ -54,34 +58,7 @@ type PrescriptionsScreenProps = BottomTabScreenProps<
 // Styled Components
 // ============================================================================
 
-/**
- * @description A styled `View` component serving as the main container for the screen.
- * Ensures it fills available space and applies theme background color.
- */
-const ScreenContainer = styled(View)`
-  flex: 1; /* Take full available space */
-  background-color: ${({ theme }: { theme: AppTheme }) =>
-    theme.colors.background};
-`;
-
-/**
- * @description Styled container for loading or error states, centering content.
- */
-const StateContainer = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-`;
-
-/**
- * @description Styled `Text` component for displaying error messages.
- */
-const ErrorText = styled(Text)`
-  color: ${({ theme }: { theme: AppTheme }) => theme.colors.error};
-  margin: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  text-align: center;
-`;
+// Local styled components for this screen specifically
 
 /**
  * @description Styled View to hold the alert badge and text, aligning them horizontally.
@@ -165,6 +142,8 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
   // Access the theme object.
   // Access the theme object, explicitly providing the AppTheme type to the hook.
   const theme: AppTheme = useTheme<AppTheme>();
+  // State for the search query
+  const [searchQuery, setSearchQuery] = useState("");
 
   /**
    * @description Renders the alert icon and text based on the prescription's alert status.
@@ -250,41 +229,48 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
 
   // --- Loading State ---
   if (isLoading && prescriptions.length === 0) {
-    return (
-      <StateContainer>
-        <ActivityIndicator
-          animating={true}
-          size="large"
-          color={theme.colors.primary}
-        />
-        <Text style={{ marginTop: theme.customSpacing.s }}>
-          Loading Prescriptions...
-        </Text>
-      </StateContainer>
-    );
+    // Use the reusable LoadingIndicator component
+    return <LoadingIndicator message="Loading Prescriptions..." />;
   }
 
   // --- Error State ---
   if (error) {
-    return (
-      <StateContainer>
-        <ErrorText variant="bodyLarge">
-          Error loading prescriptions: {error.message}
-        </ErrorText>
-        {/* TODO: Add a retry mechanism? */}
-      </StateContainer>
-    );
+    // Use the reusable ErrorDisplay component
+    // TODO: Implement retry mechanism by passing a retryAction prop
+    return <ErrorDisplay error={error} />;
   }
 
   // --- Empty State ---
   if (!isLoading && prescriptions.length === 0) {
+    // Use ScreenContainer for consistent padding/background
+    // Center content using inline styles for now
     return (
-      <StateContainer>
-        <Text variant="titleMedium">No Prescriptions Found</Text>
-        <Text variant="bodyMedium" style={{ marginTop: theme.customSpacing.s }}>
+      <ScreenContainer>
+        {/* Add Searchbar */}
+        <Searchbar
+          placeholder="Search Prescriptions"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+          style={{ marginBottom: theme.customSpacing.s }}
+          // TODO: Implement filtering logic based on searchQuery
+        />
+        <Text
+          variant="titleMedium"
+          style={{ textAlign: "center", alignSelf: "center" }}
+        >
+          No Prescriptions Found
+        </Text>
+        <Text
+          variant="bodyMedium"
+          style={{
+            marginTop: theme.customSpacing.s,
+            textAlign: "center",
+            alignSelf: "center",
+          }}
+        >
           You currently have no prescriptions listed.
         </Text>
-      </StateContainer>
+      </ScreenContainer>
     );
   }
 

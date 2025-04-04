@@ -12,18 +12,9 @@
  */
 
 import React from "react";
-import { View, FlatList } from "react-native"; // Import FlatList for rendering lists
+import { FlatList } from "react-native"; // Import FlatList for rendering lists
 // Import UI components from React Native Paper
-import {
-  Button,
-  Text,
-  List,
-  ActivityIndicator,
-  Divider,
-  useTheme,
-} from "react-native-paper";
-// Import styled-components for creating theme-aware styled native components
-import styled from "styled-components/native";
+import { Button, Text, List, Divider, useTheme } from "react-native-paper";
 // Import navigation prop types, specifically for Native Stack screens
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 // Import the specific ParamList for the Orders stack from the central types file
@@ -34,6 +25,10 @@ import type { AppTheme } from "../theme/theme";
 import useAppDataStore from "../stores/appDataStore";
 // Import the Order type
 import type { Order } from "../types";
+// Import reusable components
+import LoadingIndicator from "../components/LoadingIndicator";
+import ErrorDisplay from "../components/ErrorDisplay";
+import ScreenContainer from "../components/ScreenContainer";
 
 // ============================================================================
 // Navigation Props Type
@@ -52,40 +47,6 @@ type OrdersScreenProps = NativeStackScreenProps<
   OrdersStackParamList,
   "OrdersList" // This must match the screen name in the navigator and the key in the ParamList
 >;
-
-// ============================================================================
-// Styled Components
-// ============================================================================
-
-/**
- * @description A styled `View` component serving as the main container for the screen.
- * Ensures it fills available space and applies theme background color.
- * Padding will be handled by the content list or specific elements.
- */
-const ScreenContainer = styled(View)`
-  flex: 1; /* Take full available space */
-  background-color: ${({ theme }: { theme: AppTheme }) =>
-    theme.colors.background};
-`;
-
-/**
- * @description Styled container for loading or error states, centering content.
- */
-const StateContainer = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-`;
-
-/**
- * @description Styled `Text` component for displaying error messages.
- */
-const ErrorText = styled(Text)`
-  color: ${({ theme }: { theme: AppTheme }) => theme.colors.error};
-  margin: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  text-align: center;
-`;
 
 // ============================================================================
 // Orders Screen Component
@@ -155,42 +116,41 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
   // --- Loading State ---
   // Show loading indicator only during initial load (when orders array is empty)
   if (isLoading && orders.length === 0) {
-    return (
-      <StateContainer>
-        <ActivityIndicator
-          animating={true}
-          size="large"
-          color={theme.colors.primary}
-        />
-        <Text style={{ marginTop: theme.customSpacing.s }}>
-          Loading Orders...
-        </Text>
-      </StateContainer>
-    );
+    // Use the reusable LoadingIndicator component
+    return <LoadingIndicator message="Loading Orders..." />;
   }
 
   // --- Error State ---
   if (error) {
-    return (
-      <StateContainer>
-        <ErrorText variant="bodyLarge">
-          Error loading orders: {error.message}
-        </ErrorText>
-        {/* TODO: Add a retry mechanism? */}
-      </StateContainer>
-    );
+    // Use the reusable ErrorDisplay component
+    // TODO: Implement retry mechanism by passing a retryAction prop
+    return <ErrorDisplay error={error} />;
   }
 
   // --- Empty State ---
   // Handle the case where loading is finished, no error, but no orders exist.
   if (!isLoading && orders.length === 0) {
+    // Use ScreenContainer for consistent padding/background
+    // Center content using inline styles for now
     return (
-      <StateContainer>
-        <Text variant="titleMedium">No Orders Found</Text>
-        <Text variant="bodyMedium" style={{ marginTop: theme.customSpacing.s }}>
+      <ScreenContainer>
+        <Text
+          variant="titleMedium"
+          style={{ textAlign: "center", alignSelf: "center" }}
+        >
+          No Orders Found
+        </Text>
+        <Text
+          variant="bodyMedium"
+          style={{
+            marginTop: theme.customSpacing.s,
+            textAlign: "center",
+            alignSelf: "center",
+          }}
+        >
           You haven't placed any orders yet.
         </Text>
-      </StateContainer>
+      </ScreenContainer>
     );
   }
 

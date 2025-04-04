@@ -140,11 +140,14 @@ export const useInitializeAppData = (): void => {
   // We use `useEffect` hooks to react to changes in the data, loading, and error
   // states returned by `useQuery` and update the central Zustand store accordingly.
 
-  // Calculate a combined loading state. The app is considered "loading" initial data
-  // if *any* of the primary queries are in their initial fetching state.
-  // Note: `isFetching` is true during initial load AND background refetches.
-  // For a "show initial loading spinner" state, you might check `isLoading` from `useQuery` instead,
-  // but for simplicity here, we use `isFetching`.
+  // Calculate a combined loading state for the global Zustand store.
+  // The app's global `isLoading` state reflects if *any* essential query is actively fetching.
+  // Note on `isFetching` vs `isLoading` from `useQuery`:
+  // - `isLoading`: True only during the initial hard loading state (no data yet).
+  // - `isFetching`: True during initial load AND background refetches.
+  // We use `isFetching` here so the global `isLoading` state reflects any background activity,
+  // which might be useful for subtle loading indicators, though `isLoading` could be used
+  // if only an initial "blocking" loading state is desired.
   const isAnyQueryFetching =
     isFetchingProfile ||
     isFetchingReminders ||
@@ -160,8 +163,8 @@ export const useInitializeAppData = (): void => {
   useEffect(() => {
     // Call the Zustand action to update the global loading flag.
     setLoading(isAnyQueryFetching);
-    // `setLoading` is included as a dependency, following exhaustive-deps rules,
-    // although its identity is stable due to Zustand's implementation.
+    // `setLoading` is included as a dependency to satisfy the `eslint-plugin-react-hooks/exhaustive-deps` rule.
+    // Zustand guarantees that action functions have stable identities, so this doesn't cause unnecessary re-runs.
   }, [isAnyQueryFetching, setLoading]);
 
   // Effect to update the global error state in Zustand.
@@ -178,10 +181,12 @@ export const useInitializeAppData = (): void => {
           : new Error("An unknown error occurred during data fetching"),
       );
     } else {
-      // Optional: Clear the error state if there are no current errors
-      // setError(null); // Uncomment if you want errors to clear automatically
+      // Optional: Clear the error state if there are no current errors.
+      // setError(null); // Uncomment if errors should clear automatically once fetches succeed.
+      // Leaving it commented means errors persist until explicitly cleared or overwritten by a new error,
+      // which might be preferable to inform the user that *something* failed previously.
     }
-    // `setError` is included as a dependency.
+    // `setError` is included as a dependency per exhaustive-deps rules (stable identity from Zustand).
   }, [queryError, setError]);
 
   // Effect to update the user profile in Zustand when fetched data changes.
@@ -191,7 +196,7 @@ export const useInitializeAppData = (): void => {
     if (userProfile) {
       setUserProfile(userProfile);
     }
-    // Dependencies ensure this effect runs when the fetched data arrives or the setter changes.
+    // Dependencies: `userProfile` (data) and `setUserProfile` (action, included per exhaustive-deps rule).
   }, [userProfile, setUserProfile]);
 
   // Effect to update medication reminders in Zustand.
@@ -199,21 +204,21 @@ export const useInitializeAppData = (): void => {
     if (reminders) {
       setMedicationReminders(reminders);
     }
-  }, [reminders, setMedicationReminders]);
+  }, [reminders, setMedicationReminders]); // Dependencies: `reminders` (data), `setMedicationReminders` (action)
 
   // Effect to update prescriptions in Zustand.
   useEffect(() => {
     if (prescriptions) {
       setPrescriptions(prescriptions);
     }
-  }, [prescriptions, setPrescriptions]);
+  }, [prescriptions, setPrescriptions]); // Dependencies: `prescriptions` (data), `setPrescriptions` (action)
 
   // Effect to update orders in Zustand.
   useEffect(() => {
     if (orders) {
       setOrders(orders);
     }
-  }, [orders, setOrders]);
+  }, [orders, setOrders]); // Dependencies: `orders` (data), `setOrders` (action)
 
   // This hook doesn't need to return anything as its purpose is to trigger
   // data fetching (via useQuery) and update the global state (via Zustand actions).

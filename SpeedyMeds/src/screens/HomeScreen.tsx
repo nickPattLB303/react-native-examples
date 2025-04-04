@@ -11,20 +11,27 @@
  */
 
 import React from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 // Import UI components from React Native Paper
-import { Text, SegmentedButtons } from "react-native-paper";
+import { Text, SegmentedButtons, Card, List, Avatar } from "react-native-paper";
 // Import styled-components for creating theme-aware styled native components
 import styled from "styled-components/native";
 // Import the custom hook to access the theme context
 import { useThemeContext } from "../context/ThemeContext";
 // Import the type definition for theme preference values
 import type { ThemePreference } from "../context/ThemeContext";
+import type { MedicationReminder } from "../types"; // Import reminder type
 // Import the AppTheme type for strong typing with styled-components and theme usage
 import type { AppTheme } from "../theme/theme";
 // Import navigation prop types (even if not used directly, good practice for screen components)
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { BottomTabParamList } from "../navigation/types";
+// Import reusable components
+import ScreenContainer from "../components/ScreenContainer";
+import LoadingIndicator from "../components/LoadingIndicator";
+import ErrorDisplay from "../components/ErrorDisplay";
+// Import the hook to access the global application data store (Zustand)
+import useAppDataStore from "../stores/appDataStore";
 
 // ============================================================================
 // Navigation Props Type
@@ -51,93 +58,193 @@ type HomeScreenProps = BottomTabScreenProps<BottomTabParamList, "Home">;
  * is a robust way to ensure TypeScript provides correct autocompletion and type checking,
  * even if global `styled-components` theme typing (`styled.d.ts`) is set up.
  */
-const ScreenContainer = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  background-color: ${({ theme }: { theme: AppTheme }) =>
-    theme.colors.background};
-`;
-
-/**
- * @description A styled `Text` component specifically for the main title of the screen.
- * It leverages the theme for setting the text color (`primary`), font size (`xxl`),
- * and adds a bottom margin using theme spacing constants.
- */
-const TitleText = styled(Text)`
-  color: ${({ theme }: { theme: AppTheme }) => theme.colors.primary};
-  font-size: ${({ theme }: { theme: AppTheme }) => theme.customFontSizes.xxl}px;
-  margin-bottom: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  text-align: center; /* Ensure title is centered if it wraps */
-`;
 
 // ============================================================================
 // Home Screen Component
 // ============================================================================
 
 /**
- * @description The main dashboard/home screen component.
- * It utilizes the `useThemeContext` hook to get the current theme preference (`themePreference`),
- * the function to update it (`setThemePreference`), and the active theme object (`theme`).
- * It displays a welcome message and uses React Native Paper's `SegmentedButtons`
- * to allow the user to switch between light, dark, and system theme preferences.
+ * @description The main dashboard/home screen component. Displays user info,
+ * balance, navigation cards, reminders, and theme controls.
+ * Fetches data from the global Zustand store.
  *
  * @param {HomeScreenProps} props - Navigation props provided by React Navigation.
  *        Currently unused but included for completeness and future potential use.
  * @returns {React.ReactElement} The rendered Home screen UI.
  */
-const HomeScreen: React.FC<HomeScreenProps> = (_props: HomeScreenProps) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   // Destructure values from the theme context using the custom hook.
-  const { themePreference, setThemePreference, theme } = useThemeContext();
+  const { themePreference, setThemePreference, theme } = useThemeContext(); // Get theme from context
+  // Fetch required data slices from Zustand store
+  const userProfile = useAppDataStore((state) => state.userProfile);
+  const reminders = useAppDataStore((state) => state.medicationReminders);
+  const isLoading = useAppDataStore((state) => state.isLoading);
+  const error = useAppDataStore((state) => state.error);
 
+  // --- Handle Loading and Error States ---
+  if (isLoading && !userProfile) {
+    // Show loading indicator only on initial load when profile isn't available yet
+    return <LoadingIndicator message="Loading Dashboard..." />;
+  }
+
+  if (error) {
+    // Show error display if fetching failed
+    // TODO: Add retry mechanism
+    return <ErrorDisplay error={error} />;
+  }
+
+  // --- Render Dashboard Content ---
   return (
     <ScreenContainer>
-      {/* Display the main title using the styled TitleText component and a Paper variant */}
-      <TitleText variant="headlineLarge">Home Screen (Dashboard)</TitleText>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Welcome Message */}
+        <Text
+          variant="headlineMedium"
+          style={{ marginBottom: theme.customSpacing.s }}
+        >
+          Welcome back, {userProfile?.firstName ?? "User"}!
+        </Text>
 
-      {/* Display a welcome message */}
-      <Text
-        variant="bodyMedium"
-        // Apply margin using inline style with theme spacing for demonstration
-        style={{ marginBottom: theme.customSpacing.l }}
-      >
-        Welcome to SpeedyMeds!
-      </Text>
+        {/* Balance Display (Placeholder) */}
+        <Card mode="elevated" style={{ marginBottom: theme.customSpacing.m }}>
+          <Card.Title
+            title="Current Balance"
+            subtitle="$123.45" // Placeholder value
+            left={(props) => <Avatar.Icon {...props} icon="wallet" />}
+          />
+        </Card>
 
-      {/* Theme selection buttons */}
-      {/* @see https://callstack.github.io/react-native-paper/docs/components/SegmentedButtons/ */}
-      <SegmentedButtons
-        // `value` controls which button is currently selected. It's bound to the `themePreference` from context.
-        value={themePreference}
-        // `onValueChange` is called when the user selects a different button.
-        // We call `setThemePreference` from context to update the global theme state.
-        // The `value` received is cast to `ThemePreference` to satisfy TypeScript.
-        onValueChange={(value) => setThemePreference(value as ThemePreference)}
-        // `buttons` is an array defining the configuration for each button in the group.
-        buttons={[
-          {
-            value: "light", // Must match a ThemePreference value
-            label: "Light", // Text displayed on the button
-            icon: "brightness-5", // Icon name from MaterialCommunityIcons
-            // accessibilityLabel: "Set light theme", // Good for accessibility
-          },
-          {
-            value: "dark",
-            label: "Dark",
-            icon: "brightness-4",
-            // accessibilityLabel: "Set dark theme",
-          },
-          {
-            value: "system",
-            label: "System",
-            icon: "brightness-auto",
-            // accessibilityLabel: "Use system theme setting",
-          },
-        ]}
-        // Apply some basic styling to the button group container.
-        style={{ width: "90%" }} // Make the group take up most of the screen width
-      />
+        {/* Navigation Cards (Placeholder Structure) */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: theme.customSpacing.m,
+          }}
+        >
+          <Card
+            mode="outlined"
+            style={{ flex: 1, marginRight: theme.customSpacing.xs }}
+            onPress={() => navigation.navigate("Prescriptions")} // Navigate to Prescriptions tab
+          >
+            <Card.Content style={{ alignItems: "center" }}>
+              <Avatar.Icon size={40} icon="pill" />
+              <Text
+                variant="labelMedium"
+                style={{ marginTop: theme.customSpacing.xs }}
+              >
+                Prescriptions
+              </Text>
+            </Card.Content>
+          </Card>
+          <Card
+            mode="outlined"
+            style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
+            onPress={() => navigation.navigate("Orders")} // Navigate to Orders tab
+          >
+            <Card.Content style={{ alignItems: "center" }}>
+              <Avatar.Icon size={40} icon="receipt" />
+              <Text
+                variant="labelMedium"
+                style={{ marginTop: theme.customSpacing.xs }}
+              >
+                Orders
+              </Text>
+            </Card.Content>
+          </Card>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: theme.customSpacing.l,
+          }}
+        >
+          <Card
+            mode="outlined"
+            style={{ flex: 1, marginRight: theme.customSpacing.xs }}
+          >
+            <Card.Content style={{ alignItems: "center" }}>
+              <Avatar.Icon size={40} icon="truck-delivery" />
+              <Text
+                variant="labelMedium"
+                style={{ marginTop: theme.customSpacing.xs }}
+              >
+                Delivery
+              </Text>
+            </Card.Content>
+          </Card>
+          <Card
+            mode="outlined"
+            style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
+          >
+            <Card.Content style={{ alignItems: "center" }}>
+              <Avatar.Icon size={40} icon="help-circle" />
+              <Text
+                variant="labelMedium"
+                style={{ marginTop: theme.customSpacing.xs }}
+              >
+                Resources
+              </Text>
+            </Card.Content>
+          </Card>
+        </View>
+
+        {/* Medication Reminders */}
+        <List.Section title="Medication Reminders">
+          {reminders.length > 0 ? (
+            reminders.map((reminder: MedicationReminder) => (
+              <List.Item
+                key={reminder.id}
+                title={reminder.name} // Use the correct property 'name'
+                description={`Time: ${reminder.time}`} // Use the correct property 'time'
+                left={(props) => <List.Icon {...props} icon="alarm-check" />}
+              />
+            ))
+          ) : (
+            <Text
+              style={{
+                paddingLeft: theme.customSpacing.m,
+                fontStyle: "italic",
+              }}
+            >
+              No reminders set.
+            </Text>
+          )}
+        </List.Section>
+
+        {/* Theme selection buttons (Kept at the bottom for now) */}
+        <SegmentedButtons
+          value={themePreference}
+          onValueChange={(value) =>
+            setThemePreference(value as ThemePreference)
+          }
+          buttons={[
+            {
+              value: "light",
+              label: "Light",
+              icon: "brightness-5",
+              accessibilityLabel: "Set light theme",
+            },
+            {
+              value: "dark",
+              label: "Dark",
+              icon: "brightness-4",
+              accessibilityLabel: "Set dark theme",
+            },
+            {
+              value: "system",
+              label: "System",
+              icon: "brightness-auto",
+              accessibilityLabel: "Use system theme setting",
+            },
+          ]}
+          style={{
+            marginTop: theme.customSpacing.l,
+            marginBottom: theme.customSpacing.m,
+          }}
+        />
+      </ScrollView>
     </ScreenContainer>
   );
 };

@@ -51,10 +51,8 @@ A central store is defined to hold the main application data. This involves:
     isLoading: true,
     error: null,
 
-    setUserProfile: (profile) =>
-      set({ userProfile: profile, isLoading: false, error: null }),
-    setPrescriptions: (prescriptions) =>
-      set({ prescriptions: prescriptions, isLoading: false, error: null }),
+    setUserProfile: (profile) => set({ userProfile: profile }),
+    setPrescriptions: (prescriptions) => set({ prescriptions: prescriptions }),
     setLoading: (loading) => set({ isLoading: loading }),
     setError: (error) => set({ error: error, isLoading: false }),
     // ... initial state and other actions ...
