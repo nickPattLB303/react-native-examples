@@ -92,12 +92,12 @@ _(Status Key: [x] = Done, [ ] = To Do / In Progress)_
 - [ ] **Error Handling:** Implement more user-friendly display of global errors.
 - [ ] **Loading States:** Refine loading indicators (e.g., skeleton loaders).
 
-### Phase 5: Testing (To Do)
+### Phase 5: Testing (In Progress / Partially Done)
 
-- [ ] Write unit tests for Zustand store actions/selectors.
+- [x] Write unit tests for Zustand store actions/selectors.
 - [ ] Write unit tests for custom hooks (e.g., `useInitializeAppData` logic if feasible).
-- [ ] Write component tests (RNTL) for reusable components (once created).
-- [ ] Write component/screen tests (RNTL) for key screens (e.g., rendering lists, basic interactions, navigation).
+- [x] Write component tests (RNTL) for reusable components.
+- [x] Write component/screen tests (RNTL) for key screens.
 - [ ] Write tests for form validation and submission logic (if implemented).
 
 ### Phase 6: Refinement & Finalization (To Do)
