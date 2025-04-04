@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button, Text } from "react-native-paper"; // Import Paper Button & Text
 import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; // Use NativeStackScreenProps
-import { OrdersStackParamList } from "../navigation/AppNavigator"; // Import the new Orders stack param list
+import { OrdersStackParamList } from "../navigation/types"; // Import from types.ts
 import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**

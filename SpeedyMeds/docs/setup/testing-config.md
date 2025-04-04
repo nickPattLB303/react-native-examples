@@ -113,6 +113,7 @@ You can add other scripts for different testing flows (e.g., coverage, CI) as ne
 - Write tests focusing on user interaction and observable output, querying the component tree in ways similar to how a user would interact with it.
 
 - **Example Conceptual Snippet:**
+
   ```typescript
   import React from 'react';
   import { render, screen, fireEvent } from '@testing-library/react-native';

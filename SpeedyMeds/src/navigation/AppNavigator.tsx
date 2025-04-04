@@ -1,161 +1,111 @@
 import React from "react";
 import { NavigationContainer, Theme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"; // Import icons
-// Import your placeholder screens
-import HomeScreen from "../screens/HomeScreen";
-import PrescriptionsScreen from "../screens/PrescriptionsScreen";
-import OrdersScreen from "../screens/OrdersScreen";
-import AccountScreen from "../screens/AccountScreen";
-import OrderDetailScreen from "../screens/OrderDetailScreen";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from "@react-navigation/native-stack";
+
+// Import the Root ParamList type from the central types file
+import type { RootStackParamList } from "./types";
+// Import the MainTabNavigator which contains the app's primary sections
+import MainTabNavigator from "./MainTabNavigator";
 
 /**
- * @description Defines the parameters expected by each screen in the root Native Stack Navigator.
- * The root stack contains the main `MainTabs` navigator and any screens presented
- * modally or pushed on top of the tab navigator, such as `OrderDetail`.
- * @property {undefined} MainTabs - Represents the nested Bottom Tab Navigator. No parameters are passed to it directly.
- * // OrderDetail is now nested within the Orders stack inside MainTabs
+ * Root Application Navigator Setup
+ *
+ * This file defines the top-level navigation structure for the SpeedyMeds app.
+ * It sets up the `NavigationContainer` which is essential for React Navigation to work,
+ * and defines the Root Stack Navigator.
+ *
+ * The Root Stack primarily holds the `MainTabNavigator`, but could also include
+ * screens that need to be displayed *outside* or *on top of* the main tabs,
+ * such as full-screen modals (e.g., a login screen shown initially, or a settings modal).
+ *
+ * @see https://reactnavigation.org/docs/getting-started/ - React Navigation Getting Started Guide
+ * @see https://reactnavigation.org/docs/navigation-container/ - `NavigationContainer` documentation
+ * @see https://reactnavigation.org/docs/native-stack-navigator/ - Native Stack Navigator documentation
  */
-export type RootStackParamList = {
-  MainTabs: undefined; // No params expected for the main tab navigator itself
-  // Add other modal/full-screen views here if needed outside tabs (e.g., SettingsModal)
-};
 
 /**
- * @description Defines the parameters expected by each screen within the Bottom Tab Navigator (`MainTabs`).
- * Currently, none of the tab screens expect any parameters.
- * @property {undefined} Home - The Home/Dashboard screen.
- * @property {undefined} Prescriptions - The Prescriptions screen.
- * @property {undefined} Orders - The Orders screen.
- * @property {undefined} Account - The Account screen.
+ * Creates the Root Native Stack Navigator instance.
+ * We pass the `RootStackParamList` to ensure type safety for screens defined
+ * directly within this root stack.
  */
-export type BottomTabParamList = {
-  Home: undefined;
-  Prescriptions: undefined;
-  Orders: undefined;
-  Account: undefined;
-};
-
-// Define ParamList for the new Orders Stack
-export type OrdersStackParamList = {
-  OrdersList: undefined; // The main Orders screen
-  OrderDetail: { orderId: string }; // The Order Detail screen
-};
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<BottomTabParamList>();
-const OrdersStack = createNativeStackNavigator<OrdersStackParamList>();
-
-// --- Orders Stack Navigator ---
-/**
- * @description Navigator specifically for the Orders section, containing the list and detail screens.
- * @returns {React.ReactElement} The configured Orders Stack Navigator.
- */
-function OrdersNavigator() {
-  return (
-    <OrdersStack.Navigator
-      // Keep headers consistent with other tabs, or customize as needed
-      screenOptions={{
-        headerShown: true, // Or false if the tab navigator shows the header
-      }}
-    >
-      <OrdersStack.Screen
-        name="OrdersList"
-        component={OrdersScreen}
-        options={{ title: "Your Orders" }} // Set header title for the list screen
-      />
-      <OrdersStack.Screen
-        name="OrderDetail"
-        component={OrderDetailScreen}
-        options={{ title: "Order Details" }} // Set header title for the detail screen
-      />
-    </OrdersStack.Navigator>
-  );
-}
-
-// --- Bottom Tab Navigator ---
-/**
- * @description Component defining the main Bottom Tab Navigator structure.
- * It includes screens for Home, Prescriptions, the Orders stack, and Account.
- * Configures icons for each tab.
- * @returns {React.ReactElement} The configured Bottom Tab Navigator.
- */
-function MainTabNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: true, // Show headers for tab screens (Orders stack manages its own)
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: React.ComponentProps<
-            typeof MaterialCommunityIcons
-          >["name"] = "help-circle"; // Default icon
-
-          if (route.name === "Home") {
-            iconName = focused ? "view-dashboard" : "view-dashboard-outline";
-          } else if (route.name === "Prescriptions") {
-            iconName = focused ? "pill" : "pill"; // Using same for focused/unfocused
-          } else if (route.name === "Orders") {
-            iconName = focused ? "receipt" : "script-text-outline"; // Use script-text-outline for unfocused
-          } else if (route.name === "Account") {
-            iconName = focused ? "account-circle" : "account-circle-outline";
-          }
-
-          // You can return any component that you like here!
-          return (
-            <MaterialCommunityIcons name={iconName} size={size} color={color} />
-          );
-        },
-        // Optional: Customize active/inactive tint colors if needed
-        // tabBarActiveTintColor: 'tomato',
-        // tabBarInactiveTintColor: 'gray',
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Prescriptions" component={PrescriptionsScreen} />
-      {/* Orders tab now renders the OrdersNavigator stack */}
-      <Tab.Screen
-        name="Orders"
-        component={OrdersNavigator}
-        options={{ headerShown: false }} // Important: Hide Tab header for the Orders stack
-      />
-      <Tab.Screen name="Account" component={AccountScreen} />
-    </Tab.Navigator>
-  );
-}
 
 /**
- * @description Props for the main AppNavigator component.
- * @property {Theme} navigationTheme - The navigation theme object (from `@react-navigation/native`)
- *                                     to be applied to the NavigationContainer.
+ * @description Defines the expected props for the main AppNavigator component.
+ * This interface ensures that the component receives the necessary theme information.
  */
 interface AppNavigatorProps {
+  /**
+   * @description The navigation theme object provided by React Navigation (`@react-navigation/native`).
+   * This theme object (containing colors, etc.) will be applied to the `NavigationContainer`,
+   * influencing the default appearance of navigator elements like headers and tab bars.
+   * It's typically derived from the application's overall theme (light/dark mode).
+   * @see https://reactnavigation.org/docs/themes/ - React Navigation Theming documentation
+   */
   navigationTheme: Theme;
 }
 
 /**
- * @description The main application navigator component.
- * Sets up the `NavigationContainer` with the provided theme and defines the
- * root `NativeStackNavigator`. The root stack contains the `MainTabNavigator`
- * and other screens like `OrderDetail`.
- * @param {AppNavigatorProps} props - Component props.
- * @param {Theme} props.navigationTheme - The theme to apply to the NavigationContainer.
- * @returns {React.ReactElement} The main application navigator.
+ * @description The main application navigator component. This is the top-level navigator
+ * that should be rendered within the main `App.tsx` file, inside necessary context providers
+ * (like ThemeProvider, PaperProvider, etc.).
+ *
+ * It sets up the `NavigationContainer` which links the navigator state to the app environment,
+ * and defines the root `NativeStackNavigator`. The primary screen within this root stack
+ * is the `MainTabNavigator`, which holds the app's main sections.
+ *
+ * @param {AppNavigatorProps} props - The component props containing the navigation theme.
+ * @param {Theme} props.navigationTheme - The theme object to apply.
+ * @returns {React.ReactElement} The fully configured root navigator component for the application.
  */
-function AppNavigator({ navigationTheme }: AppNavigatorProps) {
+function AppNavigator({
+  navigationTheme,
+}: AppNavigatorProps): React.ReactElement {
+  // Define default screen options for the Root Stack Navigator.
+  const rootScreenOptions: NativeStackNavigationOptions = {
+    // `headerShown: false` hides the header bar for the Root Stack itself.
+    // This is common practice when the primary screen is a Tab Navigator,
+    // as the screens *within* the Tab Navigator (or nested stacks) will manage their own headers.
+    // This prevents having a double header (one for the root stack, one for the tab screen).
+    headerShown: false,
+  };
+
   return (
+    /**
+     * The `NavigationContainer` is a mandatory component that wraps the entire navigator structure.
+     * It manages the navigation tree and contains the navigation state. It also handles deep linking
+     * and connects the navigator to the device's back button/gestures.
+     * We pass the `navigationTheme` prop here to theme the navigator elements.
+     */
     <NavigationContainer theme={navigationTheme}>
-      <RootStack.Navigator
-        screenOptions={{
-          headerShown: false, // Hide root stack header; headers managed by nested navigators
-        }}
-      >
-        <RootStack.Screen name="MainTabs" component={MainTabNavigator} />
-        {/* OrderDetail Screen is removed from here - it's inside OrdersNavigator now */}
-        {/* Add other root stack screens (modals, etc.) here if needed */}
+      {/* Define the Root Stack Navigator */}
+      {/* `screenOptions` applies the `rootScreenOptions` defined above to all screens in this stack. */}
+      <RootStack.Navigator screenOptions={rootScreenOptions}>
+        {/* Define the primary screen within the Root Stack. */}
+        <RootStack.Screen
+          // `name` must match a key in `RootStackParamList` ('MainTabs').
+          name="MainTabs"
+          // `component` renders the imported `MainTabNavigator` component.
+          component={MainTabNavigator}
+          // No specific `options` needed here as the header is hidden by `screenOptions`.
+        />
+        {/*
+         * Add other screens directly to the Root Stack here if needed.
+         * These screens would typically be modals or screens presented outside the tab flow.
+         * Example:
+         * <RootStack.Screen
+         *   name="SettingsModal"
+         *   component={SettingsScreen}
+         *   options={{ presentation: 'modal', headerShown: true, title: 'Settings' }}
+         * />
+         */}
       </RootStack.Navigator>
     </NavigationContainer>
   );
 }
 
+// Export the main AppNavigator component.
 export default AppNavigator;

@@ -23,7 +23,11 @@ We are implementing a common mobile navigation pattern combining:
 
 2.  **Directory Structure:**
 
-    - Navigation logic resides in `src/navigation/`.
+    - Navigation logic is organized within `src/navigation/`:
+      - `types.ts`: Contains all `ParamList` type definitions.
+      - `OrdersStackNavigator.tsx`: Defines the nested stack for the Orders section.
+      - `MainTabNavigator.tsx`: Defines the main bottom tab navigator.
+      - `AppNavigator.tsx`: Defines the root stack navigator and wraps everything in `NavigationContainer`.
     - Screen components reside in `src/screens/`.
 
 3.  **Core Files & Theming Integration:**
@@ -34,13 +38,14 @@ We are implementing a common mobile navigation pattern combining:
       - Gets the active theme and `isDark` flag from `useThemeContext`.
       - Selects the appropriate navigation theme (`CombinedNavLightTheme` or `CombinedNavDarkTheme`) based on `isDark`.
       - Renders the `AppNavigator`, passing the selected `navigationTheme` as a prop.
+    - **`src/navigation/types.ts`**: Exports `RootStackParamList`, `BottomTabParamList`, and `OrdersStackParamList`.
+    - **`src/navigation/OrdersStackNavigator.tsx`**: Defines and exports the `OrdersStackNavigator` component using `createNativeStackNavigator`.
+    - **`src/navigation/MainTabNavigator.tsx`**: Defines and exports the `MainTabNavigator` component using `createBottomTabNavigator`. It imports `OrdersStackNavigator` for the 'Orders' tab and configures `tabBarIcon` options.
     - **`src/navigation/AppNavigator.tsx`**:
-      - Defines `RootStackParamList`, `BottomTabParamList`, and `OrdersStackParamList` types.
-      - Creates the root stack, bottom tab, and nested orders stack navigators.
-      - Implements the `OrdersNavigator` component for the nested stack.
-      - Configures the `MainTabNavigator` with screens and `tabBarIcon` options using `MaterialCommunityIcons`.
-      - The exported `AppNavigator` component accepts the `navigationTheme` prop.
-      - The `NavigationContainer` inside `AppNavigator` receives the `navigationTheme` prop, ensuring navigators match the app's light/dark mode.
+      - Imports `MainTabNavigator`.
+      - Defines and exports the root `AppNavigator` component using `createNativeStackNavigator`.
+      - Renders the `NavigationContainer` with the provided `navigationTheme`.
+      - The root stack contains the `MainTabNavigator` as its primary screen.
     - **`src/screens/*.tsx`**: Placeholder screens (HomeScreen, PrescriptionsScreen, OrdersScreen, AccountScreen, OrderDetailScreen).
 
 4.  **Type Safety:**
@@ -93,6 +98,6 @@ graph TD
 
 **Key Changes:**
 
--   The `Orders` tab now renders the `OrdersStackNav`.
--   `OrdersListScreen` (formerly `OrdersScreen`) and `OrderDetailScreen` are now part of the `OrdersStackNav`.
--   Icons are displayed for each tab in the `TabNav`.
+- The `Orders` tab now renders the `OrdersStackNav`.
+- `OrdersListScreen` (formerly `OrdersScreen`) and `OrderDetailScreen` are now part of the `OrdersStackNav`.
+- Icons are displayed for each tab in the `TabNav`.

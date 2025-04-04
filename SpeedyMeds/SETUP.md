@@ -62,6 +62,7 @@ Install these extensions in VS Code for a better development experience:
     ```
     **Important Security Note:** This setting bypasses TLS certificate verification. It should **only** be used in controlled development/training environments where you understand the risks and **never** in production. Ensure this `.env` file is listed in your `.gitignore` file (it usually is by default) to prevent accidentally committing it.
 3.  **Install Dependencies:** Navigate into the `SpeedyMeds` directory and install the necessary packages using `npx expo install`. This command is crucial for Expo projects as it ensures that you install versions of libraries that are compatible with your project's Expo SDK version.
+
     ```bash
     cd SpeedyMeds
     npx expo install
@@ -71,6 +72,7 @@ Install these extensions in VS Code for a better development experience:
     You might encounter errors related to "peer dependencies" during installation (e.g., `ERESOLVE unable to resolve dependency tree`). This often happens due to differing version requirements between libraries (like React versions needed by `jest-expo`, `styled-components`, etc.).
 
     If `npx expo install` fails due to peer dependency conflicts, you often need to pass the `--legacy-peer-deps` flag down to the underlying `npm install` command. Expo provides a specific syntax for this:
+
     ```bash
     # If installing a specific package fails:
     npx expo install <package-name> -- --legacy-peer-deps
@@ -78,20 +80,23 @@ Install these extensions in VS Code for a better development experience:
     # If the initial 'npx expo install' or a general 'npm install' fails:
     npm install --legacy-peer-deps
     ```
+
     This flag tells npm to ignore the peer dependency conflicts and proceed with the installation. While generally necessary for this project setup, be aware that it bypasses some dependency version checks.
 
     **Key Dependencies Installed:**
-    *   React Native & Expo core libraries
-    *   React Navigation (Stack, Bottom Tabs)
-    *   React Native Paper (UI Components)
-    *   Styled Components (Styling)
-    *   TanStack Query (React Query) (Data Fetching/Caching)
-    *   Zustand (Global State)
-    *   @react-native-community/netinfo (Network status for React Query)
-    *   @faker-js/faker (Dev Dependency for Mock Data)
-    *   Jest, React Native Testing Library (Testing)
-    *   ESLint, Prettier (Linting/Formatting)
-    *   TypeScript
+
+    - React Native & Expo core libraries
+    - React Navigation (Stack, Bottom Tabs)
+    - React Native Paper (UI Components)
+    - Styled Components (Styling)
+    - TanStack Query (React Query) (Data Fetching/Caching)
+    - Zustand (Global State)
+    - @react-native-community/netinfo (Network status for React Query)
+    - @faker-js/faker (Dev Dependency for Mock Data)
+    - Jest, React Native Testing Library (Testing)
+    - ESLint, Prettier (Linting/Formatting)
+    - TypeScript
+
 4.  **Ensure Simulator/Emulator is Running:** Make sure your chosen iOS Simulator or Android Emulator is running.
 5.  **Start Metro Bundler:** Run the Expo development server using the `--localhost` flag:
 

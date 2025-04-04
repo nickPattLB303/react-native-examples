@@ -74,12 +74,15 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
     cd SpeedyMeds
     ```
 2.  **Install Dependencies:** Use `npx expo install` to install dependencies listed in `package.json`, ensuring compatible versions for Expo projects.
+
     ```bash
     npx expo install
     ```
+
     _(This command ensures compatibility. For adding **new** dependencies later, **always** prefer `npx expo install [package-name]` over `npm install`. See [SETUP.md](./SETUP.md) for the full explanation and the linked article: [Why Use "npx expo install"](https://medium.com/@huzaifaqureshi037/exwhy-you-should-use-npx-expo-install-instead-of-npm-install-in-expo-react-native-app-07d6156f064a))_
 
     **Note:** Due to potential version conflicts between dependencies (especially related to React versions required by libraries like `jest-expo` or `styled-components`), you might encounter "peer dependency" errors during installation, even when using `npx expo install`. If this happens, you may need to pass the `--legacy-peer-deps` flag to the underlying npm command:
+
     ```bash
     # Example for installing a new package with the flag
     npx expo install [package-name] -- --legacy-peer-deps
@@ -87,6 +90,7 @@ _(See [SETUP.md](./SETUP.md) for more detailed environment setup instructions fo
     # Example for reinstalling all packages if needed
     npm install --legacy-peer-deps
     ```
+
     Using this flag instructs npm to ignore these conflicts and proceed. While generally safe for these types of conflicts, be mindful that it bypasses dependency checks.
 
 ### Running the App (Simulators/Emulators Recommended)

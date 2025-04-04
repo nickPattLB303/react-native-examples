@@ -4,7 +4,7 @@
 
 This project uses [Zustand](https://zustand.docs.pmnd.rs/) for managing global client-side state. Zustand is chosen for its simplicity, minimal boilerplate, and hook-based API, making it easy to access and update state from any component without needing Context providers.
 
-In this application, Zustand primarily holds the application data (user profile, prescriptions, orders, reminders) *after* it has been fetched and cached by TanStack Query (React Query). Zustand serves as the readily accessible, centralized client-side 'single source of truth' for this data, decoupling UI components from the fetching logic itself.
+In this application, Zustand primarily holds the application data (user profile, prescriptions, orders, reminders) _after_ it has been fetched and cached by TanStack Query (React Query). Zustand serves as the readily accessible, centralized client-side 'single source of truth' for this data, decoupling UI components from the fetching logic itself.
 
 ## Installation
 
@@ -21,6 +21,7 @@ npm install zustand --save --legacy-peer-deps
 A central store is defined to hold the main application data. This involves:
 
 - **Defining the State Interface:** A TypeScript interface (`AppDataState`) outlines the structure of the store, including the data slices (e.g., `userProfile`, `prescriptions`) and any associated state (e.g., `isLoading`, `error`). It also defines the signatures for action functions that modify the state.
+
   ```typescript
   interface AppDataState {
     userProfile: UserProfile | null;
@@ -35,10 +36,12 @@ A central store is defined to hold the main application data. This involves:
     // ... other state and actions
   }
   ```
+
 - **Creating the Store:** The `create` function from Zustand is used to initialize the store with its initial state and the implementation of the action functions. Actions use the `set` function provided by Zustand to update the state immutably.
+
   ```typescript
-  import { create } from 'zustand';
-  import type { UserProfile } from '../types'; // Import necessary types
+  import { create } from "zustand";
+  import type { UserProfile } from "../types"; // Import necessary types
 
   // ... (Interface definition) ...
 
@@ -48,8 +51,10 @@ A central store is defined to hold the main application data. This involves:
     isLoading: true,
     error: null,
 
-    setUserProfile: (profile) => set({ userProfile: profile, isLoading: false, error: null }),
-    setPrescriptions: (prescriptions) => set({ prescriptions: prescriptions, isLoading: false, error: null }),
+    setUserProfile: (profile) =>
+      set({ userProfile: profile, isLoading: false, error: null }),
+    setPrescriptions: (prescriptions) =>
+      set({ prescriptions: prescriptions, isLoading: false, error: null }),
     setLoading: (loading) => set({ isLoading: loading }),
     setError: (error) => set({ error: error, isLoading: false }),
     // ... initial state and other actions ...
@@ -64,9 +69,9 @@ The Zustand store is primarily populated by the data fetched via TanStack Query.
 
 ```typescript
 // src/hooks/useInitializeAppData.ts
-import { useEffect } from 'react';
-import useAppDataStore from '../stores/appDataStore';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from "react";
+import useAppDataStore from "../stores/appDataStore";
+import { useQuery } from "@tanstack/react-query";
 // ... other imports
 
 export const useInitializeAppData = () => {
@@ -75,7 +80,9 @@ export const useInitializeAppData = () => {
     // ... other actions
   } = useAppDataStore();
 
-  const { data: userProfile /* ... */ } = useQuery({ /* ... */ });
+  const { data: userProfile /* ... */ } = useQuery({
+    /* ... */
+  });
   // ... other queries ...
 
   useEffect(() => {
@@ -108,10 +115,10 @@ const AccountScreen = () => {
   // Alternatively, select multiple slices at once (use shallow for optimization)
   // import { shallow } from 'zustand/shallow';
   // const { userProfile, isLoading, error } = useAppDataStore(
-  //   (state) => ({ 
+  //   (state) => ({
   //     userProfile: state.userProfile,
   //     isLoading: state.isLoading,
-  //     error: state.error 
+  //     error: state.error
   //   }),
   //   shallow // Important for performance when selecting objects
   // );
@@ -141,4 +148,4 @@ export default AccountScreen;
 - **No Providers:** Unlike Context API, Zustand doesn't require wrapping the app in provider components.
 - **Selectors:** Use selector functions to subscribe components only to the state slices they need, preventing unnecessary re-renders.
 - **Immutability:** The `set` function handles immutable updates internally.
-- **Decoupling:** Zustand decouples state management logic from UI components and data fetching. 
+- **Decoupling:** Zustand decouples state management logic from UI components and data fetching.

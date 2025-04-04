@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Text } from "react-native-paper"; // Use Paper Text for consistency
 import styled from "styled-components/native"; // Import styled
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { OrdersStackParamList } from "../navigation/AppNavigator"; // Use the new Orders stack param list
+import { OrdersStackParamList } from "../navigation/types"; // Import from types.ts
 import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**

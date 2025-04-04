@@ -43,10 +43,11 @@ export default function App() {
 To optimize React Query for the React Native environment, configurations for online status and app focus management are added in `App.tsx`:
 
 - **Online Status:** Uses `@react-native-community/netinfo` to inform React Query whether the device is online or offline, enabling automatic refetching on reconnect.
+
   ```typescript
   // App.tsx
-  import NetInfo from '@react-native-community/netinfo';
-  import { onlineManager } from '@tanstack/react-query';
+  import NetInfo from "@react-native-community/netinfo";
+  import { onlineManager } from "@tanstack/react-query";
 
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {
@@ -54,23 +55,25 @@ To optimize React Query for the React Native environment, configurations for onl
     });
   });
   ```
+
 - **App Focus Refetching:** Uses the React Native `AppState` module to refetch queries when the app comes back into focus.
+
   ```typescript
   // App.tsx
-  import { AppState, Platform } from 'react-native';
-  import type { AppStateStatus } from 'react-native';
-  import { focusManager } from '@tanstack/react-query';
-  import { useEffect } from 'react';
+  import { AppState, Platform } from "react-native";
+  import type { AppStateStatus } from "react-native";
+  import { focusManager } from "@tanstack/react-query";
+  import { useEffect } from "react";
 
   function onAppStateChange(status: AppStateStatus) {
-    if (Platform.OS !== 'web') {
-      focusManager.setFocused(status === 'active');
+    if (Platform.OS !== "web") {
+      focusManager.setFocused(status === "active");
     }
   }
 
   // Inside the main App component or a top-level component
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', onAppStateChange);
+    const subscription = AppState.addEventListener("change", onAppStateChange);
     return () => subscription.remove();
   }, []);
   ```
@@ -84,8 +87,8 @@ Constants are defined for query keys to ensure consistency and prevent typos whe
 ```typescript
 // src/api/queryKeys.ts
 export const queryKeys = {
-  userProfile: ['userProfile'] as const,
-  prescriptions: ['prescriptions'] as const,
+  userProfile: ["userProfile"] as const,
+  prescriptions: ["prescriptions"] as const,
   // ... other keys
 };
 ```
@@ -100,21 +103,30 @@ A custom hook centralizes the initial data fetching logic. It uses the `useQuery
 
 ```typescript
 // src/hooks/useInitializeAppData.ts
-import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '../api/queryKeys';
-import { fetchUserProfile, fetchPrescriptions } from '../api';
-import useAppDataStore from '../stores/appDataStore';
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../api/queryKeys";
+import { fetchUserProfile, fetchPrescriptions } from "../api";
+import useAppDataStore from "../stores/appDataStore";
 
 export const useInitializeAppData = () => {
-  const { setUserProfile, setPrescriptions, setError, setLoading } = useAppDataStore();
+  const { setUserProfile, setPrescriptions, setError, setLoading } =
+    useAppDataStore();
 
-  const { data: userProfile, isFetching: isFetchingProfile, error: errorProfile } = useQuery({
+  const {
+    data: userProfile,
+    isFetching: isFetchingProfile,
+    error: errorProfile,
+  } = useQuery({
     queryKey: queryKeys.userProfile,
     queryFn: fetchUserProfile,
     staleTime: Infinity, // Example: Keep profile data fresh indefinitely
   });
 
-  const { data: prescriptions, isFetching: isFetchingPrescriptions, error: errorPrescriptions } = useQuery({
+  const {
+    data: prescriptions,
+    isFetching: isFetchingPrescriptions,
+    error: errorPrescriptions,
+  } = useQuery({
     queryKey: queryKeys.prescriptions,
     queryFn: () => fetchPrescriptions(5),
     staleTime: 1000 * 60 * 10, // Example: Refetch every 10 minutes
@@ -123,9 +135,14 @@ export const useInitializeAppData = () => {
   // ... queries for other data types ...
 
   // Effect hooks to update Zustand store with fetched data/errors
-  useEffect(() => {
-    // ... update Zustand store ...
-  }, [/* dependencies */]);
+  useEffect(
+    () => {
+      // ... update Zustand store ...
+    },
+    [
+      /* dependencies */
+    ],
+  );
 };
 ```
 
@@ -159,7 +176,7 @@ const AccountScreen = () => {
 
 ## Key Concepts
 
-- **Declarative Fetching:** Define *how* to fetch data with `useQuery`, letting React Query handle *when* (initial load, focus, reconnect, etc.).
+- **Declarative Fetching:** Define _how_ to fetch data with `useQuery`, letting React Query handle _when_ (initial load, focus, reconnect, etc.).
 - **Caching:** Reduces redundant network requests by serving stale data while refetching in the background.
 - **Automatic Refetching:** Keeps data fresh based on window focus, network reconnection, and `staleTime`.
 - **Separation of Concerns:** Data fetching logic is separated from UI components.

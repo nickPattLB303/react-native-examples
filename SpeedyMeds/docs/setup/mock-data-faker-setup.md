@@ -46,10 +46,11 @@ A dedicated module (`src/api/mockData.ts`) contains functions that use Faker.js 
   import { fakerEN as faker } from "@faker-js/faker";
   ```
 - **Generator Functions:** Functions like `generateMockUserProfile`, `generateMockPrescriptions`, etc., utilize various Faker methods (`faker.person.firstName()`, `faker.location.streetAddress()`, `faker.date.past()`, `faker.helpers.arrayElement()`, etc.) to create realistic data.
+
   ```typescript
   // Example from src/api/mockData.ts
   import { fakerEN as faker } from "@faker-js/faker";
-  import type { Address } from '../types';
+  import type { Address } from "../types";
 
   const generateMockAddress = (): Address => ({
     street: faker.location.streetAddress(),
@@ -58,6 +59,7 @@ A dedicated module (`src/api/mockData.ts`) contains functions that use Faker.js 
     zip: faker.location.zipCode(),
   });
   ```
+
 - **Mockup Consistency:** The generation functions include logic to ensure that specific data points shown in the UI mockups (e.g., the Welchol order, specific prescription details) are included in the generated datasets for consistency during development.
 
 ### 3. API Simulation (`src/api/index.ts`)
@@ -66,14 +68,17 @@ The mock data generators are used within simulated API functions (`fetchUserProf
 
 ```typescript
 // Example from src/api/index.ts
-import { generateMockPrescriptions } from './mockData';
-import type { Prescription } from '../types';
+import { generateMockPrescriptions } from "./mockData";
+import type { Prescription } from "../types";
 
-const networkDelay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const networkDelay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
-export const fetchPrescriptions = async (count: number = 5): Promise<Prescription[]> => {
+export const fetchPrescriptions = async (
+  count: number = 5,
+): Promise<Prescription[]> => {
   await networkDelay(750);
-  console.log('API: fetchPrescriptions called');
+  console.log("API: fetchPrescriptions called");
   return generateMockPrescriptions(count);
 };
 ```
@@ -83,4 +88,4 @@ export const fetchPrescriptions = async (count: number = 5): Promise<Prescriptio
 - Faker.js provides realistic data for UI development and testing.
 - Explicitly importing locales (`fakerEN`) is recommended for performance.
 - Combining Faker with TypeScript interfaces ensures type safety.
-- Mock data generation is centralized in `src/api/mockData.ts`. 
+- Mock data generation is centralized in `src/api/mockData.ts`.
