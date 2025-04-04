@@ -137,12 +137,12 @@ const AccountScreen: React.FC<AccountScreenProps> = (
       >
         {/* Display the profile avatar, name, and member ID */}
         <ProfileSection>
-          {/* Avatar.Text displays text initials */}
+          {/* @see https://callstack.github.io/react-native-paper/docs/components/Avatar/AvatarText/ */}
           <Avatar.Text
             size={70} // Set avatar size
             label={initial} // Display the calculated initial
             style={{ marginBottom: theme.customSpacing.s }} // Add some margin below
-            // accessibilityLabel={`Avatar for ${displayName}`} // Good for accessibility
+            accessibilityLabel={`Avatar for ${displayName}`} // Good for accessibility
           />
           {/* Use Text variants for semantic typography */}
           <Text variant="titleLarge">{displayName}</Text>
@@ -167,7 +167,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             // `onPress` defines the action when the item is tapped.
             // TODO: Implement actual navigation logic.
             onPress={() => console.log("Navigate to Personal Info screen")}
-            // accessibilityLabel="Navigate to Personal Information" // Good for accessibility
+            accessibilityLabel="Navigate to Personal Information" // Good for accessibility
           />
           <List.Item
             title="Payment Methods"
@@ -177,6 +177,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             // TODO: Implement actual navigation logic.
             onPress={() => console.log("Navigate to Payment Methods screen")}
+            accessibilityLabel="Navigate to Payment Methods"
           />
           <List.Item
             title="Communication Preferences"
@@ -186,6 +187,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             onPress={() =>
               console.log("Navigate to Communication Preferences screen")
             }
+            accessibilityLabel="Navigate to Communication Preferences"
           />
           <List.Item
             title="Security"
@@ -193,6 +195,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             // TODO: Implement actual navigation logic.
             onPress={() => console.log("Navigate to Security screen")}
+            accessibilityLabel="Navigate to Security Settings"
           />
           <List.Item
             title="Help & Support"
@@ -202,10 +205,11 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             // TODO: Implement actual navigation logic.
             onPress={() => console.log("Navigate to Help & Support screen")}
+            accessibilityLabel="Navigate to Help and Support"
           />
         </List.Section>
 
-        {/* Log Out Button */}
+        {/* @see https://callstack.github.io/react-native-paper/docs/components/Button/ */}
         <Button
           mode="outlined" // Use outlined style for less emphasis than 'contained'
           onPress={() => console.log("Log Out action triggered")} // TODO: Implement actual log out logic
@@ -215,7 +219,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             borderColor: theme.colors.error, // Use error color for border
           }}
           textColor={theme.colors.error} // Use error color for text
-          // accessibilityLabel="Log out of your account" // Good for accessibility
+          accessibilityLabel="Log out of your account" // Good for accessibility
         >
           Log Out
         </Button>

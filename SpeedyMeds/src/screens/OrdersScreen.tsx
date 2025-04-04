@@ -88,6 +88,7 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
   /**
    * @description Renders a single order item within the FlatList.
    * Uses React Native Paper's List.Item for consistent styling.
+   * @see https://callstack.github.io/react-native-paper/docs/components/List/ListItem/
    * @param {object} props - Props containing the item data.
    * @param {Order} props.item - The order data object for the current row.
    * @returns {React.ReactElement} The rendered list item component.
@@ -110,6 +111,7 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
       onPress={() => handleNavigateToDetail(item.id)}
       // Add a left icon for visual flair (optional)
       left={(props) => <List.Icon {...props} icon="receipt" />} // Use 'receipt' or similar icon
+      accessibilityLabel={`Order for ${item.drugName}, ${item.dosage}. Order number ${item.orderNumber}. Status: ${item.status}. Date: ${item.orderDate.toLocaleDateString()}. Press to view details.`}
     />
   );
 
@@ -177,6 +179,7 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
         mode="contained"
         onPress={() => handleNavigateToDetail("12345")} // Navigate to a dummy ID
         style={{ margin: theme.customSpacing.m }} // Add margin around the button
+        accessibilityLabel="View details for hardcoded test order 12345"
       >
         View Hardcoded Order 12345 (Test)
       </Button>

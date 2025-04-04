@@ -75,6 +75,7 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, retryAction }) => {
           // Ensure button text color contrasts with button background
           labelStyle={{ color: theme.colors.onErrorContainer }}
           buttonColor={theme.colors.errorContainer} // Use error container color for button
+          accessibilityLabel="Retry loading data" // Add accessibility label
         >
           Retry
         </Button>

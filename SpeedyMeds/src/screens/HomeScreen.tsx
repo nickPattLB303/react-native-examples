@@ -14,15 +14,12 @@ import React from "react";
 import { View, ScrollView } from "react-native";
 // Import UI components from React Native Paper
 import { Text, SegmentedButtons, Card, List, Avatar } from "react-native-paper";
-// Import styled-components for creating theme-aware styled native components
-import styled from "styled-components/native";
 // Import the custom hook to access the theme context
 import { useThemeContext } from "../context/ThemeContext";
 // Import the type definition for theme preference values
 import type { ThemePreference } from "../context/ThemeContext";
 import type { MedicationReminder } from "../types"; // Import reminder type
 // Import the AppTheme type for strong typing with styled-components and theme usage
-import type { AppTheme } from "../theme/theme";
 // Import navigation prop types (even if not used directly, good practice for screen components)
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { BottomTabParamList } from "../navigation/types";
@@ -106,7 +103,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         </Text>
 
         {/* Balance Display (Placeholder) */}
-        <Card mode="elevated" style={{ marginBottom: theme.customSpacing.m }}>
+        <Card
+          mode="elevated"
+          style={{ marginBottom: theme.customSpacing.m }}
+          accessibilityLabel="Current account balance: $123.45" // Placeholder value
+        >
           <Card.Title
             title="Current Balance"
             subtitle="$123.45" // Placeholder value
@@ -114,7 +115,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           />
         </Card>
 
-        {/* Navigation Cards (Placeholder Structure) */}
+        {/**
+         * @description Section displaying quick navigation cards.
+         * Uses Paper `Card` components arranged in rows.
+         * TODO: Implement navigation for Delivery and Resources cards.
+         */}
         <View
           style={{
             flexDirection: "row",
@@ -126,6 +131,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             mode="outlined"
             style={{ flex: 1, marginRight: theme.customSpacing.xs }}
             onPress={() => navigation.navigate("Prescriptions")} // Navigate to Prescriptions tab
+            accessibilityRole="button"
+            accessibilityLabel="Navigate to Prescriptions screen"
           >
             <Card.Content style={{ alignItems: "center" }}>
               <Avatar.Icon size={40} icon="pill" />
@@ -141,6 +148,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             mode="outlined"
             style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
             onPress={() => navigation.navigate("Orders")} // Navigate to Orders tab
+            accessibilityRole="button"
+            accessibilityLabel="Navigate to Orders screen"
           >
             <Card.Content style={{ alignItems: "center" }}>
               <Avatar.Icon size={40} icon="receipt" />
@@ -163,6 +172,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           <Card
             mode="outlined"
             style={{ flex: 1, marginRight: theme.customSpacing.xs }}
+            // TODO: Add onPress navigation when Delivery screen exists
+            accessibilityRole="button"
+            accessibilityLabel="Navigate to Delivery screen (Not implemented)"
           >
             <Card.Content style={{ alignItems: "center" }}>
               <Avatar.Icon size={40} icon="truck-delivery" />
@@ -177,6 +189,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           <Card
             mode="outlined"
             style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
+            // TODO: Add onPress navigation when Resources screen exists
+            accessibilityRole="button"
+            accessibilityLabel="Navigate to Resources screen (Not implemented)"
           >
             <Card.Content style={{ alignItems: "center" }}>
               <Avatar.Icon size={40} icon="help-circle" />
@@ -190,7 +205,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           </Card>
         </View>
 
-        {/* Medication Reminders */}
+        {/**
+         * @description Section displaying medication reminders.
+         * Maps over the `reminders` array from the store and renders `List.Item` for each.
+         * Shows an empty state message if no reminders are available.
+         */}
         <List.Section title="Medication Reminders">
           {reminders.length > 0 ? (
             reminders.map((reminder: MedicationReminder) => (
@@ -199,6 +218,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 title={reminder.name} // Use the correct property 'name'
                 description={`Time: ${reminder.time}`} // Use the correct property 'time'
                 left={(props) => <List.Icon {...props} icon="alarm-check" />}
+                accessibilityLabel={`Medication reminder: ${reminder.name}, Time: ${reminder.time}`}
               />
             ))
           ) : (

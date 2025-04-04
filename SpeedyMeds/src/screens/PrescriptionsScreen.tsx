@@ -198,6 +198,8 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
   /**
    * @description Renders a single prescription item within the FlatList.
    * Uses React Native Paper's List.Item and Badge for styling.
+   * @see https://callstack.github.io/react-native-paper/docs/components/List/ListItem/
+   * @see https://callstack.github.io/react-native-paper/docs/components/Badge/
    * @param {object} props - Props containing the item data.
    * @param {Prescription} props.item - The prescription data object for the current row.
    * @returns {React.ReactElement} The rendered list item component.
@@ -224,6 +226,7 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
       // onPress={() => console.log('Navigate to detail for:', item.id)}
       // Add a left icon for visual flair
       left={(props) => <List.Icon {...props} icon="pill" />}
+      accessibilityLabel={`Prescription for ${item.drugName}, ${item.dosage}. Patient: ${item.patientName}. Refills remaining: ${item.refillsRemaining}. Supply: ${item.daysSupplyRemaining} days left.`}
     />
   );
 
@@ -246,14 +249,6 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
     // Center content using inline styles for now
     return (
       <ScreenContainer>
-        {/* Add Searchbar */}
-        <Searchbar
-          placeholder="Search Prescriptions"
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          style={{ marginBottom: theme.customSpacing.s }}
-          // TODO: Implement filtering logic based on searchQuery
-        />
         <Text
           variant="titleMedium"
           style={{ textAlign: "center", alignSelf: "center" }}
@@ -277,6 +272,16 @@ const PrescriptionsScreen: React.FC<PrescriptionsScreenProps> = (
   // --- Success State (Render Prescription List) ---
   return (
     <ScreenContainer>
+      {/* @see https://callstack.github.io/react-native-paper/docs/components/Searchbar/ */}
+      <Searchbar
+        placeholder="Search Prescriptions"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+        style={{ marginBottom: theme.customSpacing.s }}
+        // TODO: Implement filtering logic based on searchQuery
+        accessibilityLabel="Search prescriptions by name or keyword"
+      />
+      {/* @see https://reactnative.dev/docs/flatlist */}
       <FlatList
         data={prescriptions}
         renderItem={renderPrescriptionItem}

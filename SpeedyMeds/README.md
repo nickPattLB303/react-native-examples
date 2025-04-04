@@ -41,12 +41,12 @@ _(These represent the target design and features for the application)_
 
 This repository is primarily intended for developers participating in the associated React Native training course. However, it can also serve as a reference for anyone learning React Native and looking for examples of integrating common libraries and patterns.
 
-## Key Features (Based on Mockups)
+## Key Features (Based on Mockups - Current Status: Skeleton Implemented)
 
-- **Home Dashboard:** Displays welcome message, current balance, quick navigation cards (Prescriptions, Orders, Delivery, Resources), and medication reminders.
-- **Prescriptions Screen:** Allows searching/filtering prescriptions and displays a list including drug info, dosage, days supply, patient, refills, alerts, and actions.
-- **Order Detail Screen:** Shows details for a specific order (drug info, order date/number), a status tracker (Placed, Processing, Shipped, Delivered), tracking number with a tracking button, and shipping address.
-- **Account Screen:** Displays user profile summary (avatar, name, ID) and provides navigation to manage Personal Information, Payment Methods, Communication Preferences, Security, Help & Support, along with a Log Out button.
+- **Home Dashboard:** Displays welcome message, placeholder balance, placeholder navigation cards (Prescriptions/Orders navigate), and basic medication reminders list. Theme switcher functional.
+- **Prescriptions Screen:** Displays a list of prescriptions with basic info, status badges, and alerts. Includes a placeholder search bar (no filtering logic yet).
+- **Order Detail Screen:** Placeholder screen exists but is not yet implemented.
+- **Account Screen:** Displays user profile summary (avatar, name, ID) and placeholder navigation list items (no navigation logic yet). Placeholder Log Out button.
 - **Global Navigation:** Consistent bottom tab bar for Home, Prescriptions, Orders, and Account sections, with appropriate icons.
 - **Theming:** Supports Light, Dark, and System theme preferences.
 

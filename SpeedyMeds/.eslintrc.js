@@ -58,6 +58,14 @@ module.exports = {
     // 'react/react-in-jsx-scope': 'off', // Not needed with modern React/JSX transform
     // '@typescript-eslint/explicit-function-return-type': 'warn', // Encourage explicit return types
   },
+  /**
+   * Defines predefined global variables for specific environments.
+   * - `jest: true`: Adds Jest global variables (like `jest`, `describe`, `it`, `expect`)
+   *   to prevent 'no-undef' errors in test files.
+   */
+  env: {
+    jest: true,
+  },
 
   // --- Optional Settings ---
   // You might add other ESLint configurations here if needed, such as:

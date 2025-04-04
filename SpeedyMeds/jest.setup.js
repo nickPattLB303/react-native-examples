@@ -6,10 +6,10 @@
  * It's used for global test setup tasks.
  *
  * Primary Purpose Here:
- *   - Import and extend Jest's `expect` with React Native-specific matchers
- *     provided by `@testing-library/jest-native`. This gives us useful assertions
- *     like `toBeVisible()`, `toBeDisabled()`, `toHaveStyle()`, etc., making tests
- *     more readable and expressive for React Native components.
+ *   - Global test setup tasks.
+ *   - Previously, this imported `@testing-library/jest-native/extend-expect`, but
+ *     those matchers are now built into `@testing-library/react-native` v12.4+
+ *     and this separate import is no longer needed (and the package is deprecated).
  *
  * Other Potential Uses (Add as needed):
  *   - Global mocks for native modules or external libraries (e.g., mocking `AsyncStorage`).
@@ -17,13 +17,28 @@
  *   - Configuring test utilities.
  *
  * @see https://jestjs.io/docs/configuration#setupfilesafterenv-array
- * @see https://github.com/testing-library/jest-native#usage
+ * @see https://callstack.github.io/react-native-testing-library/docs/migration/jest-matchers - RNTL Jest Matchers Migration Guide
  * @see docs/setup/testing-config.md - Project's testing setup documentation.
  */
 
-// Import the jest-native matchers to extend Jest's `expect`
-// eslint-disable-next-line import/no-unresolved -- ESLint struggles with this path, but it's correct for Jest
-import "@testing-library/jest-native/extend-expect";
+// No longer needed as of @testing-library/react-native v12.4+
+// import "@testing-library/jest-native/extend-expect";
+
+// --- Mocks ---
+
+// Mock @expo/vector-icons
+jest.mock("@expo/vector-icons", () => {
+  // Return null for all icons to avoid font loading issues in tests
+  const MockIcon = () => null;
+  return {
+    MaterialCommunityIcons: MockIcon,
+    Ionicons: MockIcon, // Add other icon sets used if necessary
+    // Add other icon sets as needed (e.g., FontAwesome, Entypo)
+    createIconSet: () => MockIcon, // Mock the factory function too
+    createIconSetFromIcoMoon: () => MockIcon,
+    createIconSetFromFontello: () => MockIcon,
+  };
+});
 
 // --- Optional: Add other global setup below ---
 
@@ -38,4 +53,4 @@ import "@testing-library/jest-native/extend-expect";
 // Example: Silence specific console warnings/errors during tests (use with caution)
 // jest.spyOn(console, 'warn').mockImplementation(() => {});
 
-console.log("Jest setup file executed: jest-native matchers extended.");
+console.log("Jest setup file executed.");
