@@ -11,7 +11,7 @@
  * @dependencies
  * - React: For component logic.
  * - React Native (`View`, `ScrollView`): For layout and scrolling.
- * - React Native Paper (`Text`, `Avatar`, `List`, `Button`, `useTheme`): For UI elements and theming.
+ * - React Native Paper (`Text`, `Avatar`, `List`, `useTheme`): For UI elements and theming.
  * - styled-components/native: For creating custom styled components.
  * - Zustand (`useAppDataStore`): For accessing global user profile state, loading/error status.
  * - @react-navigation/bottom-tabs: For navigation prop types.
@@ -22,6 +22,7 @@
  *   - `../components/ScreenContainer`: Reusable screen wrapper.
  *   - `../components/LoadingIndicator`: Reusable loading component.
  *   - `../components/ErrorDisplay`: Reusable error display component.
+ *   - `../components/ThemeSelector`: Reusable theme selection component.
  *
  * @see {@link https://callstack.github.io/react-native-paper/ | React Native Paper Docs}
  * @see {@link https://styled-components.com/docs/basics#react-native | styled-components for React Native}
@@ -36,7 +37,6 @@ import {
   Text, // For displaying text
   Avatar, // For user avatar/initials
   List, // For creating lists of items (settings links)
-  Button, // For the Log Out button
   useTheme, // Hook to access theme properties (colors, spacing)
 } from "react-native-paper";
 // Import styled-components for creating theme-aware styled native components
@@ -52,6 +52,7 @@ import type { BottomTabParamList } from "../navigation/types"; // Defines parame
 import ScreenContainer from "../components/ScreenContainer"; // Consistent screen padding/background
 import LoadingIndicator from "../components/LoadingIndicator"; // Shows when loading
 import ErrorDisplay from "../components/ErrorDisplay"; // Shows on error
+import ThemeSelector from "../components/ThemeSelector"; // Import the new component
 
 // ============================================================================
 // Navigation Props Type
@@ -96,6 +97,7 @@ const ProfileSection = styled(View)`
  * various account settings (currently placeholders). It fetches the user profile,
  * loading status, and error status from the global `useAppDataStore`. It handles
  * rendering loading indicators, error messages, or the main account view based on this state.
+ * It also includes the theme selection component.
  *
  * @param {AccountScreenProps} _props - Navigation props provided by React Navigation.
  *        The underscore prefix indicates they are currently unused but included for type safety.
@@ -107,25 +109,14 @@ const AccountScreen: React.FC<AccountScreenProps> = (
   // --- State and Theme Access ---
 
   // Access global state slices from the Zustand store.
-  // This component subscribes to changes in userProfile, isLoading, and error.
-  // Note: Selecting the entire state object (`useAppDataStore()`) can cause re-renders
-  // if *any* part of the store changes. For better performance, especially in complex
-  // components, prefer individual selectors:
-  // const userProfile = useAppDataStore(state => state.userProfile);
-  // const isLoading = useAppDataStore(state => state.isLoading);
-  // const error = useAppDataStore(state => state.error);
-  // Or use shallow equality if selecting multiple fields:
-  // const { userProfile, isLoading, error } = useAppDataStore(state => ({ ... }), shallow);
   const { userProfile, isLoading, error } = useAppDataStore();
 
   // Access the theme object using the hook from React Native Paper.
-  // Provides access to colors, fonts, spacing defined in the theme.
   const theme = useTheme<AppTheme>();
 
   // --- Conditional Rendering Logic ---
 
   // 1. Loading State: Show indicator if data is loading AND profile isn't already loaded.
-  //    This prevents the indicator from showing during background refetches.
   if (isLoading && !userProfile) {
     return <LoadingIndicator message="Loading Account..." />;
   }
@@ -133,8 +124,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
   // 2. Error State: Show error display if an error occurred.
   if (error) {
     // TODO: Implement a retry mechanism by passing a `retryAction` prop to ErrorDisplay
-    // const handleRetry = () => { /* Logic to refetch data */ };
-    return <ErrorDisplay error={error /* retryAction={handleRetry} */} />;
+    return <ErrorDisplay error={error} />;
   }
 
   // 3. No Data State: Handle the edge case where loading finished, no error, but profile is still null.
@@ -168,7 +158,6 @@ const AccountScreen: React.FC<AccountScreenProps> = (
         {/* Profile Section */}
         <ProfileSection>
           {/* Avatar Component: Displays user initial */}
-          {/* See: https://callstack.github.io/react-native-paper/docs/components/Avatar/AvatarText/ */}
           <Avatar.Text
             size={70} // Define avatar size
             label={initial} // The text initial to display
@@ -186,20 +175,14 @@ const AccountScreen: React.FC<AccountScreenProps> = (
         </ProfileSection>
 
         {/* Settings List Section */}
-        {/* See: https://callstack.github.io/react-native-paper/docs/components/List/ListSection */}
-        {/* See: https://callstack.github.io/react-native-paper/docs/components/List/ListItem */}
         <List.Section>
           {/* Each List.Item represents a tappable row */}
           <List.Item
             title="Personal Information"
-            // `left` prop takes a function returning a React element (here, an Icon)
             left={(props) => <List.Icon {...props} icon="account-outline" />}
-            // `right` prop also takes a function, often used for navigation indicators
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            // `onPress` handles tap events
-            // TODO: Replace console.log with actual navigation logic
             onPress={() => console.log("Navigate to Personal Info screen")}
-            accessibilityLabel="Navigate to Personal Information" // Clear label for accessibility
+            accessibilityLabel="Navigate to Personal Information"
           />
           <List.Item
             title="Payment Methods"
@@ -236,22 +219,8 @@ const AccountScreen: React.FC<AccountScreenProps> = (
             accessibilityLabel="Navigate to Help and Support"
           />
         </List.Section>
-
-        {/* Log Out Button */}
-        {/* See: https://callstack.github.io/react-native-paper/docs/components/Button/ */}
-        <Button
-          mode="outlined" // Less prominent style than "contained"
-          onPress={() => console.log("Log Out action triggered")} // TODO: Implement actual logout
-          style={{
-            marginHorizontal: theme.customSpacing.m, // Add side margins
-            marginTop: theme.customSpacing.l, // Add top margin for separation
-            borderColor: theme.colors.error, // Use error color for border to indicate destructive action
-          }}
-          textColor={theme.colors.error} // Use error color for text
-          accessibilityLabel="Log out of your account" // Clear accessibility label
-        >
-          Log Out
-        </Button>
+        {/* Theme Selector */}
+        <ThemeSelector />
       </ScrollView>
     </ScreenContainer>
   );

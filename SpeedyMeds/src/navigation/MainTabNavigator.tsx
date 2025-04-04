@@ -4,6 +4,7 @@ import {
   BottomTabNavigationOptions,
 } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useTheme } from "react-native-paper"; // Import useTheme
 
 // Import screen components & the nested Orders stack navigator
 import HomeScreen from "../screens/HomeScreen";
@@ -13,6 +14,7 @@ import OrdersStackNavigator from "./OrdersStackNavigator"; // Import the nested 
 
 // Import the specific ParamList type for this tab navigator
 import type { BottomTabParamList } from "./types";
+import type { AppTheme } from "../theme/theme"; // Import AppTheme type
 
 /**
  * Creates a Bottom Tab Navigator instance.
@@ -26,14 +28,17 @@ const Tab = createBottomTabNavigator<BottomTabParamList>();
  * @description Defines the React Native component for the main Bottom Tab Navigator.
  * This navigator displays the primary sections of the app (Home, Prescriptions, Orders, Account)
  * as tabs at the bottom of the screen. The 'Orders' tab renders a nested Stack Navigator.
- * It also configures the icons for each tab.
+ * It also configures the icons for each tab and applies theme-based header styling.
  *
  * @returns {React.ReactElement} The configured Bottom Tab Navigator component.
  */
 function MainTabNavigator(): React.ReactElement {
+  // Call useTheme at the top level of the component
+  const theme = useTheme<AppTheme>();
+
   /**
    * @description Configuration options applied to all screens within the Bottom Tab Navigator.
-   * This function receives the `route` and `navigation` objects for each screen, allowing
+   * This function receives the `route` object for each screen, allowing
    * options to be set dynamically based on the current route.
    * @param {object} props - Props provided by React Navigation.
    * @param {object} props.route - The route object for the current screen.
@@ -50,6 +55,16 @@ function MainTabNavigator(): React.ReactElement {
     // The header for the 'Orders' tab is explicitly hidden in its `Tab.Screen` options
     // because the nested `OrdersStackNavigator` manages its own headers.
     headerShown: true,
+    // Apply theme colors to header using the theme object from the component scope
+    headerStyle: { backgroundColor: theme.colors.surface },
+    headerTintColor: theme.colors.onSurface,
+    headerTitleStyle: {
+      color: theme.colors.onSurface, // Ensure title color matches tint
+      // Explicitly set font properties for consistency
+      fontFamily: theme.fonts.medium.fontFamily, // Use the specific medium font family
+      fontSize: theme.customFontSizes.m, // Use the 'm' size (16)
+      fontWeight: theme.fonts.medium.fontWeight, // Use the 'medium' weight (500)
+    },
 
     /**
      * @description Function to render the icon for each tab.
@@ -117,7 +132,8 @@ function MainTabNavigator(): React.ReactElement {
         name="Home"
         // `component` is the React component to render for this tab.
         component={HomeScreen}
-        // `options` could be used here to override `screenOptions` specifically for Home, e.g., options={{ title: 'Dashboard' }}
+        // Let the Home screen inherit the default screenOptions header
+        // options={{ headerShown: false }} // Removed this line
       />
       {/* Define the Prescriptions tab screen */}
       <Tab.Screen name="Prescriptions" component={PrescriptionsScreen} />

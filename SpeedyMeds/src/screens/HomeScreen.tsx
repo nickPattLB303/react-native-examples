@@ -30,7 +30,6 @@ import { View, ScrollView } from "react-native"; // Core layout components
 // Import UI components from React Native Paper
 import {
   Text, // For displaying text
-  SegmentedButtons, // For theme selection (Light/Dark/System)
   Card, // Used for balance display and navigation links
   List, // Used for displaying reminders
   Avatar, // Used for icons within Cards and List items
@@ -260,41 +259,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             </Text>
           )}
         </List.Section>
-
-        {/* Theme Selection Controls */}
-        {/* See: https://callstack.github.io/react-native-paper/docs/components/SegmentedButtons/ */}
-        <SegmentedButtons
-          value={themePreference} // Controlled component: value reflects current state
-          // Update the theme preference state in the context when a button is selected
-          onValueChange={
-            (value) => setThemePreference(value as ThemePreference) // Cast value to ThemePreference type
-          }
-          // Define the buttons to display
-          buttons={[
-            {
-              value: "light", // Value passed to onValueChange
-              label: "Light", // Text displayed on the button
-              icon: "brightness-5", // Icon name (MaterialCommunityIcons)
-              accessibilityLabel: "Set light theme", // Label for screen readers
-            },
-            {
-              value: "dark",
-              label: "Dark",
-              icon: "brightness-4",
-              accessibilityLabel: "Set dark theme",
-            },
-            {
-              value: "system",
-              label: "System",
-              icon: "brightness-auto",
-              accessibilityLabel: "Use system theme setting", // Updated, clearer label
-            },
-          ]}
-          style={{
-            marginTop: theme.customSpacing.l, // Add space above buttons
-            marginBottom: theme.customSpacing.m, // Add space below buttons
-          }}
-        />
       </ScrollView>
     </ScreenContainer>
   );
