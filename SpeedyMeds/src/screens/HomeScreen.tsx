@@ -37,7 +37,6 @@ import {
 // Import the custom hook to access the theme context
 import { useThemeContext } from "../context/ThemeContext";
 // Import the type definition for theme preference values ('light', 'dark', 'system')
-import type { ThemePreference } from "../context/ThemeContext";
 import type { MedicationReminder } from "../types"; // Type for reminder data structure
 // Import navigation prop types for type safety
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
@@ -85,7 +84,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   // --- State and Context Access ---
 
   // Get theme state and functions from the ThemeContext
-  const { themePreference, setThemePreference, theme } = useThemeContext();
+  const { theme } = useThemeContext();
 
   // Get required data slices from the global Zustand store using selectors
   // Using selectors ensures the component only re-renders if these specific slices change.
