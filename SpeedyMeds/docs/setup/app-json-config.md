@@ -1,9 +1,9 @@
 # Expo Configuration (`app.json`) Explained
 
-This document explains the configuration settings found in the `app.json` file for the SpeedyMeds project. This file is crucial for controlling various aspects of the Expo application build and runtime behavior.
+This document explains the configuration settings found in the `app.json` file for the SpeedyMeds project. `app.json` is the standard configuration file used by Expo to manage project settings. It's crucial for controlling various aspects of the application build and runtime behavior. You modify these settings by directly editing this JSON file.
 
 ```json
-// Current app.json content (as of YYYY-MM-DD):
+// Example app.json content (structure based on latest):
 {
   "expo": {
     "name": "SpeedyMeds",
@@ -100,4 +100,4 @@ This document explains the configuration settings found in the `app.json` file f
 
 The default `app.json` provided by the Expo `blank-typescript` template is well-suited for the initial development phase of the SpeedyMeds training project. Key settings like enabling the New Architecture are already in place. Further customizations (icons, splash screen, platform-specific identifiers) can be addressed later as needed.
 
-_(Reference: [Expo app.json Configuration](https://docs.expo.dev/versions/latest/config/app/))_
+_(For the complete and up-to-date reference, see the official [Expo app.json Configuration Documentation](https://docs.expo.dev/versions/latest/config/app/).)_

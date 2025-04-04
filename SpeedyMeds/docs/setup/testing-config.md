@@ -110,11 +110,33 @@ You can add other scripts for different testing flows (e.g., coverage, CI) as ne
 - Place test files in a `__tests__` directory, either at the root or alongside the code being tested (e.g., `src/components/__tests__/Button.test.tsx`).
 - Use the `.test.ts` or `.test.tsx` file extension.
 - Import necessary functions from `@testing-library/react-native` (`render`, `fireEvent`, `screen`, etc.).
-- Write tests focusing on user interaction and observable output.
+- Write tests focusing on user interaction and observable output, querying the component tree in ways similar to how a user would interact with it.
+
+- **Example Conceptual Snippet:**
+  ```typescript
+  import React from 'react';
+  import { render, screen, fireEvent } from '@testing-library/react-native';
+  import MyButton from '../MyButton'; // Example component
+
+  it('calls onPress when clicked', () => {
+    const mockOnPress = jest.fn();
+    render(<MyButton title="Submit" onPress={mockOnPress} />);
+
+    // Find the button by its text
+    const buttonElement = screen.getByText('Submit');
+
+    // Simulate a press event
+    fireEvent.press(buttonElement);
+
+    // Assert that the mock function was called
+    expect(mockOnPress).toHaveBeenCalledTimes(1);
+  });
+  ```
 
 ## Conclusion
 
-This setup aligns the SpeedyMeds project with the standard Expo testing configuration using Jest, `jest-expo`, and React Native Testing Library. It provides a robust and user-centric approach to testing React Native components and logic.
+This setup aligns the SpeedyMeds project with the standard Expo testing configuration using Jest, `jest-expo`, and React Native Testing Library. Remember that the `jest-expo` preset automatically handles much of the necessary configuration and mocking for the React Native environment, simplifying the setup process. This configuration provides a robust and user-centric approach to testing React Native components and logic.
 
 _(Primary Reference: [Expo Unit Testing Docs](https://docs.expo.dev/develop/unit-testing/))_
 _(RNTL Reference: [React Native Testing Library Docs](https://callstack.github.io/react-native-testing-library/docs/getting-started))_
+_(Jest Native Matchers: [jest-native GitHub](https://github.com/testing-library/jest-native))_

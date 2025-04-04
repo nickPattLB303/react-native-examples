@@ -4,9 +4,9 @@ This document outlines the setup for the UI component library (`react-native-pap
 
 ## Approach
 
-- **UI Components:** `react-native-paper` (v5, MD3) is used for pre-built Material Design components.
-- **Theming:** `react-native-paper` provides a robust theming system. We define separate `lightTheme` and `darkTheme` objects based on Paper's `MD3LightTheme` and `MD3DarkTheme`, merged with our custom values.
-- **Custom Styling:** `styled-components` is used consistently across all screens for creating custom components and overriding/extending styles, leveraging the same theme object provided by the context.
+- **UI Components:** [React Native Paper](https://callstack.github.io/react-native-paper/) (v5, MD3) is used for pre-built Material Design components.
+- **Theming:** React Native Paper provides a robust theming system. We define separate `lightTheme` and `darkTheme` objects based on Paper's `MD3LightTheme` and `MD3DarkTheme`, merged with our custom values.
+- **Custom Styling:** [Styled Components](https://styled-components.com/docs/basics#react-native) is used consistently across all screens for creating custom components and overriding/extending styles, leveraging the same theme object provided by the context.
 - **Theme Switching:** A React Context (`ThemeContext`) manages the active theme, allowing users to choose between 'light', 'dark', or 'system' preferences. It uses React Native's `useColorScheme` hook to detect the system setting.
 
 ## Implementation Details
@@ -42,8 +42,8 @@ This document outlines the setup for the UI component library (`react-native-pap
     - The application root in `App.tsx` is wrapped with our custom `CustomThemeProvider` from `src/context/ThemeContext.tsx`.
     - An inner component (`AppContent`) is used to access the theme context via `useThemeContext`.
     - `AppContent` then wraps the `AppNavigator` with:
-      - `PaperProvider` from `react-native-paper`, passing the `theme` from the context.
-      - `StyledThemeProvider` from `styled-components/native`, also passing the `theme` from the context.
+      - `PaperProvider` from `react-native-paper`, passing the active `theme` from the context.
+      - `StyledThemeProvider` from `styled-components/native`, passing the **exact same** active `theme` object from the context. This ensures that both pre-built Paper components and custom styled components use the same theme values (colors, spacing, fonts, etc.) for consistency.
 
     ```typescript
     // App.tsx (Simplified)

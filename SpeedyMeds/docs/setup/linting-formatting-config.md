@@ -1,6 +1,8 @@
 # ESLint & Prettier Configuration
 
-This document outlines the setup for ESLint (code linting) and Prettier (code formatting) in the SpeedyMeds project, following the standard practices recommended by Expo. Consistent code style and early error detection are crucial for collaboration and maintainability.
+This document outlines the setup for ESLint (code linting) and Prettier (code formatting) in the SpeedyMeds project, following the standard practices recommended by Expo.
+**Linting** refers to analyzing code for potential errors, bugs, stylistic issues, and suspicious constructs. **Formatting** focuses specifically on enforcing a consistent code style (like indentation, spacing, line breaks).
+Using both tools ensures consistent code style and helps catch errors early, which is crucial for collaboration and maintainability.
 
 ## Goals
 
@@ -180,8 +182,14 @@ To get the most benefit, integrate these tools with VS Code:
     ```
 3.  **Reload VS Code:** Restart or reload the VS Code window to ensure settings and extensions are loaded correctly.
 
+## Best Practices
+
+- **Format Before Committing:** Run `npm run format` or rely on the VS Code format-on-save feature before committing your code changes. This ensures all code pushed to the repository adheres to the defined style.
+- **Address Lint Warnings:** Pay attention to warnings reported by ESLint in your editor or when running `npm run lint`. Addressing them helps prevent potential bugs and improves code quality.
+
 ## Conclusion
 
 This setup aligns the SpeedyMeds project with the standard Expo configuration for ESLint and Prettier, providing a robust linting and formatting foundation. It helps maintain code quality and consistency using integrated, industry-standard tools.
 
 _(Primary Reference: [Expo Using ESLint Guide](https://docs.expo.dev/guides/using-eslint/))_
+_(See also: [ESLint Rules](https://eslint.org/docs/latest/rules/), [Prettier Options](https://prettier.io/docs/en/options))_

@@ -55,4 +55,7 @@ The project's `tsconfig.json` extends `expo/tsconfig.base`. This base configurat
 
 By extending the Expo base configuration and enabling strict mode along with additional checks (`noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`, `forceConsistentCasingInFileNames`), we establish a robust TypeScript setup. This configuration helps catch errors early, enforces code quality, and aligns with best practices, providing a solid foundation for the training course.
 
+**Note:** Your code editor (like VS Code) heavily relies on `tsconfig.json` to provide accurate TypeScript IntelliSense (autocompletion), error checking within the editor, and other language features.
+
 _(Reference: [TypeScript Compiler Options](https://www.typescriptlang.org/tsconfig))_
+_(Reference: [Expo TypeScript Guide](https://docs.expo.dev/guides/typescript/))_

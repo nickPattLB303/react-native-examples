@@ -2,7 +2,7 @@
 
 ## Overview
 
-To facilitate development and testing without relying on a live backend, this project uses [Faker.js](https://fakerjs.dev/) to generate realistic mock data for user profiles, prescriptions, orders, and reminders. This ensures that UI components can be built and tested with data that closely resembles what a real API might return.
+To facilitate development and testing without relying on a live backend during the initial phases, this project uses [Faker.js](https://fakerjs.dev/) to generate realistic mock data for user profiles, prescriptions, orders, and reminders. This ensures that UI components can be built and tested with data that closely resembles what a real API might return. **Note:** This mock data setup is intended for development and testing only; in a production scenario, these functions would be replaced by actual API calls to a live backend service.
 
 ## Installation
 

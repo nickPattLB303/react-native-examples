@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project uses [TanStack Query (v5)](https://tanstack.com/query/latest) (formerly React Query) to manage asynchronous operations, primarily data fetching from our simulated API. It simplifies fetching, caching, synchronizing, and updating server state in the React Native application.
+This project uses [TanStack Query (v5)](https://tanstack.com/query/v5/docs/react/overview) (formerly React Query) to manage asynchronous operations, primarily data fetching from our simulated API. Efficiently handling data fetching, caching, and synchronization with server state is crucial for building responsive and robust applications, and TanStack Query provides powerful tools for these tasks.
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install @tanstack/react-query --save --legacy-peer-deps
 npx expo install @react-native-community/netinfo -- --legacy-peer-deps
 ```
 
-**Note:** The `--legacy-peer-deps` flag was necessary during setup due to potential peer dependency conflicts. See `SETUP.md` for details.
+**Note:** The `--legacy-peer-deps` flag was necessary during setup to resolve potential version conflicts between dependencies in the project. While generally avoided, it can sometimes be required to proceed with installation in complex dependency trees. See `SETUP.md` for details.
 
 ## Configuration
 
@@ -136,7 +136,7 @@ export const useInitializeAppData = () => {
 
 ### 4. Usage in Components
 
-Components typically **do not** directly call `useQuery` themselves for this global application data. Instead, they consume the data from the Zustand store (`useAppDataStore`), which is kept up-to-date by the `useInitializeAppData` hook.
+Components typically **do not** directly call `useQuery` themselves for this global application data. Instead, they consume the data from the Zustand store (`useAppDataStore`). This approach centralizes data access, decouples components from the fetching logic, and ensures components react to the latest available state managed globally, which is kept up-to-date by the `useInitializeAppData` hook.
 
 ```typescript
 // Example in a screen component (e.g., AccountScreen.tsx)
@@ -144,11 +144,14 @@ import useAppDataStore from '../stores/appDataStore';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
 const AccountScreen = () => {
-  const { userProfile, isLoading, error } = useAppDataStore();
+  // Select only the needed state slices from Zustand
+  const userProfile = useAppDataStore((state) => state.userProfile);
+  const isLoading = useAppDataStore((state) => state.isLoading);
+  const error = useAppDataStore((state) => state.error);
 
-  if (isLoading) return <ActivityIndicator />;
-  if (error) return <Text>Error: {error.message}</Text>;
-  if (!userProfile) return <Text>No profile data.</Text>;
+  if (isLoading && !userProfile) return <ActivityIndicator />; // Show loading only if no data yet
+  if (error) return <Text>Error loading profile: {error.message}</Text>;
+  if (!userProfile) return <Text>No profile data available.</Text>;
 
   return <Text>Welcome, {userProfile.firstName}</Text>;
 };
@@ -160,4 +163,18 @@ const AccountScreen = () => {
 - **Caching:** Reduces redundant network requests by serving stale data while refetching in the background.
 - **Automatic Refetching:** Keeps data fresh based on window focus, network reconnection, and `staleTime`.
 - **Separation of Concerns:** Data fetching logic is separated from UI components.
-- **Integration with Zustand:** React Query handles fetching and caching, while Zustand provides easy access to the latest fetched state across the application. 
+- **Integration with Zustand:** React Query handles the complexities of fetching and caching server state. Zustand then serves as the readily accessible, centralized client-side store for this data, providing components with a simple hook (`useAppDataStore`) to consume the latest state.
+
+## Data Flow Visualization
+
+The following diagram illustrates how data flows from the API through React Query and Zustand to the UI components in this architecture:
+
+```mermaid
+graph LR
+    A[API/Mock] -->|fetch| B(React Query);
+    B -->|updates cache| B;
+    B -->|provides data/status| C(useInitializeAppData Hook);
+    C -->|updates state| D(Zustand Store);
+    D -->|provides state| E(React Components);
+    E -->|reads state| D;
+```

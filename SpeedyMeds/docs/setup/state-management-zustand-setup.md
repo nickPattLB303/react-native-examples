@@ -4,7 +4,7 @@
 
 This project uses [Zustand](https://zustand.docs.pmnd.rs/) for managing global client-side state. Zustand is chosen for its simplicity, minimal boilerplate, and hook-based API, making it easy to access and update state from any component without needing Context providers.
 
-In this application, Zustand primarily holds the application data (user profile, prescriptions, orders, reminders) that has been fetched and cached by TanStack Query (React Query).
+In this application, Zustand primarily holds the application data (user profile, prescriptions, orders, reminders) *after* it has been fetched and cached by TanStack Query (React Query). Zustand serves as the readily accessible, centralized client-side 'single source of truth' for this data, decoupling UI components from the fetching logic itself.
 
 ## Installation
 

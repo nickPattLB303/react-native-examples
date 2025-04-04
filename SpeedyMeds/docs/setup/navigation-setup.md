@@ -1,13 +1,13 @@
 # Navigation Setup
 
-This document details the setup of navigation using React Navigation for the SpeedyMeds project, including integration with the application theme.
+This document details the setup of navigation using [React Navigation](https://reactnavigation.org/) for the SpeedyMeds project, including integration with the application theme. React Navigation is the standard library for routing and navigation in React Native applications.
 
 ## Approach
 
 We are implementing a common mobile navigation pattern combining:
 
-1.  **Bottom Tab Navigator:** For the primary sections (Home, Prescriptions, Orders, Account).
-2.  **Native Stack Navigator:** As the root navigator, allowing screens (like Order Details) to be pushed on top of the tabs.
+1.  **[Bottom Tab Navigator](https://reactnavigation.org/docs/bottom-tab-navigator):** For the primary sections (Home, Prescriptions, Orders, Account).
+2.  **[Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator):** As the root navigator, allowing screens (like Order Details) to be pushed on top of the tabs, providing native platform navigation animations and headers.
 3.  **Theming:** The appearance of the navigators (headers, tab bar, background) is controlled by the application's theme.
 
 ## Implementation Details
@@ -51,3 +51,17 @@ We are implementing a common mobile navigation pattern combining:
 - The `AppNavigator` is rendered within the theme providers in `App.tsx`.
 - The `NavigationContainer` and its navigators automatically adopt the light or dark theme based on the selection made via the `ThemeContext` (e.g., using the switcher in `HomeScreen`).
 - Navigation between screens remains the same (`navigation.navigate('ScreenName', {params})`).
+
+## Navigation Structure Visualization
+
+The following diagram shows the relationship between the Root Stack Navigator and the Bottom Tab Navigator:
+
+```mermaid
+graph TD
+    RootStack(Native Stack Navigator) --> TabNav(Bottom Tab Navigator);
+    RootStack --> OrderDetail(OrderDetail Screen);
+    TabNav --> HomeScreen(Home Screen);
+    TabNav --> PrescriptionsScreen(Prescriptions Screen);
+    TabNav --> OrdersScreen(Orders Screen);
+    TabNav --> AccountScreen(Account Screen);
+```

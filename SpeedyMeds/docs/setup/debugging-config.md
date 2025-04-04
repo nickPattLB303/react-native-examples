@@ -27,7 +27,7 @@ This menu, built into Expo Go and development builds, provides access to essenti
 
 ## 3. React Native DevTools (`j`) - Primary Debugger
 
-This is the modern, recommended tool for debugging your app's JavaScript code and React components, replacing the older Chrome DevTools integration. It works with the Hermes engine.
+This is the modern, recommended tool for debugging your app's JavaScript code and React components, replacing the older Chrome DevTools integration. It works directly with the Hermes engine (React Native's optimized JavaScript engine) and utilizes source maps to allow you to debug using your original, readable TypeScript/JavaScript code.
 
 - **Accessing:** Press `j` in the terminal window where `npx expo start` is running.
 - **Key Features (Integrated Interface):**
@@ -37,7 +37,7 @@ This is the modern, recommended tool for debugging your app's JavaScript code an
   - **Memory:** Inspect JavaScript memory usage and take heap snapshots.
   - **Components (React DevTools):** Inspect the React component tree, view/edit props and state, check component hierarchy.
   - **Profiler (React DevTools):** Record and analyze the performance of your JavaScript code execution and component rendering (debug builds only currently).
-- **Recommendation:** This is the **main tool** for debugging JavaScript logic, inspecting component state/props, analyzing performance, and checking network requests.
+- **Recommendation:** This is the **primary tool** you should use for most JavaScript logic debugging, inspecting component state/props, analyzing performance, and checking network requests within Expo Go or development builds.
 
 ## 4. Standalone React DevTools (`Shift+M`)
 
