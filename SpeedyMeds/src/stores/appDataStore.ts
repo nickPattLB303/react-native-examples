@@ -1,35 +1,41 @@
 /**
  * Zustand Store for Global Application Data
  *
- * This file defines a Zustand store responsible for holding the main application data
- * that needs to be accessible globally across different components and screens.
- * Zustand is a small, fast, and scalable state management solution for React.
- *
- * Key Concepts:
- *   - Store: A central object holding the state and actions to modify it.
- *   - State: The data itself (e.g., user profile, lists of prescriptions/orders).
- *   - Actions: Functions defined within the store that are used to update the state.
- *   - Hook-based: Components access the store using the generated hook (`useAppDataStore`).
- *   - Selectors: Components typically select only the specific pieces of state they need,
- *     which optimizes re-renders.
- *
- * Data Flow in this App:
- *   1. Data is fetched using TanStack Query (React Query) within the `useInitializeAppData` hook.
- *   2. The `useInitializeAppData` hook observes the results from TanStack Query.
- *   3. When data is successfully fetched or errors occur, `useInitializeAppData` calls the
- *      appropriate action functions (defined below) in *this* Zustand store.
- *   4. This store updates its state (e.g., `userProfile`, `prescriptions`, `isLoading`, `error`).
- *   5. UI components subscribe to this store using `useAppDataStore` and re-render when
- *      the relevant parts of the state change.
- *
+ * @file This file defines the central state management store for the SpeedyMeds application using Zustand.
  * @module stores/appDataStore
- * @see https://github.com/pmndrs/zustand - Zustand Documentation
- * @see hooks/useInitializeAppData - Hook responsible for populating this store.
- * @see types/index - Defines the data structures stored here.
+ *
+ * @purpose This store holds data that needs to be accessed or modified by multiple components
+ * across the application, such as user information, prescriptions, orders, and global loading/error states.
+ * Using a central store avoids prop drilling (passing data down through many component layers).
+ *
+ * @dependencies
+ * - Zustand (`create` function): The core library used to create the store.
+ * - Internal:
+ *   - `../types`: Provides the TypeScript definitions (`UserProfile`, `Prescription`, etc.) for the data stored.
+ *
+ * @key_concepts Zustand:
+ *   - **Store:** A single object containing the application's state and functions (actions) to update it.
+ *   - **`create`:** The primary function from Zustand used to build a store. It takes a setup function.
+ *   - **`set`:** A function provided *inside* the setup function. Actions use `set` to update the state immutably (meaning it creates a new state object instead of modifying the old one). `set` automatically merges the changes.
+ *   - **Hook (`useAppDataStore`):** Zustand generates a React hook (`useAppDataStore` in this case) from `create`. Components use this hook to access the store's state and actions.
+ *   - **Selectors:** When using the hook in a component, you typically provide a selector function (e.g., `state => state.userProfile`). This tells Zustand to only re-render the component if *that specific piece* of state changes, which is great for performance.
+ *
+ * @data_flow in this App:
+ *   1. **Fetching:** Data (like profile, prescriptions) is initially fetched using TanStack Query (React Query) within the `useInitializeAppData` custom hook.
+ *      *See: `../hooks/useInitializeAppData.ts`*
+ *   2. **Observing:** The `useInitializeAppData` hook monitors the status (loading, success, error) of those data fetches.
+ *   3. **Updating Store:** Based on the fetch status, `useInitializeAppData` calls the action functions defined *in this file* (e.g., `setPrescriptions`, `setError`, `setLoading`).
+ *   4. **State Change:** This Zustand store updates its internal state (`prescriptions`, `error`, `isLoading`, etc.).
+ *   5. **UI Update:** Components that are subscribed to this store via the `useAppDataStore` hook (and potentially using selectors) will automatically re-render if the relevant state slice has changed.
+ *
+ * @see {@link https://github.com/pmndrs/zustand | Zustand Documentation} - Official Zustand docs.
+ * @see {@link ../hooks/useInitializeAppData.ts | useInitializeAppData Hook} - Responsible for fetching data and populating this store.
+ * @see {@link ../types/index.ts | Project Type Definitions} - Defines the shapes of `UserProfile`, `Prescription`, etc.
  */
 
-import { create } from "zustand";
-// Import the TypeScript types for the data structures being stored.
+import { create } from "zustand"; // Import the main function from Zustand to create the store
+// Import the TypeScript types for the data structures we'll be storing.
+// Using specific types makes the store type-safe and easier to understand.
 import type {
   UserProfile,
   MedicationReminder,
@@ -38,96 +44,178 @@ import type {
 } from "../types";
 
 /**
- * @description Defines the structure (shape) of the state managed by this Zustand store.
- * It includes slices for different data types and associated metadata like loading/error states.
- * It also defines the signatures for the action functions used to modify the state.
+ * Defines the structure (the "shape") of the state managed by this Zustand store.
+ *
+ * @description This interface lists all the pieces of data (`userProfile`, `prescriptions`, etc.)
+ * and the functions (`setUserProfile`, `setLoading`, etc.) that will be available in the store.
+ * Exporting this interface allows other parts of the application (like tests) to understand
+ * the store's structure.
+ *
  * @interface AppDataState
  */
 export interface AppDataState {
-  // Add export keyword
   // --- State Slices ---
-  /** The currently logged-in user's profile information. Null if not loaded or error. */
+  // These properties hold the actual application data.
+
+  /**
+   * The profile information for the currently logged-in user.
+   * It's `null` initially and when no user is loaded or if there was an error fetching it.
+   * @type {UserProfile | null}
+   */
   userProfile: UserProfile | null;
-  /** An array of medication reminders for the user. */
+
+  /**
+   * An array containing the user's medication reminders.
+   * Starts as an empty array `[]`.
+   * @type {MedicationReminder[]}
+   */
   medicationReminders: MedicationReminder[];
-  /** An array of the user's prescriptions. */
+
+  /**
+   * An array containing the user's prescriptions.
+   * Starts as an empty array `[]`.
+   * @type {Prescription[]}
+   */
   prescriptions: Prescription[];
-  /** An array of the user's orders. */
+
+  /**
+   * An array containing the user's past and present orders.
+   * Starts as an empty array `[]`.
+   * @type {Order[]}
+   */
   orders: Order[];
 
   // --- Metadata ---
+  // These properties provide information *about* the state, like loading or error status.
+
   /**
-   * A boolean flag indicating if any of the initial core application data is currently being fetched.
-   * This is typically set to `true` initially and managed by the `useInitializeAppData` hook.
-   * Components can use this to display global loading indicators.
+   * A flag indicating if the essential application data (profile, prescriptions, etc.)
+   * is currently being fetched for the first time.
+   * Set to `true` initially, and managed by `setLoading` and `setError` actions,
+   * usually triggered by the `useInitializeAppData` hook.
+   * UI components can use this to show a global loading indicator.
+   * @type {boolean}
    */
   isLoading: boolean;
+
   /**
-   * Holds an Error object if any of the initial data fetches failed, otherwise null.
-   * Components can use this to display global error messages.
+   * Holds an `Error` object if fetching the initial application data failed.
+   * It's `null` if there's no error or if data is still loading.
+   * UI components can use this to show a global error message.
+   * @type {Error | null}
    */
   error: Error | null;
 
   // --- Actions (State Modifiers) ---
-  /** Action to update the user profile state slice. */
+  // These are functions defined within the store that are the *only* way to modify the state.
+  // They typically call the `set` function provided by Zustand.
+
+  /**
+   * Action to update the `userProfile` slice of the state.
+   * @param {UserProfile} profile - The new user profile data.
+   * @returns {void}
+   */
   setUserProfile: (profile: UserProfile) => void;
-  /** Action to update the medication reminders state slice. */
+
+  /**
+   * Action to update the `medicationReminders` slice of the state.
+   * @param {MedicationReminder[]} reminders - The new array of reminders.
+   * @returns {void}
+   */
   setMedicationReminders: (reminders: MedicationReminder[]) => void;
-  /** Action to update the prescriptions state slice. */
+
+  /**
+   * Action to update the `prescriptions` slice of the state.
+   * @param {Prescription[]} prescriptions - The new array of prescriptions.
+   * @returns {void}
+   */
   setPrescriptions: (prescriptions: Prescription[]) => void;
-  /** Action to update the orders state slice. */
+
+  /**
+   * Action to update the `orders` slice of the state.
+   * @param {Order[]} orders - The new array of orders.
+   * @returns {void}
+   */
   setOrders: (orders: Order[]) => void;
-  /** Action to explicitly set the global loading state. */
+
+  /**
+   * Action to explicitly set the global `isLoading` state.
+   * @param {boolean} loading - The new loading status.
+   * @returns {void}
+   */
   setLoading: (loading: boolean) => void;
-  /** Action to explicitly set or clear the global error state. */
+
+  /**
+   * Action to explicitly set or clear the global `error` state.
+   * Note: Setting an error implicitly sets `isLoading` to `false`.
+   * @param {Error | null} error - The `Error` object or `null` to clear the error.
+   * @returns {void}
+   */
   setError: (error: Error | null) => void;
 }
 
 /**
- * Creates the Zustand store for managing global application data.
+ * Creates the Zustand store instance for managing global application data.
  *
- * `create<AppDataState>((set) => ({ ... }))` initializes the store.
- *   - `<AppDataState>` provides TypeScript type safety for the store's state and actions.
- *   - `(set)`: The function passed to `create` receives the `set` function as an argument.
- *     The `set` function is used within actions to update the store's state. It merges
- *     the provided object with the existing state immutably.
- *   - `{ ... }`: The object returned defines the initial state of the store and the
- *     implementation of the action functions.
+ * @description This is where the store is actually created using Zustand's `create` function.
+ * - `create<AppDataState>`: We provide our `AppDataState` interface to `create` for TypeScript checking.
+ *   This ensures our initial state and actions match the defined structure.
+ * - `(set) => ({ ... })`: This is the "creator function". It receives `set` as an argument.
+ *   - `set`: The function provided by Zustand to update the state. You pass it an object
+ *     containing the state slices you want to change. It merges this object with the
+ *     current state immutably (creating a new state object).
+ *   - `{ ... }`: The object returned by the creator function defines:
+ *     1. **Initial State:** The starting values for all state properties (`userProfile: null`, `isLoading: true`, etc.).
+ *     2. **Action Implementations:** The actual code for each action function defined in `AppDataState`.
  *
- * @see https://github.com/pmndrs/zustand#first-create-a-store - Zustand `create` API
+ * The result of `create` is the custom hook (`useAppDataStore`) that components will use.
+ *
+ * @see {@link https://github.com/pmndrs/zustand#first-create-a-store | Zustand `create` API}
  */
 const useAppDataStore = create<AppDataState>((set) => ({
-  // --- Initial State ---
+  // --- Initial State Values ---
   userProfile: null, // Start with no user profile loaded
-  medicationReminders: [], // Start with empty arrays for lists
+  medicationReminders: [], // Start with empty lists
   prescriptions: [],
   orders: [],
-  isLoading: true, // Assume data is loading initially when the store is created
+  isLoading: true, // Assume data is loading when the app starts and the store is initialized
   error: null, // Start with no error
 
   // --- Action Implementations ---
-  // Each action calls the `set` function provided by Zustand to update state.
-  // Note: Individual data setters (`setUserProfile`, `setMedicationReminders`, etc.)
-  // only update their specific slice of the state. The global `isLoading` and `error`
-  // states are managed separately by the `setLoading` and `setError` actions,
-  // typically driven by the `useInitializeAppData` hook based on the overall fetch status.
+  // These functions define *how* the state is updated when an action is called.
+  // They all use the `set` function provided by the `create` call.
 
-  setUserProfile: (profile) => set({ userProfile: profile }),
+  /** Sets the user profile in the state */
+  setUserProfile: (profile) => set({ userProfile: profile }), // Only updates userProfile
 
+  /** Sets the medication reminders in the state */
   setMedicationReminders: (reminders) =>
-    set({ medicationReminders: reminders }), // Example: Just setting reminders
+    set({ medicationReminders: reminders }), // Only updates medicationReminders
 
-  setPrescriptions: (prescriptions) => set({ prescriptions: prescriptions }),
+  /** Sets the prescriptions in the state */
+  setPrescriptions: (prescriptions) => set({ prescriptions: prescriptions }), // Only updates prescriptions
 
-  setOrders: (orders) => set({ orders: orders }),
+  /** Sets the orders in the state */
+  setOrders: (orders) => set({ orders: orders }), // Only updates orders
 
-  // Action to specifically control the global loading flag.
-  setLoading: (loading) => set({ isLoading: loading }),
+  /**
+   * Sets the global loading state.
+   * Typically called by `useInitializeAppData` when fetching starts or finishes.
+   */
+  setLoading: (loading) => set({ isLoading: loading }), // Updates isLoading
 
-  // Action to specifically control the global error flag.
-  // Setting an error also implicitly sets isLoading to false.
-  setError: (error) => set({ error: error, isLoading: false }),
+  /**
+   * Sets the global error state.
+   * If an error occurs during initial data load, `useInitializeAppData` calls this.
+   * Setting an error also automatically sets `isLoading` to `false` because
+   * the loading process has effectively ended (even if unsuccessfully).
+   */
+  setError: (error) => set({ error: error, isLoading: false }), // Updates error AND isLoading
 }));
 
-// Export the custom hook generated by `create`. Components will import and use this hook.
+// Export the custom hook generated by `create`.
+// Components will import this hook to interact with the store:
+// `import useAppDataStore from './stores/appDataStore';`
+// `const prescriptions = useAppDataStore(state => state.prescriptions);`
+// `const setLoading = useAppDataStore(state => state.setLoading);`
 export default useAppDataStore;

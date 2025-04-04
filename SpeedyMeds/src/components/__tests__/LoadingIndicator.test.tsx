@@ -12,7 +12,9 @@ describe("LoadingIndicator", () => {
     render(<LoadingIndicator />);
 
     // Use findByText to wait for potential async updates
-    expect(await screen.findByText("Loading...")).toBeVisible();
+    await act(async () => {
+      expect(await screen.findByText("Loading...")).toBeVisible();
+    });
   });
 
   it("renders the activity indicator and a custom message", async () => {
@@ -21,7 +23,9 @@ describe("LoadingIndicator", () => {
     render(<LoadingIndicator message={customMessage} />);
 
     // Use findByText to wait for potential async updates
-    expect(await screen.findByText(customMessage)).toBeVisible();
+    await act(async () => {
+      expect(await screen.findByText(customMessage)).toBeVisible();
+    });
   });
 
   it("renders only the activity indicator when message is an empty string", async () => {
@@ -33,7 +37,10 @@ describe("LoadingIndicator", () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0)); // Allow microtasks to flush
     });
-    expect(screen.queryByText(/./)).toBeNull(); // Check for any text content
+    // Check for any text content after ensuring updates are flushed
+    await act(async () => {
+      expect(screen.queryByText(/./)).toBeNull();
+    });
 
     // We could add a testID to ActivityIndicator in the component if we needed to assert its presence explicitly
     // e.g., expect(await screen.findByTestId('loading-indicator-activity')).toBeVisible();

@@ -1,64 +1,102 @@
 /**
  * Jest Setup File for SpeedyMeds App
  *
- * This file is automatically run by Jest before executing the test suite
- * (as configured potentially in `jest.config.js` or `package.json` via `setupFilesAfterEnv`).
- * It's used for global test setup tasks.
+ * @file This file configures the global testing environment for Jest before any tests are run.
+ * It's automatically executed by Jest based on the configuration in `jest.config.js`
+ * or `package.json` (look for `setupFilesAfterEnv`).
  *
- * Primary Purpose Here:
- *   - Global test setup tasks.
- *   - Previously, this imported `@testing-library/jest-native/extend-expect`, but
- *     those matchers are now built into `@testing-library/react-native` v12.4+
- *     and this separate import is no longer needed (and the package is deprecated).
+ * @purpose We use this file to set up global mocks and configurations needed for
+ * our React Native tests to run correctly in the Node.js environment Jest uses.
+ * Native device features (like font loading, icons, native modules) don't exist
+ * in Node.js, so we need to provide simple "fake" versions (mocks) for them.
  *
- * Other Potential Uses (Add as needed):
- *   - Global mocks for native modules or external libraries (e.g., mocking `AsyncStorage`).
- *   - Setting up mock implementations for APIs (though often done per-test or per-suite).
- *   - Configuring test utilities.
- *
- * @see https://jestjs.io/docs/configuration#setupfilesafterenv-array
- * @see https://callstack.github.io/react-native-testing-library/docs/migration/jest-matchers - RNTL Jest Matchers Migration Guide
- * @see docs/setup/testing-config.md - Project's testing setup documentation.
+ * @see {@link https://jestjs.io/docs/configuration#setupfilesafterenv-array | Jest setupFilesAfterEnv Config}
+ * @see {@link https://callstack.github.io/react-native-testing-library/docs/migration/jest-matchers | RNTL Jest Matchers Migration Guide} - Explains why `@testing-library/jest-native/extend-expect` is no longer needed.
+ * @see {@link ./docs/setup/testing-config.md | Project Testing Setup Documentation} - More details on this project's testing strategy.
  */
 
-// No longer needed as of @testing-library/react-native v12.4+
+// --- Deprecated Import ---
+// The `extend-expect` import from `@testing-library/jest-native` used to add helpful
+// matchers like `toBeVisible()`. However, these are now included directly in
+// `@testing-library/react-native` (since v12.4+), so this separate package is deprecated.
 // import "@testing-library/jest-native/extend-expect";
 
-// --- Mocks ---
+// --- Global Mocks ---
+// `jest.mock(moduleName, factory)` tells Jest: "Whenever code asks for `moduleName`,
+// don't give it the real module. Instead, give it the result of the `factory` function."
+// This is crucial for testing React Native components in Node.js.
 
-// Mock @expo/vector-icons
+/**
+ * Mock for `@expo/vector-icons`.
+ *
+ * @reason Vector icons rely on native font loading, which doesn't work in Jest's Node environment.
+ * Attempting to render real icons would cause errors.
+ * @strategy We replace all icon components (`MaterialCommunityIcons`, `Ionicons`, etc.)
+ * with a simple function component that renders nothing (`() => null`). This prevents
+ * errors and allows tests to run without worrying about actual icon rendering.
+ * We also mock the factory functions (`createIconSet`, etc.) used internally.
+ * @see {@link https://docs.expo.dev/guides/icons/ | Expo Vector Icons Guide}
+ */
 jest.mock("@expo/vector-icons", () => {
-  // Return null for all icons to avoid font loading issues in tests
+  // A simple React component that renders nothing.
   const MockIcon = () => null;
   return {
+    // Mock specific icon sets used in the app
     MaterialCommunityIcons: MockIcon,
-    Ionicons: MockIcon, // Add other icon sets used if necessary
-    // Add other icon sets as needed (e.g., FontAwesome, Entypo)
-    createIconSet: () => MockIcon, // Mock the factory function too
+    Ionicons: MockIcon,
+    // Add mocks for any other icon sets you might use (e.g., FontAwesome, Entypo)
+
+    // Mock the functions used to create icon sets
+    createIconSet: () => MockIcon,
     createIconSetFromIcoMoon: () => MockIcon,
     createIconSetFromFontello: () => MockIcon,
   };
 });
 
-// Mock expo-font
+/**
+ * Mock for `expo-font`.
+ *
+ * @reason Loading custom fonts (`.ttf`, `.otf`) is a native device feature.
+ * The `expo-font` library manages this, but its functions (`loadAsync`, `useFonts`)
+ * will fail in the Jest environment.
+ * @strategy We mock the core functions:
+ *   - `loadAsync`: Mocked to return a resolved promise immediately, simulating successful font loading.
+ *   - `isLoaded`: Mocked to always return `true`.
+ *   - `useFonts`: Mocked as a Jest function (`jest.fn()`) that returns `[true, null]`.
+ *     This mimics the hook successfully loading fonts and having no error.
+ * @see {@link https://docs.expo.dev/versions/latest/sdk/font/ | Expo Font Documentation}
+ */
 jest.mock("expo-font", () => ({
-  loadAsync: jest.fn().mockResolvedValue(undefined), // Mock loadAsync to resolve immediately
-  isLoaded: jest.fn().mockReturnValue(true), // Mock isLoaded to always return true
-  // Add mocks for other functions if needed, e.g., useFonts
-  useFonts: jest.fn().mockReturnValue([true, null]), // Mock useFonts hook
+  /** Mock implementation of expo-font's loadAsync function. */
+  loadAsync: jest.fn().mockResolvedValue(undefined), // Simulate fonts loaded successfully
+  /** Mock implementation of expo-font's isLoaded function. */
+  isLoaded: jest.fn().mockReturnValue(true), // Assume fonts are always loaded
+  /** Mock implementation of the useFonts hook. Returns [loaded, error]. */
+  useFonts: jest.fn().mockReturnValue([true, null]), // Simulate hook returning loaded state
 }));
 
 // --- Optional: Add other global setup below ---
 
 // Example: Mocking a native module like AsyncStorage (if needed globally)
+// Useful if many tests interact with device storage.
 // jest.mock('@react-native-async-storage/async-storage', () =>
 //   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 // );
 
-// Example: Mocking react-native-gesture-handler (often needed)
-// require('react-native-gesture-handler/jestSetup');
+// Example: Mocking react-native-gesture-handler (often needed for navigation/interactions)
+// Gesture Handler relies heavily on native code.
+// require('react-native-gesture-handler/jestSetup'); // Provides standard mocks
 
-// Example: Silence specific console warnings/errors during tests (use with caution)
-// jest.spyOn(console, 'warn').mockImplementation(() => {});
+// Example: Silence specific console warnings/errors during tests (use with caution!)
+// This can hide potentially useful warnings. Only use if a specific warning is known
+// to be irrelevant noise in the test environment.
+// jest.spyOn(console, 'warn').mockImplementation((message) => {
+//   if (message.includes("Specific warning text to ignore")) {
+//     return; // Ignore this specific warning
+//   }
+//   // Log other warnings
+//   console.warn(message);
+// });
 
-console.log("Jest setup file executed.");
+// Log to console to confirm this setup file ran. Useful for debugging setup issues.
+console.log("✅ Jest setup file executed successfully.");

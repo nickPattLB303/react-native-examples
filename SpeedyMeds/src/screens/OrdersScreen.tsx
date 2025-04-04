@@ -1,184 +1,225 @@
 /**
  * Orders List Screen Component
  *
- * This screen displays a list of the user's past and current orders.
- * It serves as the entry point within the Orders navigation stack.
- * Users can tap on an order in the list to navigate to the `OrderDetailScreen`.
- *
+ * @file This file defines the React component for the main "Orders" list screen.
  * @module screens/OrdersScreen
- * @see navigation/OrdersStackNavigator - The navigator containing this screen.
- * @see screens/OrderDetailScreen - The screen navigated to from here.
- * @see stores/appDataStore - The Zustand store providing the orders data.
+ *
+ * @purpose Displays a list of the user's past and current medication orders.
+ * It fetches order data from the global Zustand store and handles loading, error,
+ * and empty states. Users can tap on an order to navigate to the `OrderDetailScreen`.
+ * This screen acts as the root screen within the `OrdersStackNavigator`.
+ *
+ * @dependencies
+ * - React: For component logic.
+ * - React Native (`FlatList`): For efficiently rendering the list of orders.
+ * - React Native Paper (`Button`, `Text`, `List`, `Divider`, `useTheme`): For UI elements.
+ * - @react-navigation/native-stack: For navigation prop types (`NativeStackScreenProps`).
+ * - Internal:
+ *   - `../navigation/types`: For stack-specific parameter list (`OrdersStackParamList`).
+ *   - `../theme/theme`: For `AppTheme` type definition.
+ *   - `../stores/appDataStore`: Hook (`useAppDataStore`) to access global order state, loading/error status.
+ *   - `../types`: For `Order` type definition.
+ *   - `../components/LoadingIndicator`: Reusable loading component.
+ *   - `../components/ErrorDisplay`: Reusable error display component.
+ *   - `../components/ScreenContainer`: Reusable screen wrapper.
+ *
+ * @see {@link ../navigation/OrdersStackNavigator.tsx | Orders Stack Navigator}
+ * @see {@link ./OrderDetailScreen.tsx | Order Detail Screen}
+ * @see {@link ../stores/appDataStore.ts | App Data Store (Zustand)}
+ * @see {@link https://reactnavigation.org/docs/native-stack-navigator | React Navigation Native Stack Navigator}
+ * @see {@link https://reactnative.dev/docs/flatlist | React Native FlatList}
  */
 
 import React from "react";
-import { FlatList } from "react-native"; // Import FlatList for rendering lists
+import { FlatList, View } from "react-native"; // Core components for lists and layout
 // Import UI components from React Native Paper
 import { Button, Text, List, Divider, useTheme } from "react-native-paper";
-// Import navigation prop types, specifically for Native Stack screens
+// Import navigation prop types specifically for Native Stack screens
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 // Import the specific ParamList for the Orders stack from the central types file
+// This defines the routes and their parameters within this specific stack navigator.
 import { OrdersStackParamList } from "../navigation/types";
-// Import the AppTheme type for strong typing with styled-components and theme usage
+// Import the AppTheme type for strong typing when using theme properties
 import type { AppTheme } from "../theme/theme";
 // Import the hook to access the global application data store (Zustand)
 import useAppDataStore from "../stores/appDataStore";
-// Import the Order type
+// Import the Order type definition
 import type { Order } from "../types";
-// Import reusable components
-import LoadingIndicator from "../components/LoadingIndicator";
-import ErrorDisplay from "../components/ErrorDisplay";
-import ScreenContainer from "../components/ScreenContainer";
+// Import reusable custom components
+import LoadingIndicator from "../components/LoadingIndicator"; // Shows when loading
+import ErrorDisplay from "../components/ErrorDisplay"; // Shows on error
+import ScreenContainer from "../components/ScreenContainer"; // Consistent screen padding/background
 
 // ============================================================================
 // Navigation Props Type
 // ============================================================================
 
 /**
- * @description Defines the navigation props expected by the OrdersScreen.
- * Uses `NativeStackScreenProps` and specifies its place ('OrdersList') within the `OrdersStackParamList`.
- * This screen doesn't expect any parameters itself, but its `navigation` prop
- * can be used to navigate to other screens within the same stack (like 'OrderDetail').
+ * Defines the shape of the navigation props specifically for the OrdersScreen.
+ *
+ * @description This type uses `NativeStackScreenProps` because this screen lives inside
+ * a `NativeStackNavigator`. It's parameterized with `OrdersStackParamList` (listing all
+ * screens and their params within this stack) and `"OrdersList"` (the name of this specific screen).
+ * This provides type safety for the `navigation` and `route` props.
+ *
  * @typedef {NativeStackScreenProps<OrdersStackParamList, "OrdersList">} OrdersScreenProps
- * @property {object} navigation - The navigation object for performing navigation actions.
- * @property {object} route - The route object (contains key and name, no params expected here).
+ * @property navigation - The navigation object used to navigate to other screens in the stack (e.g., `OrderDetail`).
+ * @property route - The route object containing information about the current route (key, name). No params are expected for this list screen itself.
+ * @see {@link https://reactnavigation.org/docs/typescript/#type-checking-the-navigator | React Navigation: Type checking the navigator}
  */
 type OrdersScreenProps = NativeStackScreenProps<
   OrdersStackParamList,
-  "OrdersList" // This must match the screen name in the navigator and the key in the ParamList
+  "OrdersList" // This name must match the screen name defined in OrdersStackNavigator
 >;
 
 // ============================================================================
-// Orders Screen Component
+// Orders Screen Component Definition
 // ============================================================================
 
 /**
- * @description Screen component responsible for displaying a list of the user's orders.
- * It retrieves the orders list, loading status, and error status from the
- * global `useAppDataStore` (Zustand). It renders the list using `FlatList` and
- * allows navigation to the `OrderDetailScreen` for each order.
+ * The main functional component for the Orders list screen.
  *
- * @param {OrdersScreenProps} props - Component props provided by React Navigation,
- *        primarily used for the `navigation` object.
- * @returns {React.ReactElement} The rendered Orders list screen UI.
+ * @description Fetches and displays a list of user orders from the global Zustand store.
+ * Handles loading, error, and empty states. Allows navigation to the detail view for each order.
+ *
+ * @param {OrdersScreenProps} props - Component props provided by React Navigation.
+ *        Destructures the `navigation` object for triggering navigation actions.
+ * @returns {React.ReactElement} The rendered UI for the Orders list screen.
  */
-const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
-  // Access the global state from the Zustand store.
-  // Select only the slices needed for this screen using individual selectors
-  // to prevent unnecessary re-renders.
+const OrdersScreen: React.FC<OrdersScreenProps> = ({
+  navigation, // Destructure the navigation object from props
+}): React.ReactElement => {
+  // --- State and Theme Access ---
+
+  // Access global state slices from the Zustand store using selectors for performance.
   const orders = useAppDataStore((state) => state.orders);
   const isLoading = useAppDataStore((state) => state.isLoading);
   const error = useAppDataStore((state) => state.error);
 
-  // Access the theme object.
+  // Access the theme object for styling.
   const theme = useTheme<AppTheme>();
 
+  // --- Navigation Handler ---
+
   /**
-   * @description Handles navigation to the OrderDetail screen when an order item is pressed.
-   * It uses the `navigation.navigate` method provided by the `navigation` prop
-   * (which comes from the NativeStackScreenProps).
-   * @param {string} orderId - The unique ID of the order to navigate to.
+   * Navigates to the OrderDetail screen, passing the selected order's ID.
+   *
+   * @function handleNavigateToDetail
+   * @param {string} orderId - The unique ID of the order to display details for.
    */
-  const handleNavigateToDetail = (orderId: string) => {
-    // Navigate to the 'OrderDetail' screen within the *same* OrdersStack.
-    // Pass the required `orderId` as a parameter in the second argument object.
+  const handleNavigateToDetail = (orderId: string): void => {
+    // Use the navigation object provided by the Stack Navigator.
+    // Navigate to the 'OrderDetail' screen (defined within the same OrdersStack).
+    // Pass the required `orderId` as a route parameter.
     navigation.navigate("OrderDetail", { orderId: orderId });
   };
 
+  // --- List Item Renderer ---
+
   /**
-   * @description Renders a single order item within the FlatList.
-   * Uses React Native Paper's List.Item for consistent styling.
-   * @see https://callstack.github.io/react-native-paper/docs/components/List/ListItem/
-   * @param {object} props - Props containing the item data.
-   * @param {Order} props.item - The order data object for the current row.
-   * @returns {React.ReactElement} The rendered list item component.
+   * Renders a single order item component for the FlatList.
+   *
+   * @function renderOrderItem
+   * @param {object} listItemProps - The props provided by FlatList for each item.
+   * @param {Order} listItemProps.item - The data object for the current order.
+   * @returns {React.ReactElement} A JSX element representing one row in the order list.
+   * @see {@link https://reactnative.dev/docs/flatlist#renderitem | FlatList renderItem prop}
+   * @see {@link https://callstack.github.io/react-native-paper/docs/components/List/ListItem/ | Paper List.Item}
    */
-  const renderOrderItem = ({ item }: { item: Order }): React.ReactElement => (
+  const renderOrderItem = ({
+    item, // Destructure the 'item' data
+  }: {
+    item: Order; // Explicitly type the 'item'
+  }): React.ReactElement => (
     <List.Item
-      title={`${item.drugName} ${item.dosage}`} // Combine drug name and dosage for the title
-      description={`Order #${item.orderNumber} - ${item.status}`} // Show order number and status
-      // Display the order date, formatted nicely
-      // Note: Consider using a date formatting library like `date-fns` or `moment` for complex formatting
+      // Display drug name and dosage as the main title
+      title={`${item.drugName} ${item.dosage}`}
+      // Display order number and status as the description
+      description={`Order #${item.orderNumber} - ${item.status}`}
+      // Display the formatted order date on the right side
       right={() => (
         <Text
           variant="bodySmall"
-          style={{ alignSelf: "center", marginRight: 8 }}
+          style={{ alignSelf: "center", marginRight: 8 }} // Align vertically and add margin
         >
+          {/* Format the date. Consider a library like date-fns for more complex needs. */}
           {item.orderDate.toLocaleDateString()}
         </Text>
       )}
-      // Navigate to detail screen on press, passing the order ID
+      // Call the navigation handler when the item is pressed
       onPress={() => handleNavigateToDetail(item.id)}
-      // Add a left icon for visual flair (optional)
-      left={(props) => <List.Icon {...props} icon="receipt" />} // Use 'receipt' or similar icon
-      accessibilityLabel={`Order for ${item.drugName}, ${item.dosage}. Order number ${item.orderNumber}. Status: ${item.status}. Date: ${item.orderDate.toLocaleDateString()}. Press to view details.`}
+      // Add a leading icon for visual context
+      left={(props) => <List.Icon {...props} icon="receipt" />} // Use 'receipt' or similar
+      // Accessibility: Provide a comprehensive label for screen readers
+      accessibilityLabel={`Order for ${item.drugName}, ${
+        item.dosage
+      }. Order number ${
+        item.orderNumber
+      }. Status: ${item.status}. Date: ${item.orderDate.toLocaleDateString()}. Press to view details.`}
     />
   );
 
-  // --- Loading State ---
-  // Show loading indicator only during initial load (when orders array is empty)
+  // --- Conditional Rendering Logic ---
+
+  // 1. Loading State: Show indicator only during initial load (when orders list is empty).
   if (isLoading && orders.length === 0) {
-    // Use the reusable LoadingIndicator component
     return <LoadingIndicator message="Loading Orders..." />;
   }
 
-  // --- Error State ---
+  // 2. Error State: Show error display if fetching failed.
   if (error) {
-    // Use the reusable ErrorDisplay component
-    // TODO: Implement retry mechanism by passing a retryAction prop
+    // TODO: Implement a retry mechanism via retryAction prop
     return <ErrorDisplay error={error} />;
   }
 
-  // --- Empty State ---
-  // Handle the case where loading is finished, no error, but no orders exist.
+  // 3. Empty State: Show message if loading is done, no error, but no orders found.
   if (!isLoading && orders.length === 0) {
-    // Use ScreenContainer for consistent padding/background
-    // Center content using inline styles for now
     return (
       <ScreenContainer>
-        <Text
-          variant="titleMedium"
-          style={{ textAlign: "center", alignSelf: "center" }}
+        {/* Center the text elements */}
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          No Orders Found
-        </Text>
-        <Text
-          variant="bodyMedium"
-          style={{
-            marginTop: theme.customSpacing.s,
-            textAlign: "center",
-            alignSelf: "center",
-          }}
-        >
-          You haven't placed any orders yet.
-        </Text>
+          <Text variant="titleMedium" style={{ textAlign: "center" }}>
+            No Orders Found
+          </Text>
+          <Text
+            variant="bodyMedium"
+            style={{
+              marginTop: theme.customSpacing.s,
+              textAlign: "center",
+              color: theme.colors.onSurfaceVariant, // Use muted color
+            }}
+          >
+            You haven't placed any orders yet.
+          </Text>
+        </View>
       </ScreenContainer>
     );
   }
 
-  // --- Success State (Render Order List) ---
+  // --- Success State: Render Order List ---
   return (
     <ScreenContainer>
-      {/* Use FlatList for efficient rendering of lists.
-          It only renders items currently visible on screen. */}
-      {/* @see https://reactnative.dev/docs/flatlist */}
+      {/* FlatList efficiently renders the list of orders */}
+      {/* See: https://reactnative.dev/docs/flatlist */}
       <FlatList
-        data={orders} // The array of order data from the Zustand store
-        renderItem={renderOrderItem} // Function to render each item in the list
-        keyExtractor={(item) => item.id} // Function to extract a unique key for each item (order ID is perfect)
-        // Add dividers between items for better visual separation
-        ItemSeparatorComponent={() => <Divider />}
-        // Optional: Add pull-to-refresh functionality later
-        // onRefresh={handleRefresh} // Define a handleRefresh function
-        // refreshing={isRefreshing} // Control the refresh indicator state
+        data={orders} // The array of order data from Zustand
+        renderItem={renderOrderItem} // Function to render each order row
+        keyExtractor={(item) => item.id} // Use unique order ID as the key
+        ItemSeparatorComponent={() => <Divider />} // Show dividers between items
+        contentContainerStyle={{ paddingBottom: theme.customSpacing.l }} // Add padding at the bottom of the list
+        // Optional: Add pull-to-refresh later
+        // onRefresh={handleRefresh}
+        // refreshing={isRefreshing}
       />
 
-      {/* Example Button (kept from previous version, might be removed in final design) */}
-      {/* This button demonstrates navigating to a specific hardcoded order */}
+      {/* Test Button (Example - Can be removed) */}
+      {/* Demonstrates navigating with a hardcoded ID */}
       <Button
         mode="contained"
         onPress={() => handleNavigateToDetail("12345")} // Navigate to a dummy ID
-        style={{ margin: theme.customSpacing.m }} // Add margin around the button
+        style={{ margin: theme.customSpacing.m }} // Add margin
         accessibilityLabel="View details for hardcoded test order 12345"
       >
         View Hardcoded Order 12345 (Test)
@@ -187,4 +228,4 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ navigation }) => {
   );
 };
 
-export default OrdersScreen;
+export default OrdersScreen; // Export the component for use in the navigator

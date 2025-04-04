@@ -1,32 +1,52 @@
 /**
  * Home Screen (Dashboard) Component
  *
- * This is the main landing screen of the application after the user is authenticated (implicitly, in this version).
- * It typically displays summary information, quick actions, or serves as a central navigation point.
- * Currently, it displays a welcome message and provides controls to change the application theme.
- *
+ * @file This file defines the React component for the main "Home" or dashboard screen.
  * @module screens/HomeScreen
- * @see screens/AccountScreen - Example of another screen using similar patterns.
- * @see context/ThemeContext - Context providing theme state and functions.
+ *
+ * @purpose Serves as the primary landing screen after app launch (assuming user is logged in).
+ * It displays a personalized welcome message, summary information (like balance),
+ * quick navigation cards to other sections, medication reminders, and theme controls.
+ *
+ * @dependencies
+ * - React: For component logic.
+ * - React Native (`View`, `ScrollView`): For layout and scrolling.
+ * - React Native Paper (`Text`, `SegmentedButtons`, `Card`, `List`, `Avatar`): For UI elements.
+ * - Internal:
+ *   - `../context/ThemeContext`: Hook (`useThemeContext`) to access and modify theme state.
+ *   - `../types`: For `ThemePreference`, `MedicationReminder` types.
+ *   - `../navigation/types`: For navigation prop types (`BottomTabScreenProps`, `BottomTabParamList`).
+ *   - `../components/ScreenContainer`: Reusable screen wrapper.
+ *   - `../components/LoadingIndicator`: Reusable loading component.
+ *   - `../components/ErrorDisplay`: Reusable error display component.
+ *   - `../stores/appDataStore`: Hook (`useAppDataStore`) to access global state (profile, reminders, loading/error).
+ *
+ * @see {@link ../context/ThemeContext.ts | Theme Context}
+ * @see {@link ../stores/appDataStore.ts | App Data Store (Zustand)}
  */
 
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native"; // Core layout components
 // Import UI components from React Native Paper
-import { Text, SegmentedButtons, Card, List, Avatar } from "react-native-paper";
+import {
+  Text, // For displaying text
+  SegmentedButtons, // For theme selection (Light/Dark/System)
+  Card, // Used for balance display and navigation links
+  List, // Used for displaying reminders
+  Avatar, // Used for icons within Cards and List items
+} from "react-native-paper";
 // Import the custom hook to access the theme context
 import { useThemeContext } from "../context/ThemeContext";
-// Import the type definition for theme preference values
+// Import the type definition for theme preference values ('light', 'dark', 'system')
 import type { ThemePreference } from "../context/ThemeContext";
-import type { MedicationReminder } from "../types"; // Import reminder type
-// Import the AppTheme type for strong typing with styled-components and theme usage
-// Import navigation prop types (even if not used directly, good practice for screen components)
+import type { MedicationReminder } from "../types"; // Type for reminder data structure
+// Import navigation prop types for type safety
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import type { BottomTabParamList } from "../navigation/types";
-// Import reusable components
-import ScreenContainer from "../components/ScreenContainer";
-import LoadingIndicator from "../components/LoadingIndicator";
-import ErrorDisplay from "../components/ErrorDisplay";
+import type { BottomTabParamList } from "../navigation/types"; // Defines parameters for each tab
+// Import reusable custom components
+import ScreenContainer from "../components/ScreenContainer"; // Consistent screen padding/background
+import LoadingIndicator from "../components/LoadingIndicator"; // Shows when loading
+import ErrorDisplay from "../components/ErrorDisplay"; // Shows on error
 // Import the hook to access the global application data store (Zustand)
 import useAppDataStore from "../stores/appDataStore";
 
@@ -35,104 +55,105 @@ import useAppDataStore from "../stores/appDataStore";
 // ============================================================================
 
 /**
- * @description Defines the navigation props expected by the HomeScreen.
- * Uses `BottomTabScreenProps` specific to its position within the `MainTabNavigator`.
+ * Defines the shape of the navigation props specifically for the HomeScreen.
+ *
+ * @description Ensures type safety when accessing `navigation` or `route` props
+ * provided by the BottomTabNavigator.
  * @typedef {BottomTabScreenProps<BottomTabParamList, "Home">} HomeScreenProps
+ * @see {@link https://reactnavigation.org/docs/typescript/#type-checking-screens | React Navigation: Type checking screens}
  */
 type HomeScreenProps = BottomTabScreenProps<BottomTabParamList, "Home">;
 
 // ============================================================================
-// Styled Components
+// Home Screen Component Definition
 // ============================================================================
 
 /**
- * @description A styled `View` component serving as the main container for the screen content.
- * It ensures the container takes up the full screen height (`flex: 1`), centers its children
- * both horizontally (`align-items: center`) and vertically (`justify-content: center`),
- * applies standard padding from the theme, and sets the background color based on the theme.
+ * The main functional component for the Home screen (Dashboard).
  *
- * Note: The explicit `{ theme: AppTheme }` typing for the `theme` prop within the template literal
- * is a robust way to ensure TypeScript provides correct autocompletion and type checking,
- * even if global `styled-components` theme typing (`styled.d.ts`) is set up.
- */
-
-// ============================================================================
-// Home Screen Component
-// ============================================================================
-
-/**
- * @description The main dashboard/home screen component. Displays user info,
- * balance, navigation cards, reminders, and theme controls.
- * Fetches data from the global Zustand store.
+ * @description Displays a welcome message, summary cards (balance, navigation),
+ * a list of medication reminders, and theme selection controls. It fetches required data
+ * (user profile, reminders, loading/error state) from the global `useAppDataStore` and
+ * theme information from `useThemeContext`. Handles loading and error states.
  *
  * @param {HomeScreenProps} props - Navigation props provided by React Navigation.
- *        Currently unused but included for completeness and future potential use.
- * @returns {React.ReactElement} The rendered Home screen UI.
+ *        Specifically uses `props.navigation` for navigating when cards are pressed.
+ * @returns {React.ReactElement} The rendered UI for the Home screen.
  */
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-  // Destructure values from the theme context using the custom hook.
-  const { themePreference, setThemePreference, theme } = useThemeContext(); // Get theme from context
-  // Fetch required data slices from Zustand store
+const HomeScreen: React.FC<HomeScreenProps> = ({
+  navigation, // Destructure navigation prop for use
+}): React.ReactElement => {
+  // --- State and Context Access ---
+
+  // Get theme state and functions from the ThemeContext
+  const { themePreference, setThemePreference, theme } = useThemeContext();
+
+  // Get required data slices from the global Zustand store using selectors
+  // Using selectors ensures the component only re-renders if these specific slices change.
   const userProfile = useAppDataStore((state) => state.userProfile);
-  const reminders = useAppDataStore((state) => state.medicationReminders);
+  const reminders = useAppDataStore((state) => state.medicationReminders); // Correct state slice name
   const isLoading = useAppDataStore((state) => state.isLoading);
   const error = useAppDataStore((state) => state.error);
 
-  // --- Handle Loading and Error States ---
+  // --- Conditional Rendering: Loading and Error States ---
+
+  // Show loading indicator only on initial load (when profile isn't available yet)
   if (isLoading && !userProfile) {
-    // Show loading indicator only on initial load when profile isn't available yet
     return <LoadingIndicator message="Loading Dashboard..." />;
   }
 
+  // Show error display if fetching data failed
   if (error) {
-    // Show error display if fetching failed
-    // TODO: Add retry mechanism
+    // TODO: Implement a retry mechanism by passing a `retryAction` prop
     return <ErrorDisplay error={error} />;
   }
 
-  // --- Render Dashboard Content ---
+  // --- Success State: Render Dashboard ---
+  // Assumes userProfile is loaded if we reach this point without loading/error
   return (
     <ScreenContainer>
+      {/* Use ScrollView to allow content to scroll if it exceeds screen height */}
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Welcome Message */}
         <Text
-          variant="headlineMedium"
-          style={{ marginBottom: theme.customSpacing.s }}
+          variant="headlineMedium" // Use semantic typography variant
+          style={{ marginBottom: theme.customSpacing.s }} // Add space below heading
         >
+          {/* Display user's first name, fallback to "User" if profile is somehow null */}
           Welcome back, {userProfile?.firstName ?? "User"}!
         </Text>
 
-        {/* Balance Display (Placeholder) */}
+        {/* Balance Display Card (Placeholder Data) */}
         <Card
-          mode="elevated"
-          style={{ marginBottom: theme.customSpacing.m }}
-          accessibilityLabel="Current account balance: $123.45" // Placeholder value
+          mode="elevated" // Add shadow elevation
+          style={{ marginBottom: theme.customSpacing.m }} // Space below card
+          // Accessibility: Announce the purpose and content of the card
+          accessibilityLabel="Current account balance: $123.45" // Hardcoded placeholder value
         >
           <Card.Title
             title="Current Balance"
-            subtitle="$123.45" // Placeholder value
+            subtitle="$123.45" // Hardcoded placeholder value
+            // Add an icon to the left of the title/subtitle
             left={(props) => <Avatar.Icon {...props} icon="wallet" />}
           />
         </Card>
 
-        {/**
-         * @description Section displaying quick navigation cards.
-         * Uses Paper `Card` components arranged in rows.
-         * TODO: Implement navigation for Delivery and Resources cards.
-         */}
+        {/* Quick Navigation Cards Section */}
+        {/* Row 1: Prescriptions & Orders */}
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: theme.customSpacing.m,
+            flexDirection: "row", // Arrange cards horizontally
+            justifyContent: "space-between", // Distribute space between cards
+            marginBottom: theme.customSpacing.m, // Space below the row
           }}
         >
+          {/* Prescriptions Card */}
           <Card
-            mode="outlined"
-            style={{ flex: 1, marginRight: theme.customSpacing.xs }}
-            onPress={() => navigation.navigate("Prescriptions")} // Navigate to Prescriptions tab
-            accessibilityRole="button"
-            accessibilityLabel="Navigate to Prescriptions screen"
+            mode="outlined" // Use outlined style for navigation cards
+            style={{ flex: 1, marginRight: theme.customSpacing.xs }} // Take up half space, add right margin
+            onPress={() => navigation.navigate("Prescriptions")} // Navigate on press
+            accessibilityRole="button" // Indicate it's interactive
+            accessibilityLabel="Navigate to Prescriptions screen" // Clear label for screen readers
           >
             <Card.Content style={{ alignItems: "center" }}>
               <Avatar.Icon size={40} icon="pill" />
@@ -144,10 +165,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               </Text>
             </Card.Content>
           </Card>
+          {/* Orders Card */}
           <Card
             mode="outlined"
-            style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
-            onPress={() => navigation.navigate("Orders")} // Navigate to Orders tab
+            style={{ flex: 1, marginLeft: theme.customSpacing.xs }} // Take up half space, add left margin
+            onPress={() => navigation.navigate("Orders")} // Navigate on press
             accessibilityRole="button"
             accessibilityLabel="Navigate to Orders screen"
           >
@@ -162,18 +184,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </Card.Content>
           </Card>
         </View>
+        {/* Row 2: Delivery & Resources (Placeholders) */}
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginBottom: theme.customSpacing.l,
+            marginBottom: theme.customSpacing.l, // Larger margin below second row
           }}
         >
+          {/* Delivery Card (Placeholder) */}
           <Card
             mode="outlined"
             style={{ flex: 1, marginRight: theme.customSpacing.xs }}
-            // TODO: Add onPress navigation when Delivery screen exists
+            // onPress={() => { /* TODO: Navigate to Delivery */ }} // No action yet
             accessibilityRole="button"
+            // Indicate that this feature is not yet implemented for accessibility
             accessibilityLabel="Navigate to Delivery screen (Not implemented)"
           >
             <Card.Content style={{ alignItems: "center" }}>
@@ -186,10 +211,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               </Text>
             </Card.Content>
           </Card>
+          {/* Resources Card (Placeholder) */}
           <Card
             mode="outlined"
             style={{ flex: 1, marginLeft: theme.customSpacing.xs }}
-            // TODO: Add onPress navigation when Resources screen exists
+            // onPress={() => { /* TODO: Navigate to Resources */ }} // No action yet
             accessibilityRole="button"
             accessibilityLabel="Navigate to Resources screen (Not implemented)"
           >
@@ -205,27 +231,29 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           </Card>
         </View>
 
-        {/**
-         * @description Section displaying medication reminders.
-         * Maps over the `reminders` array from the store and renders `List.Item` for each.
-         * Shows an empty state message if no reminders are available.
-         */}
+        {/* Medication Reminders Section */}
         <List.Section title="Medication Reminders">
+          {/* Check if there are any reminders */}
           {reminders.length > 0 ? (
+            // If yes, map over them and render a List.Item for each
             reminders.map((reminder: MedicationReminder) => (
               <List.Item
-                key={reminder.id}
-                title={reminder.name} // Use the correct property 'name'
-                description={`Time: ${reminder.time}`} // Use the correct property 'time'
+                key={reminder.id} // Unique key for each list item
+                title={reminder.name} // Display reminder name
+                description={`Time: ${reminder.time}`} // Display reminder time
+                // Add an icon to the left
                 left={(props) => <List.Icon {...props} icon="alarm-check" />}
+                // Accessibility label for the reminder item
                 accessibilityLabel={`Medication reminder: ${reminder.name}, Time: ${reminder.time}`}
               />
             ))
           ) : (
+            // If no reminders, display a message
             <Text
               style={{
-                paddingLeft: theme.customSpacing.m,
-                fontStyle: "italic",
+                paddingLeft: theme.customSpacing.m, // Indent text slightly
+                fontStyle: "italic", // Italicize for emphasis
+                color: theme.colors.onSurfaceVariant, // Use a muted color
               }}
             >
               No reminders set.
@@ -233,18 +261,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           )}
         </List.Section>
 
-        {/* Theme selection buttons (Kept at the bottom for now) */}
+        {/* Theme Selection Controls */}
+        {/* See: https://callstack.github.io/react-native-paper/docs/components/SegmentedButtons/ */}
         <SegmentedButtons
-          value={themePreference}
-          onValueChange={(value) =>
-            setThemePreference(value as ThemePreference)
+          value={themePreference} // Controlled component: value reflects current state
+          // Update the theme preference state in the context when a button is selected
+          onValueChange={
+            (value) => setThemePreference(value as ThemePreference) // Cast value to ThemePreference type
           }
+          // Define the buttons to display
           buttons={[
             {
-              value: "light",
-              label: "Light",
-              icon: "brightness-5",
-              accessibilityLabel: "Set light theme",
+              value: "light", // Value passed to onValueChange
+              label: "Light", // Text displayed on the button
+              icon: "brightness-5", // Icon name (MaterialCommunityIcons)
+              accessibilityLabel: "Set light theme", // Label for screen readers
             },
             {
               value: "dark",
@@ -256,12 +287,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               value: "system",
               label: "System",
               icon: "brightness-auto",
-              accessibilityLabel: "Use system theme setting",
+              accessibilityLabel: "Use system theme setting", // Updated, clearer label
             },
           ]}
           style={{
-            marginTop: theme.customSpacing.l,
-            marginBottom: theme.customSpacing.m,
+            marginTop: theme.customSpacing.l, // Add space above buttons
+            marginBottom: theme.customSpacing.m, // Add space below buttons
           }}
         />
       </ScrollView>
@@ -269,4 +300,4 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default HomeScreen; // Export the component for use in the navigator
