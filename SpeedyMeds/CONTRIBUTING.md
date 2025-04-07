@@ -1,52 +1,53 @@
-# Contributing to SpeedyMeds
+# Contributing to Your SpeedyMeds Group Project
 
-Welcome, contributors! We're excited to have you participate in building the SpeedyMeds application as part of the React Native training course. This project is designed as a learning experience, and contributing is a key part of that process. Following these guidelines helps ensure a smooth, effective, and collaborative learning environment for everyone.
+Welcome, team! This guide outlines how you'll contribute to the SpeedyMeds application within **your assigned group's dedicated repository fork**. Following these steps ensures everyone can work together effectively and learn standard development practices.
+
+**Remember:** You are working within a copy (a fork) of the main template repository, specifically created for your training group. All your work (branches, commits, Pull Requests) will happen **inside this group repository**.
 
 ## Code of Conduct
 
 Please ensure all interactions (comments, PRs, discussions) are respectful, constructive, and collaborative. We aim for a positive learning environment where everyone feels comfortable asking questions and providing feedback.
 
-## Getting Started
+## Getting Started: Your Group Repository
 
-1.  **Complete Environment Setup:** Before writing any code, ensure you have meticulously followed all the setup steps outlined in the main [README.md](./README.md) and the detailed **[SETUP.md](./SETUP.md)**. A correct setup prevents many common issues.
-2.  **Understand the Workflow:** Familiarize yourself with the **GitHub Flow** process described below. This is a standard workflow used in many development teams.
-3.  **Check Issues & Roadmap:**
-    - Look at the project's [GitHub Issues]([Your Repository URL]/issues) `<!-- TODO: Replace [Your Repository URL] with the actual repo URL -->` for available tasks, bugs, or features to work on.
-    - Review the [ROADMAP.md](./ROADMAP.md) to understand the planned features and project phases.
-    - **Claim an Issue:** If you want to work on an existing issue, please leave a comment indicating your intention to prevent duplicated effort.
-    - **Propose New Work:** If you plan to work on something not listed (a new feature idea, a refactor), please **create an issue first** to discuss it with the instructor(s) and ensure it aligns with the project goals.
+1.  **Clone Your Group Repository:** Your instructor will provide the URL for your group's specific fork (e.g., `SpeedyMeds-Group-Apr`). Clone this repository to your local machine. **Do not clone the main template repository.**
+    ```bash
+    # Example: Replace with YOUR group's actual URL
+    git clone <your_group_repository_url>
+    cd <your_group_repository_directory>
+    ```
+2.  **Complete Environment Setup:** Before writing code, ensure you've followed the setup steps in `SETUP.md` within your cloned group repository. A correct setup prevents many common issues.
+3.  **Understand the Workflow:** Familiarize yourself with the branching and Pull Request process described below. This simulates a common team workflow.
+4.  **Check for Tasks:** Your instructor will likely assign tasks or features. Coordinate with your instructor and teammates on who is working on what (e.g., using course communication channels or potentially GitHub Issues *within your group repository* if enabled).
 
-## Branching Strategy (GitHub Flow)
+## Branching Strategy (Within Your Group Repository)
 
-We use a simple GitHub Flow approach, which is great for projects with frequent releases or continuous deployment (and good for learning).
+We use a simple feature branching workflow within your group's repository.
 
-1.  **Sync `main` Branch:** Before starting any new work, always make sure your local `main` branch is up-to-date with the remote repository's `main` branch.
-
+1.  **Sync `main` Branch:** Before starting new work, ensure your local `main` branch (which contains the group's latest integrated code) is up-to-date with the `main` branch on GitHub *in your group repository*.
     ```bash
     # Switch to your local main branch
     git checkout main
 
-    # Pull the latest changes from the remote 'origin' repository
+    # Pull the latest changes from your group repository's main branch
+    # 'origin' should point to your group fork by default when you clone it
     git pull origin main
     ```
-
-2.  **Create a Feature Branch:** Create a new branch _from_ the up-to-date `main` branch for your specific task. Use a descriptive naming convention prefixed with a type (`feature/`, `fix/`, `chore/`, `docs/`, `test/`):
+2.  **Create a Feature Branch:** Create a new branch *from* the up-to-date `main` branch for your specific task. Use a descriptive naming convention prefixed with a type (`feature/`, `fix/`, `chore/`, `docs/`, `test/`):
     - Examples:
-      - `feature/add-prescription-list`
-      - `fix/order-detail-date-format`
-      - `chore/update-react-navigation`
-      - `docs/improve-readme-setup`
-      - `test/add-account-screen-tests`
+        - `feature/add-prescription-list`
+        - `fix/order-detail-date-format`
+        - `chore/update-react-navigation`
+        - `docs/improve-readme-setup`
+        - `test/add-account-screen-tests`
     ```bash
-    # Create and switch to your new branch
+    # Create and switch to your new branch (make sure you're on 'main' first)
     git checkout -b feature/your-feature-name
     ```
-3.  **Commit Changes Frequently:** Make your code changes on your feature branch. Commit your work often with clear, concise messages. We strongly recommend following the [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/) specification for commit messages. This standard format helps automate changelog generation and makes commit history easier to understand.
-
+3.  **Commit Changes Frequently:** Make your code changes on your feature branch. Commit your work often with clear, concise messages. We strongly recommend following the [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/) specification.
     - **Format:** `<type>[optional scope]: <description>`
-    - **Common Types:** `feat` (new feature), `fix` (bug fix), `chore` (build process, tooling), `docs` (documentation changes), `style` (code style changes, formatting), `refactor` (code change that neither fixes a bug nor adds a feature), `test` (adding/fixing tests), `perf` (performance improvement).
-    - **Example Commit Message:** `feat: add avatar and user info to AccountScreen`
-
+    - **Common Types:** `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `test`, `perf`.
+    - **Example:** `feat: add avatar and user info to AccountScreen`
     ```bash
     # Stage your changes
     git add .
@@ -54,102 +55,94 @@ We use a simple GitHub Flow approach, which is great for projects with frequent 
     # Commit with a conventional commit message
     git commit -m "feat: add avatar and user info to AccountScreen"
     ```
-
-4.  **Push Your Branch:** Push your local feature branch to the remote repository (GitHub).
+4.  **Push Your Branch:** Push your local feature branch to **your group's repository** on GitHub.
     ```bash
     # Push the branch (the -u flag sets the upstream for the first push)
     git push -u origin feature/your-feature-name
     ```
 
-## Pull Requests (PRs)
+### Workflow Visualization
 
-Once your feature or fix is complete and pushed to GitHub:
+```mermaid
+graph TD
+   A[Start Task] --> B(git checkout main);
+   B --> C(git pull origin main);
+   C --> D(git checkout -b feature/your-feature);
+   D --> E[Code & Commit];
+   E --> F(git push -u origin feature/your-feature);
+   F --> G{Create PR on GitHub};
+   G --> H{Request Review};
+   H --> I{Address Feedback};
+   I --> J[Merge PR (by Instructor/Lead)];
+   J --> K[End Task];
+   I --> E; % Loop for feedback
+```
+
+
+## Pull Requests (PRs) - Within Your Group Repository
+
+Once your feature or fix is complete and pushed to your group's GitHub repository:
 
 1.  **Self-Review & Test:**
     - Review your own code changes. Does it meet the requirements? Is it clear?
     - **Run Linters & Formatters:** Ensure your code adheres to the project's style guides.
-      ```bash
-      # Check for linting errors (ESLint)
-      npm run lint
-      # Apply automatic formatting (Prettier)
-      npm run format
-      ```
+        ```bash
+        # Check for linting errors (ESLint)
+        npm run lint
+        # Apply automatic formatting (Prettier)
+        npm run format
+        ```
     - **Run Tests:** Ensure all existing tests pass, and add new tests for your changes.
-      ```bash
-      # Run tests (likely in watch mode, press 'a' to run all if needed)
-      npm run test
-      ```
-2.  **Create Pull Request on GitHub:**
-    - Navigate to the repository page on GitHub.
+        ```bash
+        # Run tests (likely in watch mode, press 'a' to run all if needed)
+        npm run test
+        ```
+2.  **Create Pull Request on GitHub (Within Your Group Repo):**
+    - Navigate to **your group's repository page** on GitHub.
     - You should see a prompt to create a Pull Request from your recently pushed branch. Click it.
-    - Ensure the base branch is `main` and the compare branch is your feature branch.
+    - Ensure the **base branch** is `main` (the target branch in your group repo) and the **compare branch** is your feature branch.
 3.  **Use the PR Template:**
-    - Fill out the Pull Request template (`.github/PULL_REQUEST_TEMPLATE.md`) thoroughly.
-    - **Clearly describe:** What changes were made? Why were they made (motivation/context)? How can the reviewer test the changes? What were the test results? Include screenshots or GIFs if helpful for UI changes.
-4.  **Link Related Issues:** If your PR addresses one or more GitHub Issues, link them using keywords like `Closes #123`, `Fixes #456`, or `Resolves #789` in the PR description. This automatically closes the linked issues when the PR is merged.
-5.  **Request Review:** Use GitHub's "Reviewers" feature on the right side of the PR page to request a review from the course instructor(s) and/or designated peers.
+    - Fill out the Pull Request template (`.github/PULL_REQUEST_TEMPLATE.md` if present) thoroughly.
+    - **Clearly describe:** What changes were made? Why? How can it be tested? Include screenshots/GIFs for UI changes.
+4.  **Link Related Issues (If Applicable):** If your group uses GitHub Issues *within the group repository*, link them using keywords like `Closes #123` in the PR description.
+5.  **Request Review:** Use GitHub's "Reviewers" feature to request a review from the course instructor(s) and/or designated peers **within your group**.
 
 ## Code Standards & Best Practices
 
-Adhering to these standards ensures code quality, consistency, and maintainability, making the project a better learning resource.
+(This section remains largely the same as the original, as the standards apply regardless of the repository structure. Ensure you follow these within your group's codebase.)
 
-- **Language:** Use **TypeScript**. Leverage its features (types, interfaces, enums, generics) to improve code safety and clarity. Avoid using `any` where possible; define specific types instead.
-- **Styling:**
-  - Use **React Native Paper** for base Material Design components (`Button`, `Text`, `List`, `Avatar`, etc.).
-  - Use **Styled Components** (`styled-components/native`) for custom styling, layout, and applying theme values. Create reusable styled components where appropriate.
-  - Access theme values (`colors`, `customSpacing`, etc.) via the `theme` prop provided by the `StyledThemeProvider` or the `useTheme` hook.
-- **Linting/Formatting:** Code **must** pass ESLint checks (`npm run lint`) and be formatted by Prettier (`npm run format`). Configure your editor for format-on-save using the project's `.vscode/settings.json`.
-- **Components:**
-  - Aim for small, focused, reusable components.
-  - Follow the Single Responsibility Principle.
-  - Use functional components with React Hooks.
-  - Organize components logically (e.g., within `src/components/` or feature-specific directories if the project grows).
-- **Custom Hooks:** Encapsulate reusable stateful logic, side effects (like data fetching wrappers, although `useInitializeAppData` handles most), or complex component logic within custom hooks (e.g., `useDebounce`, `useFormValidation`). Name them starting with `use`.
-- **Testing:**
-  - Write unit/component tests using **Jest** and **React Native Testing Library (RNTL)**.
-  - Focus on testing component behavior from a user's perspective (querying elements, simulating events, asserting on visible output).
-  - Test new components, custom hooks, utility functions, and complex logic.
-  - Aim for reasonable test coverage for the functionality you add or modify.
-  - Place test files in a `__tests__` directory alongside the code they test (e.g., `src/components/Button/__tests__/Button.test.tsx`) or in a central `__tests__` directory.
-- **State Management:**
-  - Use **Zustand** (`useAppDataStore`) for managing _global_ application state needed across multiple, potentially unrelated components (e.g., user profile, fetched lists).
-  - For state local to a single component or shared only within a small, closely related component subtree, use standard React Hooks (`useState`, `useReducer`). Avoid overusing global state.
-- **Data Fetching:** Use **TanStack Query (React Query)** via the `useInitializeAppData` hook for fetching and caching application-wide data. For data specific to a single screen/component (if needed later), consider using `useQuery` directly within that component or a dedicated hook.
-- **Navigation:** Use **React Navigation**. Follow the established patterns (Stack, Tabs, nested navigators). Use the defined ParamList types (`src/navigation/types.ts`) for type safety.
-- **Code Documentation:**
-  - Write clear **JSDoc comments** (`/** ... */`) for functions, components, types, and complex logic blocks. Explain the "why" as well as the "what".
-  - Use concise **inline comments** (`// ...`) to clarify specific lines or non-obvious code sections.
-  - Aim for documentation that helps a novice developer understand the code's purpose and usage.
-- **Accessibility (A11y):**
-  - Strive to make all UI elements accessible.
-  - Use appropriate accessibility props (`accessibilityLabel`, `accessibilityHint`, `accessibilityRole`, `accessibilityState`).
-  - Ensure sufficient color contrast (WCAG AA guidelines recommend 4.5:1 for normal text). Use tools to check contrast.
-  - Ensure touch targets are adequately sized (at least 44x44 points is recommended).
-  - Test with accessibility tools (VoiceOver on iOS, TalkBack on Android) periodically.
-  - See: [React Native Accessibility Docs](https://reactnative.dev/docs/accessibility)
+- **Language:** Use **TypeScript**. Avoid `any`.
+- **Styling:** Use **React Native Paper** and **Styled Components**. Access theme values correctly.
+- **Linting/Formatting:** Code **must** pass `npm run lint` and be formatted via `npm run format`. Use format-on-save.
+- **Components:** Aim for small, focused, reusable functional components.
+- **Custom Hooks:** Encapsulate reusable stateful logic. Name them starting with `use`.
+- **Testing:** Write unit/component tests using **Jest** and **RNTL**. Focus on user perspective testing. Aim for reasonable coverage.
+- **State Management:** Use **Zustand** (`useAppDataStore`) for *global* state. Use React Hooks (`useState`, `useReducer`) for local state.
+- **Data Fetching:** Use **TanStack Query (React Query)** via `useInitializeAppData` or `useQuery` as appropriate.
+- **Navigation:** Use **React Navigation**. Follow established patterns and use defined types.
+- **Code Documentation:** Write clear **JSDoc** and inline comments.
+- **Accessibility (A11y):** Strive for accessible UI elements (labels, roles, contrast, touch targets). Test with screen readers.
 
-## Code Reviews
+## Code Reviews (Within Your Group)
 
-Code reviews are a critical part of learning and ensuring quality.
+Code reviews are crucial for learning and quality within your group.
 
-- **Reviewers:**
-  - Provide **constructive, specific, and respectful** feedback. Focus on the code, not the person.
-  - Check for correctness, clarity, performance, adherence to standards (including testing and documentation), and potential improvements.
-  - Ask clarifying questions if needed. Suggest alternatives where appropriate.
-  - Verify that tests pass and adequately cover the changes.
-  - Use GitHub's review tools (commenting, suggesting changes, approving).
+- **Reviewers (Instructor/Peers):**
+    - Provide **constructive, specific, and respectful** feedback on PRs within the group repository.
+    - Check for correctness, clarity, performance, adherence to standards, testing, etc.
+    - Use GitHub's review tools.
 - **Authors:**
-  - Be **receptive to feedback**. Understand that reviews are meant to improve the code and provide learning opportunities.
-  - Respond to comments. Discuss suggestions respectfully if you have different perspectives.
-  - Make necessary updates to your branch based on the feedback. Push the changes to update the PR.
-  - Address **all** comments before marking the PR as ready for re-review or merging.
+    - Be **receptive to feedback**.
+    - Respond to comments and discuss respectfully.
+    - Make necessary updates to your feature branch based on feedback. Push changes to update the PR.
+    - Address **all** comments before marking the PR as ready for merge.
 
 ## Asking for Help
 
-- **Try First:** Attempt to solve problems yourself first by consulting documentation (project docs, library docs), searching online (Stack Overflow, Google), and using debugging tools.
-- **Be Specific:** When asking for help (on Slack, WebEx, or GitHub Issues), clearly describe the problem, what you've tried already, what you expected to happen, and what actually happened. Include relevant code snippets, error messages, and screenshots.
-- **Use Appropriate Channels:** Use the designated course communication channel for general questions or discussions. Use GitHub Issues for specific bugs/tasks related to the codebase. Use PR comments for feedback on specific code changes.
+- **Try First:** Consult documentation, search online, use debugging tools.
+- **Be Specific:** Clearly describe the problem, what you tried, expected vs. actual results. Include code/errors/screenshots.
+- **Use Appropriate Channels:** Use course communication channels (Slack, WebEx) for general help. Use PR comments for feedback on specific code within your group repo. Use GitHub Issues (if enabled in your group repo) for specific bugs/tasks.
 
 ---
 
-Thank you for contributing to a positive, collaborative, and high-quality learning experience!
+Let's build something great together in your group! Happy coding!

@@ -8,9 +8,11 @@
 
 ## 🚀 Overview
 
-Welcome to the SpeedyMeds project! This application serves as the **capstone project** for a React Native training course. Its primary goal is to provide a practical, hands-on learning experience where participants apply fundamental and advanced React Native concepts to build a functional (though simplified) mobile pharmacy application.
+Welcome to the SpeedyMeds **Template Repository**! This project provides the **scaffolding** (starting codebase) for the capstone project in a React Native training course. Its primary goal is to offer a pre-configured environment where participants can immediately begin applying React Native concepts to build a functional mobile pharmacy application.
 
-This project simulates a professional development environment, emphasizing best practices in:
+**Course Structure:** This template repository is typically **forked** for each training group. Students work collaboratively within their assigned group's fork. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the specific workflow.
+
+This scaffolding emphasizes best practices in:
 
 - **Modern Frameworks:** Utilizing React Native with Expo for streamlined development.
 - **Strong Typing:** Leveraging TypeScript for enhanced code quality and maintainability.
@@ -20,9 +22,9 @@ This project simulates a professional development environment, emphasizing best 
 - **Styling & Theming:** Combining React Native Paper (Material Design) and Styled Components for flexible UI design with light/dark mode support.
 - **Code Quality:** Enforcing standards with ESLint and Prettier.
 - **Testing:** Setting up unit and component tests using Jest and React Native Testing Library.
-- **Development Workflow:** Following standard practices like Git branching (GitHub Flow), Pull Requests, and clear documentation.
+- **Development Workflow:** Following a collaborative workflow within a dedicated group repository (details in [CONTRIBUTING.md](./CONTRIBUTING.md)).
 
-The aim is to create an **exemplary learning resource** showcasing how these tools integrate, providing a solid foundation for developers new to React Native.
+The aim is to provide a **robust starting point (scaffolding)** for the course project, allowing students to focus on feature development while learning how common tools and patterns integrate in React Native. This `main` branch contains the scaffolding code; a completed version exists on the `completed-example` branch for reference.
 
 ---
 
@@ -46,7 +48,9 @@ These images represent the intended final look and feel of the application's cor
 
 ## 🎯 Target Audience
 
-This repository is primarily designed for developers participating in the associated React Native training course. However, it can also serve as a valuable reference for anyone learning React Native and seeking practical examples of integrating common libraries and architectural patterns.
+This repository serves two main audiences:
+- **Instructors:** Use this repository as the **template** to fork for new training groups.
+- **Students:** Clone your assigned **group fork** to begin the capstone project. The code here represents the starting point (`main` branch) and a potential reference (`completed-example` branch).
 
 ---
 
@@ -96,7 +100,7 @@ This project utilizes the following core technologies and demonstrates key conce
 
 ## 🚀 Getting Started
 
-Follow these steps to set up and run the project locally.
+Follow these steps to set up and run the **scaffolding project** locally. If you are a student, you should perform these steps within your assigned **group fork repository**, not this template repository.
 
 ### Prerequisites
 
@@ -113,11 +117,15 @@ Follow these steps to set up and run the project locally.
 
 ### Installation
 
-1.  **Clone the Repository:**
+1.  **Clone the Correct Repository:**
+    - **Instructors:** Clone this template repository if you need to modify the base scaffolding.
+    - **Students:** Clone **your assigned group fork repository**. Your instructor will provide the URL.
     ```bash
-    # Replace [Your Repository URL] with the actual URL
-    git clone [Your Repository URL]
-    cd SpeedyMeds
+    # Example for a student in the 'Apr' group:
+    # git clone [URL for SpeedyMeds-Group-Apr]
+    # cd SpeedyMeds-Group-Apr
+    git clone <YOUR_ASSIGNED_REPOSITORY_URL>
+    cd <REPOSITORY_DIRECTORY_NAME>
     ```
 2.  **Install Dependencies:** Use `npx expo install` to ensure compatible package versions.
     ```bash
@@ -222,22 +230,20 @@ SpeedyMeds/
 
 ---
 
-## 🤝 Development Workflow
+## 🤝 Course Development Workflow
 
-This project follows the **GitHub Flow** branching strategy:
+This template repository itself doesn't typically receive direct contributions during a course. Instead, development occurs within **group-specific forks**.
 
-1.  Create a new branch from `main` for each feature or bug fix.
-2.  Make changes, commit frequently with clear messages.
-3.  Write unit/component tests for new logic.
-4.  Ensure all tests pass (`npm run test:ci`).
-5.  Ensure code is formatted (`npm run format`) and linted (`npm run lint`) without errors.
-6.  Push your branch to the remote repository.
-7.  Open a Pull Request (PR) against the `main` branch.
-8.  Request code reviews.
-9.  Address feedback, make necessary changes.
-10. Once approved and CI checks pass, merge the PR.
+**Students:** Please refer to the **[CONTRIBUTING.md](./CONTRIBUTING.md)** file **within your assigned group fork repository** for detailed instructions on:
+- Cloning the group repository.
+- Creating feature branches.
+- Committing changes.
+- Pushing branches to the group repository.
+- Creating Pull Requests (PRs) within the group repository.
+- Code review expectations.
+- Coding standards and testing requirements.
 
-➡️ **Detailed Guidelines:** Please refer to **[CONTRIBUTING.md](./CONTRIBUTING.md)** for coding standards, testing expectations, and the full Pull Request process.
+**Instructors:** The workflow for updating this template repository follows standard practices (branch, commit, PR, merge).
 
 ---
 
@@ -246,7 +252,7 @@ This project follows the **GitHub Flow** branching strategy:
 - **Environment Setup:** [SETUP.md](./SETUP.md)
 - **Contribution Guide:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 - **How to Use the App:** [USAGE.md](./USAGE.md)
-- **Development Plan:** [ROADMAP.md](./ROADMAP.md)
+- **(Removed/Simplified in Scaffolding):** `ROADMAP.md`
 - **Version History:** [CHANGELOG.md](./CHANGELOG.md)
 - **Tooling Setup Guides (`docs/setup/`):**
   - [Expo Config (`app.json`)](./docs/setup/app-json-config.md)
