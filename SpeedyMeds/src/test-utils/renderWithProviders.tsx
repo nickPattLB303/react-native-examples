@@ -45,7 +45,8 @@ import { ThemeProvider as StyledThemeProvider } from "styled-components/native";
 import { lightTheme } from "../theme/theme"; // Using light theme as the default for tests
 import { spacing } from "../theme/spacing"; // Import spacing definitions
 import type { AppTheme } from "../theme/theme"; // Import the theme type
-
+// Import the custom ThemeProvider from the context file
+import { ThemeProvider as CustomThemeProvider } from "../context/ThemeContext";
 /**
  * A wrapper component that includes all necessary global context providers.
  *
@@ -70,9 +71,11 @@ const AllTheProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   // Return the children wrapped in the necessary providers, passing the consistent test theme.
   return (
-    <PaperProvider theme={themeToUse}>
-      <StyledThemeProvider theme={themeToUse}>{children}</StyledThemeProvider>
-    </PaperProvider>
+    <CustomThemeProvider>
+      <PaperProvider theme={themeToUse}>
+        <StyledThemeProvider theme={themeToUse}>{children}</StyledThemeProvider>
+      </PaperProvider>
+    </CustomThemeProvider>
   );
 };
 

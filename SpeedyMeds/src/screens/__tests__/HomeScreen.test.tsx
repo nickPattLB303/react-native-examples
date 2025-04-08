@@ -34,7 +34,7 @@ import { screen, fireEvent } from "@testing-library/react-native";
 import { render } from "../../test-utils/renderWithProviders"; // Use custom render with theme providers
 import HomeScreen from "../HomeScreen";
 import useAppDataStore, { AppDataState } from "../../stores/appDataStore"; // Import store hook and state type
-import { useThemeContext } from "../../context/ThemeContext"; // Import theme context hook
+// Removed import of useThemeContext as it's no longer mocked here
 import { lightTheme } from "../../theme/theme"; // Import a theme object for default mock
 import type { MedicationReminder } from "../../types"; // Import specific types needed
 
@@ -50,15 +50,8 @@ const mockUseAppDataStore = useAppDataStore as jest.MockedFunction<
   typeof useAppDataStore
 >;
 
-/**
- * Mock the Theme context hook (`useThemeContext`).
- * @strategy Uses `jest.mock` to replace the real hook. `mockReturnValue` is used in
- * `beforeEach` to provide a default theme state for most tests.
- */
-jest.mock("../../context/ThemeContext");
-const mockUseThemeContext = useThemeContext as jest.MockedFunction<
-  typeof useThemeContext
->;
+// Removed mocking for useThemeContext. Tests will now use the actual
+// ThemeProvider supplied by renderWithProviders.
 
 /**
  * Mock navigation props (`navigation` and `route`).
@@ -102,13 +95,7 @@ const defaultStoreState: AppDataState = {
   setLoading: jest.fn(),
 };
 
-/** Default mock state for `useThemeContext` hook. */
-const defaultThemeContextState = {
-  themePreference: "system" as const, // Default preference
-  setThemePreference: jest.fn(), // Mock the setter function
-  theme: lightTheme, // Provide the actual light theme object
-  isDark: false, // Consistent with light theme
-};
+// Removed defaultThemeContextState as useThemeContext is no longer mocked here.
 
 // --- Tests ---
 
@@ -135,8 +122,7 @@ describe("HomeScreen", () => {
       },
     );
 
-    // Default mock for Theme context
-    mockUseThemeContext.mockReturnValue(defaultThemeContextState);
+    // Removed mock setup for useThemeContext
   });
 
   /**
@@ -249,10 +235,8 @@ describe("HomeScreen", () => {
       ),
     ).toBeVisible();
 
-    // Theme switcher buttons (using accessibility labels)
-    expect(screen.getByLabelText("Set light theme")).toBeVisible();
-    expect(screen.getByLabelText("Set dark theme")).toBeVisible();
-    expect(screen.getByLabelText("Use system theme setting")).toBeVisible(); // Verify correct label
+    // Theme switcher buttons are not rendered directly in HomeScreen,
+    // so assertions for them are removed from this test.
   });
 
   /**
@@ -289,20 +273,5 @@ describe("HomeScreen", () => {
 
   // Note: Tests for Delivery/Resources cards were removed as they currently lack onPress handlers.
 
-  /**
-   * Test case: Verifies that pressing a theme button calls the context's setThemePreference.
-   * @action Simulates pressing the "Set dark theme" button.
-   * @assertion Checks if `setThemePreference` from the mocked theme context was called with "dark".
-   */
-  it("calls setThemePreference when a theme button is pressed", () => {
-    // Arrange
-    render(<HomeScreen {...(mockProps as any)} />);
-    // Act: Find the dark theme button by label and press it
-    const darkThemeButton = screen.getByLabelText("Set dark theme");
-    fireEvent.press(darkThemeButton);
-    // Assert: Check if the mocked context function was called
-    expect(defaultThemeContextState.setThemePreference).toHaveBeenCalledWith(
-      "dark",
-    );
-  });
+  // Removed test case for theme button press as HomeScreen does not render ThemeSelector.
 });

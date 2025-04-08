@@ -62,7 +62,7 @@ You need either an iOS Simulator (macOS only) or an Android Emulator to run and 
     - Open your **Terminal** and run: `xcode-select --install`.
     - If it's already installed, it will tell you. If not, it will prompt you to install. Agree to the installation.
     - **Verify (Optional):** Open Xcode, go to `Xcode` > `Settings...` (or `Preferences...`) > `Locations`. Ensure a version is selected in the "Command Line Tools" dropdown menu.
-    > _[Placeholder: Screenshot of Xcode > Settings > Locations > Command Line Tools dropdown]_
+    <!-- > _[Placeholder: Screenshot of Xcode > Settings > Locations > Command Line Tools dropdown]_ -->
 3.  **Launch Simulator:**
     - The easiest way is often via Xcode: `Xcode` > `Open Developer Tool` > `Simulator`.
     - Alternatively, you can find it via Spotlight search ("Simulator").
@@ -77,12 +77,12 @@ Setting up the Android Emulator involves installing Android Studio and configuri
 2.  **Configure Emulator (Android Virtual Device - AVD):**
     - Open Android Studio.
     - On the Welcome screen or via the `Tools` menu, find the **Device Manager** (previously AVD Manager). Look for an icon resembling a phone or tablet, or navigate through `Tools` > `Device Manager`.
-    > _[Placeholder: Screenshot of Android Studio Welcome Screen showing Device Manager location]_
+    <!-- > _[Placeholder: Screenshot of Android Studio Welcome Screen showing Device Manager location]_ -->
     - Click `Create device` (or `+ Create Virtual Device`).
     - **Choose Hardware:** Select a phone definition from the list (e.g., "Pixel 6", "Pixel 7 Pro", or similar recent Pixel devices are good choices). Click `Next`.
     - **Select System Image:** Choose a recent Android version (API Level). Look for one under the "Recommended" tab. If the image isn't downloaded yet, click the "Download" link next to it. Wait for the download to complete. Select the downloaded image and click `Next`.
     - **Verify Configuration:** Give your AVD a name (optional) and review the settings. You can usually leave the defaults. Click `Finish`.
-    > _[Placeholder: GIF illustrating the process of Creating a Virtual Device (Hardware -> System Image -> Finish)]_
+    <!-- > _[Placeholder: GIF illustrating the process of Creating a Virtual Device (Hardware -> System Image -> Finish)]_ -->
 3.  **Launch Emulator:**
     - In the Device Manager list, find the virtual device you just created.
     - Click the **"Play" (triangle) icon** in the "Actions" column next to your device.
@@ -131,7 +131,7 @@ Now that your environment is set up, let's install the project dependencies and 
       - Press `i` to attempt to open the app on the running **iOS Simulator**.
       - Press `a` to attempt to open the app on the running **Android Emulator**.
     - Expo CLI will automatically install the Expo Go client app onto the simulator/emulator if it's not already present, and then launch your SpeedyMeds project inside Expo Go.
-    > _[Placeholder: Screenshot showing Expo Go launching the app on iOS Simulator/Android Emulator]_
+    <!-- > _[Placeholder: Screenshot showing Expo Go launching the app on iOS Simulator/Android Emulator]_ -->
 
 ---
 
