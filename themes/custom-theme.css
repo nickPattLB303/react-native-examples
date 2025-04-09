@@ -1,0 +1,44 @@
+/* @theme custom-theme */
+
+/*
+ * Custom Theme for React Native Training Course
+ *
+ * This theme can extend or override Marp's built-in themes.
+ * Add custom CSS rules here to ensure consistent styling across
+ * all course documentation and slides.
+ *
+ * Example: Define custom colors, fonts, header/footer styles, etc.
+ */
+
+/* Import a base theme (optional, e.g., gaia or uncover) */
+/* @import url('https://cdn.jsdelivr.net/npm/@marp-team/marp-core@latest/themes/gaia.css'); */
+
+/* Add custom styles below */
+:root {
+  /* Define color variables or other global styles */
+  /* --main-bg-color: #f8f8f8; */
+}
+
+/* Example: Style h1 headings */
+/*
+h1 {
+  color: #333;
+  border-bottom: 2px solid #007bff;
+}
+*/
+
+/* --- Custom Styles for Course --- */
+
+/* Make code blocks scrollable */
+pre {
+  max-height: 400px; /* Adjust height as needed */
+  overflow-y: auto !important; /* Use !important to override potential theme defaults */
+  background-color: #f5f5f5; /* Optional: slightly different background for scrollable blocks */
+  padding: 0.8em !important; /* Ensure padding is consistent */
+}
+
+/* Improve readability within scrollable code blocks */
+pre code {
+  display: block; /* Ensure code takes full width for scrolling */
+  min-width: min-content; /* Prevent wrapping if possible, allow horizontal scroll if needed */
+}

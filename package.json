@@ -1,0 +1,17 @@
+{
+  "name": "react-native-course-docs",
+  "version": "1.0.0",
+  "description": "Documentation and slides for the React Native Training Course",
+  "private": true,
+  "scripts": {
+    "create-lesson": "node scripts/create-lesson.js"
+  },
+  "keywords": [
+    "react-native",
+    "training",
+    "course",
+    "marp",
+    "documentation"
+  ],
+  "license": "UNLICENSED"
+}

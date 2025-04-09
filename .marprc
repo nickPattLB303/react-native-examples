@@ -1,0 +1,11 @@
+# Marp CLI Configuration File
+# See: https://github.com/marp-team/marp-cli#configuration-file
+
+# Allow HTML tags within Markdown. Be cautious with this for security if sourcing
+# Markdown from untrusted places, but useful for controlled course content.
+html: true
+
+# We will likely define themes and other options here later.
+# engine: '@marp-team/marp-core' # Default, usually not needed unless customizing
+# themeSet: ./themes # We'll likely use this later
+# allowLocalFiles: false # Default, safer for browser-based conversions
