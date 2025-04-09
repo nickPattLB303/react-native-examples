@@ -1,0 +1,317 @@
+/* Company Theme for React Native Training Course
+   Based on Marp default theme with custom styling
+*/
+
+/* Base slide styles */
+section {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header and footer */
+header {
+  position: absolute;
+  top: 20px;
+  left: 50px;
+  right: 50px;
+  font-size: 18px;
+  color: #555;
+}
+
+footer {
+  position: absolute;
+  bottom: 20px;
+  left: 50px;
+  right: 50px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Title slide */
+section.title-slide {
+  justify-content: center;
+  text-align: center;
+  padding-top: 0;
+  background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+}
+
+section.title-slide h1 {
+  font-size: 56px;
+  color: #AA00FF;
+  margin-bottom: 20px;
+}
+
+section.title-slide h2 {
+  font-size: 36px;
+  color: #555;
+  font-weight: normal;
+}
+
+section.title-slide header,
+section.title-slide footer {
+  color: #777;
+}
+
+/* Content slide */
+section.content-slide h1 {
+  font-size: 40px;
+  color: #AA00FF;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+section.content-slide ul,
+section.content-slide ol {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+
+section.content-slide li {
+  margin-bottom: 12px;
+}
+
+/* Code slide */
+section.code-slide pre {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+section.code-slide code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Roboto Mono', monospace;
+  font-size: 20px;
+  padding: 24px;
+}
+
+section.code-slide h1 {
+  font-size: 36px;
+  color: #AA00FF;
+  margin-bottom: 20px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th {
+  background-color: #f0f0f0;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  font-weight: bold;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Special boxes */
+.highlight-box {
+  background-color: #f9f0ff;
+  border-left: 4px solid #AA00FF;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.pharmacy-box {
+  background-color: #f0f8ff;
+  border-left: 4px solid #2962FF;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.native-dev-note {
+  background-color: #fff8e1;
+  border-left: 4px solid #ffc107;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.web-dev-note {
+  background-color: #e8f5e9;
+  border-left: 4px solid #00C853;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.med-warning {
+  background-color: #ffebee;
+  border-left: 4px solid #d32f2f;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.med-info {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Emphasis and strong */
+em {
+  color: #555;
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Links */
+a {
+  color: #2962FF;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Code blocks (inline) */
+:not(pre) > code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Roboto Mono', monospace;
+  background-color: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 90%;
+  color: #AA00FF;
+}
+
+/* Mermaid diagram styling */
+.mermaid {
+  margin: 20px 0;
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  section {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+  }
+  
+  section.title-slide {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1f1f1f 100%);
+  }
+  
+  section.title-slide h1 {
+    color: #d580ff;
+  }
+  
+  section.title-slide h2,
+  section.title-slide header,
+  section.title-slide footer {
+    color: #b0b0b0;
+  }
+  
+  section.content-slide h1,
+  section.code-slide h1 {
+    color: #d580ff;
+    border-bottom-color: #444;
+  }
+  
+  .highlight-box {
+    background-color: #330033;
+    border-left-color: #d580ff;
+  }
+  
+  .pharmacy-box {
+    background-color: #0a1a33;
+    border-left-color: #6b8cff;
+  }
+  
+  .native-dev-note {
+    background-color: #332e00;
+    border-left-color: #f5d042;
+  }
+  
+  .web-dev-note {
+    background-color: #0a3317;
+    border-left-color: #1edb68;
+  }
+  
+  .med-warning {
+    background-color: #330c0c;
+    border-left-color: #ff5252;
+  }
+  
+  .med-info {
+    background-color: #0a1a33;
+    border-left-color: #64b5f6;
+  }
+  
+  th {
+    background-color: #333;
+    border-bottom-color: #555;
+  }
+  
+  td {
+    border-bottom-color: #333;
+  }
+  
+  :not(pre) > code {
+    background-color: #333;
+    color: #d580ff;
+  }
+  
+  a {
+    color: #6b8cff;
+  }
+  
+  strong {
+    color: #e0e0e0;
+  }
+  
+  em {
+    color: #b0b0b0;
+  }
+}
+
+/* Animations and transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+section {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Pagination */
+section::after {
+  content: attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total);
+  position: absolute;
+  bottom: 20px;
+  right: 50px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Print-specific overrides */
+@media print {
+  section {
+    page-break-inside: avoid;
+    page-break-after: always;
+  }
+}
