@@ -1,0 +1,21 @@
+{
+  // Enable HTML rendering in Marp previews for presenter notes and embeds
+  "markdown.marp.enableHtml": true,
+
+  // Set Prettier as the default formatter for Markdown files for consistency
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Optional: Automatically format on save
+  "editor.formatOnSave": true,
+
+  // Optional: Set default end of line sequence
+  "files.eol": "\n",
+
+  // Optional: Ensure final newline
+  "files.insertFinalNewline": true,
+
+  // Optional: Trim trailing whitespace
+  "files.trimTrailingWhitespace": true
+}
