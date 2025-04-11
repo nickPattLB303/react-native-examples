@@ -1,0 +1,1 @@
+> **⚛️ React Dev Context:** [Insert explanation comparing/contrasting the current topic with React (web) concepts. Highlight similarities and differences, especially regarding the environment (DOM vs. Native). Be specific and detailed.]
