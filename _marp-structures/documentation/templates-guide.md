@@ -10,7 +10,8 @@ This guide provides details on the available Marp slide templates located in the
 4.  If creating multiple slides, separate each template instance with `---`.
 5.  Replace the placeholder text (e.g., `[Insert Title Here]`) with your actual content.
 6.  Incorporate necessary snippets (like callouts) by copying them from the `/_marp-structures/snippets/` directory and pasting them into the appropriate location within the template. Refer to the `snippets-guide.md` for details.
-7.  Strictly adhere to the content constraints and guidelines specified for each template, especially regarding presenter notes and accompanying text for code/diagrams/tables.
+7.  Strictly adhere to the content constraints and guidelines specified for each template, especially regarding notes and accompanying text for code/diagrams/tables.
+8.  **Important:** Ensure the final module Markdown file (in `/course-content`) starts with the Marp front matter `--- marp: true ---` exactly once at the very top. Do not include this in the individual templates when copying.
 
 ---
 
@@ -27,7 +28,8 @@ This guide provides details on the available Marp slide templates located in the
 
 ## [Optional: Insert Subtitle or Module Number Here]
 
-<!-- Presenter Notes -->
+<!-- Notes -->
+<!-- Note: The `_class: lead` directive applies special styling for title slides. -->
 ```
 **Guidelines:**
 *   Use as the very first slide of a module file.
@@ -44,7 +46,8 @@ This guide provides details on the available Marp slide templates located in the
 
 ## [Insert Section Title Here]
 
-<!-- Presenter Notes -->
+<!-- Notes -->
+<!-- Note: `_class: invert` applies inverse theme styling. `<style scoped>` applies CSS only to this slide for centering. -->
 ```
 **Guidelines:**
 *   Use between distinct topics or sections.
@@ -56,9 +59,6 @@ This guide provides details on the available Marp slide templates located in the
 **Purpose:** The standard template for presenting textual information, bullet points, simple images, and incorporating callout snippets.
 **Structure Example:**
 ```markdown
----
-marp: true
----
 
 # [Insert Slide Title Here]
 
@@ -67,7 +67,7 @@ marp: true
 
 <!-- Add more content/snippets -->
 
-<!-- Presenter Notes -->
+<!-- Notes -->
 ```
 **Guidelines:**
 *   The workhorse template for most informational slides.
@@ -80,9 +80,6 @@ marp: true
 **Purpose:** Specifically for displaying code examples **up to 25 lines**.
 **Structure Example:**
 ```markdown
----
-marp: true
----
 
 ### [Insert Code Example Title Here]
 
@@ -92,7 +89,7 @@ marp: true
 // Code <= 25 lines
 ```
 
-<!-- Presenter Notes -->
+<!-- Notes -->
 ```
 **Constraints & Guidelines:**
 *   **Strictly for code examples <= 25 lines.** For longer examples, use `embedded-example-slide.md`.
@@ -101,7 +98,7 @@ marp: true
     *   A single descriptive sentence immediately following the title.
 *   **Presenter notes are MANDATORY** and must be detailed:
     *   If code > 5 lines, notes must be ~200 words minimum, explaining each line/block and summarizing logic/functionality.
-    *   Use the standard presenter notes structure.
+    *   Use the standard notes structure.
 *   Use the correct language identifier in the code block (e.g., `tsx`, `jsx`).
 
 ### 5. Diagram Slide (`diagram-slide.md`)
@@ -109,9 +106,6 @@ marp: true
 **Purpose:** Specifically for displaying Mermaid diagrams.
 **Structure Example:**
 ```markdown
----
-marp: true
----
 
 ### [Insert Diagram Title Here]
 
@@ -122,14 +116,14 @@ marp: true
 [Insert Diagram Definition]
 ```
 
-<!-- Presenter Notes -->
+<!-- Notes -->
 ```
 **Constraints & Guidelines:**
 *   **Accompanying text MUST be limited to:**
     *   A `###` level title.
     *   A single descriptive sentence immediately following the title.
 *   **Presenter notes are MANDATORY** and must clearly explain the diagram, its components, and the concept it illustrates.
-*   Use the standard presenter notes structure.
+*   Use the standard notes structure.
 *   All diagrams MUST use Mermaid syntax within the ` ```mermaid ` block.
 
 ### 6. Table Slide (`table-slide.md`)
@@ -137,9 +131,6 @@ marp: true
 **Purpose:** Specifically for displaying data in tables.
 **Structure Example:**
 ```markdown
----
-marp: true
----
 
 ### [Insert Table Title Here]
 
@@ -150,14 +141,14 @@ marp: true
 | Cell 1   | Cell 2   |
 <!-- Replace with actual table -->
 
-<!-- Presenter Notes -->
+<!-- Notes -->
 ```
 **Constraints & Guidelines:**
 *   **Accompanying text MUST be limited to:**
     *   A `###` level title.
     *   A single descriptive sentence immediately following the title.
 *   **Presenter notes are MANDATORY** and must explain the table's structure, data, and key takeaways.
-*   Use the standard presenter notes structure.
+*   Use the standard notes structure.
 *   Use standard Markdown table syntax.
 
 ### 7. Embedded Example Slide (`embedded-example-slide.md`)
@@ -165,9 +156,6 @@ marp: true
 **Purpose:** Specifically for large code examples **(> 25 lines)** requiring embedding from CodeSandbox or Expo Snack.
 **Structure Example:**
 ```markdown
----
-marp: true
----
 
 ### [Insert Embedded Example Title Here]
 
@@ -177,7 +165,7 @@ marp: true
 <!-- Instructions for Author -->
 [**<<< PASTE EMBED CODE (e.g., iframe) HERE >>>**]
 
-<!-- Presenter Notes -->
+<!-- Notes -->
 ```
 **Constraints & Guidelines:**
 *   **Strictly for code examples > 25 lines.** For smaller examples, use `code-example-slide.md`.
@@ -192,8 +180,8 @@ marp: true
 
 ## General Template Guidelines
 
-*   **Notes:** Unless it's a title or divider slide, presenter notes following the standard structure are **mandatory**.
-*   **Line/Word Counts:** While Marp doesn't enforce strict limits, be mindful of keeping slide content readable. Avoid overly dense slides. Presenter notes have specific length guidance for code/embeds.
+*   **Notes:** Unless it's a title or divider slide, notes following the standard structure are **mandatory**.
+*   **Line/Word Counts:** While Marp doesn't enforce strict limits, be mindful of keeping slide content readable. Avoid overly dense slides. Notes have specific length guidance for code/embeds.
 *   **Consistency:** Use these templates consistently to maintain a professional and predictable course structure.
 *   **Simplicity:** Adhere to the minimal Marp features used in these templates. Avoid adding complex custom styling or directives unless absolutely necessary and documented.
 

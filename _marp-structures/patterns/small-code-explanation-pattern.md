@@ -50,8 +50,6 @@ Notes:
 -->
 
 ---
-marp: true
----
 
 # [Slide 3: Summarize Code Example Here]
 

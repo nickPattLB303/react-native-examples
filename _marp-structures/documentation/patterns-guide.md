@@ -4,12 +4,23 @@ This guide describes standard content patterns, which are recommended sequences 
 
 ## How to Use Patterns
 
+There are two main ways to use patterns:
+
+**Option A: Using the Pattern Example Files (Recommended for Ease)**
 1.  Identify your teaching goal (e.g., introduce a new concept, explain a code example).
 2.  Consult the decision tree below or browse the available patterns to find the one that best fits your goal.
-3.  Create a new section in your course module's Markdown file for this pattern.
-4.  Copy the structure of the required templates (as listed in the pattern description) into your file, separated by `---`.
-5.  Populate each template with content, following the guidelines in `templates-guide.md` and `snippets-guide.md`.
-6.  Ensure the flow between the slides within the pattern is logical and smooth.
+3.  Locate the corresponding example pattern file in `/_marp-structures/patterns/` (e.g., `concept-introduction-pattern.md`).
+4.  Copy the *entire content* of the example pattern file into your course module's Markdown file.
+5.  Populate the placeholder content within the copied structure, following the guidelines in `templates-guide.md` and `snippets-guide.md`.
+6.  **Important:** Remember that the final module file needs a single `--- marp: true ---` front matter block at the very top. The example pattern files intentionally omit this.
+
+**Option B: Manually Combining Templates**
+1.  Identify your teaching goal and the appropriate pattern from the descriptions below.
+2.  Note the sequence of templates required by the pattern.
+3.  Copy the content of each required template file from `/_marp-structures/templates/` into your course module file, ensuring they are separated by `---`.
+4.  Populate each template with content, following the guidelines in `templates-guide.md` and `snippets-guide.md`.
+5.  Ensure the flow between the slides is logical and smooth.
+6.  **Important:** Add the `--- marp: true ---` front matter once at the very top of your final module file.
 
 ---
 
@@ -30,7 +41,7 @@ This guide describes standard content patterns, which are recommended sequences 
 **Purpose:** To explain a specific piece of code that is 25 lines or less.
 **Sequence:**
 1.  `content-slide.md`: Introduce the concept the code demonstrates or the problem it solves. Provide necessary background.
-2.  `code-example-slide.md`: Display the code (max 25 lines). Title and single sentence description only on this slide. **Detailed presenter notes explaining the code are mandatory.**
+2.  `code-example-slide.md`: Display the code (max 25 lines). Title and single sentence description only on this slide. **Detailed notes explaining the code are mandatory.**
 3.  `content-slide.md`: Summarize what the code does, reinforce the key takeaways, or discuss alternatives/next steps.
 
 **When to Use:** For focused code examples illustrating syntax, a specific function, component usage, or a small algorithm. **Strictly for code <= 25 lines.**
@@ -40,7 +51,7 @@ This guide describes standard content patterns, which are recommended sequences 
 **Purpose:** To explain a larger, more complex code example requiring an embedded CodeSandbox or Expo Snack.
 **Sequence:**
 1.  `content-slide.md`: Introduce the concept the code demonstrates or the problem it solves. Explain the context and goals of the embedded example.
-2.  `embedded-example-slide.md`: Provide the title, single sentence description, and the embedded CodeSandbox/Expo Snack. **Detailed presenter notes explaining the embedded code are mandatory.**
+2.  `embedded-example-slide.md`: Provide the title, single sentence description, and the embedded CodeSandbox/Expo Snack. **Detailed notes explaining the embedded code are mandatory.**
 3.  `content-slide.md`: Summarize the key functionality shown in the embed, discuss important patterns or takeaways, and guide learners on how to interact with the embed.
 
 **When to Use:** For complex components, multi-file examples, or code exceeding 25 lines that benefits from live interaction.
@@ -52,7 +63,7 @@ This guide describes standard content patterns, which are recommended sequences 
     *   **CodeSandbox:** Click "Share" -> "Embed". Copy the `<iframe>` code.
     *   **Expo Snack:** Click the "Embed" tab below the editor. Copy the `<iframe>` code.
 4.  **Paste into Template:** Open the `embedded-example-slide.md` template content in your course file. Delete the placeholder comment `[<<< PASTE EMBED CODE... >>>]` and the instructional comments surrounding it. Paste the copied `<iframe>` code in its place.
-5.  **Write Notes:** Fill in the presenter notes section for the `embedded-example-slide.md`, providing a detailed explanation (~200 words minimum) of the embedded code's structure, logic, and key features, as required by the template.
+5.  **Write Notes:** Fill in the notes section for the `embedded-example-slide.md`, providing a detailed explanation (~200 words minimum) of the embedded code's structure, logic, and key features, as required by the template.
 
 ### 4. Topic Overview Pattern
 

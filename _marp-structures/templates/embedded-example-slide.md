@@ -1,6 +1,3 @@
----
-marp: true
----
 
 ### [Insert Embedded Example Title Here]
 

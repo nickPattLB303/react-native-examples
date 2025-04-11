@@ -24,8 +24,6 @@ Notes:
 -->
 
 ---
-marp: true
----
 
 ### [Slide 2: Insert Embedded Example Title Here]
 

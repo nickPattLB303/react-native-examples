@@ -21,8 +21,6 @@ Notes:
 -->
 
 ---
-marp: true
----
 
 # [Slide 2: Learning Objectives]
 

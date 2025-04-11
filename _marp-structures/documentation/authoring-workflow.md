@@ -4,7 +4,12 @@ This document outlines the standard workflow for creating course content using t
 
 ## Step-by-Step Workflow
 
-1.  **Plan Your Content:**
+1.  **Prepare Module File:**
+    *   Navigate to the `/course-content` directory.
+    *   Create a new Markdown file for your module (e.g., `module-name.md`) or open an existing one.
+    *   **Crucially:** Add the Marp front matter `--- marp: true ---` as the very first line(s) of the file. This should only appear **once** per file.
+
+2.  **Plan Your Content:**
     *   Define the learning objectives for the lesson or section.
     *   Outline the key concepts, examples, and activities needed.
     *   Consider the target audience's background (Native, Web, React, Angular) and incorporate relevant context.
@@ -31,9 +36,9 @@ This document outlines the standard workflow for creating course content using t
 
 6.  **Write Notes:**
     *   **This is mandatory for almost all slides (except title/divider).**
-    *   Use the standard presenter notes snippet structure (`<!-- ... -->`).
+    *   Use the standard notes snippet structure (`<!-- ... -->`).
     *   Write detailed, general-purpose explanations suitable for all learners.
-    *   **Crucially:** For `code-example-slide.md` (if code > 5 lines), `embedded-example-slide.md`, `diagram-slide.md`, and `table-slide.md`, ensure presenter notes meet the specific detail and length requirements outlined in the template/pattern guides (e.g., ~200 words for code/embeds, detailed explanation of diagrams/tables).
+    *   **Crucially:** For `code-example-slide.md` (if code > 5 lines), `embedded-example-slide.md`, `diagram-slide.md`, and `table-slide.md`, ensure notes meet the specific detail and length requirements outlined in the template/pattern guides (e.g., ~200 words for code/embeds, detailed explanation of diagrams/tables).
 
 7.  **Handle Special Content:**
     *   **Code Examples:**
@@ -51,7 +56,7 @@ This document outlines the standard workflow for creating course content using t
     *   **Self-Review:** Before submitting or finalizing, review your content against the checklists provided in `templates-guide.md` and `patterns-guide.md`. Check for:
         *   Correct template/pattern usage.
         *   Adherence to content constraints (e.g., text limits on code/diagram/table slides).
-        *   Presence and quality of presenter notes (meeting length/detail requirements).
+        *   Presence and quality of notes (meeting length/detail requirements).
         *   Correct use of snippets (callouts, etc.).
         *   Logical heading structure.
         *   Accuracy and clarity of information.
@@ -66,5 +71,5 @@ This document outlines the standard workflow for creating course content using t
 
 *   **Modularity:** Think in terms of reusable snippets and templates.
 *   **Consistency:** Adhere strictly to the defined structures and guidelines.
-*   **Completeness:** Ensure presenter notes and linked resources provide comprehensive explanations.
+*   **Completeness:** Ensure notes and linked resources provide comprehensive explanations.
 *   **Simplicity:** Stick to the provided structures and standard Markdown/Marp features. Avoid unnecessary complexity.

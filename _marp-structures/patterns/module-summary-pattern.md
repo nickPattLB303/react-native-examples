@@ -25,8 +25,6 @@ Notes:
 -->
 
 ---
-marp: true
----
 
 # [Slide 2: Next Steps & Resources]
 
