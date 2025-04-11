@@ -12,7 +12,7 @@ marp: true
 <!-- Add/remove points as needed to summarize the most critical concepts -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).
@@ -39,7 +39,7 @@ marp: true
 <!-- Add more resources as appropriate -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).
@@ -64,7 +64,7 @@ marp: true
 <!-- This slide is optional; remove if not needed -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

@@ -11,7 +11,7 @@ marp: true
 <!-- Add more points, paragraphs, images, or callout snippets as needed -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).
@@ -44,7 +44,7 @@ marp: true
 ```
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail, focusing on what the diagram illustrates.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).
@@ -69,7 +69,7 @@ marp: true
 <!-- Add more points, paragraphs, images, or callout snippets as needed -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

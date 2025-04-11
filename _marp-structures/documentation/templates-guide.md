@@ -192,7 +192,7 @@ marp: true
 
 ## General Template Guidelines
 
-*   **Presenter Notes:** Unless it's a title or divider slide, presenter notes following the standard structure are **mandatory**.
+*   **Notes:** Unless it's a title or divider slide, presenter notes following the standard structure are **mandatory**.
 *   **Line/Word Counts:** While Marp doesn't enforce strict limits, be mindful of keeping slide content readable. Avoid overly dense slides. Presenter notes have specific length guidance for code/embeds.
 *   **Consistency:** Use these templates consistently to maintain a professional and predictable course structure.
 *   **Simplicity:** Adhere to the minimal Marp features used in these templates. Avoid adding complex custom styling or directives unless absolutely necessary and documented.

@@ -15,7 +15,7 @@ marp: true
 <!-- Replace with actual table content. Adjust alignment (:, ::, :), columns, and rows as needed. -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail, focusing on the data in the table.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

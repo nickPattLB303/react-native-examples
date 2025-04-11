@@ -14,7 +14,7 @@ h2 {
 ## [Insert Section Title Here]
 
 <!-- 
-Presenter Notes:
+Notes:
 - Briefly introduce the upcoming section.
 - Mention the key topics that will be covered.
 - Provide a smooth transition from the previous section.

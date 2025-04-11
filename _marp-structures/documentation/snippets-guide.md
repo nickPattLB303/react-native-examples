@@ -20,7 +20,7 @@ This guide provides details on the available Markdown/Marp snippets located in t
 **Code:**
 ```html
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

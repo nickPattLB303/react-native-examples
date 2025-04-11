@@ -14,7 +14,7 @@ h2 {
 ## [Slide 1: Insert Topic/Lesson Title Here]
 
 <!-- 
-Presenter Notes:
+Notes:
 - Briefly introduce the upcoming section/lesson.
 - Mention the key topics that will be covered.
 - Provide a smooth transition from the previous section.
@@ -33,7 +33,7 @@ marp: true
 <!-- Add more objectives as needed -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).
@@ -61,7 +61,7 @@ marp: true
 <!-- Adjust topics and sub-topics as needed -->
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

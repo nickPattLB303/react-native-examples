@@ -19,7 +19,7 @@ marp: true
 ```
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail, focusing on what the diagram illustrates.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

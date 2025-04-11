@@ -5,7 +5,7 @@
 ## [Optional: Insert Subtitle or Module Number Here]
 
 <!-- 
-Presenter Notes:
+Notes:
 - Briefly introduce the module/lesson.
 - State the main objectives.
 - Mention the target audience or prerequisites if applicable.

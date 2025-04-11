@@ -1,5 +1,5 @@
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts presented on the slide in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

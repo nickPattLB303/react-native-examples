@@ -21,7 +21,7 @@ Instructions for Author:
 
 
 <!-- 
-Presenter Notes:
+Notes:
 
 - Explain the concepts demonstrated in the embedded example in detail.
 - Use general-purpose language suitable for all learners (NOT presenter-specific instructions).

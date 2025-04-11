@@ -52,7 +52,7 @@ This guide describes standard content patterns, which are recommended sequences 
     *   **CodeSandbox:** Click "Share" -> "Embed". Copy the `<iframe>` code.
     *   **Expo Snack:** Click the "Embed" tab below the editor. Copy the `<iframe>` code.
 4.  **Paste into Template:** Open the `embedded-example-slide.md` template content in your course file. Delete the placeholder comment `[<<< PASTE EMBED CODE... >>>]` and the instructional comments surrounding it. Paste the copied `<iframe>` code in its place.
-5.  **Write Presenter Notes:** Fill in the presenter notes section for the `embedded-example-slide.md`, providing a detailed explanation (~200 words minimum) of the embedded code's structure, logic, and key features, as required by the template.
+5.  **Write Notes:** Fill in the presenter notes section for the `embedded-example-slide.md`, providing a detailed explanation (~200 words minimum) of the embedded code's structure, logic, and key features, as required by the template.
 
 ### 4. Topic Overview Pattern
 

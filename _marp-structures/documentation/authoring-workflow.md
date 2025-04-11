@@ -29,7 +29,7 @@ This document outlines the standard workflow for creating course content using t
     *   Paste the snippet content into the appropriate location within your slide template.
     *   Fill in the snippet's placeholder text.
 
-6.  **Write Presenter Notes:**
+6.  **Write Notes:**
     *   **This is mandatory for almost all slides (except title/divider).**
     *   Use the standard presenter notes snippet structure (`<!-- ... -->`).
     *   Write detailed, general-purpose explanations suitable for all learners.
