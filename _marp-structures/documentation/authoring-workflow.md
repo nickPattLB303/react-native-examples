@@ -7,7 +7,12 @@ This document outlines the standard workflow for creating course content using t
 1.  **Prepare Module File:**
     *   Navigate to the `/course-content` directory.
     *   Create a new Markdown file for your module (e.g., `module-name.md`) or open an existing one.
-    *   **Crucially:** Add the Marp front matter `--- marp: true ---` as the very first line(s) of the file. This should only appear **once** per file.
+    *   **Crucially:** Add the Marp front matter exactly as shown below (with `---` on separate lines) as the very first lines of the file. This block should only appear **once** per file.
+        ```yaml
+        ---
+        marp: true
+        ---
+        ```
 
 2.  **Plan Your Content:**
     *   Define the learning objectives for the lesson or section.

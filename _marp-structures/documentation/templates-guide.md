@@ -100,6 +100,7 @@ This guide provides details on the available Marp slide templates located in the
     *   If code > 5 lines, notes must be ~200 words minimum, explaining each line/block and summarizing logic/functionality.
     *   Use the standard notes structure.
 *   Use the correct language identifier in the code block (e.g., `tsx`, `jsx`).
+*   **Incorrect Usage Example:** Do not add explanatory bullet points or paragraphs directly on this slide template. Explanations belong on preceding or succeeding `content-slide.md` templates as defined in the relevant pattern (e.g., `small-code-explanation-pattern`).
 
 ### 5. Diagram Slide (`diagram-slide.md`)
 
@@ -125,6 +126,7 @@ This guide provides details on the available Marp slide templates located in the
 *   **Presenter notes are MANDATORY** and must clearly explain the diagram, its components, and the concept it illustrates.
 *   Use the standard notes structure.
 *   All diagrams MUST use Mermaid syntax within the ` ```mermaid ` block.
+*   **Incorrect Usage Example:** Do not add explanatory bullet points or paragraphs directly on this slide template. Explanations belong on preceding or succeeding `content-slide.md` templates as defined in the relevant pattern (e.g., `concept-introduction-pattern`).
 
 ### 6. Table Slide (`table-slide.md`)
 
