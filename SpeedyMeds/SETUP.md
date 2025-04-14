@@ -15,9 +15,9 @@ Welcome! This guide provides comprehensive, step-by-step instructions for settin
 
 ## 1. Verify Core Tools
 
-Before proceeding, let's double-check that Node.js, npm, and Git are correctly installed and accessible from your terminal (Command Prompt, PowerShell, Terminal, etc.).
+Before proceeding, let's double-check that Node.js, npm, and Git are correctly installed and accessible from your terminal.
 
-- **Node.js & npm:** Open your terminal and run:
+<!-- - **Node.js & npm:** Open your terminal and run:
   ```bash
   node -v
   npm -v
@@ -27,7 +27,7 @@ Before proceeding, let's double-check that Node.js, npm, and Git are correctly i
   ```bash
   git --version
   ```
-  You should see a git version number (e.g., `git version 2.39.2`). If not, download and install Git from [git-scm.com](https://git-scm.com/).
+  You should see a git version number (e.g., `git version 2.39.2`). If not, download and install Git from [git-scm.com](https://git-scm.com/). -->
 
 ---
 
@@ -56,7 +56,7 @@ You need either an iOS Simulator (macOS only) or an Android Emulator to run and 
 
 ### iOS Simulator (macOS Only)
 
-1.  **Install Xcode:** Download and install the latest version of Xcode from the **Mac App Store**. This is a large application, and the download/installation process can take a significant amount of time. Xcode includes the iOS SDK, Simulator, and necessary build tools.
+1.  **Install Xcode:** Download and install the latest version of Xcode. Xcode includes the iOS SDK, Simulator, and necessary build tools.
 2.  **Install Xcode Command Line Tools:**
     - After installing Xcode, open it once to agree to the license terms.
     - Open your **Terminal** and run: `xcode-select --install`.
@@ -73,7 +73,7 @@ You need either an iOS Simulator (macOS only) or an Android Emulator to run and 
 
 Setting up the Android Emulator involves installing Android Studio and configuring a virtual device.
 
-1.  **Install Android Studio:** Download and install the latest version of Android Studio from the [official Android Developers site](https://developer.android.com/studio). Follow the installation wizard instructions.
+1.  **Install Android Studio:** Download and install the latest version of Android Studio.
 2.  **Configure Emulator (Android Virtual Device - AVD):**
     - Open Android Studio.
     - On the Welcome screen or via the `Tools` menu, find the **Device Manager** (previously AVD Manager). Look for an icon resembling a phone or tablet, or navigate through `Tools` > `Device Manager`.
@@ -108,17 +108,16 @@ Now that your environment is set up, let's install the project dependencies and 
       ```
     - **Security Warning:** This setting disables Node.js's default security check for TLS certificates. **Do not use this in production applications.** It's a workaround for potential certificate issues in specific development or corporate network environments. Ensure `.env` is listed in your `.gitignore` file (it should be by default) to avoid committing sensitive configurations. If you don't encounter network errors when running `npx expo start`, you might not strictly need this line.
 3.  **Install Dependencies (Crucial Step!):**
-    - Use the `npx expo install` command. **Do not use `npm install` or `yarn install` directly for the initial setup.**
+    - Use the `npm install --legacy-peer-deps` command for the initial setup:
+      ```bash
+      npm install --legacy-peer-deps
+      ```
+    - **Why `--legacy-peer-deps` is Essential:** It's common in complex JavaScript projects to encounter "peer dependency" warnings or errors during installation (you might see `ERESOLVE unable to resolve dependency tree`). This means different libraries require slightly different versions of a shared dependency (often React itself). The `--legacy-peer-deps` flag tells npm to ignore these peer conflicts and proceed with installation.
+    - **Alternative Installation Method:** If you encounter specific compatibility issues, you can try using Expo's installation command, which automatically installs compatible versions of known libraries based on your Expo SDK version (defined in `app.json`):
       ```bash
       npx expo install
       ```
-    - **Why `npx expo install` is Essential:** Expo projects rely on specific versions of React Native and other libraries that are compatible with the chosen Expo SDK version (defined in `app.json`). `npx expo install` reads your `package.json` and automatically installs compatible versions of known libraries, preventing many common version mismatch errors that occur when using `npm install` directly.
-    - **Handling Peer Dependency Errors:** It's common in complex JavaScript projects to encounter "peer dependency" warnings or errors during installation (you might see `ERESOLVE unable to resolve dependency tree`). This means different libraries require slightly different versions of a shared dependency (often React itself). If `npx expo install` fails because of this, the recommended workaround is usually to use the `--legacy-peer-deps` flag with `npm`:
-      ```bash
-      # If the above 'npx expo install' fails, try this:
-      npm install --legacy-peer-deps
-      ```
-      This tells npm to ignore the peer conflicts and proceed. Use this if necessary, but understand it bypasses some checks.
+      This can help prevent version mismatch errors that might occur with standard npm installation, but our default approach uses npm with the legacy flag for consistency.
 4.  **Ensure Simulator/Emulator is Running:** Double-check that your chosen iOS Simulator or Android Emulator is running and fully booted.
 5.  **Start the Expo Development Server:**
     - Use the `--localhost` flag for more reliable connections with simulators/emulators, especially if you added the `.env` setting.

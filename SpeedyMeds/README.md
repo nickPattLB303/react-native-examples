@@ -24,13 +24,13 @@ This scaffolding emphasizes best practices in:
 - **Testing:** Setting up unit and component tests using Jest and React Native Testing Library.
 - **Development Workflow:** Following a collaborative workflow within a dedicated group repository (details in [CONTRIBUTING.md](./CONTRIBUTING.md)).
 
-The aim is to provide a **robust starting point (scaffolding)** for the course project, allowing students to focus on feature development while learning how common tools and patterns integrate in React Native. This `main` branch contains the scaffolding code; a completed version exists on the `completed-example` branch for reference.
+The aim is to provide a **robust starting point (scaffolding)** for the course project, allowing students to focus on feature development while learning how common tools and patterns integrate in React Native. This `main` branch contains the scaffolding code.
 
 ---
 
 ## 🎨 UI Mockups (Target Design)
 
-These images represent the intended final look and feel of the application's core screens. The current implementation status is noted in the "Key Features" section below.
+These images provide a general guide for the look and feel of the application's core screens. The current implementation status is noted in the "Key Features" section below.
 
 **Dashboard:**
 ![Dashboard Mockup](./assets/images/dashboard.svg)
@@ -104,9 +104,9 @@ Follow these steps to set up and run the **scaffolding project** locally. If you
 
 ### Prerequisites
 
-- **Node.js:** LTS version recommended (e.g., 18.x, 20.x). Check `.nvmrc` if present. [Download Node.js](https://nodejs.org/)
-- **Package Manager:** npm (comes with Node.js) or Yarn Classic.
-- **Git:** For cloning and version control. [Download Git](https://git-scm.com/)
+- **Node.js:** LTS version recommended.
+- **Package Manager:** npm.
+- **Git:** For cloning and version control.
 - **Code Editor:** VS Code is highly recommended with extensions: ESLint, Prettier - Code formatter. [Download VS Code](https://code.visualstudio.com/)
 - **Mobile Development Environment:**
   - **iOS:** macOS with Xcode installed.
@@ -127,13 +127,13 @@ Follow these steps to set up and run the **scaffolding project** locally. If you
     git clone <YOUR_ASSIGNED_REPOSITORY_URL>
     cd <REPOSITORY_DIRECTORY_NAME>
     ```
-2.  **Install Dependencies:** Use `npx expo install` to ensure compatible package versions.
+2.  **Install Dependencies:** Use `npm install --legacy-peer-deps` to ensure compatible package versions.
     ```bash
-    npx expo install
+    npm install --legacy-peer-deps
     ```
-    - **Why `npx expo install`?** It wraps `npm install` or `yarn add`, checking package versions against the project's Expo SDK version for compatibility, especially for libraries with native code. Using `npm install` directly might lead to version conflicts. [More Info](https://docs.expo.dev/workflow/expo-cli/#installation).
+    - **Why `--legacy-peer-deps`?** This flag allows npm to ignore peer dependency requirements, which is often necessary in React Native projects where different packages may have conflicting peer dependency requirements. It helps avoid installation errors when packages specify incompatible versions of shared dependencies. Use cautiously as it bypasses npm's dependency resolution safeguards.
     - **Adding New Packages:** Prefer `npx expo install [package-name]` for potentially native libraries. Use `npm install [package-name]` or `yarn add [package-name]` for pure JS libraries.
-    - **Peer Dependencies:** If you encounter peer dependency errors, you might need the `--legacy-peer-deps` flag (use cautiously): `npx expo install [package] -- --legacy-peer-deps`. For persistent issues, try removing `node_modules` and `package-lock.json` / `yarn.lock` and running `npm install --legacy-peer-deps` or `yarn install`.
+    - **Peer Dependencies:** If you encounter peer dependency errors, you might need the `--legacy-peer-deps` flag (use cautiously): `npm install [package] -- --legacy-peer-deps`. For persistent issues, try removing `node_modules` and `package-lock.json` / `yarn.lock` and running `npm install --legacy-peer-deps`.
 
 ### Running the App
 
@@ -141,9 +141,7 @@ Follow these steps to set up and run the **scaffolding project** locally. If you
 2.  **Check `.env`:** See [SETUP.md](./SETUP.md) if any environment variables are needed (e.g., for network configurations).
 3.  **Start Metro Bundler:**
     ```bash
-    npx expo start
-    # Or, for potentially more stable simulator connections:
-    # npx expo start --localhost
+    npx expo start --localhost
     ```
 4.  **Open in Simulator/Emulator/Device:**
     - Press `i` in the terminal → Open on iOS Simulator.
@@ -162,18 +160,12 @@ Follow these steps to set up and run the **scaffolding project** locally. If you
 ```bash
 # Run tests in interactive watch mode
 npm test
-# or
-yarn test
 
 # Run tests once (e.g., for CI)
 npm run test:ci
-# or
-yarn test:ci
 
 # Run tests and generate a coverage report
 npm run test:coverage
-# or
-yarn test:coverage
 ```
 
 ➡️ **Detailed Testing Guide:** See [docs/setup/testing-config.md](./docs/setup/testing-config.md).
@@ -270,7 +262,7 @@ This template repository itself doesn't typically receive direct contributions d
 
 ## 📞 Contact & Support
 
-For questions related to the course material or this specific capstone project, please use the designated course communication channel (e.g., WebEx, Slack, Forum).
+For questions related to the course material or this specific capstone project, please use the designated React Native Training WebEx channel.
 
 For bugs, feature requests, or suggestions related to the project's codebase itself, please **open an issue** on the project's GitHub repository.
 

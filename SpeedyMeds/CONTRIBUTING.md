@@ -4,10 +4,6 @@ Welcome, team! This guide outlines how you'll contribute to the SpeedyMeds appli
 
 **Remember:** You are working within a copy (a fork) of the main template repository, specifically created for your training group. All your work (branches, commits, Pull Requests) will happen **inside this group repository**.
 
-## Code of Conduct
-
-Please ensure all interactions (comments, PRs, discussions) are respectful, constructive, and collaborative. We aim for a positive learning environment where everyone feels comfortable asking questions and providing feedback.
-
 ## Getting Started: Your Group Repository
 
 1.  **Clone Your Group Repository:** Your instructor will provide the URL for your group's specific fork (e.g., `SpeedyMeds-Group-Apr`). Clone this repository to your local machine. **Do not clone the main template repository.**
@@ -73,9 +69,9 @@ graph TD
    F --> G{Create PR on GitHub};
    G --> H{Request Review};
    H --> I{Address Feedback};
-   I --> J[Merge PR (by Instructor/Lead)];
+   I --> J[Merge PR];
    J --> K[End Task];
-   I --> E; % Loop for feedback
+   I --> E;
 ```
 
 
