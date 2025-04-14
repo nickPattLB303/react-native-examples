@@ -47,7 +47,7 @@ Set the stage. Discuss the inherent challenges in mobile development that paved 
 Presenter Notes:
 *   Explain the traditional native development approach.
 *   Highlight the significant drawbacks (cost, time, complexity).
-*   Reference [1, 2, 3] for details on native development challenges.
+*   Reference [1], [[2](https://www.jetbrains.com/help/kotlin-multiplatform-dev/native-and-cross-platform.html)], [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)] for details on native development challenges.
 *   This sets up the motivation for cross-platform solutions.
 -->
 
@@ -66,8 +66,8 @@ Presenter Notes:
 Presenter Notes:
 *   Introduce WebViews as an early solution.
 *   Explain the core idea: web tech in a native shell.
-*   Mention Cordova/PhoneGap as key examples [6, 7].
-*   **Historical Note:** PhoneGap (Nitobi, 2008) -> Acquired by Adobe (2011) -> Open-sourced core became Apache Cordova [8].
+*   Mention Cordova/PhoneGap as key examples [[6](https://moldstud.com/articles/p-phonegap-vs-cordova-mobile-development-architecture-guide)], [[7](https://codewave.com/insights/android-ios-cross-platform-app-development-frameworks/)].
+*   **Historical Note:** PhoneGap (Nitobi, 2008) -> Acquired by Adobe (2011) -> Open-sourced core became Apache Cordova [[8](https://en.wikipedia.org/wiki/Apache_Cordova)].
 -->
 
 ---
@@ -78,15 +78,15 @@ Presenter Notes:
 
 *   **Performance:** Sluggishness, especially for complex UIs/animations [1].
 *   **Look & Feel:** Often felt "web-like," not truly native [1].
-*   **Native API Access:** Limited compared to native apps [3].
-*   **User Experience:** Suboptimal due to performance/feel [3]. (e.g., Facebook's 2012 pivot away from HTML5 [11]).
+*   **Native API Access:** Limited compared to native apps [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)].
+*   **User Experience:** Suboptimal due to performance/feel [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)]. (e.g., Facebook's 2012 pivot away from HTML5 [[11](https://www.netguru.com/glossary/react-native)]).
 
 <!--
 Presenter Notes:
 *   Discuss the shortcomings of WebView approaches.
 *   Emphasize the performance bottlenecks and non-native feel.
 *   Mention the limited access to the full spectrum of native APIs.
-*   Use the Facebook example as a prominent case study [11].
+*   Use the Facebook example as a prominent case study [[11](https://www.netguru.com/glossary/react-native)].
 *   These limitations created the need for a better solution.
 -->
 
@@ -96,13 +96,13 @@ Presenter Notes:
 
 #### **React Native as a Solution**
 
-*   **Goal:** Efficiency of cross-platform *without* sacrificing native performance/UX [12].
-*   **Approach:** Render *actual* native UI components, not WebViews [12].
-*   **Target:** 60 FPS animations, native look & feel [12].
+*   **Goal:** Efficiency of cross-platform *without* sacrificing native performance/UX [[12](https://reactnative.dev/docs/performance)].
+*   **Approach:** Render *actual* native UI components, not WebViews [[12](https://reactnative.dev/docs/performance)].
+*   **Target:** 60 FPS animations, native look & feel [[12](https://reactnative.dev/docs/performance)].
 
 <!--
 Presenter Notes:
-*   Introduce React Native as Facebook's solution to these challenges [11].
+*   Introduce React Native as Facebook's solution to these challenges [[11](https://www.netguru.com/glossary/react-native)].
 *   Clearly state its core value proposition: combining cross-platform efficiency with native quality.
 *   Emphasize the key difference: rendering native components.
 -->
@@ -115,12 +115,12 @@ Presenter Notes:
 
 | Feature                 | Native (iOS/Android)             | WebView (e.g., Cordova)        | React Native                     |
 | :---------------------- | :------------------------------- | :----------------------------- | :------------------------------- |
-| **Dev Cost/Time**       | High (Separate Codebases) [1]    | Lower (Shared Web Code) [5]    | Medium (High Code Sharing) [5]   |
-| **Performance**         | Optimal (Direct Access) [3]      | Often Sub-optimal [3]          | Near-Native (New Arch) [1]       |
-| **UI/UX (Native Feel)** | Excellent (Platform Standard) [3] | Challenging (Web Render) [3]   | Excellent (Native Components) [12] |
-| **Native API Access**   | Full [2]                         | Limited (Plugins) [3]          | Extensive (New Arch) [13]       |
-| **Code Sharing**        | None                             | High (HTML, CSS, JS)           | Very High (JS/React Logic) [14]  |
-| **Maintenance**         | Complex (Two Codebases) [1]      | Simpler (Single Web Code) [5]  | Simpler (Mostly Single) [14]     |
+| **Dev Cost/Time**       | High (Separate Codebases) [1]    | Lower (Shared Web Code) [[5](https://selleo.com/blog/native-development-vs-cross-platform)]    | Medium (High Code Sharing) [[5](https://selleo.com/blog/native-development-vs-cross-platform)]   |
+| **Performance**         | Optimal (Direct Access) [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)]      | Often Sub-optimal [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)]          | Near-Native (New Arch) [1]       |
+| **UI/UX (Native Feel)** | Excellent (Platform Standard) [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)] | Challenging (Web Render) [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)]   | Excellent (Native Components) [[12](https://reactnative.dev/docs/performance)] |
+| **Native API Access**   | Full [[2](https://www.jetbrains.com/help/kotlin-multiplatform-dev/native-and-cross-platform.html)]                         | Limited (Plugins) [[3](https://themobilereality.com/blog/cross-platform-vs-native-app-development)]          | Extensive (New Arch) [[13](https://reactnative.dev/)]       |
+| **Code Sharing**        | None                             | High (HTML, CSS, JS)           | Very High (JS/React Logic) [[14](https://mobidev.biz/blog/react-native-app-development-guide)]  |
+| **Maintenance**         | Complex (Two Codebases) [1]      | Simpler (Single Web Code) [[5](https://selleo.com/blog/native-development-vs-cross-platform)]  | Simpler (Mostly Single) [[14](https://mobidev.biz/blog/react-native-app-development-guide)]     |
 
 <!--
 Presenter Notes:
@@ -134,19 +134,19 @@ Presenter Notes:
 
 ### **1.2. Why Choose React Native?**
 
-*   **Code Sharing & Efficiency:** Write once (mostly), deploy on iOS & Android [5, 1]. (Note: 100% sharing often unrealistic/undesirable [16]).
+*   **Code Sharing & Efficiency:** Write once (mostly), deploy on iOS & Android [[5](https://selleo.com/blog/native-development-vs-cross-platform)], [1]. (Note: 100% sharing often unrealistic/undesirable [[16](https://shopify.engineering/five-years-of-react-native-at-shopify)]).
 *   **Developer Experience (DX):**
-    *   Leverage React knowledge [11].
-    *   Fast Refresh for rapid iteration [14].
-    *   Access to JS ecosystem (npm) [12].
-*   **Native Capabilities:** Renders *actual* native UI components (\<View\> -> UIView/ViewGroup) [12]. Access platform APIs via Native Modules [13].
-*   **Performance:** Designed for 60 FPS [12]. New Architecture significantly improves performance [13].
-*   **Community & Backing:** Meta, Microsoft, Shopify, Expo, large global community [13].
+    *   Leverage React knowledge [[11](https://www.netguru.com/glossary/react-native)].
+    *   Fast Refresh for rapid iteration [[14](https://mobidev.biz/blog/react-native-app-development-guide)].
+    *   Access to JS ecosystem (npm) [[12](https://reactnative.dev/docs/performance)].
+*   **Native Capabilities:** Renders *actual* native UI components (\<View\> -> UIView/ViewGroup) [[12](https://reactnative.dev/docs/performance)]. Access platform APIs via Native Modules [[13](https://reactnative.dev/)].
+*   **Performance:** Designed for 60 FPS [[12](https://reactnative.dev/docs/performance)]. New Architecture significantly improves performance [[13](https://reactnative.dev/)].
+*   **Community & Backing:** Meta, Microsoft, Shopify, Expo, large global community [[13](https://reactnative.dev/)].
 
 <!--
 Presenter Notes:
 *   Summarize the key benefits.
-*   **Code Sharing:** Mention Shopify's success story [16] but also temper expectations about 100% sharing.
+*   **Code Sharing:** Mention Shopify's success story [[16](https://shopify.engineering/five-years-of-react-native-at-shopify)] but also temper expectations about 100% sharing.
 *   **DX:** Explain Fast Refresh (evolution of Hot Reloading) and its impact on productivity.
 *   **Native Capabilities:** Reiterate the core difference from WebViews – rendering real native elements.
 *   **Performance:** Acknowledge historical context but emphasize improvements with the New Architecture. Avoid definitive comparisons with Flutter as it's complex [1].
@@ -157,9 +157,9 @@ Presenter Notes:
 
 ### **1.3. Core Idea: JavaScript Controlling Native**
 
-*   **Declarative UI:** Use React components, JSX, props, state [17]. Describe *what* the UI should look like.
-*   **"Translation" Layer:** React Native translates JS/React descriptions into native instructions [17]. (JS = Remote Control, Native UI = TV).
-*   **Core Components as Bridges:** Built-in components (\<View\>, \<Text\>, \<Image\>) map directly to native UI elements (UIView, TextView, etc.) [18, 36].
+*   **Declarative UI:** Use React components, JSX, props, state [[17](https://reactnative.dev/docs/tutorial)]. Describe *what* the UI should look like.
+*   **"Translation" Layer:** React Native translates JS/React descriptions into native instructions [[17](https://reactnative.dev/docs/tutorial)]. (JS = Remote Control, Native UI = TV).
+*   **Core Components as Bridges:** Built-in components (\<View\>, \<Text\>, \<Image\>) map directly to native UI elements (UIView, TextView, etc.) [[18](https://micheal.dev/blog/learning-react-native-basics/)], [[36](https://reactnative.dev/docs/components-and-apis)].
 *   **Communication Mechanism:** How JS talks to Native (Legacy: Bridge, Modern: JSI) - *Crucial concept explored next!*
 
 <!--
@@ -167,9 +167,9 @@ Presenter Notes:
 *   Explain the fundamental paradigm: using familiar React concepts to drive native UI.
 *   Use the "remote control" analogy.
 *   Introduce Core Components as the tangible link between JS and Native. Provide examples:
-    *   `<View>` -> `UIView` / `android.view.ViewGroup` [18]
-    *   `<Text>` -> `UITextView` / `android.widget.TextView` [18]
-    *   `<Image>` -> `UIImageView` / `android.widget.ImageView` [18]
+    *   `<View>` -> `UIView` / `android.view.ViewGroup` [[18](https://micheal.dev/blog/learning-react-native-basics/)]
+    *   `<Text>` -> `UITextView` / `android.widget.TextView` [[18](https://micheal.dev/blog/learning-react-native-basics/)]
+    *   `<Image>` -> `UIImageView` / `android.widget.ImageView` [[18](https://micheal.dev/blog/learning-react-native-basics/)]
 *   Set the stage for the next section on the communication architecture (Bridge vs. JSI).
 -->
 
@@ -179,22 +179,22 @@ Presenter Notes:
 
 **For Web Developers (React/Angular):**
 
-*   **Familiar:** React concepts (Components, Props, State, Hooks, JSX), JS, npm [17, 12]. Styling via JS objects (somewhat familiar) [39].
+*   **Familiar:** React concepts (Components, Props, State, Hooks, JSX), JS, npm [[17](https://reactnative.dev/docs/tutorial)], [[12](https://reactnative.dev/docs/performance)]. Styling via JS objects (somewhat familiar) [[39](https://www.newline.co/30-days-of-react-native/day-04-styles)].
 *   **Different:**
-    *   Target: Native UI elements, not DOM [11]. (\<View\> != \<div\>)
-    *   Styling: `StyleSheet.create()`, Flexbox *only*, no cascade (except nested `<Text>`), different properties [39].
-    *   Navigation: Stack/Tab/Drawer (React Navigation), not browser routing [23].
-    *   Platform APIs: More direct hardware access (Camera, GPS) [23].
+    *   Target: Native UI elements, not DOM [[11](https://www.netguru.com/glossary/react-native)]. (\<View\> != \<div\>)
+    *   Styling: `StyleSheet.create()`, Flexbox *only*, no cascade (except nested `<Text>`), different properties [[39](https://www.newline.co/30-days-of-react-native/day-04-styles)].
+    *   Navigation: Stack/Tab/Drawer (React Navigation), not browser routing [[23](https://hygraph.com/blog/react-vs-react-native)].
+    *   Platform APIs: More direct hardware access (Camera, GPS) [[23](https://hygraph.com/blog/react-vs-react-native)].
 
 **For Native Developers (Android/iOS):**
 
-*   **Familiar:** Renders native UI components (UIView, TextView), aims for native look/feel/performance [18, 12]. Can write native modules.
+*   **Familiar:** Renders native UI components (UIView, TextView), aims for native look/feel/performance [[18](https://micheal.dev/blog/learning-react-native-basics/)], [[12](https://reactnative.dev/docs/performance)]. Can write native modules.
 *   **Different:**
-    *   Language/Paradigm: JS, React's declarative model [17].
-    *   Layout: Flexbox via JS styles, not XML/Auto Layout/SwiftUI [24].
-    *   Lifecycle: React component lifecycle (`useEffect`), not Activity/ViewController lifecycle [44].
-    *   Navigation: JS libraries (React Navigation), not Intents/Segues [42].
-    *   Styling: `StyleSheet.create()`, not XML attributes/platform styles [39].
+    *   Language/Paradigm: JS, React's declarative model [[17](https://reactnative.dev/docs/tutorial)].
+    *   Layout: Flexbox via JS styles, not XML/Auto Layout/SwiftUI [[24](https://reactnative.dev/docs/intro-react)].
+    *   Lifecycle: React component lifecycle (`useEffect`), not Activity/ViewController lifecycle [[44](https://dev.to/amazonappdev/an-android-developers-guide-to-react-native-j66)].
+    *   Navigation: JS libraries (React Navigation), not Intents/Segues [[42](https://reactnative.dev/docs/navigation)].
+    *   Styling: `StyleSheet.create()`, not XML attributes/platform styles [[39](https://www.newline.co/30-days-of-react-native/day-04-styles)].
 
 <!--
 Presenter Notes:
@@ -222,12 +222,12 @@ Presenter Notes:
 
 ### **2.1. The Old Way: The Legacy Bridge (Conceptual)**
 
-*   **Central Communication Channel:** Connected JS Thread and Native/UI Thread [25].
+*   **Central Communication Channel:** Connected JS Thread and Native/UI Thread [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 *   **Key Threads:**
-    1.  **JS Thread:** JS execution, React logic, business logic [12].
-    2.  **Native/UI Thread:** Native UI rendering, gestures, native module code [12].
+    1.  **JS Thread:** JS execution, React logic, business logic [[12](https://reactnative.dev/docs/performance)].
+    2.  **Native/UI Thread:** Native UI rendering, gestures, native module code [[12](https://reactnative.dev/docs/performance)].
     3.  **Native Modules Thread (Optional):** For specific modules.
-    4.  **Shadow Thread:** Background layout calculations (Yoga) [46].
+    4.  **Shadow Thread:** Background layout calculations (Yoga) [[46](https://dev.to/hellonehha/react-native-new-architecture-1hao)].
 
 <!--
 Presenter Notes:
@@ -241,16 +241,16 @@ Presenter Notes:
 
 #### **Communication Flow (Asynchronous & Serialized)**
 
-1.  **JS -> Native:** Instructions batched [12].
-2.  **Serialization:** Batch serialized to JSON string [12].
+1.  **JS -> Native:** Instructions batched [[12](https://reactnative.dev/docs/performance)].
+2.  **Serialization:** Batch serialized to JSON string [[12](https://reactnative.dev/docs/performance)].
 3.  **Transmission:** JSON sent *asynchronously* across Bridge.
-4.  **Native Execution:** Native side deserializes JSON, executes updates (UI thread) [12].
+4.  **Native Execution:** Native side deserializes JSON, executes updates (UI thread) [[12](https://reactnative.dev/docs/performance)].
 5.  **Native -> JS:** Data serialized to JSON, sent *asynchronously* back, invokes JS callback.
 
 <!--
 Presenter Notes:
 *   Detail the steps involved in communication across the Bridge.
-*   **Crucially emphasize:** Asynchronous nature and JSON serialization/deserialization [12, 25].
+*   **Crucially emphasize:** Asynchronous nature and JSON serialization/deserialization [[12](https://reactnative.dev/docs/performance)], [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 -->
 
 ---
@@ -281,11 +281,11 @@ Presenter Notes:
 
 #### **Limitations of the Bridge**
 
-*   **Asynchronicity:** Inefficient/impossible sync operations (e.g., getting layout before render) [25]. Potential UI inconsistencies [53].
-*   **Serialization Overhead:** JSON conversion consumed CPU/memory, bottleneck for frequent/large data [12].
-*   **JS Thread Bottlenecks:** Heavy JS logic blocked the *single* JS thread, leading to unresponsive UI, jank, delayed touches [12]. (Worse in dev mode).
-*   **Eager Native Module Loading:** All modules loaded at startup -> slower start time, higher memory use [25].
-*   **Concurrency Limitations:** Hindered leveraging multi-core CPUs and modern React concurrent features [25].
+*   **Asynchronicity:** Inefficient/impossible sync operations (e.g., getting layout before render) [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]. Potential UI inconsistencies [[53](https://reactnative.dev/docs/communication-ios)].
+*   **Serialization Overhead:** JSON conversion consumed CPU/memory, bottleneck for frequent/large data [[12](https://reactnative.dev/docs/performance)].
+*   **JS Thread Bottlenecks:** Heavy JS logic blocked the *single* JS thread, leading to unresponsive UI, jank, delayed touches [[12](https://reactnative.dev/docs/performance)]. (Worse in dev mode).
+*   **Eager Native Module Loading:** All modules loaded at startup -> slower start time, higher memory use [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Concurrency Limitations:** Hindered leveraging multi-core CPUs and modern React concurrent features [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 
 <!--
 Presenter Notes:
@@ -298,8 +298,8 @@ Presenter Notes:
 
 ### **2.2. The New Way: The New Architecture**
 
-*   **Goal:** Redesign core internals for better performance, capabilities, and alignment with modern React [25]. (Multi-year effort started ~2018).
-*   **Status:** **Enabled by default** in RN 0.76+ and **Expo SDK 52+** [25, 54]. *(You are using it!)*
+*   **Goal:** Redesign core internals for better performance, capabilities, and alignment with modern React [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]. (Multi-year effort started ~2018).
+*   **Status:** **Enabled by default** in RN 0.76+ and **Expo SDK 52+** [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)], [[54](https://www.reddit.com/r/expo/comments/1is2e6q/downgrade_52_to_51/)]. *(You are using it!)*
 
 #### **Key Components:**
 
@@ -319,9 +319,9 @@ Presenter Notes:
 
 ### **2.3. JSI (JavaScript Interface): Direct Communication**
 
-*   **Core Concept:** Lightweight C++ API providing a *direct* interface to the JS engine (Hermes, V8) [25]. Replaces the async, JSON-based Bridge.
-*   **Mechanism:** Allows JS and Native to hold **direct references** to objects in the other realm [26].
-    *   JS gets reference to C++ "Host Object" [57].
+*   **Core Concept:** Lightweight C++ API providing a *direct* interface to the JS engine (Hermes, V8) [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]. Replaces the async, JSON-based Bridge.
+*   **Mechanism:** Allows JS and Native to hold **direct references** to objects in the other realm [[26](https://reactnative.dev/architecture/landing-page)].
+    *   JS gets reference to C++ "Host Object" [[57](https://www.sharepointeurope.com/deep-dive-into-react-natives-new-architecture-jsi-turbomodules-fabric-yoga/)].
     *   JS invokes methods *directly* on the C++ reference.
     *   Native can hold references to JS functions/objects and invoke them directly.
 *   **Bypasses the Bridge entirely.**
@@ -330,7 +330,7 @@ Presenter Notes:
 Presenter Notes:
 *   Explain JSI as the cornerstone of the New Architecture.
 *   Focus on the **direct reference** concept – this is the key difference from the Bridge's message passing.
-*   Mention "Host Objects" as the term for C++ objects exposed to JS [57].
+*   Mention "Host Objects" as the term for C++ objects exposed to JS [[57](https://www.sharepointeurope.com/deep-dive-into-react-natives-new-architecture-jsi-turbomodules-fabric-yoga/)].
 -->
 
 ---
@@ -339,9 +339,9 @@ Presenter Notes:
 
 #### **Benefits of JSI**
 
-*   **Eliminates Serialization Overhead:** Direct memory access/method invocation -> much faster communication [25]. (e.g., `react-native-vision-camera` handling 1GB/s [26]). Significant latency reduction [28].
-*   **Enables Synchronous Communication:** Crucial for tasks like getting native layout dimensions *before* rendering [25]. Prevents layout jumps.
-*   **JS Engine Agnostic:** Abstraction layer allows RN to work with Hermes (default), V8, etc. [51].
+*   **Eliminates Serialization Overhead:** Direct memory access/method invocation -> much faster communication [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]. (e.g., `react-native-vision-camera` handling 1GB/s [[26](https://reactnative.dev/architecture/landing-page)]). Significant latency reduction [[28](https://dev.to/joaoalissonsilva/the-new-react-native-architecture-1jn9)].
+*   **Enables Synchronous Communication:** Crucial for tasks like getting native layout dimensions *before* rendering [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]. Prevents layout jumps.
+*   **JS Engine Agnostic:** Abstraction layer allows RN to work with Hermes (default), V8, etc. [[51](https://github.com/anisurrahman072/React-Native-Advanced-Guide/blob/master/New-Architecture/New-Architecture-in-depth.md)].
 
 #### **Analogy:**
 
@@ -394,11 +394,11 @@ Presenter Notes:
 
 ### **2.4. Fabric: The Modern Renderer**
 
-*   **What:** React Native's new rendering system [25].
-*   **Built On:** Leverages JSI for communication [31].
+*   **What:** React Native's new rendering system [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Built On:** Leverages JSI for communication [[31](https://reactnative.dev/architecture/fabric-renderer)].
 *   **Core Principles:**
-    *   **Shared C++ Core:** More rendering logic (layout, view flattening) in C++ -> cross-platform consistency & performance [25].
-    *   **JSI Integration:** Efficient updates, synchronous operations [31].
+    *   **Shared C++ Core:** More rendering logic (layout, view flattening) in C++ -> cross-platform consistency & performance [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+    *   **JSI Integration:** Efficient updates, synchronous operations [[31](https://reactnative.dev/architecture/fabric-renderer)].
     *   **Improved Interoperability:** Better integration with native UI systems.
 
 <!--
@@ -413,12 +413,12 @@ Presenter Notes:
 
 #### **Benefits of Fabric**
 
-*   **Performance & Responsiveness:** More efficient UI updates, synchronous layout/rendering prevents visual "jumps" [31]. Smoother animations/interactions [28].
-*   **React 18+ Concurrent Features:** Unlocks modern React capabilities in RN [25]:
+*   **Performance & Responsiveness:** More efficient UI updates, synchronous layout/rendering prevents visual "jumps" [[31](https://reactnative.dev/architecture/fabric-renderer)]. Smoother animations/interactions [[28](https://dev.to/joaoalissonsilva/the-new-react-native-architecture-1jn9)].
+*   **React 18+ Concurrent Features:** Unlocks modern React capabilities in RN [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]:
     *   Concurrent Rendering (work on multiple updates simultaneously).
     *   Transitions (`useTransition` for prioritizing updates).
     *   Suspense for Data Fetching (better loading state handling).
-*   **Lazy Initialization of Host Components:** Native views (\<View\>, \<Text\>) initialized only when needed -> faster app startup [31].
+*   **Lazy Initialization of Host Components:** Native views (\<View\>, \<Text\>) initialized only when needed -> faster app startup [[31](https://reactnative.dev/architecture/fabric-renderer)].
 
 <!--
 Presenter Notes:
@@ -432,15 +432,15 @@ Presenter Notes:
 
 ### **2.5. TurboModules: Efficient Native Modules**
 
-*   **What:** New system for creating and interacting with Native Modules [25].
-*   **Built On:** Leverages **JSI** [32].
-*   **Mechanism:** JS gets a direct JSI reference to the native module instance -> call methods directly (sync/async) without Bridge overhead [32].
+*   **What:** New system for creating and interacting with Native Modules [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Built On:** Leverages **JSI** [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)].
+*   **Mechanism:** JS gets a direct JSI reference to the native module instance -> call methods directly (sync/async) without Bridge overhead [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)].
 
 #### **Key Benefit: Lazy Loading**
 
 *   **Old Way (Eager):** All modules loaded at app startup.
-*   **New Way (Lazy):** Module loaded/initialized only on *first access* from JS [25].
-*   **Result:** Dramatically improved app startup time & reduced initial memory footprint [25].
+*   **New Way (Lazy):** Module loaded/initialized only on *first access* from JS [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Result:** Dramatically improved app startup time & reduced initial memory footprint [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 
 <!--
 Presenter Notes:
@@ -456,11 +456,11 @@ Presenter Notes:
 #### **CodeGen's Role in Type Safety**
 
 *   **Problem:** Dynamically typed JS vs. statically typed Native (Java/Kotlin/ObjC/Swift/C++) can cause runtime type errors.
-*   **Solution: CodeGen** [25]
-    1.  **Specification:** Define module interface (methods, params, types) in JS (TypeScript/Flow) [32]. *Single source of truth.*
+*   **Solution: CodeGen** [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]
+    1.  **Specification:** Define module interface (methods, params, types) in JS (TypeScript/Flow) [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)]. *Single source of truth.*
     2.  **Generation:** Build tool reads the spec.
-    3.  **Scaffolding:** Auto-generates C++ JSI interface & native boilerplate (Java/ObjC++) ensuring type-safe communication [32].
-*   **Benefits:** Reduces boilerplate, enforces type safety, more robust/efficient native module development [32].
+    3.  **Scaffolding:** Auto-generates C++ JSI interface & native boilerplate (Java/ObjC++) ensuring type-safe communication [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)].
+*   **Benefits:** Reduces boilerplate, enforces type safety, more robust/efficient native module development [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)].
 
 <!--
 Presenter Notes:
@@ -474,11 +474,11 @@ Presenter Notes:
 
 ### **2.6. Bridgeless Mode: The Final Step**
 
-*   **Context:** JSI/Fabric/TurboModules remove the *need* for the Bridge, but it might still initialize for backward compatibility (timers, events, errors) [49].
-*   **Bridgeless Mode:** Experimental feature (RN ~0.73+) that **completely disables legacy Bridge initialization** [48, 49].
-*   **Interop Layers:** Allow TurboModules/Fabric to work with legacy modules/components even without the Bridge [49, 58].
-*   **Goal:** Remove final remnants/overhead of the old architecture, potential further startup improvements [50].
-*   **Status:** Ecosystem adoption ongoing [60]. Focus for now is understanding JSI/Fabric/TurboModules (the core you're using).
+*   **Context:** JSI/Fabric/TurboModules remove the *need* for the Bridge, but it might still initialize for backward compatibility (timers, events, errors) [[49](https://github.com/reactwg/react-native-new-architecture/discussions/154)].
+*   **Bridgeless Mode:** Experimental feature (RN ~0.73+) that **completely disables legacy Bridge initialization** [[48](https://www.spritle.com/blog/react-native-0-76-unleashed-bridgeless-architecture-redefines-app-speed/)], [[49](https://github.com/reactwg/react-native-new-architecture/discussions/154)].
+*   **Interop Layers:** Allow TurboModules/Fabric to work with legacy modules/components even without the Bridge [[49](https://github.com/reactwg/react-native-new-architecture/discussions/154)], [[58](https://reactnative.dev/blog/2023/12/06/0.73-debugging-improvements-stable-symlinks)].
+*   **Goal:** Remove final remnants/overhead of the old architecture, potential further startup improvements [[50](https://www.callstack.com/blog/experiment-with-new-architecture-of-react-native)].
+*   **Status:** Ecosystem adoption ongoing [[60](https://www.youtube.com/watch?v=K5HBIKAjZ4U)]. Focus for now is understanding JSI/Fabric/TurboModules (the core you're using).
 
 <!--
 Presenter Notes:
@@ -486,7 +486,7 @@ Presenter Notes:
 *   Mention the Interop Layers that facilitate this transition.
 *   Clarify that while it's the ultimate goal, full ecosystem adoption is still in progress.
 *   Reiterate that understanding JSI, Fabric, and TurboModules is the main takeaway for now.
-*   **Optional Deep Dive Callout:** Explain how JSI uses C++ Host Objects (`facebook::jsi::HostObject`) and pointers/references to allow direct method calls, bypassing serialization. Link to official docs [51, 52]. ([https://reactnative.dev/docs/architecture-overview](https://reactnative.dev/docs/architecture-overview))
+*   **Optional Deep Dive Callout:** Explain how JSI uses C++ Host Objects (`facebook::jsi::HostObject`) and pointers/references to allow direct method calls, bypassing serialization. Link to official docs [[51](https://github.com/anisurrahman072/React-Native-Advanced-Guide/blob/master/New-Architecture/New-Architecture-in-depth.md)], [[52](https://reactnative.dev/architecture/overview)]. ([https://reactnative.dev/docs/architecture-overview](https://reactnative.dev/docs/architecture-overview))
 -->
 
 ---
@@ -495,17 +495,17 @@ Presenter Notes:
 
 | Limitation                  | Description                               | Primary Solution(s) | How it Solves                                                                 |
 | :-------------------------- | :---------------------------------------- | :------------------ | :---------------------------------------------------------------------------- |
-| **Serialization Overhead**  | Slow JSON conversion between JS/Native [25] | **JSI**             | Direct C++ calls/memory access, no serialization needed [25].                 |
-| **Asynchronous-Only Calls** | Bridge was inherently async [25]          | **JSI**             | Allows direct *synchronous* calls when needed [25].                           |
-| **Eager Module Loading**    | All modules loaded at startup [25]        | **TurboModules**    | Lazy loading: modules load only on first access [25].                         |
-| **JS Thread Blocking/Jank** | Heavy JS blocked thread & UI updates [25] | **Fabric** & **JSI**  | Fabric enables concurrent rendering; JSI allows faster/sync calls [25].        |
-| **Concurrency Limitations** | Hindered modern React features [25]       | **Fabric**          | Designed to support React 18 concurrent features (Transitions, Suspense) [26]. |
+| **Serialization Overhead**  | Slow JSON conversion between JS/Native [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)] | **JSI**             | Direct C++ calls/memory access, no serialization needed [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].                 |
+| **Asynchronous-Only Calls** | Bridge was inherently async [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]          | **JSI**             | Allows direct *synchronous* calls when needed [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].                           |
+| **Eager Module Loading**    | All modules loaded at startup [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]        | **TurboModules**    | Lazy loading: modules load only on first access [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].                         |
+| **JS Thread Blocking/Jank** | Heavy JS blocked thread & UI updates [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)] | **Fabric** & **JSI**  | Fabric enables concurrent rendering; JSI allows faster/sync calls [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].        |
+| **Concurrency Limitations** | Hindered modern React features [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]       | **Fabric**          | Designed to support React 18 concurrent features (Transitions, Suspense) [[26](https://reactnative.dev/architecture/landing-page)]. |
 
 <!--
 Presenter Notes:
 *   Use this table to explicitly connect the problems of the old architecture to the solutions provided by the new components.
 *   Reinforce that the New Architecture is a fundamental redesign, not just incremental improvements.
-*   Mention the Interop Layers [49] facilitating gradual ecosystem transition [25, 26].
+*   Mention the Interop Layers [[49](https://github.com/reactwg/react-native-new-architecture/discussions/154)] facilitating gradual ecosystem transition [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)], [[26](https://reactnative.dev/architecture/landing-page)].
 -->
 
 ---
@@ -558,14 +558,14 @@ Transition from the "how it works" to "why you should care" as a developer.
 
 ### **3.1. Why This Matters For You**
 
-*   **You're Already Using It!** (RN 0.76+, Expo SDK 52+) [25, 54].
+*   **You're Already Using It!** (RN 0.76+, Expo SDK 52+) [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)], [[54](https://www.reddit.com/r/expo/comments/1is2e6q/downgrade_52_to_51/)].
 *   **Performance Awareness:** Understand *why* things are faster:
-    *   Smoother Lists/Animations (`FlatList` in SpeedyMeds) -> Fabric's efficiency [28].
-    *   Faster App Startup -> TurboModules lazy loading [25].
-    *   Quicker Native Interactions (Camera Scan, Biometrics) -> JSI's direct path [25].
-*   **Debugging Context:** Mental model helps diagnose issues (e.g., sync JSI call blocking? Concurrent rendering glitch?) [26].
-*   **Leveraging Modern React:** Enables React 18+ features (`useTransition`, Suspense) via Fabric [25].
-*   **Ecosystem Compatibility:** Check library compatibility (TurboModules/Fabric vs. Bridge) using tools like React Native Directory [55].
+    *   Smoother Lists/Animations (`FlatList` in SpeedyMeds) -> Fabric's efficiency [[28](https://dev.to/joaoalissonsilva/the-new-react-native-architecture-1jn9)].
+    *   Faster App Startup -> TurboModules lazy loading [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+    *   Quicker Native Interactions (Camera Scan, Biometrics) -> JSI's direct path [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Debugging Context:** Mental model helps diagnose issues (e.g., sync JSI call blocking? Concurrent rendering glitch?) [[26](https://reactnative.dev/architecture/landing-page)].
+*   **Leveraging Modern React:** Enables React 18+ features (`useTransition`, Suspense) via Fabric [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **Ecosystem Compatibility:** Check library compatibility (TurboModules/Fabric vs. Bridge) using tools like React Native Directory [[55](https://docs.expo.dev/guides/new-architecture/)].
 
 <!--
 Presenter Notes:
@@ -578,11 +578,11 @@ Presenter Notes:
 
 ### **3.2. Performance Considerations (Conceptual)**
 
-*   **Startup Time (TurboModules):** Lazy loading = major win [25].
-*   **UI Responsiveness (Fabric):** Concurrent rendering -> less blocking, smoother UI/animations, especially with complex updates or large data [25, 28]. (Contrast with old JS thread freezing UI [12]).
-*   **Native Call Efficiency (JSI):** Reduced overhead for frequent JS <-> Native communication -> less CPU usage, faster responses [25].
+*   **Startup Time (TurboModules):** Lazy loading = major win [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
+*   **UI Responsiveness (Fabric):** Concurrent rendering -> less blocking, smoother UI/animations, especially with complex updates or large data [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)], [[28](https://dev.to/joaoalissonsilva/the-new-react-native-architecture-1jn9)]. (Contrast with old JS thread freezing UI [[12](https://reactnative.dev/docs/performance)]).
+*   **Native Call Efficiency (JSI):** Reduced overhead for frequent JS <-> Native communication -> less CPU usage, faster responses [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 
-*(Note: Actual performance still depends on app code quality, but New Architecture removes inherent bottlenecks [30].)*
+*(Note: Actual performance still depends on app code quality, but New Architecture removes inherent bottlenecks [[30](https://dev.to/anishamalde/how-does-react-natives-new-architecture-affect-performance-1ioe)].)*
 
 <!--
 Presenter Notes:
@@ -597,9 +597,9 @@ Presenter Notes:
 
 *   **Improved Tooling:**
     *   Hermes engine debugging improvements.
-    *   New experimental JS Debugger (via Dev Menu) aiming to replace Flipper for JS [58].
-    *   Better `console.log` capture early in lifecycle [58].
-*   **Conceptual Relevance:** Understanding sync JSI calls or concurrent rendering helps diagnose certain bugs (e.g., unexpected delays, visual glitches) [26]. *(Specific tools covered later).*
+    *   New experimental JS Debugger (via Dev Menu) aiming to replace Flipper for JS [[58](https://reactnative.dev/blog/2023/12/06/0.73-debugging-improvements-stable-symlinks)].
+    *   Better `console.log` capture early in lifecycle [[58](https://reactnative.dev/blog/2023/12/06/0.73-debugging-improvements-stable-symlinks)].
+*   **Conceptual Relevance:** Understanding sync JSI calls or concurrent rendering helps diagnose certain bugs (e.g., unexpected delays, visual glitches) [[26](https://reactnative.dev/architecture/landing-page)]. *(Specific tools covered later).*
 
 <!--
 Presenter Notes:
@@ -614,10 +614,10 @@ Presenter Notes:
 
 Expo simplifies using the New Architecture:
 
-*   **Enabled by Default:** `npx create-expo-app` (SDK 52+) sets it up automatically [54]. (`"newArchEnabled": true` in `app.json`/`app.config.js`).
-*   **Opting Out:** Possible (`newArchEnabled: false` + new dev build) for incompatible libraries, but use as temporary workaround [54].
-*   **Compatibility Check (`expo-doctor`):** `npx expo-doctor` validates dependencies against React Native Directory for New Arch issues [55, 63]. (Configurable in `package.json`).
-*   **Expo Modules Compatibility:** Modules built with `expo-modules-core` are compatible out-of-the-box [55].
+*   **Enabled by Default:** `npx create-expo-app` (SDK 52+) sets it up automatically [[54](https://www.reddit.com/r/expo/comments/1is2e6q/downgrade_52_to_51/)]. (`"newArchEnabled": true` in `app.json`/`app.config.js`).
+*   **Opting Out:** Possible (`newArchEnabled: false` + new dev build) for incompatible libraries, but use as temporary workaround [[54](https://www.reddit.com/r/expo/comments/1is2e6q/downgrade_52_to_51/)].
+*   **Compatibility Check (`expo-doctor`):** `npx expo-doctor` validates dependencies against React Native Directory for New Arch issues [[55](https://docs.expo.dev/guides/new-architecture/)], [[63](https://docs.expo.dev/develop/tools/)]. (Configurable in `package.json`).
+*   **Expo Modules Compatibility:** Modules built with `expo-modules-core` are compatible out-of-the-box [[55](https://docs.expo.dev/guides/new-architecture/)].
 
 <!--
 Presenter Notes:
@@ -682,13 +682,13 @@ Transition to the practical building blocks developers use daily. Emphasize the 
 
 ### **4.1. Essential Building Blocks (Preview)**
 
-React Native provides **Core Components** - pre-built, cross-platform UI elements mapping to native views [22].
+React Native provides **Core Components** - pre-built, cross-platform UI elements mapping to native views [[22](https://reactnative.dev/docs/intro-react-native-components)].
 
-*   `<View>`: Basic container, layout (Flexbox) [36, 18].
-*   `<Text>`: Display text (all text *must* be inside `<Text>`) [36, 38].
-*   `<Image>`: Display network/static images [36].
-*   `<StyleSheet>`: API for defining optimized styles [36].
-*   `<Button>`: Simple, basic button [36].
+*   `<View>`: Basic container, layout (Flexbox) [[36](https://reactnative.dev/docs/components-and-apis)], [[18](https://micheal.dev/blog/learning-react-native-basics/)].
+*   `<Text>`: Display text (all text *must* be inside `<Text>`) [[36](https://reactnative.dev/docs/components-and-apis)], [[38](https://reactnative.dev/docs/text)].
+*   `<Image>`: Display network/static images [[36](https://reactnative.dev/docs/components-and-apis)].
+*   `<StyleSheet>`: API for defining optimized styles [[36](https://reactnative.dev/docs/components-and-apis)].
+*   `<Button>`: Simple, basic button [[36](https://reactnative.dev/docs/components-and-apis)].
 
 *(More details & components in later modules!)*
 
@@ -704,9 +704,9 @@ Presenter Notes:
 
 ### **Core Component: `<View>`**
 
-*   **Role:** Fundamental container for layout and grouping [36].
-*   **Maps to:** `UIView` (iOS), `android.view.ViewGroup` (Android) [18].
-*   **Layout:** Uses Flexbox [24].
+*   **Role:** Fundamental container for layout and grouping [[36](https://reactnative.dev/docs/components-and-apis)].
+*   **Maps to:** `UIView` (iOS), `android.view.ViewGroup` (Android) [[18](https://micheal.dev/blog/learning-react-native-basics/)].
+*   **Layout:** Uses Flexbox [[24](https://reactnative.dev/docs/intro-react)].
 
 ```typescript
 /**
@@ -740,7 +740,7 @@ export default MedicationInfoContainer;
 Presenter Notes:
 *   Explain the View's role as the primary layout container.
 *   Show the simple SpeedyMeds-themed example.
-*   **Code Explanation:** This example uses a `<View>` styled via StyleSheet to create a container for medication info. Styles define padding, background, border radius. It groups two `<Text>` components. `accessibilityRole="text"` improves semantics for screen readers. Maps to native `UIView`/`ViewGroup` [18].
+*   **Code Explanation:** This example uses a `<View>` styled via StyleSheet to create a container for medication info. Styles define padding, background, border radius. It groups two `<Text>` components. `accessibilityRole="text"` improves semantics for screen readers. Maps to native `UIView`/`ViewGroup` [[18](https://micheal.dev/blog/learning-react-native-basics/)].
 *   Point out the documentation link.
 *   Full styles from original doc:
 ```typescript
@@ -769,9 +769,9 @@ const styles = StyleSheet.create({
 
 ### **Core Component: `<Text>`**
 
-*   **Role:** Display all text content [36].
-*   **Rule:** All text strings *must* be wrapped in `<Text>` [38].
-*   **Features:** Nesting for inline styling, touch handling, text layout rules (not Flexbox for children) [38].
+*   **Role:** Display all text content [[36](https://reactnative.dev/docs/components-and-apis)].
+*   **Rule:** All text strings *must* be wrapped in `<Text>` [[38](https://reactnative.dev/docs/text)].
+*   **Features:** Nesting for inline styling, touch handling, text layout rules (not Flexbox for children) [[38](https://reactnative.dev/docs/text)].
 
 ```typescript
 /**
@@ -809,7 +809,7 @@ Presenter Notes:
 *   Explain the Text component's role and the crucial rule about wrapping all text.
 *   Mention nesting for inline styles.
 *   Show the SpeedyMeds dosage example.
-*   **Code Explanation:** Displays dosage instructions. Outer `<Text>` sets base style. Nested `<Text>` applies bold/color to "1 tablet", showing inline styling. Adheres to "all text in `<Text>`" rule [38]. `lineHeight` improves readability. `accessibilityLabel` provides summary for screen readers. Demonstrates rendering styled text [38].
+*   **Code Explanation:** Displays dosage instructions. Outer `<Text>` sets base style. Nested `<Text>` applies bold/color to "1 tablet", showing inline styling. Adheres to "all text in `<Text>`" rule [[38](https://reactnative.dev/docs/text)]. `lineHeight` improves readability. `accessibilityLabel` provides summary for screen readers. Demonstrates rendering styled text [[38](https://reactnative.dev/docs/text)].
 *   Point out the documentation link.
 *   Full styles from original doc:
 ```typescript
@@ -831,8 +831,8 @@ const styles = StyleSheet.create({
 
 ### **Core Component: `<Image>`**
 
-*   **Role:** Display images (network, static resources, local) [36].
-*   **Requirement:** **Must** specify `width` & `height` styles for network images [65]. Recommended for static.
+*   **Role:** Display images (network, static resources, local) [[36](https://reactnative.dev/docs/components-and-apis)].
+*   **Requirement:** **Must** specify `width` & `height` styles for network images [[65](https://reactnative.dev/docs/image)]. Recommended for static.
 
 ```typescript
 /**
@@ -878,9 +878,9 @@ export default MedicationImages;
 <!--
 Presenter Notes:
 *   Explain the Image component's purpose.
-*   Emphasize the width/height requirement for network images [65].
+*   Emphasize the width/height requirement for network images [[65](https://reactnative.dev/docs/image)].
 *   Show the example with both network and static (placeholder) images.
-*   **Code Explanation:** Shows network and static images. Network `<Image>` uses `uri` in `source` prop and requires `width`/`height` styles [65]. Static `<Image>` uses `require()` (or placeholder URI) - dimensions often inferred but set explicitly here for consistency. Both include crucial `accessibilityLabel` for screen readers. Could show medication pictures in SpeedyMeds.
+*   **Code Explanation:** Shows network and static images. Network `<Image>` uses `uri` in `source` prop and requires `width`/`height` styles [[65](https://reactnative.dev/docs/image)]. Static `<Image>` uses `require()` (or placeholder URI) - dimensions often inferred but set explicitly here for consistency. Both include crucial `accessibilityLabel` for screen readers. Could show medication pictures in SpeedyMeds.
 *   Point out the documentation link.
 *   Full styles from original doc:
 ```typescript
@@ -915,8 +915,8 @@ const styles = StyleSheet.create({
 
 ### **Core API: `StyleSheet`**
 
-*   **Role:** API (`StyleSheet.create`) to define reusable style objects [36].
-*   **Benefits:** Code organization (styles separate from render logic), potential performance optimizations, static analysis/autocomplete [39, 66].
+*   **Role:** API (`StyleSheet.create`) to define reusable style objects [[36](https://reactnative.dev/docs/components-and-apis)].
+*   **Benefits:** Code organization (styles separate from render logic), potential performance optimizations, static analysis/autocomplete [[39](https://www.newline.co/30-days-of-react-native/day-04-styles)], [[66](https://reactnative.dev/docs/stylesheet)].
 
 ```typescript
 /**
@@ -960,7 +960,7 @@ Presenter Notes:
 *   Explain StyleSheet not as a component, but an API for defining styles.
 *   Highlight the benefits over inline styles.
 *   Show the InfoCard example demonstrating its usage.
-*   **Code Explanation:** Shows `StyleSheet.create` for a reusable `InfoCard` (e.g., for SpeedyMeds alerts). Styles (`cardContainer`, `titleText`, etc.) defined once. Keeps JSX clean [66]. Standard RN approach for organization, reuse, potential performance gains [39]. Includes layout, appearance, platform shadows (shadow*/elevation). Accessibility roles added.
+*   **Code Explanation:** Shows `StyleSheet.create` for a reusable `InfoCard` (e.g., for SpeedyMeds alerts). Styles (`cardContainer`, `titleText`, etc.) defined once. Keeps JSX clean [[66](https://reactnative.dev/docs/stylesheet)]. Standard RN approach for organization, reuse, potential performance gains [[39](https://www.newline.co/30-days-of-react-native/day-04-styles)]. Includes layout, appearance, platform shadows (shadow*/elevation). Accessibility roles added.
 *   Point out the documentation link.
 *   Full styles and App component from original doc:
 ```typescript
@@ -1015,9 +1015,9 @@ export default App;
 
 ### **Core Component: `<Button>`**
 
-*   **Role:** Simple, cross-platform button [36].
-*   **Props:** Requires `title` (string) and `onPress` (function) [67]. Optional: `color`, `accessibilityLabel`, `disabled` [67].
-*   **Customization:** Minimal. Use `<Pressable>` for more control [67].
+*   **Role:** Simple, cross-platform button [[36](https://reactnative.dev/docs/components-and-apis)].
+*   **Props:** Requires `title` (string) and `onPress` (function) [[67](https://reactnative.dev/docs/button)]. Optional: `color`, `accessibilityLabel`, `disabled` [[67](https://reactnative.dev/docs/button)].
+*   **Customization:** Minimal. Use `<Pressable>` for more control [[67](https://reactnative.dev/docs/button)].
 
 ```typescript
 /**
@@ -1054,10 +1054,10 @@ export default RefillButton;
 <!--
 Presenter Notes:
 *   Introduce the basic Button component.
-*   Highlight required props (`title`, `onPress`) [67].
-*   Mention its limited customization and point towards `<Pressable>` for more complex needs [67, 68].
+*   Highlight required props (`title`, `onPress`) [[67](https://reactnative.dev/docs/button)].
+*   Mention its limited customization and point towards `<Pressable>` for more complex needs [[67](https://reactnative.dev/docs/button)], [[68](https://reactnative.dev/docs/handling-touches)].
 *   Show the SpeedyMeds "Request Refill" example.
-*   **Code Explanation:** Basic `<Button>` example. Requires `title` and `onPress` props [67]. `onPress` triggers an `Alert`. Optional `color` styling varies by platform [67]. `accessibilityLabel` is crucial. Limited styling; use `<Pressable>` for custom buttons [67]. Fits SpeedyMeds theme.
+*   **Code Explanation:** Basic `<Button>` example. Requires `title` and `onPress` props [[67](https://reactnative.dev/docs/button)]. `onPress` triggers an `Alert`. Optional `color` styling varies by platform [[67](https://reactnative.dev/docs/button)]. `accessibilityLabel` is crucial. Limited styling; use `<Pressable>` for custom buttons [[67](https://reactnative.dev/docs/button)]. Fits SpeedyMeds theme.
 *   Point out the documentation link.
 *   Full styles from original doc:
 ```typescript
@@ -1076,13 +1076,13 @@ const styles = StyleSheet.create({
 
 | React Native | Android Native      | iOS Native   | Web Analog            | Description                               |
 | :----------- | :------------------ | :----------- | :-------------------- | :---------------------------------------- |
-| `<View>`     | ViewGroup           | UIView       | `<div>`               | Container, Layout (Flexbox), Styling [18] |
-| `<Text>`     | TextView            | UITextView   | `<p>`, `<span>`       | Display styled text [18]                  |
-| `<Image>`    | ImageView           | UIImageView  | `<img>`               | Display images [18]                       |
-| `<TextInput>`| EditText            | UITextField  | `<input type="text">` | User text input [18]                      |
-| `<ScrollView>`| ScrollView         | UIScrollView | `<div>` (overflow)    | Generic scrolling container [18]          |
-| `<Button>`   | Button              | UIButton     | `<button>`            | Basic button [36]                         |
-| `StyleSheet` | N/A                 | N/A          | CSS                   | API for defining styles [36]              |
+| `<View>`     | ViewGroup           | UIView       | `<div>`               | Container, Layout (Flexbox), Styling [[18](https://micheal.dev/blog/learning-react-native-basics/)] |
+| `<Text>`     | TextView            | UITextView   | `<p>`, `<span>`       | Display styled text [[18](https://micheal.dev/blog/learning-react-native-basics/)]                  |
+| `<Image>`    | ImageView           | UIImageView  | `<img>`               | Display images [[18](https://micheal.dev/blog/learning-react-native-basics/)]                       |
+| `<TextInput>`| EditText            | UITextField  | `<input type="text">` | User text input [[18](https://micheal.dev/blog/learning-react-native-basics/)]                      |
+| `<ScrollView>`| ScrollView         | UIScrollView | `<div>` (overflow)    | Generic scrolling container [[18](https://micheal.dev/blog/learning-react-native-basics/)]          |
+| `<Button>`   | Button              | UIButton     | `<button>`            | Basic button [[36](https://reactnative.dev/docs/components-and-apis)]                         |
+| `StyleSheet` | N/A                 | N/A          | CSS                   | API for defining styles [[36](https://reactnative.dev/docs/components-and-apis)]              |
 
 <!--
 Presenter Notes:
@@ -1100,9 +1100,9 @@ Presenter Notes:
 
 #### **Key Documentation Sites:**
 
-1.  **React Native:** [reactnative.dev](https://reactnative.dev/) (Core concepts, components, APIs) [12]
-2.  **Expo:** [docs.expo.dev](https://docs.expo.dev/) (Expo SDK, CLI, EAS, workflows) [55]
-3.  **React Navigation:** [reactnavigation.org](https://reactnavigation.org/) (Navigation library) [43]
+1.  **React Native:** [reactnative.dev](https://reactnative.dev/) (Core concepts, components, APIs) [[12](https://reactnative.dev/docs/performance)]
+2.  **Expo:** [docs.expo.dev](https://docs.expo.dev/) (Expo SDK, CLI, EAS, workflows) [[55](https://docs.expo.dev/guides/new-architecture/)]
+3.  **React Navigation:** [reactnavigation.org](https://reactnavigation.org/) (Navigation library) [[43](https://reactnavigation.org/docs/getting-started/)]
 
 <!--
 Presenter Notes:
@@ -1117,13 +1117,13 @@ Presenter Notes:
 
 #### **Navigation Strategy:**
 
-*   **Getting Started/Tutorials:** Initial setup, basic concepts [17].
+*   **Getting Started/Tutorials:** Initial setup, basic concepts [[17](https://reactnative.dev/docs/tutorial)].
 *   **Components & APIs (Reference):** Detailed info on components/APIs.
-    *   Look for: **Props** (list, types, descriptions) [37], Examples, Platform Specificity notes.
-*   **Guides:** In-depth topics (Flexbox, Touches, Networking, Performance, Accessibility) [12].
-*   **Architecture (RN Docs):** Internals (JSI, Fabric, TurboModules) [26].
-*   **Expo Docs Structure:** Guides, Reference (SDK modules), EAS, CLI [63].
-*   **Version Selector:** **ALWAYS** match doc version to your project's RN/Expo SDK version [64].
+    *   Look for: **Props** (list, types, descriptions) [[37](https://reactnative.dev/docs/view)], Examples, Platform Specificity notes.
+*   **Guides:** In-depth topics (Flexbox, Touches, Networking, Performance, Accessibility) [[12](https://reactnative.dev/docs/performance)].
+*   **Architecture (RN Docs):** Internals (JSI, Fabric, TurboModules) [[26](https://reactnative.dev/architecture/landing-page)].
+*   **Expo Docs Structure:** Guides, Reference (SDK modules), EAS, CLI [[63](https://docs.expo.dev/develop/tools/)].
+*   **Version Selector:** **ALWAYS** match doc version to your project's RN/Expo SDK version [[64](https://reactnative.dev/docs/0.70/text)].
 
 <!--
 Presenter Notes:
@@ -1140,15 +1140,15 @@ Beyond official docs:
 
 #### **Official Channels:**
 
-*   **React Native GitHub:** [github.com/facebook/react-native](https://github.com/facebook/react-native) (Issues [73], Discussions/Proposals [62])
+*   **React Native GitHub:** [github.com/facebook/react-native](https://github.com/facebook/react-native) (Issues [[73](https://github.com/facebook/react-native/blob/master/.github/SUPPORT.md)], Discussions/Proposals [[62](https://github.com/react-native-community)])
 *   **Expo GitHub:** [github.com/expo/expo](https://github.com/expo/expo) (Expo-specific issues)
 
 #### **Community Forums & Chat:**
 
-*   **Stack Overflow:** (`react-native`, `expo` tags) [73]
-*   **Reactiflux Discord:** (`#react-native` channel) [73] ([discord.gg/reactiflux](https://discord.gg/reactiflux))
-*   **Expo Discord:** [chat.expo.dev](https://chat.expo.dev) [71]
-*   **Reddit:** r/reactnative [33], r/expo [54]
+*   **Stack Overflow:** (`react-native`, `expo` tags) [[73](https://github.com/facebook/react-native/blob/master/.github/SUPPORT.md)]
+*   **Reactiflux Discord:** (`#react-native` channel) [[73](https://github.com/facebook/react-native/blob/master/.github/SUPPORT.md)] ([discord.gg/reactiflux](https://discord.gg/reactiflux))
+*   **Expo Discord:** [chat.expo.dev](https://chat.expo.dev) [[71](https://docs.expo.dev/)]
+*   **Reddit:** r/reactnative [[33](https://www.reddit.com/r/reactnative/comments/1aoz3kv/did_the_new_react_native_architecture_make_it/)], r/expo [[54](https://www.reddit.com/r/expo/comments/1is2e6q/downgrade_52_to_51/)]
 
 <!--
 Presenter Notes:
@@ -1163,17 +1163,17 @@ Presenter Notes:
 
 #### **Helpful Tools & Sites:**
 
-*   **React Native Community Org:** [github.com/react-native-community](https://github.com/react-native-community) (Hosts essential 3rd-party libraries) [62]
-*   **React Native Directory:** [reactnative.directory](https://reactnative.directory/) (Searchable library database, **New Architecture compatibility info**) [55]
+*   **React Native Community Org:** [github.com/react-native-community](https://github.com/react-native-community) (Hosts essential 3rd-party libraries) [[62](https://github.com/react-native-community)]
+*   **React Native Directory:** [reactnative.directory](https://reactnative.directory/) (Searchable library database, **New Architecture compatibility info**) [[55](https://docs.expo.dev/guides/new-architecture/)]
 *   **Expo Snack:** [snack.expo.dev](https://snack.expo.dev/) (Online RN editor, great for sharing examples/bugs)
-*   **React Native Upgrade Helper:** [react-native-community.github.io/upgrade-helper/](https://react-native-community.github.io/upgrade-helper/) (Code diffs between RN versions) [59]
+*   **React Native Upgrade Helper:** [react-native-community.github.io/upgrade-helper/](https://react-native-community.github.io/upgrade-helper/) (Code diffs between RN versions) [[59](https://dev.to/ajmal_hasan/a-step-by-step-guide-to-upgrading-your-react-native-project-to-the-new-architecture-3o20)]
 
 <!--
 Presenter Notes:
 *   Highlight key community resources and tools.
 *   **Crucially emphasize** React Native Directory for checking library compatibility.
 *   Mention Expo Snack as a required tool for course exercises.
-*   Reinforce that leveraging the community is key [13].
+*   Reinforce that leveraging the community is key [[13](https://reactnative.dev/)].
 *   **Instructor Note:** Emphasize effective searching and bookmarking key sites.
 -->
 
@@ -1195,11 +1195,11 @@ Presenter Notes:
 Presenter Notes:
 *   Run this as an interactive quiz (MS Forms) to encourage documentation exploration.
 *   **Answers:**
-    1.  `resizeMode` [65]
+    1.  `resizeMode` [[65](https://reactnative.dev/docs/image)]
     2.  `row`, `column`, `row-reverse`, `column-reverse` [From Flexbox Guide]
-    3.  `npx expo-doctor` [63]
-    4.  JSI (JavaScript Interface) [26]
-    5.  `onPress` [67]
+    3.  `npx expo-doctor` [[63](https://docs.expo.dev/develop/tools/)]
+    4.  JSI (JavaScript Interface) [[26](https://reactnative.dev/architecture/landing-page)]
+    5.  `onPress` [[67](https://reactnative.dev/docs/button)]
 -->
 
 ---
@@ -1232,8 +1232,8 @@ Introduce the optional end-of-module challenge. Frame it as applying the learned
     *   **Feature 1:** Efficiently display many medication images (network/cache) in a list.
     *   **Feature 2:** Schedule reliable *native* platform notifications.
 3.  **Architecture Connection (Conceptual Explanation):**
-    *   **Feature 1:** How might **Fabric** help smooth scrolling with many images? (Hint: Concurrent rendering [31]).
-    *   **Feature 2:** What New Arch component needed for native notifications? (Hint: Accessing native features [32]). How does **JSI** make JS -> Native calls more efficient/flexible than the Bridge? (Hint: Direct calls vs. serialization [25]).
+    *   **Feature 1:** How might **Fabric** help smooth scrolling with many images? (Hint: Concurrent rendering [[31](https://reactnative.dev/architecture/fabric-renderer)]).
+    *   **Feature 2:** What New Arch component needed for native notifications? (Hint: Accessing native features [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)]). How does **JSI** make JS -> Native calls more efficient/flexible than the Bridge? (Hint: Direct calls vs. serialization [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)]).
 
 <!--
 Presenter Notes:
@@ -1241,8 +1241,8 @@ Presenter Notes:
 *   Focus is on *connecting concepts*, not writing code.
 *   **Guidance for Discussion/Answers:**
     *   **Structure:** Encourage simple nesting: `View` (container) -> `Image` (left), `View` (text details) -> `Text` (name), `Text` (dosage/time), `Button` (right/bottom).
-    *   **Feature 1 (Images):** Fabric's concurrent rendering can prevent image loading/rendering from blocking the main thread, keeping scrolling smooth even as images pop in [31].
-    *   **Feature 2 (Notifications):** Need a **TurboModule** to wrap native notification APIs [32]. **JSI** allows direct, faster calls to `scheduleNotification` without Bridge serialization overhead. Could potentially allow synchronous confirmation if the native API supports it [25].
+    *   **Feature 1 (Images):** Fabric's concurrent rendering can prevent image loading/rendering from blocking the main thread, keeping scrolling smooth even as images pop in [[31](https://reactnative.dev/architecture/fabric-renderer)].
+    *   **Feature 2 (Notifications):** Need a **TurboModule** to wrap native notification APIs [[32](https://reactnative.dev/docs/turbo-native-modules-introduction)]. **JSI** allows direct, faster calls to `scheduleNotification` without Bridge serialization overhead. Could potentially allow synchronous confirmation if the native API supports it [[25](https://dev.to/rushi-patel/decoding-the-new-architecture-of-react-native-4hd5)].
 *   Facilitate discussion or review submissions based on the learning path.
 -->
 
@@ -1265,100 +1265,3 @@ Presenter Notes:
 *   Briefly preview the topics coming in subsequent modules.
 *   Congratulate learners on completing the fundamentals.
 -->
-
----
-
-## **Works Cited (1/4)**
-
-1.  Your Next Mobile App Platform in 2025... - Bugsee
-2.  Cross-platform and native app development... - JetBrains
-3.  Cross-platform vs native app development... - Mobile Reality
-4.  Cross-platform vs Native Mobile Development... - Turing
-5.  Native Development Vs Cross-Platform Development... - Selleo
-6.  PhoneGap vs Cordova Mobile Development Architecture Guide - MoldStud
-7.  Cross-Platform Mobile App Development: Popular Frameworks - Codewave
-8.  Apache Cordova - Wikipedia
-9.  Apache Cordova vs. PhoneGap: Differences... - Ionic
-10. Comparing Mobile Frameworks: Cordova vs PhoneGap vs Ionic... | Startup House
-11. What Is React Native? Complex Guide for 2024 - Netguru
-12. Performance Overview - React Native
-13. React Native · Learn once, write anywhere
-14. React Native App Development Guide... - MobiDev
-15. React vs React Native - Key Difference... - Radixweb
-16. Five years of React Native at Shopify (2025)
-17. Learn the Basics - React Native
-18. React Native Overview Notes - Micheal England
-19. Beyond HMR: Understanding React's Fast Refresh - DEV Community
-20. Fast Refresh - React Native
-
-<!-- Presenter Notes: Keep citations for reference. Split across multiple slides for readability if needed. -->
-
----
-
-## **Works Cited (2/4)**
-
-21. What is the difference between Hot Reloading and Live Reloading... - Stack Overflow
-22. Core Components and Native Components - React Native
-23. React vs. React Native: What are the differences? - Hygraph
-24. React Fundamentals - React Native
-25. The New Architecture of React Native: All you need to know - DEV ...
-26. About the New Architecture · React Native
-27. React Native New Architecture - IJMRA
-28. The New React Native Architecture - DEV Community
-29. Understanding React Native's New Architecture... - Metadesign Solutions
-30. How does React Native's New Architecture affect performance? - DEV Community
-31. Fabric · React Native
-32. Native Modules: Introduction · React Native
-33. Did the new React Native architecture make it faster/as fast as flutter? - Reddit
-34. React Native Core Contributor Summit 2024 Recap
-35. Five years of React Native at Shopify : r/reactnative - Reddit
-36. Core Components and APIs - React Native
-37. View · React Native
-38. Text · React Native
-39. Styles - 30 Days of React Native | newline - Fullstack.io
-40. Style - React Native
-
----
-
-## **Works Cited (3/4)**
-
-41. CSS in React Native Thanks to Babel and Metro... - Sparkbox
-42. Navigating Between Screens - React Native
-43. Getting started | React Navigation
-44. An Android Developer's Guide to React Native - DEV Community
-45. iOS Native UI Components - React Native
-46. React Native New Architecture - DEV Community (hellonehha)
-47. React Native's New Architecture: A Deep Dive... - Atalay Tech
-48. React Native 0.76 Unleashed: Bridgeless Architecture... - Spritle
-49. 0.73: Introducing Bridgeless Mode · reactwg react-native-new ... - GitHub Discussions
-50. Experiment With the New Architecture of React Native | {callstack}
-51. React Native — Ultimate Guide on New Architecture in depth - GitHub (anisurrahman072)
-52. Architecture Overview · React Native
-53. Communication between native and React Native - React Native
-54. Downgrade 52 to 51 : r/expo - Reddit (Also covers New Arch default)
-55. React Native's New Architecture - Expo Documentation
-56. React Native Update - Expo 52 is Here | WaveMaker Docs
-57. Deep Dive into React Native's New Architecture... - ESPC Conference, 2025
-58. React Native 0.73 - Debugging Improvements...
-59. A Guide to Upgrade Your React Native Project... - DEV Community
-60. React Native Bridgeless Mode for Dummies - YouTube
-
----
-
-## **Works Cited (4/4)**
-
-61. New React Native / Expo templates not working... #8727 | Support | ABP.IO
-62. React Native Community - GitHub
-63. Tools for development - Expo Documentation
-64. Text - React Native (Example showing version selector usage)
-65. Image · React Native
-66. StyleSheet · React Native
-67. Button · React Native
-68. Handling Touches - React Native
-69. Questions about core components : r/reactnative - Reddit
-70. Handling Text Input - React Native
-71. Expo Documentation (General reference, includes Discord link)
-72. React Navigation | React Navigation (General reference)
-73. react-native/.github/SUPPORT.md ... - GitHub (Support guidelines)
-74. Where To Get Support - React (Community support page)
-75. Image Style Props - React Native

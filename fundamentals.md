@@ -1316,7 +1316,7 @@ This concludes the Fundamentals module. You now have a foundational understandin
 
 #### **Works cited**
 
-1. Your Next Mobile App Platform in 2025: A Comprehensive Guide to Native and Cross-Platform Development \- Bugsee, accessed April 14, 2025, [https://bugsee.com/blog/your-next-mobile-app-platform-in-2025-a-comprehensive-guide-to-native-and-cross-platform-development/](https://bugsee.com/blog/your-next-mobile-app-platform-in-2025-a-comprehensive-guide-to-native-and-cross-platform-development/)  
+1. Your Next Mobile App Platform in 2025: A Comprehensive Guide to Native and Cross-Platform Development \- Bugsee, accessed April 14, 2025, [1] 
 2. Cross-platform and native app development: How do you choose? \- JetBrains, accessed April 14, 2025, [https://www.jetbrains.com/help/kotlin-multiplatform-dev/native-and-cross-platform.html](https://www.jetbrains.com/help/kotlin-multiplatform-dev/native-and-cross-platform.html)  
 3. Cross-platform vs native app development: Final Comparison \- Mobile Reality, accessed April 14, 2025, [https://themobilereality.com/blog/cross-platform-vs-native-app-development](https://themobilereality.com/blog/cross-platform-vs-native-app-development)  
 4. Cross-platform vs Native Mobile Development: What Should Enterprises Choose? \- Turing, accessed April 14, 2025, [https://www.turing.com/blog/cross-platform-vs-native-mobile-development](https://www.turing.com/blog/cross-platform-vs-native-mobile-development)  
