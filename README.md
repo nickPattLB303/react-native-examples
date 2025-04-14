@@ -40,19 +40,12 @@ This course supports three distinct learning paths:
 
 This repository is organized as follows:
 
-- `main` branch: Course overview and navigation
-- `docs` branch: All text-based documentation in markdown format and HTML/CSS slides for live training sessions
-  - `/slides`: Contains all presentation materials organized by module
-- `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
-- `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
-- `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
-- `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
+- `main` branch: Contains the latest course information, documentation, and slides
+- `v2` branch: 
+  - `docs` All text-based documentation in markdown format
+  - `/slides`: HTML/CSS slides for live training sessions
+  - `exercises/<EXERCISE_NAME>/starter`: Starter code for exercises
+  - `exercises/<EXERCISE_NAME>/complete`: Completed examples for exercises
+  - `challenges/<CHALLENGE_NAME>/starter`: Starter code for challenges
+  - `challenges/<CHALLENGE_NAME>/complete`: Completed examples for challenges
 
-
-## Development Tools
-
-- HTML, CSS, JavaScript, React: [CodePen](https://codepen.io/)
-- React Native: [Expo Snack](https://snack.expo.dev/)
-- React Native Development: [Expo Go](https://expo.dev/client)
-- Analysis Exercises: [Microsoft Forms](https://forms.office.com/)
-- Diagramming Exercises: [Microsoft Whiteboard](https://whiteboard.microsoft.com/)
