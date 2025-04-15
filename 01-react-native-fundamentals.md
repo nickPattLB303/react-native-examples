@@ -137,8 +137,8 @@ The mechanism by which this "translation" or communication between JavaScript an
 
 #### **Callout for Web Developers (React/Angular)**
 
-![React Wordmark Light](./react_wordmark_light.svg)
-![Angular Wordmark Gradient](./angular_wordmark_gradient.png)
+![React Wordmark Light](./assets/images/react_wordmark_light.svg)
+![Angular Wordmark Gradient](./assets/images/angular_wordmark_gradient.png)
 
 ##### **What's Familiar?** 
 
