@@ -115,14 +115,14 @@ table {
   font-size: 16px;
 }
 </style>
-| Feature                 | Native Development (iOS/Android)         | WebView Approach (e.g., Cordova) | React Native                             |
-| :---------------------- | :--------------------------------------- | :------------------------------- | :--------------------------------------- |
-| Development Cost/Time | High (Separate Codebases)        | Lower (Shared Web Code)         | Medium (High Code Sharing)       |
-| Performance             | Optimal (Direct Platform Access) | Often Sub-optimal (WebView Bottleneck) | Near-Native (Native Components, New Arch) |
-| UI/UX (Native Feel)     | Excellent (Platform Standard)    | Challenging (Web Rendering)    | Excellent (Renders Native Components) |
-| Native API Access       | Full                             | Limited (Via Plugins)          | Extensive (Native Modules, New Arch) |
-| Code Sharing            | None                             | High (HTML, CSS, JS)          | Very High (JavaScript/React Logic & UI) |
-| Maintenance             | Complex (Two Codebases)          | Simpler (Single Web Codebase)    | Simpler (Mostly Single Codebase)   |
+| Feature               | Native Development (iOS/Android) | WebView Approach (e.g., Cordova)       | React Native                              |
+| :-------------------- | :------------------------------- | :------------------------------------- | :---------------------------------------- |
+| Development Cost/Time | High (Separate Codebases)        | Lower (Shared Web Code)                | Medium (High Code Sharing)                |
+| Performance           | Optimal (Direct Platform Access) | Often Sub-optimal (WebView Bottleneck) | Near-Native (Native Components, New Arch) |
+| UI/UX (Native Feel)   | Excellent (Platform Standard)    | Challenging (Web Rendering)            | Excellent (Renders Native Components)     |
+| Native API Access     | Full                             | Limited (Via Plugins)                  | Extensive (Native Modules, New Arch)      |
+| Code Sharing          | None                             | High (HTML, CSS, JS)                   | Very High (JavaScript/React Logic & UI)   |
+| Maintenance           | Complex (Two Codebases)          | Simpler (Single Web Codebase)          | Simpler (Mostly Single Codebase)          |
 
 > 🔑 Understanding this evolution is key. The shortcomings of purely native development (cost, time) and early cross-platform attempts (performance, UX) created the specific need that React Native was designed to fill: efficient development *with* a high-quality, native user experience.
 
@@ -426,13 +426,13 @@ table {
   font-size: 20px;
 }
 </style>
-| Limitation                  | Description                                                                 | Primary Solution(s) | How it Solves the Limitation                                                                     |
-| :-------------------------- | :-------------------------------------------------------------------------- | :------------------ | :----------------------------------------------------------------------------------------------- |
-| Serialization Overhead    | Converting data (often to JSON) between JS and Native was slow and costly. | JSI                 | Enables direct C++ method calls and memory access, eliminating the need for serialization/deserialization. |
-| Asynchronous-Only Calls   | Bridge communication was inherently async, preventing efficient sync ops. | JSI                 | Allows for direct synchronous method invocations between JS and Native when required.          |
-| Eager Module Loading        | All Native Modules loaded at app startup, increasing load time/memory.     | TurboModules        | Implements lazy loading; modules are loaded only when first accessed by JS code.           |
+| Limitation                   | Description                                                                  | Primary Solution(s) | How it Solves the Limitation                                                                                                 |
+| :--------------------------- | :--------------------------------------------------------------------------- | :------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
+| Serialization Overhead       | Converting data (often to JSON) between JS and Native was slow and costly.   | JSI                 | Enables direct C++ method calls and memory access, eliminating the need for serialization/deserialization.                   |
+| Asynchronous-Only Calls      | Bridge communication was inherently async, preventing efficient sync ops.    | JSI                 | Allows for direct synchronous method invocations between JS and Native when required.                                        |
+| Eager Module Loading         | All Native Modules loaded at app startup, increasing load time/memory.       | TurboModules        | Implements lazy loading; modules are loaded only when first accessed by JS code.                                             |
 | JS Thread Blocking / UI Jank | Heavy JS work could block the thread, delaying Bridge messages & UI updates. | Fabric & JSI        | Fabric enables concurrent rendering (React 18), offloading work. JSI allows faster/sync native calls, reducing JS wait time. |
-| Concurrency Limitations     | Single-threaded JS & async Bridge hindered modern React features.       | Fabric              | Specifically designed to support React 18's concurrent rendering features (Transitions, Suspense). |
+| Concurrency Limitations      | Single-threaded JS & async Bridge hindered modern React features.            | Fabric              | Specifically designed to support React 18's concurrent rendering features (Transitions, Suspense).                           |
 
 ######
 
@@ -911,15 +911,15 @@ table {
   font-size: 20px;
 }
 </style>
-| React Native Component | Android Native View        | iOS Native View  | Web Analog             | Description                                                                            |
-| :--------------------- | :------------------------- | :--------------- | :--------------------- | :------------------------------------------------------------------------------------- |
-| `<View>`               | `android.view.ViewGroup`   | `UIView`         | `<div>`                | Fundamental container supporting Flexbox layout, styling, and touch handling. |
-| `<Text>`               | `android.widget.TextView`  | `UITextView`     | `<p>`, `<span>`         | Displays styled text; must wrap all text nodes. |
-| `<Image>`              | `android.widget.ImageView` | `UIImageView`    | `<img>`                | Displays network or static images. |
-| `<TextInput>`          | `android.widget.EditText`  | `UITextField`    | `<input type="text">` | Allows user text input via keyboard. |
-| `<ScrollView>`         | `android.widget.ScrollView`| `UIScrollView`   | `<div>` (with overflow)| Generic scrolling container for heterogeneous content. |
-| `<Button>`             | `android.widget.Button`    | `UIButton`       | `<button>`             | Basic, minimally customizable button. |
-| `<StyleSheet>` (API)   | N/A                        | N/A              | CSS                    | JavaScript API for defining optimized style objects. |
+| React Native Component | Android Native View         | iOS Native View | Web Analog              | Description                                                                   |
+| :--------------------- | :-------------------------- | :-------------- | :---------------------- | :---------------------------------------------------------------------------- |
+| `<View>`               | `android.view.ViewGroup`    | `UIView`        | `<div>`                 | Fundamental container supporting Flexbox layout, styling, and touch handling. |
+| `<Text>`               | `android.widget.TextView`   | `UITextView`    | `<p>`, `<span>`         | Displays styled text; must wrap all text nodes.                               |
+| `<Image>`              | `android.widget.ImageView`  | `UIImageView`   | `<img>`                 | Displays network or static images.                                            |
+| `<TextInput>`          | `android.widget.EditText`   | `UITextField`   | `<input type="text">`   | Allows user text input via keyboard.                                          |
+| `<ScrollView>`         | `android.widget.ScrollView` | `UIScrollView`  | `<div>` (with overflow) | Generic scrolling container for heterogeneous content.                        |
+| `<Button>`             | `android.widget.Button`     | `UIButton`      | `<button>`              | Basic, minimally customizable button.                                         |
+| `<StyleSheet>` (API)   | N/A                         | N/A             | CSS                     | JavaScript API for defining optimized style objects.                          |
 
 (Note: This mapping is conceptual; the underlying implementation involves complex bridging and rendering logic.)
 
