@@ -1,0 +1,29 @@
+# Module 1: The React Native Ecosystem
+
+## 1.2 Why React Native? Understanding the New Architecture Advantage
+
+Context: React Native emerged as a prominent solution to the cross-platform development challenge. However, for experienced developers, particularly those from native backgrounds, the justification for adopting any cross-platform framework often hinges on performance and capability compared to native development. Modern React Native addresses these concerns directly through its New Architecture.
+
+Beyond "Cross-Platform": While React Native's primary appeal is enabling code sharing between iOS and Android, its modern value proposition, especially for performance-sensitive applications, is deeply rooted in the technical advancements of its New Architecture. This architecture was specifically designed to overcome the inherent limitations of older cross-platform approaches and previous iterations of React Native itself.
+
+Legacy Architecture Limitations (The Bridge): Earlier versions of React Native relied on a mechanism known as "the bridge" to facilitate communication between the JavaScript code (where the application logic resides) and the native platform (which handles UI rendering and device APIs).9 This bridge, while functional, presented several critical drawbacks:
+
+-   Asynchronous Bottleneck: Communication across the bridge was fundamentally asynchronous.9 The JavaScript thread and the native threads (including the main UI thread and, in older versions, a separate shadow thread for layout calculations 11) operated independently. When JavaScript needed to update the UI or call a native module, it sent a message across the bridge. This message was processed asynchronously by the native side. This asynchronous nature could become a bottleneck, especially during high-frequency interactions like animations, gestures, or list scrolling, leading to noticeable delays or "jank" in the user interface.9
+-   Serialization Overhead: Data exchanged between the JavaScript and native realms had to be serialized into a format the bridge could understand (typically JSON strings) and then deserialized on the receiving end.10 This process of encoding and decoding data added significant computational overhead and latency, particularly when dealing with large amounts of data or frequent updates.13
+-   Complexity: Managing the asynchronous communication and data flow across the bridge added complexity for developers, especially when creating custom native modules that required intricate interactions between JavaScript and native code.9
+
+New Architecture as the Justification: The development and adoption of the New Architecture represent React Native's direct response to these limitations.16 It provides a compelling technical rationale for choosing React Native, even for applications where performance and a near-native user experience are paramount. By fundamentally changing how JavaScript interacts with the native platform, the New Architecture addresses the core performance concerns historically associated with the bridge.
+
+Performance Implications: The shift away from the asynchronous, serializing bridge towards more direct communication mechanisms generally results in performance improvements. Community benchmarks and reports suggest benefits such as faster application startup times (partly due to lazy loading of modules), more responsive UI updates, smoother animations, and reduced latency in communication between JavaScript and native code.10 Some tests have shown significant reductions in the time taken for frequent native module calls.19 Reduced application bundle size has also been observed as a potential benefit, though this can depend on various factors.10 It is important to note that performance gains can vary depending on the specific application, the complexity of the UI, and the hardware of the device.13 However, the architectural changes provide a foundation for higher performance potential compared to the legacy system.
+
+The historical performance criticisms often directed at cross-platform frameworks, sometimes comparing React Native unfavorably to native development or other frameworks like Flutter 21, are directly tackled by the New Architecture. Explaining the technical underpinnings of JSI, Fabric, and Turbo Modules provides a robust argument for React Native's viability in demanding, production environments, countering skepticism based on the limitations of the older bridge model.
+
+#### Works cited
+
+9.  Understanding React Native's New Architecture: Fabric and TurboModules Explained, accessed April 24, 2025, <https://metadesignsolutions.com/understanding-react-natives-new-architecture-fabric-and-turbomodules-explained/>
+10. React Native New Architecture: Turbo Modules, JSI, and Fabric Explained | OrangeLoops, accessed April 24, 2025, <https://orangeloops.com/2024/12/react-native-new-architecture-turbo-modules-jsi-and-fabric-explained/>
+11. React Native New Architecture - DEV Community, accessed April 24, 2025, <https://dev.to/hellonehha/react-native-new-architecture-1hao>
+13. Experiment With the New Architecture of React Native | {callstack}, accessed April 24, 2025, <https://www.callstack.com/blog/experiment-with-new-architecture-of-react-native>
+16. About the New Architecture - React Native, accessed April 24, 2025, <https://reactnative.dev/architecture/landing-page>
+19. React Native's New Architecture: An Overview of Performance Benchmarks, accessed April 24, 2025, <https://dev.to/yoel/react-native-new-architecture-what-you-need-to-know-1eke>
+21. Did the new React Native architecture make it faster/as fast as flutter? : r/reactnative - Reddit, accessed April 24, 2025, <https://www.reddit.com/r/reactnative/comments/1aoz3kv/did_the_new_react_native_architecture_make_it/>
