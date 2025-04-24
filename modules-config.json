@@ -1,4 +1,12 @@
 {
+  "01-react-native-ecosystem": [
+    "00-introduction.md",
+    "01-mobile-development-history.md",
+    "02-why-react-native.md",
+    "03-react-native-architecture.md",
+    "04-official-documentation.md",
+    "05-summary-and-next-steps.md"
+  ],
   "07-react-native-ui-and-styling": [
     "00-introduction.md",
     "01-core-components.md",
