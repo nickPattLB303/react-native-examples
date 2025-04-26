@@ -1,24 +1,15 @@
 {
-  "01-react-native-ecosystem": [
+  "04-javascript-essentials": [
     "00-introduction.md",
-    "01-mobile-development-history.md",
-    "02-why-react-native.md",
-    "03-react-native-architecture.md",
-    "04-official-documentation.md",
-    "05-summary-and-next-steps.md"
-  ],
-  "07-react-native-ui-and-styling": [
-    "00-introduction.md",
-    "01-core-components.md",
-    "02-styling-basics.md",
-    "03-layout-flexbox.md",
-    "04-platform-specific-styling.md",
-    "05-styled-components.md",
-    "06-responsive-design.md",
-    "07-images-and-assets.md",
-    "08-icons.md",
-    "09-custom-fonts.md",
-    "10-animations.md",
-    "11-summary-and-next-steps.md"
+    "01-variables.md",
+    "02-data-types.md",
+    "03-operators.md",
+    "04-control-flow.md",
+    "05-functions.md",
+    "06-objects.md",
+    "07-arrays.md",
+    "08-async-javascript.md",
+    "09-modules.md",
+    "10-conclusion.md"
   ]
 }
