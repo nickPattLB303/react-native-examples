@@ -414,23 +414,27 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
 
     -   **Syntax and Purpose:**
         -   **NOTE:**
-
+  
+            > [!NOTE]
             > Information the user should notice even if skimming. Use for supplementary details, reminders, or context.
 
         -   **TIP:**
 
+            > [!TIP]
             > Optional information to help a user be more successful or efficient. Use for best practices, shortcuts, or alternative approaches.
 
         -   **IMPORTANT:**
 
+            > [!IMPORTANT]
             > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
 
         -   **CAUTION:**
-
+            > [!CAUTION]
             > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
 
         -   **WARNING:**
 
+            > [!WARNING]
             > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
 
     -   **Usage Rules:** Use callouts judiciously to avoid cluttering the content. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `>`. Paragraph breaks within a callout can be achieved using a line containing only `>`.
@@ -438,32 +442,42 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
 
     -   **Syntax:**
 
-        > Comparison: Explain how this React Native concept relates to or differs from common patterns in the target audience's background (e.g., Android lifecycle vs. useEffect, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
+        > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:**
+        > **Comparison:** Explain how this React Native concept relates to or differs from common patterns in the target audience's background (e.g., Android lifecycle vs. useEffect, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
         >
-        > Key Takeaway: Briefly summarize the most crucial difference or similarity.
+        > **Key Takeaway:** Briefly summarize the most crucial difference or similarity.
         >
-        > Example: (Optional) Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
+        > **Source:** [<TITLE_FOR_SOURCE>](<LINK_TO_SOURCE_DOCUMENTATION_FOR_TARGET_BACKGOUND>)
+        >
+        > **Example: (Optional)** Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
 
-    -   **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(Native Developers)`, `(Web Developers - React)`, `(Web Developers - Angular)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself.
+    -   **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, use `(Web Developers)`. Separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Use specific emoji's to help draw the attention of the `(Target Audience)`. Use 🍏 for iOS Developers, use 🤖 for Android, use 📲 for Native Developers, use ⚛️ for React Developers, use 🅰 for Angular Developers, and use 🌐 for Web Developers. MUST include links to official documentation and other trusted sources for further details around concepts related to the target background (Android, iOS, React, Angular).
 -   **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
 
     -   **Syntax:**
 
-        > **Guidance/Activity:** Provide specific advice, suggest preparation for instructor-led sessions, recommend review strategies for self-paced learners, or highlight the standalone relevance for asynchronous learners.
+        > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation for instructor-led sessions, recommend review strategies for self-paced learners, or highlight the standalone relevance for asynchronous learners.
 
-    -   **Usage Rules:** Use sparingly at strategic points, such as before complex sections, exercises, or challenges. The `(Target Path)` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Guidance should be actionable and relevant to the specified learning path(s).
--   **Official Documentation Link Box:** A standardized format for highlighting essential links to official documentation sources.
+    -   **Usage Rules:** Use judiciously at strategic points, such as the start of a module, the start of a section, exercises, or challenges. The `(Target Path)` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Guidance should be actionable and relevant to the specified learning path(s). Use specific emoji's to help draw the attention of the `(Target Path)`. Use 🧑‍🏫 for iInstructor-Led, use 🧗‍♀️ for Self-Led, use 🔁 for Asynchronous, and use 🛣️ for All Learners.
+-   **Official Documentation and Additional Resources Link Box:** A standardized format for highlighting essential links to official documentation and other trusted sources.
 
     -   **Syntax:**
 
-        > **Official Documentation:**
+        > 📚 **Official Documentation:**
         >
-        > -   (URL)
-        > -   (URL)
-        > -   (URL)
-        > -   MDN Web Docs: async function
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+        >
+        > 🗂️ **Additional Resources:**
+        >
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [<LINK_TITLE>](<URL>)
+        > *   [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 
-    -   **Usage Rules:** MUST be included in sections introducing significant new APIs, components, core concepts, or technologies (e.g., Flexbox, `useState`, `FlatList`, Expo Router, JSI). Links MUST point to the canonical, most relevant page in the official documentation for the specific topic. Use a bulleted list (`*`) within the blockquote.
+    -   **Usage Rules:** MUST be included in ALL sections, especially introducing significant new APIs, components, core concepts, or technologies (e.g., Flexbox, `useState`, `FlatList`, Expo Router, JSI). Links MUST point to the canonical, most relevant page in the official documentation for the specific topic or a relevant verified trusted source such as an article or blog. Use a bulleted list (`*`) within the blockquote. MUST include and abundance of relevant links to official documentation AND additional resources.
 
 ### C. Visual Element Standards
 
@@ -537,14 +551,14 @@ Code examples are critical learning tools and must adhere to the following stand
 
 | **Component Name** | **Purpose** | **Markdown Syntax Example** | **Required Usage Context** |
 | ------------------ | ----------- | --------------------------- | -------------------------- |
-| Callout (NOTE) | Supplementary details, reminders, context. | `>` <br> `> Content...` | To provide additional information that is helpful but not critical. |
-| Callout (TIP) | Best practices, shortcuts, alternative approaches. | `>` <br> `> Content...` | To offer optional advice for efficiency or better results. |
-| Callout (IMPORTANT) | Essential information for success, critical concepts, prerequisites. | `>` <br> `> Content...` | To highlight non-negotiable requirements or foundational knowledge. |
-| Callout (CAUTION) | Warns of potential negative but recoverable consequences (errors, performance issues). | `>` <br> `> Content...` | To advise care when performing actions that could lead to minor problems if done incorrectly. |
-| Callout (WARNING) | Warns of potentially severe or non-recoverable consequences (data loss, security risks). | `>` <br> `> Content...` | To alert users to critical risks or actions with irreversible outcomes. |
-| Background Bridge Note | Compares/contrasts RN concepts with specific developer backgrounds (Native/Web). | `>` <br> `> **Comparison:**...` <br> `> **Key Takeaway:**...`<br> `> **Example:** (Optional)...` | Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified. |
-| Learning Path Guidance | Provides context/direction specific to Instructor-Led, Self-Led, or Asynchronous learning paths. | `>` <br> `> **Guidance/Activity:**...` | Strategically placed before complex topics, exercises, or challenges to offer path-specific advice. Target path(s) MUST be specified. |
-| Official Documentation Box | Highlights key links to official documentation for important APIs, components, or concepts. | `> **Official Documentation:**` <br> `> *(URL)` <br> `> *(URL)` | In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources. |
+| Callout (NOTE) | Supplementary details, reminders, context. | `> [!NOTE]` <br> `> Content...` | To provide additional information that is helpful but not critical. |
+| Callout (TIP) | Best practices, shortcuts, alternative approaches. | `> [!TIP]` <br> `> Content...` | To offer optional advice for efficiency or better results. |
+| Callout (IMPORTANT) | Essential information for success, critical concepts, prerequisites. | `> [!IMPORTANT]` <br> `> Content...` | To highlight non-negotiable requirements or foundational knowledge. |
+| Callout (CAUTION) | Warns of potential negative but recoverable consequences (errors, performance issues). | `> [!CAUTION]` <br> `> Content...` | To advise care when performing actions that could lead to minor problems if done incorrectly. |
+| Callout (WARNING) | Warns of potentially severe or non-recoverable consequences (data loss, security risks). | `> [!WARNING]` <br> `> Content...` | To alert users to critical risks or actions with irreversible outcomes. |
+| Background Bridge Note | Compares/contrasts RN concepts with specific developer backgrounds (Native/Web). | `> 📲 **Target Audience:` <br> `> **Comparison:**...` <br> `> **Key Takeaway:**...` <br> `> **Source:**...`<br> `> **Example:** (Optional)...` | Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified. |
+| Learning Path Guidance | Provides context/direction specific to Instructor-Led, Self-Led, or Asynchronous learning paths. | `> 🛣️ **Target Path:**...` | Strategically placed before complex topics, exercises, or challenges to offer path-specific advice. Target path(s) MUST be specified. |
+| Official Documentation Box | Highlights key links to official documentation for important APIs, components, or concepts. | `> **Official Documentation:**` <br> `> *(URL)` <br> `> *(URL)` <br> `> **Additional Resources:**` <br> `> *(URL)` <br> `> *(URL)`  | In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources. |
 
 *The inclusion of Table IV.1 provides authors with a quick, accessible reference for implementing these essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations.*
 
