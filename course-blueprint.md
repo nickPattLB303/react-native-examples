@@ -625,15 +625,11 @@ These rules define the required syntax for standard Markdown elements.
 
 -   Lists:
 
--   Unordered lists MUST use an asterisk (*) followed by a space for each item. Using hyphens (-) or plus signs (+) is forbidden.40
-
--   Ordered lists MUST use the format 1. followed by a space for each item. Using the same number (e.g., 1.) for all items ("lazy numbering") is acceptable for long lists, as Markdown renders sequential numbers.38
-
--   Nested lists MUST be indented by exactly 4 spaces relative to the parent item.38
-
--   A single blank line MUST precede and follow the entire list block (both ordered and unordered).37
-
--   Task lists MUST use the syntax - [ ] for incomplete items and - [x] for completed items.38
+    -   Unordered lists MUST use an asterisk (*) followed by a space for each item. Using hyphens (-) or plus signs (+) is forbidden.40
+    -   Ordered lists MUST use the format 1. followed by a space for each item. Using the same number (e.g., 1.) for all items ("lazy numbering") is acceptable for long lists, as Markdown renders sequential numbers.38
+    -   Nested lists MUST be indented by exactly 4 spaces relative to the parent item.38
+    -   A single blank line MUST precede and follow the entire list block (both ordered and unordered).37
+    -   Task lists MUST use the syntax - [ ] for incomplete items and - [x] for completed items.38
 
 -   Links:
 
@@ -769,14 +765,15 @@ Official Documentation:
 
 -   Build Processes (e.g., EAS Build workflow)
 
--   Syntax: Embed within standard fenced code blocks using the mermaid language identifier 48:\
-    Code snippet\
-    graph TD;\
-        A --> B{Decision};\
-        B -- Yes --> C[Action 1];\
-        B -- No --> D[Action 2];\
-        C --> E[End];\
-        D --> E;
+-   Syntax: Embed within standard fenced code blocks using the `mermaid` language identifier 48:
+    ```mermaid
+    graph TD;
+        A --> B{Decision};
+        B -- Yes --> C[Action 1];
+        B -- No --> D[Action 2];
+        C --> E[End];
+        D --> E;
+    ```
 
 -   Diagram Types: Utilize appropriate diagram types based on the information being presented:
 
@@ -856,159 +853,16 @@ Code examples are critical learning tools and must adhere to the following stand
 
 Table IV.1: Custom Markdown Component Reference
 
-|
-
-Component Name
-
- |
-
-Purpose
-
- |
-
-Markdown Syntax Example
-
- |
-
-Required Usage Context
-
- |
-|
-
-Callout (NOTE)
-
- |
-
-Supplementary details, reminders, context.
-
- |
-
-> <br> > Content...
-
- |
-
-To provide additional information that is helpful but not critical.
-
- |
-|
-
-Callout (TIP)
-
- |
-
-Best practices, shortcuts, alternative approaches.
-
- |
-
-> <br> > Content...
-
- |
-
-To offer optional advice for efficiency or better results.
-
- |
-|
-
-Callout (IMPORTANT)
-
- |
-
-Essential information for success, critical concepts, prerequisites.
-
- |
-
-> <br> > Content...
-
- |
-
-To highlight non-negotiable requirements or foundational knowledge.
-
- |
-|
-
-Callout (CAUTION)
-
- |
-
-Warns of potential negative but recoverable consequences (errors, performance issues).
-
- |
-
-> <br> > Content...
-
- |
-
-To advise care when performing actions that could lead to minor problems if done incorrectly.
-
- |
-|
-
-Callout (WARNING)
-
- |
-
-Warns of potentially severe or non-recoverable consequences (data loss, security risks).
-
- |
-
-> <br> > Content...
-
- |
-
-To alert users to critical risks or actions with irreversible outcomes.
-
- |
-|
-
-Background Bridge Note
-
- |
-
-Compares/contrasts RN concepts with specific developer backgrounds (Native/Web).
-
- |
-
-> <br> > **Comparison:**... <br> > **Key Takeaway:**... <br> > **Example:** (Optional)...
-
- |
-
-Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified.
-
- |
-|
-
-Learning Path Guidance
-
- |
-
-Provides context/direction specific to Instructor-Led, Self-Led, or Asynchronous learning paths.
-
- |
-
-> <br> > **Guidance/Activity:**...
-
- |
-
-Strategically placed before complex topics, exercises, or challenges to offer path-specific advice. Target path(s) MUST be specified.
-
- |
-|
-
-Official Documentation Box
-
- |
-
-Highlights key links to official documentation for important APIs, components, or concepts.
-
- |
-
-> **Official Documentation:** <br> > *(URL) <br> > *(URL)
-
- |
-
-In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources.
-
- |
+| Component Name             | Purpose                                                                                 | Markdown Syntax Example                                                                                                                               | Required Usage Context                                                                                                                                                           |
+| -------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Callout (NOTE)             | Supplementary details, reminders, context.                                              | ```markdown\n> [!NOTE]\n> Content...\n> \n> More content in another paragraph.\n```                                                                     | To provide additional information that is helpful but not critical.                                                                                                              |
+| Callout (TIP)              | Best practices, shortcuts, alternative approaches.                                      | ```markdown\n> [!TIP]\n> Content...\n```                                                                                                              | To offer optional advice for efficiency or better results.                                                                                                                       |
+| Callout (IMPORTANT)        | Essential information for success, critical concepts, prerequisites.                    | ```markdown\n> [!IMPORTANT]\n> Content...\n```                                                                                                        | To highlight non-negotiable requirements or foundational knowledge.                                                                                                              |
+| Callout (CAUTION)          | Warns of potential negative but recoverable consequences (errors, performance issues).  | ```markdown\n> [!CAUTION]\n> Content...\n```                                                                                                         | To advise care when performing actions that could lead to minor problems if done incorrectly.                                                                                    |
+| Callout (WARNING)          | Warns of potentially severe or non-recoverable consequences (data loss, security risks). | ```markdown\n> [!WARNING]\n> Content...\n```                                                                                                         | To alert users to critical risks or actions with irreversible outcomes.                                                                                                          |
+| Background Bridge Note     | Compares/contrasts RN concepts with specific developer backgrounds (Native/Web).        | ```markdown\n> [!NOTE]\n> **(Target Audience: e.g., Native Developers)**\n> \n> **Comparison:** Explain how this RN concept relates to/differs from native patterns...\n> \n> **Key Takeaway:** Summarize the crucial difference/similarity.\n> \n> **Example:** (Optional) Brief native code snippet or analogy.\n``` | Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified. |
+| Learning Path Guidance     | Provides context/direction specific to learning paths (Instructor-Led, Self-Led, Async). | ```markdown\n> [!TIP]\n> **(Target Path: e.g., Instructor-Led)**\n> \n> **Guidance/Activity:** Provide specific advice or suggest preparation...\n```        | Strategically placed before complex topics, exercises, or challenges to offer path-specific advice. Target path(s) MUST be specified.                                         |
+| Official Documentation Box | Highlights key links to official documentation for important APIs, components, concepts.  | ```markdown\n> [!IMPORTANT]\n> **Official Documentation:**\n> \n> *   [React Native - `useState`](URL)\n> *   [Expo - FileSystem API](URL)\n> *   [MDN - Flexbox](URL)\n``` | In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources.                     |
 
 The inclusion of Table IV.1 provides authors with a quick, accessible reference for implementing these essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations.
 
@@ -1376,147 +1230,3 @@ This blueprint provides a comprehensive and prescriptive framework for developin
 The integration of instructional design principles 5, technical writing best practices 3, and specific adaptations for diverse learner backgrounds and paths 42 forms the foundation of this blueprint. The mandatory use of visual aids like Mermaid diagrams 47 and the requirement for detailed explanations, particularly for "under the hood" concepts 17 and code examples, are designed to foster deep understanding. The carefully chosen tooling strategy for exercises 60 balances pedagogical needs with practical constraints.
 
 Successful implementation requires not only adherence to the rules laid out but also a commitment to the underlying principles of clarity, accuracy, consistency, and learner-centricity. The demands for content depth and ongoing maintenance in a rapidly evolving ecosystem necessitate dedicated resources and a proactive approach to keeping the material current. Rigorous enforcement through structured review processes is critical to realizing the blueprint's potential. By following this blueprint diligently, the development team can create a world-class training resource that effectively empowers developers to master React Native.
-
-#### Works cited
-
-1.  From Chaos To Control: Modular Content Management - eLearning Industry, accessed April 26, 2025, <https://elearningindustry.com/from-chaos-to-control-modular-content-management>
-
-2.  How to Develop and Execute a Modular Content Strategy That Scales - Thought Industries, accessed April 26, 2025, <https://www.thoughtindustries.com/blog/how-to-develop-and-execute-a-modular-content-strategy-that-scales/>
-
-3.  knowledgSoftware Documentation Best Practices [With Examples] - Helpjuice, accessed April 26, 2025, <https://helpjuice.com/blog/software-documentation>
-
-4.  How to Create Technical Documentation with Examples - Document360, accessed April 26, 2025, <https://document360.com/blog/technical-documentation/>
-
-5.  ADDIE Model - Information Technology - UW Bothell, accessed April 26, 2025, <https://www.uwb.edu/it/addie>
-
-6.  Using instructional design principles to develop effective information literacy instruction: The ADDIE model | Davis | College & Research Libraries News, accessed April 26, 2025, <https://crln.acrl.org/index.php/crlnews/article/view/8934/9656>
-
-7.  ADDIE: 5 Steps To Effective Training Courses | LearnUpon, accessed April 26, 2025, <https://www.learnupon.com/blog/addie-5-steps/>
-
-8.  The ADDIE Model for Instructional Design Explained - ATD, accessed April 26, 2025, <https://www.td.org/content/newsletter/all-about-addie>
-
-9.  The Key Principles of Instructional Design (2025) - Devlin Peck, accessed April 26, 2025, <https://www.devlinpeck.com/content/principles-of-instructional-design>
-
-10. Modular Course Design - Center for Teaching and Learning - Risepoint, accessed April 26, 2025, <https://ctl.risepoint.com/modular-course-design/>
-
-11. Assemble Your Perfect Content Strategy with Modular Content - SimpleA, accessed April 26, 2025, <https://simplea.com/Articles/modular-content>
-
-12. Microsoft Learn style guide - Quick start - Contributor guide, accessed April 26, 2025, <https://learn.microsoft.com/en-us/contribute/content/style-quick-start>
-
-13. Microsoft's brand voice; above all, simple and human - Microsoft Style Guide, accessed April 26, 2025, <https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human>
-
-14. What are some best (and worst practices) for creating documentation? : r/dataengineering, accessed April 26, 2025, <https://www.reddit.com/r/dataengineering/comments/126m46x/what_are_some_best_and_worst_practices_for/>
-
-15. Writing tips - Microsoft Style Guide, accessed April 26, 2025, <https://learn.microsoft.com/en-us/style-guide/global-communications/writing-tips>
-
-16. Writing for All Abilities - Microsoft Style Guide, accessed April 26, 2025, <https://learn.microsoft.com/en-us/style-guide/accessibility/writing-all-abilities>
-
-17. Experiment With the New Architecture of React Native | {callstack}, accessed April 26, 2025, <https://www.callstack.com/blog/experiment-with-new-architecture-of-react-native>
-
-18. React Native New Architecture: Turbo Modules, JSI, and Fabric Explained | OrangeLoops, accessed April 26, 2025, <https://orangeloops.com/2024/12/react-native-new-architecture-turbo-modules-jsi-and-fabric-explained/>
-
-19. About the New Architecture - React Native, accessed April 26, 2025, <https://reactnative.dev/architecture/landing-page>
-
-20. React Native New Architecture - DEV Community, accessed April 26, 2025, <https://dev.to/hellonehha/react-native-new-architecture-1hao>
-
-21. React Styled Components You Should Look for in 2025 - Aglowid IT Solutions, accessed April 26, 2025, <https://aglowiditsolutions.com/blog/react-styled-components/>
-
-22. Theming | React Native Paper, accessed April 26, 2025, <https://callstack.github.io/react-native-paper/docs/guides/theming/>
-
-23. React Native Paper, accessed April 26, 2025, <https://reactnativepaper.com/>
-
-24. React Native | TanStack Query React Docs, accessed April 26, 2025, <https://tanstack.com/query/latest/docs/framework/react/react-native>
-
-25. Overview | TanStack Query React Docs, accessed April 26, 2025, <https://tanstack.com/query/latest/docs/framework/react/overview>
-
-26. State Management: Comparing Redux Toolkit, Zustand, and React Context, accessed April 26, 2025, <https://prakashinfotech.com/state-management-comparing-redux-toolkit-zustand-and-react-context>
-
-27. Master React State Management: Redux, Context API, Zustand - Mbloging, accessed April 26, 2025, <https://www.mbloging.com/post/mastering-state-management-in-react-a-comprehensive-guide-with-redux-context-api-and-zustand>
-
-28. React Context API vs Zustand -- which one should you use? - Codedamn, accessed April 26, 2025, <https://codedamn.com/news/reactjs/zustand-vs-react>
-
-29. Is expo-router a replacement for React Navigation for react native apps? #668 - GitHub, accessed April 26, 2025, <https://github.com/expo/router/discussions/668>
-
-30. Expo Router vs React Navigation: A Comprehensive Comparison | Attract Group, accessed April 26, 2025, <https://attractgroup.com/blog/expo-router-vs-react-navigation-a-comprehensive-comparison/>
-
-31. React Native Best Practices 2025 - Aalpha, accessed April 26, 2025, <https://www.aalpha.net/articles/best-practices-for-react-native-development/>
-
-32. React Navigation v5 + React Native Paper = ❤️, accessed April 26, 2025, <https://reactnavigation.org/blog/2020/01/29/using-react-navigation-5-with-react-native-paper/>
-
-33. Introducing v5 with Material You | React Native Paper, accessed April 26, 2025, <https://callstack.github.io/react-native-paper/docs/guides/migration-guide-to-5.0/>
-
-34. React navigation or expo router? : r/reactnative - Reddit, accessed April 26, 2025, <https://www.reddit.com/r/reactnative/comments/1i70spg/react_navigation_or_expo_router/>
-
-35. Top React Native ESSENTIALS Tech Stack for 2025 ⛳️ - DEV Community, accessed April 26, 2025, <https://dev.to/martygo/react-native-kit-updates-topics-you-must-know-57bi>
-
-36. Reference - Expo Documentation, accessed April 26, 2025, <https://docs.expo.dev/versions/latest/>
-
-37. Markdown best practices - PowerShell | Microsoft Learn, accessed April 26, 2025, <https://learn.microsoft.com/en-us/powershell/scripting/community/contributing/general-markdown?view=powershell-7.5>
-
-38. Markdown for Technical Writers: Tips, Tricks, and Best Practices - Israel Mitolu's Blog, accessed April 26, 2025, <https://israelmitolu.hashnode.dev/markdown-for-technical-writers-tips-tricks-and-best-practices>
-
-39. Markdown style guide | styleguide - Google, accessed April 26, 2025, <https://google.github.io/styleguide/docguide/style.html>
-
-40. How to use Markdown for writing technical documentation - Adobe Experience League, accessed April 26, 2025, <https://experienceleague.adobe.com/en/docs/contributor/contributor-guide/writing-essentials/markdown>
-
-41. Best practices and tips in markdown - Technical writing mentorship program, accessed April 26, 2025, <https://technicalwritingmp.com/docs/markdown-course/best-practices-and-tips-in-markdown/>
-
-42. Web Adaptation Development-Technical Highlights-One-Time Development for Multi-Device Deployment-Core Technical Concepts, accessed April 26, 2025, <https://developer.huawei.com/consumer/en/doc/best-practices-V14/bpta-web-adaptation-V14>
-
-43. Web vs. Mobile development: a comprehensive guide to application development - ASYMM, accessed April 26, 2025, <https://asymm.com/web-vs-mobile-development/>
-
-44. 7 Pros of Native App Development vs. Hybrid & Web Apps - MLSDev, accessed April 26, 2025, <https://mlsdev.com/blog/native-app-development-vs-web-and-hybrid-app-development>
-
-45. Web vs native - make the right choice in 2021 - Arek Nawo, accessed April 26, 2025, <https://areknawo.com/web-vs-native-make-the-right-choice-in-2021/>
-
-46. Web vs native mobile apps: Which is better? - Test Double, accessed April 26, 2025, <https://testdouble.com/insights/web-vs-native-mobile-apps-which-is-better>
-
-47. How to Create Stunning Mermaid Diagrams (With Examples) - ClickUp, accessed April 26, 2025, <https://clickup.com/blog/mermaid-diagram-examples/>
-
-48. Creating Mermaid Diagrams - ReadMe Docs, accessed April 26, 2025, <https://docs.readme.com/main/docs/creating-mermaid-diagrams>
-
-49. Mermaid.js: A Complete Guide - Swimm, accessed April 26, 2025, <https://swimm.io/learn/mermaid-js/mermaid-js-a-complete-guide>
-
-50. 5 Mermaid.js examples to get you started - Swimm, accessed April 26, 2025, <https://swimm.io/learn/mermaid-js/5-mermaid-js-examples-to-get-you-started>
-
-51. About Mermaid, accessed April 26, 2025, <https://mermaid.js.org/intro/>
-
-52. What syntax can I use to diagram as code with Mermaid? - Lucid Community, accessed April 26, 2025, <https://community.lucid.co/inspiration-5/what-syntax-can-i-use-to-diagram-as-code-with-mermaid-9665>
-
-53. Flowcharts Syntax | Mermaid, accessed April 26, 2025, <https://mermaid.js.org/syntax/flowchart.html>
-
-54. Block Diagram Syntax - Mermaid, accessed April 26, 2025, <https://mermaid.js.org/syntax/block.html>
-
-55. 10 Proven Ways to Make Training Content Engaging | Continu, accessed April 26, 2025, <https://www.continu.com/blog/make-training-content-engaging>
-
-56. Creating Impactful Training Content: Tips and Tricks for Content Developers, accessed April 26, 2025, <https://thetrainingassociates.com/content-developers-tips/>
-
-57. Don't Update to Expo SDK 53 Until You Watch This - YouTube, accessed April 26, 2025, <https://www.youtube.com/watch?v=x-nhJcKYfOo>
-
-58. Expo SDK 52 Release - Pagepro, accessed April 26, 2025, <https://pagepro.co/blog/react-tldr/expo-sdk-52-release/>
-
-59. Get started with technical documentation writing best practices - Swimm, accessed April 26, 2025, <https://swimm.io/blog/get-started-with-technical-documentation-writing-best-practices>
-
-60. React Native with Expo - Codesandbox, accessed April 26, 2025, <https://codesandbox.io/s/react-native-with-expo-8dwy78>
-
-61. Is there a codesandbox for React Native : r/reactnative - Reddit, accessed April 26, 2025, <https://www.reddit.com/r/reactnative/comments/1bkck4z/is_there_a_codesandbox_for_react_native/>
-
-62. react-native-paper-example - Codesandbox, accessed April 26, 2025, <https://codesandbox.io/s/react-native-paper-example-d9jn5>
-
-63. I Watched All 27 React Europe Talks So You Don't Have To - Telerik.com, accessed April 26, 2025, <https://www.telerik.com/blogs/i-watched-all-27-react-europe-talks-so-you-dont-have-to>
-
-64. Microsoft Forms - Free tool to create online surveys, forms, polls, and quizzes, accessed April 26, 2025, <https://forms.office.com/>
-
-65. Adjust your form or quiz settings in Microsoft Forms, accessed April 26, 2025, <https://support.microsoft.com/en-us/office/adjust-your-form-or-quiz-settings-in-microsoft-forms-f255a4ba-e03c-4e12-b880-f7e8b62e0665>
-
-66. Create a quiz with Microsoft Forms, accessed April 26, 2025, <https://support.microsoft.com/en-us/office/create-a-quiz-with-microsoft-forms-a082a018-24a1-48c1-b176-4b3616cdc83d>
-
-67. What is Microsoft Forms?, accessed April 26, 2025, <https://support.microsoft.com/en-us/office/what-is-microsoft-forms-6b391205-523c-45d2-b53a-fc10b22017c8>
-
-68. Microsoft Whiteboard | Office of Innovative Technologies, accessed April 26, 2025, <https://oit.utk.edu/training/ms-education/ms-whiteboard/>
-
-69. Diagramming in Microsoft Whiteboard - YouTube, accessed April 26, 2025, <https://m.youtube.com/watch?v=_bR-a-FUfcE>
-
-70. Digital Online Whiteboard App - Microsoft, accessed April 26, 2025, <https://www.microsoft.com/en-us/microsoft-365/microsoft-whiteboard/digital-whiteboard-app>
-
-71. Design-led thinking in Microsoft Whiteboard, accessed April 26, 2025, <https://support.microsoft.com/en-us/office/design-led-thinking-in-microsoft-whiteboard-efb553c1-8ad1-40c2-95ea-2de786587f16>
