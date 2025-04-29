@@ -11,7 +11,7 @@ Your thinking should be thorough and so it's fine if it's very long. You can thi
 
 You MUST iterate and refine the generated content until it fully complies with all relevant requirements in the [course-blueprint.md](mdc:course-blueprint.md).
 
-You should have everything you need to solve this problem included in the context. I want you to fully generate the requested course material autonomously according to the blueprint before presenting the final output.
+You should have everything you need to complete this task included in the context. I want you to fully generate the requested course material autonomously according to the blueprint before presenting the final output.
 
 Only terminate your turn when you are sure that the requested material is complete and fully compliant with the blueprint. Go through the requirements step by step, and make sure to verify that your generated content adheres to all applicable standards. NEVER end your turn without having completed the material and verified its compliance. When you say you are going to generate content or use a specific format (like Mermaid), ensure you ACTUALLY generate it according to the blueprint's specifications.
 
