@@ -426,6 +426,9 @@ These rules define the required syntax for standard Markdown elements, incorpora
   - Use sparingly, primarily to indicate a major thematic break within a very long section where a subheading isn't appropriate.
 - **Numbers:** Numbers in text MUST follow MSWSG rules (spell out 0-9, numerals for 10+, exceptions). See `styleguide/numbers.md`.
 - **Acronyms:** Acronyms MUST be defined on first use (spelled-out term followed by acronym in parentheses) unless extremely common, per MSWSG rules. See `styleguide/acronyms.md`.
+- **Developer Element Formatting:** Consistently format developer-specific text elements according to `styleguide/developer-content/formatting-developer-text-elements.md`. Key conventions relevant to this course include:
+    - **Bold:** Use for keywords (e.g., `const`, `function`), predefined classes/types (e.g., `string`, `View`, `StyleSheet`), methods/functions (e.g., `.map()`, `useState()`), properties/props (e.g., `style`, `onPress`), component names (e.g., `<Button>`). Capitalization MUST match the actual element.
+    - *Italic:* Use for parameters (e.g., *userId*, *options*) and placeholders (e.g., *your-app-name*).
 
 ### B. Custom Course Component Definitions
 
@@ -480,25 +483,19 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
         > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation for instructor-led sessions, recommend review strategies for self-paced learners, or highlight the standalone relevance for asynchronous learners.
 
   - **Usage Rules:** Use judiciously at strategic points, such as the start of a module, the start of a section, exercises, or challenges. The `(Target Path)` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Guidance should be actionable and relevant to the specified learning path(s). Use specific emoji's to help draw the attention of the `(Target Path)`. Use 🧑‍🏫 for iInstructor-Led, use 🧗‍♀️ for Self-Led, use 🔁 for Asynchronous, and use 🛣️ for All Learners.
-- **Official Documentation and Additional Resources Link Box:** A standardized format for highlighting essential links to official documentation and other trusted sources.
-
-  - **Syntax:**
-
-        > 📚 **Official Documentation:**
-        >
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
-        >
-        > 🗂️ **Additional Resources:**
-        >
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
-
-  - **Usage Rules:** MUST be included in ALL sections, especially introducing significant new APIs, components, core concepts, or technologies (e.g., Flexbox, `useState`, `FlatList`, Expo Router, JSI). Links MUST point to the canonical, most relevant page in the official documentation for the specific topic or a relevant verified trusted source such as an article or blog. Use a bulleted list (`*`) within the blockquote. MUST include and abundance of relevant links to official documentation AND additional resources.
+- **Official Documentation:**
+-
+- > - [<LINK_TITLE>](<URL>)
+- > - [<LINK_TITLE>](<URL>)
+- > - [<LINK_TITLE>](<URL>)
+- > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+-
+- 🗂️ **Additional Resources:**
+-
+- > - [<LINK_TITLE>](<URL>)
+- > - [<LINK_TITLE>](<URL>)
+- > - [<LINK_TITLE>](<URL>)
+- > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 
 ### C. Visual Element Standards
 
@@ -652,8 +649,14 @@ Each section within a module MUST adhere to the following structure:
 2. **Section Introduction:** 1-2 sentences clearly stating the purpose or topic of the section.
 3. **Content:** The main explanatory text, definitions, concepts, procedures, etc. MUST strictly adhere to all formatting and element standards defined in Section IV. This includes:
     - Clear paragraphs and lists.
-    - Correct use of emphasis.
+    - Correct use of emphasis and developer element formatting (IV.A).
     - Mandatory "Background Bridge Notes" (IV.B) where applicable based on content and audience.
+    - **API/Component/Hook Explanations:** When explaining core APIs, components, hooks, or functions (from React Native, Expo, or included libraries), the explanation MUST clearly cover, where applicable:
+        - **Purpose:** A concise sentence or two describing what the element does or represents (inspired by the 'Description' in `styleguide/developer-content/reference-documentation.md`).
+        - **Syntax/Signature (Conceptual):** If relevant, show the basic structure or how it's called.
+        - **Key Parameters/Props:** Description of essential inputs, their types, and purpose (use italics for names). Focus on the most common or important ones for the learning objective.
+        - **Return Value:** Description of the output and its type, if applicable.
+        - **Usage/Remarks:** Important details about usage, common patterns, potential pitfalls, side effects, or connections to other elements (inspired by the 'Remarks' section in `styleguide/developer-content/reference-documentation.md`).
     - Mandatory Mermaid diagrams (IV.C) with text descriptions where applicable for visualizing concepts.
     - Mandatory Code Examples (IV.D) with detailed explanations where applicable for demonstrating implementation.
     - Mandatory "Official Documentation Link Box" (IV.B) when introducing significant APIs, components, or concepts.
