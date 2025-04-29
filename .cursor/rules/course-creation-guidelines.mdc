@@ -1,0 +1,81 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# React Native Course Material Creation Guidelines
+
+You will be tasked with creating specific course materials (such as module sections, exercises, diagrams, code examples, etc.) for a React Native training course. Your work MUST strictly adhere to the rules and standards defined in the [course-blueprint.md](mdc:course-blueprint.md) document.
+
+Your thinking should be thorough and so it's fine if it's very long. You can think step by step before and after each action you decide to take.
+
+You MUST iterate and refine the generated content until it fully complies with all relevant requirements in the [course-blueprint.md](mdc:course-blueprint.md).
+
+You should have everything you need to solve this problem included in the context. I want you to fully generate the requested course material autonomously according to the blueprint before presenting the final output.
+
+Only terminate your turn when you are sure that the requested material is complete and fully compliant with the blueprint. Go through the requirements step by step, and make sure to verify that your generated content adheres to all applicable standards. NEVER end your turn without having completed the material and verified its compliance. When you say you are going to generate content or use a specific format (like Mermaid), ensure you ACTUALLY generate it according to the blueprint's specifications.
+
+Take your time and think through every step – remember to check your generated content rigorously against the blueprint and watch out for non-compliance, especially regarding formatting, structure, terminology, code standards, and custom component usage. Your output must perfectly match the blueprint's requirements. If not, continue working on it. At the end, you must review your content rigorously using the blueprint as a checklist to ensure adherence to all rules. Failing to strictly follow the blueprint is the NUMBER ONE failure mode on these types of tasks; make sure you handle all specified formatting, structure, and content requirements.
+
+You MUST plan extensively before generating content, referencing specific sections of the [course-blueprint.md](mdc:course-blueprint.md) to guide your creation process. You MUST reflect extensively on the generated content, verifying it against the blueprint's rules after creation. DO NOT generate content without this planning and reflection, as it can impair your ability to create compliant and high-quality material.
+
+# Workflow
+
+## High-Level Content Creation Strategy
+
+1.  **Understand the Request & Blueprint:** Deeply understand the specific course material required (e.g., which module/section, type of content). Identify and thoroughly review *all* relevant sections and rules within the [course-blueprint.md](mdc:course-blueprint.md) that apply to the requested material.
+2.  **Plan the Content Structure:** Outline the structure, headings, key elements, and required custom components (Callouts, Background Bridges, etc.) based *strictly* on the blueprint's specifications for that type of content (e.g., Standard Module Structure V.A, Standard Section Structure V.B, Code Example Standards IV.D).
+3.  **Generate the Content:** Create the markdown text, code examples (using TypeScript, related to SpeedyMeds theme), Mermaid diagrams (with descriptions), exercise/challenge prompts (using specified tools), etc., ensuring strict adherence to blueprint rules for syntax (IV.A), style (MSWSG via II.B), terminology (II.C), custom components (IV.B, IV.E), visual elements (IV.C), code standards (IV.D), and content depth/accuracy (V.C).
+4.  **Verify Against Blueprint:** Systematically review the generated content against a checklist derived from the applicable blueprint sections. Check formatting, structure, terminology, custom component usage, code correctness/style, diagram syntax/description, link formats, etc.
+5.  **Refine and Iterate:** Correct any deviations found during verification. Improve clarity, accuracy, and flow while maintaining strict blueprint compliance. Repeat verification and refinement until the content is perfect.
+6.  **Final Compliance Check:** Conduct a final, comprehensive review to ensure the material perfectly aligns with all relevant blueprint standards and fulfills the original request.
+
+Refer to the detailed sections below for more information on each step.
+
+## 1. Deeply Understand the Request & Blueprint
+Carefully read the request for course material. Identify *all* relevant rules and standards in the [course-blueprint.md](mdc:course-blueprint.md) that apply. This includes general rules (Section II, IV.A), custom components (IV.B, IV.E), visual elements (IV.C), code standards (IV.D), module/section structure (V.A, V.B), content depth (V.C), learner adaptation (V.D), and exercise/challenge requirements (VI).
+
+## 2. Plan the Content Structure
+- Outline the specific sequence of headings, paragraphs, lists, code blocks, diagrams, custom components, etc.
+- Explicitly map elements of your plan to specific rules or structural requirements in the blueprint (e.g., "H2 for Section Title per V.B", "Use `tsx` for code block per IV.A", "Include Background Bridge Note for iOS developers per V.D", "Mermaid diagram required for this concept per IV.C").
+
+## 3. Generate the Content Incrementally
+- Create the content piece by piece, following your plan.
+- When generating code, ensure it uses TypeScript, relates to the SpeedyMeds theme, follows formatting standards, and includes required explanations/comments per IV.D.
+- When generating Mermaid diagrams, ensure the syntax is correct, the diagram is followed by a detailed text description (min 100 words) per IV.C, and it visually represents the intended concept clearly.
+- When using custom components (Callouts, Background Bridges, Learning Path Guidance, Official Doc Box), use the exact syntax specified in IV.B and IV.E, ensuring the content is appropriate for the component type.
+- Ensure all text adheres to the Microsoft Writing Style Guide principles outlined in II.B (voice, tone, word choice, scannability, etc.).
+- Use the precise terminology defined in II.C.
+
+## 4. Verify Against Blueprint
+- After generating a section or significant piece of content, pause and verify it.
+- Use the blueprint like a checklist:
+    - Headings: Correct level? Sentence case? Spacing? (IV.A)
+    - Lists: Correct marker? Indentation? Punctuation? Serial comma? (IV.A)
+    - Code Blocks: Fenced? Language ID? Formatting? Related to theme? Explanations/comments correct per example type? (IV.A, IV.D)
+    - Inline Code: Backticks used? (IV.A)
+    - Emphasis: Correct syntax? Used appropriately? (IV.A)
+    *   Developer Element Formatting: Bold/Italic used correctly per IV.A?
+    - Custom Components: Correct syntax? Correct type used? Content appropriate? Target Audience/Path specified correctly? Emojis used? (IV.B, IV.E)
+    - Mermaid Diagrams: Correct syntax? Followed by detailed description? Clear and relevant? (IV.C)
+    - Images: Alt text? Caption? (IV.C, IV.A)
+    - Links: Descriptive text? Correct format (internal/external)? Official Doc Box used where required? (IV.A, IV.B)
+    - Terminology: Consistent with dictionary? (II.C)
+    - MSWSG: Voice/tone, word choice, capitalization, punctuation, numbers, acronyms compliant? (II.B)
+    - Structure: Does it follow the required Module/Section structure? (V.A, V.B)
+    - Content Depth: 0-to-mastery? Under the hood explanations where needed? (V.C)
+    - Learner Adaptation: Background Bridge Notes / Learning Path Guidance used appropriately? (V.D)
+    - Exercises/Challenges: Correct tool specified? Link format correct? Capstone relation? (VI.A, VI.C)
+
+## 5. Refine and Iterate
+- If any check fails during verification, correct the content immediately.
+- Refine wording for clarity and conciseness (per MSWSG).
+- Ensure smooth transitions between concepts.
+- Re-verify after making changes. Continue iterating until all blueprint requirements are met for the generated content.
+
+## 6. Final Compliance Check
+- Before concluding, perform one last holistic review of the entire generated material.
+- Read it as if you were a learner and a strict reviewer simultaneously.
+- Ensure perfect alignment with the [course-blueprint.md](mdc:course-blueprint.md) in every detail.
+- Confirm the material directly addresses the original creation request.
+- Be aware that the ultimate success requires the material to be not only compliant but also pedagogically effective, accurately reflecting the intent behind the blueprint's rules. Do not assume the task is complete just because the syntax looks correct; ensure the content *works* as intended by the blueprint.
