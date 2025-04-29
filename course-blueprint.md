@@ -46,21 +46,37 @@ The course documentation adheres to established instructional design principles 
 
 ### B. Technical Writing Principles (Microsoft Writing Style Guide)
 
-All documentation MUST adhere to the Microsoft Writing Style Guide. Key principles include:
+All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Consult the `styleguide/` directory for detailed rules. Key principles and mandatory rules include:
 
-- **Focus on Intent:** Clearly define the target audience (developer backgrounds) and their goals for each module and section. Content must directly help the learner achieve specific tasks.
-- **Everyday Words & Conversational Tone:** Use natural, accessible language while maintaining technical accuracy. Be less formal but not less precise. Explain concepts clearly, like talking one-on-one. Avoid jargon where simpler terms suffice, but explain necessary technical terms thoroughly.
-- **Conciseness:** Be affirmative and avoid unnecessary words or qualifiers. Keep sentences short and focused. Use screenshots and diagrams where they save words. Content should convey the point effectively without excessive verbosity.
-- **Scannability:** Put the most important information first. Use headings, lists, and short paragraphs to break up text and make it easy to scan. The defined markdown structure supports this.
-- **Empathy:** Use a supportive tone. Acknowledge potentially frustrating concepts or steps. Focus on what matters to the learner.
-- **Accessibility:** Write clear, simple text. Use descriptive link text. Structure content logically with headings. Provide text alternatives for visuals (diagram descriptions, image alt text). Use people-first language where applicable.
-- **Localization/Machine Translation:** Use simple sentence structures, consistent terminology, and include "small words" (articles, prepositions) to aid translation. Avoid idioms and culturally specific references.
+- **Focus on Intent:** Clearly define the target audience (developer backgrounds) and their goals for each module and section. Content must directly help the learner achieve specific tasks.
+- **Voice and Tone (Conversational, Friendly, Empathetic):**
+  - Use natural, accessible language. Be less formal but not less precise. Explain concepts clearly, like talking one-on-one. See `styleguide/top-10-tips-style-voice.md`.
+  - Project friendliness by using contractions (e.g., `it's`, `you're`, `we're`, `let's`). See `styleguide/word-choice/use-contractions.md`.
+  - Use a supportive, empathetic tone. Acknowledge potentially frustrating concepts. Focus on what matters to the learner.
+  - Primarily use the second person (`you`). See `styleguide/grammar/person.md`.
+  - Use active voice whenever possible. See `styleguide/grammar/verbs.md`.
+  - Avoid gender-specific pronouns in generic references; use `you` or role descriptions. See `styleguide/bias-free-communication.md`.
+- **Word Choice (Simple, Concise):**
+  - Be affirmative and avoid unnecessary words or qualifiers. Keep sentences short and focused. See `styleguide/top-10-tips-style-voice.md` and `styleguide/word-choice/use-simple-words-concise-sentences.md`.
+  - Start statements with verbs where appropriate; edit out unnecessary phrases like "you can" or "there is/are". See `styleguide/top-10-tips-style-voice.md`.
+  - Avoid jargon where simpler terms suffice, but explain necessary technical terms thoroughly. See `styleguide/word-choice/avoid-jargon.md`. Use technical terms carefully, per `styleguide/word-choice/use-technical-terms-carefully.md`.
+  - Use US spelling. See `styleguide/word-choice/use-us-spelling-avoid-non-english-words.md`.
+- **Scannability:** Put the most important information first. Use headings, lists, and short paragraphs to break up text. Make choices and next steps obvious. See `styleguide/scannable-content/`. Brevity also aids readability on various devices (See `styleguide/responsive-content.md`).
+- **Procedures and Instructions:** Use the imperative mood (direct commands) for procedures and instructions. See `styleguide/procedures-instructions/writing-step-by-step-instructions.md` and `styleguide/grammar/verbs.md`.
+- **Capitalization:** Default to sentence-style capitalization (capitalize only the first word and proper nouns) for headings, titles, UI labels, etc. Title-style capitalization is rare and used only for specific cases like official product names or specific publication titles. See `styleguide/capitalization.md`.
+- **Numbers:** Follow specific rules for numerals vs. words (spell out zero-nine, numerals for 10+), comma usage, dates, percentages, ranges, etc. See `styleguide/numbers.md`.
+- **Acronyms:** Define acronyms on first use (spell out term followed by acronym in parentheses) unless they are extremely common (e.g., USB, URL per *The American Heritage Dictionary* or the MSWSG A-Z list). Avoid introducing acronyms used only once. Lowercase the spelled-out term unless it contains proper nouns. See `styleguide/acronyms.md`.
+- **Punctuation:** Use the serial (Oxford) comma in lists of three or more items. Use one space after periods. Skip end punctuation for short headings and list items (three words or fewer). Follow specific rules for hyphens, dashes, etc. See `styleguide/punctuation/` and `styleguide/top-10-tips-style-voice.md`.
+- **Links and URLs:** Use descriptive link text. Don't include `https://` unless the protocol is different. Omit trailing slashes unless required. See `styleguide/urls-web-addresses.md`.
+- **Accessibility:** Write clear, simple text. Use descriptive link text. Structure content logically with headings. Provide text alternatives for visuals (diagram descriptions, image alt text). Use people-first language where applicable. See `styleguide/accessibility/`.
+- **Developer Content:** Follow specific guidelines for formatting code examples, placeholders, and technical elements. See `styleguide/developer-content/`.
+- **Localization/Machine Translation:** Use simple sentence structures, consistent terminology, and include "small words" (articles, prepositions) to aid translation. Avoid idioms and culturally specific references.
 
 ### C. Terminology Dictionary
 
-Consistency in terminology is paramount. The following terms MUST be used consistently throughout the documentation:
+Consistency in terminology is paramount. The following terms MUST be used consistently throughout the documentation. Usage should also align with the Microsoft Writing Style Guide A-Z word list (`styleguide/a-z-word-list-term-collections/`).
 
-- **React Native:** The framework itself.
+- **React Native:** The framework itself.
 - **Expo:** The platform/toolset used for development and building. Refer to specific Expo modules (e.g., `expo-camera`, Expo Router) when discussing them.
 - **Component:** Reusable UI building blocks (React concept). Distinguish between Core Components (provided by React Native, e.g., `<View>`, `<Text>`) and Custom Components (created by developers).
 - **Hook:** Functions allowing functional components to use state and lifecycle features (React concept). Distinguish between Core Hooks (provided by React, e.g., `useState`, `useEffect`) and Custom Hooks.
@@ -86,7 +102,7 @@ Consistency in terminology is paramount. The following terms MUST be used consis
 - **Section:** A subdivision within a module, focusing on a specific concept or API.
 - **Sign in / Sign out:** Preferred over "Log in / Log out".
 
-*(This dictionary should be expanded as more specific terms arise during content development).*
+*(This dictionary should be expanded as more specific terms arise during content development. Always check the MSWSG A-Z list for preferred terminology.)*
 
 III. Course Outline and Structure
 ---------------------------------
@@ -362,21 +378,23 @@ This section defines the mandatory patterns and standards for all markdown eleme
 
 ### A. Core Markdown Syntax Rules
 
-These rules define the required syntax for standard Markdown elements.
+These rules define the required syntax for standard Markdown elements, incorporating MSWSG guidelines.
 
-- **Headings:** MUST use ATX style (`#`) only. Sentence case is required (capitalize only the first word and proper nouns). A single space MUST follow the `#`. A single blank line MUST precede and follow each heading. Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden. Maximum heading depth is H4. Headings MUST NOT contain bold or other inline formatting. Each document MUST have exactly one H1 heading, serving as the document title.
-- **Paragraphs:** Separate consecutive paragraphs with a single blank line. Line length SHOULD be limited to approximately 100 characters where feasible to improve readability in plain text editors and `git diff`views. Avoid multiple consecutive blank lines.
+- **Headings:** MUST use ATX style (`#`) only. Sentence case is required (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`. A single space MUST follow the `#`. A single blank line MUST precede and follow each heading. Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden. Maximum heading depth is H4. Headings MUST NOT contain bold or other inline formatting. Each document MUST have exactly one H1 heading , serving as the document title. Skip end punctuation for headings (per `styleguide/punctuation/`).
+- **Paragraphs:** Separate consecutive paragraphs with a single blank line. Line length SHOULD be limited to approximately 100 characters. Avoid multiple consecutive blank lines.
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Use emphasis sparingly for highlighting key terms or concepts.
 - **Lists:**
   - Unordered lists MUST use an asterisk (`*`) followed by a space for each item. Using hyphens (`-`) or plus signs (`+`) is forbidden.
   - Ordered lists MUST use the format `1.` followed by a space for each item. Using the same number (e.g., `1.`) for all items ("lazy numbering") is acceptable for long lists, as Markdown renders sequential numbers.
   - Nested lists MUST be indented by exactly 4 spaces relative to the parent item.
   - A single blank line MUST precede and follow the entire list block (both ordered and unordered).
+  - Skip end punctuation for list items that are three words or fewer (per `styleguide/top-10-tips-style-voice.md`).
+  - Always use the serial (Oxford) comma when list items involve conjunctions (per `styleguide/punctuation/commas.md`).
   - Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items.
 - **Links:**
   - Use inline link syntax `(URL)` for most links.
-  - Link text MUST be descriptive and clearly indicate the destination's content. Avoid generic phrases like "click here" or "read more". This improves accessibility and context.
-  - External links MUST use the full absolute URL.
+  - Link text MUST be descriptive and clearly indicate the destination's content. Avoid generic phrases like "click here" or "read more". This improves accessibility and context. See `styleguide/urls-web-addresses.md`.
+  - External links MUST use the full absolute URL, omitting `https://` unless the protocol differs (e.g., `ftp://`). Omit trailing slashes where possible. See `styleguide/urls-web-addresses.md`.
   - Internal links to other markdown files within the same course module directory MUST use relative paths, e.g., `(./section-3-setup.md)`. Links *between* modules should generally be avoided or use a placeholder mechanism if necessary, assuming the final platform handles inter-module navigation.
   - Reference-style links (`[link text][ref-id]` with `[ref-id]: URL "Optional Title"` defined elsewhere, typically at the section's end) MAY be used sparingly if a URL is very long and repeated multiple times, or to significantly improve paragraph readability.
   - An abundance of links, especially to official documentation (React Native, Expo, MDN, library docs), is REQUIRED.
@@ -390,6 +408,7 @@ These rules define the required syntax for standard Markdown elements.
   - A language identifier (e.g., `tsx`,`javascript`, ```bash`,`json`,`mermaid`) MUST be included immediately after the opening backticks.
   - Inline code snippets within paragraphs MUST use single backticks (``code``).
   - Multiple consecutive blank lines within a code block are forbidden as they can break rendering or formatting.
+  - Follow specific formatting guidelines from `styleguide/developer-content/`.
 - **Tables:**
   - MUST use the pipe (`|`) and hyphen (`-`) syntax for defining headers and rows.
   - A single blank line MUST precede the table markdown.
@@ -405,6 +424,8 @@ These rules define the required syntax for standard Markdown elements.
   - Use three consecutive hyphens (`---`) on a line by themselves.
   - A single blank line MUST precede and follow the horizontal rule.
   - Use sparingly, primarily to indicate a major thematic break within a very long section where a subheading isn't appropriate.
+- **Numbers:** Numbers in text MUST follow MSWSG rules (spell out 0-9, numerals for 10+, exceptions). See `styleguide/numbers.md`.
+- **Acronyms:** Acronyms MUST be defined on first use (spelled-out term followed by acronym in parentheses) unless extremely common, per MSWSG rules. See `styleguide/acronyms.md`.
 
 ### B. Custom Course Component Definitions
 
