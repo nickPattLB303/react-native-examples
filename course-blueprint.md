@@ -453,6 +453,7 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
             > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
 
     - **CAUTION:**
+  
             > [!CAUTION]
             > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
 
@@ -483,19 +484,20 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
         > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation for instructor-led sessions, recommend review strategies for self-paced learners, or highlight the standalone relevance for asynchronous learners.
 
   - **Usage Rules:** Use judiciously at strategic points, such as the start of a module, the start of a section, exercises, or challenges. The `(Target Path)` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Guidance should be actionable and relevant to the specified learning path(s). Use specific emoji's to help draw the attention of the `(Target Path)`. Use 🧑‍🏫 for iInstructor-Led, use 🧗‍♀️ for Self-Led, use 🔁 for Asynchronous, and use 🛣️ for All Learners.
-- **Official Documentation:**
--
-- > - [<LINK_TITLE>](<URL>)
-- > - [<LINK_TITLE>](<URL>)
-- > - [<LINK_TITLE>](<URL>)
-- > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
--
-- 🗂️ **Additional Resources:**
--
-- > - [<LINK_TITLE>](<URL>)
-- > - [<LINK_TITLE>](<URL>)
-- > - [<LINK_TITLE>](<URL>)
-- > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+
+        > 📚 **Official Documentation:**
+        >
+        > - [<LINK_TITLE>](<URL>)
+        > - [<LINK_TITLE>](<URL>)
+        > - [<LINK_TITLE>](<URL>)
+        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+        >
+        > 🗂️ **Additional Resources:**
+        >
+        > - [<LINK_TITLE>](<URL>)
+        > - [<LINK_TITLE>](<URL>)
+        > - [<LINK_TITLE>](<URL>)
+        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 
 ### C. Visual Element Standards
 
