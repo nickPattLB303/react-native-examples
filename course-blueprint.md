@@ -535,7 +535,6 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
   - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams illustrating different aspects. Use clear, concise labels for all elements. Avoid unnecessary visual clutter.
   - **Consistency:** Maintain consistent styling (e.g., shapes for similar entity types, line styles for similar relationships) across diagrams within the course. If using custom styling via `classDef`, apply it consistently.
 - **Images/Screenshots:** Use to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces.
-
   - **Requirement:** Include screenshots for:
     - Illustrating steps in environment setup (e.g., Xcode settings, terminal commands/output).
     - Showing the visual output of UI code examples.
@@ -545,26 +544,64 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
 
 ### D. Code Example Standards
 
-Code examples are critical learning tools and must adhere to the following standards.
+Code examples are critical learning tools and MUST adhere to the following standards, guided by MSWSG (`styleguide/developer-content/code-examples.md`) and pedagogical best practices. The goal is clarity, accuracy, reusability, and relevance to the course's capstone theme (SpeedyMeds).
 
-- **Formatting and Syntax:** All code examples MUST be enclosed in fenced code blocks (```) with the correct language identifier (`tsx` for React/React Native, `typescript` for standalone TS files, `javascript` for early JS examples before TS introduction, `json`, `bash`, etc.). Code MUST be formatted using a standard Prettier configuration to ensure consistency.
-- **Language and Typing:** All React Native code examples MUST use TypeScript (`tsx`). JavaScript examples in the "JavaScript Essentials" module MUST transition to TypeScript (`typescript` or `tsx` if embedded in a React context) once TypeScript is introduced in Module 6. TypeScript usage MUST be comprehensive, with accurate types for props, state, function parameters, return values, and variables. Avoid using `any`unless absolutely necessary and justified.
-- **Documentation (JSDoc and Comments):**
-  - JSDoc comments (`/**... */`) are MANDATORY for all exported functions, classes, components, custom hooks, and complex type definitions or interfaces. JSDoc blocks must clearly explain the purpose, parameters (`@param`), return values (`@returns`), and any side effects.
-  - Inline comments (`//`) SHOULD be used judiciously within code blocks to clarify non-obvious logic, complex expressions, or the purpose of specific lines/sections. Avoid commenting on obvious code.
-- **Accessibility:** All React Native code examples that render UI elements MUST include appropriate accessibility props (`accessibilityLabel`, `accessibilityHint`, `accessibilityRole`, `accessibilityState`, etc.). Values provided for these props must be meaningful and genuinely improve usability for users relying on assistive technologies.
-- **Expo Focus:** Examples MUST default to using Expo libraries and APIs (e.g., Expo Router, `expo-camera`, `expo-constants`) whenever an Expo solution exists for the concept being taught. Core React Native APIs should be used when fundamental concepts are introduced or when no direct Expo equivalent exists.
-- **Relation to Capstone Project:** All code examples, exercises, and challenges MUST be contextually related to the SpeedyMeds pharmacy/medication theme. Use relevant variable names (e.g., `prescription`, `patientName`, `medicationList`), component names (e.g., `<PrescriptionCard>`, `<OrderDetailsScreen>`), and scenarios (e.g., fetching medication data, displaying order status). Examples should be practical and reflect plausible application logic within this theme.
-- **Explanation:** Every code block is a teaching tool and requires thorough explanation.
-  - Each code block MUST be preceded by a short introductory sentence stating what the code demonstrates.
-  - Each code block MUST be followed by a detailed text description (minimum 200 words). This description must:
-    - Explain the overall purpose and functionality of the code snippet.
-    - Break down key sections or lines of code, explaining the logic.
-    - Define any important variables, functions, or components used.
-    - Explain the specific React Native/Expo/JavaScript/TypeScript concepts being illustrated.
-    - Describe the expected outcome or visual result (if applicable).
-    - Reference any relevant APIs or libraries used, linking to official documentation where appropriate.
-- **Simplicity and Focus:** Code examples must be as concise as possible while effectively demonstrating the target concept. Avoid extraneous complexity or unrelated features. Use mock data or simplified stubs where necessary to keep the focus clear. Ensure the example directly supports the learning objective of the section.
+**1. General Principles:**
+
+- **Purposeful Scenarios:** Examples MUST illustrate meaningful developer tasks and scenarios relevant to the SpeedyMeds theme, not contrived or obvious points.
+- **Gradual Complexity:** Start with simple examples and build complexity incrementally as concepts are layered. Prioritize frequently used or potentially difficult elements.
+- **Accuracy and Testing:** All code examples MUST be compiled, tested, and verified against the target technology versions.
+- **Readability and Formatting:** Code MUST be formatted using a standard Prettier configuration. Use meaningful names for variables, functions, etc.
+- **Security:** Write secure code. Validate input, avoid hard-coded secrets, and be mindful of common security practices.
+- **Accessibility:** Code rendering UI MUST include appropriate accessibility props (`accessibilityLabel`, `accessibilityHint`, etc.) with meaningful values.
+- **Expo Focus:** Default to Expo libraries/APIs when available. Use core React Native APIs for fundamental concepts or where no Expo equivalent exists.
+- **Capstone Relation:** All examples (beyond basic syntax illustration) MUST relate contextually to the SpeedyMeds theme (variables, component names, scenarios).
+- **Copy/Run Capability:** Provide easy ways for learners to copy code. For long examples, use Expo Snack or CodeSandbox as appropriate (See Section VI).
+
+**2. Example Types and Usage:**
+
+This blueprint defines three tiers of code examples, each with specific usage contexts and documentation requirements. An abundance of *Inline* and *Short, Self-Contained* examples is MANDATORY, especially when introducing new concepts, syntax, or APIs.
+
+- **a) Inline Code Snippets (`code`):**
+  - **Purpose:** To illustrate specific syntax elements, keywords, prop names, simple function calls, or brief fragments directly within explanatory text.
+  - **Usage:** Mandatory when introducing new language syntax, API elements (props, method names), or configuration values for the first time. Use liberally within paragraphs to ground explanations in concrete code.
+  - **Format:** Use single backticks (``).
+  - **Explanation:** Context is provided by the surrounding sentence(s). No separate explanation block or JSDoc required.
+  - **Example Context:** "To manage component state, use the `useState` Hook. Pass the initial state as an argument, like `useState(0)`."
+
+- **b) Short, Self-Contained Examples:**
+  - **Purpose:** To demonstrate a single, focused concept, API usage, or technique in a runnable context. Illustrates *how* to use a specific element introduced in the text.
+  - **Usage:** Use frequently after explaining a core concept, component, hook, or API. Ideal for showing the basic implementation of a feature.
+  - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals).
+  - **Explanation:**
+    - MUST be preceded by a single sentence introducing the example's specific purpose (e.g., "This example shows how to fetch data using `useEffect`.").
+    - MUST be followed by a focused explanation (approx. 50-100 words) clarifying the key parts of the code, the concept demonstrated, and the expected outcome. This explanation focuses only on the new concept being shown.
+    - JSDoc comments within the code are OPTIONAL but encouraged for clarity if the code involves a non-trivial function or component definition.
+    - The 200-word minimum description does NOT apply.
+  - **Example Context:** After explaining the `<Button>` component and its `onPress` prop, provide a short, runnable Snack example showing a simple `<Button>` that triggers an `Alert`. The explanation would focus *only* on the `<Button>` and `onPress` connection, not re-explain the entire component structure.
+
+- **c) Long Samples:**
+  - **Purpose:** To illustrate multiple features working together, complex scenarios, architectural patterns, or best practices. Often integrates several concepts covered previously.
+  - **Usage:** Use more sparingly than short examples. Reserve for the end of sections covering multiple related topics, end-of-module examples, or dedicated walkthroughs/tutorials. Avoid using long samples to introduce fundamental concepts.
+  - **Format:** Use fenced code blocks (```) with the correct language identifier. MUST be runnable (Expo Snack/CodeSandbox). May be accompanied by helper files or setup instructions if necessary.
+  - **Explanation:**
+    - MUST be preceded by an introduction describing the scenario, requirements, dependencies, and what the sample demonstrates.
+    - MUST be followed by a detailed text description (minimum 200 words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome, and link to relevant APIs/docs.
+    - JSDoc comments (`/** ... */`) are MANDATORY within the code for all exported functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc.
+    - Inline comments (`//`) SHOULD be used judiciously to clarify non-obvious logic. Do not comment on the obvious. Keep comments synchronized with code changes.
+  - **Example Context:** After covering `useState`, `useEffect`, `FlatList`, and basic styling, a long sample could show a screen component that fetches a list of medications from a mock API, stores it in state, and renders it using `FlatList`, applying styles from `StyleSheet`. The detailed explanation would cover how these pieces work together.
+
+**3. Comments and Explanations:**
+
+- **Inline Comments (`//`):** Use within code blocks (primarily in *Long Samples*, optionally in *Short Examples*) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax. Keep comments concise and synchronized with code.
+- **JSDoc (`/** ... */`):** Mandatory *only* for *Long Samples* as defined above. Apply to all key functions, components, hooks, classes, and types.
+- **Text Explanations (Following Code Blocks):** Required for *Short* and *Long* examples. The depth varies: focused and brief (~50-100 words) for *Short Examples*, detailed and comprehensive (200+ words) for *Long Samples*.
+
+**4. Exception Handling:**
+
+- Show exception handling (`try`/`catch`) only when it is intrinsic to the example's purpose (e.g., demonstrating error boundaries or specific API error handling). Do not clutter simple examples with boilerplate error catching for invalid arguments.
+
+By defining these tiers and adjusting documentation requirements, the blueprint encourages frequent, focused examples while reserving comprehensive documentation efforts for more complex, integrative samples, aligning with both MSWSG and effective pedagogical practice.
 
 ### E. Mandatory Table: Custom Markdown Component Reference
 
