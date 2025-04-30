@@ -16,6 +16,7 @@ import styled from "styled-components/native";
 import type { AppTheme } from "../theme/theme";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { BottomTabParamList } from "../navigation/types";
+import ThemeSelector from "../components/ThemeSelector"; // Import the new component
 
 // ============================================================================
 // Navigation Props Type
@@ -58,6 +59,7 @@ const AccountScreen: React.FC<AccountScreenProps> = (
       >
         Account Screen Placeholder
       </Text>
+      <ThemeSelector />
     </PlaceholderContainer>
   );
 };
