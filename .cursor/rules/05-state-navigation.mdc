@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+**STATE MANAGEMENT & NAVIGATION**
+
+Adhere to the following MANDATORY practices based on [`course-blueprint.md`](mdc:course-blueprint.md) (Modules 11, 13):
+
+**State Management:**
+
+1.  **Client State (Zustand):**
+    *   Use Zustand (v4+) for managing complex client-side state (global state, UI state not tied to server data).
+    *   Define Zustand stores clearly, following library best practices.
+    *   Prefer Zustand over Context API for anything beyond simple theming or authentication status.
+2.  **Server State (TanStack Query):**
+    *   Use TanStack Query (v5) for managing ALL server state (data fetching, caching, synchronization, mutations).
+    *   Utilize `useQuery` for fetching data and `useMutation` for creating/updating/deleting data.
+    *   Configure `QueryClient` appropriately.
+    *   Implement effective caching strategies, background updates, and query invalidation.
+    *   Handle loading and error states explicitly.
+    *   Configure React Native specific settings (Online Manager, Focus Refetching) as needed.
+3.  **Context API:** Use sparingly only for very simple, low-frequency update global state like theme or authentication context, as outlined in the blueprint.
+4.  **Prop Drilling:** Avoid excessive prop drilling. Use state management solutions (Zustand, Context) or component composition instead.
+
+**Navigation:**
+
+1.  **Library Choice:** Use either React Navigation (v6) OR Expo Router, following the patterns and configurations detailed in the blueprint (Module 11).
+    *   **React Navigation:** Configure Stack, Tab, and Drawer navigators as needed. Understand screen options, parameter passing, and header/tab configuration.
+    *   **Expo Router:** Utilize file-based routing conventions. Understand layout routes, dynamic routes, and parameter passing via segments.
+2.  **Configuration:** Set up navigators and routes correctly, including initial routes, screen options, and linking configuration.
+3.  **Parameter Passing:** Pass parameters between screens/routes safely and efficiently using defined mechanisms.
+4.  **Deep Linking:** Configure deep linking using Expo Router or React Navigation's linking configuration as required.
+5.  **Type Safety:** Ensure navigation parameters and route names are type-safe using TypeScript.

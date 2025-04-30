@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+**CODE STYLE, FORMATTING, AND LINTING**
+
+All code MUST adhere to the following standards:
+
+1.  **TypeScript MANDATORY:**
+    *   All JavaScript code MUST be written in TypeScript (`.ts` or `.tsx`).
+    *   Use strong typing. Avoid `any` unless absolutely necessary and justified. Use `unknown` where appropriate.
+    *   Leverage TypeScript features as outlined in the blueprint (Interfaces, Type Aliases, Generics, Enums, Utility Types).
+    *   Adhere to the project's TypeScript configuration: [`SpeedyMeds/tsconfig.json`](mdc:SpeedyMeds/tsconfig.json).
+2.  **Prettier Formatting:**
+    *   All code MUST be formatted using Prettier according to the project configuration: [`SpeedyMeds/prettierrc.js`](mdc:SpeedyMeds/prettierrc.js).
+    *   Run Prettier before committing code.
+3.  **ESLint Linting:**
+    *   All code MUST pass ESLint checks based on the project configuration: [`SpeedyMeds/.eslintrc.js`](mdc:SpeedyMeds/.eslintrc.js).
+    *   Address all ESLint errors and warnings before committing code. Do not disable rules inline without strong justification and comments.
+4.  **JSDoc & Comments (Blueprint Section IV.D):**
+    *   **Long Samples (> ~20 lines or complex logic):** MANDATORY JSDoc (`/** ... */`) for all exported functions, classes (though forbidden), components, custom hooks, and complex types. Explain purpose, `@param`, `@returns`.
+    *   **Short Examples:** JSDoc is OPTIONAL but encouraged for clarity.
+    *   **Inline Comments (`//`):** Use judiciously ONLY to clarify non-obvious logic. Do NOT comment on obvious code. Keep comments synchronized with code changes.
+    *   Follow MSWSG for comment style and tone.
+5.  **Naming Conventions:** Use clear, descriptive, and consistent naming conventions (e.g., PascalCase for components and types/interfaces, camelCase for variables/functions).
