@@ -9,19 +9,19 @@
  * It verifies theme context integration by applying themed background/text colors.
  */
 
-import React from 'react';
-import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import styled from 'styled-components/native';
-import type { AppTheme } from '../theme/theme';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { BottomTabParamList } from '../navigation/types';
+import React from "react";
+import { View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import styled from "styled-components/native";
+import type { AppTheme } from "../theme/theme";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import type { BottomTabParamList } from "../navigation/types";
 
 // ============================================================================
 // Navigation Props Type
 // ============================================================================
 
-type HomeScreenProps = BottomTabScreenProps<BottomTabParamList, 'Home'>;
+type HomeScreenProps = BottomTabScreenProps<BottomTabParamList, "Home">;
 
 // ============================================================================
 // Styled Components (Minimal Container)
@@ -31,7 +31,8 @@ const PlaceholderContainer = styled(View)`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }: { theme: AppTheme }) => theme.colors.background};
+  background-color: ${({ theme }: { theme: AppTheme }) =>
+    theme.colors.background};
 `;
 
 // ============================================================================
@@ -51,7 +52,10 @@ const HomeScreen: React.FC<HomeScreenProps> = (
 
   return (
     <PlaceholderContainer>
-      <Text variant="headlineMedium" style={{ color: theme.colors.onBackground }}>
+      <Text
+        variant="headlineMedium"
+        style={{ color: theme.colors.onBackground }}
+      >
         Home Screen Placeholder
       </Text>
     </PlaceholderContainer>

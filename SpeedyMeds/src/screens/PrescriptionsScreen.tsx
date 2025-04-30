@@ -9,13 +9,13 @@
  * It verifies theme context integration by applying themed background/text colors.
  */
 
-import React from 'react';
-import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import styled from 'styled-components/native';
-import type { AppTheme } from '../theme/theme';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { BottomTabParamList } from '../navigation/types';
+import React from "react";
+import { View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import styled from "styled-components/native";
+import type { AppTheme } from "../theme/theme";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import type { BottomTabParamList } from "../navigation/types";
 
 // ============================================================================
 // Navigation Props Type
@@ -23,7 +23,7 @@ import type { BottomTabParamList } from '../navigation/types';
 
 type PrescriptionsScreenProps = BottomTabScreenProps<
   BottomTabParamList,
-  'Prescriptions'
+  "Prescriptions"
 >;
 
 // ============================================================================
@@ -35,7 +35,8 @@ const PlaceholderContainer = styled(View)`
   justify-content: center;
   align-items: center;
   padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  background-color: ${({ theme }: { theme: AppTheme }) => theme.colors.background};
+  background-color: ${({ theme }: { theme: AppTheme }) =>
+    theme.colors.background};
 `;
 
 // ============================================================================

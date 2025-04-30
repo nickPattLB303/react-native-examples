@@ -10,13 +10,13 @@
  * It verifies theme context integration by applying themed background/text colors.
  */
 
-import React from 'react';
-import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
-import styled from 'styled-components/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OrdersStackParamList } from '../navigation/types';
-import type { AppTheme } from '../theme/theme';
+import React from "react";
+import { View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import styled from "styled-components/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { OrdersStackParamList } from "../navigation/types";
+import type { AppTheme } from "../theme/theme";
 
 // ============================================================================
 // Navigation Props Type
@@ -24,7 +24,7 @@ import type { AppTheme } from '../theme/theme';
 
 type OrderDetailScreenProps = NativeStackScreenProps<
   OrdersStackParamList,
-  'OrderDetail'
+  "OrderDetail"
 >;
 
 // ============================================================================
@@ -36,7 +36,8 @@ const PlaceholderContainer = styled(View)`
   justify-content: center;
   align-items: center;
   padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.m}px;
-  background-color: ${({ theme }: { theme: AppTheme }) => theme.colors.background};
+  background-color: ${({ theme }: { theme: AppTheme }) =>
+    theme.colors.background};
 `;
 
 // ============================================================================
