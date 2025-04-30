@@ -20,14 +20,14 @@ _(Status Key: [x] = Done)_
 - [x] **Version Control:** Set up Git repository and basic GitHub workflow elements (templates).
 - [x] **Initial Documentation:** Create `README.md`, `SETUP.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `USAGE.md`, `ROADMAP.md` (this file).
 - [x] **Configuration:**
-    - [x] Configure Expo settings (`app.json`).
-    - [x] Configure TypeScript (`tsconfig.json`).
-    - [x] Set up ESLint & Prettier (`.eslintrc.js`, `prettierrc.js`, `.prettierignore`).
-    - [x] Integrate ESLint/Prettier with VS Code (`.vscode/settings.json`).
+  - [x] Configure Expo settings (`app.json`).
+  - [x] Configure TypeScript (`tsconfig.json`).
+  - [x] Set up ESLint & Prettier (`.eslintrc.js`, `prettierrc.js`, `.prettierignore`).
+  - [x] Integrate ESLint/Prettier with VS Code (`.vscode/settings.json`).
 - [x] **Testing Foundation:**
-    - [x] Verify/Configure Jest setup (`jest.config.js`).
-    - [x] Install React Native Testing Library.
-    - [x] Configure Jest setup file for RNTL (`jest.setup.js`).
+  - [x] Verify/Configure Jest setup (`jest.config.js`).
+  - [x] Install React Native Testing Library.
+  - [x] Configure Jest setup file for RNTL (`jest.setup.js`).
 - [x] **Debugging Setup:** Explore and document debugging tools (`docs/setup/debugging-config.md`).
 - [x] **Mockups:** Create/Include SVG mockups (`assets/images/`).
 
@@ -36,19 +36,19 @@ _(Status Key: [x] = Done)_
 - [x] **UI Library:** Integrate React Native Paper (v5 / MD3).
 - [x] **Styling:** Set up Styled Components.
 - [x] **Theming:**
-    - [x] Define base theme tokens (colors, spacing, typography, shape).
-    - [x] Create comprehensive light and dark themes (`theme.ts`).
-    - [x] Implement theme context and provider (`ThemeContext.tsx`).
-    - [x] Integrate theme with PaperProvider, StyledThemeProvider.
-    - [x] Implement theme switching capability (Light/Dark/System).
+  - [x] Define base theme tokens (colors, spacing, typography, shape).
+  - [x] Create comprehensive light and dark themes (`theme.ts`).
+  - [x] Implement theme context and provider (`ThemeContext.tsx`).
+  - [x] Integrate theme with PaperProvider, StyledThemeProvider.
+  - [x] Implement theme switching capability (Light/Dark/System).
 - [x] **Navigation:**
-    - [x] Set up React Navigation (Native Stack, Bottom Tabs).
-    - [x] Define navigation types (`types.ts`).
-    - [x] Implement main tab structure (`MainTabNavigator.tsx`).
-    - [x] Implement nested stack for Orders (`OrdersStackNavigator.tsx`).
-    - [x] Implement root navigator (`AppNavigator.tsx`).
-    - [x] Add icons to bottom tabs.
-    - [x] Integrate navigation theming.
+  - [x] Set up React Navigation (Native Stack, Bottom Tabs).
+  - [x] Define navigation types (`types.ts`).
+  - [x] Implement main tab structure (`MainTabNavigator.tsx`).
+  - [x] Implement nested stack for Orders (`OrdersStackNavigator.tsx`).
+  - [x] Implement root navigator (`AppNavigator.tsx`).
+  - [x] Add icons to bottom tabs.
+  - [x] Integrate navigation theming.
 - [x] **Basic Screens:** Create placeholder screen components (`src/screens/`).
 
 ### Phase 3: Data Flow & State Management (Complete)
@@ -56,8 +56,8 @@ _(Status Key: [x] = Done)_
 - [x] **Mock Data:** Set up Faker.js to generate realistic mock data (`mockData.ts`).
 - [x] **API Simulation:** Create mock API functions simulating async fetching (`api/index.ts`).
 - [x] **Server State:** Integrate TanStack Query (React Query) for data fetching & caching.
-    - [x] Define query keys (`queryKeys.ts`).
-    - [x] Configure React Native focus/online management (`App.tsx`).
+  - [x] Define query keys (`queryKeys.ts`).
+  - [x] Configure React Native focus/online management (`App.tsx`).
 - [x] **Global Client State:** Integrate Zustand for global state (`appDataStore.ts`).
 - [x] **Data Synchronization:** Implement hook (`useInitializeAppData.ts`) to fetch data via React Query and sync to Zustand store.
 - [x] **Type Safety:** Define comprehensive TypeScript types for API data structures (`types/index.ts`).

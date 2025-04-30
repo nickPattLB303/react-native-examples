@@ -7,8 +7,8 @@ Effective debugging is crucial for development. Modern React Native (including p
 The simplest form of debugging. Use `console.log()`, `console.warn()`, and `console.error()` statements in your code.
 
 - **Where to View:**
-    - Logs appear directly in the **terminal window** where you ran `npx expo start` or `npx react-native start`.
-    - They also appear in the **Console** tab of the **React Native DevTools**.
+  - Logs appear directly in the **terminal window** where you ran `npx expo start` or `npx react-native start`.
+  - They also appear in the **Console** tab of the **React Native DevTools**.
 
 ## 2. LogBox
 
@@ -73,13 +73,13 @@ VS Code has debugging capabilities that can connect to your Expo app via the Exp
 
 - **Setup:** Requires the [Expo Tools VS Code extension](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
 - **Usage:** Connect your app, use the VS Code command palette (`Cmd/Ctrl+Shift+P`) and run `Expo: Debug ...`. Allows setting breakpoints and inspecting variables within VS Code.
-- **Recommendation:** An alternative if you prefer debugging within your editor. The official React Native documentation notes that VS Code debugging is *not directly supported* by the React team, and React Native DevTools (`j`) is the officially supported and generally recommended approach. [Ref](https://reactnative.dev/docs/react-native-devtools#core-features)
+- **Recommendation:** An alternative if you prefer debugging within your editor. The official React Native documentation notes that VS Code debugging is _not directly supported_ by the React team, and React Native DevTools (`j`) is the officially supported and generally recommended approach. [Ref](https://reactnative.dev/docs/react-native-devtools#core-features)
 
 ## Deprecated / Replaced Tools
 
 - **Remote JS Debugging (Chrome DevTools via `chrome://inspect`):** This method is **deprecated and removed** in modern React Native versions (since 0.73+). It executed JS in Chrome's V8 engine, causing inconsistencies, and is incompatible with Hermes. **Do not use.**
 - **React Native Debugger (Standalone App - RND):** This standalone application relied on Remote JS Debugging and is therefore **obsolete and incompatible** with modern React Native (Hermes). **Do not use.**
-- **Flipper:** While a powerful platform, Flipper is **no longer the recommended primary tool** for React Native JavaScript debugging. React Native DevTools (`j`) has integrated and improved upon many of its core JS/React debugging features (Console, Network, React DevTools). Flipper might still be used in **development builds** (`npx expo run:ios/android` or `npx react-native run-ios/android`) for advanced *native* debugging tasks (native module inspection, detailed layout inspection, native performance profiling, database inspection) via its plugin system. For standard JS/React debugging, use React Native DevTools. [Ref](https://shift.infinite.red/why-you-dont-need-flipper-in-your-react-native-app-and-how-to-get-by-without-it-3af461955109), [Ref](https://reactnative.dev/docs/debugging#flipper-and-alternative-debugging-tools)
+- **Flipper:** While a powerful platform, Flipper is **no longer the recommended primary tool** for React Native JavaScript debugging. React Native DevTools (`j`) has integrated and improved upon many of its core JS/React debugging features (Console, Network, React DevTools). Flipper might still be used in **development builds** (`npx expo run:ios/android` or `npx react-native run-ios/android`) for advanced _native_ debugging tasks (native module inspection, detailed layout inspection, native performance profiling, database inspection) via its plugin system. For standard JS/React debugging, use React Native DevTools. [Ref](https://shift.infinite.red/why-you-dont-need-flipper-in-your-react-native-app-and-how-to-get-by-without-it-3af461955109), [Ref](https://reactnative.dev/docs/debugging#flipper-and-alternative-debugging-tools)
 
 ## Summary for Course
 

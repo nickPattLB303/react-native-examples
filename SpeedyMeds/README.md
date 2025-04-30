@@ -49,6 +49,7 @@ These images provide a general guide for the look and feel of the application's 
 ## 🎯 Target Audience
 
 This repository serves two main audiences:
+
 - **Instructors:** Use this repository as the **template** to fork for new training groups.
 - **Students:** Clone your assigned **group fork** to begin the capstone project. The code here represents the starting point (`main` branch) and a potential reference (`completed-example` branch).
 
@@ -227,6 +228,7 @@ SpeedyMeds/
 This template repository itself doesn't typically receive direct contributions during a course. Instead, development occurs within **group-specific forks**.
 
 **Students:** Please refer to the **[CONTRIBUTING.md](./CONTRIBUTING.md)** file **within your assigned group fork repository** for detailed instructions on:
+
 - Cloning the group repository.
 - Creating feature branches.
 - Committing changes.
