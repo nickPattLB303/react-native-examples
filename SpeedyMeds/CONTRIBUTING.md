@@ -1,40 +1,37 @@
-# Contributing to Your SpeedyMeds Group Project
+# Contributing to The SpeedyMeds Group Project
 
-Welcome, team! This guide outlines how you'll contribute to the SpeedyMeds application within **your assigned group's dedicated repository fork** (or the main repository if working individually).
+Welcome, team! This guide outlines how you'll contribute to the SpeedyMeds application.
 
 Following these steps ensures everyone can work together effectively and learn standard development practices.
 
-**Remember:** You are working within a copy (a fork) of the main template repository, specifically created for your training group, or directly in the main repository per instructor guidance. All your work (branches, commits, Pull Requests) will happen **inside this designated repository**.
+## Getting Started
 
-## Getting Started: Your Project Repository
-
-1.  **Clone Your Repository:** Your instructor will provide the URL for your specific repository (e.g., `SpeedyMeds-Group-Apr` or the main project repo). Clone this repository to your local machine. **Do not clone other template repositories unless instructed.**
+1.  **Clone The Repository:** Clone this repository to your local machine.
     ```bash
-    # Example: Replace with YOUR repository's actual URL
-    git clone <your_repository_url>
-    cd <your_repository_directory>
+    git clone <this_repository_url>
+    cd <SpeedyMeds_directory>
     ```
-2.  **Ensure You're on `main`:** The `main` branch contains the starting code (Option 2 state: architecture complete, placeholder screens). Make sure you start from this branch.
+2.  **Ensure You're on `main`:** The `main` branch contains the starting code with the core architecture complete and placeholder screens ready for implementation. Make sure you start from this branch.
     ```bash
     git checkout main
     git pull origin main # Ensure you have the latest starting code
     ```
-3.  **Complete Environment Setup:** Before writing code, ensure you've followed the setup steps in `SETUP.md` within your cloned repository. A correct setup prevents many common issues.
-4.  **Understand the Workflow:** Familiarize yourself with the branching and Pull Request process described below (if applicable to your course structure).
-5.  **Check for Tasks:** Your instructor will likely assign tasks or features. Coordinate with your instructor and teammates (if applicable) on who is working on what (e.g., using course communication channels or potentially GitHub Issues _within your repository_ if enabled).
+3.  **Complete Environment Setup:** Before writing code, ensure you've followed the setup steps in `SETUP.md` within the cloned repository. A correct setup prevents many common issues.
+4.  **Understand the Workflow:** Familiarize yourself with the branching and Pull Request process described below.
+5.  **Check for Tasks:** Coordinate with the instructor and teammates to assign tasks or features.
 
-## Branching Strategy (Within Your Repository)
+## Branching Strategy
 
 We use a simple feature branching workflow.
 
-1.  **Sync `main` Branch:** Before starting new work, ensure your local `main` branch (which contains the starting code or the latest integrated code) is up-to-date with the `main` branch on GitHub _in your repository_.
+1.  **Sync `main` Branch:** Before starting new work, ensure your local `main` branch (which contains the starting code or the latest integrated code) is up-to-date with the `main` branch on GitHub _in the repository_.
 
     ```bash
     # Switch to your local main branch
     git checkout main
 
-    # Pull the latest changes from your repository's main branch
-    # 'origin' should point to your repo by default when you clone it
+    # Pull the latest changes from the repository's main branch
+    # 'origin' should point to the repo by default when you clone it
     git pull origin main
     ```
 
@@ -63,7 +60,7 @@ We use a simple feature branching workflow.
     git commit -m "feat: implement basic layout for AccountScreen"
     ```
 
-4.  **Push Your Branch:** Push your local feature branch to **your repository** on GitHub.
+4.  **Push Your Branch:** Push your local feature branch to the repository on GitHub.
     ```bash
     # Push the branch (the -u flag sets the upstream for the first push)
     git push -u origin feature/your-feature-name
@@ -86,9 +83,7 @@ graph TD
    I --> E;
 ```
 
-## Pull Requests (PRs) - If Applicable
-
-If your course involves Pull Requests for review/merging:
+## Pull Requests (PRs)
 
 1.  **Self-Review & Test:**
     - Review your own code changes. Does it meet the requirements? Is it clear?
@@ -106,15 +101,15 @@ If your course involves Pull Requests for review/merging:
       # Or run once for CI-like check
       npm run test:ci
       ```
-2.  **Create Pull Request on GitHub (Within Your Repo):**
-    - Navigate to **your repository page** on GitHub.
+2.  **Create Pull Request on GitHub:**
+    - Navigate to the repository page on GitHub.
     - You should see a prompt to create a Pull Request from your recently pushed branch. Click it.
     - Ensure the **base branch** is `main` and the **compare branch** is your feature branch.
 3.  **Use the PR Template:**
     - Fill out the Pull Request template (`.github/PULL_REQUEST_TEMPLATE.md` if present) thoroughly.
     - **Clearly describe:** What changes were made? Why? How can it be tested? Include screenshots/GIFs for UI changes.
-4.  **Link Related Issues (If Applicable):** If your repository uses GitHub Issues, link them using keywords like `Closes #123` in the PR description.
-5.  **Request Review:** Use GitHub's "Reviewers" feature to request a review from the course instructor(s) and/or designated peers as per course instructions.
+4.  **Link Related Issues:** Link GitHub Issues using keywords like `Closes #123` in the PR description.
+5.  **Request Review:** Use GitHub's "Reviewers" feature to request a review from the instructor and team.
 
 ## Code Standards & Best Practices
 
@@ -130,11 +125,11 @@ If your course involves Pull Requests for review/merging:
 - **Code Documentation:** Write clear **JSDoc** for functions, components, and types. Use inline comments sparingly for non-obvious logic.
 - **Accessibility (A11y):** Strive for accessible UI elements (labels, roles, contrast, touch targets).
 
-## Code Reviews (If Applicable)
+## Code Reviews
 
 Code reviews are crucial for learning and quality.
 
-- **Reviewers (Instructor/Peers):**
+- **Reviewers (Instructor/team):**
   - Provide **constructive, specific, and respectful** feedback on PRs within the designated repository.
   - Check for correctness, clarity, performance, adherence to standards, testing, etc.
   - Use GitHub's review tools.

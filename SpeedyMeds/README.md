@@ -28,6 +28,24 @@ The aim is to provide a **robust architectural foundation**, allowing students t
 
 ---
 
+## 🎨 Target UI Mockups
+
+These images provide a general guide for the look and feel of the application's core screens that you will implement. The current state provides placeholders for these screens.
+
+**Dashboard:**
+![Dashboard Mockup](./assets/images/dashboard.svg)
+
+**Prescriptions:**
+![Prescriptions Mockup](./assets/images/prescriptions.svg)
+
+**Order Detail:**
+![Order Detail Mockup](./assets/images/orders.svg)
+
+**Account:**
+![Account Mockup](./assets/images/account.svg)
+
+---
+
 ## ✨ Key Features & Starting State
 
 This section outlines the pre-configured architecture and the state of the application screens provided in this starting point:
@@ -44,6 +62,7 @@ This section outlines the pre-configured architecture and the state of the appli
   - `AccountScreen` placeholder includes the `ThemeSelector` component to demonstrate theme switching.
 - ✅ **Reusable Components (`src/components/`):** Generic components for `LoadingIndicator`, `ErrorDisplay`, `ScreenContainer`, and `ThemeSelector` are provided.
 - ✅ **Testing Setup (`src/test-utils/`, `jest.setup.js`):** Configuration and a custom `renderWithProviders` function are ready for testing components within the theme context. Tests for placeholder screens verify basic rendering.
+- ✅ **Environment Configuration (`.env`):** A `.env` file is pre-configured at the root with `NODE_TLS_REJECT_UNAUTHORIZED=0` and `REACT_NATIVE_PACKAGER_HOSTNAME=localhost`. This helps bypass potential SSL certificate issues in certain development environments and ensures the Metro bundler connects correctly without needing the `--localhost` flag.
 
 ---
 
@@ -114,12 +133,11 @@ Follow these steps to set up and run the **starting point project** locally.
 ### Running the App
 
 1.  **Start Simulator/Emulator:** Launch your desired iOS Simulator (from Xcode) or Android Emulator (from Android Studio).
-2.  **Check `.env`:** See [SETUP.md](./SETUP.md) if any environment variables are needed (e.g., for network configurations). The `.env.example` file may contain guidance.
-3.  **Start Metro Bundler:**
+2.  **Start Metro Bundler:** Note that the included `.env` file sets `REACT_NATIVE_PACKAGER_HOSTNAME=localhost`, so the `--localhost` flag is generally not needed here.
     ```bash
-    npx expo start --localhost
+    npx expo start
     ```
-4.  **Open in Simulator/Emulator/Device:**
+3.  **Open in Simulator/Emulator/Device:**
     - Press `i` in the terminal → Open on iOS Simulator.
     - Press `a` in the terminal → Open on Android Emulator.
     - Scan the QR code with the Expo Go app on your phone (must be on the same Wi-Fi network as your computer).
@@ -172,6 +190,7 @@ SpeedyMeds/
 │   ├── test-utils/       # Testing utilities (custom renderWithProviders function)
 │   ├── theme/            # Theming definitions (colors, spacing, typography, shape, theme assembly)
 │   └── types/            # Shared TypeScript interfaces and type definitions
+├── .env                  # **IMPORTANT:** Pre-configured env file (DO NOT COMMIT IF MODIFIED)
 ├── .env.example          # Example environment variables (copy to .env if needed)
 ├── .eslintrc.js          # ESLint configuration (code quality rules)
 ├── .gitignore            # Files/folders ignored by Git
