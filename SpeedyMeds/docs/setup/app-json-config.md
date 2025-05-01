@@ -1,9 +1,9 @@
-# Expo Configuration (`app.json`) Explained
+# Digging into Expo Config (`app.json`)
 
-This document explains the configuration settings found in the `app.json` file for the SpeedyMeds project. `app.json` is the standard configuration file used by Expo to manage project settings. It's crucial for controlling various aspects of the application build and runtime behavior. You modify these settings by directly editing this JSON file.
+Let's take a look at the `app.json` file! This is Expo's main configuration file for the SpeedyMeds project. Think of it as the control panel for your app's metadata, icons, splash screen, build settings, and more. You'll modify this file directly if you need to change these kinds of project-level settings.
 
 ```json
-// Example app.json content (structure based on latest):
+// Current app.json content:
 {
   "expo": {
     "name": "SpeedyMeds",
@@ -11,7 +11,7 @@ This document explains the configuration settings found in the `app.json` file f
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic", // Now respects system theme!
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -34,70 +34,54 @@ This document explains the configuration settings found in the `app.json` file f
 }
 ```
 
-## Key Configuration Sections:
+## Key Settings Explained:
 
 1.  **`name`**: `"SpeedyMeds"`
-
-    - **Purpose**: The display name of the app as it appears on the device's home screen and within system menus.
-    - **Decision**: The name is appropriate for the project.
+    - **What it does**: The app's display name on the home screen.
+    - **Our Setup**: Looks good!
 
 2.  **`slug`**: `"SpeedyMeds"`
-
-    - **Purpose**: A URL-friendly identifier used in Expo Go and for publishing updates. It should be unique within an Expo account if publishing.
-    - **Decision**: The slug matches the name and is suitable.
+    - **What it does**: A URL-friendly name used by Expo services.
+    - **Our Setup**: Matches the name, all set.
 
 3.  **`version`**: `"1.0.0"`
-
-    - **Purpose**: The initial version number of the application, following Semantic Versioning (SemVer).
-    - **Decision**: Standard starting version. Will be updated as the project progresses (see `CHANGELOG.md`).
+    - **What it does**: Your app's current version.
+    - **Our Setup**: Standard starting version.
 
 4.  **`orientation`**: `"portrait"`
-
-    - **Purpose**: Locks the application to portrait mode.
-    - **Decision**: Appropriate for this type of mobile application based on the mockups. `landscape` or `default` (allowing both) are other options if needed later.
+    - **What it does**: Locks the app to portrait orientation.
+    - **Our Setup**: Makes sense for this app based on the mockups.
 
 5.  **`icon`**: `"./assets/icon.png"`
+    - **What it does**: Points to the app icon file.
+    - **Our Setup**: Uses the default Expo icon for now. You could swap this out later with a custom SpeedyMeds icon!
 
-    - **Purpose**: Specifies the path to the main application icon file.
-    - **Decision**: Uses the default Expo icon. This can be customized later in the project with a dedicated SpeedyMeds icon.
-
-6.  **`userInterfaceStyle`**: `"light"`
-
-    - **Purpose**: Sets the default appearance mode (light/dark). `light` forces light mode. `dark` forces dark mode. `automatic` respects the user's system setting.
-    - **Decision**: `light` matches the initial mockups. We can change this to `automatic` later if dark mode support becomes a requirement.
+6.  **`userInterfaceStyle`**: `"automatic"`
+    - **What it does**: Controls the app's theme appearance. `light` forces light mode, `dark` forces dark mode, and `automatic` respects the user's phone setting.
+    - **Our Setup**: Set to `automatic` so it works nicely with our light/dark theme setup out of the box!
 
 7.  **`newArchEnabled`**: `true`
-
-    - **Purpose**: Enables React Native's New Architecture (Fabric renderer and TurboModules). This generally offers performance improvements.
-    - **Decision**: Keeping this `true` is recommended for new projects to leverage the latest architecture. It's good practice for learners to work with this enabled.
+    - **What it does**: Turns on React Native's New Architecture (Fabric & TurboModules) for potential performance boosts.
+    - **Our Setup**: Good to have this enabled from the start.
 
 8.  **`splash`**: `{...}`
-
-    - **Purpose**: Configures the splash screen displayed briefly when the app starts.
-      - `image`: Path to the splash screen image.
-      - `resizeMode`: How the image should fit the screen (`contain`, `cover`).
-      - `backgroundColor`: Background color shown behind the image.
-    - **Decision**: Uses default Expo splash assets. These can be customized later for branding. The `backgroundColor` could eventually match the app's theme.
+    - **What it does**: Configures the loading screen shown when the app starts.
+    - **Our Setup**: Uses default Expo assets. Could be customized later for branding.
 
 9.  **`ios`**: `{...}`
-
-    - **Purpose**: iOS-specific configurations.
-      - `supportsTablet`: Allows the app to run on iPads.
-    - **Decision**: Basic configuration is sufficient for now. Later, we might add `bundleIdentifier` for native builds.
+    - **What it does**: Settings specific to iOS builds.
+    - **Our Setup**: Basic setting to support iPads is included.
 
 10. **`android`**: `{...}`
-
-    - **Purpose**: Android-specific configurations.
-      - `adaptiveIcon`: Configures Android's adaptive icons (required for newer Android versions).
-    - **Decision**: Basic configuration is sufficient for now. Later, we might add `package` for native builds.
+     - **What it does**: Settings specific to Android builds.
+     - **Our Setup**: Includes configuration for modern Android adaptive icons.
 
 11. **`web`**: `{...}`
-    - **Purpose**: Web-specific configurations (when running as a Progressive Web App).
-      - `favicon`: Sets the browser tab icon.
-    - **Decision**: Basic configuration. Web support is not the primary focus of this course.
+     - **What it does**: Settings for web support (if you run the app in a browser).
+     - **Our Setup**: Basic favicon setting.
 
 ## Conclusion
 
-The default `app.json` provided by the Expo `blank-typescript` template is well-suited for the initial development phase of the SpeedyMeds training project. Key settings like enabling the New Architecture are already in place. Further customizations (icons, splash screen, platform-specific identifiers) can be addressed later as needed.
+The `app.json` file is set up with sensible defaults for this project, including support for automatic light/dark mode and the New Architecture. You likely won't need to touch this much initially, but it's good to know where these settings live!
 
-_(For the complete and up-to-date reference, see the official [Expo app.json Configuration Documentation](https://docs.expo.dev/versions/latest/config/app/).)_
+_(Want all the details? Check out the official [Expo `app.json` Configuration Documentation](https://docs.expo.dev/versions/latest/config/app/).)_ 

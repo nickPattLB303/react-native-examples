@@ -1,51 +1,50 @@
-# Data Fetching & Caching (TanStack Query / React Query)
+# How Data Fetching Works (TanStack Query / React Query)
 
 ## Overview
 
-This project uses [TanStack Query (v5)](https://tanstack.com/query/v5/docs/react/overview) (formerly React Query) to manage asynchronous operations, primarily data fetching from our simulated API. Efficiently handling data fetching, caching, and synchronization with server state is crucial for building responsive and robust applications, and TanStack Query provides powerful tools for these tasks.
+How does the app get data like prescriptions or orders? This project uses a powerful library called [TanStack Query (v5)](https://tanstack.com/query/v5/docs/react/overview) (you might also hear it called React Query) to handle talking to our simulated API.
 
-## Installation
+Dealing with data fetching, caching (saving data temporarily so you don't have to ask for it again immediately), and keeping things in sync can be tricky. TanStack Query makes this much easier and helps build responsive apps.
 
-```bash
-# Using npm (with legacy peer deps flag)
-npm install @tanstack/react-query --save --legacy-peer-deps
+## Setup (Already Done!)
 
-# Required for online status management in React Native
-npx expo install @react-native-community/netinfo -- --legacy-peer-deps
-```
+Good news! The necessary packages are already installed:
 
-**Note:** The `--legacy-peer-deps` flag was necessary during setup to resolve potential version conflicts between dependencies in the project. While generally avoided, it can sometimes be required to proceed with installation in complex dependency trees. See `SETUP.md` for details.
+- `@tanstack/react-query`: The core library.
+- `@react-native-community/netinfo`: Helps React Query know if the phone is online or offline.
 
-## Configuration
+## How It's Configured
+
+Here's a peek at how React Query is wired up in this project:
 
 ### 1. QueryClientProvider (`App.tsx`)
 
-The root of the application is wrapped with `QueryClientProvider`, making the `QueryClient` instance available throughout the component tree.
+The whole app is wrapped with `QueryClientProvider`. This makes a central `QueryClient` (which manages the data cache) available everywhere.
 
 ```typescript
-// App.tsx
+// App.tsx (Simplified)
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Create a client instance
+// Create one client instance for the whole app
 const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Rest of the app */}
+      {/* ... other providers and the rest of the app ... */}
     </QueryClientProvider>
   );
 }
 ```
 
-### 2. React Native Specific Setup (`App.tsx`)
+### 2. React Native Smarts (`App.tsx`)
 
-To optimize React Query for the React Native environment, configurations for online status and app focus management are added in `App.tsx`:
+We added some extra configuration in `App.tsx` so React Query works great on mobile:
 
-- **Online Status:** Uses `@react-native-community/netinfo` to inform React Query whether the device is online or offline, enabling automatic refetching on reconnect.
+- **Online Status:** It uses `@react-native-community/netinfo` to detect when the phone connects or disconnects from the internet. This lets React Query automatically retry fetches when you come back online.
 
   ```typescript
-  // App.tsx
+  // App.tsx (Online Manager Setup)
   import NetInfo from "@react-native-community/netinfo";
   import { onlineManager } from "@tanstack/react-query";
 
@@ -56,142 +55,130 @@ To optimize React Query for the React Native environment, configurations for onl
   });
   ```
 
-- **App Focus Refetching:** Uses the React Native `AppState` module to refetch queries when the app comes back into focus.
+- **App Focus Refetching:** It uses React Native's `AppState` to tell React Query when the app comes back into the foreground. This helps keep data fresh by automatically refetching when the user switches back to the app.
 
   ```typescript
-  // App.tsx
+  // App.tsx (Focus Manager Setup)
   import { AppState, Platform } from "react-native";
-  import type { AppStateStatus } from "react-native";
   import { focusManager } from "@tanstack/react-query";
-  import { useEffect } from "react";
-
-  function onAppStateChange(status: AppStateStatus) {
-    if (Platform.OS !== "web") {
-      focusManager.setFocused(status === "active");
-    }
-  }
-
-  // Inside the main App component or a top-level component
+  // ... inside App component or AppContent useEffect ...
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", onAppStateChange);
+    const subscription = AppState.addEventListener("change", (status) => {
+      if (Platform.OS !== "web") {
+        focusManager.setFocused(status === "active");
+      }
+    });
     return () => subscription.remove();
   }, []);
   ```
 
-## Usage
+## How We Use It
 
 ### 1. Query Keys (`src/api/queryKeys.ts`)
 
-Constants are defined for query keys to ensure consistency and prevent typos when referencing cached data.
+We define simple names (keys) for each type of data we fetch (like `userProfile`, `prescriptions`). Think of these like labels for the cached data. Using consistent keys helps React Query manage everything correctly.
 
 ```typescript
 // src/api/queryKeys.ts
 export const queryKeys = {
   userProfile: ["userProfile"] as const,
   prescriptions: ["prescriptions"] as const,
-  // ... other keys
+  // ... other keys ...
 };
 ```
 
 ### 2. API Functions (`src/api/index.ts`)
 
-Asynchronous functions (e.g., `fetchUserProfile`, `fetchPrescriptions`) are defined to handle the actual data fetching logic (currently simulating calls to the mock data generators).
+These are the functions (like `fetchUserProfile`, `fetchPrescriptions`) that actually perform the data fetching (currently, they just return mock data after a short delay).
 
 ### 3. Fetching Hook (`src/hooks/useInitializeAppData.ts`)
 
-A custom hook centralizes the initial data fetching logic. It uses the `useQuery` hook from React Query for each data type:
+This custom hook is the central place where we trigger the initial data fetches when the app starts. It uses the `useQuery` hook from React Query for each piece of data:
 
 ```typescript
-// src/hooks/useInitializeAppData.ts
+// src/hooks/useInitializeAppData.ts (Simplified)
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "../api/queryKeys";
 import { fetchUserProfile, fetchPrescriptions } from "../api";
-import useAppDataStore from "../stores/appDataStore";
+import useAppDataStore from "../stores/appDataStore"; // To update our global state
 
 export const useInitializeAppData = () => {
-  const { setUserProfile, setPrescriptions, setError, setLoading } =
+  const { setUserProfile, setPrescriptions, /* ... other setters ... */ } =
     useAppDataStore();
 
-  const {
-    data: userProfile,
-    isFetching: isFetchingProfile,
-    error: errorProfile,
-  } = useQuery({
+  // Fetch User Profile
+  const { data: userProfile, /* ... status fields ... */ } = useQuery({
     queryKey: queryKeys.userProfile,
     queryFn: fetchUserProfile,
-    staleTime: Infinity, // Example: Keep profile data fresh indefinitely
+    staleTime: Infinity, // Profile data is considered fresh forever
   });
 
-  const {
-    data: prescriptions,
-    isFetching: isFetchingPrescriptions,
-    error: errorPrescriptions,
-  } = useQuery({
+  // Fetch Prescriptions
+  const { data: prescriptions, /* ... status fields ... */ } = useQuery({
     queryKey: queryKeys.prescriptions,
     queryFn: () => fetchPrescriptions(5),
-    staleTime: 1000 * 60 * 10, // Example: Refetch every 10 minutes
+    staleTime: 1000 * 60 * 10, // Prescriptions fresh for 10 mins
   });
 
-  // ... queries for other data types ...
+  // ... queries for other data ...
 
-  // Effect hooks to update Zustand store with fetched data/errors
-  useEffect(
-    () => {
-      // ... update Zustand store ...
-    },
-    [
-      /* dependencies */
-    ],
-  );
+  // This hook also uses useEffect to push the fetched data into the Zustand store
+  useEffect(() => {
+    if (userProfile) setUserProfile(userProfile);
+  }, [userProfile, setUserProfile]);
+
+  useEffect(() => {
+    if (prescriptions) setPrescriptions(prescriptions);
+  }, [prescriptions, setPrescriptions]);
+
+  // ... other effects ...
 };
 ```
 
-- **`queryKey`:** Uses the constants defined earlier.
-- **`queryFn`:** References the corresponding API function.
-- **`staleTime`:** Configured to control how long cached data is considered fresh before requiring a background refetch.
-- **Data Synchronization:** `useEffect` hooks within `useInitializeAppData` observe the results from `useQuery` and update the global Zustand store (`useAppDataStore`) accordingly.
+- **`queryKey`:** Uses our predefined labels.
+- **`queryFn`:** Points to the function that fetches the data.
+- **`staleTime`:** Tells React Query how long to consider the cached data "fresh" before checking for updates in the background.
+- **Data Synchronization:** This hook takes the data successfully fetched by React Query and puts it into our global Zustand store (`useAppDataStore`), making it easy for components to access.
 
-### 4. Usage in Components
+### 4. Using the Data in Components
 
-Components typically **do not** directly call `useQuery` themselves for this global application data. Instead, they consume the data from the Zustand store (`useAppDataStore`). This approach centralizes data access, decouples components from the fetching logic, and ensures components react to the latest available state managed globally, which is kept up-to-date by the `useInitializeAppData` hook.
+Your UI components usually **won't** need to call `useQuery` directly for this core app data. Instead, they just grab the latest data from the Zustand store (`useAppDataStore`). React Query and the `useInitializeAppData` hook handle keeping that store up-to-date in the background.
 
 ```typescript
 // Example in a screen component (e.g., AccountScreen.tsx)
 import useAppDataStore from '../stores/appDataStore';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { Text, ActivityIndicator } from 'react-native-paper';
 
 const AccountScreen = () => {
-  // Select only the needed state slices from Zustand
+  // Get data directly from the Zustand store
   const userProfile = useAppDataStore((state) => state.userProfile);
-  const isLoading = useAppDataStore((state) => state.isLoading);
-  const error = useAppDataStore((state) => state.error);
+  const isLoading = useAppDataStore((state) => state.isLoading); // Global loading state
 
-  if (isLoading && !userProfile) return <ActivityIndicator />; // Show loading only if no data yet
-  if (error) return <Text>Error loading profile: {error.message}</Text>;
-  if (!userProfile) return <Text>No profile data available.</Text>;
+  if (isLoading && !userProfile) return <ActivityIndicator />;
+  // ... handle error and no data states ...
 
   return <Text>Welcome, {userProfile.firstName}</Text>;
 };
 ```
 
-## Key Concepts
+## Key Ideas
 
-- **Declarative Fetching:** Define _how_ to fetch data with `useQuery`, letting React Query handle _when_ (initial load, focus, reconnect, etc.).
-- **Caching:** Reduces redundant network requests by serving stale data while refetching in the background.
-- **Automatic Refetching:** Keeps data fresh based on window focus, network reconnection, and `staleTime`.
-- **Separation of Concerns:** Data fetching logic is separated from UI components.
-- **Integration with Zustand:** React Query handles the complexities of fetching and caching server state. Zustand then serves as the readily accessible, centralized client-side store for this data, providing components with a simple hook (`useAppDataStore`) to consume the latest state.
+- **Declarative Fetching:** You tell `useQuery` *how* to fetch, React Query handles *when*.
+- **Caching:** Saves data locally to avoid unnecessary re-fetching.
+- **Automatic Updates:** Refreshes data when you re-focus the app or reconnect.
+- **Separation:** Data fetching logic is kept separate from your UI components.
+- **Teamwork (React Query + Zustand):** React Query manages fetching/caching server data; Zustand provides easy access to that data for your components.
 
-## Data Flow Visualization
+## Data Flow Diagram
 
-The following diagram illustrates how data flows from the API through React Query and Zustand to the UI components in this architecture:
+Here's a simple view of how data flows in this setup:
 
 ```mermaid
 graph LR
-    A[API/Mock] -->|fetch| B(React Query);
-    B -->|updates cache| B;
+    A[Simulated API] -->|fetch called by| B(React Query with useQuery);
+    B -->|updates cache & status| B;
     B -->|provides data/status| C(useInitializeAppData Hook);
-    C -->|updates state| D(Zustand Store);
-    D -->|provides state| E(React Components);
-    E -->|reads state| D;
-```
+    C -->|updates store| D[Zustand Store useAppDataStore];
+    D -->|provides state slice| E(Your React Components);
+    E -->|reads latest state| D;
+``` 
