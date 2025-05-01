@@ -191,7 +191,6 @@ SpeedyMeds/
 │   ├── theme/            # Theming definitions (colors, spacing, typography, shape, theme assembly)
 │   └── types/            # Shared TypeScript interfaces and type definitions
 ├── .env                  # **IMPORTANT:** Pre-configured env file (DO NOT COMMIT IF MODIFIED)
-├── .env.example          # Example environment variables (copy to .env if needed)
 ├── .eslintrc.js          # ESLint configuration (code quality rules)
 ├── .gitignore            # Files/folders ignored by Git
 ├── .prettierignore       # Files/folders ignored by Prettier

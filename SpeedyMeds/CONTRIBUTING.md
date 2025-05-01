@@ -75,10 +75,10 @@ graph TD
    C --> D(git checkout -b feature/your-feature);
    D --> E[Code & Commit];
    E --> F(git push -u origin feature/your-feature);
-   F --> G{Create PR on GitHub (If Req.)};
-   G --> H{Request Review (If Req.)};
-   H --> I{Address Feedback (If Req.)};
-   I --> J[Merge PR (If Req.)];
+   F --> G{Create PR on GitHub};
+   G --> H{Request Review};
+   H --> I{Address Feedback};
+   I --> J[Merge PR];
    J --> K[End Task];
    I --> E;
 ```
@@ -96,7 +96,7 @@ graph TD
       ```
     - **Run Tests:** Ensure all existing tests pass, and add new tests for your changes.
       ```bash
-      # Run tests (likely in watch mode, press 'a' to run all if needed)
+      # Run tests (likely in watch mode, press 'a' to run all)
       npm run test
       # Or run once for CI-like check
       npm run test:ci
