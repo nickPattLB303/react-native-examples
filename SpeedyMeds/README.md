@@ -1,4 +1,4 @@
-# SpeedyMeds - React Native Training Capstone Project Starting Point
+# SpeedyMeds - React Native Training Capstone Project 
 
 [![React Native](https://img.shields.io/badge/React%20Native-0.7x-blue?logo=react)](https://reactnative.dev/)
 [![Expo](https://img.shields.io/badge/Expo-SDK%2052-blue?logo=expo)](https://docs.expo.dev/get-started/create-a-new-app/)
@@ -8,29 +8,28 @@
 
 ## 🚀 Overview
 
-Welcome to the SpeedyMeds **Starting Point**! This repository provides the foundation for the capstone project in a React Native training course. Its primary goal is to offer a pre-configured environment with the core architecture already set up, allowing participants to immediately begin applying React Native concepts to build a functional mobile pharmacy application by implementing UI and features.
+Welcome to the SpeedyMeds! Think of this as your launchpad for the React Native training capstone project. We've set up a solid foundation with the core architecture in place so you can dive right into the fun part: applying React Native concepts to build a functional mobile pharmacy app.
 
-**Course Structure:** This repository (or a group-specific fork) serves as the starting code. Participants work collaboratively or individually based on course instructions. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the specific contribution workflow if applicable.
+**Course Structure:** This repository is your starting code. You can work individually or as part of a group. Check out [CONTRIBUTING.md](./CONTRIBUTING.md) for tips.
 
-This starting point emphasizes best practices and includes a ready-to-use setup for:
+This starting point comes pre-loaded with helpful tools and patterns:
 
-- **Modern Frameworks:** Utilizing React Native with Expo for streamlined development.
-- **Strong Typing:** Leveraging TypeScript for enhanced code quality and maintainability.
-- **Component Architecture:** A structure ready for building reusable UI components.
-- **State Management:** Pre-configured client-side (Zustand) and server-side (TanStack Query) state management. Includes a global store and data initialization hook pattern.
-- **Navigation:** Pre-configured app flow using React Navigation (Native Stack & Bottom Tabs) with types defined.
-- **Styling & Theming:** Fully integrated React Native Paper (Material Design 3) and Styled Components with a complete light/dark mode theme system (`ThemeContext`) ready to use.
-- **Code Quality:** Enforced standards with ESLint and Prettier.
-- **Testing:** Setup for unit and component tests using Jest and React Native Testing Library, including a custom render function with providers.
-- **Development Workflow:** Standard setup for running and debugging the app.
+- **Modern Frameworks:** Built with React Native and Expo for a smooth development experience.
+- **Strong Typing:** Uses TypeScript to help catch errors early and keep code understandable.
+- **Component Ready:** A structure ready for you to build your own reusable UI components.
+- **State Management:** Client-side (Zustand) and server-side (TanStack Query) state management are already configured, including a global store and data fetching examples.
+- **Navigation:** App navigation using React Navigation (Stack & Tabs) is set up with types ready to go.
+- **Styling & Theming:** Includes React Native Paper (Material Design 3) and Styled Components, plus a complete light/dark mode theme system (`ThemeContext`) you can use and customize.
+- **Code Quality:** Comes with ESLint and Prettier to help keep your code neat and consistent.
+- **Testing:** Jest and React Native Testing Library are set up for writing tests, including a handy custom render function.
 
-The aim is to provide a **robust architectural foundation**, allowing students to focus on implementing screens and features within a well-structured project, learning how common tools and patterns integrate in React Native. This `main` branch contains this starting code.
+We aimed to provide a **robust starting point**, letting you focus on building features and seeing how common tools fit together in React Native. This `main` branch has everything you need to get started!
 
 ---
 
 ## 🎨 Target UI Mockups
 
-These images provide a general guide for the look and feel of the application's core screens that you will implement. The current state provides placeholders for these screens.
+Here are some mockups to give you an idea of the target look and feel for the app's core screens. The goal is to implement UIs similar to these using the provided placeholders.
 
 **Dashboard:**
 ![Dashboard Mockup](./assets/images/dashboard.svg)
@@ -48,118 +47,96 @@ These images provide a general guide for the look and feel of the application's 
 
 ## ✨ Key Features & Starting State
 
-This section outlines the pre-configured architecture and the state of the application screens provided in this starting point:
+Here's a snapshot of what's already configured and the state of the screens when you start:
 
-- ✅ **Core Architecture:**
-  - **Navigation:** Bottom Tab and Native Stack navigators are fully configured with defined types (`src/navigation/`). Navigation between placeholder screens is functional.
-  - **Theming:** Light, Dark, and System theme preferences are supported via `ThemeContext` (`src/context/`) and integrated with React Native Paper/Styled Components (`src/theme/`). Theme definitions (`colors`, `typography`, `spacing`, `shape`) are complete. A `ThemeSelector` component exists (`src/components/`).
-  - **State Management:** Zustand (`src/stores/appDataStore.ts`) is set up for global client state. TanStack Query (`App.tsx`, `src/api/queryKeys.ts`) is configured for server state caching and management, including React Native focus/online managers.
-  - **Data Fetching:** A simulated API layer (`src/api/`) using mock data (`src/api/mockData.ts`) is included. A hook (`src/hooks/useInitializeAppData.ts`) demonstrates fetching initial data with TanStack Query and syncing to the Zustand store.
-  - **Tooling:** TypeScript, ESLint, Prettier, and Jest are fully configured.
-- 🟡 **Screens (`src/screens/`):** All main screen files exist (`HomeScreen`, `PrescriptionsScreen`, `OrdersScreen`, `OrderDetailScreen`, `AccountScreen`) but contain **minimal placeholder content**. They render their name and use the theme for background/text color, serving as starting points for implementation.
-  - `OrderDetailScreen` placeholder correctly receives and displays the `orderId` navigation parameter.
-  - `OrdersScreen` placeholder includes a button to test navigation to the `OrderDetailScreen` placeholder.
-  - `AccountScreen` placeholder includes the `ThemeSelector` component to demonstrate theme switching.
-- ✅ **Reusable Components (`src/components/`):** Generic components for `LoadingIndicator`, `ErrorDisplay`, `ScreenContainer`, and `ThemeSelector` are provided.
-- ✅ **Testing Setup (`src/test-utils/`, `jest.setup.js`):** Configuration and a custom `renderWithProviders` function are ready for testing components within the theme context. Tests for placeholder screens verify basic rendering.
-- ✅ **Environment Configuration (`.env`):** A `.env` file is pre-configured at the root with `NODE_TLS_REJECT_UNAUTHORIZED=0` and `REACT_NATIVE_PACKAGER_HOSTNAME=localhost`. This helps bypass potential SSL certificate issues in certain development environments and ensures the Metro bundler connects correctly without needing the `--localhost` flag.
+- ✅ **Core Architecture:** Navigation, Theming, State Management (Zustand & TanStack Query), Mock API, and Tooling (TypeScript, ESLint, Prettier, Jest) are all set up and ready.
+- 🟡 **Screens (`src/screens/`):** The main screen files exist but have **minimal placeholder content**. Your main task will be bringing these screens to life!
+  - `OrderDetailScreen` placeholder shows the `orderId` passed via navigation.
+  - `OrdersScreen` placeholder has a button to test navigating to the detail screen.
+  - `AccountScreen` placeholder includes the `ThemeSelector` to play with themes.
+- ✅ **Reusable Components (`src/components/`):** Some helpful generic components (`LoadingIndicator`, `ErrorDisplay`, `ScreenContainer`, `ThemeSelector`) are included.
+- ✅ **Testing Setup:** Jest & RNTL are configured with a custom `renderWithProviders` function. Basic placeholder tests exist.
+- ✅ **Environment Configuration (`.env`):** A pre-configured `.env` file helps with bundler connections and potential network issues in development. **No need to modify this file** unless you encounter specific local network problems.
 
 ---
 
 ## 🛠️ Technology Stack & Key Concepts
 
-This project utilizes the following core technologies and demonstrates key concepts:
+This project uses several key technologies. Feel free to explore their docs!
 
-- **React Native:** Framework for building native mobile apps using React. ([Docs](https://reactnative.dev/docs/getting-started))
-  - _Concepts Demonstrated:_ Core Components (placeholders use `View`, `Text`), Styling (placeholders use `useTheme`), Platform APIs (`Platform` used in `typography.ts`).
-- **Expo:** Platform and toolset simplifying React Native development, builds, and workflows. ([Docs](https://docs.expo.dev/))
-  - _Concepts Demonstrated:_ Managed Workflow, Expo CLI (`npx expo start`), `app.json` configuration, Expo Go app, Development Builds.
-- **TypeScript:** Superset of JavaScript adding static typing for improved code reliability. ([Docs](https://www.typescriptlang.org/docs/))
-  - _Concepts Demonstrated:_ Type Safety, Interfaces/Types (`src/types/`), Enums (`src/types/`), Generics (in libraries), Type Utilities (`src/navigation/types.ts`), `tsconfig.json`.
-- **React Navigation (v6):** Routing and navigation solution for React Native apps. ([Docs](https://reactnavigation.org/))
-  - _Concepts Demonstrated:_ Stack Navigator (`createNativeStackNavigator`), Bottom Tab Navigator (`createBottomTabNavigator`), Nested Navigators, Type Checking Navigators (`ParamList`, `ScreenProps` used in placeholders), Theming Integration.
-- **React Native Paper (v5 - MD3):** UI component library providing pre-built Material Design 3 components and theming capabilities. ([Docs](https://callstack.github.io/react-native-paper/))
-  - _Concepts Demonstrated:_ Material Design 3, Component Usage (placeholders use `Text`, `useTheme`), Theming (`PaperProvider`), Dark Mode Support (fully configured).
-- **Styled Components:** CSS-in-JS library for component-level styling with full JavaScript power. ([Docs](https://styled-components.com/))
-  - _Concepts Demonstrated:_ Tagged Template Literals (used in placeholders and components), Theme Integration (`ThemeProvider`, `useTheme`), TypeScript Integration (`styled.d.ts`).
-- **TanStack Query (React Query v5):** Powerful library for managing asynchronous "server state" (data fetching, caching, synchronization). ([Docs](https://tanstack.com/query/v5/docs/react/overview))
-  - _Concepts Demonstrated:_ Server State vs Client State Distinction, `useQuery` Hook (in `useInitializeAppData`), Query Keys (`queryKeys.ts`), Caching (`staleTime` used), Background Updates, React Native Integration (Focus/Online Refetching configured).
-- **Zustand:** Minimalist global client-side state management library. ([Docs](https://docs.pmnd.rs/zustand/getting-started/introduction))
-  - _Concepts Demonstrated:_ Centralized Store (`create` in `appDataStore.ts`), Actions, Hook-based Access (`useAppDataStore`), (Selectors demonstrated in tests/hooks).
-- **ESLint & Prettier:** Tools for code linting (identifying potential errors/bad practices) and automatic code formatting.
-  - _Concepts Demonstrated:_ Code Quality Enforcement, Style Consistency, Configuration (`.eslintrc.js`, `prettierrc.js`), Editor Integration (Format on Save encouraged).
-- **Faker.js:** Library for generating realistic mock/fake data (used in `src/api/mockData.ts`).
-  - _Concepts Demonstrated:_ Mocking API responses for development and testing.
-- **Jest & React Native Testing Library (RNTL):** Framework and library for unit and component testing. ([Jest Docs](https://jestjs.io/docs/getting-started), [RNTL Docs](https://callstack.github.io/react-native-testing-library/))
-  - _Concepts Demonstrated:_ Test Setup (`jest.config.js`, `jest.setup.js`), Writing Tests (`describe`, `it`, `expect`), Mocking (`jest.mock` used in tests and setup), Testing Utilities (`renderWithProviders`).
-- **@react-native-community/netinfo:** Detects network connection status and details. ([GitHub](https://github.com/react-native-netinfo/react-native-netinfo))
-  - _Concepts Demonstrated:_ Native Module Integration, Network Awareness (configured for React Query).
+- **React Native:** ([Docs](https://reactnative.dev/docs/getting-started))
+- **Expo:** ([Docs](https://docs.expo.dev/))
+- **TypeScript:** ([Docs](https://www.typescriptlang.org/docs/))
+- **React Navigation (v6):** ([Docs](https://reactnavigation.org/))
+- **React Native Paper (v5 - MD3):** ([Docs](https://callstack.github.io/react-native-paper/))
+- **Styled Components:** ([Docs](https://styled-components.com/))
+- **TanStack Query (React Query v5):** ([Docs](https://tanstack.com/query/v5/docs/react/overview))
+- **Zustand:** ([Docs](https://docs.pmnd.rs/zustand/getting-started/introduction))
+- **ESLint & Prettier**
+- **Faker.js**
+- **Jest & React Native Testing Library (RNTL)**
+- **@react-native-community/netinfo:** ([GitHub](https://github.com/react-native-netinfo/react-native-netinfo))
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these steps to set up and run the **starting point project** locally.
+Ready to jump in? Follow these steps to get the project running locally.
 
 ### Prerequisites
 
-- **Node.js:** LTS version recommended.
-- **Package Manager:** npm.
-- **Git:** For cloning and version control.
-- **Code Editor:** VS Code is highly recommended with extensions: ESLint, Prettier - Code formatter. [Download VS Code](https://code.visualstudio.com/)
-- **Mobile Development Environment:**
-  - **iOS:** macOS with Xcode installed.
-  - **Android:** Android Studio installed (for SDK and emulator management).
-- **(Optional) Expo Go App:** For testing on physical devices. [Install Expo Go](https://expo.dev/go)
+Make sure you have the basic tools installed, as covered in the course prerequisites:
 
-➡️ **Detailed Setup:** For comprehensive environment setup instructions (Xcode command-line tools, Android SDK paths, emulator creation, troubleshooting), please refer to **[SETUP.md](./SETUP.md)**.
+- **Node.js** (LTS version recommended)
+- **npm** (comes with Node.js)
+- **Git**
+- A **Code Editor** (VS Code is great!)
+- **Mobile Development Environment** (Xcode for iOS Simulators / Android Studio for Emulators)
+- (Optional) **Expo Go App** on your phone
+
+➡️ **Need a refresher?** The **[SETUP.md](./SETUP.md)** guide has detailed steps for environment setup.
 
 ### Installation
 
-1.  **Clone the Repository:**
-    - **Students:** Clone this repository or your assigned group fork repository.
+1.  **Clone the Repository:** Grab the code for this project (or your assigned group fork).
     ```bash
     # Example:
-    git clone <YOUR_REPOSITORY_URL>
-    cd <REPOSITORY_DIRECTORY_NAME>
+    git clone <THIS_REPOSITORY_URL>
+    cd <SpeedyMeds_DIRECTORY_NAME>
     ```
-2.  **Install Dependencies:** Use `npm install --legacy-peer-deps` to ensure compatible package versions.
+2.  **Install Dependencies:** This command installs all the needed libraries. The `--legacy-peer-deps` flag helps work around potential version conflicts common in RN projects.
     ```bash
     npm install --legacy-peer-deps
     ```
-    - **Why `--legacy-peer-deps`?** This flag helps avoid installation errors related to conflicting peer dependency requirements common in React Native projects. Use cautiously.
-    - **Adding New Packages:** Prefer `npx expo install [package-name]` for libraries with native code. Use `npm install [package-name]` for pure JS libraries.
+    - **Adding New Packages Later?** Use `npx expo install [package-name]` for libraries with native code, and `npm install [package-name]` for pure JS ones.
 
 ### Running the App
 
-1.  **Start Simulator/Emulator:** Launch your desired iOS Simulator (from Xcode) or Android Emulator (from Android Studio).
-2.  **Start Metro Bundler:** Note that the included `.env` file sets `REACT_NATIVE_PACKAGER_HOSTNAME=localhost`, so the `--localhost` flag is generally not needed here.
+1.  **Start Your Simulator/Emulator:** Get your preferred virtual device running first.
+2.  **Start the Bundler:** Open your terminal in the project directory and run:
     ```bash
     npx expo start
     ```
-3.  **Open in Simulator/Emulator/Device:**
-    - Press `i` in the terminal → Open on iOS Simulator.
-    - Press `a` in the terminal → Open on Android Emulator.
-    - Scan the QR code with the Expo Go app on your phone (must be on the same Wi-Fi network as your computer).
+    (No `--localhost` needed thanks to the `.env` file!)
+3.  **Open the App:** In the terminal where `expo start` is running:
+    - Press `i` → Open on iOS Simulator.
+    - Press `a` → Open on Android Emulator.
+    - Or scan the QR code with the Expo Go app on your phone.
 
 ### Debugging
 
-- **Expo DevTools:** Press `j` in the Metro terminal to open the debugger UI in your browser. This provides access to console logs, React DevTools (component inspection), network requests, and more.
-- **React Native Debugger (Standalone):** A powerful standalone app combining Chrome DevTools, React DevTools, and Redux DevTools. (Requires separate installation).
-
-➡️ **Detailed Debugging Guide:** See `docs/setup/debugging-config.md` or standard Expo/React Native debugging documentation.
+- **Expo Dev Menu:** Access useful tools like Reload, Element Inspector, etc. (Cmd+D on iOS sim, Cmd+M/Ctrl+M on Android emu, Shake device).
+- **Expo DevTools:** Press `j` in the Metro terminal to open the browser debugger. Great for logs, network requests, and React DevTools.
 
 ### Running Tests
 
 ```bash
-# Run tests in interactive watch mode
+# Run tests and watch for changes
 npm test
 
-# Run tests once (e.g., for CI)
+# Run tests once
 npm run test:ci
 ```
-
-➡️ **Detailed Testing Guide:** See `docs/setup/testing-config.md` or standard Jest/RNTL documentation.
 
 ---
 
@@ -173,7 +150,7 @@ SpeedyMeds/
 ├── assets/               # Static assets (images, fonts)
 │   └── ...               # Icons/splash screen images
 ├── docs/                 # Project documentation (guides, architecture decisions)
-│   └── setup/            # Detailed setup guides (if provided beyond base docs)
+│   └── setup/            # Detailed setup guides
 ├── src/                  # Application source code
 │   ├── api/              # Data fetching simulation (mockData.ts, index.ts), query keys
 │   ├── components/       # Reusable UI components (Loading, Error, Container, ThemeSelector)
@@ -181,7 +158,7 @@ SpeedyMeds/
 │   ├── context/          # React Context providers (ThemeContext)
 │   │   └── __tests__/    # Tests for context logic
 │   ├── hooks/            # Custom React hooks (useInitializeAppData)
-│   │   └── __tests__/    # Tests for custom hooks (if applicable)
+│   │   └── __tests__/    # Tests for custom hooks
 │   ├── navigation/       # Navigation setup (AppNavigator, MainTabNavigator, OrdersStack, types)
 │   ├── screens/          # Screen components (PLACEHOLDERS: Home, Account, Orders, Detail, Prescriptions)
 │   │   └── __tests__/    # Tests for screen components (verify placeholders render)
@@ -191,9 +168,10 @@ SpeedyMeds/
 │   ├── theme/            # Theming definitions (colors, spacing, typography, shape, theme assembly)
 │   └── types/            # Shared TypeScript interfaces and type definitions
 ├── .env                  # **IMPORTANT:** Pre-configured env file (DO NOT COMMIT IF MODIFIED)
+├── .env.example          # Example environment variables (copy to .env if needed)
 ├── .eslintrc.js          # ESLint configuration (code quality rules)
 ├── .gitignore            # Files/folders ignored by Git
-├── .prettierignore       # Files/folders ignored by Prettier
+├── .prettierignore       # Files/ignored by Prettier
 ├── App.tsx               # Root React component, sets up providers (Navigation, Theme, QueryClient)
 ├── app.json              # Expo configuration file (app metadata, build settings)
 ├── index.ts              # App entry point (managed by Expo)
@@ -212,19 +190,16 @@ SpeedyMeds/
 
 ---
 
-## 🤝 Course Development Workflow
+## 🤝 How to Contribute
 
-Development occurs within this repository (or a group-specific fork).
+Development happens right here!
 
-**Students:** Please refer to the **[CONTRIBUTING.md](./CONTRIBUTING.md)** file for detailed instructions on:
+Check out **[CONTRIBUTING.md](./CONTRIBUTING.md)** for tips and guidelines on:
 
-- Cloning the repository.
-- Branching strategies (if applicable).
-- Committing changes (Conventional Commits recommended).
-- Pushing branches.
-- Creating Pull Requests (PRs) (if applicable).
-- Code review expectations.
-- Coding standards and testing requirements.
+- Branching and Committing
+- Pull Requests
+- Code Reviews
+- Coding Standards
 
 ---
 
@@ -232,17 +207,19 @@ Development occurs within this repository (or a group-specific fork).
 
 - **Environment Setup:** [SETUP.md](./SETUP.md)
 - **Contribution Guide:** [CONTRIBUTING.md](./CONTRIBUTING.md)
-- **How to Use the App (Starting State):** [USAGE.md](./USAGE.md)
-- **Starting State & Next Steps:** [ROADMAP.md](./ROADMAP.md)
+- **Using the Starter App:** [USAGE.md](./USAGE.md)
+- **Project Goals/Checklist:** [ROADMAP.md](./ROADMAP.md)
 - **Version History:** [CHANGELOG.md](./CHANGELOG.md)
-- **Detailed Tooling Setup Guides (`docs/setup/`):** (Refer to specific files if present for deeper dives into the pre-configured tools)
+- **Detailed Tooling Setup Guides (`docs/setup/`):** See these for deeper dives into the pre-configured tools.
 
 ---
 
 ## 📞 Contact & Support
 
-For questions related to the course material or this specific capstone project, please use the designated course communication channels.
+Questions about the course or the project? Use the React Native Training WebEx channel.
 
-For technical issues or bugs found within this starting codebase itself, please report them as instructed by your course instructor (e.g., via course channels or GitHub Issues if enabled).
+Find a technical issue with this *starting* code? Let your instructor know!
 
 ---
+
+Happy Coding! 🎉

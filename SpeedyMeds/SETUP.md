@@ -1,89 +1,79 @@
-# SpeedyMeds: Detailed Development Environment Setup Guide
+# SpeedyMeds: Project Setup Guide
 
-This guide provides specific instructions for installing and running the **SpeedyMeds** React Native training project **starting point**. Ensure you have completed any general environment setup prerequisites provided by your instructor (like installing Node.js, Git, VS Code, Xcode/Android Studio, and simulators/emulators) before proceeding with these project-specific steps.
+This guide helps you get the **SpeedyMeds** React Native project installed and running. Before you start here, make sure you've got the basic development tools set up (Node.js, Git, VS Code, Xcode/Android Studio, etc.) as covered in the main course prerequisites.
 
-**Goal:** To ensure you can reliably run the SpeedyMeds starting application on your configured iOS Simulator or Android Emulator and utilize the project's development tools effectively.
+**Goal:** Get the SpeedyMeds starter app running smoothly on your iOS Simulator or Android Emulator.
 
 ---
 
 ## Project Installation and Running
 
-1.  **Navigate to Project Root:** Open your terminal and ensure you are in the main project directory (the one containing `package.json`) that you cloned earlier.
+1.  **Navigate to Project Root:** Open your terminal, `cd` into the project directory you cloned.
     ```bash
     cd path/to/SpeedyMeds
     ```
 
-2.  **Review Environment File (`.env`):**
-    - This project includes a pre-configured `.env` file in the root directory containing:
+2.  **About the `.env` File:**
+    - You'll find a `.env` file in the project root with a couple of settings:
       ```
       NODE_TLS_REJECT_UNAUTHORIZED=0
       REACT_NATIVE_PACKAGER_HOSTNAME=localhost
       ```
-    - **Purpose:** These settings help bypass potential SSL certificate issues in certain development/corporate networks (`NODE_TLS_REJECT_UNAUTHORIZED`) and ensure the Expo Metro bundler connects reliably to your simulator/emulator (`REACT_NATIVE_PACKAGER_HOSTNAME`).
-    - **Action Needed:** **None.** You do not need to create or modify this file unless specifically instructed due to unique network issues.
-    - **Important Note:** The `.env` file is listed in `.gitignore` and should **not** be committed to version control.
+    - **Purpose:** These help the app connect properly during development, especially if you're on certain networks. `NODE_TLS...` helps with potential SSL issues, and `REACT_NATIVE...` helps the bundler find your simulator/emulator.
+    - **Action Needed:** **Probably none!** Just leave this file as is unless you run into specific connection problems and your instructor advises changes.
+    - **Note:** This file isn't typically tracked by Git, so don't commit any changes you might make.
 
-3.  **Install Dependencies (Crucial Step!):**
-    - Use the `npm install --legacy-peer-deps` command for the initial setup:
-      ```bash
-      npm install --legacy-peer-deps
-      ```
-    - **Why `--legacy-peer-deps`?** It's often needed in React Native projects to resolve conflicting version requirements between different libraries.
+3.  **Install Dependencies:** Grab all the necessary libraries.
+    ```bash
+    # This command installs everything listed in package.json
+    npm install --legacy-peer-deps
+    ```
+    - **Why `--legacy-peer-deps`?** Sometimes different React Native libraries ask for slightly different versions of shared packages. This flag tells npm to be a bit more flexible, which often helps the install succeed.
 
-4.  **Ensure Simulator/Emulator is Running:** Double-check that your chosen iOS Simulator or Android Emulator is running and fully booted.
+4.  **Start Your Simulator/Emulator:** Fire up your preferred virtual device.
 
-5.  **Start the Expo Development Server:**
-    - Since `REACT_NATIVE_PACKAGER_HOSTNAME=localhost` is set in the `.env` file, you typically do not need the `--localhost` flag.
-      ```bash
-      npx expo start
-      ```
-    - This command starts the Metro Bundler and provides a development server. It will output logs, a QR code, and interactive prompts in your terminal.
+5.  **Start the App:** Run the start script in your terminal.
+    ```bash
+    # This starts the Metro bundler
+    npx expo start
+    ```
+    - Look for the QR code and command prompts in the terminal output.
 
-6.  **Run the App on Simulator/Emulator:**
+6.  **Open on Device:**
     - In the terminal where Metro is running:
-      - Press `i` to attempt to open the app on the running **iOS Simulator**.
-      - Press `a` to attempt to open the app on the running **Android Emulator**.
-    - Expo CLI will automatically install the Expo Go client app onto the simulator/emulator if it's not already present, and then launch your SpeedyMeds project inside Expo Go. You should see the placeholder screen for the "Home" tab.
+      - Press `i` → Open on iOS Simulator.
+      - Press `a` → Open on Android Emulator.
+    - Expo Go (the helper app) will install on the simulator/emulator if needed, and then your SpeedyMeds app should launch, showing the "Home Screen Placeholder".
 
 ---
 
 ## Managing Dependencies (Adding New Packages Later)
 
-As you develop and add features, you might need to install new libraries. Remember the rule:
+If you need to add more libraries as you build features:
 
-- **For libraries with native code or Expo/React Native integration (e.g., maps, camera, gestures, SVG):** **ALWAYS** use `npx expo install [package-name]`. Add `--dev` for development-only dependencies (e.g., types). This ensures compatibility with your Expo SDK version.
-  ```bash
-  # Example:
-  npx expo install react-native-maps
-  npx expo install @types/react-native-maps --dev
-  # On Windows, you might need "-- --dev": npx expo install @types/react-native-maps -- --dev
-  ```
-- **For pure JavaScript libraries or dev tools without native ties (e.g., `lodash`, `date-fns`, testing utilities, most `@types/` packages):** Using `npm install [package-name]` (or `yarn add`) is generally okay. Add `--save-dev` for development dependencies.
-  ```bash
-  # Example:
-  npm install date-fns
-  npm install --save-dev @testing-library/jest-native
-  ```
-- **When in doubt, use `npx expo install`.** It's the safer default for Expo projects.
+- **For native-linked libraries (maps, camera, gestures, etc.):** Use `npx expo install [package-name]`. This helps ensure compatibility with your Expo version.
+- **For pure JavaScript libraries (`date-fns`, etc.):** `npm install [package-name]` is usually fine.
+
+Use `--save-dev` (for npm) or add `--dev` (for expo install) for development-only tools like types (`@types/...`).
 
 ---
 
-## Troubleshooting Common Setup Issues
+## Troubleshooting Tips
 
-- **Errors mentioning "Watchman":** Watchman is a file-watching service used by Metro. If you see errors related to it (especially on macOS), try installing/reinstalling it via Homebrew: `brew update && brew install watchman` and `brew reinstall watchman`. Restarting your computer might also help.
-- **Cannot Connect to Metro Bundler / App Doesn't Load:**
-  - Ensure your simulator/emulator is running _before_ starting Metro (`npx expo start`).
-  - Make sure your computer and emulator/simulator can connect (check firewalls if applicable). The pre-configured `.env` file should help, but ensure no other network configurations are interfering.
-  - Try restarting Metro (`Ctrl+C` in the terminal, then `npx expo start`).
-  - Try clearing caches: Run `npx expo start --clear` (clears Metro cache). Inside the Expo Go app on the simulator/device (if it partially loads), go to settings and clear cache there too.
-  - As a last resort, try wiping the emulator data (in Android Studio Device Manager > Virtual Device Actions > Wipe Data) or resetting the simulator content and settings (in Simulator menu > Device > Erase All Content and Settings...). **Warning:** This deletes all apps and data on the simulator/emulator.
-- **Android SDK / Emulator Issues:**
-  - Ensure you have installed appropriate "Android SDK Platform" and "Android SDK Build-Tools" versions via Android Studio's SDK Manager (`Tools` > `SDK Manager`). Check Expo documentation for recommended versions if encountering build issues.
-  - Make sure HAXM (Intel) or AMD Hypervisor/Windows Hypervisor Platform is correctly installed and enabled for emulator acceleration if applicable (check Android Studio setup guides).
-- **Peer Dependency Errors during `npm install`:** Using the `--legacy-peer-deps` flag (as recommended in Step 3) should resolve most of these. If issues persist after adding a *new* package with `npm install`, try `npm install [package-name] --legacy-peer-deps`.
+Hit a snag? Here are a few common things to try:
 
-For more in-depth troubleshooting, consult the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#set-up-your-environment) and search the Expo forums or GitHub issues.
+- **Watchman Errors (macOS)?** Try `brew update && brew install watchman` or `brew reinstall watchman`.
+- **Connection Issues?**
+  - Make sure the simulator/emulator is running *before* `npx expo start`.
+  - Check firewalls. The pre-configured `.env` file should help, but ensure no other network configurations are interfering.
+  - Restart Metro (`Ctrl+C`, then `npx expo start`).
+  - Clear caches: `npx expo start --clear`. You can also clear cache within the Expo Go app settings.
+  - Last resort: Wipe emulator data / Erase simulator content (Warning: deletes all apps/data on the virtual device!).
+- **Android Issues?** Check installed SDK Platforms/Build Tools in Android Studio's SDK Manager. Ensure Hypervisor acceleration (HAXM, AMD Hypervisor, etc.) is correctly installed and enabled.
+- **Dependency Errors?** The `--legacy-peer-deps` flag during install usually helps. If errors pop up after adding a *new* package, try installing it with `npm install [package-name] --legacy-peer-deps`.
+
+Check the official [Expo Environment setup guide](https://docs.expo.dev/workflow/getting-started/#set-up-your-environment) for more help.
 
 ---
 
-You should now have a working development environment! Refer back to the main [README.md](./README.md) and [USAGE.md](./USAGE.md) for instructions on interacting with the starting application, debugging, testing, and understanding the project structure. Happy coding!
+You should be ready to code! Check out `README.md` and `USAGE.md` for more info on the project. Happy coding!

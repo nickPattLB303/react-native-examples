@@ -1,89 +1,67 @@
-# Using the SpeedyMeds Application (Starting Point)
+# Using the SpeedyMeds Application
 
-This document serves as a guide for interacting with the features of the SpeedyMeds application **starting point**. It describes what is functional in the provided codebase (`main` branch) and how to verify the core architecture.
+This guide walks you through exploring the **starting point** for the SpeedyMeds app. It shows what's already working and how you can check out the core architecture before you start building.
 
-**Note:** The primary goal of the capstone is to **implement** the UI and features within the placeholder screens described below.
+**Note:** Your main goal is to build upon this foundation and implement the actual UI and features in the placeholder screens!
 
 ---
 
 ## 1. Running the Application
 
-Before interacting, ensure you have set up your development environment and can run the app successfully.
+First things first, get the app running on your simulator or emulator.
 
-- **Refer to [SETUP.md](./SETUP.md)** for detailed environment configuration (Node, Xcode/Android Studio, Simulators/Emulators) and project installation.
-- **Refer to the "Running the App" section in [README.md](./README.md)** for the commands to start the development server and launch the app on your simulator, emulator, or physical device via Expo Go.
+- Need help with setup? Check out **[SETUP.md](./SETUP.md)**.
+- Ready to run? Use the commands in the **[README.md](./README.md)** ("Running the App" section).
 
-Upon successful launch, you should see the initial "Home" screen placeholder.
-
----
-
-## 2. Navigating the Application
-
-The application uses a standard **bottom tab bar** for primary navigation between the main sections. The navigation structure itself is fully functional:
-
-- **Home:** The main dashboard screen placeholder.
-- **Prescriptions:** The prescriptions list screen placeholder.
-- **Orders:** The entry point to the orders section (renders the orders list screen placeholder within a stack).
-- **Account:** The user account screen placeholder.
-
-Tap the corresponding icon in the bottom tab bar to switch between these placeholder sections.
-
-Within the **Orders** tab, you can test nested navigation:
-
-- The `OrdersScreen` placeholder contains a button ("Go to Detail Placeholder (TEST_ORD_123)").
-- Tapping this button should navigate you to the `OrderDetailScreen` placeholder, which will display the test Order ID passed as a parameter.
+Once it launches, you should see the "Home Screen Placeholder".
 
 ---
 
-## 3. Core Architecture Verification (Starting State)
+## 2. Exploring Navigation
 
-While the screens themselves are placeholders, the underlying architecture is complete. You can verify parts of it:
+The app uses a standard **bottom tab bar** for the main sections. Give it a try!
 
-### 3.1 Home Dashboard Placeholder (Tab 1)
+- Tap the icons (**Home**, **Prescriptions**, **Orders**, **Account**) to switch between the placeholder screens.
 
-- ✅ **View Placeholder:** Displays text confirming it's the "Home Screen Placeholder".
-- ✅ **Theming Applied:** The background and text color should reflect the currently active theme (light/dark/system).
+Inside the **Orders** tab, you can even test nested navigation:
 
-### 3.2 Prescriptions Placeholder (Tab 2)
-
-- ✅ **View Placeholder:** Displays text confirming it's the "Prescriptions Screen Placeholder".
-- ✅ **Theming Applied:** Background and text color match the active theme.
-
-### 3.3 Orders Placeholder (Tab 3) & Order Detail Placeholder
-
-- ✅ **View List Placeholder:** Displays text confirming it's the "Orders List Placeholder".
-- ✅ **Navigate to Detail Placeholder:** Tap the "Go to Detail Placeholder (TEST_ORD_123)" button.
-- ✅ **View Detail Placeholder:** The subsequent screen should display "Order Detail Placeholder" and "Received Order ID: TEST_ORD_123".
-- ✅ **Theming Applied:** Background and text colors match the active theme on both screens.
-
-### 3.4 Account Placeholder (Tab 4)
-
-- ✅ **View Placeholder:** Displays text confirming it's the "Account Screen Placeholder".
-- ✅ **Verify Theme Switching:** This screen includes the `ThemeSelector` component. Use the segmented buttons ("Light" / "Dark" / "System") to change the application's appearance instantly across all screens.
-- ✅ **Theming Applied:** Background and text color match the active theme, and the `ThemeSelector` should function correctly.
-
-### 3.5 Background Data Fetching (Verification via Debugger)
-
-- ✅ **Initial Load:** When the app starts, the `useInitializeAppData` hook runs.
-- ✅ **Check Console Logs:** Open the debugger (`j` in the Metro terminal). You should see console logs prefixed with `API_SIMULATION:` (e.g., `API_SIMULATION: fetchUserProfile called`) indicating the mock API functions were called.
-- ✅ **Check Zustand State (Optional Advanced):** Using React DevTools (if configured) or by temporarily adding `console.log(useAppDataStore.getState())` somewhere, you can observe that the Zustand store (`appDataStore`) is populated with mock data (userProfile, prescriptions, etc.) after the initial load completes.
+- Find the button on the Orders placeholder screen ("Go to Detail Placeholder...").
+- Tap it! You should navigate to the `OrderDetailScreen` placeholder, which will show the test Order ID (`TEST_ORD_123`) that was passed along.
 
 ---
 
-## 4. Development & Debugging Features
+## 3. Verifying the Core Architecture
 
-While developing your features:
+Even though the screens look basic, the underlying structure is all set up. Here's how you can see it in action:
 
-- **Expo Dev Menu:** Access this menu for quick actions:
-  - _iOS Simulator:_ Press `Cmd + D`
-  - _Android Emulator:_ Press `Cmd + M` (macOS) or `Ctrl + M` (Windows/Linux)
-  - _Physical Device:_ Shake the device.
-  - _Options:_ Reload the app, Enable Performance Monitor, Element Inspector, etc.
-- **React Native Debugger / Expo DevTools:** The primary tool for debugging JavaScript.
-  - Press `j` in the Metro terminal (`npx expo start`) to open the debugger UI in your browser.
-  - Use this to view `console.log` messages, inspect network requests (simulated ones will appear here), set breakpoints, and use the React DevTools profiler.
-  - See `docs/setup/debugging-config.md` (if present) or standard Expo documentation for more details.
+### 3.1 Placeholder Screens (All Tabs)
+
+- ✅ **See Placeholders:** Each tab should show a basic screen confirming its name (e.g., "Home Screen Placeholder").
+- ✅ **Check Theming:** Notice the background and text colors? They should automatically match your system's theme (or the theme you select on the Account tab). This confirms the Theme Context is working.
+
+### 3.2 Theme Switching (Account Tab)
+
+- ✅ **Go to Account Tab:** Navigate to the Account placeholder.
+- ✅ **Use the ThemeSelector:** Try tapping the "Light", "Dark", and "System" buttons. The app's appearance should change instantly across all screens!
+
+### 3.3 Background Data Fetching (Under the Hood)
+
+- ✅ **Check Console Logs:** When the app first loads, open the debugger (`j` in the Metro terminal). Look for logs starting with `API_SIMULATION:` (like `API_SIMULATION: fetchUserProfile called`). This shows the simulated API calls are running in the background.
+- ✅ **Peek at Global State (Optional):** If you're curious, you can use React DevTools or add a temporary `console.log(useAppDataStore.getState())` to see that the Zustand store gets filled with mock data after the initial load.
 
 ---
 
-Your task is to replace the placeholder content with the actual UI and functionality for each screen, utilizing the provided architecture (theming, state management, navigation).
+## 4. Development & Debugging Tools
+
+As you start building, these tools will be your friends:
+
+- **Expo Dev Menu:** Quickly reload, inspect elements, etc.
+  - _iOS Sim:_ `Cmd + D`
+  - _Android Emu:_ `Cmd + M` (macOS) / `Ctrl + M` (Win/Linux)
+  - _Device:_ Shake it!
+- **Expo DevTools / Debugger:** Your main tool for seeing logs, debugging JS, inspecting components.
+  - Press `j` in the Metro terminal where `npx expo start` is running.
+
+---
+
+Now you're ready to dive in and replace the placeholder content with your awesome UI and features! Refer to the [ROADMAP.md](./ROADMAP.md) for the implementation checklist.
