@@ -1,68 +1,48 @@
-# UI Library & Styling Setup
+# UI & Styling Setup (Paper, Styled Components, Theming)
 
-This document outlines the setup for the UI component library (`react-native-paper`) and the styling library (`styled-components`), including theme management and light/dark mode support.
+This document explains how the User Interface (UI) components and styling are set up in the SpeedyMeds project. We use a combination of tools to create a consistent look and feel with support for light and dark modes.
 
-## Approach
+## The Styling Toolkit
 
-- **UI Components:** [React Native Paper](https://callstack.github.io/react-native-paper/) (v5, MD3) is used for pre-built Material Design components.
-- **Theming:** React Native Paper provides a robust theming system. We define separate `lightTheme` and `darkTheme` objects based on Paper's `MD3LightTheme` and `MD3DarkTheme`, merged with our custom values.
-- **Custom Styling:** [Styled Components](https://styled-components.com/docs/basics#react-native) is used consistently across all screens for creating custom components and overriding/extending styles, leveraging the same theme object provided by the context.
-- **Theme Switching:** A React Context (`ThemeContext`) manages the active theme, allowing users to choose between 'light', 'dark', or 'system' preferences. It uses React Native's `useColorScheme` hook to detect the system setting.
+- **UI Components:** [React Native Paper](https://callstack.github.io/react-native-paper/) (v5, using Material Design 3) provides ready-made components like Buttons, Cards, Lists, Text inputs, etc. This saves us time and gives the app a consistent Material Design style.
+- **Custom Styling:** [Styled Components](https://styled-components.com/docs/basics#react-native) lets us create our own custom, reusable components with specific styles attached. It uses familiar CSS-like syntax within template literals.
+- **Theming:** We have a central theme system (`src/theme/`) that defines colors, spacing, fonts, and shapes. This theme is used by *both* React Native Paper and our Styled Components, ensuring everything matches.
+- **Theme Switching:** A React Context (`ThemeContext` in `src/context/`) allows the theme to be switched between 'light', 'dark', or automatically follow the phone's system setting.
 
-## Implementation Details
+## How It's Set Up (Already Done!)
 
-1.  **Dependencies:** The following key packages were installed:
+1.  **Dependencies:** `react-native-paper`, `styled-components`, and their necessary types (`@types/styled-components-react-native`) are installed.
 
-    - `react-native-paper` (via `npx expo install`)
-    - `styled-components` (via `npx expo install`)
-    - `@types/styled-components-react-native` (via `npm install --save-dev`)
-    - `lodash.merge` (via `npm install --save-dev` for deep theme merging)
-    - `@types/lodash.merge` (via `npm install --save-dev`)
-    - _Note: `react-native-vector-icons` is NOT explicitly needed as `@expo/vector-icons` (included with Expo) provides compatibility._
+2.  **Theme Definition (`src/theme/`):
+    - Base values (colors, spacing, fonts, shapes) are defined in separate files.
+    - `theme.ts` combines these base values and the default themes from React Native Paper (`MD3LightTheme`, `MD3DarkTheme`) to create our complete `lightTheme` and `darkTheme` objects.
+    - It also exports an `AppTheme` type that describes the full shape of our theme object.
 
-2.  **Theme Definition (`src/theme/theme.ts`):**
+3.  **Theme Context (`src/context/ThemeContext.tsx`):
+    - Creates the `ThemeContext`.
+    - The `ThemeProvider` component manages the current preference ('light', 'dark', 'system') and determines the active theme object (`lightTheme` or `darkTheme`).
+    - It provides the active `theme` object and a `setThemePreference` function to components via the `useThemeContext` hook.
 
-    - Defines and exports `lightTheme` and `darkTheme` objects.
-    - Each theme merges the corresponding Paper MD3 base theme (`MD3LightTheme`, `MD3DarkTheme`) with custom colors, spacing, fonts, etc., defined in `./colors.ts`, `./spacing.ts`, etc.
-    - Uses `lodash.merge` for deep merging to combine base themes and custom overrides correctly.
-    - Exports a combined type `AppTheme` representing the full theme structure (MD3 + custom properties).
-    - Also exports themes adapted for React Navigation: `CombinedNavLightTheme`, `CombinedNavDarkTheme`.
-
-3.  **Theme Context (`src/context/ThemeContext.tsx`):**
-
-    - Creates `ThemeContext` and a `ThemeProvider` component.
-    - Uses the `useColorScheme` hook from `react-native` to detect the system preference.
-    - Manages the user's selected preference (`'light'`, `'dark'`, or `'system'`) using `useState` (defaulting to `'system'`). _Persistence of this preference is not currently implemented._
-    - Determines the `effectiveMode` ('light' or 'dark') based on user preference and system setting.
-    - Provides the corresponding `theme` object (`lightTheme` or `darkTheme`), the current `themePreference`, the `setThemePreference` function, and an `isDark` boolean via the context.
-    - Exports a `useThemeContext` hook for easy consumption.
-
-4.  **Provider Setup (`App.tsx`):**
-
-    - The application root in `App.tsx` is wrapped with our custom `CustomThemeProvider` from `src/context/ThemeContext.tsx`.
-    - An inner component (`AppContent`) is used to access the theme context via `useThemeContext`.
-    - `AppContent` then wraps the `AppNavigator` with:
-      - `PaperProvider` from `react-native-paper`, passing the active `theme` from the context.
-      - `StyledThemeProvider` from `styled-components/native`, passing the **exact same** active `theme` object from the context. This ensures that both pre-built Paper components and custom styled components use the same theme values (colors, spacing, fonts, etc.) for consistency.
+4.  **Provider Setup (`App.tsx`):
+    - The root of the app is wrapped in our `CustomThemeProvider`.
+    - Inside that, `AppContent` wraps the main navigator with:
+      - `<PaperProvider theme={theme}>`: Makes the theme available to all React Native Paper components.
+      - `<StyledThemeProvider theme={theme}>`: Makes the *same* theme available to all our custom Styled Components.
+    - This ensures both types of components use the same styles!
 
     ```typescript
-    // App.tsx (Simplified)
+    // App.tsx (Simplified Provider Setup)
     import { Provider as PaperProvider } from 'react-native-paper';
     import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
-    import AppNavigator from './src/navigation/AppNavigator';
     import { ThemeProvider as CustomThemeProvider, useThemeContext } from './src/context/ThemeContext';
+    // ... other imports
 
     const AppContent = () => {
-      const { theme, isDark } = useThemeContext();
-      // Determine navigation theme based on isDark
-      const navigationTheme = isDark ? CombinedNavDarkTheme : CombinedNavLightTheme;
-
+      const { theme } = useThemeContext();
       return (
         <PaperProvider theme={theme}>
           <StyledThemeProvider theme={theme}>
-            {/* Pass navigationTheme to NavigationContainer inside AppNavigator */}
-            <AppNavigator navigationTheme={navigationTheme} />
-            <StatusBar style={isDark ? 'light' : 'dark'} />
+            {/* ... AppNavigator and StatusBar ... */}
           </StyledThemeProvider>
         </PaperProvider>
       );
@@ -77,27 +57,39 @@ This document outlines the setup for the UI component library (`react-native-pap
     }
     ```
 
-    _Note: `AppNavigator` needs modification to accept and pass `navigationTheme` to `NavigationContainer`._
+5.  **Styled Components TypeScript (`src/styled.d.ts`):**
+    - This special file tells TypeScript about the shape of our custom `AppTheme` so we get autocompletion and type checking when using the `theme` prop in styled components.
 
-5.  **TypeScript Integration (`src/styled.d.ts`):**
+## How to Use Styling
 
-    - A declaration file (`src/styled.d.ts`) extends the `DefaultTheme` interface from `styled-components/native`.
-    - It sets `DefaultTheme` to be equivalent to our `AppTheme` type (exported from `src/theme/theme.ts`).
-    - This enables type checking and autocompletion for theme properties. However, due to potential type inference issues, explicit typing of the destructured `theme` prop within template literals (e.g., `({ theme }: { theme: AppTheme }) => ...`) is currently used for robustness.
+- **Accessing Theme:** In components, use the `useThemeContext` hook from `src/context/ThemeContext.tsx` to get the theme preference or the `setThemePreference` function. To get the theme object itself for styling, use the `useTheme` hook from `react-native-paper` (it gets the theme provided by `<PaperProvider>`):
+  ```typescript
+  import { useTheme } from 'react-native-paper';
+  import type { AppTheme } from '../theme/theme'; // Import AppTheme type
 
-    ```typescript
-    // src/styled.d.ts
-    import "styled-components/native";
-    import type { AppTheme } from "./theme/theme";
+  const MyComponent = () => {
+    const theme = useTheme<AppTheme>(); // Get the full theme object
+    // Now you can use theme.colors.primary, theme.customSpacing.m, etc.
+  }
+  ```
+- **Paper Components:** Import components like `Button`, `Card`, `Text` directly from `react-native-paper`. They will automatically adopt the current theme's styles.
+  ```typescript
+  import { Button, Text } from 'react-native-paper';
 
-    declare module "styled-components/native" {
-      export interface DefaultTheme extends AppTheme {}
-    }
-    ```
+  <Button mode="contained">Themed Button</Button>; // Uses theme.colors.primary etc.
+  <Text variant="bodyLarge">Themed Text</Text>; // Uses theme fonts/colors
+  ```
+- **Styled Components:** Create custom components or style existing ones. Access theme properties using the `theme` prop inside the template literal.
+  ```typescript
+  import styled from 'styled-components/native';
+  import { View } from 'react-native';
+  import type { AppTheme } from '../theme/theme';
 
-## Usage
+  const PaddedView = styled(View)`
+    padding: ${({ theme }: { theme: AppTheme }) => theme.customSpacing.l}px; /* Use theme spacing */
+    background-color: ${({ theme }: { theme: AppTheme }) => theme.colors.surfaceVariant};
+  `;
 
-- **Accessing Theme:** Use the `useThemeContext` hook in functional components to get the current `theme` object, `isDark` boolean, `themePreference`, and `setThemePreference` function.
-- **Paper Components:** Import and use components directly from `react-native-paper`. They automatically use the theme from `PaperProvider`.
-- **Styled Components:** Access theme properties via the `theme` prop, using explicit typing for the destructured parameter: `${({ theme }: { theme: AppTheme }) => theme.colors.primary}`.
-- **Theme Switching:** Use the `setThemePreference` function (obtained from `useThemeContext`) to change the theme mode ('light', 'dark', 'system'). (Example using `SegmentedButtons` added to `HomeScreen.tsx`).
+  <PaddedView>...</PaddedView>;
+  ```
+- **Theme Switching:** The `ThemeSelector` component in `src/components/` (shown on the Account placeholder screen) demonstrates how to use `useThemeContext` to change the theme.
