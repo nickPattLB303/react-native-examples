@@ -1,4 +1,4 @@
-# State Management Part 1: Zustand for Global Client State
+# State Management: Zustand for Global Client State
 
 ## Overview
 
