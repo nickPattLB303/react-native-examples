@@ -1,78 +1,53 @@
-# Navigation Setup
+# How Navigation is Set Up (React Navigation)
 
-This document details the setup of navigation using [React Navigation](https://reactnavigation.org/) for the SpeedyMeds project, including integration with the application theme. React Navigation is the standard library for routing and navigation in React Native applications.
+This document explains how navigation (moving between screens) is set up in the SpeedyMeds project using the [React Navigation](https://reactnavigation.org/) library. This is the standard way to handle screen transitions in most React Native apps.
 
-## Approach
+## The Approach
 
-We are implementing a common mobile navigation pattern combining:
+We've set up a common navigation pattern you'll see in many mobile apps:
 
-1.  **[Bottom Tab Navigator](https://reactnavigation.org/docs/bottom-tab-navigator):** For the primary sections (Home, Prescriptions, Orders, Account), now including icons.
-2.  **[Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator):** Used as the root navigator and also nested within the 'Orders' tab to handle navigation between the orders list and order details. This provides native platform navigation animations and headers within each section.
-3.  **Theming:** The appearance of the navigators (headers, tab bar, background) is controlled by the application's theme.
+1.  **Bottom Tabs:** The main sections (Home, Prescriptions, Orders, Account) are accessible via tabs at the bottom.
+2.  **Nested Stack (Orders):** Inside the 'Orders' tab, we use a "Stack" navigator. This allows you to go from the list of orders to a specific order's detail screen and have a back button appear automatically.
+3.  **Theming:** The look of the headers and tab bar matches the app's light/dark theme.
 
-## Implementation Details
+## How It Was Implemented (Already Done!)
 
-1.  **Dependencies:** The following packages were installed using `npx expo install`:
+Here's a quick overview of the key pieces already in place:
 
-    - `@react-navigation/native`
-    - `@react-navigation/native-stack`
-    - `@react-navigation/bottom-tabs`
-    - `react-native-screens`
-    - `react-native-safe-area-context`
-    - `@expo/vector-icons` (implicitly included with Expo, used for tab icons)
+1.  **Dependencies:** All the necessary `@react-navigation/...` packages are installed.
 
-2.  **Directory Structure:**
+2.  **Code Organization (`src/navigation/`):**
+    - `types.ts`: Defines the expected screens and any data (parameters) they need.
+    - `OrdersStackNavigator.tsx`: Sets up the stack navigator for the Orders section (List -> Detail).
+    - `MainTabNavigator.tsx`: Sets up the bottom tabs and includes the Orders stack.
+    - `AppNavigator.tsx`: The main container that holds everything together.
 
-    - Navigation logic is organized within `src/navigation/`:
-      - `types.ts`: Contains all `ParamList` type definitions.
-      - `OrdersStackNavigator.tsx`: Defines the nested stack for the Orders section.
-      - `MainTabNavigator.tsx`: Defines the main bottom tab navigator.
-      - `AppNavigator.tsx`: Defines the root stack navigator and wraps everything in `NavigationContainer`.
-    - Screen components reside in `src/screens/`.
+3.  **Connecting Screens & Theme:**
+    - Screens live in `src/screens/` (currently placeholders).
+    - The main `App.tsx` wraps everything in the necessary Theme providers and the `NavigationContainer`.
+    - Navigators (`MainTabNavigator`, `OrdersStackNavigator`) use the `useTheme` hook to style headers according to the active theme.
+    - Tab icons are configured in `MainTabNavigator.tsx`.
 
-3.  **Core Files & Theming Integration:**
+4.  **Type Safety:** Using the types defined in `src/navigation/types.ts` helps prevent errors when navigating or passing data between screens.
 
-    - **`src/theme/theme.ts`**: Defines `CombinedNavLightTheme` and `CombinedNavDarkTheme` by merging base React Navigation themes with our custom Paper themes using `adaptNavigationTheme`.
-    - **`src/context/ThemeContext.tsx`**: Manages the overall application theme (light/dark/system) and provides the active theme object and an `isDark` boolean.
-    - **`App.tsx`**: Wraps the entire application in our custom `ThemeProvider`. An inner `AppContent` component:
-      - Gets the active theme and `isDark` flag from `useThemeContext`.
-      - Selects the appropriate navigation theme (`CombinedNavLightTheme` or `CombinedNavDarkTheme`) based on `isDark`.
-      - Renders the `AppNavigator`, passing the selected `navigationTheme` as a prop.
-    - **`src/navigation/types.ts`**: Exports `RootStackParamList`, `BottomTabParamList`, and `OrdersStackParamList`.
-    - **`src/navigation/OrdersStackNavigator.tsx`**: Defines and exports the `OrdersStackNavigator` component using `createNativeStackNavigator`.
-    - **`src/navigation/MainTabNavigator.tsx`**: Defines and exports the `MainTabNavigator` component using `createBottomTabNavigator`. It imports `OrdersStackNavigator` for the 'Orders' tab and configures `tabBarIcon` options.
-    - **`src/navigation/AppNavigator.tsx`**:
-      - Imports `MainTabNavigator`.
-      - Defines and exports the root `AppNavigator` component using `createNativeStackNavigator`.
-      - Renders the `NavigationContainer` with the provided `navigationTheme`.
-      - The root stack contains the `MainTabNavigator` as its primary screen.
-    - **`src/screens/*.tsx`**: Placeholder screens (HomeScreen, PrescriptionsScreen, OrdersScreen, AccountScreen, OrderDetailScreen).
+## Using Navigation
 
-4.  **Type Safety:**
-    - `RootStackParamList` defines routes/params for the root stack (primarily just the `MainTabs`).
-    - `BottomTabParamList` defines routes for the bottom tabs (Home, Prescriptions, Orders, Account).
-    - `OrdersStackParamList` defines routes/params for the nested stack within the Orders tab (`OrdersList`, `OrderDetail`).
-    - Used with `createNativeStackNavigator` and `createBottomTabNavigator`.
-    - Screen components use appropriate props types: `BottomTabScreenProps` for screens directly within the tab navigator (Home, Prescriptions, Account), and `NativeStackScreenProps` for screens within the nested `OrdersStackNavigator` (`OrdersScreen` as `OrdersList`, `OrderDetailScreen`).
+- The navigation structure is already working! You can tap the bottom tabs to switch between the placeholder screens.
+- On the "Orders" tab, the button will navigate you to the "Order Detail" placeholder, demonstrating the nested stack.
+- When you build your screens, you'll use the `navigation` prop provided by React Navigation to move between screens (e.g., `navigation.navigate('ScreenName', { someData: 'value' })`).
 
-## Usage
+## Navigation Structure Visualized
 
-- The `AppNavigator` is rendered within the theme providers in `App.tsx`.
-- The `NavigationContainer` and its navigators automatically adopt the light or dark theme based on the selection made via the `ThemeContext` (e.g., using the switcher in `HomeScreen`).
-- Navigation between screens remains the same (`navigation.navigate('ScreenName', {params})`).
-
-## Navigation Structure Visualization
-
-The following diagram shows the updated navigation structure with the nested Orders stack:
+This diagram shows how the navigators are nested:
 
 ```mermaid
 graph TD
-    subgraph RootStack [Root Native Stack Navigator]
+    subgraph RootStack [App Navigator]
         direction TB
-        TabNav(Bottom Tab Navigator)
+        TabNav(Main Tabs)
     end
 
-    subgraph TabNav [Bottom Tab Navigator]
+    subgraph TabNav [Main Bottom Tabs]
         direction LR
         HomeScreen(Home Screen)
         PrescriptionsScreen(Prescriptions Screen)
@@ -80,24 +55,14 @@ graph TD
         AccountScreen(Account Screen)
     end
 
-    subgraph OrdersStackNav [Orders Native Stack Navigator]
+    subgraph OrdersStackNav [Orders Stack Navigator]
         direction TB
         OrdersListScreen(Orders List Screen) --> OrderDetailScreen(Order Detail Screen)
     end
 
-    %% Define connections explicitly if needed, though subgraph implies hierarchy
-    %% RootStack --> TabNav; (Implied by subgraph)
-    %% TabNav --> HomeScreen; (Implied by subgraph)
-    %% TabNav --> PrescriptionsScreen; (Implied by subgraph)
-    %% TabNav --> OrdersStackNav; (Implied by subgraph)
-    %% TabNav --> AccountScreen; (Implied by subgraph)
-    %% OrdersStackNav --> OrdersListScreen; (Implied by subgraph)
-    %% OrdersListScreen --> OrderDetailScreen; (Implied by subgraph)
-
+    style RootStack color:#FFFFFF, fill:#9C27B0, stroke:#9C27B0
+    style TabNav color:#FFFFFF, fill:#2962FF, stroke:#2962FF
+    style OrdersStackNav color:#FFFFFF, fill:#4CAF50, stroke:#4CAF50
 ```
 
-**Key Changes:**
-
-- The `Orders` tab now renders the `OrdersStackNav`.
-- `OrdersListScreen` (formerly `OrdersScreen`) and `OrderDetailScreen` are now part of the `OrdersStackNav`.
-- Icons are displayed for each tab in the `TabNav`.
+**In simple terms:** The main app has bottom tabs. Clicking the "Orders" tab shows the Orders List screen, which is part of its own mini-navigation stack allowing you to push the Order Detail screen on top of it.
