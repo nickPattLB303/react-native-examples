@@ -1,67 +1,47 @@
-# SpeedyMeds Scaffolding Status
+# SpeedyMeds Project Starting State & Next Steps
 
-This document outlines the features and setup included in the **scaffolding** provided by this template repository's `main` branch. This represents the starting point for the SpeedyMeds React Native training project capstone.
+This document outlines the features and architectural setup provided in this **starting point** (`main` branch) and the high-level goals for implementation during the capstone project.
 
-Development work beyond this scaffolding (implementing remaining features, further testing, etc.) occurs within group-specific forks of this repository during the training course.
+## Guiding Principles (For Capstone Implementation)
 
-## Guiding Principles (Applied during Scaffolding Setup)
+- **Apply Course Concepts:** Effectively utilize the React Native concepts, patterns, and libraries taught in the course.
+- **Feature Completion:** Implement the core user-facing features based on provided requirements or mockups.
+- **Code Quality:** Adhere to the established code standards (TypeScript, ESLint, Prettier, Testing).
+- **Collaboration (If Applicable):** Follow the contribution workflow outlined in `CONTRIBUTING.md`.
 
-- **Learning Focus:** Prioritize applying concepts taught in the React Native course effectively.
-- **Best Practices:** Adhere to modern React Native development standards.
-- **Iterative Development:** Build functionality incrementally.
+## Included Features & Setup (Starting State - Option 2)
 
-## Included Features & Setup (Scaffolding State - Complete)
+This `main` branch provides a fully configured architectural foundation:
 
-_(Status Key: [x] = Done)_
+- ✅ **Project Foundation & Core Setup:** Expo, TypeScript, Git, Documentation Structure.
+- ✅ **Configuration:** Expo (`app.json`), TypeScript (`tsconfig.json`), ESLint, Prettier, VS Code settings.
+- ✅ **Testing Foundation:** Jest & React Native Testing Library configured (`jest.config.js`, `jest.setup.js`), custom `renderWithProviders` utility.
+- ✅ **UI Library:** React Native Paper (v5 / MD3) integrated.
+- ✅ **Styling:** Styled Components set up and integrated with theming.
+- ✅ **Theming:** Comprehensive Light/Dark/System themes defined (`src/theme/`), `ThemeContext` provider implemented and integrated.
+- ✅ **Navigation:** React Navigation (Native Stack, Bottom Tabs) configured (`src/navigation/`), including type safety (`types.ts`). Navigation between placeholders works.
+- ✅ **Mock Data:** Faker.js setup (`src/api/mockData.ts`) providing realistic mock data.
+- ✅ **API Simulation:** Simulated async API functions (`src/api/index.ts`).
+- ✅ **Server State:** TanStack Query (React Query) configured (`App.tsx`, `src/api/queryKeys.ts`), including RN focus/online management.
+- ✅ **Global Client State:** Zustand store defined and set up (`src/stores/appDataStore.ts`).
+- ✅ **Data Synchronization:** Initial data fetching hook pattern implemented (`src/hooks/useInitializeAppData.ts`) using React Query and syncing to Zustand.
+- ✅ **Type Safety:** Comprehensive TypeScript types defined (`src/types/`).
+- ✅ **Basic Components:** Generic `ScreenContainer`, `LoadingIndicator`, `ErrorDisplay`, `ThemeSelector` provided.
 
-### Phase 1: Project Foundation & Core Setup (Complete)
+- 🟡 **Screens (`src/screens/`):** All core screen files exist but contain only **minimal placeholders** displaying the screen name. The core task is to implement these screens.
 
-- [x] **Project Initialization:** Initialize Expo project with TypeScript template.
-- [x] **Version Control:** Set up Git repository and basic GitHub workflow elements (templates).
-- [x] **Initial Documentation:** Create `README.md`, `SETUP.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `USAGE.md`, `ROADMAP.md` (this file).
-- [x] **Configuration:**
-  - [x] Configure Expo settings (`app.json`).
-  - [x] Configure TypeScript (`tsconfig.json`).
-  - [x] Set up ESLint & Prettier (`.eslintrc.js`, `prettierrc.js`, `.prettierignore`).
-  - [x] Integrate ESLint/Prettier with VS Code (`.vscode/settings.json`).
-- [x] **Testing Foundation:**
-  - [x] Verify/Configure Jest setup (`jest.config.js`).
-  - [x] Install React Native Testing Library.
-  - [x] Configure Jest setup file for RNTL (`jest.setup.js`).
-- [x] **Debugging Setup:** Explore and document debugging tools (`docs/setup/debugging-config.md`).
-- [x] **Mockups:** Create/Include SVG mockups (`assets/images/`).
+## Next Steps & Implementation Goals (Student Tasks)
 
-### Phase 2: UI & Navigation Structure (Complete)
+The primary goal of the capstone project is to build out the user interface and functionality within the provided architectural foundation. Key implementation tasks include:
 
-- [x] **UI Library:** Integrate React Native Paper (v5 / MD3).
-- [x] **Styling:** Set up Styled Components.
-- [x] **Theming:**
-  - [x] Define base theme tokens (colors, spacing, typography, shape).
-  - [x] Create comprehensive light and dark themes (`theme.ts`).
-  - [x] Implement theme context and provider (`ThemeContext.tsx`).
-  - [x] Integrate theme with PaperProvider, StyledThemeProvider.
-  - [x] Implement theme switching capability (Light/Dark/System).
-- [x] **Navigation:**
-  - [x] Set up React Navigation (Native Stack, Bottom Tabs).
-  - [x] Define navigation types (`types.ts`).
-  - [x] Implement main tab structure (`MainTabNavigator.tsx`).
-  - [x] Implement nested stack for Orders (`OrdersStackNavigator.tsx`).
-  - [x] Implement root navigator (`AppNavigator.tsx`).
-  - [x] Add icons to bottom tabs.
-  - [x] Integrate navigation theming.
-- [x] **Basic Screens:** Create placeholder screen components (`src/screens/`).
+1.  **Implement Home Screen:** Display welcome message, balance (using data from `useAppDataStore`), medication reminders list, and implement navigation from cards.
+2.  **Implement Prescriptions Screen:** Display the list of prescriptions (from `useAppDataStore`), implement search/filtering logic, and potentially add navigation to a detail view (requires creating a new screen/stack).
+3.  **Implement Orders Screen:** Display the list of orders (from `useAppDataStore`) and ensure navigation to the `OrderDetailScreen` works correctly (using the real order ID).
+4.  **Implement Order Detail Screen:** Fetch (using `useQuery` and `orderId` param) and display detailed information for a specific order (status, tracking, items, address).
+5.  **Implement Account Screen:** Display user profile details (from `useAppDataStore`), implement actual navigation for settings items (potentially creating new screens/stacks), and implement logout functionality.
+6.  **Build Reusable Components:** Create new components (`src/components/`) as needed (e.g., `PrescriptionCard`, `OrderListItem`, `ProfileHeader`).
+7.  **Styling:** Apply styles consistently using the provided theme and React Native Paper/Styled Components.
+8.  **Testing:** Write unit and component tests for new components and screen logic.
+9.  **Refinement:** Improve UI/UX, handle edge cases, enhance accessibility.
 
-### Phase 3: Data Flow & State Management (Complete)
-
-- [x] **Mock Data:** Set up Faker.js to generate realistic mock data (`mockData.ts`).
-- [x] **API Simulation:** Create mock API functions simulating async fetching (`api/index.ts`).
-- [x] **Server State:** Integrate TanStack Query (React Query) for data fetching & caching.
-  - [x] Define query keys (`queryKeys.ts`).
-  - [x] Configure React Native focus/online management (`App.tsx`).
-- [x] **Global Client State:** Integrate Zustand for global state (`appDataStore.ts`).
-- [x] **Data Synchronization:** Implement hook (`useInitializeAppData.ts`) to fetch data via React Query and sync to Zustand store.
-- [x] **Type Safety:** Define comprehensive TypeScript types for API data structures (`types/index.ts`).
-
----
-
-This concludes the setup provided by the scaffolding in the `main` branch. Further development (implementing screen logic, adding more tests, etc.) is part of the course exercise within group forks.
+*(Specific tasks, priorities, and features may be further defined by course instructors.)*

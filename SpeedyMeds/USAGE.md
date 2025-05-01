@@ -1,78 +1,78 @@
-# Using the SpeedyMeds Application
+# Using the SpeedyMeds Application (Starting Point)
 
-This document serves as a guide for interacting with the features of the SpeedyMeds application as they are developed throughout the React Native training course.
+This document serves as a guide for interacting with the features of the SpeedyMeds application **starting point**. It describes what is functional in the provided codebase (`main` branch) and how to verify the core architecture.
 
-**Note:** This is a **living document**. It will be updated incrementally with specific instructions, screenshots, and usage details as features are implemented and refined.
+**Note:** The primary goal of the capstone is to **implement** the UI and features within the placeholder screens described below.
 
 ---
 
 ## 1. Running the Application
 
-Before using the application, ensure you have set up your development environment and can run the app successfully.
+Before interacting, ensure you have set up your development environment and can run the app successfully.
 
-- **Refer to [SETUP.md](./SETUP.md)** for detailed, step-by-step instructions on environment configuration (Node, Xcode/Android Studio, Simulators/Emulators) and project installation.
+- **Refer to [SETUP.md](./SETUP.md)** for detailed environment configuration (Node, Xcode/Android Studio, Simulators/Emulators) and project installation.
 - **Refer to the "Running the App" section in [README.md](./README.md)** for the commands to start the development server and launch the app on your simulator, emulator, or physical device via Expo Go.
+
+Upon successful launch, you should see the initial "Home" screen placeholder.
 
 ---
 
 ## 2. Navigating the Application
 
-The application uses a standard **bottom tab bar** for primary navigation between the main sections:
+The application uses a standard **bottom tab bar** for primary navigation between the main sections. The navigation structure itself is fully functional:
 
-- **Home:** The main dashboard screen. Provides an overview and quick navigation.
-- **Prescriptions:** Lists your medications and allows searching.
-- **Orders:** Shows your past and current medication orders. Allows viewing details.
-- **Account:** Access your profile information and settings.
+- **Home:** The main dashboard screen placeholder.
+- **Prescriptions:** The prescriptions list screen placeholder.
+- **Orders:** The entry point to the orders section (renders the orders list screen placeholder within a stack).
+- **Account:** The user account screen placeholder.
 
-Tap the corresponding icon in the bottom tab bar to switch between these sections.
+Tap the corresponding icon in the bottom tab bar to switch between these placeholder sections.
 
-Within some sections, you can navigate further:
+Within the **Orders** tab, you can test nested navigation:
 
-- **Orders Screen:** Tapping an order in the list navigates to the `OrderDetailScreen`.
+- The `OrdersScreen` placeholder contains a button ("Go to Detail Placeholder (TEST_ORD_123)").
+- Tapping this button should navigate you to the `OrderDetailScreen` placeholder, which will display the test Order ID passed as a parameter.
 
 ---
 
-## 3. Core Features (Current Implementation Status)
+## 3. Core Architecture Verification (Starting State)
 
-This section details how to use the currently implemented features. Features marked with ✅ are mostly functional, while ⚠️ indicates partial implementation or placeholder behavior, and ❌ indicates not yet implemented.
+While the screens themselves are placeholders, the underlying architecture is complete. You can verify parts of it:
 
-### 3.1 Home Dashboard (Tab 1)
+### 3.1 Home Dashboard Placeholder (Tab 1)
 
-- ✅ **View Welcome & Balance:** See a welcome message with your (mock) first name and a card displaying a placeholder balance due.
-- ✅ **View Reminders:** See a basic list of mock medication reminders showing the name and time.
-- ✅ **Change Theme:** Use the segmented buttons ("Light" / "Dark" / "System") at the bottom of the screen to change the application's appearance instantly. The "System" option follows your device's current light/dark mode setting.
-- ✅ **Navigate:** Tap the "Prescriptions" or "Orders" cards to navigate directly to those respective tabs. The "Delivery" and "Resources" cards are placeholders and do not navigate anywhere yet.
+- ✅ **View Placeholder:** Displays text confirming it's the "Home Screen Placeholder".
+- ✅ **Theming Applied:** The background and text color should reflect the currently active theme (light/dark/system).
 
-### 3.2 Prescriptions Screen (Tab 2)
+### 3.2 Prescriptions Placeholder (Tab 2)
 
-- ✅ **View List:** See a list of mock prescriptions displaying:
-  - Drug Name & Dosage
-  - Patient Name & Refills Remaining
-  - Supply Status Badge (colored based on days remaining: Green for OK, Yellow for Low, Red for Critical)
-  - Alerts (e.g., "Price may be rising" icon and text)
-- ✅ **Search Prescriptions:** Use the search bar at the top to filter the list. Typing text (e.g., "Atorva") will dynamically filter the list to show only prescriptions whose drug name contains the typed text (case-insensitive). Clearing the search bar shows all prescriptions again.
-- ❌ **Navigate to Detail:** Tapping on a prescription item currently does nothing. (Future: Navigate to a detail view).
-- ❌ **Refill Requests:** No functionality exists yet to request refills.
+- ✅ **View Placeholder:** Displays text confirming it's the "Prescriptions Screen Placeholder".
+- ✅ **Theming Applied:** Background and text color match the active theme.
 
-### 3.3 Orders Screen (Tab 3) & Order Detail
+### 3.3 Orders Placeholder (Tab 3) & Order Detail Placeholder
 
-- ✅ **View List:** See a list of mock orders displaying drug name, dosage, order number, status (e.g., "Delivered", "Shipped"), and order date.
-- ✅ **Navigate to Detail:** Tap on any order item in the list to navigate to the `OrderDetailScreen`.
-- ⚠️ **View Order Detail Screen:** The detail screen currently only displays the `orderId` passed from the list. The rest of the screen (status tracker, tracking info, address) is **not yet implemented**.
-- ✅ **Test Button:** A button labeled "View Hardcoded Order 12345" exists for testing navigation to the detail screen with a specific ID.
-- ❌ **Track Shipment:** No functionality exists yet on the detail screen to track shipments.
+- ✅ **View List Placeholder:** Displays text confirming it's the "Orders List Placeholder".
+- ✅ **Navigate to Detail Placeholder:** Tap the "Go to Detail Placeholder (TEST_ORD_123)" button.
+- ✅ **View Detail Placeholder:** The subsequent screen should display "Order Detail Placeholder" and "Received Order ID: TEST_ORD_123".
+- ✅ **Theming Applied:** Background and text colors match the active theme on both screens.
 
-### 3.4 Account Screen (Tab 4)
+### 3.4 Account Placeholder (Tab 4)
 
-- ✅ **View Profile Summary:** See your mock profile information displayed at the top (Avatar with initials, Full Name, Birth Year, Member ID).
-- ⚠️ **Navigate (Placeholder):** Tap on list items like "Personal Information", "Payment Methods", "Communication Preferences", "Security", or "Help & Support". This currently **only logs a message to the console/debugger** indicating which item was pressed; it does not navigate to a new screen.
-- ⚠️ **Log Out (Placeholder):** Tap the "Log Out" button. This currently **only logs a message to the console/debugger**; it does not perform an actual logout action.
+- ✅ **View Placeholder:** Displays text confirming it's the "Account Screen Placeholder".
+- ✅ **Verify Theme Switching:** This screen includes the `ThemeSelector` component. Use the segmented buttons ("Light" / "Dark" / "System") to change the application's appearance instantly across all screens.
+- ✅ **Theming Applied:** Background and text color match the active theme, and the `ThemeSelector` should function correctly.
+
+### 3.5 Background Data Fetching (Verification via Debugger)
+
+- ✅ **Initial Load:** When the app starts, the `useInitializeAppData` hook runs.
+- ✅ **Check Console Logs:** Open the debugger (`j` in the Metro terminal). You should see console logs prefixed with `API_SIMULATION:` (e.g., `API_SIMULATION: fetchUserProfile called`) indicating the mock API functions were called.
+- ✅ **Check Zustand State (Optional Advanced):** Using React DevTools (if configured) or by temporarily adding `console.log(useAppDataStore.getState())` somewhere, you can observe that the Zustand store (`appDataStore`) is populated with mock data (userProfile, prescriptions, etc.) after the initial load completes.
 
 ---
 
 ## 4. Development & Debugging Features
 
-While using the app during development:
+While developing your features:
 
 - **Expo Dev Menu:** Access this menu for quick actions:
   - _iOS Simulator:_ Press `Cmd + D`
@@ -81,9 +81,9 @@ While using the app during development:
   - _Options:_ Reload the app, Enable Performance Monitor, Element Inspector, etc.
 - **React Native Debugger / Expo DevTools:** The primary tool for debugging JavaScript.
   - Press `j` in the Metro terminal (`npx expo start`) to open the debugger UI in your browser.
-  - Use this to view `console.log` messages, inspect network requests, set breakpoints, and use the React DevTools profiler.
-  - See `docs/setup/debugging-config.md` for more details.
+  - Use this to view `console.log` messages, inspect network requests (simulated ones will appear here), set breakpoints, and use the React DevTools profiler.
+  - See `docs/setup/debugging-config.md` (if present) or standard Expo documentation for more details.
 
 ---
 
-_This document will be updated as the project progresses and features become fully implemented._
+Your task is to replace the placeholder content with the actual UI and functionality for each screen, utilizing the provided architecture (theming, state management, navigation).

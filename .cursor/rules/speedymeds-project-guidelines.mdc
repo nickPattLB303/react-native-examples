@@ -1,0 +1,100 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# SpeedyMeds Project Development Rules
+
+These rules are MANDATORY for all development within the SpeedyMeds project. Adherence ensures code quality, maintainability, consistency, and production-readiness. ALL changes are considered final and deployed directly to production environments.
+
+## 1. Foundational Principles & Process
+
+### 1.1. Strict Adherence & Contextual Understanding (MANDATORY)
+- **Deep Review Required:** Before writing *any* code (new features, bug fixes, refactoring), you MUST thoroughly review ALL relevant context. This includes:
+    - The specific user request or issue ticket.
+    - Existing code related to the change in the `src/` directory.
+    - Project documentation: [README.md](mdc:README.md), [SETUP.md](mdc:SETUP.md), [USAGE.md](mdc:USAGE.md), and [CONTRIBUTING.md](mdc:CONTRIBUTING.md).
+    - The overall course context defined in [course-blueprint.md](mdc:course-blueprint.md).
+    - Configuration files: [package.json](mdc:package.json), [tsconfig.json](mdc:tsconfig.json), [.eslintrc.js](mdc:.eslintrc.js), [prettierrc.js](mdc:prettierrc.js), [app.json](mdc:app.json), and `eas.json` (if present).
+    - Relevant official documentation for ALL libraries/frameworks involved (React Native, Expo, React Navigation, Zustand, TanStack Query, React Native Paper, TypeScript, etc.). Links can be found in the blueprint or via web search.
+- **No Assumptions:** Do not make assumptions about functionality or requirements. If context is unclear, seek clarification or consult documentation.
+- **Gold Standard Only:** Implement solutions using established, gold-standard best practices. Prioritize simplicity, clarity, maintainability, and performance. Avoid overly complex or "clever" solutions.
+- **Production-Ready Code:** All code committed MUST be considered final, complete, and production-ready.
+    - **NO Placeholders:** Do not include placeholders, `TODO` comments (unless explicitly for follow-up issues tracked elsewhere), `console.log` statements, or notes to instructors/reviewers.
+    - **NO Unfinished Code:** Do not commit partially implemented features or commented-out code blocks (except for temporary debugging, which must be removed before finalizing).
+
+### 1.2. Technology Stack Adherence
+- Utilize the established technology stack ONLY: React Native, Expo, TypeScript, React Navigation (or Expo Router as per project state), Zustand, TanStack Query v5, React Native Paper v5.
+- Adhere strictly to the versions specified in [package.json](mdc:package.json). Do not introduce new libraries without formal approval and documentation updates.
+
+## 2. Code Style & Formatting (MANDATORY)
+
+- **Prettier:** All code MUST be formatted according to the project's Prettier configuration ([prettierrc.js](mdc:prettierrc.js)). Format code before committing.
+- **ESLint:** All code MUST adhere to the project's ESLint rules ([.eslintrc.js](mdc:.eslintrc.js)). Resolve ALL ESLint errors and warnings before committing. Do not disable rules inline without exceptionally strong justification and discussion.
+- **Naming Conventions:** Follow standard TypeScript/React naming conventions (e.g., `PascalCase` for components and types, `camelCase` for variables and functions). Use descriptive and meaningful names.
+- **Readability:** Prioritize code readability. Use consistent indentation, spacing, and clear structure. Break down complex logic into smaller, manageable functions/components.
+
+## 3. TypeScript Usage (MANDATORY)
+
+- **Strict Typing:** Leverage TypeScript's static typing to its full potential. Avoid `any` type unless absolutely necessary and unavoidable (provide justification in comments if used). Use `unknown` for safer unknown types.
+- **Interfaces & Types:** Use `type` aliases for general type definitions and `interface` for object shapes and class contracts, following project conventions.
+- **Explicit Typing:** Be explicit with types for function parameters, return values, and complex variable declarations. Rely on inference only for simple, obvious cases.
+- **Configuration:** Adhere to the settings defined in [tsconfig.json](mdc:tsconfig.json).
+
+## 4. React & React Native Best Practices (MANDATORY)
+
+- **Functional Components & Hooks:** Use functional components and Hooks (`useState`, `useEffect`, `useContext`, `useRef`, `useCallback`, `useMemo`) exclusively. Avoid class components.
+- **Core Components & APIs:** Utilize React Native Core Components and APIs correctly. Understand their props and behavior. Consult official React Native and Expo documentation.
+- **Component Design:** Create reusable, well-defined components with clear props interfaces. Aim for small, focused components (Single Responsibility Principle).
+- **Performance:**
+    - Use `React.memo`, `useCallback`, and `useMemo` appropriately to optimize performance, especially in lists or frequently re-rendering components. Understand *why* you are using them.
+    - Optimize list rendering using `FlatList` or `SectionList` correctly (e.g., `keyExtractor`, `getItemLayout` if applicable). Consider `FlashList` if performance is critical and benchmarked.
+    - Follow image optimization best practices.
+- **Accessibility:** Implement accessibility features (`accessibilityLabel`, `accessibilityHint`, `accessible={true/false}`, etc.) for all interactive elements and key visual components.
+- **Platform-Specific Code:** Use the `Platform` module or platform-specific file extensions (`.ios.tsx`, `.android.tsx`) sparingly and only when necessary.
+
+## 5. Library-Specific Guidelines (MANDATORY)
+
+- **React Navigation / Expo Router:**
+    - Implement navigation according to the chosen library's best practices (React Navigation v6 or Expo Router).
+    - Define clear navigation structures (stacks, tabs, drawers).
+    - Type-check navigation parameters rigorously.
+    - Consult official documentation for configuration and usage.
+- **Zustand (Client State):**
+    - Use Zustand for managing global or shared client-side state.
+    - Structure stores logically. Keep stores focused.
+    - Use appropriate selectors for performance.
+    - Refer to Zustand documentation for API usage.
+- **TanStack Query v5 (Server State):**
+    - Use TanStack Query for managing all asynchronous server state (fetching, caching, updating).
+    - Utilize `useQuery` for data fetching and `useMutation` for data modification.
+    - Implement proper query keys for caching and invalidation.
+    - Configure `QueryClientProvider` correctly.
+    - Understand caching, background refetching, and stale-while-revalidate mechanisms.
+    - Consult TanStack Query documentation.
+- **React Native Paper v5 (UI Library):**
+    - Use components from React Native Paper for UI elements consistently.
+    - Adhere to the project's theme configuration (if applicable).
+    - Consult React Native Paper documentation for component props and usage.
+- **Styled Components:**
+    - styled-components are used instead of StyleSheet, follow established patterns within the project. Ensure styles are themed and reusable.
+
+## 6. Testing (MANDATORY)
+
+- **Unit & Integration Tests:** Write unit and integration tests using Jest and React Native Testing Library for critical business logic, complex components, and custom hooks.
+- **Test Coverage:** Aim for meaningful test coverage, focusing on testing behavior rather than implementation details.
+- **Test Setup:** Use the existing Jest setup ([jest.setup.js](mdc:jest.setup.js)).
+
+## 7. Documentation (MANDATORY)
+
+- **JSDoc:** Write clear JSDoc comments for all exported functions, components, hooks, and complex types/interfaces, explaining their purpose, parameters (`@param`), and return values (`@returns`).
+- **Inline Comments:** Use inline comments (`//`) sparingly only to explain complex or non-obvious logic. Do NOT comment on obvious code.
+- **README Updates:** Update [README.md](mdc:README.md) or other relevant documentation if changes impact setup, usage, or core architecture.
+
+## 8. Final Check (MANDATORY)
+
+- Before finalizing any change, reread these rules and ensure full compliance.
+- Verify that the code works as expected, meets all requirements, includes necessary tests, and adheres to all style and best practice guidelines.
+- Ensure no debugging artifacts (`console.log`, etc.) remain.
+- Confirm all accessibility properties are correctly implemented.
+
