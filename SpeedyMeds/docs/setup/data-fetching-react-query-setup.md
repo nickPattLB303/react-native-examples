@@ -174,11 +174,25 @@ const AccountScreen = () => {
 Here's a simple view of how data flows in this setup:
 
 ```mermaid
-graph LR
-    A[Simulated API] -->|fetch called by| B(React Query with useQuery);
-    B -->|updates cache & status| B;
-    B -->|provides data/status| C(useInitializeAppData Hook);
-    C -->|updates store| D[Zustand Store useAppDataStore];
-    D -->|provides state slice| E(Your React Components);
-    E -->|reads latest state| D;
+sequenceDiagram
+    participant Comp as Your React Component
+    participant Hook as useInitializeAppData
+    participant RQ as React Query (useQuery)
+    participant API as Simulated API
+    participant Store as Zustand (useAppDataStore)
+
+    Comp->>Hook: Calls hook on render
+    Hook->>RQ: Calls useQuery(userProfile)
+    RQ->>API: Calls fetchUserProfile()
+    API-->>RQ: Returns Promise<UserProfile>
+    RQ-->>Hook: Provides { data, status } for userProfile
+    Hook->>Store: Calls setUserProfile(data) via useEffect
+    Store-->>Comp: Components subscribed to userProfile update
+
+    Hook->>RQ: Calls useQuery(prescriptions)
+    RQ->>API: Calls fetchPrescriptions()
+    API-->>RQ: Returns Promise<Prescription[]>
+    RQ-->>Hook: Provides { data, status } for prescriptions
+    Hook->>Store: Calls setPrescriptions(data) via useEffect
+    Store-->>Comp: Components subscribed to prescriptions update
 ``` 
