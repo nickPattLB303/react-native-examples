@@ -124,7 +124,7 @@ The SpeedyMeds scaffold employs a specific strategy for managing application sta
 graph TD
     A[API/Mock Data] -- "fetchUserProfile(), etc." --> B((TanStack Query Cache));
     C[useInitializeAppData Hook] -- "Reads Cache & Observes Status via useQuery" --> B;
-    C -- "Calls Actions (setProfile, etc.)" --> D[Zustand Store (appDataStore)];
+    C -- "Calls Actions (setProfile, etc.)" --> D[Zustand Store appDataStore];
     E(UI Component) -- "Selects State via useAppDataStore" --> D;
 ```
 
