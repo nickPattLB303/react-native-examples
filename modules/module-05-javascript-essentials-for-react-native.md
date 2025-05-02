@@ -1,1 +1,0 @@
-https://snack.expo.dev/@nickp614/speedymedspoc
