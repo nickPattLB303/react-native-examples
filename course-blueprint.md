@@ -363,13 +363,28 @@ The following outline is definitive and MUST be followed for the markdown docume
   - Section 8: Testing Strategies (Jest, React Native Testing Library)
     - *Exercise 17.3: Writing a Simple Unit Test (Expo Snack/CodeSandbox)*
   - *Challenge 17: Add an Animated Element to the Prescription Card (Expo Snack)*
-- **Module 18: Course Wrap-up and Next Steps**
+- **Module 18: Capstone Project**
 
-  - Section 1: Course Summary and Key Takeaways
-  - Section 2: Introduction to the Capstone Project (SpeedyMeds) - High-level Overview
-  - Section 3: How the Capstone Project Works (Collaboration, Workflow)
-  - Section 4: Resources for Continued Learning (Communities, Blogs, Conferences)
-  - Section 5: Final Q&A / Feedback (Instructor-Led Path)
+  - Section 1: Project Overview and Setup
+  - Section 2: Understanding the Project Scaffolding
+  - Section 3: Data Flow and State Management
+    - *Diagram: Capstone Data Flow (Mermaid)*
+  - Section 4: Navigation Implementation
+    - *Diagram: Capstone Navigation Structure (Mermaid)*
+  - Section 5: UI Layer: Theming and Styling
+  - Section 6: Development Workflow: Setup, Debugging, and Testing
+  - Section 7: Core Requirements and Milestones
+  - Section 8: Evaluation and Submission
+  - Section 9: Tips for Success
+
+- **Module 19: Course Wrap-up and Next Steps**
+
+  - Section 1: Course Summary and Key Takeaways (Recap of Modules 0-17)
+  - Section 2: Capstone Project Reflection (Reviewing the SpeedyMeds project experience)
+  - Section 3: Resources for Continued Learning (Communities, Blogs, Advanced Topics)
+  - Section 4: Next Steps in Your React Native Journey (Career paths, contributing)
+  - Section 5: Final Q&A / Feedback (Primarily for Instructor-Led Path)
+
 
 IV. Content Element Patterns and Standards
 ------------------------------------------
