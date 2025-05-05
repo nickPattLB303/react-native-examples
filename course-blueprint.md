@@ -1,5 +1,4 @@
-React Native Training Course: Markdown Documentation Blueprint
-==============================================================
+# React Native Training Course: Markdown Documentation Blueprint
 
 Version: 1.0
 
@@ -7,8 +6,7 @@ Date: 2025-11-15
 
 Target Technologies: React Native (Latest Stable, e.g., 0.7x+), Expo SDK (Latest Stable, e.g., 52+), React Navigation v6, React Native Paper v5, TanStack Query v5, Zustand v4+, TypeScript (Latest Stable)
 
-I. Introduction
----------------
+## I. Introduction
 
 ### A. Purpose of the Blueprint
 
@@ -32,8 +30,7 @@ The structure and requirements outlined in this blueprint are informed by the AD
 - **Implementation:** The delivery of the course content through various channels (Confluence, Articulate 360, Instructor-Led) is the Implementation phase.
 - **Evaluation:** Feedback mechanisms and future course revisions based on learner performance and feedback represent the Evaluation phase, which should inform subsequent updates to this blueprint.
 
-II. Foundational Principles
----------------------------
+## II. Foundational Principles
 
 ### A. Instructional Design Principles
 
@@ -65,7 +62,7 @@ All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Cons
 - **Procedures and Instructions:** Use the imperative mood (direct commands) for procedures and instructions. See `styleguide/procedures-instructions/writing-step-by-step-instructions.md` and `styleguide/grammar/verbs.md`.
 - **Capitalization:** Default to sentence-style capitalization (capitalize only the first word and proper nouns) for headings, titles, UI labels, etc. Title-style capitalization is rare and used only for specific cases like official product names or specific publication titles. See `styleguide/capitalization.md`.
 - **Numbers:** Follow specific rules for numerals vs. words (spell out zero-nine, numerals for 10+), comma usage, dates, percentages, ranges, etc. See `styleguide/numbers.md`.
-- **Acronyms:** Define acronyms on first use (spell out term followed by acronym in parentheses) unless they are extremely common (e.g., USB, URL per *The American Heritage Dictionary* or the MSWSG A-Z list). Avoid introducing acronyms used only once. Lowercase the spelled-out term unless it contains proper nouns. See `styleguide/acronyms.md`.
+- **Acronyms:** Define acronyms on first use (spell out term followed by acronym in parentheses) unless they are extremely common (e.g., USB, URL per _The American Heritage Dictionary_ or the MSWSG A-Z list). Avoid introducing acronyms used only once. Lowercase the spelled-out term unless it contains proper nouns. See `styleguide/acronyms.md`.
 - **Punctuation:** Use the serial (Oxford) comma in lists of three or more items. Use one space after periods. Skip end punctuation for short headings and list items (three words or fewer). Follow specific rules for hyphens, dashes, etc. See `styleguide/punctuation/` and `styleguide/top-10-tips-style-voice.md`.
 - **Links and URLs:** Use descriptive link text. Don't include `https://` unless the protocol is different. Omit trailing slashes unless required. See `styleguide/urls-web-addresses.md`.
 - **Accessibility:** Write clear, simple text. Use descriptive link text. Structure content logically with headings. Provide text alternatives for visuals (diagram descriptions, image alt text). Use people-first language where applicable. See `styleguide/accessibility/`.
@@ -102,10 +99,9 @@ Consistency in terminology is paramount. The following terms MUST be used consis
 - **Section:** A subdivision within a module, focusing on a specific concept or API.
 - **Sign in / Sign out:** Preferred over "Log in / Log out".
 
-*(This dictionary should be expanded as more specific terms arise during content development. Always check the MSWSG A-Z list for preferred terminology.)*
+_(This dictionary should be expanded as more specific terms arise during content development. Always check the MSWSG A-Z list for preferred terminology.)_
 
-III. Course Outline and Structure
----------------------------------
+## III. Course Outline and Structure
 
 ### A. Course Philosophy and Flow
 
@@ -122,92 +118,100 @@ The following outline is definitive and MUST be followed for the markdown docume
   - Section 3: How to Use This Course (Explaining Learning Paths, Structure, Tools)
   - Section 4: Course Components and Terminology (Referencing this Blueprint)
   - Section 5: Setting Up Your Learning Environment (Software installs beyond RN itself, tool accounts)
+
 - **Module 1: The Landscape of Mobile Development**
 
   - Section 1: A Brief History of Mobile Platforms (Pre-Smartphone to Modern OS)
   - Section 2: The Rise of Cross-Platform Development
   - Section 3: Why React Native? (Pros, Cons, Use Cases)
-    - *Exercise 1.1: Framework Comparison Research (Microsoft Forms)*
+    - _Exercise 1.1: Framework Comparison Research (Microsoft Forms)_
   - Section 4: Understanding the React Native Ecosystem (Core, Expo, Community)
-  - *Challenge 1: Mobile Development Quiz (Microsoft Forms)*
+  - _Challenge 1: Mobile Development Quiz (Microsoft Forms)_
+
 - **Module 2: React Native Architecture Explained**
 
   - Section 1: Legacy Architecture: The Bridge (Concepts, Limitations)
   - Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)
-    - *Diagram: Legacy Bridge Architecture (Mermaid)*
-    - *Diagram: New Architecture Overview (Mermaid)*
+    - _Diagram: Legacy Bridge Architecture (Mermaid)_
+    - _Diagram: New Architecture Overview (Mermaid)_
   - Section 3: How Rendering Works (Legacy vs. Fabric)
-    - *Exercise 2.1: Architecture Concepts Review (Microsoft Forms)*
+    - _Exercise 2.1: Architecture Concepts Review (Microsoft Forms)_
   - Section 4: Implications for Developers (Performance, Synchronous Operations)
-  - *Challenge 2: Architecture Diagramming (Microsoft Whiteboard)*
+  - _Challenge 2: Architecture Diagramming (Microsoft Whiteboard)_
+
 - **Module 3: Setting Up Your React Native Environment with Expo**
 
   - Section 1: Introduction to Expo and Expo Go
   - Section 2: Installing Prerequisites (Node.js, npm/yarn, Watchman, Xcode Command Line Tools)
   - Section 3: Creating Your First Expo App (`npx create-expo-app@latest`)
-    - *Exercise 3.1: Create and Run Initial App (Instructions)*
+    - _Exercise 3.1: Create and Run Initial App (Instructions)_
   - Section 4: Understanding `npx expo` vs. `npm`/`yarn`
   - Section 5: Running on the iOS Simulator
   - Section 6: Running on Expo Go (Physical Device - Optional Mention)
   - Section 7: Expo Project Structure (File/Folder Overview)
   - Section 8: Essential Expo CLI Commands (`start`, `install`, `run:ios`)
   - Section 9: Troubleshooting Common Setup Issues (`rm -rf node_modules`, `--legacy-peer-deps`, etc.)
-  - *Challenge 3: Environment Setup Verification (Checklist/Quiz - Microsoft Forms)*
+  - _Challenge 3: Environment Setup Verification (Checklist/Quiz - Microsoft Forms)_
+
 - **Module 4: Web Development Essentials Refresher**
 
   - Section 1: Core HTML Concepts (Structure, Elements, Semantics) - *Brief Review*
   - Section 2: Core CSS Concepts (Selectors, Box Model, Layout - Flexbox Focus) - *Brief Review*
-    - *Exercise 4.1: Basic HTML/CSS Structure (CodeSandbox)*
+    - _Exercise 4.1: Basic HTML/CSS Structure (CodeSandbox)_
   - Section 3: Bridging Web Concepts to React Native (Mapping HTML elements to RN Components, CSS to StyleSheet)
-  - *Challenge 4: Simple Layout Recreation (CodeSandbox)*
+  - _Challenge 4: Simple Layout Recreation (CodeSandbox)_
+
 - **Module 5: JavaScript Essentials for React Native**
 
   - Section 1: Variables, Data Types, and Operators (ES6+ Focus: `let`, `const`)
   - Section 2: Control Flow (Conditionals, Loops)
   - Section 3: Functions (Arrow Functions, Scope, Closures)
-    - *Exercise 5.1: Function Practice (CodeSandbox)*
+    - _Exercise 5.1: Function Practice (CodeSandbox)_
   - Section 4: Objects and Arrays (Methods, Destructuring, Spread/Rest Operators)
-    - *Exercise 5.2: Data Manipulation (CodeSandbox)*
+    - _Exercise 5.2: Data Manipulation (CodeSandbox)_
   - Section 5: Asynchronous JavaScript (Callbacks, Promises, `async`/`await`)
-    - *Diagram: Async/Await Flow (Mermaid)*
-    - *Exercise 5.3: Async Function Implementation (CodeSandbox)*
+    - _Diagram: Async/Await Flow (Mermaid)_
+    - _Exercise 5.3: Async Function Implementation (CodeSandbox)_
   - Section 6: ES6 Modules (Import/Export)
-  - *Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)*
+  - _Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)_
+
 - **Module 6: TypeScript Essentials**
 
   - Section 1: Why TypeScript? (Benefits: Type Safety, Tooling)
   - Section 2: Basic Types (string, number, boolean, array, object, any, unknown, void, null, undefined)
   - Section 3: Interfaces and Type Aliases
-    - *Exercise 6.1: Defining Interfaces (CodeSandbox)*
+    - _Exercise 6.1: Defining Interfaces (CodeSandbox)_
   - Section 4: Functions in TypeScript (Typing Parameters, Return Types)
   - Section 5: Generics
-    - *Exercise 6.2: Generic Function (CodeSandbox)*
+    - _Exercise 6.2: Generic Function (CodeSandbox)_
   - Section 6: Enums
   - Section 7: Utility Types (Partial, Required, Pick, Omit, etc.)
   - Section 8: Configuring TypeScript (`tsconfig.json` overview - as relevant to Expo)
-  - *Challenge 6: Typing a Pharmacy API Response (CodeSandbox)*
-  - *Note: All subsequent JS/React/RN code examples MUST use TypeScript.*
+  - _Challenge 6: Typing a Pharmacy API Response (CodeSandbox)_
+  - _Note: All subsequent JS/React/RN code examples MUST use TypeScript._
+
 - **Module 7: React Essentials for React Native**
 
   - Section 1: Introduction to React (Declarative UI, Component-Based)
   - Section 2: JSX (Syntax, Embedding Expressions, Attributes)
   - Section 3: Components (Functional Components Focus, Class Components Brief Mention)
-    - *Exercise 7.1: Creating Functional Components (CodeSandbox)*
+    - _Exercise 7.1: Creating Functional Components (CodeSandbox)_
   - Section 4: Props (Passing Data Down)
-    - *Exercise 7.2: Passing and Using Props (CodeSandbox)*
+    - _Exercise 7.2: Passing and Using Props (CodeSandbox)_
   - Section 5: State (`useState` Hook)
-    - *Exercise 7.3: Managing Component State (CodeSandbox)*
+    - _Exercise 7.3: Managing Component State (CodeSandbox)_
   - Section 6: Handling Events (Press Events)
   - Section 7: Conditional Rendering
   - Section 8: Lists and Keys
-    - *Exercise 7.4: Rendering Lists (CodeSandbox)*
+    - _Exercise 7.4: Rendering Lists (CodeSandbox)_
   - Section 9: Component Lifecycle (`useEffect` Hook)
-    - *Diagram: `useEffect` Lifecycle (Mermaid)*
-    - *Exercise 7.5: Using `useEffect` for Side Effects (CodeSandbox)*
+    - _Diagram: `useEffect` Lifecycle (Mermaid)_
+    - _Exercise 7.5: Using `useEffect` for Side Effects (CodeSandbox)_
   - Section 10: React Context API (Introduction for State Management)
-    - *Diagram: Context API Flow (Mermaid)*
-    - *Exercise 7.6: Basic Context Usage (CodeSandbox)*
-  - *Challenge 7: Simple Medication List App (CodeSandbox)*
+    - _Diagram: Context API Flow (Mermaid)_
+    - _Exercise 7.6: Basic Context Usage (CodeSandbox)_
+  - _Challenge 7: Simple Medication List App (CodeSandbox)_
+
 - **Module 8: React Native Core Components**
 
   - Section 1: The Role of Core Components
@@ -215,162 +219,172 @@ The following outline is definitive and MUST be followed for the markdown docume
   - Section 3: Text (`<Text>`) - Displaying Text
   - Section 4: Image (`<Image>`) - Displaying Images (Local and Network)
   - Section 5: TextInput (`<TextInput>`) - User Input
-    - *Exercise 8.1: Basic Form with TextInput (Expo Snack)*
+    - _Exercise 8.1: Basic Form with TextInput (Expo Snack)_
   - Section 6: ScrollView (`<ScrollView>`) - Enabling Scrolling
   - Section 7: StyleSheet API - Basic Styling
-    - *Exercise 8.2: Applying Styles with StyleSheet (Expo Snack)*
+    - _Exercise 8.2: Applying Styles with StyleSheet (Expo Snack)_
   - Section 8: Button and Pressable (`<Button>`, `<Pressable>`) - Handling Taps
-    - *Exercise 8.3: Implementing Buttons (Expo Snack)*
+    - _Exercise 8.3: Implementing Buttons (Expo Snack)_
   - Section 9: FlatList and SectionList - Efficient List Rendering
-    - *Exercise 8.4: Displaying Data with FlatList (Expo Snack)*
+    - _Exercise 8.4: Displaying Data with FlatList (Expo Snack)_
   - Section 10: Other Core Components Overview (ActivityIndicator, Modal, etc.)
-  - *Challenge 8: Build a Basic Prescription Item Card (Expo Snack)*
+  - _Challenge 8: Build a Basic Prescription Item Card (Expo Snack)_
+
 - **Module 9: React Native Core APIs and Hooks**
 
   - Section 1: Platform Module (Platform-Specific Code)
   - Section 2: Dimensions API (Getting Screen Size)
   - Section 3: Alert API (Displaying Native Alerts)
-    - *Exercise 9.1: Using the Alert API (Expo Snack)*
+    - _Exercise 9.1: Using the Alert API (Expo Snack)_
   - Section 4: Core React Hooks Recap (`useState`, `useEffect`, `useContext`)
   - Section 5: `useRef` Hook (Accessing Component Instances/DOM Elements)
   - Section 6: `useCallback` and `useMemo` Hooks (Performance Optimization)
-    - *Exercise 9.2: Optimizing with `useCallback` (Expo Snack)*
+    - _Exercise 9.2: Optimizing with `useCallback` (Expo Snack)_
   - Section 7: Creating Custom Hooks (Encapsulating Logic)
-    - *Exercise 9.3: Building a Custom Hook (Expo Snack)*
-  - *Challenge 9: Custom Hook for Device Information (Expo Snack)*
+    - _Exercise 9.3: Building a Custom Hook (Expo Snack)_
+  - _Challenge 9: Custom Hook for Device Information (Expo Snack)_
+
 - **Module 10: Styling in React Native**
 
   - Section 1: Styling Approaches Overview
   - Section 2: StyleSheet Deep Dive (Best Practices, Performance)
   - Section 3: Inline Styles (Usage and Limitations)
   - Section 4: Layout with Flexbox (Comprehensive Guide)
-    - *Diagram: Flexbox Layout Examples (Mermaid)*
-    - *Exercise 10.1: Complex Flexbox Layout (Expo Snack)*
+    - _Diagram: Flexbox Layout Examples (Mermaid)_
+    - _Exercise 10.1: Complex Flexbox Layout (Expo Snack)_
   - Section 5: Introduction to Styled Components
-    - *Exercise 10.2: Styling with Styled Components (Expo Snack)*
+    - _Exercise 10.2: Styling with Styled Components (Expo Snack)_
   - Section 6: Theming with Styled Components
   - Section 7: Introduction to UI Libraries: React Native Paper
   - Section 8: Using React Native Paper Components
-    - *Exercise 10.3: Implementing UI with Paper Components (Expo Snack)*
+    - _Exercise 10.3: Implementing UI with Paper Components (Expo Snack)_
   - Section 9: Theming with React Native Paper (v5)
-    - *Exercise 10.4: Customizing Paper Theme (Expo Snack)*
+    - _Exercise 10.4: Customizing Paper Theme (Expo Snack)_
   - Section 10: Responsive Design Techniques (Platform, Dimensions)
-  - *Challenge 10: Style the Prescription Card with Paper and Styled Components (Expo Snack)*
+  - _Challenge 10: Style the Prescription Card with Paper and Styled Components (Expo Snack)_
+
 - **Module 11: Navigation and Routing**
 
   - Section 1: Navigation Concepts (Stack, Tabs, Drawer)
   - Section 2: Introduction to React Navigation (v6)
   - Section 3: Stack Navigator Setup and Usage
-    - *Exercise 11.1: Basic Stack Navigation (Expo Snack)*
+    - _Exercise 11.1: Basic Stack Navigation (Expo Snack)_
   - Section 4: Tab Navigator Setup and Usage
-    - *Exercise 11.2: Basic Tab Navigation (Expo Snack)*
+    - _Exercise 11.2: Basic Tab Navigation (Expo Snack)_
   - Section 5: Drawer Navigator Setup and Usage
   - Section 6: Passing Parameters Between Screens
-    - *Exercise 11.3: Passing Data via Navigation (Expo Snack)*
+    - _Exercise 11.3: Passing Data via Navigation (Expo Snack)_
   - Section 7: Configuring Headers and Tabs (Styling, Options)
   - Section 8: Introduction to Expo Router
   - Section 9: File-Based Routing with Expo Router
-    - *Exercise 11.4: Implementing Routes with Expo Router (Expo Snack)*
+    - _Exercise 11.4: Implementing Routes with Expo Router (Expo Snack)_
   - Section 10: Expo Router vs. React Navigation Configuration
   - Section 11: Deep Linking (Concepts and Setup with Expo Router)
-  - *Challenge 11: Build Multi-Screen Navigation for SpeedyMeds (Expo Snack - Choose either React Navigation or Expo Router)*
+  - _Challenge 11: Build Multi-Screen Navigation for SpeedyMeds (Expo Snack - Choose either React Navigation or Expo Router)_
+
 - **Module 12: Handling User Input and Forms**
 
   - Section 1: Recap: TextInput Component
   - Section 2: Handling Text Changes (`onChangeText`)
   - Section 3: Form State Management Strategies
   - Section 4: Controlled Components Pattern
-    - *Exercise 12.1: Building a Controlled Form Input (Expo Snack)*
+    - _Exercise 12.1: Building a Controlled Form Input (Expo Snack)_
   - Section 5: Introduction to Form Libraries (React Hook Form Recommended)
   - Section 6: Setting up React Hook Form
   - Section 7: Basic Form Validation with React Hook Form
-    - *Exercise 12.2: Form with React Hook Form Validation (Expo Snack)*
+    - _Exercise 12.2: Form with React Hook Form Validation (Expo Snack)_
   - Section 8: Handling Form Submission
   - Section 9: Other Input Types (Switches, Pickers - using Paper components)
-    - *Exercise 12.3: Integrating Switch/Picker in a Form (Expo Snack)*
-  - *Challenge 12: Create a Patient Information Form (Expo Snack)*
+    - _Exercise 12.3: Integrating Switch/Picker in a Form (Expo Snack)_
+  - _Challenge 12: Create a Patient Information Form (Expo Snack)_
+
 - **Module 13: State Management**
 
   - Section 1: Recap: `useState` and Prop Drilling Limitations
   - Section 2: Recap: React Context API Deep Dive (Provider, Consumer, `useContext`)
-    - *Exercise 13.1: Managing Global Theme with Context (Expo Snack)*
+    - _Exercise 13.1: Managing Global Theme with Context (Expo Snack)_
   - Section 3: Context API Performance Considerations
   - Section 4: Introduction to Zustand (Client State)
-    - *Diagram: Zustand Store Interaction (Mermaid)*
-    - *Exercise 13.2: Implementing a Zustand Store (Expo Snack)*
+    - _Diagram: Zustand Store Interaction (Mermaid)_
+    - _Exercise 13.2: Implementing a Zustand Store (Expo Snack)_
   - Section 5: Zustand vs. Context API Comparison
   - Section 6: Introduction to Server State Management
   - Section 7: Introduction to TanStack Query (React Query) v5
   - Section 8: Core Concepts: Queries (`useQuery`), Mutations (`useMutation`), Query Client
-    - *Diagram: `useQuery` Data Flow (Mermaid)*
-    - *Exercise 13.3: Fetching Data with `useQuery` (Expo Snack)*
+    - _Diagram: `useQuery` Data Flow (Mermaid)_
+    - _Exercise 13.3: Fetching Data with `useQuery` (Expo Snack)_
   - Section 9: Caching and Background Updates with TanStack Query
   - Section 10: Handling Mutations and Invalidating Queries
-    - *Exercise 13.4: Posting Data with `useMutation` (Expo Snack)*
+    - _Exercise 13.4: Posting Data with `useMutation` (Expo Snack)_
   - Section 11: React Native Specifics for TanStack Query (Online Manager, Focus Refetching)
-  - *Challenge 13: Integrate Zustand and TanStack Query for Medication Data (Expo Snack)*
+  - _Challenge 13: Integrate Zustand and TanStack Query for Medication Data (Expo Snack)_
+
 - **Module 14: Working with Native Modules**
 
   - Section 1: What are Native Modules? Why Use Them?
   - Section 2: Using Existing Native Modules (Community & Expo SDK)
   - Section 3: Expo SDK Modules Overview (Camera, Location, FileSystem, etc.)
-    - *Exercise 14.1: Using an Expo SDK Module (e.g., `expo-device`) (Expo Snack)*
+    - _Exercise 14.1: Using an Expo SDK Module (e.g., `expo-device`) (Expo Snack)_
   - Section 4: Introduction to Creating Native Modules (Conceptual Overview)
   - Section 5: TurboModules (New Architecture Native Modules)
   - Section 6: JSI for Direct Communication
   - Section 7: Bridging Native UI Components (Conceptual Overview)
-  - *Challenge 14: Research Native Module Alternatives (Microsoft Forms)*
+  - _Challenge 14: Research Native Module Alternatives (Microsoft Forms)_
+
 - **Module 15: Performance and Debugging**
 
   - Section 1: Common Performance Bottlenecks in React Native
   - Section 2: Measuring Performance (Flipper, React DevTools Profiler)
   - Section 3: Optimizing Rendering (`React.memo`, `useCallback`, `useMemo`)
-    - *Exercise 15.1: Applying Memoization (Expo Snack)*
+    - _Exercise 15.1: Applying Memoization (Expo Snack)_
   - Section 4: Optimizing Lists (FlatList/FlashList Best Practices)
   - Section 5: Image Optimization Strategies
   - Section 6: Reducing Bundle Size
   - Section 7: Debugging Tools (React Native Debugger, Chrome DevTools, Flipper)
   - Section 8: Handling Errors (Error Boundaries, Logging)
-    - *Exercise 15.2: Implementing an Error Boundary (Expo Snack)*
+    - _Exercise 15.2: Implementing an Error Boundary (Expo Snack)_
   - Section 9: Understanding Hermes Engine Benefits
   - Section 10: New Architecture Performance Considerations
-  - *Challenge 15: Profile and Identify Optimization Opportunity (Conceptual/Quiz - Microsoft Forms)*
+  - _Challenge 15: Profile and Identify Optimization Opportunity (Conceptual/Quiz - Microsoft Forms)_
+
 - **Module 16: EAS Build and Publishing**
 
   - Section 1: Introduction to EAS (Expo Application Services)
   - Section 2: EAS Build vs. Classic Expo Build
   - Section 3: Setting up EAS CLI
   - Section 4: Configuring `eas.json` for Builds
-    - *Exercise 16.1: Configure `eas.json` (Conceptual/Quiz - Microsoft Forms)*
+    - _Exercise 16.1: Configure `eas.json` (Conceptual/Quiz - Microsoft Forms)_
   - Section 5: Creating Development Builds
   - Section 6: Creating Production Builds (iOS and Android)
   - Section 7: Submitting to App Stores (Overview)
   - Section 8: EAS Update (Over-the-Air Updates)
-    - *Exercise 16.2: Publishing an EAS Update (Conceptual/Instructions)*
+    - _Exercise 16.2: Publishing an EAS Update (Conceptual/Instructions)_
   - Section 9: Managing Secrets with EAS
-  - *Challenge 16: EAS Build Workflow Diagram (Microsoft Whiteboard)*
+  - _Challenge 16: EAS Build Workflow Diagram (Microsoft Whiteboard)_
+
 - **Module 17: Advanced Features**
 
   - Section 1: Animations Overview (Animated API vs. Reanimated)
   - Section 2: Introduction to React Native Reanimated
-    - *Exercise 17.1: Basic Reanimated Animation (Expo Snack)*
+    - _Exercise 17.1: Basic Reanimated Animation (Expo Snack)_
   - Section 3: Gestures with React Native Gesture Handler
-    - *Exercise 17.2: Implementing a Basic Gesture (Expo Snack)*
+    - _Exercise 17.2: Implementing a Basic Gesture (Expo Snack)_
   - Section 4: Combining Gestures and Animations
   - Section 5: Working with SVGs (`react-native-svg`)
   - Section 6: Push Notifications with `expo-notifications`
   - Section 7: Offline Data Storage (`AsyncStorage`, `expo-sqlite`, MMKV )
   - Section 8: Testing Strategies (Jest, React Native Testing Library)
-    - *Exercise 17.3: Writing a Simple Unit Test (Expo Snack/CodeSandbox)*
-  - *Challenge 17: Add an Animated Element to the Prescription Card (Expo Snack)*
+    - _Exercise 17.3: Writing a Simple Unit Test (Expo Snack/CodeSandbox)_
+  - _Challenge 17: Add an Animated Element to the Prescription Card (Expo Snack)_
+
 - **Module 18: Capstone Project**
 
   - Section 1: Project Overview and Setup
   - Section 2: Understanding the Project Scaffolding
   - Section 3: Data Flow and State Management
-    - *Diagram: Capstone Data Flow (Mermaid)*
+    - _Diagram: Capstone Data Flow (Mermaid)_
   - Section 4: Navigation Implementation
-    - *Diagram: Capstone Navigation Structure (Mermaid)*
+    - _Diagram: Capstone Navigation Structure (Mermaid)_
   - Section 5: UI Layer: Theming and Styling
   - Section 6: Development Workflow: Setup, Debugging, and Testing
   - Section 7: Core Requirements and Milestones
@@ -385,9 +399,7 @@ The following outline is definitive and MUST be followed for the markdown docume
   - Section 4: Next Steps in Your React Native Journey (Career paths, contributing)
   - Section 5: Final Q&A / Feedback (Primarily for Instructor-Led Path)
 
-
-IV. Content Element Patterns and Standards
-------------------------------------------
+## IV. Content Element Patterns and Standards
 
 This section defines the mandatory patterns and standards for all markdown elements and custom course components used in the documentation. Strict adherence ensures consistency, readability, and supports the course's pedagogical goals.
 
@@ -421,7 +433,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
 - **Code Blocks:**
   - MUST use fenced code blocks (triple backticks ```) exclusively. Indented code blocks are forbidden.
   - A language identifier (e.g., `tsx`,`javascript`, ```bash`,`json`,`mermaid`) MUST be included immediately after the opening backticks.
-  - Inline code snippets within paragraphs MUST use single backticks (``code``).
+  - Inline code snippets within paragraphs MUST use single backticks (`code`).
   - Multiple consecutive blank lines within a code block are forbidden as they can break rendering or formatting.
   - Follow specific formatting guidelines from `styleguide/developer-content/`.
 - **Tables:**
@@ -442,8 +454,8 @@ These rules define the required syntax for standard Markdown elements, incorpora
 - **Numbers:** Numbers in text MUST follow MSWSG rules (spell out 0-9, numerals for 10+, exceptions). See `styleguide/numbers.md`.
 - **Acronyms:** Acronyms MUST be defined on first use (spelled-out term followed by acronym in parentheses) unless extremely common, per MSWSG rules. See `styleguide/acronyms.md`.
 - **Developer Element Formatting:** Consistently format developer-specific text elements according to `styleguide/developer-content/formatting-developer-text-elements.md`. Key conventions relevant to this course include:
-    - **Bold:** Use for keywords (e.g., `const`, `function`), predefined classes/types (e.g., `string`, `View`, `StyleSheet`), methods/functions (e.g., `.map()`, `useState()`), properties/props (e.g., `style`, `onPress`), component names (e.g., `<Button>`). Capitalization MUST match the actual element.
-    - *Italic:* Use for parameters (e.g., *userId*, *options*) and placeholders (e.g., *your-app-name*).
+  - **Bold:** Use for keywords (e.g., `const`, `function`), predefined classes/types (e.g., `string`, `View`, `StyleSheet`), methods/functions (e.g., `.map()`, `useState()`), properties/props (e.g., `style`, `onPress`), component names (e.g., `<Button>`). Capitalization MUST match the actual element.
+  - _Italic:_ Use for parameters (e.g., _userId_, _options_) and placeholders (e.g., _your-app-name_).
 
 ### B. Custom Course Component Definitions
 
@@ -452,8 +464,9 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
 - **Callouts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts.
 
   - **Syntax and Purpose:**
+
     - **NOTE:**
-  
+
             > [!NOTE]
             > Information the user should notice even if skimming. Use for supplementary details, reminders, or context.
 
@@ -468,7 +481,7 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
             > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
 
     - **CAUTION:**
-  
+
             > [!CAUTION]
             > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
 
@@ -478,6 +491,7 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
             > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
 
   - **Usage Rules:** Use callouts judiciously to avoid cluttering the content. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `>`. Paragraph breaks within a callout can be achieved using a line containing only `>`.
+
 - **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge.
 
   - **Syntax:**
@@ -492,6 +506,7 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
         > **Example: (Optional)** Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
 
   - **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, use `(Web Developers)`. Separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Use specific emoji's to help draw the attention of the `(Target Audience)`. Use 🍏 for iOS Developers, use 🤖 for Android, use 📲 for Native Developers, use ⚛️ for React Developers, use 🅰 for Angular Developers, and use 🌐 for Web Developers. MUST include links to official documentation and other trusted sources for further details around concepts related to the target background (Android, iOS, React, Angular).
+
 - **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
 
   - **Syntax:**
@@ -543,11 +558,12 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
     - **Sequence Diagrams (`sequenceDiagram`):** For illustrating interactions between components or systems over time (e.g., API calls, event handling).
     - **Class Diagrams (`classDiagram`):** Use sparingly, primarily for illustrating component prop structures or complex type relationships if beneficial.
     - **State Diagrams (`stateDiagram-v2`):** For visualizing component lifecycles or state machine logic.
-    - *(Refer to Mermaid documentation for specific syntax )*
+    - _(Refer to Mermaid documentation for specific syntax )_
   - **Placement:** Insert the Mermaid code block immediately following the paragraph that introduces or references the concept being diagrammed.
   - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility and comprehension.
   - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams illustrating different aspects. Use clear, concise labels for all elements. Avoid unnecessary visual clutter.
   - **Consistency:** Maintain consistent styling (e.g., shapes for similar entity types, line styles for similar relationships) across diagrams within the course. If using custom styling via `classDef`, apply it consistently.
+
 - **Images/Screenshots:** Use to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces.
   - **Requirement:** Include screenshots for:
     - Illustrating steps in environment setup (e.g., Xcode settings, terminal commands/output).
@@ -574,9 +590,10 @@ Code examples are critical learning tools and MUST adhere to the following stand
 
 **2. Example Types and Usage:**
 
-This blueprint defines three tiers of code examples, each with specific usage contexts and documentation requirements. An abundance of *Inline* and *Short, Self-Contained* examples is MANDATORY, especially when introducing new concepts, syntax, or APIs.
+This blueprint defines three tiers of code examples, each with specific usage contexts and documentation requirements. An abundance of _Inline_ and _Short, Self-Contained_ examples is MANDATORY, especially when introducing new concepts, syntax, or APIs.
 
 - **a) Inline Code Snippets (`code`):**
+
   - **Purpose:** To illustrate specific syntax elements, keywords, prop names, simple function calls, or brief fragments directly within explanatory text.
   - **Usage:** Mandatory when introducing new language syntax, API elements (props, method names), or configuration values for the first time. Use liberally within paragraphs to ground explanations in concrete code.
   - **Format:** Use single backticks (``).
@@ -584,7 +601,8 @@ This blueprint defines three tiers of code examples, each with specific usage co
   - **Example Context:** "To manage component state, use the `useState` Hook. Pass the initial state as an argument, like `useState(0)`."
 
 - **b) Short, Self-Contained Examples:**
-  - **Purpose:** To demonstrate a single, focused concept, API usage, or technique in a runnable context. Illustrates *how* to use a specific element introduced in the text.
+
+  - **Purpose:** To demonstrate a single, focused concept, API usage, or technique in a runnable context. Illustrates _how_ to use a specific element introduced in the text.
   - **Usage:** Use frequently after explaining a core concept, component, hook, or API. Ideal for showing the basic implementation of a feature.
   - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals).
   - **Explanation:**
@@ -592,7 +610,7 @@ This blueprint defines three tiers of code examples, each with specific usage co
     - MUST be followed by a focused explanation (approx. 50-100 words) clarifying the key parts of the code, the concept demonstrated, and the expected outcome. This explanation focuses only on the new concept being shown.
     - JSDoc comments within the code are OPTIONAL but encouraged for clarity if the code involves a non-trivial function or component definition.
     - The 200-word minimum description does NOT apply.
-  - **Example Context:** After explaining the `<Button>` component and its `onPress` prop, provide a short, runnable Snack example showing a simple `<Button>` that triggers an `Alert`. The explanation would focus *only* on the `<Button>` and `onPress` connection, not re-explain the entire component structure.
+  - **Example Context:** After explaining the `<Button>` component and its `onPress` prop, provide a short, runnable Snack example showing a simple `<Button>` that triggers an `Alert`. The explanation would focus _only_ on the `<Button>` and `onPress` connection, not re-explain the entire component structure.
 
 - **c) Long Samples:**
   - **Purpose:** To illustrate multiple features working together, complex scenarios, architectural patterns, or best practices. Often integrates several concepts covered previously.
@@ -607,9 +625,9 @@ This blueprint defines three tiers of code examples, each with specific usage co
 
 **3. Comments and Explanations:**
 
-- **Inline Comments (`//`):** Use within code blocks (primarily in *Long Samples*, optionally in *Short Examples*) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax. Keep comments concise and synchronized with code.
-- **JSDoc (`/** ... */`):** Mandatory *only* for *Long Samples* as defined above. Apply to all key functions, components, hooks, classes, and types.
-- **Text Explanations (Following Code Blocks):** Required for *Short* and *Long* examples. The depth varies: focused and brief (~50-100 words) for *Short Examples*, detailed and comprehensive (200+ words) for *Long Samples*.
+- **Inline Comments (`//`):** Use within code blocks (primarily in _Long Samples_, optionally in _Short Examples_) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax. Keep comments concise and synchronized with code.
+- **JSDoc (`/** ... */`):\*\* Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, components, hooks, classes, and types.
+- **Text Explanations (Following Code Blocks):** Required for _Short_ and _Long_ examples. The depth varies: focused and brief (~50-100 words) for _Short Examples_, detailed and comprehensive (200+ words) for _Long Samples_.
 
 **4. Exception Handling:**
 
@@ -621,25 +639,24 @@ By defining these tiers and adjusting documentation requirements, the blueprint 
 
 **Table IV.1: Custom Markdown Component Reference**
 
-| **Component Name**         | **Purpose**                                                                                      | **Markdown Syntax Example**                                                                                                                   | **Required Usage Context**                                                                                                                                                     |
-| -------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Callout (NOTE)             | Supplementary details, reminders, context.                                                       | `> [!NOTE]` <br> `> Content...`                                                                                                               | To provide additional information that is helpful but not critical.                                                                                                            |
-| Callout (TIP)              | Best practices, shortcuts, alternative approaches.                                               | `> [!TIP]` <br> `> Content...`                                                                                                                | To offer optional advice for efficiency or better results.                                                                                                                     |
-| Callout (IMPORTANT)        | Essential information for success, critical concepts, prerequisites.                             | `> [!IMPORTANT]` <br> `> Content...`                                                                                                          | To highlight non-negotiable requirements or foundational knowledge.                                                                                                            |
-| Callout (CAUTION)          | Warns of potential negative but recoverable consequences (errors, performance issues).           | `> [!CAUTION]` <br> `> Content...`                                                                                                            | To advise care when performing actions that could lead to minor problems if done incorrectly.                                                                                  |
-| Callout (WARNING)          | Warns of potentially severe or non-recoverable consequences (data loss, security risks).         | `> [!WARNING]` <br> `> Content...`                                                                                                            | To alert users to critical risks or actions with irreversible outcomes.                                                                                                        |
+| **Component Name**         | **Purpose**                                                                                      | **Markdown Syntax Example**                                                                                                                    | **Required Usage Context**                                                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Callout (NOTE)             | Supplementary details, reminders, context.                                                       | `> [!NOTE]` <br> `> Content...`                                                                                                                | To provide additional information that is helpful but not critical.                                                                                                            |
+| Callout (TIP)              | Best practices, shortcuts, alternative approaches.                                               | `> [!TIP]` <br> `> Content...`                                                                                                                 | To offer optional advice for efficiency or better results.                                                                                                                     |
+| Callout (IMPORTANT)        | Essential information for success, critical concepts, prerequisites.                             | `> [!IMPORTANT]` <br> `> Content...`                                                                                                           | To highlight non-negotiable requirements or foundational knowledge.                                                                                                            |
+| Callout (CAUTION)          | Warns of potential negative but recoverable consequences (errors, performance issues).           | `> [!CAUTION]` <br> `> Content...`                                                                                                             | To advise care when performing actions that could lead to minor problems if done incorrectly.                                                                                  |
+| Callout (WARNING)          | Warns of potentially severe or non-recoverable consequences (data loss, security risks).         | `> [!WARNING]` <br> `> Content...`                                                                                                             | To alert users to critical risks or actions with irreversible outcomes.                                                                                                        |
 | Background Bridge Note     | Compares/contrasts RN concepts with specific developer backgrounds (Native/Web).                 | `> 📲 **Target Audience:` <br> `> **Comparison:**...` <br> `> **Key Takeaway:**...` <br> `> **Source:**...`<br> `> **Example:** (Optional)...` | Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified. |
 | Learning Path Guidance     | Provides context/direction specific to Instructor-Led, Self-Led, or Asynchronous learning paths. | `> 🛣️ **Target Path:**...`                                                                                                                     | Strategically placed before complex topics, exercises, or challenges to offer path-specific advice. Target path(s) MUST be specified.                                          |
-| Official Documentation Box | Highlights key links to official documentation for important APIs, components, or concepts.      | `> 📚 **Official Documentation:**` <br> `> *(URL)` <br> `> *(URL)` <br> `> 🗂️ **Additional Resources:**` <br> `> *(URL)` <br> `> *(URL)`        | In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources.                   |
+| Official Documentation Box | Highlights key links to official documentation for important APIs, components, or concepts.      | `> 📚 **Official Documentation:**` <br> `> *(URL)` <br> `> *(URL)` <br> `> 🗂️ **Additional Resources:**` <br> `> *(URL)` <br> `> *(URL)`       | In sections introducing significant new technical elements (APIs, components, core concepts like Flexbox, JSI). Links must be to canonical official sources.                   |
 
-*The inclusion of Table IV.1 provides authors with a quick, accessible reference for implementing these essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations.*
+_The inclusion of Table IV.1 provides authors with a quick, accessible reference for implementing these essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations._
 
 The rigorous definition of core markdown syntax and the introduction of specialized custom components establish a controlled yet flexible authoring environment. This structure guarantees visual and semantic consistency across the entire course, which is vital for a project intended as a single source of truth for multiple distribution formats. While these constraints limit individual authorial style, they ensure a predictable and high-quality output that aligns with established technical writing and instructional design best practices. The successful implementation of this system, however, hinges on thorough author training and potentially the use of automated linting tools to enforce compliance during the content development phase.
 
 Furthermore, the mandatory inclusion of Mermaid diagrams and detailed explanations for both visuals and code significantly elevates the pedagogical value of the documentation. These elements move beyond simple descriptions to actively guide learners through complex concepts and practical implementations. This aligns directly with the "0-to-mastery" goal by providing multiple modalities and deeper context. However, this requirement substantially increases the effort and expertise needed for content creation. Project planning must account for the time required to develop accurate, clear diagrams and comprehensive code walkthroughs, and quality assurance processes must rigorously evaluate these elements. Similarly, the constraint that all code examples relate to the capstone project fosters a cohesive and practical learning journey. It allows learners to incrementally build familiarity with the domain and see direct application of concepts. This necessitates careful planning by content creators to ensure relevant and meaningful examples can be devised for every topic, potentially requiring a shared library of capstone-themed data models or UI snippets to maintain consistency.
 
-V. Module and Section Requirements
-----------------------------------
+## V. Module and Section Requirements
 
 This section outlines the mandatory structural and content requirements for every module and section within the course documentation. These rules ensure consistency, pedagogical soundness, and alignment with the course objectives.
 
@@ -665,19 +682,19 @@ Each section within a module MUST adhere to the following structure:
 1. **Section Title:** H2 or H3 heading (`## Section X: Title` or `### Subsection Y: Title`), matching the finalized outline (III.B).
 2. **Section Introduction:** 1-2 sentences clearly stating the purpose or topic of the section.
 3. **Content:** The main explanatory text, definitions, concepts, procedures, etc. MUST strictly adhere to all formatting and element standards defined in Section IV. This includes:
-    - Clear paragraphs and lists.
-    - Correct use of emphasis and developer element formatting (IV.A).
-    - Mandatory "Background Bridge Notes" (IV.B) where applicable based on content and audience.
-    - **API/Component/Hook Explanations:** When explaining core APIs, components, hooks, or functions (from React Native, Expo, or included libraries), the explanation MUST clearly cover, where applicable:
-        - **Purpose:** A concise sentence or two describing what the element does or represents (inspired by the 'Description' in `styleguide/developer-content/reference-documentation.md`).
-        - **Syntax/Signature (Conceptual):** If relevant, show the basic structure or how it's called.
-        - **Key Parameters/Props:** Description of essential inputs, their types, and purpose (use italics for names). Focus on the most common or important ones for the learning objective.
-        - **Return Value:** Description of the output and its type, if applicable.
-        - **Usage/Remarks:** Important details about usage, common patterns, potential pitfalls, side effects, or connections to other elements (inspired by the 'Remarks' section in `styleguide/developer-content/reference-documentation.md`).
-    - Mandatory Mermaid diagrams (IV.C) with text descriptions where applicable for visualizing concepts.
-    - Mandatory Code Examples (IV.D) with detailed explanations where applicable for demonstrating implementation.
-    - Mandatory "Official Documentation Link Box" (IV.B) when introducing significant APIs, components, or concepts.
-    - Appropriate use of Callouts (IV.B) and Learning Path Guidance (IV.B).
+   - Clear paragraphs and lists.
+   - Correct use of emphasis and developer element formatting (IV.A).
+   - Mandatory "Background Bridge Notes" (IV.B) where applicable based on content and audience.
+   - **API/Component/Hook Explanations:** When explaining core APIs, components, hooks, or functions (from React Native, Expo, or included libraries), the explanation MUST clearly cover, where applicable:
+     - **Purpose:** A concise sentence or two describing what the element does or represents (inspired by the 'Description' in `styleguide/developer-content/reference-documentation.md`).
+     - **Syntax/Signature (Conceptual):** If relevant, show the basic structure or how it's called.
+     - **Key Parameters/Props:** Description of essential inputs, their types, and purpose (use italics for names). Focus on the most common or important ones for the learning objective.
+     - **Return Value:** Description of the output and its type, if applicable.
+     - **Usage/Remarks:** Important details about usage, common patterns, potential pitfalls, side effects, or connections to other elements (inspired by the 'Remarks' section in `styleguide/developer-content/reference-documentation.md`).
+   - Mandatory Mermaid diagrams (IV.C) with text descriptions where applicable for visualizing concepts.
+   - Mandatory Code Examples (IV.D) with detailed explanations where applicable for demonstrating implementation.
+   - Mandatory "Official Documentation Link Box" (IV.B) when introducing significant APIs, components, or concepts.
+   - Appropriate use of Callouts (IV.B) and Learning Path Guidance (IV.B).
 4. **Section Exercise (If applicable):** A link to the section's associated exercise, placed at the very end of the section's content. Format: `**(URL_to_Tool)**` (See Section VI). Exercises are placed according to the finalized outline (III.B).
 
 ### C. Content Depth and Linking Rules
@@ -704,8 +721,7 @@ The stringent requirements for content depth ("0-to-mastery," "under the hood") 
 
 Effectively implementing learner adaptation requires more than just following syntax; it demands pedagogical insight. Content creators must thoughtfully identify the specific points where different backgrounds might lead to confusion or where different learning paths benefit from tailored guidance. The "Background Bridge Notes" and "Learning Path Guidance" components provide the *tools* for adaptation, but their value depends entirely on their strategic and accurate application. Review processes must therefore evaluate not just the presence of these elements, but their pedagogical effectiveness in genuinely supporting diverse learners.
 
-VI. Exercises, Challenges, and Assessment
------------------------------------------
+## VI. Exercises, Challenges, and Assessment
 
 Practical application is crucial for skill acquisition. This section defines the tools, formats, and requirements for all exercises and challenges within the course.
 
@@ -774,7 +790,7 @@ To ensure consistency, manageability, and pedagogical appropriateness, the follo
 | All Modules (where applicable)    | Diagramming / Visual Brainstorming | Microsoft Whiteboard | Collaborative visual canvas, idea structuring                 | Clear Prompt, Template (Optional), Export for Review             |
 | All Modules (Optional Support)    | Starter Code / Solutions           | GitHub Repository    | Version control, code distribution (Instructor use primarily) | Standard Repos Only, Link Clearly, Not for Learner Completion    |
 
-*Table VI.1 provides unambiguous guidance on tool selection for practical activities, ensuring consistency and leveraging the strengths of each platform for its intended purpose.*
+_Table VI.1 provides unambiguous guidance on tool selection for practical activities, ensuring consistency and leveraging the strengths of each platform for its intended purpose._
 
 The decision to use a dual-platform approach for coding exercises (CodeSandbox for fundamentals, Expo Snack for React Native) is pedagogically driven. It introduces concepts in an appropriate context without overwhelming learners early on. However, this necessitates clear communication within the course materials. Section introductions, exercise links, and the initial "How to Use This Course" module must explicitly state which platform is being used and why, ensuring learners are not confused by the transition. Managing links and access across two external platforms also requires careful organization by the course administrators or instructors.
 
@@ -782,8 +798,7 @@ Furthermore, the reliance on external, third-party tools (CodeSandbox, Expo Snac
 
 Finally, the requirement for all practical activities to connect back to the SpeedyMeds capstone project provides valuable context and reinforces learning through consistent application. However, it adds a layer of complexity to exercise design. Creators must ensure that each activity not only teaches the target concept effectively but also fits logically within the pharmacy theme. Developing a shared set of reusable capstone-related assets (data models, UI snippets, common scenarios) could significantly aid content creators in meeting this requirement efficiently and consistently across the course.
 
-VII. Blueprint Governance
--------------------------
+## VII. Blueprint Governance
 
 This section defines the rules governing the maintenance and application of this blueprint document itself.
 
@@ -807,8 +822,7 @@ Adherence to this blueprint is mandatory and MUST be verified throughout the con
 
 The establishment of this blueprint as a definitive guide, coupled with a controlled update process and rigorous enforcement through multi-stage reviews, is essential for achieving the desired quality and consistency. While labeled "immutable" to emphasize its authority, the provision for formal updates acknowledges the dynamic nature of the subject matter. The success of the blueprint ultimately depends not just on its content, but on the commitment to its enforcement during the development and review cycles. Utilizing checklists derived from this document will be instrumental in making the enforcement process practical and effective, ensuring that all contributors adhere to the established standards.
 
-VIII. Conclusion
-----------------
+## VIII. Conclusion
 
 This blueprint provides a comprehensive and prescriptive framework for developing the markdown documentation for the React Native Training Course. By establishing strict standards for terminology, structure, content elements, pedagogical approaches, and practical activities, it aims to ensure a consistent, high-quality, and effective learning experience that meets the goal of bringing developers to production proficiency in React Native.
 
