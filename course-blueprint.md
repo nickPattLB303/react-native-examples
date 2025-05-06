@@ -1,9 +1,5 @@
 # React Native Training Course: Markdown Documentation Blueprint
 
-Version: 1.0
-
-Date: 2025-11-15
-
 Target Technologies: React Native (Latest Stable, e.g., 0.7x+), Expo SDK (Latest Stable, e.g., 52+), React Navigation v6, React Native Paper v5, TanStack Query v5, Zustand v4+, TypeScript (Latest Stable)
 
 ## I. Introduction
