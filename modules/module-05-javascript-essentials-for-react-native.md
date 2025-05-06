@@ -32,7 +32,8 @@ This section introduces the foundational building blocks of JavaScript: how to s
 
 In JavaScript, variables are containers for storing data values. Modern JavaScript (ES6 and later) introduced `let` and `const` for variable declaration, which offer more predictable behavior than the older `var` keyword.
 
-*   `let`: Declares a block-scoped local variable, optionally initializing it to a value. Block-scoped means the variable is only accessible within the block of code (e.g., inside an `if` statement or a `for` loop) where it's defined. Variables declared with `let` can be reassigned.
+#### `let`
+Declares a block-scoped local variable, optionally initializing it to a value. Block-scoped means the variable is only accessible within the block of code (e.g., inside an `if` statement or a `for` loop) where it's defined. Variables declared with `let` can be reassigned.
 
     ```javascript
     let medicationCount = 10;
@@ -47,7 +48,8 @@ In JavaScript, variables are containers for storing data values. Modern JavaScri
     ```
     This example demonstrates declaring `medicationCount` with `let` and reassigning it. The `inStockMessage` is block-scoped to the `if` statement.
 
-*   `const`: Declares a block-scoped local variable, but its value cannot be reassigned after initialization. It must be initialized when declared. This is useful for values that should not change, like API keys or configuration settings.
+#### `const`
+Declares a block-scoped local variable, but its value cannot be reassigned after initialization. It must be initialized when declared. This is useful for values that should not change, like API keys or configuration settings.
 
     ```javascript
     const pharmacyName = "SpeedyMeds";
@@ -61,7 +63,8 @@ In JavaScript, variables are containers for storing data values. Modern JavaScri
     ```
     Here, `pharmacyName` cannot be reassigned. For `patientDetails`, an object, `const` means the `patientDetails` variable will always point to the same object. However, the properties of that object can still be modified.
 
-*   `var`: The older way to declare variables. `var` declarations are either globally scoped or function-scoped, not block-scoped. They are also "hoisted," meaning their declarations are moved to the top of their scope before code execution, which can sometimes lead to confusing behavior. It's generally recommended to use `let` and `const` in modern JavaScript.
+#### `var`
+The older way to declare variables. `var` declarations are either globally scoped or function-scoped, not block-scoped. They are also "hoisted," meaning their declarations are moved to the top of their scope before code execution, which can sometimes lead to confusing behavior. It's generally recommended to use `let` and `const` in modern JavaScript.
 
     ```javascript
     function checkAvailability() {
