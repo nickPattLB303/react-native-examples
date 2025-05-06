@@ -751,9 +751,43 @@ An object is a collection of key-value pairs, where keys are strings (or Symbols
     ```
     This `patient` object demonstrates various property types, including a nested object `contact`, an array `allergies`, and methods `getFullName` and `getAge`.
 
+```mermaid
+graph TD
+    PatientObject["Object: patient"] -- owns --> FirstName["firstName: 'John' (String)"];
+    PatientObject -- owns --> LastName["lastName: 'Doe' (String)"];
+    PatientObject -- owns --> DOB["dateOfBirth: '1985-07-15' (String)"];
+    PatientObject -- owns --> Allergies["allergies: ['Penicillin', 'Sulfa'] (Array)"];
+    PatientObject -- owns --> ContactObject["contact: (Object)"];
+    ContactObject -- owns --> Phone["phone: '555-1234' (String)"];
+    ContactObject -- owns --> Email["email: 'john.doe@example.com' (String)"];
+    PatientObject -- owns --> GetFullName["getFullName: (Function)"];
+    PatientObject -- owns --> GetAge["getAge: (Function)"];
+
+    style PatientObject fill:#f9f,stroke:#333,stroke-width:2px;
+    style ContactObject fill:#ccf,stroke:#333,stroke-width:2px;
+```
+
+**Diagram Description: Patient Object Structure**
+
+This diagram visualizes the structure of the `patient` object example.
+- The central node `Object: patient` represents the main object.
+- It has several direct properties: `firstName`, `lastName`, `dateOfBirth` (all strings), `allergies` (an array), `contact` (another object), and two methods `getFullName` and `getAge`.
+- The `contact` object itself has two properties: `phone` and `email` (both strings).
+- This illustrates how objects can store various data types, including nested objects and functions (methods), forming a structured collection of related data. The diagram helps in understanding the hierarchical nature of such objects.
+
 *   **`new Object()` Constructor:** Less common for simple objects.
-    `const medication = new Object();`
-    `medication.name = "Ibuprofen";`
+    ```javascript
+    const medication = new Object();
+    medication.name = "Ibuprofen";
+    medication.dosage = "250mg";
+    medication.form = "Tablet";
+    medication.getDescription = function() {
+      return `${this.name} ${this.dosage} ${this.form}`;
+    };
+    console.log(medication.name); // Output: Ibuprofen
+    console.log(medication.getDescription()); // Output: Ibuprofen 250mg Tablet
+    ```
+    This `medication` object demonstrates creating an object with multiple properties and a method.
 
 **Accessing Properties:**
 *   **Dot Notation:** `objectName.propertyName`
@@ -1078,6 +1112,51 @@ JavaScript is a single-threaded language, meaning it can only do one thing at a 
 **The Event Loop (Conceptual Overview):**
 JavaScript engines (like V8 in Chrome/Node.js) use an event loop to handle asynchronous operations. When an async operation (like `setTimeout`, a network request, or a user event) is initiated, it's handed off to the browser's Web APIs or Node.js's C++ APIs. The main JavaScript thread continues executing. Once the async operation completes, its callback function is placed in a message queue (or callback queue). The event loop constantly checks if the call stack (where synchronous code runs) is empty. If it is, the event loop takes the first message from the queue and pushes its callback function onto the call stack for execution.
 
+```mermaid
+graph LR
+    subgraph JavaScriptEngine ["JavaScript Engine"]
+        CallStack["Call Stack (Sync Code)"]
+        Heap["Heap (Memory Allocation)"]
+    end
+
+    subgraph BrowserOrNodeAPIs ["Browser/Node.js APIs (Async Operations)"]
+        API1["setTimeout"]
+        API2["Network Request (fetch)"]
+        API3["DOM Events"]
+    end
+
+    CallbackQueue["Callback Queue (Task Queue)"]
+    EventLoop["Event Loop"]
+
+    CallStack -- "JS Code Runs Here" --> CallStack
+    JavaScriptEngine -- "Initiates Async Op" --> BrowserOrNodeAPIs
+    BrowserOrNodeAPIs -- "Async Op Complete, Callback Ready" --> CallbackQueue
+    EventLoop -- "Is Call Stack Empty?" --> CallStack
+    EventLoop -- "Yes" --> CallbackQueue
+    CallbackQueue -- "Dequeues Task" --> EventLoop
+    EventLoop -- "Pushes Callback to Stack" --> CallStack
+
+    style CallStack fill:#lightyellow,stroke:#333
+    style CallbackQueue fill:#lightblue,stroke:#333
+    style EventLoop fill:#lightgreen,stroke:#333
+    style BrowserOrNodeAPIs fill:#orange,stroke:#333
+```
+
+**Diagram Description: Simplified Event Loop Model**
+
+This diagram provides a simplified visualization of the JavaScript Event Loop mechanism.
+- **JavaScript Engine:** Contains the `Call Stack` (where synchronous JavaScript code executes one function at a time) and the `Heap` (for memory allocation).
+- **Browser/Node.js APIs:** These are environments outside the JavaScript engine that handle asynchronous operations like `setTimeout`, network requests (`fetch`), or DOM events. When JavaScript initiates such an operation, it's offloaded to these APIs.
+- **Callback Queue (Task Queue):** When an asynchronous operation completes (e.g., `setTimeout` timer finishes, data from a network request arrives), its associated callback function is placed in the Callback Queue.
+- **Event Loop:** This is a constantly running process that monitors two things: the Call Stack and the Callback Queue.
+- **The Flow:**
+    1. Synchronous JavaScript code is executed on the `Call Stack`.
+    2. If an asynchronous operation is encountered, it's passed to the Browser/Node.js APIs. The JavaScript engine doesn't wait for it.
+    3. When the asynchronous operation finishes in the APIs, its callback function is added to the `Callback Queue`.
+    4. The `Event Loop` continuously checks if the `Call Stack` is empty.
+    5. If the `Call Stack` is empty, the Event Loop takes the first callback function from the `Callback Queue` (if any) and pushes it onto the `Call Stack` for execution.
+This model allows JavaScript, despite being single-threaded, to handle long-running operations without blocking the main thread, thus maintaining responsiveness.
+
 ### Callbacks
 
 A callback is a function passed as an argument to another function, which is then invoked (called back) inside the outer function to complete some kind of routine or action. Callbacks are a traditional way to handle asynchronous operations.
@@ -1109,7 +1188,7 @@ When dealing with multiple nested asynchronous operations that depend on each ot
 
 ```javascript
 // Hypothetical example
-
+/*
 getPatientId('Alice', (patientId) => {
   getPrescriptions(patientId, (prescriptions) => {
     getMedicationDetails(prescriptions[0], (medDetails) => {
@@ -1119,7 +1198,7 @@ getPatientId('Alice', (patientId) => {
     }, (error) => console.error(error));
   }, (error) => console.error(error));
 }, (error) => console.error(error));
-
+*/
 ```
 Promises and `async/await` were introduced to address this issue.
 
@@ -1222,9 +1301,46 @@ verifyPrescription("P456")
 ```
 This chain first verifies a prescription, then (if valid) checks stock for the medication.
 
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: Create Promise
+    Pending --> Fulfilled: resolve(value)
+    Pending --> Rejected: reject(reason)
+    Fulfilled --> [*]: Operation Succeeded
+    Rejected --> [*]: Operation Failed
+
+    note right of Pending
+        Initial state:
+        Operation has not completed yet.
+    end note
+    note right of Fulfilled
+        Terminal state:
+        The asynchronous operation completed successfully.
+        The promise has a resulting value.
+        Handled by .then()'s first argument.
+    end note
+    note left of Rejected
+        Terminal state:
+        The asynchronous operation failed.
+        The promise has a reason for the failure.
+        Handled by .catch() or .then()'s second argument.
+    end note
+```
+
+**Diagram Description: Promise State Transitions**
+
+This state diagram illustrates the lifecycle of a JavaScript Promise.
+- **Initial State (`[*] --> Pending`):** When a Promise is created (e.g., `new Promise(...)`), it starts in the `Pending` state. This means the asynchronous operation it represents has not yet completed.
+- **From `Pending` to `Fulfilled` (`Pending --> Fulfilled`):** If the asynchronous operation completes successfully, the Promise transitions to the `Fulfilled` state. This transition is triggered by calling the `resolve(value)` function passed to the Promise executor. The `value` becomes the result of the Promise.
+- **From `Pending` to `Rejected` (`Pending --> Rejected`):** If the asynchronous operation encounters an error or fails, the Promise transitions to the `Rejected` state. This transition is triggered by calling the `reject(reason)` function passed to the Promise executor. The `reason` (usually an Error object) indicates why the Promise failed.
+- **Terminal States (`Fulfilled --> [*]`, `Rejected --> [*]`):** Once a Promise is either `Fulfilled` or `Rejected`, it is considered "settled" and its state cannot change further. `Fulfilled` indicates success, and `Rejected` indicates failure. These are terminal states for the Promise lifecycle.
+The `.then()` method is used to schedule callbacks for when a Promise is fulfilled, and `.catch()` (or the second argument to `.then()`) is used for when it's rejected.
+
 **Promise Utility Methods:**
 *   `Promise.all(iterable)`: Takes an iterable of Promises and returns a single Promise that fulfills when all of the Promises in the iterable have fulfilled, or rejects if any of them reject. The resolved value is an array of the resolved values from the input Promises, in the same order.
 *   `Promise.race(iterable)`: Takes an iterable of Promises and returns a single Promise that fulfills or rejects as soon as one of the Promises in the iterable fulfills or rejects, with the value or reason from that Promise.
+*   `Promise.allSettled(iterable)` (ES2020): Takes an iterable of Promises and returns a single Promise that fulfills after all of the given Promises have either fulfilled or rejected. The resolved value is an array of objects, each describing the outcome of each Promise (with `status: 'fulfilled', value: ...` or `status: 'rejected', reason: ...`).
+*   `Promise.any(iterable)` (ES2021): Takes an iterable of Promises and returns a single Promise that fulfills as soon as one of the Promises in the iterable fulfills. If all Promises reject, it rejects with an `AggregateError`.
 
 ```javascript
 const promise1 = Promise.resolve("Fetched Patient Profile");
