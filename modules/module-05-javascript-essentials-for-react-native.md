@@ -35,49 +35,49 @@ In JavaScript, variables are containers for storing data values. Modern JavaScri
 #### `let`
 Declares a block-scoped local variable, optionally initializing it to a value. Block-scoped means the variable is only accessible within the block of code (e.g., inside an `if` statement or a `for` loop) where it's defined. Variables declared with `let` can be reassigned.
 
-    ```javascript
-    let medicationCount = 10;
-    medicationCount = 12; // This is allowed
-    console.log(medicationCount); // Output: 12
+```javascript
+let medicationCount = 10;
+medicationCount = 12; // This is allowed
+console.log(medicationCount); // Output: 12
 
-    if (medicationCount > 10) {
-      let inStockMessage = "Sufficient stock";
-      console.log(inStockMessage); // Output: Sufficient stock
-    }
-    // console.log(inStockMessage); // Error: inStockMessage is not defined here
-    ```
-    This example demonstrates declaring `medicationCount` with `let` and reassigning it. The `inStockMessage` is block-scoped to the `if` statement.
+if (medicationCount > 10) {
+  let inStockMessage = "Sufficient stock";
+  console.log(inStockMessage); // Output: Sufficient stock
+}
+// console.log(inStockMessage); // Error: inStockMessage is not defined here
+```
+This example demonstrates declaring `medicationCount` with `let` and reassigning it. The `inStockMessage` is block-scoped to the `if` statement.
 
 #### `const`
 Declares a block-scoped local variable, but its value cannot be reassigned after initialization. It must be initialized when declared. This is useful for values that should not change, like API keys or configuration settings.
 
-    ```javascript
-    const pharmacyName = "SpeedyMeds";
-    // pharmacyName = "QuickMeds"; // Error: Assignment to constant variable.
+```javascript
+const pharmacyName = "SpeedyMeds";
+// pharmacyName = "QuickMeds"; // Error: Assignment to constant variable.
 
-    const patientDetails = { name: "John Doe", age: 30 };
-    patientDetails.age = 31; // This is allowed! const protects the binding, not the object's content.
-    console.log(patientDetails.age); // Output: 31
+const patientDetails = { name: "John Doe", age: 30 };
+patientDetails.age = 31; // This is allowed! const protects the binding, not the object's content.
+console.log(patientDetails.age); // Output: 31
 
-    // patientDetails = { name: "Jane Doe", age: 25 }; // Error: Assignment to constant variable.
-    ```
-    Here, `pharmacyName` cannot be reassigned. For `patientDetails`, an object, `const` means the `patientDetails` variable will always point to the same object. However, the properties of that object can still be modified.
+// patientDetails = { name: "Jane Doe", age: 25 }; // Error: Assignment to constant variable.
+```
+Here, `pharmacyName` cannot be reassigned. For `patientDetails`, an object, `const` means the `patientDetails` variable will always point to the same object. However, the properties of that object can still be modified.
 
 #### `var`
 The older way to declare variables. `var` declarations are either globally scoped or function-scoped, not block-scoped. They are also "hoisted," meaning their declarations are moved to the top of their scope before code execution, which can sometimes lead to confusing behavior. It's generally recommended to use `let` and `const` in modern JavaScript.
 
-    ```javascript
-    function checkAvailability() {
-      var availableItems = 5;
-      if (true) {
-        var availableItems = 10; // This redeclares and reassigns the same variable
-        console.log("Inside if:", availableItems); // Output: Inside if: 10
-      }
-      console.log("Outside if:", availableItems); // Output: Outside if: 10
-    }
-    checkAvailability();
-    ```
-    The example with `var` shows how `availableItems` declared inside the `if` block affects the variable in the outer function scope, which might not be the intended behavior. Using `let` would create a new variable scoped to the `if` block.
+```javascript
+function checkAvailability() {
+  var availableItems = 5;
+  if (true) {
+    var availableItems = 10; // This redeclares and reassigns the same variable
+    console.log("Inside if:", availableItems); // Output: Inside if: 10
+  }
+  console.log("Outside if:", availableItems); // Output: Outside if: 10
+}
+checkAvailability();
+```
+The example with `var` shows how `availableItems` declared inside the `if` block affects the variable in the outer function scope, which might not be the intended behavior. Using `let` would create a new variable scoped to the `if` block.
 
 > [!IMPORTANT]
 > For new JavaScript code, prefer `let` for variables that will be reassigned and `const` for variables that should not be reassigned. Avoid using `var` to prevent potential scope-related issues.
@@ -95,82 +95,94 @@ The older way to declare variables. `var` declarations are either globally scope
 
 JavaScript has several built-in data types. They are often categorized as primitive types and objects.
 
-**Primitive Types:**
+#### Primitive Types
 
-1.  **String:** Represents textual data. Enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``). Backticks allow for template literals, which can embed expressions.
-    ```javascript
-    let greeting = "Welcome to SpeedyMeds!";
-    const patientName = 'Jane Doe';
-    const message = `Patient: ${patientName}, your prescription is ready.`; // Template literal
-    console.log(message); // Output: Patient: Jane Doe, your prescription is ready.
-    ```
-    This shows various ways to define strings, including an embedded variable `patientName` in a template literal.
+Primitive data types are immutable (they cannot be changed) and are not objects. JavaScript has the following primitive types:
 
-2.  **Number:** Represents both integer and floating-point numbers. Special numeric values include `Infinity`, `-Infinity`, and `NaN` (Not a Number).
-    ```javascript
-    let quantity = 100;
-    const pricePerUnit = 1.25;
-    let totalCost = quantity * pricePerUnit; // 125
-    console.log(totalCost);
-    console.log(10 / 0); // Output: Infinity
-    console.log("abc" / 2); // Output: NaN
-    ```
-    This illustrates integer, float, and special numeric values `Infinity` and `NaN`.
+##### 1. String
+Represents textual data. Enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``). Backticks allow for template literals, which can embed expressions.
+```javascript
+let greeting = "Welcome to SpeedyMeds!";
+const patientName = 'Jane Doe';
+const message = `Patient: ${patientName}, your prescription is ready.`; // Template literal
+console.log(message); // Output: Patient: Jane Doe, your prescription is ready.
+```
+This shows various ways to define strings, including an embedded variable `patientName` in a template literal.
 
-3.  **Boolean:** Represents logical entities and can have two values: `true` or `false`.
-    ```javascript
-    let isPrescriptionValid = true;
-    const needsRefill = false;
-    console.log(isPrescriptionValid); // Output: true
-    ```
+##### 2. Number
+Represents both integer and floating-point numbers. Special numeric values include `Infinity`, `-Infinity`, and `NaN` (Not a Number).
+```javascript
+let quantity = 100;
+const pricePerUnit = 1.25;
+let totalCost = quantity * pricePerUnit; // 125
+console.log(totalCost);
+console.log(10 / 0); // Output: Infinity
+console.log("abc" / 2); // Output: NaN
+```
+This illustrates integer, float, and special numeric values `Infinity` and `NaN`.
 
-4.  **Null:** Represents the intentional absence of any object value. It's a primitive value, but `typeof null` surprisingly returns `"object"` (a long-standing quirk).
-    ```javascript
-    let selectedMedication = null; // No medication selected yet
-    console.log(selectedMedication); // Output: null
-    ```
+##### 3. Boolean
+Represents logical entities and can have two values: `true` or `false`.
+```javascript
+let isPrescriptionValid = true;
+const needsRefill = false;
+console.log(isPrescriptionValid); // Output: true
+```
 
-5.  **Undefined:** Represents a variable that has been declared but not yet assigned a value.
-    ```javascript
-    let doctorNotes;
-    console.log(doctorNotes); // Output: undefined
-    ```
+##### 4. Null
+Represents the intentional absence of any object value. It's a primitive value, but `typeof null` surprisingly returns `"object"` (a long-standing quirk).
+```javascript
+let selectedMedication = null; // No medication selected yet
+console.log(selectedMedication); // Output: null
+```
 
-6.  **Symbol (ES6):** A unique and immutable primitive value that may be used as the key of an Object property.
-    ```javascript
-    const patientIdSymbol = Symbol('id');
-    const anotherIdSymbol = Symbol('id');
-    console.log(patientIdSymbol === anotherIdSymbol); // Output: false (symbols are unique)
-    let patientRecord = {
-        [patientIdSymbol]: 12345
-    };
-    console.log(patientRecord[patientIdSymbol]); // Output: 12345
-    ```
-    This example shows the uniqueness of symbols and their use as object keys, which helps prevent naming collisions.
+##### 5. Undefined
+Represents a variable that has been declared but not yet assigned a value.
+```javascript
+let doctorNotes;
+console.log(doctorNotes); // Output: undefined
+```
 
-7.  **BigInt (ES2020):** Represents whole numbers larger than 2<sup>53</sup> - 1, which is the largest number JavaScript can reliably represent with the `Number` type. Appending `n` to the end of an integer literal creates a `BigInt`.
-    ```javascript
-    const veryLargeOrderNumber = 9007199254740991n;
-    const anotherLargeNumber = BigInt("9007199254740992");
-    console.log(veryLargeOrderNumber + 1n); // Output: 9007199254740992n
-    ```
+##### 6. Symbol (ES6)
+A unique and immutable primitive value that may be used as the key of an Object property.
+```javascript
+const patientIdSymbol = Symbol('id');
+const anotherIdSymbol = Symbol('id');
+console.log(patientIdSymbol === anotherIdSymbol); // Output: false (symbols are unique)
+let patientRecord = {
+    [patientIdSymbol]: 12345
+};
+console.log(patientRecord[patientIdSymbol]); // Output: 12345
+```
+This example shows the uniqueness of symbols and their use as object keys, which helps prevent naming collisions.
 
-**Object Type:**
+##### 7. BigInt (ES2020)
+Represents whole numbers larger than 2<sup>53</sup> - 1, which is the largest number JavaScript can reliably represent with the `Number` type. Appending `n` to the end of an integer literal creates a `BigInt`.
+```javascript
+const veryLargeOrderNumber = 9007199254740991n;
+const anotherLargeNumber = BigInt("9007199254740992");
+console.log(veryLargeOrderNumber + 1n); // Output: 9007199254740992n
+```
 
-*   **Object:** A collection of key-value pairs (properties). Properties can be strings or Symbols, and values can be any data type, including other objects or functions (methods).
-    ```javascript
-    let medication = {
-      name: "Amoxicillin",
-      dosage: "250mg",
-      form: "Tablet",
-      getDescription: function() {
-        return `${this.name} ${this.dosage} ${this.form}`;
-      }
-    };
-    console.log(medication.name); // Output: Amoxicillin
-    console.log(medication.getDescription()); // Output: Amoxicillin 250mg Tablet
-    ```
-    This object `medication` stores various details and includes a method `getDescription`. We will explore objects in more detail in a later section.
+#### Object Type
+
+Beyond primitives, JavaScript has a complex data type: the Object.
+
+##### 1. Object
+A collection of key-value pairs (properties). Properties can be strings or Symbols, and values can be any data type, including other objects or functions (methods).
+```javascript
+let medication = {
+  name: "Amoxicillin",
+  dosage: "250mg",
+  form: "Tablet",
+  getDescription: function() {
+    return `${this.name} ${this.dosage} ${this.form}`;
+  }
+};
+console.log(medication.name); // Output: Amoxicillin
+console.log(medication.getDescription()); // Output: Amoxicillin 250mg Tablet
+```
+This object `medication` stores various details and includes a method `getDescription`. We will explore objects in more detail in a later section.
 
 The `typeof` operator can be used to find the data type of a JavaScript variable.
 ```javascript
