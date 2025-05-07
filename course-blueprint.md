@@ -475,14 +475,16 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
 
             > [!IMPORTANT]
             > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
-
-    - **CAUTION:**
-
+            ```
+            *   **Usage Context:** To highlight non-negotiable requirements or foundational knowledge.
+        -   **CAUTION:**
+            ```
             > [!CAUTION]
             > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
-
-    - **WARNING:**
-
+            ```
+            *   **Usage Context:** To advise care when performing actions that could lead to minor problems if done incorrectly.
+        -   **WARNING:**
+            ```
             > [!WARNING]
             > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
 
@@ -502,6 +504,7 @@ These components utilize specific Markdown conventions (primarily blockquotes) t
         > **Example: (Optional)** Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
 
   - **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, use `(Web Developers)`. Separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Use specific emoji's to help draw the attention of the `(Target Audience)`. Use 🍏 for iOS Developers, use 🤖 for Android, use 📲 for Native Developers, use ⚛️ for React Developers, use 🅰 for Angular Developers, and use 🌐 for Web Developers. MUST include links to official documentation and other trusted sources for further details around concepts related to the target background (Android, iOS, React, Angular).
+    -   **Usage Context:** Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified.
 
 - **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
 
@@ -648,7 +651,16 @@ By defining these tiers and adjusting documentation requirements, the blueprint 
 
 _The inclusion of Table IV.1 provides authors with a quick, accessible reference for implementing these essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations._
 
-The rigorous definition of core markdown syntax and the introduction of specialized custom components establish a controlled yet flexible authoring environment. This structure guarantees visual and semantic consistency across the entire course, which is vital for a project intended as a single source of truth for multiple distribution formats. While these constraints limit individual authorial style, they ensure a predictable and high-quality output that aligns with established technical writing and instructional design best practices. The successful implementation of this system, however, hinges on thorough author training and potentially the use of automated linting tools to enforce compliance during the content development phase.
+### F. Course Content Types
+
+To ensure clarity, consistency, and pedagogical effectiveness within each section, content MUST be categorized and structured according to the following defined content types, inspired by established documentation models. Sections will typically combine multiple content types.
+
+-   **Conceptual Content:** Explains fundamental concepts, theories, "under the hood" mechanisms, purpose, and importance. This type answers "What is it?" and "Why does it matter?". It includes explanatory paragraphs, overviews, and detailed breakdowns of how things work.
+-   **Procedural Content:** Provides step-by-step instructions for completing specific tasks or workflows. This type answers "How do I do it?". It includes numbered steps, command-line instructions, and code examples that demonstrate a sequence of actions. Exercises and Challenges are larger-scale applications of procedural content.
+-   **Referential Content:** Presents structured, detailed information about APIs, components, props, types, configuration options, or terminology. This type answers "What are the details?". It includes API descriptions, parameter lists, tables, and definitions.
+-   **Troubleshooting Content:** Addresses common issues, errors, and unexpected behavior, providing solutions or workarounds. This type answers "What went wrong?" and "How do I fix it?". It includes descriptions of problems, error messages, and resolution steps.
+
+These content types provide a framework for organizing information logically within sections, ensuring that learners can easily find explanations, instructions, reference details, and help with problems.
 
 Furthermore, the mandatory inclusion of Mermaid diagrams and detailed explanations for both visuals and code significantly elevates the pedagogical value of the documentation. These elements move beyond simple descriptions to actively guide learners through complex concepts and practical implementations. This aligns directly with the "0-to-mastery" goal by providing multiple modalities and deeper context. However, this requirement substantially increases the effort and expertise needed for content creation. Project planning must account for the time required to develop accurate, clear diagrams and comprehensive code walkthroughs, and quality assurance processes must rigorously evaluate these elements. Similarly, the constraint that all code examples relate to the capstone project fosters a cohesive and practical learning journey. It allows learners to incrementally build familiarity with the domain and see direct application of concepts. This necessitates careful planning by content creators to ensure relevant and meaningful examples can be devised for every topic, potentially requiring a shared library of capstone-themed data models or UI snippets to maintain consistency.
 
@@ -669,29 +681,29 @@ Each module's primary markdown file(s) MUST follow this structure precisely:
 7. **Module Sections:** The core content, divided into sections as defined in the finalized outline (III.B) and adhering to the Standard Section Structure (V.B).
 8. **Module Challenge:** A link to the module's culminating challenge, placed after the final content section. Format: `**(URL_to_Tool)**` (See Section VI).
 9. **Module Summary:** A brief (1-2 paragraphs) recap highlighting the most critical concepts and skills covered in the module.
-10. **Further Resources (Optional):** A bulleted list (`*`) of high-quality, supplementary resources (e.g., key blog posts, conference talks, community libraries) that go beyond the mandatory official documentation links embedded within sections.
+10. **Additional Resources (Optional):** A bulleted list (`*`) of high-quality, supplementary resources (e.g., key blog posts, conference talks, community libraries) that go beyond the mandatory official documentation links embedded within sections.
 
 ### B. Standard Section Structure
 
-Each section within a module MUST adhere to the following structure:
+Each section within a module MUST adhere to the following structure and content ordering:
 
-1. **Section Title:** H2 or H3 heading (`## Section X: Title` or `### Subsection Y: Title`), matching the finalized outline (III.B).
-2. **Section Introduction:** 1-2 sentences clearly stating the purpose or topic of the section.
-3. **Content:** The main explanatory text, definitions, concepts, procedures, etc. MUST strictly adhere to all formatting and element standards defined in Section IV. This includes:
-   - Clear paragraphs and lists.
-   - Correct use of emphasis and developer element formatting (IV.A).
-   - Mandatory "Background Bridge Notes" (IV.B) where applicable based on content and audience.
-   - **API/Component/Hook Explanations:** When explaining core APIs, components, hooks, or functions (from React Native, Expo, or included libraries), the explanation MUST clearly cover, where applicable:
-     - **Purpose:** A concise sentence or two describing what the element does or represents (inspired by the 'Description' in `styleguide/developer-content/reference-documentation.md`).
-     - **Syntax/Signature (Conceptual):** If relevant, show the basic structure or how it's called.
-     - **Key Parameters/Props:** Description of essential inputs, their types, and purpose (use italics for names). Focus on the most common or important ones for the learning objective.
-     - **Return Value:** Description of the output and its type, if applicable.
-     - **Usage/Remarks:** Important details about usage, common patterns, potential pitfalls, side effects, or connections to other elements (inspired by the 'Remarks' section in `styleguide/developer-content/reference-documentation.md`).
-   - Mandatory Mermaid diagrams (IV.C) with text descriptions where applicable for visualizing concepts.
-   - Mandatory Code Examples (IV.D) with detailed explanations where applicable for demonstrating implementation.
-   - Mandatory "Official Documentation Link Box" (IV.B) when introducing significant APIs, components, or concepts.
-   - Appropriate use of Callouts (IV.B) and Learning Path Guidance (IV.B).
-4. **Section Exercise (If applicable):** A link to the section's associated exercise, placed at the very end of the section's content. Format: `**(URL_to_Tool)**` (See Section VI). Exercises are placed according to the finalized outline (III.B).
+1.  **Section Title:** H2 or H3 heading (`## Section X: Title` or `### Subsection Y: Title`), matching the finalized outline (III.B).
+2.  **Section Introduction:** 1-2 sentences clearly stating the purpose or topic of the section.
+3.  **Core Content (Ordered by Content Type):** The main explanatory text, definitions, concepts, procedures, etc., organized according to the content types defined in Section IV.F. Content within this block MUST follow this general order, though not all types will be present in every section:
+    *   **Conceptual Content:** Overviews, explanations, "under the hood" details, purpose, importance, use cases. (See IV.F)
+        *   *Includes:* Explanatory paragraphs, diagrams (IV.C) illustrating concepts or flows, "Background Bridge Notes" (IV.B), relevant Callouts (IV.B), Learning Path Guidance (IV.B).
+    *   **Referential Content:** Detailed information about APIs, components, props, types, configuration, terminology. (See IV.F)
+        *   *Includes:* API/Component/Hook Explanations (covering Purpose, Syntax, Parameters/Props, Return Value, Usage/Remarks), tables (IV.A), definitions, "Official Documentation Link Box" (IV.B).
+    *   **Prerequisites (for this section's procedures/exercises):** A brief list or paragraph outlining necessary prior knowledge or setup specifically required for the procedural content or exercise within *this* section. MUST be placed immediately before the relevant procedural steps or the link to the exercise. (See V.C for more details).
+    *   **Procedural Content:** Step-by-step instructions for tasks, code implementation steps. (See IV.F)
+        *   *Includes:* Numbered steps (IV.A), command-line instructions, Code Examples (IV.D) demonstrating procedures, diagrams (IV.C) illustrating workflows.
+    *   **Troubleshooting Content:** Common issues, errors, and solutions related to the section's topic or procedures. (See IV.F)
+        *   *Includes:* Descriptions of problems, error messages, resolution steps, troubleshooting tips integrated near relevant procedural content.
+4.  **Section Exercise (If applicable):** A link to the section's associated exercise, placed after the core content block. Format: `**(URL_to_Tool)**` (See Section VI). Exercises are placed according to the finalized outline (III.B).
+5.  **Next Steps (Optional):** A brief list or paragraph suggesting logical follow-up actions or linking to related sections/modules within the course. Use for internal course navigation guidance.
+6.  **Additional Resources (Optional):** A bulleted list of high-quality, supplementary external resources (e.g., key blog posts, conference talks, community libraries) relevant to the section's topic. Use for external learning guidance.
+
+Content within the "Core Content" block MUST strictly adhere to all formatting and element standards defined in Section IV.
 
 ### C. Content Depth and Linking Rules
 
