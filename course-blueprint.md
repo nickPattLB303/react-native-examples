@@ -561,78 +561,117 @@ These rules define the required syntax for standard Markdown elements, incorpora
 
 These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes.
 
-- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see `./contributing/style-guide-and-content-model/style-guide.md`).
+- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see [Alerts section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alerts) and [GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts)).
 
-  - **Syntax and Purpose:**
+  - **Syntax:** All callouts use the blockquote (`>`) syntax with a special type indicator on the first line.
 
     - **NOTE:**
-
-            > [!NOTE]
-            > Information the user should notice even if skimming. Use for supplementary details, reminders, or context.
-
+      ```markdown
+      > [!NOTE]
+      > Information the user should notice even if skimming.
+      > Use for supplementary details, reminders, or context.
+      ```
     - **TIP:**
-
-            > [!TIP]
-            > Optional information to help a user be more successful or efficient. Use for best practices, shortcuts, or alternative approaches.
-
+      ```markdown
+      > [!TIP]
+      > Optional information to help a user be more successful or efficient.
+      > Use for best practices, shortcuts, or alternative approaches.
+      ```
     - **IMPORTANT:**
+      ```markdown
+      > [!IMPORTANT]
+      > Essential information required for user success or understanding.
+      > Use for critical concepts, prerequisites, setup steps, or core requirements.
+      ```
+    - **CAUTION:**
+      ```markdown
+      > [!CAUTION]
+      > Negative potential consequences of an action that are generally recoverable.
+      > Use for actions that might lead to errors, performance issues, unexpected behavior,
+      > or minor data inconsistencies if instructions aren't followed carefully.
+      ```
+    - **WARNING:**
+      ```markdown
+      > [!WARNING]
+      > Negative potential consequences of an action that may be severe or non-recoverable.
+      > Use for critical security advice, actions with irreversible consequences (data loss),
+      > major pitfalls, or steps that could render the application unusable.
+      ```
 
-            > [!IMPORTANT]
-            > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
-            ```
-            *   **Usage Context:** To highlight non-negotiable requirements or foundational knowledge.
-
-      - **CAUTION:**
-        ```
-        > [!CAUTION]
-        > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
-        ```
-        - **Usage Context:** To advise care when performing actions that could lead to minor problems if done incorrectly.
-      - **WARNING:**
-        ```
-        > [!WARNING]
-        > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
-        ```
-
-  - **Usage Rules:** Use callouts judiciously. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `. Paragraph breaks within a callout can be achieved using a line containing only `.
+  - **Usage Rules:**
+    - Use callouts judiciously to avoid cluttering the content.
+    - They should highlight information, not contain core instruction.
+    - Content within callouts MUST be concise and directly related to the callout type.
+    - The `> [!TYPE]` tag MUST be on its own line.
+    - All subsequent lines of the callout content MUST start with `> ` (blockquote marker plus a space).
+    - Paragraph breaks within a callout are created by inserting a line containing only `>`.
 
 - **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge.
 
-  - **Syntax:**
+  - **Syntax:** Uses blockquote (`>`) syntax with a specific structure.
 
-        > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:**
-        > **Comparison:** Explain how this React Native concept relates to or differs from common patterns in the target audience's background (e.g., Android lifecycle vs. useEffect, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
-        >
-        > **Key Takeaway:** Briefly summarize the most crucial difference or similarity.
-        >
-        > **Source:** [<TITLE_FOR_SOURCE>](<LINK_TO_SOURCE_DOCUMENTATION_FOR_TARGET_BACKGOUND>)
-        >
-        > **Example: (Optional)** Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
+    ```markdown
+    > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:** > **Comparison:** Explain how this React Native concept relates to or differs from
+    > common patterns in the target audience's background (e.g., Android lifecycle vs.
+    > `useEffect`, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
+    >
+    > **Key Takeaway:** Briefly summarize the most crucial difference or similarity.
+    >
+    > **Source:** [<TITLE_FOR_SOURCE>](URL)
+    >
+    > **Example:** (Optional) Provide a very brief native code snippet (conceptual)
+    > or analogy relevant to the target background.
+    ```
 
-  - **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, use `(Web Developers)`. Separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Use specific emoji's to help draw the attention of the `(Target Audience)`. Use 🍏 for iOS Developers, use 🤖 for Android, use 📲 for Native Developers, use ⚛️ for React Developers, use 🅰 for Angular Developers, and use 🌐 for Web Developers. MUST include links to official documentation and other trusted sources for further details around concepts related to the target background (Android, iOS, React, Angular).
-    - **Usage Context:** Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified.
+  - **Usage Rules:**
+    - MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular).
+    - The `<TARGET_AUDIENCE>` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). Use standard Markdown `()` for the audience name.
+    - Use the specified emoji for the target audience: 🍏 (iOS), 🤖 (Android), 📲 (Native = iOS + Android), ⚛️ (React), 🅰 (Angular), 🌐 (Web = React + Angular).
+    - If applicable to both native platforms, use `📲 **(Native Developers):**`. If applicable to both web frameworks, use `🌐 **(Web Developers):**`.
+    - Separate notes may be needed if the comparison points differ significantly between backgrounds.
+    - Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself.
+    - The `**Source:**` link MUST point to relevant official documentation or trusted resources for the target background's comparison concept.
+    - The `**Example:**` (Optional) should be very brief and conceptual.
 
 - **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
 
-  - **Syntax:**
+  - **Syntax:** Uses blockquote (`>`) syntax.
 
-        > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation for instructor-led sessions, recommend review strategies for self-paced learners, or highlight the standalone relevance for asynchronous learners.
+    ```markdown
+    > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation
+    > for instructor-led sessions, recommend review strategies for self-paced learners,
+    > or highlight the standalone relevance for asynchronous learners.
+    ```
 
-  - **Usage Rules:** Use judiciously at strategic points, such as the start of a module, the start of a section, exercises, or challenges. The `(Target Path)` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Guidance should be actionable and relevant to the specified learning path(s). Use specific emoji's to help draw the attention of the `(Target Path)`. Use 🧑‍🏫 for iInstructor-Led, use 🧗‍♀️ for Self-Led, use 🔁 for Asynchronous, and use 🛣️ for All Learners.
+  - **Usage Rules:**
+    - Use judiciously at strategic points (e.g., start of module/section, before complex exercises/challenges).
+    - The `<TARGET_PATH>` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Use standard Markdown `()` for the path name.
+    - Use the specified emoji for the target path: 🧑‍🏫 (Instructor-Led), 🧗‍♀️ (Self-Led), 🔁 (Asynchronous), 🛣️ (All Learners).
+    - Guidance should be actionable and relevant to the specified learning path(s).
 
-        > 📚 **Official Documentation:**
-        >
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
-        >
-        > 🗂️ **Additional Resources:**
-        >
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [<LINK_TITLE>](<URL>)
-        > - [MDN Web Docs: async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+- **Official Documentation Box:** Used to group and highlight essential links to official documentation for key APIs, components, or concepts.
+
+  - **Syntax:** Uses blockquote (`>`) syntax with nested lists for links.
+
+    ```markdown
+    > 📚 **Official Documentation:**
+    >
+    > - [React Native Docs: `<ComponentName>`](URL)
+    > - [Expo Docs: `expo-module`](URL)
+    > - [MDN Web Docs: `Array.prototype.map()`](URL)
+    >
+    > 🗂️ **Additional Resources:** (Optional section within the same box)
+    >
+    > - [Blog Post Title](URL)
+    > - [Library Docs: Specific Page](URL)
+    ```
+
+  - **Usage Rules:**
+    - Place in sections immediately following the introduction of significant new technical elements (APIs, components, core concepts like Flexbox, JSI, etc.).
+    - Links under `📚 **Official Documentation:**` MUST point to canonical official sources (reactnative.dev, docs.expo.dev, react.dev, MDN, relevant library sites).
+    - Link text SHOULD be descriptive, often including the specific API/component name and the source (e.g., "React Native Docs: `useState` Hook").
+    - The `🗂️ **Additional Resources:**` section is optional and can be used for high-quality supplementary links (trusted blogs, conference talks, related tools) that are not official API documentation.
+    - Use standard Markdown lists (`-`) for the links.
 
 ### C. Visual Element Standards
 
