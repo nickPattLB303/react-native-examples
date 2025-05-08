@@ -677,7 +677,7 @@ These components utilize specific Markdown conventions to create standardized el
 
 - **Mermaid Diagrams:** MANDATORY for visualizing complex information like architecture, flows, and hierarchies. They are a primary tool for explanation, not an optional addition.
 
-  - **Requirement:** Use Mermaid diagrams to illustrate:
+  - **Requirement:** Use Mermaid diagrams to illustrate concepts such as:
     - System Architecture (e.g., Legacy Bridge vs. New Architecture)
     - Component Hierarchies (where relationships are complex or instructive)
     - State Management Flows (e.g., Context API, Zustand, TanStack Query data flow)
@@ -685,36 +685,39 @@ These components utilize specific Markdown conventions to create standardized el
     - Asynchronous Logic Flow (e.g., `async/await`, Promise chains)
     - Conditional Rendering Logic (if complex)
     - Build Processes (e.g., EAS Build workflow)
-  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier :Code snippet
-
-        ```
-        graph TD;
-            A --> B{Decision};
-            B -- Yes --> C[Action 1];
-            B -- No --> D[Action 2];
-            C --> E[End];
-            D --> E;
-
-        ```
-
-  - **Diagram Types:** Utilize appropriate diagram types based on the information being presented:
-    - **Flowcharts (`graph TD` or `graph LR`):** For processes, workflows, decision logic.
-    - **Sequence Diagrams (`sequenceDiagram`):** For illustrating interactions between components or systems over time (e.g., API calls, event handling).
-    - **Class Diagrams (`classDiagram`):** Use sparingly, primarily for illustrating component prop structures or complex type relationships if beneficial.
-    - **State Diagrams (`stateDiagram-v2`):** For visualizing component lifecycles or state machine logic.
-    - _(Refer to Mermaid documentation for specific syntax )_
+  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier. See Section IV.A (Code Blocks) for syntax details.
+    Example:
+    ```mermaid
+    graph TD;
+        A --> B{Decision};
+        B -- Yes --> C[Action 1];
+        B -- No --> D[Action 2];
+        C --> E[End];
+        D --> E;
+    ```
+  - **Diagram Types:** Utilize appropriate diagram types based on the information being presented. Common types include:
+    - Flowcharts (`graph TD` or `graph LR`): For processes, workflows, decision logic.
+    - Sequence Diagrams (`sequenceDiagram`): For illustrating interactions between components or systems over time (e.g., API calls, event handling).
+    - Class Diagrams (`classDiagram`): Use sparingly, primarily for illustrating component prop structures or complex type relationships if beneficial.
+    - State Diagrams (`stateDiagram-v2`): For visualizing component lifecycles or state machine logic.
+    - _(Refer to official Mermaid documentation for specific syntax and capabilities)._
   - **Placement:** Insert the Mermaid code block immediately following the paragraph that introduces or references the concept being diagrammed.
   - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility and comprehension.
   - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams illustrating different aspects. Use clear, concise labels for all elements. Avoid unnecessary visual clutter.
   - **Consistency:** Maintain consistent styling (e.g., shapes for similar entity types, line styles for similar relationships) across diagrams within the course. If using custom styling via `classDef`, apply it consistently.
 
-- **Images/Screenshots:** Use to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces.
-  - **Requirement:** Include screenshots for:
-    - Illustrating steps in environment setup (e.g., Xcode settings, terminal commands/output).
+- **Images/Screenshots:** Use static images (e.g., PNG, JPG) to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces.
+
+  - **Requirement:** Include screenshots for purposes such as:
+    - Illustrating steps in environment setup (e.g., Xcode settings, terminal commands/output where visuals add clarity beyond text).
     - Showing the visual output of UI code examples.
     - Demonstrating the use of debugging tools or IDE features.
     - Visualizing the structure of the Expo Go app or simulator interface.
-  - **Formatting:** Adhere strictly to the image rules in IV.A (mandatory descriptive Alt Text, mandatory caption paragraph, single blank line before/after). Images MUST be high-resolution, clear, and cropped tightly to the relevant area. Use annotations (arrows, boxes, highlights) directly on the image where necessary to draw attention to specific elements; these annotations MUST be explained in the caption paragraph.
+  - **Formatting and Accessibility:**
+    - Adhere strictly to all image rules defined in Section IV.A: Images, including mandatory descriptive `Alt Text` and a mandatory following caption paragraph.
+    - Images MUST be high-resolution, clear, and cropped tightly to the relevant area.
+    - Use annotations (arrows, boxes, highlights) directly on the image sparingly and only where necessary to draw attention; these annotations MUST be explained clearly in the caption paragraph.
+    - Remember: Do NOT use images of code or terminal output as a _replacement_ for text-based code blocks (see IV.A).
 
 ### D. Code Example Standards
 
