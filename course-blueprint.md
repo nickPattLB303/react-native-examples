@@ -419,6 +419,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
   - There must be text content between a header and subheader, such as an introduction. per [./contributing/style-guide-and-content-model/style-guide.md#headers](./contributing/style-guide-and-content-model/style-guide.md#headers).
 - **Paragraphs:** Prettier will enforce separation of consecutive paragraphs with a single blank line and will collapse multiple consecutive blank lines.
   - While Prettier's default `proseWrap: "preserve"` setting means it will not automatically re-wrap paragraph lines, authors SHOULD manually aim for a line length of approximately 100 characters for readability. Avoid manually creating overly long lines.
+  - Do **not** use forced line breaks (e.g., ending a line with two spaces or using `<br>` tags) within sentences or paragraphs. Allow text to wrap naturally. This improves readability and accessibility across different screen sizes, per `styleguide/accessibility/writing-all-abilities.md`.
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Prettier will preserve this formatting. Use emphasis sparingly for highlighting key terms or concepts.
 - **Lists:** Lists work best when they have two to seven items. Each item should be fairly
   short—the reader should be able to see at least two, and preferably
@@ -483,7 +484,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
     - Do not include punctuation marks (like periods or commas) _inside_ the `[Link Text]` or `(URL)` unless they are a legitimate part of the URL itself, per [./contributing/style-guide-and-content-model/style-guide.md#formatting-links](./contributing/style-guide-and-content-model/style-guide.md#formatting-links).
   - **Abundance of Official Documentation Links:**
     - REQUIRED. The course content explains and curates, but does not replace, official documentation.
-    - Primarily use the "Official Documentation Box" custom component (defined in IV.B) for links to React Native, Expo, MDN, library docs, etc. Relevant links can also be naturally embedded within the text where appropriate.
+    - Primarily use the "Official Documentation Box" custom component (defined in IV.B) for links to React Native, Expo, MDN library docs, etc. Relevant links can also be naturally embedded within the text where appropriate.
 - **Images:**
   - **Syntax:** Use standard Markdown image syntax: `![Alt Text](URL "Optional Tooltip Title")`. Prettier will ensure correct formatting and spacing.
     - The `Alt Text` is mandatory.
