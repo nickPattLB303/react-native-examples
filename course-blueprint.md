@@ -399,14 +399,14 @@ The following outline is definitive and MUST be followed for the markdown docume
 
 This section defines the mandatory patterns and standards for all markdown elements and custom course components used in the documentation. Strict adherence ensures consistency, readability, and supports the course's pedagogical goals.
 
+> [!NOTE]
+> This section uses a nested list structure to define the core Markdown rules. While the number of top-level items (10) slightly exceeds the general guideline of 2-7 items per list for optimal scannability, this structure is used here to group all core syntax rules logically together. The nesting ensures individual rules remain digestible.
+
 ### A. Core Markdown Syntax Rules
 
 These rules define the required syntax for standard Markdown elements, incorporating MSWSG and [GitHub Docs style guide](./contributing/style-guide-and-content-model/style-guide.md) guidelines. All Markdown documentation MUST be automatically formatted using Prettier with its default configuration. The following rules supplement Prettier's formatting by defining content structure, style, and areas where Prettier's defaults are to be adhered to or where manual attention is still required. Prettier's default settings for Markdown include `proseWrap: "preserve"` (meaning it does not re-wrap paragraph text) and `tabWidth: 2`.
 
-- **Headings:** Headings provide both structure and visual points of reference to help readers scan content. If
-  you can break text logically into smaller sections, the extra
-  spacing and distinct fonts associated with headings
-  will help readers scan content and find entry points, per [headings.md](./styleguide/scannable-content/headings.md)
+- **Headings:** Headings provide both structure and visual points of reference to help readers scan content. If you can break text logically into smaller sections, the extra spacing and distinct fonts associated with headings will help readers scan content and find entry points, per [headings.md](./styleguide/scannable-content/headings.md)
   - MUST use ATX style (`#`) only. Prettier will enforce a single space following the `#`.
   - Sentence case is required for headings (capitalize only the first word and proper nouns), per [capitalization.md](./styleguide/capitalization.md).
   - Prettier will enforce single blank lines preceding and following each heading.
@@ -421,10 +421,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
   - While Prettier's default `proseWrap: "preserve"` setting means it will not automatically re-wrap paragraph lines, authors SHOULD manually aim for a line length of approximately 100 characters for readability. Avoid manually creating overly long lines.
   - Do **not** use forced line breaks (e.g., ending a line with two spaces or using `<br>` tags) within sentences or paragraphs. Allow text to wrap naturally. This improves readability and accessibility across different screen sizes, per [writing-all-abilities.md](./styleguide/accessibility/writing-all-abilities.md).
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Prettier will preserve this formatting. Use emphasis sparingly for highlighting key terms or concepts.
-- **Lists:** Lists work best when they have two to seven items. Each item should be fairly
-  short—the reader should be able to see at least two, and preferably
-  three, list items at a glance. It's OK to have a couple of short
-  paragraphs in a list item, but don't exceed that length too often, per [lists.md](./styleguide/scannable-content/lists.md).
+- **Lists:** Lists work best when they have two to seven items. Each item should be fairly short—the reader should be able to see at least two, and preferably three, list items at a glance. It's OK to have a couple of short paragraphs in a list item, but don't exceed that length too often, per [lists.md](./styleguide/scannable-content/lists.md).
   - Items in a list MUST be parallel in grammatical structure (e.g., each item is a noun phrase, or each starts with a verb), per [lists.md](./styleguide/scannable-content/lists.md).
   - **Unordered (Bulleted) Lists:**
     - MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style.
