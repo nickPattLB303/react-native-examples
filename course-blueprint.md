@@ -559,11 +559,12 @@ These rules define the required syntax for standard Markdown elements, incorpora
 
 ### B. Custom Course Component Definitions
 
-These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes.
+These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes. Adherence to their defined syntax and usage rules is mandatory for consistency and effectiveness. As outlined in Section IV.A, Prettier will automatically format the overall Markdown document. For these custom components, this means Prettier will standardize the block-level elements (e.g., the `>` characters, spacing around the component block). However, authors MUST meticulously author the _internal_ content: - The specific keywords (e.g., `[!NOTE]`, `**Comparison:**`, `📚 **Official Documentation:**`). - The precise use of Markdown within the component (e.g., bolding, emojis, nested `>` for new paragraphs within the component, list formatting in the `Official Documentation Box`).
+Prettier will generally preserve this internal content as authored, especially with `proseWrap: "preserve"` (see Section IV.A), but it is the author's responsibility to ensure it conforms to the definitions below. Prettier will not, for example, correct a misspelled `[!NOTTE]` to `[!NOTE]`.
 
-- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see [Alerts section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alerts) and [GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts)).
+- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** These components highlight information with varying levels of emphasis.
 
-  - **Syntax:** All callouts use the blockquote (`>`) syntax with a special type indicator on the first line.
+  - **Syntax:** All callouts use the blockquote (`>`) syntax with a special type indicator on the first line. The content of the callout must also be within the blockquote.
 
     - **NOTE:**
       ```markdown
@@ -599,16 +600,16 @@ These components utilize specific Markdown conventions to create standardized el
       ```
 
   - **Usage Rules:**
-    - Use callouts judiciously to avoid cluttering the content.
-    - They should highlight information, not contain core instruction.
-    - Content within callouts MUST be concise and directly related to the callout type.
-    - The `> [!TYPE]` tag MUST be on its own line.
-    - All subsequent lines of the callout content MUST start with `> ` (blockquote marker plus a space).
+    - Use callouts judiciously to avoid cluttering the content and ensure they stand out.
+    - They should highlight information, not contain core instruction or lengthy explanations.
+    - Content within callouts MUST be concise and directly related to the callout type, adhering to principles of `styleguide/word-choice/use-simple-words-concise-sentences.md`.
+    - The `> [!TYPE]` tag MUST be on its own line, per GFM alert syntax.
+    - All subsequent lines of the callout content MUST start with `> ` (blockquote marker plus a space), as shown in `[GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts)`.
     - Paragraph breaks within a callout are created by inserting a line containing only `>`.
 
-- **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge.
+- **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge. These notes are crucial for learner adaptation, a core principle of this course (see Section V.D). Their content should be crafted with empathy and a focus on the learner's perspective, as advocated in `styleguide/top-10-tips-style-voice.md` and `styleguide/brand-voice-above-all-simple-human.md`.
 
-  - **Syntax:** Uses blockquote (`>`) syntax with a specific structure.
+  - **Syntax:** Uses blockquote (`>`) syntax with a specific structure. The bolding of labels like `**Comparison:**` is part of this custom component's style.
 
     ```markdown
     > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:** > **Comparison:** Explain how this React Native concept relates to or differs from
@@ -625,17 +626,17 @@ These components utilize specific Markdown conventions to create standardized el
 
   - **Usage Rules:**
     - MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular).
-    - The `<TARGET_AUDIENCE>` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). Use standard Markdown `()` for the audience name.
+    - The `<TARGET_AUDIENCE>` (e.g., `(iOS Developers)`, `(Android Developers)`) MUST be specified accurately and enclosed in parentheses.
     - Use the specified emoji for the target audience: 🍏 (iOS), 🤖 (Android), 📲 (Native = iOS + Android), ⚛️ (React), 🅰 (Angular), 🌐 (Web = React + Angular).
     - If applicable to both native platforms, use `📲 **(Native Developers):**`. If applicable to both web frameworks, use `🌐 **(Web Developers):**`.
     - Separate notes may be needed if the comparison points differ significantly between backgrounds.
-    - Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself.
-    - The `**Source:**` link MUST point to relevant official documentation or trusted resources for the target background's comparison concept.
-    - The `**Example:**` (Optional) should be very brief and conceptual.
+    - Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Brevity and clarity are key, per `styleguide/word-choice/use-simple-words-concise-sentences.md`.
+    - The `**Source:**` link MUST point to relevant official documentation or trusted resources for the target background's comparison concept. Link text and URL formatting should follow guidelines in `styleguide/urls-web-addresses.md`.
+    - The `**Example:**` (Optional) should be very brief, conceptual, and illustrative.
 
-- **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
+- **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous). This guidance supports diverse learning engagement (see Section V.D) and should be written in a clear, supportive, and actionable tone, per `styleguide/top-10-tips-style-voice.md`.
 
-  - **Syntax:** Uses blockquote (`>`) syntax.
+  - **Syntax:** Uses blockquote (`>`) syntax. Bolding of the `**<TARGET_PATH>:**` label is part of this custom style.
 
     ```markdown
     > <TARGET_PATH_EMOJI> **<TARGET_PATH>:** Provide specific advice, suggest preparation
@@ -645,13 +646,13 @@ These components utilize specific Markdown conventions to create standardized el
 
   - **Usage Rules:**
     - Use judiciously at strategic points (e.g., start of module/section, before complex exercises/challenges).
-    - The `<TARGET_PATH>` MUST be specified (e.g., `(Instructor-Led)`, `(Self-Led)`, `(Asynchronous)`, `(All Learners)`). Use standard Markdown `()` for the path name.
+    - The `<TARGET_PATH>` (e.g., `(Instructor-Led)`, `(Self-Led)`, `(All Learners)`) MUST be specified accurately and enclosed in parentheses.
     - Use the specified emoji for the target path: 🧑‍🏫 (Instructor-Led), 🧗‍♀️ (Self-Led), 🔁 (Asynchronous), 🛣️ (All Learners).
-    - Guidance should be actionable and relevant to the specified learning path(s).
+    - Guidance should be actionable, concise, and directly relevant to the specified learning path(s), promoting scannability (see `styleguide/scannable-content/`).
 
-- **Official Documentation Box:** Used to group and highlight essential links to official documentation for key APIs, components, or concepts.
+- **Official Documentation Box:** Used to group and highlight essential links to official documentation for key APIs, components, or concepts. This component aggregates crucial external resources, and its structure promotes discoverability.
 
-  - **Syntax:** Uses blockquote (`>`) syntax with nested lists for links.
+  - **Syntax:** Uses blockquote (`>`) syntax with nested lists for links. Bolding of labels and use of emojis are stylistic choices for this component.
 
     ```markdown
     > 📚 **Official Documentation:**
@@ -669,13 +670,15 @@ These components utilize specific Markdown conventions to create standardized el
   - **Usage Rules:**
     - Place in sections immediately following the introduction of significant new technical elements (APIs, components, core concepts like Flexbox, JSI, etc.).
     - Links under `📚 **Official Documentation:**` MUST point to canonical official sources (reactnative.dev, docs.expo.dev, react.dev, MDN, relevant library sites).
-    - Link text SHOULD be descriptive, often including the specific API/component name and the source (e.g., "React Native Docs: `useState` Hook").
+    - Link text SHOULD be descriptive, often including the specific API/component name and the source (e.g., "React Native Docs: `useState` Hook"), in line with `styleguide/urls-web-addresses.md` and `[Links section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#links)`.
     - The `🗂️ **Additional Resources:**` section is optional and can be used for high-quality supplementary links (trusted blogs, conference talks, related tools) that are not official API documentation.
-    - Use standard Markdown lists (`-`) for the links.
+    - Use standard Markdown lists (`-`) for the links, following best practices from `styleguide/scannable-content/lists.md`. Ensure each list item is grammatically parallel if possible.
 
 ### C. Visual Element Standards
 
-- **Mermaid Diagrams:** MANDATORY for visualizing complex information like architecture, flows, and hierarchies. They are a primary tool for explanation, not an optional addition.
+Visual elements are crucial for clarifying complex information and engaging learners. All visual elements MUST adhere to the following standards to ensure clarity, accessibility, and consistency.
+
+- **Mermaid Diagrams:** MANDATORY for visualizing complex information like architecture, flows, and hierarchies. They are a primary tool for explanation, not an optional addition. The use of diagrams aligns with Mayer's Multimedia Principle, enhancing understanding by combining textual explanations with visual representations.
 
   - **Requirement:** Use Mermaid diagrams to illustrate concepts such as:
     - System Architecture (e.g., Legacy Bridge vs. New Architecture)
@@ -685,7 +688,8 @@ These components utilize specific Markdown conventions to create standardized el
     - Asynchronous Logic Flow (e.g., `async/await`, Promise chains)
     - Conditional Rendering Logic (if complex)
     - Build Processes (e.g., EAS Build workflow)
-  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier. See Section IV.A (Code Blocks) for syntax details.
+  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier, as detailed in Section IV.A (Code Blocks) and adhering to `[GitHub Basic Formatting Syntax - Code Blocks](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#quoting-code)`.
+    The `mermaid` language identifier is critical for correct rendering and potential editor/tooling support. While Prettier ensures the fenced code block (<code>`mermaid ... `</code>) is correctly formatted as a Markdown element, it does **not** format or validate the Mermaid diagram code _within_ the block. Authors are solely responsible for writing valid, clear, and well-structured Mermaid syntax according to Mermaid's own documentation and best practices.
     Example:
     ```mermaid
     graph TD;
@@ -695,29 +699,27 @@ These components utilize specific Markdown conventions to create standardized el
         C --> E[End];
         D --> E;
     ```
-  - **Diagram Types:** Utilize appropriate diagram types based on the information being presented. Common types include:
-    - Flowcharts (`graph TD` or `graph LR`): For processes, workflows, decision logic.
-    - Sequence Diagrams (`sequenceDiagram`): For illustrating interactions between components or systems over time (e.g., API calls, event handling).
-    - Class Diagrams (`classDiagram`): Use sparingly, primarily for illustrating component prop structures or complex type relationships if beneficial.
-    - State Diagrams (`stateDiagram-v2`): For visualizing component lifecycles or state machine logic.
-    - _(Refer to official Mermaid documentation for specific syntax and capabilities)._
+  - **Diagram Types:** Utilize appropriate diagram types based on the information being presented. Common types include Flowcharts, Sequence Diagrams, Class Diagrams, and State Diagrams. Refer to official Mermaid documentation for specific syntax and capabilities.
   - **Placement:** Insert the Mermaid code block immediately following the paragraph that introduces or references the concept being diagrammed.
-  - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility and comprehension.
-  - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams illustrating different aspects. Use clear, concise labels for all elements. Avoid unnecessary visual clutter.
+  - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility (see `styleguide/accessibility/writing-all-abilities.md`) and comprehension, supporting learners who may not fully grasp the visual or require textual reinforcement. The description should be clear and follow principles outlined in `styleguide/word-choice/use-simple-words-concise-sentences.md`.
+  - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams. Use clear, concise labels for all elements, aligning with `styleguide/scannable-content/`. Avoid unnecessary visual clutter.
   - **Consistency:** Maintain consistent styling (e.g., shapes for similar entity types, line styles for similar relationships) across diagrams within the course. If using custom styling via `classDef`, apply it consistently.
 
-- **Images/Screenshots:** Use static images (e.g., PNG, JPG) to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces.
+- **Images/Screenshots:** Use static images (e.g., PNG, JPG) to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces. The standards for images are detailed in Section IV.A: Core Markdown Syntax Rules - Images, and further emphasized here.
 
   - **Requirement:** Include screenshots for purposes such as:
     - Illustrating steps in environment setup (e.g., Xcode settings, terminal commands/output where visuals add clarity beyond text).
     - Showing the visual output of UI code examples.
     - Demonstrating the use of debugging tools or IDE features.
     - Visualizing the structure of the Expo Go app or simulator interface.
-  - **Formatting and Accessibility:**
-    - Adhere strictly to all image rules defined in Section IV.A: Images, including mandatory descriptive `Alt Text` and a mandatory following caption paragraph.
-    - Images MUST be high-resolution, clear, and cropped tightly to the relevant area.
+  - **Formatting and Accessibility:** Adherence to accessibility standards is paramount.
+    - Strictly follow all image rules defined in Section IV.A: Images. This includes mandatory descriptive `Alt Text` as detailed in `[GitHub Basic Formatting Syntax - Images](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#images)`, `styleguide/accessibility/graphics-design-media.md`, and `[Alt text section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text)`.
+    - A mandatory caption paragraph following the image is required to explain its context and relevance.
+    - Images MUST be high-resolution, clear, and cropped tightly to the relevant area to avoid distractions, supporting `styleguide/responsive-content.md`.
     - Use annotations (arrows, boxes, highlights) directly on the image sparingly and only where necessary to draw attention; these annotations MUST be explained clearly in the caption paragraph.
-    - Remember: Do NOT use images of code or terminal output as a _replacement_ for text-based code blocks (see IV.A).
+  - **File Naming:** Follow consistent and descriptive file naming conventions as per `[File names for images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#file-names-for-images)`.
+  - **Usage Context:**
+    - Remember: Do NOT use images of code or terminal output as a _replacement_ for text-based fenced code blocks (see Section IV.A and guidelines in `styleguide/developer-content/formatting-developer-text-elements.md`). Screenshots of command-line interfaces should only be used if the visual aspect of the interface itself is important, and `[Alt text for CLI images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text-for-images-of-command-line-interfaces)` must be followed.
 
 ### D. Code Example Standards
 
