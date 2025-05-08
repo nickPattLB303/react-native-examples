@@ -406,7 +406,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
 - **Headings:** Headings provide both structure and visual points of reference to help readers scan content. If
   you can break text logically into smaller sections, the extra
   spacing and distinct fonts associated with headings
-  will help readers scan content and find entry points, per [](./styleguide/scannable-content/headings.md)
+  will help readers scan content and find entry points, per [./styleguide/scannable-content/headings.md](./styleguide/scannable-content/headings.md)
   - MUST use ATX style (`#`) only. Prettier will enforce a single space following the `#`.
   - Sentence case is required for headings (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`.
   - Prettier will enforce single blank lines preceding and following each heading.
@@ -420,14 +420,19 @@ These rules define the required syntax for standard Markdown elements, incorpora
 - **Paragraphs:** Prettier will enforce separation of consecutive paragraphs with a single blank line and will collapse multiple consecutive blank lines.
   - While Prettier's default `proseWrap: "preserve"` setting means it will not automatically re-wrap paragraph lines, authors SHOULD manually aim for a line length of approximately 100 characters for readability. Avoid manually creating overly long lines.
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Prettier will preserve this formatting. Use emphasis sparingly for highlighting key terms or concepts.
-- **Lists:**
-  - Unordered lists MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style.
-  - Ordered lists MUST use the format `1.` (or other sequential numbers like `0.`, `2.`) followed by a space for each item. Prettier will format ordered lists, potentially re-numbering them sequentially if lazy numbering (e.g., all `1.`) was used.
-  - Nested lists will be indented by Prettier. With the default `tabWidth: 2`, this typically results in a 2-space indent for nested list items, though Prettier may use 4 spaces in certain contexts (e.g., loose lists) to maintain clarity. The formatting applied by Prettier is the standard.
-  - Prettier will ensure a single blank line precedes and follows the entire list block (both ordered and unordered).
-  - Skip end punctuation for list items that are three words or fewer (per `styleguide/top-10-tips-style-voice.md`).
-  - Always use the serial (Oxford) comma when list items involve conjunctions (per `styleguide/punctuation/commas.md`).
-  - Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items. Prettier will format these using `-` as the bullet marker.
+- **Lists:** work best when they have two to seven items. Each item should be fairly
+  short—the reader should be able to see at least two, and preferably
+  three, list items at a glance. It’s OK to have a couple of short
+  paragraphs in a list item, but don’t exceed that length too often, per [./styleguide/scannable-content/lists.md](./styleguide/scannable-content/lists.md).
+  - Unordered lists/Bulleted lists MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style. Use a bulleted list for things that have something in common but don’t need to appear in a particular order.
+  - Ordered lists/Numbered lists MUST use the format `1.` (or other sequential numbers like `0.`, `2.`) followed by a space for each item. Prettier will format ordered lists, potentially re-numbering them sequentially if lazy numbering (e.g., all `1.`) was used. Use a numbered list for sequential items (like a procedure) or prioritized items (like a top 10 list).
+  - Make sure the purpose of the list is clear. Introduce the list with a heading, a complete sentence, or a fragment that ends with a colon. If you introduce a list with a heading, don’t use explanatory text after the heading. Also, don’t use a colon or period after the heading.
+- Nested lists will be indented by Prettier. With the default `tabWidth: 2`, this typically results in a 2-space indent for nested list items, though Prettier may use 4 spaces in certain contexts (e.g., loose lists) to maintain clarity. The formatting applied by Prettier is the standard.
+- Prettier will ensure a single blank line precedes and follows the entire list block (both ordered and unordered).
+- Skip end punctuation for list items that are three words or fewer (per `styleguide/top-10-tips-style-voice.md`).
+- Always use the serial (Oxford) comma when list items involve conjunctions (per `styleguide/punctuation/commas.md`).
+- Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items. Prettier will format these using `-` as the bullet marker.
+- When writing a list of items that consist of primary and secondary text, such as a `term` and its definition, use a colon delimiter. The secondary text should be capitalized as if it was the beginning of the line per [contributing/style-guide-and-content-model/style-guide.md](./contributing/style-guide-and-content-model/style-guide.md).
 - **Links:**
   - Use inline link syntax `(URL)` for most links. Prettier will ensure this syntax is correctly formatted.
   - Link text MUST be descriptive and clearly indicate the destination's content. Avoid generic phrases like "click here" or "read more". This improves accessibility and context. See `styleguide/urls-web-addresses.md`.
@@ -461,7 +466,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
 
 These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes.
 
-- **Callouts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see `./contributing/style-guide-and-content-model/style-guide.md`).
+- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see `./contributing/style-guide-and-content-model/style-guide.md`).
 
   - **Syntax and Purpose:**
 
