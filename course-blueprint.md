@@ -559,10 +559,14 @@ These rules define the required syntax for standard Markdown elements, incorpora
 
 ### B. Custom Course Component Definitions
 
-These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes. Adherence to their defined syntax and usage rules is mandatory for consistency and effectiveness. As outlined in Section IV.A, Prettier will automatically format the overall Markdown document. For these custom components, this means Prettier will standardize the block-level elements (e.g., the `>` characters, spacing around the component block). However, authors MUST meticulously author the _internal_ content: - The specific keywords (e.g., `[!NOTE]`, `**Comparison:**`, `📚 **Official Documentation:**`). - The precise use of Markdown within the component (e.g., bolding, emojis, nested `>` for new paragraphs within the component, list formatting in the `Official Documentation Box`).
+These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes. Adherence to their defined syntax and usage rules is mandatory for consistency and effectiveness. As outlined in Section IV.A, Prettier will automatically format the overall Markdown document. For these custom components, this means Prettier will standardize the block-level elements (e.g., the `>` characters, spacing around the component block). However, authors MUST meticulously author the _internal_ content:
+
+- The specific keywords (e.g., `[!NOTE]`, `**Comparison:**`, `📚 **Official Documentation:**`).
+- The precise use of Markdown within the component (e.g., bolding, emojis, nested `>` for new paragraphs within the component, list formatting in the `Official Documentation Box`).
+
 Prettier will generally preserve this internal content as authored, especially with `proseWrap: "preserve"` (see Section IV.A), but it is the author's responsibility to ensure it conforms to the definitions below. Prettier will not, for example, correct a misspelled `[!NOTTE]` to `[!NOTE]`.
 
-- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** These components highlight information with varying levels of emphasis.
+- **Callouts/Alerts (Note, Tip, Important, Caution, Warning):** These components highlight information with varying levels of emphasis. They utilize standard GitHub Flavored Markdown (GFM) alert syntax, as detailed in [GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts). The specific types and their semantic usage within this course are also guided by [Alerts section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alerts).
 
   - **Syntax:** All callouts use the blockquote (`>`) syntax with a special type indicator on the first line. The content of the callout must also be within the blockquote.
 
@@ -602,9 +606,9 @@ Prettier will generally preserve this internal content as authored, especially w
   - **Usage Rules:**
     - Use callouts judiciously to avoid cluttering the content and ensure they stand out.
     - They should highlight information, not contain core instruction or lengthy explanations.
-    - Content within callouts MUST be concise and directly related to the callout type, adhering to principles of `styleguide/word-choice/use-simple-words-concise-sentences.md`.
+    - Content within callouts MUST be concise and directly related to the callout type, adhering to principles of [simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
     - The `> [!TYPE]` tag MUST be on its own line, per GFM alert syntax.
-    - All subsequent lines of the callout content MUST start with `> ` (blockquote marker plus a space), as shown in `[GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts)`.
+    - All subsequent lines of the callout content MUST start with `> ` (blockquote marker plus a space), as shown in [GitHub Basic Formatting Syntax - Alerts](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#alerts).
     - Paragraph breaks within a callout are created by inserting a line containing only `>`.
 
 - **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge. These notes are crucial for learner adaptation, a core principle of this course (see Section V.D). Their content should be crafted with empathy and a focus on the learner's perspective, as advocated in `styleguide/top-10-tips-style-voice.md` and `styleguide/brand-voice-above-all-simple-human.md`.
@@ -630,11 +634,11 @@ Prettier will generally preserve this internal content as authored, especially w
     - Use the specified emoji for the target audience: 🍏 (iOS), 🤖 (Android), 📲 (Native = iOS + Android), ⚛️ (React), 🅰 (Angular), 🌐 (Web = React + Angular).
     - If applicable to both native platforms, use `📲 **(Native Developers):**`. If applicable to both web frameworks, use `🌐 **(Web Developers):**`.
     - Separate notes may be needed if the comparison points differ significantly between backgrounds.
-    - Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Brevity and clarity are key, per `styleguide/word-choice/use-simple-words-concise-sentences.md`.
-    - The `**Source:**` link MUST point to relevant official documentation or trusted resources for the target background's comparison concept. Link text and URL formatting should follow guidelines in `styleguide/urls-web-addresses.md`.
+    - Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Brevity and clarity are key, per [simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
+    - The `**Source:**` link MUST point to relevant official documentation or trusted resources for the target background's comparison concept. Link text and URL formatting should follow guidelines in [URLs and Web Addresses](./styleguide/urls-web-addresses.md).
     - The `**Example:**` (Optional) should be very brief, conceptual, and illustrative.
 
-- **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous). This guidance supports diverse learning engagement (see Section V.D) and should be written in a clear, supportive, and actionable tone, per `styleguide/top-10-tips-style-voice.md`.
+- **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous). This guidance supports diverse learning engagement (see Section V.D) and should be written in a clear, supportive, and actionable tone, per [Top 10 Tips for Style and Voice](./styleguide/top-10-tips-style-voice.md).
 
   - **Syntax:** Uses blockquote (`>`) syntax. Bolding of the `**<TARGET_PATH>:**` label is part of this custom style.
 
@@ -648,7 +652,7 @@ Prettier will generally preserve this internal content as authored, especially w
     - Use judiciously at strategic points (e.g., start of module/section, before complex exercises/challenges).
     - The `<TARGET_PATH>` (e.g., `(Instructor-Led)`, `(Self-Led)`, `(All Learners)`) MUST be specified accurately and enclosed in parentheses.
     - Use the specified emoji for the target path: 🧑‍🏫 (Instructor-Led), 🧗‍♀️ (Self-Led), 🔁 (Asynchronous), 🛣️ (All Learners).
-    - Guidance should be actionable, concise, and directly relevant to the specified learning path(s), promoting scannability (see `styleguide/scannable-content/`).
+    - Guidance should be actionable, concise, and directly relevant to the specified learning path(s), promoting scannability (see [Scannable Content guidelines](./styleguide/scannable-content/)).
 
 - **Official Documentation Box:** Used to group and highlight essential links to official documentation for key APIs, components, or concepts. This component aggregates crucial external resources, and its structure promotes discoverability.
 
@@ -670,9 +674,9 @@ Prettier will generally preserve this internal content as authored, especially w
   - **Usage Rules:**
     - Place in sections immediately following the introduction of significant new technical elements (APIs, components, core concepts like Flexbox, JSI, etc.).
     - Links under `📚 **Official Documentation:**` MUST point to canonical official sources (reactnative.dev, docs.expo.dev, react.dev, MDN, relevant library sites).
-    - Link text SHOULD be descriptive, often including the specific API/component name and the source (e.g., "React Native Docs: `useState` Hook"), in line with `styleguide/urls-web-addresses.md` and `[Links section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#links)`.
+    - Link text SHOULD be descriptive, often including the specific API/component name and the source (e.g., "React Native Docs: `useState` Hook"), in line with [URLs and Web Addresses](./styleguide/urls-web-addresses.md) and [Links section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#links).
     - The `🗂️ **Additional Resources:**` section is optional and can be used for high-quality supplementary links (trusted blogs, conference talks, related tools) that are not official API documentation.
-    - Use standard Markdown lists (`-`) for the links, following best practices from `styleguide/scannable-content/lists.md`. Ensure each list item is grammatically parallel if possible.
+    - Use standard Markdown lists (`-`) for the links, following best practices from [Lists formatting guidelines](./styleguide/scannable-content/lists.md). Ensure each list item is grammatically parallel if possible.
 
 ### C. Visual Element Standards
 
@@ -688,7 +692,7 @@ Visual elements are crucial for clarifying complex information and engaging lear
     - Asynchronous Logic Flow (e.g., `async/await`, Promise chains)
     - Conditional Rendering Logic (if complex)
     - Build Processes (e.g., EAS Build workflow)
-  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier, as detailed in Section IV.A (Code Blocks) and adhering to `[GitHub Basic Formatting Syntax - Code Blocks](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#quoting-code)`.
+  - **Syntax:** Embed within standard fenced code blocks using the `mermaid` language identifier, as detailed in Section IV.A (Code Blocks) and adhering to [GitHub Basic Formatting Syntax - Code Blocks](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#quoting-code).
     The `mermaid` language identifier is critical for correct rendering and potential editor/tooling support. While Prettier ensures the fenced code block (<code>`mermaid ... `</code>) is correctly formatted as a Markdown element, it does **not** format or validate the Mermaid diagram code _within_ the block. Authors are solely responsible for writing valid, clear, and well-structured Mermaid syntax according to Mermaid's own documentation and best practices.
     Example:
     ```mermaid
@@ -701,8 +705,8 @@ Visual elements are crucial for clarifying complex information and engaging lear
     ```
   - **Diagram Types:** Utilize appropriate diagram types based on the information being presented. Common types include Flowcharts, Sequence Diagrams, Class Diagrams, and State Diagrams. Refer to official Mermaid documentation for specific syntax and capabilities.
   - **Placement:** Insert the Mermaid code block immediately following the paragraph that introduces or references the concept being diagrammed.
-  - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility (see `styleguide/accessibility/writing-all-abilities.md`) and comprehension, supporting learners who may not fully grasp the visual or require textual reinforcement. The description should be clear and follow principles outlined in `styleguide/word-choice/use-simple-words-concise-sentences.md`.
-  - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams. Use clear, concise labels for all elements, aligning with `styleguide/scannable-content/`. Avoid unnecessary visual clutter.
+  - **Text Description:** MANDATORY. Every Mermaid diagram MUST be immediately followed by a detailed explanatory paragraph (minimum 100 words). This description must explain the purpose of the diagram, define its elements (nodes, actors, states), and walk through the depicted flow or structure. This is crucial for accessibility (see [Writing for all abilities](./styleguide/accessibility/writing-all-abilities.md)) and comprehension, supporting learners who may not fully grasp the visual or require textual reinforcement. The description should be clear and follow principles outlined in [simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
+  - **Simplicity and Clarity:** Diagrams must prioritize clarity over complexity. If a concept requires a very complex diagram, break it down into multiple, simpler diagrams. Use clear, concise labels for all elements, aligning with [Scannable Content guidelines](./styleguide/scannable-content/). Avoid unnecessary visual clutter.
   - **Consistency:** Maintain consistent styling (e.g., shapes for similar entity types, line styles for similar relationships) across diagrams within the course. If using custom styling via `classDef`, apply it consistently.
 
 - **Images/Screenshots:** Use static images (e.g., PNG, JPG) to visually support textual explanations, especially for UI elements, setup steps, or tool interfaces. The standards for images are detailed in Section IV.A: Core Markdown Syntax Rules - Images, and further emphasized here.
@@ -713,26 +717,26 @@ Visual elements are crucial for clarifying complex information and engaging lear
     - Demonstrating the use of debugging tools or IDE features.
     - Visualizing the structure of the Expo Go app or simulator interface.
   - **Formatting and Accessibility:** Adherence to accessibility standards is paramount.
-    - Strictly follow all image rules defined in Section IV.A: Images. This includes mandatory descriptive `Alt Text` as detailed in `[GitHub Basic Formatting Syntax - Images](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#images)`, `styleguide/accessibility/graphics-design-media.md`, and `[Alt text section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text)`.
+    - Strictly follow all image rules defined in Section IV.A: Images. This includes mandatory descriptive `Alt Text` as detailed in [GitHub Basic Formatting Syntax - Images](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#images), [Graphics, Design, and Media accessibility](./styleguide/accessibility/graphics-design-media.md), and [Alt text section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text).
     - A mandatory caption paragraph following the image is required to explain its context and relevance.
-    - Images MUST be high-resolution, clear, and cropped tightly to the relevant area to avoid distractions, supporting `styleguide/responsive-content.md`.
+    - Images MUST be high-resolution, clear, and cropped tightly to the relevant area to avoid distractions, supporting [Responsive Content guidelines](./styleguide/responsive-content.md).
     - Use annotations (arrows, boxes, highlights) directly on the image sparingly and only where necessary to draw attention; these annotations MUST be explained clearly in the caption paragraph.
-  - **File Naming:** Follow consistent and descriptive file naming conventions as per `[File names for images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#file-names-for-images)`.
+  - **File Naming:** Follow consistent and descriptive file naming conventions as per [File names for images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#file-names-for-images).
   - **Usage Context:**
-    - Remember: Do NOT use images of code or terminal output as a _replacement_ for text-based fenced code blocks (see Section IV.A and guidelines in `styleguide/developer-content/formatting-developer-text-elements.md`). Screenshots of command-line interfaces should only be used if the visual aspect of the interface itself is important, and `[Alt text for CLI images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text-for-images-of-command-line-interfaces)` must be followed.
+    - Remember: Do NOT use images of code or terminal output as a _replacement_ for text-based fenced code blocks (see Section IV.A and guidelines in [Formatting Developer Text Elements](./styleguide/developer-content/formatting-developer-text-elements.md)). Screenshots of command-line interfaces should only be used if the visual aspect of the interface itself is important, and [Alt text for CLI images section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#alt-text-for-images-of-command-line-interfaces) must be followed.
 
 ### D. Code Example Standards
 
-Code examples are critical learning tools and MUST adhere to the following standards, guided by MSWSG (`styleguide/developer-content/code-examples.md`) and pedagogical best practices. The goal is clarity, accuracy, reusability, and relevance to the course's capstone theme (SpeedyMeds).
+Code examples are critical learning tools and MUST adhere to the following standards, guided by MSWSG ([Code examples in developer content](./styleguide/developer-content/code-examples.md)) and pedagogical best practices. The goal is clarity, accuracy, reusability, and relevance to the course's capstone theme (SpeedyMeds). As established in Section IV.A, Prettier will automatically format the Markdown document, which includes formatting the code within fenced code blocks according to standard rules for the specified language (due to `embeddedLanguageFormatting: "auto"`). Authors are responsible for the code's logical correctness, adherence to the example's purpose, and the clarity of variable/function names and overall structure, which Prettier does not enforce.
 
 **1. General Principles:**
 
-- **Purposeful Scenarios:** Examples MUST illustrate meaningful developer tasks and scenarios relevant to the SpeedyMeds theme, not contrived or obvious points.
+- **Purposeful Scenarios:** Examples MUST illustrate meaningful developer tasks and scenarios relevant to the SpeedyMeds theme, not contrived or obvious points, as per guidance in [Code examples in developer content](./styleguide/developer-content/code-examples.md).
 - **Gradual Complexity:** Start with simple examples and build complexity incrementally as concepts are layered. Prioritize frequently used or potentially difficult elements.
 - **Accuracy and Testing:** All code examples MUST be compiled, tested, and verified against the target technology versions.
-- **Readability and Formatting:** Code MUST be formatted using a standard Prettier configuration. Use meaningful names for variables, functions, etc.
-- **Security:** Write secure code. Validate input, avoid hard-coded secrets, and be mindful of common security practices.
-- **Accessibility:** Code rendering UI MUST include appropriate accessibility props (`accessibilityLabel`, `accessibilityHint`, etc.) with meaningful values.
+- **Readability and Formatting:** While Prettier handles automated formatting, code MUST also be inherently readable through meaningful names for variables, functions, etc., following advice from [Code examples in developer content](./styleguide/developer-content/code-examples.md).
+- **Security:** Write secure code. Validate input, avoid hard-coded secrets, and be mindful of common security practices detailed in [Code examples in developer content](./styleguide/developer-content/code-examples.md).
+- **Accessibility:** Code rendering UI MUST include appropriate accessibility props (`accessibilityLabel`, `accessibilityHint`, etc.) with meaningful values. Refer to [Accessibility guidelines](./styleguide/accessibility/) and the accessibility section in [Code examples in developer content](./styleguide/developer-content/code-examples.md).
 - **Expo Focus:** Default to Expo libraries/APIs when available. Use core React Native APIs for fundamental concepts or where no Expo equivalent exists.
 - **Capstone Relation:** All examples (beyond basic syntax illustration) MUST relate contextually to the SpeedyMeds theme (variables, component names, scenarios).
 - **Copy/Run Capability:** Provide easy ways for learners to copy code. For long examples, use Expo Snack or CodeSandbox as appropriate (See Section VI).
@@ -744,8 +748,8 @@ This blueprint defines three tiers of code examples, each with specific usage co
 - **a) Inline Code Snippets (`code`):**
 
   - **Purpose:** To illustrate specific syntax elements, keywords, prop names, simple function calls, or brief fragments directly within explanatory text.
-  - **Usage:** Mandatory when introducing new language syntax, API elements (props, method names), or configuration values for the first time. Use liberally within paragraphs to ground explanations in concrete code.
-  - **Format:** Use single backticks (``).
+  - **Usage:** Mandatory when introducing new language syntax, API elements (props, method names), or configuration values for the first time. Use liberally within paragraphs to ground explanations in concrete code. See [Formatting developer text elements](./styleguide/developer-content/formatting-developer-text-elements.md) and [GitHub Basic Formatting Syntax - Quoting Code](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#quoting-code).
+  - **Format:** Use single backticks (``). Prettier will preserve this formatting.
   - **Explanation:** Context is provided by the surrounding sentence(s). No separate explanation block or JSDoc required.
   - **Example Context:** "To manage component state, use the `useState` Hook. Pass the initial state as an argument, like `useState(0)`."
 
@@ -753,10 +757,10 @@ This blueprint defines three tiers of code examples, each with specific usage co
 
   - **Purpose:** To demonstrate a single, focused concept, API usage, or technique in a runnable context. Illustrates _how_ to use a specific element introduced in the text.
   - **Usage:** Use frequently after explaining a core concept, component, hook, or API. Ideal for showing the basic implementation of a feature.
-  - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals).
+  - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). Prettier will format the code within these blocks. MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals).
   - **Explanation:**
     - MUST be preceded by a single sentence introducing the example's specific purpose (e.g., "This example shows how to fetch data using `useEffect`.").
-    - MUST be followed by a focused explanation (approx. 50-100 words) clarifying the key parts of the code, the concept demonstrated, and the expected outcome. This explanation focuses only on the new concept being shown.
+    - MUST be followed by a focused explanation (approx. 50-100 words) clarifying the key parts of the code, the concept demonstrated, and the expected outcome. This explanation focuses only on the new concept being shown and should be written clearly and concisely, per [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
     - JSDoc comments within the code are OPTIONAL but encouraged for clarity if the code involves a non-trivial function or component definition.
     - The 200-word minimum description does NOT apply.
   - **Example Context:** After explaining the `<Button>` component and its `onPress` prop, provide a short, runnable Snack example showing a simple `<Button>` that triggers an `Alert`. The explanation would focus _only_ on the `<Button>` and `onPress` connection, not re-explain the entire component structure.
@@ -764,19 +768,19 @@ This blueprint defines three tiers of code examples, each with specific usage co
 - **c) Long Samples:**
   - **Purpose:** To illustrate multiple features working together, complex scenarios, architectural patterns, or best practices. Often integrates several concepts covered previously.
   - **Usage:** Use more sparingly than short examples. Reserve for the end of sections covering multiple related topics, end-of-module examples, or dedicated walkthroughs/tutorials. Avoid using long samples to introduce fundamental concepts.
-  - **Format:** Use fenced code blocks (```) with the correct language identifier. MUST be runnable (Expo Snack/CodeSandbox). May be accompanied by helper files or setup instructions if necessary.
+  - **Format:** Use fenced code blocks (```) with the correct language identifier. Prettier will format the code within these blocks. MUST be runnable (Expo Snack/CodeSandbox). May be accompanied by helper files or setup instructions if necessary.
   - **Explanation:**
     - MUST be preceded by an introduction describing the scenario, requirements, dependencies, and what the sample demonstrates.
-    - MUST be followed by a detailed text description (minimum 200 words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome, and link to relevant APIs/docs.
-    - JSDoc comments (`/** ... */`) are MANDATORY within the code for all exported functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc.
-    - Inline comments (`//`) SHOULD be used judiciously to clarify non-obvious logic. Do not comment on the obvious. Keep comments synchronized with code changes.
+    - MUST be followed by a detailed text description (minimum 200 words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome, and link to relevant APIs/docs. This text should also be clear and concise, following [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
+    - JSDoc comments (`/** ... */`) are MANDATORY within the code for all exported functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc. Prettier can fix the indentation of JSDoc-style comments.
+    - Inline comments (`//`) SHOULD be used judiciously to clarify non-obvious logic. Do not comment on the obvious (see [Code examples in developer content](./styleguide/developer-content/code-examples.md)). Prettier generally leaves the content of inline comments as-is, but their placement might shift if Prettier reflows the code around them. Authors should verify comment placement after formatting, especially for "magic comments" like `eslint-disable-next-line`.
   - **Example Context:** After covering `useState`, `useEffect`, `FlatList`, and basic styling, a long sample could show a screen component that fetches a list of medications from a mock API, stores it in state, and renders it using `FlatList`, applying styles from `StyleSheet`. The detailed explanation would cover how these pieces work together.
 
 **3. Comments and Explanations:**
 
-- **Inline Comments (`//`):** Use within code blocks (primarily in _Long Samples_, optionally in _Short Examples_) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax. Keep comments concise and synchronized with code.
-- **JSDoc (`/** ... */`):\*\* Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, components, hooks, classes, and types.
-- **Text Explanations (Following Code Blocks):** Required for _Short_ and _Long_ examples. The depth varies: focused and brief (~50-100 words) for _Short Examples_, detailed and comprehensive (200+ words) for _Long Samples_.
+- **Inline Comments (`//`):** Use within code blocks (primarily in _Long Samples_, optionally in _Short Examples_) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax, as per [Code examples in developer content](./styleguide/developer-content/code-examples.md). As noted above, Prettier largely preserves inline comment content but may adjust their positioning.
+- **JSDoc (`/** ... */`):\*\* Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, components, hooks, classes, and types. Prettier assists with the indentation of JSDoc blocks.
+- **Text Explanations (Following Code Blocks):** Required for _Short_ and _Long_ examples. The depth varies: focused and brief (~50-100 words) for _Short Examples_, detailed and comprehensive (200+ words) for _Long Samples_. All explanatory text should adhere to `styleguide` principles for clarity and conciseness.
 
 **4. Exception Handling:**
 
@@ -978,7 +982,7 @@ Adherence to this blueprint is mandatory and MUST be verified throughout the con
 - **Instructional Design (ID) Review:** ID reviewers verify pedagogical soundness, clarity, consistency, and correct implementation of learner adaptation elements.
 - **Checklists:** Standardized review checklists derived directly from this blueprint MUST be used in all review phases to ensure systematic and thorough verification.
 
-The establishment of this blueprint as a definitive guide, coupled with a controlled update process and rigorous enforcement through multi-stage reviews, is essential for achieving the desired quality and consistency. While labeled "immutable" to emphasize its authority, the provision for formal updates acknowledges the dynamic nature of the subject matter. The success of the blueprint ultimately depends not just on its content, but on the commitment to its enforcement during the development and review cycles. Utilizing checklists derived from this document will be instrumental in making the enforcement process practical and effective, ensuring that all contributors adhere to the established standards.
+The establishment of this blueprint as a definitive guide, coupled with a controlled update process and rigorous enforcement through structured review processes, is essential for achieving the desired quality and consistency. While labeled "immutable" to emphasize its authority, the provision for formal updates acknowledges the dynamic nature of the subject matter. The success of the blueprint ultimately depends not just on its content, but on the commitment to its enforcement during the development and review cycles. Utilizing checklists derived from this document will be instrumental in making the enforcement process practical and effective, ensuring that all contributors adhere to the established standards.
 
 ## VIII. Conclusion
 
