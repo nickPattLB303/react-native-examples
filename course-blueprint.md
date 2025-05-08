@@ -410,7 +410,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
   - MUST use ATX style (`#`) only. Prettier will enforce a single space following the `#`.
   - Sentence case is required for headings (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`.
   - Prettier will enforce single blank lines preceding and following each heading.
-  - Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden.
+  - Headings MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden.
   - Headings MUST NOT contain bold or other inline formatting.
   - Each document MUST have exactly one H1 heading , serving as the document title.
   - Skip end punctuation for headings (per `styleguide/punctuation/`).
@@ -420,41 +420,138 @@ These rules define the required syntax for standard Markdown elements, incorpora
 - **Paragraphs:** Prettier will enforce separation of consecutive paragraphs with a single blank line and will collapse multiple consecutive blank lines.
   - While Prettier's default `proseWrap: "preserve"` setting means it will not automatically re-wrap paragraph lines, authors SHOULD manually aim for a line length of approximately 100 characters for readability. Avoid manually creating overly long lines.
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Prettier will preserve this formatting. Use emphasis sparingly for highlighting key terms or concepts.
-- **Lists:** work best when they have two to seven items. Each item should be fairly
+- **Lists:** Lists work best when they have two to seven items. Each item should be fairly
   short—the reader should be able to see at least two, and preferably
-  three, list items at a glance. It’s OK to have a couple of short
-  paragraphs in a list item, but don’t exceed that length too often, per [./styleguide/scannable-content/lists.md](./styleguide/scannable-content/lists.md).
-  - Unordered lists/Bulleted lists MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style. Use a bulleted list for things that have something in common but don’t need to appear in a particular order.
-  - Ordered lists/Numbered lists MUST use the format `1.` (or other sequential numbers like `0.`, `2.`) followed by a space for each item. Prettier will format ordered lists, potentially re-numbering them sequentially if lazy numbering (e.g., all `1.`) was used. Use a numbered list for sequential items (like a procedure) or prioritized items (like a top 10 list).
-  - Make sure the purpose of the list is clear. Introduce the list with a heading, a complete sentence, or a fragment that ends with a colon. If you introduce a list with a heading, don’t use explanatory text after the heading. Also, don’t use a colon or period after the heading.
-- Nested lists will be indented by Prettier. With the default `tabWidth: 2`, this typically results in a 2-space indent for nested list items, though Prettier may use 4 spaces in certain contexts (e.g., loose lists) to maintain clarity. The formatting applied by Prettier is the standard.
-- Prettier will ensure a single blank line precedes and follows the entire list block (both ordered and unordered).
-- Skip end punctuation for list items that are three words or fewer (per `styleguide/top-10-tips-style-voice.md`).
-- Always use the serial (Oxford) comma when list items involve conjunctions (per `styleguide/punctuation/commas.md`).
-- Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items. Prettier will format these using `-` as the bullet marker.
-- When writing a list of items that consist of primary and secondary text, such as a `term` and its definition, use a colon delimiter. The secondary text should be capitalized as if it was the beginning of the line per [contributing/style-guide-and-content-model/style-guide.md](./contributing/style-guide-and-content-model/style-guide.md).
+  three, list items at a glance. It's OK to have a couple of short
+  paragraphs in a list item, but don't exceed that length too often, per [./styleguide/scannable-content/lists.md](./styleguide/scannable-content/lists.md).
+  - Items in a list MUST be parallel in grammatical structure (e.g., each item is a noun phrase, or each starts with a verb), per [./styleguide/scannable-content/lists.md](./styleguide/scannable-content/lists.md#bulleted-lists).
+  - **Unordered (Bulleted) Lists:**
+    - MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style.
+    - Use for items that have something in common but don't need to appear in a particular order, per [./styleguide/scannable-content/lists.md#bulleted-lists](./styleguide/scannable-content/lists.md#bulleted-lists).
+    - If the order of items is not important, alphabetize the list. If order is important (but not strictly sequential), order items by importance to the reader (e.g., broadest to most specialized), per [./contributing/style-guide-and-content-model/style-guide.md#lists](./contributing/style-guide-and-content-model/style-guide.md#lists).
+  - **Ordered (Numbered) Lists:**
+    - MUST use the format `1.` (or other sequential numbers like `0.`, `2.`) followed by a space for each item. Prettier will format ordered lists, potentially re-numbering them sequentially if lazy numbering (e.g., all `1.`) was used.
+    - Use for sequential items (like a procedure) or prioritized items (like a top 10 list), per [./styleguide/scannable-content/lists.md#numbered-lists](./styleguide/scannable-content/lists.md#numbered-lists).
+  - **Introducing Lists:**
+    - Make sure the purpose of the list is clear. Introduce the list with a heading, a complete sentence, or a fragment that ends with a colon, per [./styleguide/scannable-content/lists.md#introductory-text](./styleguide/scannable-content/lists.md#introductory-text).
+    - If you introduce a list with a heading, don't use explanatory text after the heading. Also, don't use a colon or period after the heading, per [./styleguide/scannable-content/lists.md#introductory-text](./styleguide/scannable-content/lists.md#introductory-text).
+    - Introductions should be descriptive, clearly conveying the list's subject. Avoid nonspecific phrases like "the following" or "these items" where possible, to improve clarity and localization, per [./contributing/style-guide-and-content-model/style-guide.md#lists](./contributing/style-guide-and-content-model/style-guide.md#lists).
+  - **Capitalization:** Begin each list item with a capital letter unless there's a specific reason not to (e.g., a command that is always lowercase). If necessary, rewrite items so they all begin with capitals or all with lowercase, per [./styleguide/scannable-content/lists.md#capitalization](./styleguide/scannable-content/lists.md#capitalization) and [./contributing/style-guide-and-content-model/style-guide.md#lists](./contributing/style-guide-and-content-model/style-guide.md#lists).
+  - **Punctuation of List Items:**
+    - End each list item with a period if:
+      - Any item forms a complete sentence when combined with the list introduction (if the intro ends with a colon).
+      - Any item _by itself_ is a complete sentence.
+    - **Exception:** Do not use periods if all items have three or fewer words, OR if the items are UI labels, headings, subheadings, or strings. This rule for short items is also highlighted in [./styleguide/top-10-tips-style-voice.md](./styleguide/top-10-tips-style-voice.md). The comprehensive rule is per [./styleguide/scannable-content/lists.md#punctuation](./styleguide/scannable-content/lists.md#punctuation).
+    - Do NOT use semicolons, commas, or conjunctions (like _and_ or _or_) at the end of individual list item lines, per [./styleguide/scannable-content/lists.md#punctuation](./styleguide/scannable-content/lists.md#punctuation).
+  - **Serial (Oxford) Commas:** In prose, or when a single list item itself contains a series of three or more elements, always use the serial (Oxford) comma before the conjunction (e.g., "apples, bananas, and oranges"), per [./styleguide/punctuation/commas.md](./styleguide/punctuation/commas.md) and [./styleguide/top-10-tips-style-voice.md](./styleguide/top-10-tips-style-voice.md).
+  - **Formatting and Indentation:**
+    - Nested lists will be indented by Prettier. With the default `tabWidth: 2`, this typically results in a 2-space indent, though Prettier may use 4 spaces in certain contexts. The formatting applied by Prettier is the standard.
+    - Prettier will ensure a single blank line precedes and follows the entire list block (both ordered and unordered).
+    - Avoid unneeded linebreaks within and around lists, per [./contributing/style-guide-and-content-model/style-guide.md#linebreaks](./contributing/style-guide-and-content-model/style-guide.md#linebreaks).
+  - **Task Lists:** MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items. Prettier will format these using `-` as the bullet marker.
+  - **Term-Definition Lists:** When writing a list where items consist of a term and its definition, use a colon as a delimiter after the term. The definition (secondary text) should be capitalized as if it were the beginning of a new sentence, per [./contributing/style-guide-and-content-model/style-guide.md#lists](./contributing/style-guide-and-content-model/style-guide.md#lists). Example: `- `Term`: This is the definition.`
 - **Links:**
-  - Use inline link syntax `(URL)` for most links. Prettier will ensure this syntax is correctly formatted.
-  - Link text MUST be descriptive and clearly indicate the destination's content. Avoid generic phrases like "click here" or "read more". This improves accessibility and context. See `styleguide/urls-web-addresses.md`.
-  - External links MUST use the full absolute URL, omitting `https://` unless the protocol differs (e.g., `ftp://`). Omit trailing slashes where possible. See `styleguide/urls-web-addresses.md`.
-  - Internal links to other markdown files within the same course module directory MUST use relative paths, e.g., `(./section-3-setup.md)`. Links _between_ modules should generally be avoided or use a placeholder mechanism if necessary, assuming the final platform handles inter-module navigation.
-  - Reference-style links (`[link text][ref-id]` with `[ref-id]: URL "Optional Title"` defined elsewhere, typically at the section's end) MAY be used sparingly if a URL is very long and repeated multiple times, or to significantly improve paragraph readability. Prettier will format reference-style links correctly.
-  - An abundance of links, especially to official documentation (React Native, Expo, MDN, library docs), is REQUIRED.
+  - Use inline link syntax `[Link Text](URL)` for most links. Prettier will ensure this syntax is correctly formatted.
+  - **Link Text:**
+    - MUST be descriptive and clearly indicate the destination's content. Ideally, use the title of the target page or a concise summary of its content. Link text should make sense without the surrounding text. See `styleguide/urls-web-addresses.md` and [./contributing/style-guide-and-content-model/style-guide.md#links](./contributing/style-guide-and-content-model/style-guide.md#links).
+    - Avoid generic phrases like "click here," "read more," or "link."
+  - **Introducing Links:**
+    - Introduce links with a simple "see" if the context is clear (e.g., "For details, see [Page Title](URL).").
+    - Otherwise, use introductory phrases like "For more information, see [Page Title](URL)" or "To learn more about Concept X, see [Relevant Article](URL)," per [./contributing/style-guide-and-content-model/style-guide.md#formatting-links](./contributing/style-guide-and-content-model/style-guide.md#formatting-links).
+    - Avoid making arbitrary words or phrases within a sentence into hyperlinks without a clear lead-in. This improves readability and translatability.
+  - **External Links:**
+    - MUST use the full absolute URL (e.g., `https://example.com/path/to/page`).
+    - Omitting `https://` is acceptable only if the protocol is `http` AND the link still functions correctly; however, including `https://` is generally safer. Always include the protocol if it's different (e.g., `ftp://`).
+    - Omit trailing slashes where possible, unless they are required for the URL to resolve correctly. See `styleguide/urls-web-addresses.md`.
+    - When linking to an external page, consider mentioning the destination site if it provides useful context (e.g., "See [React Hooks API Reference](URL) in the official React documentation."), per [./contributing/style-guide-and-content-model/style-guide.md#links-to-external-resources](./contributing/style-guide-and-content-model/style-guide.md#links-to-external-resources).
+  - **Internal Links (Within This Course):**
+    - Links to other markdown files within the _same course module directory_ MUST use relative paths (e.g., `[Link to Section 3](./section-3-setup.md)`).
+    - Links _between different modules_ should generally be avoided to maintain modularity. If essential, and the final platform's inter-module linking mechanism is unknown, use a clear placeholder (e.g., `(TODO: Link to Module X, Section Y: Topic)` accompanied by a comment for later review) rather than attempting a relative path that might break.
+  - **Links to Sections:**
+    - For links to sections _within the same document_: Use `[Link to Section Title](#section-title-slug)`. The link text should ideally match or clearly reference the target section title. The `#section-title-slug` is typically auto-generated by Markdown renderers based on the heading text (e.g., "## My Awesome Section" becomes `#my-awesome-section`). Verify slug behavior.
+    - For links to sections _in a different document (within the same module)_: Use `[Link to Page Title - Section Title](./other-page.md#section-title-slug)`.
+    - Ensure the link text provides enough context about the destination. See [./contributing/style-guide-and-content-model/style-guide.md#links-to-specific-sections-of-articles](./contributing/style-guide-and-content-model/style-guide.md#links-to-specific-sections-of-articles).
+  - **Reference-Style Links:**
+    - Syntax: `[link text][reference-id]` with `[reference-id]: URL "Optional Title"` defined elsewhere (typically at the end of the section or document).
+    - MAY be used sparingly if a URL is very long and used multiple times, or if it significantly improves the readability of a paragraph dense with links. Prettier will format these correctly.
+  - **Link Frugality and Placement:**
+    - Be judicious with links. Only include them if they provide clear value or are necessary for the learner's understanding or task completion.
+    - Place critical links directly in the relevant text. Related but non-essential links can be grouped in an "Additional Resources" list at the end of a section or module, or introduced as "For further reading, see..."
+    - Avoid repeating the exact same link multiple times in close proximity within the same article section. Refer to [./contributing/style-guide-and-content-model/style-guide.md#links](./contributing/style-guide-and-content-model/style-guide.md#links).
+  - **Punctuation and Links:**
+    - If a period or other punctuation at the end of a sentence might be confused as part of an adjacent URL, rewrite the sentence or set the URL off (e.g., on a new line or after a colon). See `styleguide/urls-web-addresses.md`.
+    - Do not include punctuation marks (like periods or commas) _inside_ the `[Link Text]` or `(URL)` unless they are a legitimate part of the URL itself, per [./contributing/style-guide-and-content-model/style-guide.md#formatting-links](./contributing/style-guide-and-content-model/style-guide.md#formatting-links).
+  - **Abundance of Official Documentation Links:**
+    - REQUIRED. The course content explains and curates, but does not replace, official documentation.
+    - Primarily use the "Official Documentation Box" custom component (defined in IV.B) for links to React Native, Expo, MDN, library docs, etc. Relevant links can also be naturally embedded within the text where appropriate.
 - **Images:**
-  - Use the syntax `!(URL "Optional Title")`. Prettier will ensure this syntax and appropriate blank lines around image markdown are correctly formatted. The URL MUST point to an image file stored within a designated course assets directory (structure to be defined, e.g., `./assets/images/module-3/setup-screenshot.png`).
-  - `Alt Text` is MANDATORY and MUST provide a concise, descriptive alternative for screen readers and cases where the image doesn't load.
-  - Every image MUST be immediately followed by a brief paragraph serving as a caption, explaining the image's context or highlighting key elements.
+  - **Syntax:** Use standard Markdown image syntax: `![Alt Text](URL "Optional Tooltip Title")`. Prettier will ensure correct formatting and spacing.
+    - The `Alt Text` is mandatory.
+    - The `"Optional Tooltip Title"` (which becomes the HTML `title` attribute) should generally be omitted unless it provides significant, non-redundant value on hover.
+  - **URL:** The URL MUST point to an image file (e.g., PNG, JPG, SVG) stored within a designated course assets directory (e.g., `./assets/images/module-X/filename.png`).
+  - **Alt Text (Mandatory):**
+    - MUST provide a concise (approx. 40-150 characters), descriptive textual equivalent of the image's content and function. Reference `styleguide/accessibility/graphics-design-media.md`.
+    - MUST express the core idea or meaning, not just a literal description.
+    - MUST end with punctuation (usually a period).
+    - Do NOT start with redundant phrases like "Image of..." or "Graphic showing...". Screen readers announce this.
+    - DO start with the _type_ of graphic, e.g., "Screenshot of..." or "Diagram showing...".
+    - If the image contains highlights (outlines, arrows), describe them (e.g., "...button is outlined in orange.").
+    - For screenshots: Focus on the key UI elements and their state relevant to the context. Alt text is not a replacement for instructional text in the document.
+    - Reference: [./contributing/style-guide-and-content-model/style-guide.md#alt-text](./contributing/style-guide-and-content-model/style-guide.md#alt-text).
+  - **Caption (Mandatory):** Every image MUST be immediately followed by a brief paragraph serving as a caption. The caption explains the image's context, highlights key elements shown, or clarifies its relevance to the surrounding text.
+  - **Image Quality and Formatting:**
+    - Images MUST be high-resolution and clear.
+    - Crop images tightly to the relevant area needed to illustrate the point.
+    - Use annotations (arrows, boxes, highlights) directly on the image sparingly and only where necessary to draw attention; these annotations MUST be explained in the caption.
+  - **File Naming:**
+    - Use descriptive file names in lowercase kebab-case.
+    - Include relevant context (module, concept, UI element) in the name (e.g., `module-3-ios-simulator-initial-screen.png`, `component-view-layout-example.png`).
+    - Maintain consistent naming conventions across the course assets.
+    - Reference: [./contributing/style-guide-and-content-model/style-guide.md#file-names-for-images](./contributing/style-guide-and-content-model/style-guide.md#file-names-for-images).
+  - **Usage Context:**
+    - Use static images (PNG, JPG, SVG) for screenshots, illustrations, or static diagrams (though Mermaid is preferred for diagrams - see IV.C).
+    - Do NOT use animated GIFs. Convey dynamic concepts using text, Mermaid diagrams, or link to external videos if necessary.
+    - Do NOT use images of code or command-line output _instead_ of using fenced code blocks. Screenshots should illustrate UI or visual results, not replace text content. Reference: [./contributing/style-guide-and-content-model/style-guide.md#alt-text-for-images-of-command-line-interfaces](./contributing/style-guide-and-content-model/style-guide.md#alt-text-for-images-of-command-line-interfaces).
 - **Code Blocks:**
-  - MUST use fenced code blocks (triple backticks ```) exclusively. Indented code blocks are forbidden. Prettier enforces the use of fenced code blocks.
-  - A language identifier (e.g., `tsx`,`javascript`, ```bash`,`json`,`mermaid`) MUST be included immediately after the opening backticks.
-  - Prettier, with its default `embeddedLanguageFormatting: "auto"` setting, will format the code within fenced code blocks according to its rules for the specified language (e.g., JavaScript, TypeScript, JSON), which includes collapsing excessive blank lines according to the language's style.
-  - Inline code snippets within paragraphs MUST use single backticks (`code`). Prettier will preserve this formatting.
-  - Follow specific formatting guidelines from `styleguide/developer-content/`.
+  - **Syntax:** MUST use fenced code blocks (triple backticks ```) exclusively. Indented code blocks are forbidden. Prettier enforces the use of fenced code blocks.
+  - **Language Identifier:** A language identifier (e.g., `tsx`, `typescript`, `javascript`, `bash`, `json`, `mermaid`) MUST be included immediately after the opening backticks to enable syntax highlighting.
+  - **Formatting:** Prettier, with its default `embeddedLanguageFormatting: "auto"` setting, will format the code within fenced code blocks according to standard rules for the specified language. This includes appropriate indentation and handling of blank lines.
+  - **Line Length:** Aim for a code line length of around 80 characters maximum within blocks to prevent horizontal scrolling where feasible, per [./contributing/style-guide-and-content-model/style-guide.md#code-blocks](./contributing/style-guide-and-content-model/style-guide.md#code-blocks).
+  - **Inline Code:** Inline code snippets within paragraphs MUST use single backticks (e.g., `const example = true;`). Prettier will preserve this formatting. Use this for referencing variables, function names, properties, keywords, short code fragments, file names, directory names, commands, etc., within prose. See `styleguide/developer-content/formatting-developer-text-elements.md`.
+  - **Placeholders:** Placeholders within code MUST use `ALL-CAPS-KEBAB-CASE` (e.g., `YOUR-API-KEY`, `MY-VARIABLE`). The meaning of each placeholder MUST be explained clearly in the accompanying text. See [./contributing/style-guide-and-content-model/style-guide.md#placeholders](./contributing/style-guide-and-content-model/style-guide.md#placeholders).
+  - **Command Line Examples:**
+    - Do NOT include command prompts (e.g., `$`, `#`, `>`) in runnable command examples to facilitate easy copy-pasting.
+    - If showing command output is necessary, place it immediately after the command within the same code block and comment it out using the appropriate comment character for the shell (usually `#`). Example:
+      ```bash
+      npx expo install my-library
+      # Installing my-library...
+      # Added 1 package
+      ```
+    - See [./contributing/style-guide-and-content-model/style-guide.md#code-blocks](./contributing/style-guide-and-content-model/style-guide.md#code-blocks) and [./contributing/style-guide-and-content-model/style-guide.md#commands](./contributing/style-guide-and-content-model/style-guide.md#commands).
+  - **HTML:** Do NOT use HTML tags for styling or formatting _within_ standard Markdown fenced code blocks.
+  - **Context for Excerpts:** When showing an excerpt from a larger file, provide enough surrounding context (e.g., enclosing function, import statements if relevant) for the user to understand the snippet's position and dependencies. See [./contributing/style-guide-and-content-model/style-guide.md#examples](./contributing/style-guide-and-content-model/style-guide.md#examples).
+  - **Code Example Standards:** Detailed standards for code example quality, explanations, comments (including JSDoc), security, accessibility, testing, and relevance to the course theme are defined in **Section IV.D: Code Example Standards**. This section (IV.A) focuses only on the core Markdown syntax and formatting rules for code blocks. Refer to IV.D for comprehensive requirements.
 - **Tables:**
-  - MUST use the pipe (`|`) and hyphen (`-`) syntax for defining headers and rows. Prettier will automatically align columns in tables using spaces for improved source code readability and ensure a blank line precedes table markdown.
-  - Tables are appropriate for presenting structured, comparable data. Avoid complex content like multiple paragraphs, nested lists, or code blocks within table cells; use alternative formatting (headings, lists, paragraphs) if content is too complex for a simple table structure.
-  - Every table MUST be preceded by a brief introductory sentence explaining its purpose and summarizing its content.
-  - Column headers MUST be concise, descriptive, and specific.
+  - **Syntax:**
+    - MUST use the pipe (`|`) and hyphen (`-`) syntax for defining headers and rows.
+    - Every row MUST begin and end with a pipe (`|`).
+    - Prettier will automatically align columns in the Markdown source using spaces for readability and ensure a blank line precedes the table.
+  - **Purpose:** Use tables for presenting structured, comparable data (e.g., values, attributes, categories with examples, simple action mappings). Reference `styleguide/scannable-content/tables.md`.
+  - **When NOT to Use:** Do NOT use tables for simple lists of items; use standard Markdown lists (`-` or `1.`) instead. Reference `styleguide/scannable-content/tables.md` and `contributing/style-guide-and-content-model/style-guide.md#use-tables-only-for-presenting-tabular-information`.
+  - **Introduction:** Every table MUST be preceded by a brief introductory sentence explaining its purpose and summarizing its content. This sentence MUST end with a period (not a colon). Avoid repeating information in the text that is clear from the table itself. Reference `styleguide/scannable-content/tables.md` and `contributing/style-guide-and-content-model/style-guide.md#avoid-describing-table-data`.
+  - **Headers:**
+    - **Column Headers:** MUST be concise, descriptive, and specific. Use Sentence case capitalization. Reference `styleguide/scannable-content/tables.md`.
+    - **Row Headers:** If the first column serves to describe the rows (acting as a header for row data, e.g., listing item names or properties), ensure this structure is clear. The top-left cell should ideally describe the row headers unless redundant. This is crucial for accessibility. Reference `contributing/style-guide-and-content-model/style-guide.md#use-proper-markup-for-row-and-column-headers`.
+  - **Cell Content:**
+    - Avoid complex content like multiple paragraphs, nested lists, or code blocks within cells. Use alternative formatting (like separate sections with headings) if content is too complex for a table cell.
+    - Place primary identifiers (e.g., item names, commands) in the leftmost column. Reference `styleguide/scannable-content/tables.md`.
+    - Keep cell text brief (ideally one line) for readability and responsiveness. Reference `styleguide/scannable-content/tables.md`.
+    - Populate every cell. Use "None" or "Not applicable" (preferred over "N/A") for empty cells; do not leave them blank or use dashes. Reference both style guides.
+    - Ensure entries within a column are grammatically parallel (e.g., all nouns, all verb phrases). Reference `styleguide/scannable-content/tables.md`.
+    - Use Sentence case capitalization unless the content requires specific casing (e.g., code `variableName`). Reference `styleguide/scannable-content/tables.md`.
+    - Use periods or other end punctuation only if cells contain complete sentences or a mix of sentences and fragments. Reference `styleguide/scannable-content/tables.md`.
+  - **Symbols:** If using symbols (e.g., for Yes/No), use standard icons (like check ✔️ / cross ❌) consistently and provide a legend or ensure context makes their meaning clear. Avoid emoji. Populate all relevant cells. Reference `contributing/style-guide-and-content-model/style-guide.md#use-clear-consistent-symbols-and-labels`.
+  - **Alignment:** Use Markdown alignment syntax in the separator line (`:---` for left, `:---:` for center, `---:` for right) to control column alignment. Default to left-alignment. Center-align columns containing only symbols or very short, uniform data. Reference `contributing/style-guide-and-content-model/style-guide.md#align-table-content-consistently`.
 - **Blockquotes:**
   - Use the `>` character followed by a space at the beginning of each line. Prettier will ensure correct formatting of blockquotes, including the `>` marker and spacing for single or multiple paragraphs.
   - Standard blockquotes should be used only for actual quotations from external sources. For other highlighted information, use the custom Callout components defined below.
@@ -499,7 +596,7 @@ These components utilize specific Markdown conventions to create standardized el
         > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
         ```
 
-  - **Usage Rules:** Use callouts judiciously to avoid cluttering the content. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `. Paragraph breaks within a callout can be achieved using a line containing only `.
+  - **Usage Rules:** Use callouts judiciously. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `. Paragraph breaks within a callout can be achieved using a line containing only `.
 
 - **Background Bridge Notes:** Designed to explicitly address learners from different development backgrounds, comparing and contrasting React Native concepts with their existing knowledge.
 
