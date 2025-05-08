@@ -39,7 +39,7 @@ The course documentation adheres to established instructional design principles 
 
 ### B. Technical Writing Principles (Microsoft Writing Style Guide)
 
-All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Consult the `styleguide/` directory for detailed rules. Key principles and mandatory rules include:
+All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Consult the [styleguide/](./styleguide/) directory and [styleguide/TOC.md](./styleguide/TOC.md) for detailed rules. Key principles and mandatory rules include:
 
 - **Focus on Intent:** Clearly define the target audience (developer backgrounds) and their goals for each module and section. Content must directly help the learner achieve specific tasks.
 - **Voice and Tone (Conversational, Friendly, Empathetic):**
@@ -67,7 +67,7 @@ All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Cons
 
 ### C. Terminology Dictionary
 
-Consistency in terminology is paramount. The following terms MUST be used consistently throughout the documentation. Usage should also align with the Microsoft Writing Style Guide A-Z word list (`styleguide/a-z-word-list-term-collections/`).
+Consistency in terminology is paramount. The following terms MUST be used consistently throughout the documentation. Usage should also align with the [Microsoft Writing Style Guide A-Z word list](./styleguide/a-z-word-list-term-collections/).
 
 - **React Native:** The framework itself.
 - **Expo:** The platform/toolset used for development and building. Refer to specific Expo modules (e.g., `expo-camera`, Expo Router) when discussing them.
@@ -401,10 +401,22 @@ This section defines the mandatory patterns and standards for all markdown eleme
 
 ### A. Core Markdown Syntax Rules
 
-These rules define the required syntax for standard Markdown elements, incorporating MSWSG guidelines.
+These rules define the required syntax for standard Markdown elements, incorporating MSWSG and [GitHub Docs](./contributing/style-guide-and-content-model/style-guide.md) guidelines.
 
-- **Headings:** MUST use ATX style (`#`) only. Sentence case is required (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`. A single space MUST follow the `#`. A single blank line MUST precede and follow each heading. Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden. Maximum heading depth is H4. Headings MUST NOT contain bold or other inline formatting. Each document MUST have exactly one H1 heading , serving as the document title. Skip end punctuation for headings (per `styleguide/punctuation/`).
-- **Paragraphs:** Separate consecutive paragraphs with a single blank line. Line length SHOULD be limited to approximately 100 characters. Avoid multiple consecutive blank lines.
+- **Headings:** Headings provide both structure and visual points of reference to help readers scan content. If
+you can break text logically into smaller sections, the extra
+spacing and distinct fonts associated with headings
+will help readers scan content and find entry points, per [./styleguide/scannable-content/headings.md](./styleguide/scannable-content/headings.md)
+  - MUST use ATX style (`#`) only. Sentence case is required (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`. 
+  - A single space MUST follow the `#`. A single blank line MUST precede and follow each heading. 
+  - Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden. 
+  - Headings MUST NOT contain bold or other inline formatting. 
+  - Each document MUST have exactly one H1 heading , serving as the document title. 
+  - Skip end punctuation for headings (per `styleguide/punctuation/`). 
+  - Headers must adequately describe the content under them. Headers can either follow the [guidelines for writing titles](/contributing/style-guide-and-content-model/contents-of-a-github-docs-article#titles) or can be written as questions. 
+  - You can use H3 and H4 level headers to further organize content into related groups, but you cannot skip header levels. 
+  - There must be text content between a header and subheader, such as an introduction. per [./contributing/style-guide-and-content-model/style-guide.md#headers](./contributing/style-guide-and-content-model/style-guide.md#headers).
+- **Paragraphs:** Separate consecutive paragraphs with a single blank line. Line length SHOULD be limited to approximately 100 characters. Avoid multiple consecutive blank lines, per [](./styleguide/scannable-content/index.md).
 - **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Use emphasis sparingly for highlighting key terms or concepts.
 - **Lists:**
   - Unordered lists MUST use an asterisk (`*`) followed by a space for each item. Using hyphens (`-`) or plus signs (`+`) is forbidden.
@@ -455,9 +467,9 @@ These rules define the required syntax for standard Markdown elements, incorpora
 
 ### B. Custom Course Component Definitions
 
-These components utilize specific Markdown conventions (primarily blockquotes) to create standardized elements for pedagogical purposes.
+These components utilize specific Markdown conventions to create standardized elements for pedagogical purposes.
 
-- **Callouts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts.
+- **Callouts (Note, Tip, Important, Caution, Warning):** Based on established conventions for technical documentation alerts (see `./contributing/style-guide-and-content-model/style-guide.md`).
 
   - **Syntax and Purpose:**
 
