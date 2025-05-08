@@ -401,69 +401,61 @@ This section defines the mandatory patterns and standards for all markdown eleme
 
 ### A. Core Markdown Syntax Rules
 
-These rules define the required syntax for standard Markdown elements, incorporating MSWSG and [GitHub Docs](./contributing/style-guide-and-content-model/style-guide.md) guidelines.
+These rules define the required syntax for standard Markdown elements, incorporating MSWSG and [GitHub Docs](./contributing/style-guide-and-content-model/style-guide.md) guidelines. All Markdown documentation MUST be automatically formatted using Prettier with its default configuration. The following rules supplement Prettier's formatting by defining content structure, style, and areas where Prettier's defaults are to be adhered to or where manual attention is still required. Prettier's default settings for Markdown include `proseWrap: "preserve"` (meaning it does not re-wrap paragraph text) and `tabWidth: 2`.
 
 - **Headings:** Headings provide both structure and visual points of reference to help readers scan content. If
-you can break text logically into smaller sections, the extra
-spacing and distinct fonts associated with headings
-will help readers scan content and find entry points, per [./styleguide/scannable-content/headings.md](./styleguide/scannable-content/headings.md)
-  - MUST use ATX style (`#`) only. Sentence case is required (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`. 
-  - A single space MUST follow the `#`. A single blank line MUST precede and follow each heading. 
-  - Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden. 
-  - Headings MUST NOT contain bold or other inline formatting. 
-  - Each document MUST have exactly one H1 heading , serving as the document title. 
-  - Skip end punctuation for headings (per `styleguide/punctuation/`). 
-  - Headers must adequately describe the content under them. Headers can either follow the [guidelines for writing titles](/contributing/style-guide-and-content-model/contents-of-a-github-docs-article#titles) or can be written as questions. 
-  - You can use H3 and H4 level headers to further organize content into related groups, but you cannot skip header levels. 
+  you can break text logically into smaller sections, the extra
+  spacing and distinct fonts associated with headings
+  will help readers scan content and find entry points, per [](./styleguide/scannable-content/headings.md)
+  - MUST use ATX style (`#`) only. Prettier will enforce a single space following the `#`.
+  - Sentence case is required for headings (capitalize only the first word and proper nouns), per `styleguide/capitalization.md`.
+  - Prettier will enforce single blank lines preceding and following each heading.
+  - Heading levels MUST increment by one (e.g., H2 follows H1, H3 follows H2); skipping levels is forbidden.
+  - Headings MUST NOT contain bold or other inline formatting.
+  - Each document MUST have exactly one H1 heading , serving as the document title.
+  - Skip end punctuation for headings (per `styleguide/punctuation/`).
+  - Headers must adequately describe the content under them. Headers can either follow the [guidelines for writing titles](/contributing/style-guide-and-content-model/contents-of-a-github-docs-article#titles) or can be written as questions.
+  - You can use H3 and H4 level headers to further organize content into related groups, but you cannot skip header levels.
   - There must be text content between a header and subheader, such as an introduction. per [./contributing/style-guide-and-content-model/style-guide.md#headers](./contributing/style-guide-and-content-model/style-guide.md#headers).
-- **Paragraphs:** Separate consecutive paragraphs with a single blank line. Line length SHOULD be limited to approximately 100 characters. Avoid multiple consecutive blank lines, per [](./styleguide/scannable-content/index.md).
-- **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Use emphasis sparingly for highlighting key terms or concepts.
+- **Paragraphs:** Prettier will enforce separation of consecutive paragraphs with a single blank line and will collapse multiple consecutive blank lines.
+  - While Prettier's default `proseWrap: "preserve"` setting means it will not automatically re-wrap paragraph lines, authors SHOULD manually aim for a line length of approximately 100 characters for readability. Avoid manually creating overly long lines.
+- **Emphasis:** Use `**bold**` for bold text (double asterisks). Use `*italic*` for italic text (single asterisk). Use `***bold and italic***` for combined emphasis. To display literal asterisks, escape them with a backslash (`\*`). Prettier will preserve this formatting. Use emphasis sparingly for highlighting key terms or concepts.
 - **Lists:**
-  - Unordered lists MUST use an asterisk (`*`) followed by a space for each item. Using hyphens (`-`) or plus signs (`+`) is forbidden.
-  - Ordered lists MUST use the format `1.` followed by a space for each item. Using the same number (e.g., `1.`) for all items ("lazy numbering") is acceptable for long lists, as Markdown renders sequential numbers.
-  - Nested lists MUST be indented by exactly 4 spaces relative to the parent item.
-  - A single blank line MUST precede and follow the entire list block (both ordered and unordered).
+  - Unordered lists MUST use a hyphen (`-`) followed by a space for each item. Prettier will enforce this style.
+  - Ordered lists MUST use the format `1.` (or other sequential numbers like `0.`, `2.`) followed by a space for each item. Prettier will format ordered lists, potentially re-numbering them sequentially if lazy numbering (e.g., all `1.`) was used.
+  - Nested lists will be indented by Prettier. With the default `tabWidth: 2`, this typically results in a 2-space indent for nested list items, though Prettier may use 4 spaces in certain contexts (e.g., loose lists) to maintain clarity. The formatting applied by Prettier is the standard.
+  - Prettier will ensure a single blank line precedes and follows the entire list block (both ordered and unordered).
   - Skip end punctuation for list items that are three words or fewer (per `styleguide/top-10-tips-style-voice.md`).
   - Always use the serial (Oxford) comma when list items involve conjunctions (per `styleguide/punctuation/commas.md`).
-  - Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items.
+  - Task lists MUST use the syntax `- [ ]` for incomplete items and `- [x]` for completed items. Prettier will format these using `-` as the bullet marker.
 - **Links:**
-  - Use inline link syntax `(URL)` for most links.
+  - Use inline link syntax `(URL)` for most links. Prettier will ensure this syntax is correctly formatted.
   - Link text MUST be descriptive and clearly indicate the destination's content. Avoid generic phrases like "click here" or "read more". This improves accessibility and context. See `styleguide/urls-web-addresses.md`.
   - External links MUST use the full absolute URL, omitting `https://` unless the protocol differs (e.g., `ftp://`). Omit trailing slashes where possible. See `styleguide/urls-web-addresses.md`.
   - Internal links to other markdown files within the same course module directory MUST use relative paths, e.g., `(./section-3-setup.md)`. Links _between_ modules should generally be avoided or use a placeholder mechanism if necessary, assuming the final platform handles inter-module navigation.
-  - Reference-style links (`[link text][ref-id]` with `[ref-id]: URL "Optional Title"` defined elsewhere, typically at the section's end) MAY be used sparingly if a URL is very long and repeated multiple times, or to significantly improve paragraph readability.
+  - Reference-style links (`[link text][ref-id]` with `[ref-id]: URL "Optional Title"` defined elsewhere, typically at the section's end) MAY be used sparingly if a URL is very long and repeated multiple times, or to significantly improve paragraph readability. Prettier will format reference-style links correctly.
   - An abundance of links, especially to official documentation (React Native, Expo, MDN, library docs), is REQUIRED.
 - **Images:**
-  - Use the syntax `!(URL "Optional Title")`. The URL MUST point to an image file stored within a designated course assets directory (structure to be defined, e.g., `./assets/images/module-3/setup-screenshot.png`).
+  - Use the syntax `!(URL "Optional Title")`. Prettier will ensure this syntax and appropriate blank lines around image markdown are correctly formatted. The URL MUST point to an image file stored within a designated course assets directory (structure to be defined, e.g., `./assets/images/module-3/setup-screenshot.png`).
   - `Alt Text` is MANDATORY and MUST provide a concise, descriptive alternative for screen readers and cases where the image doesn't load.
-  - A single blank line MUST precede and follow the image markdown line.
   - Every image MUST be immediately followed by a brief paragraph serving as a caption, explaining the image's context or highlighting key elements.
 - **Code Blocks:**
-  - MUST use fenced code blocks (triple backticks ```) exclusively. Indented code blocks are forbidden.
+  - MUST use fenced code blocks (triple backticks ```) exclusively. Indented code blocks are forbidden. Prettier enforces the use of fenced code blocks.
   - A language identifier (e.g., `tsx`,`javascript`, ```bash`,`json`,`mermaid`) MUST be included immediately after the opening backticks.
-  - Inline code snippets within paragraphs MUST use single backticks (`code`).
-  - Multiple consecutive blank lines within a code block are forbidden as they can break rendering or formatting.
+  - Prettier, with its default `embeddedLanguageFormatting: "auto"` setting, will format the code within fenced code blocks according to its rules for the specified language (e.g., JavaScript, TypeScript, JSON), which includes collapsing excessive blank lines according to the language's style.
+  - Inline code snippets within paragraphs MUST use single backticks (`code`). Prettier will preserve this formatting.
   - Follow specific formatting guidelines from `styleguide/developer-content/`.
 - **Tables:**
-  - MUST use the pipe (`|`) and hyphen (`-`) syntax for defining headers and rows.
-  - A single blank line MUST precede the table markdown.
-  - For source code readability, columns SHOULD be aligned using spaces, although rendering depends on the Markdown processor.
+  - MUST use the pipe (`|`) and hyphen (`-`) syntax for defining headers and rows. Prettier will automatically align columns in tables using spaces for improved source code readability and ensure a blank line precedes table markdown.
   - Tables are appropriate for presenting structured, comparable data. Avoid complex content like multiple paragraphs, nested lists, or code blocks within table cells; use alternative formatting (headings, lists, paragraphs) if content is too complex for a simple table structure.
   - Every table MUST be preceded by a brief introductory sentence explaining its purpose and summarizing its content.
   - Column headers MUST be concise, descriptive, and specific.
 - **Blockquotes:**
-  - Use the `>` character followed by a space at the beginning of each line.
-  - For blockquotes spanning multiple paragraphs, each paragraph MUST be prefixed with `. A blank line prefixed with `>` can separate paragraphs within the quote.
+  - Use the `>` character followed by a space at the beginning of each line. Prettier will ensure correct formatting of blockquotes, including the `>` marker and spacing for single or multiple paragraphs.
   - Standard blockquotes should be used only for actual quotations from external sources. For other highlighted information, use the custom Callout components defined below.
 - **Horizontal Rules:**
-  - Use three consecutive hyphens (`---`) on a line by themselves.
-  - A single blank line MUST precede and follow the horizontal rule.
+  - Use three consecutive hyphens (`---`) on a line by themselves. Prettier will enforce this style and ensure a single blank line precedes and follows horizontal rules.
   - Use sparingly, primarily to indicate a major thematic break within a very long section where a subheading isn't appropriate.
-- **Numbers:** Numbers in text MUST follow MSWSG rules (spell out 0-9, numerals for 10+, exceptions). See `styleguide/numbers.md`.
-- **Acronyms:** Acronyms MUST be defined on first use (spelled-out term followed by acronym in parentheses) unless extremely common, per MSWSG rules. See `styleguide/acronyms.md`.
-- **Developer Element Formatting:** Consistently format developer-specific text elements according to `styleguide/developer-content/formatting-developer-text-elements.md`. Key conventions relevant to this course include:
-  - **Bold:** Use for keywords (e.g., `const`, `function`), predefined classes/types (e.g., `string`, `View`, `StyleSheet`), methods/functions (e.g., `.map()`, `useState()`), properties/props (e.g., `style`, `onPress`), component names (e.g., `<Button>`). Capitalization MUST match the actual element.
-  - _Italic:_ Use for parameters (e.g., _userId_, _options_) and placeholders (e.g., _your-app-name_).
 
 ### B. Custom Course Component Definitions
 
@@ -489,16 +481,18 @@ These components utilize specific Markdown conventions to create standardized el
             > Essential information required for user success or understanding. Use for critical concepts, prerequisites, setup steps, or core requirements.
             ```
             *   **Usage Context:** To highlight non-negotiable requirements or foundational knowledge.
-        -   **CAUTION:**
-            ```
-            > [!CAUTION]
-            > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
-            ```
-            *   **Usage Context:** To advise care when performing actions that could lead to minor problems if done incorrectly.
-        -   **WARNING:**
-            ```
-            > [!WARNING]
-            > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
+
+      - **CAUTION:**
+        ```
+        > [!CAUTION]
+        > Negative potential consequences of an action that are generally recoverable. Use for actions that might lead to errors, performance issues, unexpected behavior, or minor data inconsistencies if instructions aren't followed carefully.
+        ```
+        - **Usage Context:** To advise care when performing actions that could lead to minor problems if done incorrectly.
+      - **WARNING:**
+        ```
+        > [!WARNING]
+        > Negative potential consequences of an action that may be severe or non-recoverable. Use for critical security advice, actions with irreversible consequences (data loss), major pitfalls, or steps that could render the application unusable.
+        ```
 
   - **Usage Rules:** Use callouts judiciously to avoid cluttering the content. They should highlight information, not contain core instruction. Content within callouts MUST be concise and directly related to the callout type. The `>` tag MUST be on its own line. All subsequent lines of the callout content MUST start with `. Paragraph breaks within a callout can be achieved using a line containing only `.
 
@@ -516,7 +510,7 @@ These components utilize specific Markdown conventions to create standardized el
         > **Example: (Optional)** Provide a very brief native code snippet (conceptual) or analogy relevant to the target background.
 
   - **Usage Rules:** MUST be used immediately following the primary explanation of a core React Native concept where a significant difference or potential point of confusion exists for one or more of the specified target backgrounds (Native Android, Native iOS, Web React, Web Angular). The `(Target Audience)` MUST be specified accurately (e.g., `(iOS Developers)`, `(Android Developers)`, `(React Developers)`, `(Angular Developers)`). If applicable to both native platforms, use `(Native Developers)`. If applicable to both web frameworks, use `(Web Developers)`. Separate notes may be needed if the comparison points differ significantly. Content MUST be focused on comparison and clarification, avoiding redundant explanation of the core concept itself. Use specific emoji's to help draw the attention of the `(Target Audience)`. Use 🍏 for iOS Developers, use 🤖 for Android, use 📲 for Native Developers, use ⚛️ for React Developers, use 🅰 for Angular Developers, and use 🌐 for Web Developers. MUST include links to official documentation and other trusted sources for further details around concepts related to the target background (Android, iOS, React, Angular).
-    -   **Usage Context:** Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified.
+    - **Usage Context:** Immediately after explaining a core RN concept with significant differences from Native (Android/iOS), Web React, or Web Angular paradigms. Target audience MUST be specified.
 
 - **Learning Path Guidance:** Provides context or direction specific to the different ways learners might engage with the course (Instructor-Led, Self-Led, Asynchronous).
 
@@ -667,10 +661,10 @@ _The inclusion of Table IV.1 provides authors with a quick, accessible reference
 
 To ensure clarity, consistency, and pedagogical effectiveness within each section, content MUST be categorized and structured according to the following defined content types, inspired by established documentation models. Sections will typically combine multiple content types.
 
--   **Conceptual Content:** Explains fundamental concepts, theories, "under the hood" mechanisms, purpose, and importance. This type answers "What is it?" and "Why does it matter?". It includes explanatory paragraphs, overviews, and detailed breakdowns of how things work.
--   **Procedural Content:** Provides step-by-step instructions for completing specific tasks or workflows. This type answers "How do I do it?". It includes numbered steps, command-line instructions, and code examples that demonstrate a sequence of actions. Exercises and Challenges are larger-scale applications of procedural content.
--   **Referential Content:** Presents structured, detailed information about APIs, components, props, types, configuration options, or terminology. This type answers "What are the details?". It includes API descriptions, parameter lists, tables, and definitions.
--   **Troubleshooting Content:** Addresses common issues, errors, and unexpected behavior, providing solutions or workarounds. This type answers "What went wrong?" and "How do I fix it?". It includes descriptions of problems, error messages, and resolution steps.
+- **Conceptual Content:** Explains fundamental concepts, theories, "under the hood" mechanisms, purpose, and importance. This type answers "What is it?" and "Why does it matter?". It includes explanatory paragraphs, overviews, and detailed breakdowns of how things work.
+- **Procedural Content:** Provides step-by-step instructions for completing specific tasks or workflows. This type answers "How do I do it?". It includes numbered steps, command-line instructions, and code examples that demonstrate a sequence of actions. Exercises and Challenges are larger-scale applications of procedural content.
+- **Referential Content:** Presents structured, detailed information about APIs, components, props, types, configuration options, or terminology. This type answers "What are the details?". It includes API descriptions, parameter lists, tables, and definitions.
+- **Troubleshooting Content:** Addresses common issues, errors, and unexpected behavior, providing solutions or workarounds. This type answers "What went wrong?" and "How do I fix it?". It includes descriptions of problems, error messages, and resolution steps.
 
 These content types provide a framework for organizing information logically within sections, ensuring that learners can easily find explanations, instructions, reference details, and help with problems.
 
@@ -702,15 +696,15 @@ Each section within a module MUST adhere to the following structure and content 
 1.  **Section Title:** H2 or H3 heading (`## Section X: Title` or `### Subsection Y: Title`), matching the finalized outline (III.B).
 2.  **Section Introduction:** 1-2 sentences clearly stating the purpose or topic of the section.
 3.  **Core Content (Ordered by Content Type):** The main explanatory text, definitions, concepts, procedures, etc., organized according to the content types defined in Section IV.F. Content within this block MUST follow this general order, though not all types will be present in every section:
-    *   **Conceptual Content:** Overviews, explanations, "under the hood" details, purpose, importance, use cases. (See IV.F)
-        *   *Includes:* Explanatory paragraphs, diagrams (IV.C) illustrating concepts or flows, "Background Bridge Notes" (IV.B), relevant Callouts (IV.B), Learning Path Guidance (IV.B).
-    *   **Referential Content:** Detailed information about APIs, components, props, types, configuration, terminology. (See IV.F)
-        *   *Includes:* API/Component/Hook Explanations (covering Purpose, Syntax, Parameters/Props, Return Value, Usage/Remarks), tables (IV.A), definitions, "Official Documentation Link Box" (IV.B).
-    *   **Prerequisites (for this section's procedures/exercises):** A brief list or paragraph outlining necessary prior knowledge or setup specifically required for the procedural content or exercise within *this* section. MUST be placed immediately before the relevant procedural steps or the link to the exercise. (See V.C for more details).
-    *   **Procedural Content:** Step-by-step instructions for tasks, code implementation steps. (See IV.F)
-        *   *Includes:* Numbered steps (IV.A), command-line instructions, Code Examples (IV.D) demonstrating procedures, diagrams (IV.C) illustrating workflows.
-    *   **Troubleshooting Content:** Common issues, errors, and solutions related to the section's topic or procedures. (See IV.F)
-        *   *Includes:* Descriptions of problems, error messages, resolution steps, troubleshooting tips integrated near relevant procedural content.
+    - **Conceptual Content:** Overviews, explanations, "under the hood" details, purpose, importance, use cases. (See IV.F)
+      - _Includes:_ Explanatory paragraphs, diagrams (IV.C) illustrating concepts or flows, "Background Bridge Notes" (IV.B), relevant Callouts (IV.B), Learning Path Guidance (IV.B).
+    - **Referential Content:** Detailed information about APIs, components, props, types, configuration, terminology. (See IV.F)
+      - _Includes:_ API/Component/Hook Explanations (covering Purpose, Syntax, Parameters/Props, Return Value, Usage/Remarks), tables (IV.A), definitions, "Official Documentation Link Box" (IV.B).
+    - **Prerequisites (for this section's procedures/exercises):** A brief list or paragraph outlining necessary prior knowledge or setup specifically required for the procedural content or exercise within _this_ section. MUST be placed immediately before the relevant procedural steps or the link to the exercise. (See V.C for more details).
+    - **Procedural Content:** Step-by-step instructions for tasks, code implementation steps. (See IV.F)
+      - _Includes:_ Numbered steps (IV.A), command-line instructions, Code Examples (IV.D) demonstrating procedures, diagrams (IV.C) illustrating workflows.
+    - **Troubleshooting Content:** Common issues, errors, and solutions related to the section's topic or procedures. (See IV.F)
+      - _Includes:_ Descriptions of problems, error messages, resolution steps, troubleshooting tips integrated near relevant procedural content.
 4.  **Section Exercise (If applicable):** A link to the section's associated exercise, placed after the core content block. Format: `**(URL_to_Tool)**` (See Section VI). Exercises are placed according to the finalized outline (III.B).
 5.  **Next Steps (Optional):** A brief list or paragraph suggesting logical follow-up actions or linking to related sections/modules within the course. Use for internal course navigation guidance.
 6.  **Additional Resources (Optional):** A bulleted list of high-quality, supplementary external resources (e.g., key blog posts, conference talks, community libraries) relevant to the section's topic. Use for external learning guidance.
