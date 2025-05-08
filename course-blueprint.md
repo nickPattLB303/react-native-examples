@@ -727,11 +727,11 @@ Visual elements are crucial for clarifying complex information and engaging lear
 
 ### D. Code Example Standards
 
-Code examples are critical learning tools and MUST adhere to the following standards, guided by MSWSG ([Code examples in developer content](./styleguide/developer-content/code-examples.md)) and pedagogical best practices. The goal is clarity, accuracy, reusability, and relevance to the course's capstone theme (SpeedyMeds). As established in Section IV.A, Prettier will automatically format the Markdown document, which includes formatting the code within fenced code blocks according to standard rules for the specified language (due to `embeddedLanguageFormatting: "auto"`). Authors are responsible for the code's logical correctness, adherence to the example's purpose, and the clarity of variable/function names and overall structure, which Prettier does not enforce.
+Code examples are critical learning tools and MUST adhere to the following standards, guided by MSWSG ([Code examples in developer content](./styleguide/developer-content/code-examples.md)), the general philosophy of [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples), and pedagogical best practices. The fundamental Markdown syntax for code is detailed in Section IV.A.7 and the [GitHub Flavored Markdown Spec - Code Blocks](https://github.github.com/gfm/#fenced-code-blocks). The goal is clarity, accuracy, reusability, and relevance to the course's capstone theme (SpeedyMeds). As established in Section IV.A, Prettier will automatically format the Markdown document, which includes formatting the code within fenced code blocks according to standard rules for the specified language (due to `embeddedLanguageFormatting: "auto"`). Authors are responsible for the code's logical correctness, adherence to the example's purpose, and the clarity of variable/function names and overall structure, which Prettier does not enforce.
 
 **1. General Principles:**
 
-- **Purposeful Scenarios:** Examples MUST illustrate meaningful developer tasks and scenarios relevant to the SpeedyMeds theme, not contrived or obvious points, as per guidance in [Code examples in developer content](./styleguide/developer-content/code-examples.md).
+- **Purposeful Scenarios:** Examples MUST illustrate meaningful developer tasks and scenarios relevant to the SpeedyMeds theme, not contrived or obvious points, as per guidance in [Code examples in developer content](./styleguide/developer-content/code-examples.md) and in line with the contextual advice in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples).
 - **Gradual Complexity:** Start with simple examples and build complexity incrementally as concepts are layered. Prioritize frequently used or potentially difficult elements.
 - **Accuracy and Testing:** All code examples MUST be compiled, tested, and verified against the target technology versions.
 - **Readability and Formatting:** While Prettier handles automated formatting, code MUST also be inherently readable through meaningful names for variables, functions, etc., following advice from [Code examples in developer content](./styleguide/developer-content/code-examples.md).
@@ -740,10 +740,11 @@ Code examples are critical learning tools and MUST adhere to the following stand
 - **Expo Focus:** Default to Expo libraries/APIs when available. Use core React Native APIs for fundamental concepts or where no Expo equivalent exists.
 - **Capstone Relation:** All examples (beyond basic syntax illustration) MUST relate contextually to the SpeedyMeds theme (variables, component names, scenarios).
 - **Copy/Run Capability:** Provide easy ways for learners to copy code. For long examples, use Expo Snack or CodeSandbox as appropriate (See Section VI).
+- **Copy-Paste Integrity:** Code blocks (inline, short, or long) MUST only contain information that the reader can type or copy and paste directly. Avoid including non-executable explanations or prompts within the code itself, as per [Code blocks section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#code-blocks).
 
 **2. Example Types and Usage:**
 
-This blueprint defines three tiers of code examples, each with specific usage contexts and documentation requirements. An abundance of _Inline_ and _Short, Self-Contained_ examples is MANDATORY, especially when introducing new concepts, syntax, or APIs.
+This blueprint defines three tiers of code examples, each with specific usage contexts and documentation requirements. The fundamental Markdown syntax for both inline code (single backticks) and fenced code blocks (triple backticks with language identifiers) is covered in Section IV.A.7 and detailed in [GitHub Basic Formatting Syntax - Quoting Code](./getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.md#quoting-code). An abundance of _Inline_ and _Short, Self-Contained_ examples is MANDATORY, especially when introducing new concepts, syntax, or APIs.
 
 - **a) Inline Code Snippets (`code`):**
 
@@ -756,8 +757,8 @@ This blueprint defines three tiers of code examples, each with specific usage co
 - **b) Short, Self-Contained Examples:**
 
   - **Purpose:** To demonstrate a single, focused concept, API usage, or technique in a runnable context. Illustrates _how_ to use a specific element introduced in the text.
-  - **Usage:** Use frequently after explaining a core concept, component, hook, or API. Ideal for showing the basic implementation of a feature.
-  - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). Prettier will format the code within these blocks. MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals).
+  - **Usage:** Mandatory after explaining a core concept, component, hook, or API. Ideal for showing the basic implementation of a feature.
+  - **Format:** Use fenced code blocks (```) with the correct language identifier (`tsx`, `typescript`, `json`, `bash`, etc.). Prettier will format the code within these blocks. MUST be runnable in the appropriate tool (Expo Snack for RN, CodeSandbox for JS/TS/React fundamentals), aligning with guidance in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples) on providing self-contained, runnable examples.
   - **Explanation:**
     - MUST be preceded by a single sentence introducing the example's specific purpose (e.g., "This example shows how to fetch data using `useEffect`.").
     - MUST be followed by a focused explanation (approx. 50-100 words) clarifying the key parts of the code, the concept demonstrated, and the expected outcome. This explanation focuses only on the new concept being shown and should be written clearly and concisely, per [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
@@ -768,12 +769,11 @@ This blueprint defines three tiers of code examples, each with specific usage co
 - **c) Long Samples:**
   - **Purpose:** To illustrate multiple features working together, complex scenarios, architectural patterns, or best practices. Often integrates several concepts covered previously.
   - **Usage:** Use more sparingly than short examples. Reserve for the end of sections covering multiple related topics, end-of-module examples, or dedicated walkthroughs/tutorials. Avoid using long samples to introduce fundamental concepts.
-  - **Format:** Use fenced code blocks (```) with the correct language identifier. Prettier will format the code within these blocks. MUST be runnable (Expo Snack/CodeSandbox). May be accompanied by helper files or setup instructions if necessary.
+  - **Format:** Use fenced code blocks (```) with the correct language identifier. Prettier will format the code within these blocks. MUST be runnable (Expo Snack/CodeSandbox), aligning with guidance in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples) on providing self-contained, runnable examples. May be accompanied by helper files or setup instructions if necessary.
   - **Explanation:**
-    - MUST be preceded by an introduction describing the scenario, requirements, dependencies, and what the sample demonstrates.
+    - MUST be preceded by an introduction describing the scenario, requirements, dependencies, and what the sample demonstrates. If the sample is an excerpt or part of a larger setup, ensure sufficient context is provided for understanding, as advised in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples) and [Code blocks section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#code-blocks).
     - MUST be followed by a detailed text description (minimum 200 words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome, and link to relevant APIs/docs. This text should also be clear and concise, following [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
-    - JSDoc comments (`/** ... */`) are MANDATORY within the code for all exported functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc. Prettier can fix the indentation of JSDoc-style comments.
-    - Inline comments (`//`) SHOULD be used judiciously to clarify non-obvious logic. Do not comment on the obvious (see [Code examples in developer content](./styleguide/developer-content/code-examples.md)). Prettier generally leaves the content of inline comments as-is, but their placement might shift if Prettier reflows the code around them. Authors should verify comment placement after formatting, especially for "magic comments" like `eslint-disable-next-line`.
+    - JSDoc comments (`/** ... */`):\** Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc. Prettier can fix the indentation of JSDoc-style comments.
   - **Example Context:** After covering `useState`, `useEffect`, `FlatList`, and basic styling, a long sample could show a screen component that fetches a list of medications from a mock API, stores it in state, and renders it using `FlatList`, applying styles from `StyleSheet`. The detailed explanation would cover how these pieces work together.
 
 **3. Comments and Explanations:**
