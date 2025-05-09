@@ -73,31 +73,31 @@ Key principles and mandatory rules include:
 
 Consistency in terminology is paramount. The following terms MUST be used consistently throughout the documentation. Usage should also align with the [Microsoft Writing Style Guide A-Z word list](./styleguide/a-z-word-list-term-collections/).
 
-- **React Native:** The framework itself.
-- **Expo:** The platform/toolset used for development and building. Refer to specific Expo modules (e.g., `expo-camera`, Expo Router) when discussing them.
-- **Component:** Reusable UI building blocks (React concept). Distinguish between Core Components (provided by React Native, e.g., `<View>`, `<Text>`) and Custom Components (created by developers).
-- **Hook:** Functions allowing functional components to use state and lifecycle features (React concept). Distinguish between Core Hooks (provided by React, e.g., `useState`, `useEffect`) and Custom Hooks.
-- **Props:** (Properties) Data passed down from parent to child components.
-- **State:** Data managed within a component that can change over time.
-- **Native Modules:** Platform-specific code (Swift/Objective-C for iOS, Kotlin/Java for Android) bridged for use in React Native. Distinguish from JavaScript modules. Use "TurboModules" when specifically discussing the New Architecture's native modules.
-- **JSI (JavaScript Interface):** The C++ layer enabling synchronous communication between JavaScript and native code in the New Architecture. Explain this replaces the asynchronous "Bridge" of the legacy architecture.
-- **Fabric:** The New Architecture's rendering system.
-- **Codegen:** The tool generating interface code between JS/TS and native modules in the New Architecture.
-- **Expo Go:** The client app used for development and testing Expo projects without native builds.
-- **Simulator (iOS) / Emulator (Android):** Software for running mobile apps on a desktop. Course focuses on iOS Simulator.
-- **StyleSheet:** React Native's API for creating styles.
-- **Styled Components:** The specific CSS-in-JS library used for styling.
-- **React Native Paper:** The specific UI component library used.
-- **TanStack Query (useQuery):** The library used for server state management.
-- **Zustand:** The library used for client state management (alternative to Context API).
-- **Context API:** React's built-in state management solution.
-- **Expo Router:** File-based routing solution built on React Navigation.
-- **React Navigation:** Library for handling navigation stacks, tabs, drawers.
-- **Exercise:** Short, focused practice activity (15-20 mins).
-- **Challenge:** More complex application of concepts (30-60 mins).
-- **Module:** A major topical unit of the course.
-- **Section:** A subdivision within a module, focusing on a specific concept or API.
-- **Sign in / Sign out:** Preferred over "Log in / Log out".
+- `React Native`: The framework itself.
+- `Expo`: The platform/toolset used for development and building. Refer to specific Expo modules (e.g., `expo-camera`, Expo Router) when discussing them.
+- `Component`: Reusable UI building blocks (React concept). Distinguish between Core Components (provided by React Native, e.g., `<View>`, `<Text>`) and Custom Components (created by developers).
+- `Hook`: Functions allowing functional components to use state and lifecycle features (React concept). Distinguish between Core Hooks (provided by React, e.g., `useState`, `useEffect`) and Custom Hooks.
+- `Props`: (Properties) Data passed down from parent to child components.
+- `State`: Data managed within a component that can change over time.
+- `Native Modules`: Platform-specific code (Swift/Objective-C for iOS, Kotlin/Java for Android) bridged for use in React Native. Distinguish from JavaScript modules. Use "TurboModules" when specifically discussing the New Architecture's native modules.
+- `JSI (JavaScript Interface)`: The C++ layer enabling synchronous communication between JavaScript and native code in the New Architecture. Explain this replaces the asynchronous "Bridge" of the legacy architecture.
+- `Fabric`: The New Architecture's rendering system.
+- `Codegen`: The tool generating interface code between JS/TS and native modules in the New Architecture.
+- `Expo Go`: The client app used for development and testing Expo projects without native builds.
+- `Simulator (iOS) / Emulator (Android)`: Software for running mobile apps on a desktop. Course focuses on iOS Simulator.
+- `StyleSheet`: React Native's API for creating styles.
+- `Styled Components`: The specific CSS-in-JS library used for styling.
+- `React Native Paper`: The specific UI component library used.
+- `TanStack Query (useQuery)`: The library used for server state management.
+- `Zustand`: The library used for client state management (alternative to Context API).
+- `Context API`: React's built-in state management solution.
+- `Expo Router`: File-based routing solution built on React Navigation.
+- `React Navigation`: Library for handling navigation stacks, tabs, drawers.
+- `Exercise`: Short, focused practice activity (15-20 mins).
+- `Challenge`: More complex application of concepts (30-60 mins).
+- `Module`: A major topical unit of the course.
+- `Section`: A subdivision within a module, focusing on a specific concept or API.
+- `Sign in / Sign out`: Preferred over "Log in / Log out".
 
 _(This dictionary should be expanded as more specific terms arise during content development. Always check the MSWSG A-Z list for preferred terminology.)_
 
@@ -553,7 +553,7 @@ These rules define the required syntax for standard Markdown elements, incorpora
   - **Alignment:** Use Markdown alignment syntax in the separator line (`:---` for left, `:---:` for center, `---:` for right) to control column alignment. Default to left-alignment. Center-align columns containing only symbols or very short, uniform data. Reference [Align table content consistently section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#align-table-content-consistently).
 - **Blockquotes:**
   - Use the `>` character followed by a space at the beginning of each line. Prettier will ensure correct formatting of blockquotes, including the `>` marker and spacing for single or multiple paragraphs.
-  - Standard blockquotes should be used only for actual quotations from external sources. For other highlighted information, use the custom Callout components defined below (Section IV.B).
+  - Standard blockquotes should be used only for actual quotations from external sources. For other highlighted information, the blockquote syntax (`>`) is used for the custom Callout components defined below (Section IV.B).
 - **Horizontal Rules:**
   - Use three consecutive hyphens (`---`) on a line by themselves. Prettier will enforce this style and ensure a single blank line precedes and follows horizontal rules.
   - Use sparingly, primarily to indicate a major thematic break within a very long section where a subheading isn't appropriate.
@@ -791,6 +791,8 @@ By defining these tiers and adjusting documentation requirements, the blueprint 
 
 ### E. Mandatory Table: Custom Markdown Component Reference
 
+The following table provides a quick, accessible reference for implementing the essential custom components correctly, reinforcing consistency and adherence to the blueprint's pedagogical adaptations.
+
 **Table IV.1: Custom Markdown Component Reference**
 
 | **Component Name**         | **Purpose**                                                                                      | **Markdown Syntax Example**                                                                                                                    | **Required Usage Context**                                                                                                                                                     |
@@ -944,6 +946,8 @@ To ensure consistency, manageability, and pedagogical appropriateness, the follo
 
 ### D. Mandatory Table: Activity Tooling Matrix
 
+The following table provides unambiguous guidance on tool selection for practical activities, ensuring consistency and leveraging the strengths of each platform for its intended purpose.
+
 **Table VI.1: Activity Tooling Matrix**
 
 | **Module Category**               | **Activity Type**                  | **Mandatory Tool**   | **Rationale**                                                 | **Key Implementation Rules**                                     |
@@ -978,11 +982,11 @@ Modifications to this blueprint may become necessary over time due to significan
 
 Adherence to this blueprint is mandatory and MUST be verified throughout the content creation lifecycle. Specific checkpoints include:
 
-- **Author Self-Check:** Content creators are responsible for understanding and applying these standards.
-- **Peer Review:** Colleagues should review content specifically against blueprint requirements.
-- **Subject Matter Expert (SME) Review:** SMEs verify technical accuracy _and_ adherence to specified patterns (e.g., code standards, "under the hood" explanations).
-- **Instructional Design (ID) Review:** ID reviewers verify pedagogical soundness, clarity, consistency, and correct implementation of learner adaptation elements.
-- **Checklists:** Standardized review checklists derived directly from this blueprint MUST be used in all review phases to ensure systematic and thorough verification.
+- `Author Self-Check`: Content creators are responsible for understanding and applying these standards.
+- `Peer Review`: Colleagues should review content specifically against blueprint requirements.
+- `Subject Matter Expert (SME) Review`: SMEs verify technical accuracy _and_ adherence to specified patterns (e.g., code standards, "under the hood" explanations).
+- `Instructional Design (ID) Review`: ID reviewers verify pedagogical soundness, clarity, consistency, and correct implementation of learner adaptation elements.
+- `Checklists`: Standardized review checklists derived directly from this blueprint MUST be used in all review phases to ensure systematic and thorough verification.
 
 The establishment of this blueprint as a definitive guide, coupled with a controlled update process and rigorous enforcement through structured review processes, is essential for achieving the desired quality and consistency. While labeled "immutable" to emphasize its authority, the provision for formal updates acknowledges the dynamic nature of the subject matter. The success of the blueprint ultimately depends not just on its content, but on the commitment to its enforcement during the development and review cycles. Utilizing checklists derived from this document will be instrumental in making the enforcement process practical and effective, ensuring that all contributors adhere to the established standards.
 
