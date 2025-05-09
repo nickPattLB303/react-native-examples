@@ -39,7 +39,11 @@ The course documentation adheres to established instructional design principles 
 
 ### B. Technical Writing Principles (Microsoft Writing Style Guide)
 
-All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Consult the [styleguide/](./styleguide/) directory and [styleguide/TOC.md](./styleguide/TOC.md) for detailed rules. Key principles and mandatory rules include:
+All documentation MUST adhere to the Microsoft Writing Style Guide (MSWSG). Consult the [styleguide/](./styleguide/) directory and [styleguide/TOC.md](./styleguide/TOC.md) for detailed rules.
+
+**Authors are required to consult the linked style guide files throughout this blueprint for comprehensive details and the full context of the referenced standards.** Adherence to these external guidelines is as mandatory as adherence to the rules defined directly within this document.
+
+Key principles and mandatory rules include:
 
 - **Focus on Intent:** Clearly define the target audience (developer backgrounds) and their goals for each module and section. Content must directly help the learner achieve specific tasks.
 - **Voice and Tone (Conversational, Friendly, Empathetic):**
@@ -398,9 +402,6 @@ The following outline is definitive and MUST be followed for the markdown docume
 ## IV. Content Element Patterns and Standards
 
 This section defines the mandatory patterns and standards for all markdown elements and custom course components used in the documentation. Strict adherence ensures consistency, readability, and supports the course's pedagogical goals.
-
-> [!NOTE]
-> This section uses a nested list structure to define the core Markdown rules. While the number of top-level items (10) slightly exceeds the general guideline of 2-7 items per list for optimal scannability, this structure is used here to group all core syntax rules logically together. The nesting ensures individual rules remain digestible.
 
 ### A. Core Markdown Syntax Rules
 
@@ -771,7 +772,7 @@ This blueprint defines three tiers of code examples, each with specific usage co
   - **Format:** Use fenced code blocks (```) with the correct language identifier. Prettier will format the code within these blocks. MUST be runnable (Expo Snack/CodeSandbox), aligning with guidance in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples) on providing self-contained, runnable examples. May be accompanied by helper files or setup instructions if necessary.
   - **Explanation:**
     - MUST be preceded by an introduction describing the scenario, requirements, dependencies, and what the sample demonstrates. If the sample is an excerpt or part of a larger setup, ensure sufficient context is provided for understanding, as advised in [Examples section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#examples) and [Code blocks section in style-guide.md](./contributing/style-guide-and-content-model/style-guide.md#code-blocks).
-    - MUST be followed by a detailed text description (minimum 200 words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome (explicitly describing or showing output where practical), and link to relevant APIs/docs. Crucially, the explanation should also guide the learner on how different parts of the example can be adapted or modified for their own use, reflecting the "Design code for reuse. Help developers determine what to modify" principle from [Code examples in developer content](./styleguide/developer-content/code-examples.md). This text should also be clear and concise, following [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
+    - MUST be followed by a detailed text description (sufficiently detailed, typically 200+ words). This description must explain the overall purpose, break down key sections, define important elements, explain the concepts illustrated, describe the outcome (explicitly describing or showing output where practical), and link to relevant APIs/docs. Crucially, the explanation should also guide the learner on how different parts of the example can be adapted or modified for their own use, reflecting the "Design code for reuse. Help developers determine what to modify" principle from [Code examples in developer content](./styleguide/developer-content/code-examples.md). This text should also be clear and concise, following [Simple words and concise sentences](./styleguide/word-choice/use-simple-words-concise-sentences.md).
     - JSDoc comments (`/** ... */`):\** Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, classes, components, custom hooks, and complex types, explaining purpose, params (`@param`), returns (`@returns`), etc. Prettier can fix the indentation of JSDoc-style comments.
     - Inline comments (`//`) SHOULD be used judiciously to clarify non-obvious logic. Do not comment on the obvious (see [Code examples in developer content](./styleguide/developer-content/code-examples.md)). Prettier generally leaves the content of inline comments as-is, but their placement might shift if Prettier reflows the code around them. Authors should verify comment placement after formatting, especially for "magic comments" like `eslint-disable-next-line`.
   - **Example Context:** After covering `useState`, `useEffect`, `FlatList`, and basic styling, a long sample could show a screen component that fetches a list of medications from a mock API, stores it in state, and renders it using `FlatList`, applying styles from `StyleSheet`. The detailed explanation would cover how these pieces work together.
@@ -780,7 +781,7 @@ This blueprint defines three tiers of code examples, each with specific usage co
 
 - **Inline Comments (`//`):** Use within code blocks (primarily in _Long Samples_, optionally in _Short Examples_) to clarify non-obvious logic or specific lines. Avoid commenting on obvious syntax, as per [Code examples in developer content](./styleguide/developer-content/code-examples.md). As noted above, Prettier largely preserves inline comment content but may adjust their positioning.
 - **JSDoc (`/** ... */`):\*\* Mandatory *only* for *Long Samples\* as defined above. Apply to all key functions, components, hooks, classes, and types. Prettier assists with the indentation of JSDoc blocks.
-- **Text Explanations (Following Code Blocks):** Required for _Short_ and _Long_ examples. The depth varies: focused and brief (~50-100 words) for _Short Examples_, detailed and comprehensive (200+ words) for _Long Samples_. All explanatory text should adhere to `styleguide` principles for clarity and conciseness. If discussing error messages that code might produce, they should be formatted as quoted, sentence-cased strings (e.g., "If the network is unavailable, you might see an error message like 'Network request failed.'") as per guidance in [Formatting developer text elements](./styleguide/developer-content/formatting-developer-text-elements.md).
+- **Text Explanations (Following Code Blocks):** Required for _Short_ and _Long_ examples. The depth varies: focused and brief (~50-100 words) for _Short Examples_, detailed and comprehensive (sufficiently detailed, typically 200+ words) for _Long Samples_. All explanatory text should adhere to `styleguide` principles for clarity and conciseness. If discussing error messages that code might produce, they should be formatted as quoted, sentence-cased strings (e.g., "If the network is unavailable, you might see an error message like 'Network request failed.'") as per guidance in [Formatting developer text elements](./styleguide/developer-content/formatting-developer-text-elements.md).
 
 **4. Exception Handling:**
 
@@ -846,6 +847,7 @@ Each section within a module MUST adhere to the following structure and content 
 3.  **Core Content (Ordered by Content Type):** The main explanatory text, definitions, concepts, procedures, etc., organized according to the content types defined in Section IV.F. Content within this block MUST follow this general order, though not all types will be present in every section:
     - **Conceptual Content:** Overviews, explanations, "under the hood" details, purpose, importance, use cases. (See IV.F and [`conceptual-content-type.md`](@contributing/style-guide-and-content-model/conceptual-content-type.md))
       - _Includes:_ Explanatory paragraphs, diagrams (IV.C) illustrating concepts or flows (see [Graphics, Design, and Media Guidelines](@styleguide/accessibility/graphics-design-media.md)), "Background Bridge Notes" (IV.B), relevant Callouts (IV.B) (see [Formatting Common Text Elements](@styleguide/text-formatting/formatting-common-text-elements.md)), Learning Path Guidance (IV.B).
+    Note that specific placement rules for "Background Bridge Notes" and "Learning Path Guidance" are detailed in Section IV.B.
     - **Referential Content:** Detailed information about APIs, components, props, types, configuration, terminology. (See IV.F and [`referential-content-type.md`](@contributing/style-guide-and-content-model/referential-content-type.md); also [Reference Documentation](@styleguide/developer-content/reference-documentation.md))
       - _Includes:_ API/Component/Hook Explanations (covering Purpose, Syntax, Parameters/Props, Return Value, Usage/Remarks), tables (IV.A) (see [Formatting Common Text Elements](@styleguide/text-formatting/formatting-common-text-elements.md)), definitions, "Official Documentation Link Box" (IV.B).
     - **Prerequisites (for this section's procedures/exercises):** A brief list or paragraph outlining necessary prior knowledge or setup specifically required for the procedural content or exercise within _this_ section. MUST be placed immediately before the relevant procedural steps or the link to the exercise. (See V.C for more details).
@@ -964,9 +966,9 @@ Finally, the requirement for all practical activities to connect back to the Spe
 
 This section defines the rules governing the maintenance and application of this blueprint document itself.
 
-### A. Immutability and Control
+### A. Authority and Control
 
-This blueprint document represents the single, authoritative source of rules and standards for creating the React Native Training Course markdown documentation. All content MUST conform to the specifications outlined herein. Deviation from these standards is not permitted. While the technological landscape evolves , changes to this blueprint must follow a controlled process, ensuring stability and predictability in content creation. It serves as the "hard immutable rules" requested.
+This blueprint document represents the single, authoritative source of rules and standards for creating the React Native Training Course markdown documentation. All content MUST conform to the specifications outlined herein. Deviation from these standards is not permitted. While the technological landscape evolves, changes to this blueprint must follow a strictly controlled and versioned process, ensuring stability and predictability in content creation. It serves as the "hard rules" requested, subject to formal updates.
 
 ### B. Review and Update Process
 
