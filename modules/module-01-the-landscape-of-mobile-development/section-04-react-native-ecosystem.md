@@ -77,6 +77,8 @@ flowchart TD
     B --> J[Expo Go]
 ```
 
+This diagram shows how the main components of the React Native ecosystem relate to each other. React Native core is at the center, with Expo providing additional tools and managed workflows. Community libraries like React Navigation, React Native Paper, Zustand, and TanStack Query extend functionality. Tooling such as Metro and Expo CLI support development and building. Understanding these relationships helps you make informed choices as you start building apps with React Native.
+
 > 📚 **Official Documentation:**
 >
 > - [React Native Documentation](https://reactnative.dev/docs/getting-started)

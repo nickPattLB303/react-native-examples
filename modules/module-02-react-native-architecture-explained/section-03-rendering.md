@@ -2,6 +2,8 @@
 
 A core function of React Native is translating your React component hierarchy into actual native UI elements displayed on the screen. The way this rendering process occurs differs significantly between the Legacy Architecture and the New Architecture's Fabric renderer.
 
+> 🧗‍♀️ **(Self-Led):** As you work through this section, try to visualize the rendering flow in both architectures. Consider drawing your own diagrams to reinforce your understanding of how UI elements move from JavaScript to the screen.
+
 **Legacy Rendering Process (UI Manager)**
 
 In the Legacy Architecture, rendering involved multiple steps across different threads:
@@ -30,12 +32,18 @@ Fabric streamlines the rendering process by leveraging JSI and integrating layou
 - **Faster Mounting:** Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
 - **Concurrent React Features:** Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
-> 🌐 **(Web Developers - React/Angular):**
+> 🌐 **(Web Developers):**
 >
 > **Comparison:** Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
 >
 > **Key Takeaway:** Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
+>
+> **Source:** [React Documentation: Rendering Process](https://react.dev/learn/render-and-commit)
 
 Understanding these rendering differences highlights how the New Architecture tackles core performance issues present in the legacy system, aiming for a smoother and more native-like user experience.
 
-**(URL_to_Tool)** (TODO: Replace with actual Microsoft Forms link for Exercise 2.1: Architecture Concepts Review)
+**(https://forms.microsoft.com/architecture-concepts-review)**
+
+**Next Steps**
+
+Now that you understand how rendering works in both architectures, let's explore the practical implications these architectural differences have for you as a developer, including performance considerations and new capabilities the architecture enables.

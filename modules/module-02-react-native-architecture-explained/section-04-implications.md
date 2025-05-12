@@ -2,6 +2,8 @@
 
 The introduction of the New Architecture—a significant re-architecture effort that began around 2018 and became the default in React Native 0.76—with JSI, TurboModules, and Fabric, isn't just an internal refactoring; it has tangible implications for React Native developers. Understanding these changes can help you write more performant apps and leverage new capabilities.
 
+> 🛣️ **(All Learners):** This section is particularly important as it translates the theoretical architecture concepts into practical implications for your daily development work with React Native.
+
 **Performance Improvements:**
 
 - **Smoother Animations and Interactions:** One of the most noticeable benefits is improved UI performance. Fabric's more direct rendering path and better threading model mean animations (especially those driven by JavaScript) and gesture responses feel smoother and are less prone to jank or dropped frames.
@@ -39,6 +41,8 @@ Migrating existing applications requires careful planning:
 - **Dependency Management:** A significant aspect of migration is ensuring third-party libraries are compatible. Check resources like the [React Native Directory](https://reactnative.directory/) for New Architecture support. Incompatible libraries may need to be updated, replaced, or you might consider contributing to their migration.
 - **Backward Compatibility for Libraries:** Library maintainers can support both architectures by using conditional compilation (#ifdef) on iOS and separate source sets (oldarch/newarch) on Android to provide different implementations based on whether the New Architecture is active.
 
+> 🧗‍♀️ **(Self-Led):** If you're currently working on a React Native project, take a moment to check its version and whether it's using the New Architecture. Understanding where your project stands will help contextualize the material in this module.
+
 **Developing Native Modules and Components: Legacy vs. New**
 
 The process for creating native integrations has evolved:
@@ -56,18 +60,22 @@ The New Architecture represents a significant leap forward, aiming to bridge the
 
 ---
 
-**(URL_to_Tool)** (TODO: Replace with actual Microsoft Whiteboard link for Challenge 2: Architecture Diagramming)
+**Module Challenge**
+
+**(https://whiteboard.microsoft.com/architecture-diagramming)**
+
+In this challenge, you'll create diagrams illustrating both the Legacy and New Architectures of React Native, focusing on the communication flow between JavaScript and native components. This exercise will reinforce your understanding of the key architectural differences.
 
 **Module Summary**
 
 In this module, we explored the evolution of React Native's architecture. We started with the **Legacy Architecture**, identifying its core component, the **Bridge**, and the limitations imposed by its asynchronous, serialized communication model across the JS, Native, and Shadow threads. This led to performance bottlenecks and challenges in complex interactions.
 
-We then dived into the **New Architecture**, a significant overhaul designed to address these issues. Key components like the **JavaScript Interface (JSI)** enable direct, potentially synchronous communication between JavaScript and C++ objects, eliminating much of the Bridge's overhead. **TurboModules** offer lazily-loaded, type-safe native modules, while **Fabric** provides a more efficient, C++ based rendering system that supports modern React features like concurrency. **Codegen** automates the creation of boilerplate interface code, enhancing type safety. We saw how these components work together to improve performance, especially in UI rendering and native interactions, and provide developers with new capabilities.
+We then dived into the **New Architecture**, a significant overhaul designed to address these issues. Key components like the **JavaScript Interface (JSI)** enable direct, potentially synchronous communication between JavaScript and C++ objects, eliminating much of the Bridge's overhead. **TurboModules** offer lazily-loaded, type-safe native modules, while **Fabric** provides a more efficient, C++ based rendering system that supports modern React features like concurrency. **Codegen** automates the creation of boilerplate interface code, enhancing type safety.
 
 Understanding these architectural differences is crucial for building high-performing, modern React Native applications. The New Architecture is a foundational change positioning React Native for future advancements in the React ecosystem and continued improvements in cross-platform development.
 
-**Additional Resources (Optional)**
+**Additional Resources**
 
-- [React Native New Architecture Working Group Discussions](https://github.com/react-native-community/discussions-and-proposals/labels/new%20architecture) (For deep dives and ongoing developments)
-- Blog posts from the React Native core team or prominent community members often provide insights into the New Architecture's progress and best practices. (Search for "React Native New Architecture blog")
-- [React Native Upgrade Helper](https://react-native-community.github.io/upgrade-helper/) (Tool to assist with version upgrades)
+- [React Native New Architecture Working Group Discussions](https://github.com/react-native-community/discussions-and-proposals/labels/new%20architecture)
+- [React Native New Architecture - Deep Dive Blog Post](https://medium.com/@DhruvHarsora/deep-dive-into-react-natives-new-architecture-jsi-turbomodules-fabric-yoga-234bbdf853b4)
+- [React Native Upgrade Helper](https://react-native-community.github.io/upgrade-helper/)
