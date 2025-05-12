@@ -424,28 +424,28 @@ console.log(resultWithParens); // Output: 16
 
 Understanding precedence is crucial for writing correct code. Here's a simplified table of common operator precedence (higher number means higher precedence):
 
-| Precedence | Operator(s)                                                                                  | Description                                                                    | Associativity  |
-| :--------- | :------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- | :------------- | ------------------------------ | --- |
-| 19         | `()`                                                                                         | Grouping                                                                       | n/a            |
-| 18         | `.`, `?.`, `[]`, `new` (with args)                                                           | Member Access, Optional Chaining, Computed Member Access, Function Call, `new` | L-R            |
-| 17         | `new` (without args)                                                                         | Instantiation (no args)                                                        | R-L            |
-| 16         | `++` (postfix), `--` (postfix)                                                               | Postfix Increment/Decrement                                                    | n/a            |
-| 15         | `!`, `~`, `+` (unary), `-` (unary), `++` (prefix), `--` (prefix), `typeof`, `void`, `delete` | Logical/Bitwise NOT, Unary +/- Prefix Inc/Dec, `typeof`, `void`, `delete`      | R-L (unary)    |
-| 14         | `**`                                                                                         | Exponentiation                                                                 | R-L            |
-| 13         | `*`, `/`, `%`                                                                                | Multiplication, Division, Remainder                                            | L-R            |
-| 12         | `+` (binary), `-` (binary)                                                                   | Addition, Subtraction                                                          | L-R            |
-| 11         | `<<`, `>>`, `>>>`                                                                            | Bitwise Shifts                                                                 | L-R            |
-| 10         | `<`, `<=`, `>`, `>=`, `in`, `instanceof`                                                     | Relational, `in`, `instanceof`                                                 | L-R            |
-| 9          | `==`, `!=`, `===`, `!==`                                                                     | Equality                                                                       | L-R            |
-| 8          | `&`                                                                                          | Bitwise AND                                                                    | L-R            |
-| 7          | `^`                                                                                          | Bitwise XOR                                                                    | L-R            |
-| 6          | `                                                                                            | `                                                                              | Bitwise OR     | L-R                            |
-| 5          | `&&`                                                                                         | Logical AND                                                                    | L-R            |
-| 4          | `                                                                                            |                                                                                | `              | Logical OR                     | L-R |
-| 3          | `??`                                                                                         | Nullish Coalescing                                                             | L-R            |
-| 2          | `? :`                                                                                        | Conditional (Ternary)                                                          | R-L            |
-| 1          | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `**=`, `&&=`, `                                           |                                                                                | =`, `??=`, ... | Assignment, Logical Assignment | R-L |
-| 0          | `,`                                                                                          | Comma                                                                          | L-R            |
+|  Precedence  | Operator(s)                                                         | Description                                                | Associativity |
+| :----------: | :------------------------------------------------------------------ | :--------------------------------------------------------- | :-----------: |
+| 19 (Highest) | `()`                                                                | Grouping                                                   |      n/a      |
+|      18      | `.` `?.` `[]` `new` (with args)                                     | Member Access, Optional Chaining, Call                     |      L-R      |
+|      17      | `new` (without args)                                                | Instantiation                                              |      R-L      |
+|      16      | `++` `--` (postfix)                                                 | Postfix Increment/Decrement                                |      n/a      |
+|      15      | `!` `~` `+` `-` (unary) `++` `--` (prefix) `typeof` `void` `delete` | Logical/Bitwise NOT, Unary, Prefix Inc/Dec, Type Operators |  R-L (unary)  |
+|      14      | `**`                                                                | Exponentiation                                             |      R-L      |
+|      13      | `*` `/` `%`                                                         | Multiplication, Division, Remainder                        |      L-R      |
+|      12      | `+` `-` (binary)                                                    | Addition, Subtraction                                      |      L-R      |
+|      11      | `<<` `>>` `>>>`                                                     | Bitwise Shifts                                             |      L-R      |
+|      10      | `<` `<=` `>` `>=` `in` `instanceof`                                 | Relational, `in`, `instanceof`                             |      L-R      |
+|      9       | `==` `!=` `===` `!==`                                               | Equality                                                   |      L-R      |
+|      8       | `&`                                                                 | Bitwise AND                                                |      L-R      |
+|      7       | `^`                                                                 | Bitwise XOR                                                |      L-R      |
+|      6       | `\|`                                                                | Bitwise OR                                                 |      L-R      |
+|      5       | `&&`                                                                | Logical AND                                                |      L-R      |
+|      4       | `\|\|`                                                              | Logical OR                                                 |      L-R      |
+|      3       | `??`                                                                | Nullish Coalescing                                         |      L-R      |
+|      2       | `? :`                                                               | Conditional (Ternary)                                      |      R-L      |
+|      1       | `=` `+=` `-=` `**=` `*=`, etc. `&&=` `\|\|=` `??=`                  | Assignment, Logical Assignment                             |      R-L      |
+|  0 (Lowest)  | `,`                                                                 | Comma                                                      |      L-R      |
 
 > [!TIP]
 > When in doubt, use parentheses `()` to make the order of operations explicit and improve code readability.
