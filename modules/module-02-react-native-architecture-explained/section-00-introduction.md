@@ -1,8 +1,12 @@
 # Module 2: React Native Architecture Explained
 
+![Conceptual diagram illustrating interconnected gears representing different architectural components like JS, Native, JSI, Fabric.](./assets/images/module-02/architecture-overview-banner.png "React Native Architecture Overview")
+
+A conceptual overview of React Native's architecture, showing the interplay of its core components.
+
 React Native allows you to build mobile apps using JavaScript and React, but how does that JavaScript code actually interact with the native platform (iOS or Android) to display UI and access device features? Understanding the underlying architecture is key to writing efficient, performant applications and troubleshooting effectively. This module delves into the core mechanisms that power React Native, comparing the original "Legacy Architecture" with the modern "New Architecture."
 
-> 🍏 **(iOS Developers):**
+> 🍏 **iOS Developers:**
 >
 > **Comparison:** You'll see parallels between the communication mechanisms discussed here and concepts like Objective-C bridging or Swift interoperability, but also key differences in how React Native manages the UI thread.
 >
@@ -10,7 +14,7 @@ React Native allows you to build mobile apps using JavaScript and React, but how
 >
 > **Source:** [Swift and Objective-C Interoperability | Apple Developer Documentation](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift)
 
-> 🤖 **(Android Developers):**
+> 🤖 **Android Developers:**
 >
 > **Comparison:** Concepts like Java Native Interface (JNI) might come to mind, but React Native's approach, especially with the New Architecture, introduces different patterns for cross-language communication and UI rendering.
 >
@@ -18,7 +22,7 @@ React Native allows you to build mobile apps using JavaScript and React, but how
 >
 > **Source:** [JNI Tips | Android Developers](https://developer.android.com/training/articles/perf-jni#jni-tips)
 
-> 🌐 **(Web Developers):**
+> 🌐 **Web Developers:**
 >
 > **Comparison:** While you're familiar with JavaScript controlling the UI, the way React Native interacts with distinct native platforms introduces complexities not found in the browser DOM, particularly around threading and native module communication.
 >
@@ -38,4 +42,4 @@ By the end of this module, you will be able to:
 
 **Prerequisites**
 
-- Completion of Module 1: The Landscape of Mobile Development
+- Completion of [Module 1: The Landscape of Mobile Development](../module-01-mobile-landscape/section-00-introduction.md)

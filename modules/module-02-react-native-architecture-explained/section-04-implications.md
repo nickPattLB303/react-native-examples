@@ -31,8 +31,21 @@ The introduction of the New Architecture—a significant re-architecture effort 
 
 The New Architecture is enabled by default in new projects created with React Native 0.76 and later. For older projects (typically 0.68+ for opt-in), it needs to be explicitly enabled:
 
-- **iOS:** Set `ENV['RCT_NEW_ARCH_ENABLED'] = '1'` in your `ios/Podfile` before `require Pod::Executable` and run `pod install`.
+- **iOS:** Set `ENV[\'RCT_NEW_ARCH_ENABLED\'] = \'1\'` in your `ios/Podfile` before `require Pod::Executable` and run `pod install`.
+  ```ruby
+  # ios/Podfile
+  # ... other config ...
+  ENV[\'RCT_NEW_ARCH_ENABLED\'] = \'1\'
+  require_relative '../node_modules/react-native/scripts/react_native_pods'
+  require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+  # ... rest of Podfile ...
+  ```
 - **Android:** Set `newArchEnabled=true` in your `android/gradle.properties` file.
+  ```groovy
+  # android/gradle.properties
+  # ... other properties ...
+  newArchEnabled=true
+  ```
 
 Migrating existing applications requires careful planning:
 
@@ -41,7 +54,8 @@ Migrating existing applications requires careful planning:
 - **Dependency Management:** A significant aspect of migration is ensuring third-party libraries are compatible. Check resources like the [React Native Directory](https://reactnative.directory/) for New Architecture support. Incompatible libraries may need to be updated, replaced, or you might consider contributing to their migration.
 - **Backward Compatibility for Libraries:** Library maintainers can support both architectures by using conditional compilation (#ifdef) on iOS and separate source sets (oldarch/newarch) on Android to provide different implementations based on whether the New Architecture is active.
 
-> 🧗‍♀️ **(Self-Led):** If you're currently working on a React Native project, take a moment to check its version and whether it's using the New Architecture. Understanding where your project stands will help contextualize the material in this module.
+> 🧗‍♀️ **Self-Led:**
+> If you\'re currently working on a React Native project, take a moment to check its version and whether it\'s using the New Architecture. Understanding where your project stands will help contextualize the material in this module.
 
 **Developing Native Modules and Components: Legacy vs. New**
 

@@ -20,7 +20,13 @@ Communication across the Bridge was fundamentally **asynchronous**, **serialized
 2.  **Serialized:** Data sent across the Bridge needed to be converted into a format both sides could understand. This typically involved serializing the data into a JSON string. When the other side received the message, it would deserialize the JSON back into its native data structures (JavaScript objects or native dictionaries/maps).
 3.  **Batched:** To avoid flooding the Bridge with too many small messages (which would be inefficient), React Native often batched multiple operations together into a single message sent across the Bridge, typically at the end of each iteration of the JavaScript event loop.
 
-> 🤖 **(Android Developers):**
+> 📚 **Official Documentation:**
+>
+> - [React Native Glossary: Bridge](https://reactnative.dev/architecture/glossary#bridge)
+> - [React Native Glossary: Threading Model](https://reactnative.dev/architecture/glossary#threading-model)
+> - [Yoga Layout Engine](https://yogalayout.com/)
+
+> 🤖 **Android Developers:**
 >
 > **Comparison:** This asynchronous, message-passing approach is different from directly calling Java/Kotlin methods from C++ via JNI, which can be synchronous. The serialization step adds overhead not typically present in direct JNI calls.
 >
@@ -28,7 +34,7 @@ Communication across the Bridge was fundamentally **asynchronous**, **serialized
 >
 > **Source:** [JNI Tips | Android Developers](https://developer.android.com/training/articles/perf-jni#jni-tips)
 
-> 🍏 **(iOS Developers):**
+> 🍏 **iOS Developers:**
 >
 > **Comparison:** While Objective-C/Swift bridging allows communication between languages, the React Native Bridge imposes a specific asynchronous, JSON-based protocol. Directly calling native APIs from JavaScript isn't possible in the way you might call Swift code from Objective-C.
 >

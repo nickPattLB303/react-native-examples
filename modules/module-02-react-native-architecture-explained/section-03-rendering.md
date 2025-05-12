@@ -32,7 +32,13 @@ Fabric streamlines the rendering process by leveraging JSI and integrating layou
 - **Faster Mounting:** Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
 - **Concurrent React Features:** Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
-> 🌐 **(Web Developers):**
+> 📚 **Official Documentation:**
+>
+> - [Fabric Renderer | React Native](https://reactnative.dev/architecture/fabric-renderer)
+> - [Fabric Native Components | React Native](https://reactnative.dev/docs/new-architecture-fabric-components)
+> - [React Docs: Render and Commit](https://react.dev/learn/render-and-commit)
+
+> 🌐 **Web Developers:**
 >
 > **Comparison:** Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
 >

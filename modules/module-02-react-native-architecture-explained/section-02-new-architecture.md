@@ -11,13 +11,13 @@ JSI is the foundational change in the New Architecture. Instead of the asynchron
 - **Shared Ownership:** JSI enables shared ownership of objects between the JavaScript and Native realms, reducing the overhead of data transfer.
 - **Enables Synchronous Operations:** A key benefit is the ability to synchronously access native functionality (e.g., layout information via `measure` on a component ref), preventing issues like layout jumps common in the legacy architecture.
 
-> 🌐 **(Web Developers - React/Angular):**
+> 🌐 **Web Developers:**
 >
 > **Comparison:** JSI brings the communication model slightly closer to how JavaScript interacts with browser APIs (which are often implemented in C++). While the browser sandbox provides security boundaries, JSI offers a more direct C++ interface than the legacy Bridge allowed, enabling faster interactions.
 >
 > **Key Takeaway:** JSI removes the primary bottleneck (the async, serialized Bridge) allowing for potentially faster and synchronous communication between JS and native code, something not directly possible with the old Bridge.
 >
-> **Source:** [An Deep Dive into React Native's New Architecture - JSI](https://blog.notesnook.com/an-deep-dive-into-react-native-new-architecture-jsi/)
+> **Source:** [An Deep Dive into React Native\'s New Architecture - JSI](https://blog.notesnook.com/an-deep-dive-into-react-native-new-architecture-jsi/)
 
 **2. TurboModules**
 
