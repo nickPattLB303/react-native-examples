@@ -32,12 +32,6 @@ By the end of this module, you will be able to:
 
 - Completion of [Module 0: Course Introduction](./../module-00-course-introduction/section-01-welcome-and-course-goals.md) (Adjust link as necessary based on final structure)
 
----
-
-_(Content for Sections 1-4 of Module 1 will be detailed in their respective files: `section-01-history-of-mobile-platforms.md`, `section-02-rise-of-cross-platform.md`, `section-03-why-react-native.md`, and `section-04-react-native-ecosystem.md`)_
-
----
-
 ### Module Challenge
 
 At the end of this module, you'll test your understanding with a quiz:
