@@ -6,6 +6,9 @@ Control flow statements are essential tools in JavaScript that allow you to dict
 
 Conditional statements execute different blocks of code based on whether a specified condition evaluates to `true` or `false`.
 
+> [!TIP]
+> It's good practice to always use block statements (`{}`) for the code to be executed within an `if`, `else if`, or `else` construct, even if the block contains only a single line. This improves code readability and can prevent errors if more lines are added later.
+
 #### `if` Statement
 
 The `if` statement executes a block of code only if a specified condition is true.
@@ -57,7 +60,7 @@ if (temperatureCelsius > 38) {
 The `switch` statement is used to perform different actions based on different conditions (cases). It's often a more elegant way to handle multiple `else if` scenarios when checking a single variable against multiple values.
 
 - The `switch` expression is evaluated once.
-- The value of the expression is compared with the values of each `case`.
+- The value of the expression is compared with the values of each `case` using strict equality (`===`).
 - If there is a match, the associated block of code is executed.
 - The `break` keyword exits the `switch` block. If `break` is omitted, execution will continue into the next `case` (fall-through), which is usually unintended.
 - The `default` keyword specifies the code to run if there is no `case` match.
@@ -68,7 +71,7 @@ let instructions = "";
 
 switch (dosageForm) {
   case "Tablet":
-  case "Capsule":
+  case "Capsule": // Example of fall-through for shared logic
     instructions = "Swallow whole with water. Do not crush or chew.";
     break;
   case "Liquid":
@@ -86,18 +89,30 @@ console.log(`Instructions for ${dosageForm}: ${instructions}`);
 
 #### Truthy and Falsy Values
 
-In JavaScript, conditions don't strictly need to be boolean values. JavaScript uses the concept of "truthy" and "falsy" to evaluate non-boolean values in a boolean context (like an `if` statement).
+In JavaScript, conditions don't strictly need to be boolean values. JavaScript uses the concept of "truthy" and "falsy" to evaluate non-boolean values in a boolean context (like an `if` statement). Understanding these is critical for accurate conditional logic.
 
-- **Falsy values** are values that translate to `false` when evaluated in a Boolean context. The falsy values in JavaScript are:
-  - `false`
-  - `0` (zero)
-  - `-0` (minus zero)
-  - `0n` (BigInt zero)
-  - `''` or `""` (empty string)
-  - `null`
-  - `undefined`
-  - `NaN` (Not a Number)
-- **Truthy values** are all other values, including objects, arrays, non-empty strings, numbers other than zero, etc.
+- **Falsy values** are values that coerce to `false` when evaluated in a Boolean context.
+- **Truthy values** are all other values not in the falsy list.
+
+##### Table 2.1: Truthy and Falsy Values in JavaScript
+
+| Value          | Type      | Truthiness | Notes                                    |
+| :------------- | :-------- | :--------- | :--------------------------------------- |
+| `false`        | Boolean   | Falsy      |                                          |
+| `0`            | Number    | Falsy      |                                          |
+| `-0`           | Number    | Falsy      |                                          |
+| `0n`           | BigInt    | Falsy      |                                          |
+| `""`           | String    | Falsy      | Empty string                             |
+| `null`         | Null      | Falsy      |                                          |
+| `undefined`    | Undefined | Falsy      |                                          |
+| `NaN`          | Number    | Falsy      | Not-a-Number                             |
+| `true`         | Boolean   | Truthy     |                                          |
+| `"hello"`      | String    | Truthy     | Non-empty string                         |
+| `"0"`          | String    | Truthy     | Non-empty string (even if looks numeric) |
+| `42`           | Number    | Truthy     | Non-zero number                          |
+| `{}`           | Object    | Truthy     | Any object, including empty object       |
+| `[]`           | Object    | Truthy     | Any array, including empty array         |
+| `function(){}` | Function  | Truthy     | Any function                             |
 
 ```javascript
 let patientNotes = ""; // Falsy
@@ -189,12 +204,37 @@ for (const medication of medications) {
 // Paracetamol
 ```
 
+Objects themselves are not directly iterable with `for...of`. However, you can iterate over their properties using `for...of` in conjunction with methods like `Object.keys()`, `Object.values()`, or `Object.entries()`:
+
+```javascript
+const medicationStorage = {
+  Amoxicillin: "Shelf A",
+  Ibuprofen: "Shelf B",
+  Paracetamol: "Shelf A",
+};
+
+console.log("\nMedication Locations (Keys):");
+for (const medName of Object.keys(medicationStorage)) {
+  console.log(medName); // Amoxicillin, Ibuprofen, Paracetamol
+}
+
+console.log("\nStorage Shelves (Values):");
+for (const shelf of Object.values(medicationStorage)) {
+  console.log(shelf); // Shelf A, Shelf B, Shelf A
+}
+
+console.log("\nMedication to Shelf Mapping (Entries):");
+for (const [medName, shelf] of Object.entries(medicationStorage)) {
+  console.log(`${medName} is on ${shelf}`);
+}
+```
+
 #### `for...in` Loop
 
-The `for...in` loop iterates over the enumerable string properties of an object (ignoring Symbol properties).
+The `for...in` loop iterates over the enumerable string properties (keys) of an object, including inherited enumerable properties.
 
-> [!CAUTION] 
-> `for...in` is generally not recommended for iterating over Arrays because it iterates over property names (indices as strings) rather than values, and it may also iterate over inherited properties if not handled carefully. Use `for...of` or array methods like `forEach()` for arrays.
+> [!CAUTION]
+> `for...in` is generally not recommended for iterating over Arrays because it iterates over property names (indices as strings, and potentially other added properties) rather than values. The order of iteration is not guaranteed. Use `for...of` or array methods like `forEach()` for arrays.
 
 ```javascript
 const patientRecord = {
@@ -203,9 +243,9 @@ const patientRecord = {
   insuranceProvider: "SpeedyHealth Inc.",
 };
 
-console.log("Patient Record Details:");
+console.log("\nPatient Record Details (for...in):");
 for (const propertyKey in patientRecord) {
-  // It's good practice to check if the property belongs to the object itself
+  // It's good practice to check if the property belongs to the object itself (not inherited)
   if (Object.prototype.hasOwnProperty.call(patientRecord, propertyKey)) {
     console.log(`${propertyKey}: ${patientRecord[propertyKey]}`);
   }
@@ -222,7 +262,7 @@ for (const propertyKey in patientRecord) {
 
   ```javascript
   const medicationBatchNumbers = [101, 102, 0, 104, 105]; // 0 indicates an error/end of valid batches
-  console.log("Checking medication batches:");
+  console.log("\nChecking medication batches with break:");
   for (const batchNum of medicationBatchNumbers) {
     if (batchNum === 0) {
       console.log("Invalid batch number found. Stopping process.");
@@ -239,10 +279,10 @@ for (const propertyKey in patientRecord) {
 - **`continue`:** Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
   ```javascript
   const patientAges = [25, 17, 65, 12, 40]; // Ages for a clinical trial
-  console.log("Eligible adult patients for trial (age 18-60):");
+  console.log("\nEligible adult patients for trial (age 18-60) with continue:");
   for (const age of patientAges) {
     if (age < 18 || age > 60) {
-      console.log(`Patient aged ${age} is not eligible, skipping.`);
+      // console.log(`Patient aged ${age} is not eligible, skipping.`);
       continue; // Skip to the next patient
     }
     console.log(`Patient aged ${age} is eligible.`);
@@ -254,6 +294,38 @@ for (const propertyKey in patientRecord) {
   // Patient aged 12 is not eligible, skipping.
   // Patient aged 40 is eligible.
   ```
+
+#### Labeled Statements
+
+Labels can be used with `break` or `continue` to control the flow of nested loops more precisely, by specifying which loop to break from or continue with. While powerful, they can make code harder to read and are used less frequently.
+
+```javascript
+/* Conceptual Example:
+medicationBatchesLoop: // Label for the outer loop
+for (const batch of allBatches) {
+  inventoryCheckLoop: // Label for the inner loop
+  for (const item of batch.items) {
+    if (item.isExpired) {
+      console.log(`Expired item found in batch ${batch.id}. Skipping entire batch.`);
+      continue medicationBatchesLoop; // Continue to the next batch
+    }
+    if (item.quantity === 0) {
+      break inventoryCheckLoop; // Stop checking this specific batch's inventory
+    }
+  }
+}
+*/
+```
+
+#### Table 2.2: Loop Comparison
+
+| Loop Type    | Syntax                                 | Primary Use Case                                           | Condition Check         | Executes At Least Once? |
+| :----------- | :------------------------------------- | :--------------------------------------------------------- | :---------------------- | :---------------------- |
+| `for`        | `for (init; cond; afterthought) {...}` | Known number of iterations, iterating with a counter       | Before each iteration   | No (if cond is false)   |
+| `while`      | `while (condition) {...}`              | Iterations based on a condition, number unknown            | Before each iteration   | No (if cond is false)   |
+| `do...while` | `do {...} while (condition);`          | Iterations based on condition, body needs to run once      | After each iteration    | Yes                     |
+| `for...in`   | `for (const key in object) {...}`      | Enumerating object property names (keys)                   | Implicit (for each key) | No (if obj empty)       |
+| `for...of`   | `for (const value of iterable) {...}`  | Iterating over values of iterables (Arrays, Strings, etc.) | Implicit (for each val) | No (if iterable empty)  |
 
 > 📚 **Official Documentation:**
 >
@@ -267,6 +339,7 @@ for (const propertyKey in patientRecord) {
 > - [MDN Web Docs: `for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
 > - [MDN Web Docs: `break`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break)
 > - [MDN Web Docs: `continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue)
+> - [MDN Web Docs: Labeled statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label)
 
 ### Next Steps
 
