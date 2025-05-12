@@ -1,96 +1,134 @@
-## Section 8: Essential Expo CLI Commands (`start`, `install`, `run:ios`)
+## Section 8: Essential Expo CLI Commands
 
-The Expo CLI is your primary tool for managing and running your Expo project. While it offers many commands, this section focuses on the most essential ones you'll use frequently during development: `start`, `install`, and `run:ios`.
+The Expo CLI is your primary tool for managing and running your Expo project. While it offers many commands, this section covers the most essential ones you'll use frequently during development.
 
 Remember, the recommended way to run these commands is using `npx expo <command>` within your project directory.
 
-### 1. `npx expo start`
+### Core Development Commands
 
-This is arguably the most fundamental command. It starts the Metro development server, which bundles your JavaScript code and serves it to the Expo Go app or your development build.
+**1. `npx expo start`**
 
-**What it does:**
+Starts the Metro development server, which bundles your JavaScript code, serves assets, and enables Fast Refresh.
 
-- Starts the Metro Bundler.
-- Opens Expo Dev Tools in your web browser (a GUI for managing the server and viewing logs).
-- Displays a QR code in the terminal for connecting with Expo Go on physical devices.
-- Provides keyboard shortcuts in the terminal to open your app on simulators (`i` for iOS, `a` for Android), web (`w`), show the QR code again (`c`), or reload the app (`r`).
-- Watches your project files for changes and enables Live/Hot Reloading (Fast Refresh).
-
-**Usage:**
-
-```bash
-cd path/to/your/SpeedyMedsPrototype
-npx expo start
-```
+- **Role:** Runs Metro, provides a QR code, opens Dev Tools GUI, offers terminal UI options.
+- **Common Options:**
+  - `--dev-client`: Starts the server for a Development Build.
+  - `--go`: Explicitly starts the server for Expo Go.
+  - `--offline`: Attempts to start offline (may fail if caches aren't populated).
+  - `--clear`: Clears the Metro cache before starting.
+  - `--port <number>`: Use a specific port number.
+  - `--tunnel`: Creates a public URL using Expo's tunnel service (via ngrok) to share or connect when not on the same network. Requires `@expo/ngrok`.
+  - `-a`, `-i`, `-w`: Shortcut flags to attempt opening on Android, iOS, or Web automatically after starting.
+- **Usage:** `npx expo start` (Defaults to Expo Go mode)
 
 - _Image: Screenshot of Expo Dev Tools web interface opened after running `npx expo start`._
 - _Caption: Expo Dev Tools provides a graphical interface in your browser to manage the development server, view connection status, see device logs, and access build settings._
 
-### 2. `npx expo install [package-name]`
+**2. `npx expo run:[ios|android]`**
 
-When adding new libraries (dependencies) to your Expo project, especially those with native code, you should **always** use `npx expo install` instead of `npm install` or `yarn add`.
+Builds the native project locally and runs it on a simulator/emulator or connected physical device.
 
-**Why use `npx expo install`?**
+- **Role:** Orchestrates native build tools (Xcodebuild, Gradle), installs dependencies (CocoaPods, Maven), builds the `.app`/`.apk`, installs, and launches.
+- **Common Options:**
+  - `--device [name|udid]`: Target a specific physical device.
+  - `--simulator "Simulator Name"` (iOS): Target a specific simulator (use `xcrun simctl list devices` to see names).
+  - `--variant [debug|release]` (Android): Specify build variant.
+  - `--no-bundler`: Builds and installs the app but does not start the Metro server.
+- **Usage:** `npx expo run:ios` or `npx expo run:android`
 
-- **Version Compatibility:** Expo projects rely on specific versions of libraries that are tested and known to work together within a particular Expo SDK version. `npx expo install` automatically selects a compatible version of the library for your project's SDK, preventing potential version conflicts or native build errors.
-- **Native Dependency Handling:** For libraries that include native code, `expo install` can sometimes perform additional configuration steps required for them to work correctly within the Expo managed workflow.
+**3. `npx expo install [package...]`**
 
-**Usage:**
+Installs JavaScript dependencies, ensuring versions are compatible with your project's Expo SDK.
 
-```bash
-cd path/to/your/SpeedyMedsPrototype
-
-# Example: Install React Native Paper (UI library)
-npx expo install react-native-paper
-
-# Example: Install React Navigation (Navigation library)
-npx expo install @react-navigation/native
-```
+- **Role:** Checks Expo's compatibility map and instructs npm/yarn/pnpm to install the correct version. Essential for avoiding version mismatches with native modules.
+- **Usage:** `npx expo install package-name another-package`
 
 > [!IMPORTANT]
-> Using `npm install` or `yarn add` directly for packages that interact with the Expo SDK or have native components can lead to difficult-to-diagnose errors or crashes because you might install an incompatible version. Always prefer `npx expo install` for adding dependencies to Expo projects.
+> Always use `npx expo install` over `npm install`/`yarn add` when adding libraries, especially those with native code.
 
-### 3. `npx expo run:ios` / `npx expo run:android`
+### Project Configuration & Maintenance
 
-While `npx expo start` combined with Expo Go or the simulator (`i`/`a` keys) is great for initial development, sometimes you need to build and run the native project directly, especially:
+**4. `npx expo prebuild`**
 
-- When you add custom native code.
-- When you need to test features not fully supported by Expo Go (rare for Expo SDK modules).
-- When creating a _development build_ that includes specific native libraries not bundled in Expo Go.
+Generates the native `ios` and `android` project directories based on `app.json`/`app.config.js` and installed config plugins. This is the core of **Continuous Native Generation (CNG)**.
 
-`npx expo run:ios` and `npx expo run:android` compile the native code (`ios` or `android` directories) for your project and install/launch the app on a connected device or simulator/emulator.
+- **Role:** Reads Expo config, applies config plugins, creates/updates native project files (`Info.plist`, `AndroidManifest.xml`, build files, etc.).
+- **Common Options:**
+  - `--platform [ios|android]`: Generate only for a specific platform.
+  - `--clean`: Deletes existing `ios`/`android` directories before generating.
+  - `--no-install`: Skips running `pod install` after generating the `ios` directory.
+  - `--template <name|path>`: Use a specific native project template (advanced).
+- **Usage:** `npx expo prebuild` (usually run automatically by `run:*` commands if needed, but can be run manually).
 
-**What it does:**
+**5. `npx expo config`**
 
-- Ensures you have the native directories (`ios`/`android`). If not, it might prompt you to run `npx expo prebuild` first.
-- Installs native dependencies (using CocoaPods for iOS, Gradle for Android).
-- Builds the native application binary (`.app` for iOS Simulator, `.apk` for Android).
-- Installs and launches the built app on a target device/simulator.
-- Connects the running app to the Metro development server (if started).
+Inspects the fully resolved configuration of your project after processing `app.json`/`app.config.js` and config plugins.
 
-**Usage:**
+- **Role:** Useful for debugging configuration issues or seeing the final values that will be used during prebuild or builds.
+- **Common Options:**
+  - `--type [public|prebuild|introspect]`: Shows different views of the config (`public` is the static JSON, `prebuild` shows values used for native generation, `introspect` shows plugin details).
+  - `-p [ios|android]`: Show platform-specific config.
+- **Usage:** `npx expo config` or `npx expo config --type prebuild -p ios`
 
-```bash
-cd path/to/your/SpeedyMedsPrototype
+**6. `npx expo doctor`**
 
-# Build and run on an iOS simulator or connected device
-npx expo run:ios
+Diagnoses potential issues with your project setup, dependencies, or environment.
 
-# Build and run on an Android emulator or connected device
-# npx expo run:android
-```
+- **Role:** Checks for common problems like mismatched versions, missing dependencies, or environment setup issues.
+- **Usage:** `npx expo doctor`
 
-> [!NOTE]
-> Running `npx expo run:ios` typically requires a full Xcode installation, not just the Command Line Tools, as it invokes the Xcode build system. Similarly, `npx expo run:android` requires Android Studio setup. This process is slower than using Expo Go because it involves native compilation.
+**7. `npx expo upgrade`**
 
-> 📲 **(Native Developers - iOS & Android):** `npx expo run:ios` is conceptually similar to pressing the "Run" button in Xcode for your project. It triggers the native build process (compiling Swift/Objective-C, running CocoaPods) and deploys the result to a target. `npx expo run:android` does the equivalent using Gradle and the Android toolchain. Expo CLI orchestrates these native build tools for you.
+Upgrades your project's Expo SDK version and attempts to install compatible versions of core dependencies.
 
-Mastering these three commands (`start`, `install`, `run:ios`) provides a solid foundation for your daily Expo development workflow.
+- **Role:** Modifies `package.json`, installs new versions using `npx expo install`. Read the upgrade guide for the target SDK version carefully before running.
+- **Usage:** `npx expo upgrade` (Upgrades to the latest supported SDK) or `npx expo upgrade <sdk-version>`
+
+**8. `npx expo customize [file]`**
+
+Copies default configuration files (like `metro.config.js`, `babel.config.js`, `app.config.js`) into your project for customization.
+
+- **Role:** Provides a starting point if you need to modify default build tool configurations.
+- **Usage:** `npx expo customize metro.config.js`
+
+### Expo Account Management (for EAS)
+
+**9. `npx expo login` / `logout` / `whoami`**
+
+Manages authentication with your Expo account, which is required for using Expo Application Services (EAS).
+
+- **Role:** `login` prompts for credentials, `logout` clears credentials, `whoami` shows the currently logged-in user.
+- **Usage:** `npx expo login`
+
+### Summary Table
+
+| Command                        | Primary Purpose                                                   |
+| :----------------------------- | :---------------------------------------------------------------- | -------------------------------------------------------------- |
+| `npx expo start`               | Start Metro dev server, enable Fast Refresh, provide QR code/UI   |
+| `npx expo run:[ios             | android]`                                                         | Build native project locally, run on simulator/emulator/device |
+| `npx expo install [pkg...]`    | Install dependencies with Expo SDK compatibility checks           |
+| `npx expo prebuild`            | Generate/update native `ios`/`android` projects from config (CNG) |
+| `npx expo config`              | Inspect resolved project configuration                            |
+| `npx expo doctor`              | Diagnose project setup issues                                     |
+| `npx expo upgrade`             | Upgrade project to a newer Expo SDK version                       |
+| `npx expo customize [file]`    | Copy default config files for customization                       |
+| `npx expo login/logout/whoami` | Manage Expo account session (for EAS)                             |
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** `start` manages Metro (like running `react-native start` but integrated). `run:*` orchestrates `xcodebuild`/`gradlew`. `install` is a package manager wrapper with version validation. `prebuild` automates native project generation based on JS config (akin to code generation tools). `config` introspects this generation process. `doctor` is a diagnostic tool.
+>
+> **Key Takeaway:** Expo CLI wraps and extends native tools and package managers with Expo-specific logic and workflows (like CNG and compatibility checks).
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** `start` is like your `npm run dev` or `vite` command. `run:*` has no direct web equivalent but involves native compilation. `install` is `npm install` plus safety checks. `prebuild`/`config` relate to generating the underlying native app structure from your config, somewhat analogous to how a web framework might generate boilerplate or optimized build outputs based on its config.
+>
+> **Key Takeaway:** Familiar concepts (`start`, `install`) have native-specific enhancements (`run:*`, `prebuild`, compatibility checks).
+
+Mastering these commands provides a solid foundation for your daily Expo development workflow.
 
 > 📚 **Official Documentation:**
 >
-> - [Expo Docs: Expo CLI Commands](https://docs.expo.dev/more/expo-cli/)
-> - [Expo Docs: `expo start`](https://docs.expo.dev/more/expo-cli/#expo-start)
-> - [Expo Docs: `expo install`](https://docs.expo.dev/more/expo-cli/#expo-install)
-> - [Expo Docs: `expo run:ios`](https://docs.expo.dev/more/expo-cli/#expo-runios)
-> - [Expo Docs: `expo run:android`](https://docs.expo.dev/more/expo-cli/#expo-runandroid)
+> - [Expo Docs: Expo CLI Reference](https://docs.expo.dev/more/expo-cli/)
+> - Specific command docs are linked from the main reference page (e.g., `start`, `install`, `run:ios`, `prebuild`, `config`, `doctor`, `upgrade`).
