@@ -29,3 +29,31 @@ By the end of this module, you will be able to:
 - Completion of Module 0: Course Introduction (Understanding course structure and tools).
 - Basic familiarity with using the command line/terminal.
 - Administrator privileges on your macOS machine for software installation.
+
+## Module Sections
+
+- [Section 1: Introduction to Expo and Expo Go](./section-01-introduction-to-expo-and-expo-go.md)
+- [Section 2: Installing Prerequisites](./section-02-installing-prerequisites.md)
+- [Section 3: Creating Your First Expo App (`npx create-expo-app@latest`)](./section-03-creating-your-first-expo-app.md)
+- [Section 4: Understanding `npx expo` vs. `npm`/`yarn`](./section-04-understanding-npx-expo-vs-npm-yarn.md)
+- [Section 5: Running on the iOS Simulator](./section-05-running-on-the-ios-simulator.md)
+- [Section 6: Running on Expo Go (Physical Device - Optional Mention)](./section-06-running-on-expo-go.md)
+- [Section 7: Expo Project Structure (File/Folder Overview)](./section-07-expo-project-structure.md)
+- [Section 8: Essential Expo CLI Commands (`start`, `install`, `run:ios`)](./section-08-essential-expo-cli-commands.md)
+- [Section 9: Troubleshooting Common Setup Issues](./section-09-troubleshooting-common-setup-issues.md)
+
+## Module Challenge
+
+- **Challenge 3: Environment Setup Verification (Checklist/Quiz - Microsoft Forms)**
+  **(URL_to_Tool)** (This link will be the same as provided in Section 9)
+
+## Module Summary
+
+This module equipped you with the foundational knowledge and practical skills to set up a complete React Native development environment using Expo. You learned about the roles of Expo and Expo Go, installed all necessary prerequisites including Node.js, npm/yarn, Watchman, and Xcode Command Line Tools. You successfully created your first Expo application, `SpeedyMedsPrototype`, using `create-expo-app` and explored the differences between `npx expo` commands and traditional `npm`/`yarn` scripts.
+
+Key takeaways include understanding how to run your application on both the iOS Simulator and optionally on a physical device via Expo Go, navigating the Expo project structure, and utilizing essential Expo CLI commands like `start`, `install`, and `run:ios`. Finally, you were introduced to common troubleshooting techniques to address setup issues. With this environment in place, you are now fully prepared to dive into building React Native applications.
+
+## Additional Resources (Optional)
+
+- [Awesome Expo: A curated list of awesome Expo tools, resources and examples](https://github.com/expo/awesome-expo)
+- [Expo Blog](https://blog.expo.dev/) (For latest news and updates from the Expo team)
