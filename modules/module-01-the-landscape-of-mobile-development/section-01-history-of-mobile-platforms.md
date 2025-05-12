@@ -71,3 +71,9 @@ Today, iOS and Android dominate the mobile market. Modern mobile operating syste
 - **Focus on Security and Privacy:** Increasingly robust mechanisms to protect user data and control app permissions (like runtime permissions introduced in Android Marshmallow).
 
 Understanding this evolution—from fragmented beginnings through revolutionary changes to the current robust, ecosystem-driven duopoly—highlights the increasing complexity and capability of mobile platforms. It sets the stage for the next section where we discuss the challenges and solutions for developing across these powerful, yet distinct, operating systems.
+
+📚 **Official Documentation:**
+
+- [Apple: iOS - A Short History](https://developer.apple.com/library/archive/documentation/General/Conceptual/DevPedia-CocoaCore/iOS.html)
+- [Android: The History of Android](https://source.android.com/setup/start/history)
+- [Wikipedia: Mobile Operating System](https://en.wikipedia.org/wiki/Mobile_operating_system)

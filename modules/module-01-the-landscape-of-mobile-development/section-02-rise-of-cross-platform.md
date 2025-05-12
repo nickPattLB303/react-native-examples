@@ -102,3 +102,9 @@ While specific approaches vary, some general advantages and disadvantages apply:
 - Potential limitations in accessing certain device hardware or APIs without native code.
 
 The decision between native and cross-platform development depends heavily on the specific project requirements, budget, timeline, and performance needs. However, the increasing sophistication of cross-platform tools has made them a viable and often preferred option for many applications. The next section focuses specifically on React Native, a popular choice in the "compiled to native" category.
+
+> 📚 **Official Documentation:**
+>
+> - [Apache Cordova Documentation](https://cordova.apache.org/docs/en/latest/)
+> - [Flutter Documentation](https://docs.flutter.dev/)
+> - [MDN Web Docs: Progressive Web Apps (PWAs)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
