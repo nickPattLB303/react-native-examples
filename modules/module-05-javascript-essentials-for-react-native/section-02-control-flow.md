@@ -193,7 +193,8 @@ for (const medication of medications) {
 
 The `for...in` loop iterates over the enumerable string properties of an object (ignoring Symbol properties).
 
-> [!CAUTION] > `for...in` is generally not recommended for iterating over Arrays because it iterates over property names (indices as strings) rather than values, and it may also iterate over inherited properties if not handled carefully. Use `for...of` or array methods like `forEach()` for arrays.
+> [!CAUTION] 
+> `for...in` is generally not recommended for iterating over Arrays because it iterates over property names (indices as strings) rather than values, and it may also iterate over inherited properties if not handled carefully. Use `for...of` or array methods like `forEach()` for arrays.
 
 ```javascript
 const patientRecord = {
