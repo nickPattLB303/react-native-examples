@@ -72,11 +72,11 @@ getPatientDetails("P90210", displayPatientData);
 // After ~1.5 seconds, displayPatientData will be called with patientData
 ```
 
-**"Callback Hell" (Pyramid of Doom):**
-When dealing with multiple dependent asynchronous operations using callbacks, you can end up with deeply nested callbacks. This pattern, often called "callback hell" or the "pyramid of doom," makes code difficult to read, debug, and maintain.
+**The "Pyramid of Doom":**
+When dealing with multiple dependent asynchronous operations using callbacks, you can end up with deeply nested callbacks. This pattern, often called the "pyramid of doom," makes code difficult to read, debug, and maintain.
 
 ```javascript
-// Conceptual example of callback hell
+// Conceptual example of the pyramid of doom
 /*
 fetchFirstResource(param1, function(result1) {
   console.log('Got result 1');
@@ -91,7 +91,7 @@ fetchFirstResource(param1, function(result1) {
 */
 ```
 
-Promises and `async/await` were introduced to solve these issues.
+Promises and `async/await` were introduced to solve these issues, offering more structured and readable ways to handle asynchronous operations.
 
 ### Promises (ES6)
 
@@ -102,6 +102,16 @@ A Promise can be in one of three states:
 - **`pending`**: Initial state, neither fulfilled nor rejected.
 - **`fulfilled` (or `resolved`)**: The operation completed successfully, and the Promise has a resulting value.
 - **`rejected`**: The operation failed, and the Promise has a reason for the failure.
+
+Once a Promise is _settled_ (i.e., it is either fulfilled or rejected), its state and value/reason are immutable and will not change.
+
+#### Promise States and Transitions
+
+| State       | Description                                   | How it's Reached                                            | Next Possible States    |
+| :---------- | :-------------------------------------------- | :---------------------------------------------------------- | :---------------------- |
+| `pending`   | Initial state, operation not yet completed    | When `new Promise()` is created                             | `fulfilled`, `rejected` |
+| `fulfilled` | Operation completed successfully, has a value | Executor calls `resolve(value)`                             | (Terminal state)        |
+| `rejected`  | Operation failed, has a reason (error)        | Executor calls `reject(reason)` or error thrown in executor | (Terminal state)        |
 
 #### Creating Promises
 
@@ -168,7 +178,11 @@ fetchMedicationStock("Aspirin")
 ```
 
 **Chaining Promises:**
-`.then()` and `.catch()` return new Promises, allowing you to chain asynchronous operations in a more readable sequence than nested callbacks.
+`.then()`, `.catch()`, and `.finally()` return new Promises, allowing you to chain asynchronous operations. The way you return values or throw errors within these handlers determines the state and value of the chained Promise:
+
+- **Returning a Value:** If an `onFulfilled` or `onRejected` handler returns a regular value (not a Promise), the new Promise returned by `.then()` (or `.catch()`) is **fulfilled** with that value.
+- **Throwing an Error:** If a handler throws an error, the new Promise is **rejected** with that error.
+- **Returning a Promise:** If a handler returns another Promise (let's call it `P2`), the new Promise returned by `.then()` (or `.catch()`) will "adopt" the state of `P2`. It will wait for `P2` to settle and then settle with `P2`'s fulfillment value or rejection reason. This is key for sequencing dependent asynchronous operations.
 
 ```javascript
 function verifyPatient(patientId) {
@@ -205,6 +219,8 @@ verifyPatient("P123")
 - `Promise.race(iterable)`: Waits for the first promise in an iterable to settle (either resolve or reject). Returns a Promise that settles with the result/reason of the first promise that settles.
 - `Promise.resolve(value)`: Returns a Promise object that is resolved with the given value.
 - `Promise.reject(reason)`: Returns a Promise object that is rejected with the given reason.
+- **`Promise.allSettled(iterableOfPromises)` (ES2020+):** Takes an iterable of Promises. It returns a Promise that fulfills after _all_ of the given Promises have either fulfilled or rejected. The fulfillment value is an array of objects, each describing the outcome of a Promise: `{status: "fulfilled", value:...}` or `{status: "rejected", reason:...}`. This is useful when you need to know the outcome of all operations, regardless of individual failures.
+- **`Promise.any(iterableOfPromises)` (ES2021+):** Takes an iterable of Promises. It returns a Promise that fulfills as soon as _any_ of the input Promises fulfill, with the value of the first one that fulfilled. If all input Promises reject, it rejects with an `AggregateError` (an error object that groups all the individual rejection reasons).
 
 ```javascript
 Promise.all([
@@ -220,6 +236,22 @@ Promise.all([
   .catch((error) => {
     console.error("One of the stock checks failed:", error.message);
   });
+
+// Example for allSettled
+Promise.allSettled([
+  fetchMedicationStock("Amoxicillin"),
+  fetchMedicationStock("NonExistentDrug"), // This will reject
+  Promise.resolve("Quickly resolved value"),
+]).then((results) => {
+  console.log("\n--- Promise.allSettled Results ---");
+  results.forEach((result) => {
+    if (result.status === "fulfilled") {
+      console.log(`Fulfilled:`, result.value);
+    } else {
+      console.error(`Rejected:`, result.reason.message);
+    }
+  });
+});
 ```
 
 ### `async/await` (ES2017)
@@ -299,6 +331,71 @@ sequenceDiagram
 ```
 
 This diagram shows that when an `async` function encounters an `await` keyword, it pauses its own execution at that point, allowing other JavaScript code (like UI updates or other event handlers) to run. The `await` waits for the asynchronous operation (the Promise) to complete. Once the awaited Promise settles (resolves or rejects), the `async` function resumes from where it left off. This makes complex asynchronous sequences much easier to write and understand because the code flows top-to-bottom, similar to synchronous code, but without freezing the main thread. The Event Loop is crucial in managing these paused functions and resuming them when their awaited operations are done.
+
+### Under the Hood: Event Loop, Task Queues, and Microtasks
+
+To truly understand how JavaScript handles asynchronicity without multiple threads, we need to look at the runtime environment's components:
+
+1.  **JavaScript Engine & Call Stack:**
+
+    - As discussed, JavaScript itself is single-threaded with one **Call Stack**. The Call Stack keeps track of function calls. When a script wants to call a function, it pushes a frame for that function onto the stack. When the function returns, its frame is popped.
+
+2.  **Web APIs / Native Environment APIs (Background Operations):**
+
+    - Asynchronous operations like `setTimeout`, DOM events (in browsers), `fetch` requests, or file system operations (in Node.js) are not handled directly by the JavaScript engine's main thread. Instead, they are offloaded to the browser's Web APIs or the Node.js environment's C++ APIs (often using separate threads managed by the environment, not directly accessible to your JS code).
+    - When these background operations complete, they don't interrupt JavaScript execution. Instead, they place their associated callback functions into specific queues.
+
+3.  **Callback Queue (Task Queue / Macrotask Queue):**
+
+    - This queue holds callback functions that are ready to be executed from completed **macrotasks**. Examples of macrotasks include:
+      - `setTimeout` and `setInterval` timers.
+      - I/O operations (e.g., network responses from `fetch` after the initial Promise part, file reads).
+      - User interaction events (e.g., clicks, key presses).
+      - UI rendering updates (in browsers, this is a complex part of the event loop cycle).
+
+4.  **Microtask Queue:**
+
+    - This queue holds callbacks from completed **microtasks**. Microtasks have a **higher priority** than macrotasks.
+    - The primary sources of microtasks are:
+      - **Promise handlers:** Callbacks attached via `.then()`, `.catch()`, and `.finally()`.
+      - Callbacks registered with `queueMicrotask()` (a way to schedule a function to run as a microtask).
+      - `MutationObserver` callbacks (in browsers).
+
+5.  **The Event Loop:**
+    - The Event Loop is a constantly running process that orchestrates these components. Its fundamental job is to monitor the Call Stack and the task queues. Its cycle can be simplified as:
+      1.  Execute all currently available synchronous code on the Call Stack until it is empty.
+      2.  After the synchronous code finishes (and after each Macrotask from step 4 finishes), **process the Microtask Queue**: Execute all microtasks in the queue, one by one, until the Microtask Queue is empty. If a microtask adds another microtask, that new one is also processed before moving on.
+      3.  (Browser-specific) If rendering updates are needed and conditions are met, the browser may perform UI rendering steps.
+      4.  If the Call Stack is empty and the Microtask Queue is empty, take **one Macrotask** from the Callback Queue (if available) and push its callback function onto the Call Stack for execution. This brings us back to step 1 (the callback itself is synchronous code).
+
+**Implications for Developers:**
+
+- **Priority:** Microtasks (like Promise handlers) will always execute before Macrotasks (like `setTimeout` callbacks), even if both are scheduled at roughly the same time.
+
+  ```javascript
+  console.log("Start");
+
+  setTimeout(() => {
+    console.log("Timeout callback (Macrotask)");
+  }, 0);
+
+  Promise.resolve().then(() => {
+    console.log("Promise.then callback (Microtask)");
+  });
+
+  console.log("End");
+
+  // Expected Output:
+  // Start
+  // End
+  // Promise.then callback (Microtask)
+  // Timeout callback (Macrotask)
+  ```
+
+- **Non-Blocking:** This entire system ensures that the main JavaScript thread is not blocked by long-running I/O operations, keeping the UI responsive.
+- **`async/await` Integration:** `await` works by pausing the `async` function and letting the event loop continue. When the awaited Promise settles, the continuation of the `async` function is typically scheduled as a microtask.
+
+Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
 > 📚 **Official Documentation:**
 >

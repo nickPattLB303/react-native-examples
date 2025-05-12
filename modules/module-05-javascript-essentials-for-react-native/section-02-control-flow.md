@@ -61,6 +61,7 @@ The `switch` statement is used to perform different actions based on different c
 - If there is a match, the associated block of code is executed.
 - The `break` keyword exits the `switch` block. If `break` is omitted, execution will continue into the next `case` (fall-through), which is usually unintended.
 - The `default` keyword specifies the code to run if there is no `case` match.
+- **Important:** `switch` uses **strict equality (`===`)** for comparisons, similar to the `===` operator. No type coercion is performed.
 
 ```javascript
 let dosageForm = "Tablet";
@@ -175,7 +176,7 @@ console.log(`Confirmation code 7 generated after ${attempt} attempts.`);
 
 #### `for...of` Loop (ES6)
 
-The `for...of` loop iterates over the values of iterable objects, such as Arrays, Strings, Maps, Sets, etc. It's generally the preferred way to loop over arrays.
+The `for...of` loop iterates over the **values** of iterable objects. Iterable objects include built-in types like `Array`, `String`, `Map`, `Set`, etc. It provides a simple and direct way to access the elements of a collection.
 
 ```javascript
 const medications = ["Amoxicillin", "Ibuprofen", "Paracetamol"];
@@ -191,10 +192,13 @@ for (const medication of medications) {
 
 #### `for...in` Loop
 
-The `for...in` loop iterates over the enumerable string properties of an object (ignoring Symbol properties).
+The `for...in` loop iterates over the enumerable string **property names (keys)** of an object. The order of iteration is not guaranteed.
 
-> [!CAUTION] 
-> `for...in` is generally not recommended for iterating over Arrays because it iterates over property names (indices as strings) rather than values, and it may also iterate over inherited properties if not handled carefully. Use `for...of` or array methods like `forEach()` for arrays.
+> [!CAUTION]
+>
+> - **Use with Objects:** `for...in` is intended for iterating over the keys of plain objects.
+> - **Avoid with Arrays:** Do not use `for...in` to iterate over Arrays. It iterates over indices (as strings) and potentially any other added properties, including inherited ones. The order is not guaranteed. Use `for...of` or array methods (`forEach`, `map`, etc.) for arrays.
+> - **Check `hasOwnProperty`:** When using `for...in` with objects, it's often wise to check if the property belongs directly to the object and is not inherited from its prototype chain, using `Object.prototype.hasOwnProperty.call(object, key)` or `object.hasOwnProperty(key)`.
 
 ```javascript
 const patientRecord = {
@@ -237,6 +241,7 @@ for (const propertyKey in patientRecord) {
   ```
 
 - **`continue`:** Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
+
   ```javascript
   const patientAges = [25, 17, 65, 12, 40]; // Ages for a clinical trial
   console.log("Eligible adult patients for trial (age 18-60):");
@@ -254,6 +259,35 @@ for (const propertyKey in patientRecord) {
   // Patient aged 12 is not eligible, skipping.
   // Patient aged 40 is eligible.
   ```
+
+- **Labeled Statements (Advanced):** JavaScript allows you to label loops. You can then use `break labelName;` or `continue labelName;` to control nested loops more precisely, jumping to the statement after the labeled loop (`break`) or starting the next iteration of the labeled loop (`continue`). This is less common but useful in specific complex scenarios.
+  ```javascript
+  // Example (Conceptual)
+  outerLoop: for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (i === 1 && j === 1) {
+        console.log(`Continuing outer loop at i=${i}, j=${j}`);
+        continue outerLoop; // Skips rest of inner loop and starts next outer loop iteration
+      }
+      if (i === 2 && j === 0) {
+        console.log(`Breaking outer loop at i=${i}, j=${j}`);
+        break outerLoop; // Exits both loops
+      }
+      console.log(`i=${i}, j=${j}`);
+    }
+  }
+  console.log("Loop finished");
+  ```
+
+#### Loop Comparison Summary
+
+| Loop Type    | Syntax                          | Primary Use Case                                                      | Condition Check       | Executes At Least Once? |
+| :----------- | :------------------------------ | :-------------------------------------------------------------------- | :-------------------- | :---------------------- |
+| `for`        | `for (init; cond; final)`       | Known number of iterations, iterating with a counter                  | Before each iteration | No                      |
+| `while`      | `while (condition)`             | Iterations based on a condition, number unknown                       | Before each iteration | No                      |
+| `do...while` | `do {...} while (condition);`   | Iterations based on a condition, body _must_ run at least once        | After each iteration  | Yes                     |
+| `for...in`   | `for (const key in object)`     | Enumerating object **property names (keys)**                          | Implicit (each key)   | No (if 0 properties)    |
+| `for...of`   | `for (const value of iterable)` | Iterating over **values** of iterable objects (Arrays, Strings, etc.) | Implicit (each value) | No (if empty iterable)  |
 
 > 📚 **Official Documentation:**
 >

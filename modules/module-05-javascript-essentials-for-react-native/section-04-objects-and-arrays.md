@@ -51,9 +51,9 @@ An object is an unordered collection of key-value pairs, where keys are typicall
   console.log(patientPreferences["contact method"]); // Output: email
   ```
 
-#### Modifying Properties
+#### Adding/Modifying/Deleting Properties
 
-- **Adding or Updating:** Assign a value to a new or existing property.
+- **Adding or Updating:** Assign a value to a new or existing property using dot or bracket notation.
 
   ```javascript
   medication.lastRestocked = "2023-10-15"; // New property
@@ -67,20 +67,42 @@ An object is an unordered collection of key-value pairs, where keys are typicall
   console.log(medication.lastRestocked); // Output: undefined
   ```
 
+#### Computed Property Names (ES6)
+
+Allows you to use an expression for a property key within an object literal.
+
+```javascript
+let propertyName = "dosageInstructions";
+const prescriptionDetails = {
+  medication: "Ibuprofen",
+  [propertyName]: "Take with food",
+  ["patient" + "Id"]: "P999",
+};
+
+console.log(prescriptionDetails.dosageInstructions); // Output: Take with food
+console.log(prescriptionDetails.patientId); // Output: P999
+```
+
 #### Object Methods
 
-When a function is a property of an object, it's called a method. Inside a method defined using the `function` keyword, `this` refers to the object the method is called on.
+When a function is a property of an object, it's called a method. Inside a method defined using the `function` keyword **or the ES6 method shorthand syntax**, `this` refers to the object the method is called on.
 
 ```javascript
 const prescription = {
   medicationName: "Amoxicillin",
   patientName: "Carlos Ray",
+  // Traditional method syntax
   displayLabel: function () {
-    // 'this' refers to the 'prescription' object
     return `Med: ${this.medicationName}, Patient: ${this.patientName}`;
+  },
+  // ES6 method shorthand syntax
+  updateMedication(newMedication) {
+    this.medicationName = newMedication;
+    console.log(`Medication updated to ${this.medicationName}`);
   },
 };
 console.log(prescription.displayLabel()); // Output: Med: Amoxicillin, Patient: Carlos Ray
+prescription.updateMedication("Augmentin"); // Output: Medication updated to Augmentin
 ```
 
 > [!NOTE]
@@ -262,6 +284,29 @@ Destructuring provides a concise way to extract values from arrays or properties
   console.log(`${name} has allergies: ${allergies}`); // Output: James Bond has allergies: None reported
   ```
 
+  **Nested Object Destructuring:**
+
+  ```javascript
+  const order = {
+    orderId: "ORD555",
+    customer: {
+      name: "Alice Wonderland",
+      address: {
+        street: "123 Main St",
+        city: "Anytown",
+      },
+    },
+  };
+
+  const {
+    customer: {
+      name: customerName,
+      address: { city },
+    },
+  } = order;
+  console.log(`Customer: ${customerName}, City: ${city}`); // Output: Customer: Alice Wonderland, City: Anytown
+  ```
+
 - **Array Destructuring:**
 
   ```javascript
@@ -278,6 +323,15 @@ Destructuring provides a concise way to extract values from arrays or properties
   // Skipping elements
   const [, , thirdDrug] = topSellingDrugs;
   console.log(`Third best seller: ${thirdDrug}`); // Output: Third best seller: Lisinopril
+  ```
+
+  **Swapping Variables:** A concise way to swap values.
+
+  ```javascript
+  let first = "A";
+  let second = "B";
+  [first, second] = [second, first];
+  console.log(first, second); // Output: B A
   ```
 
 #### Spread Operator (`...`)
@@ -305,6 +359,10 @@ The spread operator allows an iterable (like an array or string) to be expanded 
   ```
 
 - **With Objects (ES2018+):**
+
+  - **Shallow Copying:** Creates a new object with copies of the original object's own enumerable properties. If a property value is an object or array, the _reference_ is copied, not the nested structure itself.
+  - **Merging:** Combines properties from multiple objects. Properties from later objects overwrite earlier ones with the same key.
+  - **Difference from `Object.assign()`:** Spread syntax (`{...obj}`) creates a new object and defines properties directly. `Object.assign(target, source)` _mutates_ the `target` object and calls setters if they exist on the target.
 
   ```javascript
   const basicPatientInfo = {
@@ -339,38 +397,46 @@ The spread operator allows an iterable (like an array or string) to be expanded 
   // Output: Batch B001 contains: Simvastatin, Omeprazole
   ```
 
-#### Rest Parameters (`...`)
+#### Rest Parameters (`...`) and Rest Properties (`...`)
 
-The rest parameter syntax allows a function to accept an indefinite number of arguments as an array.
+While they use the same syntax (`...`), their role depends on the context:
 
-```javascript
-function logAllergies(patientId, ...allergiesList) {
-  console.log(`Patient ${patientId} has allergies:`);
-  if (allergiesList.length === 0) {
-    console.log("  None reported.");
-  } else {
-    allergiesList.forEach((allergy) => console.log(`  - ${allergy}`));
+- **Rest Parameters (in Function Definitions):** Collects an indefinite number of _function arguments_ into a single **array**. Must be the last parameter.
+
+  ```javascript
+  // (Example shown in Section 3: Functions)
+  function logPatientVitals(patientId, ...vitals) {
+    console.log(`Vitals for ${patientId}: ${vitals.join(", ")}`);
   }
-}
+  logPatientVitals("P123", "HR: 72", "BP: 120/80", "Temp: 37.0C");
+  // Output: Vitals for P123: HR: 72, BP: 120/80, Temp: 37.0C
+  ```
 
-logAllergies("P567", "Penicillin", "Sulfa", "Aspirin");
-// Output:
-// Patient P567 has allergies:
-//   - Penicillin
-//   - Sulfa
-//   - Aspirin
+- **Rest Properties (in Object Destructuring):** Collects the remaining own enumerable _object properties_ into a single **object**. Must be the last element in the destructuring pattern.
 
-logAllergies("P568");
-// Output:
-// Patient P568 has allergies:
-//   None reported.
-```
+  ```javascript
+  const fullPatientData = {
+    patientId: "PXYZ",
+    name: "Laura Croft",
+    dob: "1996-02-14",
+    primaryDoctor: "Dr. Smith",
+    lastCheckup: "2023-11-01",
+  };
+
+  const { patientId, name, ...medicalInfo } = fullPatientData;
+
+  console.log(`ID: ${patientId}, Name: ${name}`);
+  // Output: ID: PXYZ, Name: Laura Croft
+
+  console.log("Medical Info:", medicalInfo);
+  // Output: Medical Info: { dob: '1996-02-14', primaryDoctor: 'Dr. Smith', lastCheckup: '2023-11-01' }
+  ```
 
 > [!NOTE]
-> While both spread and rest parameters use the `...` syntax, their roles are opposite:
+> Remember the difference:
 >
-> - **Spread** _expands_ an iterable (array/object/string) into individual elements/properties.
-> - **Rest** _collects_ multiple elements/arguments into a single array.
+> - **Spread (`...`)** _expands_ an iterable or object properties.
+> - **Rest (`...`)** _collects_ function arguments or object properties.
 
 > 📚 **Official Documentation:**
 >
@@ -430,6 +496,8 @@ const medicationsInventory = {
 ```
 ````
 
+```
+
 ## Tasks
 
 1.  **List Patient Names:**
@@ -478,9 +546,12 @@ const medicationsInventory = {
 
 Good luck!
 
-```
-
 ### Next Steps
 
 Understanding how to structure and manipulate data with objects and arrays is crucial. Next, we'll delve into how JavaScript handles operations that take time to complete, such as network requests or user interactions. Proceed to [Section 5: Asynchronous JavaScript](./section-05-asynchronous-javascript.md) to learn about callbacks, Promises, and async/await.
+
+```
+
+```
+
 ```

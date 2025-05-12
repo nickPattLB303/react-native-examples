@@ -246,6 +246,69 @@ patientManager.addPatient("PXYZ", "Eleanor Rigby");
 
 This example demonstrates how different functionalities (medication management, patient management) can be separated into their own modules and then imported where needed, leading to a cleaner and more organized codebase.
 
+### Re-exporting Modules
+
+Modules can also export functionality that they have imported from other modules. This is useful for creating a single entry point ("barrel" file) for multiple related modules or for restructuring modules without breaking external imports.
+
+**1. Re-exporting named exports:**
+
+```javascript
+// file: allUtils.js
+// Re-exports named functions from two different utility modules
+export { formatCurrency, calculateSalesTax } from "./pharmacyUtils.js";
+export { getMedicationId } from "./medicationHelpers.js";
+
+// Now another module can import directly from allUtils.js:
+// import { formatCurrency, getMedicationId } from './allUtils.js';
+```
+
+**2. Re-exporting all named exports (`export * from ...`):**
+This syntax re-exports all **named** exports from the specified module. It does **not** re-export the default export.
+
+```javascript
+// file: allServices.js
+export * from "./medicationService.js"; // Re-exports getMedicationDetails, updateStock, etc.
+// Note: Does not re-export PatientManager if it were the default export of patientService.js
+
+// Usage:
+// import { getMedicationDetails } from './allServices.js';
+```
+
+**3. Re-exporting a default export (as named or default):**
+
+```javascript
+// file: servicesIndex.js
+
+// Re-export the default export of patientService.js as a named export 'PatientService'
+export { default as PatientService } from "./patientService.js";
+
+// Re-export the default export of loggerService.js as the default export of servicesIndex.js
+export { default } from "./loggerService.js";
+
+// Usage:
+// import log, { PatientService } from './servicesIndex.js';
+```
+
+### Dynamic Imports (Advanced)
+
+Besides the static `import` statement (which is processed at build time), JavaScript also supports dynamic `import()`. This looks like a function call and returns a **Promise** that resolves with the module object.
+
+```javascript
+// Conceptual Example
+async function loadReportingModule() {
+  if (userNeedsReports) {
+    try {
+      const reportingUtils = await import("./reportingUtils.js");
+      reportingUtils.generateReport();
+    } catch (error) {
+      console.error("Failed to load reporting module:", error);
+    }
+  }
+}
+```
+
+Dynamic imports are useful for **code splitting** – loading code only when it's actually needed, which can improve initial application load times, especially in web contexts. While Metro (React Native's bundler) handles bundling differently, the concept of loading resources dynamically is relevant.
+
 > 📚 **Official Documentation:**
 >
 > - [MDN Web Docs: JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
@@ -334,6 +397,8 @@ export const dailyPrescriptions = [
 ```
 ````
 
+```
+
 ## Tasks
 
 Create functions (potentially in a separate `processor.js` file, imported into `index.js`) to perform the following operations:
@@ -384,14 +449,17 @@ Create functions (potentially in a separate `processor.js` file, imported into `
 ## Expected Output (Example for `generateDailyReport`)
 
 ```
+
 --- SpeedyMeds Daily Prescription Report ---
 Total Revenue: $XX.XX
 Lisinopril Prescriptions: X
 Patients with High-Cost Prescriptions (> $20.00): Patient A, Patient B
 Insurance Coverage:
-  Covered: X
-  Uncovered: X
-----------------------------------------
+Covered: X
+Uncovered: X
+
+---
+
 ```
 
 (Replace X and XX.XX with your calculated values.)
@@ -404,7 +472,6 @@ Insurance Coverage:
 4.  Log the report to the console.
 
 Good luck!
-
 ```
 
 ---
@@ -415,12 +482,12 @@ Congratulations on completing Module 5: JavaScript Essentials for React Native! 
 
 Key takeaways from this module include:
 
-*   **Variables and Data Types:** Understanding `let` and `const` for variable declaration, and mastering JavaScript's primitive and object data types, along with various operators for manipulation and comparison.
-*   **Control Flow:** Using conditional statements (`if/else`, `switch`) and loops (`for`, `while`, `for...of`) to direct the execution path of your programs.
-*   **Functions:** Defining and using functions (including concise arrow functions), understanding scope (global, function, block, lexical), and harnessing the power of closures for data encapsulation and persistent state.
-*   **Objects and Arrays:** Working proficiently with these core data structures, including their methods, and leveraging ES6+ features like destructuring, the spread operator, and rest parameters for efficient data manipulation.
-*   **Asynchronous JavaScript:** Grasping the concepts of asynchronous operations, and managing them effectively using callbacks, Promises, and the modern `async/await` syntax to prevent blocking and maintain responsive applications.
-*   **ES6 Modules:** Learning how to organize code into reusable and maintainable modules using `import` and `export` statements.
+- **Variables and Data Types:** Understanding `let` and `const` for variable declaration, and mastering JavaScript's primitive and object data types, along with various operators for manipulation and comparison.
+- **Control Flow:** Using conditional statements (`if/else`, `switch`) and loops (`for`, `while`, `for...of`) to direct the execution path of your programs.
+- **Functions:** Defining and using functions (including concise arrow functions), understanding scope (global, function, block, lexical), and harnessing the power of closures for data encapsulation and persistent state.
+- **Objects and Arrays:** Working proficiently with these core data structures, including their methods, and leveraging ES6+ features like destructuring, the spread operator, and rest parameters for efficient data manipulation.
+- **Asynchronous JavaScript:** Grasping the concepts of asynchronous operations, and managing them effectively using callbacks, Promises, and the modern `async/await` syntax to prevent blocking and maintain responsive applications.
+- **ES6 Modules:** Learning how to organize code into reusable and maintainable modules using `import` and `export` statements.
 
 These JavaScript skills are not just prerequisites but are actively used every day when building React Native applications. From managing component state and props to handling API responses and structuring your application logic, a solid understanding of these concepts will make your journey into React Native much smoother and more productive.
 
@@ -428,12 +495,15 @@ These JavaScript skills are not just prerequisites but are actively used every d
 
 For further exploration and to deepen your JavaScript knowledge, consider these resources:
 
-*   [JavaScript.info](https://javascript.info): A comprehensive and modern JavaScript tutorial.
-*   [Eloquent JavaScript by Marijn Haverbeke](https://eloquentjavascript.net/): A well-regarded book available online for free, covering JavaScript in depth.
-*   [You Don't Know JS Yet (book series) by Kyle Simpson](https://github.com/getify/You-Dont-Know-JS): A series of books that dive deep into the core mechanisms of JavaScript.
-*   [MDN Web Docs: JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide): An extensive guide covering all aspects of JavaScript.
+- [JavaScript.info](https://javascript.info): A comprehensive and modern JavaScript tutorial.
+- [Eloquent JavaScript by Marijn Haverbeke](https://eloquentjavascript.net/): A well-regarded book available online for free, covering JavaScript in depth.
+- [You Don't Know JS Yet (book series) by Kyle Simpson](https://github.com/getify/You-Dont-Know-JS): A series of books that dive deep into the core mechanisms of JavaScript.
+- [MDN Web Docs: JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide): An extensive guide covering all aspects of JavaScript.
 
 ### Next Steps
 
 With these JavaScript essentials under your belt, you're well-prepared to enhance your code with static typing. Proceed to **[Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)** (link to be updated based on final structure) to learn how TypeScript can help you write more robust and maintainable React Native applications.
+
+```
+
 ```

@@ -65,10 +65,66 @@ console.log(medicationDetails.dosage); // Output: 20mg
 
 #### What about `var`?
 
-You might encounter `var` in older JavaScript code. `var` declares variables that are function-scoped or globally-scoped, and they are hoisted (moved to the top of their scope during compilation). This behavior can sometimes lead to confusion. Modern JavaScript development strongly favors `let` and `const` for their clearer block-scoping rules and improved predictability.
+You might encounter `var` in older JavaScript code or examples. `var` was the original way to declare variables before ES6 introduced `let` and `const`. It differs significantly in its scoping and hoisting behavior:
+
+- **Scope:** `var` variables are either **function-scoped** or **globally-scoped**. They are _not_ block-scoped like `let` and `const`. This means a `var` declared inside an `if` block or `for` loop is still accessible outside of that block, within the enclosing function or global scope.
+- **Hoisting:** `var` declarations are "hoisted" to the top of their scope (function or global) during compilation. However, only the declaration is hoisted, not the initialization. The variable is implicitly initialized with `undefined`. This allows you to reference a `var` variable before its textual declaration in the code, although its value will be `undefined` until the assignment line is reached.
+
+  ```javascript
+  console.log(oldVariable); // Output: undefined (due to hoisting)
+  var oldVariable = "I am old";
+  console.log(oldVariable); // Output: I am old
+
+  // This behaves as if the code were:
+  // var oldVariable; // Declaration hoisted, initialized to undefined
+  // console.log(oldVariable);
+  // oldVariable = "I am old"; // Assignment happens here
+  // console.log(oldVariable);
+  ```
+
+- **Re-declaration:** `var` variables can be re-declared within the same scope without error.
+  ```javascript
+  var x = 10;
+  var x = 20; // This is allowed with var
+  console.log(x); // Output: 20
+  ```
+
+#### Hoisting and the Temporal Dead Zone (TDZ) with `let` and `const`
+
+Like `var`, declarations using `let` and `const` are also technically hoisted to the top of their _block_ scope. However, they are **not** initialized with `undefined`. Instead, they enter a state known as the **Temporal Dead Zone (TDZ)**.
+
+- **TDZ:** The TDZ starts at the beginning of the block and ends when the `let` or `const` declaration statement is evaluated. Attempting to access the variable within the TDZ (before its declaration) results in a `ReferenceError`.
+  ```javascript
+  {
+    // Start of TDZ for myScopedVar
+    // console.log(myScopedVar); // ReferenceError: Cannot access 'myScopedVar' before initialization
+    let myScopedVar = "Now accessible"; // End of TDZ for myScopedVar
+    console.log(myScopedVar); // Output: Now accessible
+  }
+  ```
+- **Why TDZ?** This behavior prevents the use of variables before they are properly declared and initialized, leading to more reliable and less error-prone code compared to `var`'s hoisting behavior.
+
+#### Best Practices for Variable Declaration (Modern JavaScript)
+
+1.  **Prefer `const` by default:** Use `const` whenever you declare a variable whose value is not intended to change after initialization. This makes your intentions clear and prevents accidental reassignments.
+2.  **Use `let` only when necessary:** Use `let` only for variables whose values you expect to reassign later in their scope (e.g., loop counters, state variables that change over time).
+3.  **Avoid `var`:** In modern ES6+ codebases (including React Native), avoid using `var`. `let` and `const` offer superior block scoping and TDZ behavior, preventing common bugs associated with `var`.
+4.  **Declare at the top:** Declare variables (`let` and `const`) at the top of their respective blocks for better readability, even though they are block-scoped regardless of position.
+
+#### Comparison: `var` vs. `let` vs. `const`
+
+| Feature                         | `var`                     | `let`                               | `const`                    |
+| :------------------------------ | :------------------------ | :---------------------------------- | :------------------------- |
+| **Scope**                       | Function or Global        | Block (`{}`)                        | Block (`{}`)               |
+| **Hoisting (Declaration)**      | Yes                       | Yes                                 | Yes                        |
+| **Hoisting (Initialization)**   | Yes (to `undefined`)      | No (in TDZ)                         | No (in TDZ)                |
+| **Temporal Dead Zone (TDZ)**    | No                        | Yes                                 | Yes                        |
+| **Re-declaration (same scope)** | Yes                       | No (`SyntaxError`)                  | No (`SyntaxError`)         |
+| **Re-assignment**               | Yes                       | Yes                                 | No (`TypeError`)           |
+| **Must be initialized?**        | No (defaults `undefined`) | No (defaults `undefined` after TDZ) | Yes (`SyntaxError` if not) |
 
 > [!NOTE]
-> For this course, and in modern React Native development, you should primarily use `let` for variables whose values might change and `const` for variables whose values should remain constant.
+> For this course, and in modern React Native development, you should primarily use `let` for variables whose values might change and `const` for variables whose values should remain constant. Avoid `var`.
 
 ### Data Types
 
@@ -76,7 +132,7 @@ JavaScript is a dynamically typed language. This means you don't have to explici
 
 #### Primitive Data Types
 
-Primitive types are immutable, meaning their values cannot be changed once created. When you operate on a primitive value, you get a new value.
+Primitive types are immutable, meaning their values cannot be changed once created. When you operate on a primitive value, you get a new value. JavaScript has seven primitive data types:
 
 1.  **String:** Represents textual data. Strings are enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``).
 
@@ -89,7 +145,12 @@ Primitive types are immutable, meaning their values cannot be changed once creat
 
     Backticks allow for template literals, which make embedding expressions in strings easier.
 
-2.  **Number:** Represents both integer and floating-point numbers. Special numeric values include `Infinity`, `-Infinity`, and `NaN` (Not a Number).
+2.  **Number:** Represents both integer and floating-point numbers. JavaScript uses a single 64-bit floating-point format (IEEE 754 standard) for all numbers.
+
+    Special numeric values include `Infinity`, `-Infinity`, and `NaN` (Not a Number).
+
+    - `NaN` often results from invalid operations like `0 / 0` or `parseInt("hello")`.
+    - **Quirk:** `NaN` is the only JavaScript value not equal to itself (`NaN === NaN` is `false`). To check if a value is `NaN`, use the global `isNaN()` function or the more reliable `Number.isNaN()` method.
 
     ```javascript
     let quantity = 100;
@@ -99,6 +160,8 @@ Primitive types are immutable, meaning their values cannot be changed once creat
 
     let notANumber = 0 / 0;
     console.log(notANumber); // Output: NaN
+    console.log(NaN === NaN); // Output: false
+    console.log(Number.isNaN(notANumber)); // Output: true
     ```
 
 3.  **Boolean:** Represents a logical entity and can have two values: `true` or `false`.
@@ -109,14 +172,14 @@ Primitive types are immutable, meaning their values cannot be changed once creat
     console.log(isPrescriptionRequired); // Output: true
     ```
 
-4.  **Undefined:** A variable that has been declared but not yet assigned a value has the type `undefined`.
+4.  **Undefined:** A variable that has been declared but not yet assigned a value has the type `undefined`. It also signifies the value returned by functions that don't explicitly return anything or the value of accessing a non-existent object property.
 
     ```javascript
     let deliveryAddress;
     console.log(deliveryAddress); // Output: undefined
     ```
 
-5.  **Null:** Represents the intentional absence of any object value. It's often used to explicitly indicate that a variable holds no value.
+5.  **Null:** Represents the intentional absence of any object value. It's a primitive value explicitly assigned by developers to signify "no value" or "empty".
 
     ```javascript
     let selectedMedication = null;
@@ -124,23 +187,35 @@ Primitive types are immutable, meaning their values cannot be changed once creat
     console.log(selectedMedication); // Output: null
     ```
 
-6.  **Symbol (ES6):** A unique and immutable primitive value that may be used as the key of an Object property. Symbols are less commonly used in everyday application logic but are useful for specific metaprogramming tasks.
+    **`null` vs. `undefined`:**
+
+    - `undefined` usually means a value hasn't been assigned _yet_ (default state).
+    - `null` usually means a variable _was explicitly assigned_ the value of "nothing".
+    - **Quirk:** `typeof null` returns `"object"`. This is a long-standing historical bug. To check for `null`, use strict equality: `myVar === null`.
+
+6.  **Symbol (ES6):** A unique and immutable primitive value that may be used as the key of an Object property. Symbols are primarily used to create unique property keys, helping avoid naming collisions, especially when dealing with third-party code or internal metaproperties.
 
     ```javascript
     const uniqueId = Symbol("patientRecordId");
     console.log(uniqueId.toString()); // Output: Symbol(patientRecordId)
     ```
 
-7.  **BigInt (ES2020):** Represents whole numbers larger than 2<sup>53</sup> - 1, which is the largest number JavaScript can reliably represent with the `Number` type. You create a `BigInt` by appending `n` to the end of an integer or by calling the `BigInt()` constructor.
+7.  **BigInt (ES2020):** Represents whole numbers larger than 2<sup>53</sup> - 1 (the `Number.MAX_SAFE_INTEGER`), which is the largest integer JavaScript can reliably represent with the standard `Number` type.
+
+    - Create `BigInt`s by appending `n` to an integer literal or using `BigInt()`.
+    - Cannot be mixed directly with `Number`s in arithmetic operations; requires explicit conversion.
+
     ```javascript
     const veryLargeNumber = 9007199254740991n;
     const anotherLargeNumber = BigInt("9007199254740992");
     console.log(veryLargeNumber + 1n); // Output: 9007199254740992n
+    // console.log(veryLargeNumber + 1); // TypeError: Cannot mix BigInt and other types
     ```
 
-#### Non-Primitive Data Type
+#### Non-Primitive Data Type (Reference Type)
 
-1.  **Object:** Represents a collection of key-value pairs (or properties). Objects are mutable, meaning their contents can be changed after creation. Functions and arrays are also types of objects in JavaScript.
+1.  **Object:** Represents a collection of key-value pairs (properties and methods). Objects are mutable (their content can change) and are considered "reference types," meaning variables hold a reference (memory address) to the object, not the object itself.
+    - Includes generic objects (`{}`), arrays (`[]`), functions (`function() {}`), `Date`, `RegExp`, etc.
     ```javascript
     let prescription = {
       patientId: "P1001",
@@ -162,10 +237,10 @@ Assigns a value to its left operand based on the value of its right operand.
 
 - `=` (Assignment): Assigns the value of the right operand to the left operand.
   `javascript
-    let stockLevel = 50;
-    stockLevel += 20; // equivalent to stockLevel = stockLevel + 20;
-    console.log(stockLevel); // Output: 70
-    `
+let stockLevel = 50;
+stockLevel += 20; // equivalent to stockLevel = stockLevel + 20;
+console.log(stockLevel); // Output: 70
+`
   Other assignment operators include `+=`, `-=`, `*=`, `/=`, `%=`.
 
 #### Arithmetic Operators
@@ -238,7 +313,32 @@ console.log(hasValidPrescription || medicationInStock); // Output: true
 console.log(!medicationInStock); // Output: true
 ```
 
-Logical operators can also work with non-boolean values (truthy/falsy values), often used for short-circuiting.
+Logical operators can also work with non-boolean values (truthy/falsy values), often used for **short-circuiting**:
+
+- `&&` (Logical AND): Returns the _first_ falsy operand it encounters, or the _last_ operand if all are truthy. If the first operand is falsy, the second operand is **not evaluated**. This is useful for conditional execution.
+
+  ```javascript
+  let userProfile = { name: "Alice" };
+  let displayName = userProfile && userProfile.name; // If userProfile exists, get name
+  console.log(displayName); // Output: Alice
+
+  let settings = null;
+  // settings.apply() is never called because settings is falsy
+  let result = settings && settings.apply();
+  console.log(result); // Output: null
+  ```
+
+- `||` (Logical OR): Returns the _first_ truthy operand it encounters, or the _last_ operand if all are falsy. If the first operand is truthy, the second operand is **not evaluated**. This is commonly used for providing default values.
+
+  ```javascript
+  let inputUsername = "";
+  let username = inputUsername || "Guest"; // If input is empty (falsy), use 'Guest'
+  console.log(username); // Output: Guest
+
+  let configValue = { port: 8080 };
+  let port = configValue || { port: 3000 }; // configValue is truthy, so it's used
+  console.log(port); // Output: { port: 8080 }
+  ```
 
 #### String Operators
 
@@ -280,6 +380,75 @@ console.log(ageCategory); // Output: Adult
   console.log(anArray instanceof Array); // Output: true
   console.log(aDate instanceof Date); // Output: true
   ```
+
+#### Other Operators
+
+JavaScript includes other operators for more specific tasks:
+
+- **Logical Assignment Operators (ES2021+):** Combine logical operations with assignment.
+  - `&&=` (Logical AND assignment): `x &&= y` is like `x && (x = y)`. Assigns `y` to `x` only if `x` is truthy.
+  - `||=` (Logical OR assignment): `x ||= y` is like `x || (x = y)`. Assigns `y` to `x` only if `x` is falsy.
+  - `??=` (Nullish Coalescing assignment): `x ??= y` is like `x ?? (x = y)`. Assigns `y` to `x` only if `x` is `null` or `undefined`.
+- **Unary Operators:**
+  - `+` (Unary Plus): Tries to convert its operand to a number (e.g., `+"42"` results in `42`).
+  - `-` (Unary Negation): Negates its numeric operand.
+- **Bitwise Operators:** Perform operations on the binary representation of numbers (`&`, `|`, `^`, `~`, `<<`, `>>`, `>>>`). Less common in typical application logic.
+- **Comma Operator:** Evaluates multiple expressions left-to-right and returns the value of the last expression. Rarely used.
+- **Relational Operators:**
+  - `in`: Checks if an object has a given property (including inherited ones).
+    ```javascript
+    const car = { make: "Toyota", model: "Camry" };
+    console.log("make" in car); // Output: true
+    console.log("toString" in car); // Output: true (inherited from Object prototype)
+    ```
+
+### Operator Precedence and Associativity
+
+When an expression contains multiple operators, JavaScript follows specific rules to determine the order of evaluation:
+
+1.  **Precedence:** Which operations are performed first. Operators with higher precedence are evaluated before those with lower precedence. For example, multiplication (`*`) has higher precedence than addition (`+`).
+    ```javascript
+    let result = 3 + 5 * 2; // 5 * 2 is evaluated first (10), then 3 + 10
+    console.log(result); // Output: 13
+    ```
+2.  **Associativity:** Which order operators with the _same_ precedence are evaluated in (left-to-right or right-to-left).
+    - Most operators are **left-to-right** (e.g., `a - b + c` is evaluated as `(a - b) + c`).
+    - Assignment (`=`, `+=`, etc.), ternary (`? :`), and exponentiation (`**`) operators are **right-to-left** (e.g., `a = b = 5` is evaluated as `a = (b = 5)`).
+
+**Parentheses `()`** can always be used to override the default precedence and associativity rules and explicitly control the order of evaluation.
+
+```javascript
+let resultWithParens = (3 + 5) * 2; // 3 + 5 is evaluated first (8), then 8 * 2
+console.log(resultWithParens); // Output: 16
+```
+
+Understanding precedence is crucial for writing correct code. Here's a simplified table of common operator precedence (higher number means higher precedence):
+
+| Precedence | Operator(s)                                                                                  | Description                                                                    | Associativity  |
+| :--------- | :------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- | :------------- | ------------------------------ | --- |
+| 19         | `()`                                                                                         | Grouping                                                                       | n/a            |
+| 18         | `.`, `?.`, `[]`, `new` (with args)                                                           | Member Access, Optional Chaining, Computed Member Access, Function Call, `new` | L-R            |
+| 17         | `new` (without args)                                                                         | Instantiation (no args)                                                        | R-L            |
+| 16         | `++` (postfix), `--` (postfix)                                                               | Postfix Increment/Decrement                                                    | n/a            |
+| 15         | `!`, `~`, `+` (unary), `-` (unary), `++` (prefix), `--` (prefix), `typeof`, `void`, `delete` | Logical/Bitwise NOT, Unary +/- Prefix Inc/Dec, `typeof`, `void`, `delete`      | R-L (unary)    |
+| 14         | `**`                                                                                         | Exponentiation                                                                 | R-L            |
+| 13         | `*`, `/`, `%`                                                                                | Multiplication, Division, Remainder                                            | L-R            |
+| 12         | `+` (binary), `-` (binary)                                                                   | Addition, Subtraction                                                          | L-R            |
+| 11         | `<<`, `>>`, `>>>`                                                                            | Bitwise Shifts                                                                 | L-R            |
+| 10         | `<`, `<=`, `>`, `>=`, `in`, `instanceof`                                                     | Relational, `in`, `instanceof`                                                 | L-R            |
+| 9          | `==`, `!=`, `===`, `!==`                                                                     | Equality                                                                       | L-R            |
+| 8          | `&`                                                                                          | Bitwise AND                                                                    | L-R            |
+| 7          | `^`                                                                                          | Bitwise XOR                                                                    | L-R            |
+| 6          | `                                                                                            | `                                                                              | Bitwise OR     | L-R                            |
+| 5          | `&&`                                                                                         | Logical AND                                                                    | L-R            |
+| 4          | `                                                                                            |                                                                                | `              | Logical OR                     | L-R |
+| 3          | `??`                                                                                         | Nullish Coalescing                                                             | L-R            |
+| 2          | `? :`                                                                                        | Conditional (Ternary)                                                          | R-L            |
+| 1          | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `**=`, `&&=`, `                                           |                                                                                | =`, `??=`, ... | Assignment, Logical Assignment | R-L |
+| 0          | `,`                                                                                          | Comma                                                                          | L-R            |
+
+> [!TIP]
+> When in doubt, use parentheses `()` to make the order of operations explicit and improve code readability.
 
 > 📚 **Official Documentation:**
 >
