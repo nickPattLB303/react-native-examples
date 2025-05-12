@@ -21,9 +21,6 @@ Starts the Metro development server, which bundles your JavaScript code, serves 
   - `-a`, `-i`, `-w`: Shortcut flags to attempt opening on Android, iOS, or Web automatically after starting.
 - **Usage:** `npx expo start` (Defaults to Expo Go mode)
 
-- _Image: Screenshot of Expo Dev Tools web interface opened after running `npx expo start`._
-- _Caption: Expo Dev Tools provides a graphical interface in your browser to manage the development server, view connection status, see device logs, and access build settings._
-
 **2. `npx expo run:[ios|android]`**
 
 Builds the native project locally and runs it on a simulator/emulator or connected physical device.

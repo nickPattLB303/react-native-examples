@@ -38,8 +38,6 @@ SpeedyMedsPrototype/
 └── tsconfig.json            # Config: TypeScript compiler configuration
 ```
 
-- _Diagram: Mermaid diagram showing the Expo Router project structure hierarchy._
-
 ```mermaid
 graph TD
     ProjectRoot[SpeedyMedsPrototype/]
@@ -77,7 +75,7 @@ graph TD
     style MetroConfig fill:#f9f,stroke:#333,stroke-width:1px
 ```
 
-- _Caption: This diagram illustrates the standard structure of a new Expo project using Expo Router. The `app/` directory is central for navigation. Grayed-out folders are generated/managed by tools. Pink files are optional configurations._
+This diagram illustrates the standard folder hierarchy within a new Expo project created using the default Expo Router template (`SpeedyMedsPrototype`). Key directories like `app/` (containing screen routes and layouts), `assets/`, `components/`, and `constants/` hold your source code and resources. Configuration files such as `app.json`, `package.json`, and `tsconfig.json` define project settings and dependencies. Other folders like `.expo/`, `.git/`, and `node_modules/` are typically generated or managed by development tools and version control. Understanding the roles of these core directories, especially the `app/` directory for routing and `app.json` for configuration, is fundamental to navigating and building your application effectively with Expo.
 
 ### Key Files and Folders Explained
 

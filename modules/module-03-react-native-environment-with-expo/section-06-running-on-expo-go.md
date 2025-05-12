@@ -26,9 +26,6 @@ Expo Go makes it incredibly easy to run your app on a physical iPhone or Android
 
 2.  **Locate the QR Code:** The terminal output from `npx expo start` will display a QR code.
 
-    - _Image: Screenshot of the terminal output from `npx expo start` with the QR code highlighted._
-    - _Caption: The QR code displayed by the Expo development server is used to open your project in Expo Go on a physical device._
-
 3.  **Open Expo Go on Your Device:** Launch the Expo Go app.
 4.  **Scan the QR Code:** Use the scanning feature within the Expo Go app (or the device's Camera app on iOS) and point it at the QR code in your terminal.
 5.  **App Bundling and Launch:** Expo Go will connect to your development server over the local network, download your app's JavaScript bundle, and launch your `SpeedyMedsPrototype` app on your device.

@@ -26,7 +26,7 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-- Completion of Module 0: Course Introduction (Understanding course structure and tools).
+- Completion of [Module 0: Course Introduction](../module-00-course-introduction/section-00-introduction.md) (Understanding course structure and tools).
 - Basic familiarity with using the command line/terminal.
 - Administrator privileges on your macOS machine for software installation.
 
@@ -44,8 +44,7 @@ By the end of this module, you will be able to:
 
 ## Module Challenge
 
-- **Challenge 3: Environment Setup Verification (Checklist/Quiz - Microsoft Forms)**
-  **(URL_to_Tool)** (This link will be the same as provided in Section 9)
+- **Challenge 3: Environment Setup Verification:** This challenge, detailed at the end of Section 9, involves a checklist or quiz in Microsoft Forms to confirm your environment is correctly configured and essential commands are working.
 
 ## Module Summary
 

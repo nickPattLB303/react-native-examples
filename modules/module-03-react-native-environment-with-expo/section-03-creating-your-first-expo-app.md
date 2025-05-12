@@ -64,38 +64,11 @@ Let's create your first application. For this course, we'll be working towards b
 
 Congratulations! You've successfully created your first Expo project.
 
-### Exercise 3.1: Create and Run Initial App (Instructions)
+### Exercise 3.1: Create and Run Initial App
 
-This exercise solidifies the project creation process and ensures your environment is working correctly by running the newly created app.
+This exercise solidifies the project creation process and ensures your environment is working correctly by running the newly created app on the iOS Simulator.
 
-**Objective:** Create a new Expo app using the recommended template and run it on the iOS Simulator.
-
-**Instructions:**
-
-1.  **Ensure Prerequisites are Met:** Double-check completion of installations from Section 2 (Node.js, npm/yarn, Watchman, Xcode Command Line Tools).
-2.  **Create a New Expo App:**
-    - Open your terminal.
-    - Navigate to a directory for projects (e.g., `cd ~/Developer`).
-    - Run: `npx create-expo-app@latest MyTestApp`.
-    - If prompted for a template, choose `default` or `tabs`. If not prompted, proceed.
-    - Wait for project creation.
-3.  **Navigate into the Project Directory:**
-    - `cd MyTestApp`.
-4.  **Start the Development Server:**
-    - Run: `npx expo start`.
-5.  **Run on iOS Simulator:**
-    - In the terminal where Metro is running, press `i`.
-    - The simulator should open, boot, install the app, and launch it.
-    - You should see the default screen of the chosen template (e.g., basic text or tab structure).
-
-**Expected Outcome:**
-
-- A new Expo project folder (`MyTestApp`) exists.
-- `npx expo start` runs successfully.
-- Pressing `i` launches the app on the iOS Simulator, showing the template's initial screen.
-
-> [!TIP]
-> If the simulator doesn't open or the app fails, review troubleshooting tips in Section 9. Ensure Watchman is running and the simulator is functional.
+**(URL_to_Expo_Snack)**
 
 This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators next.
 

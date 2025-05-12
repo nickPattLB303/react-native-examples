@@ -59,9 +59,6 @@ You can also launch the app on the simulator via the Expo CLI's interactive term
 
 Once your app (either built via `run:ios` or launched via `start` + `i`) starts on the simulator, its native code (specifically the React Native framework) automatically attempts to connect to the Metro server running on your Mac (usually `http://localhost:8081`). It fetches the initial JavaScript bundle and establishes a WebSocket for Fast Refresh / Hot Module Replacement updates when you save code changes.
 
-    - _Image: Screenshot of a newly created Expo app running on the iOS Simulator, showing the default welcome message._
-    - _Caption: The initial screen of a fresh `create-expo-app` project (default template) running on an iOS Simulator after being launched via `npx expo run:ios` or `npx expo start` and pressing `i`._
-
 > [!TIP]
 > If you have multiple iOS Simulators installed, you can manage them via Xcode (`Xcode > Window > Devices and Simulators`). `npx expo run:ios --simulator "My Specific Simulator Name"` lets you target a specific one. ([Source](https://docs.expo.dev/more/expo-cli/#runios))
 

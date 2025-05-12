@@ -140,11 +140,23 @@ Before you can create and run your first React Native Expo app, you need to inst
     - **(Windows PowerShell):** `Get-ChildItem -Path Env:\\ANDROID_SDK_ROOT`
       The command should output the path you set. Also try running `adb version` to verify `platform-tools` are in the PATH. ([Source](https://reactnative.dev/docs/set-up-your-environment))
 
-> 🤖 **(Native Android Developers):**\n>\n> **Comparison:** You're familiar with Android Studio and `ANDROID_SDK_ROOT`. The key differences are the specific SDK/Build Tools versions (35) required by React Native 0.7x+ and the need to install Node.js (LTS) and potentially Watchman (macOS/Linux).\n>\n> **Key Takeaway:** Adapt your existing Android environment by installing Node/Watchman and ensuring the correct SDK/Build Tools versions are active.
+> 🤖 **(Native Android Developers):**
+>
+> **Comparison:** You're familiar with Android Studio and `ANDROID_SDK_ROOT`. The key differences are the specific SDK/Build Tools versions (35) required by React Native 0.7x+ and the need to install Node.js (LTS) and potentially Watchman (macOS/Linux).
+>
+> **Key Takeaway:** Adapt your existing Android environment by installing Node/Watchman and ensuring the correct SDK/Build Tools versions are active.
 
-> 🍏 **(Native iOS Developers):**\n>\n> **Comparison:** You have Xcode/CLTs. The new tools are Node.js (LTS), npm/Yarn (JS package managers like CocoaPods/SPM), and Watchman. If targeting Android, you also need to install and configure Android Studio and the Android SDK as described.\n>\n> **Key Takeaway:** Install the JavaScript ecosystem tools (Node, npm/Yarn, Watchman) and the Android toolchain if needed.
+> 🍏 **(Native iOS Developers):**
+>
+> **Comparison:** You have Xcode/CLTs. The new tools are Node.js (LTS), npm/Yarn (JS package managers like CocoaPods/SPM), and Watchman. If targeting Android, you also need to install and configure Android Studio and the Android SDK as described.
+>
+> **Key Takeaway:** Install the JavaScript ecosystem tools (Node, npm/Yarn, Watchman) and the Android toolchain if needed.
 
-> 🌐 **(Web Developers):**\n>\n> **Comparison:** Node.js, npm/Yarn are familiar. The major additions are the native development environments: Android Studio (+SDK config) and Xcode Command Line Tools (or full Xcode for iOS simulation). These provide the compilers and SDKs needed because React Native builds native apps.\n>\n> **Key Takeaway:** Augment your web toolchain with platform-specific native SDKs and tools (Android Studio, Xcode CLTs).
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** Node.js, npm/Yarn are familiar. The major additions are the native development environments: Android Studio (+SDK config) and Xcode Command Line Tools (or full Xcode for iOS simulation). These provide the compilers and SDKs needed because React Native builds native apps.
+>
+> **Key Takeaway:** Augment your web toolchain with platform-specific native SDKs and tools (Android Studio, Xcode CLTs).
 
 ### Summary: Prerequisite Installation Commands (Recommended Methods)
 
