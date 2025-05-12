@@ -6,14 +6,17 @@ Now that we understand the context of mobile history and the rise of cross-platf
 
 React Native allows you to build native mobile apps using JavaScript and React. Its core philosophy is often summarized as "Learn once, write anywhere." This means you leverage your knowledge of React (a popular web library) to build applications for both iOS and Android from a single codebase.
 
-Unlike hybrid approaches that use WebViews, React Native renders UIs using actual native components. When you write a `<View>` or `<Text>` component in React Native, it translates to a native `UIView` on iOS or a `View` on Android behind the scenes. This allows React Native apps to achieve performance and a look-and-feel that is much closer to purely native applications.
+> [!NOTE]
+> React Native emerged from Facebook's internal efforts to improve their mobile development after facing performance challenges with HTML5-based solutions. It was first showcased publicly in 2015 and aimed to combine the developer experience of web development (using React) with the performance and feel of native applications.
+
+Unlike hybrid approaches that use WebViews, React Native renders UIs using actual native components. When you write a `<View>` or `<Text>` component in React Native, it translates to a native `UIView` on iOS or a `View` on Android behind the scenes (facilitated by the "Bridge" or newer "JSI" architecture, discussed in Module 2). This allows React Native apps to achieve performance and a look-and-feel that is much closer to purely native applications.
 
 ### Advantages of React Native
 
 React Native offers several compelling benefits:
 
 - **Code Reusability:** Share a significant portion (often 70-95%) of your codebase between iOS and Android, drastically reducing development effort.
-- **Developer Experience:** Features like Fast Refresh allow you to see the results of your latest code changes almost instantly without recompiling the entire app, leading to faster iteration cycles.
+- **Developer Experience:** Features like **Fast Refresh** allow you to see the results of your latest code changes almost instantly without losing app state or requiring a full recompile, leading to faster iteration cycles.
 - **Large and Active Community:** Benefit from a vast collection of community-created libraries, tools, tutorials, and extensive support forums.
 - **Leverages React:** If you or your team already know React for web development, the learning curve for React Native is significantly reduced.
 - **Performance:** By rendering native UI components, React Native generally offers much better performance than WebView-based hybrid solutions.
@@ -26,10 +29,32 @@ Despite its strengths, React Native isn't the perfect solution for every scenari
 
 - **Performance Edge Cases:** While generally performant, apps with extremely complex animations, heavy computations, or demanding graphics (like high-end games) might still achieve better performance with pure native code.
 - **Reliance on Native Modules:** For features not covered by React Native core or existing community modules, you might need to write custom native modules (in Swift/Objective-C or Kotlin/Java), requiring native development skills.
-- **Abstraction Layer:** The bridge (in legacy architecture) or JSI (in the New Architecture) adds a layer between JavaScript and native code, which can introduce complexity and potential bottlenecks if not managed well.
+- **Abstraction Layer Overhead:** The communication layer (Bridge/JSI) between JavaScript and native code, while powerful, can introduce potential performance bottlenecks or complexities if not managed well, especially for frequent, high-throughput communication.
 - **Debugging Complexity:** Debugging can sometimes involve three layers (JavaScript, React Native framework, Native Platform), potentially making it more complex than debugging purely native or web apps.
-- **Platform Updates:** There might be a slight delay in adopting the absolute latest iOS or Android features as the React Native framework needs to incorporate them.
-- **Larger App Size (Potentially):** The inclusion of the JavaScript runtime and React Native libraries can sometimes result in a slightly larger initial app download size compared to a minimal native app.
+- **Platform Updates:** There might be a slight delay in adopting the absolute latest iOS or Android features as the React Native framework and community libraries need time to incorporate them.
+- **Larger App Size (Potentially):** The inclusion of the JavaScript runtime (like Hermes) and React Native libraries can sometimes result in a slightly larger initial app download size compared to a minimal native app.
+- **Dependency Management & Upgrades:** Managing dependencies and handling breaking changes across React Native versions, Expo SDK updates, and third-party libraries can sometimes be challenging, particularly in large or complex projects.
+
+### Comparing frameworks
+
+The table below summarizes how React Native compares to other popular mobile development approaches.
+
+| Approach             | Language(s)              | UI Rendering         | Code Sharing | Performance | Typical Use Cases                   |
+| -------------------- | ------------------------ | -------------------- | ------------ | ----------- | ----------------------------------- |
+| React Native         | JavaScript, TypeScript   | Native components    | High         | Near-native | Cross-platform business apps        |
+| Flutter              | Dart                     | Skia (custom engine) | High         | Near-native | Custom UI, cross-platform           |
+| Xamarin              | C#                       | Native components    | Medium       | Near-native | Enterprise, .NET shops              |
+| Native (iOS/Android) | Swift/Obj-C, Kotlin/Java | Native components    | None         | Best        | Platform-specific, high-performance |
+
+```mermaid
+flowchart TD
+    A[JavaScript/TypeScript Code] --> B[React Native Bridge]
+    B --> C[iOS Native Components]
+    B --> D[Android Native Components]
+    C & D --> E[Mobile Device UI]
+```
+
+This diagram shows React Native's high-level architecture. Your JavaScript or TypeScript code communicates with the React Native Bridge, which translates your logic into native UI components for iOS and Android. This approach enables code sharing and native performance, while still allowing you to access platform-specific features when needed. Understanding this architecture helps you see why React Native is a powerful choice for many mobile projects.
 
 > 🤖 **(Android Developers):**
 >
