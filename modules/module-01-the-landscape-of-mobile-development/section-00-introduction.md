@@ -32,12 +32,11 @@ By the end of this module, you will be able to:
 
 - Completion of [Module 0: Course Introduction](./../module-00-course-introduction/section-01-welcome-and-course-goals.md) (Adjust link as necessary based on final structure)
 
-
 ### Additional Resources
 
 For further exploration of mobile development trends and history, you might find these resources insightful:
 
-- [The History of Mobile App Development](https://www.ಯಲ್ಲಿinfoq.com/articles/history-mobile-app-development/) - A look back at how mobile app development has evolved.
+- [The History of Mobile App Development](https://www.infoq.com/articles/history-mobile-app-development/) - A look back at how mobile app development has evolved.
 - [Cross-Platform Native Mobile Apps: The Ultimate Guide](https://www.toptal.com/cross-platform/guide-to-cross-platform-mobile-development) - An article discussing various cross-platform tools and considerations.
 - [React Native Official Website](https://reactnative.dev/) - For the latest news and an overview of React Native.
 - [Expo Official Website](https://expo.dev/) - To learn more about the Expo platform and its services.

@@ -88,3 +88,17 @@ This diagram shows how the main components of the React Native ecosystem relate 
 > - [Community Resources (React Native Docs)](https://reactnative.dev/community/overview)
 
 Together, React Native core, the Expo platform, and the vibrant community form a powerful ecosystem for building cross-platform mobile applications efficiently. It's important to remember that the strength of the surrounding ecosystem—the quality of tooling like Expo, the availability of libraries, the responsiveness of the community, and the clarity of documentation—is often just as critical to a project's success as the technical features of the core framework itself. With this foundational understanding of the mobile development landscape and React Native's place within it, you are ready to move on to exploring the architecture that powers these applications.
+
+### Challenge
+
+Now that you've learned about the mobile development landscape, cross-platform solutions, and React Native's ecosystem, test your knowledge with the following challenge:
+
+- **Challenge 1: Mobile Development Quiz**
+  - **(./challenge-1-mobile-development-quiz.md)**
+
+### Module Summary
+
+Congratulations on completing Module 1! Continue to the module summary to reinforce what you've learned before moving on to the next module.
+
+- **Module 1 Summary: The Landscape of Mobile Development**
+  - **(./module-summary.md)**

@@ -2,6 +2,10 @@
 
 This section takes a look back at the evolution of mobile platforms. Understanding this history helps appreciate the context in which modern mobile operating systems like iOS and Android, and development frameworks like React Native, emerged.
 
+> 🧑‍🏫 **(Instructor-Led):** For instructor-led sessions, prepare questions about your earliest memories of mobile devices or apps. This will create an engaging discussion about the rapid pace of mobile evolution and help connect personal experiences to the timeline we'll explore.
+
+> 🧗‍♀️ **(Self-Led):** As you work through this historical section, try to identify the key technological shifts that enabled each major advancement. This will help you recognize patterns of innovation that might predict future developments in mobile.
+
 ```mermaid
 gantt
     dateFormat  YYYY

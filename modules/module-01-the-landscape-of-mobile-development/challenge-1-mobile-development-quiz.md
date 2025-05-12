@@ -1,0 +1,37 @@
+# Challenge 1: Mobile Development Quiz
+
+## Objective
+
+Test your understanding of mobile development history, cross-platform approaches, React Native, and the React Native ecosystem through a comprehensive quiz.
+
+## Instructions
+
+Complete the Mobile Development Quiz by accessing the following Microsoft Forms link:
+
+**(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-MOBILE-DEV-QUIZ)**
+
+The quiz will cover topics from all four sections of Module 1:
+
+- The history of mobile platforms
+- Cross-platform development approaches
+- React Native's advantages, disadvantages, and use cases
+- The React Native ecosystem (core, Expo, community)
+
+You will be presented with multiple-choice questions, true/false statements, and matching exercises to thoroughly assess your understanding of the concepts covered.
+
+## Expected Outcome
+
+By completing this challenge, you will:
+
+- Reinforce your understanding of key mobile development concepts
+- Identify any areas where you might need to review the material
+- Connect historical context to modern development approaches
+- Solidify your knowledge of React Native's position in the mobile development landscape
+
+## Relation to SpeedyMeds
+
+As we prepare to build the SpeedyMeds pharmacy application in future modules, it's essential to understand why React Native is an appropriate choice for this project. The quiz will help you assess your grasp of the technical and business factors that influence framework selection for healthcare-related mobile applications.
+
+## Time Allocation
+
+This challenge should take approximately 30-45 minutes to complete.

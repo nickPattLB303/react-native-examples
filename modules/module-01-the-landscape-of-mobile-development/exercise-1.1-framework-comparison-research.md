@@ -1,0 +1,40 @@
+# Exercise 1.1: Framework Comparison Research
+
+## Objective
+
+Compare React Native with other popular cross-platform development frameworks to understand their relative strengths, weaknesses, and use cases.
+
+## Instructions
+
+1. Research the following cross-platform development frameworks:
+
+   - React Native
+   - Flutter
+   - Xamarin
+   - Ionic
+   - Unity (for mobile game development)
+
+2. For each framework, identify:
+
+   - The primary programming language(s) used
+   - The company/organization behind it
+   - How UI rendering is handled (WebView, native components, custom engine, etc.)
+   - Target platforms supported
+   - Performance characteristics compared to fully native development
+   - Types of applications it's best suited for
+   - Notable companies or applications built with it
+
+3. Complete the research form by filling out your findings:
+   **(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-FRAMEWORK-COMPARISON)**
+
+## Expected Outcome
+
+This exercise will help you understand the landscape of cross-platform development options and where React Native fits within it. You'll gain insights into which frameworks are appropriate for different types of projects and business requirements.
+
+## Relation to SpeedyMeds
+
+When developing a pharmacy application like SpeedyMeds, choosing the right development framework is crucial. The app will need to handle sensitive data securely, provide a responsive user interface for patients viewing medications and prescriptions, and potentially integrate with device features like camera (for scanning prescriptions) and notifications (for medication reminders).
+
+## Time Allocation
+
+This exercise should take approximately 15-20 minutes to complete.
