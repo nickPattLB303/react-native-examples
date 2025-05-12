@@ -43,6 +43,41 @@ Understanding Expo Go requires recognizing two distinct parts: ([Source](https:/
 
 React Native acts as the bridge, allowing your JavaScript code running inside the Expo Go shell to communicate with the native modules already compiled into that specific version of the Expo Go app.
 
+```mermaid
+graph TD
+    subgraph "Your Computer"
+        A[Your React Native Code] --> B[Metro Bundler]
+        B --> C{Development Server}
+    end
+
+    subgraph "Mobile Device"
+        D[Expo Go App] --> E[React Native Runtime]
+        E --> F[Pre-bundled Native Modules]
+    end
+
+    C -->|JavaScript Bundle| D
+
+    subgraph "Development Build"
+        G[Your React Native Code] --> H[Metro Bundler]
+        H --> I{Development Server}
+        I -->|JavaScript Bundle| J[Your Custom App]
+        J --> K[React Native Runtime]
+        K --> L[Custom Native Modules]
+    end
+
+    style D fill:#d4f1f9,stroke:#333
+    style J fill:#ffe6cc,stroke:#333
+    style F fill:#d4f1f9,stroke:#333
+    style L fill:#ffe6cc,stroke:#333
+```
+
+This diagram illustrates two development workflows:
+
+1. **Expo Go Workflow** (top): Your JavaScript code is bundled by Metro and served to the pre-built Expo Go app, which contains a fixed set of native modules.
+2. **Development Build Workflow** (bottom): Similar JavaScript bundling process, but the app receiving the bundle is your custom-built app with exactly the native modules you need.
+
+The fundamental difference is where the native code resides and how customizable it is. With Expo Go, you're limited to the modules pre-bundled in the Expo Go app. With a Development Build, you can include any native modules your project requires.
+
 > [!CAUTION]
 > If your JavaScript code attempts to call a native module that is _not_ included in the installed Expo Go build (e.g., a third-party library with native code, or your own custom native code), the app will crash because the corresponding native code doesn't exist within the Expo Go sandbox. ([Source](https://docs.expo.dev/develop/development-builds/introduction/))
 

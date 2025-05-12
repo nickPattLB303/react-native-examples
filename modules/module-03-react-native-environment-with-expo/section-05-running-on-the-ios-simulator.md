@@ -4,11 +4,18 @@ One of the most common ways to test your React Native Expo application during de
 
 This section details how to prepare the simulator and run your Expo app using both `npx expo run:ios` and `npx expo start`.
 
+> 🧑‍🏫 **(Instructor-Led):** Use screen sharing to demonstrate the simulator launch process, highlighting common issues students might encounter. Consider having students pair up to troubleshoot simulator setup problems together.
+
+> 🧗‍♀️ **(Self-Led):** If you encounter issues starting the simulator, try launching it manually first using the Spotlight search for "Simulator" before running your Expo commands. This can solve many common connection problems.
+
 ### Prerequisites for Running on iOS Simulator
 
 1.  **macOS Operating System:** The iOS Simulator is only available on macOS.
 2.  **Full Xcode Installed:** You MUST have the full Xcode application installed from the Mac App Store. The Xcode Command Line Tools alone are not sufficient for running the iOS Simulator. Xcode includes the simulator runtimes and necessary build tools. ([Source](https://reactnative.dev/docs/set-up-your-environment))
 3.  **Project Created:** You need an Expo project, like `SpeedyMedsPrototype`.
+
+> [!IMPORTANT]
+> If you're not using macOS, you can still develop React Native apps using Expo Go on a physical iOS device (Section 6) or an Android emulator. However, the iOS Simulator specifically requires macOS and Xcode.
 
 ### Preparing and Launching the Simulator
 
@@ -67,17 +74,69 @@ Once your app (either built via `run:ios` or launched via `start` + `i`) starts 
 - **Fast Refresh:** Save changes in your JS/TS files, and Metro sends updates to the app on the simulator, often reflecting changes instantly without losing app state.
 - **Developer Menu:** Press `Cmd+Ctrl+Z` (or `Device > Shake` in Simulator menu) to open the developer menu for debugging options.
 
+```typescript
+// Example of adding a button to your SpeedyMeds home screen
+// The changes will be reflected in the Simulator via Fast Refresh
+import { View, Text, Button, StyleSheet } from "react-native";
+
+export default function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>SpeedyMeds</Text>
+      <Text style={styles.subtitle}>Your medication assistant</Text>
+
+      <Button
+        title="View Prescriptions"
+        onPress={() => console.log("Prescriptions button pressed")}
+      />
+
+      {/* Add this button and save to see Fast Refresh in action */}
+      <Button
+        title="Nearby Pharmacies"
+        onPress={() => console.log("Pharmacies button pressed")}
+        color="#5cb85c"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 24,
+    color: "#555",
+  },
+});
+```
+
 > 📲 **(Native iOS Developers):**
 >
-> **Comparison:** `npx expo run:ios` automates your standard Xcode "Build and Run" (Cmd+R) for the simulator. It handles `pod install`, calls `xcodebuild`, and uses `simctl` to install/launch. The key difference is that after launching, the React Native app connects to Metro for its JavaScript bundle, rather than executing purely compiled UI layer code.
+> **Comparison:** `npx expo run:ios` automates your standard Xcode "Build and Run" (Cmd+R) process for the simulator. It handles `pod install`, calls `xcodebuild`, and uses `simctl` to install/launch. The key difference is that after launching, the React Native app connects to Metro for its JavaScript bundle, rather than executing purely compiled Swift/Objective-C code. Fast Refresh replaces your traditional build-and-run cycle for most code changes.
 >
-> **Key Takeaway:** `npx expo run:ios` is your Xcode build-and-run equivalent, integrated with Metro.
+> **Key Takeaway:** `npx expo run:ios` is your Xcode build-and-run equivalent, integrated with Metro's JavaScript delivery system.
+>
+> **Source:** [React Native: Building from Source](https://reactnative.dev/docs/0.71/building-from-source)
+>
+> **Example:** Instead of modifying ViewController code and rebuilding an entire app, with React Native you modify JS/TS files and see changes instantly via Fast Refresh without recompilation.
 
-> 🌐 **(Web/Android Developers):**
+> 🌐 **(Web Developers):**
 >
-> **Comparison:** The iOS Simulator is Apple's official tool for emulating iPhones/iPads on macOS. Unlike browser device simulation or Android Emulators (which run on various OSes), iOS development and simulation require macOS and Xcode due to Apple's ecosystem. `npx expo run:ios` bridges your JS project with this native iOS build and simulation environment.
+> **Comparison:** The iOS Simulator is conceptually similar to using browser DevTools' device simulation, but significantly more accurate as it's running actual iOS system code. Metro serves a similar role to webpack-dev-server or Vite in web development—bundling your code and providing hot reloading. The key difference is that your code runs within a true native iOS environment with real native UI components, not in a browser rendering HTML/CSS.
 >
-> **Key Takeaway:** iOS Simulator is a macOS-only, high-fidelity iOS environment; `npx expo run:ios` is the command to build and run your app there.
+> **Key Takeaway:** Consider the simulator as a specialized "browser" for iOS apps; Metro as your bundler/dev-server; Fast Refresh as HMR for mobile.
+>
+> **Source:** [Apple Developer: Testing with Simulator](https://developer.apple.com/documentation/xcode/testing-with-simulator)
 
 Running on the iOS Simulator provides a fast and efficient way to develop and test your React Native application on iOS.
 
@@ -86,3 +145,4 @@ Running on the iOS Simulator provides a fast and efficient way to develop and te
 > - [Expo Docs: Running on emulators/simulators](https://docs.expo.dev/workflow/run-on-device/#running-on-emulatorsimulators)
 > - [Expo CLI: `run:ios`](https://docs.expo.dev/more/expo-cli/#runios)
 > - [Apple Developer Docs: Simulator](https://developer.apple.com/documentation/xcode/simulator)
+> - [React Native: Using the iOS Simulator](https://reactnative.dev/docs/running-on-simulator-ios)

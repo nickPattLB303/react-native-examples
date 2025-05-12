@@ -4,6 +4,53 @@ The Expo CLI is your primary tool for managing and running your Expo project. Wh
 
 Remember, the recommended way to run these commands is using `npx expo <command>` within your project directory.
 
+> 🧑‍🏫 **(Instructor-Led):** Consider creating a hands-on exercise where students use each of these commands and document the output. This practical experience helps reinforce their understanding of the Expo CLI's capabilities.
+
+> 🧗‍♀️ **(Self-Led):** Create a command reference card or cheat sheet with these commands for quick reference. Focus first on mastering `start`, `run:ios`/`run:android`, and `install`, as these will be your most frequently used commands.
+
+### Expo CLI Command Workflow
+
+```mermaid
+graph TD
+    subgraph "Project Creation"
+        A["npx create-expo-app"] --> B["New Project"]
+    end
+
+    subgraph "Development Workflow"
+        B --> C["npx expo start"]
+        C --> D["Metro Server"]
+        D --> D1["Press i: iOS Simulator"]
+        D --> D2["Press a: Android Emulator"]
+        D --> D3["Scan QR: Expo Go"]
+
+        B --> E["npx expo run:ios/android"]
+        E --> F["Native Build"]
+        F --> G["Simulator/Emulator"]
+
+        H["npx expo install pkg"] --> I["Compatible Dependencies"]
+        I --> C
+        I --> E
+    end
+
+    subgraph "Configuration & Maintenance"
+        B --> J["npx expo prebuild"]
+        J --> K["iOS/Android Folders"]
+        K --> E
+
+        L["npx expo config"] --> M["View Config"]
+        N["npx expo doctor"] --> O["Diagnose Issues"]
+        P["npx expo upgrade"] --> Q["Update SDK"]
+        R["npx expo customize"] --> S["Config Templates"]
+    end
+
+    style C fill:#d4f1f9,stroke:#333
+    style E fill:#d4f1f9,stroke:#333
+    style H fill:#d4f1f9,stroke:#333
+    style N fill:#ffe6cc,stroke:#333
+```
+
+This diagram illustrates the relationships between key Expo CLI commands and their roles in the development workflow. The blue highlighted commands (`start`, `run:ios`/`run:android`, and `install`) are your core daily development commands, while the orange `doctor` command is especially useful for troubleshooting issues.
+
 ### Core Development Commands
 
 **1. `npx expo start`**
@@ -100,9 +147,9 @@ Manages authentication with your Expo account, which is required for using Expo 
 ### Summary Table
 
 | Command                        | Primary Purpose                                                   |
-| :----------------------------- | :---------------------------------------------------------------- | -------------------------------------------------------------- |
+| :----------------------------- | :---------------------------------------------------------------- |
 | `npx expo start`               | Start Metro dev server, enable Fast Refresh, provide QR code/UI   |
-| `npx expo run:[ios             | android]`                                                         | Build native project locally, run on simulator/emulator/device |
+| `npx expo run:[ios\|android]`  | Build native project locally, run on simulator/emulator/device    |
 | `npx expo install [pkg...]`    | Install dependencies with Expo SDK compatibility checks           |
 | `npx expo prebuild`            | Generate/update native `ios`/`android` projects from config (CNG) |
 | `npx expo config`              | Inspect resolved project configuration                            |
@@ -116,16 +163,109 @@ Manages authentication with your Expo account, which is required for using Expo 
 > **Comparison:** `start` manages Metro (like running `react-native start` but integrated). `run:*` orchestrates `xcodebuild`/`gradlew`. `install` is a package manager wrapper with version validation. `prebuild` automates native project generation based on JS config (akin to code generation tools). `config` introspects this generation process. `doctor` is a diagnostic tool.
 >
 > **Key Takeaway:** Expo CLI wraps and extends native tools and package managers with Expo-specific logic and workflows (like CNG and compatibility checks).
+>
+> **Source:** [Expo Docs: Developing with the iOS Simulator](https://docs.expo.dev/workflow/ios-simulator/)
 
 > 🌐 **(Web Developers):**
 >
-> **Comparison:** `start` is like your `npm run dev` or `vite` command. `run:*` has no direct web equivalent but involves native compilation. `install` is `npm install` plus safety checks. `prebuild`/`config` relate to generating the underlying native app structure from your config, somewhat analogous to how a web framework might generate boilerplate or optimized build outputs based on its config.
+> **Comparison:** `start` is like your `npm run dev` or `vite` command. `run:*` has no direct web equivalent but involves native compilation similar to a build process. `install` is `npm install` plus safety checks, like using a smart package manager that knows about compatibility. `prebuild`/`config` relate to generating the underlying native app structure from your config, somewhat analogous to how webpack might generate optimized bundles from your configuration.
 >
 > **Key Takeaway:** Familiar concepts (`start`, `install`) have native-specific enhancements (`run:*`, `prebuild`, compatibility checks).
+>
+> **Source:** [Metro Bundler Documentation](https://facebook.github.io/metro/) - The bundler under the hood of `npx expo start`
+
+> 🔁 **(Asynchronous Learners):** Focus on remembering the most essential commands first: `start`, `run:ios`/`run:android`, and `install`. Once you're comfortable with those, gradually incorporate the maintenance commands like `doctor` and `upgrade` as needed. Creating a reference sheet with example usages will be helpful.
+
+### Using Commands in SpeedyMeds Development
+
+```typescript
+// Example of installing and using a barcode scanner in SpeedyMeds
+// Terminal commands to set up:
+// npx expo install expo-barcode-scanner
+// npx expo start
+
+// In your MedicationScanScreen.tsx:
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, Button } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+
+export default function MedicationScanScreen() {
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState(false);
+  const [medicationCode, setMedicationCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
+    setScanned(true);
+    setMedicationCode(data);
+    console.log(
+      `Bar code with type ${type} and data ${data} has been scanned!`
+    );
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  return (
+    <View style={styles.container}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
+      {scanned && (
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultText}>Medication: {medicationCode}</Text>
+          <Button title="Scan Again" onPress={() => setScanned(false)} />
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  resultContainer: {
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 8,
+    margin: 16,
+    alignItems: "center",
+  },
+  resultText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+});
+```
+
+This code example demonstrates how you might use `npx expo install` to add the barcode scanner package to your SpeedyMeds app, then run it with `npx expo start` to test scanning medication barcodes.
 
 Mastering these commands provides a solid foundation for your daily Expo development workflow.
 
 > 📚 **Official Documentation:**
 >
 > - [Expo Docs: Expo CLI Reference](https://docs.expo.dev/more/expo-cli/)
-> - Specific command docs are linked from the main reference page (e.g., `start`, `install`, `run:ios`, `prebuild`, `config`, `doctor`, `upgrade`).
+> - [Expo Docs: CLI commands list](https://docs.expo.dev/more/expo-cli/#npx-expo-start)
+> - [Expo Docs: Metro Bundler Configuration](https://docs.expo.dev/guides/customizing-metro/)
+> - [Expo Docs: Configuration system](https://docs.expo.dev/versions/latest/config/app/)
+> - [Metro Bundler Documentation](https://facebook.github.io/metro/)

@@ -2,6 +2,8 @@
 
 Setting up a development environment involves several moving parts, and occasionally things don't go perfectly smoothly. This section covers common setup issues and provides troubleshooting steps.
 
+> 🧗‍♀️ **(Self-Led):** Keep this section bookmarked as a reference. When you encounter issues, methodically work through the troubleshooting steps rather than trying random solutions you find online. This systematic approach will save you time in the long run.
+
 ### General Troubleshooting Tips
 
 Before diving into specific errors:
@@ -21,6 +23,45 @@ Before diving into specific errors:
     - `watchman watch-del-all` (Clears Watchman watches)
 4.  **Restart:** Restart your terminal, your IDE, Watchman (`watchman shutdown-server`), or even your computer.
 5.  **Check Official Docs & GitHub Issues:** Search the Expo documentation, React Native documentation, and the GitHub issues page for the specific library mentioned in the error.
+
+### Troubleshooting Flow Diagram
+
+```mermaid
+flowchart TD
+    A[Encounter Error] --> B{Error Type?}
+
+    B -->|Command Not Found| C[Installation Issue]
+    C --> C1[Verify installation]
+    C1 --> C2[Check PATH environment]
+    C2 --> C3[Reinstall if needed]
+
+    B -->|Build Error| D[Native Build Issue]
+    D --> D1[Check native tools]
+    D1 --> D2[Clear caches]
+    D2 --> D3[Run prebuild with clean flag]
+
+    B -->|Runtime Error| E[App Execution Issue]
+    E --> E1[Check logs for specifics]
+    E1 --> E2[Try with --clear flag]
+    E2 --> E3[Verify package versions]
+
+    B -->|Connection Error| F[Networking Issue]
+    F --> F1[Verify same network]
+    F1 --> F2[Check firewall settings]
+    F2 --> F3[Try tunnel mode]
+
+    G[General Solutions] --> G1[Clear node_modules]
+    G --> G2[Clear caches]
+    G --> G3[Reinstall dependencies]
+    G --> G4[Restart services/device]
+
+    C3 -.-> G
+    D3 -.-> G
+    E3 -.-> G
+    F3 -.-> G
+```
+
+This diagram illustrates a systematic approach to troubleshooting common React Native and Expo setup issues. By identifying the general category of your error first, you can follow a specific branch of solutions. If those don't work, there are general solutions (clearing caches, reinstalling dependencies, etc.) that often resolve many issues regardless of their type.
 
 ### Specific Issues & Solutions
 
@@ -83,12 +124,16 @@ Before diving into specific errors:
 > **Comparison:** Many issues mirror native development: PATH problems, port conflicts, SDK/toolchain verification (Xcode, Android SDK), build tool issues (CocoaPods, Gradle), signing complexities. The unique Expo layers are Watchman, Metro cache (`--clear`), Expo Go connection quirks, and the `npx expo install` compatibility layer.
 >
 > **Key Takeaway:** Apply standard native troubleshooting, plus Expo-specific checks for Metro, Watchman, and dependencies (`expo install`).
+>
+> **Source:** [Apple Developer: Resolving Common Development Errors](https://developer.apple.com/documentation/xcode/diagnosing-issues-using-crash-reports-and-device-logs/)
 
 > 🌐 **(Web Developers):**
 >
 > **Comparison:** `command not found` (PATH), port conflicts, cache clearing (`npm cache`), and dependency issues are familiar. The new territory is troubleshooting the native toolchains (Xcode, Android Studio, Simulators, Emulators), native build systems (CocoaPods, Gradle), and device/emulator connectivity issues, which have no direct web equivalent.
 >
 > **Key Takeaway:** Augment web troubleshooting skills with checks for native tool installations, configurations, and build processes.
+>
+> **Source:** [Expo Community Forum: Troubleshooting](https://forums.expo.dev/c/help/6)
 
 > [!TIP]
 > When asking for help (e.g., on forums or Stack Overflow), provide:
@@ -98,14 +143,50 @@ Before diving into specific errors:
 > 3.  What actually happened (copy/paste the _full_ error message and relevant logs).
 > 4.  Your environment details (OS, Node version, Expo SDK version, relevant tool versions).
 
-### Challenge 3: Environment Setup Verification (Checklist/Quiz - Microsoft Forms)
+### SpeedyMeds Example Error Scenario
+
+Here's a common scenario you might encounter while developing your SpeedyMeds app:
+
+```bash
+# Attempting to add a QR code scanner for medication verification
+npx expo install expo-barcode-scanner
+
+# Error in terminal after adding the package
+Error: Unable to resolve module 'expo-barcode-scanner' from 'app/screens/MedicationScanScreen.tsx'
+```
+
+The typical troubleshooting flow would be:
+
+1. Ensure you used `npx expo install` (not `npm install`) for the package
+2. Restart the Metro bundler with `npx expo start --clear`
+3. Check if the package was actually added to package.json
+4. Run `npm install` or `yarn` to ensure node_modules is fully updated
+5. Verify import statement matches the actual package name
+
+### Challenge 3: Environment Setup Verification
 
 This challenge verifies that you have successfully installed all the necessary tools and can run the core commands covered in this module.
 
-**(URL_to_Tool)**
+[**Challenge 3: Environment Setup Verification (Microsoft Forms)**](https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)
+
+In this challenge, you'll complete a checklist and answer questions to confirm that your development environment is properly set up. You'll verify your:
+
+1. Node.js and npm/yarn installation
+2. Watchman installation (macOS)
+3. Xcode/Command Line Tools setup
+4. Android Studio setup (optional)
+5. Successful project creation with `create-expo-app`
+6. Ability to run the project on iOS Simulator
+7. Understanding of key `npx expo` commands
+
+The form includes screenshots demonstrating proper output for various verification commands, allowing you to compare your results.
+
+> 🧑‍🏫 **(Instructor-Led):** Take time in class to go through the verification process together. This will help identify and resolve any lingering setup issues before moving to more complex modules.
 
 > 📚 **Official Documentation:**
 >
 > - [Expo Docs: Troubleshooting](https://docs.expo.dev/troubleshooting/errors/)
 > - [React Native Docs: Troubleshooting](https://reactnative.dev/docs/troubleshooting)
 > - [Expo Docs: Continuous Native Generation FAQ](https://docs.expo.dev/workflow/continuous-native-generation/#faq)
+> - [Expo Docs: Common Development Errors](https://docs.expo.dev/debugging/common-problems/)
+> - [React Native Docs: Known Issues](https://reactnative.dev/docs/known-issues)

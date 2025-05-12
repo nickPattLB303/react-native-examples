@@ -4,6 +4,10 @@ While the iOS Simulator is excellent for development on macOS, testing your appl
 
 Expo Go makes it incredibly easy to run your app on a physical iPhone or Android device during the initial development phases.
 
+> 🧑‍🏫 **(Instructor-Led):** Consider setting aside time in class for students to download Expo Go and test their SpeedyMeds projects on physical devices. This is particularly valuable when introducing hardware features like camera access in later modules.
+
+> 🧗‍♀️ **(Self-Led):** Even if you primarily develop using simulators, testing on a physical device periodically helps catch issues related to real-world usage that might not be apparent in simulators. Try to test on both iOS and Android devices if available.
+
 ### Prerequisites for Running on a Physical Device via Expo Go
 
 1.  **Expo Go App Installed on Device:** Download and install the Expo Go app from the App Store (for iOS) or Google Play Store (for Android) onto your physical smartphone or tablet. ([Source](https://expo.dev/go))
@@ -56,15 +60,143 @@ The experience mirrors the simulator:
 - **Fast Refresh:** Saved code changes trigger near-instant updates on the device.
 - **Developer Menu:** Shake the device (or use other platform-specific gestures) to access the menu for reloading, debugging, etc.
 
+### Hardware Features for SpeedyMeds
+
+For a pharmacy application like SpeedyMeds, physical devices unlock several important features that simulators can't fully replicate:
+
+```typescript
+// Example of camera access for medication barcode scanning in SpeedyMeds
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, Alert } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { Camera } from "expo-camera";
+
+export default function MedicationScannerScreen() {
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
+    setScanned(true);
+
+    // In a real app, this would look up the medication in a database
+    if (data.startsWith("RXMED")) {
+      Alert.alert(
+        "Medication Found",
+        `Prescription ID: ${data}\nAcetaminophen 500mg\nTake 1-2 tablets every 6 hours as needed`,
+        [
+          { text: "OK" },
+          {
+            text: "Add to My Medications",
+            onPress: () => console.log("Added to medications"),
+          },
+        ]
+      );
+    } else {
+      Alert.alert(
+        "Unknown Barcode",
+        "This barcode doesn't match any known medications."
+      );
+    }
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting camera permission...</Text>;
+  }
+  if (hasPermission === false) {
+    return (
+      <Text>
+        Camera access denied. Please enable camera permissions in your device
+        settings.
+      </Text>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Camera
+        style={styles.camera}
+        type={Camera.Constants.Type.back}
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.scanText}>Scan Medication Barcode</Text>
+          {scanned && <Text style={styles.rescanText}>Tap to scan again</Text>}
+        </View>
+      </Camera>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  camera: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingBottom: 60,
+  },
+  scanText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  rescanText: {
+    color: "#66ff66",
+    fontSize: 14,
+    marginTop: 10,
+  },
+});
+```
+
+This code example demonstrates a common use case for our SpeedyMeds app that requires a physical device: scanning medication barcodes. While simulators can simulate camera access, they cannot actually scan physical barcodes.
+
+Other hardware features relevant to SpeedyMeds that work best on physical devices include:
+
+- **Location services** for finding nearby pharmacies
+- **Push notifications** for medication reminders
+- **Haptic feedback** when confirming important actions
+- **Biometric authentication** (Face ID/Touch ID) for securing sensitive medical information
+
 ### Limitations Recap
 
 Remember that running via Expo Go uses the pre-built sandbox environment. **It cannot load projects that require custom native modules or native code modifications not already included in that specific build of Expo Go.** For those cases, you need a Development Build (see Section 1). ([Source](https://docs.expo.dev/develop/development-builds/introduction/))
 
-> 📲 **(Native Developers - Android & iOS):**
+> 📲 **(Native Developers):**
 >
-> **Comparison:** This Expo Go method completely bypasses any local native compilation (`run:ios`/`run:android`). You're loading your JavaScript bundle into Expo's pre-compiled native app shell. This enables rapid JS iteration but offers no flexibility for custom native code during this phase.
+> **Comparison:** Expo Go eliminates the need for code signing, provisioning profiles, and USB debugging setup that traditional iOS/Android development requires for physical device testing. Instead of deploying a compiled binary to the device through Xcode or Android Studio, you're remotely loading your JavaScript bundle into Expo's pre-compiled container app. This is similar to how web developers can instantly serve HTML/JS to a browser without compilation.
 >
 > **Key Takeaway:** Expo Go offers speed by decoupling your JS from local native builds, at the cost of native customization.
+>
+> **Source:** [React Native: Running on Device](https://reactnative.dev/docs/running-on-device)
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** Using Expo Go is conceptually similar to opening a website on your mobile device browser. Your local development server (like running a web server on localhost) serves your code to the Expo Go app (the "browser"). The QR code scanning is analogous to typing a URL, just more convenient for mobile.
+>
+> **Key Takeaway:** Think of Expo Go as a specialized browser for your React Native app, with the QR code as the URL.
+>
+> **Source:** [Expo Go Documentation](https://docs.expo.dev/get-started/expo-go/)
+
+> 🔁 **(Asynchronous Learners):** Physical device testing is especially important when learning asynchronously. Make sure to test on real devices regularly since you won't have an instructor or peers immediately available to help troubleshoot device-specific issues.
 
 While this course primarily uses the iOS Simulator, running on a physical device via Expo Go is valuable for initial testing and experiencing real-world interaction.
 
@@ -73,3 +205,5 @@ While this course primarily uses the iOS Simulator, running on a physical device
 > - [Expo Docs: Running on Devices](https://docs.expo.dev/workflow/run-on-device/#running-on-devices-via-lan)
 > - [Expo Docs: Expo Go](https://docs.expo.dev/get-started/expo-go/)
 > - [Expo CLI: `start`](https://docs.expo.dev/more/expo-cli/#start) (mentions `--tunnel`)
+> - [Expo Camera Documentation](https://docs.expo.dev/versions/latest/sdk/camera/)
+> - [Expo Barcode Scanner Documentation](https://docs.expo.dev/versions/latest/sdk/bar-code-scanner/)

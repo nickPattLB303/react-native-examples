@@ -2,6 +2,10 @@
 
 When you create a new project with `create-expo-app` using the default template (or the `tabs` template), it generates a specific directory structure built around **Expo Router** for file-based navigation. Understanding this structure is essential for navigating your project, adding screens, managing assets, and configuring your application.
 
+> 🧑‍🏫 **(Instructor-Led):** Consider having students create a diagram of their own project structure as a reference. This physical mapping activity helps solidify understanding of how different files relate to each other.
+
+> 🧗‍♀️ **(Self-Led):** Take time to explore each folder and file in your project, opening key files to understand their content. Getting familiar with this structure now will make adding new features much easier later.
+
 Let's examine the typical structure of a project created with the default Expo Router template:
 
 ```text
@@ -113,6 +117,112 @@ This diagram illustrates the standard folder hierarchy within a new Expo project
 
 - **`ios/` and `android/` (Generated - Typically Ignored)**: These directories contain the **native platform projects** (Xcode project for iOS, Gradle project for Android). In the default Expo workflow (CNG), these are **generated artifacts** created by `npx expo prebuild` based on `app.json`/`app.config.js` and config plugins. **You generally should not edit files in these directories directly**, as changes will be overwritten the next time `prebuild` runs. They are usually added to `.gitignore`. (You only commit these if you _eject_ from the CNG workflow). ([Source](https://docs.expo.dev/workflow/continuous-native-generation/))
 
+### TypeScript in Your Project Structure
+
+TypeScript is integrated throughout the project, with `.tsx` files for React components and `.ts` files for non-component code. Let's look at how TypeScript typing might be used in a SpeedyMeds app structure:
+
+```typescript
+// types/index.ts - Central location for shared types
+export interface Medication {
+  id: string;
+  name: string;
+  dosage: string;
+  frequency: string;
+  expiryDate: Date;
+  instructions: string;
+  isRefillable: boolean;
+}
+
+export interface Pharmacy {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  hours: {
+    open: string;
+    close: string;
+    days: string[];
+  };
+}
+
+export interface User {
+  id: string;
+  name: string;
+  prescriptions: string[]; // IDs of medications
+  preferredPharmacy?: string; // ID of pharmacy
+}
+
+// Example of how these types would be used in various project files:
+
+// app/(tabs)/medications.tsx - A screen component in the routing structure
+import { View, Text, FlatList } from "react-native";
+import { Medication } from "../../types";
+import { MedicationCard } from "../../components/MedicationCard";
+import { useGetMedications } from "../../hooks/useGetMedications";
+
+export default function MedicationsScreen() {
+  const { medications, isLoading } = useGetMedications();
+
+  return (
+    <View>
+      <Text>Your Medications</Text>
+      {isLoading ? (
+        <Text>Loading your prescriptions...</Text>
+      ) : (
+        <FlatList<Medication>
+          data={medications}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <MedicationCard medication={item} />}
+        />
+      )}
+    </View>
+  );
+}
+
+// components/MedicationCard.tsx - A reusable component
+import { View, Text, StyleSheet } from "react-native";
+import { Medication } from "../types";
+
+interface MedicationCardProps {
+  medication: Medication;
+  onPress?: (id: string) => void;
+}
+
+export function MedicationCard({ medication, onPress }: MedicationCardProps) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.name}>{medication.name}</Text>
+      <Text>{medication.dosage}</Text>
+      <Text>{medication.frequency}</Text>
+      <Text>{medication.instructions}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+    marginBottom: 12,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 6,
+  },
+});
+```
+
+This example demonstrates how TypeScript integrates with your project structure, providing type safety across different files and components.
+
+> 🔁 **(Asynchronous Learners):** When setting up your own project or joining an existing codebase, spend extra time familiarizing yourself with the project structure. Creating a personal "map" of key files and relationships will help you navigate efficiently when working independently.
+
 ### Expo's Abstraction Approach
 
 This structure highlights Expo's philosophy: manage native configuration primarily through `app.json`/`app.config.js` and Expo Router's file-based system, using `prebuild` to generate the native projects as needed. This simplifies the developer experience, especially for those without deep native platform expertise.
@@ -122,12 +232,16 @@ This structure highlights Expo's philosophy: manage native configuration primari
 > **Comparison:** `app.json`/`app.config.js` replaces direct editing of `Info.plist`/`AndroidManifest.xml` for many common settings. Config Plugins handle more complex native modifications programmatically. The `ios/` and `android/` folders are treated like build outputs, not primary source code, unless you specifically move away from the CNG workflow. Expo Router replaces manual setup of native navigation containers (like `UINavigationController` or Android Fragments/Activities for navigation structure).
 >
 > **Key Takeaway:** Configuration is centralized in JS/JSON; native projects are generated artifacts.
+>
+> **Source:** [Expo Config Plugins Documentation](https://docs.expo.dev/config-plugins/introduction/)
 
 > 🌐 **(Web Developers):**
 >
 > **Comparison:** Expo Router's `app/` directory feels similar to file-based routing in frameworks like Next.js or Remix. `app.json` is like a mix of `package.json` metadata and build configurations specific to mobile apps. The `ios/`/`android/` folders are analogous to a complex build output directory (`dist/`, `build/`) that you wouldn't typically edit directly.
 >
 > **Key Takeaway:** File-based routing in `app/`, central configuration in `app.json`, native folders are generated.
+>
+> **Source:** [Next.js App Router Documentation](https://nextjs.org/docs/app/building-your-application/routing)
 
 Understanding this structure, particularly the role of the `app/` directory and `app.json`, is key to developing effectively with Expo and Expo Router.
 
@@ -137,4 +251,5 @@ Understanding this structure, particularly the role of the `app/` directory and 
 > - [Expo Docs: Configuration with app.json / app.config.js](https://docs.expo.dev/versions/latest/config/app/)
 > - [Expo Docs: Continuous Native Generation (CNG)](https://docs.expo.dev/workflow/continuous-native-generation/)
 > - [Expo Docs: Customizing Metro](https://docs.expo.dev/guides/customizing-metro/)
+> - [TypeScript Documentation: tsconfig.json](https://www.typescriptlang.org/tsconfig)
 > - [React Native Docs: Project Structure](https://reactnative.dev/docs/project-structure) (General perspective)

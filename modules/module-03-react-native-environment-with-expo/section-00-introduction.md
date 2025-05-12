@@ -1,14 +1,29 @@
 # Module 3: Setting Up Your React Native Environment with Expo
 
-<!-- Optional Module Introduction Image -->
-<!-- ![Abstract graphic related to environment setup](./assets/images/module-3/module-banner.png) -->
-<!-- Caption: Setting up the foundation for your React Native development journey with Expo. -->
+![Abstract graphic related to environment setup](./assets/images/module-3/module-banner.png)
+_Setting up the foundation for your React Native development journey with Expo._
 
 Welcome to Module 3! This module is your starting point for hands-on React Native development. We'll guide you through setting up a robust development environment using Expo, a powerful platform that simplifies building and iterating on React Native applications. By the end of this module, you'll have a working local setup, understand the core tools, and be ready to start building your first components.
 
-> 🌐 **(Web Developers):** You'll find the setup process familiar to Node.js web development, involving package managers (npm/yarn) and command-line tools. Expo significantly streamlines the native build tooling setup compared to traditional native development or vanilla React Native.
+## Target Audience Adaptation
+
+> 🌐 **(Web Developers):**
 >
-> 📲 **(Native Developers - iOS & Android):** While you're accustomed to Xcode or Android Studio, Expo provides a different, often faster, development loop, especially early on with Expo Go. We'll focus on the Expo CLI and iOS Simulator, abstracting away much of the native build configuration you might be used to. Understanding how Expo manages the underlying native projects will be key later.
+> **Comparison:** If you've set up Node.js web applications before, this process will feel familiar with package managers and command-line tools. Expo abstracts away the complex native build configurations you'd otherwise need to manage with vanilla React Native.
+>
+> **Key Takeaway:** Expo eliminates the need to install and configure native SDKs directly, saving significant setup time.
+>
+> **Source:** [React Native Environment Setup - CLI](https://reactnative.dev/docs/environment-setup)
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** While native development requires Xcode (iOS) or Android Studio with extensive configuration, Expo provides a streamlined alternative. Instead of managing build settings, provisioning profiles, and simulator configurations manually, Expo handles these complexities behind the scenes.
+>
+> **Key Takeaway:** Expo offers a significantly faster development cycle for prototyping and initial development compared to traditional native workflows.
+>
+> **Source:** [Expo vs. Native Development](https://docs.expo.dev/workflow/already-used-react-native/)
+>
+> **Example:** Instead of configuring CocoaPods dependencies or Gradle files manually, Expo manages native dependencies through simple JavaScript commands.
 
 ## Learning Objectives
 
@@ -44,7 +59,9 @@ By the end of this module, you will be able to:
 
 ## Module Challenge
 
-- **Challenge 3: Environment Setup Verification:** This challenge, detailed at the end of Section 9, involves a checklist or quiz in Microsoft Forms to confirm your environment is correctly configured and essential commands are working.
+[**Challenge 3: Environment Setup Verification (Microsoft Forms)**](https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)
+
+This challenge involves verifying your environment setup through a checklist in Microsoft Forms. You'll confirm that your environment is correctly configured and essential commands are working properly.
 
 ## Module Summary
 
@@ -52,7 +69,8 @@ This module equipped you with the foundational knowledge and practical skills to
 
 Key takeaways include understanding how to run your application on both the iOS Simulator and optionally on a physical device via Expo Go, navigating the Expo project structure, and utilizing essential Expo CLI commands like `start`, `install`, and `run:ios`. Finally, you were introduced to common troubleshooting techniques to address setup issues. With this environment in place, you are now fully prepared to dive into building React Native applications.
 
-## Additional Resources (Optional)
+## Additional Resources
 
 - [Awesome Expo: A curated list of awesome Expo tools, resources and examples](https://github.com/expo/awesome-expo)
 - [Expo Blog](https://blog.expo.dev/) (For latest news and updates from the Expo team)
+- [Setting up Continuous Integration for Expo](https://docs.expo.dev/guides/setting-up-continuous-integration/)

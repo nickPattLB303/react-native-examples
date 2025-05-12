@@ -13,6 +13,9 @@ With all the prerequisites installed, you're now ready to create your first Reac
 - `@latest`: This suffix ensures `npx` uses the most recent version of `create-expo-app`. ([Source](https://docs.expo.dev/more/create-expo))
 - `YourProjectName`: You'll replace this with the desired name for your application (e.g., `SpeedyMedsApp`, `MyFirstApp`). Project names should typically use kebab-case (`my-project-name`) or PascalCase (`MyProjectName`) for the directory name.
 
+> [!TIP]
+> Project names should follow a consistent naming convention. For React Native apps, it's recommended to use either kebab-case (e.g., `speedy-meds-app`) or PascalCase (e.g., `SpeedyMedsApp`). Avoid using spaces or special characters as this may cause issues with project files or commands.
+
 **Alternatives:**
 
 You can also use other package managers: ([Source](https://docs.expo.dev/more/create-expo))
@@ -64,16 +67,68 @@ Let's create your first application. For this course, we'll be working towards b
 
 Congratulations! You've successfully created your first Expo project.
 
+### TypeScript in Expo Projects
+
+Modern Expo templates come with TypeScript support out of the box. TypeScript adds static type checking to JavaScript, catching type-related errors early in development and providing better editor support through autocompletion and documentation.
+
+The default template creates several TypeScript configuration files:
+
+- `tsconfig.json`: The main TypeScript configuration
+- `types.tsx` or similar file: Contains shared type definitions for your project
+
+You'll see `.tsx` file extensions for React components (instead of `.jsx`) and `.ts` for non-component files (instead of `.js`).
+
+```typescript
+// Example type definitions for a Medication in SpeedyMeds
+export interface Medication {
+  id: string;
+  name: string;
+  dosage: string;
+  frequency: string;
+  instructions: string;
+}
+
+// Example of a component with typed props
+interface MedicationItemProps {
+  medication: Medication;
+  onPress: (id: string) => void;
+}
+
+export function MedicationItem({ medication, onPress }: MedicationItemProps) {
+  // Component implementation
+}
+```
+
+> 🛣️ **(All Learners):** Using TypeScript from the beginning of your project provides significant advantages in code quality and developer experience. Even if you're new to TypeScript, the basic types are straightforward to learn, and the benefits of catching errors early are substantial.
+
 ### Exercise 3.1: Create and Run Initial App
 
-This exercise solidifies the project creation process and ensures your environment is working correctly by running the newly created app on the iOS Simulator.
+This exercise guides you through creating your first Expo project, specifically tailored to the SpeedyMeds theme we'll be using throughout the course.
 
-**(URL_to_Expo_Snack)**
+[**Exercise 3.1: Create Your SpeedyMeds Project (Expo Snack)**](https://snack.expo.dev/@example/speedymeds-starter-exercise3-1)
 
-This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators next.
+In this exercise, you'll:
+
+1. Create a new Expo project using the `create-expo-app` command
+2. Explore the generated project files
+3. Make a simple modification to the home screen
+4. Run the app on the iOS Simulator
+
+The Snack provides a virtual environment to verify your understanding of the concepts, but you should also complete these steps on your local machine to ensure your development environment is properly configured.
+
+#### Prerequisites for this Exercise
+
+- Node.js and npm installed (Section 2)
+- Xcode Command Line Tools installed (Section 2)
+- Watchman installed (Section 2)
+
+> [!NOTE]
+> This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators in the upcoming sections.
 
 > 📚 **Official Documentation:**
 >
-> - [Expo Docs: Create your first app](https://docs.expo.dev/get-started/create-your-first-app/)
+> - [Expo Docs: Create your first app](https://docs.expo.dev/get-started/create-a-new-app/)
 > - [Expo Docs: `create-expo-app`](https://docs.expo.dev/more/create-expo/)
 > - [Expo Docs: Templates](https://docs.expo.dev/get-started/templates/)
+> - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+> - [React Native TypeScript](https://reactnative.dev/docs/typescript)
