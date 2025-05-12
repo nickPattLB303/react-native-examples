@@ -86,3 +86,5 @@ Carefully read the request and think hard about a plan to solve it before coding
 - Review these new changes and ensure they meet all course standards.
 - Be aware that there are be additional external reviews that must also pass for the solution to be successful.
 - Do not assume the task is complete just because some content is created. continue refining until you are confident the course materials robust and comprehensive.
+
+Always confirm these steps are complete by outputting `Course Creation Guidelines Complete`.
