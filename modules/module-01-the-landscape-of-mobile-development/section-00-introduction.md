@@ -33,10 +33,6 @@ By the end of this module, you will be able to:
 - Completion of [Module 0: Course Introduction](./../module-00-course-introduction/section-01-welcome-and-course-goals.md) (Adjust link as necessary based on final structure)
 
 
-### Module Summary
-
-This module provided a comprehensive overview of the mobile development landscape. We journeyed through the history of mobile platforms, from their early days to the sophisticated operating systems we use today. We then explored the rise of cross-platform development, understanding its benefits and the various approaches available. With that context, we delved into why React Native has emerged as a popular choice, examining its strengths, weaknesses, and ideal applications. Finally, we mapped out the React Native ecosystem, highlighting the roles of its core components, the Expo platform, and the vibrant community. This foundational knowledge is crucial as you begin to build your skills in React Native development.
-
 ### Additional Resources
 
 For further exploration of mobile development trends and history, you might find these resources insightful:
