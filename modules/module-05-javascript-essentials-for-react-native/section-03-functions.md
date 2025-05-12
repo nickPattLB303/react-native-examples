@@ -6,6 +6,45 @@ Functions are fundamental building blocks in JavaScript. They are reusable block
 
 There are several ways to define functions in JavaScript.
 
+> 📲 **(Native Developers):** 
+> 
+> **Comparison:** JavaScript functions differ from Swift and Kotlin methods in several important ways. In Swift, functions are first-class types with clear parameter/return types. In Kotlin/Java, methods belong to classes with explicit typing. JavaScript functions are more flexible - they can be declared multiple ways, passed as values, and don't require explicit type annotations.
+>
+> **Key Takeaway:** JavaScript's arrow functions (`=>`) are similar to Swift closures and Kotlin lambdas, but with a critical difference in how `this` is handled - arrow functions inherit `this` from their parent scope, which is especially important in React Native.
+>
+> **Source:** [Swift Functions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/) and [Kotlin Functions](https://kotlinlang.org/docs/functions.html)
+>
+> **Example:**
+>
+> ```swift
+> // Swift function
+> func greet(name: String) -> String {
+>    return "Hello, \(name)!"
+> }
+> // Swift closure
+> let greetClosure = { (name: String) -> String in
+>    return "Hello, \(name)!"
+> }
+> ```
+>
+> ```kotlin
+> // Kotlin function
+> fun greet(name: String): String {
+>    return "Hello, $name!"
+> }
+> // Kotlin lambda
+> val greetLambda = { name: String -> "Hello, $name!" }
+> ```
+>
+> ```javascript
+> // JavaScript function declaration
+> function greet(name) {
+>   return `Hello, ${name}!`;
+> }
+> // JavaScript arrow function
+> const greetArrow = (name) => `Hello, ${name}!`;
+> ```
+
 #### Function Declarations
 
 A function declaration defines a named function. These declarations are **hoisted**, meaning the entire function definition (name and body) is conceptually moved to the top of its enclosing scope (function or global) by the JavaScript engine before the code is executed. This allows you to call a declared function _before_ its textual definition in the code.

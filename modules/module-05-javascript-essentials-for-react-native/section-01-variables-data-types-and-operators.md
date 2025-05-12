@@ -6,6 +6,34 @@ Welcome to the foundational concepts of JavaScript! Variables, data types, and o
 
 In JavaScript, a variable is a named container for storing data values. Think of it as a label you can attach to a value, allowing you to refer to and manipulate that value throughout your code. In modern JavaScript (ES6 and later), we primarily use `let` and `const` to declare variables.
 
+> 📲 **(Native Developers):**
+> 
+> **Comparison:** JavaScript's variable and type system differs significantly from Swift (iOS) and Kotlin/Java (Android). While Swift uses type inference but is statically typed (`var` and `let`), and Kotlin/Java use explicit type declarations, JavaScript is dynamically typed with no need to specify types when declaring variables. Types are associated with values, not variables.
+>
+> **Key Takeaway:** In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
+>
+> **Source:** [Swift Language Guide: The Basics](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/) and [Kotlin Basic Syntax](https://kotlinlang.org/docs/basic-syntax.html#variables)
+>
+> **Example:**
+>
+> ```swift
+> // Swift: Type is inferred but fixed
+> let name: String = "John"
+> // name = 42 // Error: Cannot assign value of type 'Int' to type 'String'
+> ```
+>
+> ```kotlin
+> // Kotlin: Type is required and fixed
+> val name: String = "John"
+> // name = 42 // Error: The integer literal does not conform to the expected type String
+> ```
+>
+> ```javascript
+> // JavaScript: No type declaration, type can change
+> let name = "John";
+> name = 42; // Valid in JavaScript
+> ```
+
 #### `let`
 
 The `let` keyword declares a block-scoped local variable, optionally initializing it to a value. Block scope means the variable is only accessible within the block of code (typically defined by curly braces `{}`) where it is declared.

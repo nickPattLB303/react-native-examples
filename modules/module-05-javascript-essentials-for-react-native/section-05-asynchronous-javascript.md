@@ -32,6 +32,66 @@ JavaScript is single-threaded, meaning it can only execute one piece of code at 
   // Second: Patient data received (asynchronously).
   ```
 
+> 📲 **(Native Developers):** 
+> 
+> **Comparison:** JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
+>
+> **Key Takeaway:** In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
+>
+> **Source:** [Swift Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) and [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
+>
+> **Example:**
+>
+> ```swift
+> // Swift: Actual concurrency with async/await
+> func fetchData() async throws -> Data {
+>     let (data, _) = try await URLSession.shared.data(from: url)
+>     return data // This thread yields while waiting
+> }
+>
+> // Usage:
+> Task {
+>     do {
+>         let data = try await fetchData()
+>         processData(data)
+>     } catch {
+>         handleError(error)
+>     }
+> }
+> ```
+>
+> ```kotlin
+> // Kotlin: Coroutines for structured concurrency
+> suspend fun fetchData(): Data {
+>     return withContext(Dispatchers.IO) {
+>         val response = URL(url).readText() // Suspends coroutine, not thread
+>         parseData(response)
+>     }
+> }
+>
+> // Usage:
+> CoroutineScope(Dispatchers.Main).launch {
+>     try {
+>         val data = fetchData()
+>         processData(data)
+>     } catch (e: Exception) {
+>         handleError(e)
+>     }
+> }
+> ```
+>
+> ```javascript
+> // JavaScript: Single-threaded with Promises
+> async function fetchData() {
+>   const response = await fetch(url); // Non-blocking, returns to event loop
+>   const data = await response.json();
+>   return data;
+> }
+>
+> // Usage:
+> fetchData().then(processData).catch(handleError);
+> ```
+
 #### The Event Loop
 
 JavaScript environments (like browsers, Node.js, and React Native's JavaScript engine) manage asynchronous operations using an **event loop**, a **call stack**, and a **message queue** (or task queue).

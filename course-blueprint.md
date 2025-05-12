@@ -617,7 +617,9 @@ Prettier will generally preserve this internal content as authored, especially w
   - **Syntax:** Uses blockquote (`>`) syntax with a specific structure. The bolding of labels like `**Comparison:**` is part of this custom component's style.
 
     ```markdown
-    > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:** > **Comparison:** Explain how this React Native concept relates to or differs from common patterns in the target audience's background (e.g., Android lifecycle vs. `useEffect`, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
+    > <TARGET_AUDIENCE_EMOJI> **<TARGET_AUDIENCE>:**
+    >
+    > **Comparison:** Explain how this React Native concept relates to or differs from common patterns in the target audience's background (e.g., Android lifecycle vs. `useEffect`, iOS Auto Layout vs. Flexbox, React web state vs. RN state).
     >
     > **Key Takeaway:** Briefly summarize the most crucial difference or similarity.
     >
@@ -849,7 +851,7 @@ Each section within a module MUST adhere to the following structure and content 
 3.  **Core Content (Ordered by Content Type):** The main explanatory text, definitions, concepts, procedures, etc., organized according to the content types defined in Section IV.F. Content within this block MUST follow this general order, though not all types will be present in every section:
     - **Conceptual Content:** Overviews, explanations, "under the hood" details, purpose, importance, use cases. (See IV.F and [`conceptual-content-type.md`](@contributing/style-guide-and-content-model/conceptual-content-type.md))
       - _Includes:_ Explanatory paragraphs, diagrams (IV.C) illustrating concepts or flows (see [Graphics, Design, and Media Guidelines](@styleguide/accessibility/graphics-design-media.md)), "Background Bridge Notes" (IV.B), relevant Callouts (IV.B) (see [Formatting Common Text Elements](@styleguide/text-formatting/formatting-common-text-elements.md)), Learning Path Guidance (IV.B).
-    Note that specific placement rules for "Background Bridge Notes" and "Learning Path Guidance" are detailed in Section IV.B.
+        Note that specific placement rules for "Background Bridge Notes" and "Learning Path Guidance" are detailed in Section IV.B.
     - **Referential Content:** Detailed information about APIs, components, props, types, configuration, terminology. (See IV.F and [`referential-content-type.md`](@contributing/style-guide-and-content-model/referential-content-type.md); also [Reference Documentation](@styleguide/developer-content/reference-documentation.md))
       - _Includes:_ API/Component/Hook Explanations (covering Purpose, Syntax, Parameters/Props, Return Value, Usage/Remarks), tables (IV.A) (see [Formatting Common Text Elements](@styleguide/text-formatting/formatting-common-text-elements.md)), definitions, "Official Documentation Link Box" (IV.B).
     - **Prerequisites (for this section's procedures/exercises):** A brief list or paragraph outlining necessary prior knowledge or setup specifically required for the procedural content or exercise within _this_ section. MUST be placed immediately before the relevant procedural steps or the link to the exercise. (See V.C for more details).
