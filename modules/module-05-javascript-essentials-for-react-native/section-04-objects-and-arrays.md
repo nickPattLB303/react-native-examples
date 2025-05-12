@@ -456,7 +456,7 @@ _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the
 
 **Instructions for Exercise 5.2 (to be placed in CodeSandbox `README.md`):**
 
-````markdown
+```markdown
 # Exercise 5.2: Data Manipulation - SpeedyMeds Pharmacy
 
 ## Objective
@@ -466,6 +466,8 @@ Practice manipulating JavaScript objects and arrays using various methods, destr
 ## Data
 
 Start with the following sample data in your `index.js`:
+
+```
 
 ```javascript
 const patients = [
@@ -494,9 +496,8 @@ const medicationsInventory = {
   Warfarin: { stock: 50, unitPrice: 1.2 },
 };
 ```
-````
 
-```
+```markdown
 
 ## Tasks
 
@@ -546,12 +547,8 @@ const medicationsInventory = {
 
 Good luck!
 
+```
+
 ### Next Steps
 
 Understanding how to structure and manipulate data with objects and arrays is crucial. Next, we'll delve into how JavaScript handles operations that take time to complete, such as network requests or user interactions. Proceed to [Section 5: Asynchronous JavaScript](./section-05-asynchronous-javascript.md) to learn about callbacks, Promises, and async/await.
-
-```
-
-```
-
-```

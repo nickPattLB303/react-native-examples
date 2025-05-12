@@ -327,7 +327,7 @@ _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the
 
 **Instructions for Challenge 5 (to be placed in CodeSandbox `README.md`):**
 
-````markdown
+```markdown
 # Challenge 5: Mini Pharmacy Data Processor
 
 ## Objective
@@ -341,6 +341,8 @@ SpeedyMeds wants a simple script to analyze its daily prescription data. You are
 ## Data
 
 Start with the following sample data in your `index.js` (or a separate `data.js` if you choose to structure it with modules conceptually):
+
+```
 
 ```javascript
 // data.js (conceptually)
@@ -395,9 +397,8 @@ export const dailyPrescriptions = [
   },
 ];
 ```
-````
 
-```
+```markdown
 
 ## Tasks
 
@@ -448,8 +449,6 @@ Create functions (potentially in a separate `processor.js` file, imported into `
 
 ## Expected Output (Example for `generateDailyReport`)
 
-```
-
 --- SpeedyMeds Daily Prescription Report ---
 Total Revenue: $XX.XX
 Lisinopril Prescriptions: X
@@ -459,8 +458,6 @@ Covered: X
 Uncovered: X
 
 ---
-
-```
 
 (Replace X and XX.XX with your calculated values.)
 
@@ -503,7 +500,3 @@ For further exploration and to deepen your JavaScript knowledge, consider these 
 ### Next Steps
 
 With these JavaScript essentials under your belt, you're well-prepared to enhance your code with static typing. Proceed to **[Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)** (link to be updated based on final structure) to learn how TypeScript can help you write more robust and maintainable React Native applications.
-
-```
-
-```
