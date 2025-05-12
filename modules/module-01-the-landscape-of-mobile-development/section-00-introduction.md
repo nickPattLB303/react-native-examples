@@ -32,12 +32,6 @@ By the end of this module, you will be able to:
 
 - Completion of [Module 0: Course Introduction](./../module-00-course-introduction/section-01-welcome-and-course-goals.md) (Adjust link as necessary based on final structure)
 
-### Module Challenge
-
-At the end of this module, you'll test your understanding with a quiz:
-
-- **Challenge 1: Mobile Development Quiz**
-  - **(URL_to_Microsoft_Forms_for_Challenge_1)**
 
 ### Module Summary
 
