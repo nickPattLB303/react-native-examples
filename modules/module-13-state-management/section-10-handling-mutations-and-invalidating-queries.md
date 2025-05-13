@@ -1,0 +1,277 @@
+## Section 10: Handling Mutations and Invalidating Queries
+
+In Section 8, we introduced `useMutation` as the hook for creating, updating, or deleting data on the server. A critical aspect of using mutations effectively is ensuring that your client-side cache and UI are updated to reflect these changes. TanStack Query provides robust mechanisms for this, primarily through query invalidation and, for more advanced scenarios, optimistic updates or direct cache manipulation.
+
+### Recap: `useMutation`
+
+As a quick reminder, `useMutation` takes a `mutationFn` (an async function that performs the server update) and returns an object with a `mutate` function to trigger the operation, along with status indicators (`isPending`, `isSuccess`, `isError`) and callbacks like `onSuccess`, `onError`, and `onSettled`.
+
+```tsx
+// Basic structure from previous section
+// const mutation = useMutation({
+//   mutationFn: updateSpeedyMedsUserProfile,
+//   onSuccess: (data, variables) => {
+//     // What to do after successful mutation?
+//   },
+//   onError: (error, variables) => {
+//     // Handle error
+//   }
+// });
+
+// mutation.mutate({ userId: '123', newEmail: 'user@example.com' });
+```
+
+The key question is: what happens in `onSuccess` to make sure our UI reflects the `newEmail` if it was displaying the user's profile?
+
+### Strategies for Post-Mutation Cache Updates
+
+TanStack Query offers several ways to synchronize your client state after a mutation:
+
+1.  **Invalidating Queries (`queryClient.invalidateQueries`)**
+    This is the most common and often the simplest approach. When you invalidate a query (or a set of queries), TanStack Query marks them as stale. If those queries are currently active (i.e., being used by a mounted component via `useQuery`), they will be automatically re-fetched from the server.
+
+    - **How it Works:** Inside the `onSuccess` callback of `useMutation`, you use `queryClient.invalidateQueries({ queryKey: [...] })`.
+    - **Specificity:** You can invalidate queries with exact keys or use prefix matching to invalidate a group of related queries.
+      - `queryClient.invalidateQueries({ queryKey: ['userProfile', userId] })`: Invalidates the specific user profile query.
+      - `queryClient.invalidateQueries({ queryKey: ['medications'] })`: Invalidates all queries whose key starts with `'medications'` (e.g., `['medications']`, `['medications', 'category', 'painkiller']`, `['medications', 'detail', medId]`).
+    - **Benefit:** Ensures your UI displays fresh data from the server after a change. It's a reliable way to keep data consistent.
+
+2.  **Direct Cache Updates with `queryClient.setQueryData`**
+    Sometimes, the response from your mutation already contains the updated data. In such cases, instead of re-fetching, you can directly update the cache using `queryClient.setQueryData(queryKey, newData)` or `queryClient.setQueryData(queryKey, (oldData) => computeNewData(oldData))`. This can make the UI update feel instantaneous as it avoids an additional network request for the re-fetch.
+
+    - **How it Works:** In `onSuccess`, use the data returned by your `mutationFn` to update the relevant query cache.
+    - **Benefit:** Faster UI updates if the mutation response is sufficient. Avoids an extra fetch.
+    - **Caution:** You are manually manipulating the cache, so you need to ensure the data structure matches what `useQuery` expects for that `queryKey`. If other parts of the data that weren't returned by the mutation also changed on the server, `setQueryData` alone won't pick that up.
+
+3.  **Optimistic Updates**
+    This is a more advanced technique for making UIs feel extremely responsive. The idea is to update the UI _immediately_ as if the mutation was successful, even before the server has responded. If the server confirms success, nothing more needs to be done (or perhaps just a silent re-fetch for consistency). If the server returns an error, the UI change is rolled back to its previous state.
+
+    - **How it Works:**
+      1.  In `onMutate` (a callback in `useMutation` that fires _before_ `mutationFn`):
+          - Optionally cancel any outgoing re-fetches for the queries you're about to update optimistically to prevent them from overwriting your optimistic update.
+          - Snapshot the current cached value.
+          - Optimistically update the cache using `queryClient.setQueryData` to the new desired state.
+          - Return the snapshot (previous value) from `onMutate`. This snapshot will be passed as `context` to `onError` and `onSettled`.
+      2.  In `onError`: Use the `context` (previous value) to roll back the optimistic update by calling `queryClient.setQueryData` again with the old data.
+      3.  In `onSettled` (called after success or error): Always re-fetch the relevant query to ensure true data consistency from the server, regardless of optimistic success or rollback.
+    - **Benefit:** Provides the best perceived performance as UI updates instantly.
+    - **Complexity:** More complex to implement correctly, especially handling rollbacks and ensuring consistency. Only use when the UX benefit is significant and the rollback logic is manageable.
+
+### Example: Updating Medication Stock and Invalidating
+
+Let's imagine a scenario in SpeedyMeds where a pharmacist updates the stock level of a medication. After the update, we want to ensure that any component displaying the medication list or this specific medication's details shows the new stock level.
+
+```tsx
+import React, { useState } from "react";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+
+// Mock API functions
+interface Medication {
+  id: string;
+  name: string;
+  stock: number;
+}
+
+const MOCK_MEDICATIONS: Medication[] = [
+  { id: "med001", name: "Amoxicillin 250mg", stock: 150 },
+  { id: "med002", name: "Lisinopril 10mg", stock: 75 },
+];
+
+const fetchMedicationById = async (
+  medId: string
+): Promise<Medication | undefined> => {
+  console.log(`API: Fetching medication ${medId}...`);
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const medication = MOCK_MEDICATIONS.find((m) => m.id === medId);
+  if (!medication) throw new Error("Medication not found");
+  return medication;
+};
+
+const updateMedicationStockAPI = async ({
+  medId,
+  newStock,
+}: {
+  medId: string;
+  newStock: number;
+}): Promise<Medication> => {
+  console.log(`API: Updating stock for ${medId} to ${newStock}...`);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const medIndex = MOCK_MEDICATIONS.findIndex((m) => m.id === medId);
+  if (medIndex === -1)
+    throw new Error("Failed to update: Medication not found");
+  MOCK_MEDICATIONS[medIndex] = {
+    ...MOCK_MEDICATIONS[medIndex],
+    stock: newStock,
+  };
+  return MOCK_MEDICATIONS[medIndex];
+};
+
+// Component to display and update medication stock
+const MedicationStockManager: React.FC<{ medicationId: string }> = ({
+  medicationId,
+}) => {
+  const queryClient = useQueryClient();
+  const [newStockLevel, setNewStockLevel] = useState("");
+
+  const {
+    data: medication,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Medication, Error>({
+    queryKey: ["medication", medicationId], // Query key for specific medication
+    queryFn: () => fetchMedicationById(medicationId),
+  });
+
+  const updateStockMutation = useMutation<
+    Medication, // Type returned by mutationFn
+    Error, // Type of error
+    { medId: string; newStock: number } // Type of variables passed to mutate
+  >({
+    mutationFn: updateMedicationStockAPI,
+    onSuccess: (updatedMedication, variables) => {
+      Alert.alert(
+        "Success",
+        `${updatedMedication.name} stock updated to ${updatedMedication.stock}`
+      );
+
+      // Strategy 1: Invalidate the specific medication query to refetch its details
+      queryClient.invalidateQueries({
+        queryKey: ["medication", variables.medId],
+      });
+
+      // Strategy 2: (Alternative/Additional) Invalidate a broader query if you have a list display
+      // queryClient.invalidateQueries({ queryKey: ['allMedications'] });
+
+      // Strategy 3: (Alternative) Directly set query data if the mutation returns the full updated object
+      // This can avoid the refetch if you are confident the returned data is complete
+      // queryClient.setQueryData(['medication', variables.medId], updatedMedication);
+
+      setNewStockLevel("");
+    },
+    onError: (err) => {
+      Alert.alert("Error", `Failed to update stock: ${err.message}`);
+    },
+  });
+
+  const handleUpdateStock = () => {
+    const stock = parseInt(newStockLevel, 10);
+    if (isNaN(stock) || stock < 0) {
+      Alert.alert("Invalid Input", "Please enter a valid stock number.");
+      return;
+    }
+    updateStockMutation.mutate({ medId: medicationId, newStock: stock });
+  };
+
+  if (isLoading) return <ActivityIndicator style={styles.centered} />;
+  if (isError)
+    return <Text style={styles.errorText}>Error: {error?.message}</Text>;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.medName}>{medication?.name}</Text>
+      <Text style={styles.stockText}>Current Stock: {medication?.stock}</Text>
+      <TextInput
+        placeholder="Enter new stock level"
+        keyboardType="numeric"
+        value={newStockLevel}
+        onChangeText={setNewStockLevel}
+        style={styles.input}
+      />
+      <Button
+        title={updateStockMutation.isPending ? "Updating..." : "Update Stock"}
+        onPress={handleUpdateStock}
+        disabled={updateStockMutation.isPending}
+      />
+      {updateStockMutation.isError && (
+        <Text style={styles.errorText}>
+          Mutation Error: {updateStockMutation.error.message}
+        </Text>
+      )}
+    </View>
+  );
+};
+
+// App setup (simplified for example)
+const queryClient = new QueryClient();
+const App: React.FC = () => (
+  <QueryClientProvider client={queryClient}>
+    <View style={{ paddingTop: 50 }}>
+      <MedicationStockManager medicationId="med001" />
+    </View>
+  </QueryClientProvider>
+);
+
+const styles = StyleSheet.create({
+  centered: { marginVertical: 20 },
+  container: {
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    margin: 10,
+    borderRadius: 8,
+  },
+  medName: { fontSize: 18, fontWeight: "bold" },
+  stockText: { fontSize: 16, marginVertical: 10 },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  errorText: { color: "red", marginTop: 10 },
+});
+
+export default App; // Or your specific component
+```
+
+**Explanation of the Example:**
+
+1.  **`MedicationStockManager` Component:** Fetches details for a single medication using `useQuery` with the key `['medication', medicationId]`.
+2.  **`updateStockMutation`:** Configured to call `updateMedicationStockAPI`.
+3.  **`onSuccess` Callback:**
+    - It shows a success alert.
+    - Crucially, it calls `queryClient.invalidateQueries({ queryKey: ['medication', variables.medId] })`. This tells TanStack Query that the data associated with this specific medication ID is now stale.
+    - Because `MedicationStockManager` is currently using `useQuery` with this exact key, TanStack Query will automatically re-fetch the data for `['medication', medicationId]`, ensuring the `Current Stock` display updates with the value from the (mocked) server.
+    - Alternative strategies like invalidating a broader `['allMedications']` list (if such a query existed elsewhere) or directly using `setQueryData` are commented out for illustration.
+
+Choosing between invalidation and direct cache updates often depends on:
+
+- Whether your mutation response contains all the data needed to update the cache accurately.
+- How many different queries might be affected by the mutation.
+- The desired trade-off between immediate UI updates (with `setQueryData` or optimistic updates) and ensuring data consistency by re-fetching.
+
+Invalidation is generally safer and simpler to start with.
+
+> 📚 **Official Documentation:**
+>
+> - [TanStack Query - Mutations (`useMutation`)](https://tanstack.com/query/v5/docs/react/guides/mutations) (covers `onSuccess`, `onError`, etc.)
+> - [TanStack Query - Query Invalidation](https://tanstack.com/query/v5/docs/react/guides/query-invalidation)
+> - [TanStack Query - Optimistic Updates](https://tanstack.com/query/v5/docs/react/guides/optimistic-updates)
+> - [TanStack Query - `setQueryData`](https://tanstack.com/query/v5/docs/react/reference/QueryClient#queryclientsetquerydata)
+
+### Exercise 13.4: Posting Data with `useMutation`
+
+Let's practice using `useMutation` to post data and then update the UI.
+
+- **Objective:** Implement a feature to add a new patient note using `useMutation` and then refresh the list of notes for that patient.
+- **Task:** You'll create a form to submit a new note. Upon successful submission, you will invalidate the query that fetches patient notes to display the newly added note.
+
+**(https://snack.expo.dev/YOUR_SNACK_ID_HERE)**
+
+Mastering mutations and how they interact with your cached query data is fundamental to building dynamic, interactive applications with TanStack Query. In the next section, we'll look at some React Native specific considerations when using this powerful library.
