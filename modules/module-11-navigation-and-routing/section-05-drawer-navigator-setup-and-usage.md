@@ -185,6 +185,80 @@ export default function AppDrawerNavigator() {
 >
 > **Comparison:** This directly corresponds to Android's `DrawerLayout` and `NavigationView`. The swipe gesture and the concept of a main content area with a sliding drawer are identical. React Navigation provides the cross-platform abstraction.
 
+#### Referential Content: Key Drawer Navigator Configuration Options
+
+Beyond `drawerLabel` and `title`, the Drawer Navigator offers numerous options to customize its appearance and behavior. These can be set in the `screenOptions` prop of `<Drawer.Navigator>` or the `options` prop of individual `<Drawer.Screen>` components.
+
+**Common Options:**
+
+- `drawerIcon: ({ focused, color, size }) => React.ReactNode`: Function that returns a React Element for the drawer item's icon.
+- `drawerActiveTintColor: string`, `drawerInactiveTintColor: string`: Colors for active/inactive drawer item labels and icons.
+- `drawerActiveBackgroundColor: string`, `drawerInactiveBackgroundColor: string`: Background colors for active/inactive drawer items.
+- `drawerItemStyle: object`: Style object for individual drawer item containers.
+- `drawerLabelStyle: object`: Style object for the drawer item labels.
+- `drawerStyle: object`: Style object for the drawer container itself (e.g., to change its `width` or `backgroundColor`).
+- `drawerType: 'front' | 'back' | 'slide' | 'permanent'`: Determines the drawer animation and behavior.
+  - `'front'` (default): Drawer slides in and overlays the screen content.
+  - `'back'`: Screen content slides away to reveal the drawer underneath.
+  - `'slide'`: Both drawer and screen content slide together.
+  - `'permanent'`: Drawer is always visible, typically used on larger screens like tablets.
+- `drawerPosition: 'left' | 'right'`: Side from which the drawer appears. Defaults to `'left'`.
+- `swipeEnabled: boolean`: Whether the swipe gesture can be used to open/close the drawer. Defaults to `true`.
+- `headerShown: boolean`: Whether to show the default header for screens within the drawer. Often set to `false` if screens manage their own headers (e.g., if they are stack navigators).
+- `swipeEdgeWidth: number`: Distance from the edge of the screen where the swipe gesture is recognized.
+
+**Note on `drawerContentOptions` (Legacy):**
+
+- In older versions of React Navigation (and somewhat functional in v6 for backward compatibility), many drawer styling options were grouped under a single `drawerContentOptions` object. While you might encounter this in older codebases, the current best practice is to use individual top-level options or the `drawerContent` prop for extensive customization.
+
+#### Referential Content: Customizing Drawer Content
+
+For more complex drawer layouts or to add elements beyond the standard navigation items (like a user profile header, branding, or footer links), React Navigation allows you to provide a custom component to render the entire drawer's content using the `drawerContent` prop on the `<Drawer.Navigator>`.
+
+```tsx
+// Example of using drawerContent prop
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
+import { Linking, Text, View } from "react-native";
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <View style={{ padding: 20, alignItems: "center" }}>
+        {/* Add custom header content, e.g., User Avatar and Name */}
+        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+          SpeedyMeds User
+        </Text>
+      </View>
+      <DrawerItemList {...props} />
+      {/* Add custom items not part of the defined screens */}
+      <DrawerItem
+        label="Help Center"
+        onPress={() => Linking.openURL("https://example.com/help")}
+        // You can add icons here too
+      />
+      <DrawerItem label="Logout" onPress={() => alert("Logging out...")} />
+    </DrawerContentScrollView>
+  );
+}
+
+// In your Drawer Navigator setup:
+// <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+//   {/* ...your Drawer.Screen components... */}
+// </Drawer.Navigator>
+```
+
+**Helper Components for Custom Drawers:**
+
+- `DrawerContentScrollView`: A `ScrollView` specially configured for drawer content, handling safe areas and scrolling appropriately.
+- `DrawerItemList`: Renders the standard list of navigation items based on the `Drawer.Screen` components defined in your navigator. You pass all props from your custom content component to it (`{...props}`).
+- `DrawerItem`: A component to render a single, customizable drawer item. Useful for adding extra links or actions that aren't tied to a specific screen in the navigator.
+
+Using `drawerContent` provides full control over the drawer's appearance and functionality, allowing for highly tailored navigation experiences.
+
 #### Exercise: (No exercise for this section as per blueprint, but one could be added)
 
 The blueprint doesn't specify an exercise for Section 5. However, a typical exercise would involve:

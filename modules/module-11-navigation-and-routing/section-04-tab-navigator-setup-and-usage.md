@@ -208,6 +208,39 @@ export default function App() {
 >
 > **Comparison:** This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
 
+#### Referential Content: Key Tab Navigator Configuration Options
+
+Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` shown in the example, `@react-navigation/bottom-tabs` offers more options to customize its appearance and behavior. These can typically be set in the `screenOptions` prop of `<Tab.Navigator>` or the `options` prop of individual `<Tab.Screen>` components.
+
+**Common Options:**
+
+- `tabBarLabel: string | (({ focused, color }) => string | React.ReactNode)`: Explicitly sets the label for a tab. If not set, `options.title` is often used as a fallback.
+- `tabBarBadge: string | number`: Displays a badge on the tab icon, useful for notifications.
+- `tabBarActiveBackgroundColor: string`: Background color for the active tab item.
+- `tabBarInactiveBackgroundColor: string`: Background color for inactive tab items.
+- `tabBarStyle: object`: Style object for the tab bar container itself (e.g., to change its height, background color, or add borders).
+- `tabBarItemStyle: object`: Style object for individual tab item containers.
+- `tabBarLabelStyle: object`: Style object for the tab labels.
+- `tabBarShowLabel: boolean`: Whether to show the label for tabs. Defaults to `true`.
+- `tabBarHideOnKeyboard: boolean`: Whether the tab bar should be hidden when the keyboard opens. The default behavior for this has varied across React Navigation versions (e.g., `true` in v4, `false` in v7 for new projects). For v6, it's generally best to test or explicitly set based on desired behavior.
+- `tabBarButton: (props) => React.ReactNode`: Allows you to render a custom component for the tab button, giving full control over its touch handling and rendering.
+- `tabBar: (props) => React.ReactNode`: Allows replacing the entire tab bar with a custom React component. This gives maximum flexibility but requires you to handle tab switching logic.
+
+**Lazy Loading:**
+
+- `lazy: boolean`: Defaults to `true`. When `true`, screens for tabs are not mounted until they are first focused. Setting `lazy={false}` on a `<Tab.Screen>` will cause it to be mounted immediately when the tab navigator mounts. This can be useful for pre-loading content but may impact initial app load time if many tabs are set to `lazy={false}`.
+
+**Note on `tabBarOptions` (Legacy):**
+
+- In older versions of React Navigation (and still somewhat functional in v6 for backward compatibility, though not the primary way), many tab bar styling options were grouped under a single `tabBarOptions` object within `screenOptions` or `options`. While you might see this in older examples, the current best practice (and the direction from v7 onwards) is to use the individual top-level options like `tabBarActiveTintColor`, `tabBarStyle`, etc.
+
+> [!TIP] > **Native Tab Bar Alternatives:**
+> For projects requiring a tab bar that strictly adheres to the native platform's look and feel (e.g., iOS blur effects, Material Design 3 ripple effects and theming), and potentially offers better performance for complex tab structures, you might explore third-party libraries like `react-native-bottom-tabs`. This library integrates native iOS (`UITabBar`) and Android (`BottomNavigationView`) components with React Navigation.
+>
+> **Pros:** More authentic native appearance, platform-specific styling (like iOS blur, Material You theming), adapts layout across different devices (iPadOS, tvOS, etc.).
+> **Cons:** Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
+> The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.
+
 #### Exercise 11.2: Basic Tab Navigation
 
 Let's put this into practice by creating a simple tab-based navigation structure.

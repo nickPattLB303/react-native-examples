@@ -239,6 +239,32 @@ This type definition helps React Navigation provide type checking for route name
 >
 > **Key Takeaway:** React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
 
+#### Referential Content: Key Stack Navigator Configuration Options
+
+While we'll dive deeper into styling headers in Section 7, it's useful to be aware of some key configuration options available for the Stack Navigator. These options can be applied to individual screens via the `options` prop on `<Stack.Screen>` or to all screens in the navigator via the `screenOptions` prop on `<Stack.Navigator>`.
+
+**Common Header Options:**
+
+- `title: string`: Sets the text for the header title. Can also be a component.
+- `headerShown: boolean`: Defaults to `true`. Set to `false` to hide the header for a particular screen or for the entire stack.
+- `headerStyle: object`: Styles for the header container (e.g., `{ backgroundColor: '#f4511e' }`).
+- `headerTintColor: string`: Color for the header title and back button icon (e.g., `'#fff'`).
+- `headerTitleStyle: object`: Style object for the title text (e.g., `{ fontWeight: 'bold' }`).
+- `headerBackTitleVisible: boolean` (iOS specific): Defaults to `true`. Whether the back button title (typically the title of the previous screen) should be visible. In React Navigation v7+, this is often replaced or supplemented by `headerBackButtonDisplayMode`.
+- `headerLeft: (props) => React.ReactNode`: Function that returns a React Element to display on the left side of the header (e.g., a custom back button or menu icon).
+- `headerRight: (props) => React.ReactNode`: Function that returns a React Element to display on the right side of the header (e.g., a save button or profile icon).
+- `header: (props) => React.ReactNode`: Function that returns a completely custom React Element to use as the header, replacing the default header entirely.
+
+**Screen Presentation and Animation:**
+
+- `presentation: 'card' | 'modal' | 'transparentModal'`: Defines how the screen is presented and animated.
+  - `'card'` (default): Standard platform-specific push/pop animations.
+  - `'modal'`: Platform-specific modal presentation (e.g., slides up from the bottom on iOS). Often used for flows that temporarily interrupt the main app flow.
+  - `'transparentModal'`: Similar to `modal` but with a transparent background, allowing content underneath to be partially visible. Useful for dialogs or pop-ups.
+- Animation options: More granular control over animations (gestures, transitions) can be achieved using options like `animationEnabled`, `gestureEnabled`, `cardStyleInterpolator`, etc. Some advanced header animations might require the optional `@react-native-masked-view/masked-view` package.
+
+These options provide a high degree of control over the look, feel, and behavior of your Stack Navigator screens.
+
 #### Exercise 11.1: Basic Stack Navigation
 
 Now it's time to practice! This exercise will guide you through setting up a basic two-screen stack navigator.

@@ -94,7 +94,17 @@ When your app is opened via a deep link (e.g., `speedymeds://orders/123` or `htt
 - It matches this path to your file structure in the `app` directory (e.g., `app/orders/[id].tsx`).
 - The corresponding screen is rendered, and parameters (like `id: '123'`) are available via `useLocalSearchParams()`.
 
-**4. Testing Deep Links:**
+**4. Preserving Back Stack on Deep Link:**
+
+When a user deep links into a deeply nested screen, you often want the back button to navigate through the logical parent screens of your app, rather than exiting the app immediately. Expo Router allows you to configure this behavior.
+
+- If your deep link targets a screen within a navigator (e.g., a screen inside a Stack or Tabs defined in a `_layout.tsx`), that navigator will be mounted.
+- To ensure a proper back stack, you can use the `initialRouteName` prop on your navigator components within your `_layout.tsx` files. For example, if a deep link goes to `app/(tabs)/profile.tsx`, and `app/(tabs)/_layout.tsx` defines a `<Tabs initialRouteName="home">`, the "home" tab might be considered part of the stack history, depending on how the specific navigator handles it. The key is that by structuring your app with layouts, Expo Router builds up the necessary navigator context.
+- For Stack navigators, if you deep link to `app/stack/screenC.tsx`, and `app/stack/_layout.tsx` defines a `<Stack />`, screens A and B (if they are parents in a conceptual hierarchy leading to C) would typically need to be part of the mounted stack for back navigation to work through them. Expo Router handles this by ensuring parent layouts are rendered. Setting an `initialRouteName` on a stack can ensure a base screen is always present in that stack if no other screen in the stack is specified by the URL.
+
+Essentially, by defining your navigation hierarchy with layouts, Expo Router ensures that parent navigators are part of the rendered tree, which helps React Navigation (used underneath) to establish a meaningful back stack. You generally don't need to do much extra for simple cases beyond correctly structuring your layouts.
+
+**5. Testing Deep Links:**
 
 - **Development (Expo Go):**
 - You can use `npx uri-scheme open <URL> --ios` or `npx uri-scheme open <URL> --android` to test custom schemes with the Expo Go app or development builds on simulators/emulators.
