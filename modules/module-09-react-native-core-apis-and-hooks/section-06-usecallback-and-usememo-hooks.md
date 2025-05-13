@@ -1,23 +1,25 @@
 ## Section 6: `useCallback` and `useMemo` Hooks
 
-Performance is a critical aspect of mobile application development. React's `useCallback` and `useMemo` Hooks are powerful tools for optimizing functional components by memoizing functions and values, respectively. This helps prevent unnecessary re-renders and expensive recalculations, leading to smoother user experiences in your SpeedyMeds app.
+Performance is a critical aspect of mobile application development. React\'s `useCallback` and `useMemo` Hooks are powerful tools for optimizing functional components by memoizing functions and values, respectively. This helps prevent unnecessary re-renders and expensive recalculations, primarily by preserving **referential equality** for props passed to child components, leading to smoother user experiences in your SpeedyMeds app.
 
 ### Conceptual Content
 
-**Why Optimize?**
+**Why Optimize with Memoization?**
 
-In React, components re-render when their state or props change. If a parent component re-renders, its child components typically re-render as well, even if their props haven't actually changed in value. This can lead to performance issues, especially with complex components or long lists.
+In React, components re-render when their state or props change. If a parent component re-renders, its child components typically re-render as well. This happens even if the props passed to a child haven\'t semantically changed but are new references (e.g., a function defined inline in the parent, or a new object/array literal created during the parent\'s render).
 
-- **`useCallback`**: Returns a memoized version of a callback function. This memoized callback only changes if one of its dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g., child components wrapped in `React.memo`).
+This is where memoization Hooks come in:
 
-- **`useMemo`**: Returns a memoized value. It recomputes the memoized value only when one of its dependencies has changed. This is useful for avoiding expensive calculations on every render.
+- **`useCallback`**: Returns a memoized version of a callback function. This memoized callback maintains the same reference across renders unless one of its dependencies has changed. This is crucial when passing callbacks to optimized child components (e.g., those wrapped in `React.memo`) that rely on stable prop references to prevent unnecessary re-renders.
 
-**`React.memo`**
+- **`useMemo`**: Returns a memoized value. It recomputes and returns a new value only when one of its dependencies has changed. This is useful for avoiding expensive calculations on every render and for providing stable references for objects or arrays passed as props to child components.
 
-It's important to also mention `React.memo`. This is a higher-order component that memoizes a component. If your component renders the same result given the same props, you can wrap it in `React.memo` for a performance boost in some cases by skipping the render. `useCallback` and `useMemo` are often used in conjunction with `React.memo`.
+**`React.memo` - The Partner in Optimization**
+
+`React.memo` is a Higher Order Component (HOC) that memoizes a functional component. If your component renders the same result given the same props (compared shallowly by default), `React.memo` skips re-rendering the component and reuses the last rendered result. `useCallback` and `useMemo` are often used in the parent component to ensure that props (callbacks and complex values) passed to a `React.memo`-wrapped child have stable references, thereby allowing `React.memo` to work effectively.
 
 > [!IMPORTANT]
-> Optimization Hooks like `useCallback` and `useMemo` should be used judiciously. They are not free – they add a small overhead for dependency checking and memoization. Profile your application first to identify performance bottlenecks before applying these Hooks. Premature optimization can sometimes make code more complex without significant performance gains.
+> Optimization Hooks like `useCallback` and `useMemo` should be used judiciously. They are not free – they add a small overhead for dependency checking and memoization. **Always profile your application first** (e.g., using the React DevTools Profiler) to identify actual performance bottlenecks before applying these Hooks. Premature optimization can sometimes make code more complex without significant performance gains, and might even slightly degrade performance if the cost of memoization outweighs the rendering cost of the component.
 
 ### Referential Content
 
@@ -27,16 +29,46 @@ It's important to also mention `React.memo`. This is a higher-order component th
   - **`deps`**: An array of dependencies. `useCallback` will return a new memoized function if any dependency has changed. If the dependencies array is empty (`[]`), the returned function instance will never change.
   - **Returns**: A memoized version of the callback function `fn`.
 
+  **Use Cases for `useCallback`:**
+
+  1.  **Passing Callbacks to Memoized Child Components:** Prevents child components wrapped with `React.memo` from re-rendering unnecessarily if the callback function itself hasn\'t semantically changed.
+  2.  **Dependency for Other Hooks:** When a function is used as a dependency in another hook (e.g., `useEffect`, or another `useCallback`/`useMemo`), memoizing it with `useCallback` ensures that the dependent hook doesn\'t re-run unnecessarily due to a new function reference on each render.
+
+  **"Under the Hood" (`useCallback`):**
+  `useCallback` works by storing the function instance from the previous render. On subsequent renders, it compares the current dependencies with the previous dependencies (using `Object.is` comparison). If they are identical, it returns the stored function instance. If they differ, it creates a new function instance with the current scope, stores it, and returns it.
+
 - **`useMemo(computeExpensiveValue, deps)`**
-  - **`computeExpensiveValue`**: A function that computes a value.
+
+  - **`computeExpensiveValue`**: A function that returns the value to be memoized. This function is executed during rendering.
   - **`deps`**: An array of dependencies. `useMemo` will recompute the memoized value only if any dependency has changed.
   - **Returns**: A memoized value.
 
-> 📚 **Official Documentation:**
->
-> - [React Docs: `useCallback`](https://react.dev/reference/react/useCallback)
-> - [React Docs: `useMemo`](https://react.dev/reference/react/useMemo)
-> - [React Docs: `React.memo`](https://react.dev/reference/react/memo)
+  **Use Cases for `useMemo`:**
+
+  1.  **Memoizing Expensive Calculations:** If a component performs a computationally intensive calculation, `useMemo` can cache the result, preventing re-calculation on every render if the inputs haven\'t changed.
+  2.  **Memoizing Objects or Arrays Passed as Props:** When passing objects or arrays as props to child components (especially those wrapped with `React.memo`), `useMemo` can ensure these props maintain referential equality if their underlying data hasn\'t changed, thus preventing unnecessary child re-renders.
+
+  **"Under the Hood" (`useMemo`):**
+  `useMemo` executes the `computeExpensiveValue` function during the render. It stores the returned value. On subsequent renders, it compares the current dependencies with the previous ones. If they are the same, it returns the stored value without re-executing `computeExpensiveValue`. If dependencies differ, it re-executes the function, stores the new result, and returns it.
+
+### `useCallback` vs. `useMemo`
+
+It can be helpful to remember their relationship:
+
+- `useCallback(fn, deps)` is essentially equivalent to `useMemo(() => fn, deps)`.
+- **`useCallback` memoizes the function itself** (providing referential equality for the function instance).
+- **`useMemo` memoizes the result of the function execution** (providing referential equality for the returned value).
+
+Use `useCallback` when you need to pass a stable function reference (e.g., event handlers, callbacks passed to children). Use `useMemo` when you need to memoize a computed value, which could be a primitive, an object, or an array.
+
+### `React.memo(Component, arePropsEqual?)` - Revisited
+
+As mentioned, `React.memo` is a HOC. It performs a shallow comparison of the component\'s props by default. If the props are identical to the props from the previous render, `React.memo` skips re-rendering the component and reuses the last rendered result.
+
+- **Usage:** `const MyMemoizedComponent = React.memo(MyOriginalComponent);`
+- **Custom Comparison:** You can provide an optional custom comparison function as the second argument to `React.memo`: `arePropsEqual(prevProps, nextProps)`. This function should return `true` if the props are considered equal (meaning the component can skip re-rendering), and `false` otherwise. Use this if shallow comparison is insufficient for determining if a re-render is needed.
+
+To make `React.memo` effective, props that are functions or objects passed from the parent should typically be memoized using `useCallback` or `useMemo` in that parent component.
 
 ### Procedural Content
 
@@ -105,11 +137,11 @@ const MedicationListScreen: React.FC = () => {
   // };
 
   // With useCallback, handleSelectMedication is memoized
-  // It only changes if its dependencies change (none in this case, as setSelectedMedicationId is stable)
+  // It only changes if its dependencies change (none in this case, as setSelectedMedicationId is stable from React)
   const handleSelectMedication = useCallback((id: string) => {
     console.log("Selected medication:", id);
     setSelectedMedicationId(id);
-  }, []); // Empty dependency array: function instance is stable
+  }, []); // Empty dependency array: function instance is stable. Using functional update for setSelectedMedicationId would also avoid needing `selectedMedicationId` in deps if it were used directly.
 
   return (
     <View style={styles.container}>
@@ -251,6 +283,20 @@ export default PatientDashboard;
 
 In `PatientDashboard`, `calculateOverduePrescriptions` is an expensive function. By wrapping its invocation in `useMemo`, the `overdueCount` is only recalculated if the `patients` array (its dependency) changes. Re-renders caused by other state changes (like `refreshKey`) will use the memoized `overdueCount` value, saving computation.
 
+### Performance Considerations
+
+Memoization with `useCallback` and `useMemo` is not a silver bullet and comes with its own trade-offs:
+
+- **Overhead:** These hooks introduce a small computational overhead for storing the previous function/value and its dependencies, and for comparing these dependencies on each render.
+- **Profile First:** Before applying memoization, always use tools like the React DevTools Profiler to identify actual performance bottlenecks. Applying these hooks indiscriminately can lead to more complex code without providing noticeable performance benefits, and in some minor cases, could even slightly hinder performance if the memoization overhead outweighs the cost of a cheap render.
+- **When to Consider Optimization:**
+  - For components that render very frequently with the same props.
+  - For components with particularly expensive rendering logic.
+  - When passing callbacks or complex objects/arrays as props to child components wrapped with `React.memo`.
+  - When functions or values are dependencies of `useEffect`, and you need to precisely control the effect\'s execution frequency to prevent it from running too often.
+- **Native Performance:** While these React hooks optimize the JavaScript side of your application, remember that overall app performance (e.g., smooth animations, efficient list rendering with `FlashList` or an optimized `FlatList`) also heavily depends on native platform capabilities and how React Native interacts with them. Efficient native modules and offloading CPU-intensive tasks from the JS thread (where possible) are separate but related concerns.
+- **Avoid Masking Issues:** Over-reliance on `useCallback` and `useMemo` without understanding the root cause of re-renders can sometimes mask deeper problems in your component structure or state management strategy. Simplifying component logic, optimizing data structures, or improving state flow can often be more effective initial steps.
+
 ### Background Bridge Notes
 
 > 📲 **(Native Developers):**
@@ -270,12 +316,23 @@ In `PatientDashboard`, `calculateOverduePrescriptions` is an expensive function.
 Apply `useCallback` to optimize a component that passes a function to a memoized child.
 
 - **Exercise 9.2: Optimizing with `useCallback`**
-  - **Objective:** You are given a parent component that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to other state changes. Optimize this using `useCallback` for the delete handler.
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
   - **Instructions:**
-    1. Create a simple `ReminderItem` component that accepts `reminderText` and an `onDelete` function prop. Wrap it with `React.memo`.
-    2. In the parent component, manage a list of reminder strings in state.
-    3. Provide an `onDelete` function to `ReminderItem` to remove a reminder from the list.
-    4. Add a button or other state in the parent that causes it to re-render without changing the reminders list.
-    5. Observe (e.g., with `console.log` in `ReminderItem`) that `ReminderItem` re-renders on parent re-render.
-    6. Apply `useCallback` to the `onDelete` handler in the parent component to prevent unnecessary re-renders of `ReminderItem`.
-  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/) (A new Snack will need to be created for this exercise).
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/)

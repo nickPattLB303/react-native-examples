@@ -22,27 +22,217 @@ The primary method for the `Alert` API is:
   - **`buttons` (AlertButton[], optional):** An array of button configuration objects. If not provided, a default "OK" button is shown. Each `AlertButton` object can have:
     - `text` (string): The label for the button.
     - `onPress` (function, optional): A callback function executed when the button is pressed.
-    - `style` ('default', 'cancel', 'destructive', optional): Defines the button's style.
-      - `'default'`: Standard button style.
-      - `'cancel'`: Typically used for a cancel action. On iOS, this button might be styled differently or placed separately.
-      - `'destructive'`: Indicates an action that could lead to data loss or a significant change. Often styled in red on iOS.
+    - `style` (\'default\', \'cancel\', \'destructive\', optional): Defines the button\'s style.
+      - `\'default\'`: Standard button style.
+      - `\'cancel\'`: Typically used for a cancel action. On iOS, this button might be styled differently (e.g., bolder font) or placed separately. On Android, it often maps to a negative action button.
+      - `\'destructive\'`: Indicates an action that could lead to data loss or a significant change. Often styled in red on iOS. On Android, it may map to a negative action button.
+    - `isPreferred` (boolean, optional, iOS only): If `true`, this button is marked as the preferred action, which may result in it being visually emphasized (e.g., bolded) on iOS.
   - **`options` (object, optional):** An object with additional options:
-    - `cancelable` (boolean, optional): If `true` (Android only), the alert can be dismissed by tapping outside of it. Default is `true`.
-    - `onDismiss` (function, optional): A callback executed when the alert is dismissed (e.g., by tapping outside on Android if `cancelable` is true, or by pressing the hardware back button).
+    - `cancelable` (boolean, optional): (Android only) If `true`, the alert can be dismissed by tapping outside of its boundaries or by pressing the hardware back button. Default is typically `false` if there are buttons, `true` if no buttons are specified. It is good practice to set this explicitly.
+    - `onDismiss` (function, optional): (Android only) A callback executed when the alert is dismissed by means other than pressing one of its action buttons (e.g., by tapping outside if `cancelable` is true, or by pressing the hardware back button).
     - `userInterfaceStyle` ('light' | 'dark' | 'automatic', optional): (iOS 13+ only) Sets the interface style for the alert. Defaults to `'automatic'`.
 
 **Button Order and Limits:**
 
-- On iOS, you can have an unlimited number of buttons.
-- On Android, you can have at most three buttons. If you provide more, only the first three will be displayed according to these rules:
-  1. A "neutral" button (if one is specified as `style: 'default'` or no style).
-  2. A "negative" button (if one is specified as `style: 'cancel'` or `style: 'destructive'`).
-  3. A "positive" button (if one is specified as `style: 'default'` or no style, and it's the primary action).
-     It's generally best to stick to 1-3 buttons for cross-platform consistency.
+- On iOS, you can have an unlimited number of buttons, which are typically arranged vertically if there are more than two.
+- On Android, you can have at most three buttons. These typically map to a positive, negative, and neutral action.
+  - 1 button: Positive action.
+  - 2 buttons: Negative, Positive (e.g., "Cancel", "OK").
+  - 3 buttons: Neutral, Negative, Positive (e.g., "Later", "Cancel", "OK").
+- The `style` and `isPreferred` properties are primarily for iOS styling and behavior; Android button appearance is more standardized by the OS.
+
+It\'s generally best to stick to 1-3 buttons for cross-platform consistency and a clear user experience.
+
+> [!NOTE]
+> For more complex dialogs requiring custom layouts, diverse input types (beyond simple text on iOS), or non-modal behavior, you should create custom modal components (e.g., using the `Modal` core component from React Native) or utilize third-party dialog libraries. The `Alert` API is best suited for simple, standard system alerts.
+
+> [!IMPORTANT] > **Testing Alerts:** Interactions with native `Alert` dialogs (especially `Alert.prompt`) often cannot be tested effectively with JavaScript-based testing libraries like React Native Testing Library, as these libraries operate on the React component tree. Native alerts are outside this tree. Testing them typically requires End-to-End (E2E) testing tools such as Detox or Maestro, which can interact with actual native UI elements, or by mocking the `Alert` module during unit/integration tests.
 
 > 📚 **Official Documentation:**
 >
 > - [React Native Docs: `Alert`](https://reactnative.dev/docs/alert)
+
+### "Under the Hood": Native Implementation of `Alert.alert`
+
+The `Alert` API is a native module. When `Alert.alert()` is called from your JavaScript code:
+
+- **iOS:** The JavaScript call is bridged to native iOS code. This native code then instantiates and configures a `UIAlertController` with a style of `UIAlertController.Style.alert`. The `title`, `message`, and `buttons` you provide are used to configure this `UIAlertController`. Each button object in your `buttons` array maps to a `UIAlertAction` instance, with its `style` property influencing the `UIAlertAction.Style` (`.default`, `.cancel`, or `.destructive`).
+- **Android:** The call is bridged to native Android code, which constructs an `android.app.AlertDialog` (often via `androidx.appcompat.app.AlertDialog.Builder` for consistent styling across Android versions). The `title`, `message`, and `buttons` are set using methods like `setTitle()`, `setMessage()`, `setPositiveButton()`, `setNegativeButton()`, and `setNeutralButton()`. The `cancelable` and `onDismiss` options are also configured here.
+
+When a user interacts with a button on the native alert, the native platform triggers the corresponding action. This, in turn, sends an event back to the JavaScript side, which then executes the `onPress` callback function you associated with that button.
+
+**Table: `Alert.alert()` Button Configuration Differences (iOS vs. Android)**
+
+| Feature                  | iOS                                   | Android                                                                    | Notes                                                                    |
+| ------------------------ | ------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Max Buttons              | Unlimited (practically limited by UI) | 3 (Positive, Negative, Neutral)                                            | Android orders buttons specifically (e.g., Neutral, Negative, Positive). |
+| `style: \'cancel\'`      | Yes (specific behavior & placement)   | Ignored directly; maps to Negative/Neutral based on button position/count. |                                                                          |
+| `style: \'destructive\'` | Yes (renders text in red)             | Ignored directly; may map to a Negative button.                            |                                                                          |
+| `isPreferred`            | Yes (visually emphasizes button)      | Ignored                                                                    | iOS specific.                                                            |
+| Button Layout            | Typically vertical for >2 buttons     | Horizontal (standard Android dialog layout)                                |                                                                          |
+
+This table summarizes key button configuration differences, helping developers design alerts that function effectively on both platforms.
+
+### `Alert.prompt()` (iOS-only)
+
+This method displays an alert dialog that includes one or more text input fields, allowing the user to enter text directly within the alert. **This functionality is exclusive to iOS.**
+
+- **`Alert.prompt(title, message?, callbackOrButtons?, type?, defaultValue?, keyboardType?, options?)`**
+  - **`title` (string):** The dialog\'s title.
+  - **`message` (string, optional):** An optional message displayed above the input field(s).
+  - **`callbackOrButtons` (function or AlertButton[], optional):**
+    - If a **function** is provided, it is called with the entered text value(s) when the user taps the default "OK" (or equivalent positive) button. For single input types (`\'plain-text\'`, `\'secure-text\'`), it receives a single string. For `\'login-password\'`, it receives an array of two strings: `[username, password]`.
+    - If an **array of `AlertButton` objects** is provided, it configures the buttons just like in `Alert.alert()`. The `onPress` handler for these buttons will need to handle the input values. Note: The input values are _not_ directly passed to button `onPress` handlers in this configuration; you must use the function callback pattern if you need the values directly in the callback.
+  - **`type` (AlertType, optional):** Configures the appearance and behavior of the text input field(s). Common values:
+    - `\'default\'`: Standard alert, typically no input fields (behavior may vary, use with caution for prompts).
+    - `\'plain-text\'`: A single plain text input field.
+    - `\'secure-text\'`: A single secure text input field (for passwords, characters are masked).
+    - `\'login-password\'`: Two text input fields: one for a login/username (plain text) and one for a password (secure text).
+  - **`defaultValue` (string, optional):** The default text to pre-fill in the input field. If `type` is `\'login-password\'`, this is an array of two strings for username and password respectively, e.g., `['defaultUser', '']`.
+  - **`keyboardType` (string, optional):** Specifies the keyboard type for the input field(s) (e.g., `\'numeric\'`, `\'email-address\'`). Uses the same values as the `TextInput` `keyboardType` prop.
+  - **`options` (AlertOptions, optional):** Similar to `Alert.alert` options, primarily `userInterfaceStyle` for iOS.
+
+#### "Under the Hood" (`Alert.prompt` on iOS):
+
+`Alert.prompt()` on iOS also maps to a `UIAlertController` with style `.alert`. The text input fields are added to this alert controller using its `addTextField(configurationHandler:)` method. The `type` parameter dictates how many fields are added and their configuration (e.g., secure entry for passwords).
+
+#### `Alert.prompt` Usage Examples (iOS only):
+
+**1. Simple Text Input Prompt for SpeedyMeds Feedback Subject**
+
+```tsx
+import React from \'react\';
+import { View, Button, StyleSheet, Alert, Platform, Text } from \'react-native\';
+
+const FeedbackPromptButton: React.FC = () => {
+  const [feedbackSubject, setFeedbackSubject] = React.useState<string>(\'\');
+
+  const handlePromptFeedbackSubject = () => {
+    if (Platform.OS === \'ios\') {
+      Alert.prompt(
+        \'Feedback Subject\',
+        \'Please enter a subject for your SpeedyMeds feedback:\',
+        (text) => {
+          console.log(\'Feedback subject entered:\', text);
+          setFeedbackSubject(text);
+          // You would typically then open a more detailed feedback form or submit this
+        },
+        \'plain-text\', // Type of input
+        \'General Inquiry\', // Default value
+        \'default\' // Keyboard type
+      );
+    } else {
+      Alert.alert(\'Not Supported\', \'Input prompts are an iOS-only feature.\');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title=\"Provide Feedback Subject (iOS)\" onPress={handlePromptFeedbackSubject} />
+      {feedbackSubject ? <Text style={styles.statusText}>Entered Subject: {feedbackSubject}</Text> : null}
+    </View>
+  );
+};
+
+const stylesForPrompt = StyleSheet.create({
+  container: {
+    padding: 20,
+    alignItems: \'center\',
+  },
+  statusText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: \'blue\',
+  },
+});
+
+// To use:
+// export default FeedbackPromptButton;
+```
+
+**2. Login Prompt for SpeedyMeds Secure Area (Conceptual)**
+
+```tsx
+import React from \'react\';
+import { View, Button, StyleSheet, Alert, Platform, Text } from \'react-native\';
+
+const SecureLoginButton: React.FC = () => {
+  const [loginStatus, setLoginStatus] = React.useState<string>(\'\');
+
+  const handleLoginPrompt = () => {
+    if (Platform.OS === \'ios\') {
+      Alert.prompt(
+        \'SpeedyMeds Secure Login\',
+        \'Enter your username and password:\',
+        [
+          {
+            text: \'Cancel\',
+            onPress: () => setLoginStatus(\'Login canceled.\'),
+            style: \'cancel\',
+          },
+          {
+            text: \'Login\',
+            onPress: (credentials) => { // `credentials` will be [username, password]
+              if (Array.isArray(credentials)) {
+                console.log(\'Username:\', credentials[0], \'Password:\', credentials[1]);
+                // Actual login logic here
+                if (credentials[0] === \'user\' && credentials[1] === \'pass\') {
+                  setLoginStatus(\'Login successful!\');
+                } else {
+                  setLoginStatus(\'Login failed. Invalid credentials.\');
+                }
+              } else {
+                 // Should not happen with 'login-password' type
+                setLoginStatus(\'Login failed. Unexpected input.\');
+              }
+            },
+            style: \'default\',
+            isPreferred: true,
+          },
+        ],
+        \'login-password\',
+        [\'jane.doe@example.com\', \'\'], // Default username, empty password
+        undefined // Default keyboard types
+      );
+    } else {
+      Alert.alert(\'Not Supported\', \'Login prompts are an iOS-only feature.\');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title=\"Access Secure Area (iOS Login Prompt)\" onPress={handleLoginPrompt} />
+      {loginStatus ? <Text style={styles.statusText}>{loginStatus}</Text> : null}
+    </View>
+  );
+};
+
+// Assuming styles.container and styles.statusText are defined as in previous examples
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    alignItems: \'center\',
+  },
+  statusText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: \'purple\',
+  },
+});
+// To use:
+// export default SecureLoginButton;
+```
+
+**Table: `Alert.prompt()` (iOS) `type` Options**
+
+| Type Value           | Description                                                               | Input Field(s)           | Callback Value Type(s) |
+| -------------------- | ------------------------------------------------------------------------- | ------------------------ | ---------------------- |
+| `\'default\'`        | Standard alert, typically no input fields (use with caution for prompts). | 0 (or 1 if RN forces it) | `string` (if 1 field)  |
+| `\'plain-text\'`     | Single plain text input field.                                            | 1                        | `string`               |
+| `\'secure-text\'`    | Single secure text input field (e.g., for passwords, characters masked).  | 1                        | `string`               |
+| `\'login-password\'` | Two text input fields: one for login (plain), one for password (secure).  | 2                        | `[string, string]`     |
+
+This table clarifies the input configurations available with `Alert.prompt` on iOS.
 
 ### Procedural Content
 
@@ -222,23 +412,29 @@ Here, the "Delete" button has `style: 'destructive'`. On iOS, this usually rende
 
 > 📲 **(Native Developers):**
 >
-> **Comparison:** In iOS, this is very similar to using `UIAlertController` with different `UIAlertAction` styles (`.default`, `.cancel`, `.destructive`). On Android, it's akin to using `AlertDialog.Builder` to create and show dialogs with positive, negative, and neutral buttons.
+> **Comparison:** In iOS, `Alert.alert()` is very similar to using `UIAlertController` with different `UIAlertAction` styles (`.default`, `.cancel`, `.destructive`). `Alert.prompt()` also maps to `UIAlertController` but utilizes the `addTextField(configurationHandler:)` method to include input fields. On Android, `Alert.alert()` is akin to using `AlertDialog.Builder` to create and show dialogs with positive, negative, and neutral buttons. Android lacks a direct system-level equivalent to `Alert.prompt()` with built-in text fields within the standard `AlertDialog`; creating such a prompt natively would require a custom dialog layout containing `EditText` views.
 >
-> **Key Takeaway:** React Native's `Alert` API provides a cross-platform abstraction over these native alert components, simplifying their usage from JavaScript.
->
-> **Source:** [UIAlertController (Apple Docs)](https://developer.apple.com/documentation/uikit/uialertcontroller), [Dialogs (Android Docs)](https://developer.android.com/guide/topics/ui/dialogs)
+> **Key Takeaway:** React Native's `Alert` API provides a cross-platform abstraction for standard alerts and an iOS-specific method for simple input prompts, simplifying their usage from JavaScript. However, its calls are asynchronous, unlike some synchronous native dialog interactions.
 
 > 🌐 **(Web Developers):**
 >
-> **Comparison:** The closest web equivalents are `window.alert()`, `window.confirm()`, and `window.prompt()`. However, these are very basic, often considered intrusive, and cannot be styled or customized as much as native alerts.
->
-> **Key Takeaway:** React Native's `Alert` API provides access to the richer, more user-friendly native alert system of mobile platforms, offering a better user experience than standard browser dialogs.
+> **Comparison:** The closest web equivalents are `window.alert()`, `window.confirm()`, and `window.prompt()`. However, these are very basic, often considered intrusive, and cannot be styled or customized as much as native alerts. Unlike web `alert()`, `confirm()`, and `prompt()`, which are synchronous and block JavaScript execution, React Native\'s `Alert` API calls are asynchronous. The `onPress`, `onDismiss` (Android), or prompt callback functions are invoked when the user interacts with the native dialog.
 
 ### Exercise
 
-Practice using the `Alert` API to provide feedback in a user interaction scenario.
-
 - **Exercise 9.1: Using the Alert API**
-  - **Objective:** Create a button that, when pressed, simulates submitting a patient feedback form for the SpeedyMeds app and then displays an alert confirming the submission.
-  - **Instructions:** Modify a simple component to include a "Submit Feedback" button. On press, show an alert with the title "Feedback Submitted" and a message like "Thank you for your feedback on the SpeedyMeds app!". The alert should have a single "Dismiss" button.
-  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/) (A new Snack will need to be created for this exercise).
+  - **Objective:** Create a simple application that demonstrates the use of the `Alert.alert()` method to display different types of alerts, and `Alert.prompt()` on iOS.
+  - **Instructions:**
+    1.  Create a new Expo Snack or a new file in your local Expo project.
+    2.  Import `Alert`, `Button`, `View`, `StyleSheet`, and `Platform` from `react-native`.
+    3.  Create a functional component, for example, `AlertsDemoComponent`.
+    4.  Inside `AlertsDemoComponent`, implement functions to trigger different alerts:
+        - `showSimpleAlert()`: Displays an alert with a title "Medication Logged", a message "Paracetamol 500mg has been logged.", and a single "OK" button that logs "OK Pressed" to the console.
+        - `showConfirmationAlert()`: Displays an alert with title "Confirm Action", message "Are you sure you want to submit your monthly health report?", a "Cancel" button (logs "Report submission canceled", style `cancel`), and a "Submit Report" button (logs "Health report submitted!", style `default`, `isPreferred: true` for iOS).
+        - `showDestructiveAlert()`: Displays an alert with title "Delete Account", message "Are you sure you want to delete your SpeedyMeds account? This is irreversible.", a "Keep Account" button (style `cancel`), and a "Delete My Account" button (logs "Account deletion initiated...", style `destructive`).
+        - `showAndroidCancelable()`: If `Platform.OS === \'android\'`, shows an alert with title "Android Special", message "This alert can be dismissed by tapping outside.", an "Understood" button, and options `{ cancelable: true, onDismiss: () => console.log(\'Android alert dismissed (not via button)\') }`. Otherwise, show a simple alert saying this feature is Android-only.
+        - `showIOSInputPrompt()`: If `Platform.OS === \'ios\'`, use `Alert.prompt` to ask "What is your primary pharmacy?", with a placeholder "e.g., SpeedyMeds Central", and log the entered text.
+    5.  In the `AlertsDemoComponent` JSX, render `Button` components to trigger each of these alert functions.
+    6.  Add basic styling.
+    7.  Test on both iOS and Android simulators/devices (or Expo Snack web previews) to observe behaviors and platform differences.
+  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/)

@@ -1,6 +1,15 @@
 ## Section 4: Core React Hooks Recap
 
-Before diving into more specialized React Native APIs and Hooks, it's essential to have a solid understanding of the core React Hooks: `useState`, `useEffect`, and `useContext`. These Hooks are the bedrock of managing state, side effects, and global data in modern React applications, including those built with React Native. This section serves as a brief recap; for a comprehensive introduction, please refer to Module 7: React Essentials for React Native.
+Before diving into more specialized React Native APIs and Hooks, it's essential to have a solid understanding of the core React Hooks: `useState`, `useEffect`, and `useContext`. These Hooks are the bedrock of managing state, side effects, and global data in modern React applications, including those built with React Native. This section serves as a detailed recap; for the initial comprehensive introduction, please refer to Module 7: React Essentials for React Native.
+
+### Rules of Hooks (Recap)
+
+It is paramount to remember and adhere to the two fundamental rules of Hooks:
+
+1.  **Only Call Hooks at the Top Level:** Hooks must be called at the top level of your React function components or your own custom Hooks. They should not be called inside loops, conditions, or nested functions. This ensures Hooks are called in the same order each time a component renders, which is critical for React to correctly preserve the state of Hooks between multiple `useState` and `useEffect` calls.
+2.  **Only Call Hooks from React Functions:** Hooks should only be called from React function components or from custom Hooks. They should not be called from regular JavaScript functions or class components.
+
+Adherence to these rules is typically enforced by the `eslint-plugin-react-hooks` ESLint plugin, which is commonly included in React Native projects created with Expo.
 
 ### Conceptual Content
 
@@ -19,31 +28,88 @@ Understanding their behavior, dependencies, and cleanup mechanisms is crucial fo
 
 ### Referential Content
 
-Here's a quick reminder of each Hook's purpose and basic syntax:
+Here's a more detailed reminder of each Hook's purpose, syntax, and key behaviors:
 
 - **`useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>]`**
 
-  - **Purpose:** Adds state to functional components.
-  - **Returns:** A stateful value and a function to update it.
-  - **Example:** `const [medicationName, setMedicationName] = useState('');`
+  - **Purpose:** Adds state to functional components, allowing them to remember information between renders.
+  - **Returns:** An array containing two elements:
+    1.  The current state value (e.g., `count`).
+    2.  A function to update this state value (e.g., `setCount`), often called the "setter" function.
+  - **Initial State (`initialState`):**
+    - The argument passed to `useState` is the initial state. This value is used _only_ during the first render of the component.
+    - **Lazy Initialization:** If the initial state is computationally expensive to create, you can pass a function (an "initializer function") to `useState` (e.g., `useState(() => computeExpensiveInitialValue())`). This function will _only_ be executed during the initial render.
+  - **Updating State:**
+    - The setter function (e.g., `setCount`) is used to update the state. When called, it schedules a re-render of the component with the new state value.
+    - **Functional Updates:** When the new state depends on the previous state, it is crucial to use the functional update form. This form receives the previous state as an argument and returns the new state (e.g., `setCount(prevCount => prevCount + 1)`). This avoids issues related to stale closures where the update might be based on an outdated state value, especially when updates are batched or asynchronous. If multiple `setCount(count + 1)` calls occur within the same event handler or effect, `count` might refer to its value at the beginning of that render, not the most recently updated value from a previous `setCount` call in the same batch. The functional update `setCount(c => c + 1)` ensures that each update is based on the actual latest state queued by React.
+    - **Immutability:** When updating state that holds objects or arrays, it is essential to treat state as immutable. Always create a new object or array instance instead of directly mutating the existing one (e.g., using the spread syntax `...` or array methods like `map`, `filter`, or `concat` that return new arrays). If you directly mutate an object or array in state (e.g., `profile.age = 31; setProfile(profile);`), React's shallow comparison mechanism (`Object.is`) for detecting state changes might not recognize that the state has changed because the object/array reference remains the same. This can lead to the component not re-rendering as expected.
+  - **Example:**
 
-- **`useEffect(didUpdate: () => (() => void) | void, dependencies?: DependencyList)`**
+    ```tsx
+    const [count, setCount] = useState<number>(0);
+    const [user, setUser] = useState<{ id: number; username: string } | null>(
+      null
+    );
+    const [items, setItems] = useState<string[]>([]);
 
-  - **Purpose:** Performs side effects after rendering.
-  - **`didUpdate` function:** Can optionally return a cleanup function.
-  - **`dependencies` array (optional):** Controls when the effect re-runs. An empty array `[]` means it runs once after the initial render and cleans up on unmount. No array means it runs after every render.
-  - **Example:** `useEffect(() => { console.log('Component mounted'); return () => console.log('Component unmounted'); }, []);`
+    const addItem = (newItem: string) => {
+      setItems((prevItems) => [...prevItems, newItem]); // Correct: new array
+    };
+    ```
+
+- **`useEffect(setup: () => (() => void) | void, dependencies?: DependencyList)`**
+
+  - **Purpose:** Performs side effects in function components. Side effects include operations like data fetching, setting up subscriptions (e.g., event listeners, timers), or manually changing the DOM (though direct DOM manipulation is rare in React Native and usually handled via refs to native components).
+  - **`setup` function:** This function contains the code for your side effect. It runs after every completed render by default.
+  - **Cleanup Function (Optional):** The `setup` function can optionally return another function. This "cleanup function" runs before the component unmounts, _and also before the effect runs again if its dependencies have changed_. It is crucial for preventing memory leaks by unsubscribing from event listeners, clearing timers, or cancelling network requests.
+  - **`dependencies` array (optional):** This array controls when the `setup` function (and its corresponding cleanup) is re-executed.
+    - If **omitted** (undefined): The effect runs after every render of the component. This is often not desired as it can lead to performance issues or infinite loops if the effect itself triggers a re-render.
+    - **Empty array (`[]`):** The effect runs only once after the initial render (component mount), and the cleanup function runs only when the component unmounts. This is suitable for one-time setup tasks.
+    - **Array with values (`[dep1, dep2,...]`):** The effect runs after the initial render and then again only if any of the values in the dependency array have changed since the last render (React uses `Object.is` for comparison).
+  - **Critical Considerations:** Incorrectly specified dependencies can lead to stale closures (where the effect function uses outdated values of props or state because those values were not listed as dependencies) or infinite loops (where the effect updates a value that is also in its dependency array, causing the effect to run again).
+  - **Example (Data Fetching for SpeedyMeds):**
+    ```tsx
+    useEffect(() => {
+      const fetchMedicationDetails = async (medId: string) => {
+        // setIsLoading(true); setError(null);
+        // try { const response = await fetch(`/api/medications/${medId}`); ... setMedication(data); }
+        // catch (e) { setError(e); }
+        // finally { setIsLoading(false); }
+        console.log(`Fetching details for medication ID: ${medId}`);
+      };
+      fetchMedicationDetails("some-med-id");
+      return () => {
+        // console.log('Cleaning up medication fetch effect');
+        // E.g., abortController.abort(); if using one
+      };
+    }, ["some-med-id"]); // Dependency: re-run if medId changes
+    ```
 
 - **`useContext<T>(context: Context<T>): T`**
-  - **Purpose:** Accepts a context object (the value returned from `React.createContext`) and returns the current context value for that context.
-  - **Example:** `const theme = useContext(ThemeContext);`
+
+  - **Purpose:** Accepts a context object (the value returned from `React.createContext`) and returns the current context value for that context. Context allows you to pass data through the component tree without having to pass props down manually at every level (prop drilling).
+  - **Creating Context:** `const MyContext = React.createContext(defaultValue);`
+  - **Providing Context:** `<MyContext.Provider value={sharedValue}>...</MyContext.Provider>` wraps the part of the tree that needs access.
+  - **Consuming Context:** `const currentValue = useContext(MyContext);`
+  - **Updating Context Value:** Context itself does not manage state. To make context values dynamic, you typically combine the Provider with `useState` or `useReducer` in the component that renders the Provider. Changes to the `value` prop of the Provider will cause all consuming components to re-render with the new context value.
+  - **Performance Note:** Any component consuming a context will re-render if _any part_ of the context value object changes, even if the component does not directly use the changed part. This can be a performance consideration, often addressed by splitting contexts into more granular pieces or memoizing context values with `useMemo`.
+  - **Example (SpeedyMeds Theme):**
+
+    ```tsx
+    // In ThemeContext.js
+    // export const ThemeContext = React.createContext({ themeMode: 'light', toggleTheme: () => {} });
+
+    // In a component
+    // const { themeMode, toggleTheme } = useContext(ThemeContext);
+    // <View style={{backgroundColor: themeMode === 'light' ? '#FFF' : '#333'}}>
+    //   <Button title="Toggle Theme" onPress={toggleTheme} />
+    // </View>
+    ```
 
 > 📚 **Official Documentation:**
 >
-> - [React Docs: Using the State Hook](https://react.dev/reference/react/useState)
-> - [React Docs: Using the Effect Hook](https://react.dev/reference/react/useEffect)
-> - [React Docs: `useContext`](https://react.dev/reference/react/useContext)
-> - [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md) (for in-depth explanations and initial examples)
+> - [React Docs: Hooks Overview](https://legacy.reactjs.org/docs/hooks-overview.html)
+> - [React Docs: Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks)
 
 ### Procedural Content (Illustrative Recap Examples)
 
@@ -66,7 +132,7 @@ const PatientSearch: React.FC = () => {
         value={searchTerm}
         onChangeText={setSearchTerm} // Directly updates the state
       />
-      <Text style={styles.searchText}>Searching for: {searchTerm}</Text>
+      <Text style={styles.searchText}>Searching for patient: {searchTerm}</Text>
     </View>
   );
 };
@@ -98,23 +164,31 @@ import { View, Text, StyleSheet } from "react-native";
 
 interface PrescriptionDetailsScreenProps {
   prescriptionId: string;
+  patientName: string;
 }
 
 const PrescriptionDetailsScreen: React.FC<PrescriptionDetailsScreenProps> = ({
   prescriptionId,
+  patientName,
 }) => {
   useEffect(() => {
-    // In a real app, this could be an analytics call
+    // In a real app, this could be an analytics call to log screen views
+    // or fetch additional related data for the prescription.
     console.log(
-      `SpeedyMeds: Viewing details for prescription ID: ${prescriptionId}`
+      `SpeedyMeds: Displaying details for prescription ID: ${prescriptionId} for patient: ${patientName}`
     );
 
-    // No cleanup needed for this simple log
-  }, [prescriptionId]); // Re-run if prescriptionId changes
+    // Example cleanup: If this effect started a subscription, it would be unsubscribed here.
+    // return () => {
+    //   console.log(`Cleaning up effect for prescription: ${prescriptionId}`);
+    //   // mySubscription.unsubscribe();
+    // };
+  }, [prescriptionId, patientName]); // Re-run if prescriptionId or patientName changes
 
   return (
     <View style={styles.container}>
-      <Text>Details for Prescription: {prescriptionId}</Text>
+      <Text>Prescription ID: {prescriptionId}</Text>
+      <Text>Patient: {patientName}</Text>
       {/* ... more details ... */}
     </View>
   );
@@ -127,79 +201,182 @@ const styles = StyleSheet.create({
 export default PrescriptionDetailsScreen;
 ```
 
-Here, `useEffect` logs a message when the component mounts or when `prescriptionId` changes. The dependency array `[prescriptionId]` ensures the effect re-runs if the viewed prescription changes.
+Here, `useEffect` logs a message when the component mounts or when `prescriptionId` or `patientName` changes. The dependency array `[prescriptionId, patientName]` ensures the effect re-runs if the viewed prescription or patient name changes.
 
 **3. `useContext` for Accessing a Theme**
 
-Assuming a `ThemeContext` is set up higher in the component tree for SpeedyMeds app styling.
+Assuming a `SpeedyMedsThemeContext` is set up higher in the component tree for SpeedyMeds app styling.
 
 ```tsx
 import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-// Assume ThemeContext is defined elsewhere and provides: e.g., { colors: { text: 'black', background: 'white' } }
 interface Theme {
-  colors: { text: string; background: string; primary: string };
-  spacing: { unit: number };
+  colors: { text: string; background: string; primary: string; card: string };
+  spacing: { unit: number; paddingSmall: number; paddingMedium: number };
+  typography: { fontSizeRegular: number; fontSizeLarge: number };
 }
 const defaultTheme: Theme = {
-  colors: { text: "#333", background: "#FFF", primary: "#007AFF" },
-  spacing: { unit: 8 },
+  colors: {
+    text: "#333333",
+    background: "#FFFFFF",
+    primary: "#007AFF",
+    card: "#F5F5F5",
+  },
+  spacing: { unit: 8, paddingSmall: 8, paddingMedium: 16 },
+  typography: { fontSizeRegular: 16, fontSizeLarge: 20 },
 };
-export const ThemeContext = React.createContext<Theme>(defaultTheme);
+export const SpeedyMedsThemeContext = React.createContext<Theme>(defaultTheme);
 
-const ThemedGreeting: React.FC = () => {
-  const theme = useContext(ThemeContext); // Access the current theme
+// Higher-level component (e.g., App.tsx) providing the theme
+export const SpeedyMedsThemeProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
+  const [currentTheme, setCurrentTheme] = useState<Theme>(defaultTheme);
+
+  // Potential function to toggle theme (simplified)
+  const toggleTheme = () => {
+    setCurrentTheme((prevTheme) =>
+      prevTheme.colors.background === "#FFFFFF"
+        ? {
+            ...defaultTheme,
+            colors: {
+              ...defaultTheme.colors,
+              background: "#222222",
+              text: "#FFFFFF",
+            },
+          }
+        : defaultTheme
+    );
+  };
+
+  return (
+    <SpeedyMedsThemeContext.Provider value={currentTheme}>
+      {/* <Button title="Toggle Theme" onPress={toggleTheme} /> Simplified toggle button */}
+      {children}
+    </SpeedyMedsThemeContext.Provider>
+  );
+};
+
+const ThemedPrescriptionCard: React.FC<{ medication: string }> = ({
+  medication,
+}) => {
+  const theme = useContext(SpeedyMedsThemeContext); // Access the current theme
 
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      style={[
+        styles.card,
+        {
+          backgroundColor: theme.colors.card,
+          padding: theme.spacing.paddingMedium,
+        },
+      ]}
     >
-      <Text style={[styles.greetingText, { color: theme.colors.text }]}>
-        Welcome to SpeedyMeds!
+      <Text
+        style={[
+          styles.cardText,
+          {
+            color: theme.colors.text,
+            fontSize: theme.typography.fontSizeRegular,
+          },
+        ]}
+      >
+        Medication: {medication}
       </Text>
       <Text
         style={{
           color: theme.colors.primary,
-          fontSize: (12 * theme.spacing.unit) / 8,
+          marginTop: theme.spacing.paddingSmall,
         }}
       >
-        Your health, managed efficiently.
+        Status: Active
       </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20, // Will use theme.spacing.unit * 2.5 in a real themed app
+  container: { padding: 10 }, // General container style
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 8,
+  },
+  searchText: { fontSize: 14 },
+  // Styles for PrescriptionDetailsScreen
+  // container: { flex: 1, padding: 16, alignItems: "center" }, // Already defined, ensure no conflict
+  // Styles for ThemedPrescriptionCard
+  card: {
+    borderRadius: 8,
+    marginVertical: 10,
+    elevation: 2, // Android shadow
+    shadowColor: "#000", // iOS shadow
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+  },
+  cardText: {
+    fontWeight: "bold",
+  },
+  // Styles from original ThemedGreeting (can be merged or kept separate if structure demands)
+  greetingContainer: {
+    padding: 20,
     alignItems: "center",
     borderRadius: 5,
     margin: 10,
   },
   greetingText: {
-    fontSize: 20, // Will use theme.typography.h1FontSize in a real themed app
+    fontSize: 20,
     fontWeight: "bold",
   },
 });
 
-export default ThemedGreeting;
+// Example usage (conceptual, would be in different files usually)
+// const App = () => (
+//   <SpeedyMedsThemeProvider>
+//     <PatientSearch />
+//     <PrescriptionDetailsScreen prescriptionId="123" patientName="Jane Doe" />
+//     <ThemedPrescriptionCard medication="Amoxicillin 250mg" />
+//   </SpeedyMedsThemeProvider>
+// );
+
+export default PatientSearch; // Exporting one for module consistency, others are illustrative
 ```
 
-This component uses `useContext` to access `theme` properties (like `colors.background` and `colors.text`) to style itself, making it adaptable to different themes provided by `ThemeContext.Provider` higher up.
+This component uses `useContext` to access `theme` properties (like `colors.background` and `colors.text`) to style itself, making it adaptable to different themes provided by `SpeedyMedsThemeContext.Provider` higher up.
 
 ### Background Bridge Notes
 
 > 📲 **(Native Developers):**
 >
-> **Comparison:** `useState` is somewhat analogous to managing instance variables or properties that affect a View's rendering. `useEffect` combines aspects of lifecycle methods like `viewDidLoad`/`viewDidAppear` (iOS) or `onCreate`/`onResume` (Android) for setup, and `viewWillDisappear`/`onPause` for cleanup. `useContext` can be compared to dependency injection or accessing singleton services that provide shared data.
+> **Comparison:**
 >
-> **Key Takeaway:** React Hooks offer a more declarative and composable way to manage state and lifecycle logic within functional components, which can be a shift from the more imperative or class-based approaches in native development.
+> - `useState` is somewhat analogous to managing instance variables or properties that affect a View's rendering (e.g., properties in a custom `UIView` subclass or `ViewModel` fields in Android that are observed for UI updates).
+> - `useEffect` combines aspects of lifecycle methods like `viewDidLoad`/`viewDidAppear`/`viewWillAppear` (iOS) or `onCreate`/`onResume`/`onStart` (Android) for setup, and `viewWillDisappear`/`viewDidDisappear`/`deinit` (iOS) or `onPause`/`onStop`/`onDestroy` (Android) for cleanup. Reacting to dependency changes (`[dep]`) is akin to observing `LiveData` (Android) or using Key-Value Observing (KVO) or `NotificationCenter` observers (iOS) to respond to data changes, but `useEffect` ties these reactions directly to the component's render cycle and its declared data dependencies.
+> - `useContext` can be compared to dependency injection frameworks (like Dagger/Hilt on Android, or manual DI in iOS) or accessing singleton services/managers that provide shared data or configuration.
+>
+> **Key Takeaway:** React Hooks offer a more declarative and composable way to manage state and lifecycle logic within functional components. This can be a shift from the more imperative, class-based, or specific lifecycle callback patterns prevalent in native development.
 
 > 🌐 **(Web Developers - Angular specific):**
 >
-> **Comparison:** Angular developers can relate `useState` to component class properties that are part of change detection. `useEffect` is similar to lifecycle hooks like `ngOnInit`, `ngAfterViewInit`, and `ngOnDestroy`, particularly when dealing with subscriptions or direct DOM manipulations (though direct DOM manipulation is less common in React Native). `useContext` shares similarities with using Angular Services injected into components to share data or state across different parts of the application.
+> **Comparison:**
 >
-> **Key Takeaway:** While the syntax and paradigms differ, the core challenges of state management, side effect handling, and data sharing are addressed by these Hooks in React, just as services and lifecycle hooks address them in Angular.
+> - Angular developers can relate `useState` to component class properties that are part of Angular's change detection mechanism.
+> - `useEffect` is similar to lifecycle hooks like `ngOnInit`, `ngAfterViewInit`, and `ngOnDestroy`, particularly when dealing with RxJS subscriptions (which need cleanup) or direct DOM manipulations (though direct DOM manipulation is less common in React Native). `ngOnChanges` is somewhat comparable to `useEffect` with dependencies for reacting to input property changes.
+> - `useContext` shares similarities with using Angular Services (often provided at a module or root level and injected into components) to share data or state across different parts of the application.
+>
+> **Key Takeaway:** While the syntax and paradigms differ (e.g., Hooks vs. decorators and classes), the core challenges of state management, side effect handling, and data sharing are addressed by these Hooks in React, just as services, lifecycle hooks, and RxJS address them in Angular.
+
+**Table: `useEffect` Lifecycle Equivalents (Conceptual)**
+
+| React `useEffect` Usage                               | Native Android (Conceptual)                           | Native iOS (Conceptual)                                  | Angular (Conceptual)                                                     |
+| ----------------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `useEffect(fn, [])` (Mount)                           | `onCreate` / `onViewCreated` / `onStart` / `onResume` | `viewDidLoad` / `viewWillAppear` / `viewDidAppear`       | `ngOnInit` / `ngAfterViewInit`                                           |
+| `useEffect(() => { return cleanupFn }, [])` (Unmount) | `onPause` / `onStop` / `onDestroyView` / `onDestroy`  | `viewWillDisappear` / `viewDidDisappear` / `deinit`      | `ngOnDestroy`                                                            |
+| `useEffect(fn, [dep])` (Update on dep change)         | Data observers (e.g., `LiveData`), custom listeners   | KVO, `NotificationCenter` observers, delegates, `didSet` | `ngOnChanges`, RxJS subscriptions management in `ngOnInit`/`ngOnDestroy` |
+
+This table provides a conceptual mapping to help developers from various backgrounds understand how `useEffect` manages side effects in relation to familiar lifecycle patterns.
 
 Mastering these core Hooks is foundational. The subsequent sections in this module will build upon this knowledge by introducing more specific Hooks and APIs pertinent to React Native development.
