@@ -1,8 +1,6 @@
-## Section 3: Bridging Web Concepts and Styling in React Native
+## Section 3: Bridging Web Concepts to React Native
 
 This section explains how the fundamental concepts of HTML structure and CSS styling, reviewed in the previous sections, translate to the React Native environment. Understanding this mapping is key to leveraging your web development knowledge (or understanding the web-inspired paradigms if you come from a native background).
-
-### Conceptual Content
 
 React Native allows you to build native mobile applications using React and JavaScript, but it does _not_ render HTML or use traditional CSS. Instead, it provides a set of **Core Components** that map conceptually to native UI widgets on iOS and Android, and a **JavaScript-based styling system (`StyleSheet`)** that borrows heavily from CSS, particularly Flexbox.
 
@@ -117,8 +115,6 @@ This table highlights common property translations.
 >
 > **Key Takeaway:** React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
 
-### Procedural Content
-
 #### Example: Basic Card Layout (React Native)
 
 Let's translate a simple HTML/CSS card concept into React Native using `<View>`, `<Text>`, and `StyleSheet` with Flexbox.
@@ -158,12 +154,22 @@ Let's translate a simple HTML/CSS card concept into React Native using `<View>`,
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-// Define props for type safety (assuming TypeScript)
+/**
+ * Props for the MedicationCard component.
+ */
 interface MedicationCardProps {
+  /** The name of the medication. */
   name: string;
+  /** The instructions for taking the medication. */
   instructions: string;
 }
 
+/**
+ * A component that displays medication information in a card format.
+ *
+ * @param {MedicationCardProps} props The props for the component.
+ * @returns {React.ReactElement} The MedicationCard component.
+ */
 const MedicationCard: React.FC<MedicationCardProps> = ({ name, instructions }) => {
   return (
     <View style={styles.card}> // Equivalent to <div class="card">
@@ -208,6 +214,9 @@ This example demonstrates the mapping. The HTML `div` with class `card` becomes 
 ### Challenge
 
 Recreate a simple web layout using React Native components and StyleSheet based on provided HTML/CSS.
+
+> [!WARNING]
+> The following CodeSandbox link is a placeholder and MUST be replaced with a functional link to the actual Challenge 4 before finalizing the course materials. Ensure the linked CodeSandbox environment is correctly set up as per blueprint requirements.
 
 **(https://codesandbox.io/p/sandbox/module-4-challenge-simple-layout-recreation-placeholder-w6ztrx)** (Note: Replace with actual CodeSandbox link when created)
 

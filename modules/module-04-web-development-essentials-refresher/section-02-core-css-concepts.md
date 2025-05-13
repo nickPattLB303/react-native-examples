@@ -5,8 +5,6 @@ This section reviews fundamental CSS (Cascading Style Sheets) concepts, with a p
 > [!TIP]
 > If you're experienced with CSS and Flexbox, skim this section, focusing on the Background Bridge Notes that compare web CSS with React Native's `StyleSheet` and layout system.
 
-### Conceptual Content
-
 #### A Brief History of CSS
 
 Initially, web styling was mixed with HTML. To separate structure from presentation, CSS was proposed by Håkon Wium Lie in 1994. CSS Level 1 (1996) introduced basic styling. CSS Level 2 (1998) added positioning and media types. CSS Level 3, developed modularly since 1999, introduced features like advanced selectors, Flexbox, Grid, transitions, and animations, allowing CSS to evolve more rapidly. The W3C continues to maintain CSS standards.
@@ -105,7 +103,7 @@ graph LR
     end
 ```
 
-_Diagram: Conceptual layout of the CSS Box Model._ This diagram shows the layers of the box model, starting from the outer margin and moving inwards through the border and padding to the central content area.
+_Diagram: Conceptual layout of the CSS Box Model._ This diagram visually represents the layered structure of the CSS Box Model, which is fundamental to understanding how elements occupy space and how spacing is controlled on a webpage. At the very center is the **Content** area, which holds the actual text, images, or other media. Surrounding the content is the **Padding**, an optional transparent space that provides an inner cushion between the content and its border. The **Border** itself is a line that can be styled with various thicknesses, styles (solid, dashed, etc.), and colors, defining the visible edge of the element. Finally, the outermost layer is the **Margin**, another transparent space that separates this element from any adjacent elements on the page. Understanding these distinct layers—Content, Padding, Border, and Margin—and how their sizes interact (especially with the `box-sizing` property) is critical for precise layout and spacing in web design, a concept that also heavily influences React Native styling.
 
 Understanding the box model is crucial for controlling element size and spacing.
 
@@ -253,6 +251,9 @@ The `.container` div is set to `display: flex`, making its children (`.item` div
 ### Exercise
 
 Apply these basic HTML and CSS concepts.
+
+> [!WARNING]
+> The following CodeSandbox link is a placeholder and MUST be replaced with a functional link to the actual Exercise 4.1 before finalizing the course materials. Ensure the linked CodeSandbox environment is correctly set up as per blueprint requirements.
 
 **(https://codesandbox.io/p/sandbox/module-4-exercise-1-basic-html-css-placeholder-j9krzr)** (Note: Replace with actual CodeSandbox link when created)
 

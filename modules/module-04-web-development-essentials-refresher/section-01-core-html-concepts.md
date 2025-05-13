@@ -5,8 +5,6 @@ This section provides a high-level overview of fundamental HTML concepts. Unders
 > [!TIP]
 > If you're already comfortable with HTML basics, feel free to skim this section. Pay close attention to the Background Bridge Notes comparing HTML elements to native UI concepts.
 
-### Conceptual Content
-
 #### A Brief History of HTML
 
 HTML's roots go back to Tim Berners-Lee at CERN in the late 1980s and early 1990s. It evolved through proposals at the IETF and standardization efforts by the W3C (HTML 4.01 in 1999). A move towards stricter XML-based rules (XHTML) was later challenged by a more pragmatic approach from the WHATWG group, formed in 2004. This group drove the development of HTML5 (standardized 2014) and now maintains HTML as a "Living Standard," allowing it to evolve continuously while focusing on backward compatibility and features needed for modern web applications.
@@ -40,7 +38,7 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 </html>
 ```
 
-This structure provides a logical organization for web content.
+This example illustrates the fundamental boilerplate of an HTML5 document, including the `<!DOCTYPE>` declaration, the root `<html>` element with a language attribute, the `<head>` for metadata like the title and character set, and the `<body>` where all visible content resides. This hierarchical structure is foundational to how web pages are organized and later interpreted by browsers to build the DOM.
 
 #### Semantic HTML: Meaningful Structure
 
