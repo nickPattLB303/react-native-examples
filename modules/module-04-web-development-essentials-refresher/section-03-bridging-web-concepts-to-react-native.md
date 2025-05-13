@@ -1,4 +1,4 @@
-## Section 3: Bridging Web Concepts to React Native
+## Section 3: Bridging Web Concepts and Styling in React Native
 
 This section explains how the fundamental concepts of HTML structure and CSS styling, reviewed in the previous sections, translate to the React Native environment. Understanding this mapping is key to leveraging your web development knowledge (or understanding the web-inspired paradigms if you come from a native background).
 
@@ -36,27 +36,74 @@ This table summarizes the common conceptual mappings.
 
 React Native uses JavaScript objects created via `StyleSheet.create` to style components. This approach offers performance benefits (sending styles over the bridge once) and better organization.
 
+**Example `StyleSheet.create` Usage:**
+
+```javascript
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    // Styles for a container component
+    flex: 1, // Use Flexbox
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    // Styles for a text component
+    color: "blue",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+});
+
+// Usage in a component:
+// <View style={styles.container}>
+//   <Text style={styles.text}>Hello!</Text>
+// </View>
+```
+
 **Key Differences from Web CSS:**
 
 1.  **Syntax:** Styles are defined in JavaScript objects, not separate `.css` files.
-2.  **Property Names:** CSS properties are written in `camelCase` (e.g., `backgroundColor` instead of `background-color`, `flexDirection` instead of `flex-direction`).
-3.  **Units:** Most dimensions (width, height, margin, padding, font size) are unitless numbers interpreted as density-independent pixels (dp). Strings with units (e.g., `'10%'`, `'5em'`) are generally not supported, except for percentages in some specific properties.
-4.  **No Cascading:** Styles are not inherited from parent elements in the same way as web CSS. Text styles applied to a parent `<Text>` component are inherited by nested `<Text>` components, but layout styles applied to a `<View>` are not inherited by its children.
-5.  **Limited Selectors:** There are no complex CSS selectors (e.g., descendant selectors, attribute selectors). Styles are applied directly to components via the `style` prop.
-6.  **Flexbox Default:** Flexbox is the default layout model for `<View>`. You don't need `display: flex`. Furthermore, the default `flexDirection` is `column`, unlike the web's default of `row`.
+2.  **Property Names:** CSS properties are written in `camelCase` (e.g., `backgroundColor` instead of `background-color`, `fontSize` instead of `font-size`).
+3.  **Units:** Most dimensions (width, height, margin, padding, fontSize, etc.) and positioning properties (top, left, etc.) are unitless numbers interpreted as density-independent pixels (dp). Strings with units (e.g., `'5em'`) are not supported. Percentage values (e.g., `'50%'`) are accepted for some properties like width, height, margin, padding.
+4.  **No Cascading/Specificity (Mostly):** Styles are typically not inherited from parent elements in the same way as web CSS. There's no complex cascade calculation or specificity wars between rules defined in `StyleSheet`. Styles applied directly via the `style` prop (especially inline styles `style={{...}}`) generally take precedence. An exception is text styling: nested `<Text>` components inherit text-related styles (like `color`, `fontSize`) from their parent `<Text>` component.
+5.  **Limited Selectors & Subset:** There are no complex CSS selectors (like attribute or pseudo-selectors). Styles are applied directly to components via the `style` prop. React Native implements a subset of CSS properties, primarily focusing on layout (Flexbox), text styling, colors, backgrounds, borders, and transformations. Not all web CSS properties are available.
+6.  **Flexbox is Default & Different:** Flexbox is the **default** layout model for `<View>` components; you don't need `display: flex`. Key differences from web Flexbox include:
+    - `flexDirection` defaults to `column` (aligning items vertically) instead of `row`.
+    - `alignItems` defaults to `stretch`.
+    - `flex: 1` is a common pattern on a root container `<View>` to make it expand and fill all available space along the main axis.
+    - Properties like `justifyContent`, `alignItems`, `alignSelf`, `flexWrap`, `flexGrow`, `flexShrink`, `flexBasis` work very similarly.
+
+**Table: Mapping Common Web CSS to React Native Styles**
+
+This table highlights common property translations.
+
+| Web CSS Property   | React Native Style Property                                                    | Value Example (Web) | Value Example (RN)                       | Notes                                                               |
+| :----------------- | :----------------------------------------------------------------------------- | :------------------ | :--------------------------------------- | :------------------------------------------------------------------ |
+| `background-color` | `backgroundColor`                                                              | `#FF0000` / `red`   | `'#FF0000'` / `'red'`                    | String values.                                                      |
+| `color`            | `color`                                                                        | `blue`              | `'blue'`                                 | String values.                                                      |
+| `font-size`        | `fontSize`                                                                     | `16px` / `1.2em`    | `16`                                     | Number (pixels assumed).                                            |
+| `font-weight`      | `fontWeight`                                                                   | `bold` / `700`      | `'bold'` / `'700'`                       | String values (keywords or numeric strings).                        |
+| `margin`           | `margin`, `marginTop`, `marginLeft`, `marginVertical`, `marginHorizontal`      | `10px` / `5%`       | `10` / `'5%'` / `{ marginTop: 10 }`      | Number (pixels), percentage string, or specific directional props.  |
+| `padding`          | `padding`, `paddingTop`, `paddingLeft`, `paddingVertical`, `paddingHorizontal` | `10px`              | `10` / `{ paddingTop: 10 }`              | Number (pixels) or specific directional props.                      |
+| `border`           | `borderWidth`, `borderColor`, `borderStyle`, `borderRadius`                    | `1px solid black`   | `borderWidth: 1`, `borderColor: 'black'` | Shorthand split; `borderStyle` exists; `borderRadius` added.        |
+| `width` / `height` | `width` / `height`                                                             | `100px` / `50%`     | `100` / `'50%'`                          | Number (pixels) or percentage string.                               |
+| `display: flex;`   | _(Default Behavior)_                                                           | `display: flex;`    | _(Implicit on `<View>`)_                 | Flexbox is default in RN for `<View>`.                              |
+| `flex-direction`   | `flexDirection`                                                                | `row`               | `'column'` (default), `'row'`            | Default differs from web (`row`).                                   |
+| `justify-content`  | `justifyContent`                                                               | `center`            | `'center'`                               | Same values as web (`flex-start`, `flex-end`, `center`, etc.).      |
+| `align-items`      | `alignItems`                                                                   | `center`            | `'center'` / `'stretch'` (default)       | Same values as web (`flex-start`, `flex-end`, `center`, `stretch`). |
 
 > 📚 **Official Documentation:**
 >
-> - [React Native Docs: View](https://reactnative.dev/docs/view)
-> - [React Native Docs: Text](https://reactnative.dev/docs/text)
-> - [React Native Docs: Image](https://reactnative.dev/docs/image)
-> - [React Native Docs: TextInput](https://reactnative.dev/docs/textinput)
-> - [React Native Docs: Button](https://reactnative.dev/docs/button)
-> - [React Native Docs: Pressable](https://reactnative.dev/docs/pressable)
-> - [React Native Docs: FlatList](https://reactnative.dev/docs/flatlist)
 > - [React Native Docs: StyleSheet](https://reactnative.dev/docs/stylesheet)
 > - [React Native Docs: Style](https://reactnative.dev/docs/style)
-> - [React Native Docs: Layout with Flexbox](https://reactnative.dev/docs/flexbox)
+> - [React Native Docs: Layout with Flexbox](https://reactnative.dev/docs/layout-props) (Note: URL updated as `/flexbox` redirects to `/layout-props` which covers flex)
+> - [React Native Docs: View Style Props](https://reactnative.dev/docs/view-style-props)
+> - [React Native Docs: Text Style Props](https://reactnative.dev/docs/text-style-props)
+> - [React Native Docs: Image Style Props](https://reactnative.dev/docs/image-style-props)
 
 > 🌐 **(Web Developers):**
 >

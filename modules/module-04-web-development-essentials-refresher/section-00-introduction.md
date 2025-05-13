@@ -1,6 +1,8 @@
 # Module 4: Web Development Essentials Refresher
 
-This module serves as a focused refresher on the core concepts of HTML and CSS that are most relevant to understanding React Native development. While React Native doesn't use HTML and CSS directly, its component structure and styling system draw heavily on web paradigms. Understanding these fundamentals provides a crucial foundation for effectively building user interfaces in React Native.
+This module serves as a focused refresher on the core concepts of HTML and CSS that are most relevant to understanding React Native development. While React Native doesn't use HTML and CSS directly, its component structure and styling system draw heavily on web paradigms. A solid understanding of HTML's structural concepts and CSS's styling and layout principles, particularly Flexbox, is invaluable. Understanding these fundamentals provides a crucial foundation for effectively building and styling user interfaces in React Native.
+
+This module revisits the fundamentals, assuming varying levels of prior web development experience among learners. The goal is to establish a common ground, ensuring everyone possesses the foundational knowledge needed to effectively grasp React Native's UI paradigms, write cleaner code, and debug layout and style issues more effectively. We will refresh key concepts including semantic HTML for meaningful structure, CSS selectors for targeting elements, the cascade and specificity for managing styles, the box model for understanding element space, and Flexbox for modern layout.
 
 > [!TIP]
 > Experienced web developers (React, Angular, or others) may find the concepts in Sections 1 and 2 familiar. It's recommended to skim these sections for review, paying particular attention to the "Background Bridge Notes" which highlight key differences and parallels relevant to React Native. Developers coming from a native background (iOS/Android) should review these sections carefully as they introduce foundational web concepts essential for understanding React Native's approach.
@@ -14,7 +16,7 @@ This module serves as a focused refresher on the core concepts of HTML and CSS t
 By the end of this module, you will be able to:
 
 - Identify core HTML structural elements and their semantic purpose.
-- Describe fundamental CSS concepts including the box model and selectors.
+- Describe fundamental CSS concepts including selectors, the cascade, specificity, and the box model.
 - Explain the core principles of Flexbox for layout.
 - Articulate how HTML elements map conceptually to React Native Core Components.
 - Explain how CSS concepts translate to React Native's `StyleSheet` API and Flexbox layout.

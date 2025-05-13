@@ -123,11 +123,11 @@ For our SpeedyMeds pharmacy application, the New Architecture delivers several k
 
 ```mermaid
 graph LR
-    subgraph JS Realm (JS Thread)
+    subgraph JS [JS Realm]
         A[React App JS Code] --> B(JS Bridge);
     end
 
-    subgraph Native Realm
+    subgraph Native [Native Realm]
         subgraph Native UI Thread
             D(Native UI) --- E(Native Modules);
         end
@@ -140,8 +140,8 @@ graph LR
     E -- Direct Calls --> D;
     D -- Native Events --> C;
 
-    style JS Realm fill:#D6EAF8,stroke:#333,stroke-width:1px;
-    style Native Realm fill:#D5F5E3,stroke:#333,stroke-width:1px;
+    style JS fill:#D6EAF8,stroke:#333,stroke-width:1px;
+    style Native fill:#D5F5E3,stroke:#333,stroke-width:1px;
     style B fill:#FADBD8,stroke:#C0392B;
     style C fill:#FADBD8,stroke:#C0392B;
     style A fill:#AED6F1;
@@ -161,13 +161,13 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph JS Realm (JS Thread - Hermes)
+    subgraph JS [JS Thread - Hermes]
         A[React App JS Code];
-        B[JavaScript Interface (JSI) C++];
+        B[JavaScript Interface JSI C++];
         A --> B;
     end
 
-    subgraph Native Realm
+    subgraph Native [Native Realm]
         subgraph Native UI Thread
             E(Native UI - Fabric Managed);
         end
@@ -187,8 +187,8 @@ graph LR
     D -- Native Events via JSI --> B;
 
     %% Styling
-    style JS Realm fill:#D6EAF8,stroke:#333,stroke-width:1px;
-    style Native Realm fill:#D5F5E3,stroke:#333,stroke-width:1px;
+    style JS fill:#D6EAF8,stroke:#333,stroke-width:1px;
+    style Native fill:#D5F5E3,stroke:#333,stroke-width:1px;
     style B fill:#AEB6BF,stroke:#34495E;
     style C fill:#A9DFBF,stroke:#1E8449;
     style D fill:#A9DFBF,stroke:#1E8449;

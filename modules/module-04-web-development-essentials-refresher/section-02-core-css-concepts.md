@@ -7,17 +7,88 @@ This section reviews fundamental CSS (Cascading Style Sheets) concepts, with a p
 
 ### Conceptual Content
 
-#### CSS Selectors
+#### A Brief History of CSS
+
+Initially, web styling was mixed with HTML. To separate structure from presentation, CSS was proposed by Håkon Wium Lie in 1994. CSS Level 1 (1996) introduced basic styling. CSS Level 2 (1998) added positioning and media types. CSS Level 3, developed modularly since 1999, introduced features like advanced selectors, Flexbox, Grid, transitions, and animations, allowing CSS to evolve more rapidly. The W3C continues to maintain CSS standards.
+
+#### CSS Rules: Selectors and Declarations
+
+A CSS rule consists of a **selector** and a **declaration block** `{}`. The selector targets HTML elements, and the block contains **declarations** (property-value pairs like `color: blue;`) defining the styles.
+
+#### Selectors
 
 Selectors are patterns used to target specific HTML elements for styling.
 
-- **Element Selector:** Targets all elements of a specific type (e.g., `p` targets all `<p>` elements).
-- **Class Selector:** Targets elements with a specific `class` attribute (e.g., `.highlight` targets `<div class="highlight">`).
-- **ID Selector:** Targets a single element with a specific `id` attribute (e.g., `#main-content` targets `<div id="main-content">`).
+- **Type/Element Selector:** Targets elements by tag name (e.g., `p` targets all `<p>` elements).
+- **Class Selector:** Targets elements with a specific `class` attribute, prefixed with `.` (e.g., `.highlight`).
+- **ID Selector:** Targets a single element with a specific `id` attribute, prefixed with `#` (e.g., `#main-content`). IDs must be unique.
+- **Attribute Selector:** Matches elements based on attributes (e.g., `input[type="text"]`).
+- **Universal Selector:** Matches any element (`*`).
+- **Combinators:** Define relationships between selectors:
+  - Descendant (space): `article p` (selects `<p>` inside `<article>`).
+  - Child (`>`): `ul > li` (selects `<li>` directly inside `<ul>`).
+  - Adjacent Sibling (`+`): `h2 + p` (selects first `<p>` immediately after `<h2>`).
+  - General Sibling (`~`): `h2 ~ p` (selects all `<p>` siblings following `<h2>`).
+- **Pseudo-classes:** Select elements based on state (e.g., `:hover`, `:focus`, `:nth-child()`).
+- **Pseudo-elements:** Style parts of an element (e.g., `::before`, `::after`, `::first-line`).
+
+#### The Cascade Algorithm
+
+The "Cascading" in CSS refers to how browsers resolve conflicts when multiple rules target the same element and property. Styles originate from:
+
+1.  **User-agent Stylesheets:** Browser defaults.
+2.  **User Stylesheets:** Custom user styles (often for accessibility).
+3.  **Author Stylesheets:** Styles written by the developer (most common).
+
+The cascade assigns precedence based on **origin** and **importance** (`!important` flag). The simplified order (lowest to highest priority) is generally:
+
+1.  User-agent normal
+2.  User normal
+3.  Author normal
+4.  Author `!important`
+5.  User `!important`
+6.  User-agent `!important`
+
+(Animations and transitions have specific interactions with this order).
+Author styles override browser defaults, but user `!important` styles can override author `!important` styles, giving users final control for accessibility.
+
+#### Specificity: Winning the Style War
+
+When rules have the same origin and importance, **specificity** determines the winner. It's a weight calculated from the selector's components.
+
+**Calculation (Conceptual Columns: ID-Class-Type):**
+
+- **Inline Styles:** Applied via `style="..."` have the highest specificity (effectively `1-0-0-0`, considered separately).
+- **IDs:** Each `#id` adds 1 to the ID column.
+- **Classes, Attributes, Pseudo-classes:** Each `.class`, `[attribute]`, or `:pseudo-class` adds 1 to the Class column.
+- **Types, Pseudo-elements:** Each `element` or `::pseudo-element` adds 1 to the Type column.
+- **Zero Specificity:** `*`, combinators (`>`, `+`, `~`, space), and `:where()` contribute nothing.
+
+Compare values from left to right (ID > Class > Type). The selector with a higher value in the most significant column wins. If specificities are equal, the last rule declared in the CSS source order wins.
+
+> [!CAUTION]
+> Avoid overusing `!important`. It breaks the natural cascade and makes debugging much harder. Reserve it for specific overrides or temporary debugging.
+
+**Table: CSS Specificity Calculation Examples**
+
+This table shows conceptual specificity values for comparing rules.
+
+| Selector Type                       | Conceptual Value (ID-Class-Type) | Example Selector                      | Calculated Value (ID-Class-Type) |
+| ----------------------------------- | -------------------------------- | ------------------------------------- | -------------------------------- |
+| ID                                  | `0-1-0-0`                        | `#myId`                               | `1-0-0`                          |
+| Class                               | `0-0-1-0`                        | `.myClass`                            | `0-1-0`                          |
+| Attribute                           | `0-0-1-0`                        | `[type="text"]`                       | `0-1-0`                          |
+| Pseudo-class                        | `0-0-1-0`                        | `:hover`                              | `0-1-0`                          |
+| Type                                | `0-0-0-1`                        | `div`                                 | `0-0-1`                          |
+| Pseudo-element                      | `0-0-0-1`                        | `::before`                            | `0-0-1`                          |
+| Complex                             | -                                | `nav#mainNav > ul.navList li a:hover` | `1-2-3`                          |
+| Universal / Combinator / `:where()` | `0-0-0-0`                        | `*`, `>`, `+`, `:where(.info)`        | `0-0-0`                          |
+
+_Note: Inline styles (via the `style` attribute) have higher specificity than any selector but are not shown in the ID-Class-Type calculation._
 
 #### The Box Model
 
-The CSS box model describes how elements are rendered as rectangular boxes. Each box consists of:
+The CSS box model describes how elements are rendered as rectangular boxes. Each box consists of concentric layers:
 
 - **Content:** The actual content (text, image).
 - **Padding:** Transparent space around the content, inside the border.
@@ -38,62 +109,80 @@ _Diagram: Conceptual layout of the CSS Box Model._ This diagram shows the layers
 
 Understanding the box model is crucial for controlling element size and spacing.
 
+**`box-sizing` Property:**
+
+- `content-box` (default): `width` and `height` apply only to the content area. Total width = `width` + `padding` + `border`.
+- `border-box`: `width` and `height` include content, padding, and border. The content area shrinks to accommodate padding/border. This is often considered more intuitive for layout.
+
+**Margin Collapsing:**
+Vertical margins (top/bottom) of adjacent block-level boxes can collapse into a single margin (usually the size of the larger margin). This occurs only vertically under specific conditions.
+
 #### Layout with Flexbox
 
 Flexbox (Flexible Box Layout) is a one-dimensional layout model designed for distributing space among items in an interface and aligning them. It's the **primary layout system in React Native**.
 
 Key concepts:
 
-- **Flex Container:** An element designated as a flex container (e.g., using `display: flex;` in CSS). Its direct children become flex items.
+- **Flex Container:** An element with `display: flex;` (or `display: inline-flex;` on the web). Its direct children become flex items.
 - **Flex Items:** The children of a flex container.
-- **Main Axis:** The primary direction along which flex items are laid out (row or column).
-- **Cross Axis:** The axis perpendicular to the main axis.
+- **Axes:**
+  - **Main Axis:** Primary axis for layout (defined by `flex-direction`).
+  - **Cross Axis:** Perpendicular to the main axis.
 
-**Common Flex Container Properties (CSS):**
+**Key Flexbox Properties (CSS):**
 
-- `display: flex;`: Enables Flexbox layout for the container.
-- `flex-direction`: Defines the main axis (`row` (default), `row-reverse`, `column`, `column-reverse`).
-- `justify-content`: Aligns items along the main axis (`flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly`).
-- `align-items`: Aligns items along the cross axis (`stretch`, `flex-start`, `flex-end`, `center`, `baseline`).
-- `flex-wrap`: Controls whether items wrap onto multiple lines (`nowrap` (default), `wrap`, `wrap-reverse`).
-- `align-content`: Aligns wrapped lines along the cross axis (similar values to `justify-content`).
+- **Container Properties:**
+  - `display: flex;`: Enables Flexbox.
+  - `flex-direction`: `row` (default), `row-reverse`, `column`, `column-reverse` (Defines main axis).
+  - `justify-content`: Alignment along Main Axis (`flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly`).
+  - `align-items`: Alignment along Cross Axis (`stretch` (default), `flex-start`, `flex-end`, `center`, `baseline`).
+  - `flex-wrap`: Item wrapping (`nowrap` (default), `wrap`, `wrap-reverse`).
+  - `align-content`: Alignment of wrapped lines along Cross Axis (`stretch` (default), `flex-start`, `flex-end`, `center`, `space-between`, `space-around`).
+- **Item Properties:**
+  - `flex-grow`: Ability to grow (unitless proportion, default 0).
+  - `flex-shrink`: Ability to shrink (unitless proportion, default 1).
+  - `flex-basis`: Default size before distributing space (`auto`, length, percentage).
+  - `flex`: Shorthand for `flex-grow`, `flex-shrink`, `flex-basis`.
+  - `align-self`: Overrides container's `align-items` for a single item (`auto`, `stretch`, `flex-start`, `flex-end`, `center`, `baseline`).
 
-**Common Flex Item Properties (CSS):**
+**Table: Common CSS Flexbox Alignment Properties**
 
-- `flex-grow`: Defines the ability for an item to grow if necessary (takes a unitless proportion).
-- `flex-shrink`: Defines the ability for an item to shrink if necessary.
-- `flex-basis`: Defines the default size of an item before remaining space is distributed.
-- `flex`: Shorthand for `flex-grow`, `flex-shrink`, and `flex-basis`.
-- `align-self`: Overrides the container's `align-items` for a single item.
+This table summarizes key properties for positioning items.
 
-```mermaid
-graph TD
-    subgraph Flex Container (flex-direction: row)
-        direction LR
-        A[Item 1] --> B[Item 2] --> C[Item 3]
-    end
-    subgraph Main Axis (Horizontal)
-        direction LR
-        D( ) --- E( )
-    end
-    subgraph Cross Axis (Vertical)
-        direction TB
-        F( ) --- G( )
-    end
-    FlexContainer -- Main Axis --> MainAxis
-    FlexContainer -- Cross Axis --> CrossAxis
-```
+| Property          | Controls Alignment/Distribution On | Key Values                                                                          | Effect                                                                            |
+| ----------------- | ---------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `flex-direction`  | Main Axis Direction                | `row`, `column`, `row-reverse`, `column-reverse`                                    | Sets the flow direction. Default: `row`.                                          |
+| `justify-content` | Main Axis                          | `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly` | Distributes space along main axis. Default: `flex-start`.                         |
+| `align-items`     | Cross Axis (single line)           | `stretch`, `flex-start`, `flex-end`, `center`, `baseline`                           | Aligns items along cross axis. Default: `stretch`.                                |
+| `align-content`   | Cross Axis (multiple lines)        | `stretch`, `flex-start`, `flex-end`, `center`, `space-between`, `space-around`      | Aligns wrapped lines along cross axis (requires `flex-wrap`). Default: `stretch`. |
+| `align-self`      | Cross Axis (single item)           | `auto`, `stretch`, `flex-start`, `flex-end`, `center`, `baseline`                   | Overrides `align-items` for one item. Default: `auto`.                            |
+| `flex-wrap`       | Item Wrapping                      | `nowrap`, `wrap`, `wrap-reverse`                                                    | Controls if items wrap. Default: `nowrap`.                                        |
 
-_Diagram: Simplified Flexbox Axes with `flex-direction: row`._ This flowchart shows three flex items arranged horizontally within a container when the main axis is set to `row`. The main axis runs horizontally, and the cross axis runs vertically.
+Flexbox provides powerful and efficient control over layout, making it ideal for dynamic UIs and responsive design.
 
-Flexbox provides powerful and efficient control over layout, making it ideal for dynamic UIs.
+#### Under the Hood: How Browsers Apply CSS
+
+After building the DOM from HTML, browsers process CSS:
+
+1.  **Fetch & Parse CSS:** Load CSS from `<link>`, `<style>`, or `style` attributes.
+2.  **Tokenization & CSSOM Construction:** Parse CSS text into tokens, then build the **CSS Object Model (CSSOM)**, a tree representing selectors and styles.
+3.  **Style Calculation:** Combine DOM and CSSOM. For each DOM element, determine computed styles using cascade, specificity, and inheritance. Relative units become pixels.
+4.  **Render Tree Construction:** Create a tree of only visible elements (excluding `display: none`) with their computed styles.
+5.  **Layout (Reflow):** Calculate the exact size and position of each Render Tree node based on the box model, positioning, and layout modes (like Flexbox).
+6.  **Painting:** Draw the pixels for each visible element (text, colors, borders, images) onto the screen, potentially in layers.
+7.  **Compositing:** Combine painted layers into the final screen image. Changes affecting layout trigger reflow and repaint; appearance-only changes may only trigger repaint.
 
 > 📚 **Official Documentation:**
 >
-> - [MDN Web Docs: CSS Box Model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
-> - [MDN Web Docs: CSS Selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors)
-> - [MDN Web Docs: Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+> - [MDN Web Docs: CSS Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors)
+> - [MDN Web Docs: The Cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade)
+> - [MDN Web Docs: Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+> - [MDN Web Docs: Introduction to the CSS Box Model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
+> - [MDN Web Docs: box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)
+> - [MDN Web Docs: CSS Flexible Box Layout (Flexbox)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+> - [MDN Web Docs: Basic Concepts of Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
 > - [CSS-Tricks: A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+> - [MDN Web Docs: Introduction to how browsers work](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_browsers_work)
 
 > 📲 **(Native Developers):**
 >
