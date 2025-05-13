@@ -363,7 +363,7 @@ For Native Android/iOS Developers:
 The <Image> component's prop-based configuration (e.g., source={{uri: '...'}}, resizeMode) is the React Native way of achieving what you'd do natively by, for example, creating a UIImage from data/URL and assigning it to UIImageView.image, then setting UIImageView.contentMode on iOS. On Android, this would be akin to using BitmapFactory to decode an image (or a library like Glide/Picasso to load from a URL) into an ImageView and setting its scaleType.
 React Native's @2x/@3x convention for static assets 35 is a streamlined approach compared to managing different drawable folders (mdpi, hdpi, xhdpi, etc.) on Android or dealing with asset catalogs and image sets on iOS. React Native's bundler handles the selection.
 For Web Developers (React/Angular):
-The <Image source={{uri: '...'}} style={{width, height}} /> syntax is analogous to the HTML <img src="..." width="..." height="..." /> tag.48
+The <Image source={{uri: '...'}} style={{width, height}} /> syntax is analogous to the HTML <img src="./..." width="..." height="..." /> tag.48
 A key difference is the mandatory width and height styling for network images in React Native.34 Web browsers can often infer dimensions or reflow content once an image loads, but React Native's layout is typically calculated before the image is fully downloaded, necessitating explicit dimensions to prevent a 0x0 size or layout shifts.
 The resizeMode prop in React Native is similar in concept to the CSS object-fit property (e.g., resizeMode: 'contain' is like object-fit: contain;) [43 (Expo Image comparison)].
 Section 5: TextInput (<TextInput>) - User Input
