@@ -128,6 +128,9 @@ export default PrescriptionAlerts;
 
 Here, the urgent alert `View` is only rendered if `hasUrgentAlerts` is true.
 
+> [!CAUTION]
+> When using the logical `&&` operator for conditional rendering, be mindful of falsy values that are not boolean `false`. For example, if a variable `count` is `0` (which is falsy), the expression `{count && <MyComponent />}` will render `0` in your UI, not nothing. To avoid this, always ensure the left-hand side of the `&&` operator is a boolean expression (e.g., `{count > 0 && <MyComponent />}`).
+
 ### Ternary Conditional Operator (`condition ? trueExpression : falseExpression`)
 
 The ternary operator is useful for inline conditional rendering where you want to render one thing if a condition is true, and another thing if it's false.
@@ -217,3 +220,142 @@ Conditional rendering is essential for creating responsive and dynamic UIs that 
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Conditional Rendering](https://react.dev/learn/conditional-rendering)
+
+### Using `switch` Statements
+
+For scenarios where you have multiple mutually exclusive conditions determining what to render, a `switch` statement (used outside of your JSX, similar to `if` statements) can be clearer than a long chain of `if/else if` statements. You can assign the resulting JSX to a variable.
+
+```tsx
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+interface NotificationBannerProps {
+  type: "info" | "warning" | "error" | "success";
+  message: string;
+}
+
+const NotificationBanner: React.FC<NotificationBannerProps> = ({
+  type,
+  message,
+}) => {
+  let bannerContent;
+  let bannerStyle;
+
+  switch (type) {
+    case "info":
+      bannerStyle = styles.info;
+      bannerContent = <Text>ℹ️ Info: {message}</Text>;
+      break;
+    case "warning":
+      bannerStyle = styles.warning;
+      bannerContent = <Text>⚠️ Warning: {message}</Text>;
+      break;
+    case "error":
+      bannerStyle = styles.error;
+      bannerContent = <Text>🛑 Error: {message}</Text>;
+      break;
+    case "success":
+      bannerStyle = styles.success;
+      bannerContent = <Text>✅ Success: {message}</Text>;
+      break;
+    default:
+      bannerStyle = styles.unknown;
+      bannerContent = <Text>{message}</Text>;
+  }
+
+  return <View style={[styles.bannerBase, bannerStyle]}>{bannerContent}</View>;
+};
+
+const styles = StyleSheet.create({
+  bannerBase: { padding: 12, borderRadius: 4, marginVertical: 8 },
+  info: { backgroundColor: "#E0EFFF", borderColor: "#B0CFFF", borderWidth: 1 },
+  warning: {
+    backgroundColor: "#FFF3E0",
+    borderColor: "#FFD180",
+    borderWidth: 1,
+  },
+  error: { backgroundColor: "#FFEBEE", borderColor: "#FFCDD2", borderWidth: 1 },
+  success: {
+    backgroundColor: "#E8F5E9",
+    borderColor: "#C8E6C9",
+    borderWidth: 1,
+  },
+  unknown: {
+    backgroundColor: "#F5F5F5",
+    borderColor: "#E0E0E0",
+    borderWidth: 1,
+  },
+});
+
+// Example Usage
+// <NotificationBanner type="error" message="Failed to submit prescription." />
+
+export default NotificationBanner;
+```
+
+### Using Object Mapping for Conditional Renders
+
+Another clean way to render different components or JSX based on a specific prop value is to use an object as a map. This is particularly useful when you have a direct mapping from a string or number value to a corresponding UI representation.
+
+```tsx
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+// Assume Icon components are available, e.g., from a library or custom made
+// import { TabletIcon, CapsuleIcon, SyrupIcon, DefaultIcon } from './Icons';
+
+interface MedicationFormDisplayProps {
+  form: "tablet" | "capsule" | "liquid" | "other";
+}
+
+const MedicationFormDisplay: React.FC<MedicationFormDisplayProps> = ({
+  form,
+}) => {
+  const FORM_COMPONENTS_MAP: {
+    [key in MedicationFormDisplayProps["form"]]?: JSX.Element;
+  } = {
+    tablet: <Text>💊 Tablet</Text>, // Replace with <TabletIcon />
+    capsule: <Text> कैप्सूल Capsule</Text>, // Replace with <CapsuleIcon />
+    liquid: <Text>💧 Liquid</Text>, // Replace with <SyrupIcon />
+  };
+
+  const ComponentToRender = FORM_COMPONENTS_MAP[form] || (
+    <Text>❓ Other Form</Text>
+  ); // Fallback
+
+  return <View style={styles.formContainer}>{ComponentToRender}</View>;
+};
+
+const styles = StyleSheet.create({
+  formContainer: { padding: 5, alignItems: "flex-start" },
+});
+
+// Example Usage
+// <MedicationFormDisplay form="tablet" />
+
+export default MedicationFormDisplay;
+```
+
+This pattern can be very readable and maintainable, especially if the mapping logic becomes complex.
+
+### Preventing Rendering with `null`
+
+In some cases, you might want a component to render nothing. You can do this by returning `null`.
+
+```tsx
+import React from "react";
+import { Text } from "react-native";
+
+interface OptionalMessageProps {
+  message?: string;
+  show: boolean;
+}
+
+const OptionalMessage: React.FC<OptionalMessageProps> = ({ message, show }) => {
+  if (!show || !message) {
+    return null; // Render nothing if show is false or no message
+  }
+  return <Text>Special Instructions: {message}</Text>;
+};
+
+export default OptionalMessage;
+```

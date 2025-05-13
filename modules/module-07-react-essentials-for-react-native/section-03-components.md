@@ -50,6 +50,19 @@ export default Greeting; // Exporting for use in other files
 - With Hooks (like `useState` and `useEffect`), they can have state and lifecycle features, making them as powerful as class components.
 - They are generally more concise and easier to read and test.
 
+**Advantages of Functional Components (especially with Hooks):**
+
+- **Simplicity & Readability:** Functional components are generally more concise and easier to read and write compared to class components, involving less boilerplate code. A significant factor contributing to this simplicity is the absence of the `this` keyword, which can be a source of confusion in JavaScript classes.
+- **Hooks are a Game-Changer:** The introduction of React Hooks (e.g., `useState`, `useEffect`) in React 16.8 was transformative. Hooks empower functional components to manage local state, handle side effects (like data fetching or subscriptions), and access context—functionalities previously exclusive to class components. This has made functional components capable of handling virtually all use cases.
+- **Performance Considerations:** Functional components can offer slight performance benefits as they avoid the overhead associated with class instantiation and method binding. While the difference might be negligible in many real-world applications, functional components are generally lighter and can be more easily optimized by React itself.
+- **Testability:** Functional components are often easier to test, especially when written as "pure functions" (i.e., given the same props, they always return the same UI and have no side effects). Their simpler structure makes them more straightforward to unit test.
+- **Conciseness:** They typically result in less overall code compared to their class-based counterparts.
+- **Preferred Approach:** The official React team and the broader React community advocate for using functional components with Hooks for new development projects.
+
+The introduction of Hooks marked a significant paradigm shift, elevating functional components to first-class citizens capable of handling all types of component logic. Before Hooks, any component requiring local state or lifecycle methods had to be a class component. Hooks provide a cleaner, more direct way to "hook into" React's state and lifecycle features from within functional components. This not only simplified component structure but also enabled better patterns for reusing stateful logic through custom Hooks, effectively avoiding the complexities of `this` keyword management and class inheritance common with class components.
+
+Functional components, by their nature as JavaScript functions, align well with React's core philosophy of composition over inheritance. They are easy to combine and compose into more complex UI structures. Custom Hooks further enhance this by allowing developers to extract and reuse stateful logic across different functional components.
+
 **Example: A Simple MedicationDisplay Component**
 
 Let's create a simple component for our SpeedyMeds theme to display a medication name.
@@ -100,11 +113,49 @@ export default MedicationDisplay;
 // <MedicationDisplay medicationName="Amoxicillin" dosage="250mg" />
 ```
 
-This example defines a `MedicationDisplay` component that accepts `medicationName` and `dosage` as props and displays them. It also includes some basic styling using `StyleSheet` (which we'll cover in detail later). Notice the use of `React.FC` (Functional Component) as a type for the component, which is a common pattern in TypeScript for React components that might include `children` props by default (though we aren't using `children` here explicitly).
+This example defines a `MedicationDisplay` component that accepts `medicationName` and `dosage` as props and displays them. It also includes some basic styling using `StyleSheet` (which we'll cover in detail later). Notice the use of `React.FC<MedicationDisplayProps>` (Functional Component) as a type for the component. `React.FC` is a utility type in TypeScript for React functional components; it provides type checking for props and implicitly includes `children` as an optional prop.
 
 ### Class Components (Brief Mention)
 
-Before Hooks were introduced in React 16.8, class components were the only way to have state and lifecycle methods within a component.
+Before Hooks were introduced in React 16.8, class components were the only way to have state and lifecycle methods within a component. Understanding their structure and lifecycle is crucial for developers who may need to work with or migrate older React projects, and it provides valuable context for understanding why Hooks were introduced and the problems they aimed to solve.
+
+Class components are ES6 classes that extend `React.Component`.
+
+**1. Constructor and `super(props)`**
+
+If a class component has a constructor, it's called before the component is mounted.
+
+- It MUST call `super(props)` as the first statement. This initializes the parent `React.Component` and makes `this.props` available in the constructor.
+- It's primarily used to:
+  - Initialize local state: `this.state = { count: 0 };`
+  - Bind event handler methods to the component instance: `this.handleIncrement = this.handleIncrement.bind(this);` (This was necessary to ensure `this` inside `handleIncrement` refers to the component instance).
+
+**2. `render()` Method**
+
+The `render()` method is the only strictly required method in a class component. It returns the JSX describing the component's UI. React calls `render()` when props or state change.
+
+**3. `this.props` and `this.state`**
+
+- `this.props`: Props are passed from the parent and are accessible via `this.props`. They are read-only and should not be modified by the component.
+- `this.state`: Internal data managed by the component. It's initialized in the constructor (or using class fields syntax). State is updated using `this.setState({ count: 1 })`, which schedules a re-render. Directly modifying `this.state` (e.g., `this.state.count = 1;`) is incorrect as it won't trigger a re-render.
+
+**4. Key Lifecycle Methods (Conceptual Overview)**
+
+Class components have lifecycle methods for performing actions at different stages:
+
+- **Mounting (Creation & Insertion):**
+  - `constructor(props)`: Initialize state, bind methods.
+  - `render()`: Returns JSX.
+  - `componentDidMount()`: Called after the component is in the DOM. Used for network requests, subscriptions, DOM interactions.
+- **Updating (Re-rendering due to props/state change):**
+  - `render()`: Returns updated JSX.
+  - `componentDidUpdate(prevProps, prevState)`: Called after update. Used for DOM operations based on updates or network requests (conditionally, comparing `prevProps` with `this.props`).
+- **Unmounting (Removal from DOM):**
+  - `componentWillUnmount()`: Called before unmounting. Used for cleanup (timers, network requests, subscriptions) to prevent memory leaks.
+
+**Historical Context & Challenges with Class Components:**
+
+Class components, while powerful, often led to more verbose code and complexities with the `this` keyword (requiring manual binding). Related logic for a single feature could also become fragmented across different lifecycle methods (e.g., data fetching logic in `componentDidMount`, `componentDidUpdate`, and cleanup in `componentWillUnmount`). Hooks, particularly `useEffect`, allow for better colocation of such related logic, improving readability and maintainability.
 
 Here's what a similar `Greeting` component might look like as a class component:
 
@@ -154,8 +205,173 @@ Understanding how to create and use components is central to React development. 
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Your First Component](https://react.dev/learn/your-first-component)
-> - [React Docs: Components and Props](https://react.dev/learn/passing-props-to-a-component) (Preview, as Props are covered next)
-> - [React Native Docs: Core Components and Native Components](https://reactnative.dev/docs/intro-react-native-components) (Focuses more on _what_ components are available, but good context)
+> - [React Docs: Components and Props](https://react.dev/learn/passing-props-to-a-component)
+> - [React Docs: Composition vs Inheritance](https://legacy.reactjs.org/docs/composition-vs-inheritance.html)
+> - [React Docs: Reconciliation](https://legacy.reactjs.org/docs/reconciliation.html)
+> - [React Native Docs: Core Components and Native Components](https://reactnative.dev/docs/intro-react-native-components)
+
+---
+
+### Exercise 7.1: Creating Functional Components
+
+Now it's time to practice creating your own functional components.
+
+**Objective:** Create a simple `PatientInfoCard` functional component that accepts and displays a patient's name and age. Then, use this component to display information for two different patients.
+
+**Instructions:**
+
+1.  Define a functional component named `PatientInfoCard`.
+2.  It should accept `name` (string) and `age` (number) as props.
+3.  The component should render a `<View>` containing two `<Text>` elements: one for the patient's name and one for their age.
+4.  Style the card and text elements minimally (e.g., a border for the card, different font sizes for name and age).
+5.  In your main `App` component (or a similar entry point in CodeSandbox), render two instances of `PatientInfoCard` with different patient data.
+
+**Tool:** CodeSandbox
+
+**(https://codesandbox.io)** (You will need to create a new React TypeScript sandbox or use a provided template if available for the course.)
+
+_A solution will be provided by your instructor or in the course materials._
+
+### Component Composition
+
+A core principle in React is building complex UIs by combining smaller, simpler, and reusable components. This approach, known as composition, is favored over class inheritance for achieving code reuse and flexibility.
+
+**1. Building UIs by Combining Components**
+
+Instead of monolithic UI structures, you create small, independent components, each responsible for a specific part of the UI or functionality. These are then composed—typically by nesting them within other components—to create complex interfaces. A component can render other components in its output, forming a tree-like UI structure.
+
+**2. Containment: `props.children`**
+
+Some components act as generic "boxes" or containers without knowing their children ahead of time. They use the special `props.children` prop to render whatever content is passed between their opening and closing JSX tags.
+
+```tsx
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+interface CardProps {
+  children?: React.ReactNode; // Make children prop explicit and typed
+  title?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, title }) => {
+  return (
+    <View style={styles.cardContainer}>
+      {title && <Text style={styles.cardTitle}>{title}</Text>}
+      {children}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    padding: 16,
+    marginVertical: 8,
+    backgroundColor: "#fff",
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+});
+
+// Usage:
+// <Card title="Patient Details">
+//   <Text>Name: John Doe</Text>
+//   <Text>Condition: Stable</Text>
+// </Card>
+
+export default Card;
+```
+
+In this `Card` example, any JSX nested within `<Card>...</Card>` tags will be passed as `props.children` and rendered inside the `View`.
+
+**3. Specialization**
+
+This pattern involves creating a more "specific" component that renders a more "generic" one and configures it with particular props. This allows reuse of the generic component's structure and behavior while providing variations.
+
+```tsx
+// Assuming a generic Dialog component exists:
+// function Dialog(props: { type: string; title: string; message: string; children?: React.ReactNode }) {
+//   return (
+//     <View style={/* styles for dialog based on props.type */}>
+//       <Text>{props.title}</Text>
+//       <Text>{props.message}</Text>
+//       {props.children}
+//     </View>
+//   );
+// }
+
+interface ConfirmationDialogProps {
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+// const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ message, onConfirm, onCancel }) => {
+//   return (
+//     <Dialog type="warning" title="Confirm Action" message={message}>
+//       <Button title="Confirm" onPress={onConfirm} />
+//       <Button title="Cancel" onPress={onCancel} />
+//     </Dialog>
+//   );
+// };
+```
+
+Here, a hypothetical `ConfirmationDialog` would be a specialized version of a generic `Dialog`, pre-configured with a type and title, and specific children for actions.
+
+Beyond `props.children`, components can also define multiple "slots" for composition by accepting other props that expect React elements. For example, a `LayoutComponent` might have `header` and `footer` props: `<LayoutComponent header={<AppHeader />} footer={<AppFooter />} />`.
+
+**4. Why Composition is Favored Over Inheritance**
+
+React strongly recommends composition over class inheritance for reusing code and behavior:
+
+- **Flexibility & Simplicity:** Props and composition offer a clear, explicit, and safe way to customize a component's look and behavior.
+- **Avoiding Inheritance Problems:** Class inheritance in UIs can lead to complex, fragile hierarchies (e.g., "fragile base class problem," tight coupling). Composition promotes looser coupling.
+- **Reusing Non-UI Logic:** For non-UI functionality (e.g., data formatting, business logic), React suggests extracting it into separate JavaScript modules or, in modern React, custom Hooks. These can be imported and used by any component without needing inheritance.
+
+The compositional model in React allows significantly greater flexibility and reusability. A single generic component can be adapted for numerous use cases by passing different children or props.
+
+### React's Virtual DOM and Reconciliation (Conceptual Overview)
+
+One of React's key innovations for performance and its declarative programming model is the use of a Virtual DOM and an efficient reconciliation process.
+
+**1. The Virtual DOM: An In-Memory Representation**
+
+React creates and maintains a lightweight, in-memory representation of the actual UI structure. This is known as the Virtual DOM – essentially a JavaScript object tree mirroring the UI elements. Manipulating JavaScript objects in memory is much faster than making direct changes to the browser's Real DOM (on the web) or native UI elements, which can be resource-intensive.
+
+**2. Reconciliation: The Diffing Algorithm**
+
+When a component's state or props change, React doesn't immediately update the real UI. Instead:
+
+1.  A new Virtual DOM tree is created for the updated state/props.
+2.  This new Virtual DOM tree is compared with the previous one. This comparison is called **reconciliation**.
+3.  React uses a heuristic algorithm (the "diffing algorithm") to efficiently identify the differences ("diff") between the two Virtual DOM trees.
+
+Key heuristics of the diffing algorithm include:
+
+- **Different Element Types:** If root elements being compared have different types (e.g., `<View>` changes to `<Text>`), React tears down the old tree and builds the new tree from scratch. Old DOM nodes are destroyed, and component state is lost.
+- **Same Element Types:** If elements are of the same type, React looks at their attributes (props). It only updates the underlying native view for attributes that changed. The component instance is preserved, and its state is maintained.
+- **Keys for Lists:** When reconciling lists of child elements (covered in detail later), the `key` prop helps React identify stable elements across renders (added, removed, reordered), optimizing updates.
+
+**3. Efficient UI Updates**
+
+After diffing, React calculates the minimal set of changes needed to bring the real UI into sync with the new Virtual DOM. It then batches these updates and applies them to the native UI in an optimized manner. This minimizes direct manipulation of native views, which is costly.
+
+The Virtual DOM and reconciliation are fundamental to React's performance. They allow developers to declaratively define the UI for any given state, and React handles the complex task of efficiently transitioning the actual UI to that state. This principle also applies to React Native, where changes determined by reconciliation in the JavaScript thread are communicated to the native UI thread to update native views.
+
+In the next sections, we'll explore how to pass data into components using props and how components can manage their own internal data using state.
+
+> 📚 **Official Documentation:**
+>
+> - [React Docs: Your First Component](https://react.dev/learn/your-first-component)
+> - [React Docs: Components and Props](https://react.dev/learn/passing-props-to-a-component)
+> - [React Docs: Composition vs Inheritance](https://legacy.reactjs.org/docs/composition-vs-inheritance.html)
+> - [React Docs: Reconciliation](https://legacy.reactjs.org/docs/reconciliation.html)
+> - [React Native Docs: Core Components and Native Components](https://reactnative.dev/docs/intro-react-native-components)
 
 ---
 

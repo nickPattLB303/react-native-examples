@@ -1,6 +1,6 @@
 ## Section 6: Handling Events (Press Events)
 
-Interactive applications respond to user input. In React Native, this often involves handling touch events, such as a user pressing a button. This section focuses on how to handle these events, particularly "press" events, using React's event system.
+Interactive applications respond to user input. In React Native, this often involves handling touch events, such as a user pressing a button. This section focuses on how to handle these events, particularly "press" events, using React's event system, which provides a consistent API across platforms by abstracting native differences.
 
 ### Event Handling in React
 
@@ -16,6 +16,8 @@ Handling events in React (and React Native) is very similar to handling events o
   // JSX (React/React Native)
   <Button title="Login" onPress={handleLogin} />
   ```
+
+Event handler functions can also receive an optional argument, often called `event` (or `e`), which contains information about the user interaction. For basic `onPress` events with the `<Button>` component, this argument is often not explicitly used as the primary action is clear. However, for more complex interactions or components like `<Pressable>`, this event object can provide useful details (e.g., touch coordinates via `event.nativeEvent`). We will explore components like `<Pressable>` in more detail later.
 
 ### Handling `onPress` Events
 

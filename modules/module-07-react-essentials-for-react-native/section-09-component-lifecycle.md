@@ -32,12 +32,12 @@ useEffect(() => {
 }, [dependency1, dependency2]); // Optional dependency array
 ```
 
-- **Effect Function:** The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen.
-- **Dependency Array (Optional):** The second argument is an array of dependencies.
+- **Effect Function:** The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
+- **Dependency Array (Optional):** The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
   - If you **omit** the dependency array, the effect function runs after _every_ render.
-  - If you provide an **empty array `[]`**, the effect runs only _once_ after the initial render (component did mount) and the cleanup function runs only when the component unmounts (component will unmount).
+  - If you provide an **empty array `[]`**, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
   - If you provide an array with **variables `[propA, stateB]`**, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
-- **Cleanup Function (Optional):** The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change) and also when the component is unmounted from the UI.
+- **Cleanup Function (Optional):** The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
 
 ### Simulating Lifecycle Events with `useEffect`
 
@@ -96,21 +96,27 @@ const PatientDetailsFetcher: React.FC<PatientDetailsProps> = ({
     console.log(`PatientDetailsFetcher: Effect for patientId: ${patientId}`);
     setLoading(true);
     // Simulate fetching patient data for SpeedyMeds
+    let isActive = true;
     const fetchPatientData = async () => {
       // In a real app, this would be an API call: fetch(`/api/patients/${patientId}`)
+      // Consider using AbortController for real fetch requests
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
-      setPatientData({
-        id: patientId,
-        name: `Patient ${patientId.slice(-3)}`,
-        condition: "Stable",
-      });
-      setLoading(false);
+      if (isActive) {
+        // Only update state if the component is still mounted
+        setPatientData({
+          id: patientId,
+          name: `Patient ${patientId.slice(-3)}`,
+          condition: "Stable",
+        });
+        setLoading(false);
+      }
     };
 
     fetchPatientData();
 
-    // No cleanup needed for this specific example, but could be added
-    // if there was something to clean up (e.g., aborting a fetch request)
+    return () => {
+      isActive = false; // Set flag to false on cleanup
+    };
   }, [patientId]); // Dependency: effect runs if patientId changes
 
   if (loading) {
@@ -150,16 +156,20 @@ The following diagram illustrates the basic flow of the `useEffect` Hook in rela
 
 ```mermaid
 graph TD
-    A[Component Renders / Re-renders] --> B{Dependencies Changed?};
-    B -- Yes --> C[Run Cleanup (if previous effect ran)];
-    C --> D[Run Effect Function];
-    B -- No --> E[Do Nothing];
-    F[Component Mounts] --> D;
-    G[Component Unmounts] --> H[Run Cleanup (if effect ran)];
-    D --> A; % Effect might cause re-render if state is set
+    A[Component Renders / Re-renders] --> B{Has Dependency Array?};
+    B -- No (or omitted) --> C[Run Effect After Every Render];
+    B -- Yes --> D{Dependencies Changed (Object.is)?};
+    C --> E{Effect Returns Cleanup Function?};
+    D -- No --> F[Do Nothing];
+    D -- Yes --> G[PREV: Run Previous Effect's Cleanup (if any)];
+    G --> H[Run Current Effect Function];
+    H --> E;
+    E -- Yes --> I[Register Cleanup for Unmount / Next Effect Run];
+    E -- No --> J[No Cleanup Registered for this Effect];
+    K[Component Unmounts] --> L[Run All Registered Cleanups for this Component];
 ```
 
-This diagram shows that when a component mounts, the effect function runs. On subsequent re-renders, React checks if the dependencies (if specified) have changed. If they have, the cleanup function from the previous effect runs, followed by the new effect function. When the component unmounts, the cleanup function for the last effect runs.
+This diagram shows that when a component mounts, the effect function runs (if dependencies allow or if no array). On subsequent re-renders, React checks if the dependencies (if specified) have changed using `Object.is` comparison. If they have (or if no dependency array), the cleanup function from the previous effect (if one was returned) runs, followed by the new effect function. When the component unmounts, the cleanup function for the last run effect is executed.
 
 > ⚛️ **(Web Developers with React Experience):**
 >
@@ -184,8 +194,26 @@ The `useEffect` Hook is a powerful tool for managing side effects and synchroniz
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Hooks - Using the Effect Hook (`useEffect`)](https://react.dev/reference/react/useEffect)
+> - [React Docs: Hooks - `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
 > - [React Docs: Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
 > - [React Docs: You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) (Important considerations for when _not_ to use `useEffect`)
+
+### A Note on `useLayoutEffect`
+
+React provides another Hook called `useLayoutEffect` which has the same signature as `useEffect` but fires _synchronously_ after all DOM mutations are complete, but _before_ the browser has painted the changes to the screen. This means it can block visual updates.
+
+- **Use Case:** `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
+- **Preference:** For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), **`useEffect` is preferred** because it does not block the browser from painting, leading to a more responsive UI.
+
+Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
+
+The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
+
+> 📚 **Official Documentation:**
+>
+> - [React Docs: Hooks - Using the Effect Hook (`useEffect`)](https://react.dev/reference/react/useEffect)
+> - [React Docs: Hooks - `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
+> - [React Docs: Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
 
 ---
 

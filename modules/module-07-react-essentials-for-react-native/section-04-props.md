@@ -8,9 +8,11 @@ Props are read-only data that a component receives from its parent. Think of the
 
 **Key characteristics of props:**
 
-- **Read-Only:** A component should never modify its own props. Props are owned by the parent component that passes them. This principle is often referred to as "props are immutable" from the child's perspective.
-- **Unidirectional Data Flow:** Data flows downwards from parent to child. This makes it easier to understand how data changes affect different parts of your application.
+- **Read-Only:** A component should never modify its own props. Props are owned by the parent component that passes them. This principle is often referred to as "props are immutable" from the child's perspective. Components should act like "pure functions" with respect to their props: given the same set of props, a component should always produce the same UI output and should not cause any side effects by altering its inputs.
+- **Unidirectional Data Flow:** Data flows downwards from parent to child. This makes it easier to understand how data changes affect different parts of your application. If a child component needs to communicate a change or trigger an action in its parent (e.g., based on a user interaction within the child), this is achieved by the parent passing a callback function as a prop to the child. The child then calls this function when appropriate, effectively sending information or a request back up to the parent, which owns and manages the actual state and the function to modify it.
 - **Configuration:** Props are used to configure and customize child components.
+
+Props are fundamental to creating predictable and maintainable applications. Because data flows in only one direction and props cannot be altered by the receiving child components, tracing the origin of data and understanding how changes propagate becomes significantly easier. This simplifies debugging and reduces unintended side effects. Props also play a vital role in component decoupling, as child components operate based on the props they receive, without needing to know the internal workings of their parents.
 
 ### Defining and Passing Props
 
@@ -74,6 +76,52 @@ export default MedicationDisplay;
 
 Here, `MedicationDisplay` receives `medicationName`, `dosage`, and an optional `notes` prop. We destructure these from the `props` object in the function signature.
 
+### Passing Different Data Types as Props
+
+Props in React are highly flexible and can accept any valid JavaScript value. Here are common examples:
+
+- **Strings:** Directly in quotes or in curly braces.
+  ```tsx
+  <UserProfile bio="Loves React Native" details={"Enjoys coding"} />
+  ```
+- **Numbers:** In curly braces.
+  ```tsx
+  <MedicationOrder quantity={2} refillsRemaining={5} />
+  ```
+- **Booleans:** In curly braces, or using shorthand for `true`.
+  ```tsx
+  <AppointmentCard isConfirmed={true} needsFollowUp />;
+  {
+    /* needsFollowUp is true. For false, use needsFollowUp={false} */
+  }
+  ```
+- **Arrays:** In curly braces.
+  ```tsx
+  const allergies = ["Peanuts", "Dust"];
+  <PatientAlerts allergyList={allergies} />;
+  ```
+- **Objects:** In curly braces, with an inner pair for the object literal.
+  ```tsx
+  const patientContact = { phone: '555-1234', email: 'patient@example.com' };
+  <ContactInfo details={patientContact} />
+  // Or inline:
+  <ContactInfo details={{ phone: '555-1234', email: 'patient@example.com' }} />
+  ```
+- **Functions (Callbacks):** In curly braces. This is key for child-to-parent communication.
+  ```tsx
+  const handleSelectMedication = (medId: string) => {
+    console.log("Selected medication:", medId);
+  };
+  <MedicationSelector onMedicationSelect={handleSelectMedication} />;
+  ```
+- **React Elements/JSX:** You can pass entire JSX structures as props for flexible composition.
+  ```tsx
+  const CustomHeader = (
+    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Patient Dashboard</Text>
+  );
+  <PageLayout headerSlot={CustomHeader} />;
+  ```
+
 ### Typing Props with TypeScript
 
 Using TypeScript to define the shape of your props object is highly recommended. It provides type safety, autocompletion, and makes your components easier to understand and maintain.
@@ -106,7 +154,7 @@ const PatientBanner: React.FC<PatientBannerProps> = (props) => {
 // ... (styles for banner and priorityText)
 ```
 
-Using `React.FC<PatientBannerProps>` is a common way to type a functional component. `React.FC` (or `React.FunctionComponent`) is a generic type that provides type checking for functional components, including implicit `children` props (though you can also type `children` explicitly if needed).
+Using `React.FC<PatientBannerProps>` (or its full form `React.FunctionComponent<PatientBannerProps>`) is a common way to type a functional component. It provides type checking for the props and implicitly includes `children` as an optional prop (typed as `React.ReactNode`). Alternatively, you can type the props argument directly: `(props: PatientBannerProps) => { ... }`.
 
 ### Default Props
 
@@ -139,32 +187,55 @@ const PillReminderCard: React.FC<PillReminderCardProps> = ({
 // ... (styles for card, takenCard, pendingCard)
 ```
 
-If `isTaken` is not provided when using `<PillReminderCard />`, it will default to `false`.
+If `isTaken` is not provided when using `<PillReminderCard />`, it will default to `false` due to the default parameter value in the destructuring assignment.
 
 ### `props.children`
 
-A special prop, `props.children`, allows components to be composed. It contains any content passed between the opening and closing tags of a component instance.
+A special prop, `props.children`, allows components to be composed. It contains any content passed between the opening and closing tags of a component instance. The content of `props.children` can be a single element, multiple elements (which React treats as an array), text nodes, or any other renderable React node type.
 
 ```tsx
 // Card.tsx - A generic Card component
 import React, { ReactNode } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native"; // Added Text and StyleSheet for the title
 
 interface CardProps {
-  children: ReactNode; // ReactNode can be any renderable content
+  children?: ReactNode; // ReactNode can be any renderable content; make it optional if cards can be empty
   title?: string;
 }
+
+// Using PropsWithChildren utility type can also be an option for components expecting children
+// import React, { PropsWithChildren } from 'react';
+// type CardProps = PropsWithChildren<{
+//   title?: string;
+// }>;
 
 const Card: React.FC<CardProps> = ({ children, title }) => {
   return (
     <View style={styles.cardContainer}>
-      {title && <Text style={styles.title}>{title}</Text>}
+      {title && <Text style={styles.titleText}>{title}</Text>}
+      {/* Changed style name for clarity */}
       {children}
     </View>
   );
 };
 
-// ... (styles for cardContainer, title)
+const styles = StyleSheet.create({
+  // Added StyleSheet definition
+  cardContainer: {
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
+    borderColor: "#dddddd",
+    borderRadius: 5,
+  },
+  titleText: {
+    // Changed style name
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+});
 
 export default Card;
 
@@ -177,7 +248,13 @@ export default Card;
 // </Card>
 ```
 
-In this `Card` component, `children` will be the `<Text>` elements passed within its tags.
+In this `Card` component, `children` will be the `<Text>` elements passed within its tags. You can also use TypeScript's `PropsWithChildren` utility type if preferred: `type CardProps = PropsWithChildren<{ title?: string; }>;` which automatically adds `children?: ReactNode;` to your props type.
+
+### How Props are Passed: Under the Hood
+
+When React's JSX transpiler (like Babel) processes a component tag such as `<MyComponent propA="valueA" propB={valueB} />`, it transforms this into a function call (e.g., `React.createElement` in older setups or the newer `_jsx` runtime equivalent from `react/jsx-runtime`).
+
+As part of this transformation, all the attributes (like `propA` and `propB`) and their corresponding values are collected into a single JavaScript object. This object _is_ the `props` object. It is then passed as the first argument to the `MyComponent` function (if it's a functional component) or made available as `this.props` on the instance of `MyComponent` (if it's a class component). This mechanism is how components receive their configuration and data from their parents.
 
 > ⚛️ **(Web Developers with React Experience):**
 >
@@ -193,16 +270,33 @@ In this `Card` component, `children` will be the `<Text>` elements passed within
 
 > 📲 **(Native Developers - Android/iOS):**
 >
-> **Comparison:** Think of props as parameters you pass when initializing a View or ViewController, or data set on an object after its creation to configure it. For example, passing data to an Android Fragment via its arguments Bundle, or setting properties on a `UIView` subclass during its initialization.
+> **Comparison:** Props in React are how you pass data to configure your UI components. This is conceptually similar to how you might pass data when initializing a View or ViewController in native development, or how you set properties on an object to configure it after creation.
 >
-> **Key Takeaway:** Props are how you configure and customize your reusable UI components from their parents. They are the input data that determines what a component renders and how it behaves.
+> - 🤖 **Android Developers:** Think of props like the arguments you pass in a `Bundle` to a `Fragment` using `fragment.setArguments(bundle)`, or data passed to an `Activity` via `Intent extras`. When you inflate a custom View from XML, attributes you define in XML are like initial props for that View.
+> - 🍏 **iOS Developers:** This is similar to passing parameters during the initialization of a `UIViewController` (e.g., in a custom `init` method) or setting properties on a `UIView` subclass after creating it. When using Segues, the `prepare(for:sender:)` method is where you'd typically access the destination view controller and set its properties (pass data).
+>
+> The key difference is React's strict unidirectional data flow (parent to child) for props. For child-to-parent communication, React uses a pattern where the parent passes a callback function as a prop to the child.
+>
+> **Key Takeaway:** Props are the input data that determines what a component renders and how it behaves. They are the primary way to customize and configure reusable UI components from their parents in React Native.
+
+Here's a table summarizing how React props compare to some common native data passing mechanisms:
+
+| Feature                  | React Props                                                                  | Android (Intents / Fragment Bundles)                                                  | iOS (Segues / Direct Property Setting / Delegates)                                      |
+| ------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Primary Use**          | Parent-to-child UI data/config within the component tree.                    | Inter-Activity/Fragment communication, navigation, starting Services.                 | ViewController transitions (Segues); Object configuration; Child-to-parent (Delegates). |
+| **Data Flow Direction**  | Strictly unidirectional (parent to child). Callbacks for child-to-parent.    | Can be bidirectional (e.g., `startActivityForResult`). Bundles are typically one-way. | Unidirectional for Segues/property setting. Callback-style for Delegates.               |
+| **Mutability**           | Immutable (read-only) from child's perspective.                              | Data in Bundles/Intents is typically copied (new instances).                          | Properties set can be mutable. Delegate parameters are passed.                          |
+| **How Data is Sent**     | JSX attributes on component tag.                                             | `intent.putExtra()`, `bundle.putType()`.                                              | `destinationVC.property = value` in `prepareForSegue`; Calling delegate method.         |
+| **How Data is Received** | Function argument / `this.props` object.                                     | `getIntent().getExtra()`, `getArguments().getType()`.                                 | Accessing property on `self`; Implementing delegate method parameters.                  |
+| **Typical Data Types**   | Any JavaScript value (primitives, objects, arrays, functions, JSX elements). | Primitives, Serializable, Parcelable in a `Bundle`.                                   | Any Swift/Objective-C type.                                                             |
 
 Props are a cornerstone of building reusable and maintainable React components. By understanding how to effectively pass and utilize props, you can create a flexible and well-structured UI for your SpeedyMeds application.
 
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
-> - [React Docs: Typing Props (using TypeScript)](https://react.dev/learn/typescript#typing-props) (Part of the TypeScript with React page)
+> - [React Docs: Typing Props (using TypeScript)](https://react.dev/learn/typescript#typing-props)
+> - [React Docs: `React.Children` Utilities](https://react.dev/reference/react/Children) (For advanced manipulation of `props.children`)
 
 ---
 

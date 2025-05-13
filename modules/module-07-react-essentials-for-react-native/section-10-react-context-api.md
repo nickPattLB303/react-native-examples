@@ -31,16 +31,23 @@ The Context API consists of three main parts:
       toggleMode: () => void;
     }
 
-    // Create a context with a default value
-    const ThemeContext = React.createContext<AppTheme | undefined>(undefined);
-    // It's good practice to provide a meaningful default, or handle undefined consumers.
-    // Or, provide a default that makes sense:
-    // const ThemeContext = React.createContext<AppTheme>({ mode: 'light', toggleMode: () => {} });
+    // Create a context with a default value.
+    // Providing a default that matches the AppTheme shape can improve type safety and DX,
+    // even if the default functions are no-ops or throw an error.
+    const ThemeContext = React.createContext<AppTheme>({
+      mode: "light",
+      toggleMode: () => {
+        console.warn("toggleMode was called without a ThemeProvider.");
+      },
+    });
+    // Alternatively, for contexts where a default is truly not applicable until a Provider is set,
+    // you might initialize with `undefined` or `null` and handle that in consumers:
+    // const UserContext = React.createContext<User | null>(null);
 
     export default ThemeContext;
     ```
 
-    The default value is used only when a component does not have a matching Provider above it in the tree.
+    The default value is used only when a component that consumes the context does not have a matching `Provider` above it in the component tree. If a component tries to consume a context value that is `undefined` (because no provider was found and the default was `undefined`), it can lead to errors if not handled carefully.
 
 2.  **`Context.Provider`:** Every Context object comes with a Provider component. The Provider component accepts a `value` prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
 
@@ -73,6 +80,8 @@ The Context API consists of three main parts:
 
     - **`useContext(MyContext)`:** This Hook is the modern and preferred way to consume a context value. It accepts a context object (the result of `React.createContext`) and returns the current context value for that context. The context value is determined by the `value` prop of the nearest `Context.Provider` above the calling component in the tree.
 
+      When this nearest `Context.Provider` updates (i.e., its `value` prop changes), the `useContext` Hook will trigger a re-render of the component consuming the context, providing it with the latest context `value`.
+
       ```tsx
       // Inside a component like MyPageLayout.tsx or a deeper child
       import React, { useContext } from "react";
@@ -80,12 +89,13 @@ The Context API consists of three main parts:
       import ThemeContext from "./ThemeContext";
 
       const ThemedButton = () => {
-        const theme = useContext(ThemeContext);
+        const theme = useContext(ThemeContext); // theme will match the AppTheme interface
 
-        if (!theme) {
-          // This should ideally not happen if Provider is set up correctly at the top level
-          throw new Error("ThemedButton must be used within a ThemeProvider");
-        }
+        // No need to check for !theme if a meaningful default is provided in createContext
+        // if (!theme) {
+        //   // This should ideally not happen if Provider is set up correctly at the top level
+        //   throw new Error("ThemedButton must be used within a ThemeProvider");
+        // }
 
         const buttonStyles =
           theme.mode === "dark" ? styles.darkButton : styles.lightButton;
@@ -134,6 +144,9 @@ Context is designed to share data that can be considered "global" for a tree of 
 
 > [!IMPORTANT]
 > Using Context can make component reuse more difficult since a component consuming context is coupled to that specific context. Only use it for data that truly needs to be shared across a component tree.
+
+> [!NOTE]
+> Any component calling `useContext` will re-render whenever the context value provided by its nearest Provider changes. This is usually the desired behavior. However, for performance-critical scenarios with large component trees, if only a small part of a consuming component actually depends on the context data that changes frequently, you might explore advanced optimization patterns. These could involve splitting the component into smaller pieces or using memoization techniques (like `React.memo`), which we'll touch upon later in the course. For most common use cases of Context (like theming or user authentication), the default behavior is perfectly fine.
 
 ### Diagram: Context API Flow
 

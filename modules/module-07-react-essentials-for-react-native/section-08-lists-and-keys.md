@@ -61,19 +61,21 @@ When you render a list of elements, React needs a way to uniquely identify each 
 **Keys must be:**
 
 - **Strings:** Keys should be strings that uniquely identify a list item among its siblings.
-- **Stable:** The key for a specific item should not change between renders. Don't use something like `Math.random()` or array indices if the order of items can change.
-- **Unique (among siblings):** Keys only need to be unique among sibling elements in the list, not globally unique in your application.
+- **Stable:** The key for a specific item should not change between renders. If a key changes, React will destroy the old component instance and create a new one, meaning any internal state of that component will be lost.
+- **Unique (among siblings):** Keys only need to be unique among the direct children in the list, not globally unique in your entire application.
 
 **Why are keys necessary?**
 
-- **Efficient Updates:** Keys help React identify which items have changed, are added, or are removed. This allows React to minimize direct manipulation of the UI and perform updates more efficiently.
-- **Preserving State:** If list items have their own state (e.g., a checkbox in a list item), keys help React preserve that state when the list is reordered or items are added/removed.
+- **Efficient Updates:** Keys are React's primary mechanism for identifying list items. When a list is updated (items added, removed, or reordered), React uses these keys to determine the minimal changes needed for the UI. If keys are stable and unique, React can efficiently reuse existing component instances by just updating their props if the data changed, or correctly reorder/add/remove component instances.
+- **Preserving State:** If list items have their own internal state (e.g., an input field in a to-do item, a toggle switch), stable keys ensure that React correctly associates the state with the specific item. Without proper keys, or if keys change unnecessarily, this state can be lost or incorrectly assigned to another item during re-renders, especially if the list order changes.
 
-If you don't provide keys, React will log a warning in the console, and it might lead to inefficient rendering or issues with component state when the list changes.
+If you don't provide keys, React will default to using array indices as keys, which can lead to performance issues and bugs with component state if the list items can be reordered, added to, or removed from anywhere but the end. React will also log a warning in the console in such cases.
 
 **Adding Keys:**
 
-Let's update our `MedicationListSimple` component to include keys. Often, data from an API will have a unique `id` field that is perfect for a key.
+Let's update our `MedicationListSimple` component to include keys. Often, data from an API or database will have a unique `id` field that is perfect for a key.
+
+If you're generating data locally (e.g., for a to-do list or items in a cart before saving), you should add a unique ID to your items during creation. This can be an auto-incrementing counter (be cautious if items can be deleted and re-added, as IDs might clash if not managed carefully), or more robustly, use `crypto.randomUUID()` (available in modern JavaScript environments including React Native) or a library like `uuid` to generate unique identifiers.
 
 ```tsx
 // ... (imports and medications array remain the same)
@@ -156,6 +158,17 @@ const MedicationListItem: React.FC<MedicationListItemProps> = ({
       )}
     </View>
   );
+  // If MedicationListItem returned only a React.Fragment as its single root element,
+  // you could place the key on the Fragment like so:
+  // return (
+  //   <React.Fragment key={medication.id}> // Key on the Fragment
+  //     <Text style={styles.medicationName}>{medication.name}</Text>
+  //     <Text>Dosage: {medication.dosage}</Text>
+  //     {/* Other elements ... */}
+  //   </React.Fragment>
+  // );
+  // However, for list items that have their own distinct visual container or Pressable behavior,
+  // a root <View> or <Pressable> is more common than a root Fragment.
 };
 
 const prescriptionData: Medication[] = [
