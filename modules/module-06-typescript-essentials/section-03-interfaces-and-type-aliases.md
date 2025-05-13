@@ -62,6 +62,23 @@ An interface is a way to define a contract for an object's shape. It specifies t
   // currentPatient.medicalRecordNumber = "MRN_NEW"; // Error: Cannot assign to 'medicalRecordNumber' because it is a read-only property.
   ```
 
+- **Excess Property Checks:**
+  When assigning an object literal directly to a variable typed with an interface, TypeScript performs "excess property checking." If the object literal has properties not defined in the interface, a compile-time error occurs. This helps catch typos or misunderstandings about the expected shape.
+
+  ```typescript
+  interface SimplePatient {
+    patientId: string;
+    name: string;
+  }
+
+  // const anotherPatient: SimplePatient = { patientId: "P1002", name: "Bob", age: 40 };
+  // Error: Object literal may only specify known properties, and 'age' does not exist in type 'SimplePatient'.
+
+  // To bypass this, assign to another variable first, or use a type assertion (less safe):
+  const patientData = { patientId: "P1002", name: "Bob", age: 40 };
+  const anotherPatient: SimplePatient = patientData; // OK, patientData is not an object literal here.
+  ```
+
 **Extending Interfaces:**
 Interfaces can extend other interfaces, inheriting their members. This is useful for creating more specialized types based on existing ones.
 
@@ -95,9 +112,150 @@ Interfaces can extend other interfaces, inheriting their members. This is useful
   );
   ```
 
+**Function Types in Interfaces:**
+Interfaces can also describe the shape of functions.
+
+- **SpeedyMeds Example: `MedicationSearchFunction`**
+
+  ```typescript
+  interface MedicationSearchFunction {
+    (ndcCode: string, formularyId?: string): Medication | undefined; // Medication type defined elsewhere
+  }
+
+  // Assuming Medication type is defined as:
+  type Medication = { name: string; ndcCode: string; dosage: string };
+
+  const findMedicationInFormulary: MedicationSearchFunction = (
+    ndc,
+    formulary
+  ) => {
+    console.log(
+      `Searching for NDC ${ndc} in formulary ${formulary || "default"}`
+    );
+    if (ndc === "NDC12345-678-01") {
+      return { name: "Ibuprofen", ndcCode: ndc, dosage: "200mg" };
+    }
+    return undefined;
+  };
+
+  const foundMed = findMedicationInFormulary("NDC12345-678-01");
+  console.log(foundMed?.name);
+  ```
+
+**Indexable Types in Interfaces:**
+Interfaces can describe types that can be "indexed into," like arrays or dictionaries, using an index signature.
+
+- **SpeedyMeds Example: `MedicationStockLevels`**
+
+  ```typescript
+  interface MedicationStockLevels {
+    [medicationNdc: string]: number; // Key is NDC string, value is stock quantity (number)
+  }
+
+  const pharmacyStock: MedicationStockLevels = {};
+  pharmacyStock["NDC12345-678-01"] = 100; // Ibuprofen
+  pharmacyStock["NDC98765-432-10"] = 50; // Lisinopril
+  // pharmacyStock["SomeMedName"] = "Low"; // Error: Type 'string' is not assignable to type 'number'.
+
+  console.log(
+    `Stock of Ibuprofen (NDC12345-678-01): ${pharmacyStock["NDC12345-678-01"]}`
+  );
+
+  interface PatientAlerts {
+    [alertId: number]: string; // Key is alert ID (number), value is alert message (string)
+  }
+  const patientAlerts: PatientAlerts = {
+    101: "Check for penicillin allergy",
+    205: "Advise patient on new dosage",
+  };
+  console.log(`Alert 101: ${patientAlerts[101]}`);
+  ```
+
+**Implementing Interfaces with Classes (`implements`):**
+Classes can implement interfaces to ensure they adhere to the contract defined by the interface. This enforces that the class has all the properties and methods specified by the interface.
+
+- **SpeedyMeds Example: `SMSService` implementing `NotificationProvider`**
+
+  ```typescript
+  interface NotificationProvider {
+    providerName: string;
+    sendNotification(patientId: string, message: string): Promise<boolean>;
+    checkStatus(messageId: string): Promise<"Sent" | "Failed" | "Pending">;
+  }
+
+  class SMSService implements NotificationProvider {
+    providerName = "SpeedyMeds SMS Gateway";
+
+    async sendNotification(
+      patientId: string,
+      message: string
+    ): Promise<boolean> {
+      console.log(`SMS to ${patientId}: ${message} (via ${this.providerName})`);
+      // Actual SMS sending logic here
+      return Math.random() > 0.1; // Simulate success/failure
+    }
+
+    async checkStatus(
+      messageId: string
+    ): Promise<"Sent" | "Failed" | "Pending"> {
+      console.log(`Checking SMS status for ${messageId}`);
+      // Actual status check logic
+      const statuses: Array<"Sent" | "Failed" | "Pending"> = [
+        "Sent",
+        "Failed",
+        "Pending",
+      ];
+      return statuses[Math.floor(Math.random() * statuses.length)];
+    }
+  }
+
+  const smsNotifier: NotificationProvider = new SMSService();
+  smsNotifier
+    .sendNotification("P1001", "Your prescription is ready for pickup.")
+    .then((sent) => console.log("SMS Sent status:", sent));
+  ```
+
+**Declaration Merging in Interfaces:**
+A unique feature of interfaces is that if you declare multiple interfaces with the same name (even across different files or modules within the same compilation context), TypeScript merges them into a single interface definition containing all members from all declarations. Non-function members must be unique or have the same type if repeated. Function members with the same name are treated as overloads.
+
+- **Example:**
+
+  ```typescript
+  interface UserProfile {
+    userId: string;
+    displayName: string;
+  }
+
+  // Sometime later, perhaps in another file or for a specific feature:
+  interface UserProfile {
+    email?: string;
+    lastLogin: Date;
+    logActivity(action: string): void; // New method
+  }
+
+  // The UserProfile interface now effectively is:
+  // interface UserProfile {
+  //   userId: string;
+  //   displayName: string;
+  //   email?: string;
+  //   lastLogin: Date;
+  //   logActivity(action: string): void;
+  // }
+
+  const userProfile: UserProfile = {
+    userId: "usr123",
+    displayName: "JaneDev",
+    lastLogin: new Date(),
+    logActivity: (action) => console.log(`User action: ${action}`),
+  };
+  userProfile.logActivity("Viewed dashboard");
+  ```
+
+  This is particularly useful for extending existing interfaces, including those from third-party libraries or built-in JavaScript objects, without modifying their original source code.
+
 **2. Type Aliases (`type`)**
 
-A type alias allows you to create a new name (an alias) for any type, not just object shapes. This can be a primitive type, a union type, a tuple, or any other type.
+A type alias allows you to create a new name (an alias) for any type, not just object shapes. This can be a primitive type, a union type, a tuple, an intersection type, a function type, or even more complex types involving generics, conditional types, or mapped types.
 
 - **Syntax (for object shapes):**
 
@@ -140,6 +298,82 @@ A type alias allows you to create a new name (an alias) for any type, not just o
   };
 
   logMedication(painRelief);
+  ```
+
+- **Aliasing Primitives, Unions, Tuples, and Function Types:**
+  Type aliases shine in their ability to give meaningful names to simpler or combined types.
+
+  - _SpeedyMeds Examples:_
+
+  ```typescript
+  type PatientID = string; // Alias for a primitive
+  type MedicationStatus = "Active" | "Discontinued" | "Pending Authorization"; // Alias for a union type
+  type VitalSignReading = [timestamp: Date, value: number, unit: string]; // Alias for a tuple
+  type DosageCalculator = (weightKg: number, ageYears: number) => number | null; // Alias for a function type
+
+  let currentPatientId: PatientID = "PAT-0042X";
+  let amoxicillinStatus: MedicationStatus = "Active";
+  let lastHeartRate: VitalSignReading = [new Date(), 72, "bpm"];
+
+  const calculatePediatricDosage: DosageCalculator = (weight, age) => {
+    if (age < 12) return weight * 10; // Simplified example
+    return null; // e.g., not applicable
+  };
+  console.log(`Dosage for 10kg child: ${calculatePediatricDosage(10, 5)}mg`);
+  ```
+
+- **Recursive Type Aliases:**
+  Type aliases can refer to themselves, which is essential for defining recursive data structures, such as trees or linked lists.
+
+  - _SpeedyMeds Example: `DrugInteractionCategory` (Hierarchical)_
+
+  ```typescript
+  type DrugInteractionCategory = {
+    categoryId: string;
+    categoryName: string;
+    description?: string;
+    subCategories?: DrugInteractionCategory[]; // Recursive reference
+    relatedDrugs?: string[]; // e.g., array of NDC codes
+  };
+
+  const interactionTree: DrugInteractionCategory = {
+    categoryId: "ALL",
+    categoryName: "All Drug Interactions",
+    subCategories: [
+      {
+        categoryId: "MAOI",
+        categoryName: "MAO Inhibitors",
+        description: "Interactions involving Monoamine Oxidase Inhibitors.",
+        relatedDrugs: ["NDC-MAOI-1", "NDC-MAOI-2"],
+        subCategories: [
+          {
+            categoryId: "MAOI-SSRI",
+            categoryName: "MAOI with SSRI",
+            description: "Risk of serotonin syndrome.",
+          },
+        ],
+      },
+      {
+        categoryId: "STATIN",
+        categoryName: "Statins",
+        description: "Interactions involving HMG-CoA reductase inhibitors.",
+      },
+    ],
+  };
+
+  function printInteractionCategories(
+    category: DrugInteractionCategory,
+    indent: string = ""
+  ): void {
+    console.log(`${indent}- ${category.categoryName} (${category.categoryId})`);
+    if (category.subCategories) {
+      category.subCategories.forEach((subCat) =>
+        printInteractionCategories(subCat, indent + "  ")
+      );
+    }
+  }
+
+  printInteractionCategories(interactionTree);
   ```
 
 **Extending Type Aliases (using intersections):**
@@ -188,38 +422,66 @@ While type aliases don't have a direct `extends` keyword like interfaces, you ca
 
 **3. Interfaces vs. Type Aliases**
 
-For defining object shapes, interfaces and type aliases are often interchangeable. However, there are subtle differences:
+For defining object shapes, interfaces and type aliases are often interchangeable due to TypeScript's structural typing. However, there are key differences and conventions:
 
-- **Extensibility:** Interfaces can be extended using the `extends` keyword. Type aliases can achieve similar results with intersection types (`&`). A key difference is that an interface can be defined multiple times with the same name, and TypeScript will merge these declarations (declaration merging). Type aliases cannot be re-declared once created.
+- **Extensibility and Declaration Merging:**
 
-  ```typescript
-  // Declaration Merging (Interfaces only)
-  interface User {
-    name: string;
-  }
-  interface User {
-    age: number;
-  }
-  const user: User = { name: "John", age: 30 }; // Works!
+  - **Interfaces:** Can be extended using the `extends` keyword. Crucially, interfaces support **declaration merging**: if you define an interface with the same name multiple times, TypeScript merges their properties into a single interface definition. This is very useful for augmenting types from external libraries or for allowing extensibility.
+    ```typescript
+    // Declaration Merging (Interfaces only)
+    interface User {
+      name: string;
+    }
+    interface User {
+      age: number; // Merged into the User interface
+    }
+    const mergedUser: User = { name: "John", age: 30 }; // Works!
+    ```
+  - **Type Aliases:** Do not support declaration merging. Attempting to create a type alias with an existing name will result in a compiler error. Extension-like behavior is achieved using intersection types (`&`).
+    ```typescript
+    // type MyType = { x: number };
+    // type MyType = { y: string }; // Error: Duplicate identifier 'MyType'.
+    ```
 
-  // type MyType = { x: number };
-  // type MyType = { y: string }; // Error: Duplicate identifier 'MyType'.
-  ```
+- **Aliasing Capabilities:**
 
-- **Primitive Aliases:** Type aliases can name primitive types, union types, tuples, etc. Interfaces are primarily for object shapes.
-  ```typescript
-  type PatientID = string | number;
-  type Coordinates = [number, number]; // Tuple
-  type NullableString = string | null;
-  ```
-- **Implementation:** Classes can `implement` interfaces (and type aliases that define object shapes) to ensure they adhere to a contract.
+  - **Interfaces:** Primarily used to describe the shape of objects or, less commonly, function types that might be implemented by a class.
+  - **Type Aliases:** More versatile. They can create names for _any_ type, including primitives (`type UserID = string;`), union types (`type Status = "pending" | "active";`), intersection types, tuples (`type Coordinates = [number, number];`), function types, and more complex mapped or conditional types.
 
-**General Recommendation:**
+- **Implementation by Classes:**
+  - Classes can `implement` interfaces to ensure they adhere to a specific contract.
+  - Classes can also `implement` type aliases that define an object shape, but this is less conventional than implementing interfaces.
 
-- Use `interface` when defining the shape of objects or contracts for classes, especially if you anticipate needing to extend them or benefit from declaration merging.
-- Use `type` for aliasing primitives, union types, tuples, or when you need features not available with interfaces (like mapped types, conditional types, which are more advanced topics).
+**When to Use Which: General Recommendations**
 
-Many teams establish a convention (e.g., always use `interface` for object shapes unless a `type` alias feature is specifically needed).
+- **Use `interface` when:**
+
+  - Defining the shape of an object or a class contract.
+  - You need or anticipate needing declaration merging (e.g., to augment types from external libraries or allow future extensibility by others).
+  - You prefer the object-oriented paradigm of `extends` for inheritance and `implements` for class contracts.
+
+- **Use `type` when:**
+  - You need to alias primitive types, union types, intersection types, or tuples.
+  - You need to define more complex types using advanced TypeScript features like utility types, mapped types, or conditional types (which often result in a specific, final type structure).
+  - You want a type that explicitly cannot be changed or extended via declaration merging.
+  - Defining function types not associated with a class structure.
+
+Many teams establish a convention, such as defaulting to `interface` for object shapes and class contracts, and using `type` for all other scenarios where its broader aliasing capabilities are needed.
+
+**Summary Table: Interfaces vs. Type Aliases**
+
+| Feature                      | `interface`                                        | `type` alias                                                                    |
+| ---------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Primary Use**              | Defining object shapes, class contracts            | Naming _any_ type (primitives, unions, intersections, objects, functions, etc.) |
+| **Declaration Merging**      | Yes                                                | No                                                                              |
+| **Extending**                | `extends` keyword                                  | Intersection types (`&`)                                                        |
+| **Implementing by Class**    | Yes (common practice)                              | Yes (for object shapes, less common)                                            |
+| **Aliasing Primitives**      | No                                                 | Yes                                                                             |
+| **Aliasing Union/Tuple**     | No (can describe shapes that _use_ them)           | Yes                                                                             |
+| **Recursive Structures**     | Can be used, but type aliases are often clearer    | Yes, directly supports recursive definitions                                    |
+| **Mapped/Conditional Types** | Not directly; interfaces describe resulting shapes | Yes, can alias the results of these advanced type operations                    |
+
+Understanding these distinctions allows you to choose the most appropriate tool for defining your types, leading to clearer, more maintainable, and robust TypeScript code.
 
 > 📚 **Official Documentation:**
 >

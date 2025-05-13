@@ -173,7 +173,75 @@ Similar to interfaces, type aliases can also be generic.
   console.log(medicationBatchId);
   ```
 
-**4. Generic Constraints**
+**4. Generic Classes**
+
+Classes can also be generic. This allows you to create classes that can work with different types for their properties or methods.
+
+- **SpeedyMeds Example: `DataCache<TItem>` Class**
+
+  ```typescript
+  interface Cacheable {
+    id: string | number;
+  }
+
+  class DataCache<TItem extends Cacheable> {
+    private cache: Map<string | number, TItem> = new Map();
+
+    addItem(item: TItem): void {
+      this.cache.set(item.id, item);
+      console.log(`Cached item with ID: ${item.id}`);
+    }
+
+    getItem(id: string | number): TItem | undefined {
+      return this.cache.get(id);
+    }
+
+    clearCache(): void {
+      this.cache.clear();
+      console.log("Cache cleared.");
+    }
+
+    listCachedIds(): (string | number)[] {
+      return Array.from(this.cache.keys());
+    }
+  }
+
+  // Usage with Patient data
+  interface PatientProfile {
+    id: string;
+    name: string;
+    lastConsultation: Date;
+  }
+  const patientCache = new DataCache<PatientProfile>();
+  patientCache.addItem({
+    id: "P001",
+    name: "Alice Ray",
+    lastConsultation: new Date(),
+  });
+  patientCache.addItem({
+    id: "P002",
+    name: "Bob Sanders",
+    lastConsultation: new Date(),
+  });
+  console.log("Patient P001:", patientCache.getItem("P001"));
+
+  // Usage with Medication data
+  interface MedicationDetail {
+    id: string; // NDC Code for example
+    genericName: string;
+    strength: string;
+  }
+  const medicationCache = new DataCache<MedicationDetail>();
+  medicationCache.addItem({
+    id: "NDC54321",
+    genericName: "Metformin",
+    strength: "500mg",
+  });
+  console.log("Medication NDC54321:", medicationCache.getItem("NDC54321"));
+  console.log("Cached medication IDs:", medicationCache.listCachedIds());
+  ```
+
+**5. Generic Constraints**
 
 Sometimes you want to constrain the types that can be used with a generic type variable. You can use the `extends` keyword to require that the type variable implements a certain interface or has certain properties.
 
@@ -211,6 +279,20 @@ Sometimes you want to constrain the types that can be used with a generic type v
   In this example, `logItemId` can only be called with objects that have an `id` property of type `string` or `number`.
 
 Generics are a cornerstone of creating flexible and type-safe libraries and utilities. They allow you to write code that is abstract over types, providing a good balance between reusability and static type checking.
+
+**Common Use Cases for Generics:**
+
+- Creating type-safe collections (e.g., `Array<T>`, `Map<K, V>`, custom cache classes like `DataCache<TItem>` above).
+- Building reusable utility functions that operate on various data types (e.g., `getFirstElement<T>`).
+- Defining flexible API response structures (e.g., `ApiResponse<TData>`) or data mappers.
+- Developing abstract data structures (like trees, linked lists) and algorithms that can work with different data types.
+
+> [!NOTE] > **`Under the Hood`: Type Erasure and Generics**
+> An important aspect to understand about generics in TypeScript is **type erasure**. Generic type information is primarily a compile-time construct. During the compilation process, when TypeScript code is transpiled to JavaScript, these generic type parameters are typically erased. The resulting JavaScript code often uses `any` or relies on JavaScript's dynamic typing for the parts that were generic.
+>
+> For example, `function getFirstElement<T>(arr: T[]): T | undefined { /* ... */ }` might compile down to something like `function getFirstElement(arr) { /* ... */ }` in JavaScript.
+>
+> The crucial benefit of generics lies in the **static analysis and type safety they provide during the development phase**. The TypeScript compiler uses the generic information to catch errors and provide better tooling support _before_ the code is executed. This compile-time checking is what makes generics powerful, not any runtime generic type information (which generally doesn't exist in the output JavaScript).
 
 > 📚 **Official Documentation:**
 >
