@@ -1,8 +1,18 @@
 # Module 12: Handling User Input and Forms
 
-Welcome to Module 12! This module is your comprehensive guide to managing user input and building forms in React Native applications. Effective form handling is a cornerstone of interactive mobile apps, allowing users to enter data, make selections, and submit information seamlessly. We'll explore everything from the fundamental `TextInput` component to sophisticated form management strategies using popular libraries. By the end of this module, you'll be proficient in creating robust and user-friendly forms for your SpeedyMeds application or any React Native project.
+Welcome to Module 12! This module delves into the critical aspects of capturing and managing user input within React Native applications. Building robust and user-friendly forms is a cornerstone of mobile app development. We will explore various strategies for handling form state, from fundamental React hooks to powerful dedicated libraries, with an emphasis on understanding the "under the hood" mechanics, ensuring performance, and adhering to best practices for accessibility and user experience. By the end of this module, you'll be proficient in creating robust and user-friendly forms for your SpeedyMeds application or any React Native project.
 
 This module builds upon foundational React concepts like state management and component composition. We'll cover how to capture user input, validate data, manage form state efficiently, and handle submissions, ensuring your apps collect accurate information and provide a smooth user experience.
+
+**Target Versions:**
+
+This module assumes the use of the following technology versions:
+
+- React Native: 0.79+ (as per report, aligning with latest stable)
+- Expo SDK: 53+ (as per report, aligning with latest stable)
+- React Hook Form: v7.x (specifically 7.56.3 or later, as per report)
+- React Native Paper: v5.x (specifically 5.14.0 or later, as per report)
+- TypeScript: 5.x (as per report)
 
 <0xF0><0x9F><0xAA><0x84> **Target Audience Adaptation:**
 
@@ -27,8 +37,8 @@ This module builds upon foundational React concepts like state management and co
 Upon completing this module, you will be able to:
 
 - Understand and utilize the `TextInput` component for various input types.
-- Implement robust text change handling and manage form state effectively.
-- Apply the controlled components pattern for predictable form behavior.
+- Implement robust text change handling and manage form state effectively, including "under the hood" insights.
+- Apply the controlled components pattern for predictable form behavior and understand its performance implications.
 - Identify the benefits of using form management libraries.
 - Set up and integrate React Hook Form into an Expo project.
 - Implement basic form validation using React Hook Form.

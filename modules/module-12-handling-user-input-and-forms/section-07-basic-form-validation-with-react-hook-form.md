@@ -30,22 +30,77 @@ React Hook Form allows you to define validation rules directly on the `Controlle
 
 **Common Built-in Validation Rules:**
 
-React Hook Form provides several built-in validation rules that you can use:
+React Hook Form provides several built-in validation rules that you can use. For each rule, you can provide a custom error message string that will be accessible via `formState.errors` if the validation fails.
 
-- `required`: (boolean | string) - If `true` or a string message, the field must have a value.
-  - Example: `required: 'Patient email is required'`
-- `minLength`: (number | { value: number, message: string }) - The minimum length for a string input.
-  - Example: `minLength: { value: 8, message: 'Password must be at least 8 characters' }`
-- `maxLength`: (number | { value: number, message: string }) - The maximum length for a string input.
-  - Example: `maxLength: { value: 100, message: 'Notes cannot exceed 100 characters' }`
-- `min`: (number | { value: number, message: string }) - The minimum value for a numeric input.
-  - Example: `min: { value: 18, message: 'Patient must be at least 18 years old' }`
-- `max`: (number | { value: number, message: string }) - The maximum value for a numeric input.
-  - Example: `max: { value: 120, message: 'Age cannot exceed 120 years' }`
-- `pattern`: (RegExp | { value: RegExp, message: string }) - A regular expression the input value must match.
-  - Example for a simple email validation: `pattern: { value: /\S+@\S+\.\S+/, message: 'Entered value does not match email format' }`
-- `validate`: (Function | Object) - For custom validation logic. The function receives the field value and should return `true` if valid, or a string error message if invalid. You can also provide an object of multiple validation functions.
-  - Example: `validate: value => value === 'admin' || 'Username must be admin'`
+- **`required`**: Ensures the field must have a value.
+
+  - **Type:** `boolean | string | { value: boolean, message: string }`
+  - **Example:** `rules={{ required: 'This field is mandatory' }}` or `rules={{ required: { value: true, message: 'Patient email is required' } }}`
+
+- **`minLength`**: Specifies the minimum allowed length for a string input.
+
+  - **Type:** `number | { value: number, message: string }`
+  - **Example:** `rules={{ minLength: { value: 8, message: 'Password must be at least 8 characters' } }}`
+
+- **`maxLength`**: Specifies the maximum allowed length for a string input.
+
+  - **Type:** `number | { value: number, message: string }`
+  - **Example:** `rules={{ maxLength: { value: 100, message: 'Notes cannot exceed 100 characters' } }}`
+
+- **`min`**: Specifies the minimum allowed numerical value for an input.
+
+  - **Type:** `number | { value: number, message: string }`
+  - **Example:** `rules={{ min: { value: 18, message: 'Patient must be at least 18 years old' } }}`
+
+- **`max`**: Specifies the maximum allowed numerical value for an input.
+
+  - **Type:** `number | { value: number, message: string }`
+  - **Example:** `rules={{ max: { value: 120, message: 'Age cannot exceed 120 years' } }}`
+
+- **`pattern`**: Validates the input value against a regular expression.
+  - **Type:** `RegExp | { value: RegExp, message: string }`
+  - **Example (for email validation):** `rules={{ pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email format' } }}`
+
+**Custom Validation with the `validate` Option**
+
+For more complex or business-specific validation logic that isn\'t covered by the built-in rules, React Hook Form provides a `validate` option within the `rules` prop.
+
+The `validate` option can accept:
+
+- A single validation function: `(value: any, formValues: Record<string, any>) => boolean | string | Promise<boolean | string>`
+- An object of validation functions: Where each key is a name for the validation rule (e.g., `isPositive`, `noAdmin`), and the value is a validation function with the same signature.
+
+Each validation function receives the current field\'s value as its first argument and an object containing all current `formValues` as the second argument (useful for dependent field validation).
+
+- If the validation passes, the function should return `true`.
+- If the validation fails, it should return a string containing the error message.
+- For asynchronous validation (e.g., checking if a username is taken by querying an API), the function can return a `Promise` that resolves to `true` (valid) or an error message string (invalid).
+
+**Example of `validate`:**
+
+```typescript
+// In Controller rules prop:
+rules={{
+  validate: {
+    noAdmin: (value: string) =>
+      value.toLowerCase() !== 'admin' || 'Username "admin" is not allowed',
+    // Example of dependent validation (e.g., for a confirmPassword field):
+    // confirmPasswordMatch: (value: string, formValues) =>
+    //   value === formValues.password || 'Passwords do not match',
+    // Example of async validation (conceptual):
+    // isUsernameAvailable: async (value: string) => {
+    //   try {
+    //     const response = await fetch(`/api/check-username?username=${value}`);
+    //     if (!response.ok) throw new Error('Network response was not ok.');
+    //     const data = await response.json();
+    //     return data.isAvailable || 'This username is already taken';
+    //   } catch (error) {
+    //     return 'Failed to check username availability.'; // Or rethrow, handle appropriately
+    //   }
+    // }
+  }
+}}
+```
 
 **Displaying Error Messages**
 
@@ -348,3 +403,20 @@ Now, let's apply these validation concepts.
 Refer to the `README.md` within the Snack for detailed instructions and starter code if provided.
 
 By implementing these basic validation techniques, you can significantly improve the quality and reliability of the data collected through your SpeedyMeds application forms.
+
+**Table: React Hook Form Validation Rules Summary**
+
+| Rule Name   | Parameter Type(s)                                          | Example Usage in `rules` Prop                             | Default Message (Example if RHF provides one) |
+| :---------- | :--------------------------------------------------------- | :-------------------------------------------------------- | :-------------------------------------------- |
+| `required`  | `boolean`, `string`, `{ value: boolean, message: string }` | `required: 'Field is required'`                           | Varies by browser/RHF; often generic          |
+| `minLength` | `{ value: number, message: string }`                       | `minLength: { value: 5, message: 'Too short' }`           | "MinLength is 5"                              |
+| `maxLength` | `{ value: number, message: string }`                       | `maxLength: { value: 10, message: 'Too long' }`           | "MaxLength is 10"                             |
+| `min`       | `{ value: number, message: string }`                       | `min: { value: 0, message: 'Must be positive' }`          | "Min is 0"                                    |
+| `max`       | `{ value: number, message: string }`                       | `max: { value: 100, message: 'Max 100' }`                 | "Max is 100"                                  |
+| `pattern`   | `{ value: RegExp, message: string }`                       | `pattern: { value: /^\d+$/, message: 'Numbers only' }`    | "Pattern does not match"                      |
+| `validate`  | `function` or `object_of_functions`                        | `validate: value => value === 'test' \|\| 'Must be test'` | (No default, message comes from function)     |
+
+> 📚 **Official Documentation:**
+>
+> - [React Hook Form - Validation (`register` rules, applicable to `Controller` `rules` prop)](https://react-hook-form.com/docs/useform/register#validation)
+> - [React Hook Form - `formState` (for errors)](https://react-hook-form.com/docs/useform/formstate)

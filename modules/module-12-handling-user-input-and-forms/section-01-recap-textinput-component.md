@@ -8,6 +8,17 @@ The `TextInput` component is a core React Native component that allows users to 
 
 Think of it as the equivalent of an `<input type="text">` or `<textarea>` element in web development, but specifically designed for mobile interfaces.
 
+**"Under the Hood": Native Mapping and Architecture**
+
+The React Native `TextInput` component serves as a bridge to the underlying native input controls of the host platform.
+
+- On Android, it typically maps to the native `EditText` widget.
+- On iOS, it corresponds to `UITextField` for single-line input or `UITextView` for multi-line input.
+
+With the advent of React Native's New Architecture, `TextInput` is implemented as a Fabric component. This architectural shift is significant because Fabric components communicate with the native side more directly and efficiently through the JavaScript Interface (JSI), bypassing the asynchronous nature of the legacy bridge. This direct communication channel aims to reduce latency and improve the responsiveness of UI elements like `TextInput`, especially during frequent updates such as typing. The move to Fabric for core components like `TextInput` addresses historical performance concerns, particularly in scenarios involving complex input interactions or frequent re-renders.
+
+Understanding that `TextInput` is deeply connected to the native platform's input mechanisms means that its behavior often involves considering how these underlying native controls operate. This awareness is particularly useful when debugging platform-specific quirks or performance characteristics. The evolution towards Fabric for `TextInput` underscores a commitment to enhancing its responsiveness and mitigating the overhead previously associated with the bridge.
+
 **Key Properties Review:**
 
 Here's a refresher on some of the most commonly used `TextInput` props. For a complete list, always refer to the official documentation.
@@ -27,6 +38,14 @@ Here's a refresher on some of the most commonly used `TextInput` props. For a co
 - `autoCapitalize` (enum: `'none'`, `'sentences'`, `'words'`, `'characters'`): Controls automatic capitalization behavior.
 - `autoCorrect` (boolean): If `false`, disables automatic correction.
 - `editable` (boolean): If `false`, text is not editable. Defaults to `true`.
+
+> 📱 **Background Bridge Notes:**
+>
+> **For Native Developers (Android/iOS):**
+> The React Native `TextInput` component abstracts the complexities of platform-specific input controls like Android's `EditText` or iOS's `UITextField`/`UITextView`. While you might be accustomed to directly interacting with these native elements and their respective APIs (e.g., listeners, delegates), React Native provides a unified JavaScript-based interface. The underlying native behavior is still present but managed by React Native.
+>
+> **For Web Developers (React/Angular):**
+> The `TextInput` component is conceptually similar to the HTML `<input>` and `<textarea>` elements. Many props, like `placeholder` and `value`, will feel familiar. However, event handling, such as `onChangeText` (which we'll cover in the next section), is more direct in React Native compared to accessing `event.target.value` in web React.
 
 **Basic Usage Example:**
 
@@ -93,9 +112,11 @@ export default SimpleInputScreen;
 
 This basic example renders a `TextInput`. However, it doesn't yet capture or manage the input's value. We'll cover that in the upcoming sections.
 
+Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
+
 > 📚 **Official Documentation:**
 >
 > - [React Native Docs: `TextInput`](https://reactnative.dev/docs/textinput)
 > - [Expo Docs: `TextInput`](https://docs.expo.dev/ui-programming/user-interface-libraries/#textinput) (Often links to React Native core docs for these components)
-
-Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
+> - [React Native New Architecture: Fabric](https://reactnative.dev/docs/the-new-architecture/pillars-fabric)
+> - [React Native New Architecture: JSI](https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface)

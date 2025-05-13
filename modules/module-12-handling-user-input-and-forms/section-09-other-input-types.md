@@ -2,7 +2,7 @@
 
 Forms often require more than just text inputs. Users might need to make binary choices (e.g., with a switch), select from a predefined list of options (e.g., with a picker/dropdown), or input dates. React Hook Form, through its `Controller` component, can integrate seamlessly with various custom input components, including those from UI libraries like React Native Paper, which is recommended in our course blueprint.
 
-This section will demonstrate how to incorporate React Native Paper's `Switch` and a conceptual `Picker` (as Paper doesn't have a direct Picker, we'll illustrate the pattern, often achieved with a `Modal` and `List` or a third-party library) into your forms managed by React Hook Form.
+This section will demonstrate how to incorporate React Native Paper's `Switch`, build custom pickers using Paper components like `Menu`, and integrate popular third-party pickers like `react-native-picker-select` into your forms managed by React Hook Form.
 
 **Integrating with `Controller`**
 
@@ -244,63 +244,308 @@ export default SwitchFormScreen;
 3.  The `Controller` for `receiveNotifications` maps its `field.value` to the `Switch`'s `value` prop and `field.onChange` to the `onValueChange` prop.
 4.  The `watch('receiveNotifications')` call is used to observe the current value of the switch and display it, demonstrating real-time state tracking.
 
-**2. Integrating a Picker/Dropdown (Conceptual)**
+**2. Custom Pickers with React Native Paper**
 
-React Native core does not include a built-in, universally styled Picker component that works consistently across both iOS and Android with a dropdown-like UI. `@react-native-picker/picker` is a community package that provides this functionality, and React Native Paper typically relies on integrating such components or building custom solutions using its `Modal` and `List.Item` components for a dropdown experience.
+When the standard platform pickers are insufficient or a more customized UI/UX is required for selection, React Native Paper components like `Menu` can be used to build custom pickers.
 
-For the purpose of demonstrating integration with React Hook Form, let's assume we have a conceptual `CustomPicker` component. The pattern remains the same: use `Controller` and map its `field` properties.
+**Using `Menu` Component for Simple Dropdown Pickers:**
 
-**Conceptual `CustomPicker` Props:**
+The `Menu` component from React Native Paper, along with `Menu.Item`, can create a simple dropdown-style picker.
 
-- `selectedValue`: The currently selected value.
-- `onValueChange`: Callback when a new value is selected.
-- `items`: An array of objects like `{ label: string, value: any }`.
+- **Key `Menu` Props:** `visible` (boolean to control visibility), `onDismiss` (callback when the menu is dismissed, e.g., by tapping outside), and `anchor` (the UI element, typically a `Button`, that the menu is positioned relative to and which triggers its opening).
+- **Key `Menu.Item` Props:** `title` (the text displayed for the option) and `onPress` (callback when the item is selected).
 
-**Conceptual Example: Picker for Medication Type**
+To integrate this with RHF `Controller`:
 
-```typescript
-// In your form component:
-// interface MedicationFormData { /* ... */ medicationType: string; }
-// const { control, /* ... */ } = useForm<MedicationFormData>({
-//   defaultValues: { medicationType: 'tablet' },
-// });
+1.  Manage the menu\'s `visible` state locally within your component (using `useState`).
+2.  The `anchor` (e.g., a `Button`) displays the currently selected value (from `field.value`) and opens the menu on press.
+3.  Inside the `Menu.Item`\'s `onPress` handler, call `field.onChange(selectedValue)` to update RHF\'s state and then close the menu.
 
-<Controller
-  control={control}
-  name="medicationType"
-  rules={{ required: "Medication type is required." }}
-  render={({ field: { onChange, value }, fieldState: { error } }) => (
-    <View style={styles.inputGroup}>
-      <Text style={styles.label}>Medication Type:</Text>
-      {/* <CustomPicker
-        selectedValue={value}
-        onValueChange={onChange}
-        items={[
-          { label: 'Tablet', value: 'tablet' },
-          { label: 'Capsule', value: 'capsule' },
-          { label: 'Syrup', value: 'syrup' },
-          { label: 'Injection', value: 'injection' },
-        ]}
-        // ... other props for your CustomPicker
-      /> */}
-      {/* Replace CustomPicker with an actual implementation or library */}
-      <Text style={styles.placeholderText}>
-        (Picker/Dropdown for Medication Type - Conceptual)
-      </Text>
-      {error && <Text style={styles.errorText}>{error.message}</Text>}
-    </View>
-  )}
-/>
+**Example: `Menu` as a Picker for "Contact Method"**
+
+```tsx
+import React, { useState } from "react";
+import { View, StyleSheet, Alert } from "react-native";
+import {
+  Button,
+  Menu,
+  Text,
+  Provider as PaperProvider,
+  DefaultTheme,
+} from "react-native-paper";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
+const theme = DefaultTheme;
+
+interface PreferenceFormData {
+  contactMethod: string;
+}
+
+const contactOptions = [
+  { label: "Email", value: "email" },
+  { label: "Phone", value: "phone" },
+  { label: "SMS", value: "sms" },
+];
+
+const MenuPickerForm: React.FC = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PreferenceFormData>({
+    defaultValues: { contactMethod: "" },
+  });
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
+
+  const onSubmit: SubmitHandler<PreferenceFormData> = (data) => {
+    Alert.alert("Preferences Saved", `Contact Method: ${data.contactMethod}`);
+    console.log("SpeedyMeds Preferences:", data);
+  };
+
+  return (
+    <PaperProvider theme={theme}>
+      <View style={styles.container}>
+        <Text style={styles.label}>Preferred Contact Method:</Text>
+        <Controller
+          control={control}
+          name="contactMethod"
+          rules={{ required: "Please select a contact method" }}
+          render={({ field: { onChange, value } }) => (
+            <Menu
+              visible={menuVisible}
+              onDismiss={closeMenu}
+              anchor={
+                <Button
+                  onPress={openMenu}
+                  mode="outlined"
+                  style={styles.pickerButton}
+                >
+                  {contactOptions.find((opt) => opt.value === value)?.label ||
+                    "Select..."}
+                </Button>
+              }
+            >
+              {contactOptions.map((opt) => (
+                <Menu.Item
+                  key={opt.value}
+                  title={opt.label}
+                  onPress={() => {
+                    onChange(opt.value);
+                    closeMenu();
+                  }}
+                />
+              ))}
+            </Menu>
+          )}
+        />
+        {errors.contactMethod && (
+          <Text style={styles.errorText}>{errors.contactMethod.message}</Text>
+        )}
+        <View style={styles.buttonContainer}>
+          <Button mode="contained" onPress={handleSubmit(onSubmit)}>
+            Save Preferences
+          </Button>
+        </View>
+      </View>
+    </PaperProvider>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { padding: 20, flex: 1, justifyContent: "center" },
+  label: { fontSize: 16, marginBottom: 8, fontWeight: "500" },
+  pickerButton: { marginBottom: 10 },
+  errorText: { color: "red", fontSize: 12, marginTop: -5, marginBottom: 10 },
+  buttonContainer: { marginTop: 20 },
+});
+
+// To use this example, ensure you export it, e.g.:
+// export default MenuPickerForm;
 ```
 
-**Key Points for Picker Integration:**
+**Using `Dialog` Component for More Complex Pickers:**
 
-- The `field.value` from `Controller` would hold the selected value of the picker.
-- The `field.onChange` from `Controller` would be called by the picker's `onValueChange` (or equivalent) prop.
-- You would source the `items` for the picker from your application's data or constants.
+For pickers requiring a more elaborate UI (e.g., with search functionality, custom item rendering, or multi-select capabilities), the React Native Paper `Dialog` component offers greater flexibility. A `Dialog` can host any custom content. You would typically use `Dialog`, `Dialog.Title`, `Dialog.Content`, and `Dialog.Actions`. The `Dialog` needs to be wrapped in a `Portal` component to ensure it renders above other content.
 
-> [!TIP]
-> For a true dropdown/picker experience in React Native, you often need to use a third-party library (like `@react-native-picker/picker` for basic functionality, or more comprehensive ones like `react-native-dropdown-picker`) or build a custom component using a `Modal` from React Native or React Native Paper to display the list of options. The integration principle with React Hook Form's `Controller` remains consistent.
+Integration with RHF `Controller` would involve:
+
+1.  Managing the dialog\'s visibility state.
+2.  Rendering your custom picker UI inside `Dialog.Content`.
+3.  When a value is selected within the dialog, call `field.onChange(selectedValue)` and then close the dialog. This approach is more involved but provides maximum control over the picker\'s appearance and functionality.
+
+**3. Alternative: `react-native-picker-select`**
+
+`react-native-picker-select` is a popular third-party library that provides a cross-platform picker component aiming to emulate native select interfaces. It often wraps `@react-native-picker/picker`.
+
+**Installation:**
+
+```bash
+npm install react-native-picker-select @react-native-picker/picker
+# For iOS, if not using Expo Prebuild or if issues arise:
+# npx pod-install ios
+```
+
+For Expo managed projects, `npx expo install react-native-picker-select @react-native-picker/picker` is recommended.
+
+**Key Props of `react-native-picker-select`:**
+
+- `onValueChange: (value: any, index: number) => void`: Callback invoked with the selected value and its index.
+- `items: Array<{ label: string, value: any, key?: string, color?: string }>`: An array of objects defining the picker options. `label` and `value` are required.
+- `value: any`: The currently selected value.
+- `placeholder?: { label: string, value: any }`: An object to define a placeholder item (e.g., "Select an item..."). An empty object `{}` can disable it or use `null` for the value if it should represent no selection.
+- `style?: object`: For custom styling of various parts of the picker (see library docs for details on `inputIOS`, `inputAndroid`, etc.).
+- `useNativeAndroidPickerStyle?: boolean` (Android only): Defaults to `true`, using the native Android Picker. If `false`, it renders a `TextInput`-like component similar to the iOS default, allowing for more consistent styling across platforms.
+
+**Example: `react-native-picker-select` for "Favorite Sport"**
+
+```tsx
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button as NativeButton,
+  Alert,
+} from "react-native";
+import RNPickerSelect from "react-native-picker-select";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
+interface SurveyFormData {
+  favoriteSport: string | null; // Allow null for placeholder
+}
+
+const sportsItems = [
+  { label: "Football", value: "football" },
+  { label: "Basketball", value: "basketball" },
+  { label: "Tennis", value: "tennis" },
+  { label: "Volleyball", value: "volleyball" },
+];
+
+const PickerSelectForm: React.FC = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SurveyFormData>({
+    defaultValues: { favoriteSport: null }, // Use null for placeholder
+  });
+
+  const onSubmit: SubmitHandler<SurveyFormData> = (data) => {
+    Alert.alert(
+      "Survey Submitted",
+      `Favorite Sport: ${data.favoriteSport || "None"}`
+    );
+    console.log("SpeedyMeds Survey Data:", data);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Favorite Sport:</Text>
+      <Controller
+        control={control}
+        name="favoriteSport"
+        rules={{ required: "Please select your favorite sport" }}
+        render={({ field: { onChange, value } }) => (
+          <View style={styles.pickerInputContainer}>
+            <RNPickerSelect
+              onValueChange={(val) => onChange(val)} // Pass selected value to RHF
+              items={sportsItems}
+              value={value} // Controlled by RHF
+              placeholder={{ label: "Select a sport...", value: null }}
+              style={pickerSelectStyles} // Custom styles for the picker
+            />
+          </View>
+        )}
+      />
+      {errors.favoriteSport && (
+        <Text style={styles.errorText}>{errors.favoriteSport.message}</Text>
+      )}
+      <View style={styles.buttonContainer}>
+        <NativeButton title="Submit Survey" onPress={handleSubmit(onSubmit)} />
+      </View>
+    </View>
+  );
+};
+
+// Add styles similar to SwitchFormScreen, adapting as necessary
+// const styles = StyleSheet.create({ ... pickerInputContainer: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8 }, ... });
+
+// Example custom styles for RNPickerSelect
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1, // Changed from 0.5 to match styling
+    borderColor: "gray", // Changed from 'purple' to match styling
+    borderRadius: 4, // Changed from 8 to match styling
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  placeholder: {
+    color: "#a0a0a0", // Placeholder text color
+  },
+});
+
+export default PickerSelectForm;
+```
+
+**"Under the Hood": `react-native-picker-select` iOS vs. Android Rendering**
+
+This library abstracts platform differences, but it\'s important to be aware of them for styling and behavior:
+
+- **iOS:** By default, it renders an unstyled `TextInput` component. When tapped, it presents a native modal-like picker UI (`UIPickerView`). This allows for extensive styling of the "closed" state input.
+- **Android:** By default (`useNativeAndroidPickerStyle={true}`), it uses the native Android `Picker` widget. This provides a native look and feel but offers less styling flexibility for the "closed" state. If `useNativeAndroidPickerStyle={false}` is set, it will render a `TextInput` on Android as well, behaving more like the iOS version and allowing for more consistent cross-platform styling.
+
+This underlying difference is key to understanding why styling props might apply differently or why certain behaviors (like the appearance of the dropdown/modal) vary between platforms.
+
+**Props Summary Tables:**
+
+**Table: React Native Paper `Switch` Core Props**
+
+| Prop Name       | Type                              | Description                                                       |
+| :-------------- | :-------------------------------- | :---------------------------------------------------------------- |
+| `value`         | `boolean`                         | Current state of the switch (true for \'on\', false for \'off\'). |
+| `onValueChange` | `(newValue: boolean) => void`     | Callback invoked with the new value when the switch is toggled.   |
+| `disabled`      | `boolean` (optional)              | If true, the switch is non-interactive.                           |
+| `color`         | `string` (optional)               | Custom color for the switch, typically when in the \'on\' state.  |
+| `style`         | `StyleProp<ViewStyle>` (optional) | Custom styles for the switch container.                           |
+
+**Table: React Native Paper `Menu` Core Props (for Picker Usage)**
+
+| Prop Name   | Type              | Description                                                                                  |
+| :---------- | :---------------- | :------------------------------------------------------------------------------------------- |
+| `visible`   | `boolean`         | Controls whether the menu is currently visible.                                              |
+| `onDismiss` | `() => void`      | Callback when the menu is dismissed (e.g., by tapping outside). Must set `visible` to false. |
+| `anchor`    | `React.ReactNode` | The UI element (e.g., a `Button`) that the menu is positioned relative to.                   |
+| `children`  | `React.ReactNode` | Content of the menu, typically `Menu.Item` components.                                       |
+
+_Note: `Menu.Item` has props like `title` and `onPress` which are crucial for picker functionality._
+
+**Table: `react-native-picker-select` Core Props**
+
+| Prop Name                     | Type                                                        | Description                                                                                                         |
+| :---------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| `onValueChange`               | `(value: any, index: number) => void`                       | Required. Callback with the selected value and its index.                                                           |
+| `items`                       | `Array<{ label: string, value: any,... }>`                  | Required. Array of item objects for the picker. `label` and `value` are mandatory per item.                         |
+| `value`                       | `any`                                                       | The currently selected value. Should be controlled by RHF via `Controller`.                                         |
+| `placeholder`                 | `object` (e.g., `{ label: string, value: any }`) (optional) | Defines a placeholder item. Use `{}` or `null` value for placeholder.                                               |
+| `disabled`                    | `boolean` (optional)                                        | If true, the picker is non-interactive.                                                                             |
+| `style`                       | `object` (optional)                                         | Custom styles for various parts of the picker (see library docs for specific keys like `inputIOS`, `inputAndroid`). |
+| `useNativeAndroidPickerStyle` | `boolean` (Android only, optional)                          | Default `true`. If `false`, uses a `TextInput`-like appearance on Android, similar to iOS.                          |
 
 **Exercise 12.3: Integrating Switch/Picker in a Form**
 
@@ -323,3 +568,11 @@ Time to practice integrating these non-text input types.
 Refer to the `README.md` in the Snack for detailed instructions.
 
 By using `Controller`, React Hook Form provides a flexible way to integrate a wide variety of input components, making your forms highly adaptable to different data types and UI requirements in applications like SpeedyMeds.
+
+> 📚 **Official Documentation:**
+>
+> - [React Native Paper - `Switch`](https://callstack.github.io/react-native-paper/docs/components/Switch/)
+> - [React Native Paper - `Menu`](https://callstack.github.io/react-native-paper/docs/components/Menu/)
+> - [React Native Paper - `Dialog`](https://callstack.github.io/react-native-paper/docs/components/Dialog/)
+> - [`react-native-picker-select` - GitHub](https://github.com/lawnstarter/react-native-picker-select)
+> - [`@react-native-picker/picker` - GitHub](https://github.com/react-native-picker/picker) (often a dependency)
