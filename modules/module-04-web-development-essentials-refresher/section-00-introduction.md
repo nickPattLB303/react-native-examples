@@ -1,5 +1,9 @@
 # Module 4: Web Development Essentials Refresher
 
+![Web Development concepts (HTML structure and CSS styling) bridging to React Native components and StyleSheet](./assets/images/module-4/web-to-react-native-bridge.png "Bridging web concepts to React Native")
+
+_A conceptual bridge showing how HTML elements and CSS styles map to React Native components and StyleSheet properties._
+
 This module serves as a focused refresher on the core concepts of HTML and CSS that are most relevant to understanding React Native development. While React Native doesn't use HTML and CSS directly, its component structure and styling system draw heavily on web paradigms. A solid understanding of HTML's structural concepts and CSS's styling and layout principles, particularly Flexbox, is invaluable. Understanding these fundamentals provides a crucial foundation for effectively building and styling user interfaces in React Native.
 
 This module revisits the fundamentals, assuming varying levels of prior web development experience among learners. The goal is to establish a common ground, ensuring everyone possesses the foundational knowledge needed to effectively grasp React Native's UI paradigms, write cleaner code, and debug layout and style issues more effectively. We will refresh key concepts including semantic HTML for meaningful structure, CSS selectors for targeting elements, the cascade and specificity for managing styles, the box model for understanding element space, and Flexbox for modern layout.

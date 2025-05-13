@@ -40,6 +40,14 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 
 This example illustrates the fundamental boilerplate of an HTML5 document, including the `<!DOCTYPE>` declaration, the root `<html>` element with a language attribute, the `<head>` for metadata like the title and character set, and the `<body>` where all visible content resides. This hierarchical structure is foundational to how web pages are organized and later interpreted by browsers to build the DOM.
 
+> 📲 **(Native Developers):**
+>
+> **Comparison:** HTML's hierarchical structure is conceptually similar to native UI hierarchies like Android's View hierarchy or iOS's UIView hierarchy. The parent-child relationships in HTML (container elements with nested children) parallel how native UI elements are nested within parent containers. The DOM (Document Object Model) is comparable to Android's View tree or iOS's UIView hierarchy in memory.
+>
+> **Key Takeaway:** HTML's structural patterns will feel familiar if you've worked with native UI hierarchies. Both use tree-like structures where parent elements/views contain and manage child elements/views, forming a complete UI.
+>
+> **Source:** [Android Developers: View Hierarchy](https://developer.android.com/guide/topics/ui/ui-events.html) / [Apple Developer: UIView](https://developer.apple.com/documentation/uikit/uiview)
+
 #### Semantic HTML: Meaningful Structure
 
 While HTML can structure content using generic container elements like `<div>` (block-level) and `<span>` (inline-level), **semantic HTML** uses elements that convey the meaning or purpose of the content they enclose. Using semantic elements provides significant benefits:

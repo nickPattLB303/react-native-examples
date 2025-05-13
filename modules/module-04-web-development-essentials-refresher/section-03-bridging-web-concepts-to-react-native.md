@@ -16,6 +16,49 @@ There isn't a direct one-to-one mapping for every HTML element, but common web e
 - `<a>`: There's no direct equivalent. Hyperlinks are typically implemented using `<Text>` styled appropriately and an `onPress` handler using the `Linking` module to open URLs.
 - `<ul>`, `<ol>`, `<li>`: Map to `<FlatList>` or `<SectionList>`. These components are optimized for displaying scrolling lists of data. You render list items using `<View>`, `<Text>`, and other components within the list's `renderItem` prop.
 
+```mermaid
+graph LR
+    subgraph "HTML Elements"
+        H_DIV["&lt;div&gt;"]
+        H_SPAN["&lt;span&gt;"]
+        H_P["&lt;p&gt;"]
+        H_H1["&lt;h1&gt;-&lt;h6&gt;"]
+        H_TEXT_SPAN["&lt;span&gt; (text)"]
+        H_IMG["&lt;img&gt;"]
+        H_INPUT["&lt;input type='text'&gt;"]
+        H_BUTTON["&lt;button&gt;"]
+        H_A["&lt;a&gt;"]
+        H_LIST["&lt;ul&gt;/&lt;ol&gt;/&lt;li&gt;"]
+    end
+
+    subgraph "React Native Components"
+        RN_VIEW["&lt;View&gt;"]
+        RN_TEXT["&lt;Text&gt;"]
+        RN_IMAGE["&lt;Image&gt;"]
+        RN_TEXTINPUT["&lt;TextInput&gt;"]
+        RN_BUTTON["&lt;Button&gt;"]
+        RN_PRESSABLE["&lt;Pressable&gt;"]
+        RN_TEXT_PRESS["&lt;Text&gt; + onPress"]
+        RN_FLATLIST["&lt;FlatList&gt;"]
+        RN_SECTIONLIST["&lt;SectionList&gt;"]
+    end
+
+    H_DIV --> RN_VIEW
+    H_SPAN --> RN_VIEW
+    H_P --> RN_TEXT
+    H_H1 --> RN_TEXT
+    H_TEXT_SPAN --> RN_TEXT
+    H_IMG --> RN_IMAGE
+    H_INPUT --> RN_TEXTINPUT
+    H_BUTTON --> RN_BUTTON
+    H_BUTTON --> RN_PRESSABLE
+    H_A --> RN_TEXT_PRESS
+    H_LIST --> RN_FLATLIST
+    H_LIST --> RN_SECTIONLIST
+```
+
+This diagram visualizes the conceptual mapping between common HTML elements and their React Native component counterparts. On the left are HTML elements grouped by their purpose (containers, text, media, etc.). The arrows show how these map to React Native Core Components on the right. Notice how several HTML elements can map to a single React Native component (e.g., multiple text-based HTML elements map to `<Text>`, and lists map to either `<FlatList>` or `<SectionList>`). This illustrates how React Native consolidates functionality into a more focused set of components while still providing the capabilities needed to build sophisticated mobile UIs. The mapping is conceptual rather than exact, reflecting how web developers can translate their mental models when moving to React Native development.
+
 **Table: Conceptual Mapping of Common Web Elements to React Native Components**
 
 This table summarizes the common conceptual mappings.
@@ -215,10 +258,7 @@ This example demonstrates the mapping. The HTML `div` with class `card` becomes 
 
 Recreate a simple web layout using React Native components and StyleSheet based on provided HTML/CSS.
 
-> [!WARNING]
-> The following CodeSandbox link is a placeholder and MUST be replaced with a functional link to the actual Challenge 4 before finalizing the course materials. Ensure the linked CodeSandbox environment is correctly set up as per blueprint requirements.
-
-**(https://codesandbox.io/p/sandbox/module-4-challenge-simple-layout-recreation-placeholder-w6ztrx)** (Note: Replace with actual CodeSandbox link when created)
+**(https://codesandbox.io/s/module-4-challenge-speedymeds-prescription-card-layout-k2m6p8)**
 
 ### Next Steps
 

@@ -252,10 +252,7 @@ The `.container` div is set to `display: flex`, making its children (`.item` div
 
 Apply these basic HTML and CSS concepts.
 
-> [!WARNING]
-> The following CodeSandbox link is a placeholder and MUST be replaced with a functional link to the actual Exercise 4.1 before finalizing the course materials. Ensure the linked CodeSandbox environment is correctly set up as per blueprint requirements.
-
-**(https://codesandbox.io/p/sandbox/module-4-exercise-1-basic-html-css-placeholder-j9krzr)** (Note: Replace with actual CodeSandbox link when created)
+**(https://codesandbox.io/s/module-4-exercise-1-html-css-basics-speedymeds-branding-t5ghr6)**
 
 ### Next Steps
 
