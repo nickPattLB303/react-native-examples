@@ -1,0 +1,55 @@
+# Module 16: EAS Build and Publishing
+
+<!-- Optional: Module Introduction Image - A relevant banner image could be placed here. Ensure it has alt text and a caption if included. -->
+
+Welcome to Module 16! This module is your comprehensive guide to Expo Application Services (EAS), a powerful suite of tools that streamline the process of building, submitting, and updating your React Native applications. As you transition from development to production, EAS provides the cloud services necessary to create installable app binaries for iOS and Android, manage your app store submissions, and deploy updates seamlessly. Understanding EAS is crucial for any developer looking to efficiently deliver and maintain high-quality Expo and React Native apps. By the end of this module, you'll be equipped to take your projects from your local machine to the app stores and beyond.
+
+<TARGET_AUDIENCE_EMOJI> This module is particularly relevant for developers looking to understand the full lifecycle of a React Native application, from coding to deployment.
+
+- 🍏 **(iOS Developers):** You'll find EAS Build offers a cloud-based alternative to building `ipa` files with Xcode, simplifying provisioning and certificate management. The concepts of app signing and submission will be familiar, but EAS provides a unified workflow.
+- 🤖 **(Android Developers):** You're likely familiar with generating APKs or AABs using Android Studio. EAS Build provides a similar capability in the cloud, integrated with the Expo ecosystem, making build and submission processes more streamlined.
+- 🌐 **(Web Developers - React/Angular):** While web deployment often involves static site hosting or server deployments, mobile app deployment has distinct steps like code signing, binary compilation, and store submissions. EAS abstracts much of this complexity, making the transition smoother. Understanding build profiles in EAS will be key.
+
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Describe the services offered by Expo Application Services (EAS).
+- Differentiate between EAS Build and the classic `expo build` service.
+- Set up and configure the EAS CLI for your React Native projects.
+- Create and manage build profiles using `eas.json` for different environments.
+- Generate development builds for testing on physical devices and simulators/emulators.
+- Create production builds ready for submission to the Apple App Store and Google Play Store.
+- Explain the general process for submitting apps to app stores.
+- Implement Over-the-Air (OTA) updates using EAS Update.
+- Securely manage application secrets (API keys, environment variables) with EAS.
+
+## Prerequisites
+
+Before starting this module, ensure you have a solid understanding of the following:
+
+- Completion of [Module 3: Setting Up Your React Native Environment with Expo](./../module-03-setting-up-your-react-native-environment-with-expo/section-00-introduction.md) (Specifically, understanding of Expo projects).
+- Familiarity with basic terminal/command-line usage.
+- An Expo account (you can create one for free at [expo.dev](https://expo.dev)).
+- A conceptual understanding of mobile app deployment (though prior experience is not strictly required).
+
+## Module Challenge
+
+At the end of this module, you'll apply your knowledge by completing a conceptual challenge:
+
+- **Challenge 16: EAS Build Workflow Diagram** `**(MICROSOFT_WHITEBOARD_URL_CHALLENGE_16)**` (You'll be asked to diagram the EAS Build process, highlighting key stages and configurations.)
+
+## Module Summary
+
+This module provides a comprehensive overview of Expo Application Services (EAS), covering EAS Build for creating app binaries, EAS Submit for app store submissions (conceptually), EAS Update for deploying over-the-air updates, and managing environment variables and secrets. You'll learn how to configure build profiles in `eas.json`, create development and production builds, and understand the workflow for getting your app into the hands of users. By mastering EAS, you gain essential skills for the production phase of React Native development with Expo.
+
+## Additional Resources
+
+For further exploration of EAS and related topics, consider the following:
+
+- [Expo Documentation: EAS Overview](https://docs.expo.dev/eas/)
+- [Expo Blog: Stay updated with the latest EAS features](https://blog.expo.dev/)
+
+---
+
+_Next: [Section 1: Introduction to EAS (Expo Application Services)](./section-01-introduction-to-eas.md)_
