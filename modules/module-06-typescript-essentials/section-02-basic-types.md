@@ -128,8 +128,8 @@ someValue = true;
 > **Best Practices for `any` and `unknown`:**
 >
 > - **Avoid `any` where possible:** Reserve `any` for situations where type checking is genuinely impossible or during incremental migration of JavaScript codebases. Ensure the `noImplicitAny` compiler option is enabled to prevent variables from defaulting to `any`.
-> - **Prefer `unknown` for uncertain types:** When a value's type is truly unknown (e.g., API responses, user input), use `unknown`.
-> - **Narrow `unknown` types:** Always use type guards (like `typeof`, `instanceof`) or type assertions to narrow an `unknown` type to a more specific type before performing operations on it.
+> - **Prefer `unknown` for uncertain types:** When a value's type is truly unknown (e.g., API responses, user input), use `unknown`. `unknown` is safer because it forces you to acknowledge and address the ambiguity of a variable's type before performing operations.
+> - **Narrow `unknown` types:** Always use type guards (like `typeof`, `instanceof`, `in` operator, or user-defined type guards) or type assertions to narrow an `unknown` type to a more specific type before performing operations on it. This explicit checking is what makes `unknown` a much safer choice than `any`.
 
 **7. `unknown`**
 
@@ -140,28 +140,44 @@ A type-safe counterpart to `any`. When a value is of type `unknown`, you cannot 
 ```typescript
 let externalDrugInfo: unknown;
 
-externalDrugInfo = "Retrieved from external API";
+externalDrugInfo = "Retrieved from external API as a string";
+// externalDrugInfo = { name: "DrugX", interactions: ["DrugY"] }; // Could also be an object
+
+// console.log(externalDrugInfo.toUpperCase()); // Error: Object is of type 'unknown'.
 
 if (typeof externalDrugInfo === "string") {
   console.log(externalDrugInfo.toUpperCase()); // OK, type is narrowed to string
+} else if (
+  typeof externalDrugInfo === "object" &&
+  externalDrugInfo !== null &&
+  "name" in externalDrugInfo
+) {
+  // Assuming 'name' would be a string if it exists.
+  const drugObject = externalDrugInfo as {
+    name: string;
+    interactions?: string[];
+  };
+  console.log(`Drug Name: ${drugObject.name}`); // OK, type narrowed via assertion after checks
+} else {
+  console.log("External drug info is of an unexpected type.");
 }
-
-// console.log(externalDrugInfo.someProperty); // Error: Object is of type 'unknown'.
 ```
 
 **8. `void`**
 
-Represents the absence of a return value, typically used as the return type for functions that do not return a value.
+Represents the absence of a return value, typically used as the return type for functions that do not return a value. While a JavaScript function without an explicit `return` statement implicitly returns `undefined`, `void` as a type annotation in TypeScript emphasizes that the function's return value, if any, is not intended to be used by the caller.
 
 - **SpeedyMeds Example:**
 
 ```typescript
 function logPrescription(medication: string, dosage: number): void {
   console.log(`Prescription logged: ${medication}, ${dosage}mg`);
-  // No return statement
+  // No return statement, or could explicitly return undefined.
+  // return undefined; // This is permissible
 }
 
-logPrescription("Metformin", 500);
+let result = logPrescription("Metformin", 500); // result is of type void (effectively undefined)
+// console.log(result.something); // Error: Property 'something' does not exist on type 'void'.
 ```
 
 **9. `null` and `undefined`**
@@ -210,6 +226,30 @@ function infiniteProcessingLoop(): never {
     // Process background tasks...
   }
 }
+
+// Example of exhaustive check with 'never'
+type ReportStatus = "Pending" | "Complete" | "Failed";
+
+function handleReportStatus(status: ReportStatus): string {
+  switch (status) {
+    case "Pending":
+      return "Report is pending generation.";
+    case "Complete":
+      return "Report successfully generated.";
+    case "Failed":
+      return "Report generation failed.";
+    default:
+      // If a new status is added to ReportStatus (e.g., "Archived")
+      // and this switch is not updated, 'status' here would no longer be 'never'.
+      // The TypeScript compiler would then flag an error on the next line,
+      // because a value of the new status type cannot be assigned to 'never'.
+      const _exhaustiveCheck: never = status;
+      return `Unknown status: ${_exhaustiveCheck}`; // This line theoretically unreachable
+  }
+}
+
+console.log(handleReportStatus("Complete"));
+// criticalErrorHandler("Example critical error"); // Uncomment to test
 ```
 
 **11. `tuple`**
@@ -273,6 +313,41 @@ console.log(`Incremented ID: ${incrementedId}`);
 
 > [!IMPORTANT] > `bigint` and `number` are not interchangeable. You cannot mix them in arithmetic operations without explicit conversion. `bigint` also behaves differently with `Math` object methods.
 
+**13. `symbol`**
+
+Represents a primitive data type that is always unique and immutable. Symbols are often used to add unique property keys to an object to avoid name collisions, especially when dealing with object extension or metadata. They are created using the global `Symbol()` function.
+
+- **SpeedyMeds Example:** (Useful for unique identifiers or internal properties)
+
+```typescript
+const uniquePatientIdSymbol = Symbol("uniquePatientId");
+const internalNotesSymbol = Symbol("internalNotes");
+
+interface PatientRecord {
+  name: string;
+  [uniquePatientIdSymbol]: string; // Using a symbol as a property key
+  [internalNotesSymbol]?: string;
+}
+
+let patient1: PatientRecord = {
+  name: "Alice Johnson",
+  [uniquePatientIdSymbol]: "SYMBOL_P001",
+};
+
+patient1[internalNotesSymbol] = "Patient is allergic to penicillin.";
+
+console.log(patient1.name);
+console.log(patient1[uniquePatientIdSymbol]); // Access using the symbol
+
+// Symbols are not enumerated in for...in loops or Object.keys()
+for (const key in patient1) {
+  console.log(`Key in loop: ${key}`); // Will log 'name' but not the symbols
+}
+console.log(Object.getOwnPropertySymbols(patient1)); // [Symbol(uniquePatientId), Symbol(internalNotes)]
+```
+
+Symbol keys are a good way to define "private" or metadata properties on objects that won't accidentally clash with string-based keys.
+
 ### TypeScript Basic Types vs. JavaScript Equivalents
 
 The following table summarizes TypeScript's basic types and their relationship to JavaScript's primitives and concepts.
@@ -295,7 +370,7 @@ The following table summarizes TypeScript's basic types and their relationship t
 | `never`                       | No direct equivalent (conceptually, a non-terminating path)       | Represents values that never occur. TS specific.                                                 |
 | `object`                      | Any non-primitive value (`typeof x === 'object'` or `'function'`) | More specific than `any`, but less specific than an interface or `Record<string, unknown>`.      |
 
-### 13. Literal Types
+### 14. Literal Types
 
 Literal types allow you to define types that represent exact, specific values. TypeScript supports string literal types, numeric literal types, and boolean literal types. They are most powerful when combined with union types (`|`) to constrain a variable to one of several specific values.
 
@@ -333,7 +408,7 @@ Literal types allow you to define types that represent exact, specific values. T
 
 Literal types provide a more precise way to define expectations than general primitive types, enhancing type safety and self-documentation, especially for things like status codes, action types, or predefined options.
 
-### 14. Understanding Structural Typing (Duck Typing)
+### 15. Understanding Structural Typing (Duck Typing)
 
 Type compatibility in TypeScript is based on **structural subtyping**, often referred to as "duck typing" at compile time. This means that types are related based on their members (properties and methods), not on explicit declarations or names. If an object `x` possesses at least the same members (with compatible types) as an object `y` requires, then `x` is considered compatible with `y` and can be assigned to `y`.
 
@@ -367,11 +442,11 @@ logPatientName(minimalPatient); // OK!
 - **Flexibility:** Allows for more decoupled code because components interact based on the structure of data they expect, not on specific, named types from a particular hierarchy.
 - **Easier Integration with JavaScript:** TypeScript can easily type existing JavaScript objects and libraries based on their shapes.
 
-> 🤖 **(Native Android/iOS Developers - Java/Kotlin/Swift):** This is a key difference from **nominal typing** systems used in languages like Java, Kotlin, and Swift. In nominal systems, type compatibility is determined by explicit declarations (e.g., class `Dog` explicitly `implements` `AnimalInterface`). In TypeScript, if an object has the same _structure_ as an interface, it's compatible, even without an explicit `implements` clause (though classes _can_ use `implements` to ensure they adhere to an interface contract).
+> 🤖 **(Native Android/iOS Developers - Java/Kotlin/Swift):** This is a key difference from **nominal typing** systems used in languages like Java, Kotlin, and Swift. In nominal systems, type compatibility is determined by explicit declarations (e.g., class `Dog` explicitly `implements` `AnimalInterface` or extends `AnimalBase`). In TypeScript, if an object has the same _structure_ as an interface, it's compatible, even without an explicit `implements` clause (though classes _can_ use `implements` to ensure they adhere to an interface contract).
 
 Understanding structural typing is fundamental to working effectively with TypeScript, especially when defining and using interfaces and object types.
 
-### 15. Type Annotations with Destructuring
+### 16. Type Annotations with Destructuring
 
 TypeScript extends JavaScript's destructuring capabilities by allowing type annotations, enhancing type safety when extracting values from arrays or properties from objects.
 
@@ -422,21 +497,15 @@ TypeScript extends JavaScript's destructuring capabilities by allowing type anno
     medicationName,
     quantity,
     refillsLeft = 0,
-  }: {
-    medicationName: string;
-    quantity: number;
-    refillsLeft?: number;
-  } = currentPrescription;
-  // medicationName: string, quantity: number, refillsLeft: number (defaults to 0 if undefined)
+  }: Prescription = currentPrescription;
+  // medicationName: string, quantity: number, refillsLeft: number
 
   console.log(
     `Prescription for ${medicationName}, Qty: ${quantity}, Refills: ${refillsLeft}`
   );
   ```
 
-  The type annotation `{ medicationName: string; quantity: number; refillsLeft?: number }` defines the expected shape and types of the properties being extracted.
-
-Type annotations on destructuring assignments provide immediate clarity about the expected structure and types, allowing the TypeScript compiler to catch errors if the source data doesn't conform.
+  Type annotations on destructuring assignments provide immediate clarity about the expected structure and types, allowing the TypeScript compiler to catch errors if the source data doesn't conform.
 
 These basic types and foundational concepts form the building blocks for more complex type definitions you'll encounter and create in TypeScript. Mastering them is essential for writing type-safe and maintainable code.
 

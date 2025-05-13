@@ -243,12 +243,30 @@ Constructs an object type whose property keys are `K` and whose property values 
 **Other Useful Utility Types:**
 
 - `Exclude<T, U>`: Constructs a type by excluding from `T` all union members that are assignable to `U`.
+  - _Example:_ `type T0 = Exclude<"a" | "b" | "c", "a" | "b">; // T0 is "c"`
 - `Extract<T, U>`: Constructs a type by extracting from `T` all union members that are assignable to `U`.
+  - _Example:_ `type T0 = Extract<"a" | "b" | "c", "a" | "f">; // T0 is "a"`
 - `NonNullable<T>`: Constructs a type by excluding `null` and `undefined` from `T`.
+  - _Example:_ `type T0 = NonNullable<string | number | null | undefined>; // T0 is string | number`
 - `ReturnType<T>`: Constructs a type consisting of the return type of function `T`.
+  - _Example:_ `type GetMedicationNameFunc = () => string; type MedName = ReturnType<GetMedicationNameFunc>; // MedName is string`
 - `Parameters<T>`: Constructs a tuple type from the types used in the parameters of a function type `T`.
+  - _Example:_ `type LogFunc = (message: string, code?: number) => void; type LogParams = Parameters<LogFunc>; // LogParams is [message: string, code?: number | undefined]`
+- `InstanceType<T>`: Constructs a type consisting of the instance type of a constructor function type `T`.
+  - _Example:_ `class MedicationOrder { constructor(public id: string) {} } type OrderInstance = InstanceType<typeof MedicationOrder>; // OrderInstance is MedicationOrder`
 
 These utility types are extremely powerful for creating precise and flexible type definitions based on existing ones. They help keep your codebase DRY (Don't Repeat Yourself) and make type transformations more explicit and manageable.
+
+> [!NOTE] > **`Under the Hood`: Implementation of Utility Types**
+> Many of these utility types are not "magic" compiler intrinsics but are themselves implemented using other advanced TypeScript features like mapped types and conditional types (which you'll encounter later). For example, `Partial<T>` can be conceptually defined using a mapped type like this:
+>
+> ```typescript
+> type Partial<T> = {
+>   [P in keyof T]?: T[P];
+> };
+> ```
+>
+> Understanding this underlying mechanism can empower you to create your own custom utility types tailored to specific project needs if the built-in ones don't quite fit. This approach promotes DRY (Don't Repeat Yourself) principles at the type level, leading to more maintainable and expressive type definitions.
 
 > 📚 **Official Documentation:**
 >

@@ -21,6 +21,9 @@ An interface is a way to define a contract for an object's shape. It specifies t
   }
   ```
 
+> [!NOTE]
+> It's important to distinguish `readonly` (used for object properties) from `const` (used for variable declarations). `const` ensures that a variable cannot be reassigned to a different value or object. `readonly` ensures that a specific property on an object cannot be modified after the object is initialized.
+
 - **SpeedyMeds Example: `Patient` Interface**
 
   ```typescript

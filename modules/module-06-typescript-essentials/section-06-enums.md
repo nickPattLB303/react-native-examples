@@ -187,7 +187,31 @@ However, you can also use `const enums` if you want TypeScript to completely era
   console.log(`Current user role: ${currentUserRole}`);
   ```
 
-  Const enums are useful for performance-critical scenarios or when you want to avoid the overhead of a runtime enum object, but they have limitations (e.g., no reverse mapping for numeric const enums).
+  Const enums are useful for performance-critical scenarios or when you want to avoid the overhead of a runtime enum object, but they have limitations (e.g., no reverse mapping for numeric const enums, and they cannot be discovered at runtime if their module is ambiently declared).
+
+> [!NOTE] > **`Under the Hood`: JavaScript Representation of Enums**
+> Regular (non-const) enums are compiled into JavaScript objects that exist at runtime.
+>
+> - **Numeric Enums:** Generate an Immediately Invoked Function Expression (IIFE) that creates an object with both forward (name to value) and reverse (value to name) mappings.
+>   For example, `enum Color { Red = 0, Green = 1 }` might compile to something like:
+>   ```javascript
+>   // Simplified representation
+>   var Color;
+>   (function (Color) {
+>     Color[(Color["Red"] = 0)] = "Red";
+>     Color[(Color["Green"] = 1)] = "Green";
+>   })(Color || (Color = {}));
+>   ```
+> - **String Enums:** Compile to simpler objects containing only the name-to-value mapping.
+>   For example, `enum Mode { On = "ON", Off = "OFF" }` might compile to:
+>   ```javascript
+>   // Simplified representation
+>   var Mode = {
+>     On: "ON",
+>     Off: "OFF",
+>   };
+>   ```
+>   This runtime object is why you can access enum members like `OrderStatus.Processing` and also perform reverse lookups like `OrderStatus[1]` for numeric enums.
 
 **When to Use Enums:**
 
@@ -195,7 +219,32 @@ However, you can also use `const enums` if you want TypeScript to completely era
 - To improve code readability by giving meaningful names to special values.
 - To restrict the possible values a variable can take.
 
-Alternatives to enums in some cases include using string literal union types (e.g., `type DosageForm = "TABLET" | "CAPSULE";`), which can offer similar type safety without creating a runtime object (unless `const enum` is used).
+Alternatives to enums in some cases include using string literal union types (e.g., `type DosageForm = "TABLET" | "CAPSULE";`), which can offer similar type safety without creating a runtime object (unless `const enum` is used). Another common pattern is using plain objects with `as const` to create a set of readonly, literal-typed constants.
+
+**Comparing Enums, Literal Unions, and `as const` Objects:**
+
+- **Enums:**
+
+  - Provide a distinct nominal-like type.
+  - Numeric enums offer reverse mapping (value to name).
+  - Generate runtime JavaScript objects (unless `const enum`), which adds to bundle size.
+  - `const enum` values are inlined, avoiding runtime overhead but losing runtime discoverability.
+
+- **Literal Union Types** (e.g., `type Status = "Pending" | "Success";`):
+
+  - Purely a compile-time construct; no runtime overhead.
+  - Offer excellent type safety for a fixed set of string or number literals.
+  - No reverse mapping or runtime object.
+  - Often preferred for simple sets of string or numeric constants where a runtime object isn't needed.
+
+- **Objects with `as const`** (e.g., `const HttpStatus = { Ok: 200, NotFound: 404 } as const;`):
+  - Creates a plain JavaScript object with `readonly` properties and literal types for its values.
+  - More JavaScript-idiomatic for some developers.
+  - Provides a runtime object that can be iterated or used.
+  - To get a union type of its values, you can use `typeof HttpStatus[keyof typeof HttpStatus]` (which would result in `200 | 404`).
+  - No automatic reverse mapping like numeric enums.
+
+The choice depends on the specific needs: if you need a runtime object with reverse mapping, numeric enums are suitable. If you only need type safety for a set of known string/number constants with no runtime footprint, literal unions are excellent. `as const` objects provide a runtime structure with strong type safety and are a good alternative to string enums if you prefer a plain object.
 
 > 📚 **Official Documentation:**
 >
