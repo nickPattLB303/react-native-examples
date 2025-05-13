@@ -4,6 +4,24 @@ In the fast-paced world of software development, especially in a dynamic ecosyst
 
 TypeScript, an open-source language developed and maintained by Microsoft, addresses these challenges by adding an optional layer of static typing on top of JavaScript. It's not a completely new language; rather, it's a superset of JavaScript, meaning any valid JavaScript code is also valid TypeScript code. TypeScript code is then **transpiled** by the TypeScript compiler (`tsc`) into standard JavaScript, which can run in any environment that supports JavaScript—browsers, Node.js, and, crucially for this course, within React Native applications powered by Expo. This transpilation process includes **static analysis**, where the compiler checks your code against the type definitions you've provided.
 
+```mermaid
+graph TD
+    A[TypeScript Code<br>(.ts, .tsx files)] --> B[TypeScript Compiler<br>tsc]
+    B -->|Static Type Checking| C{Errors?}
+    C -->|Yes| D[Type Errors<br>Compilation Fails]
+    C -->|No| E[JavaScript Code<br>(.js files)]
+    E --> F[Runtime<br>Browser/Node.js/React Native]
+
+    style A fill:#d4f1f9
+    style B fill:#ffe6cc
+    style C fill:#ffcccc
+    style D fill:#f8cecc
+    style E fill:#d5e8d4
+    style F fill:#e1d5e7
+```
+
+The diagram above illustrates the TypeScript compilation process. TypeScript files (`.ts` or `.tsx`) are processed by the TypeScript compiler, which performs static type checking. If errors are found, compilation fails with helpful error messages. If no errors are found, the compiler outputs standard JavaScript that can run in any JavaScript environment.
+
 The core philosophy of TypeScript is to enable developers to write JavaScript along with these type definitions, significantly enhancing code quality, understandability, and scalability, particularly in larger projects. By catching errors during development rather than at runtime, TypeScript helps shift error discovery to an earlier, less costly phase of the software lifecycle.
 
 > 🍏 **(Native iOS Developers - Swift):** You'll find TypeScript's static typing familiar to Swift. Concepts like defining types for variables, function parameters, and return values will feel natural. The key difference is that TypeScript types are primarily for compile-time checking and are erased during transpilation to JavaScript, unlike Swift's strong typing which persists at runtime.
@@ -13,6 +31,12 @@ The core philosophy of TypeScript is to enable developers to write JavaScript al
 > 🌐 **(Web Developers - Python, Ruby, PHP etc.):** If you're coming from dynamically-typed languages like Python or Ruby, TypeScript introduces a new paradigm of defining types before runtime. This might seem like extra effort initially, but it pays off by catching errors early, improving code clarity, and making large codebases more manageable.
 >
 > ⚛️ **(Web Developers - React/Angular with JavaScript):** If you've used JavaScript with React or Angular, TypeScript will feel like an enhancement to your existing workflow, providing more robust tooling and error checking for your components, props, and state.
+
+> 🛣️ **(All Learners):** This module establishes a critical foundation for working with TypeScript in React Native. Take time to understand the core concepts and practice with the examples. For the remainder of the course, all code will use TypeScript.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider having students share experiences with typed vs. untyped languages before diving into TypeScript concepts. This helps establish a baseline understanding of the class's prior knowledge.
+
+> 🧗‍♀️ **(Self-Led):** Pay special attention to the TypeScript compilation process and how type errors are reported. Try intentionally creating type errors in the exercises to see how TypeScript provides feedback - this will help you understand the error messages you'll encounter in real development.
 
 ### Conceptual Content: The Value Proposition of TypeScript
 

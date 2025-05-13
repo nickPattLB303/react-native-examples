@@ -58,6 +58,14 @@ Upon completing this module, you will be able to:
 - Leverage utility types (e.g., `Partial`, `Required`, `Pick`, `Omit`) to manipulate existing types.
 - Understand the basic structure and key options of a `tsconfig.json` file within an Expo project.
 
+> 🛣️ **(All Learners):** TypeScript is a cornerstone technology for modern React Native development. Take your time with this module, as the concepts you learn here will be used throughout the rest of the course. All subsequent modules will use TypeScript exclusively.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider conducting short TypeScript exercises at the start of each session to reinforce key concepts. Have students explain TypeScript errors to each other to build deeper understanding.
+
+> 🧗‍♀️ **(Self-Led):** As you work through this module, try to create additional examples beyond those provided. Actively typing your own code will help solidify the concepts better than just reading examples.
+
+> 🔁 **(Asynchronous Learners):** If you're already familiar with TypeScript, you can skim the basic sections but pay close attention to how TypeScript is used in the React Native context, as there are some framework-specific patterns and best practices.
+
 ## Prerequisites
 
 Before starting this module, you should have a solid understanding of JavaScript, as covered in:
@@ -85,7 +93,7 @@ At the end of this module, you will apply your knowledge in a practical challeng
 
 - **Challenge 6: Typing a Pharmacy API Response**
   - You will define TypeScript interfaces and types to accurately represent a complex JSON response from a mock SpeedyMeds pharmacy API.
-  - **[INSERT_ACTUAL_CODESANDBOX_LINK_HERE]**
+  - **[https://codesandbox.io/s/speedymeds-typescript-challenge-pharmacy-api-types-j9r5mv](https://codesandbox.io/s/speedymeds-typescript-challenge-pharmacy-api-types-j9r5mv)**
 
 > [!IMPORTANT]
 > Starting with this module, all subsequent JavaScript, React, and React Native code examples and exercises throughout this course MUST be written in TypeScript. This is a critical step towards production-level development.

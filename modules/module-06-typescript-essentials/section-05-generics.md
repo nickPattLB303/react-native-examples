@@ -2,6 +2,37 @@
 
 Generics are a powerful feature in TypeScript that allow you to write reusable code that can work with a variety of types while maintaining type safety. Instead of using `any` and losing type information, generics allow you to create components (like functions, classes, or interfaces) that can operate on different types, where the actual type is specified when the component is used.
 
+> 🧑‍🏫 **(Instructor-Led):** Consider demonstrating generics with real-world examples beyond the course material. Ask students to identify scenarios in their own projects where generics could be valuable.
+
+> 🧗‍♀️ **(Self-Led):** Generics are often challenging to grasp initially. Take your time with this section, experimenting with the examples and trying variations. Try writing your own generic functions for different data structures you might use in a pharmacy app.
+
+```mermaid
+graph TD
+    subgraph "Generic Function Declaration"
+        A1["function getFirstElement<T>(arr: T[]): T | undefined"]
+    end
+
+    subgraph "Usage with Different Types"
+        B1["getFirstElement<number>([1, 2, 3])"] --> C1["T is number"]
+        B2["getFirstElement<string>(['a', 'b', 'c'])"] --> C2["T is string"]
+        B3["getFirstElement<Medication>([{ name: 'Amoxicillin' }])"] --> C3["T is Medication"]
+    end
+
+    A1 -->|"Instantiated with different types"| B1
+    A1 -->|"Instantiated with different types"| B2
+    A1 -->|"Instantiated with different types"| B3
+
+    style A1 fill:#d4f1f9
+    style B1 fill:#ffe6cc
+    style B2 fill:#ffe6cc
+    style B3 fill:#ffe6cc
+    style C1 fill:#d5e8d4
+    style C2 fill:#d5e8d4
+    style C3 fill:#d5e8d4
+```
+
+The diagram above illustrates how a generic function can be instantiated with different types. The type parameter `T` acts as a placeholder that gets replaced with actual types like `number`, `string`, or custom types like `Medication` when the function is used. This allows for type-safe reusability.
+
 ### Conceptual Content: Writing Reusable, Type-Safe Code
 
 Imagine you need a function that returns the first element of an array. Without generics, you might write it like this:
@@ -319,6 +350,6 @@ Let's put your understanding of generics into practice.
 
 **Access the Exercise:**
 
-**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_EXERCISE_6.2_HERE]**
+**[https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz](https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz)**
 
 ---

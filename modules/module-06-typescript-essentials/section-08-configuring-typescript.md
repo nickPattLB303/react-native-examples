@@ -16,6 +16,43 @@ When you create a new Expo project with TypeScript support (which is the default
 
 A typical `tsconfig.json` file is a JSON object with several top-level properties, the most important being `compilerOptions` and often `extends`, `include`, and `exclude`.
 
+```mermaid
+graph TD
+    A[tsconfig.json] --> B["extends"]
+    A --> C["compilerOptions"]
+    A --> D["include"]
+    A --> E["exclude"]
+
+    B --> B1["Base configuration<br>e.g., 'expo/tsconfig.base'"]
+
+    C --> C1["target"]
+    C --> C2["module"]
+    C --> C3["lib"]
+    C --> C4["jsx"]
+    C --> C5["strict"]
+    C --> C6["moduleResolution"]
+    C --> C7["..."other options]
+
+    D --> D1["TypeScript files to include<br>e.g., **/*.ts, **/*.tsx"]
+
+    E --> E1["Files to exclude<br>e.g., node_modules, build"]
+
+    style A fill:#d4f1f9
+    style B fill:#ffe6cc
+    style C fill:#ffe6cc
+    style D fill:#ffe6cc
+    style E fill:#ffe6cc
+    style C5 fill:#f8cecc
+```
+
+The diagram above illustrates the structure of a `tsconfig.json` file and its key components. The `extends` property allows inheriting from a base configuration, while `compilerOptions` contains the bulk of the settings that control TypeScript's behavior. The `include` and `exclude` properties determine which files are part of the compilation.
+
+> 🛣️ **(All Learners):** Understanding `tsconfig.json` is essential for working with TypeScript in React Native projects. While Expo provides sensible defaults, knowing what these settings do will help you troubleshoot type issues and customize your project's behavior.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider showing examples of how different `compilerOptions` settings affect the compiled output. The `--showConfig` flag with the TypeScript compiler can be useful to demonstrate the complete resolved configuration.
+
+> 🧗‍♀️ **(Self-Led):** Experiment with different `strict` mode settings to see how they affect type checking. Creating a small test project with various configurations can help solidify your understanding.
+
 - **`compilerOptions`**: This object contains the bulk of the configuration, telling the compiler how to process your files.
 - **`extends`**: Allows you to inherit configurations from another `tsconfig.json` file. Expo projects often use this to extend a base configuration (e.g., `expo/tsconfig.base`).
 - **`include`**: An array of glob patterns specifying which files to include in the compilation. If not specified, it defaults to all TypeScript files (`.ts`, `.tsx`, `.d.ts`) in the containing directory and subdirectories.
@@ -216,7 +253,7 @@ The SpeedyMeds system needs to fetch comprehensive details for a medication. The
 
 **Access the Challenge:**
 
-**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_CHALLENGE_6_HERE]**
+**[https://codesandbox.io/s/speedymeds-typescript-challenge-pharmacy-api-types-j9r5mv](https://codesandbox.io/s/speedymeds-typescript-challenge-pharmacy-api-types-j9r5mv)**
 
 This challenge does not require writing functions to process the data, only to accurately define the types for it. Good luck!
 

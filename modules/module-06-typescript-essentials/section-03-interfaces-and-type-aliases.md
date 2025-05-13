@@ -424,6 +424,37 @@ While type aliases don't have a direct `extends` keyword like interfaces, you ca
 
 For defining object shapes, interfaces and type aliases are often interchangeable due to TypeScript's structural typing. However, there are key differences and conventions:
 
+```mermaid
+graph TD
+    subgraph "Interface"
+        A1[Declaration] --> B1[Object Shapes]
+        A1 --> C1[Function Types]
+        A1 --> D1[Class Implementation Contracts]
+
+        E1[Extensibility] --> F1["Can be extended (extends)"]
+        E1 --> G1["Can merge declarations"]
+    end
+
+    subgraph "Type Alias"
+        A2[Declaration] --> B2[Object Shapes]
+        A2 --> C2[Function Types]
+        A2 --> D2["Primitives (string, number, etc.)"]
+        A2 --> E2["Unions (A | B)"]
+        A2 --> F2["Intersections (A & B)"]
+        A2 --> G2["Tuples [A, B, C]"]
+
+        H2[Extensibility] --> I2["Cannot merge declarations"]
+        H2 --> J2["Can use intersections (&) for extension"]
+    end
+
+    style A1 fill:#d4f1f9
+    style A2 fill:#ffe6cc
+    style E1 fill:#d5e8d4
+    style H2 fill:#e1d5e7
+```
+
+The diagram above illustrates the capabilities and extension mechanisms of interfaces and type aliases. While both can define object shapes and function types, type aliases have broader capabilities for defining various types. Interfaces excel in their ability to be extended and merged in declarations.
+
 - **Extensibility and Declaration Merging:**
 
   - **Interfaces:** Can be extended using the `extends` keyword. Crucially, interfaces support **declaration merging**: if you define an interface with the same name multiple times, TypeScript merges their properties into a single interface definition. This is very useful for augmenting types from external libraries or for allowing extensibility.
@@ -516,6 +547,6 @@ Now it's time to practice defining your own interfaces.
 
 **Access the Exercise:**
 
-**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_EXERCISE_6.1_HERE]**
+**[https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv](https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv)**
 
 ---

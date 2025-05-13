@@ -2,6 +2,41 @@
 
 TypeScript comes with a set of built-in utility types that allow you to transform existing types in various useful ways. These utilities help you create new types based on existing ones without having to manually redefine them, promoting code reuse and maintainability. They are particularly handy when working with interfaces and type aliases for different scenarios, such as creating types for partial updates, read-only views, or subsets of properties.
 
+> 🛣️ **(All Learners):** Utility types are powerful tools in TypeScript that will help you avoid redundant type definitions. Master these to significantly improve your code's maintainability.
+
+> 🔁 **(Asynchronous Learners):** If you're jumping directly to this section, make sure you understand interfaces and type aliases (Section 3) first, as utility types build upon those concepts.
+
+```mermaid
+graph TD
+    A[Original Type] --> B["Partial<T>"]
+    A --> C["Required<T>"]
+    A --> D["Readonly<T>"]
+    A --> E["Pick<T, K>"]
+    A --> F["Omit<T, K>"]
+
+    subgraph "Transformation Examples"
+        B --> B1["Makes all properties optional"]
+        C --> C1["Makes all properties required"]
+        D --> D1["Makes all properties readonly"]
+        E --> E1["Creates type with only selected properties"]
+        F --> F1["Creates type without specified properties"]
+    end
+
+    style A fill:#d4f1f9
+    style B fill:#ffe6cc
+    style C fill:#ffe6cc
+    style D fill:#ffe6cc
+    style E fill:#ffe6cc
+    style F fill:#ffe6cc
+    style B1 fill:#d5e8d4
+    style C1 fill:#d5e8d4
+    style D1 fill:#d5e8d4
+    style E1 fill:#d5e8d4
+    style F1 fill:#d5e8d4
+```
+
+The diagram above illustrates how utility types transform an original type into new derived types with different characteristics. Each utility type serves a specific purpose, allowing you to adapt existing types to various use cases without redefining them.
+
 ### Conceptual Content: Transforming Existing Types
 
 Let's explore some of the most commonly used utility types with examples relevant to our SpeedyMeds application.

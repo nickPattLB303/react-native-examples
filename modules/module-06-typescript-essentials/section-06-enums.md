@@ -2,6 +2,12 @@
 
 Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less error-prone by restricting a variable to a fixed set of possible values. They are useful when you have a group of related constants, such as states, categories, or options.
 
+> 🛣️ **(All Learners):** Enums in TypeScript provide a way to create meaningful, descriptive constants. Understanding when to use them (and when to use alternatives like union types) is important for writing maintainable React Native code.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider comparing TypeScript enums with similar constructs in other languages students might be familiar with: Swift enums, Kotlin/Java enums, or even JavaScript constants. Highlight the runtime behavior differences.
+
+> 🧗‍♀️ **(Self-Led):** When working with enums in your own projects, be mindful of their runtime implications. Try both numeric and string enums in the exercises to see their transpiled JavaScript output. For many cases, you might find union types (covered in Section 3) provide similar benefits with less runtime overhead.
+
 ### Conceptual Content: Defining Named Constants
 
 TypeScript supports both numeric and string-based enums.
