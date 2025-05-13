@@ -76,6 +76,9 @@ In most modern React Native development, `<Pressable>` is often preferred for it
 - `color`: (string) Color of the text on iOS, background color on Android (for default button style). On Android, the color control can be limited for some button styles.
 - `disabled`: (boolean) If `true`, disable all interactions for this component. Default is `false`.
 - `accessibilityLabel`: (string) Text that screen readers will speak.
+- `touchSoundDisabled`: (boolean, Android only) If `true`, the Android system touch sound is disabled. Default is `false`.
+- `hasTVPreferredFocus`: (boolean, tvOS/Android TV only) If `true`, this button will receive focus when the screen appears.
+- `nextFocusDown`, `nextFocusForward`, `nextFocusLeft`, `nextFocusRight`, `nextFocusUp`: (number, Android TV only) Designates the `nativeID` of the component to receive focus when navigating.
 
 **Common `<Pressable>` Props:**
 

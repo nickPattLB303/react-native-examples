@@ -34,4 +34,8 @@ By the end of this module, you will be able to:
 - Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)
 - Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md)
 
-This module will culminate in a challenge where you'll apply your knowledge of Core Components to build a UI element for the SpeedyMeds application. A summary of key takeaways will reinforce your learning at the end of the module.
+## Module Summary
+
+This module provides a comprehensive exploration of React Native's Core Components. You'll learn that these components are the essential, pre-built UI pieces like `<View>`, `<Text>`, `<Image>`, `<TextInput>`, `<ScrollView>`, and interactive elements like `<Button>` and `<Pressable>`. We'll cover how they map to native platform widgets, ensuring a truly native look and feel. A key focus will be on understanding their props, styling using `StyleSheet`, and their role in constructing the UI of a React Native application. By mastering these foundational elements, you'll be well-prepared to build complex and interactive user interfaces.
+
+This module will culminate in **Challenge 8: Build a Basic Prescription Item Card**, where you'll apply your knowledge of Core Components to build a UI element for the SpeedyMeds application.

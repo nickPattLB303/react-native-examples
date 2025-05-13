@@ -6,25 +6,48 @@ This section focuses on the `<Text>` component, the primary way to display text 
 
 The `<Text>` component is used to render strings of text. Unlike on the web where text can appear standalone or within various HTML elements like `<p>`, `<h1>-<h6>`, or `<span>`, in React Native, any text string you want to display must be a child of a `<Text>` component. You cannot render text directly within a `<View>` without wrapping it in `<Text>`.
 
+This requirement is a direct consequence of React Native's need to efficiently manage text rendering and styling on native platforms. Native operating systems typically use specific UI elements for text (like `UILabel` on iOS or `TextView` on Android). The `<Text>` component provides the necessary abstraction layer to interact with these native text elements, ensuring that text rendering goes through React Native's controlled pipeline for applying text-specific native properties and layout.
+
 **Key Characteristics of `<Text>`:**
 
 - **Text Rendering:** Its sole purpose is to display text content.
-- **Styling:** `<Text>` components can be styled using the `StyleSheet` API to control font size, color, font family, weight, alignment, line height, and more.
-- **Nesting:** `<Text>` components can be nested within each other. This is powerful because style inheritance works within nested `<Text>` components. For example, if an outer `<Text>` has a default font color, an inner `<Text>` will inherit that color unless explicitly overridden. This inheritance does _not_ apply from `<View>` to `<Text>`.
-- **Text-Specific Props:** It supports various props for text layout and interaction, such as `numberOfLines`, `ellipsizeMode`, and `onPress` (to make text tappable).
+- **Styling:** `<Text>` components can be styled using the `StyleSheet` API to control font size, color, font family, weight, alignment, line height, and more. Common text-specific style properties include `color`, `fontFamily`, `fontSize`, `fontStyle`, `fontWeight`, `letterSpacing`, `lineHeight`, `textAlign`, `textDecorationLine`, `textShadowColor`, `textShadowOffset`, `textShadowRadius`, `textTransform`, `includeFontPadding` (Android), and `textAlignVertical` (Android).
+- **Nesting:** `<Text>` components can be nested within each other. This is powerful because style inheritance works within nested `<Text>` components. For example, if an outer `<Text>` has a default font color, an inner `<Text>` will inherit that color unless explicitly overridden. This inheritance does _not_ apply from `<View>` to `<Text>`. Internally, React Native translates these nested structures into a flat `NSAttributedString` on iOS or a `SpannableString` on Android, which are the native mechanisms for handling styled text ranges.
+- **Text-Specific Props:** It supports various props for text layout and interaction, such as `numberOfLines`, `ellipsizeMode`, `onPress` (to make text tappable), `selectable`, `allowFontScaling`, `adjustsFontSizeToFit` (iOS), and `minimumFontScale` (iOS).
 - **Accessibility:** Text content within `<Text>` components is automatically accessible to screen readers.
+- **Text Layout vs. Flexbox:** Everything rendered inside a `<Text>` component uses text layout rules, not Flexbox. Child elements (which must also be `<Text>` components or raw strings) are treated as inline elements. They flow together and wrap to the next line when they reach the end of the parent `<Text>` container's boundary. This contrasts with `<View>` components, whose children are laid out as rectangular blocks according to Flexbox rules.
+
+  For example:
+
+  ```tsx
+  // Text container: text flows inline
+  <Text>
+    <Text>First part and </Text>
+    <Text>second part</Text>
+  </Text>
+  // Output might be: |First part and second part| (or wrapped)
+
+  // View container: each Text is a block if not styled otherwise
+  <View>
+    <Text>First part and </Text>
+    <Text>second part</Text>
+  </View>
+  // Output might be:
+  // |First part and |
+  // |second part    |
+  ```
 
 > 📲 **(Native Developers):**
 >
-> **Comparison:** `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering.
+> **Comparison:** `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering. Styling using JavaScript style objects is akin to working with `NSAttributedString` (iOS) or `SpannableString` (Android).
 >
-> **Key Takeaway:** `<Text>` is your go-to component for all textual content, providing features similar to native text display widgets.
+> **Key Takeaway:** `<Text>` is your go-to component for all textual content, providing features similar to native text display widgets, with a unified styling approach.
 >
 > **Source:** [React Native Docs: Text](https://reactnative.dev/docs/text)
 
 > 🌐 **(Web Developers):**
 >
-> **Comparison:** While on the web, text can exist within many elements (`<p>`, `<span>`, `<h1>`, etc.) or even as bare text nodes within a `<div>`, React Native is stricter. All text _must_ be inside a `<Text>` component. Think of `<Text>` as a universal text container. Style inheritance for text properties (like `color` or `fontSize`) only works between nested `<Text>` components, not from a parent `<View>` to a child `<Text>` as it might with CSS inheritance from a `<div>` to a `<p>`.
+> **Comparison:** While on the web, text can exist within many elements (`<p>`, `<span>`, `<h1>`, etc.) or even as bare text nodes within a `<div>`, React Native is stricter. All text _must_ be inside a `<Text>` component. Think of `<Text>` as a universal text container. Style inheritance for text properties (like `color` or `fontSize`) only works between nested `<Text>` components, not from a parent `<View>` to a child `<Text>` as it might with CSS inheritance from a `<div>` to a `<p>`. The layout of elements _within_ a `<Text>` component follows text flow rules (inline, wrapping), whereas `<Text>` itself, when placed in a `<View>`, behaves according to Flexbox rules applied to that `<View>`.
 >
 > **Key Takeaway:** Always wrap your text in `<Text>`. Nested `<Text>` components allow for rich text styling through inheritance.
 >
@@ -32,23 +55,43 @@ The `<Text>` component is used to render strings of text. Unlike on the web wher
 
 ### Referential Content: Common `<Text>` Props
 
-Here are some common props for the `<Text>` component:
+Here is a table summarizing some of the most common and important props for the `<Text>` component:
 
-- `style`: Accepts a style object (or an array of style objects) to define the text's appearance. Common text-specific style properties include `color`, `fontFamily`, `fontSize`, `fontStyle`, `fontWeight`, `letterSpacing`, `lineHeight`, `textAlign`, `textDecorationLine`, `textShadowColor`, `textShadowOffset`, `textShadowRadius`, `textTransform`.
-  - _Type:_ `StyleProp<TextStyle>`
-- `children`: The text string or other nested `<Text>` components to display.
-  - _Type:_ `React.ReactNode`
-- `numberOfLines`: (number) Used to truncate the text with an ellipsis after a specific number of lines.
-- `ellipsizeMode`: (enum: `'head'`, `'middle'`, `'tail'`, `'clip'`) Specifies how text should be truncated if `numberOfLines` is set. Default is `'tail'`.
-- `onPress`: (function) A handler to be called when the text is pressed. This makes the text behave like a button or link.
-- `selectable`: (boolean) When `true`, the text can be selected and copied by the user. Default is `false`.
-- `accessibilityLabel`, `accessibilityHint`, `accessibilityRole`: Similar to `<View>`, these props enhance accessibility.
+| Prop                   | Type                                     | Description                                                                                                             |
+| ---------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- | ------- | --------------------------------------------------------------------------------------- |
+| `style`                | `StyleProp<TextStyle>`                   | Applies text-specific styles (color, font, alignment, etc.).                                                            |
+| `children`             | `React.ReactNode`                        | The text content or nested `<Text>` components.                                                                         |
+| `numberOfLines`        | `number`                                 | Truncates text to this many lines. `0` for no limit.                                                                    |
+| `ellipsizeMode`        | `'head' \\                               | 'middle' \\                                                                                                             | 'tail' \\ | 'clip'` | Determines how text is truncated when `numberOfLines` is exceeded. Default is `'tail'`. |
+| `onPress`              | `(event: GestureResponderEvent) => void` | Callback invoked when the text is pressed.                                                                              |
+| `selectable`           | `boolean`                                | If true, text can be selected by the user for copy-paste. Default `false`.                                              |
+| `accessibilityLabel`   | `string`                                 | Overrides the text read by screen readers.                                                                              |
+| `accessibilityHint`    | `string`                                 | An accessibility hint helps users understand what will happen when they perform an action on the accessibility element. |
+| `accessibilityRole`    | `AccessibilityRole`                      | Communicates the purpose of a component to the user of an assistive technology.                                         |
+| `allowFontScaling`     | `boolean`                                | Whether fonts should scale to respect Text Size accessibility settings. Default is `true`.                              |
+| `adjustsFontSizeToFit` | `boolean` (iOS only)                     | Automatically adjusts font size to fit within the component's bounds.                                                   |
+| `minimumFontScale`     | `number` (iOS only)                      | Used with `adjustsFontSizeToFit` to set a minimum font scale factor.                                                    |
 
 > 📚 **Official Documentation:**
 >
+> - [React Native Docs: Text](https://reactnative.dev/docs/text)
 > - [React Native Docs: Text Props](https://reactnative.dev/docs/text-props)
 > - [React Native Docs: Text Style Props](https://reactnative.dev/docs/text-style-props)
 > - [Expo Docs: Text](https://docs.expo.dev/ui-programming/text/)
+> - _(Native Docs)_ [Apple Developer: UILabel](https://developer.apple.com/documentation/uikit/uilabel)
+> - _(Native Docs)_ [Apple Developer: UITextView](https://developer.apple.com/documentation/uikit/uitextview) (Relevant for selection capabilities)
+> - _(Native Docs)_ [Android Developer: TextView](https://developer.android.com/reference/android/widget/TextView)
+
+### "Under the Hood": `<Text>` Internals
+
+**Native Mapping:**
+
+- On iOS, the React Native `<Text>` component typically maps to a native `UILabel`. `UILabel` is efficient for displaying static or simple styled text.
+- On Android, it maps to `android.widget.TextView`.
+- When `selectable={true}` is used, or if more advanced text interaction features are needed, React Native might internally use or configure the underlying native component differently. For instance, on iOS, this could involve behavior closer to `UITextView`, which offers more robust text selection capabilities.
+
+**Fabric Architecture:**
+In the Fabric architecture, a `TextShadowNode` is responsible for managing the properties and layout of `<Text>` components. Text layout itself is a complex process that often relies on native platform capabilities (e.g., CoreText on iOS, Android's text layout engine). Fabric, with JSI, allows for more efficient communication and coordination with these native text layout and rendering systems. For instance, measuring text size, which is crucial for layout, can be done more synchronously if needed.
 
 ### Procedural Content: Basic `<Text>` Usage
 

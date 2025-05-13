@@ -6,26 +6,26 @@ Styling is a crucial aspect of creating visually appealing and user-friendly app
 
 In React Native, you don't use CSS directly as you would in web development. Instead, styles are defined using JavaScript objects. The `StyleSheet` API provides a way to create these style objects with several benefits:
 
-- **Performance:** `StyleSheet.create()` can send styles to the native side only once during the initial render, potentially optimizing performance by avoiding passing new style objects on every render. It also helps in validating your style properties.
+- **Performance:** `StyleSheet.create()` can send styles to the native side only once during the initial render (by assigning them an ID), potentially optimizing performance by avoiding passing new style objects on every render.
 - **Organization:** It encourages you to define styles in a centralized place, separate from your component's render logic, leading to cleaner and more maintainable code.
 - **Readability:** Using named styles (e.g., `styles.container`, `styles.title`) makes your component's JSX more readable than using inline style objects directly.
-- **Validation:** `StyleSheet.create` can perform some validation of your style properties, helping catch typos or invalid values early.
+- **Validation and Static Analysis:** `StyleSheet.create()` helps in catching errors related to style properties or values during development. When used with type systems like TypeScript or Flow, it can provide static type checking and autocompletion.
 
 Styles in React Native are similar to CSS, but property names are typically camelCased (e.g., `backgroundColor` instead of `background-color`, `fontSize` instead of `font-size`). Values can be strings (e.g., `'#FFF'`, `'center'`), numbers (e.g., `10`, `1.5`), or platform-specific constants.
 
 **Key Characteristics of Styling in React Native:**
 
 - **JavaScript Objects:** Styles are defined as plain JavaScript objects.
-- **CamelCase Properties:** CSS property names are converted to camelCase (e.g., `background-color` becomes `backgroundColor`).
-- **No Cascading (Mostly):** Unlike CSS on the web, styles are not inherited from parent `<View>` components to child `<View>` or `<Text>` components in the same way (except for text properties within nested `<Text>` components, as discussed in Section 3). Each component typically needs its styles applied directly or through props.
-- **Flexbox by Default:** `<View>` components use Flexbox for layout by default. This is the primary layout system in React Native (covered in detail in Module 10).
+- **CamelCase Properties:** CSS property names are converted to camelCase.
+- **No Cascading (Mostly):** Unlike CSS on the web, styles are not inherited from parent `<View>` components to child `<View>` or `<Text>` components in the same way (except for text properties within nested `<Text>` components). Each component typically needs its styles applied directly.
+- **Flexbox by Default:** `<View>` components use Flexbox for layout by default (covered in Module 10).
 - **Units:** Dimension values (like `width`, `height`, `margin`, `padding`, `fontSize`) are generally unitless and represent density-independent pixels (dp).
 
 > 📲 **(Native Developers):**
 >
-> **Comparison:** Styling in React Native with `StyleSheet` is different from using XML layouts (Android) or Interface Builder/programmatic constraints (iOS). You define styles in JavaScript. Flexbox for layout is a key concept to grasp, which might differ from native layout systems like Auto Layout or ConstraintLayout.
+> **Comparison:** Styling in React Native with `StyleSheet` is different from using XML layouts and `<style>` resources (Android) or Interface Builder/programmatic constraints (iOS). You define styles in JavaScript. Flexbox for layout is a key concept. There's no direct equivalent to Android's theme system for global styling; theming is custom-built.
 >
-> **Key Takeaway:** Styles are JavaScript objects. `StyleSheet.create` is the preferred way to define them for organization and potential performance benefits.
+> **Key Takeaway:** Styles are JavaScript objects. `StyleSheet.create` is the preferred way for organization and potential performance benefits. Units are density-independent pixels by default.
 >
 > **Source:** [React Native Docs: StyleSheet](https://reactnative.dev/docs/stylesheet)
 
@@ -33,60 +33,98 @@ Styles in React Native are similar to CSS, but property names are typically came
 >
 > **Comparison:** While you use JavaScript for styling instead of CSS files, many CSS concepts apply. Property names are camelCased. Flexbox is the dominant layout model. The biggest difference is the lack of global CSS cascading and selectors. Styles are scoped to components.
 >
-> **Key Takeaway:** Think of `StyleSheet` objects as similar to CSS rules, but written in JavaScript and scoped locally. Flexbox knowledge is highly transferable.
+> **Key Takeaway:** Think of `StyleSheet` objects as similar to CSS rules, but written in JavaScript and scoped locally. Flexbox knowledge is highly transferable. React Native uses unitless numbers for density-independent pixels, differing from CSS units like `px`, `em`, `rem`.
 >
 > **Source:** [React Native Docs: Style](https://reactnative.dev/docs/style)
 
-### Referential Content: Using `StyleSheet.create()`
+### Referential Content: `StyleSheet` API
 
-The most common way to define styles is using `StyleSheet.create()`:
+**1. `StyleSheet.create(styles)`:**
+
+The most common way to define styles:
 
 ```typescript
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    /* ... */
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
+    /* ... */
   },
-  // Add more named styles here
 });
 ```
 
-- You import `StyleSheet` from `react-native`.
-- You call `StyleSheet.create()` with an object where keys are style names (e.g., `container`, `title`) and values are style objects containing the actual style properties.
-- You then apply these styles to your components using the `style` prop: `<View style={styles.container}>` or `<Text style={styles.title}>`.
+- Call `StyleSheet.create()` with an object where keys are style names and values are style objects.
+- Apply with `style={styles.container}`.
 
-**Applying Multiple Styles:**
-You can apply multiple styles to a component by passing an array to the `style` prop. Styles later in the array will override earlier ones if they have conflicting properties.
-
-```tsx
-<Text style={[styles.baseText, styles.highlightedText]}>Important Info</Text>
-```
-
-**Conditional Styles:**
-You can also apply styles conditionally:
+**2. Applying Multiple Styles:**
+Pass an array to the `style` prop. Later styles override earlier ones.
+`false`, `null`, or `undefined` values in the array are ignored.
 
 ```tsx
-<View style={[styles.card, isActive && styles.activeCard]}>...</View>
-// or
-<View style={isUrgent ? styles.urgentItem : styles.normalItem}>...</View>
+<Text
+  style={[
+    styles.baseText,
+    styles.highlightedText,
+    isActive && styles.activeStyle,
+  ]}
+/>
 ```
+
+**3. Other `StyleSheet` Utilities:**
+
+| API Element                     | Description                                                                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `StyleSheet.flatten(style)`     | Merges an array of style objects (or registered style IDs) into a single plain JavaScript object. Useful for debugging or introspection. |
+| `StyleSheet.compose(s1, s2)`    | Combines two styles, with `s2` overriding `s1`. Returns one style if the other is falsy, avoiding array allocation.                      |
+| `StyleSheet.absoluteFill`       | A pre-registered style object for `{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }`.                                      |
+| `StyleSheet.absoluteFillObject` | A plain object version of `absoluteFill`.                                                                                                |
+| `StyleSheet.hairlineWidth`      | A constant for the thinnest possible line width on the current device (typically 1 physical pixel, as a density-independent value).      |
+
+**Table: React Native Style Property vs. CSS Equivalent (Common Examples)**
+
+| React Native Style (camelCase)    | CSS Equivalent (kebab-case)    | Notes                                                                                                                              |
+| --------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `backgroundColor`                 | `background-color`             |                                                                                                                                    |
+| `color`                           | `color`                        | (For `<Text>` components)                                                                                                          |
+| `fontSize`                        | `font-size`                    | Unitless number in RN (dp), various units in CSS (px, em, rem).                                                                    |
+| `fontWeight`                      | `font-weight`                  | Supports `'normal'`, `'bold'`, and string/number weights like `'400'`, `500`.                                                      |
+| `margin`                          | `margin`                       | Single value for all sides. Specific sides: `marginTop`, `marginLeft`, etc.                                                        |
+| `padding`                         | `padding`                      | Single value for all sides. Specific sides: `paddingTop`, `paddingLeft`, etc.                                                      |
+| `width`, `height`                 | `width`, `height`              | Unitless number (dp) or percentage string (e.g., `'50%'`) in RN.                                                                   |
+| `flex`                            | `flex`                         | In RN, typically a single number (e.g., `flex: 1`).                                                                                |
+| `flexDirection`                   | `flex-direction`               | Default is `'column'` in RN, `'row'` in web CSS.                                                                                   |
+| `alignItems`                      | `align-items`                  |                                                                                                                                    |
+| `justifyContent`                  | `justify-content`              |                                                                                                                                    |
+| `borderRadius`                    | `border-radius`                | Single value for all corners. Specific corners: `borderTopLeftRadius`, etc.                                                        |
+| `borderWidth`                     | `border-width`                 | Single value for all sides. Specific sides: `borderTopWidth`, etc.                                                                 |
+| `position: 'absolute'`            | `position: absolute;`          |                                                                                                                                    |
+| `transform: [{ translateX: 10 }]` | `transform: translateX(10px);` | RN `transform` is an array of objects. CSS `transform` is a space-separated list of functions. Angles as strings (e.g. `'45deg'`). |
 
 > 📚 **Official Documentation:**
 >
 > - [React Native Docs: StyleSheet API](https://reactnative.dev/docs/stylesheet)
+> - [React Native Docs: Style Prop](https://reactnative.dev/docs/style)
 > - [React Native Docs: View Style Props](https://reactnative.dev/docs/view-style-props)
 > - [React Native Docs: Text Style Props](https://reactnative.dev/docs/text-style-props)
 > - [React Native Docs: Image Style Props](https://reactnative.dev/docs/image-style-props)
+> - [React Native Docs: Layout Props (Flexbox)](https://reactnative.dev/docs/layout-props)
+> - [React Native Docs: Transforms](https://reactnative.dev/docs/transforms)
 > - [Expo Docs: Styling](https://docs.expo.dev/ui-programming/styling/)
+> - _(Web Reference)_ [MDN CSS Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+### "Under the Hood": How StyleSheet Translates to Native Styles
+
+When `StyleSheet.create()` is used, React Native processes these JavaScript style objects:
+
+1.  **ID Assignment & Caching:** For styles defined in `StyleSheet.create()`, React Native typically assigns a unique ID to each style rule object. These style objects and their IDs are registered.
+2.  **Bridge Transmission (Legacy Architecture):** When a component renders with a style like `styles.myStyle`, instead of sending the entire JavaScript style object over the bridge for every instance, React Native often sent just the pre-computed ID. The native side (UIManager) maintained a registry and looked up the full style definition using the ID. This significantly reduced data transfer.
+3.  **Native Translation:** The native rendering system (UIManager in legacy, or Fabric's rendering pipeline in the New Architecture) takes these style definitions (resolved by ID or passed as inline objects for dynamic styles) and translates them into the corresponding native view properties or layout parameters. For example, `{ backgroundColor: 'blue', width: 100 }` applied to a `<View>` would instruct the native side to create/update a `UIView` (iOS) or `android.view.View` (Android) and set its background color and width.
+4.  **Layout with Yoga:** Flexbox styles (e.g., `flex: 1`, `alignItems: 'center'`) are interpreted by the Yoga layout engine. Yoga calculates the positions and sizes (frames: x, y, width, height) of all elements. These results are then applied to the native views.
+
+Even with the New Architecture's JSI (which largely eliminates the bridge bottleneck), the principle of efficiently defining and referencing styles remains important for performance. Styles are processed and applied to shadow nodes, which then inform the native view updates.
 
 ### Procedural Content: Basic Styling Example
 
