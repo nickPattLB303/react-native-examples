@@ -72,11 +72,15 @@ While convenient, inline styles have several drawbacks, especially if overused:
 
 2.  **Reusability:** Inline styles are not easily reusable across multiple components or even multiple instances of the same component if the styles are identical. `StyleSheet` allows you to define a style once and reference it many times.
 
-3.  **Performance (Potentially):** For static styles, `StyleSheet.create` can offer performance benefits because the style objects are created once and identified by an ID. Inline style objects are often recreated on every render (if defined as new literals within the render function). While React Native is optimized for this, in performance-critical scenarios with many components or frequent re-renders, this could contribute to overhead. The `StyleSheet` module can also perform optimizations like sending styles to the native side only once.
+3.  **Performance Considerations:** For static styles, `StyleSheet.create` offers clear performance benefits because the style objects are created once and identified by an ID. Inline style objects, especially if defined as new object literals within the render function (e.g., `style={{ color: 'blue' }}`), are often recreated on every render. This can lead to:
 
-4.  **No Validation (Typically):** Unlike styles created with `StyleSheet.create`, inline styles generally don't undergo the same level of validation in development mode. This means typos in property names or invalid values might not be caught as easily.
+    - Increased JavaScript execution time to create these new objects.
+    - More work for the garbage collector to clean up these short-lived objects.
+    - Potentially more data being serialized and sent to the native side if these objects are passed across the bridge (though React Native has optimizations, frequent creation of new, complex style objects can still contribute to overhead, especially in lists or frequently updated components).
 
-5.  **Lack of Organization:** As an application grows, relying heavily on inline styles can lead to a disorganized and inconsistent styling approach, making maintenance and theming more difficult.
+4.  **Limited Tooling and Validation:** Unlike styles created with `StyleSheet.create`, inline styles generally do not benefit from the same level of static analysis, autocompletion for style properties, or advanced type-checking that IDEs can provide for `StyleSheet` objects. Furthermore, `StyleSheet.create` can perform validations on style properties and values in development mode, helping to catch typos or invalid styles early, a feature typically bypassed by inline styles.
+
+5.  **Lack of Organization:** As an application grows, relying heavily on inline styles can lead to a disorganized and inconsistent styling approach, making maintenance, refactoring, and theming more difficult.
 
 > 🌐 **(Web Developers):**
 >

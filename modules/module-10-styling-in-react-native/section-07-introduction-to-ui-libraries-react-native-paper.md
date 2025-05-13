@@ -44,18 +44,19 @@ To use React Native Paper (version 5, as specified in our course blueprint) in y
     yarn add react-native-paper@^5.0.0
     ```
 
-2.  **Install Peer Dependencies (Icons):**
-    React Native Paper uses `react-native-vector-icons` for its icons. Expo projects usually handle this well, but it's good to ensure it's listed or install it explicitly if needed.
+2.  **Install Peer Dependencies (Icons & Safe Area):**
+    React Native Paper uses `react-native-vector-icons` for its icons and `react-native-safe-area-context` for proper safe area handling, especially with components like `Appbar`.
 
     ```bash
     # Using npm
-    npm install react-native-vector-icons
+    npm install react-native-vector-icons react-native-safe-area-context
 
     # Or using yarn
-    yarn add react-native-vector-icons
+    yarn add react-native-vector-icons react-native-safe-area-context
     ```
 
-    Expo Go typically includes `react-native-vector-icons`, so this step might just ensure your `package.json` is explicit. If you were ejecting or building for production, this dependency would be critical.
+    - **For Expo Go users:** Expo Go typically includes `react-native-vector-icons` and `react-native-safe-area-context`, so these commands primarily ensure your `package.json` is explicit and versions are aligned. No further native linking is usually required for Expo Go.
+    - **For Development Builds / Non-Expo projects:** If you are creating development builds or working in a non-Expo (vanilla React Native) project, you MUST ensure `react-native-vector-icons` is correctly linked. This usually involves running `npx pod-install ios` (for iOS) after installation and following the specific [installation guide for `react-native-vector-icons`](https://github.com/oblador/react-native-vector-icons#installation) for both platforms if native assets aren't automatically linked.
 
 3.  **Optional: Setup for Font Customization (if not using default Material font)**
     If you want to use custom fonts globally with React Native Paper components, you'll need to configure the theme, which we will cover in a later section. For now, the default Material Design font (Roboto for Android, San Francisco for iOS, or platform defaults) will be used.
@@ -65,7 +66,7 @@ To use React Native Paper (version 5, as specified in our course blueprint) in y
 
 ### Basic Setup (Conceptual)
 
-After installation, you'll typically wrap your application (or a portion of it) with React Native Paper's `PaperProvider`. This component provides the theme to all Paper components within its subtree. If you don't provide a custom theme, a default Material Design theme is used.
+After installation, you'll typically wrap your application (or a portion of it) with React Native Paper's `PaperProvider`. This component provides the theme to all Paper components within its subtree and also acts as a portal for components like `Modal` or `Snackbar` to ensure they are rendered at the top level of your app. If you don't provide a custom theme, a default Material Design theme is used.
 
 ```tsx
 // App.tsx (Conceptual - We will integrate this more deeply later)
@@ -84,6 +85,9 @@ export default function App() {
 ```
 
 This setup makes the theme (default or custom) available to all React Native Paper components used within `MainNavigator`.
+
+> [!NOTE]
+> If you are using other global providers in your application (e.g., for navigation like React Navigation, or for state management like Redux), ensure that `PaperProvider` is placed appropriately in the component tree. Often, `PaperProvider` will wrap your main navigation/app content, but it might be nested inside other providers like a navigation container. Consult the documentation for any other global providers you use to determine the best hierarchy.
 
 > 🌐 **(Web Developers):**
 >

@@ -203,6 +203,70 @@ const PrimaryButtonText = styled.Text`
 - For example, `background-color: ${(props) => props.theme.colors.background};` sets the background color of the `ThemedContainer` to the `background` color defined in the currently active theme.
 - If you toggle the theme in `App.tsx` (e.g., by changing `isDarkMode`), all components using `props.theme` will automatically re-render with the new theme values.
 
+**4. Accessing Theme with `useTheme` Hook (Alternative)**
+
+In addition to accessing the theme via `props.theme` directly within the tagged template literals of your styled components, `styled-components/native` also provides a `useTheme` hook. This hook can be useful if you need to access theme values within the logic of your functional component, for example, to pass to a non-styled child component or to use in calculations.
+
+```tsx
+import styled, { useTheme } from "styled-components/native";
+import { View, Text } from "react-native"; // Standard RN components
+import { AppTheme } from "./themes/speedyMedsTheme"; // Assuming your theme type is exported
+
+// Styled component remains the same
+const InfoBox = styled.View`
+  padding: ${(props) => props.theme.spacing.md};
+  border-radius: ${(props) => props.theme.borderRadius};
+  border: 1px solid ${(props) => props.theme.colors.secondary};
+  margin-bottom: ${(props) => props.theme.spacing.sm};
+`;
+
+const InfoText = styled.Text`
+  color: ${(props) => props.theme.colors.textSecondary};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`;
+
+// Example SpeedyMeds component using useTheme hook
+const PatientAdvisoryNotice = ({ message }: { message: string }) => {
+  const theme = useTheme() as AppTheme; // Cast to AppTheme for type safety
+
+  // Here, theme values can be used for logic, passed to other components,
+  // or used for styles on standard React Native components.
+  const dynamicTextStyle = {
+    color: theme.colors.error, // Accessing theme color
+    fontSize: parseFloat(theme.fonts.sizes.medium), // Using theme font size
+    marginTop: parseFloat(theme.spacing.xs),
+  };
+
+  return (
+    <InfoBox>
+      <Text
+        style={{
+          fontWeight: theme.fonts.weights.bold,
+          color: theme.colors.text,
+        }}
+      >
+        Important Advisory:
+      </Text>
+      <Text style={dynamicTextStyle}>{message}</Text>
+      <InfoText>
+        Please consult your pharmacist if you have any questions. Contact line:
+        1800-MEDS-INFO (using theme color: {theme.colors.primary})
+      </InfoText>
+    </InfoBox>
+  );
+};
+
+// Usage:
+// <PatientAdvisoryNotice message="Ensure medication is stored below 25°C." />
+```
+
+**Explanation of `useTheme` Example:**
+
+- We import `useTheme` from `styled-components/native`.
+- Inside the `PatientAdvisoryNotice` functional component, `const theme = useTheme() as AppTheme;` retrieves the current theme object. We cast it to `AppTheme` (our defined theme interface) to get TypeScript autocompletion and type safety when accessing `theme.colors.error`, etc.
+- The `dynamicTextStyle` object is created using values from the theme. This style object is then applied to a standard React Native `<Text>` component.
+- This demonstrates the flexibility of `useTheme` for accessing theme properties outside the direct context of a styled component's template literal.
+
 ### Best Practices for Theming
 
 - **Comprehensive Theme Object:** Define as many common design values (colors, typography, spacing, border radii, shadows) as possible in your theme to maximize consistency.

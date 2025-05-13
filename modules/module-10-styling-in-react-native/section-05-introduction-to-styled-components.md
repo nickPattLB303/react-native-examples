@@ -41,6 +41,7 @@ yarn add --dev @types/styled-components-react-native
 
 > [!IMPORTANT]
 > For React Native, you specifically import from `styled-components/native`.
+> As of `styled-components` v6 and later, the library is written in TypeScript and typically bundles its own type definitions. The separate `@types/styled-components-react-native` package might still be needed for older versions or specific project configurations, but always check the official `styled-components` documentation for the most up-to-date TypeScript integration instructions for the version you are using.
 
 ### Basic Usage
 
@@ -51,10 +52,15 @@ import React from "react";
 import { Text, TouchableOpacityProps } from "react-native";
 import styled from "styled-components/native"; // Import from /native
 
-// Define a styled TouchableOpacity component
-const StyledButtonContainer = styled.TouchableOpacity`
-  background-color: ${(props: { primary?: boolean }) =>
-    props.primary ? "#007bff" : "#6c757d"};
+// Define an interface for the props that StyledButtonContainer will accept for styling
+interface StyledButtonContainerProps {
+  primary?: boolean;
+  disabled?: boolean;
+}
+
+// Define a styled TouchableOpacity component using the interface for its props
+const StyledButtonContainer = styled.TouchableOpacity<StyledButtonContainerProps>`
+  background-color: ${(props) => (props.primary ? "#007bff" : "#6c757d")};
   padding: 12px 20px;
   border-radius: 8px;
   align-items: center;
@@ -62,7 +68,7 @@ const StyledButtonContainer = styled.TouchableOpacity`
   margin-vertical: 10px; /* Example of a CSS-like property */
 
   /* Example of adapting styles based on a prop */
-  opacity: ${(props: { disabled?: boolean }) => (props.disabled ? 0.5 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
 // Define a styled Text component for the button label
@@ -111,8 +117,8 @@ export default SpeedyButton;
     - `styled.Text` creates a styled `Text` component.
 3.  **CSS-like Syntax:** Inside the template literal, you can write CSS-like properties. React Native compatible properties are used (e.g., `backgroundColor`, `borderRadius`, `marginVertical`). Notice `margin-vertical` is a valid way to write it here, though `marginVertical` also works.
 4.  **Adapting Based on Props:**
-    - The `background-color` of `StyledButtonContainer` changes based on the `primary` prop: `background-color: ${(props: { primary?: boolean }) => props.primary ? '#007bff' : '#6c757d'};`.
-    - The `opacity` changes based on the `disabled` prop: `opacity: ${(props: { disabled?: boolean }) => props.disabled ? 0.5 : 1};`.
+    - The `background-color` of `StyledButtonContainer` changes based on the `primary` prop: `background-color: ${(props) => props.primary ? '#007bff' : '#6c757d'};`.
+    - The `opacity` changes based on the `disabled` prop: `opacity: ${(props) => props.disabled ? 0.5 : 1};`.
     - This is a powerful feature where style rules can be functions that receive the component's props and return a style value.
 5.  **Usage:** The `SpeedyButton` component then uses `StyledButtonContainer` and `StyledButtonText` just like regular React Native components, passing props like `primary` and `disabled` to control their appearance.
 

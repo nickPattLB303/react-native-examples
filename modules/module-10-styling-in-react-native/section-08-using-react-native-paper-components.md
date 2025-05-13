@@ -30,7 +30,7 @@ const SpeedyMedsAppbar: React.FC<SpeedyMedsAppbarProps> = ({
   const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
   return (
-    <Appbar.Header>
+    <Appbar.Header mode="large" elevated>
       {showBackButton && <Appbar.BackAction onPress={onBackPress} />}
       <Appbar.Content title={title} />
       {onMorePress && <Appbar.Action icon={MORE_ICON} onPress={onMorePress} />}
@@ -60,7 +60,7 @@ export default SpeedyMedsAppbar;
 
 **Explanation:**
 
-- `Appbar.Header`: The main container for the app bar.
+- `Appbar.Header`: The main container for the app bar. Per Material Design 3, `Appbar.Header` has different modes (via the `mode` prop: `'small'` (default), `'medium'`, `'large'`, `'center-aligned'`) that affect its height and how the title is displayed, especially with scrolling. The `elevated` prop can be used to add a surface tint color and shadow according to MD3 elevation system.
 - `Appbar.BackAction`: A standard back button icon and action.
 - `Appbar.Content`: Used to display the title of the app bar.
 - `Appbar.Action`: Used for displaying icon buttons for actions. We use a platform-specific icon for "more options".
@@ -122,9 +122,12 @@ export default PrescriptionActions;
 
 **Explanation:**
 
-- `mode="contained"`: A filled button, typically for primary actions.
-- `mode="outlined"`: A button with a border and no fill, for secondary actions.
-- `mode="text"`: A flat button with no border or fill, often for less prominent actions.
+- `mode="contained"`: A filled button, typically for primary actions. In MD3, this offers strong emphasis.
+- `mode="outlined"`: A button with a border and no fill, for medium emphasis secondary actions.
+- `mode="text"`: A flat button with no border or fill, often for low emphasis actions.
+- **MD3 Modes**: React Native Paper v5 Buttons also include additional Material Design 3 modes like:
+  - `mode="elevated"`: An elevated button with a shadow, offering slightly less emphasis than `contained`.
+  - `mode="contained-tonal"`: A filled button that uses a secondary theme color, offering a medium emphasis often used for actions like "Add to cart" in a product card where the primary action is "Buy now".
 - `icon` prop can take the name of any Material Community Icon.
 - `style` prop can be used to apply additional custom styles.
 
@@ -198,7 +201,7 @@ export default PatientSearchInput;
 **Explanation:**
 
 - `label`: The floating label for the input.
-- `mode="outlined"`: Provides an outlined style for the input field.
+- `mode="outlined"`: Provides an outlined style for the input field. Another common mode is `'flat'`. Both styles, along with their behavior for states (focus, error), colors, and density, adhere to Material Design 3 guidelines in Paper v5.
 - `left` and `right` props can take `TextInput.Icon` to add icons inside the input field.
 - `error` prop highlights the input if there's an error.
 - `HelperText` component can be used to display messages below the input, including error messages.
@@ -279,12 +282,138 @@ export default PrescriptionDetailCard;
 
 **Explanation:**
 
-- `Card`: The main container.
+- `Card`: The main container. With Paper v5, `Card` components can have different visual styles based on the `mode` prop, aligning with Material Design 3: `'elevated'` (default, with shadow), `'outlined'` (with a border), and `'contained'` (less distinct, often for grouping content within a larger surface).
 - `Card.Title`: Displays a title, subtitle, and can include `left` or `right` elements (like an `Avatar.Icon`).
 - `Card.Content`: For the main body of the card.
 - `Card.Cover`: (Not used here) For displaying an image at the top of the card.
 - `Card.Actions`: A container for action buttons at the bottom of the card.
 - `Text` with `variant` prop can be used to quickly apply Material Design type scale styles.
+
+### `Text` for Displaying Themed Typography
+
+While React Native's core `<Text>` component is fundamental, React Native Paper's `Text` component is integrated with the Paper theme, especially its Material Design 3 type scale. By using the `variant` prop, you can apply standardized typographic styles consistently.
+
+```tsx
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Text, Card } from "react-native-paper";
+
+// Example showcasing different Text variants in SpeedyMeds context
+const TypographyDemoScreen = () => {
+  return (
+    <Card style={styles.container}>
+      <Card.Content>
+        <Text variant="displayLarge" style={styles.textSample}>
+          Display Large (Patient Name)
+        </Text>
+        <Text variant="headlineMedium" style={styles.textSample}>
+          Headline Medium (Section Title)
+        </Text>
+        <Text variant="titleSmall" style={styles.textSample}>
+          Title Small (Card Subheader)
+        </Text>
+        <Text variant="bodyLarge" style={styles.textSample}>
+          Body Large: Your next refill for Amoxicillin 250mg is scheduled for
+          tomorrow.
+        </Text>
+        <Text variant="labelMedium" style={styles.textSample}>
+          Label Medium (Button Text / Caption)
+        </Text>
+      </Card.Content>
+    </Card>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 16,
+    padding: 8,
+  },
+  textSample: {
+    marginBottom: 12,
+  },
+});
+
+export default TypographyDemoScreen;
+```
+
+**Explanation:**
+
+- The `variant` prop on `Text` (e.g., `displayLarge`, `headlineMedium`, `bodyLarge`, `labelMedium`) automatically applies font size, weight, and line height according to the Material Design 3 type scale defined in your Paper theme.
+- This ensures typographic consistency across your SpeedyMeds app and makes it easy to update typography globally by customizing the theme.
+
+### `ActivityIndicator` for Loading States
+
+The `ActivityIndicator` component displays a circular loading spinner, useful for indicating background processes or data fetching in your SpeedyMeds app.
+
+```tsx
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, Card, Button } from "react-native-paper";
+
+// Example ActivityIndicator for SpeedyMeds loading state
+const PrescriptionList = () => {
+  const [loading, setLoading] = useState(true);
+  const [prescriptions, setPrescriptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Simulate fetching data
+    const timer = setTimeout(() => {
+      setPrescriptions(["Lisinopril 10mg", "Metformin 500mg"]);
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator animating={true} size="large" />
+        <Text style={{ marginTop: 8 }} variant="bodyMedium">
+          Loading prescriptions...
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <Card style={styles.card}>
+      <Card.Title title="Your Prescriptions" />
+      <Card.Content>
+        {prescriptions.map((rx, index) => (
+          <Text key={index} variant="bodyLarge" style={styles.listItem}>
+            {rx}
+          </Text>
+        ))}
+      </Card.Content>
+    </Card>
+  );
+};
+
+const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  card: {
+    margin: 16,
+  },
+  listItem: {
+    paddingVertical: 8,
+  },
+});
+
+export default PrescriptionList;
+```
+
+**Explanation:**
+
+- `ActivityIndicator` is imported from `react-native-paper`.
+- `animating={true}` (or simply `animating`): Controls whether the indicator is visible and spinning. Defaults to `true`.
+- `size` prop can be `'small'`, `'large'`, or a number specifying the diameter.
+- `color` prop can be used to set a custom color. If not provided, it defaults to the theme's primary color, aligning with Material Design 3 guidance.
 
 These examples showcase just a few of the many components available in React Native Paper. By combining these components, you can build complex and visually appealing UIs for SpeedyMeds with relative ease.
 
