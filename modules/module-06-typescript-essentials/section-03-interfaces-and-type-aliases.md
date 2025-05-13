@@ -516,8 +516,6 @@ Now it's time to practice defining your own interfaces.
 
 **Access the Exercise:**
 
-**(https://codesandbox.io/s/speedymeds-ts-interfaces-exercise-placeholder)** (Note: This is a placeholder link. A live CodeSandbox link with setup will be provided.)
+**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_EXERCISE_6.1_HERE]**
 
 ---
-
-Course Creation Guidelines Complete

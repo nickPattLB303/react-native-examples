@@ -336,5 +336,3 @@ Understanding how to type functions effectively is crucial for writing robust an
 In the next section, we will explore generics, which allow you to write reusable, type-safe functions and classes that can work with a variety of types.
 
 ---
-
-Course Creation Guidelines Complete

@@ -62,7 +62,7 @@ Upon completing this module, you will be able to:
 
 Before starting this module, you should have a solid understanding of JavaScript, as covered in:
 
-- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-00-introduction.md) (TODO: Verify this link path structure)
+- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-00-introduction.md)
 
 Familiarity with fundamental React concepts (Module 7) will be helpful for context, but this module primarily focuses on TypeScript language features.
 
@@ -85,7 +85,7 @@ At the end of this module, you will apply your knowledge in a practical challeng
 
 - **Challenge 6: Typing a Pharmacy API Response**
   - You will define TypeScript interfaces and types to accurately represent a complex JSON response from a mock SpeedyMeds pharmacy API.
-  - **(https://codesandbox.io/s/speedymeds-ts-challenge-placeholder)** (Note: This is a placeholder link. A live CodeSandbox link will be provided.)
+  - **[INSERT_ACTUAL_CODESANDBOX_LINK_HERE]**
 
 > [!IMPORTANT]
 > Starting with this module, all subsequent JavaScript, React, and React Native code examples and exercises throughout this course MUST be written in TypeScript. This is a critical step towards production-level development.
@@ -105,5 +105,3 @@ For further exploration of TypeScript, refer to the official documentation:
 > - [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/)
 
 ---
-
-Course Creation Guidelines Complete

@@ -216,10 +216,8 @@ The SpeedyMeds system needs to fetch comprehensive details for a medication. The
 
 **Access the Challenge:**
 
-**(https://codesandbox.io/s/speedymeds-ts-challenge-placeholder)** (Note: This is a placeholder link. A live CodeSandbox link with a basic setup and the JSON data will be provided.)
+**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_CHALLENGE_6_HERE]**
 
 This challenge does not require writing functions to process the data, only to accurately define the types for it. Good luck!
 
 ---
-
-Course Creation Guidelines Complete

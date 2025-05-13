@@ -319,8 +319,6 @@ Let's put your understanding of generics into practice.
 
 **Access the Exercise:**
 
-**(https://codesandbox.io/s/speedymeds-ts-generics-exercise-placeholder)** (Note: This is a placeholder link. A live CodeSandbox link with setup will be provided.)
+**[INSERT_ACTUAL_CODESANDBOX_LINK_FOR_EXERCISE_6.2_HERE]**
 
 ---
-
-Course Creation Guidelines Complete

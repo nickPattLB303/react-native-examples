@@ -448,5 +448,3 @@ These basic types and foundational concepts form the building blocks for more co
 In the next section, we'll explore how to define more complex shapes for our data using interfaces and type aliases.
 
 ---
-
-Course Creation Guidelines Complete

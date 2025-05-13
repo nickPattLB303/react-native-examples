@@ -198,5 +198,3 @@ Alternatives to enums in some cases include using string literal union types (e.
 Enums provide a clean and type-safe way to work with sets of named constants, making your SpeedyMeds application logic clearer and more robust.
 
 ---
-
-Course Creation Guidelines Complete
