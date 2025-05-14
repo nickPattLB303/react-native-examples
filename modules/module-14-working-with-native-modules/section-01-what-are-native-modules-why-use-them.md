@@ -23,6 +23,40 @@ In older versions of React Native (pre-0.68, approximately, though the transitio
 - **Native Execution:** The native side would deserialize the message, identify the target module and method, convert the arguments to native types, and invoke the native code.
 - **Callback (Optional):** If the JavaScript call expected a result (via a callback or Promise), the native code would execute, potentially perform its own asynchronous operations, and eventually send a result back across the Bridge, again involving serialization and deserialization.
 
+```mermaid
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code] --> Format_Msg[Format Message (Module, Method, Args)];
+        Format_Msg --> Serialize_JSON[Serialize to JSON];
+        Serialize_JSON --> JS_Queue[Enqueue Message];
+    end
+
+    subgraph Native Realm
+        Native_Queue[Dequeue Message] --> Deserialize_JSON[Deserialize JSON];
+        Deserialize_JSON --> Native_Lookup[Lookup Native Module/Method];
+        Native_Lookup --> Execute_Native[Execute Native Code];
+        Execute_Native --> Native_Result[Native Result];
+        Native_Result --> Format_Callback_Msg[Format Callback Message (Optional)];
+        Format_Callback_Msg --> Serialize_Callback_JSON[Serialize to JSON (Optional)];
+        Serialize_Callback_JSON --> Native_Queue_Callback[Enqueue Callback Message (Optional)];
+    end
+
+    JS_Queue --> Bridge_Transit[Bridge (Async Message Passing)];
+    Bridge_Transit --> Native_Queue;
+
+    Native_Queue_Callback ==> Bridge_Return_Transit[Bridge (Async Message Passing)];
+    Bridge_Return_Transit ==> JS_Code_Callback[JavaScript Receives Callback/Promise Resolution (Optional)];
+
+    style Bridge_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style Bridge_Return_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style JS_Code fill:#ccf,stroke:#333,stroke-width:2px
+    style Execute_Native fill:#cfc,stroke:#333,stroke-width:2px
+```
+
+This diagram illustrates the communication flow in React Native's legacy architecture. The process begins in the JavaScript realm where application code intends to invoke a native function. The JavaScript code first formats a message specifying the target native module, the method to be called, and any arguments. This message is then serialized into a JSON string. This JSON payload is enqueued and passed asynchronously across the "Bridge" – a conceptual boundary between the JavaScript and native environments.
+
+On the native side (iOS or Android), the platform's infrastructure dequeues this message. The JSON string is deserialized back into a usable format. The system then looks up the specified native module and method. Once identified, the native code is executed with the provided arguments (after type conversion). If the JavaScript call included a callback or expected a Promise resolution, the native code, after completing its task (which might involve its own asynchronous operations), would prepare a result. This result is then packaged, serialized back into JSON, and sent back across the Bridge to the JavaScript realm, where it's processed by the original callback or Promise. The key characteristics are the asynchronous nature and the JSON serialization/deserialization at each step of the communication.
+
 > [!IMPORTANT] > **Key Characteristics of the Legacy Bridge:** The defining traits of the Bridge were its **asynchronous nature** (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the **serialization overhead** (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
 
 #### New Architecture: JSI (JavaScript Interface)
@@ -33,6 +67,39 @@ The New Architecture introduces a fundamentally different communication layer bu
 - **Synchronous Potential:** The most significant change enabled by JSI is the ability for JavaScript to hold direct references to native objects (represented as C++ Host Objects) and invoke methods on them **synchronously**. This means JS can call a function, execution can jump to C++/native code, perform an operation, and return a result directly back to JS, all within the same "tick" of the JS event loop (assuming the native operation itself is synchronous).
 - **Bypassing Overhead:** JSI eliminates the need for JSON serialization/deserialization for many types of data transfer and bypasses the asynchronous message queue of the legacy bridge. This results in significantly faster and more efficient communication.
 - **Foundation for Modern Modules:** It's critical to understand that modern native module implementations (specifically TurboModules, discussed later) are built on top of JSI. JSI provides the underlying high-performance communication channel.
+
+```mermaid
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code]
+        JS_Engine[JavaScript Engine (e.g., Hermes)]
+        JS_Code --> JS_Engine;
+    end
+
+    subgraph Native Realm
+        Native_Code[Platform Native Code (Swift/Kotlin/Obj-C/Java)]
+        Native_Object[Native Object/Function]
+        Native_Code --> Native_Object;
+    end
+
+    subgraph JSI Layer (C++)
+        JSI_HostObject[C++ Host Object exposing Native Functionality]
+        JSI_Bindings[JSI Bindings]
+        JSI_HostObject <--> JSI_Bindings;
+    end
+
+    JS_Engine <-->|Direct, Potentially Synchronous Calls via JSI| JSI_Bindings;
+    JSI_HostObject <-->|Direct Invocation| Native_Object;
+
+
+    style JS_Engine fill:#ccf,stroke:#333,stroke-width:2px
+    style Native_Object fill:#cfc,stroke:#333,stroke-width:2px
+    style JSI_Layer fill:#fcf,stroke:#333,stroke-width:1px,opacity:0.5
+```
+
+This diagram depicts the communication model facilitated by the JavaScript Interface (JSI) in React Native's New Architecture. Unlike the legacy bridge, JSI allows for more direct and potentially synchronous interaction. The JavaScript code, running within its engine (like Hermes), can interact with native functionalities via a C++ layer. This C++ layer, enabled by JSI, exposes native objects or functions as "Host Objects" that JavaScript can hold references to and invoke methods on directly.
+
+When JavaScript calls a method on such a Host Object, the JSI bindings translate this call into an invocation on the corresponding C++ object. This C++ object, in turn, can directly call the actual native platform code (Swift, Kotlin, Objective-C, or Java). If the native operation is synchronous and quick, the result can be returned directly through the C++ layer back to JavaScript within the same execution cycle, eliminating the serialization and asynchronous queuing overhead inherent in the legacy bridge. This direct pathway significantly enhances performance for many types of native interactions, making JavaScript-to-native communication much more efficient and enabling a tighter integration between the two realms. This forms the basis for TurboModules.
 
 The move from the asynchronous, serialization-heavy Bridge to the direct, synchronous-capable JSI layer is more than just an internal implementation detail. It fundamentally enhances the potential for deep, performant integration between JavaScript and native code. The limitations imposed by the Bridge's latency and overhead restricted certain types of interactions, particularly those requiring frequent updates or low-latency responses (like driving animations smoothly from native events or handling real-time data streams). JSI removes these barriers, allowing JavaScript and native code to interact almost as if they were in the same execution environment for synchronous operations. This capability makes React Native feel considerably "closer" to native performance in scenarios leveraging JSI-based communication, enabling features and integrations that were previously impractical or inefficient.
 

@@ -46,10 +46,43 @@ Key concepts underpinning Fabric Components include:
     export default "RNTMyFabricView" as HostComponent<NativeProps>;
     ```
 
+    This TypeScript interface, `MyFabricComponentSpec.ts`, defines the props that the native UI component `RNTMyFabricView` will accept from JavaScript. It extends `ViewProps` for common properties and adds custom ones like `customText` and `opacity`. It also declares an event callback `onCustomEvent`. This spec file is crucial for Codegen to generate the necessary C++ and native interface code, ensuring type safety and consistent communication between JavaScript and the native view.
+
 3.  **Codegen (Code Generation):** The React Native Codegen tool processes this spec file. For Fabric Components, it generates:
     - **C++ Shadow Node definitions:** Fabric maintains a UI tree in C++, called the "Shadow Tree," which mirrors the React component tree. Codegen generates C++ classes representing the shadow nodes for the custom native component. These shadow nodes hold the component's props and layout information.
     - **Native ViewManager interfaces/protocols:** Ensures the native ViewManager implementation conforms to the spec, guaranteeing type consistency for props and event handling.
 4.  **Fabric Renderer:** This is the core of the new rendering system. It uses JSI to communicate between JavaScript and the C++ Shadow Tree. When React updates a component, Fabric can efficiently update the corresponding C++ Shadow Node. Fabric then calculates the layout (using Yoga, also in C++) and orchestrates the creation and updating of the actual native views on the main thread based on the information in the Shadow Tree.
+
+    ```mermaid
+    graph TD
+        A[React (JS) Component Tree] -->|Updates| B(Fabric Bridge - JSI);
+        B --> C{C++ Shadow Tree};
+        C -->|Layout via Yoga| C;
+        C -->|Diffing & Batching| D[Native View Manager (Platform Specific)];
+        D --> E[Native UI View (iOS/Android)];
+
+        subgraph JavaScript Realm
+            A
+        end
+
+        subgraph Bridging & Core Logic (C++)
+            B
+            C
+        end
+
+        subgraph Native Realm
+            D
+            E
+        end
+
+        style A fill:#ccf,stroke:#333,stroke-width:2px
+        style E fill:#cfc,stroke:#333,stroke-width:2px
+        style C fill:#fcf,stroke:#333,stroke-width:2px
+    ```
+
+    This diagram illustrates the high-level architecture of Fabric, React Native's new rendering system. When your React application's JavaScript component tree updates, these changes are communicated via the Fabric Bridge (which utilizes JSI) to the C++ Shadow Tree. The Shadow Tree is a lightweight representation of the UI, existing entirely in C++. It's responsible for managing the layout (using the Yoga layout engine, also in C++) and calculating what has changed (diffing).
+
+    Once the updates and layout are processed in the C++ Shadow Tree, Fabric efficiently batches these changes and communicates them to the platform-specific Native View Managers. These managers are then responsible for creating, updating, or deleting the actual native UI views (UIView on iOS, View on Android) on the main thread. This architecture minimizes the overhead of JS-to-native communication for UI operations and enables better synchronization, leading to improved performance and responsiveness compared to the legacy UIManager.
 
 Fabric, by addressing the UI rendering and interaction bottlenecks inherent in the legacy `UIManager`/Bridge system, aims to deliver UI performance and responsiveness much closer to that of purely native applications.
 

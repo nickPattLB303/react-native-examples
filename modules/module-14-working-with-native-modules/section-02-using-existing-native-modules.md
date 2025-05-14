@@ -87,7 +87,9 @@ Integrating a native module involves adding the JavaScript package and ensuring 
           H -- No --> J[May require bare workflow or manual setup];
       ```
 
-      This diagram illustrates how Expo Config Plugins facilitate the integration of community native modules. Config Plugins act as programmatic "install scripts" for the native side of community libraries, making them usable within Expo's traditionally managed environment.
+      This diagram illustrates the workflow when integrating a community native module into an Expo project using Config Plugins. The process starts when a developer runs `npx expo install community-module`. The system checks if this module includes a Config Plugin. If it does, the plugin is typically registered in the project's `app.json` or `app.config.js` file.
+
+      During the build process (triggered by `eas build` or `expo prebuild`), Expo identifies and executes these registered Config Plugins. Each plugin contains scripts that programmatically modify the native project configuration files (such as `Info.plist` for iOS or `build.gradle` and `AndroidManifest.xml` for Android). These modifications ensure that the native code from the community module is correctly linked and configured. As a result, the app can be built successfully, incorporating the desired native feature. If the module doesn't have a Config Plugin, the system then checks if it's a pure JavaScript library, which would work directly. If it's a native module without a Config Plugin, it might necessitate using the bare workflow or involve manual setup, highlighting the convenience Config Plugins offer for managed projects.
 
     The evolution from manual linking to autolinking and then to the sophisticated Config Plugin system in Expo simplifies native code integration significantly.
 
@@ -126,6 +128,10 @@ After installation, using a native module in your JavaScript or TypeScript code 
 
     checkConnection();
     ```
+
+    The `expo-device` module provides synchronous access to device properties. For instance, `Device.deviceType` might return an enum or string like `Device.DeviceType.PHONE` or `'TABLET'`, and `Device.osVersion` would return the operating system version string (e.g., `'15.0'`). This information is readily available upon import.
+
+    The `@react-native-community/netinfo` module, on the other hand, typically provides network state information asynchronously. The `NetInfo.fetch()` method returns a Promise that resolves with an object containing details like `state.type` (e.g., `'wifi'`, `'cellular'`, `'none'`) and `state.isConnected` (a boolean). This asynchronous pattern is common for operations that might take time or involve system events.
 
 > [!IMPORTANT]
 > Always check for compatibility between the native module, your React Native version, and your Expo SDK version (if applicable). `npx expo install` greatly helps with this for Expo projects. For other libraries, consult their documentation.

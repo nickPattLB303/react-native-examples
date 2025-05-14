@@ -1,4 +1,4 @@
-## Section 3: Expo SDK Modules Overview
+## Section 3: Expo SDK Modules Overview (Camera, Location, FileSystem, etc.)
 
 This section provides an overview of the Expo SDK, a powerful suite of pre-built native modules. You'll learn about its benefits, how modules are categorized, explore some key modules in depth with code examples and under-the-hood insights, and get a comprehensive list of commonly used modules.
 
@@ -109,6 +109,11 @@ Below are examples of key Expo SDK modules, illustrating their functionality, us
   import { View, Button, Text } from "react-native";
   import { Camera, CameraType, CameraCapturedPicture } from "expo-camera";
 
+  /**
+   * A React component demonstrating basic usage of the `expo-camera` module.
+   * It requests camera permissions, displays a camera preview, and provides a button
+   * to take a picture.
+   */
   function MyCameraComponent() {
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [type, setType] = useState(CameraType.back);
@@ -131,6 +136,11 @@ Below are examples of key Expo SDK modules, illustrating their functionality, us
       );
     }
 
+    /**
+     * Captures a picture using the camera reference.
+     * The captured photo is logged to the console.
+     * @async
+     */
     async function takePicture() {
       if (cameraRef.current) {
         const photo: CameraCapturedPicture =
@@ -204,14 +214,6 @@ Below are examples of key Expo SDK modules, illustrating their functionality, us
 ### Expo Abstraction Layer
 
 A key benefit of using Expo SDK modules is the abstraction layer they provide. The JavaScript API exposed to you aims for stability and consistency across platforms and SDK versions. Expo can update the underlying native implementation of a module (e.g., to adopt a newer Android API or fix an iOS bug) without necessarily requiring changes to your JavaScript code. Expo manages the versioning and compatibility of its modules within SDK releases, significantly reducing your maintenance burden.
-
-### Key Expo SDK Modules
-
-Below is an overview of some popular and widely used modules from the Expo SDK. This list is not exhaustive, and new modules or features are regularly added.
-
-- **`expo-sharing`**:
-  - **Purpose:** Allows sharing files or data from your app to other apps using the native sharing UI.
-  - **Use Case:** Sharing images, documents, or text content.
 
 ### Key Expo SDK Modules Overview Table
 

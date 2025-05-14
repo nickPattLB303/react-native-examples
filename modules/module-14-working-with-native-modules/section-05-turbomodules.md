@@ -42,11 +42,45 @@ TurboModules achieve their goals through a combination of JSI, explicit specific
     export default global.turboModuleRegistry.get<Spec>("MyTurboModule");
     ```
 
+    This TypeScript interface, `MyTurboModuleSpec.ts`, serves as the definitive contract for the `MyTurboModule`. It explicitly declares all methods intended for JavaScript consumption, along with their parameter types and return types. For example, `getConstants` is expected to return an object with a `PI` number, `sayHelloSync` is a synchronous function taking a string and returning a string, and `doSomethingAsync` is an asynchronous function returning a Promise. This spec file is the single source of truth that Codegen will use.
+
 3.  **Codegen (Code Generation):**
     React Native includes a build-time tool called **Codegen**. This tool reads the JavaScript spec file (TypeScript/Flow) and automatically generates significant portions of the boilerplate code required to connect the JavaScript side to the native implementations. This generated code includes:
 
     - **C++ interface code:** Defines the C++ representation of the module that interacts directly with JSI.
     - **Native interface code:** Generates interfaces or protocols in the target native languages (Java/Kotlin for Android, Objective-C++ for iOS) that the developer's custom native implementation must conform to.
+
+    ```mermaid
+    graph LR
+        A[1. Developer writes Module Spec (e.g., MyTurboModuleSpec.ts)] --> B(2. Build Process Triggers Codegen);
+        B --> C{3. Codegen Parses Spec File};
+        C --> D[4. Generates C++ JSI Interface Code (e.g., .h, .cpp files)];
+        C --> E[5. Generates Native Interface Stubs (e.g., Java interfaces, Obj-C++ protocols)];
+        D --> F[6. JavaScript Engine (via JSI)];
+        E --> G[7. Developer Implements Native Logic (Kotlin/Java, Swift/Obj-C) based on Stubs];
+        F <--> H{React Native Runtime};
+        G --> H;
+
+        subgraph Developer Input
+            A
+        end
+        subgraph Build & Generation Process
+            B
+            C
+            D
+            E
+        end
+        subgraph Runtime Interaction
+            F
+            G
+            H
+        end
+
+        style A fill:#lightgrey,stroke:#333,stroke-width:2px
+        style G fill:#lightgrey,stroke:#333,stroke-width:2px
+    ```
+
+    This diagram outlines the Codegen process within the New Architecture. It begins with the developer creating a specification file (typically in TypeScript) that strictly defines the interface of the native module—its methods, parameters, and return types. During the application's build process, Codegen is triggered. It parses this spec file and, based on the defined contract, automatically generates several pieces of code. Key outputs include C++ JSI interface code, which forms the low-level bridge for JavaScript to interact with native C++ objects, and native interface stubs or protocols for each target platform (Java/Kotlin for Android, Objective-C++/Swift for iOS). Developers then write their platform-specific native logic, ensuring their implementations conform to these Codegen-generated interfaces. This automated generation of bridging code and strict interface enforcement are central to TurboModules' type safety and efficiency.
 
     Codegen ensures that the native implementation adheres precisely to the structure defined in the JS spec, guaranteeing type consistency across the JS-Native boundary. It also significantly reduces the amount of manual "glue" code developers need to write.
 
