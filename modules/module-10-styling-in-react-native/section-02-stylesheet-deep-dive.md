@@ -100,11 +100,22 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Props for the PrescriptionCard component.
+ * @param name - The name of the prescription.
+ * @param isWarning - Optional flag to indicate if the card should display in a warning state.
+ */
 interface PrescriptionCardProps {
   name: string;
   isWarning?: boolean;
 }
 
+/**
+ * A component to display prescription information, potentially in a warning state.
+ * Illustrates conditional application of styles.
+ * @param {PrescriptionCardProps} props - The props for the component.
+ * @returns {React.ReactElement} The PrescriptionCard component.
+ */
 const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
   name,
   isWarning,

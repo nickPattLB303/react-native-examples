@@ -14,6 +14,13 @@ import { Appbar } from "react-native-paper";
 import { Platform } from "react-native";
 
 // Example Appbar for a SpeedyMeds screen
+/**
+ * Props for the SpeedyMedsAppbar component.
+ * @param title - The title to display in the Appbar.
+ * @param showBackButton - Optional flag to show the back button.
+ * @param onBackPress - Optional callback function when the back button is pressed.
+ * @param onMorePress - Optional callback function when the "more" action is pressed.
+ */
 interface SpeedyMedsAppbarProps {
   title: string;
   showBackButton?: boolean;
@@ -21,6 +28,12 @@ interface SpeedyMedsAppbarProps {
   onMorePress?: () => void;
 }
 
+/**
+ * A custom Appbar component for SpeedyMeds screens, demonstrating
+ * common Appbar elements like back action, title, and other actions.
+ * @param {SpeedyMedsAppbarProps} props - The props for the SpeedyMedsAppbar.
+ * @returns {React.ReactElement} The SpeedyMedsAppbar component.
+ */
 const SpeedyMedsAppbar: React.FC<SpeedyMedsAppbarProps> = ({
   title,
   showBackButton,
@@ -75,6 +88,11 @@ import { View, StyleSheet } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 // Example Buttons for a SpeedyMeds form
+/**
+ * A component demonstrating various React Native Paper Button styles (contained, outlined, text)
+ * in the context of prescription actions for the SpeedyMeds app.
+ * @returns {React.ReactElement} The PrescriptionActions component.
+ */
 const PrescriptionActions = () => {
   return (
     <View style={styles.container}>
@@ -141,6 +159,11 @@ import { View, StyleSheet } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 
 // Example TextInput for a SpeedyMeds patient search
+/**
+ * A component demonstrating React Native Paper TextInput fields for patient and medication search
+ * in the SpeedyMeds app. It includes features like floating labels, icons, helper text, and error states.
+ * @returns {React.ReactElement} The PatientSearchInput component.
+ */
 const PatientSearchInput = () => {
   const [patientId, setPatientId] = useState("");
   const [error, setError] = useState(false);
@@ -216,6 +239,13 @@ import { View, StyleSheet } from "react-native";
 import { Avatar, Button, Card, Text, Divider } from "react-native-paper";
 
 // Example Card for displaying prescription details in SpeedyMeds
+/**
+ * Props for the PrescriptionDetailCard component.
+ * @param medicationName - The name of the medication.
+ * @param dosage - The dosage information for the medication.
+ * @param refillsRemaining - The number of refills remaining.
+ * @param pharmacist - The name of the pharmacist or prescribing doctor.
+ */
 interface PrescriptionDetailCardProps {
   medicationName: string;
   dosage: string;
@@ -223,8 +253,22 @@ interface PrescriptionDetailCardProps {
   pharmacist: string;
 }
 
-const LeftContent = (props: any) => <Avatar.Icon {...props} icon="pill" />;
+/**
+ * A helper component to render the left content (icon) for the Card.Title.
+ * @param props - Props passed by Card.Title, includes size.
+ * @param {number} props.size - The size of the icon.
+ * @returns {React.ReactElement} An Avatar.Icon component.
+ */
+const LeftContent = (props: { size: number }) => (
+  <Avatar.Icon {...props} size={props.size} icon="pill" />
+);
 
+/**
+ * A component that displays detailed information about a prescription using a React Native Paper Card.
+ * It showcases Card.Title, Card.Content, and Card.Actions for structuring information in the SpeedyMeds app.
+ * @param {PrescriptionDetailCardProps} props - The props for the component.
+ * @returns {React.ReactElement} The PrescriptionDetailCard component.
+ */
 const PrescriptionDetailCard: React.FC<PrescriptionDetailCardProps> = ({
   medicationName,
   dosage,
@@ -299,6 +343,11 @@ import { View, StyleSheet } from "react-native";
 import { Text, Card } from "react-native-paper";
 
 // Example showcasing different Text variants in SpeedyMeds context
+/**
+ * A component demonstrating various React Native Paper Text variants to showcase
+ * Material Design 3 typography scales within the SpeedyMeds app context.
+ * @returns {React.ReactElement} The TypographyDemoScreen component.
+ */
 const TypographyDemoScreen = () => {
   return (
     <Card style={styles.container}>
@@ -352,6 +401,12 @@ import { View, StyleSheet } from "react-native";
 import { ActivityIndicator, Text, Card, Button } from "react-native-paper";
 
 // Example ActivityIndicator for SpeedyMeds loading state
+/**
+ * A component that demonstrates using the React Native Paper ActivityIndicator
+ * to show a loading state while fetching a list of prescriptions for the SpeedyMeds app.
+ * It simulates an API call and displays the list once loaded.
+ * @returns {React.ReactElement} The PrescriptionList component.
+ */
 const PrescriptionList = () => {
   const [loading, setLoading] = useState(true);
   const [prescriptions, setPrescriptions] = useState<string[]>([]);

@@ -111,7 +111,22 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTheme, MD3Theme } from "react-native-paper"; // Import MD3Theme for type safety
 
 // Example custom component for SpeedyMeds that uses the Paper theme
-const ThemedInfoBox: React.FC<{ message: string }> = ({ message }) => {
+/**
+ * Props for the ThemedInfoBox component.
+ * @param message - The informational message to display inside the box.
+ */
+interface ThemedInfoBoxProps {
+  message: string;
+}
+
+/**
+ * A custom component that displays an informational message box, styled using
+ * the current React Native Paper theme obtained via the `useTheme` hook.
+ * It demonstrates accessing theme colors and roundness for custom styling within the SpeedyMeds app.
+ * @param {ThemedInfoBoxProps} props - The props for the component.
+ * @returns {React.ReactElement} The ThemedInfoBox component.
+ */
+const ThemedInfoBox: React.FC<ThemedInfoBoxProps> = ({ message }) => {
   const theme = useTheme<MD3Theme>(); // Access the theme object, specify type for safety
 
   const styles = StyleSheet.create({

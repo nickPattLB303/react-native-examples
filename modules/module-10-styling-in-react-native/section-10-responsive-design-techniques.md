@@ -44,6 +44,12 @@ console.log(
   }`
 );
 
+/**
+ * A component demonstrating responsive width and height calculations based on
+ * initial screen dimensions obtained via `Dimensions.get()`. This approach is
+ * suitable for one-time calculations as these dimensions do not update on changes.
+ * @returns {React.ReactElement} The ResponsiveCard component.
+ */
 const ResponsiveCard = () => {
   const cardWidth = windowWidthInitial * 0.9; // Card takes 90% of the initial window width
   const imageHeight = windowHeightInitial * 0.2; // Image takes 20% of the initial window height
@@ -107,6 +113,12 @@ This hook, available from `react-native`, automatically updates when screen dime
 import React from "react";
 import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 
+/**
+ * A component demonstrating dynamic responsive sizing using the `useWindowDimensions` hook.
+ * The card width and title font size adapt to changes in window dimensions and font scale,
+ * ensuring the UI remains responsive (e.g., on device rotation).
+ * @returns {React.ReactElement} The DynamicResponsiveCard component.
+ */
 const DynamicResponsiveCard = () => {
   const {
     width: windowWidth,
@@ -192,7 +204,24 @@ if (Platform.OS === "ios") {
   }
 }
 
-const PlatformSpecificHeader = ({ title }: { title: string }) => {
+/**
+ * Props for the PlatformSpecificHeader component.
+ * @param title - The title to display in the header.
+ */
+interface PlatformSpecificHeaderProps {
+  title: string;
+}
+
+/**
+ * A component that demonstrates platform-specific styling using `Platform.OS`
+ * and `Platform.select()` for padding, background color, and text color.
+ * It also shows conditional rendering of text based on the platform.
+ * @param {PlatformSpecificHeaderProps} props - The props for the component.
+ * @returns {React.ReactElement} The PlatformSpecificHeader component.
+ */
+const PlatformSpecificHeader: React.FC<PlatformSpecificHeaderProps> = ({
+  title,
+}) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>{title}</Text>
@@ -266,7 +295,21 @@ The `aspectRatio` style property allows you to maintain a component's aspect rat
 
 ```tsx
 // SpeedyMeds: Displaying a medication image with a fixed aspect ratio
-const MedicationImage = ({ imageUrl }: { imageUrl: string }) => {
+/**
+ * Props for the MedicationImage component.
+ * @param imageUrl - The URL of the medication image to display (currently unused by placeholder).
+ */
+interface MedicationImageProps {
+  imageUrl: string;
+}
+
+/**
+ * A component that displays a placeholder for a medication image, maintaining a 16:9 aspect ratio.
+ * It demonstrates the use of the `aspectRatio` style property.
+ * @param {MedicationImageProps} props - The props for the component.
+ * @returns {React.ReactElement} The MedicationImage component.
+ */
+const MedicationImage: React.FC<MedicationImageProps> = ({ imageUrl }) => {
   return (
     <View style={styles.imageContainer}>
       {/* In a real app, use <Image source={{uri: imageUrl}} style={styles.image} /> */}
@@ -286,6 +329,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc", // Placeholder
   },
 });
+
+export default MedicationImage;
 ```
 
 **6. Orientation Changes**
@@ -293,6 +338,12 @@ const styles = StyleSheet.create({
 When a device rotates, the width and height swap. `useWindowDimensions` will automatically provide the updated values. You might need to adjust your layout logic based on whether `width > height` (landscape) or `height > width` (portrait).
 
 ```tsx
+/**
+ * A component that demonstrates an orientation-aware layout.
+ * It changes its `flexDirection` based on whether the device is in landscape or portrait mode,
+ * utilizing the `useWindowDimensions` hook to detect orientation changes.
+ * @returns {React.ReactElement} The OrientationAwareLayout component.
+ */
 const OrientationAwareLayout = () => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
@@ -420,6 +471,12 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+/**
+ * A component demonstrating how to apply custom padding based on safe area insets.
+ * It uses the `useSafeAreaInsets` hook from `react-native-safe-area-context`
+ * to ensure content is not obscured by device notches or system UI elements.
+ * @returns {React.ReactElement} The ScreenWithCustomSafePadding component.
+ */
 const ScreenWithCustomSafePadding = () => {
   const insets = useSafeAreaInsets();
 

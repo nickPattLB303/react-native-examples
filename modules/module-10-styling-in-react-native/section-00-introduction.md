@@ -66,15 +66,15 @@ Before starting this module, ensure you have completed:
 This module is divided into the following sections, each building upon the last to provide a comprehensive understanding of styling in React Native:
 
 1.  **Styling Approaches Overview:** A high-level look at `StyleSheet`, inline styles, CSS-in-JS, and UI libraries.
-2.  **StyleSheet Deep Dive:** Best practices and performance considerations for `StyleSheet.create()`.
-3.  **Inline Styles:** Appropriate usage and limitations of direct style application.
-4.  **Layout with Flexbox:** A comprehensive guide to React Native's layout engine.
+2.  **StyleSheet Deep Dive (Best Practices, Performance):** Best practices and performance considerations for `StyleSheet.create()`.
+3.  **Inline Styles (Usage and Limitations):** Appropriate usage and limitations of direct style application.
+4.  **Layout with Flexbox (Comprehensive Guide):** A comprehensive guide to React Native's layout engine.
 5.  **Introduction to Styled Components:** Using this popular CSS-in-JS library.
 6.  **Theming with Styled Components:** Creating consistent designs with themes.
 7.  **Introduction to UI Libraries: React Native Paper:** Leveraging pre-built Material Design components.
 8.  **Using React Native Paper Components:** Practical examples of common Paper components.
-9.  **Theming with React Native Paper:** Customizing the look and feel of Paper components.
-10. **Responsive Design Techniques:** Adapting your UI to various screen sizes and platforms.
+9.  **Theming with React Native Paper (v5):** Customizing the look and feel of Paper components.
+10. **Responsive Design Techniques (Platform, Dimensions):** Adapting your UI to various screen sizes and platforms.
 
 ## Module Challenge
 

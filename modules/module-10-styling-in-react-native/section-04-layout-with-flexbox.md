@@ -401,12 +401,25 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Props for the PrescriptionCard component.
+ * @param name - The name of the medication.
+ * @param strength - The strength or dosage of the medication (e.g., "10mg").
+ * @param instructionsText - The instructions for taking the medication.
+ */
 interface PrescriptionCardProps {
   name: string;
   strength: string;
   instructionsText: string;
 }
 
+/**
+ * A component that displays prescription details in a card format.
+ * This component demonstrates a complex layout using various Flexbox properties
+ * to arrange medication information, dosage, instructions, and a refill action.
+ * @param {PrescriptionCardProps} props - The props for the component.
+ * @returns {React.ReactElement} The PrescriptionCard component.
+ */
 const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
   name,
   strength,

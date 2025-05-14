@@ -43,7 +43,7 @@ In practice, you might use a combination of these approaches. For example, you c
 
 For developers coming from a web background, it's helpful to see how common CSS properties map to React Native's `StyleSheet` system. Remember, React Native uses camelCase for property names.
 
-The following table provides a quick reference for some common properties:
+The following table provides a quick reference for some common properties.
 
 | CSS Property        | React Native StyleSheet Property                                 | Notes                                                                                               |
 | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |

@@ -53,6 +53,12 @@ import { Text, TouchableOpacityProps } from "react-native";
 import styled from "styled-components/native"; // Import from /native
 
 // Define an interface for the props that StyledButtonContainer will accept for styling
+/**
+ * Props for the StyledButtonContainer styled component.
+ * These props control the visual appearance of the button container.
+ * @param primary - Optional flag to indicate if the button should have primary styling.
+ * @param disabled - Optional flag to indicate if the button should appear disabled.
+ */
 interface StyledButtonContainerProps {
   primary?: boolean;
   disabled?: boolean;
@@ -78,11 +84,26 @@ const StyledButtonText = styled.Text`
   font-weight: bold;
 `;
 
+/**
+ * Props for the SpeedyButton component.
+ * Extends TouchableOpacityProps to accept all standard touchable opacity props.
+ * @param title - The text to display on the button.
+ * @param primary - Optional flag to render the button with primary styling.
+ * @param disabled - Optional flag to render the button in a disabled state (inherited by StyledButtonContainer).
+ */
 interface SpeedyButtonProps extends TouchableOpacityProps {
   title: string;
   primary?: boolean;
+  // disabled is inherited from TouchableOpacityProps and also used by StyledButtonContainerProps
 }
 
+/**
+ * A custom, styled button component for the SpeedyMeds application.
+ * It utilizes styled-components for its container and text, and supports
+ * primary and disabled states through props.
+ * @param {SpeedyButtonProps} props - The props for the SpeedyButton.
+ * @returns {React.ReactElement} The SpeedyButton component.
+ */
 const SpeedyButton: React.FC<SpeedyButtonProps> = ({
   title,
   primary,

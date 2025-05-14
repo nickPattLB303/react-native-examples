@@ -28,37 +28,57 @@ Let's define a simple theme for our SpeedyMeds application.
 ```typescript
 // themes/speedyMedsTheme.ts
 
+/**
+ * Defines the structure of the application theme.
+ * Contains design tokens for colors, fonts, spacing, and border radius
+ * to ensure a consistent look and feel across the SpeedyMeds application.
+ */
 export interface AppTheme {
+  /** Color palette for the application. */
   colors: {
+    /** The primary brand color, used for interactive elements, headers, etc. */
     primary: string;
+    /** Secondary color, used for less prominent elements or accents. */
     secondary: string;
+    /** Default background color for screens. */
     background: string;
-    surface: string; // For card backgrounds, etc.
+    /** Background color for elevated surfaces like cards, dialogs. */
+    surface: string;
+    /** Default text color. */
     text: string;
+    /** Secondary text color, for less important text or hints. */
     textSecondary: string;
+    /** Color used for error messages and indicators. */
     error: string;
+    /** Color used for success messages and indicators. */
     success: string;
   };
+  /** Font definitions for the application. */
   fonts: {
+    /** Default font family or a list of fallbacks. */
     main: string;
+    /** Standardized font sizes. */
     sizes: {
       small: string;
       medium: string;
       large: string;
       xlarge: string;
     };
+    /** Standardized font weights. */
     weights: {
       normal: string;
       bold: string;
     };
   };
+  /** Standardized spacing units for margins, paddings. */
   spacing: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
+    xs: string; // Extra small
+    sm: string; // Small
+    md: string; // Medium
+    lg: string; // Large
+    xl: string; // Extra large
   };
+  /** Default border radius for elements like buttons, cards. */
   borderRadius: string;
 }
 
@@ -132,7 +152,7 @@ import React, { useState } from "react";
 import { ThemeProvider } from "styled-components/native";
 import { lightTheme, darkTheme } from "./themes/speedyMedsTheme";
 import MainNavigator from "./navigation/MainNavigator"; // Assuming you have a navigator
-import { Button } from "react-native"; // For a simple toggle example
+// import { Button } from "react-native"; // For a simple toggle example, if needed
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -210,7 +230,7 @@ In addition to accessing the theme via `props.theme` directly within the tagged 
 ```tsx
 import styled, { useTheme } from "styled-components/native";
 import { View, Text } from "react-native"; // Standard RN components
-import { AppTheme } from "./themes/speedyMedsTheme"; // Assuming your theme type is exported
+import { AppTheme } from "./themes/speedyMedsTheme"; // Assuming your theme type is exported from ./themes/
 
 // Styled component remains the same
 const InfoBox = styled.View`
@@ -225,8 +245,24 @@ const InfoText = styled.Text`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `;
 
-// Example SpeedyMeds component using useTheme hook
-const PatientAdvisoryNotice = ({ message }: { message: string }) => {
+/**
+ * Props for the PatientAdvisoryNotice component.
+ * @param message - The advisory message to display to the patient.
+ */
+interface PatientAdvisoryNoticeProps {
+  message: string;
+}
+
+/**
+ * Displays an important advisory notice to the patient using themed styles.
+ * This component demonstrates using the `useTheme` hook to access theme values
+ * within the component's logic and for styling standard React Native components.
+ * @param {PatientAdvisoryNoticeProps} props - The props for the component.
+ * @returns {React.ReactElement} The PatientAdvisoryNotice component.
+ */
+const PatientAdvisoryNotice: React.FC<PatientAdvisoryNoticeProps> = ({
+  message,
+}) => {
   const theme = useTheme() as AppTheme; // Cast to AppTheme for type safety
 
   // Here, theme values can be used for logic, passed to other components,
