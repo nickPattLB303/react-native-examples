@@ -1,5 +1,17 @@
 # Module 13: State Management
 
+> [!NOTE] > **Preliminary Note on Target Versions:**
+> This module adheres to the following target versions for all technical information, API descriptions, and code examples:
+>
+> - React Native: 0.7x (specifically 0.76 as bundled with Expo SDK 52)
+> - Expo SDK: 52+
+> - TanStack Query (React Query): v5
+> - Zustand: v4+
+> - TypeScript: Latest stable (used in all code examples)
+> - React: Version compatible with React Native 0.7x
+>
+> Stating these versions upfront is crucial for ensuring accuracy and relevance, as features and APIs can change between versions. Learners should always consult the official documentation corresponding to the specific versions used in their projects.
+
 Managing data that changes over time—the "state"—is a fundamental aspect of building any interactive application. In React Native, as your SpeedyMeds app grows in complexity, handling state effectively becomes crucial for creating a responsive, maintainable, and scalable user experience. This module explores various strategies and tools for state management, moving from foundational React concepts to powerful libraries designed for both client-side and server-side data.
 
 We'll begin by revisiting familiar territory with `useState` and the React Context API, analyzing their strengths and limitations. Then, we'll dive into dedicated client-side state management with Zustand, a lightweight and flexible solution. Finally, we'll tackle the complexities of server state—fetching, caching, and synchronizing data from your backend—using the robust TanStack Query library. By the end of this module, you'll be equipped to make informed decisions about the best state management approaches for different parts of your React Native applications.

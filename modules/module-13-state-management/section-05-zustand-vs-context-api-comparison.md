@@ -7,6 +7,24 @@ We've now explored React's built-in Context API and a popular third-party librar
 - **React Context API:** Built into React. Primarily designed to solve prop drilling by making data accessible to a tree of components without passing props manually. Re-renders all consuming components when the provider's value changes.
 - **Zustand:** A minimalistic, standalone library. Creates a store that lives outside the React component tree. Components subscribe to specific parts of the state and only re-render if those specific parts change.
 
+### Key Differentiators Explained
+
+Beyond the basics, let's delve into the most significant differences that often drive the choice between Context API and Zustand:
+
+1.  **Re-render Optimization (Performance):**
+
+    - **Context API:** Its default behavior re-renders _all_ consumers when the `value` prop of the `Provider` changes, even if a consumer only cares about a part of the value that didn\'t change. Optimizing this requires manual effort (e.g., `useMemo` on the provider value, splitting contexts, `React.memo` on consumers).
+    - **Zustand:** Designed with performance in mind. Components subscribe to state using selectors, ensuring they only re-render if the specific state slices they need have actually changed (compared via strict equality `===`). This selective subscription model leads to more efficient updates out-of-the-box for dynamic state.
+
+2.  \*\*Boilerplate and Ease of Use (API Conciseness):
+
+    - **Context API:** Generally more verbose. Requires creating a context, defining and managing state within a `Provider` component (often involving `useState`/`useReducer` and memoization hooks like `useMemo`, `useCallback`), and then using `useContext` in consumers.
+    - **Zustand:** Offers a more concise API. Defining a store with `create` and using the generated hook to access state and actions typically involves less setup code. The absence of a mandatory Provider component wrapping the app tree also simplifies the overall structure for global state.
+
+3.  **External Dependency vs. Built-in:**
+    - **Context API:** Part of the React library itself, requiring no additional dependencies.
+    - **Zustand:** An external library that needs to be installed (~1-2kB gzipped). While small, this is a consideration for projects strictly minimizing external dependencies.
+
 ### Detailed Comparison Aspects
 
 Let's break down the comparison across several key aspects:
@@ -58,19 +76,41 @@ Let's break down the comparison across several key aspects:
 
 This table summarizes the key differences:
 
-| Feature                | React Context API                                                 | Zustand                                                         |
-| ---------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| **Primary Goal**       | Avoid prop drilling, share "global" data in a tree                | Manage client-side state scalably and performantly              |
-| **State Location**     | Within React tree (Provider component holds state)                | Outside React tree (separate store module)                      |
-| **Boilerplate**        | Moderate (Provider setup, `useContext`)                           | Minimal (`create` store, use hook)                              |
-| **Re-render Behavior** | All consumers re-render on Provider `value` change                | Only components whose selected state changes re-render          |
-| **Performance**        | Can require manual optimization for frequent updates              | Optimized for selective re-renders out-of-the-box               |
-| **Bundle Size Impact** | None (built-in)                                                   | Very small (~1-2KB)                                             |
-| **Learning Curve**     | Generally easy, optimization can be tricky                        | Very easy, intuitive API                                        |
-| **Persistence**        | Manual implementation needed (e.g., `useEffect` + `AsyncStorage`) | Easy with `persist` middleware                                  |
-| **DevTools**           | React DevTools for context inspection                             | Redux DevTools integration via middleware                       |
-| **TypeScript**         | Good, requires manual typing of context value                     | Excellent, designed with TypeScript first                       |
-| **Typical Use Cases**  | Theming, auth status, language, low-frequency data                | Complex client state, frequent updates, performance-critical UI |
+| Feature                  | React Context API                                                   | Zustand                                                         |
+| ------------------------ | ------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Primary Goal**         | Avoid prop drilling, share "global" data in a tree                  | Manage client-side state scalably and performantly              |
+| **State Location**       | Within React tree (Provider component holds state)                  | Outside React tree (separate store module)                      |
+| **Provider Required**    | Yes (for the part of the tree that needs access)                    | No (store is global by default)                                 |
+| **Boilerplate**          | Moderate (Provider setup, `useContext`)                             | Minimal (`create` store, use hook)                              |
+| **API Conciseness**      | Generally more verbose                                              | More concise hook-based API                                     |
+| **Re-render Behavior**   | All consumers re-render on Provider `value` change                  | Only components whose selected state changes re-render          |
+| **Performance Opt.**     | Manual (memoization, splitting contexts) required for dynamic state | Optimized by default via selective subscriptions                |
+| **"Zombie Child" Issue** | Can occur if consumers don't unsubscribe (less with hooks)          | Designed to mitigate this and other common pitfalls             |
+| **Bundle Size Impact**   | None (built-in)                                                     | Very small (~1-2KB)                                             |
+| **Learning Curve**       | Generally easy, optimization can be tricky                          | Very easy, intuitive API                                        |
+| **Persistence**          | Manual implementation needed (e.g., `useEffect` + `AsyncStorage`)   | Easy with `persist` middleware                                  |
+| **DevTools**             | React DevTools for context inspection                               | Redux DevTools integration via middleware                       |
+| **TypeScript**           | Good, requires manual typing of context value                       | Excellent, designed with TypeScript first                       |
+| **Typical Use Cases**    | Theming, auth status, language, low-frequency data                  | Complex client state, frequent updates, performance-critical UI |
+
+### When to Choose Which
+
+The decision often involves balancing simplicity, performance needs, and the nature of the state being managed:
+
+**Choose React Context API when:**
+
+- The state changes infrequently (e.g., theme, user authentication status, locale).
+- The application's performance is not heavily impacted by potential re-renders, or you are willing to implement optimizations manually.
+- Avoiding external dependencies is a high priority.
+- The state being shared is relatively simple, and the prop-drilling problem is the main concern.
+
+**Choose Zustand when:**
+
+- Managing more complex client-side state structures.
+- The state updates frequently, and performance optimization (avoiding unnecessary re-renders) is crucial.
+- Minimizing boilerplate code and simplifying setup for global state is desired.
+- You need a solution that handles common edge cases like the "zombie child" problem more automatically.
+- Easy state persistence or DevTools integration (Redux DevTools) is beneficial.
 
 ### Choosing for SpeedyMeds: Scenarios
 
@@ -84,9 +124,15 @@ For our SpeedyMeds application, you might choose as follows:
 - **List of Favorite Medications (as in our Zustand example):** Zustand shines here due to easy persistence and selective updates for components displaying or interacting with favorites.
 
 > [!TIP]
-> It's not uncommon to use both Context API and a library like Zustand in the same application. Context can handle very stable, truly global data like themes, while Zustand can manage more dynamic or complex pieces of client-side application state.
+> It's not uncommon to use both Context API and a library like Zustand in the same application. Context can handle very stable, truly global data like themes, while Zustand can manage more dynamic or complex pieces of client-side application state. This distinction often arises because Context API serves as a general **dependency injection mechanism** for React trees, whereas Zustand is specifically designed as a **state management library** focused on performance and developer experience for dynamic state.
 
 Understanding these trade-offs will empower you to make informed decisions about which client-side state management tool is appropriate for different parts of your React Native application, leading to a more maintainable, performant, and developer-friendly codebase.
+
+> 📚 **Official Documentation & Comparative Resources:**
+>
+> - [React Context API (Official Docs)](https://react.dev/learn/passing-data-deeply-with-context)
+> - [Zustand GitHub Repository (Official Docs)](https://github.com/pmndrs/zustand)
+> - [Codedamn: Zustand vs React Context API (Comparison Article)](https://codedamn.com/news/reactjs/zustand-vs-react)
 
 ### Next Steps
 

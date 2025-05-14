@@ -10,8 +10,10 @@ Two crucial configuration options determine how TanStack Query handles cached da
 
 1.  **`staleTime`**: This option defines how long fetched data is considered "fresh." When a query result is fresh, TanStack Query will use the cached data without attempting a network request, even if a component using that query re-mounts or its `queryKey` remains the same.
 
-    - **Default:** `0` milliseconds. This means data is considered stale immediately by default, leading to a re-fetch on component mount or window focus (if those features are enabled).
-    - **Usage:** If you know your data doesn't change frequently, you can set a longer `staleTime` (e.g., `5 * 60 * 1000` for 5 minutes) to prevent unnecessary re-fetches. For example, a list of medical departments in SpeedyMeds might not change often, so a longer `staleTime` could be appropriate.
+    - **Default:** `0` milliseconds. This means data is considered stale immediately by default.
+    - **Behavior:** Once `staleTime` has elapsed since the data was last fetched (i.e., `Date.now() > dataUpdatedAt + staleTime`), the data becomes "stale." Stale data is still served immediately from the cache for a fast UI response. However, if the query associated with the stale data is actively being observed (i.e., a component using `useQuery` for that key is mounted), TanStack Query will trigger a background refetch to get potentially updated data.
+    - **"Under the Hood":** TanStack Query stores a `dataUpdatedAt` timestamp with each cache entry. When a query instance becomes active, it compares `Date.now()` with `dataUpdatedAt + staleTime`. If `Date.now()` is less than this sum, the data is fresh; otherwise, it's stale.
+    - **Usage:** For data that doesn't change frequently (e.g., a list of medical departments), a longer `staleTime` (e.g., `5 * 60 * 1000` for 5 minutes) can reduce network requests.
 
     ```tsx
     // Example: Setting staleTime for a query
@@ -22,12 +24,13 @@ Two crucial configuration options determine how TanStack Query handles cached da
     // });
     ```
 
-2.  **`gcTime`** (Garbage Collection Time, formerly `cacheTime` in v3 and earlier):
-    This option determines how long data remains in the cache _after all components using that query have unmounted_ (i.e., the query becomes inactive). Once `gcTime` expires for an inactive query, its data is garbage collected from the cache to free up memory.
+2.  **`gcTime`** (Garbage Collection Time, formerly `cacheTime`):
+    This option determines how long data remains in the cache _after all components using that query have unmounted_ (i.e., the query becomes inactive and its reference count drops to zero). Once `gcTime` expires for an inactive query, its data is garbage collected from the cache to free up memory.
 
     - **Default:** `5 * 60 * 1000` (5 minutes).
-    - **Usage:** If a user navigates away from a screen that uses a query, that query becomes inactive. If they navigate back within the `gcTime`, the data might still be in the cache (though it could be stale and trigger a re-fetch). If they navigate back after `gcTime` has passed, the data will be fetched from scratch.
-    - **Important:** `gcTime` must be greater than or equal to `staleTime`. It doesn't make sense to garbage collect data that is still considered fresh.
+    - **Behavior:** When a query becomes inactive, a timer based on `gcTime` starts. If no component subscribes to that query again before the timer expires, the cached data for that query key is removed from memory. Setting `gcTime` to `Infinity` disables garbage collection for that query (not generally recommended for all queries).
+    - **"Under the Hood":** The Query Cache maintains reference counts for each query key. When the count drops to zero, the `gcTime` timer begins for that cache entry.
+    - **Usage:** If a user navigates away and quickly returns (within `gcTime`), cached data is likely still available for an immediate display (though it might be stale and trigger a background refetch). `gcTime` should generally be set to a value greater than or equal to `staleTime`.
 
     ```tsx
     // Example: Setting gcTime for a query
@@ -39,23 +42,21 @@ Two crucial configuration options determine how TanStack Query handles cached da
     // });
     ```
 
-You can configure these defaults globally when creating your `QueryClient` instance, or override them on a per-query basis within the `useQuery` options.
+Understanding `staleTime` and `gcTime` is key to fine-tuning TanStack Query's caching behavior to match your application's data volatility and performance requirements. This sophisticated caching strategy allows developers to optimize for perceived performance (instant cache reads) while ensuring data eventually becomes consistent and unused data is cleaned up.
 
-```tsx
-// Example: Global configuration in App.tsx
-// import { QueryClient } from '@tanstack/react-query';
+### How Data is Served from Cache
 
-// const queryClient = new QueryClient({
-//   defaultOptions: {
-//     queries: {
-//       staleTime: 5 * 60 * 1000, // Default staleTime for all queries: 5 minutes
-//       gcTime: 10 * 60 * 1000,  // Default gcTime for all queries: 10 minutes
-//     },
-//   },
-// });
-```
+When `useQuery` is mounted or its `queryKey` changes:
 
-Understanding `staleTime` and `gcTime` is key to fine-tuning TanStack Query's caching behavior to match your application's data volatility and performance requirements.
+1.  TanStack Query checks the cache for data associated with the `queryKey`.
+2.  **If data exists in the cache:**
+    - It checks if the data is fresh (`Date.now() < dataUpdatedAt + staleTime`).
+    - **If fresh:** The cached data is returned immediately. No network request is made. `status` is `'success'`, `isFetching` is `false`.
+    - **If stale:** The stale cached data is returned immediately. A background refetch is triggered if the query is active. `status` is `'success'`, `isFetching` becomes `true` during the refetch, and the UI updates again when the refetch completes with new data or an error.
+3.  **If no data exists in the cache:**
+    - The query enters the `'pending'` state (`isPending` is `true`, `isFetching` is `true`).
+    - The `queryFn` is executed to fetch data from the server.
+    - Once the fetch completes, the data is stored in the cache, and the component updates with `status: 'success'` and the data, or `status: 'error'` and the error.
 
 ### Background Data Synchronization Strategies
 
@@ -121,6 +122,18 @@ These caching and background update features provide significant benefits for an
 - **Offline Resilience (Partial):** While TanStack Query itself is not a full offline solution (it doesn't handle mutations while offline without extra setup), its caching means that previously fetched data is available even if the network is temporarily unavailable, improving the user experience in spotty connectivity.
 
 By intelligently combining `staleTime`, `gcTime`, and the various `refetchOn...` options, you can create a robust data synchronization strategy tailored to the specific needs of different data types within your SpeedyMeds application.
+
+### Table: TanStack Query Caching and Refetching Options
+
+| Option                        | Default       | Description                                                                           | Impact on Behavior                                                                  |
+| ----------------------------- | ------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `staleTime`                   | `0`           | Duration (ms) data is considered fresh after fetch.                                   | Prevents background refetches while data is fresh. `0` means data is always stale.  |
+| `gcTime`                      | `300000` (5m) | Duration (ms) inactive cached data is kept before garbage collection.                 | Controls memory usage by removing unused data. Should generally be `>= staleTime`.  |
+| `refetchOnMount`              | `true`        | Refetch stale query when a new instance mounts.                                       | Ensures component gets fresh data on mount if cached data is stale.                 |
+| `refetchOnWindowFocus`        | `true`        | Refetch stale query on window/app focus.                                              | Updates data when user returns to the app. Requires FocusManager setup in RN.       |
+| `refetchOnReconnect`          | `true`        | Refetch stale query on network reconnection.                                          | Updates data after network interruptions. Requires OnlineManager setup in RN.       |
+| `refetchInterval`             | `false`       | Interval (ms) for automatic polling, or `false` to disable.                           | Continuously updates data at a fixed frequency (e.g., for real-time dashboards).    |
+| `refetchIntervalInBackground` | `false`       | If `refetchInterval` is set, determines if polling continues when app is not focused. | Can keep data fresh even in background, but use with caution on mobile for battery. |
 
 > 📚 **Official Documentation:**
 >

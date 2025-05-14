@@ -6,6 +6,16 @@ Now that we have TanStack Query set up with `QueryClientProvider`, it's time to 
 
 The `useQuery` hook is the primary tool for fetching, caching, and synchronizing asynchronous data from your server. You provide it with a unique `queryKey` and a `queryFn` that returns a promise resolving with your data (or throwing an error).
 
+**Key Options (v5 Object Syntax):**
+
+- `queryKey: QueryKey`: **Required.** An array used to uniquely identify the query data (e.g., `['todos']`, `['todo', todoId]`). Must be serializable. Fundamental for caching, refetching, and invalidation.
+- `queryFn: () => Promise<TData>`: **Required.** An asynchronous function (must return a Promise) that fetches the data. It resolves with the data or throws an error.
+- `enabled?: boolean`: (Default: `true`) If `false`, the query won't automatically fetch on mount or key change. Useful for dependent queries that require manual triggering via `refetch`.
+- `staleTime?: number`: (Default: `0`) Duration (ms) data is considered fresh. While fresh, data is served from cache without a network request. See Section 9 for details.
+- `gcTime?: number`: (Default: `5 * 60 * 1000`) Duration (ms) inactive data stays in cache before garbage collection. See Section 9 for details.
+- `refetchOnWindowFocus?`, `refetchOnMount?`, `refetchOnReconnect?`: Booleans or functions to control automatic refetching on these events. See Section 9 and 11 for details.
+- `retry?`: Number of retries or a function to customize retry logic for failed queries.
+
 **Basic Usage:**
 
 ```tsx
@@ -50,11 +60,14 @@ const fetchMedications = async (): Promise<Medication[]> => {
 const MedicationsList: React.FC = () => {
   const {
     data,
-    isLoading,
+    isLoading, // True only for initial load (status === 'pending')
     isError,
     error,
-    status,
-    isFetching, // Different from isLoading, true even for background refetches
+    status, // 'pending', 'error', 'success' - reflects data availability
+    fetchStatus, // 'fetching', 'paused', 'idle' - reflects queryFn execution state
+    isFetching, // True whenever the queryFn is executing (initial load or background refetch)
+    isPending, // Equivalent to status === 'pending' & isLoading. True only for initial load when no data is present.
+    isSuccess, // Equivalent to status === 'success'
     refetch, // Function to manually refetch
   } = useQuery<Medication[], Error>({
     queryKey: ["medications"], // Unique key for this query
@@ -75,8 +88,8 @@ const MedicationsList: React.FC = () => {
     );
   }
 
-  // status can also be 'pending', 'error', 'success'
   // console.log('Query status:', status);
+  // console.log('Fetch status:', fetchStatus);
   // console.log('Is fetching in background?:', isFetching);
 
   return (
@@ -112,28 +125,36 @@ const styles = StyleSheet.create({
 export default MedicationsList;
 ```
 
-**Explanation of `useQuery` Return Values:**
+**Explanation of `useQuery` Key Return Values:**
 
-`useQuery` returns an object with various properties to help you manage the state of your data fetching:
+`useQuery` returns an object with various properties. Some of the most important include:
 
-- `data: TData | undefined`: The successfully fetched data for your query. It's `undefined` until data is fetched or if there's an error.
-- `isLoading: boolean`: True if the query is currently fetching for the _first time_ and has no cached data. This is equivalent to `status === 'pending' && isFetching`.
-- `isFetching: boolean`: True if the query is currently fetching, including background refetches or revalidation fetches.
-- `isError: boolean`: True if the query encountered an error during fetching. This is equivalent to `status === 'error'`.
-- `error: TError | null`: The error object if an error occurred.
-- `status: 'pending' | 'error' | 'success'`: A string representing the current status of the query.
-  - `'pending'`: The query is active but no data has been resolved yet.
-  - `'error'`: The query encountered an error.
-  - `'success'`: The query was successful and `data` is available.
-- `refetch: () => Promise<UseQueryResult>`: A function to manually trigger a re-fetch of the query.
-- And many more, including `isSuccess`, `isStale`, etc.
+- `data: TData | undefined`: The successfully fetched data. `undefined` during initial load or if an error occurred.
+- `error: TError | null`: The error object if the query failed, otherwise `null`.
+- `status: 'pending' | 'error' | 'success'`: Reflects the status of the **data itself**.
+  - `'pending'`: Query is fetching for the first time, no data yet.
+  - `'error'`: Query attempt failed.
+  - `'success'`: Query succeeded, and `data` is available.
+- `fetchStatus: 'fetching' | 'paused' | 'idle'`: Reflects the status of the **`queryFn` execution**.
+  - `'fetching'`: The `queryFn` is currently running (initial fetch or background refetch).
+  - `'paused'`: The query tried to fetch but was paused (e.g., offline, see OnlineManager in Section 11).
+  - `'idle'`: The query is not currently fetching.
+- `isPending: boolean`: Derived from `status === 'pending'`. True only during the initial fetch before any data or error is available. Use this for initial loading spinners.
+- `isLoading: boolean`: (Legacy, often an alias for `isPending` in v5 for `useQuery`). In v5, `isPending` is generally preferred for clarity for the initial loading state.
+- `isFetching: boolean`: Derived from `fetchStatus === 'fetching'`. True whenever the `queryFn` is executing (initial load OR background refetch). Useful for showing background loading indicators.
+- `isError: boolean`: Derived from `status === 'error'`.
+- `isSuccess: boolean`: Derived from `status === 'success'`.
+- `refetch: () => Promise<UseQueryResult>`: A function to manually trigger a refetch of the query.
+- And others like `dataUpdatedAt`, `errorUpdateAt`, `isStale`.
+
+The distinction between `status` (data availability) and `fetchStatus` (network activity), and consequently `isPending` vs. `isFetching`, is crucial for building UIs that can show stale data while indicating a background refresh, rather than always reverting to a full loading skeleton.
 
 **Query Keys (`queryKey`):**
-As mentioned, `queryKey` uniquely identifies your data. If your data depends on a variable (e.g., fetching a specific medication by ID), include that variable in the query key:
+As mentioned, `queryKey` uniquely identifies your data and is foundational to TanStack Query's caching. If your data depends on a variable (e.g., fetching a specific medication by ID), include that variable in the query key. Its structure allows for granular data management; for example, `['medications']` might fetch all medications, while `['medications', { id: 'med001' }]` fetches a specific one.
 
 ```tsx
 // const { data } = useQuery({
-//   queryKey: ['medication', medicationId],
+//   queryKey: ['medication', medicationId], // medicationId changing will trigger refetch/cache lookup
 //   queryFn: () => fetchMedicationById(medicationId)
 // });
 ```
@@ -188,6 +209,14 @@ This flow ensures that components get data quickly if available, while also effi
 
 While `useQuery` is for reading data, `useMutation` is used for creating, updating, or deleting data on the server (typically via POST, PUT, PATCH, DELETE requests).
 
+**Key Options (v5 Object Syntax):**
+
+- `mutationFn: (variables: TVariables) => Promise<TData>`: **Required** (unless a default is set globally). The async function performing the mutation. It receives variables passed to the `mutate` function and should return a Promise resolving with the result or rejecting with an error.
+- `onSuccess?: (data: TData, variables: TVariables, context?: TContext) => void | Promise<void>`: Callback fired upon successful mutation completion. Often used to invalidate relevant queries or show success notifications.
+- `onError?: (error: TError, variables: TVariables, context?: TContext | undefined) => void | Promise<void>`: Callback fired if the mutation fails. Used for error handling or rolling back optimistic updates.
+- `onSettled?: (data?: TData, error?: TError, variables?: TVariables, context?: TContext | undefined) => void | Promise<void>`: Callback fired after the mutation finishes, regardless of success or error. Useful for cleanup or always invalidating queries.
+- `onMutate?: (variables: TVariables) => Promise<TContext | void> | TContext | void`: Callback fired _before_ `mutationFn`. Used for optimistic updates. Can return a context value passed to `onError` and `onSettled`.
+
 **Basic Usage:**
 
 ```tsx
@@ -237,9 +266,8 @@ const AddPrescriptionForm: React.FC<{ patientId: string }> = ({
 
   const mutation = useMutation<Prescription, Error, NewPrescriptionPayload>({
     mutationFn: addPrescriptionAPI, // Function that performs the mutation
-    onSuccess: (data, variables) => {
-      // `data` is the result from mutationFn
-      // `variables` is the payload passed to mutate()
+    onSuccess: (data, variables, context) => {
+      // context is from onMutate
       Alert.alert(
         "Success",
         `Prescription for ${variables.medicationName} added successfully! ID: ${data.id}`
@@ -256,13 +284,14 @@ const AddPrescriptionForm: React.FC<{ patientId: string }> = ({
       setMedicationName("");
       setDosage("");
     },
-    onError: (error, variables) => {
+    onError: (error, variables, context) => {
+      // context is from onMutate
       Alert.alert(
         "Error",
         `Failed to add prescription for ${variables.medicationName}: ${error.message}`
       );
     },
-    // onSettled: (data, error, variables) => {
+    // onSettled: (data, error, variables, context) => { // context is from onMutate
     //   // Called after onSuccess or onError
     //   console.log('Mutation settled!');
     // }
@@ -335,23 +364,21 @@ const styles = StyleSheet.create({
 export default AddPrescriptionForm;
 ```
 
-**Explanation of `useMutation`:**
+**Explanation of `useMutation` Key Return Values:**
 
-- **`mutationFn`**: An asynchronous function that performs the actual create, update, or delete operation. It receives the variables you pass to the `mutate` function.
-- **Return Value:** `useMutation` returns an object (here destructured into `mutation`) containing:
-  - `mutate: (variables: TVariables, options?: MutateOptions) => void`: A function to trigger the mutation. You pass the necessary variables to it.
-  - `mutateAsync: (variables: TVariables, options?: MutateOptions) => Promise<TData>`: Similar to `mutate`, but returns a promise that resolves with the mutation result or rejects with an error.
-  - `isPending: boolean` (or `status === 'pending'`): True if the mutation is currently in progress.
-  - `isSuccess: boolean` (or `status === 'success'`): True if the mutation was successful.
-  - `isError: boolean` (or `status === 'error'`): True if the mutation failed.
-  - `data: TData | undefined`: The data returned from a successful `mutationFn`.
-  - `error: TError | null`: The error object if the mutation failed.
-- **Side Effect Callbacks:**
-  - `onSuccess: (data: TData, variables: TVariables, context?: TContext) => void`: Called if the mutation is successful. Ideal for invalidating related queries, showing success messages, or navigation.
-  - `onError: (error: TError, variables: TVariables, context?: TContext) => void`: Called if the mutation fails. Good for showing error messages or logging.
-  - `onSettled: (data?: TData, error?: TError, variables?: TVariables, context?: TContext) => void`: Called after the mutation is either successful or errors out. Useful for cleanup tasks.
+- `mutate: (variables: TVariables, options?: MutateOptions) => void`: The primary function to trigger the mutation. Pass the required variables. Optionally pass per-mutation callbacks (e.g., `onSuccess`) which will override those defined in `useMutation` options for this specific call.
+- `mutateAsync: (variables: TVariables, options?: MutateOptions) => Promise<TData>`: Similar to `mutate`, but returns a Promise that resolves/rejects based on the mutation outcome.
+- `status: 'idle' | 'pending' | 'error' | 'success'`: Current status of the mutation.
+- `isPending: boolean`: True if the mutation is currently executing (equivalent to `status === 'pending'`).
+- `isIdle: boolean`: True if the mutation has not started or has been reset (equivalent to `status === 'idle'`).
+- `isSuccess: boolean`: True if the last mutation was successful (equivalent to `status === 'success'`).
+- `isError: boolean`: True if the last mutation failed (equivalent to `status === 'error'`).
+- `data: TData | undefined`: The data returned from the last successful `mutationFn`.
+- `error: TError | null`: The error from the last failed mutation.
+- `reset: () => void`: A function to reset the mutation state back to `idle`.
 
-**Invalidating Queries:** A crucial pattern after a successful mutation is to invalidate queries whose data might have changed due to the mutation. `queryClient.invalidateQueries({ queryKey: [...] })` tells TanStack Query to mark matching queries as stale, triggering a re-fetch for active queries. This ensures your UI displays fresh data. We'll cover this in more detail in Section 10.
+**Invalidating Queries:**
+A crucial pattern after a successful mutation is to invalidate queries whose data might have changed due to the mutation. `queryClient.invalidateQueries({ queryKey: [...] })` tells TanStack Query to mark matching queries as stale, triggering a re-fetch for active queries. This ensures your UI displays fresh data. We'll cover this in more detail in Section 10.
 
 > 📚 **Official Documentation (`useMutation`):**
 >
@@ -377,6 +404,16 @@ We'll see more practical uses of `QueryClient` methods, especially for cache man
 > 📚 **Official Documentation (`QueryClient`):**
 >
 > - [TanStack Query - `QueryClient`](https://tanstack.com/query/v5/docs/react/reference/QueryClient)
+
+### TanStack Query Core Concepts Summary
+
+| Concept       | Purpose                                                                 | Key Options/Features (v5)                                                                                                                      |
+| ------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `QueryClient` | Central hub for cache, configurations, and cache interaction methods.   | `defaultOptions`, `getQueryData`, `setQueryData`, `invalidateQueries`, `prefetchQuery`, `cancelQueries`                                        |
+| `useQuery`    | Declaratively fetch, cache, and manage server data (read operations).   | `queryKey`, `queryFn`, `staleTime`, `gcTime`, `enabled`, `retry`. Returns `data`, `error`, `status`, `fetchStatus`, `isPending`, `isFetching`. |
+| `useMutation` | Perform asynchronous actions that modify server state (CUD operations). | `mutationFn`, `onSuccess`, `onError`, `onSettled`, `onMutate`. Returns `mutate`, `mutateAsync`, `status`, `data`, `error`, `isPending`.        |
+
+This table serves as a quick reference, summarizing the distinct roles and primary features of the fundamental building blocks within TanStack Query, aiding learners in constructing a clear mental model of the library's architecture.
 
 ### Exercise 13.3: Fetching Data with `useQuery`
 

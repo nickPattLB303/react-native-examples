@@ -21,19 +21,16 @@ By embracing these principles, TanStack Query simplifies server state management
 
 TanStack Query offers a wealth of features that directly address the challenges of server state:
 
-- **Declarative Hooks:** Provides custom React Hooks like `useQuery` (for fetching data) and `useMutation` (for creating, updating, or deleting data) that abstract away the complexities of data fetching logic.
-- **Automatic Caching:** Caches query results in memory. You can configure cache times (`staleTime`, `gcTime` formerly `cacheTime`) to control how long data is considered fresh and how long it's kept in the cache after becoming inactive.
-- **Background Updates & Refetching:** Automatically re-fetches stale data when:
-  - A component using a query mounts.
-  - The network reconnects.
-  - The application window (or screen in React Native) is refocused by the user (configurable).
-  - You can also configure polling (refetching on an interval).
-- **Devtools:** Comes with its own Devtools (TanStack Query Devtools) that allow you to inspect cached data, query states, and manually trigger actions, making debugging server state incredibly easy. For React Native, you can integrate these Devtools to run in a browser.
-- **Mutations and Optimistic Updates:** Provides a clean way to handle data mutations (POST, PUT, DELETE requests) and to implement optimistic updates for a smoother user experience.
-- **Pagination and Infinite Scrolling:** Offers dedicated hooks and patterns (`useInfiniteQuery`) to simplify the implementation of pagination and infinite scrolling features.
-- **SSR and SSG Support:** While more relevant for web, its core is framework agnostic, and it has excellent support for Server-Side Rendering and Static Site Generation in web frameworks.
-- **TypeScript Support:** Written in TypeScript, offering excellent type safety for your queries and mutations.
-- **Protocol Agnostic:** You can use it with any asynchronous data fetching method (Fetch API, Axios, GraphQL clients like Apollo or urql, or even direct `AsyncStorage` calls if you treat them as async data sources).
+- **Declarative Data Fetching:** You use hooks like `useQuery` for fetching data and `useMutation` for CUD (Create, Update, Delete) operations. TanStack Query then handles the underlying fetching logic.
+- **Automatic Caching:** Query results are automatically cached. Subsequent requests for the same data (identified by a unique query key) can be served instantly from the cache. You can configure cache behavior with `staleTime` and `gcTime`.
+- **Background Updates & Stale Data Handling:** Implements strategies like "stale-while-revalidate," serving cached data immediately while refetching in the background. It also automatically refetches data on events like window focus or network reconnection.
+- **Request Deduplication:** If multiple components request the same data (using the same query key) around the same time, TanStack Query automatically deduplicates these requests, making only one actual network call.
+- **Pagination and Infinite Loading:** Provides built-in hooks (e.g., `useInfiniteQuery`) and patterns to simplify implementing pagination and infinite scroll features.
+- **Optimistic Updates:** Offers first-class support and patterns for implementing optimistic UI updates, making applications feel more responsive.
+- **Devtools:** Comes with dedicated developer tools (TanStack Query Devtools) that allow inspection of the query cache, query states, and manual interaction with queries, greatly aiding debugging. These can be integrated for use with React Native.
+- **Reduced Boilerplate:** Significantly cuts down on the repetitive `useEffect` and `useState` code typically needed for managing loading states, error states, data fetching, and cleanup.
+- **TypeScript Support:** Written in TypeScript, providing excellent type safety.
+- **Protocol Agnostic:** Works with any asynchronous data fetching method (Fetch API, Axios, GraphQL clients, etc.).
 
 Using TanStack Query for the SpeedyMeds app means you can manage fetching medication lists, patient details, prescription histories, and order statuses with significantly less manual effort, leading to more robust and responsive features.
 
@@ -63,7 +60,14 @@ Getting started with TanStack Query in a React Native project is straightforward
     import MainNavigator from "./src/navigation/MainNavigator"; // Example navigator
 
     // Create a client
-    const queryClient = new QueryClient();
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 5 * 60 * 1000, // Default stale time for all queries: 5 minutes
+          gcTime: 10 * 60 * 1000,    // Default garbage collection (cache) time: 10 minutes
+        },
+      },
+    });
 
     const App: React.FC = () => {
       return (
@@ -83,8 +87,23 @@ Getting started with TanStack Query in a React Native project is straightforward
 
     **Explanation:**
 
-    - `new QueryClient()`: This creates an instance of the query client. The client is responsible for managing the cache and all the queries within your application. You typically create only one instance of `QueryClient` for your entire app.
+    - `new QueryClient()`: This creates an instance of the query client. The client is responsible for managing the cache and all the queries within your application. You typically create only one instance of `QueryClient` for your entire app. You can also set default options for all queries and mutations here.
     - `<QueryClientProvider client={queryClient}>`: This component makes the `queryClient` instance available to all descendant components that use TanStack Query's hooks (like `useQuery` or `useMutation`).
+
+### Important Note for TanStack Query v5 Users
+
+TanStack Query v5 introduced some significant and beneficial changes to its API compared to v4. If you are familiar with older versions or see examples using older syntax, keep these key v5 changes in mind:
+
+1.  **Object Syntax for Hooks:** Most hooks (`useQuery`, `useMutation`, `useInfiniteQuery`, etc.) and `queryClient` methods now accept a **single options object** as their parameter. This replaces the previous pattern of multiple positional arguments or function overloads.
+
+    *   **Example (`useQuery`):**
+        *   v4 style: `useQuery('todos', fetchTodos, { staleTime: 5000 });`
+        *   v5 style: `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 5000 });`
+    This change improves API consistency, readability (especially for functions with many options), and TypeScript integration.
+
+2.  **`gcTime` (Garbage Collection Time):** The option previously known as `cacheTime` in v4 has been renamed to `gcTime` in v5. This name more accurately reflects its purpose: controlling how long inactive query data remains in memory before being garbage collected.
+
+Throughout this module, all examples and explanations will use the **v5 syntax and terminology**.
 
 ### Conceptual Overview: Queries
 
@@ -109,10 +128,12 @@ This basic model, combined with its powerful features, forms the foundation of s
 
 > 📚 **Official Documentation:**
 >
-> - [TanStack Query - Introduction](https://tanstack.com/query/v5/docs/react/overview)
+> - [TanStack Query - Introduction (Overview)](https://tanstack.com/query/v5/docs/react/overview)
+> - [Why Use TanStack Query?](https://tanstack.com/query/v5/docs/react/overview#why-use-tanstack-query)
 > - [TanStack Query - Installation](https://tanstack.com/query/v5/docs/react/installation)
 > - [TanStack Query - Important Defaults](https://tanstack.com/query/v5/docs/react/important-defaults)
 > - [TanStack Query - Core Concepts (Queries)](https://tanstack.com/query/v5/docs/react/guides/queries)
+> - [Migrating to TanStack Query v5 (Official Guide)](https://tanstack.com/query/v5/docs/react/guides/migrating-to-v5) (Helpful if familiar with v4)
 
 With this introduction and setup in place, we are now ready to explore how to actually fetch data using TanStack Query's core hook, `useQuery`.
 
