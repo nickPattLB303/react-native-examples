@@ -2,6 +2,10 @@
 
 In the previous section, we saw how the React Context API can effectively solve the problem of prop drilling, making it easier to share global data like themes or user authentication status. While Context API is a powerful tool, it's important to understand its behavior regarding re-renders and potential performance implications, especially as your SpeedyMeds application grows and more components start consuming context.
 
+> 🧑‍🏫 **(Instructor-Led):** During this section, be prepared to discuss real-world examples of performance issues you've encountered with Context API. Sharing experiences about debugging and optimizing context usage in production applications can provide valuable insights beyond the theoretical concepts covered here.
+
+> 🧗‍♀️ **(Self-Led):** As you work through this section, try to apply the concepts to your own projects. Consider analyzing any existing Context usage in your applications for potential performance issues using React DevTools Profiler. The optimization strategies explained here can significantly improve your application's performance.
+
 ### Deep Dive into Performance Issues
 
 The primary performance concern with the Context API stems from its re-rendering behavior:

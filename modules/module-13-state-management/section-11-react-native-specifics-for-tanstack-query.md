@@ -2,6 +2,10 @@
 
 While TanStack Query is designed to work seamlessly across different JavaScript environments, including React Native, there are a couple of platform-specific considerations that can enhance its behavior and reliability on mobile devices. These primarily revolve around how TanStack Query detects application focus and network online status, which are crucial for its automatic refetching strategies like `refetchOnWindowFocus` and `refetchOnReconnect`.
 
+> 🧑‍🏫 **(Instructor-Led):** During this section's live demonstration, we'll set up a complete React Native project with TanStack Query integration including proper focus and network status management. Come prepared with questions about real-world issues you might encounter when implementing these patterns in production apps, particularly around offline support and synchronization.
+
+> 🧗‍♀️ **(Self-Led):** This section contains important implementation details that significantly improve your app's behavior on mobile devices. Make sure to set up both the focus management and online status management in your project even if you're just experimenting. These patterns will become essential as your app grows more complex.
+
 ### Focus Management (`refetchOnWindowFocus`)
 
 By default, `refetchOnWindowFocus` is enabled in TanStack Query. This means that when the application regains focus after being in the background, TanStack Query will automatically attempt to refetch stale queries.

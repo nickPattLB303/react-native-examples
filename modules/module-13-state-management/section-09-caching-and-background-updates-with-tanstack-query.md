@@ -2,6 +2,10 @@
 
 One of the most powerful aspects of TanStack Query is its sophisticated caching mechanism and its ability to keep your data synchronized with the server through intelligent background updates. These features work together to provide a responsive user experience while minimizing unnecessary network requests and ensuring data freshness in your SpeedyMeds application.
 
+> 🔁 **(Asynchronous Learners):** This section is especially valuable if you're skimming through the module for specific information. The caching and automatic background updates are what truly set TanStack Query apart from simple data fetching, so understanding these concepts is essential even if you skip other details.
+
+> 🛣️ **(All Learners):** Pay particular attention to the `staleTime` and `gcTime` parameters, as configuring these incorrectly is a common source of confusion. The table at the end of this section provides a handy reference you may want to bookmark for future use in your projects.
+
 ### Deep Dive into Caching
 
 TanStack Query uses an in-memory cache to store the data fetched by your queries. The `queryKey` you provide to `useQuery` serves as the unique identifier for that data within the cache.

@@ -4,6 +4,10 @@ So far in this module, we've focused on **client state**: data that originates a
 
 However, a significant portion of the data in modern mobile applications like SpeedyMeds doesn't originate on the client. Instead, it resides on a **server** and is fetched, updated, and synchronized over a network. This is what we call **server state**, and managing it comes with a unique set of challenges that often require specialized tools.
 
+> 🛣️ **(All Learners):** This section marks an important transition from client-side to server-side state management, which is crucial for building real-world applications. The concepts covered here will fundamentally change how you think about data in your React Native apps, making your API integration more robust and maintainable.
+
+> 🔁 **(Asynchronous Learners):** Even if you're jumping directly to this section, ensure you understand the basics of React state (useState, useEffect) as the server state management solutions we'll cover build upon those foundations. This section serves as a standalone introduction to server state concepts regardless of which client-side state management approach you prefer.
+
 ### What is Server State?
 
 Server state refers to data that is persisted remotely on a server and is not directly controlled by your client application. Key characteristics of server state include:
