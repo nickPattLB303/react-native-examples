@@ -34,6 +34,12 @@ import type { StackScreenProps } from "@react-navigation/stack"; // For type che
 
 // Define a type for your stack parameters if you plan to pass params
 // We'll cover this in detail in a later section (Section 6)
+/**
+ * Defines the parameter list for the root stack navigator.
+ * Specifies the parameters expected by each screen in the stack.
+ * - `Home`: No parameters expected.
+ * - `PrescriptionDetail`: Expects a `prescriptionId` of type string.
+ */
 export type RootStackParamList = {
   Home: undefined; // No params for Home
   PrescriptionDetail: { prescriptionId: string }; // Expects prescriptionId
@@ -42,6 +48,12 @@ export type RootStackParamList = {
 // Type for HomeScreen props
 type HomeScreenProps = StackScreenProps<RootStackParamList, "Home">;
 
+/**
+ * Represents the home screen of the SpeedyMeds application.
+ * It displays a welcome message and buttons to navigate to prescription detail screens.
+ * @param {HomeScreenProps} props - The properties passed to the component, including navigation.
+ * @returns {JSX.Element} The rendered home screen component.
+ */
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <View style={styles.container}>
@@ -94,6 +106,12 @@ type PrescriptionDetailScreenProps = StackScreenProps<
   "PrescriptionDetail"
 >;
 
+/**
+ * Represents the prescription detail screen of the SpeedyMeds application.
+ * It displays details for a specific prescription identified by `prescriptionId` received via route params.
+ * @param {PrescriptionDetailScreenProps} props - The properties passed to the component, including route and navigation.
+ * @returns {JSX.Element} The rendered prescription detail screen component.
+ */
 export default function PrescriptionDetailScreen({
   route,
   navigation,
@@ -157,6 +175,12 @@ import PrescriptionDetailScreen from "./screens/PrescriptionDetailScreen";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+/**
+ * The main application component for SpeedyMeds.
+ * Sets up the root navigation container and the primary stack navigator
+ * with `HomeScreen` and `PrescriptionDetailScreen`.
+ * @returns {JSX.Element} The root application component with navigation.
+ */
 export default function App() {
   return (
     <NavigationContainer>

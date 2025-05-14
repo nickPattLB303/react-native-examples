@@ -35,6 +35,12 @@ import { RootDrawerParamList } from "../navigators/AppDrawerNavigator"; // Adjus
 
 type SettingsScreenProps = DrawerScreenProps<RootDrawerParamList, "Settings">;
 
+/**
+ * Represents the settings screen of the SpeedyMeds application.
+ * Allows users to configure preferences and provides options to open/toggle the drawer.
+ * @param {SettingsScreenProps} props - The properties passed to the component, including navigation for drawer interaction.
+ * @returns {JSX.Element} The rendered settings screen component.
+ */
 export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   return (
     <View style={styles.container}>
@@ -71,6 +77,12 @@ const styles = StyleSheet.create({
 
 ```typescript
 // navigators/AppDrawerNavigator.tsx or a shared types file
+/**
+ * Defines the parameter list for the root drawer navigator.
+ * Specifies the routes available in the drawer menu and any parameters they expect.
+ * - `MainApp`: Route for the main application content (likely a nested Tab or Stack navigator).
+ * - `Settings`: Route for the application settings screen.
+ */
 export type RootDrawerParamList = {
   MainApp: undefined; // Represents our main TabNavigator or StackNavigator
   Settings: undefined;
@@ -109,6 +121,14 @@ const Stack = createStackNavigator();
 
 // Helper component to add a header to MainAppTabs and a drawer toggle button
 // Note: navigation prop here is from the Stack, not the Drawer directly
+/**
+ * A helper component that wraps the main application tabs (or other main content)
+ * within a Stack Navigator to provide a header. This header includes a button
+ * to open the drawer menu.
+ * @param {{ navigation: any }} props - Props containing the navigation object, used here to control the drawer.
+ *                                     The `navigation` prop is from the parent Drawer.Screen, thus it can open the drawer.
+ * @returns {JSX.Element} A Stack Navigator wrapping the main app content with a drawer toggle in the header.
+ */
 function MainAppWithHeader({ navigation }: { navigation: any }) {
   return (
     <Stack.Navigator>
@@ -128,6 +148,13 @@ function MainAppWithHeader({ navigation }: { navigation: any }) {
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
+/**
+ * The main drawer navigator component for the application.
+ * It sets up the drawer menu with "MainApp" (which includes its own header with a menu button)
+ * and a "Settings" screen.
+ * The NavigationContainer is included here assuming this is the root navigator for the example.
+ * @returns {JSX.Element} The root application component with Drawer navigation.
+ */
 export default function AppDrawerNavigator() {
   return (
     // NavigationContainer should be at the root, so if AppDrawerNavigator is not the root,
@@ -224,6 +251,13 @@ import {
 } from "@react-navigation/drawer";
 import { Linking, Text, View } from "react-native";
 
+/**
+ * A custom component to render the content of the drawer menu.
+ * This allows for adding custom headers, footers, or additional non-screen items
+ * to the drawer, such as a user profile section or a logout button.
+ * @param {object} props - Props passed by the DrawerNavigator, including navigation state and descriptors.
+ * @returns {JSX.Element} The custom drawer content UI.
+ */
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
@@ -258,15 +292,6 @@ function CustomDrawerContent(props) {
 - `DrawerItem`: A component to render a single, customizable drawer item. Useful for adding extra links or actions that aren't tied to a specific screen in the navigator.
 
 Using `drawerContent` provides full control over the drawer's appearance and functionality, allowing for highly tailored navigation experiences.
-
-#### Exercise: (No exercise for this section as per blueprint, but one could be added)
-
-The blueprint doesn't specify an exercise for Section 5. However, a typical exercise would involve:
-
-1. Creating a new Drawer Navigator.
-2. Adding a few simple screens to it (e.g., ProfileScreen, HelpScreen).
-3. Integrating an existing Stack or Tab navigator as one of the drawer items.
-4. Implementing a button in the header of the nested navigator to toggle the drawer.
 
 #### Next Steps
 

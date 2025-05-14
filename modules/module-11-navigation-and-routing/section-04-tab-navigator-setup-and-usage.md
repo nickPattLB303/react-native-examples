@@ -29,6 +29,11 @@ Assume we already have `HomeScreen` and `PrescriptionDetailScreen` from the prev
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+/**
+ * Displays static information about the SpeedyMeds pharmacy.
+ * This includes address, opening hours, and contact details.
+ * @returns {JSX.Element} The rendered pharmacy information screen.
+ */
 export default function PharmacyInfoScreen() {
   return (
     <View style={styles.container}>
@@ -72,6 +77,12 @@ import PrescriptionDetailScreen from "../screens/PrescriptionDetailScreen"; // A
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+/**
+ * A stack navigator responsible for managing screens related to medications.
+ * This includes the list of medications (`HomeScreen`) and details for a specific prescription (`PrescriptionDetailScreen`).
+ * It is intended to be nested within a parent navigator (e.g., a TabNavigator).
+ * @returns {JSX.Element} The rendered medications stack navigator.
+ */
 export default function MedicationsNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -101,9 +112,15 @@ Similar to the Stack Navigator, we should define types for our Tab Navigator's r
 
 ```typescript
 // App.tsx or a shared types file
+/**
+ * Defines the parameter list for the root tab navigator.
+ * Specifies the routes available in the tab bar and any parameters they expect.
+ * - `Medications`: Route for the medications section (likely a nested stack), expects no parameters directly.
+ * - `PharmacyInfo`: Route for the pharmacy information screen, expects no parameters.
+ */
 export type RootTabParamList = {
-  Medications: undefined; // No params for the Medications tab itself
-  PharmacyInfo: undefined; // No params for PharmacyInfo
+  Medications: undefined;
+  PharmacyInfo: undefined;
   // Add other tab screens and their params here
 };
 ```
@@ -123,6 +140,12 @@ import Ionicons from "@expo/vector-icons/Ionicons"; // Example icon library
 import MedicationsNavigator from "./navigators/MedicationsNavigator"; // Our stack
 import PharmacyInfoScreen from "./screens/PharmacyInfoScreen";
 
+/**
+ * Defines the parameter list for the root tab navigator.
+ * Specifies the routes available in the tab bar and any parameters they expect.
+ * - `Medications`: Route for the medications section (likely a nested stack), expects no parameters directly.
+ * - `PharmacyInfo`: Route for the pharmacy information screen, expects no parameters.
+ */
 export type RootTabParamList = {
   Medications: undefined;
   PharmacyInfo: undefined;
@@ -130,6 +153,12 @@ export type RootTabParamList = {
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
+/**
+ * The main application component that sets up the root Tab Navigator.
+ * This navigator includes a "Medications" tab (which is a nested StackNavigator)
+ * and a "PharmacyInfo" tab.
+ * @returns {JSX.Element} The root application component with Tab navigation.
+ */
 export default function App() {
   return (
     <NavigationContainer>

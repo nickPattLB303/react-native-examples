@@ -40,6 +40,12 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
   // app/(main)/_layout.tsx
   import { Stack } from "expo-router";
 
+  /**
+   * Defines the layout for the main stack navigation group `(main)`.
+   * This Stack navigator includes screens for home (`index`), details, and a dynamic item screen.
+   * It also applies default header styling to all screens within this stack.
+   * @returns {JSX.Element} The Stack navigator for the (main) group.
+   */
   export default function MainStackLayout() {
     return (
       <Stack
@@ -71,6 +77,12 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
   // Or specifically import the stack if it's the only thing
   // import { Stack } from 'expo-router/stack'; // if using a stack from a group like (app)
 
+  /**
+   * Defines the root layout for the application when the primary content
+   * is managed by a nested navigator (e.g., in a route group like `(main)`).
+   * This layout uses `<Slot />` to render the matched child route/navigator.
+   * @returns {JSX.Element} The Slot component rendering the child navigator.
+   */
   export default function RootLayout() {
     // If (main) is your primary navigator, you might just render its slot.
     // Or, if you have multiple top-level groups/navigators, this root layout
@@ -111,6 +123,13 @@ Tab navigators are ideal for primary, distinct sections of an app.
   import { Tabs } from "expo-router";
   import Ionicons from "@expo/vector-icons/Ionicons"; // Example
 
+  /**
+   * Defines the layout for the `(tabs)` navigation group.
+   * This component sets up a Tabs navigator with screens for home, prescriptions, and settings,
+   * each configured with titles and icons.
+   * Default styling for active/inactive tabs is also applied.
+   * @returns {JSX.Element} The Tabs navigator for the (tabs) group.
+   */
   export default function TabLayout() {
     return (
       <Tabs
@@ -161,6 +180,13 @@ Tab navigators are ideal for primary, distinct sections of an app.
   // app/_layout.tsx
   import { Stack } from "expo-router";
 
+  /**
+   * Defines the root layout for an application where the primary navigation
+   * is a Tab navigator (defined in a route group like `(tabs)`).
+   * This root layout uses a Stack navigator to contain the Tabs, often to manage
+   * global modals or other screens outside the tab structure, while hiding the Stack's own header.
+   * @returns {JSX.Element} The root Stack navigator configured to display the Tabs navigator.
+   */
   export default function RootLayout() {
     // This setup makes the (tabs) navigator available at the root.
     // The headerShown: false on the Stack containing the Tabs
@@ -195,6 +221,13 @@ Drawer navigators provide a slide-out menu.
   import { Drawer } from "expo-router/drawer"; // Or import { Drawer } from "expo-router"
   import Ionicons from "@expo/vector-icons/Ionicons";
 
+  /**
+   * Defines the layout for the `(drawer)` navigation group.
+   * This component sets up a Drawer navigator with screens for a feed, notifications,
+   * and a main content area (which itself could be another navigator group like `(mainContent)`).
+   * It configures drawer labels, titles, and icons for each drawer item.
+   * @returns {JSX.Element} The Drawer navigator for the (drawer) group.
+   */
   export default function DrawerLayout() {
     return (
       <Drawer

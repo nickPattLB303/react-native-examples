@@ -226,15 +226,6 @@ For screens within a stack that is itself a tab, the `options` for the `<Stack.S
 >
 > **Comparison:** Styling the `Toolbar` or `AppBarLayout` (title, background, menu items) and `BottomNavigationView` (item icons, labels, colors, background) directly relates to these options.
 
-#### Exercise: (No exercise for this section as per blueprint, but one could be added)
-
-The blueprint does not specify an exercise for Section 7. A relevant exercise could involve:
-
-1.  Customizing the header style (background color, title color, font weight) for a Stack Navigator.
-2.  Adding a custom `headerRight` button to one of the stack screens.
-3.  Customizing the `tabBarActiveTintColor`, `tabBarInactiveTintColor`, and `tabBarLabelStyle` for a Tab Navigator.
-4.  Setting custom icons for each tab based on focus state.
-
 #### Next Steps
 
 While React Navigation offers powerful imperative and component-based ways to define navigation, Expo has introduced its own file-system-based routing solution called Expo Router. The next section will introduce you to this alternative approach.

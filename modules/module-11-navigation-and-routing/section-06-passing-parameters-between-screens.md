@@ -62,6 +62,12 @@ type PrescriptionDetailScreenProps = StackScreenProps<
   "PrescriptionDetail"
 >;
 
+/**
+ * Displays details for a specific prescription.
+ * Receives `prescriptionId` and an optional `sourceScreen` via route parameters.
+ * @param {PrescriptionDetailScreenProps} props - Props containing route and navigation objects.
+ * @returns {JSX.Element} The rendered prescription detail screen.
+ */
 export default function PrescriptionDetailScreen({
   route,
   navigation,
@@ -154,6 +160,13 @@ Sometimes, a screen needs to return data to the screen that opened it (e.g., a s
 
 ```tsx
 // ScreenB (e.g., a selection modal)
+/**
+ * Represents a screen (e.g., a modal or selection list) that allows a user to select an item
+ * and then pass this selected item back to the previous screen (ScreenA).
+ * @param {object} props - Component props, including the navigation object.
+ * @param {any} props.navigation - The navigation prop provided by React Navigation.
+ * @returns {JSX.Element} Placeholder for ScreenB's UI, actual rendering of items would be here.
+ */
 function ScreenB({ navigation }) {
   const onSelectItem = (item) => {
     navigation.navigate({
@@ -166,6 +179,15 @@ function ScreenB({ navigation }) {
 }
 
 // ScreenA (the screen that opened ScreenB)
+/**
+ * Represents a screen that navigates to ScreenB for item selection and then
+ * receives the selected item back via route parameters.
+ * It uses `useEffect` to listen for changes in `route.params.selectedItem`.
+ * @param {object} props - Component props, including route and navigation objects.
+ * @param {any} props.route - The route prop containing parameters.
+ * @param {any} props.navigation - The navigation prop.
+ * @returns {JSX.Element} Placeholder for ScreenA's UI.
+ */
 function ScreenA({ route, navigation }) {
   React.useEffect(() => {
     if (route.params?.selectedItem) {
@@ -257,6 +279,13 @@ In the destination screen component, all parameters (from dynamic route segments
 import { useLocalSearchParams, Stack } from "expo-router";
 import { View, Text } from "react-native";
 
+/**
+ * Represents a user profile screen that displays information for a user
+ * identified by an `id` parameter from the route. It can also receive an optional
+ * `referrer` query parameter.
+ * Uses `useLocalSearchParams` from Expo Router to access route parameters.
+ * @returns {JSX.Element} The rendered user profile screen.
+ */
 export default function UserProfileScreen() {
   const { id, referrer } = useLocalSearchParams<{
     id: string;

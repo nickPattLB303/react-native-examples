@@ -32,7 +32,7 @@ graph TD;
     S_B --> S_A;
 ```
 
-> The diagram above illustrates a simple stack navigation flow. Screen A is the initial screen. Navigating to Screen B pushes it onto the stack above Screen A. Similarly, Screen C is pushed above Screen B. When going back from Screen C, it's popped, revealing Screen B. Going back again from Screen B pops it, revealing Screen A. The stack ensures a clear history and allows users to retrace their steps easily.
+> The diagram above illustrates a simple stack navigation flow, a common pattern where screens are managed in a "Last-In, First-Out" (LIFO) manner. Screen A represents the initial base screen. When a user performs an action to navigate to Screen B (e.g., tapping a button), Screen B is conceptually "pushed" onto the top of this stack, visually obscuring Screen A. Similarly, navigating from Screen B to Screen C pushes Screen C onto the top, making it the active screen. The sub-diagram explicitly shows this stack with Screen C at the top, followed by B, then A at the bottom. User actions like pressing a hardware back button or an in-app back control trigger a "pop" operation. Thus, going back from Screen C pops it off, revealing Screen B as the active screen. Another back action from Screen B pops it, returning the user to Screen A. This mechanism provides a clear and intuitive history, allowing users to easily retrace their steps through a sequence of views. The stack navigator is fundamental for drilling down into details or progressing through multi-step processes.
 
 **2. Tab Navigator**
 
@@ -68,7 +68,7 @@ graph TD;
     style TN fill:#ccf,stroke:#333,stroke-width:2px;
 ```
 
-> This diagram shows a Tab navigator with three tabs. Each tab (Tab 1, Tab 2, Tab 3) can lead to its own screen or even its own stack of screens (e.g., Tab 1 has Screen X1 which can navigate to Screen X2). When a user switches from Tab 1 to Tab 2, the navigation state of Tab 1 (including its stack) is typically preserved, so when they return to Tab 1, they are back where they left off. This allows users to multitask between different sections of the app seamlessly.
+> This diagram visualizes a Tab navigator, often used for top-level navigation between distinct sections of an application. The `AppShell` represents the main application container, housing the `Tab Navigator` (TN). This TN presents multiple tabs—Tab 1, Tab 2, and Tab 3. Each tab acts as an entry point to a separate content area, which can be a single screen (like Screen Y1 for Tab 2) or its own independent navigation stack (like Tab 1, which has Screen X1 that can navigate to Screen X2, forming `Tab1Stack`). A key characteristic is that when a user switches tabs, for example from Tab 1 to Tab 2, the navigation state within Tab 1 (including its current screen or back-stack) is typically preserved. This allows users to return to Tab 1 and find it as they left it, facilitating seamless multitasking and exploration across different primary features of the application without losing context in each section. The `Tab2Stack` simply shows Screen Y1 as its top screen, implying it might not have a deeper stack in this illustration.
 
 **3. Drawer Navigator**
 
@@ -99,7 +99,7 @@ graph TD;
     style DrawerMenu fill:#efe,stroke:#333,stroke-width:2px;
 ```
 
-> The diagram illustrates a Drawer navigator. The main app screen has a header with a menu icon. Clicking this icon or swiping from the edge opens the drawer. The drawer itself contains a list of navigation options (Option 1, Option 2, Option 3), each leading to a different screen (Screen P, Screen Q, Screen R). The drawer typically overlays or pushes the main content aside when open.
+> The diagram illustrates a Drawer navigator, a common pattern for providing access to various sections or features via a side menu. The `AppScreen` depicts the currently visible main content area, which includes a `Header` often containing a menu icon (e.g., a hamburger icon). A user action, such as clicking this `MenuIconClick` or performing a swipe gesture from the screen edge, triggers the `DrawerOpen` state. This action reveals the `DrawerMenu`, which slides in (typically from the left or right). The `DrawerMenu` itself contains a list of navigation items like Option 1, Option 2, and Option 3. Selecting any of these options navigates the user to a corresponding screen (Screen P, Screen Q, or Screen R respectively). The drawer usually overlays the main content or pushes it aside temporarily. This pattern is particularly useful for housing less frequently accessed items or a larger number of navigation choices without cluttering the primary interface, thus keeping the main screen focused on core content.
 
 **Combining Navigators**
 

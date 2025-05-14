@@ -1,9 +1,5 @@
 # Module 11: Navigation and Routing
 
-<!-- Optional: Add a relevant banner image here if desired, following image standards -->
-<!-- e.g., ![React Native Navigation Banner](./assets/images/module-11/navigation-banner.png) -->
-<!-- Caption: Navigational elements connecting different app screens. -->
-
 Welcome to Module 11: Navigation and Routing! In any mobile application with more than a single screen, a robust navigation system is essential. Navigation forms the backbone of an application, dictating how users move between different sections and functionalities, and managing the presentation of, and transitions between, multiple screens. The effectiveness of an application's navigation system is paramount to its success; a poorly designed or unintuitive navigation structure can significantly hinder usability and lead to user frustration, potentially causing users to abandon the app. Conversely, a seamless, logical, and predictable navigation flow enhances the overall user experience (UX) significantly. Effective navigation acts as a silent guide, enabling users to discover features, complete tasks, and access information with minimal friction, directly contributing to higher user engagement and satisfaction. The chosen navigation patterns and underlying library are critical architectural decisions that shape the user's journey and perception of the application by structuring its information architecture.
 
 This module explores how to implement intuitive and effective navigation in your React Native applications. You'll learn about fundamental navigation concepts and then dive into two powerful libraries: React Navigation and Expo Router. While these are the primary focus, it's worth noting that other solutions like `react-native-navigation` by Wix exist, which take a native-centric approach. By the end of this module, you'll be able to construct complex navigation flows, pass data between screens, and customize the appearance of your navigation elements, enabling you to build professional, multi-screen applications for our SpeedyMeds pharmacy app.
@@ -69,7 +65,8 @@ The following table provides a reference for potentially compatible library vers
 |                         | `expo-constants`                 | Use `npx expo install` recommended version          | Used by Expo Router.                                                                            |
 |                         | `expo-status-bar`                | Use `npx expo install` recommended version          | Common utility, installed with Expo Router setup.                                               |
 
-> **Note:** Always prioritize versions recommended by `npx expo install <package-name>` for your specific Expo SDK version, as this tool attempts to resolve compatible dependencies.
+> [!NOTE]
+> Always prioritize versions recommended by `npx expo install <package-name>` for your specific Expo SDK version, as this tool attempts to resolve compatible dependencies.
 
 ## Learning Objectives
 

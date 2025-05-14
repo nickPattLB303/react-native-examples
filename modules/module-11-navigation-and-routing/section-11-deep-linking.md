@@ -149,16 +149,6 @@ Essentially, by defining your navigation hierarchy with layouts, Expo Router ens
 >
 > **Key Takeaway:** Deep linking in mobile with Expo Router feels very much like standard URL routing on the web. The primary additional complexity comes from configuring the native OS (iOS/Android) to correctly associate your web domain or custom scheme with your app through AASA and assetlinks.json files.
 
-#### Exercise: (No exercise for this section as per blueprint, deep linking setup can be complex)
-
-The blueprint does not specify an exercise for Section 11. Implementing and testing deep linking thoroughly, especially Universal Links/App Links, involves external server configurations and build processes that go beyond a typical Expo Snack exercise.
-
-A conceptual exercise could involve:
-
-1.  Defining the desired deep link URLs for various SpeedyMeds app features (e.g., viewing a prescription, opening the refill page).
-2.  Outlining the necessary `app.json` scheme configuration.
-3.  Describing where the `apple-app-site-association` and `assetlinks.json` files would be hosted and what their basic content might include for a given domain.
-
 #### Next Steps
 
 This concludes the core topics for Module 11: Navigation and Routing. You've learned about fundamental navigation concepts, implementing stacks, tabs, and drawers with React Navigation, passing parameters, customizing appearance, and then explored file-system based routing and deep linking with Expo Router. The module challenge will allow you to apply these concepts to build a more comprehensive navigation structure for the SpeedyMeds app.

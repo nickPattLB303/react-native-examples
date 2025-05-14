@@ -156,6 +156,12 @@ This file defines the root navigator for your app. For example, a simple stack n
 // app/_layout.tsx
 import { Stack } from "expo-router/stack";
 
+/**
+ * Defines the root layout for the application using Expo Router.
+ * This component sets up a Stack navigator as the primary navigation structure.
+ * It includes screens for the home page (`index`) and a profile page (`profile`).
+ * @returns {JSX.Element} The root Stack navigator.
+ */
 export default function RootLayout() {
   return (
     <Stack>
@@ -175,6 +181,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 
+/**
+ * Represents the home screen of the SpeedyMeds application when using Expo Router.
+ * Displays a welcome message and links to other sections like Profile and an example medication detail page.
+ * @returns {JSX.Element} The rendered home screen component.
+ */
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -214,6 +225,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Stack } from "expo-router"; // To configure screen-specific options if needed
 
+/**
+ * Represents the user profile screen in the SpeedyMeds application using Expo Router.
+ * Displays basic user information like name and email.
+ * @returns {JSX.Element} The rendered profile screen component.
+ */
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
