@@ -2,7 +2,43 @@
 
 TypeScript extends JavaScript by adding types. Understanding these basic types is the first step towards leveraging TypeScript's power. These types allow you to declare the expected data shape for your variables, function parameters, and object properties, enabling the TypeScript compiler to catch errors early.
 
-### Conceptual Content: Core Data Types in TypeScript
+```mermaid
+graph TD
+    A[TypeScript Types] --> B[Primitive Types]
+    A --> C[Object Types]
+    A --> D[Special Types]
+
+    B --> B1[string]
+    B --> B2[number]
+    B --> B3[boolean]
+    B --> B4[symbol]
+    B --> B5[bigint]
+    B --> B6[null]
+    B --> B7[undefined]
+
+    C --> C1[Interface]
+    C --> C2[Type Alias]
+    C --> C3[Class]
+    C --> C4[Array]
+    C --> C5[Tuple]
+    C --> C6[Enum]
+
+    D --> D1[any]
+    D --> D2[unknown]
+    D --> D3[never]
+    D --> D4[void]
+
+    style A fill:#d4f1f9
+    style B fill:#d5e8d4
+    style C fill:#ffe6cc
+    style D fill:#e1d5e7
+```
+
+The diagram above visualizes the main categories of TypeScript types that you'll learn about in this course. TypeScript types can be broadly organized into three categories:
+
+1. **Primitive Types**: The basic building blocks like `string`, `number`, and `boolean` that represent simple values.
+2. **Object Types**: More complex types that define structures like objects, arrays, and classes.
+3. **Special Types**: Utility types that serve specific purposes in the type system, such as `any`, `unknown`, and `never`.
 
 Let's explore the most commonly used basic types in TypeScript. Many of these will feel familiar if you have experience with JavaScript, but TypeScript provides explicit ways to work with them.
 
@@ -205,6 +241,12 @@ if (nextAppointmentDate) {
 }
 ```
 
+> 🛣️ **(All Learners):** The next few types (`never`, `tuple`, `bigint`, `symbol`) are more advanced and less frequently used in day-to-day React Native development. However, understanding them will give you a complete picture of TypeScript's type system and help you recognize them when you encounter them in library definitions or advanced patterns.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider conducting a quick quiz on the basic types covered so far before moving to these more advanced types. Ask students to provide examples of when they might use `null` vs. `undefined`, or how `unknown` differs from `any`.
+
+> 🧗‍♀️ **(Self-Led):** As you study these advanced types, try to come up with your own SpeedyMeds-related examples to reinforce your understanding. Creating your own examples is an effective way to internalize new concepts.
+
 **10. `never`**
 
 The `never` type represents the type of values that never occur. It indicates that a function will not reach its normal completion point.
@@ -252,6 +294,22 @@ console.log(handleReportStatus("Complete"));
 // criticalErrorHandler("Example critical error"); // Uncomment to test
 ```
 
+> 🍏 **(iOS Developers - Swift):**
+>
+> **Comparison:** Swift's `Never` type serves a similar purpose to TypeScript's `never` type. In Swift, a function with return type `Never` indicates it will never return to its caller normally (e.g., it will throw an error, cause a fatal error, or enter an infinite loop). This is used in Swift for functions like `fatalError()` or `exit()`, or in control flow to indicate exhaustive pattern matching.
+>
+> **Key Takeaway:** Both TypeScript's `never` and Swift's `Never` enforce exhaustiveness checking in control flow. The main difference is that TypeScript erases types at compile time, while Swift's type system maintains runtime significance.
+>
+> **Source:** [Swift - Never Type Documentation](https://developer.apple.com/documentation/swift/never)
+
+> 🤖 **(Android Developers - Kotlin):**
+>
+> **Comparison:** Kotlin's `Nothing` type is conceptually equivalent to TypeScript's `never`. A function returning `Nothing` will never return normally (it will throw an exception or run indefinitely). This is used for functions like `throw`, `error()`, or infinite loops in Kotlin.
+>
+> **Key Takeaway:** TypeScript's `never` serves the same purpose as Kotlin's `Nothing` - both indicate a function won't complete normally and help with exhaustiveness checking. However, as with Swift, Kotlin's type system has runtime presence while TypeScript's is erased during compilation.
+>
+> **Source:** [Kotlin - Nothing Type](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing.html)
+
 **11. `tuple`**
 
 Represents an array with a fixed number of elements whose types are known, but need not be the same. This provides more structure than a general array of mixed types.
@@ -293,6 +351,22 @@ console.log(
   } refills left.`
 );
 ```
+
+> 🌐 **(Web Developers - Python):**
+>
+> **Comparison:** TypeScript's tuples are similar to Python's tuples in that they are fixed-length collections with specific types at specific positions. However, there are key differences: Python tuples are immutable (cannot be modified after creation), while TypeScript tuples can be modified. In Python, tuples are primarily differentiated from lists by immutability, whereas in TypeScript, they're differentiated by their fixed structure and typed positions.
+>
+> **Key Takeaway:** TypeScript's tuples provide similar structural benefits to Python's tuples – enforcing a specific "shape" of data – but without the immutability constraint. In TypeScript, use tuples when you need a fixed, ordered structure where each position has a specific meaning and type.
+>
+> **Example:**
+>
+> ```python
+> # Python tuple
+> point = (10, 20)  # Tuple of two integers
+> name_and_age = ("John", 30)  # Tuple with mixed types
+> ```
+>
+> **Source:** [Python Tuples](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences)
 
 **12. `bigint`**
 
@@ -408,6 +482,12 @@ Literal types allow you to define types that represent exact, specific values. T
 
 Literal types provide a more precise way to define expectations than general primitive types, enhancing type safety and self-documentation, especially for things like status codes, action types, or predefined options.
 
+> 🛣️ **(All Learners):** The concept of structural typing is central to how TypeScript works and is quite different from class-based typing in many other languages. Take your time to understand this section as it impacts how you will structure your types throughout your React Native projects.
+
+> 🧑‍🏫 **(Instructor-Led):** This is an excellent opportunity for a group exercise. Ask students to create object literals and interfaces, then discuss which would be compatible with each other based on structural typing rules.
+
+> 🧗‍♀️ **(Self-Led):** Try creating several different object shapes and interfaces, then test your understanding by predicting which assignments TypeScript would allow or reject based on structural compatibility.
+
 ### 15. Understanding Structural Typing (Duck Typing)
 
 Type compatibility in TypeScript is based on **structural subtyping**, often referred to as "duck typing" at compile time. This means that types are related based on their members (properties and methods), not on explicit declarations or names. If an object `x` possesses at least the same members (with compatible types) as an object `y` requires, then `x` is considered compatible with `y` and can be assigned to `y`.
@@ -505,9 +585,17 @@ TypeScript extends JavaScript's destructuring capabilities by allowing type anno
   );
   ```
 
-  Type annotations on destructuring assignments provide immediate clarity about the expected structure and types, allowing the TypeScript compiler to catch errors if the source data doesn't conform.
+Type annotations on destructuring assignments provide immediate clarity about the expected structure and types, allowing the TypeScript compiler to catch errors if the source data doesn't conform.
 
 These basic types and foundational concepts form the building blocks for more complex type definitions you'll encounter and create in TypeScript. Mastering them is essential for writing type-safe and maintainable code.
+
+> 🛣️ **(All Learners):** Now that you've learned about TypeScript's basic types, you have the foundation to start building type-safe applications. In the rest of this module, we'll explore more advanced typing features, but these core types will be used in nearly every TypeScript file you write.
+
+> 🧑‍🏫 **(Instructor-Led):** Consider a short recap exercise where students identify which TypeScript type would be appropriate for different pieces of data in the SpeedyMeds application (patient records, medication details, authentication states, etc.).
+
+> 🧗‍♀️ **(Self-Led):** Before moving to the next section, create a small TypeScript file with examples of at least 5 different types we've covered. Use type annotations explicitly to reinforce your understanding.
+
+> 🔁 **(Asynchronous Learners):** If you're skimming through sections based on your existing TypeScript knowledge, make sure you've understood the differences between `any` and `unknown`, as well as how union types work with `null` and `undefined`. These aspects are particularly important for building robust React Native applications.
 
 > 📚 **Official Documentation:**
 >
