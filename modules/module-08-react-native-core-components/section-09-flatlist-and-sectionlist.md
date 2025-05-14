@@ -478,4 +478,4 @@ Time to build a list using `<FlatList>` for the SpeedyMeds application.
 7.  Style the list items and the list itself for a clean, professional look.
 8.  (Optional) Add a `ListHeaderComponent` to display a title like 'Today\'s Appointments'.
 
-**(TODO: Link to Specific Expo Snack for Exercise 8.4)**
+**(https://snack.expo.dev/@speedymeds/rn-exercise-8-4-flatlist-appointments)**

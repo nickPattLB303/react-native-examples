@@ -326,6 +326,6 @@ Let's practice passing and using props to make components more dynamic.
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Exercise 7.2)**
+**(https://codesandbox.io/s/react-native-exercise-7-2-medication-info-props-fn38xt)**
 
 _A solution will be provided by your instructor or in the course materials._

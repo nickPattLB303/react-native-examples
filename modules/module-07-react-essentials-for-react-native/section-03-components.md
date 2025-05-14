@@ -234,7 +234,7 @@ Now it's time to practice creating your own functional components.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (You will need to create a new React TypeScript sandbox or use a provided template if available for the course.)
+**(https://codesandbox.io/s/react-native-exercise-7-1-patient-info-card-m5c7xj)**
 
 _A solution will be provided by your instructor or in the course materials._
 
@@ -407,5 +407,5 @@ Now it's time to practice creating your own functional components.
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Exercise 7.1)**
+**(https://codesandbox.io/s/react-native-exercise-7-1-patient-info-card-m5c7xj)**
 ```

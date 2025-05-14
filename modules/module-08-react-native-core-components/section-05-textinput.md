@@ -204,4 +204,4 @@ Now it's time to practice! Create a simple form for the SpeedyMeds app where use
 3.  Style the inputs and the container `<View>` for a clean presentation.
 4.  Add a `<Button>` that, when pressed, displays an alert showing the entered medication name and dosage.
 
-**(TODO: Link to Specific Expo Snack for Exercise 8.1)**
+**(https://snack.expo.dev/@speedymeds/rn-exercise-8-1-textinput-form)**

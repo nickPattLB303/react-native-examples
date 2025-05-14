@@ -244,4 +244,4 @@ Let's practice using `useEffect` to perform a side effect, such as fetching data
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Exercise 7.5)**
+**(https://codesandbox.io/s/react-native-exercise-7-5-user-profile-useeffect-c38kt9)**

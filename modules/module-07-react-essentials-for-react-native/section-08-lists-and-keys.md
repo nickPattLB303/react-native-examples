@@ -271,4 +271,4 @@ Time to practice rendering lists of data with keys.
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Exercise 7.4)**
+**(https://codesandbox.io/s/react-native-exercise-7-4-medication-list-f4gkwr)**

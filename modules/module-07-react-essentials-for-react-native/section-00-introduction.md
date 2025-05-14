@@ -82,7 +82,7 @@ After completing all sections, put your knowledge to the test with this module's
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Challenge 7: Simple Medication List App)**
+**(https://codesandbox.io/s/react-native-challenge-7-medication-list-app-k93xmf)**
 
 ---
 

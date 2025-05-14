@@ -221,11 +221,8 @@ Let's get some practice using the `useState` Hook to manage component state.
 5.  Add a `<Button>` labeled "Clear Notes". When pressed, it should reset the `notes` state to an empty string.
 6.  (Optional) Add some basic styling.
 
-**Tool:** CodeSandbox (Remember to import `TextInput`, `Button`, etc., from `react-native-web` if your CodeSandbox template is for React web, or use an Expo Snack if you want to use actual React Native components more easily for this exercise type, though the blueprint specifies CodeSandbox for this module. For fundamental React concepts, `react-native-web` can suffice.)
+**Tool:** CodeSandbox
 
-> [!NOTE]
-> For this exercise in CodeSandbox, if you are using a standard React (web) template, you can use HTML input elements or import components like `TextInput` and `Button` from `react-native-web` to simulate the React Native environment for learning purposes. The core `useState` logic remains the same.
-
-**(TODO: Link to Specific CodeSandbox for Exercise 7.3)**
+**(https://codesandbox.io/s/react-native-exercise-7-3-medication-counter-state-9z3dkr)**
 
 _A solution will be provided by your instructor or in the course materials._

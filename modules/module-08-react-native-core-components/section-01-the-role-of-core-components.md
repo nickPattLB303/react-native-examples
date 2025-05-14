@@ -21,6 +21,70 @@ Utilizing Core Components typically involves a straightforward process:
 3.  **Integrate the Component:** Incorporate the component into your JSX code for rendering within the application's UI hierarchy.
 4.  **Customize with Props:** Each Core Component accepts a set of properties, known as `props`, which allow you to customize its behavior, appearance, and content (e.g., the `style` prop for visual characteristics, an `onPress` prop for button actions).
 
+**Core Components Mapping to Native Platform Widgets:**
+
+The following diagram illustrates how React Native Core Components map to their native counterparts on iOS and Android platforms:
+
+```mermaid
+graph TD
+    subgraph "React Native Components"
+        RN_View["&lt;View&gt;"]
+        RN_Text["&lt;Text&gt;"]
+        RN_Image["&lt;Image&gt;"]
+        RN_Button["&lt;Button&gt;"]
+        RN_TextInput["&lt;TextInput&gt;"]
+        RN_ScrollView["&lt;ScrollView&gt;"]
+        RN_FlatList["&lt;FlatList&gt;"]
+    end
+
+    subgraph "iOS Native Components"
+        iOS_View["UIView"]
+        iOS_Label["UILabel"]
+        iOS_ImageView["UIImageView"]
+        iOS_Button["UIButton"]
+        iOS_TextField["UITextField"]
+        iOS_TextView["UITextView"]
+        iOS_ScrollView["UIScrollView"]
+        iOS_TableView["UITableView"]
+    end
+
+    subgraph "Android Native Components"
+        Android_View["ViewGroup"]
+        Android_TextView["TextView"]
+        Android_ImageView["ImageView"]
+        Android_Button["Button"]
+        Android_EditText["EditText"]
+        Android_ScrollView["ScrollView"]
+        Android_RecyclerView["RecyclerView"]
+    end
+
+    RN_View --> iOS_View
+    RN_View --> Android_View
+
+    RN_Text --> iOS_Label
+    RN_Text --> Android_TextView
+
+    RN_Image --> iOS_ImageView
+    RN_Image --> Android_ImageView
+
+    RN_Button --> iOS_Button
+    RN_Button --> Android_Button
+
+    RN_TextInput --> iOS_TextField
+    RN_TextInput --> iOS_TextView
+    RN_TextInput --> Android_EditText
+
+    RN_ScrollView --> iOS_ScrollView
+    RN_ScrollView --> Android_ScrollView
+
+    RN_FlatList --> iOS_TableView
+    RN_FlatList --> Android_RecyclerView
+```
+
+This diagram shows the direct mapping between React Native Core Components and the corresponding native UI elements on both iOS and Android platforms. When you use a React Native component in your JavaScript code, React Native translates it to the appropriate native widget behind the scenes. The JavaScript bridge (in the legacy architecture) or JSI (in the New Architecture) facilitates this communication, allowing you to write cross-platform code while still leveraging native performance and appearance.
+
+Note that some React Native components may map to different native components depending on configuration. For example, `<TextInput>` maps to `UITextField` for single-line input on iOS but to `UITextView` for multiline input. Similarly, components like `FlatList` leverage optimized list views on each platform (`UITableView` on iOS and `RecyclerView` on Android) for efficient rendering of large data sets.
+
 **Key Characteristics:**
 
 - **Platform Agnostic (Mostly):** While they render to native widgets, the API you interact with in your JavaScript/TypeScript code is consistent across platforms. Some components might have platform-specific props, but the general usage is the same.

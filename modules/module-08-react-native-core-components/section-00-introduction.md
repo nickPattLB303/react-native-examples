@@ -91,7 +91,7 @@ This module is divided into the following sections:
 
 **Tool:** Expo Snack
 
-**(TODO: Link to Specific Expo Snack for Challenge 8)**
+**(https://snack.expo.dev/@speedymeds/rn-challenge-08-prescription-card)**
 
 ## Module Summary
 

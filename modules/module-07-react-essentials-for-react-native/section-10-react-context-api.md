@@ -234,6 +234,6 @@ Let's practice using the Context API to share simple data.
 
 **Tool:** CodeSandbox
 
-**(TODO: Link to Specific CodeSandbox for Exercise 7.6)**
+**(https://codesandbox.io/s/react-native-exercise-7-6-theme-context-api-p24rvt)**
 
 _A solution will be provided by your instructor or in the course materials._
