@@ -230,6 +230,7 @@ const ValidationRHFScreen = () => {
                   value={value}
                   placeholder="e.g., Jane Smith"
                   placeholderTextColor="#b0bec5"
+                  accessibilityLabel="Enter Patient Full Name"
                 />
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
               </View>
@@ -267,6 +268,7 @@ const ValidationRHFScreen = () => {
                   keyboardType="numeric"
                   placeholderTextColor="#b0bec5"
                   maxLength={3} // Practical limit for age input
+                  accessibilityLabel="Enter Patient Age"
                 />
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
               </View>
@@ -406,9 +408,11 @@ By implementing these basic validation techniques, you can significantly improve
 
 **Table: React Hook Form Validation Rules Summary**
 
+The following table provides a quick reference for the common validation rules discussed, their parameters, and example usage within the `rules` prop of a React Hook Form `Controller`.
+
 | Rule Name   | Parameter Type(s)                                          | Example Usage in `rules` Prop                             | Default Message (Example if RHF provides one) |
 | :---------- | :--------------------------------------------------------- | :-------------------------------------------------------- | :-------------------------------------------- |
-| `required`  | `boolean`, `string`, `{ value: boolean, message: string }` | `required: 'Field is required'`                           | Varies by browser/RHF; often generic          |
+| `required`  | `boolean`, `string`, `{ value: boolean, message: string }` | `required: \'Field is required\'`                         | Varies by browser/RHF; often generic          |
 | `minLength` | `{ value: number, message: string }`                       | `minLength: { value: 5, message: 'Too short' }`           | "MinLength is 5"                              |
 | `maxLength` | `{ value: number, message: string }`                       | `maxLength: { value: 10, message: 'Too long' }`           | "MaxLength is 10"                             |
 | `min`       | `{ value: number, message: string }`                       | `min: { value: 0, message: 'Must be positive' }`          | "Min is 0"                                    |

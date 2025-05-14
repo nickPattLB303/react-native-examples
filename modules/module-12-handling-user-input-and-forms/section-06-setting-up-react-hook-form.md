@@ -209,6 +209,7 @@ const BasicRHFScreen = () => {
                 value={value} // TextInput value is controlled by RHF
                 placeholder="e.g., John Doe"
                 placeholderTextColor="#aaa"
+                accessibilityLabel="Enter Patient Full Name"
               />
               {error && <Text style={styles.errorText}>{error.message}</Text>}
             </View>

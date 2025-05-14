@@ -34,23 +34,24 @@ There are two common ways to use `useState` for form state:
   import { TextInput, View, StyleSheet } from "react-native";
 
   const SimpleFormOneStatePerInput: React.FC = () => {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [patientName, setPatientName] = useState<string>("");
+    const [medicationId, setMedicationId] = useState<string>("");
 
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
+          placeholder="Patient Name"
+          value={patientName}
+          onChangeText={setPatientName}
+          accessibilityLabel="Enter Patient Name"
         />
         <TextInput
           style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
+          placeholder="Medication ID"
+          value={medicationId}
+          onChangeText={setMedicationId}
+          accessibilityLabel="Enter Medication ID"
         />
       </View>
     );
@@ -78,14 +79,14 @@ There are two common ways to use `useState` for form state:
   import { TextInput, View, StyleSheet } from "react-native";
 
   interface FormValues {
-    username: string;
-    email: string;
+    patientName: string;
+    contactEmail: string;
   }
 
   const SimpleFormSingleStateObject: React.FC = () => {
     const [formValues, setFormValues] = useState<FormValues>({
-      username: "",
-      email: "",
+      patientName: "",
+      contactEmail: "",
     });
 
     const handleChange = (fieldName: keyof FormValues, value: string) => {
@@ -99,16 +100,18 @@ There are two common ways to use `useState` for form state:
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          value={formValues.username}
-          onChangeText={(text) => handleChange("username", text)}
+          placeholder="Patient Name"
+          value={formValues.patientName}
+          onChangeText={(text) => handleChange("patientName", text)}
+          accessibilityLabel="Enter Patient Name"
         />
         <TextInput
           style={styles.input}
-          placeholder="Email"
-          value={formValues.email}
-          onChangeText={(text) => handleChange("email", text)}
+          placeholder="Contact Email"
+          value={formValues.contactEmail}
+          onChangeText={(text) => handleChange("contactEmail", text)}
           keyboardType="email-address"
+          accessibilityLabel="Enter Contact Email"
         />
       </View>
     );
@@ -151,9 +154,9 @@ import React, { useReducer } from "react";
 import { TextInput, View, Button, StyleSheet } from "react-native";
 
 interface ComplexFormState {
-  email: string;
-  password: string;
-  age: string; // Kept as string for TextInput, convert on submission
+  patientId: string;
+  prescriptionNotes: string;
+  refillCount: string; // Kept as string for TextInput, convert on submission
 }
 
 type FormAction =
@@ -161,9 +164,9 @@ type FormAction =
   | { type: "RESET_FORM" };
 
 const initialState: ComplexFormState = {
-  email: "",
-  password: "",
-  age: "",
+  patientId: "",
+  prescriptionNotes: "",
+  refillCount: "",
 };
 
 const formReducer = (
@@ -202,26 +205,29 @@ const ComplexFormWithReducer: React.FC = () => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={formState.email}
-        onChangeText={(text) => handleInputChange("email", text)}
-        keyboardType="email-address"
+        placeholder="Patient ID"
+        value={formState.patientId}
+        onChangeText={(text) => handleInputChange("patientId", text)}
+        accessibilityLabel="Enter Patient ID"
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
-        value={formState.password}
-        onChangeText={(text) => handleInputChange("password", text)}
-        secureTextEntry
+        placeholder="Prescription Notes"
+        value={formState.prescriptionNotes}
+        onChangeText={(text) => handleInputChange("prescriptionNotes", text)}
+        multiline
+        numberOfLines={3}
+        accessibilityLabel="Enter Prescription Notes"
       />
       <TextInput
         style={styles.input}
-        placeholder="Age"
-        value={formState.age}
-        onChangeText={(text) => handleInputChange("age", text)}
+        placeholder="Refill Count (e.g., 2)"
+        value={formState.refillCount}
+        onChangeText={(text) => handleInputChange("refillCount", text)}
         keyboardType="numeric"
+        accessibilityLabel="Enter Refill Count"
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      <Button title="Submit Prescription Data" onPress={handleSubmit} />
       <Button title="Reset" onPress={handleReset} color="#888" />
     </View>
   );
@@ -310,6 +316,8 @@ Because of these performance considerations, while Context can be useful for pro
 This course will primarily focus on the **controlled components pattern using local state (`useState` and `useReducer`)** for foundational understanding, and then transition to using **React Hook Form** for building more complex and production-ready forms for the SpeedyMeds application. This progression allows you to understand the underlying principles before leveraging the power of specialized libraries.
 
 **Table: Form State Management Strategies Comparison**
+
+The following table summarizes the key characteristics, pros, and cons of these different state management strategies, helping you choose the best fit for your form\'s complexity.
 
 | Feature               | `useState`                                                               | `useReducer`                                                                           | React Context API (for Form Input State)                        |
 | :-------------------- | :----------------------------------------------------------------------- | :------------------------------------------------------------------------------------- | :-------------------------------------------------------------- |

@@ -80,6 +80,7 @@ const ControlledInputDemoScreen = () => {
           keyboardType="phone-pad" // Use phone-pad for numeric input
           placeholderTextColor="#aaa"
           maxLength={10} // Enforced by the component as well
+          accessibilityLabel="Enter Patient Contact Number"
         />
         <Text style={styles.displayValue}>
           Current Contact: {patientContact || "(empty)"}
@@ -208,6 +209,10 @@ While React Hook Form (which we will cover later) cleverly uses refs for perform
 > - **Reactive Forms:** Binding an input using `[formControl]="controlName"` links it to a `FormControl` instance in the component class. The `FormControl`'s value acts as the source of truth, and its state is managed programmatically, which aligns closely with the principles of React's controlled components.
 
 Mastering controlled components is a key step towards building complex forms. In the next sections, we'll see how libraries can help manage the state and validation for larger forms more efficiently.
+
+**Exercise 12.1: Building a Controlled Form Input**
+
+**(TODO: Link to Expo Snack for Exercise 12.1 - Building a Controlled Form Input. The Snack should guide the student to build a controlled TextInput for a field like 'Patient Emergency Contact Name' or similar, including state management and displaying the captured value, reinforcing the concepts from this section. Ensure the Snack README has clear objectives and instructions.)**
 
 > 📚 **Official Documentation:**
 >

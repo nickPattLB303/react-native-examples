@@ -39,13 +39,17 @@ Here's a refresher on some of the most commonly used `TextInput` props. For a co
 - `autoCorrect` (boolean): If `false`, disables automatic correction.
 - `editable` (boolean): If `false`, text is not editable. Defaults to `true`.
 
-> 📱 **Background Bridge Notes:**
+> 📲 **(Native Developers - Android/iOS):**
 >
-> **For Native Developers (Android/iOS):**
-> The React Native `TextInput` component abstracts the complexities of platform-specific input controls like Android's `EditText` or iOS's `UITextField`/`UITextView`. While you might be accustomed to directly interacting with these native elements and their respective APIs (e.g., listeners, delegates), React Native provides a unified JavaScript-based interface. The underlying native behavior is still present but managed by React Native.
+> **Comparison:** The React Native `TextInput` component abstracts the complexities of platform-specific input controls like Android\'s `EditText` or iOS\'s `UITextField`/`UITextView`. While you might be accustomed to directly interacting with these native elements and their respective APIs (e.g., listeners, delegates), React Native provides a unified JavaScript-based interface. The underlying native behavior is still present but managed by React Native.
 >
-> **For Web Developers (React/Angular):**
-> The `TextInput` component is conceptually similar to the HTML `<input>` and `<textarea>` elements. Many props, like `placeholder` and `value`, will feel familiar. However, event handling, such as `onChangeText` (which we'll cover in the next section), is more direct in React Native compared to accessing `event.target.value` in web React.
+> **Key Takeaway:** Notice how React Native provides a consistent API (`TextInput` props and event handlers) that translates to the appropriate native behavior, simplifying cross-platform development for input fields.
+
+> 🌐 **(Web Developers - React/Angular):**
+>
+> **Comparison:** The `TextInput` component is conceptually similar to the HTML `<input>` and `<textarea>` elements. Many props, like `placeholder` and `value`, will feel familiar. However, event handling, such as `onChangeText` (which we\'ll cover in the next section), is more direct in React Native compared to accessing `event.target.value` in web React. For Angular developers, this single component model might contrast with the more structured `FormsModule` or `ReactiveFormsModule` for handling form inputs.
+>
+> **Key Takeaway:** While the element is different, the core idea of capturing text input remains. Pay attention to the specific props and event names in React Native.
 
 **Basic Usage Example:**
 
@@ -64,6 +68,7 @@ const SimpleInputScreen = () => {
           style={styles.input}
           placeholder="e.g., Amoxicillin 250mg"
           placeholderTextColor="#888"
+          accessibilityLabel="Enter Medication Name"
         />
       </View>
     </SafeAreaView>
@@ -110,7 +115,7 @@ const styles = StyleSheet.create({
 export default SimpleInputScreen;
 ```
 
-This basic example renders a `TextInput`. However, it doesn't yet capture or manage the input's value. We'll cover that in the upcoming sections.
+This basic example renders a styled `TextInput` field where a user could visually type. However, in this uncontrolled state, the application isn't actively managing or storing the typed text in its state. If you were to type into this input, the text would appear on the screen due to native behavior, but React would not be aware of its current value. This distinction is key to understanding why controlled components, which we'll explore in Section 4, are the preferred pattern in React for managing form data. We'll soon cover how to capture and manage the input's value using state.
 
 Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
 

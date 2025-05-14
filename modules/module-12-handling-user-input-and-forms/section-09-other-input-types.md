@@ -42,6 +42,7 @@ import {
   Provider as PaperProvider,
   DefaultTheme,
 } from "react-native-paper"; // Import Switch
+import { TextInput as RNTextInput } from "react-native"; // Moved import here
 
 // It's good practice to define a theme for PaperProvider
 const theme = {
@@ -112,6 +113,7 @@ const SwitchFormScreen = () => {
                     value={value}
                     placeholder="Enter patient name"
                     placeholderTextColor="#a0a0a0"
+                    accessibilityLabel="Enter Patient Name"
                   />
                   {error && (
                     <Text style={styles.errorText}>{error.message}</Text>
@@ -155,10 +157,6 @@ const SwitchFormScreen = () => {
     </PaperProvider>
   );
 };
-
-// Removed the incorrect placeholder TextInput component that was here.
-// Make sure to import TextInput from react-native as RNTextInput at the top of the file:
-// import { TextInput as RNTextInput } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -322,6 +320,8 @@ const MenuPickerForm: React.FC = () => {
                   onPress={openMenu}
                   mode="outlined"
                   style={styles.pickerButton}
+                  accessibilityLabel="Select Contact Method"
+                  accessibilityHint="Opens a dropdown to select contact method"
                 >
                   {contactOptions.find((opt) => opt.value === value)?.label ||
                     "Select..."}
@@ -514,7 +514,11 @@ This underlying difference is key to understanding why styling props might apply
 
 **Props Summary Tables:**
 
+The tables below summarize key props for the discussed input components, aiding in their integration with React Hook Form.
+
 **Table: React Native Paper `Switch` Core Props**
+
+The following table details essential props for the React Native Paper `Switch` component when used for boolean input.
 
 | Prop Name       | Type                              | Description                                                       |
 | :-------------- | :-------------------------------- | :---------------------------------------------------------------- |
@@ -536,6 +540,8 @@ This underlying difference is key to understanding why styling props might apply
 _Note: `Menu.Item` has props like `title` and `onPress` which are crucial for picker functionality._
 
 **Table: `react-native-picker-select` Core Props**
+
+The following table outlines core props for the `react-native-picker-select` component, useful for creating dropdown selection inputs.
 
 | Prop Name                     | Type                                                        | Description                                                                                                         |
 | :---------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
@@ -576,3 +582,31 @@ By using `Controller`, React Hook Form provides a flexible way to integrate a wi
 > - [React Native Paper - `Dialog`](https://callstack.github.io/react-native-paper/docs/components/Dialog/)
 > - [`react-native-picker-select` - GitHub](https://github.com/lawnstarter/react-native-picker-select)
 > - [`@react-native-picker/picker` - GitHub](https://github.com/react-native-picker/picker) (often a dependency)
+
+## Challenge 12: Create a Patient Information Form
+
+This challenge tasks you with building a comprehensive Patient Information form for the SpeedyMeds application, integrating various input types and robust validation using React Hook Form.
+
+- **Objective:** Consolidate your learning from Module 12 by creating a multi-field form with different input types, validation, and submission handling.
+- **Requirements:**
+  1.  Use React Hook Form for state management and validation.
+  2.  The form should collect at least the following patient information:
+      - Full Name (TextInput, required, minLength 3)
+      - Date of Birth (TextInput, placeholder for a date picker, required, basic format validation if possible e.g., YYYY-MM-DD pattern)
+      - Email (TextInput, required, email pattern validation)
+      - Phone Number (TextInput, numeric, length validation)
+      - Opt-in for SMS Reminders (React Native Paper Switch, boolean)
+      - Preferred Contact Method (Picker - you can use `react-native-picker-select` or simulate with RNP Menu, options: "Email", "Phone", "SMS", required)
+      - Emergency Contact Name (TextInput, optional)
+  3.  Implement appropriate validation rules for each field, displaying clear error messages.
+  4.  The submit button should be disabled if the form is invalid.
+  5.  On successful submission, display an `Alert` with all the collected patient data and then reset the form.
+  6.  Ensure the form is scrollable to accommodate all fields.
+
+**(TODO: Link to Expo Snack for Challenge 12 - Create a Patient Information Form. The Snack README should provide detailed requirements and any starter elements.)**
+
+## Module 12 Summary
+
+Congratulations on completing Module 12: Handling User Input and Forms! This module equipped you with essential skills for capturing and managing user data effectively in React Native applications. We began by recapping the fundamental `TextInput` component and how to handle text changes with `onChangeText`. You explored various form state management strategies, understanding the importance and implementation of the controlled components pattern.
+
+A significant portion of this module was dedicated to React Hook Form, a powerful library that simplifies form development. You learned how to install and set it up, integrate various input types (including `TextInput`, React Native Paper `Switch`, and pickers) using the `Controller` component, implement robust validation rules, and handle form submissions gracefully, including asynchronous operations and user feedback. By applying these concepts, particularly in the context of the SpeedyMeds application theme, you are now well-prepared to build complex, performant, and user-friendly forms in your React Native projects.

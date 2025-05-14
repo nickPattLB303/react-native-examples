@@ -201,6 +201,7 @@ const AsyncSubmitRHFScreen = () => {
                   value={value}
                   placeholder="e.g., Lisinopril"
                   editable={!isSubmitting} // Disable input while submitting
+                  accessibilityLabel="Enter Medication Name"
                 />
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
               </View>
@@ -224,6 +225,7 @@ const AsyncSubmitRHFScreen = () => {
                   value={value}
                   placeholder="e.g., 10mg, 1 tablet"
                   editable={!isSubmitting}
+                  accessibilityLabel="Enter Dosage"
                 />
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
               </View>
@@ -247,6 +249,7 @@ const AsyncSubmitRHFScreen = () => {
                   value={value}
                   placeholder="e.g., PAT12345"
                   editable={!isSubmitting}
+                  accessibilityLabel="Enter Patient ID"
                 />
                 {error && <Text style={styles.errorText}>{error.message}</Text>}
               </View>

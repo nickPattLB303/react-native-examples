@@ -52,6 +52,7 @@ const CaptureInputScreen = () => {
           value={medicationName} // Controlled component: value is tied to state
           onChangeText={setMedicationName} // Update state on text change
           placeholderTextColor="#888"
+          accessibilityLabel="Enter Medication Name"
         />
 
         <Text style={styles.label}>Dosage:</Text>
@@ -62,6 +63,7 @@ const CaptureInputScreen = () => {
           onChangeText={setDosage} // Update state
           keyboardType="default" // Changed from numeric to allow for units like 'mg'
           placeholderTextColor="#888"
+          accessibilityLabel="Enter Dosage"
         />
 
         <View style={styles.summaryContainer}>
@@ -164,19 +166,23 @@ The mechanism by which the `onChangeText` event is delivered from the native sid
 
 This architectural evolution from the legacy bridge to JSI/Fabric for event propagation represents a pivotal advancement in React Native. It directly addresses one of the core challenges in cross-platform development: the speed and efficiency of communication between the JavaScript runtime and native platform capabilities. For developers, this translates to a more performant framework, but it's also important to understand the nuances. While JSI enables synchronous calls, the controlled component pattern (where JavaScript state dictates the `TextInput`'s `value` prop) still involves a round trip: native input change -> JSI -> JS `onChangeText` callback -> JS state update -> React re-render -> `value` prop updates native input. Even with JSI's speed, this loop isn't instantaneous. This can, in some scenarios with complex real-time formatting or masking, still lead to a perceptible delay or "flicker" where the native input might visually update momentarily before the JS-controlled value is re-applied. This subtlety highlights that while the communication mechanism is faster, the pattern of JS controlling native UI in real-time has inherent complexities.
 
-> 📱 **Background Bridge Notes:**
+> 📲 **(Native Developers - Android/iOS):**
 >
-> **For Native Developers (Android/iOS):**
+> **Comparison:**
 >
 > - **Android:** The `onChangeText` callback is analogous to implementing `android.text.TextWatcher` and using its `afterTextChanged(Editable s)` method. In `afterTextChanged`, `s.toString()` would provide the new text. React Native abstracts the listener registration and event handling, providing the string directly to your JS function.
 > - **iOS:** `onChangeText` is similar in concept to the `UITextFieldDelegate` method `textField(_:shouldChangeCharactersIn:replacementString:)` or observing the `UITextField.textDidChangeNotification`. React Native manages the delegate pattern or notification subscription internally and surfaces the change as a direct string callback.
->   A key difference is that in React Native, you work directly with JavaScript strings in the callback, rather than native types like `CharSequence` (Android) or `NSString` (iOS).
 >
-> **For Web Developers (React/Angular):**
+> **Key Takeaway:** A key difference is that in React Native, you work directly with JavaScript strings in the callback, rather than native types like `CharSequence` (Android) or `NSString` (iOS).
+
+> 🌐 **(Web Developers - React/Angular):**
 >
-> - **React (Web):** The `onChangeText={(newText) => ...}` pattern in React Native is more direct than the typical web React approach for controlled inputs, which is `onChange={(event) => event.target.value}`. React Native's `onChangeText` directly provides the text string, eliminating the need to access it through an event object.
+> **Comparison:**
+>
+> - **React (Web):** The `onChangeText={(newText) => ...}` pattern in React Native is more direct than the typical web React approach for controlled inputs, which is `onChange={(event) => event.target.value}`. React Native\'s `onChangeText` directly provides the text string, eliminating the need to access it through an event object.
 > - **Angular:** This is conceptually similar to handling the `(input)` event or `(ngModelChange)` event on an HTML `<input>` element and receiving the new value directly in the event handler.
->   The primary convenience for web developers is the directness of `onChangeText`, which bypasses the `event.target.value` boilerplate common in web forms.
+>
+> **Key Takeaway:** The primary convenience for web developers is the directness of `onChangeText`, which bypasses the `event.target.value` boilerplate common in web forms.
 
 > 📚 **Official Documentation:**
 >
