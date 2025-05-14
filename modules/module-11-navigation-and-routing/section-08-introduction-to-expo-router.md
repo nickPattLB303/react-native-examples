@@ -23,6 +23,122 @@ Expo Router is a routing library from Expo that enables file-system-based routin
 
 Expo Router aims to simplify the setup and maintenance of navigation by making it more declarative and convention-based.
 
+Expo Router introduces a shift in how we structure navigation by aligning it with web-based routing paradigms and utilizing the file system to define routes. This approach brings several benefits:
+
+- **Intuitive Structure:** The app's routes directly mirror the file structure, making it easy to understand the application's navigation at a glance.
+- **URL-First:** Every screen has a corresponding URL that can be linked to directly, integrating deep linking directly into the routing system.
+- **Reduced Boilerplate:** Much of the navigation configuration is inferred from the file structure, reducing the amount of code you need to write.
+- **Automatic Code Splitting:** For web deployments, Expo Router can automatically split your code by route, optimizing performance.
+
+Let's explore how Expo Router maps file structure to navigation:
+
+```mermaid
+graph TD
+    subgraph "File System Structure"
+        appDir["app/ (Root Directory)"]
+
+        homeTsx["app/index.tsx<br/>Home Screen<br/>URL: /"]
+
+        medsDir["app/medications/ (Directory)"]
+        medsIndex["app/medications/index.tsx<br/>Medications List<br/>URL: /medications"]
+        medsId["app/medications/[id].tsx<br/>Medication Detail<br/>URL: /medications/:id"]
+
+        tabsDir["app/(tabs)/ (Group)<br/>Tab Navigation"]
+        tabsLayout["app/(tabs)/_layout.tsx<br/>Tab Navigator Config"]
+        homeTab["app/(tabs)/home.tsx<br/>Home Tab Screen<br/>URL: /(tabs)/home"]
+        profileTab["app/(tabs)/profile.tsx<br/>Profile Screen<br/>URL: /(tabs)/profile"]
+
+        settingsDir["app/settings/ (Directory)"]
+        settingsLayout["app/settings/_layout.tsx<br/>Stack Navigator Config"]
+        settingsIndex["app/settings/index.tsx<br/>Settings List<br/>URL: /settings"]
+        settingsAccount["app/settings/account.tsx<br/>Account Settings<br/>URL: /settings/account"]
+        settingsNotifs["app/settings/notifications.tsx<br/>Notification Settings<br/>URL: /settings/notifications"]
+
+        appDir --> homeTsx
+        appDir --> medsDir
+        medsDir --> medsIndex
+        medsDir --> medsId
+
+        appDir --> tabsDir
+        tabsDir --> tabsLayout
+        tabsDir --> homeTab
+        tabsDir --> profileTab
+
+        appDir --> settingsDir
+        settingsDir --> settingsLayout
+        settingsDir --> settingsIndex
+        settingsDir --> settingsAccount
+        settingsDir --> settingsNotifs
+    end
+
+    subgraph "Resulting Navigation Structure"
+        rootNav["Root (Implicit Stack)"]
+
+        home["/ (Home)"]
+        meds["/medications (List)"]
+        medDetail["/medications/:id (Detail)"]
+
+        tabs["Tab Navigator"]
+        homeTabScreen["/home Tab"]
+        profileTabScreen["/profile Tab"]
+
+        settingsStack["Settings Stack"]
+        settingsList["/settings (Index)"]
+        settingsAccountScreen["/settings/account"]
+        settingsNotifsScreen["/settings/notifications"]
+
+        rootNav --> home
+        rootNav --> meds
+        meds --> medDetail
+
+        rootNav --> tabs
+        tabs --> homeTabScreen
+        tabs --> profileTabScreen
+
+        rootNav --> settingsStack
+        settingsStack --> settingsList
+        settingsStack --> settingsAccountScreen
+        settingsStack --> settingsNotifsScreen
+    end
+
+    classDef file fill:#f9f9f9,stroke:#999,stroke-width:1px;
+    classDef directory fill:#e6f7ff,stroke:#0066cc,stroke-width:1px;
+    classDef layout fill:#ffe6cc,stroke:#ff8c00,stroke-width:1px;
+    classDef dynamicRoute fill:#f2e6ff,stroke:#8000ff,stroke-width:1px;
+    classDef group fill:#e6ffe6,stroke:#006600,stroke-width:1px;
+
+    classDef navStack fill:#ffcccb,stroke:#ff0000,stroke-width:2px;
+    classDef navTabs fill:#cce5ff,stroke:#0066cc,stroke-width:2px;
+    classDef navScreen fill:#f2f2f2,stroke:#999999,stroke-width:1px;
+
+    class homeTsx,medsIndex,settingsIndex,homeTab,profileTab,settingsAccount,settingsNotifs file;
+    class medsDir,settingsDir directory;
+    class medsId dynamicRoute;
+    class tabsLayout,settingsLayout layout;
+    class tabsDir group;
+
+    class rootNav,settingsStack navStack;
+    class tabs navTabs;
+    class home,meds,medDetail,homeTabScreen,profileTabScreen,settingsList,settingsAccountScreen,settingsNotifsScreen navScreen;
+```
+
+This diagram illustrates how Expo Router's file-based approach maps your project's file and directory structure to navigation routes and screens:
+
+1. **Root Structure**: The `app/` directory serves as the root for all routes. Files directly in this directory (like `index.tsx`) map to root-level routes.
+
+2. **Directories as Routes**: Each directory (like `medications/` or `settings/`) creates a new route segment. Files within these directories become sub-routes.
+
+3. **Special Files**:
+
+   - `_layout.tsx` files define navigation layouts (Stack, Tabs, Drawer) for their containing directory
+   - Files with brackets like `[id].tsx` define dynamic routes that can match variable parameters
+
+4. **Groups**: Directories with parentheses like `(tabs)` create logical groupings without affecting the URL path
+
+5. **Resulting Navigation**: The file structure automatically generates a complete navigation system with proper nesting and relationships between screens.
+
+This approach makes your navigation structure intuitively visible through your project's file organization, reducing the need for extensive configuration code. In Expo Router, the file system becomes a representation of your application's routing topology.
+
 #### Conceptual Content: Core Concepts of Expo Router
 
 1.  **The `app` Directory:** This is the heart of Expo Router. All files within the `app` directory (at the root of your project) are automatically treated as routes.

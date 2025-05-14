@@ -339,76 +339,13 @@ Expo Router supports generating types for your routes, providing autocompletion 
 >
 > **Key Takeaway:** Configuration shifts from being purely in JavaScript objects/components to being driven by file structure, with `_layout.tsx` files acting as the configuration hub for each segment.
 
-#### Exercise 11.4: Implementing Stack and Tabs with Expo Router
+#### Exercise 11.4: Implementing Routes with Expo Router
 
-This exercise will guide you through setting up a nested Stack and Tab navigation structure using Expo Router's file-based conventions.
+Now it's time to practice! In this exercise, you'll convert a navigator-based structure to Expo Router.
 
-**(Placeholder: URL_to_Expo_Snack_for_Exercise_11.4)**
+**(https://snack.expo.dev/SpeedyMedsExpoRouterEx11-4)**
 
 > **Instructions for Expo Snack `README.md` (Exercise 11.4):**
->
-> ```md
-> # Exercise 11.4: Implementing Stack and Tabs with Expo Router
->
-> **Objective:** Recreate a common mobile navigation pattern: a root Stack navigator that contains a Tab navigator for its main screen, and another separate screen within the Stack.
->
-> **File Structure Goal:**
-> ```
->
-> app/
-> ├── \_layout.tsx # Root Stack Navigator
-> ├── (tabs)/
-> │ ├── \_layout.tsx # Tab Navigator
-> │ ├── index.tsx # Home screen (first tab)
-> │ └── profile.tsx # Profile screen (second tab)
-> └── settings.tsx # Settings screen (part of the root Stack)
->
-> ```
->
-> **Tasks:**
->
-> 1.  **Project Setup:**
->     - Ensure your project is configured for Expo Router (as per Section 8).
->
-> 2.  **Create the Root Layout (`app/_layout.tsx`):**
->     - This file should define a `Stack` navigator.
->     - It should have two screens:
->       - One screen named `(tabs)` which will render the Tab navigator. Use `options={{ headerShown: false }}` for this screen to avoid a double header.
->       - Another screen named `settings` which will render the `app/settings.tsx` file. Give it a title like "App Settings".
->
-> 3.  **Create the Tabs Layout (`app/(tabs)/_layout.tsx`):**
->     - This file should define a `Tabs` navigator.
->     - It should have two screens:
->       - `index` (for `app/(tabs)/index.tsx`): Title "Home", appropriate `tabBarIcon`.
->       - `profile` (for `app/(tabs)/profile.tsx`): Title "Profile", appropriate `tabBarIcon`.
->
-> 4.  **Create Screen Content Files:**
->     - `app/(tabs)/index.tsx`:
->       - Display a "Home Screen" title.
->       - Add a `<Link href="/settings">` to navigate to the Settings screen.
->       - Add a `<Link href="/profile">` to navigate to the Profile tab.
->     - `app/(tabs)/profile.tsx`:
->       - Display a "Profile Screen" title.
->     - `app/settings.tsx`:
->       - Display a "Settings Screen" title.
->
-> 5.  **Styling (Basic):**
->     - Ensure all screens have appropriate header titles.
->     - Ensure tabs have icons and labels.
->
-> **Expected Outcome:**
->
-> - The app opens to the "Home" screen, which is the first tab of a Tab navigator.
-> - The Tab navigator has "Home" and "Profile" tabs with icons.
-> - There is no header above the Tab navigator itself (because `headerShown: false` was set on the `(tabs)` screen in the root Stack).
-> - Individual screens *within* the tabs (if they were stacks themselves, not in this exercise) or the `settings` screen would show their own headers. The "Settings Screen" should have its header "App Settings".
-> - Clicking the link to "Settings" from the Home screen should navigate to the "Settings Screen" (pushing it onto the root Stack).
-> - Clicking the link to "Profile" from the Home screen should switch to the "Profile" tab.
->
-> **Bonus:**
-> - In `app/(tabs)/index.tsx`, use the `router.push('/settings')` method for navigation instead of `<Link>`.
-> - Experiment with adding a header to the `Tabs` navigator itself in `app/(tabs)/_layout.tsx` by wrapping the `<Tabs />` component in a `<Stack />` within that file (this demonstrates how layouts can also be nested navigators).
-> ```
 
 #### Next Steps
 

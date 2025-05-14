@@ -6,17 +6,64 @@ This section explores the Tab Navigator, a common pattern for top-level navigati
 
 ### Core Content
 
-#### Conceptual Content: Understanding the Tab Navigator
+#### Conceptual Content: Understanding Bottom Tab Navigation
 
-The Tab Navigator displays a row of tabs, usually at the bottom of the screen on mobile devices (though top tabs are also possible). Each tab links to a different screen or a separate navigation stack. When a user selects a tab, the corresponding screen is displayed. The state of previously visited tabs is typically preserved, meaning users can switch between tabs without losing their place within each section.
+The Tab Navigator is a common mobile UI pattern that places a tab bar at the bottom of the screen (iOS pattern) or sometimes at the top (Material Design / Android pattern). Each tab acts as a gateway to a separate section of your app, allowing users to quickly switch between different features or content categories.
 
-**Key Concepts:**
+Unlike the Stack Navigator, which is designed for sequential navigation and going back, the Tab Navigator is designed for lateral movement between equally important sections of your app. The Bottom Tab Navigator specifically places the tab bar at the bottom of the screen, making it easy to reach with your thumb on mobile devices.
 
-- `createBottomTabNavigator`: A function from `@react-navigation/bottom-tabs` that returns an object containing `Navigator` and `Screen` components for building a bottom tab bar.
-- **Tab Screens:** Each tab is associated with a component (a screen) or another navigator.
-- **Tab Bar Icons and Labels:** Tabs are usually represented by an icon and/or a text label. These can be customized extensively.
+```mermaid
+stateDiagram-v2
+    [*] --> HomeTab
 
-#### Procedural Content: Implementing a Basic Tab Navigator
+    state TabNavigator {
+        state "Tab Bar UI Element" as TabBar
+
+        state HomeTab {
+            HomeScreen --> PrescriptionDetail: tap item
+            PrescriptionDetail --> HomeScreen: back button
+            note right of HomeScreen
+                Stack state preserved
+                when switching tabs
+            end note
+        }
+
+        state ProfileTab {
+            ProfileScreen --> EditProfile: tap edit
+            EditProfile --> ProfileScreen: save/cancel
+        }
+
+        state MedicationsTab {
+            MedListScreen --> MedDetailScreen: tap medication
+            MedDetailScreen --> MedListScreen: back button
+            MedListScreen --> AddMedScreen: tap add
+            AddMedScreen --> MedListScreen: save/cancel
+        }
+
+        TabBar --> HomeTab: tap Home icon
+        TabBar --> ProfileTab: tap Profile icon
+        TabBar --> MedicationsTab: tap Medications icon
+    }
+
+    note right of TabNavigator
+        Each tab maintains its own
+        navigation state and history
+    end note
+```
+
+This diagram illustrates several key characteristics of tab-based navigation:
+
+1. **Independent Tab States:** Each tab (Home, Profile, Medications) maintains its own independent navigation state and history. This means if you navigate to a detail screen within the Home tab, then switch to the Profile tab and return to Home, you'll still be on the detail screen, not back at the home screen.
+
+2. **Persistent Tab Bar:** The tab bar remains visible across all screens within the tab navigator (though it can be hidden programmatically if needed). This provides consistent access to primary navigation options.
+
+3. **Nested Navigation:** Each tab can contain its own navigator (typically a Stack Navigator), allowing for hierarchical navigation within each tab section. This creates logical groupings of related screens.
+
+4. **State Preservation:** If a user navigates deep into one tab (e.g., from HomeScreen to PrescriptionDetail), then switches to another tab and returns, the navigation state of the first tab is preserved, returning the user to where they left off.
+
+This navigation pattern works well for SpeedyMeds because it allows users to quickly access different primary features of the application without losing their context within each feature area.
+
+#### Procedural Content: Implementing a Bottom Tab Navigator
 
 Let's add a tab navigator to our SpeedyMeds app. We'll imagine two main sections: `MedicationsStack` (which could be the stack navigator we started building in the previous section) and a new `PharmacyInfoScreen`.
 
@@ -272,65 +319,11 @@ Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` 
 
 #### Exercise 11.2: Basic Tab Navigation
 
-Let's put this into practice by creating a simple tab-based navigation structure.
+Now it's time to practice! In this exercise, you'll create a simple tab navigator for the SpeedyMeds app.
 
-**(Placeholder: URL_to_Expo_Snack_for_Exercise_11.2)**
+**(https://snack.expo.dev/SpeedyMedsTabsEx11-2)**
 
 > **Instructions for Expo Snack `README.md` (Exercise 11.2):**
->
-> ```md
-> # Exercise 11.2: Basic Tab Navigation
->
-> **Objective:** Implement a bottom tab navigator with two tabs: "Prescriptions" and "Appointments". The "Prescriptions" tab should reuse a stack navigator.
->
-> **Tasks:**
->
-> 1.  **Project Setup:**
->
->     - Ensure you have `@react-navigation/native` and `@react-navigation/bottom-tabs` installed, along with peer dependencies. You'll also need `@react-navigation/stack` for the nested stack.
->     - Install `@expo/vector-icons` if you want to use icons (e.g., `npx expo install @expo/vector-icons`).
->
-> 2.  **Create Screen Components:**
->
->     - `PrescriptionListScreen.tsx`: Displays a title "Current Prescriptions" and a button "View Prescription RX123".
->     - `PrescriptionDetailScreen.tsx`: Displays a title "Prescription Detail" and text "Details for RX123". Add a "Back to List" button.
->     - `AppointmentsScreen.tsx`: Displays a title "Upcoming Appointments" and some placeholder text like "No appointments scheduled."
->
-> 3.  **Define TypeScript Types:**
->
->     - `PrescriptionsStackParamList`: For the stack navigator (`PrescriptionList`, `PrescriptionDetail`). `PrescriptionDetail` should accept a `prescriptionId: string` param.
->     - `RootTabParamList`: For the tab navigator (`PrescriptionsTab`, `AppointmentsTab`).
->
-> 4.  **Create Prescriptions Stack Navigator (`PrescriptionsStackNavigator.tsx`):**
->
->     - Use `createStackNavigator`.
->     - Include `PrescriptionListScreen` (name: `PrescriptionList`) and `PrescriptionDetailScreen` (name: `PrescriptionDetail`).
->     - Configure navigation from `PrescriptionListScreen` to `PrescriptionDetailScreen`, passing a `prescriptionId`.
->     - Configure navigation back from `PrescriptionDetailScreen`.
->
-> 5.  **Implement the Tab Navigator (`App.tsx` or main navigator file):**
->     - Use `createBottomTabNavigator`.
->     - Wrap it in `NavigationContainer`.
->     - Add two `<Tab.Screen>` entries:
->       - Name: `PrescriptionsTab`, Component: `PrescriptionsStackNavigator`, Options: title "Prescriptions", appropriate `tabBarIcon`.
->       - Name: `AppointmentsTab`, Component: `AppointmentsScreen`, Options: title "Appointments", appropriate `tabBarIcon`, `headerShown: true` (to show a header for this simple screen).
->     - Set `PrescriptionsTab` as the `initialRouteName`.
->     - Customize `tabBarActiveTintColor` and `tabBarInactiveTintColor`.
->
-> **Expected Outcome:**
->
-> - The app loads with two tabs: "Prescriptions" and "Appointments". "Prescriptions" is active by default.
-> - The "Prescriptions" tab shows the "Current Prescriptions" screen with its own header (from the stack navigator).
-> - Tapping "View Prescription RX123" on this screen navigates to the "Prescription Detail" screen within the same tab, updating the stack navigator's header.
-> - Tapping "Back to List" returns to the "Current Prescriptions" screen.
-> - Switching to the "Appointments" tab displays the "Upcoming Appointments" screen with its own header (from the tab screen options).
-> - Both tabs should have distinct icons.
->
-> **Bonus (Optional):**
->
-> - Try adding a third tab for "Patient Profile" (a simple screen component).
-> - Experiment with different `tabBarOptions` or `screenOptions` to change the tab bar's appearance (e.g., `tabBarStyle`, `tabBarLabelStyle`).
-> ```
 
 #### Next Steps
 

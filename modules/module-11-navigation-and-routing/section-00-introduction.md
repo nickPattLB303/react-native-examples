@@ -48,22 +48,22 @@ Being mindful of these factors will help you manage dependencies effectively and
 
 The following table provides a reference for potentially compatible library versions when targeting an environment based on Expo SDK 52 (which uses React Native 0.76). Note that specific patch versions can be crucial, and thorough testing is always recommended. Compatibility can also depend on whether the New Architecture (Fabric) is enabled.
 
-| Category                | Library                          | Recommended Version (Expo SDK 52 / RN 0.76)         | Notes                                                                                           |
-| ----------------------- | -------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Expo SDK                | `expo`                           | `~52.0.x`                                           | Base SDK version.                                                                               |
-| React Native            | `react-native`                   | `0.76.x`                                            | Required by Expo SDK 52.                                                                        |
-| React Navigation (Core) | `@react-navigation/native`       | `^6.x` (e.g., `@react-navigation/core@6.4.17`)      | Base package for v6. Specific latest v6 patch needed.                                           |
-|                         | `@react-navigation/stack`        | `^6.x`                                              | Stack navigator for v6.                                                                         |
-|                         | `@react-navigation/bottom-tabs`  | `^6.x`                                              | Bottom Tabs navigator for v6.                                                                   |
-|                         | `@react-navigation/drawer`       | `^6.x`                                              | Drawer navigator for v6.                                                                        |
-| Expo Router             | `expo-router`                    | `~3.x`                                              | Version aligned with SDK 52/53, uses React Nav v7 internally for its own implementations.       |
-| Dependencies            | `react-native-screens`           | `~4.9.0` (Paper) / `~4.0.0` (Fabric)                | Version depends on RN 0.76 and architecture. Use `npx expo install`.                            |
-|                         | `react-native-safe-area-context` | Use `npx expo install` recommended version          | Required peer dependency for React Navigation.                                                  |
-|                         | `react-native-gesture-handler`   | `~2.12.0` (Check `npx expo install` recommendation) | Required for Stack/Drawer Navigators. Verify with `npx expo install`.                           |
-|                         | `react-native-reanimated`        | `~2.14.4` / `^3.x` (Check `npx expo install`)       | Required for Drawer Navigator (v2+), potentially used by Stack. Verify with `npx expo install`. |
-|                         | `expo-linking`                   | Use `npx expo install` recommended version          | Used by Expo Router for deep linking.                                                           |
-|                         | `expo-constants`                 | Use `npx expo install` recommended version          | Used by Expo Router.                                                                            |
-|                         | `expo-status-bar`                | Use `npx expo install` recommended version          | Common utility, installed with Expo Router setup.                                               |
+| Category                | Library                          | Recommended Version (Expo SDK 52 / RN 0.76) | Notes                                                                                  |
+| ----------------------- | -------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Expo SDK                | `expo`                           | `~52.0.0`                                   | Base SDK version. As of April 2024, 52.0.1 is the latest.                              |
+| React Native            | `react-native`                   | `0.76.1`                                    | Required by Expo SDK 52.                                                               |
+| React Navigation (Core) | `@react-navigation/native`       | `^6.1.14`                                   | Base package for v6. Compatible with RN 0.76 and Expo SDK 52.                          |
+|                         | `@react-navigation/stack`        | `^6.3.25`                                   | Stack navigator for v6, aligned with native version.                                   |
+|                         | `@react-navigation/bottom-tabs`  | `^6.5.16`                                   | Bottom Tabs navigator for v6, aligned with native version.                             |
+|                         | `@react-navigation/drawer`       | `^6.6.9`                                    | Drawer navigator for v6, aligned with native version.                                  |
+| Expo Router             | `expo-router`                    | `~3.4.0`                                    | Version aligned with SDK 52, uses React Nav v7 internally for its own implementations. |
+| Dependencies            | `react-native-screens`           | `~4.0.0`                                    | Required peer dependency for React Navigation with Fabric support.                     |
+|                         | `react-native-safe-area-context` | `~4.8.2`                                    | Required peer dependency for React Navigation.                                         |
+|                         | `react-native-gesture-handler`   | `~2.14.0`                                   | Required for Stack/Drawer Navigators.                                                  |
+|                         | `react-native-reanimated`        | `~3.6.2`                                    | Required for Drawer Navigator, animations. Note v3 now required for Expo SDK 52.       |
+|                         | `expo-linking`                   | `~6.2.2`                                    | Used by Expo Router for deep linking.                                                  |
+|                         | `expo-constants`                 | `~15.4.5`                                   | Used by Expo Router.                                                                   |
+|                         | `expo-status-bar`                | `~1.11.1`                                   | Common utility, installed with Expo Router setup.                                      |
 
 > [!NOTE]
 > Always prioritize versions recommended by `npx expo install <package-name>` for your specific Expo SDK version, as this tool attempts to resolve compatible dependencies.
@@ -111,7 +111,7 @@ This module is divided into the following sections:
 
 ---
 
-**(Placeholder: URL_to_Expo_Snack_for_Challenge_11)**
+**(https://snack.expo.dev/SpeedyMedsNavChallenge11)**
 
 > This link will direct you to an Expo Snack for the Module 11 Challenge. Detailed instructions are provided within the Snack's `README.md` file.
 

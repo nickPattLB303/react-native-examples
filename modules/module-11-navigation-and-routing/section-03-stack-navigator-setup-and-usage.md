@@ -18,6 +18,61 @@ The Stack Navigator provides a way to transition between screens where each new 
 - `createStackNavigator`:
   A function that returns an object containing two components: `Navigator` and `Screen`. You use these to configure your stack.
 
+Let's visualize how the stack navigator works with user interactions:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant HomeScreen
+    participant StackNavigator as Stack Navigator
+    participant NavState as Navigation State
+    participant DetailScreen
+
+    Note over NavState: Initial Stack: [Home]
+    User->>HomeScreen: Opens App
+    HomeScreen->>StackNavigator: Initialize
+    StackNavigator->>NavState: Set initial route: "Home"
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med123"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med123"}
+
+    User->>DetailScreen: Taps back button
+    DetailScreen->>StackNavigator: navigation.goBack()
+    StackNavigator->>NavState: Pop top screen from stack
+    Note over NavState: Updated Stack: [Home]
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps another "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med456"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med456"}
+
+    User->>DetailScreen: Taps "View Related" button
+    DetailScreen->>StackNavigator: navigation.push("Detail", {id: "relatedMed789"})
+    StackNavigator->>NavState: Push another "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail, Detail]
+    NavState-->>DetailScreen: Render new instance with params {id: "relatedMed789"}
+```
+
+This diagram illustrates the core operations of a stack navigator:
+
+1. **Initial Rendering:** The app starts with HomeScreen on the stack.
+
+2. **Navigation to a New Screen:** When a user taps "Go to Details," `navigation.navigate()` pushes the DetailScreen onto the stack with parameters.
+
+3. **Going Back:** Tapping the back button triggers `navigation.goBack()`, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
+
+4. **Navigate vs. Push:** The diagram also shows the difference between `navigate()` and `push()`:
+   - `navigate("Detail")` will go to an existing "Detail" screen if it's already in the stack, but
+   - `push("Detail")` will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
+
+This stack-based navigation model is ideal for drill-down flows, where users explore progressively more detailed information and need a clear path to return to previous screens.
+
 #### Procedural Content: Implementing a Basic Stack Navigator
 
 Let's create a simple two-screen stack for our SpeedyMeds app: a `HomeScreen` and a `PrescriptionDetailScreen`.
@@ -293,70 +348,9 @@ These options provide a high degree of control over the look, feel, and behavior
 
 Now it's time to practice! This exercise will guide you through setting up a basic two-screen stack navigator.
 
-**(Placeholder: URL_to_Expo_Snack_for_Exercise_11.1)**
+**(https://snack.expo.dev/SpeedyMedsStackEx11-1)**
 
 > **Instructions for Expo Snack `README.md` (Exercise 11.1):**
->
-> ````md
-> # Exercise 11.1: Basic Stack Navigation
->
-> **Objective:** Implement a simple stack navigator with two screens: `MedicationListScreen` and `MedicationReminderScreen`.
->
-> **Tasks:**
->
-> 1.  **Project Setup:**
->
->     - Ensure you have `@react-navigation/native` and `@react-navigation/stack` installed, along with their dependencies (`react-native-screens`, `react-native-safe-area-context`). Refer to the course material if needed.
->
-> 2.  **Create Screen Components:**
->
->     - Create `MedicationListScreen.tsx`: This screen should display a simple title like "My Medications" and a button that says "Add New Reminder".
->     - Create `MedicationReminderScreen.tsx`: This screen should display a title like "New Medication Reminder" and a button that says "Back to List".
->
-> 3.  **Define Type for Stack Parameters (RootStackParamList):**
->
->     - Create a `RootStackParamList` type. For this exercise, neither screen needs to accept parameters initially.
->
->     ```typescript
->     // Example in a shared types file or at the top of your navigator setup
->     export type RootStackParamList = {
->       MedicationList: undefined;
->       MedicationReminder: undefined;
->     };
->     ```
->
-> 4.  **Implement the Stack Navigator:**
->
->     - In your `App.tsx` (or a dedicated navigator file):
->       - Import `NavigationContainer`.
->       - Import `createStackNavigator`.
->       - Import your two screen components.
->       - Create the stack navigator instance using `createStackNavigator<RootStackParamList>()`.
->       - Wrap your `Stack.Navigator` with `NavigationContainer`.
->       - Configure `Stack.Navigator` with `MedicationListScreen` as the `initialRouteName`.
->       - Add `Stack.Screen` entries for both `MedicationListScreen` (name: "MedicationList") and `MedicationReminderScreen` (name: "MedicationReminder").
->       - Set appropriate header titles for each screen using the `options` prop (e.g., `options={{ title: 'My Medications' }}`).
->
-> 5.  **Implement Navigation Logic:**
->     - In `MedicationListScreen.tsx`:
->       - Use the `navigation.navigate('MedicationReminder')` method on the "Add New Reminder" button's `onPress` handler to navigate to the `MedicationReminderScreen`.
->       - Ensure your component props are correctly typed using `StackScreenProps`.
->     - In `MedicationReminderScreen.tsx`:
->       - Use the `navigation.goBack()` method on the "Back to List" button's `onPress` handler to return to the `MedicationListScreen`.
->       - Ensure your component props are correctly typed.
->
-> **Expected Outcome:**
->
-> - The app should initially display the "My Medications" screen.
-> - Tapping "Add New Reminder" should navigate to the "New Medication Reminder" screen.
-> - Tapping "Back to List" on the reminder screen should navigate back to the "My Medications" screen.
-> - Both screens should display their respective custom header titles.
->
-> **Bonus (Optional):**
->
-> - Try using `navigation.push('MedicationReminder')` instead of `navigate` in `MedicationListScreen` and observe the difference in stack behavior if you navigate multiple times.
-> - Explore other `options` for `Stack.Screen`, like customizing header styles (we'll cover this more in Section 7).
-> ````
 
 #### Next Steps
 
