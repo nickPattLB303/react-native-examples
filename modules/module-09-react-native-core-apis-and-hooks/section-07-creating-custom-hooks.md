@@ -55,34 +55,29 @@ This custom Hook will manage a boolean state and provide a function to toggle it
 
 ```tsx
 import { useState, useCallback } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"; // Removed Button as it's not used in FaqItem/Screen
 
-// Custom Hook: useToggle
-// initialState: The initial boolean state (defaults to false)
-// Returns: A tuple [booleanState, toggleFunction]
+/**
+ * @function useToggle
+ * @description A custom Hook to manage a boolean toggle state.
+ * @param {boolean} [initialState=false] - The initial state of the toggle (true for on, false for off).
+ * @returns {[boolean, () => void]} A tuple containing the current boolean state and a function to toggle it.
+ */
 function useToggle(initialState: boolean = false): [boolean, () => void] {
   const [state, setState] = useState<boolean>(initialState);
 
-  // useCallback ensures the toggle function has a stable reference
-  // across re-renders, which is good practice if it were passed to memoized children.
-  // Here, an empty dependency array is appropriate as toggle's definition doesn't depend on external variables
-  // that change over the component's lifecycle in a way that would require toggle to be redefined.
-  // setState from useState is guaranteed to be stable.
   const toggle = useCallback(() => {
     setState((prevState) => !prevState);
-  }, []); // No dependencies needed as setState is stable and it uses a functional update.
+  }, []);
 
   return [state, toggle];
 }
 
-export default useToggle;
-```
+// Removed export default useToggle; - keeping it self-contained for the example
 
-**Using the `useToggle` Hook in a SpeedyMeds Component (e.g., `FaqItem`):**
+// Using the `useToggle` Hook in a SpeedyMeds Component (e.g., `FaqItem`):
 
-```tsx
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
-import useToggle from "./useToggle"; // Assuming useToggle is in this file or imported
+// Removed import useToggle from "./useToggle"; // Defined above
 
 interface FaqItemProps {
   question: string;
@@ -227,20 +222,35 @@ Custom Hooks are a fundamental pattern for building scalable and maintainable Re
     8.  The component should render the `seconds` and `isActive` status.
     9.  Render "Start", "Stop", and "Reset" buttons that call the respective functions from the hook.
     10. Test thoroughly to ensure the timer starts, stops, resets correctly, and handles countdown completion. Also, verify that the interval is cleared if the component were to unmount (conceptually, as direct unmount testing in Snack is tricky without navigation).
-  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/)
+  - **Tool:** **(https://snack.expo.dev/)**
   - **Conceptual Code for `useTimer.ts` (Guidance - implement your own version):**
 
     ```tsx
     import { useState, useEffect, useRef, useCallback } from "react";
 
+    /**
+     * Represents the values returned by the useTimer custom Hook.
+     */
     export interface TimerHookResult {
+      /** The current number of seconds on the timer. */
       seconds: number;
+      /** A boolean indicating whether the timer is currently active. */
       isActive: boolean;
+      /** Function to start or resume the timer. */
       start: () => void;
+      /** Function to stop or pause the timer. */
       stop: () => void;
+      /** Function to reset the timer to its initial state and stop it. */
       reset: () => void;
     }
 
+    /**
+     * A custom Hook to encapsulate timer logic (countdown or stopwatch).
+     *
+     * @param {number} [initialSeconds=0] - The initial number of seconds for the timer.
+     * @param {boolean} [isCountdown=false] - If true, the timer acts as a countdown; otherwise, as a stopwatch.
+     * @returns {TimerHookResult} An object containing timer state and control functions.
+     */
     function useTimer(
       initialSeconds: number = 0,
       isCountdown: boolean = false

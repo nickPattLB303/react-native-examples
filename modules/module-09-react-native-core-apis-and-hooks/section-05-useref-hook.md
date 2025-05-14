@@ -184,7 +184,74 @@ In this `MedicationManagementScreen`:
 
 **a) Storing a Timer ID**
 
-// ... existing code ...
+This example demonstrates using `useRef` to store a timer ID from `setTimeout`. This is useful for managing timers that shouldn't cause re-renders when their ID changes, and for ensuring they can be cleared correctly.
+
+```tsx
+import React, { useRef, useEffect, useState } from "react";
+import { View, Text, Button, StyleSheet, Alert } from "react-native"; // Added Alert for example 3
+
+const TemporaryNotification: React.FC = () => {
+  const [message, setMessage] = useState<string | null>(null);
+  const timerIdRef = useRef<NodeJS.Timeout | null>(null);
+
+  const showNotification = (text: string, duration: number = 3000) => {
+    // Clear any existing timer before setting a new one
+    if (timerIdRef.current) {
+      clearTimeout(timerIdRef.current);
+    }
+
+    setMessage(text);
+
+    timerIdRef.current = setTimeout(() => {
+      setMessage(null);
+      timerIdRef.current = null; // Clear the ref after timer expires
+    }, duration);
+  };
+
+  useEffect(() => {
+    // Cleanup: Clear the timer if the component unmounts
+    return () => {
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current);
+      }
+    };
+  }, []); // Empty dependency array means this cleanup runs on unmount
+
+  return (
+    <View style={stylesForTimer.container}>
+      <Button
+        title="Show SpeedyMeds Tip"
+        onPress={() =>
+          showNotification(
+            "SpeedyMeds Tip: Remember to take medication with food!"
+          )
+        }
+      />
+      {message && (
+        <View style={stylesForTimer.notificationBox}>
+          <Text style={stylesForTimer.notificationText}>{message}</Text>
+        </View>
+      )}
+    </View>
+  );
+};
+
+const stylesForTimer = StyleSheet.create({
+  container: { alignItems: "center", marginVertical: 10 },
+  notificationBox: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#e3f2fd", // Light blue
+    borderRadius: 5,
+    borderColor: "#90caf9", // Blue border
+    borderWidth: 1,
+  },
+  notificationText: { color: "#1e88e5" }, // Blue text
+});
+
+// Note: To run this example in isolation, you would export default TemporaryNotification;
+// For the combined section file structure, one main export is typically used.
+```
 
 Here, `timerIdRef` stores the ID returned by `setTimeout`. We use a ref because changing the timer ID should not cause a re-render. The `useEffect` cleanup function ensures that if the component unmounts while the timer is active, the timer is cleared.
 
@@ -276,22 +343,42 @@ import {
   Text,
   Button,
   StyleSheet,
+  Alert // Ensure Alert is imported if used (as in handleSubmit)
 } from \"react-native\";
 
-// Props for our custom input
+/**
+ * Props for the SpeedyMedsInput component.
+ * Extends standard TextInputProps.
+ */
 interface SpeedyMedsInputProps extends TextInputProps {
+  /** The label to display above the input field. */
   label: string;
+  /** Optional initial value for the input field. */
   initialValue?: string;
 }
 
-// Define the methods that the parent component can call via the ref
+/**
+ * Defines the imperative methods that can be called on a SpeedyMedsInput component instance
+ * when accessed via a ref.
+ */
 export interface SpeedyMedsInputRef {
+  /** Focuses the underlying TextInput field. */
   focusInput: () => void;
+  /** Clears the underlying TextInput field and its internal state. */
   clearInput: () => void;
+  /** Gets the current value of the input field from its internal state. */
   getValue: () => string | undefined;
+  /** Sets the value of the input field in its internal state. */
   setValue: (text: string) => void;
 }
 
+/**
+ * A custom TextInput component for SpeedyMeds forms that allows imperative control
+ * via a ref using `forwardRef` and `useImperativeHandle`.
+ * It manages its own internal value state.
+ * @param props - The props for the component.
+ * @param ref - The ref passed from the parent component.
+ */
 const SpeedyMedsInput = forwardRef<SpeedyMedsInputRef, SpeedyMedsInputProps>(
   (props, ref) => {
     const { label, initialValue = \"\", ...textInputProps } = props;

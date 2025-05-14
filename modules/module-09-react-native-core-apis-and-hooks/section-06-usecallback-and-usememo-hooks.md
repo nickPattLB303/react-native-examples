@@ -51,6 +51,12 @@ This is where memoization Hooks come in:
   **"Under the Hood" (`useMemo`):**
   `useMemo` executes the `computeExpensiveValue` function during the render. It stores the returned value. On subsequent renders, it compares the current dependencies with the previous ones. If they are the same, it returns the stored value without re-executing `computeExpensiveValue`. If dependencies differ, it re-executes the function, stores the new result, and returns it.
 
+> 📚 **Official Documentation:**
+>
+> - [React Docs: `useCallback`](https://react.dev/reference/react/useCallback)
+> - [React Docs: `useMemo`](https://react.dev/reference/react/useMemo)
+> - [React Docs: `React.memo`](https://react.dev/reference/react/memo)
+
 ### `useCallback` vs. `useMemo`
 
 It can be helpful to remember their relationship:
@@ -335,4 +341,4 @@ Apply `useCallback` to optimize a component that passes a function to a memoized
         - Run the app again. Press the button that increments `unrelatedCounter`.
         - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
         - Verify that deleting a reminder still works correctly.
-  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/)
+  - **Tool:** **(https://snack.expo.dev/)**

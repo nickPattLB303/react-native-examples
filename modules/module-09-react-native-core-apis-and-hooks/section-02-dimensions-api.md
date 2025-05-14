@@ -279,12 +279,9 @@ const ResponsiveLayoutInfo: React.FC = () => {
 
     // Cleanup function to remove the listener
     return () => {
-      // Check if subscription.remove() is available (newer RN versions)
+      // Ensure subscription.remove() is called to prevent memory leaks
       if (subscription && typeof subscription.remove === "function") {
         subscription.remove();
-      } else {
-        // Fallback for older RN versions (deprecated)
-        // Dimensions.removeEventListener('change', handleChange);
       }
     };
   }, []);

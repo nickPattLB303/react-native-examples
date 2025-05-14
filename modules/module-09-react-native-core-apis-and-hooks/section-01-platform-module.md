@@ -29,7 +29,7 @@ The `Platform` module exposes several key properties and methods:
   - On iOS, `Platform.Version` is a string representing the OS version (e.g., `"16.4"`).
   - It can also return version information for other platforms like `web`, `windows`, or `macos`.
 
-- **`Platform.constants`**: An object containing various platform-specific constants. This is particularly useful for finer-grained device-specific logic or analytics. Key constants include:
+- **`Platform.constants`**: An object containing various platform-specific constants. This is particularly useful for finer-grained device-specific logic or analytics. Some key constants are detailed below, and a summary of important ones is provided in the table.
   - `isTesting` (boolean): Indicates if the app is running in a test environment.
   - `reactNativeVersion` (object): Contains `major`, `minor`, `patch`, and optional `prerelease` numbers for the React Native version.
   - **Android-specific constants:**
@@ -52,7 +52,9 @@ The `Platform` module exposes several key properties and methods:
     - `isVision` (boolean, iOS only): True if the device is an Apple Vision Pro.
 
 > [!NOTE]
-> The availability of specific constants can vary slightly between React Native versions. Always consult the latest official documentation for the most current list.
+> The availability of specific constants can vary slightly between React Native versions. Always consult the latest official documentation for the most current list of all available constants.
+
+The following table summarizes some of the key `Platform.constants` properties.
 
 **Table: Key `Platform.constants` Properties**
 
@@ -186,10 +188,7 @@ const stylesForVersion = StyleSheet.create({
   },
 });
 
-// To use this component:
-// export default OSVersionInfo;
-// In another file: import OSVersionInfo from './OSVersionInfo';
-// <OSVersionInfo />
+export default OSVersionInfo;
 ```
 
 This snippet shows how to parse the iOS version string to get a major version number and how to directly use the Android API level for conditional logic relevant to app features.
@@ -287,10 +286,7 @@ const stylesForConstants = StyleSheet.create({
   },
 });
 
-// To use this component:
-// export default DeviceConstantsInfo;
-// In another file: import DeviceConstantsInfo from './DeviceConstantsInfo';
-// <DeviceConstantsInfo />
+export default DeviceConstantsInfo;
 ```
 
 This component dynamically displays several pieces of information sourced from `Platform.constants`, tailoring some output based on the OS.

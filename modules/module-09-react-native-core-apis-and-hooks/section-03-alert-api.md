@@ -82,7 +82,7 @@ This method displays an alert dialog that includes one or more text input fields
   - **`message` (string, optional):** An optional message displayed above the input field(s).
   - **`callbackOrButtons` (function or AlertButton[], optional):**
     - If a **function** is provided, it is called with the entered text value(s) when the user taps the default "OK" (or equivalent positive) button. For single input types (`\'plain-text\'`, `\'secure-text\'`), it receives a single string. For `\'login-password\'`, it receives an array of two strings: `[username, password]`.
-    - If an **array of `AlertButton` objects** is provided, it configures the buttons just like in `Alert.alert()`. The `onPress` handler for these buttons will need to handle the input values. Note: The input values are _not_ directly passed to button `onPress` handlers in this configuration; you must use the function callback pattern if you need the values directly in the callback.
+    - If an **array of `AlertButton` objects** is provided, it configures the buttons just like in `Alert.alert()`. Note: When using an array of `AlertButton` objects with `Alert.prompt`, the `onPress` handler for these buttons can receive the input values. For `type: \'login-password\'`, the handler receives an array like `[username, password]`. For single input types, it receives the input string. Consult the official React Native documentation for precise behavior with different types.
   - **`type` (AlertType, optional):** Configures the appearance and behavior of the text input field(s). Common values:
     - `\'default\'`: Standard alert, typically no input fields (behavior may vary, use with caution for prompts).
     - `\'plain-text\'`: A single plain text input field.
@@ -147,7 +147,7 @@ const stylesForPrompt = StyleSheet.create({
 });
 
 // To use:
-// export default FeedbackPromptButton;
+export default FeedbackPromptButton;
 ```
 
 **2. Login Prompt for SpeedyMeds Secure Area (Conceptual)**
@@ -207,7 +207,6 @@ const SecureLoginButton: React.FC = () => {
   );
 };
 
-// Assuming styles.container and styles.statusText are defined as in previous examples
 const styles = StyleSheet.create({
   container: {
     padding: 20,
@@ -219,8 +218,9 @@ const styles = StyleSheet.create({
     color: \'purple\',
   },
 });
+
 // To use:
-// export default SecureLoginButton;
+export default SecureLoginButton;
 ```
 
 **Table: `Alert.prompt()` (iOS) `type` Options**
@@ -437,4 +437,4 @@ Here, the "Delete" button has `style: 'destructive'`. On iOS, this usually rende
     5.  In the `AlertsDemoComponent` JSX, render `Button` components to trigger each of these alert functions.
     6.  Add basic styling.
     7.  Test on both iOS and Android simulators/devices (or Expo Snack web previews) to observe behaviors and platform differences.
-  - **Tool:** [**(https://snack.expo.dev/)**](https://snack.expo.dev/)
+  - **Tool:** **(https://snack.expo.dev/)**
