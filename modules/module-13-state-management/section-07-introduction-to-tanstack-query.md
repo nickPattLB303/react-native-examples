@@ -64,7 +64,7 @@ Getting started with TanStack Query in a React Native project is straightforward
       defaultOptions: {
         queries: {
           staleTime: 5 * 60 * 1000, // Default stale time for all queries: 5 minutes
-          gcTime: 10 * 60 * 1000,    // Default garbage collection (cache) time: 10 minutes
+          gcTime: 10 * 60 * 1000, // Default garbage collection (cache) time: 10 minutes
         },
       },
     });
@@ -96,10 +96,10 @@ TanStack Query v5 introduced some significant and beneficial changes to its API 
 
 1.  **Object Syntax for Hooks:** Most hooks (`useQuery`, `useMutation`, `useInfiniteQuery`, etc.) and `queryClient` methods now accept a **single options object** as their parameter. This replaces the previous pattern of multiple positional arguments or function overloads.
 
-    *   **Example (`useQuery`):**
-        *   v4 style: `useQuery('todos', fetchTodos, { staleTime: 5000 });`
-        *   v5 style: `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 5000 });`
-    This change improves API consistency, readability (especially for functions with many options), and TypeScript integration.
+    - **Example (`useQuery`):**
+      _ v4 style: `useQuery('todos', fetchTodos, { staleTime: 5000 });`
+      _ v5 style: `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 5000 });`
+      This change improves API consistency, readability (especially for functions with many options), and TypeScript integration.
 
 2.  **`gcTime` (Garbage Collection Time):** The option previously known as `cacheTime` in v4 has been renamed to `gcTime` in v5. This name more accurately reflects its purpose: controlling how long inactive query data remains in memory before being garbage collected.
 
@@ -125,6 +125,25 @@ This basic model, combined with its powerful features, forms the foundation of s
 
 > [!TIP]
 > TanStack Query is highly configurable. The default settings for caching and refetching are sensible for many applications, but you can customize them per query or globally on the `QueryClient` instance to fit your specific needs.
+
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** TanStack Query's approach of declarative data fetching (`useQuery`) can be likened to how SwiftUI views declare their data dependencies. The library managing the actual fetching, caching, and background updates is similar to having a sophisticated data layer service in Swift that your views consume. The `QueryClientProvider` is somewhat analogous to making an `ObservableObject` (which manages data fetching) available via `@EnvironmentObject`.
+>
+> **Key Takeaway:** TanStack Query offers a standardized, powerful solution for many data synchronization tasks you might build custom logic for in Swift (e.g., around `URLSession`, Combine publishers for data streams, and manual cache management), providing a more structured and feature-rich framework out-of-the-box.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** The `useQuery` hook can be compared to observing a `Flow` or `LiveData` from a `ViewModel` that gets its data from a Repository. The Repository itself would handle fetching (e.g., via Retrofit) and caching (e.g., with Room). TanStack Query essentially combines responsibilities of the Repository and parts of the `ViewModel` concerning data fetching lifecycle, caching, and status exposure, but in a more declarative, hook-based way integrated into the component.
+>
+> **Key Takeaway:** TanStack Query centralizes much of the server state logic that might be spread across Repositories and ViewModels in an Android app, offering built-in caching, background sync, and status management with less manual setup.
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison (React):** TanStack Query (formerly React Query) is likely familiar. It directly addresses the limitations of manual data fetching with `useEffect` and `useState` by providing a robust caching layer and declarative hooks.
+> **Comparison (Angular):** In Angular, you might use an injectable service with HttpClient to fetch data, and RxJS to manage the asynchronous stream, error handling, and potentially sharing/caching (e.g., with `shareReplay`). TanStack Query provides similar capabilities but with a more declarative hook-based API tailored for React, and it includes more built-in conventions for caching, stale-while-revalidate, and background updates than a typical manual RxJS setup might offer without significant custom code.
+>
+> **Key Takeaway:** TanStack Query provides a dedicated, feature-rich data-synchronization layer for React applications, abstracting many complexities that web developers often handle manually or with more boilerplate using `useEffect`/`useState` (React) or custom RxJS patterns within services (Angular).
 
 > 📚 **Official Documentation:**
 >

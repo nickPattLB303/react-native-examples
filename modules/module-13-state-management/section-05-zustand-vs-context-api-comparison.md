@@ -123,6 +123,10 @@ For our SpeedyMeds application, you might choose as follows:
 - **Shopping Cart for Prescription Orders:** Zustand would be an excellent choice here. Cart items can change frequently, and you'd want efficient updates and potentially persistence using `AsyncStorage`.
 - **List of Favorite Medications (as in our Zustand example):** Zustand shines here due to easy persistence and selective updates for components displaying or interacting with favorites.
 
+> 🛣️ **(All Learners): Background Bridge Note: Architectural Choices**
+>
+> Choosing between state management tools like Context API and Zustand, or deciding when to use local state versus a global solution, is a type of architectural decision common across all software development platforms. Whether you're an iOS developer deciding between `@StateObject`, `@EnvironmentObject`, or a custom service layer; an Android developer choosing scope for a `ViewModel` or implementing a repository pattern; or a backend developer selecting a caching strategy, the core thought process is similar. You weigh factors like complexity, performance, scalability, maintainability, and the specific problem at hand. The comparisons made in this section reflect these universal trade-offs, tailored to the React Native ecosystem.
+
 > [!TIP]
 > It's not uncommon to use both Context API and a library like Zustand in the same application. Context can handle very stable, truly global data like themes, while Zustand can manage more dynamic or complex pieces of client-side application state. This distinction often arises because Context API serves as a general **dependency injection mechanism** for React trees, whereas Zustand is specifically designed as a **state management library** focused on performance and developer experience for dynamic state.
 

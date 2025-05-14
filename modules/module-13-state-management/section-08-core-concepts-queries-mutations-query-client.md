@@ -31,6 +31,11 @@ interface Medication {
 }
 
 // Define your API fetching function
+/**
+ * Fetches a list of medications.
+ * Simulates an API call with a delay.
+ * @returns {Promise<Medication[]>} A promise that resolves to an array of medications.
+ */
 const fetchMedications = async (): Promise<Medication[]> => {
   // In a real app, this would be an API call, e.g., using fetch or axios
   // For this example, we simulate an API call with a delay
@@ -57,6 +62,10 @@ const fetchMedications = async (): Promise<Medication[]> => {
   ];
 };
 
+/**
+ * React component for displaying a list of medications fetched via TanStack Query.
+ * Handles loading and error states for the query.
+ */
 const MedicationsList: React.FC = () => {
   const {
     data,
@@ -238,6 +247,11 @@ interface Prescription extends NewPrescriptionPayload {
 }
 
 // API function to add a new prescription
+/**
+ * Adds a new prescription via a simulated API call.
+ * @param {NewPrescriptionPayload} payload - The data for the new prescription.
+ * @returns {Promise<Prescription>} A promise that resolves to the newly created prescription with a server-assigned ID.
+ */
 const addPrescriptionAPI = async (
   payload: NewPrescriptionPayload
 ): Promise<Prescription> => {
@@ -257,6 +271,13 @@ const addPrescriptionAPI = async (
   };
 };
 
+/**
+ * React component for adding a new prescription using TanStack Query for mutation.
+ * Includes form inputs and handles submission, loading, and error states of the mutation.
+ * Invalidates relevant queries on successful submission.
+ * @param {{ patientId: string }} props - Component props.
+ * @param {string} props.patientId - The ID of the patient for whom the prescription is being added.
+ */
 const AddPrescriptionForm: React.FC<{ patientId: string }> = ({
   patientId,
 }) => {
@@ -422,6 +443,27 @@ Time to put your knowledge of `useQuery` into practice!
 - **Objective:** Fetch and display a list of patient appointments for the SpeedyMeds app using `useQuery`.
 - **Task:** You will simulate an API call to get appointment data and display it in a list format, handling loading and error states appropriately.
 
-**(https://snack.expo.dev/YOUR_SNACK_ID_HERE)**
+**(https://snack.expo.dev/@course-author/m13-ex03-usequery)**
 
 Understanding `useQuery` and `useMutation` is key to harnessing the power of TanStack Query. In the next sections, we'll delve deeper into caching strategies and how to effectively manage data updates with mutations.
+
+> 🍏 **(iOS Developers):**
+>
+> **Comparison (`useQuery`):** The `useQuery` hook is like setting up an `ObservableObject` in SwiftUI that fetches data in its initializer or an `onAppear` block. The various status flags (`isLoading`, `isError`, `data`) are similar to `@Published` properties you'd expose. `queryKey` providing automatic re-fetching on change is like SwiftUI reacting to changes in an `@State` variable used in a fetch request.
+> **Comparison (`useMutation`):** `useMutation` is like defining a function in your `ObservableObject` that performs an async task (e.g., saving data) and updates `@Published` properties for loading/error states. Query invalidation (`queryClient.invalidateQueries`) is similar to manually re-triggering a fetch or refreshing data after a successful save, or using Combine publishers to signal a data change that other parts of the app might subscribe to.
+>
+> **Key Takeaway:** TanStack Query provides a structured way to handle the lifecycle (loading, success, error, refetching) of both data fetching and data modification operations, which often requires more manual setup with Combine and `ObservableObject`.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison (`useQuery`):** `useQuery` resembles a `ViewModel` method that exposes a `StateFlow<Resource<List<Medication>>>` (where `Resource` is a wrapper for loading/success/error states). The Composable would collect this Flow. The `queryKey` concept ensures that if the inputs to your data fetch change (like a user ID), the data is re-fetched, similar to how a `ViewModel` might re-trigger a fetch when an input `StateFlow` changes.
+> **Comparison (`useMutation`):** `useMutation` is like a `ViewModel` function that calls a suspend function in a Repository to update data. The `isLoading`, `isError` flags are similar to states you'd manage in the `ViewModel` (e.g., via a `MutableStateFlow`) to drive UI changes during the mutation. Invalidating queries is like having the `ViewModel` re-fetch data or signal other `Flows` to update after a successful mutation.
+>
+> **Key Takeaway:** TanStack Query hooks encapsulate much of the state management logic for async operations (loading, error, data, success status) directly usable by the component, reducing the need for extensive `ViewModel` boilerplate for each network call and its states.
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison (`useQuery` & `useMutation`):** > **React:** These hooks are the core of TanStack Query (React Query). They directly replace manual `useEffect` and `useState` patterns for data fetching and state management, providing caching, synchronization, and status management out-of-the-box.
+> **Angular:** `useQuery` is like subscribing to an Observable returned by an HttpClient call in a service, with added benefits of automatic caching and status tracking. `useMutation` is like a service method that performs a POST/PUT/DELETE and returns an Observable for the result, but again, TanStack Query adds lifecycle management (isLoading, onSuccess callbacks, etc.) and integrates query invalidation directly.
+>
+> **Key Takeaway:** TanStack Query offers a declarative, hook-based API that standardizes and simplifies asynchronous server state management in React, providing features that often require manual implementation or more extensive setups in both React (pre-TanStack Query) and Angular applications.

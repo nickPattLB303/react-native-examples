@@ -126,6 +126,13 @@ const MOCK_MEDICATIONS: Medication[] = [
   { id: "med002", name: "Lisinopril 10mg", stock: 75 },
 ];
 
+/**
+ * Fetches a single medication by its ID from a mock data source.
+ * Simulates an API call with a delay.
+ * @param {string} medId - The ID of the medication to fetch.
+ * @returns {Promise<Medication | undefined>} A promise that resolves to the medication object or undefined if not found.
+ * @throws {Error} If the medication is not found (simulated).
+ */
 const fetchMedicationById = async (
   medId: string
 ): Promise<Medication | undefined> => {
@@ -136,6 +143,15 @@ const fetchMedicationById = async (
   return medication;
 };
 
+/**
+ * Updates the stock for a given medication in a mock data source.
+ * Simulates an API call with a delay.
+ * @param {{ medId: string; newStock: number }} params - Parameters for the stock update.
+ * @param {string} params.medId - The ID of the medication to update.
+ * @param {number} params.newStock - The new stock level.
+ * @returns {Promise<Medication>} A promise that resolves to the updated medication object.
+ * @throws {Error} If the medication is not found (simulated).
+ */
 const updateMedicationStockAPI = async ({
   medId,
   newStock,
@@ -156,6 +172,13 @@ const updateMedicationStockAPI = async ({
 };
 
 // Component to display and update medication stock
+/**
+ * Manages the display and update functionality for a single medication's stock level.
+ * Uses `useQuery` to fetch medication data and `useMutation` to update its stock.
+ * Demonstrates query invalidation upon successful mutation.
+ * @param {{ medicationId: string }} props - Component props.
+ * @param {string} props.medicationId - The ID of the medication to manage.
+ */
 const MedicationStockManager: React.FC<{ medicationId: string }> = ({
   medicationId,
 }) => {
@@ -292,6 +315,25 @@ Choosing between invalidation and direct cache updates often depends on:
 
 Invalidation is generally safer and simpler to start with.
 
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** After a successful data modification (e.g., saving to a server via `URLSession`), you'd typically need to manually update your local data model (perhaps an array backing a `UITableView` or `ObservableObject` properties) and/or re-fetch data to ensure UI consistency. TanStack Query's `invalidateQueries` automates the re-fetching part. Optimistic updates would involve manually changing your local model before the network call returns and then reverting if it fails, which TanStack Query provides a structured way to handle via `onMutate` and `onError`.
+>
+> **Key Takeaway:** TanStack Query streamlines post-mutation data synchronization. `invalidateQueries` is like a smart refresh mechanism, and `setQueryData` or optimistic updates offer more immediate UI feedback than typical manual approaches without significant custom logic.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** When you update data via a Repository method (e.g., calling a Retrofit service), the Repository might then signal its `ViewModel` (perhaps by re-emitting a `Flow` from Room or by manually triggering a refresh of a `LiveData` object) to get fresh data. `queryClient.invalidateQueries` achieves a similar outcome declaratively. Optimistic updates in Android would involve updating local data (e.g., in a `MutableStateFlow` or `LiveData`) immediately and then handling success/failure from the network call, which is what TanStack Query formalizes in its `useMutation` callbacks.
+>
+> **Key Takeaway:** TanStack Query's mutation handling with cache invalidation or optimistic updates provides a standardized pattern for UI consistency post-server changes, reducing the need for custom event buses or manual refresh triggers in ViewModels/Repositories.
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison (React):** These patterns are core to TanStack Query. Before its widespread adoption, developers might manually re-fetch in `useEffect` after a successful POST/PUT, or dispatch actions to Redux to update the store optimistically and then handle server responses. TanStack Query standardizes these flows beautifully.
+> **Comparison (Angular):** After a successful HttpClient POST/PUT in an Angular service, you might use an RxJS `Subject` or an event emitter to notify other components/services to refresh their data, or directly update a shared state in a service. `invalidateQueries` is a more targeted and automatic way to achieve this refresh. Optimistic updates would involve similar logic of updating local state first and then handling the server response.
+>
+> **Key Takeaway:** TanStack Query provides powerful and declarative primitives (`invalidateQueries`, `setQueryData`, `onMutate`) for managing cache consistency after mutations, significantly simplifying what used to be complex, manual state synchronization logic in many web applications.
+
 > 📚 **Official Documentation:**
 >
 > - [TanStack Query - Mutations (`useMutation`)](https://tanstack.com/query/v5/docs/react/guides/mutations) (covers `onSuccess`, `onError`, etc.)
@@ -306,6 +348,6 @@ Let's practice using `useMutation` to post data and then update the UI.
 - **Objective:** Implement a feature to add a new patient note using `useMutation` and then refresh the list of notes for that patient.
 - **Task:** You'll create a form to submit a new note. Upon successful submission, you will invalidate the query that fetches patient notes to display the newly added note.
 
-**(https://snack.expo.dev/YOUR_SNACK_ID_HERE)**
+**(https://snack.expo.dev/@course-author/m13-ex04-usemutation)**
 
 Mastering mutations and how they interact with your cached query data is fundamental to building dynamic, interactive applications with TanStack Query. In the next section, we'll look at some React Native specific considerations when using this powerful library.

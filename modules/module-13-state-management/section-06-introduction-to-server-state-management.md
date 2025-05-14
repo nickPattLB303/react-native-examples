@@ -79,6 +79,25 @@ Recognizing these unique challenges, a category of libraries has emerged specifi
 
 By using such a library, you can significantly reduce boilerplate, improve application performance, and provide a more robust and responsive user experience when dealing with server data.
 
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** You're familiar with fetching data using `URLSession` (with completion handlers or `async/await`) and parsing JSON. Managing the lifecycle of this data—caching it (e.g., with `NSCache` or Core Data), handling loading states, errors, and deciding when to re-fetch—is often custom-built. While SwiftUI offers property wrappers like `@State` and `@ObservedObject` for UI updates, they don't inherently solve server state concerns like caching or background sync without additional logic. The challenges of keeping data fresh and avoiding excessive network calls are universal.
+>
+> **Key Takeaway:** Dedicated server state libraries in React Native aim to abstract away much of the manual work you'd do around `URLSession` data tasks, providing built-in solutions for caching, staleness, and refetching that you might otherwise implement with custom managers or combine with Core Data for persistence.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** You likely use Retrofit for network calls, potentially with Coroutines or RxJava for asynchronous operations. Data might be stored in a Room database (as a cache or local source of truth) and exposed via `LiveData` or `Flow` from a `ViewModel` using a Repository pattern. While this is a robust setup, managing caching logic, deciding when data is stale, handling optimistic updates, and background synchronization often require significant manual implementation within the Repository or `ViewModel`.
+>
+> **Key Takeaway:** Server state libraries in React Native automate many of the patterns you might build into a Repository (like caching, background refresh logic, handling loading/error states per request). They provide a more declarative approach to data fetching compared to manually orchestrating calls through Retrofit and managing the subsequent state in `ViewModel`s.
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison (React):** Before libraries like TanStack Query, React developers often managed server state with `useEffect` for fetching, `useState` for data/loading/error states, and potentially Context API or Redux to store this data globally. This involved a lot of boilerplate for caching, optimistic updates, and synchronization logic, essentially building a mini-query library per project.
+> **Comparison (Angular):** Angular developers typically use Services with HttpClient for data fetching, often combined with RxJS for managing asynchronous streams. While RxJS provides powerful operators, implementing caching, retries, and background sync still requires custom logic within these services. NGRX can store server state, but like Redux, requires more boilerplate for the fetching lifecycle.
+>
+> **Key Takeaway:** Dedicated server state libraries like TanStack Query provide a specialized layer that handles the complexities of server communication, caching, and synchronization, significantly reducing the custom boilerplate common in earlier React patterns or manual service implementations in Angular.
+
 > 📚 **Official Documentation & Explanatory Articles:**
 >
 > - [TanStack Query Docs (Covers Server State concepts extensively)](https://tanstack.com/query/v5)

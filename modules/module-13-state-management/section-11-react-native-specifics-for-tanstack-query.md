@@ -32,6 +32,10 @@ function onAppStateChange(status: AppStateStatus) {
 
 const queryClient = new QueryClient(); // Your QueryClient instance
 
+/**
+ * Root application component demonstrating TanStack Query setup with AppState listener
+ * for focus management.
+ */
 const App: React.FC = () => {
   useEffect(() => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
@@ -117,6 +121,10 @@ import NetInfo from "@react-native-community/netinfo";
 
 const queryClient = new QueryClient();
 
+/**
+ * Root application component demonstrating TanStack Query setup with NetInfo listener
+ * for online status management.
+ */
 const App: React.FC = () => {
   useEffect(() => {
     // Subscribe to network state changes
@@ -166,6 +174,18 @@ By setting this up, you ensure that TanStack Query's `refetchOnReconnect` featur
 
 This integration ensures `refetchOnReconnect` works reliably in your SpeedyMeds app.
 
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** React Native's `AppState` is similar to observing `UIApplication.didBecomeActiveNotification` or `UIApplication.willResignActiveNotification`. `NetInfo` provides network reachability similar to using `NWPathMonitor`. The key here is that TanStack Query provides `focusManager` and `onlineManager` as specific integration points to feed these platform events into its own state machine, automating refetches. You'd otherwise manually trigger data reloads in response to these system notifications.
+>
+> **Key Takeaway:** TanStack Query requires this explicit bridging from native app/network events to its internal managers for optimal behavior on mobile, unlike web where it can often infer from browser events.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** `AppState` changes are like `Activity` lifecycle events (`onResume`, `onPause`). `NetInfo` is similar to using `ConnectivityManager` to monitor network status. TanStack Query's `focusManager` and `onlineManager` act as centralized listeners that you update based on these Android-specific events, allowing the library to react appropriately (e.g., `refetchOnFocus`, `refetchOnReconnect`). Without this, you'd be building custom logic in your `Activity` or `ViewModel` to re-trigger fetches.
+>
+> **Key Takeaway:** Providing TanStack Query with explicit signals about app focus and network status via its managers is crucial for its automatic refetching strategies to work correctly and reliably on Android.
+
 ### Refreshing Queries on Screen Focus (with React Navigation)
 
 In addition to app-level focus, you might want to refetch data when a specific screen within your React Navigation stack comes into focus. This is useful if data relevant to that screen could have changed while the user was on a different screen.
@@ -177,6 +197,12 @@ The TanStack Query documentation provides a helpful custom hook, `useRefreshOnFo
 import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
+/**
+ * Custom hook to refetch a TanStack Query query when the screen it's on gains focus.
+ * Avoids an initial refetch on mount if useQuery already fetches.
+ * @template T The type of data returned by the refetch function.
+ * @param {() => Promise<T>} refetch - The refetch function obtained from `useQuery`.
+ */
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
   // To prevent an initial fetch on mount if useQuery already fetches
   const firstTimeRef = React.useRef(true);
@@ -205,15 +231,12 @@ import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus"; // Adjust path
 
-// Assume fetchPatientAppointments is defined elsewhere
-// const fetchPatientAppointments = async (patientId: string) => { ... };
-
-interface Appointment {
-  id: string;
-  date: string;
-  description: string;
-}
-
+/**
+ * Fetches patient appointments for a given patient ID.
+ * Simulates an API call.
+ * @param {string} patientId - The ID of the patient.
+ * @returns {Promise<Appointment[]>} A list of appointments.
+ */
 const fetchPatientAppointments = async (
   patientId: string
 ): Promise<Appointment[]> => {
@@ -229,6 +252,11 @@ const fetchPatientAppointments = async (
   ];
 };
 
+/**
+ * Screen component to display patient appointments.
+ * Uses `useQuery` to fetch data and `useRefreshOnFocus` to refetch on screen focus.
+ * @param {{ route: any }} props - Component props, expects route params with patientId.
+ */
 const PatientAppointmentsScreen: React.FC<{
   route: any /* or specific route type */;
 }> = ({ route }) => {
@@ -293,6 +321,12 @@ interface MedicationStatus {
   statusMessage: string;
 }
 
+/**
+ * Fetches real-time medication status.
+ * Simulates an API call.
+ * @param {string} medicationId - The ID of the medication.
+ * @returns {Promise<MedicationStatus>} The status of the medication.
+ */
 const fetchRealTimeStatus = async (
   medicationId: string
 ): Promise<MedicationStatus> => {
@@ -304,6 +338,12 @@ const fetchRealTimeStatus = async (
   };
 };
 
+/**
+ * Widget to display real-time medication status.
+ * Demonstrates enabling/disabling query polling based on screen focus.
+ * @param {{ medicationId: string }} props - Component props.
+ * @param {string} props.medicationId - The ID of the medication for status tracking.
+ */
 const RealTimeMedicationStatusWidget: React.FC<{ medicationId: string }> = ({
   medicationId,
 }) => {
@@ -425,13 +465,3 @@ By paying attention to these React Native specifics, you can fine-tune TanStack 
 > - [TanStack Query Persist Client (Experimental, primarily web-focused)](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient)
 
 This concludes our exploration of TanStack Query for server state management in React Native. You now have a solid foundation to fetch, cache, and update remote data effectively.
-
-### Next Steps & Module Challenge
-
-You've covered a lot in this module, from revisiting basic React state to exploring powerful client and server state management libraries!
-
-To solidify your understanding, it's time for the **Module 13 Challenge**: Integrate Zustand and TanStack Query for Medication Data.
-
-**(https://snack.expo.dev/YOUR_CHALLENGE_SNACK_ID_HERE)**
-
-This challenge will require you to apply the concepts of both Zustand (for managing some client-side aspect, perhaps UI state related to filtering or sorting) and TanStack Query (for fetching and displaying a list of medications) within a cohesive SpeedyMeds-themed scenario.

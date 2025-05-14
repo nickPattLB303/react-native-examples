@@ -157,8 +157,8 @@ The performance characteristics of Context API are a direct result of how React 
 > - [React Docs - `useCallback`](https://react.dev/reference/react/useCallback)
 > - [Blog: Understanding React Context API Performance (Example Article)](https://www.codiga.io/blog/react-context-performance/)
 
-> <TARGET_AUDIENCE_EMOJI_PLACEHOLDER> **Background Bridge Note: UI Update Mechanisms and Performance**
->
+> 🛣️ **Background Bridge Note: UI Update Mechanisms and Performance**
+
 > Comparing React Context's update mechanism to other platforms highlights different approaches to performance:
 >
 > 🤖 **(Android Developers):** UI updates triggered by `LiveData` or `StateFlow` emissions are typically handled within observers or collectors. Performance often depends on how efficiently the UI updates are performed within these callbacks. Tools like `RecyclerView.Adapter` with `DiffUtil` provide highly optimized updates for lists by calculating minimal changes. `StateFlow` also offers operators like `distinctUntilChanged()` to prevent emissions (and thus potential UI updates) if the state value hasn't actually changed.

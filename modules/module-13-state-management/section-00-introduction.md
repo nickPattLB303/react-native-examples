@@ -18,10 +18,6 @@ We'll begin by revisiting familiar territory with `useState` and the React Conte
 
 > 🛣️ **(All Learners):** Effective state management is key to building robust applications. This module will equip you with various techniques; pay close attention to the use cases for each to understand when and why to choose a particular approach.
 
-<TARGET_AUDIENCE_ADAPTATION_PLACEHOLDER>
-This section will be filled with `Background Bridge Notes` tailored for different developer backgrounds, explaining how React Native state management concepts compare to their existing knowledge.
-</TARGET_AUDIENCE_ADAPTATION_PLACEHOLDER>
-
 🍏 **(iOS Developers):**
 
 > **Comparison:** You're likely familiar with managing state using patterns like MVC, MVP, MVVM, and tools such as `UserDefaults`, Core Data, or SwiftUIs `@State`, `@ObservedObject`, and `@EnvironmentObject`. React Native's state management also emphasizes separating data from UI, but often relies on component-level state, a global store paradigm (like Redux or Zustand), or hooks for managing data lifecycles. The concept of "props" for passing data down is similar to passing data during segue preparation or view controller initialization, while "state" is more akin to internal properties that a view controller or SwiftUI view manages.
@@ -84,7 +80,7 @@ This module is divided into the following sections:
 At the end of this module, you will apply your knowledge in a practical challenge:
 
 - **Challenge 13: Integrate Zustand and TanStack Query for Medication Data**
-  - **(https://snack.expo.dev/YOUR_CHALLENGE_SNACK_ID_HERE)**
+  - **(https://snack.expo.dev/@course-author/module-13-challenge)**
 
 ## Module Summary
 

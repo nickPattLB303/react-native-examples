@@ -193,12 +193,7 @@ graph TD
 
 **Explanation of the Diagram:**
 
-This diagram illustrates the typical flow of data and actions when using Zustand:
-
-1.  **Component Subscribes:** A React component uses the Zustand hook with a selector to subscribe to a slice of the store's state.
-2.  **Action Triggered:** An event or another component triggers an action defined within the store.
-3.  **State Update:** The action calls the `set` function, which updates the state within the store. If middleware like `persist` is used, it may also interact with storage at this point (not shown in this simplified diagram for clarity on core flow).
-4.  **Notification & Re-render:** Zustand checks which subscribed components are affected by the state change (based on their selectors). Only components whose selected state slice has changed will be re-rendered.
+This diagram illustrates the typical flow of data and actions when using Zustand. A React component initiates the process by using the Zustand-generated hook, along with a selector function, to subscribe to a specific slice of the store's state. The hook accesses the central Zustand store, which then returns the selected data slice back to the hook, and subsequently to the component for rendering. When an action is triggered (e.g., by a user event or another component), this action, defined within the store, calls the internal `set` function. This function is responsible for updating the state within the store. After the state is updated, Zustand efficiently checks all its subscribed components. It re-runs their respective selector functions against the new state and only notifies (and thus triggers a re-render for) those components whose selected state slice has actually changed. This selective re-rendering mechanism is a core strength of Zustand, ensuring optimal performance by minimizing unnecessary component updates, especially in complex applications with many state consumers.
 
 > 📚 **Official Documentation:**
 >
@@ -213,4 +208,27 @@ Now it's your turn to get hands-on with Zustand!
 - **Objective:** Create a Zustand store to manage a simple counter.
 - **Task:** Define a store with a `count` state and actions to `increment`, `decrement`, and `reset` the count. Display the count and provide buttons to interact with these actions in a React Native component.
 
-**(https://snack.expo.dev/YOUR_SNACK_ID_HERE)**
+**(https://snack.expo.dev/@course-author/m13-ex02-zustand-store)**
+
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** Zustand's hook-based API (`useCounterStore()`) feels somewhat similar to using custom hooks in Swift or leveraging SwiftUI's `@StateObject` or `@ObservedObject` for a component's local or passed-in state. However, Zustand stores are typically global and don't require being explicitly passed down or injected via the environment. The idea of a store existing outside the component tree is akin to a singleton service or manager class in Swift that holds application state, which various parts of the UI might observe (perhaps via Combine publishers or delegates).
+>
+> **Key Takeaway:** Zustand offers a very lightweight, direct way to access global state slices with automatic re-renders for subscribers, potentially simpler than managing custom Combine publishers and subscribers for every piece of shared state in a large Swift application.
+
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** Zustand's store can be compared to a global `ViewModel` or a singleton repository that holds application state using `StateFlow` or `SharedFlow`. Components (or Composables) would collect these flows to react to state changes. The `set` function in Zustand is like emitting a new value to a `MutableStateFlow`. The key difference is Zustand's hook-based selection (`state => state.count`) which provides very granular updates, whereas with `StateFlow`, a Composable collecting the flow might re-compose even if only a part of the state object it doesn't care about has changed, unless further optimized (e.g., with `derivedStateOf` or by collecting specific sub-flows).
+>
+> **Key Takeaway:** Zustand provides a simple, performant global state solution with built-in selective subscriptions, potentially reducing the boilerplate of setting up complex `ViewModel` hierarchies or managing multiple `Flow` collectors for different state slices.
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison (React):** Compared to Redux, Zustand is much simpler, requiring significantly less boilerplate (no actions, reducers, dispatchers in the traditional sense). It feels more like a supercharged `useState` that's global. The selector pattern for performance is a key shared concept with libraries like `react-redux` (using `useSelector`). Compared to Context API, Zustand offers better out-of-the-box performance for dynamic state due to its selective re-renders, and it doesn't require Provider wrappers.
+> **Comparison (Angular):** Zustand's global store is similar to an Angular service holding state (e.g., with an RxJS `BehaviorSubject`). Components would inject the service and subscribe to the `Observable`. Zustand's `set` is like calling `.next()` on a Subject. The hook-based access in Zustand is idiomatic to React, whereas Angular uses DI and `async` pipes or manual subscriptions.
+>
+> **Key Takeaway:** Zustand offers a minimalistic and performant global state solution for React/React Native, often simpler than Redux and more optimized for dynamic updates than Context API. For Angular devs, it's a different paradigm but shares the goal of centralized, accessible state.
+
+### Next Steps
+
+Now that you've seen how Zustand works for managing client-side state, it's valuable to compare it directly with React's Context API to understand the specific scenarios where each might be more appropriate. The next section provides this detailed comparison.

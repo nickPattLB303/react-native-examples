@@ -569,7 +569,7 @@ Time to practice integrating these non-text input types.
   5.  Display validation errors if any.
   6.  On submit, show an `Alert` with all collected form data.
 
-**(URL_to_Tool)** _(Link to Expo Snack for Exercise 12.3)_
+**(URL_to_Tool)**
 
 Refer to the `README.md` in the Snack for detailed instructions.
 
@@ -603,7 +603,7 @@ This challenge tasks you with building a comprehensive Patient Information form 
   5.  On successful submission, display an `Alert` with all the collected patient data and then reset the form.
   6.  Ensure the form is scrollable to accommodate all fields.
 
-**(TODO: Link to Expo Snack for Challenge 12 - Create a Patient Information Form. The Snack README should provide detailed requirements and any starter elements.)**
+**(URL_to_Tool)**
 
 ## Module 12 Summary
 
