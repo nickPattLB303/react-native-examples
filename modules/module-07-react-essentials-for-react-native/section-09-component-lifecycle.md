@@ -176,18 +176,24 @@ This diagram shows that when a component mounts, the effect function runs (if de
 > **Comparison:** `useEffect` works exactly the same way in React Native as it does in React for the web. The concepts of the effect function, dependency array, and cleanup function are identical.
 >
 > **Key Takeaway:** Your existing understanding of `useEffect` is directly applicable.
+>
+> **Source:** [React Docs: Using the Effect Hook (`useEffect`)](https://react.dev/reference/react/useEffect)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** `useEffect` covers functionalities similar to Angular's lifecycle hooks like `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`. However, `useEffect` is more flexible and unified. The dependency array is key to controlling when the effect runs, mimicking different lifecycle events.
 >
 > **Key Takeaway:** `useEffect` is the go-to Hook for handling side effects. Master the use of the dependency array to control its execution precisely.
+>
+> **Source:** [Angular Docs: Lifecycle hooks](https://angular.io/guide/lifecycle-hooks)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** `useEffect` can be compared to lifecycle methods like `onCreate`/`onResume`/`onPause`/`onDestroy` in Android Activities/Fragments, or `viewDidLoad`/`viewWillAppear`/`viewWillDisappear` in iOS ViewControllers. The empty dependency array `[]` provides behavior similar to `onCreate` or `viewDidLoad` for setup, and the cleanup function to `onDestroy` or `viewDidDisappear` for teardown. Effects with dependencies relate to updates based on data changes.
 >
 > **Key Takeaway:** Use `useEffect` to manage operations that need to happen at specific points in your component's existence on the screen, such as data fetching when it appears, or cleaning up resources when it disappears.
+>
+> **Source:** [Android Dev Docs: Understand the Activity Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle), [Apple Dev Docs: Managing Your View Controller's Life Cycle](https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW1)
 
 The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
 
@@ -206,8 +212,6 @@ React provides another Hook called `useLayoutEffect` which has the same signatur
 - **Preference:** For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), **`useEffect` is preferred** because it does not block the browser from painting, leading to a more responsive UI.
 
 Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
-
-The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
 
 > 📚 **Official Documentation:**
 >
@@ -240,6 +244,4 @@ Let's practice using `useEffect` to perform a side effect, such as fetching data
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)**
-
-_A solution will be provided by your instructor or in the course materials._
+**(TODO: Link to Specific CodeSandbox for Exercise 7.5)**

@@ -184,18 +184,24 @@ In `MedicationItem`, `onPress={() => onSelectMedication(id, name)}` creates a ne
 > **Comparison:** Event handling (e.g., `onClick`, `onChange`) in React for web is very similar. React Native uses specific event props like `onPress` for touch interactions. The pattern of passing functions and using arrow functions to pass arguments is identical.
 >
 > **Key Takeaway:** Your React event handling knowledge is directly applicable. Just be aware of the specific event prop names available on React Native components (e.g., `onPress` instead of `onClick` for button-like interactions).
+>
+> **Source:** [React Native Docs: Handling Touches](https://reactnative.dev/docs/handling-touches)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Angular uses `(event)="handler()"` syntax (e.g., `(click)="onSave()"`). React uses props like `onPress={handler}`. The concept of binding events to methods is similar, but the syntax differs. React's inline arrow functions for passing arguments are a common pattern.
 >
 > **Key Takeaway:** Event handlers are props that expect functions. Pay attention to how arguments are passed using arrow functions if needed.
+>
+> **Source:** [Angular Docs: Event binding](https://angular.io/guide/event-binding)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** This is akin to setting listeners or targets/actions. For example, `button.setOnClickListener(...)` in Android or `addTarget(_:action:for:)` in iOS. In React Native, you assign a JavaScript function to an event prop like `onPress`.
 >
 > **Key Takeaway:** You handle user interactions by providing JavaScript functions to specific event props on components. These functions are executed when the interaction (e.g., a press) occurs.
+>
+> **Source:** [Android Dev Docs: Handle click events](https://developer.android.com/develop/ui/views/touch-and-input/input-events/click-events), [Apple Dev Docs: UIControl addTarget](https://developer.apple.com/documentation/uikit/uicontrol/1618259-addtarget)
 
 React Native provides a consistent way to handle user interactions across platforms. The `onPress` event is fundamental for making your SpeedyMeds app interactive, allowing users to trigger actions like selecting a medication, confirming an order, or navigating to a new screen.
 

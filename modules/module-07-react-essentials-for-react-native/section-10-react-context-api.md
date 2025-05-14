@@ -181,18 +181,24 @@ This diagram shows the `App` component providing a theme value. The `ThemedButto
 > **Comparison:** The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
 >
 > **Key Takeaway:** Your existing knowledge of the Context API is directly transferable.
+>
+> **Source:** [React Docs: Passing Data Deeply with Context](https://react.dev/learn/passing-data-deeply-with-context)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
 >
 > **Key Takeaway:** Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
+>
+> **Source:** [Angular Docs: Dependency injection in Angular](https://angular.io/guide/dependency-injection)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
 >
 > **Key Takeaway:** When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
+>
+> **Source:** [Android Dev Docs: SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences), [Apple Dev Docs: UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults)
 
 The Context API is a valuable tool in your React toolkit for managing state that needs to be shared across many components. Used judiciously, it can simplify your component structure and make your application easier to maintain.
 
@@ -228,6 +234,6 @@ Let's practice using the Context API to share simple data.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)**
+**(TODO: Link to Specific CodeSandbox for Exercise 7.6)**
 
 _A solution will be provided by your instructor or in the course materials._

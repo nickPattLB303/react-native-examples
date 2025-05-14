@@ -225,18 +225,24 @@ In this improved example:
 > **Comparison:** Rendering lists using `.map()` and the rules for `key` props are identical in React Native and React for web.
 >
 > **Key Takeaway:** Your existing knowledge of list rendering and keys in React applies directly.
+>
+> **Source:** [React Docs: Rendering Lists](https://react.dev/learn/rendering-lists)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Angular uses `*ngFor` directive to iterate over lists (e.g., `<li *ngFor="let item of items; trackBy: trackByFn">`). React uses the standard JavaScript `.map()` method within JSX. The `key` prop in React serves a similar purpose to Angular's `trackBy` function for optimizing list updates.
 >
 > **Key Takeaway:** Use `.map()` for list rendering and always provide a stable, unique `key` prop for each list item to ensure efficient rendering and state preservation.
+>
+> **Source:** [Angular Docs: NgFor with trackBy](https://angular.io/guide/built-in-directives#ngfor-with-trackby)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** This is analogous to populating a `RecyclerView` in Android (using an Adapter) or a `UITableView`/`UICollectionView` in iOS (using a DataSource). React's `.map()` and `key` system is its declarative way of achieving this. React Native's `<FlatList>` and `<SectionList>` components (covered later) are more optimized for long lists and are closer to `RecyclerView` or `UITableView` in terms of performance features like virtualization.
 >
 > **Key Takeaway:** For simple lists, `.map()` with keys is sufficient. React uses these keys to efficiently update the underlying native views when the list data changes.
+>
+> **Source:** [Android Dev Docs: Create dynamic lists with RecyclerView](https://developer.android.com/develop/ui/views/layout/lists), [Apple Dev Docs: UITableView](https://developer.apple.com/documentation/uikit/uitableview)
 
 Properly rendering lists with unique and stable keys is essential for performance and correctness in React applications. For very long lists or performance-critical scenarios, React Native provides more advanced list components like `<FlatList>` and `<SectionList>`, which we will cover in a later module.
 
@@ -265,6 +271,4 @@ Time to practice rendering lists of data with keys.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)**
-
-_A solution will be provided by your instructor or in the course materials._
+**(TODO: Link to Specific CodeSandbox for Exercise 7.4)**

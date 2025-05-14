@@ -4,11 +4,29 @@ Welcome to Module 7! Now that you have a solid understanding of JavaScript and T
 
 > 🛣️ **(All Learners):** This module is crucial for everyone, regardless of your background. While the concepts might seem familiar to those with web React experience, pay close attention to how these fundamentals apply within the React Native context and any differences highlighted.
 
-> ⚛️ **(Web Developers with React Experience):** You'll find many concepts in this module familiar, such as JSX, components, props, and state. However, it's important to review these in the context of React Native. Focus on how these core React principles are applied to build mobile UIs, and note any subtle differences or new considerations specific to the mobile environment. For example, event handling and the available "DOM" elements (Core Components) will differ.
+> ⚛️ **(Web Developers with React Experience):**
+>
+> **Comparison:** You'll find many concepts like JSX, components, props, and state very familiar. Key differences in React Native include the set of available UI elements (Core Components like `<View>`, `<Text>` instead of HTML DOM elements like `<div>`, `<p>`) and event handling (e.g., `onPress` for touch events instead of `onClick` for mouse clicks).
+>
+> **Key Takeaway:** While the core React philosophy remains, adapt your knowledge to mobile-specific UI components and interaction patterns.
+>
+> **Source:** [React Native Docs: Core Components](https://reactnative.dev/docs/intro-react-native-components), [React Native Docs: Handling Touches](https://reactnative.dev/docs/handling-touches)
 
-> 🅰️ **(Web Developers with Angular/Other Framework Experience):** You're likely familiar with component-based architectures and data binding. React has its own way of managing these, often emphasizing unidirectional data flow and explicit state management. Pay close attention to JSX (React's templating syntax), the roles of props and state, and the Hook-based API for managing component behavior and lifecycle.
+> 🅰️ **(Web Developers with Angular/Other Framework Experience):**
+>
+> **Comparison:** React uses JSX for templating, which integrates HTML-like syntax directly within JavaScript, differing from Angular's separate HTML templates. State management often starts with the `useState` Hook for local component state, and React generally follows a unidirectional data flow, contrasting with Angular's two-way data binding capabilities with `ngModel`.
+>
+> **Key Takeaway:** Embrace JSX for UI definition and understand React's approach to state and data flow, which might be more explicit than what you're used to.
+>
+> **Source:** [React Docs: Introducing JSX](https://react.dev/learn/writing-markup-with-jsx), [React Docs: State - A Component's Memory](https://react.dev/learn/state-a-components-memory)
 
-> 📲 **(Native Developers - Android/iOS):** Coming from native development, you're used to specific UI frameworks (like UIKit or Android UI). React takes a different approach with its declarative UI paradigm. You'll learn how React components translate to native UI elements and how to manage UI updates through state and props. Concepts like the component lifecycle (managed with `useEffect`) will have parallels to view controller lifecycles or Activity lifecycles, but the implementation details will be new.
+> 📲 **(Native Developers - Android/iOS):**
+>
+> **Comparison:** React Native employs a declarative UI paradigm where you describe _what_ the UI should look like based on the current state, unlike the imperative approach often used in native development (e.g., manually updating UI elements in UIKit or Android Views). Component lifecycle events, managed with the `useEffect` Hook, are analogous to `UIViewController` lifecycles (e.g., `viewDidLoad`, `viewWillAppear`) or Android `Activity` lifecycles (e.g., `onCreate`, `onResume`), but are handled within a JavaScript context.
+>
+> **Key Takeaway:** Shift your thinking from direct manipulation of UI elements to describing UI based on state, and learn how `useEffect` manages component behavior over time.
+>
+> **Source:** [React Docs: Describing the UI](https://react.dev/learn/describing-the-ui), [React Docs: Lifecycle of Reactive Effects](https://react.dev/learn/lifecycle-of-reactive-effects)
 
 ## Learning Objectives
 
@@ -29,9 +47,9 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a good understanding of the following:
 
-- Completion of [Module 4: Web Development Essentials Refresher](../module-04-web-development-essentials-refresher/section-00-introduction.md) (especially HTML and CSS concepts)
-- Completion of [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md) (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
-- Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md) (all subsequent code examples in this course will use TypeScript)
+- Completion of **Module 4: Web Development Essentials Refresher** (especially HTML and CSS concepts)
+- Completion of **Module 5: JavaScript Essentials for React Native** (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
+- Completion of **Module 6: TypeScript Essentials** (all subsequent code examples in this course will use TypeScript)
 
 With these prerequisites, you're ready to explore the powerful world of React! Let's begin.
 
@@ -64,7 +82,7 @@ After completing all sections, put your knowledge to the test with this module's
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (A specific starter template or detailed instructions for the challenge will be provided by your instructor or in the course materials.)
+**(TODO: Link to Specific CodeSandbox for Challenge 7: Simple Medication List App)**
 
 ---
 

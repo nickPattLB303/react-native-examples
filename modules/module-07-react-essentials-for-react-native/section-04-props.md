@@ -261,12 +261,16 @@ As part of this transformation, all the attributes (like `propA` and `propB`) an
 > **Comparison:** Props work identically in React Native as they do in React for the web. The concepts of passing data down, read-only nature, `props.children`, default props, and prop typing with TypeScript (or PropTypes in older JavaScript projects) are all the same.
 >
 > **Key Takeaway:** Your understanding of React props is directly applicable here.
+>
+> **Source:** [React Docs: Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Props are similar to `@Input()` properties in Angular components. They are the primary way to pass data into a component from its parent. React's data flow is strictly unidirectional (parent to child via props), whereas Angular supports two-way data binding (though one-way is often preferred).
 >
 > **Key Takeaway:** Focus on the unidirectional data flow. Data comes into a component via props, and the component treats these props as read-only.
+>
+> **Source:** [Angular Docs: Pass data from parent to child with input binding](https://angular.io/guide/component-interaction#pass-data-from-parent-to-child-with-input-binding)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
@@ -278,6 +282,8 @@ As part of this transformation, all the attributes (like `propA` and `propB`) an
 > The key difference is React's strict unidirectional data flow (parent to child) for props. For child-to-parent communication, React uses a pattern where the parent passes a callback function as a prop to the child.
 >
 > **Key Takeaway:** Props are the input data that determines what a component renders and how it behaves. They are the primary way to customize and configure reusable UI components from their parents in React Native.
+>
+> **Source:** [Android Dev Docs: Pass data between activities](https://developer.android.com/training/basics/firstapp/starting-activity#BuildIntent), [Apple Dev Docs: Passing Data between View Controllers](https://developer.apple.com/documentation/uikit/view_controllers/passing_data_between_view_controllers)
 
 Here's a table summarizing how React props compare to some common native data passing mechanisms:
 
@@ -320,6 +326,6 @@ Let's practice passing and using props to make components more dynamic.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)**
+**(TODO: Link to Specific CodeSandbox for Exercise 7.2)**
 
 _A solution will be provided by your instructor or in the course materials._

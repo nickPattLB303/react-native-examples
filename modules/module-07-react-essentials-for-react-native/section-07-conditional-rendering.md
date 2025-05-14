@@ -202,18 +202,24 @@ export default OptionalMessage;
 > **Comparison:** All these conditional rendering techniques (`if` statements, `&&`, ternary operator, returning `null`) are identical to how you'd do it in React for the web.
 >
 > **Key Takeaway:** Your existing React conditional rendering patterns are directly applicable.
+>
+> **Source:** [React Docs: Conditional Rendering](https://react.dev/learn/conditional-rendering)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Angular uses directives like `*ngIf` for conditional rendering. React integrates these concepts directly into JavaScript logic within JSX. The ternary operator and logical `&&` are common JavaScript idioms that React leverages effectively for this purpose.
 >
 > **Key Takeaway:** Learn to use JavaScript's own conditional operators and `if` statements (outside JSX or by assigning JSX to variables) to control what gets rendered. There are no special template directives for this in React.
+>
+> **Source:** [Angular Docs: Built-in structural directives - NgIf](https://angular.io/guide/built-in-directives#ngif)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** This is similar to programmatically setting the visibility of UI elements (e.g., `view.setVisibility(View.GONE)` in Android or `view.isHidden = true` in iOS) or choosing which views to add to a layout based on conditions. React makes this declarative: you describe the conditions, and React handles the showing/hiding or swapping of native views.
 >
 > **Key Takeaway:** You control the presence or appearance of UI elements by embedding JavaScript conditions directly or indirectly within your JSX structure.
+>
+> **Source:** [Android Dev Docs: View Visibility](<https://developer.android.com/reference/android/view/View#setVisibility(int)>), [Apple Dev Docs: UIView isHidden](https://developer.apple.com/documentation/uikit/uiview/1622585-ishidden)
 
 Conditional rendering is essential for creating responsive and dynamic UIs that adapt to changing data and application states. Mastering these techniques will allow you to build more sophisticated user experiences in your SpeedyMeds app.
 
@@ -336,26 +342,3 @@ export default MedicationFormDisplay;
 ```
 
 This pattern can be very readable and maintainable, especially if the mapping logic becomes complex.
-
-### Preventing Rendering with `null`
-
-In some cases, you might want a component to render nothing. You can do this by returning `null`.
-
-```tsx
-import React from "react";
-import { Text } from "react-native";
-
-interface OptionalMessageProps {
-  message?: string;
-  show: boolean;
-}
-
-const OptionalMessage: React.FC<OptionalMessageProps> = ({ message, show }) => {
-  if (!show || !message) {
-    return null; // Render nothing if show is false or no message
-  }
-  return <Text>Special Instructions: {message}</Text>;
-};
-
-export default OptionalMessage;
-```

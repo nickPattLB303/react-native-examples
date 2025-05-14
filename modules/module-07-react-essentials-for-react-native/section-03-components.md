@@ -187,18 +187,24 @@ While you might encounter class components in older codebases or some third-part
 > **Comparison:** The distinction and preference for functional components with Hooks over class components are the same in React Native as in React for web. If you've been working with modern React, this will be very familiar.
 >
 > **Key Takeaway:** Continue using functional components and Hooks. Class components are mainly for understanding legacy code.
+>
+> **Source:** [React Docs: Hooks at a Glance](https://react.dev/reference/react/hooks)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Angular components are class-based (using TypeScript classes and decorators like `@Component`). React's functional components are a more lightweight approach. Think of them as functions that render UI based on input (props) and internal state (managed by Hooks).
 >
 > **Key Takeaway:** Embrace the functional programming paradigm for components in React. Logic that you might encapsulate in class methods in Angular will often be handled by Hooks or helper functions within or outside your functional components.
+>
+> **Source:** [Angular Docs: Component Overview](https://angular.io/guide/component-overview), [React Docs: Functional and Class Components](https://legacy.reactjs.org/docs/components-and-props.html#function-and-class-components)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** In native development, UI elements or controllers often have a class-based structure (e.g., `UIViewController` in iOS, `Activity` or `Fragment` in Android). React's functional components might seem simpler. They don't inherit from a large base class by default; instead, they gain capabilities through composition and Hooks.
 >
 > **Key Takeaway:** Functional components are the primary way to define UI elements. Their "lifecycle" and state are managed using specific Hooks like `useEffect` and `useState`, which we will cover soon.
+>
+> **Source:** [React Native Docs: Core Components and Native Components](https://reactnative.dev/docs/intro-react-native-components) (Illustrates React component usage for native views)
 
 Understanding how to create and use components is central to React development. In the next sections, we'll explore how to pass data into components using props and how components can manage their own internal data using state.
 
@@ -311,17 +317,27 @@ interface ConfirmationDialogProps {
   onCancel: () => void;
 }
 
-// const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ message, onConfirm, onCancel }) => {
-//   return (
-//     <Dialog type="warning" title="Confirm Action" message={message}>
-//       <Button title="Confirm" onPress={onConfirm} />
-//       <Button title="Cancel" onPress={onCancel} />
-//     </Dialog>
-//   );
-// };
-```
+// A conceptual example of a specialized Dialog component
+// For this to be runnable, a `Dialog` component and `Button` component (from react-native or a library) would need to be defined/imported.
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ message, onConfirm, onCancel }) => {
+  // Simplified conceptual Dialog structure for illustration
+  const Dialog = (props: { type: string; title: string; message: string; children?: React.ReactNode }) => (
+    <View style={{ borderWidth: 1, padding: 10, margin: 5, borderColor: props.type === 'warning' ? 'orange' : 'grey' }}>
+      <Text style={{ fontWeight: 'bold' }}>{props.title}</Text>
+      <Text>{props.message}</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>{props.children}</View>
+    </View>
+  );
+  // Simplified conceptual Button for illustration
+  const Button = (props: {title: string, onPress: () => void}) => <Text onPress={props.onPress} style={{color: 'blue', marginLeft:10}}>{props.title}</Text>;
 
-Here, a hypothetical `ConfirmationDialog` would be a specialized version of a generic `Dialog`, pre-configured with a type and title, and specific children for actions.
+  return (
+    <Dialog type="warning" title="Confirm Action" message={message}>
+      <Button title="Confirm" onPress={onConfirm} />
+      <Button title="Cancel" onPress={onCancel} />
+    </Dialog>
+  );
+};
 
 Beyond `props.children`, components can also define multiple "slots" for composition by accepting other props that expect React elements. For example, a `LayoutComponent` might have `header` and `footer` props: `<LayoutComponent header={<AppHeader />} footer={<AppFooter />} />`.
 
@@ -391,6 +407,5 @@ Now it's time to practice creating your own functional components.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (You will need to create a new React TypeScript sandbox or use a provided template if available for the course.)
-
-_A solution will be provided by your instructor or in the course materials._
+**(TODO: Link to Specific CodeSandbox for Exercise 7.1)**
+```

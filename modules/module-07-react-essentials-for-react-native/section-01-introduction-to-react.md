@@ -43,6 +43,8 @@ In a declarative approach with React, you would define a component that conditio
 > - 🍏 **iOS Developers:** For those accustomed to UIKit, React's approach shares conceptual similarities with **SwiftUI**, where you define UI declaratively in Swift. The adjustment is moving away from direct manipulation of `UIView` instances towards describing the UI as a function of component state and props.
 >
 > **Key Takeaway for Native Developers:** With React, you describe your UI in terms of states. When the state changes, React re-renders the necessary parts of the UI. You don't typically interact directly with the native UI elements to change their properties. This shift towards declarative UIs is a broader industry trend, enhancing predictability and maintainability. Mastering this in React provides transferable skills.
+>
+> **Source:** [Android Dev: Jetpack Compose Overview](https://developer.android.com/jetpack/compose), [Apple Dev: SwiftUI Overview](https://developer.apple.com/xcode/swiftui/)
 
 ### Component-Based Architecture
 
@@ -70,12 +72,16 @@ Each component can have its own logic and manage its own internal data (state). 
 > **Comparison:** The component model in React Native is virtually identical to React for the web. You'll use the same concepts of functional components, props, state, and hooks. The main difference lies in the actual elements you render (e.g., `<View>` and `<Text>` instead of `<div>` and `<p>`) and some platform-specific APIs.
 >
 > **Key Takeaway:** Your existing React knowledge about components is directly transferable to React Native.
+>
+> **Source:** [React Native Docs: Core Components and Native Components](https://reactnative.dev/docs/intro-react-native-components)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** Angular also uses a component-based architecture. React components are similar in concept to Angular components, where they encapsulate template, styles (in a way), and logic. However, React's approach to templates (JSX), state management (`useState` hook), and lifecycle (`useEffect` hook) will differ from Angular's decorators, modules, and services.
 >
 > **Key Takeaway:** The idea of breaking down UI into reusable components will be familiar. Focus on learning React's specific syntax and patterns for defining and managing these components.
+>
+> **Source:** [Angular Docs: Introduction to components and templates](https://angular.io/guide/component-overview)
 
 By combining the declarative UI paradigm with a component-based architecture, React provides a powerful and efficient way to build complex user interfaces.
 

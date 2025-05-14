@@ -103,7 +103,7 @@ JSX elements can have attributes, just like HTML. These attributes are passed to
   <Text style={{ color: "blue" }}>Patient Alert</Text>
   ```
 
-  Wait, that `style` example is more complex. A simpler string example:
+  A simpler string example for attributes is:
 
   ```tsx
   <Image accessibilityLabel="Official SpeedyMeds Logo" />
@@ -153,10 +153,16 @@ JSX elements can have attributes, just like HTML. These attributes are passed to
 > | `tabindex`                            | `tabIndex`                     | Attribute names are generally camelCased.                                      |
 > | `readonly`                            | `readOnly`                     | Attribute names are generally camelCased.                                      |
 > | SVG attributes (e.g., `stroke-width`) | `strokeWidth` (React specific) | SVG attributes also follow camelCase convention when used in React components. |
+>
+> **Source:** [React Docs: DOM Elements](https://react.dev/reference/react-dom/components/common#common-props)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
 > **Comparison:** JSX is your primary way of defining UI layouts in React Native, similar to how you might use XML in Android (for ViewGroups and Views) or Storyboards/programmatic UIKit/SwiftUI in iOS. Instead of writing XML tags or using a visual design tool for layout, you write these JavaScript-based tags directly in your component files. These JSX tags directly correspond to native UI components.
+>
+> **Key Takeaway:** JSX provides a unified way to define UI structures in JavaScript, mapping to native components. Familiarize yourself with the available React Native Core Components that you will use within JSX.
+>
+> **Source:** [Android Dev: Layouts](https://developer.android.com/guide/topics/ui/declaring-layout), [Apple Dev: SwiftUI Views and Controls](https://developer.apple.com/documentation/swiftui/views-and-controls)
 
 JSX is a powerful feature that makes writing React UIs intuitive. As you get more comfortable with it, you'll find it a natural way to express your UI structure and logic.
 

@@ -161,12 +161,16 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 > **Comparison:** `useState` and the rules of Hooks are identical in React Native and React for web. Your knowledge of managing local component state with `useState` is directly transferable.
 >
 > **Key Takeaway:** No new concepts here if you're proficient with `useState` in React.
+>
+> **Source:** [React Docs: Using the State Hook](https://react.dev/reference/react/useState)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
 >
 > **Comparison:** State in React components is somewhat analogous to component properties in Angular that you might modify (e.g., via `this.propertyName = ...`). However, React enforces state updates exclusively through the setter function provided by `useState`. Direct mutation of state variables (like `count = count + 1;`) is not allowed and will not trigger re-renders. Angular's change detection, often based on Zone.js, is different from React's re-rendering mechanism, which is explicitly triggered by state setters from Hooks like `useState` or prop changes.
 >
 > **Key Takeaway:** Always use the setter function (e.g., `setCount`) to update state. This is how React knows to re-render the component. Understand the Rules of Hooks, especially calling them at the top level, and the importance of immutability when updating objects or arrays in state.
+>
+> **Source:** [Angular Docs: Change detection overview](https://angular.io/guide/change-detection)
 
 > 📲 **(Native Developers - Android/iOS):**
 >
@@ -176,6 +180,8 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 > - 🍏 **iOS Developers (SwiftUI):** `useState` in React is very similar to the `@State` property wrapper in SwiftUI, which is used for managing simple, local view state. When an `@State` property changes, the SwiftUI view re-renders. For more complex or shared state, SwiftUI uses `ObservableObject` with `@StateObject` or `@ObservedObject`, and `@EnvironmentObject`, which have parallels to React's Context API or external state management libraries.
 >
 > **Key Takeaway:** `useState` is the primary mechanism for making your components interactive and dynamic. Changes to state variables (via their setters) drive UI updates. It's primarily for component-local state. The principle of immutability is also critical when updating state, especially for objects and arrays.
+>
+> **Source:** [Android Dev Docs: ViewModel Overview](https://developer.android.com/topic/libraries/architecture/viewmodel), [Apple Dev Docs: SwiftUI State and Data Flow - @State](https://developer.apple.com/documentation/swiftui/managing-user-interface-state#Managing-Local-State-with-State)
 
 Here's a table comparing `useState` with common local state management in native development:
 
@@ -220,6 +226,6 @@ Let's get some practice using the `useState` Hook to manage component state.
 > [!NOTE]
 > For this exercise in CodeSandbox, if you are using a standard React (web) template, you can use HTML input elements or import components like `TextInput` and `Button` from `react-native-web` to simulate the React Native environment for learning purposes. The core `useState` logic remains the same.
 
-**(https://codesandbox.io)**
+**(TODO: Link to Specific CodeSandbox for Exercise 7.3)**
 
 _A solution will be provided by your instructor or in the course materials._
