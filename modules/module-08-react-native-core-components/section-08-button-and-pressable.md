@@ -283,9 +283,7 @@ Let's get hands-on with `<Pressable>` to create a custom interactive element for
 6.  When the button is pressed (`onPress` event), show an `Alert` saying 'Refill requested!'.
 7.  Render your `RefillButton` in your app.
 
-\*\*(https://snack.expo.dev/)
-
-_Note: You will need to create a new Snack or use a local Expo project for this exercise. The solution will be provided separately._
+**(TODO: Link to Specific Expo Snack for Exercise 8.3)**
 
 ### Next Steps
 

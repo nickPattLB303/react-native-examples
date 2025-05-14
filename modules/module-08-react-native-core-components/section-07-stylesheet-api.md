@@ -247,6 +247,4 @@ Practice using `StyleSheet` to style a basic prescription information card for t
     - Arrange the elements within the card in a clear and readable manner.
 5.  Render an instance of your `PrescriptionCard` with sample data.
 
-\*\*(https://snack.expo.dev/)
-
-_Note: You will need to create a new Snack or use a local Expo project for this exercise. The solution will be provided separately._
+**(TODO: Link to Specific Expo Snack for Exercise 8.2)**

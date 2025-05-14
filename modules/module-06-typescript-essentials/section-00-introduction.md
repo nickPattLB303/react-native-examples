@@ -70,7 +70,7 @@ Upon completing this module, you will be able to:
 
 Before starting this module, you should have completed:
 
-- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-00-introduction.md)
+- **Module 5: JavaScript Essentials for React Native**
 
 ## Sections in This Module
 

@@ -476,8 +476,6 @@ Time to build a list using `<FlatList>` for the SpeedyMeds application.
 5.  Implement `keyExtractor`.
 6.  Add an `ItemSeparatorComponent` to draw a line between appointments.
 7.  Style the list items and the list itself for a clean, professional look.
-8.  (Optional) Add a `ListHeaderComponent` to display a title like 'Today's Appointments'.
+8.  (Optional) Add a `ListHeaderComponent` to display a title like 'Today\'s Appointments'.
 
-\*\*(https://snack.expo.dev/)
-
-_Note: You will need to create a new Snack or use a local Expo project for this exercise. The solution will be provided separately._
+**(TODO: Link to Specific Expo Snack for Exercise 8.4)**

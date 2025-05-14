@@ -115,9 +115,7 @@ This card should display information about a prescription and allow the user to 
 - You can build this as a new component in a Snack project or your local Expo environment.
 - Focus on combining the Core Components covered in this module.
 
-\*\*(https://snack.expo.dev/)
-
-_This challenge is designed to test your understanding of `<View>`, `<Text>`, `<Image>`, `<Pressable>`, and `StyleSheet`. The optional `<TextInput>` adds an extra layer. Good luck! A solution will be provided separately._
+**(TODO: Link to Specific Expo Snack for Challenge 8)**
 
 ---
 
@@ -159,4 +157,4 @@ With a solid understanding of Core Components, you are well-equipped to build a 
 
 Keep practicing with these components, experiment with their props, and refer to the official React Native documentation as you continue your development journey.
 
-- [Next Module: Module 9: Navigation with React Navigation](../module-09-navigation-with-react-navigation/section-00-introduction.md) (Link to be updated if module name/path changes)
+- **Module 9: React Native Core APIs and Hooks**

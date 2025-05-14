@@ -50,7 +50,6 @@ Core Components are the bedrock of React Native development for several reasons:
 > - [React Docs: Your First Component](https://react.dev/learn/your-first-component)
 > - [React Docs: Components and Props (Legacy)](https://legacy.reactjs.org/docs/components-and-props.html)
 > - [Expo Docs: Learn the Basics - View, Text, and Image components](https://docs.expo.dev/tutorial/view-text-and-image/)
-> - _(External Resource) Thoughtbot: Understanding React Native Components_ (Consider adding if deemed appropriate for course, typically we link to official docs mainly in this box)
 
 ### Background Bridge Notes
 
@@ -75,6 +74,8 @@ Core Components are the bedrock of React Native development for several reasons:
 > **Comparison:** Unlike web development where you use HTML tags (e.g., `<div>`, `<span>`, `<img>`, `<p>`), React Native provides its own set of components like `<View>`, `<Text>`, `<Image>`. These are not HTML elements running in a WebView (unless you explicitly use a WebView component for a specific purpose). They are true native components.
 >
 > **Key Takeaway:** You must use the components provided by React Native. Standard HTML tags will not work. The concept of components mapping to native elements is key, distinguishing React Native from web-based mobile frameworks.
+>
+> **Source:** [React Native for Web Developers](https://reactnative.dev/docs/react-native-for-web-developers)
 
 Throughout this module, we will delve into the most commonly used Core Components, exploring their props, usage patterns, and how they can be combined to build user interfaces for an application like SpeedyMeds. For example, a patient's prescription list item in SpeedyMeds might be built using a `<View>` as a container, several `<Text>` components for displaying medication name, dosage, and instructions, and perhaps an `<Image>` for a pill icon.
 
