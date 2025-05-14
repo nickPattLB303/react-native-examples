@@ -48,7 +48,7 @@ graph TD
     style C5 fill:#f8cecc
 ```
 
-The diagram above illustrates the structure of a `tsconfig.json` file and its key components. The `extends` property allows inheriting from a base configuration, while `compilerOptions` contains the bulk of the settings that control TypeScript's behavior. The `include` and `exclude` properties determine which files are part of the compilation.
+The diagram above provides a high-level overview of the typical structure and key components found within a `tsconfig.json` file (Node A). This crucial file governs the TypeScript compilation process for a project. A common top-level property is `extends` (Node B), which allows the current `tsconfig.json` to inherit settings from a base configuration file, such as `expo/tsconfig.base` (Node B1), promoting consistency. The most significant part is `compilerOptions` (Node C), an object containing various settings that dictate how TypeScript checks and transpiles code. Important sub-options here include `target` (C1) for the JavaScript version, `module` (C2) for the module system, `lib` (C3) for included library definitions, `jsx` (C4) for JSX processing, and the vital `strict` (C5) option which enables a suite of robust type-checking rules. Other top-level properties like `include` (Node D) and `exclude` (Node E) use glob patterns to specify which TypeScript files (D1) are part of the compilation and which ones (E1, e.g., `node_modules`) should be ignored, respectively.
 
 > 🛣️ **(All Learners):** Understanding `tsconfig.json` is essential for working with TypeScript in React Native projects. While Expo provides sensible defaults, knowing what these settings do will help you troubleshoot type issues and customize your project's behavior.
 
@@ -196,78 +196,3 @@ This layered approach leverages `tsc` for robust type checking and Babel for fle
 > - [React Native Documentation: Using TypeScript](https://reactnative.dev/docs/typescript)
 
 Understanding the `tsconfig.json` file empowers you to customize TypeScript's behavior to suit your project's needs, although for most Expo projects, the defaults provided are excellent starting points.
-
-### Challenge 6: Typing a Pharmacy API Response
-
-This challenge will test your ability to apply various TypeScript concepts learned in this module, including interfaces, basic types, and potentially arrays or nested objects, to accurately type a complex data structure.
-
-**Objective:**
-Define TypeScript interfaces and types to accurately represent a complex JSON response from a mock SpeedyMeds pharmacy API. This API response contains information about a specific medication, including its details, patient prescription data, and pharmacy stock levels.
-
-**Scenario:**
-The SpeedyMeds system needs to fetch comprehensive details for a medication. The (mock) API endpoint `/api/medication/:medicationId/details` returns a JSON object with the following structure:
-
-```json
-// Example Mock API Response for /api/medication/MED001/details
-{
-  "medicationInfo": {
-    "id": "MED001",
-    "name": "Amoxicillin",
-    "genericName": "Amoxicillin Trihydrate",
-    "manufacturer": "SpeedyPharm Inc.",
-    "dosageForm": "Capsule", // Could be "Tablet", "Syrup", "Injection"
-    "strength": "250mg",
-    "requiresPrescription": true,
-    "storageInstructions": "Store at room temperature away from moisture and heat.",
-    "interactions": [
-      { "drugName": "Warfarin", "severity": "Major" },
-      { "drugName": "Methotrexate", "severity": "Moderate" }
-    ]
-  },
-  "patientPrescriptions": [
-    {
-      "prescriptionId": "RX78910",
-      "patientId": "PAT123",
-      "patientName": "John Doe",
-      "dosagePrescribed": "1 capsule every 8 hours",
-      "quantity": 30,
-      "refillsRemaining": 2,
-      "datePrescribed": "2023-10-15T00:00:00.000Z",
-      "prescribingDoctor": {
-        "id": "DOC005",
-        "name": "Dr. Emily Carter",
-        "specialty": "General Practice"
-      }
-    },
-    {
-      "prescriptionId": "RX11121",
-      "patientId": "PAT456",
-      "patientName": "Jane Smith",
-      "dosagePrescribed": "1 capsule every 12 hours",
-      "quantity": 20,
-      "refillsRemaining": 0,
-      "datePrescribed": "2023-11-01T00:00:00.000Z",
-      "prescribingDoctor": {
-        "id": "DOC007",
-        "name": "Dr. Alan Grant",
-        "specialty": "Pediatrics"
-      }
-    }
-  ],
-  "pharmacyStock": [
-    {
-      "pharmacyId": "PHARM001",
-      "pharmacyName": "SpeedyMeds Downtown",
-      "stockLevel": 157,
-      "lastRestocked": "2023-12-01T00:00:00.000Z"
-    },
-    {
-      "pharmacyId": "PHARM002",
-      "pharmacyName": "SpeedyMeds Uptown",
-      "stockLevel": 88,
-      "lastRestocked": "2023-11-28T00:00:00.000Z"
-    }
-  ],
-  "lastUpdatedAt": "2023-12-10T10:30:00.000Z"
-}
-```

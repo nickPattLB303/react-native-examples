@@ -456,7 +456,9 @@ graph TD
     style H2 fill:#e1d5e7
 ```
 
-The diagram above illustrates the capabilities and extension mechanisms of interfaces and type aliases. While both can define object shapes and function types, type aliases have broader capabilities for defining various types. Interfaces excel in their ability to be extended and merged in declarations.
+The diagram above illustrates the primary capabilities and extension mechanisms for `interface` and `type` alias declarations in TypeScript. For an `Interface` (left side, originating from Node A1), it's primarily used for defining object shapes (B1), function types (C1), and as contracts for class implementations (D1). A key characteristic of interfaces is their extensibility (E1), allowing them to be extended using the `extends` keyword (F1) and uniquely supporting declaration merging (G1), where multiple `interface` blocks with the same name are combined.
+
+On the other hand, a `Type Alias` (right side, originating from Node A2) is more versatile. While it can also define object shapes (B2) and function types (C2), its power extends to aliasing primitives (D2), unions (E2), intersections (F2), and tuples (G2). Regarding extensibility (H2), type aliases cannot merge declarations (I2); instead, extending their structure is typically achieved using intersection types (`&`) (J2). This visual comparison helps clarify when to choose one over the other based on these distinct features and how they handle structure and modifications.
 
 - **Extensibility and Declaration Merging:**
 
@@ -550,6 +552,6 @@ Now it's time to practice defining your own interfaces.
 
 **Access the Exercise:**
 
-**[https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv](https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv)**
+**(https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv)**
 
 ---

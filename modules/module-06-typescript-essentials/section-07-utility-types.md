@@ -35,7 +35,9 @@ graph TD
     style F1 fill:#d5e8d4
 ```
 
-The diagram above illustrates how utility types transform an original type into new derived types with different characteristics. Each utility type serves a specific purpose, allowing you to adapt existing types to various use cases without redefining them.
+The diagram above provides a visual overview of how several common TypeScript utility types operate on an `Original Type` (Node A), transforming it into new, derived types with specific characteristics. For example, `Partial<T>` (Node B) takes the `Original Type` (where `T` represents this original type) and produces a new type where all of `T`'s properties become optional (Node B1). Conversely, `Required<T>` (Node C) ensures all properties of `T` are mandatory in the resulting type (Node C1). `Readonly<T>` (Node D) creates a version of `T` where all properties are immutable (Node D1).
+
+Other transformations include `Pick<T, K>` (Node E), which constructs a new type by selecting only a specific set of keys `K` from `T` (Node E1), and `Omit<T, K>` (Node F), which does the opposite by creating a type that includes all properties from `T` except for the specified keys `K` (Node F1). These utilities allow developers to create precise, context-specific types from existing ones without redundant manual definitions, enhancing maintainability and type safety.
 
 ### Conceptual Content: Transforming Existing Types
 

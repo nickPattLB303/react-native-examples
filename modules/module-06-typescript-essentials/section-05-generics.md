@@ -31,7 +31,9 @@ graph TD
     style C3 fill:#d5e8d4
 ```
 
-The diagram above illustrates how a generic function can be instantiated with different types. The type parameter `T` acts as a placeholder that gets replaced with actual types like `number`, `string`, or custom types like `Medication` when the function is used. This allows for type-safe reusability.
+The diagram above illustrates how a single generic function declaration, `getFirstElement<T>(arr: T[]): T | undefined` (Node A1), can be versatile enough to handle arrays of different data types while maintaining type safety. The type parameter `T`, declared within angle brackets `<T>`, acts as a placeholder for a specific type that will be determined when the function is used.
+
+When the function is called, `T` is instantiated with an actual type. For instance, in `getFirstElement<number>([1, 2, 3])` (Node B1), `T` becomes `number` (Node C1), and the function is type-checked as if it were `getFirstElement(arr: number[]): number | undefined`. Similarly, for `getFirstElement<string>(['a', 'b', 'c'])` (Node B2), `T` becomes `string` (Node C2). It can also work with complex custom types, as shown with `getFirstElement<Medication>([...])` (Node B3), where `T` becomes `Medication` (Node C3). This demonstrates the core benefit of generics: writing reusable code components that can operate on various types without sacrificing the precision of static type checking for each specific usage.
 
 ### Conceptual Content: Writing Reusable, Type-Safe Code
 
@@ -350,6 +352,6 @@ Let's put your understanding of generics into practice.
 
 **Access the Exercise:**
 
-**[https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz](https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz)**
+**(https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz)**
 
 ---
