@@ -26,7 +26,7 @@ EAS Build provides a secure way to manage secrets required during the build proc
 **How EAS Secrets work:**
 
 1.  You define secrets (key-value pairs) using the EAS CLI.
-2.  These secrets are securely stored by Expo, associated with your Expo account and project.
+2.  These secrets are securely stored by Expo. They can be scoped to your entire Expo account (available to all your projects) or, more commonly, to a specific project.
 3.  When you run an EAS Build, these secrets are made available as environment variables within the build environment on the EAS servers.
 4.  Your application can then be built to include these values, for example, by embedding them via your app configuration (`app.config.js` or `app.json` using the `extra` field) or directly if build tools support it.
 
