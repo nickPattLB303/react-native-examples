@@ -31,9 +31,9 @@ If you make any of these native-level changes, a new binary build must be create
 ```mermaid
 graph LR;
     A[Developer Publishes Update via EAS CLI] --> B(EAS Update Service);
-    C(User's App on Device) -->|1. Checks for Update| B;
-    B -->|2. Update Available?| C;
-    C -->|3. Downloads Update| B;
+    C(User's App on Device) -->|1 Checks for Update| B;
+    B -->|2 Update Available?| C;
+    C -->|3 Downloads Update| B;
     C -- Upon Next Launch --> D[App Reloads with New JS & Assets];
 
     style A fill:#ccf,stroke:#333,stroke-width:2px;

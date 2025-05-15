@@ -2,6 +2,10 @@
 
 This section delves into TurboModules, a key component of React Native's New Architecture. You'll learn their purpose and goals, the core concepts that underpin them (including JSI, Specification files, and Codegen), the benefits they bring, and the conceptual workflow for their creation.
 
+![Diagram: React Native's New Architecture](../../assets/diagrams/react-native-new-architecture.png)
+
+This diagram illustrates React Native's New Architecture, highlighting key layers and components. The **JavaScript Layer**, containing your application code, interacts via the **JavaScript Interface (JSI)**. JSI enables direct, high-performance communication with the **C++ Layer**. Here, **Codegen** automatically generates bindings for **TurboModules** (for native device APIs) and **Fabric** (the new UI management system). Dotted lines from JSI show these direct call capabilities. At the base, the **Native Layer** depicts TurboModules accessing **Device APIs** (e.g., camera, sensors) and Fabric managing platform-specific **Native UI** elements. This streamlined structure aims for enhanced performance and type safety.
+
 ### Purpose and Goals of TurboModules
 
 TurboModules represent the evolution of Native Modules within React Native's New Architecture. They are designed to replace the legacy native module system, addressing its performance bottlenecks and lack of type safety. The primary goals are:
@@ -52,12 +56,13 @@ TurboModules achieve their goals through a combination of JSI, explicit specific
 
     ```mermaid
     graph LR
-        A[1. Developer writes Module Spec e.g., MyTurboModuleSpec.ts] --> B(2. Build Process Triggers Codegen);
-        B --> C{3. Codegen Parses Spec File};
-        C --> D[4. Generates C++ JSI Interface Code e.g., .h, .cpp files];
-        C --> E[5. Generates Native Interface Stubs e.g., Java interfaces, Obj-C++ protocols];
-        D --> F[6. JavaScript Engine via JSI];
-        E --> G[7. Developer Implements Native Logic Kotlin/Java, Swift/Obj-C based on Stubs];
+        A[1 Developer writes Module Spec e.g., MyTurboModuleSpec.ts] --> B(2 Build Process Triggers Codegen);
+        B --> C{3 Codegen Parses Spec File};
+        C --> D[4 Generates C++ JSI Interface Code e.g., .h, .cpp files];
+        C --> E[5 Generates Native Interface Stubs e.g., Java interfaces, Obj-C++ protocols];
+        D --> F[6 JavaScript Engine via JSI];
+        D --> G[7 Developer Implements Native Logic Kotlin/Java, Swift/Obj-C based on Stubs];
+        E --> G;
         F <--> H{React Native Runtime};
         G --> H;
 
