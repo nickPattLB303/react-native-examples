@@ -2,6 +2,14 @@
 
 This section provides an introduction to testing strategies in React Native. Writing tests is a crucial part of software development that helps ensure your application's quality, reliability, and maintainability. We will focus on unit testing with Jest and component testing with React Native Testing Library.
 
+> 🧑‍🏫 **(Instructor-Led):** In a classroom setting, consider forming small groups to write tests for the same component or utility function, then compare approaches. Discussing different testing strategies can lead to valuable insights about what makes a good test. Be prepared to demonstrate how to debug failing tests.
+>
+> 🧗‍♀️ **(Self-Led):** Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
+>
+> 🔁 **(Asynchronous):** If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
+>
+> 🛣️ **(All Learners):** Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
+
 ### Conceptual Content
 
 **Why Test?**
@@ -31,6 +39,35 @@ This section will primarily focus on unit and component testing, which form the 
 
 - **Jest:** A popular JavaScript testing framework developed by Facebook. It's often the default choice for React and React Native projects. Jest provides a test runner, assertion library, and mocking capabilities.
 - **React Native Testing Library (RNTL):** Built on top of `react-test-renderer` and a similar philosophy to `DOM Testing Library`, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
+
+```mermaid
+graph TD
+    subgraph "Test Execution Flow"
+        A[Jest Test Runner] -->|1. Load Tests| B[Test Files]
+        B -->|2. Setup Environment| C[Test Environment<br>jsdom/node]
+        C -->|3. Before All Hooks| D[Global Setup]
+        D -->|4. For Each Test| E[Test Suite - describe()]
+        E -->|5. Before Each Hooks| F[Test Setup]
+        F -->|6. Run Test| G[Test Case - it()/test()]
+        G -->|7. Assertions| H{Pass/Fail?}
+        H -->|Pass| I[Report Success]
+        H -->|Fail| J[Report Error]
+        I -->|8. After Each Hooks| K[Test Cleanup]
+        J -->|8. After Each Hooks| K
+        K -->|9. Next Test or| F
+        K -->|10. All Tests Done| L[After All Hooks]
+        L -->|11. Finalize| M[Test Summary Report]
+    end
+
+    subgraph "Component Test Example"
+        AA[RNTL render()] -->|1. Create| BB[Virtual Component Tree]
+        BB -->|2. Query| CC[Find Elements<br>getByText/getByTestId]
+        CC -->|3. Simulate| DD[User Interactions<br>fireEvent.press()]
+        DD -->|4. Assert| EE[Verify Component State<br>expect(...).toBeTrue()]
+    end
+```
+
+This diagram shows the test execution flow when running Jest tests for React Native applications. For SpeedyMeds, this process would be applied when testing medication-related components, prescription formatting utilities, and other app functionality. The first section demonstrates Jest's execution sequence from loading test files through running individual test cases to producing a final report. The second section illustrates how a typical component test using React Native Testing Library would operate, focusing on rendering components, finding elements, simulating user interactions, and making assertions about the component's behavior.
 
 **Setting up Testing in an Expo Project**
 
@@ -344,10 +381,53 @@ These tests collectively ensure that the `CustomButton` component not only rende
 
 ### Section Exercise
 
-Practice writing a simple unit test for a utility function.
+Practice writing tests for medication-related utilities in the SpeedyMeds app.
 
-- **Exercise 17.3: Writing a Simple Unit Test** `**(https://codesandbox.io/s/speedymeds-exercise-17-3)**`
-  (Complete this exercise using CodeSandbox, which is well-suited for testing standalone JavaScript/TypeScript utility functions. In this exercise, you'll implement unit tests for a medication dosage calculation utility that determines proper dosage based on patient weight and medication parameters.)
+- **Exercise 17.3: Writing a Simple Unit Test for SpeedyMeds**
+  `**(https://codesandbox.io/s/speedymeds-exercise-17-3)**`
+
+  In this exercise, you'll implement unit tests for two medication-related utility functions:
+
+  1. `calculateDosage`: A function that calculates medication dosage based on patient weight and medication parameters
+  2. `formatMedicationSchedule`: A function that generates a human-readable medication schedule from frequency data
+
+  The CodeSandbox includes:
+
+  - Pre-written utility functions in `/src/utils/medicationUtils.js`
+  - Test skeleton files in `/src/__tests__/medicationUtils.test.js`
+  - A README.md with detailed instructions
+
+  **Your tasks:**
+
+  - Complete the test cases for both functions
+  - Test normal use cases and edge cases
+  - Use Jest's `describe`, `it`, and `expect` functions
+  - Ensure all tests pass
+
+  This exercise will help you understand how to write thorough tests for critical application logic, ensuring medication calculations are accurate and reliable—an essential safety feature for a pharmacy application like SpeedyMeds.
+
+  **Sample test case from the exercise:**
+
+  ```typescript
+  // Example of one of the test cases you'll complete
+  describe("calculateDosage", () => {
+    it("calculates correct dosage for standard weight", () => {
+      // Given a 70kg patient and medication dosed at 5mg/kg
+      const patientWeight = 70; // in kg
+      const dosePerKg = 5; // mg per kg
+      const maxDose = 500; // mg maximum dose
+
+      // When calculating the dosage
+      const result = calculateDosage(patientWeight, dosePerKg, maxDose);
+
+      // Then the result should be 350mg (70kg * 5mg/kg)
+      expect(result).toBe(350);
+    });
+
+    // You'll write more test cases for edge cases
+    // such as maximum dose limits and invalid inputs
+  });
+  ```
 
 > 📚 **Official Documentation:**
 >

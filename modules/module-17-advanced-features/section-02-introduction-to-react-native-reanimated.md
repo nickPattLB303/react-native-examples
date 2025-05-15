@@ -10,6 +10,32 @@ React Native Reanimated (often referred to as "Reanimated") is a library that al
 
 The primary goal of Reanimated is to perform animation logic entirely on the UI thread. This means that even if your JavaScript thread is busy with complex calculations or rendering, your animations remain fluid. It achieves this through a JSI (JavaScript Interface) based architecture, enabling more direct and synchronous communication between the JavaScript and native environments.
 
+```mermaid
+graph TD
+    subgraph "JavaScript Thread"
+        A[React Component] -->|1. Create| B[useSharedValue]
+        A -->|2. Define| C[useAnimatedStyle]
+        A -->|3. Trigger Animation| D[Animation Start]
+        D -->|"4. Update Shared Value<br>(e.g., withTiming, withSpring)"| B
+    end
+
+    subgraph "UI Thread (Native)"
+        E[SharedValue] <-->|"5. Synchronous<br>Access via JSI"| B
+        E -->|6. Value Changed| F[Style Recalculation]
+        F -->|7. Update| G[Native View Props]
+        G -->|8. Render| H[Screen Update]
+    end
+
+    subgraph "Animation State Flow"
+        I[Initial State] -->|Animation Begins| J[Transition State]
+        J -->|"Frame-by-Frame<br>Updates"| J
+        J -->|Animation Complete| K[Final State]
+        K -->|"New Animation<br>Triggered"| J
+    end
+```
+
+This diagram illustrates how React Native Reanimated achieves smooth animations by executing the animation logic directly on the UI thread. For SpeedyMeds, this means medication reminder animations, prescription status transitions, and interactive UI elements can all run smoothly even when the app is performing other intensive tasks like data fetching or complex calculations. The key insight is that once the animation is initiated, all the frame-by-frame updates happen on the native side without needing to communicate back and forth with JavaScript for each frame.
+
 **Installation and Setup**
 
 In an Expo project, adding Reanimated is straightforward. Expo manages much of the native configuration for you.
@@ -161,91 +187,181 @@ import Animated, {
 // Or simply use the pre-built Animated.View
 
 /**
- * @component PrescriptionNotification
- * @description A component that displays a SpeedyMeds prescription alert with a fade-in animation on mount.
- * This component demonstrates the basic usage of React Native Reanimated's core concepts:
- * - `useSharedValue` for creating a reactive variable (opacity).
- * - `useAnimatedStyle` for creating a style object that depends on the shared value.
- * - `withTiming` for animating the shared value over a specific duration.
+ * @component MedicationReminderCard
+ * @description A component that displays SpeedyMeds medication reminders with fade-in and
+ * subtle scaling animations. This represents a notification for patients to take their
+ * prescribed medication on time.
+ *
+ * This component demonstrates key React Native Reanimated concepts:
+ * - `useSharedValue` for creating reactive variables (opacity and scale).
+ * - `useAnimatedStyle` for creating style objects dependent on shared values.
+ * - `withTiming` and `withSequence` for orchestrating smooth, sequential animations.
  * - `Animated.View` for applying the animated styles.
- * The animation is designed to run smoothly on the UI thread.
+ *
+ * The animations run entirely on the UI thread for optimal performance.
+ * @param {object} props - Component props
+ * @param {object} props.medication - Medication information object
  */
-const PrescriptionNotification = () => {
-  // Shared value for opacity, starting at 0 (invisible)
+const MedicationReminderCard = ({
+  medication = {
+    name: "Amoxicillin",
+    dosage: "500mg",
+    frequency: "Every 8 hours",
+    instructions: "Take with food",
+    refillDate: "10/15/2023",
+    prescribedBy: "Dr. Sarah Johnson",
+  },
+}) => {
+  // Shared values for our animations
   const opacity = useSharedValue(0);
+  const scale = useSharedValue(0.95);
 
-  // Animated style that depends on the opacity shared value
-  const animatedNotificationStyle = useAnimatedStyle(() => {
+  // Create animated styles that depend on our shared values
+  const animatedCardStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
+      transform: [{ scale: scale.value }],
     };
   });
 
-  // useEffect to trigger the animation when the component mounts
+  // Trigger the animations when the component mounts
   useEffect(() => {
-    // Animate opacity to 1 (fully visible) over 1000ms (1 second)
-    opacity.value = withTiming(1, { duration: 1000 });
-  }, [opacity]);
+    // First fade in over 800ms
+    opacity.value = withTiming(1, { duration: 800 });
+
+    // Then slightly scale up to create a subtle "pop" effect
+    scale.value = withSequence(
+      withTiming(1.02, { duration: 200 }),
+      withTiming(1, { duration: 150 })
+    );
+  }, []);
 
   return (
     <Animated.View
-      style={[styles.notificationContainer, animatedNotificationStyle]}
+      style={[styles.medicationCard, animatedCardStyle]}
+      accessibilityLabel={`Medication reminder for ${medication.name}`}
     >
-      <Text style={styles.notificationText}>New Prescription Alert!</Text>
-      <Text style={styles.detailsText}>
-        Tap to view details for Amoxicillin.
-      </Text>
+      <View style={styles.cardHeader}>
+        <Text style={styles.medicationName}>{medication.name}</Text>
+        <Text style={styles.dosage}>{medication.dosage}</Text>
+      </View>
+
+      <View style={styles.divider} />
+
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Frequency:</Text>
+        <Text style={styles.value}>{medication.frequency}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Instructions:</Text>
+        <Text style={styles.value}>{medication.instructions}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Next Refill:</Text>
+        <Text style={styles.value}>{medication.refillDate}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Prescribed by:</Text>
+        <Text style={styles.value}>{medication.prescribedBy}</Text>
+      </View>
+
+      <View style={styles.timeContainer}>
+        <Text style={styles.timeText}>Time to take your medication!</Text>
+      </View>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  notificationContainer: {
-    padding: 20,
-    margin: 15,
-    backgroundColor: "#4CAF50", // A green color for the notification
-    borderRadius: 8,
+  medicationCard: {
+    padding: 16,
+    margin: 12,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderLeftWidth: 6,
+    borderLeftColor: "#4CAF50", // SpeedyMeds primary green
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  notificationText: {
-    fontSize: 18,
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  medicationName: {
+    fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: "#333333",
   },
-  detailsText: {
+  dosage: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#4CAF50", // SpeedyMeds green
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginVertical: 10,
+  },
+  infoRow: {
+    flexDirection: "row",
+    paddingVertical: 6,
+  },
+  label: {
+    width: 100,
     fontSize: 14,
-    color: "white",
-    marginTop: 5,
+    fontWeight: "500",
+    color: "#757575",
+  },
+  value: {
+    flex: 1,
+    fontSize: 14,
+    color: "#333333",
+  },
+  timeContainer: {
+    marginTop: 12,
+    padding: 10,
+    backgroundColor: "#E8F5E9", // Light green background
+    borderRadius: 6,
+    alignItems: "center",
+  },
+  timeText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#2E7D32", // Darker green for text
   },
 });
 
-export default PrescriptionNotification;
+export default MedicationReminderCard;
 ```
 
 **Explanation of the Example:**
 
-This `PrescriptionNotification` component serves as a practical introduction to React Native Reanimated, demonstrating a common UI pattern: a fade-in animation for newly appearing content, themed for our SpeedyMeds application. The goal is to visually introduce an important alert, such as a new prescription being ready, in an engaging way.
+This `MedicationReminderCard` component serves as a practical introduction to React Native Reanimated, demonstrating a common UI pattern: a fade-in animation for newly appearing content, themed for our SpeedyMeds application. The goal is to visually introduce an important alert, such as a new prescription being ready, in an engaging way.
 
 The core of the animation lies in several Reanimated hooks working in concert:
 
 1.  **`useSharedValue(0)`:** We initialize a `shared value` called `opacity` with a starting value of 0. Shared values are special reactive variables that can be accessed and modified from both the JavaScript thread and, crucially, directly from the UI thread via worklets. This `opacity` value will drive our animation, starting completely transparent.
 
-2.  **`useAnimatedStyle(() => { ... })`:** This hook creates `animatedNotificationStyle`. The function passed to `useAnimatedStyle` is a worklet – a small piece of JavaScript that Reanimated executes on the UI thread. Inside this worklet, we return a style object: `{ opacity: opacity.value }`. Whenever `opacity.value` changes, this worklet re-runs on the UI thread, and a new style object is generated. This direct execution on the UI thread is key to Reanimated's performance, as it avoids sending style updates over the React Native bridge for each frame.
+2.  **`useAnimatedStyle(() => { ... })`:** This hook creates `animatedCardStyle`. The function passed to `useAnimatedStyle` is a worklet – a small piece of JavaScript that Reanimated executes on the UI thread. Inside this worklet, we return a style object: `{ opacity: opacity.value, transform: [{ scale: scale.value }] }`. Whenever `opacity.value` or `scale.value` changes, this worklet re-runs on the UI thread, and a new style object is generated. This direct execution on the UI thread is key to Reanimated's performance, as it avoids sending style updates over the React Native bridge for each frame.
 
-3.  **`useEffect(() => { ... }, [opacity])`:** This standard React hook is used here to trigger the animation once the component mounts. Inside `useEffect`, we update our shared value: `opacity.value = withTiming(1, { duration: 1000 });`.
+3.  **`useEffect(() => { ... }, [])`:** This standard React hook is used here to trigger the animation once the component mounts. Inside `useEffect`, we update our shared values: `opacity.value = withTiming(1, { duration: 800 })` and `scale.value = withSequence(withTiming(1.02, { duration: 200 }), withTiming(1, { duration: 150 }))`.
 
-    - `withTiming` is a Reanimated animation helper. It tells Reanimated to change `opacity.value` from its current state to the target value (1, fully opaque) over a specified `duration` (1000 milliseconds or 1 second). Reanimated handles the interpolation of values frame by frame on the UI thread.
+    - `withTiming` is a Reanimated animation helper. It tells Reanimated to change `opacity.value` and `scale.value` from their current states to the target values over specified durations. Reanimated handles the interpolation of values frame by frame on the UI thread.
 
-4.  **`<Animated.View style={[styles.notificationContainer, animatedNotificationStyle]}>`:** Instead of a regular `<View>`, we use `Animated.View`. This special component from Reanimated is capable of accepting style objects generated by `useAnimatedStyle`. As `animatedNotificationStyle` changes (driven by `opacity.value`), the `Animated.View` smoothly updates its appearance.
+4.  **`<Animated.View style={[styles.medicationCard, animatedCardStyle]}>`:** Instead of a regular `<View>`, we use `Animated.View`. This special component from Reanimated is capable of accepting style objects generated by `useAnimatedStyle`. As `animatedCardStyle` changes (driven by `opacity.value` and `scale.value`), the `Animated.View` smoothly updates its appearance.
 
-**In summary:** When `PrescriptionNotification` mounts, `useEffect` initiates an animation using `withTiming` to change `opacity.value` from 0 to 1. The `useAnimatedStyle` worklet reacts to these changes in `opacity.value` on the UI thread, updating the styles of the `Animated.View`. This results in the notification container smoothly fading into full visibility over one second. This entire animation sequence for opacity is managed on the UI thread, ensuring a fluid user experience even if the JavaScript thread is busy with other tasks. This approach is fundamental for creating high-performance animations in React Native and is a core strength of the Reanimated library.
+**In summary:** When `MedicationReminderCard` mounts, `useEffect` initiates an animation using `withTiming` and `withSequence` to change `opacity.value` and `scale.value` from 0 to 1 and 0.95 to 1.02 and back to 1 over 800ms and 200ms, respectively. The `useAnimatedStyle` worklet reacts to these changes in `opacity.value` and `scale.value` on the UI thread, updating the styles of the `Animated.View`. This results in the medication reminder card smoothly fading into full visibility and slightly scaling up to create a subtle "pop" effect over 800ms and 200ms. This entire animation sequence for opacity and scale is managed on the UI thread, ensuring a fluid user experience even if the JavaScript thread is busy with other tasks. This approach is fundamental for creating high-performance animations in React Native and is a core strength of the Reanimated library.
 
 > [!TIP]
 > In Expo Go, if you make changes to Reanimated code, especially in `babel.config.js` or install/update the library, it's often a good idea to restart the Metro bundler with the `--clear` flag (`npx expo start --clear`) to ensure changes are correctly applied.

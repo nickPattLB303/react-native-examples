@@ -17,6 +17,40 @@ There are two main types of push notifications:
 1.  **Local Notifications:** Scheduled and triggered directly by the application on the device itself. They don't require a server. Useful for reminders or time-based alerts set within the app.
 2.  **Remote (or Push) Notifications:** Sent from an app server to devices via a push notification service provided by the platform vendor (Apple Push Notification service - APNs for iOS, Firebase Cloud Messaging - FCM for Android).
 
+```mermaid
+graph TD
+    subgraph "Remote Notification Flow"
+        A[Backend Server] -->|1. Send Notification Request| B[Expo Push API]
+        B -->|2. Route to Platform Service| C{Platform}
+        C -->|iOS| D[APNs]
+        C -->|Android| E[FCM]
+        D -->|3. Deliver| F[iOS Device]
+        E -->|3. Deliver| G[Android Device]
+    end
+
+    subgraph "Local Notification Flow"
+        H[React Native App] -->|1. Schedule| I[expo-notifications]
+        I -->|2. Register with OS| J{Platform}
+        J -->|iOS| K[iOS Notification Service]
+        J -->|Android| L[Android Notification Service]
+        K -->|3. Trigger at scheduled time| F
+        L -->|3. Trigger at scheduled time| G
+    end
+
+    subgraph "User Interaction"
+        F -->|4. Notification Received| M[App in Foreground?]
+        G -->|4. Notification Received| M
+        M -->|Yes| N[NotificationReceivedListener]
+        M -->|No| O[System Notification Tray]
+        O -->|5. User Taps| P[App Launched/Foregrounded]
+        P -->|6. Process Tap| Q[NotificationResponseReceivedListener]
+        N -->|7. Handle in App| R[Update UI/State]
+        Q -->|7. Navigate or Take Action| S[App Response]
+    end
+```
+
+This diagram illustrates the complete lifecycle of both remote and local notifications in a React Native application using expo-notifications. The flow shows how notifications are created, delivered through platform-specific services, and then handled based on whether the app is in the foreground or background. For the SpeedyMeds app, this is particularly important for medication reminders, prescription status updates, and appointment notifications.
+
 **`expo-notifications` Library**
 
 `expo-notifications` is an Expo SDK library that provides a unified API for handling both local and remote push notifications across iOS and Android. It simplifies the complexities of interacting with platform-specific services.

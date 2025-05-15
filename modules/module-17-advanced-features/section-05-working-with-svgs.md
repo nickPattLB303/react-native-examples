@@ -73,45 +73,96 @@ The `viewBox` attribute is crucial for SVG scalability and responsiveness. It is
 
 ### Procedural Content
 
-**Example 1: Inline SVG Icon**
+**Example 1: Inline SVG Icon for Medication**
 
-Let's create a simple checkmark icon for our SpeedyMeds app using inline SVG components. This could be used to indicate a verified prescription or a completed task.
+Let's create a pill/capsule icon for our SpeedyMeds app using inline SVG components. This could be used to represent different medications in the app.
 
 ```tsx
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path, Ellipse, G } from "react-native-svg";
 
 /**
- * @interface CheckmarkIconProps
- * @description Defines the properties for the CheckmarkIcon component.
- * @property {string} [color="#4CAF50"] - The fill color of the checkmark icon.
- * @property {number} [size=24] - The width and height of the icon.
+ * @interface MedicationIconProps
+ * @description Defines the properties for the MedicationIcon component.
+ * @property {string} [primaryColor="#E91E63"] - The main color of the pill/capsule.
+ * @property {string} [secondaryColor="#F8BBD0"] - The accent color for details.
+ * @property {number} [size=36] - The width and height of the icon.
+ * @property {boolean} [isHorizontal=true] - Whether to show the pill horizontally (true) or vertically (false).
+ * @property {boolean} [isCapsule=true] - Whether to show as a capsule (true) or a round pill (false).
  */
-interface CheckmarkIconProps {
-  color?: string;
+interface MedicationIconProps {
+  primaryColor?: string;
+  secondaryColor?: string;
   size?: number;
+  isHorizontal?: boolean;
+  isCapsule?: boolean;
 }
 
 /**
- * @component CheckmarkIcon
- * @description A reusable SVG checkmark icon component.
- * It renders a scalable checkmark path within an Svg container.
- * Useful in the SpeedyMeds app for indicating success or verification.
- * @param {CheckmarkIconProps} props - The properties for the component.
- * @returns {React.ReactElement} The rendered CheckmarkIcon component.
+ * @component MedicationIcon
+ * @description A reusable SVG icon component representing medications (pills/capsules).
+ * It renders a scalable pill or capsule with customizable colors and orientation.
+ * Used throughout SpeedyMeds for medication listings, reminders, and prescription details.
+ * @param {MedicationIconProps} props - The properties for the component.
+ * @returns {React.ReactElement} The rendered MedicationIcon component.
  */
-const CheckmarkIcon: React.FC<CheckmarkIconProps> = ({
-  color = "#4CAF50",
-  size = 24,
+const MedicationIcon: React.FC<MedicationIconProps> = ({
+  primaryColor = "#E91E63", // Pink default
+  secondaryColor = "#F8BBD0", // Light pink default
+  size = 36,
+  isHorizontal = true,
+  isCapsule = true,
 }) => {
+  // Calculate viewBox based on orientation
+  const viewBox = isHorizontal ? "0 0 48 24" : "0 0 24 48";
+
+  // Rotation transform for vertical orientation
+  const rotateTransform = isHorizontal ? "" : "rotate(90, 24, 24)";
+
   return (
     <View style={[styles.iconContainer, { width: size, height: size }]}>
-      <Svg height={size} width={size} viewBox="0 0 24 24">
-        <Path
-          d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-          fill={color}
-        />
+      <Svg width={size} height={size} viewBox={viewBox} fill="none">
+        {isCapsule ? (
+          // Capsule shape
+          <G transform={rotateTransform}>
+            <Path
+              d="M36 12C36 18.6274 30.6274 24 24 24C17.3726 24 12 18.6274 12 12C12 5.37258 17.3726 0 24 0C30.6274 0 36 5.37258 36 12Z"
+              fill={primaryColor}
+            />
+            <Path
+              d="M12 12C12 18.6274 6.62742 24 0 24L0 0C6.62742 0 12 5.37258 12 12Z"
+              fill={primaryColor}
+            />
+            <Path
+              d="M48 12C48 18.6274 42.6274 24 36 24L36 0C42.6274 0 48 5.37258 48 12Z"
+              fill={primaryColor}
+            />
+            <Ellipse cx="36" cy="8" rx="4" ry="3" fill={secondaryColor} />
+            <Ellipse cx="24" cy="6" rx="3" ry="2" fill={secondaryColor} />
+          </G>
+        ) : (
+          // Round pill shape
+          <G transform={rotateTransform}>
+            <Ellipse cx="24" cy="12" rx="24" ry="12" fill={primaryColor} />
+            <Path
+              d="M24 24C37.2548 24 48 18.6274 48 12C48 5.37258 37.2548 0 24 0"
+              fill={primaryColor}
+            />
+            <Path
+              d="M24 0C10.7452 0 0 5.37258 0 12C0 18.6274 10.7452 24 24 24"
+              fill={primaryColor}
+            />
+            <Path
+              d="M12 12C12 13.6569 10.6569 15 9 15C7.34315 15 6 13.6569 6 12C6 10.3431 7.34315 9 9 9C10.6569 9 12 10.3431 12 12Z"
+              fill={secondaryColor}
+            />
+            <Path
+              d="M38 14C38 15.1046 37.1046 16 36 16C34.8954 16 34 15.1046 34 14C34 12.8954 34.8954 12 36 12C37.1046 12 38 12.8954 38 14Z"
+              fill={secondaryColor}
+            />
+          </G>
+        )}
       </Svg>
     </View>
   );
@@ -125,31 +176,44 @@ const styles = StyleSheet.create({
 });
 
 // Example Usage:
-// const MyScreen = () => (
-//   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//     <Text>Prescription Verified: <CheckmarkIcon size={30} color="green" /></Text>
-//     <Text>Task Completed: <CheckmarkIcon size={20} color="#03A9F4" /></Text>
+// const MedicationsScreen = () => (
+//   <View style={{padding: 20}}>
+//     <Text style={{fontSize: 18, marginBottom: 10}}>Your Current Medications:</Text>
+//     <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+//       <MedicationIcon primaryColor="#E91E63" size={30} isCapsule={true} />
+//       <Text style={{marginLeft: 10}}>Amoxicillin 500mg - 3 times daily</Text>
+//     </View>
+//     <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+//       <MedicationIcon primaryColor="#2196F3" size={30} isCapsule={false} />
+//       <Text style={{marginLeft: 10}}>Lisinopril 10mg - Once daily</Text>
+//     </View>
+//     <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//       <MedicationIcon primaryColor="#4CAF50" secondaryColor="#C8E6C9" size={30} isHorizontal={false} />
+//       <Text style={{marginLeft: 10}}>Vitamin D 1000IU - Once daily</Text>
+//     </View>
 //   </View>
 // );
 
-export default CheckmarkIcon;
+export default MedicationIcon;
 ```
 
 **Explanation of Example 1:**
 
-This `CheckmarkIcon` component demonstrates how to create a simple, reusable vector icon directly within your React Native code using `react-native-svg`. The icon is a standard checkmark, which could be used in the SpeedyMeds app to indicate a verified prescription, a successfully completed action, or a selected item.
+This `MedicationIcon` component demonstrates how to create a simple, reusable vector icon directly within your React Native code using `react-native-svg`. The icon is a standard pill/capsule shape, which could be used in the SpeedyMeds app to represent different medications.
 
 The key aspects of this component are:
 
-1.  **Props for Customization (`color`, `size`):** The component accepts `color` and `size` props, allowing it to be easily reused with different appearances. Default values are provided for convenience (`#4CAF50` green and `24` pixels).
+1.  **Props for Customization (`primaryColor`, `secondaryColor`, `size`, `isHorizontal`, `isCapsule`):** The component accepts `primaryColor`, `secondaryColor`, `size`, `isHorizontal`, and `isCapsule` props, allowing it to be easily reused with different appearances. Default values are provided for convenience (`#E91E63` pink and `#F8BBD0` light pink for the pill/capsule colors, `36` pixels, and `true` for horizontal orientation and capsule shape).
 
 2.  **`<Svg>` Container:** The root of our icon is the `<Svg>` component from `react-native-svg`. We pass the `size` prop to its `height` and `width` attributes. This defines the dimensions the SVG will occupy on the screen.
 
-3.  **`viewBox="0 0 24 24"`:** This is a critical attribute. It defines the internal coordinate system of the SVG graphic. In this case, we're saying our drawing space is a 24x24 unit square. Regardless of the actual `size` prop passed (e.g., 30, 50, or 100 pixels), the drawing instructions within the `viewBox` will be scaled to fit those dimensions. This is what makes SVGs scalable without loss of quality.
+3.  **`viewBox` Attribute:** The `viewBox` attribute is crucial for SVG scalability and responsiveness. It is defined by four numbers: `min-x`, `min-y`, `width`, and `height`. In this case, we're using `0 0 48 24` for horizontal orientation and `0 0 24 48` for vertical orientation.
 
-4.  **`<Path>` Element:** The actual checkmark shape is drawn using a single `<Path>` element. The `d` attribute contains a string of SVG path commands that define the lines and curves of the checkmark. This specific path data is a common representation for a checkmark icon. The `fill` attribute of the `<Path>` is set to the `color` prop, allowing the icon's color to be dynamically changed.
+4.  **`<G>` Element:** The `<G>` element is used to group multiple SVG elements together. In this case, we're using it to apply rotation for vertical orientation.
 
-5.  **Container `<View>`:** The `<Svg>` element is wrapped in a standard React Native `<View>`. While not strictly necessary for the SVG itself to render, this container uses Flexbox properties (`justifyContent: "center", alignItems: "center"`) and is given the icon's `width` and `height`. This can be helpful for layout purposes, ensuring the icon is aligned as expected if it's placed alongside other elements, and makes the touchable area (if any were added) consistent with the icon size.
+5.  **`<Path>` Elements:** The actual pill/capsule shape is drawn using multiple `<Path>` elements. The `d` attribute contains a string of SVG path commands that define the lines and curves of the pill/capsule.
+
+6.  **Container `<View>`:** The `<Svg>` element is wrapped in a standard React Native `<View>`. While not strictly necessary for the SVG itself to render, this container uses Flexbox properties (`justifyContent: "center", alignItems: "center"`) and is given the icon's `width` and `height`. This can be helpful for layout purposes, ensuring the icon is aligned as expected if it's placed alongside other elements, and makes the touchable area (if any were added) consistent with the icon size.
 
 By creating the icon this way, we have a component that is lightweight, scalable to any dimension without pixelation, and customizable in color. This is far more efficient for simple icons than using multiple PNG files for different resolutions and colors.
 
