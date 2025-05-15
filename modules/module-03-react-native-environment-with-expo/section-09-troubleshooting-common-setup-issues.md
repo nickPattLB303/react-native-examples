@@ -4,25 +4,29 @@ Setting up a development environment involves several moving parts, and occasion
 
 > 🧗‍♀️ **(Self-Led):** Keep this section bookmarked as a reference. When you encounter issues, methodically work through the troubleshooting steps rather than trying random solutions you find online. This systematic approach will save you time in the long run.
 
-### General Troubleshooting Tips
+### Proactive Debugging & General Troubleshooting Tips
 
-Before diving into specific errors:
+When faced with an error or unexpected behavior, adopt a systematic approach:
 
-1.  **Read the Error Message Carefully:** The terminal output often contains specific file paths, commands that failed, or suggested solutions. Pay close attention!
-2.  **Check Versions:** Ensure your tools meet the requirements (See Section 2). Verify with:
+1.  **Read the Error Message Carefully:** The terminal output often contains specific file paths, commands that failed, or suggested solutions. Pay close attention to the full message!
+2.  **Check Logs:** Examine the terminal output from `npx expo start` (for Metro bundler errors) and, if applicable, the native build logs (from `npx expo run:[platform]` or the EAS Build details page).
+3.  **Isolate the Problem:** Try to reproduce the issue in a minimal context. Does it happen in a newly created project? Does commenting out recent code changes resolve it?
+4.  **Check Versions:** Ensure your tools meet the requirements (See Section 2). Verify with:
     - `node -v`, `npm -v`, `yarn --version`
     - `watchman version` (macOS/Linux)
     - `xcodebuild -version` (macOS - requires full Xcode or CLTs)
     - Check Android Studio SDK Manager for correct SDK Platform/Build Tools versions.
-3.  **Clear Caches & Reinstall:** Corrupted caches or dependencies are common culprits.
+5.  **Use `npx expo doctor`:** This command can diagnose many common project setup issues, dependency version mismatches, and environment problems. Run it early in your troubleshooting.
+6.  **Clear Caches & Reinstall Dependencies:** Corrupted caches or dependencies are common culprits.
     - Stop any running servers (Ctrl+C).
-    - `rm -rf node_modules`
+    - `watchman watch-del-all` (Clears Watchman watches, if installed)
+    - `rm -rf node_modules` (and `ios`, `android` directories if you suspect native project corruption and are using CNG - be careful with this if you have uncommitted native changes outside CNG).
     - `npm cache clean --force` or `yarn cache clean`
-    - `npm install` or `yarn install` (or `npx expo install --fix`)
+    - `npm install` or `yarn install` (or `npx expo install --fix` to attempt to fix dependency versions)
     - `npx expo start --clear` (Clears Metro cache)
-    - `watchman watch-del-all` (Clears Watchman watches)
-4.  **Restart:** Restart your terminal, your IDE, Watchman (`watchman shutdown-server`), or even your computer.
-5.  **Check Official Docs & GitHub Issues:** Search the Expo documentation, React Native documentation, and the GitHub issues page for the specific library mentioned in the error.
+7.  **Restart:** Restart your terminal, your IDE, Watchman (`watchman shutdown-server`), the Metro server, simulators/emulators, or even your computer.
+8.  **Consult Documentation:** Search the official Expo and React Native documentation for the error message or related concepts.
+9.  **Search the Community:** Look for solutions on Stack Overflow, the Expo Forums ([forums.expo.dev](https://forums.expo.dev)), the Expo Discord server ([chat.expo.dev](https://chat.expo.dev)), or relevant GitHub repositories. Provide clear details and error logs when asking for help (see "Tips for Asking for Help" below).
 
 ### Troubleshooting Flow Diagram
 
@@ -80,7 +84,15 @@ This diagram illustrates a systematic approach to troubleshooting common React N
 - **Solutions:**
   - **Port Conflict (`EADDRINUSE`):** Stop other servers (check ports 8081, 19000-19002). Try `npx expo start --port 8088`. Find conflicting process: `lsof -i :8081` (macOS/Linux) or Resource Monitor (Windows), then `kill <PID>`.
   - **Watchman Errors:** Ensure Watchman is running. Try `watchman watch-del-all`, `brew reinstall watchman` (macOS). For persistent errors on macOS, you might need to increase file watching limits (`sudo launchctl limit maxfiles ...`).
-  - **Corrupted Cache/Modules:** See General Tips (Clear Caches & Reinstall).
+  - **"Unable to resolve module `<module_name>`" Error:**
+    - Verify the import path is correct (check spelling, case sensitivity, and relative path).
+    - Ensure the imported file actually exists.
+    - Check that the required package is listed in `package.json` and installed in `node_modules`.
+    - Make sure the file isn't accidentally excluded by `.gitignore`.
+    - Restart the Metro server (`npx expo start --clear`).
+  - **`EXPO_ROUTER_APP_ROOT` not defined error (Expo Router specific):**
+    - This usually indicates an issue with the Babel configuration for Expo Router. Ensure `babel-preset-expo` (which includes the router plugin) is correctly set up in `babel.config.js`. Try clearing the cache (`npx expo start --clear`). Verify the `metro.config.js` extends `expo/metro-config` if customized.
+  - **Corrupted Cache/Modules:** See General Tips (Clear Caches & Reinstall Dependencies).
 
 **Issue 3: Simulator/Emulator Launch Failures**
 
@@ -90,6 +102,9 @@ This diagram illustrates a systematic approach to troubleshooting common React N
   - **Launch Manually:** Try opening the Simulator (`open -a Simulator`) or Android Studio AVD Manager and launching an instance directly _before_ running the Expo command.
   - **Resources:** Check for sufficient disk space and RAM.
   - **Corrupted Instance:** (Simulator) `Hardware > Erase All Content and Settings...`; (Emulator) Wipe data via AVD Manager.
+  - **Signing Errors:** If running on a physical device, ensure your Apple Developer account is set up correctly in Xcode (`Xcode > Settings > Accounts`) and the correct signing certificate/provisioning profile is selected in the project settings (`Xcode > Your Project > Signing & Capabilities`).
+  - **Clean Build:** `npx expo prebuild --platform ios --clean` (deletes `ios` folder first), then `npx expo run:ios`. Or, clean the build folder in Xcode (`Product > Clean Build Folder`).
+  - **Test Locally in Release Mode:** Before relying solely on EAS Build for release candidate testing, try building locally in release configuration: `npx expo run:ios --configuration Release`. If this fails, the issue is likely in the project setup or local environment.
 
 **Issue 4: iOS Build Failures (`npx expo run:ios`)**
 
@@ -108,6 +123,7 @@ This diagram illustrates a systematic approach to troubleshooting common React N
   - **Gradle Issues:** Try stopping the Gradle Daemon: `cd android && ./gradlew --stop`. Clean the build: `cd android && ./gradlew clean`.
   - **Memory Issues:** If errors mention `OutOfMemoryError` or Java heap space, try increasing Gradle's memory limit. Create/edit `android/gradle.properties` and add/modify `org.gradle.jvmargs=-Xmx4g` (or higher, e.g., `6g`).
   - **Clean Build:** `npx expo prebuild --platform android --clean` (deletes `android` folder), then `npx expo run:android`.
+  - **Test Locally in Release Mode:** Similar to iOS, try `npx expo run:android --variant release`.
 
 **Issue 6: Expo Go Connection Issues (Physical Device)**
 
@@ -163,6 +179,57 @@ The typical troubleshooting flow would be:
 4. Run `npm install` or `yarn` to ensure node_modules is fully updated
 5. Verify import statement matches the actual package name
 
+### Mini-Challenge: Fixing a Common Error
+
+Let's simulate a common scenario. Imagine you've added a new component `SpeedyGreeting.tsx` in a `components/` directory:
+
+```typescript
+// components/SpeedyGreeting.tsx
+import React from "react";
+import { Text } from "react-native";
+
+interface SpeedyGreetingProps {
+  name: string;
+}
+
+const SpeedyGreeting: React.FC<SpeedyGreetingProps> = ({ name }) => {
+  return <Text>Hello, {name}! Welcome to SpeedyMeds!</Text>;
+};
+
+export default SpeedyGreeting;
+```
+
+And in your `app/index.tsx` (or any screen), you try to import it like this:
+
+```typescript
+// app/index.tsx (Incorrect Import)
+import React from "react";
+import { View } from "react-native";
+import SpeedyGreeting from "./components/SpeedyGreeting"; // Hypothetical incorrect path
+
+export default function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <SpeedyGreeting name="Pharmacist" />
+    </View>
+  );
+}
+```
+
+**The Problem:** If your `app/index.tsx` is at the root of `app/` and `components/` is at the root of your project, the relative path `'./components/SpeedyGreeting'` is incorrect from within the `app` directory. Metro will likely give an "Unable to resolve module" error.
+
+**Task:** What would be the correct relative import path for `SpeedyGreeting` from `app/index.tsx`?
+
+**Solution:** The correct path would likely be `import SpeedyGreeting from '../components/SpeedyGreeting';` (assuming `components` is a sibling of `app`).
+
+**Further Scenario:** What if `expo-constants` was used in `SpeedyGreeting.tsx` but not installed? (`import Constants from 'expo-constants';`)
+
+**Task:** What command would you run to fix the "Unable to resolve module `expo-constants`" error?
+
+**Solution:** `npx expo install expo-constants`, then restart Metro if needed (`npx expo start --clear`).
+
+This type of import path or missing dependency issue is very common. Systematically checking paths and ensuring dependencies are installed (using `npx expo install`) will resolve many such errors.
+
 ### Challenge 3: Environment Setup Verification
 
 This challenge verifies that you have successfully installed all the necessary tools and can run the core commands covered in this module.
@@ -182,6 +249,12 @@ In this challenge, you'll complete a checklist and answer questions to confirm t
 The form includes screenshots demonstrating proper output for various verification commands, allowing you to compare your results.
 
 > 🧑‍🏫 **(Instructor-Led):** Take time in class to go through the verification process together. This will help identify and resolve any lingering setup issues before moving to more complex modules.
+
+### Key Insight: Debugging as a Core Competency
+
+The prevalence of troubleshooting sections in documentation and the volume of setup-related questions in community forums underscore a critical reality: debugging is a core competency for mobile developers. The complexity arises from the multiple layers involved – the JavaScript runtime (Node.js, Hermes), the React Native framework itself, the native platform (iOS/Android SDKs), build tools (Xcode, Gradle), the bundler (Metro), and the Expo-specific tooling and services. An error can originate in any of these layers.
+
+While Expo significantly simplifies many aspects, particularly the initial setup and native builds, it doesn't eliminate the possibility of encountering issues, especially as applications grow in complexity, integrate numerous third-party libraries, or involve custom native code. Therefore, developers must cultivate the ability to systematically diagnose problems across this entire stack. This involves more than just knowing specific commands; it requires learning how to effectively read and interpret logs, understand different types of error messages (JavaScript vs. native), isolate the source of the problem, and leverage documentation and community resources. This troubleshooting section aims to instill this methodical approach, which is indispensable for becoming a productive and self-sufficient React Native developer.
 
 > 📚 **Official Documentation:**
 >

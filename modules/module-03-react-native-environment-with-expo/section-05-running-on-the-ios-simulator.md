@@ -56,11 +56,21 @@ This is the primary command to build your app's native iOS project locally and r
 You can also launch the app on the simulator via the Expo CLI's interactive terminal UI:
 
 1.  **Start the development server:**
+
     ```bash
     npx expo start
     ```
+
     This starts Metro and displays a QR code and a menu of keyboard shortcuts.
-2.  **Press `i` in the terminal.** This triggers a similar sequence: if the `ios` directory doesn't exist and the app isn't already built for the simulator, it will often run the equivalent of `npx expo run:ios` (prebuild, compile, install, launch).
+
+    Upon successful startup, the terminal typically displays:
+
+    - A **QR code**: Scanning this with the Expo Go app on a physical device connects it to the development server.
+    - **Network URLs**: URLs for accessing the app over the local network or via a tunnel if enabled.
+    - **Logs**: Output from the Metro bundler and potentially from your running application (`console.log` statements).
+    - **Interactive Menu**: A list of keyboard commands to interact with the development process. Pressing `?` in the terminal where Expo is running will display all available commands (e.g., `r` to reload, `d` to open developer menu, etc.).
+
+2.  **Press `i` in the terminal.** This triggers a similar sequence: if the `ios` directory doesn't exist and the app isn't already built for the simulator, it will often run the equivalent of `npx expo run:ios` (prebuild, compile, install, launch). If launching in Expo Go on the simulator for the first time, you might be prompted to grant permission for Expo Go to open.
 
 ### Connecting to Metro
 
@@ -73,6 +83,17 @@ Once your app (either built via `run:ios` or launched via `start` + `i`) starts 
 
 - **Fast Refresh:** Save changes in your JS/TS files, and Metro sends updates to the app on the simulator, often reflecting changes instantly without losing app state.
 - **Developer Menu:** Press `Cmd+Ctrl+Z` (or `Device > Shake` in Simulator menu) to open the developer menu for debugging options.
+
+### Understanding the Client-Server Development Model
+
+The typical development workflow in React Native, especially with Expo, relies on a distinct client-server model:
+
+- A **client application** (e.g., your app running on the iOS Simulator, Expo Go, or a Development Build) runs on the target platform.
+- A **development server** (powered by the Metro bundler) runs on your host machine (your Mac).
+
+The client connects to the server (usually over the local network via `localhost` for the simulator) to fetch the JavaScript bundle containing your application logic and UI definitions. This architecture is what enables rapid iteration through features like Fast Refresh: when your JavaScript code is saved, Metro quickly rebundles only the changed parts and sends the update to the client, which applies the changes often without losing application state. This avoids the time-consuming native recompilation cycle required for native code changes.
+
+Understanding this separation is key for troubleshooting. Problems might originate from the client (e.g., simulator crashes, native module issues in a Development Build) or the server (e.g., Metro bundling errors, caching problems). This model is specific to development; production builds typically embed the final JavaScript bundle directly within the native application package.
 
 ```typescript
 // Example of adding a button to your SpeedyMeds home screen

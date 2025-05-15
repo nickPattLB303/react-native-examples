@@ -5,39 +5,53 @@ _Setting up the foundation for your React Native development journey with Expo._
 
 Welcome to Module 3! This module is your starting point for hands-on React Native development. We'll guide you through setting up a robust development environment using Expo, a powerful platform that simplifies building and iterating on React Native applications. By the end of this module, you'll have a working local setup, understand the core tools, and be ready to start building your first components.
 
+## Module Goal
+
+The primary goal of this module is to guide you through the process of successfully setting up a local development environment tailored for React Native development using Expo. By the end of this module, you will understand the core tools and workflows within the Expo ecosystem and be able to run your first React Native application on an iOS simulator and, optionally, on a physical device using Expo Go.
+
 ## Target Audience Adaptation
 
 > 🌐 **(Web Developers):**
 >
-> **Comparison:** If you've set up Node.js web applications before, this process will feel familiar with package managers and command-line tools. Expo abstracts away the complex native build configurations you'd otherwise need to manage with vanilla React Native.
+> **Comparison:** If you've set up Node.js web applications before, this process will feel familiar with package managers and command-line tools. Expo abstracts away the complex native build configurations you'd otherwise need to manage with vanilla React Native. Concepts related to native mobile development, simulators/emulators (Xcode), and the specifics of React Native's component system and styling (vs. HTML/CSS) will be emphasized. Expo's tooling aims to make this transition smoother.
 >
-> **Key Takeaway:** Expo eliminates the need to install and configure native SDKs directly, saving significant setup time.
+> **Key Takeaway:** Expo eliminates the need to install and configure native SDKs directly, saving significant setup time. You're moving from targeting the browser DOM to controlling native iOS/Android UI elements via JavaScript.
 >
-> **Source:** [React Native Environment Setup - CLI](https://reactnative.dev/docs/environment-setup)
+> **Source:** [React Native Environment Setup - CLI](https://reactnative.dev/docs/environment-setup), [React Native: Thoughts from a web developer - Mantel](https://mantelgroup.com.au/react-native-thoughts-from-a-web-developer/)
 
 > 📲 **(Native Developers):**
 >
-> **Comparison:** While native development requires Xcode (iOS) or Android Studio with extensive configuration, Expo provides a streamlined alternative. Instead of managing build settings, provisioning profiles, and simulator configurations manually, Expo handles these complexities behind the scenes.
+> **Comparison:** While native development requires Xcode (iOS) or Android Studio with extensive configuration, Expo provides a streamlined alternative. Instead of managing build settings, provisioning profiles, and simulator configurations manually, Expo handles these complexities behind the scenes. Concepts like JavaScript runtimes (Node.js), package managers (npm), and bundlers (Metro) might be new. This module will relate Expo's abstractions (like the Expo CLI managing native builds) back to familiar tools like Android Studio or Xcode.
 >
-> **Key Takeaway:** Expo offers a significantly faster development cycle for prototyping and initial development compared to traditional native workflows.
+> **Key Takeaway:** Expo offers a significantly faster development cycle for prototyping and initial development compared to traditional native workflows. Think of Expo CLI as adding a simplifying layer on top of the familiar Xcode/Android Studio build processes for many common tasks.
 >
-> **Source:** [Expo vs. Native Development](https://docs.expo.dev/workflow/already-used-react-native/)
+> **Source:** [Expo vs. Native Development](https://docs.expo.dev/workflow/already-used-react-native/), [From Jetpack Compose to React Native: An Android Developer's Perspective - Atomic Robot](https://atomicrobot.com/blog/compose-to-react-native/)
 >
 > **Example:** Instead of configuring CocoaPods dependencies or Gradle files manually, Expo manages native dependencies through simple JavaScript commands.
+
+### Learning Paths
+
+This module serves as a critical foundation for all learning paths:
+
+- 📝 **Instructor-Led:** Active participation in setup sessions is encouraged. Use the live coding demonstrations as an opportunity to follow along and ask clarifying questions regarding environment configuration or Expo concepts.
+- 🧗 **Self-Led:** Proceed through the steps sequentially. Utilize the provided links to official documentation for deeper understanding. Do not hesitate to request instructor support via Webex chat or huddles if installation or configuration issues arise.
+- 🔄 **Asynchronous:** This module is fundamental, regardless of the specific topics targeted later. Ensure the development environment is correctly set up by carefully following these instructions. If specific setup errors are encountered later, the Troubleshooting section can be referenced directly.
 
 ## Learning Objectives
 
 By the end of this module, you will be able to:
 
-- Describe the role of Expo and Expo Go in React Native development.
-- Install all necessary prerequisite software (Node.js, npm/yarn, Xcode Command Line Tools).
-- Create a new React Native project using `create-expo-app`.
+- Install and configure all necessary prerequisite software (Node.js, Watchman, Xcode, iOS Simulator) on a macOS system.
+- Articulate the role of the Expo Command Line Interface (CLI) and explain its advantages compared to the standard React Native CLI.
+- Initialize a new React Native project using the Expo CLI command `npx create-expo-app@latest`.
+- Describe the purpose and contents of key files and directories within a standard Expo project structure.
+- Start the Expo development server using `npx expo start` and successfully launch the application on an iOS Simulator.
+- Clearly differentiate between the various Expo development environments – Expo Go, Development Builds, and Production Builds – understanding their specific use cases, capabilities, and limitations.
+- Identify common setup and runtime issues and apply appropriate troubleshooting steps to resolve them.
+- Effectively utilize Expo Snack, the web-based playground, for completing course exercises and performing basic code experimentation (where applicable).
 - Differentiate between using `npx expo` and `npm`/`yarn` for project tasks.
-- Launch and run your Expo application on the iOS Simulator.
 - Launch and run your Expo application using the Expo Go app on a physical device (optional).
-- Identify key files and directories within an Expo project structure.
 - Execute essential Expo CLI commands for development (`start`, `install`, `run:ios`).
-- Apply basic troubleshooting techniques for common environment setup issues.
 
 ## Prerequisites
 

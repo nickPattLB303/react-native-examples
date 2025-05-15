@@ -76,7 +76,7 @@ This diagram illustrates two development workflows:
 1. **Expo Go Workflow** (top): Your JavaScript code is bundled by Metro and served to the pre-built Expo Go app, which contains a fixed set of native modules.
 2. **Development Build Workflow** (bottom): Similar JavaScript bundling process, but the app receiving the bundle is your custom-built app with exactly the native modules you need.
 
-The fundamental difference is where the native code resides and how customizable it is. With Expo Go, you're limited to the modules pre-bundled in the Expo Go app. With a Development Build, you can include any native modules your project requires.
+The fundamental difference is where the native code resides and how customizable it is. With Expo Go, you're limited to the modules pre-bundled in the Expo Go app. With a Development Build, you can include _any_ native modules your project requires.
 
 > [!CAUTION]
 > If your JavaScript code attempts to call a native module that is _not_ included in the installed Expo Go build (e.g., a third-party library with native code, or your own custom native code), the app will crash because the corresponding native code doesn't exist within the Expo Go sandbox. ([Source](https://docs.expo.dev/develop/development-builds/introduction/))

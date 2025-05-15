@@ -41,6 +41,7 @@ Let's create your first application. For this course, we'll be working towards b
     - `tabs`: Pre-configured with Expo Router and basic tab navigation (using TypeScript).
     - `bare-minimum`: Similar to `blank`, but runs `npx expo prebuild` to generate native folders immediately.
       **For this course, if prompted, select the `default` template or the `tabs` template.** If not prompted, the default is usually suitable.
+      Other templates can be specified using the `--template` flag (e.g., `npx create-expo-app@latest MyProject --template blank`). Additionally, the `--example` flag can be used to clone projects directly from the `expo/examples` GitHub repository (e.g., `npx create-expo-app@latest MyProject --example with-custom-font`).
 5.  **Wait for project creation:** The tool performs several steps: ([Source](https://docs.expo.dev/more/create-expo))
 
     - Creates a new directory (`SpeedyMedsPrototype`).

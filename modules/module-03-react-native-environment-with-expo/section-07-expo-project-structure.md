@@ -93,6 +93,49 @@ This diagram illustrates the standard folder hierarchy within a new Expo project
 
 - **`app.json` / `app.config.js`**: The **primary Expo configuration file**. Defines metadata (name, version, icon, splash), platform-specific settings (bundle identifiers, permissions), SDK version, plugins (native module configurations), update settings (EAS Update), orientation, web support, and more. Expo uses this file to generate native configuration files (`Info.plist`, `AndroidManifest.xml`) during the prebuild process, abstracting away much native complexity. ([Source](https://docs.expo.dev/versions/latest/config/app/))
 
+  - **Static vs. Dynamic Configuration:**
+
+    - `app.json`: A static JSON file. Simple key-value pairs.
+    - `app.config.js` or `app.config.ts`: Allows for dynamic configuration. You export a function that receives the current config (which includes `app.json` if it exists) and can return a modified config object. This enables using JavaScript logic, environment variables (`process.env`), or even asynchronous operations (though the final returned config must be synchronous) to customize settings based on context (e.g., development vs. production).
+
+    **Dynamic Config Example (`app.config.js`):**
+
+    ```javascript
+    // app.config.js
+    export default ({ config }) => {
+      // config contains the static config from app.json if it exists
+      // Modify config based on an environment variable
+      if (process.env.MY_ENVIRONMENT === "production") {
+        config.name = "SpeedyMeds Pro";
+        config.backgroundColor = "#FFFFFF";
+        // Add custom data accessible at runtime via Constants.expoConfig.extra
+        config.extra = {
+          ...config.extra, // Preserve existing extra fields
+          apiEndpoint: "https://prod.speedymeds.com/api",
+          eas: {
+            projectId: "your-production-project-id",
+          },
+        };
+      } else {
+        config.name = "SpeedyMeds Dev";
+        config.backgroundColor = "#EEEEEE";
+        config.extra = {
+          ...config.extra,
+          apiEndpoint: "https://dev.speedymeds.com/api",
+          eas: {
+            projectId: "your-development-project-id",
+          },
+        };
+      }
+      // Always return the modified config object
+      return config;
+    };
+    ```
+
+    ([Source](https://docs.expo.dev/versions/latest/config/app/#dynamic-configuration-with-appconfigjs))
+
+  - **Runtime Access:** Many configuration values from your `app.json` or `app.config.js` (especially those under the `extra` key) are accessible within your application's JavaScript code at runtime via the `Constants.expoConfig` object from the `expo-constants` library. `import Constants from 'expo-constants'; console.log(Constants.expoConfig.extra.apiEndpoint);`
+
 - **`package.json`**: Standard Node.js manifest: lists metadata, dependencies (`react`, `react-native`, `expo`, `expo-router`), devDependencies, and scripts (`start`, `android`, `ios`, `web`). The `"main"` field usually points to `expo-router/entry` when using Expo Router.
 
 - **`assets/`**: Convention for static assets like images and fonts. Files here are bundled by Metro.
@@ -104,6 +147,22 @@ This diagram illustrates the standard folder hierarchy within a new Expo project
 - **`public/`**: Holds static assets specifically for **web builds**. Files here are served directly by the web server (e.g., `favicon.ico`, `robots.txt`). Useful for assets needed before the JS bundle loads or outside the Metro bundling process. ([Source](https://docs.expo.dev/distribution/publishing-websites/#other-static-assets))
 
 - **`babel.config.js`**: Configures Babel. Usually uses `babel-preset-expo`, which includes necessary transforms for React Native, TypeScript, and common features. May also include `expo-router/babel` plugin for Expo Router features.
+  This preset intelligently configures Babel for React Native, extending the base `@react-native/babel-preset`. It includes necessary transforms for JSX, Flow/TypeScript stripping, and automatically enables plugins for libraries like `react-native-reanimated` if they are installed. It also handles platform-specific optimizations like tree-shaking for web builds.
+  You can generate a basic `babel.config.js` by running `npx expo customize babel.config.js`. A typical file looks like this:
+
+  ```javascript
+  // babel.config.js
+  module.exports = function (api) {
+    api.cache(true); // Cache Babel's transformation results for faster builds
+    return {
+      presets: ["babel-preset-expo"],
+      // Add custom plugins here if needed
+      // plugins: ['my-custom-babel-plugin']
+    };
+  };
+  ```
+
+  Changes to `babel.config.js` usually require restarting the Metro bundler, often with the `--clear` flag (`npx expo start --clear`), to ensure the cache is updated.
 
 - **`tsconfig.json`**: TypeScript configuration. Defines compiler options like target JS version, JSX mode, module resolution, strictness settings, and path aliases (`"paths"`, `"baseUrl"`) for cleaner imports (e.g., `@/components/*`).
 
@@ -112,6 +171,25 @@ This diagram illustrates the standard folder hierarchy within a new Expo project
 - **`package-lock.json` / `yarn.lock` / `pnpm-lock.yaml`**: Lockfiles ensuring reproducible dependency installations. **Always commit these to version control.**
 
 - **`metro.config.js` (Optional)**: Allows customizing the Metro bundler configuration. You might create this file to add custom asset extensions, source file extensions, or configure module resolvers. ([Source](https://docs.expo.dev/guides/customizing-metro/))
+  Expo provides a default Metro configuration (`expo/metro-config`) that handles most common React Native and Expo requirements. You can generate a `metro.config.js` file that extends this default by running `npx expo customize metro.config.js`.
+  A common customization is adding new asset types. For example, to allow Metro to handle SVG files as assets:
+
+  ```javascript
+  // metro.config.js
+  const { getDefaultConfig } = require("expo/metro-config");
+
+  const config = getDefaultConfig(__dirname);
+
+  // Allow Metro to handle SVG files as assets
+  config.resolver.assetExts.push("svg");
+
+  // You can add other customizations here, e.g., for source extensions:
+  // config.resolver.sourceExts.push('cjs');
+
+  module.exports = config;
+  ```
+
+  Metro also reads `tsconfig.json` (or `jsconfig.json`) to support path aliases defined there, which can simplify import statements.
 
 - **`eas.json` (Optional)**: Configures **EAS Build profiles**. Generated when you run `eas build:configure`, it defines different build settings (e.g., development, preview, production) for creating builds on Expo Application Services.
 
@@ -226,6 +304,11 @@ This example demonstrates how TypeScript integrates with your project structure,
 ### Expo's Abstraction Approach
 
 This structure highlights Expo's philosophy: manage native configuration primarily through `app.json`/`app.config.js` and Expo Router's file-based system, using `prebuild` to generate the native projects as needed. This simplifies the developer experience, especially for those without deep native platform expertise.
+
+> **Key Insight: The Power of Centralized Configuration and CNG**
+> The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This contrasts sharply with traditional native development or even standard React Native CLI projects, where configurations are often scattered across various platform-specific files (like `AndroidManifest.xml`, `build.gradle`, `Info.plist`, Xcode project settings).
+>
+> Expo provides a unified, JavaScript-based layer for managing these settings. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling **Continuous Native Generation (CNG)**. With CNG, the `ios` and `android` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
 
 > 📲 **(Native Developers):**
 >
