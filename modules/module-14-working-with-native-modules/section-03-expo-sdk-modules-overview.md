@@ -264,4 +264,4 @@ Time to put your knowledge into practice! This exercise will guide you through u
 2. Access properties like `Device.manufacturer`, `Device.modelName`, `Device.osName`, and `Device.osVersion`.
 3. Display this information using `<Text>` components.
 
-**(https://snack.expo.dev/@courses/module-14-exercise-1)**
+**(https://snack.expo.dev/@speedymeds/module-14-exercise-1-device-info)**
