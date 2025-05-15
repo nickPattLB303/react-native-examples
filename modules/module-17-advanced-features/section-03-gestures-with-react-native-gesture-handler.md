@@ -228,7 +228,7 @@ Practice using `GestureHandler` components to create interactive elements.
 > - [React Native Gesture Handler - Getting Started](https://docs.swmansion.com/react-native-gesture-handler/docs/)
 > - [React Native Gesture Handler - API](https://docs.swmansion.com/react-native-gesture-handler/docs/api)
 > - [React Native Gesture Handler - `PanGestureHandler`](https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/pan-gesture)
-> - [React Native Reanimated - `useAnimatedGestureHandler`](https://docs.swmansion.com/react-native-reanimated/docs/ событий/use-animated-gesture-handler) (Note: Official Reanimated docs cover its integration with Gesture Handler)
+> - [React Native Reanimated - `useAnimatedGestureHandler`](https://docs.swmansion.com/react-native-reanimated/docs/api/hooks/useAnimatedGestureHandler/)
 
 ### Next Steps
 

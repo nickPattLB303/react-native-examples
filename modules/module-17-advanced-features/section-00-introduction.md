@@ -6,13 +6,10 @@ Welcome to Module 17, where we'll explore several advanced features and capabili
 
 This module delves into topics that will appeal to developers from all backgrounds, offering new tools and perspectives:
 
-> 📲 **(Native Developers):** You'll find React Native Reanimated and Gesture Handler offer a declarative approach to animations and gestures, potentially contrasting with imperative methods you're used to. The concepts of offline storage and push notifications will be familiar, but you'll learn how Expo simplifies their cross-platform implementation.
->
-> 🌐 **(Web Developers):**
->
-> ⚛️ **(React Developers):** Many concepts, like animations and testing strategies, will have parallels with web development. You'll appreciate how Reanimated builds upon React's declarative paradigm and how testing tools are adapted for the native environment.
->
-> 🅰️ **(Angular Developers):** While the specific libraries will be new, the underlying principles of enhancing user interfaces with animations, handling complex user interactions, and managing data will resonate with your experience.
+- **For Native Developers (Android/iOS):** You will find React Native Reanimated and Gesture Handler offer a declarative approach to animations and gestures, potentially contrasting with imperative methods you might be used to. The concepts of offline storage and push notifications will be familiar, but you will learn how Expo simplifies their cross-platform implementation.
+- **For Web Developers:**
+  - **React Developers:** Many concepts, like animations and testing strategies, will have parallels with web development. You will appreciate how Reanimated builds upon React's declarative paradigm and how testing tools are adapted for the native environment.
+  - **Angular Developers:** While the specific libraries will be new, the underlying principles of enhancing user interfaces with animations, handling complex user interactions, and managing data will resonate with your experience.
 
 ### Learning Objectives
 
@@ -32,11 +29,11 @@ Upon completing this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the concepts covered in the previous modules, particularly:
 
-- Module 7: React Essentials for React Native
-- Module 8: React Native Core Components
-- Module 9: React Native Core APIs and Hooks
-- Module 10: Styling in React Native
-- Module 13: State Management
+- Module 7: React Essentials for React Native (TODO: Link to Module 7)
+- Module 8: React Native Core Components (TODO: Link to Module 8)
+- Module 9: React Native Core APIs and Hooks (TODO: Link to Module 9)
+- Module 10: Styling in React Native (TODO: Link to Module 10)
+- Module 13: State Management (TODO: Link to Module 13)
 
 A strong grasp of TypeScript and JavaScript is also essential.
 

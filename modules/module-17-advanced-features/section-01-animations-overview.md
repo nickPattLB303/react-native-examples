@@ -17,6 +17,36 @@ The `Animated` API was React Native's first solution for animations. It provides
 - **How it Works:** The `Animated` API can be configured to offload animation calculations to the native UI thread for certain types of animations by setting `useNativeDriver: true`. When this option is used, the animation logic is serialized and sent over the bridge once, and then the native side handles the frame-by-frame updates. This significantly improves performance for supported animations (primarily non-layout properties like `opacity`, `transform`).
 - **Limitations with `useNativeDriver: false`:** If `useNativeDriver` is `false` or an animation targets a property not supported by the native driver (e.g., most layout properties like `width`, `height`, `flex`), the JavaScript thread calculates the animation values for each frame and sends updates over the bridge. This can lead to stuttering or dropped frames, especially during heavy JS workloads.
 
+```mermaid
+graph TD;
+    subgraph JS Thread
+        A[App Logic / Animation Definition]
+        A -- `useNativeDriver: false` --> B{Per-frame Calculation};
+        B -- Updates via Bridge --> C[Native UI];
+        A -- `useNativeDriver: true` --> D[Config to Native Driver];
+    end
+    subgraph Native/UI Thread
+        C
+        E[Native Animation Driver]
+        D -- Single Config via Bridge --> E;
+        E -- Smooth Animation --> C;
+    end
+    F[React Native Bridge (Async)]
+    B -.->F;
+    F -.-> C;
+    D -.->F;
+    F -.-> E;
+
+    style A fill:#D6EAF8,stroke:#2E86C1,stroke-width:2px
+    style B fill:#FADBD8,stroke:#C0392B,stroke-width:2px
+    style C fill:#D5F5E3,stroke:#28B463,stroke-width:2px
+    style D fill:#D6EAF8,stroke:#2E86C1,stroke-width:2px
+    style E fill:#D5F5E3,stroke:#28B463,stroke-width:2px
+    style F fill:#FCF3CF,stroke:#F1C40F,stroke-width:2px
+```
+
+This diagram illustrates the operational difference within React Native's `Animated` API based on the `useNativeDriver` setting. The JavaScript (JS) Thread is where your application's logic, including animation definitions, resides. When an animation is defined with `useNativeDriver: false` (or for properties not supported by the native driver), the JS Thread must perform per-frame calculations for the animation. These calculated values are then serialized and sent across the React Native Bridge—an asynchronous communication channel—to the Native/UI Thread for rendering. This frequent, per-frame communication over the bridge can lead to performance bottlenecks and animation stutter if the JS thread is busy. Conversely, when `useNativeDriver: true` is employed for supported animations (like opacity or transform changes), the animation configuration is sent over the bridge just once. The Native Animation Driver on the UI Thread then takes full responsibility for executing the animation smoothly, free from JS thread interference, resulting in significantly better performance.
+
 > [!CAUTION]
 > Animations using `Animated` with `useNativeDriver: false` can be janky if the JavaScript thread is busy. Always strive to use `useNativeDriver: true` where possible.
 
@@ -25,6 +55,34 @@ The `Animated` API was React Native's first solution for animations. It provides
 React Native Reanimated (currently in version 3) was created to overcome the limitations of the `Animated` API, especially regarding performance and the ability to run complex animations entirely on the UI thread.
 
 - **How it Works:** Reanimated allows you to define animation logic in JavaScript, but it executes this logic directly on the UI thread. This is achieved by leveraging JSI (JavaScript Interface), which enables more direct and synchronous communication between JS and native. Animations defined with Reanimated are not constrained by the bridge for per-frame updates.
+
+```mermaid
+graph TD;
+    subgraph JS Thread
+        A[App Logic]
+        B[Animation Definition (JS Worklets, Shared Values)]
+        A --> B;
+    end
+    subgraph Native/UI Thread
+        C[Native UI Elements]
+        D[Reanimated Core Logic (Native Side)]
+        E[Animation Execution on UI Thread]
+        D -- Drives --> E;
+        E -- Updates --> C;
+    end
+    F[JSI (JavaScript Interface)]
+    B -- Synchronous & Direct via JSI --> D;
+
+    style A fill:#D6EAF8,stroke:#2E86C1,stroke-width:2px
+    style B fill:#D6EAF8,stroke:#2E86C1,stroke-width:2px
+    style C fill:#D5F5E3,stroke:#28B463,stroke-width:2px
+    style D fill:#D5F5E3,stroke:#28B463,stroke-width:2px
+    style E fill:#D5F5E3,stroke:#28B463,stroke-width:2px
+    style F fill:#E8DAEF,stroke:#8E44AD,stroke-width:2px
+```
+
+This diagram illustrates the architecture of React Native Reanimated and its use of the JavaScript Interface (JSI). On the JS Thread, developers define application logic and sophisticated animation behaviors using Reanimated's constructs like JS Worklets (small pieces of JavaScript code that can run on the UI thread) and Shared Values (data that can be read and written from both JS and UI threads). Unlike the traditional `Animated` API's reliance on the asynchronous bridge for frequent updates, Reanimated leverages JSI. JSI provides a direct, synchronous communication channel between the JavaScript environment and the native side. This allows the compiled animation logic (worklets) and shared data to be efficiently passed to Reanimated's core native logic. Consequently, the animation execution itself happens predominantly on the Native/UI Thread, leading to highly performant, fluid animations that are not typically blocked by JavaScript thread computations. This direct execution on the UI thread is key to Reanimated's ability to handle complex animations smoothly.
+
 - **Key Benefits:**
   - **Performance:** Animations are generally smoother and less prone to jank because they run independently of the JavaScript thread.
   - **Flexibility:** Allows animation of a wider range of properties, including layout properties, directly on the UI thread.
@@ -46,7 +104,7 @@ React Native Reanimated (currently in version 3) was created to overcome the lim
 
 ### Referential Content
 
-Here's a table summarizing the key differences:
+Here's a table summarizing the key differences.
 
 | Feature               | Animated API                                                                 | React Native Reanimated (v2+)           |
 | --------------------- | ---------------------------------------------------------------------------- | --------------------------------------- |

@@ -62,6 +62,16 @@ interface PrescriptionCardProps {
   dosage: string;
 }
 
+/**
+ * A draggable card component representing a prescription in the SpeedyMeds app.
+ * It can be panned across the screen, rotates slightly based on horizontal drag,
+ * and springs back to its original position when released.
+ *
+ * @param {PrescriptionCardProps} props - The properties for the component.
+ * @param {string} props.medication - The name of the medication.
+ * @param {string} props.dosage - The dosage information for the medication.
+ * @returns {React.ReactElement} The rendered DraggablePrescriptionCard component.
+ */
 const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
   medication,
   dosage,
@@ -160,15 +170,22 @@ export default PrescriptionCard;
 
 **Explanation of the Example:**
 
-1.  **Shared Values:** `translateX`, `translateY`, and `rotation` are created to control the card's position and tilt.
-2.  **Gesture Handling (`useAnimatedGestureHandler`):**
-    - `onStart`: Records the initial `translateX` and `translateY` of the card when the drag begins.
-    - `onActive`: Updates `translateX` and `translateY` based on the drag. It also calculates a `rotation` value using `interpolate`. The `interpolate` function maps the `translateX` (horizontal drag distance) to a rotation angle between -10 and 10 degrees. `Extrapolate.CLAMP` ensures the rotation doesn't exceed these bounds.
-    - `onEnd`: When the drag gesture ends, `translateX`, `translateY`, and `rotation` are animated back to `0` using `withSpring`, creating a smooth spring-back effect.
-3.  **Animated Styles (`useAnimatedStyle`):** The `animatedCardStyle` applies the `translateX`, `translateY`, and `rotateZ` transformations to the card.
-4.  **Component Structure:** The `PrescriptionCard` is wrapped in a `PanGestureHandler`. The `animatedCardStyle` is applied to the `Animated.View` representing the card.
+This `PrescriptionCard` component showcases a sophisticated interactive element achieved by combining Gesture Handler and Reanimated. Let's break down its key aspects in more detail:
 
-This example creates an engaging interaction where the card not only follows the user's finger but also tilts slightly and springs back into place when released.
+1.  **Shared Values for Animation:** We initialize three shared values using `useSharedValue`: `translateX` and `translateY` to control the card's position on the screen, and `rotation` to manage its tilt. These values are the core drivers of the animation and will be manipulated directly on the UI thread.
+
+2.  **Gesture Handling with `useAnimatedGestureHandler`:** This hook is pivotal for processing pan gestures.
+
+    - `onStart(event, context)`: This worklet is triggered when the user first touches and starts to drag the card. We store the card's current `translateX` and `translateY` values in a `context` object. This `context` (defined by `CardGestureContext`) persists across the gesture's lifecycle, allowing us to calculate the new position relative to where the drag started, not just from the card's initial (0,0) position.
+    - `onActive(event, context)`: As the user's finger moves, this worklet continuously updates `translateX` and `translateY`. The new position is calculated by adding the gesture's `event.translationX` and `event.translationY` (which are relative to the start of the gesture) to the initial positions stored in `context.startX` and `context.startY`.
+      Simultaneously, we calculate the card's rotation. The `interpolate` function is used here: it takes the current `translateX.value` as input. It maps this input range (from dragging halfway across the screen to the left, to the center, to halfway across to the right: `[-screenWidth / 2, 0, screenWidth / 2]`) to an output range of rotation degrees (`[-10, 0, 10]`). This means as the card is dragged left, it rotates up to -10 degrees, and as it's dragged right, up to +10 degrees. `Extrapolate.CLAMP` is crucial because it ensures that if the user drags further than `screenWidth / 2`, the rotation value doesn't go beyond the specified -10 or 10 degrees, preventing excessive tilting.
+    - `onEnd()`: Once the user lifts their finger, this worklet is executed. We use `withSpring(0)` to animate `translateX`, `translateY`, and `rotation` shared values back to `0`. `withSpring` creates a physically plausible spring animation, making the card smoothly return to its original centered position and upright orientation with a slight bounce, enhancing the tactile feel of the interaction.
+
+3.  **Dynamic Styling with `useAnimatedStyle`:** This hook creates an animated style object that reacts to changes in our shared values. The `transform` property is an array of transformations: `translateX` and `translateY` position the card, and `rotateZ` applies the calculated rotation in degrees. Because this style object is driven by shared values updated on the UI thread, the card's visual updates are fluid and synchronized with the gesture.
+
+4.  **Component Structure and Gesture Attachment:** The `PrescriptionCard` (which is an `Animated.View`) is wrapped with the `PanGestureHandler` component. The `onGestureEvent` prop of `PanGestureHandler` is connected to our `panGestureHandler` created by `useAnimatedGestureHandler`. This setup ensures that pan gestures detected on the `Animated.View` are processed by our defined gesture logic.
+
+This combination of direct manipulation during the `onActive` phase (dragging and rotating) and a physics-based animation on `onEnd` (spring-back) results in an engaging and polished user experience, demonstrating the power of using Gesture Handler and Reanimated in tandem.
 
 > 📲 **(Native Developers):**
 >
