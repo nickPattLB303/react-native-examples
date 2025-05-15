@@ -31,11 +31,12 @@ The `useMemo` Hook returns a memoized value. It recomputes the memoized value on
 
 > 🌐 **(Web Developers):**
 >
-> - ⚛️ **(React Developers):** These are the exact same APIs (`React.memo`, `useCallback`, `useMemo`) you use in React for the web. Their purpose and behavior are identical.
+> - ⚛️ **(React Developers):** > **Comparison:** These are the exact same APIs (`React.memo`, `useCallback`, `useMemo`) you use in React for the web. Their purpose and behavior are identical.
 >   **Key Takeaway:** Your existing knowledge of these React optimization tools is directly applicable and highly valuable in React Native.
->   **Source:** [React Docs: `memo`](https://react.dev/reference/react/memo), [`useCallback`](https://react.dev/reference/react/useCallback), [`useMemo`](https://react.dev/reference/react/useMemo)
-> - 🅰️ **(Angular Developers):** While Angular has its own change detection mechanisms and performance tuning strategies (like `OnPush` change detection, pure pipes), the underlying principle of avoiding unnecessary work (computation or re-rendering) is the same. These React Hooks provide more granular manual control over memoization compared to some of Angular's more automated approaches.
->   **Key Takeaway:** React's memoization tools offer fine-grained control, which can be powerful but also requires careful implementation to avoid premature optimization or incorrect dependency tracking.
+>   **Source:** `[React Docs: memo](https://react.dev/reference/react/memo)`, `[useCallback](https://react.dev/reference/react/useCallback)`, `[useMemo](https://react.dev/reference/react/useMemo)`
+> - 🅰️ **(Angular Developers):** > **Comparison:** While Angular has its own change detection mechanisms and performance tuning strategies (like `OnPush` change detection, pure pipes for memoizing transformations), React\'s Hooks (`useCallback`, `useMemo`) and `React.memo` HOC provide more granular, manual control over memoization of functions, values, and components respectively.
+>   **Key Takeaway:** React\'s memoization tools offer fine-grained control, which can be powerful but also requires careful implementation to avoid premature optimization or incorrect dependency tracking, differing from some of Angular\'s more automated or convention-based approaches.
+>   **Source:** `[Angular Documentation: Optimizing Performance](https://angular.io/guide/performance)`
 
 ### Procedural Content: Applying Render Optimizations
 
@@ -302,5 +303,5 @@ In `MedicationStockDisplay`, the `stockStatusMessage` is calculated using `useMe
 Now, let's apply these concepts.
 
 - **Exercise 15.1: Applying Memoization**
-  - `**(https://snack.expo.dev/placeholderforsnackexercise15.1)**`
+  - `**(https://snack.expo.dev/YOUR_EXERCISE_SNACK_ID_HERE)**`
   - _Instructions: You will be provided with a Snack containing a list of SpeedyMeds prescription items. Your task is to use `React.memo`, `useCallback`, and `useMemo` appropriately to optimize the rendering of this list and its items. The `README.md` in the Snack will have detailed requirements._

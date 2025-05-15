@@ -20,11 +20,10 @@ Flipper is an extensible mobile app debugger platform created by Facebook (now M
 - **Performance Profiler (Systrace / Perfetto):** This is one of the most powerful features for in-depth performance analysis. It provides a detailed timeline of what's happening on both the native side (UI thread, background threads) and the JavaScript thread. You can see CPU usage, thread states, bridge messages (in legacy architecture), and JavaScript execution times. This helps identify if the bottleneck is on the JS side, native side, or in their interaction.
   - With Hermes, you can also generate and view Hermes trace profiles, which give very detailed insight into JS execution.
 
-> 📲 **(Native Developers):** > **Comparison:** Flipper aims to be a unified debugging platform similar to Xcode's Instruments or Android Studio's Profiler, but with a stronger focus on the cross-platform nature of React Native and JavaScript introspection.
->
-> - 🍏 **(iOS Developers):** Systrace in Flipper is conceptually similar to Time Profiler in Instruments. It helps you see what's happening across different threads.
-> - 🤖 **(Android Developers):** Flipper's Performance Profiler often uses Perfetto underneath, which is the standard profiling tool on Android. You'll find similarities with Android Studio's CPU Profiler.
->   **Key Takeaway:** Flipper provides a bridge between JavaScript and native profiling, offering a holistic view often needed in React Native development.
+> 📲 **(Native Developers):**
+> **Comparison:** Flipper acts as a comprehensive debugging platform, somewhat analogous to Xcode\'s Instruments or Android Studio\'s Profiler suite. For instance, its performance profiler (Systrace/Perfetto) provides views similar to Time Profiler on iOS or Android Studio\'s CPU Profiler, helping visualize activity across different threads.
+> **Key Takeaway:** Flipper offers a unified view for both JavaScript and native code, crucial for understanding React Native\'s cross-platform performance characteristics.
+> **Source:** `[Flipper Documentation](https://fbflipper.com/docs/getting-started/index/)`, `[Xcode Instruments User Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/)`, `[Android Studio Profiler Documentation](https://developer.android.com/studio/profile)`
 
 #### 2. React DevTools Profiler
 
@@ -35,9 +34,9 @@ While often used within Flipper, the React DevTools Profiler can also be used as
 
 > 🌐 **(Web Developers):**
 >
-> - ⚛️ **(React Developers):** This is the same Profiler you use for web development. Its application and interpretation are identical.
+> - ⚛️ **(React Developers):** > **Comparison:** This is the same Profiler you use for web development. Its application and interpretation are identical.
 >   **Key Takeaway:** Your existing React Profiler skills are directly transferable to React Native performance tuning.
->   **Source:** [Profiling with React DevTools](https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools)
+>   **Source:** `[Profiling with React DevTools](https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools)`
 
 #### 3. Browser DevTools (Chrome DevTools)
 
@@ -75,12 +74,12 @@ Detailed walkthroughs for each tool are extensive, but here's a general approach
     - Configured to use Hermes (default in newer Expo projects).
     - Running as a development build (e.g., created with `npx expo run:ios` or `npx expo run:android` using `expo-dev-client`) or a direct native build. Expo Go has limited Flipper support.
 3.  **Launch Your App & Flipper:** Start your development build on a simulator/emulator or device. Launch Flipper. Your app should appear in Flipper if correctly configured.
-4.  \*\*Using React DevTools Profiler (within Flipper or Standalone):
+4.  **Using React DevTools Profiler (within Flipper or Standalone):**
     - In Flipper: Select your app, go to "React DevTools", then the "Profiler" tab.
     - Standalone: When debugging with Metro (Remote JS Debugging enabled), open Chrome, go to `http://localhost:8081/debugger-ui/`, open Chrome DevTools, and find the "Profiler" tab (may require installing the React DevTools extension).
     - Click the record button, interact with the part of your SpeedyMeds app you want to profile (e.g., scrolling a list of prescriptions), and then stop recording.
     - Analyze the flamegraph or ranked chart to see render times and identify expensive components.
-5.  \*\*Using Flipper Performance Profiler (Systrace/Perfetto):
+5.  **Using Flipper Performance Profiler (Systrace/Perfetto):**
     - In Flipper, select your app, go to "Performance Profiler" (or a similar name like "System Trace" or "CPU Profiler" depending on the version and platform).
     - Start a recording, interact with your app, and stop the recording.
     - Explore the timeline view, zoom in on periods of jank or high CPU usage, and inspect the JS thread and native threads.

@@ -54,11 +54,15 @@ Several strategies can mitigate these issues:
     - Display a low-quality or blurred version of the image first, then load the full-resolution image. This improves perceived performance.
     - `expo-image` can facilitate this with its placeholder and transition features.
 
-> 📲 **(Native Developers):** > **Comparison:** Native platforms have robust image loading libraries (e.g., Glide/Picasso on Android, SDWebImage/Kingfisher on iOS) that handle caching, transformations, and memory management. `expo-image` aims to bring similar power and convenience to React Native, abstracting away much of the platform-specific complexity.
-> **Key Takeaway:** `expo-image` is generally the recommended way to handle images in Expo/React Native projects for better performance and features over the core `<Image>` component.
+> 📲 **(Native Developers):**
+> **Comparison:** Native platforms offer robust image loading libraries (e.g., Glide/Picasso on Android, SDWebImage/Kingfisher on iOS) that excel at caching, transformations, and memory management. `expo-image` aims to provide a similar level of sophistication and convenience within the React Native ecosystem.
+> **Key Takeaway:** `expo-image` is generally the recommended solution for handling images in Expo and React Native projects, offering superior performance and features compared to the core `<Image>` component, akin to what dedicated native libraries provide.
+> **Source:** `[expo-image Documentation](https://docs.expo.dev/versions/latest/sdk/image/)`, `[Glide (Android)](https://bumptech.github.io/glide/)`, `[SDWebImage (iOS)](https://sdwebimage.github.io/)`
 
-> 🌐 **(Web Developers):** > **Comparison:** Concepts like responsive images (`<picture>` element, `srcset` attribute), lazy loading (`loading="lazy"` attribute), and using modern formats like WebP are common in web development. The principles are similar, but the implementation details and available tools differ in React Native.
-> **Key Takeaway:** While the web has browser-level support for some of these features, in React Native, you often rely on component libraries like `expo-image` or implement strategies manually.
+> 🌐 **(Web Developers):**
+> **Comparison:** Core concepts like responsive images (e.g., HTML\'s `<picture>` element, `srcset` attribute), lazy loading (e.g., `loading="lazy"` attribute on `<img>`), and using modern image formats like WebP are common in web development to optimize image delivery.
+> **Key Takeaway:** While the underlying principles of image optimization are similar between web and React Native, the implementation details and available tools differ. In React Native, you often rely more on component libraries like `expo-image` or third-party solutions to achieve these optimizations, rather than direct browser-level support.
+> **Source:** `[MDN Web Docs: Responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)`, `[web.dev: Lazy loading images](https://web.dev/articles/lazy-loading-images)`
 
 ### Procedural Content: Implementing Image Optimizations
 

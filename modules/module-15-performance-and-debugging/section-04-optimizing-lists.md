@@ -56,11 +56,10 @@ Shopify developed **`FlashList`** as a drop-in replacement for `FlatList`, aimin
 > [!TIP]
 > If you encounter performance issues with `FlatList` even after applying standard optimizations, consider trying `FlashList`. It often provides noticeable improvements, especially for lists with complex items or frequent updates.
 
-> 📲 **(Native Developers):** > **Comparison:**
->
-> - 🍏 **(iOS Developers):** `FlatList` and `FlashList` are conceptually similar to `UITableView` with cell reuse (`dequeueReusableCell(withIdentifier:)`). The virtualization and view recycling are key to their performance.
-> - 🤖 **(Android Developers):** These components are akin to `RecyclerView` with `ViewHolder` recycling. `FlashList` aims to be even more aggressive and efficient in its recycling strategy.
->   **Key Takeaway:** The core principle of only rendering what's visible and reusing views is a common pattern in native list implementations, and React Native's list components adopt this for better performance.
+> 📲 **(Native Developers):**
+> **Comparison:** `FlatList` and `FlashList` implement virtualization and view recycling, concepts similar to `UITableView` with cell reuse (`dequeueReusableCell(withIdentifier:)`) on iOS and `RecyclerView` with `ViewHolder` recycling on Android. `FlashList`, in particular, aims for highly efficient view recycling.
+> **Key Takeaway:** The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
+> **Source:** `[Apple Developer Docs: UITableView](https://developer.apple.com/documentation/uikit/uitableview)`, `[Android Developer Docs: RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)`
 
 ### Procedural Content: Implementing Optimized Lists
 

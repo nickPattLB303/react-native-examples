@@ -17,11 +17,12 @@ React's rendering mechanism is efficient, but unnecessary re-renders of componen
 
 > 🌐 **(Web Developers):**
 >
-> - ⚛️ **(React Developers):** This is a familiar problem. Techniques like `React.memo`, `shouldComponentUpdate` (for class components), `useMemo`, and `useCallback` are equally crucial in React Native.
+> - ⚛️ **(React Developers):** > **Comparison:** This is a familiar problem. Techniques like `React.memo`, `shouldComponentUpdate` (for class components), `useMemo`, and `useCallback` are equally crucial in React Native.
 >   **Key Takeaway:** The core principles of preventing unnecessary renders are the same, but the impact can feel more pronounced on mobile due to resource constraints.
->   **Source:** [Optimizing Performance - React Docs](https://react.dev/learn/optimizing-performance)
-> - 🅰️ **(Angular Developers):** Angular's change detection (especially with OnPush strategy) aims to solve similar issues. In React Native, you manually control component updates more explicitly with tools like `React.memo`.
->   **Key Takeaway:** React Native requires more manual intervention to optimize component re-renders compared to Angular's default change detection strategies.
+>   **Source:** `[React Documentation: Optimizing Performance](https://react.dev/learn/optimizing-performance)`
+> - 🅰️ **(Angular Developers):** > **Comparison:** Angular\'s change detection (especially with OnPush strategy) aims to solve similar issues. In React Native, you manually control component updates more explicitly with tools like `React.memo`.
+>   **Key Takeaway:** React Native requires more manual intervention to optimize component re-renders compared to Angular\'s default change detection strategies.
+>   **Source:** `[Angular Documentation: Change Detection Strategy](https://angular.io/api/core/ChangeDetectionStrategy)`
 
 #### 2. Heavy Computations on the JavaScript Thread
 
@@ -30,9 +31,9 @@ React Native runs most of your application's JavaScript code on a single thread.
 - **Impact:** Frozen UI, janky animations, slow response to user interactions.
 - **SpeedyMeds Example:** Calculating complex dosage schedules or filtering a massive formulary list directly on the JS thread without offloading or optimization.
 
-> 📲 **(Native Developers):** > **Comparison:** This is akin to performing long-running tasks on the main UI thread in native Android (UI thread) or iOS (main thread). Just as you'd use background threads (e.g., `AsyncTask`, `DispatchQueue.global()`) in native development, React Native requires strategies to move work off the JS thread or optimize it.
-> **Key Takeaway:** The JS thread is precious. Heavy work must be optimized, deferred, or moved to native modules if truly intensive.
-> **Source:** [Threading on Android](https://developer.android.com/guide/components/processes-and-threads), [Dispatch Queues - Apple Developer](https://developer.apple.com/documentation/dispatch/dispatchqueues)
+> 📲 **(Native Developers):** > **Comparison:** This is akin to performing long-running tasks on the main UI thread in native Android (UI thread) or iOS (main thread). Just as you\'d use background threads (e.g., `AsyncTask` in Android, `DispatchQueue.global()` in iOS) in native development, React Native requires strategies to move intensive work off the JS thread or optimize it significantly.
+> **Key Takeaway:** The JS thread is a critical resource for UI responsiveness. Heavy computational work must be optimized, deferred, or potentially moved to native modules if it is truly intensive and blocking.
+> **Source:** `[Android Developer Documentation: Processes and Threads](https://developer.android.com/guide/components/processes-and-threads)`, `[Apple Developer Documentation: Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueues)`
 
 #### 3. Large Images and Media Files
 
@@ -41,8 +42,9 @@ Loading and displaying large, unoptimized images or other media files can consum
 - **Impact:** Slow screen transitions, high memory usage, app crashes (Out Of Memory), slow image display.
 - **SpeedyMeds Example:** Displaying full-resolution drug packaging images in a list view instead of appropriately sized thumbnails.
 
-> 🌐 **(Web Developers):** > **Comparison:** Similar to web performance, image optimization (compression, responsive sizes, lazy loading) is vital. However, mobile devices have stricter memory limits.
-> **Key Takeaway:** Image optimization is even more critical on mobile. Consider using formats like WebP, resizing images to the display dimensions, and using libraries for progressive loading.
+> 🌐 **(Web Developers):** > **Comparison:** Similar to web performance best practices, optimizing images (e.g., compression, responsive sizing, lazy loading) is vital in React Native. However, mobile devices often have stricter memory limitations and potentially slower network connections, making optimization even more critical.
+> **Key Takeaway:** Image optimization is paramount on mobile. Consider using modern formats like WebP, resizing images to their exact display dimensions, and implementing strategies like progressive loading or background fetching for a better user experience.
+> **Source:** `[MDN Web Docs: Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)`
 
 #### 4. Slow Navigation Transitions
 
@@ -58,8 +60,10 @@ Memory leaks occur when objects are no longer needed but are still referenced, p
 - **Impact:** Increased memory usage over time, eventual app crashes, general sluggishness.
 - **SpeedyMeds Example:** A listener for real-time prescription updates not being removed when the user navigates away from the prescriptions screen.
 
-> 📲 **(Native Developers):** > **Comparison:** Similar to memory leaks in native code (e.g., forgetting to unregister listeners, retain cycles in Swift/Objective-C, or context leaks in Android).
-> **Key Takeaway:** Vigilance in cleaning up resources (listeners, timers, subscriptions) in `useEffect` cleanup functions or `componentWillUnmount` is essential.
+> 📲 **(Native Developers):**
+> **Comparison:** This is analogous to memory leaks encountered in native mobile development, such as forgetting to unregister broadcast receivers or observers in Android, or creating retain cycles with closures or delegates in Swift/Objective-C.
+> **Key Takeaway:** Vigilance in cleaning up resources is essential. This includes removing listeners, clearing timers, and nullifying subscriptions, typically within `useEffect` cleanup functions (for functional components) or `componentWillUnmount` (for class components).
+> **Source:** `[Android Developer Documentation: Detect and fix memory leaks](https://developer.android.com/topic/performance/memory-leaks)`, `[Apple Developer Documentation: Avoiding Retain Cycles When Working with Closures](https://developer.apple.com/documentation/swift/automatic_reference_counting#Avoiding-Retain-Cycles-When-Working-with-Closures)`
 
 #### 6. Inefficient List Rendering
 
@@ -79,8 +83,10 @@ A large JavaScript bundle means more code to parse and execute on app startup, l
 - **Impact:** Slow app startup, increased memory usage during startup.
 - **SpeedyMeds Example:** Including many large third-party libraries or unused code, bloating the initial JS bundle for the SpeedyMeds app.
 
-> 🌐 **(Web Developers):** > **Comparison:** This is analogous to large JavaScript files slowing down website load times. Techniques like code splitting, tree shaking, and analyzing bundle contents are relevant here too.
-> **Key Takeaway:** Keep an eye on your dependencies and use tools to analyze and optimize your bundle size.
+> 🌐 **(Web Developers):**
+> **Comparison:** This directly parallels the issue of large JavaScript files slowing down website initial load times (Time to Interactive). Techniques familiar from web development, such as code splitting (though less common in basic RN apps), tree shaking by bundlers like Metro, and careful analysis of bundle contents, are relevant.
+> **Key Takeaway:** Monitor your application\'s dependencies and periodically analyze your bundle composition. Prioritize reducing the amount of JavaScript that needs to be parsed and executed at startup.
+> **Source:** `[web.dev: Reduce JavaScript payloads with code splitting](https://web.dev/articles/reduce-javascript-payloads-with-code-splitting)`
 
 #### 8. Excessive Native Module Calls / Bridge Traffic (Legacy Architecture)
 
@@ -89,8 +95,17 @@ In React Native's legacy architecture, every communication between JavaScript an
 - **Impact:** Delayed native responses, UI jank if the JS thread is waiting or overwhelmed by bridge traffic.
 - **SpeedyMeds Example:** A custom native module for barcode scanning sending continuous streams of individual pixel data across the bridge instead of processing the image natively and sending only the result.
 
-> 📲 **(Native Developers):** > **Comparison:** The bridge is an overhead. Each call has a cost in terms of serialization/deserialization and context switching. The New Architecture's JSI aims to mitigate this.
-> **Key Takeaway:** Batch calls where possible, send minimal data, and be mindful of the frequency of bridge communication, especially if you are working with or creating older native modules.
+> 📲 **(Native Developers):**
+> **Comparison:** In the legacy React Native architecture, the asynchronous bridge introduces overhead for each call due to serialization/deserialization of data and context switching between the JavaScript and native threads. This is less of an issue with the New Architecture\'s JavaScript Interface (JSI), which allows for more direct, synchronous communication.
+> **Key Takeaway:** When working with or creating native modules (especially in the legacy architecture), aim to batch calls, send only the minimal necessary data, and be mindful of the frequency of communication across the bridge. The New Architecture significantly improves this interaction model.
+> **Source:** `[React Native Documentation: The New Architecture - JavaScript Interface (JSI)](https://reactnative.dev/docs/the-new-architecture/jsi)`
+
+> 📚 **Official Documentation:**
+>
+> - [React Native Performance Overview](https://reactnative.dev/docs/performance)
+> - [Understanding React Native Memory Management](https://reactnative.dev/docs/performance#ram-format-bundles-and-inline-requires) (RAM bundles and inline requires relate to memory and startup)
+> - [Debugging in React Native (includes performance profiling)](https://reactnative.dev/docs/debugging)
+> - [Images - React Native](https://reactnative.dev/docs/image) (touches on image sources and props that can affect performance)
 
 ### Troubleshooting and Next Steps
 

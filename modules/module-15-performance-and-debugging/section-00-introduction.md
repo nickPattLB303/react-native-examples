@@ -7,10 +7,22 @@ A high-performing application is key to a great user experience. This module div
 ## Target Audience Adaptation
 
 - 🍏 **(iOS Developers):** You're likely familiar with performance tools like Instruments and debugging in Xcode. We'll explore how React Native's ecosystem offers similar capabilities with tools like Flipper and React DevTools, and how JavaScript-specific issues can impact performance differently than in Swift/Objective-C.
+  - **Comparison:** React Native's performance tooling like Flipper offers views similar to Xcode's Instruments for profiling, but debugging often involves JavaScript-specific contexts (e.g., the JS thread) alongside native threads.
+  - **Key Takeaway:** While native profiling skills are transferable, understanding the JavaScript execution model and its impact on performance is crucial in React Native.
+  - **Source:** `[Apple Developer Documentation: Instruments](https://developer.apple.com/xcode/instruments/)`
 - 🤖 **(Android Developers):** Your experience with Android Studio's profiler and debugger provides a strong foundation. This module will introduce you to JavaScript-centric performance considerations, such as bundle size and the JavaScript thread, and tools tailored for React Native development.
+  - **Comparison:** Android Studio's profilers for CPU, memory, and network are analogous to features in Flipper or React DevTools. However, React Native introduces concerns like JavaScript bridge traffic (legacy) or JSI overhead (new architecture) that are not present in pure native development.
+  - **Key Takeaway:** Focus on how JavaScript interactions and rendering lifecycles contribute to performance, in addition to native resource usage.
+  - **Source:** `[Android Developer Documentation: Android Studio Profiler](https://developer.android.com/studio/profile)`
 - 🌐 **(Web Developers):**
   - ⚛️ **(React Developers):** Many concepts like `React.memo`, `useCallback`, and `useMemo` will be familiar. We'll focus on their specific application and impact within the React Native environment, including native rendering and mobile-specific bottlenecks.
+    - **Comparison:** Concepts like `React.memo`, `useCallback`, and `useMemo` are identical. However, the rendering target is native views, not the DOM. This means performance characteristics for list virtualization (`FlatList` vs. browser scroll) and animations differ significantly.
+    - **Key Takeaway:** Apply React optimization principles, but be mindful of the native rendering implications and mobile-specific bottlenecks like overdraw or heavy UI thread computations.
+    - **Source:** `[React Documentation: Optimizing Performance](https://react.dev/learn/optimizing-performance)`
   - 🅰️ **(Angular Developers):** While the specific tools and APIs will be new, your understanding of component-based architecture and the importance of performance optimization will be highly relevant. We'll bridge the gap between browser-based performance considerations and those unique to mobile app development with React Native.
+    - **Comparison:** Angular's change detection and RxJS patterns for async operations have parallels in React Native's state management and `useEffect`. However, React Native's component styling (`StyleSheet` or CSS-in-JS) and layout (Flexbox) are different from typical Angular Material or CSS approaches. Performance focus shifts from DOM manipulation efficiency to native bridge communication and UI thread responsiveness.
+    - **Key Takeaway:** Leverage your understanding of component-based architecture and performance, but adapt to React Native's specific styling, layout, and native interaction models.
+    - **Source:** `[Angular Documentation: Performance](https://angular.io/guide/performance)`
 
 ## Learning Objectives
 
@@ -29,9 +41,9 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-- Completion of Module 7: React Essentials for React Native
-- Completion of Module 8: React Native Core Components
-- Completion of Module 9: React Native Core APIs and Hooks
+- Completion of [Module 7: React Essentials for React Native](../../module-07-react-essentials/section-00-introduction.md)
+- Completion of [Module 8: React Native Core Components](../../module-08-core-components/section-00-introduction.md)
+- Completion of [Module 9: React Native Core APIs and Hooks](../../module-09-core-apis-hooks/section-00-introduction.md)
 - Familiarity with basic JavaScript and TypeScript concepts.
 
 ## Module Sections
@@ -51,10 +63,10 @@ This module is divided into the following sections:
 
 ## Module Challenge
 
-At the end of this module, you'll apply your knowledge in a conceptual challenge:
+At the end of this module, you'll apply your knowledge in Challenge 15.
 
-- **Challenge 15: Profile and Identify Optimization Opportunity**
-  - `**(https://forms.office.com/Pages/ResponsePage.aspx?id=placeholderformidforchallenge15)**`
+- Challenge 15: Profile and Identify Optimization Opportunity (Conceptual/Quiz - Microsoft Forms)
+  - `**(https://forms.office.com/r/YOUR_CHALLENGE_FORM_ID_HERE)**`
 
 ## Module Summary
 

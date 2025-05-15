@@ -49,11 +49,15 @@ As covered in Section 7, Hermes has specific debugging support:
 - **Flipper:** Provides the "Hermes Debugger" plugin for direct JavaScript debugging on the device/emulator, including breakpoints, stepping, and variable inspection.
 - **Chrome DevTools (with a proxy):** It's possible to debug Hermes using Chrome DevTools by connecting to the Hermes debugger through a special inspector protocol. Flipper often facilitates this connection.
 
-> 📲 **(Native Developers):** > **Comparison:** Think of Hermes as a specialized virtual machine (VM) for React Native's JavaScript, much like the Android Runtime (ART) is for Kotlin/Java bytecode or LLVM for Swift/Objective-C. Its AOT compilation to bytecode is conceptually similar to how native code is compiled before an app is run.
-> **Key Takeaway:** Hermes brings some of the performance characteristics of compiled languages (like faster startup due to pre-compilation) to the JavaScript world within React Native.
+> 📲 **(Native Developers):**
+> **Comparison:** Think of Hermes as a specialized virtual machine (VM) and runtime for React Native\'s JavaScript, much like the Android Runtime (ART) is for Kotlin/Java bytecode on Android, or the Swift/Objective-C runtime and LLVM compilation stack on iOS. Its Ahead-of-Time (AOT) compilation of JavaScript to bytecode is conceptually similar to how native code is compiled to machine-readable formats before an app is deployed.
+> **Key Takeaway:** Hermes aims to bring some of the performance characteristics typically associated with compiled native languages (like faster startup due to pre-compilation and optimized bytecode) to the JavaScript layer within the React Native framework.
+> **Source:** `[Android Developer Docs: Android Runtime (ART) and Dalvik](https://source.android.com/docs/core/dalvik)`, `[Apple Developer Docs: About the Swift  Compilation Process](https://developer.apple.com/documentation/swift/about-the-swift-compilation-process)`
 
-> 🌐 **(Web Developers):** > **Comparison:** Unlike browser JavaScript engines (V8, SpiderMonkey, JavaScriptCore) that often use sophisticated JIT compilation for peak web page performance, Hermes prioritizes startup and mobile resource constraints by focusing on AOT compilation and efficient bytecode execution. It's less about hitting the absolute maximum JS execution speed for long computations and more about getting the app up and running quickly and smoothly.
-> **Key Takeaway:** Hermes makes different trade-offs than browser engines, optimizing for the mobile app context, particularly TTI and memory.
+> 🌐 **(Web Developers):**
+> **Comparison:** Unlike general-purpose browser JavaScript engines (like V8, SpiderMonkey, JavaScriptCore) which often employ sophisticated Just-In-Time (JIT) compilation to achieve peak performance for dynamic web page content and long-running scripts, Hermes prioritizes mobile app startup time (TTI) and resource constraints (memory, app size). It does this by focusing on Ahead-of-Time (AOT) compilation to optimized bytecode and forgoing a JIT compiler.
+> **Key Takeaway:** Hermes makes different architectural trade-offs compared to browser engines. It\'s less about achieving the absolute maximum JavaScript execution speed for complex, long-running computations and more about ensuring the React Native app launches quickly and runs smoothly within the typical mobile usage patterns.
+> **Source:** `[V8 JavaScript Engine Documentation](https://v8.dev/)`, `[MDN Web Docs: JavaScript technologies overview](https://developer.mozilla.org/en-US/docs/Web/JavaScript/JavaScript_technologies_overview)`
 
 ### Procedural Content: Managing Hermes
 
