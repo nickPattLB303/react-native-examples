@@ -26,7 +26,7 @@ In older versions of React Native (pre-0.68, approximately, though the transitio
 ```mermaid
 graph TD
     subgraph JavaScript Realm
-        JS_Code[JavaScript Code] --> Format_Msg[Format Message (Module, Method, Args)];
+        JS_Code[JavaScript Code] --> Format_Msg[Format Message Module, Method, Args];
         Format_Msg --> Serialize_JSON[Serialize to JSON];
         Serialize_JSON --> JS_Queue[Enqueue Message];
     end
@@ -36,16 +36,16 @@ graph TD
         Deserialize_JSON --> Native_Lookup[Lookup Native Module/Method];
         Native_Lookup --> Execute_Native[Execute Native Code];
         Execute_Native --> Native_Result[Native Result];
-        Native_Result --> Format_Callback_Msg[Format Callback Message (Optional)];
-        Format_Callback_Msg --> Serialize_Callback_JSON[Serialize to JSON (Optional)];
-        Serialize_Callback_JSON --> Native_Queue_Callback[Enqueue Callback Message (Optional)];
+        Native_Result --> Format_Callback_Msg[Format Callback Message Optional];
+        Format_Callback_Msg --> Serialize_Callback_JSON[Serialize to JSON Optional];
+        Serialize_Callback_JSON --> Native_Queue_Callback[Enqueue Callback Message Optional];
     end
 
-    JS_Queue --> Bridge_Transit[Bridge (Async Message Passing)];
+    JS_Queue --> Bridge_Transit[Bridge Async Message Passing];
     Bridge_Transit --> Native_Queue;
 
-    Native_Queue_Callback ==> Bridge_Return_Transit[Bridge (Async Message Passing)];
-    Bridge_Return_Transit ==> JS_Code_Callback[JavaScript Receives Callback/Promise Resolution (Optional)];
+    Native_Queue_Callback ==> Bridge_Return_Transit[Bridge Async Message Passing];
+    Bridge_Return_Transit ==> JS_Code_Callback[JavaScript Receives Callback/Promise Resolution Optional];
 
     style Bridge_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
     style Bridge_Return_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
@@ -57,7 +57,8 @@ This diagram illustrates the communication flow in React Native's legacy archite
 
 On the native side (iOS or Android), the platform's infrastructure dequeues this message. The JSON string is deserialized back into a usable format. The system then looks up the specified native module and method. Once identified, the native code is executed with the provided arguments (after type conversion). If the JavaScript call included a callback or expected a Promise resolution, the native code, after completing its task (which might involve its own asynchronous operations), would prepare a result. This result is then packaged, serialized back into JSON, and sent back across the Bridge to the JavaScript realm, where it's processed by the original callback or Promise. The key characteristics are the asynchronous nature and the JSON serialization/deserialization at each step of the communication.
 
-> [!IMPORTANT] > **Key Characteristics of the Legacy Bridge:** The defining traits of the Bridge were its **asynchronous nature** (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the **serialization overhead** (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
+> [!IMPORTANT]
+>  **Key Characteristics of the Legacy Bridge:** The defining traits of the Bridge were its **asynchronous nature** (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the **serialization overhead** (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
 
 #### New Architecture: JSI (JavaScript Interface)
 
@@ -72,17 +73,17 @@ The New Architecture introduces a fundamentally different communication layer bu
 graph TD
     subgraph JavaScript Realm
         JS_Code[JavaScript Code]
-        JS_Engine[JavaScript Engine (e.g., Hermes)]
+        JS_Engine[JavaScript Engine e.g., Hermes]
         JS_Code --> JS_Engine;
     end
 
     subgraph Native Realm
-        Native_Code[Platform Native Code (Swift/Kotlin/Obj-C/Java)]
+        Native_Code[Platform Native Code Swift/Kotlin/Obj-C/Java]
         Native_Object[Native Object/Function]
         Native_Code --> Native_Object;
     end
 
-    subgraph JSI Layer (C++)
+    subgraph JSI_Layer
         JSI_HostObject[C++ Host Object exposing Native Functionality]
         JSI_Bindings[JSI Bindings]
         JSI_HostObject <--> JSI_Bindings;

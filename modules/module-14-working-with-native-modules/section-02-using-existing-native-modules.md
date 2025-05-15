@@ -79,7 +79,7 @@ Integrating a native module involves adding the JavaScript package and ensuring 
           A[Developer runs `npx expo install community-module`] --> B{Module has Config Plugin?};
           B -- Yes --> C[Config Plugin registered in app.json/app.config.js];
           C -- `eas build` or `expo prebuild` --> D[Expo runs Config Plugin];
-          D --> E[Plugin modifies native project files (Info.plist, build.gradle, etc.)];
+          D --> E[Plugin modifies native project files Info.plist, build.gradle, etc.];
           E --> F[Native code from community-module is linked];
           F --> G[App builds successfully with native feature];
           B -- No --> H{Module is pure JS?};

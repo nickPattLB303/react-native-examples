@@ -63,7 +63,11 @@ flowchart TD
     C & D --> E[Mobile Device UI]
 ```
 
-This diagram shows React Native's high-level architecture. Your JavaScript or TypeScript code communicates with the React Native Bridge, which translates your logic into native UI components for iOS and Android. This approach enables code sharing and native performance, while still allowing you to access platform-specific features when needed. Understanding this architecture helps you see why React Native is a powerful choice for many mobile projects.
+The flowchart above provides a simplified visual representation of React Native's core architectural concept. It starts with the 'JavaScript/TypeScript Code,' which is where developers write their application logic and define UI using React principles. This code doesn't run directly on the mobile device's native environment in the same way Swift or Kotlin code does. Instead, it communicates through an intermediary layer, labeled here as the 'React Native Bridge' (representing both the older Bridge architecture and the newer JSI – JavaScript Interface).
+
+This Bridge is crucial as it facilitates communication between the JavaScript realm and the native platform. It's responsible for translating the JavaScript instructions into actions that the underlying operating system can understand. The diagram shows the Bridge then interacting with both 'iOS Native Components' (like UIViews, UILabels) and 'Android Native Components' (like Android Views, TextViews). This means that when you use a React Native component like `<View>` or `<Text>`, the Bridge ensures that the corresponding actual native UI element is rendered on the screen.
+
+Ultimately, both paths lead to the 'Mobile Device UI,' signifying that the end-user sees and interacts with a genuinely native interface, not a web-based one. This architecture is key to React Native's ability to offer a native look, feel, and performance while allowing developers to work primarily in JavaScript and share a large portion of their codebase across platforms.
 
 > 🤖 **(Android Developers):**
 >
@@ -117,6 +121,6 @@ It might be less suitable for:
 Now it's time to do a bit of your own research to compare React Native with other popular cross-platform frameworks.
 
 - **Exercise 1.1: Framework Comparison Research**
-  - **(./exercise-1.1-framework-comparison-research.md)**
+  - **(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-FRAMEWORK-COMPARISON)**
 
 React Native offers a powerful and efficient way to build high-quality mobile applications for both iOS and Android. By understanding its strengths and limitations, you can make informed decisions about when and how to leverage it effectively. The next section explores the broader ecosystem surrounding React Native.

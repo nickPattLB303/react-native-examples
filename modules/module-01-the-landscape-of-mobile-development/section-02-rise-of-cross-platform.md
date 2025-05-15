@@ -28,7 +28,11 @@ flowchart TD
     G[Modern Frameworks React Native, Flutter]
 ```
 
-This diagram shows the evolution from native-only development—where separate codebases were required for iOS and Android—to early cross-platform solutions, and finally to modern frameworks like React Native and Flutter. The flow highlights the pain points that led to innovation and how today's tools enable developers to target both major platforms efficiently, with fewer trade-offs than ever before.
+The flowchart diagram above illustrates the conceptual journey and motivations behind the shift towards modern cross-platform development frameworks. It begins by depicting the traditional native development model: a 'Native iOS App' and a 'Native Android App', each requiring a 'Separate codebase' to reach their respective 'App Store' and 'Google Play' distribution channels. This bifurcated approach often leads to 'Duplicated effort, cost, inconsistency,' culminating in 'Developer Frustration.'
+
+This frustration catalyzed the search for 'Early Solutions' like 'PhoneGap / Xamarin' (representing WebView-based and early compiled approaches). However, these initial attempts often came with 'Performance & UX trade-offs.' These limitations, in turn, spurred the development of more sophisticated 'Modern Frameworks' such as 'React Native, Flutter.'
+
+The diagram shows how these modern frameworks address the core problem by enabling a 'Single codebase' to target both the 'App Store' and 'Google Play.' This streamlined path signifies a move towards greater efficiency, reduced duplication, and more consistent application behavior across platforms, directly addressing the shortcomings of both pure native development for multiple platforms and earlier cross-platform technologies. The diagram visually underscores the value proposition of modern solutions in mitigating historical development pain points.
 
 ### Evolution of Cross-Platform Approaches
 
@@ -113,7 +117,7 @@ The decision between native and cross-platform development depends heavily on th
 
 ### Comparing Development Approaches
 
-The following table summarizes the key trade-offs between Native Development, WebView-based approaches, and a modern compiled cross-platform solution like React Native, illustrating where React Native aims to fit:
+The following table summarizes the key trade-offs between Native Development, WebView-based approaches, and a modern compiled cross-platform solution like React Native, illustrating where React Native aims to fit.
 
 | Feature               | Native Development (iOS/Android) | WebView Approach (e.g., Cordova)       | React Native (Modern Cross-Platform)      |
 | :-------------------- | :------------------------------- | :------------------------------------- | :---------------------------------------- |
@@ -128,6 +132,6 @@ Understanding this evolution is key. The shortcomings of purely native developme
 
 > 📚 **Official Documentation:**
 >
-> - [Apache Cordova Documentation](https://cordova.apache.org/docs/en/latest/)
-> - [Flutter Documentation](https://docs.flutter.dev/)
+> - [Apache Cordova Documentation](https://cordova.apache.org/docs/en/latest)
+> - [Flutter Documentation](https://docs.flutter.dev)
 > - [MDN Web Docs: Progressive Web Apps (PWAs)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)

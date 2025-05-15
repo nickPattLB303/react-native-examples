@@ -65,11 +65,11 @@ The official documentation is constantly updated by the core teams and community
 
 Bookmark these essential resources:
 
-- **React Native Official Documentation:** [https://reactnative.dev/](https://reactnative.dev/)
+- **React Native Official Documentation:** [https://reactnative.dev](https://reactnative.dev)
   - The primary resource for React Native core concepts, components, APIs, architecture, and guides.
-- **Expo Documentation:** [https://docs.expo.dev/](https://docs.expo.dev/)
+- **Expo Documentation:** [https://docs.expo.dev](https://docs.expo.dev)
   - Essential for anyone using the Expo ecosystem. Covers Expo SDK APIs, Expo CLI, EAS (Expo Application Services), configuration (app.json), development workflows, and guides specific to Expo.
-- **React Navigation Documentation:** [https://reactnavigation.org/](https://reactnavigation.org/)
+- **React Navigation Documentation:** [https://reactnavigation.org](https://reactnavigation.org)
   - The official documentation for React Navigation, the most popular library for handling navigation (screens, tabs, drawers) in React Native apps. (Navigation will be covered in detail later in the course).
 
 #### Navigation Strategy: Finding What You Need
@@ -111,14 +111,16 @@ While the official documentation is paramount, the vibrant React Native and Expo
 
 - **React Native Community GitHub Org:** [https://github.com/react-native-community](https://github.com/react-native-community)
   - Hosts many essential third-party libraries (e.g., AsyncStorage, NetInfo, Slider) that were previously part of the core but are now maintained by the community.
-- **React Native Directory:** [https://reactnative.directory/](https://reactnative.directory/)
+- **React Native Directory:** [https://reactnative.directory](https://reactnative.directory)
   - A searchable database of React Native libraries. Crucially, it often includes information about New Architecture compatibility, helping you choose libraries that work with modern RN/Expo setups.
-- **Expo Snack:** [https://snack.expo.dev/](https://snack.expo.dev/)
+- **Expo Snack:** [https://snack.expo.dev](https://snack.expo.dev)
   - An online editor for quickly trying out React Native code (using Expo) and sharing runnable examples without needing a local setup. Excellent for bug reproductions and simple experiments.
-- **React Native Upgrade Helper:** [https://react-native-community.github.io/upgrade-helper/](https://react-native-community.github.io/upgrade-helper/)
+- **React Native Upgrade Helper:** [https://react-native-community.github.io/upgrade-helper](https://react-native-community.github.io/upgrade-helper)
   - A web tool that shows the code differences between React Native versions, aiding in the upgrade process.
 
 ### Ecosystem components and their roles
+
+To further clarify the roles of various parts of the React Native world, the following table summarizes key ecosystem components:
 
 | Component          | Role                                                    |
 | ------------------ | ------------------------------------------------------- |
@@ -144,14 +146,18 @@ flowchart TD
     B --> J[Expo Go]
 ```
 
-This diagram shows how the main components of the React Native ecosystem relate to each other. React Native core is at the center, with Expo providing additional tools and managed workflows. Community libraries like React Navigation, React Native Paper, Zustand, and TanStack Query extend functionality. Tooling such as Metro and Expo CLI support development and building. Understanding these relationships helps you make informed choices as you start building apps with React Native.
+The flowchart diagram provided illustrates the interconnected nature of the React Native ecosystem. At its heart is 'React Native Core,' the foundational framework. Branching from this, 'Expo' is shown as a significant platform that builds upon and extends the core, offering tools like the 'Expo CLI' and services like 'Expo Go' for development and testing.
+
+Another major output from the core is its support for 'Community Libraries.' These user-generated and third-party modules are vital, encompassing a wide range of functionalities such as 'React Navigation' for screen management, 'React Native Paper' for UI components, and state management solutions like 'Zustand' and 'TanStack Query.'
+
+Underpinning the development process is the 'Metro Bundler,' which is integral to React Native Core for packaging JavaScript code. This visualization effectively demonstrates that developing a React Native application involves leveraging not just the core framework but also a rich suite of tools, platforms like Expo, and a diverse array of community-driven libraries to build full-featured applications. Understanding these relationships helps in navigating the ecosystem and selecting the right tools for specific project needs.
 
 > 📚 **Official Documentation:**
 >
 > - [React Native Documentation](https://reactnative.dev/docs/getting-started)
-> - [Expo Documentation](https://docs.expo.dev/)
-> - [Expo SDK API Reference](https://docs.expo.dev/versions/latest/)
-> - [Expo Application Services (EAS)](https://docs.expo.dev/eas/)
+> - [Expo Documentation](https://docs.expo.dev)
+> - [Expo SDK API Reference](https://docs.expo.dev/versions/latest)
+> - [Expo Application Services (EAS)](https://docs.expo.dev/eas)
 > - [Community Resources (React Native Docs)](https://reactnative.dev/community/overview)
 
 Together, React Native core, the Expo platform, and the vibrant community form a powerful ecosystem for building cross-platform mobile applications efficiently. It's important to remember that the strength of the surrounding ecosystem—the quality of tooling like Expo, the availability of libraries, the responsiveness of the community, and the clarity of documentation—is often just as critical to a project's success as the technical features of the core framework itself. With this foundational understanding of the mobile development landscape and React Native's place within it, you are ready to move on to exploring the architecture that powers these applications.
@@ -161,7 +167,7 @@ Together, React Native core, the Expo platform, and the vibrant community form a
 Now that you've learned about the mobile development landscape, cross-platform solutions, and React Native's ecosystem, test your knowledge with the following challenge:
 
 - **Challenge 1: Mobile Development Quiz**
-  - **(./challenge-1-mobile-development-quiz.md)**
+  - **(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-MOBILE-DEV-QUIZ)**
 
 ### Module Summary
 

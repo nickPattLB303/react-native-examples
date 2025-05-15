@@ -52,12 +52,12 @@ TurboModules achieve their goals through a combination of JSI, explicit specific
 
     ```mermaid
     graph LR
-        A[1. Developer writes Module Spec (e.g., MyTurboModuleSpec.ts)] --> B(2. Build Process Triggers Codegen);
+        A[1. Developer writes Module Spec e.g., MyTurboModuleSpec.ts] --> B(2. Build Process Triggers Codegen);
         B --> C{3. Codegen Parses Spec File};
-        C --> D[4. Generates C++ JSI Interface Code (e.g., .h, .cpp files)];
-        C --> E[5. Generates Native Interface Stubs (e.g., Java interfaces, Obj-C++ protocols)];
-        D --> F[6. JavaScript Engine (via JSI)];
-        E --> G[7. Developer Implements Native Logic (Kotlin/Java, Swift/Obj-C) based on Stubs];
+        C --> D[4. Generates C++ JSI Interface Code e.g., .h, .cpp files];
+        C --> E[5. Generates Native Interface Stubs e.g., Java interfaces, Obj-C++ protocols];
+        D --> F[6. JavaScript Engine via JSI];
+        E --> G[7. Developer Implements Native Logic Kotlin/Java, Swift/Obj-C based on Stubs];
         F <--> H{React Native Runtime};
         G --> H;
 

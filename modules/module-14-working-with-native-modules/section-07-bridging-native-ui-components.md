@@ -55,17 +55,17 @@ Key concepts underpinning Fabric Components include:
 
     ```mermaid
     graph TD
-        A[React (JS) Component Tree] -->|Updates| B(Fabric Bridge - JSI);
+        A[React JS Component Tree] -->|Updates| B(Fabric Bridge - JSI);
         B --> C{C++ Shadow Tree};
         C -->|Layout via Yoga| C;
-        C -->|Diffing & Batching| D[Native View Manager (Platform Specific)];
-        D --> E[Native UI View (iOS/Android)];
+        C -->|Diffing & Batching| D[Native View Manager Platform Specific];
+        D --> E[Native UI View iOS/Android];
 
         subgraph JavaScript Realm
             A
         end
 
-        subgraph Bridging & Core Logic (C++)
+        subgraph Bridging & Core Logic C++
             B
             C
         end

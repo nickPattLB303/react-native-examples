@@ -31,7 +31,13 @@ gantt
 
 ```
 
-The diagram above illustrates the major eras and milestones in mobile platform history. From early PDAs and fragmented operating systems like Symbian and Palm OS, the launch of iOS in 2007 and Android in 2008 marked a revolutionary shift. Key moments like the App Store launch and Android's support for varied screen sizes solidified their dominance. This set the stage for the modern era, characterized by the iOS/Android duopoly and the subsequent rise of cross-platform solutions like React Native starting around 2015. This timeline helps visualize the rapid evolution and the context for today's development landscape.
+The Gantt chart above, titled 'Mobile Platform Evolution Timeline,' visually maps the significant periods and pivotal moments in the history of mobile platforms, spanning from 1993 into the present day. The timeline is divided into three key eras: the 'Early Era,' the 'Smartphone Revolution,' and the 'Modern Duopoly & Cross-Platform' era.
+
+In the 'Early Era,' we see the emergence of foundational technologies. Milestones like 'Early PDAs (Newton, Simon)' in 1993 mark the genesis of handheld computing. Dominant operating systems of this period, such as 'Palm OS' (starting 1996), 'Symbian OS' (1998), 'BlackBerry OS' (1999), and 'Windows Mobile' (2000), are shown with their approximate lifespans, highlighting a fragmented market. 'Java ME (J2ME) Apps,' also starting in 2000, represented an early attempt at a more unified application environment for feature phones.
+
+The 'Smartphone Revolution' era kicks off decisively with the 'iOS Launch (iPhone)' in 2007, a critical milestone that reshaped user expectations. This was quickly followed by other transformative events: the 'App Store Launch (iOS 2)' and 'Android 1.0 Launch' in 2008, which democratized app distribution, and 'Android Market Launch' (also 2008). A key technical milestone, 'Android Screen Size Support (Donut 1.6)' in 2009, addressed early Android fragmentation.
+
+Finally, the 'Modern Duopoly & Cross-Platform' era signifies the consolidation of market power, with 'iOS / Android Domination' depicted as a critical, ongoing phase starting from 2009. Important Android maturation like 'Unified Android UI (ICS 4.0)' in 2011 further refined the platform. Crucially, the 'React Native Launch' in 2015 is marked as a significant milestone, heralding the 'Rise of Modern Cross-Platform' solutions, an active trend continuing today. This visual representation helps learners grasp the rapid succession of innovations and understand the historical context that led to the current mobile development landscape and the need for frameworks like React Native.
 
 ### The Early Days: Before Smartphones
 
@@ -60,7 +66,12 @@ The mobile landscape changed dramatically with the introduction of Apple's iPhon
 - **iOS (iPhone OS):** Launched with the first iPhone, iOS revolutionized the mobile experience with its capacitive multi-touch interface and mobile Safari browser. The App Store, introduced with iPhone OS 2 in 2008, created a centralized, easy-to-use platform for discovering, purchasing, and installing applications, fueling explosive growth in mobile app development. Key early features included Visual Voicemail (OS 1), Cut/Copy/Paste (OS 3), and Multitasking (iOS 4). Apple's Human Interface Guidelines (HIG) emphasized clarity and intuitive interaction.
 - **Android:** Acquired by Google in 2005 and first released commercially in 2008, Android offered an open-source alternative. Its key features included tight integration with Google services, customizable interfaces, and support for a wide variety of hardware. The Android Market (now Google Play Store) provided a similar app distribution model. Crucial early milestones included the on-screen keyboard (Cupcake 1.5), support for multiple screen sizes (Donut 1.6), turn-by-turn navigation (Éclair 2.0), JIT compilation for performance (Froyo 2.2), NFC support (Gingerbread 2.3), and the unification of phone/tablet UIs (Ice Cream Sandwich 4.0). Google's Material Design guidelines evolved to provide a cohesive visual language.
 
-The success of iOS and Android was driven by several factors: - **Intuitive User Interfaces:** Multi-touch gestures replaced complex button combinations. - **Powerful Hardware:** Enabled richer applications. - **Centralized App Stores:** Simplified app discovery, distribution, and monetization. - **Strong Developer Ecosystems:** Comprehensive SDKs, tools (Xcode, Android Studio), and documentation empowered developers.
+The success of iOS and Android was driven by several factors:
+
+- **Intuitive User Interfaces:** Multi-touch gestures replaced complex button combinations.
+- **Powerful Hardware:** Enabled richer applications.
+- **Centralized App Stores:** Simplified app discovery, distribution, and monetization.
+- **Strong Developer Ecosystems:** Comprehensive SDKs, tools (Xcode, Android Studio), and documentation empowered developers.
 
 ### Ecosystem Lock-in and Modern Mobile OS Characteristics
 
