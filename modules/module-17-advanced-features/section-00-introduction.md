@@ -29,11 +29,11 @@ Upon completing this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the concepts covered in the previous modules, particularly:
 
-- Module 7: React Essentials for React Native (TODO: Link to Module 7)
-- Module 8: React Native Core Components (TODO: Link to Module 8)
-- Module 9: React Native Core APIs and Hooks (TODO: Link to Module 9)
-- Module 10: Styling in React Native (TODO: Link to Module 10)
-- Module 13: State Management (TODO: Link to Module 13)
+- Module 7: React Essentials for React Native ([../module-07/section-00-introduction.md](../module-07/section-00-introduction.md))
+- Module 8: React Native Core Components ([../module-08/section-00-introduction.md](../module-08/section-00-introduction.md))
+- Module 9: React Native Core APIs and Hooks ([../module-09/section-00-introduction.md](../module-09/section-00-introduction.md))
+- Module 10: Styling in React Native ([../module-10/section-00-introduction.md](../module-10/section-00-introduction.md))
+- Module 13: State Management ([../module-13/section-00-introduction.md](../module-13/section-00-introduction.md))
 
 A strong grasp of TypeScript and JavaScript is also essential.
 
@@ -54,7 +54,7 @@ This module is divided into the following sections, each covering a key advanced
 
 At the end of this module, you will apply the concepts learned to enhance the SpeedyMeds application:
 
-- **Challenge 17: Add an Animated Element to the Prescription Card** `**(URL_to_Expo_Snack_Challenge_17)**`
+- **Challenge 17: Add an Animated Element to the Prescription Card** `**(https://snack.expo.dev/--replace-this-with-actual-challenge-17-url--)**`
 
 ### Module Summary
 

@@ -73,6 +73,13 @@ Before you can send or receive notifications, you must request permission from t
 ```typescript
 import * as Notifications from "expo-notifications";
 
+/**
+ * @async
+ * @function requestPermissionsAsync
+ * @description Checks existing notification permissions and requests new ones if not already granted.
+ * Configures iOS specific permissions for alert, badge, sound, and announcements.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if permissions are granted, `false` otherwise.
+ */
 async function requestPermissionsAsync() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
@@ -105,6 +112,14 @@ import { useEffect, useRef } from "react";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 
+/**
+ * @async
+ * @function getPushTokenAsync
+ * @description Retrieves the Expo Push Token for the current device.
+ * Ensures notification permissions are granted before attempting to get the token.
+ * Requires `extra.eas.projectId` to be configured in `app.config.js`.
+ * @returns {Promise<string | null>} A promise that resolves with the Expo Push Token string or null if an error occurs or permissions are denied.
+ */
 async function getPushTokenAsync() {
   if (!(await requestPermissionsAsync())) return; // Ensure permissions are granted
 
@@ -135,6 +150,17 @@ You can schedule a notification to appear at a later time.
 ```typescript
 import * as Notifications from "expo-notifications";
 
+/**
+ * @async
+ * @function scheduleLocalNotification
+ * @description Schedules a local notification to be displayed at a future time.
+ * Ensures notification permissions are granted before scheduling.
+ * @param {string} title - The title of the notification.
+ * @param {string} body - The main content (body) of the notification.
+ * @param {object} data - Optional data payload to attach to the notification.
+ * @param {number} seconds - The number of seconds from now when the notification should trigger.
+ * @returns {Promise<void>} A promise that resolves when the notification has been scheduled or permissions check fails.
+ */
 async function scheduleLocalNotification(
   title: string,
   body: string,
@@ -181,6 +207,14 @@ const notificationListener = useRef<Notifications.Subscription>();
 // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
 const responseListener = useRef<Notifications.Subscription>();
 
+/**
+ * @function setupNotificationHandlers
+ * @description Sets up notification event listeners for received notifications and notification responses.
+ * Also configures the default presentation behavior for foreground notifications.
+ * This function should be called in a root component (e.g., App.tsx) within a useEffect hook.
+ * It handles requesting permissions and getting the push token.
+ * Remember to clean up listeners on component unmount.
+ */
 // Call this in your root component (e.g., App.tsx)
 function setupNotificationHandlers() {
   // Set default behavior for how notifications should be presented when received while the app is foregrounded.
@@ -256,13 +290,16 @@ Consult the [Expo Server SDKs](https://docs.expo.dev/push-notifications/sending-
 
 **Example: Setting up Basic Notification Handling and Scheduling a Local Reminder**
 
-Let's integrate the permission request and a simple local notification scheduler into a conceptual SpeedyMeds component.
+Let's integrate the permission request and a simple local notification scheduler into a conceptual SpeedyMeds component. This example assumes the `requestPermissionsAsync` and `getPushTokenAsync` (renamed here to `requestPermissionsAndGetToken` for clarity in this component's context, but referring to the same logic) functions are available as defined in the Referential Content section.
 
 ```tsx
 import React, { useEffect, useRef, useState } from "react";
 import { View, Button, Text, Platform, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants"; // For projectId
+
+// (Assuming requestPermissionsAsync and getPushTokenAsync are defined as above in Referential Content)
+// For this component example, we'll use a combined function for clarity during setup.
 
 // Must be called in the root component (App.tsx) or early in your app's lifecycle
 Notifications.setNotificationHandler({
@@ -280,10 +317,13 @@ Notifications.setNotificationHandler({
  * Alerts are shown if permissions are denied or token retrieval fails.
  *
  * @async
- * @function requestPermissionsAndGetToken
+ * @function requestPermissionsAndGetTokenInComponent
+ * @description (This function is illustrative for the component context, combining logic from `requestPermissionsAsync` and `getPushTokenAsync` for this example)
  * @returns {Promise<string | null>} A promise that resolves with the Expo Push Token string or null if permission is denied or an error occurs.
  */
-async function requestPermissionsAndGetToken() {
+async function requestPermissionsAndGetTokenInComponent(): Promise<
+  string | null
+> {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
 
@@ -305,7 +345,6 @@ async function requestPermissionsAndGetToken() {
   }
 
   try {
-    // Ensure you have projectId in your app.config.js extra.eas.projectId
     const projectId = Constants.expoConfig?.extra?.eas?.projectId;
     if (!projectId) {
       console.warn(
@@ -318,10 +357,10 @@ async function requestPermissionsAndGetToken() {
     }
     const token = (await Notifications.getExpoPushTokenAsync({ projectId }))
       .data;
-    console.log("Expo Push Token:", token);
+    console.log("Expo Push Token (from component context):", token);
     return token;
   } catch (e) {
-    console.error("Failed to get push token", e);
+    console.error("Failed to get push token (from component context)", e);
     alert("Failed to get push token. Check console for details.");
     return null;
   }
@@ -340,7 +379,10 @@ const SpeedyMedsNotificationScheduler: React.FC = () => {
   const responseListener = useRef<Notifications.Subscription>();
 
   useEffect(() => {
-    requestPermissionsAndGetToken().then((token) => setExpoPushToken(token));
+    // Use the combined helper function for this component
+    requestPermissionsAndGetTokenInComponent().then((token) =>
+      setExpoPushToken(token)
+    );
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -371,6 +413,13 @@ const SpeedyMedsNotificationScheduler: React.FC = () => {
     };
   }, []);
 
+  /**
+   * @async
+   * @function scheduleMedicationReminder
+   * @description Schedules a local notification for a medication reminder.
+   * The notification will trigger in 5 seconds and includes custom data for navigation.
+   * @returns {Promise<void>}
+   */
   const scheduleMedicationReminder = async () => {
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -439,33 +488,4 @@ This `SpeedyMedsNotificationScheduler` component provides a comprehensive demons
     - `useEffect` hook: This is the heart of the component's setup and cleanup logic.
       - On component mount, it calls `requestPermissionsAndGetToken()` and updates the `expoPushToken` state.
       - `Notifications.addNotificationReceivedListener()`: Sets up a listener that fires whenever any notification is received by the device _while the app is running (foreground or background)_. The callback receives the `notification` object. This is useful for telemetry or updating app state silently.
-      - `Notifications.addNotificationResponseReceivedListener()`: Sets up a listener that fires when a user _interacts_ with a notification (e.g., taps on it). This works whether the app was in the foreground, background, or even killed (and then launched by the notification tap). The `response` object contains the `notification` and the `actionIdentifier` if custom actions were used. The `response.notification.request.content.data` holds any custom data sent with the notification, which is critical for deep linking or custom handling (e.g., navigating to a specific screen).
-      - The `return` function within `useEffect` is a cleanup function. It's crucial for removing the notification listeners when the component unmounts, preventing memory leaks and unexpected behavior. It uses `Notifications.removeNotificationSubscription()` with the stored listener references.
-
-4.  **Scheduling a Local Notification (`scheduleMedicationReminder` function):**
-
-    - This asynchronous function demonstrates how to schedule a local notification using `Notifications.scheduleNotificationAsync()`.
-    - `content`: Defines the visual aspects of the notification (`title`, `body`, `sound`) and, importantly, a `data` payload. In this SpeedyMeds example, `data: { screen: "MedicationLog", params: { from: "reminder" } }` is included. This custom data can be retrieved by the `responseListener` to navigate the user to the `MedicationLog` screen when they tap the reminder.
-    - `trigger`: Specifies when the notification should appear. Here, `seconds: 5` means it will fire 5 seconds after scheduling, useful for testing. For real reminders, you'd calculate seconds based on a specific date/time or use other trigger types like `DailyTrigger`, `WeeklyTrigger`, etc. (not shown in this specific example but available in the library).
-    - An alert confirms to the user that the reminder has been scheduled.
-
-5.  **UI Elements:**
-    - A `<Text>` component displays the `expoPushToken` or a "Requesting..." message.
-    - A `<Button>` allows the user to trigger the `scheduleMedicationReminder` function.
-
-This comprehensive example covers the essential lifecycle of notifications: configuring global handling, requesting permissions, obtaining a push token, scheduling local notifications with data, and setting up listeners for both receiving notifications and handling user interactions with them. This forms a solid base for any application needing robust notification capabilities.
-
-> [!CAUTION]
-> Testing remote push notifications often requires a physical device, as simulators may have limitations. For Expo Go, ensure your device is logged into the same Expo account as your development machine. For development builds, ensure they are correctly configured for notifications.
-
-> 📚 **Official Documentation:**
->
-> - [Expo Notifications Overview](https://docs.expo.dev/versions/latest/sdk/notifications/)
-> - [Expo: Sending Notifications with Expo's Push API](https://docs.expo.dev/push-notifications/sending-notifications/)
-> - [Expo: Receiving Notifications](https://docs.expo.dev/push-notifications/receiving-notifications/)
-> - [Firebase Cloud Messaging (FCM)](https://firebase.google.com/docs/cloud-messaging)
-> - [Apple Push Notification service (APNs)](https://developer.apple.com/documentation/usernotifications)
-
-### Next Steps
-
-Understanding push notifications is key for user engagement. Next, we'll explore how to manage data offline, enabling your application to function even without a persistent internet connection.
+      - `

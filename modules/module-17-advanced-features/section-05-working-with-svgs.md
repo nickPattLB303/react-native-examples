@@ -82,11 +82,25 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
+/**
+ * @interface CheckmarkIconProps
+ * @description Defines the properties for the CheckmarkIcon component.
+ * @property {string} [color="#4CAF50"] - The fill color of the checkmark icon.
+ * @property {number} [size=24] - The width and height of the icon.
+ */
 interface CheckmarkIconProps {
   color?: string;
   size?: number;
 }
 
+/**
+ * @component CheckmarkIcon
+ * @description A reusable SVG checkmark icon component.
+ * It renders a scalable checkmark path within an Svg container.
+ * Useful in the SpeedyMeds app for indicating success or verification.
+ * @param {CheckmarkIconProps} props - The properties for the component.
+ * @returns {React.ReactElement} The rendered CheckmarkIcon component.
+ */
 const CheckmarkIcon: React.FC<CheckmarkIconProps> = ({
   color = "#4CAF50",
   size = 24,
@@ -123,11 +137,21 @@ export default CheckmarkIcon;
 
 **Explanation of Example 1:**
 
-- We import `Svg` and `Path` from `react-native-svg`.
-- The `CheckmarkIcon` component takes optional `color` and `size` props.
-- The `<Svg>` component sets up the canvas with a `viewBox` of "0 0 24 24". This means our path data is defined within a 24x24 coordinate system.
-- The `width` and `height` props of the `<Svg>` component are set to the `size` prop, so the 24x24 `viewBox` will be scaled to fit these dimensions.
-- The `<Path>` component defines the checkmark shape using SVG path data (`d` attribute). The `fill` prop is set to the `color` prop.
+This `CheckmarkIcon` component demonstrates how to create a simple, reusable vector icon directly within your React Native code using `react-native-svg`. The icon is a standard checkmark, which could be used in the SpeedyMeds app to indicate a verified prescription, a successfully completed action, or a selected item.
+
+The key aspects of this component are:
+
+1.  **Props for Customization (`color`, `size`):** The component accepts `color` and `size` props, allowing it to be easily reused with different appearances. Default values are provided for convenience (`#4CAF50` green and `24` pixels).
+
+2.  **`<Svg>` Container:** The root of our icon is the `<Svg>` component from `react-native-svg`. We pass the `size` prop to its `height` and `width` attributes. This defines the dimensions the SVG will occupy on the screen.
+
+3.  **`viewBox="0 0 24 24"`:** This is a critical attribute. It defines the internal coordinate system of the SVG graphic. In this case, we're saying our drawing space is a 24x24 unit square. Regardless of the actual `size` prop passed (e.g., 30, 50, or 100 pixels), the drawing instructions within the `viewBox` will be scaled to fit those dimensions. This is what makes SVGs scalable without loss of quality.
+
+4.  **`<Path>` Element:** The actual checkmark shape is drawn using a single `<Path>` element. The `d` attribute contains a string of SVG path commands that define the lines and curves of the checkmark. This specific path data is a common representation for a checkmark icon. The `fill` attribute of the `<Path>` is set to the `color` prop, allowing the icon's color to be dynamically changed.
+
+5.  **Container `<View>`:** The `<Svg>` element is wrapped in a standard React Native `<View>`. While not strictly necessary for the SVG itself to render, this container uses Flexbox properties (`justifyContent: "center", alignItems: "center"`) and is given the icon's `width` and `height`. This can be helpful for layout purposes, ensuring the icon is aligned as expected if it's placed alongside other elements, and makes the touchable area (if any were added) consistent with the icon size.
+
+By creating the icon this way, we have a component that is lightweight, scalable to any dimension without pixelation, and customizable in color. This is far more efficient for simple icons than using multiple PNG files for different resolutions and colors.
 
 **Example 2: Using a Local SVG File (as a Component)**
 
@@ -153,10 +177,23 @@ You could convert this into a React Native component manually or using a tool:
 import React from "react";
 import Svg, { Rect, Path } from "react-native-svg";
 
+/**
+ * @interface RxLogoProps
+ * @description Defines the properties for the RxLogo component.
+ * @property {number} [size=100] - The width and height of the logo.
+ */
 interface RxLogoProps {
   size?: number;
 }
 
+/**
+ * @component RxLogo
+ * @description A component that renders the SpeedyMeds Rx logo using SVG elements.
+ * This demonstrates how an existing SVG file can be converted into a reusable
+ * React Native component using `react-native-svg`.
+ * @param {RxLogoProps} props - The properties for the component.
+ * @returns {React.ReactElement} The rendered RxLogo component.
+ */
 const RxLogo: React.FC<RxLogoProps> = ({ size = 100 }) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 100 100" fill="none">
@@ -183,9 +220,37 @@ export default RxLogo;
 
 **Explanation of Example 2:**
 
-- The SVG XML from `rx-logo.svg` is translated into `react-native-svg` components (`<Rect>`, `<Path>`).
-- Props like `stroke-width` become `strokeWidth` to match React prop naming conventions.
-- This `RxLogo` component can now be imported and used like any other React component, with the `size` prop controlling its rendered dimensions.
+This `RxLogo` component illustrates a common workflow for using SVGs in React Native: converting an existing `.svg` file (like one exported from a design tool) into a dedicated React Native component. This approach makes the SVG easily reusable and manageable within your project, especially for more complex graphics like logos. The SpeedyMeds Rx logo serves as our example here.
+
+Key steps and concepts involved:
+
+1.  **Original SVG Structure:** We start with the XML content of an `rx-logo.svg` file. This file contains standard SVG elements like `<svg>`, `<rect>`, and `<path>` with various attributes defining the logo's appearance (dimensions, colors, path data, stroke properties).
+
+2.  **Translation to `react-native-svg` Components:** The core idea is to replace each SVG XML tag with its corresponding component from the `react-native-svg` library.
+
+    - The root `<svg>` tag becomes the `<Svg>` component.
+    - `<rect>` becomes `<Rect>`.
+    - `<path>` becomes `<Path>`.
+
+3.  **Prop Mapping:** SVG attributes are mapped to React-style props. For example:
+
+    - `width` and `height` on the `<svg>` tag map directly to `width` and `height` props on the `<Svg>` component.
+    - `viewBox` is also a direct mapping.
+    - `fill` on `<rect>` maps to the `fill` prop.
+    - `stroke-width` on `<path>` becomes `strokeWidth` (camelCase).
+    - `stroke-linecap` becomes `strokeLinecap`.
+    - `stroke-linejoin` becomes `strokeLinejoin`.
+      This conversion to camelCase is standard for React props that correspond to hyphenated HTML/SVG attributes.
+
+4.  **Component Encapsulation:** The translated SVG elements are wrapped in a functional React component (`RxLogo`). This component can accept props, such as `size`, to allow for easy customization of the logo's rendered dimensions while maintaining its aspect ratio due to the `viewBox`.
+
+5.  **Benefits of Componentization:**
+    - **Reusability:** Import and use `<RxLogo size={50} />` anywhere in the app.
+    - **Maintainability:** If the logo design changes, you update this single component.
+    - **Performance:** For static SVGs, this is generally efficient. `react-native-svg` renders these elements on the native side.
+    - **Type Safety:** With TypeScript, `RxLogoProps` provides type checking for the component's props.
+
+While manual conversion is feasible for simple SVGs like this logo, for projects with many complex SVGs, tools like SVGR (`@svgr/cli`) are highly recommended. SVGR can automate the conversion from `.svg` files to React Native components, handling optimizations and prop transformations, significantly streamlining the development workflow. This `RxLogo` could be used in various places within the SpeedyMeds application, such as in the header, on a splash screen, or as part of branding elements.
 
 > [!TIP]
 > For managing a large number of SVG icons, consider using a tool like SVGR to automatically convert your SVG files into React Native components. This can be integrated into your build process or run as a one-time script.

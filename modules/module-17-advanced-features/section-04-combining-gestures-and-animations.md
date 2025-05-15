@@ -52,11 +52,23 @@ import {
 const { width: screenWidth } = Dimensions.get("window");
 
 // Define a context type for our gesture handler
+/**
+ * @typedef CardGestureContext
+ * @description Context object for the draggable card gesture handler.
+ * @property {number} startX - The initial X position of the card when dragging starts.
+ * @property {number} startY - The initial Y position of the card when dragging starts.
+ */
 type CardGestureContext = {
   startX: number;
   startY: number;
 };
 
+/**
+ * @interface PrescriptionCardProps
+ * @description Defines the properties for the PrescriptionCard component.
+ * @property {string} medication - The name of the medication.
+ * @property {string} dosage - The dosage information for the medication.
+ */
 interface PrescriptionCardProps {
   medication: string;
   dosage: string;

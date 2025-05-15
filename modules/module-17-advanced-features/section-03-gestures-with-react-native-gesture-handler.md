@@ -104,6 +104,44 @@ For fluid, UI-thread-driven interactions, Gesture Handler is commonly used with 
   //     // Optionally snap back or handle velocity
   //   },
   // });
+  // To use useAnimatedGestureHandler, you would first define your shared values
+  // and then the gesture handler. Below is a more complete structure:
+
+  /*
+  // Define shared values for position
+  const startingPositionX = 0;
+  const startingPositionY = 0;
+  const x = useSharedValue(startingPositionX);
+  const y = useSharedValue(startingPositionY);
+  
+  // Define the context type for the gesture
+  type GestureContext = {
+    startX: number;
+    startY: number;
+  };
+  
+  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, GestureContext> ({
+    onStart: (_, ctx) => {
+      'worklet';
+      ctx.startX = x.value;
+      ctx.startY = y.value;
+    },
+    onActive: (event, ctx) => {
+      'worklet';
+      x.value = ctx.startX + event.translationX;
+      y.value = ctx.startY + event.translationY;
+    },
+    onEnd: (_) => {
+      'worklet';
+      // Optional: Snap back to starting position with an animation
+      // x.value = withSpring(startingPositionX);
+      // y.value = withSpring(startingPositionY);
+    },
+  });
+  
+  // Then, you would apply this gestureHandler to a PanGestureHandler component
+  // and use the x and y shared values in an animated style.
+  */
   ```
 
   The first type argument to `useAnimatedGestureHandler` is the type of the event object for that specific gesture (e.g., `PanGestureHandlerGestureEvent`), and the second (optional) is the type for a `context` object that can be used to store state across gesture event callbacks.
@@ -131,14 +169,33 @@ import {
 } from "react-native-gesture-handler";
 
 // A simple pill shape for our draggable item
+/**
+ * @component Pill
+ * @description A simple presentational component that renders a pill-shaped View.
+ * Used as the visual element within the DraggablePill component.
+ */
 const Pill = () => <Animated.View style={styles.pill} />;
 
 // Define a context type for our gesture handler to store starting positions
+/**
+ * @typedef DraggableContext
+ * @description Context object for the draggable pill gesture handler.
+ * @property {number} startX - The initial X position of the pill when dragging starts.
+ * @property {number} startY - The initial Y position of the pill when dragging starts.
+ */
 type DraggableContext = {
   startX: number;
   startY: number;
 };
 
+/**
+ * @component DraggablePill
+ * @description A component that renders a "pill" which can be dragged around the screen.
+ * It demonstrates the use of `PanGestureHandler` from React Native Gesture Handler
+ * combined with Reanimated's `useAnimatedGestureHandler`, `useSharedValue`,
+ * and `useAnimatedStyle` to create a smooth, UI-thread driven drag interaction.
+ * The pill visually represents an item from the SpeedyMeds application.
+ */
 const DraggablePill = () => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -212,7 +269,27 @@ export default DraggablePill;
 
 **Explanation of the Example:**
 
-The `DraggablePill` component uses a `PanGestureHandler` to detect drag gestures. The `useAnimatedGestureHandler` hook processes these gestures: `onStart` records the initial position, `onActive` updates the `translateX` and `translateY` shared values based on the finger's movement, and `onEnd` could be used for final adjustments (like snapping). The `useAnimatedStyle` then applies these translations to the `Animated.View`, making the pill follow the user's finger. This interaction is smooth because the gesture processing and style updates all happen on the UI thread.
+This `DraggablePill` component showcases how to create a draggable UI element, themed as a "pill" for the SpeedyMeds app, using `PanGestureHandler` and React Native Reanimated. The objective is to allow users to freely move the pill around the screen, with the interaction feeling smooth and responsive.
+
+Here's a breakdown of its implementation:
+
+1.  **Shared Values (`translateX`, `translateY`):** We initialize two shared values, `translateX` and `translateY`, to 0 using `useSharedValue`. These will store the pill's current X and Y offset from its initial position as it's being dragged.
+
+2.  **`DraggableContext` Type:** A TypeScript type `DraggableContext` is defined to hold `startX` and `startY`. This context object is used within `useAnimatedGestureHandler` to remember the pill's position when a drag gesture begins. This is crucial for calculating the new position correctly during the `onActive` phase.
+
+3.  **`useAnimatedGestureHandler`:** This is the core of the gesture logic.
+
+    - **`onStart: (event, context)`:** This worklet function is executed when the pan gesture starts (i.e., the user touches and begins to move the pill). It saves the current `translateX.value` and `translateY.value` into `context.startX` and `context.startY`. This captures the starting point of the drag.
+    - **`onActive: (event, context)`:** This worklet runs continuously as the user drags their finger. `event.translationX` and `event.translationY` provide the displacement from the start of the gesture. We update `translateX.value` to `context.startX + event.translationX` (and similarly for Y). This makes the pill follow the finger.
+    - **`onEnd: ()`:** This worklet runs when the user lifts their finger. In this example, it's largely empty, meaning the pill stays where it's dragged. The commented-out lines show how you could use `withSpring` to animate the pill back to its origin or another position.
+
+4.  **`animatedPillStyle` with `useAnimatedStyle`:** This hook creates an animated style object. The worklet inside returns a `transform` style that applies the current `translateX.value` and `translateY.value`. As these shared values change due to the gesture, this style is recomputed on the UI thread, and the `Animated.View` updates.
+
+5.  **`PanGestureHandler` Component:** This component from `react-native-gesture-handler` wraps our `Animated.View`. The `onGestureEvent` prop is crucial and is assigned our `panGestureHandler` (created by `useAnimatedGestureHandler`). This connects the raw gesture data from the `PanGestureHandler` to our Reanimated logic.
+
+6.  **`Animated.View` and `Pill`:** The `Animated.View` is the component that actually moves. It uses `animatedPillStyle`. Inside it, we render a simple `Pill` component for visual representation. The `Pill` itself is an `Animated.View` to ensure it can be transformed by its parent.
+
+By connecting `PanGestureHandler` with Reanimated's hooks, the entire drag interaction—from detecting the gesture to updating the pill's position on screen—is managed on the UI thread. This architecture prevents the JavaScript thread from becoming a bottleneck, resulting in the high-performance, native-like feel that Gesture Handler and Reanimated aim to provide. This makes it ideal for interactive elements in applications like SpeedyMeds, for instance, if users needed to drag and drop medications into a schedule.
 
 > [!TIP]
 > When working with gestures, especially `PanGestureHandler`, always test on a physical device if possible, as simulator performance for gestures can sometimes differ from real-world behavior.
@@ -221,7 +298,7 @@ The `DraggablePill` component uses a `PanGestureHandler` to detect drag gestures
 
 Practice using `GestureHandler` components to create interactive elements.
 
-- **Exercise 17.2: Implementing a Basic Gesture** `**(URL_to_Expo_Snack_Exercise_17.2)**`
+- **Exercise 17.2: Implementing a Basic Gesture** `**(https://snack.expo.dev/--replace-this-with-actual-exercise-17.2-url--)**`
 
 > 📚 **Official Documentation:**
 >

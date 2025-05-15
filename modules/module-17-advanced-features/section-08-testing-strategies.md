@@ -109,6 +109,14 @@ Let's say SpeedyMeds has a helper function to format a medication schedule.
 
 ```typescript
 // utils/medicationFormatter.ts
+/**
+ * Formats a medication schedule instruction string based on how many times per day
+ * the medication should be taken.
+ *
+ * @param {number} timesPerDay - The number of times the medication is taken per day.
+ * @param {string} dosageInstruction - The specific instruction for the dosage (e.g., "Take with food").
+ * @returns {string} A formatted string describing the schedule.
+ */
 export function formatSchedule(
   timesPerDay: number,
   dosageInstruction: string
@@ -158,10 +166,14 @@ describe("formatSchedule", () => {
 
 **Explanation of Example 1:**
 
-- The test file imports the function to be tested.
-- `describe` groups tests for `formatSchedule`.
-- Each `it` block defines a specific scenario (e.g., once daily, multiple times, invalid input).
-- `expect` along with the `toBe` matcher asserts that the function's output matches the expected string for each scenario.
+- The test file imports the function to be tested (`formatSchedule`).
+- `describe("formatSchedule", ...)` groups all tests related to the `formatSchedule` function, enhancing organization and readability of test outputs.
+- Each `it(...)` block defines an individual test case, clearly describing the specific scenario it covers. This helps in quickly understanding the purpose of each test.
+  - The first test (`"should format correctly for once daily"`) checks the standard output for a single daily dosage.
+  - The second test (`"should format correctly for multiple times daily"`) verifies the output for medications taken more than once a day.
+  - The third and fourth tests (`"should handle zero times per day"` and `"should handle negative times per day"`) are crucial edge case tests. They ensure the function behaves gracefully and provides an informative message when potentially invalid input (like 0 or negative repetitions) is provided, preventing unexpected errors or nonsensical schedule descriptions in the SpeedyMeds app.
+- `expect(functionCall).toBe(expectedOutput)` is the core assertion. `expect` takes the actual value returned by `formatSchedule` and the `toBe` matcher checks for strict equality (===) against the `expectedOutput` string.
+- These unit tests thoroughly validate the `formatSchedule` function by covering typical use cases and important boundary conditions, ensuring its reliability within the SpeedyMeds application logic.
 
 **Example 2: Component Test for a Basic Button (RNTL)**
 
@@ -184,6 +196,13 @@ interface CustomButtonProps {
   testID?: string;
 }
 
+/**
+ * @component CustomButton
+ * @description A reusable button component for the SpeedyMeds application.
+ * It supports a title, onPress handler, disabled state, and testID for testing.
+ * @param {CustomButtonProps} props - The properties for the component.
+ * @returns {React.ReactElement} The rendered CustomButton component.
+ */
 const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
@@ -226,6 +245,15 @@ A component test for `CustomButton`:
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import CustomButton from "../../components/CustomButton";
+
+/**
+ * @interface CustomButtonProps
+ * @description Defines the properties for the CustomButton component.
+ * @property {string} title - The text to display on the button.
+ * @property {function} onPress - The function to call when the button is pressed.
+ * @property {boolean} [disabled] - Optional. If true, the button is disabled and onPress is not called.
+ * @property {string} [testID] - Optional. A unique identifier for testing purposes.
+ */
 
 describe("<CustomButton />", () => {
   it("renders the button title correctly", () => {
@@ -299,10 +327,17 @@ describe("<CustomButton />", () => {
 
 **Explanation of Example 2:**
 
-- The first test renders the button and uses `getByText` to assert that the title is displayed.
-- The second test provides a `mockOnPress` function (created with `jest.fn()`). It then uses `fireEvent.press` to simulate a tap on the button (found by `getByTestId`) and asserts that `mockOnPress` was called.
-- The third test checks if the button is correctly disabled by inspecting `accessibilityState.disabled` and ensuring `onPress` is not called.
-- The fourth test demonstrates checking applied styles when disabled, though it notes that testing behavior over style is generally preferred.
+This set of tests for the `CustomButton` component demonstrates how to use React Native Testing Library (RNTL) to verify component behavior from a user's perspective. The goal is to ensure the SpeedyMeds `CustomButton` is accessible, interactive, and visually appropriate in different states.
+
+1.  **`renders the button title correctly`**: This is a basic smoke test. We `render` the `CustomButton` with a specific `title`. Then, using `getByText(buttonTitle)`, RNTL attempts to find an element in the rendered output that displays this title. `expect(...).toBeVisible()` asserts that such an element is found and is visible to the user. This confirms the button displays its intended text.
+
+2.  **`calls onPress prop when pressed`**: This test verifies interactivity. We create a mock function `mockOnPress = jest.fn()`. This mock allows us to track if and how it's called. The `CustomButton` is rendered with this mock and a `testID` ("my-tap-button") for easy querying. `fireEvent.press(getByTestId("my-tap-button"))` simulates a user tapping the button. Finally, `expect(mockOnPress).toHaveBeenCalledTimes(1)` asserts that our mock function was called exactly once, confirming the `onPress` handler is correctly wired up.
+
+3.  **`disables the button when disabled prop is true`**: This tests the `disabled` state. The button is rendered with `disabled={true}`. We then query for the button using its `testID`. The key assertion here is `expect(button.props.accessibilityState.disabled).toBe(true)`, which checks an important accessibility property indicating the button is indeed disabled. To further confirm, we `fireEvent.press(button)` and assert that `mockOnPress` (a new mock for this test) was `not.toHaveBeenCalled()`, ensuring a disabled button doesn't trigger its action.
+
+4.  **`applies disabled styles when disabled`**: This test delves into visual confirmation, though RNTL generally encourages testing behavior over specific styles as styles can be brittle. Here, we render a disabled button. We then get the button and text elements. `expect(button.props.style).toEqual(expect.arrayContaining([expect.objectContaining({ backgroundColor: "#BDBDBD" })]))` checks if the button's style array contains an object with the disabled background color. A similar check is done for the text color. This test case is included for demonstration but highlights that such style tests should be used judiciously, focusing on styles that are critical to communicating the disabled state visually if behavior/accessibility checks aren_t sufficient.
+
+These tests collectively ensure that the `CustomButton` component not only renders correctly but also behaves as expected under different conditions and user interactions, contributing to a more robust UI for the SpeedyMeds application.
 
 > [!TIP]
 > Aim for tests that are resilient to minor implementation changes. Querying by text content visible to users or by `testID` (for elements without distinct text) is generally more robust than querying by component hierarchy or internal structure.
@@ -311,7 +346,8 @@ describe("<CustomButton />", () => {
 
 Practice writing a simple unit test for a utility function.
 
-- **Exercise 17.3: Writing a Simple Unit Test** `**(URL_to_CodeSandbox_Exercise_17.3)**` (Note: While Jest runs in Node, a CodeSandbox can be set up for simple JS function testing if an Expo Snack environment isn't ideal for just JS logic without UI.)
+- **Exercise 17.3: Writing a Simple Unit Test** `**(https://codesandbox.io/--replace-this-with-actual-exercise-17.3-url--)**`
+  (Complete this exercise using CodeSandbox, which is well-suited for testing standalone JavaScript/TypeScript utility functions.)
 
 > 📚 **Official Documentation:**
 >
