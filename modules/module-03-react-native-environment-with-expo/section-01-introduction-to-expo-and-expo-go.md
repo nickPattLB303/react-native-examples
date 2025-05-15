@@ -71,12 +71,12 @@ graph TD
     style L fill:#ffe6cc,stroke:#333
 ```
 
-This diagram illustrates two development workflows:
+This diagram visually contrasts two primary development workflows facilitated by Expo.
 
-1. **Expo Go Workflow** (top): Your JavaScript code is bundled by Metro and served to the pre-built Expo Go app, which contains a fixed set of native modules.
-2. **Development Build Workflow** (bottom): Similar JavaScript bundling process, but the app receiving the bundle is your custom-built app with exactly the native modules you need.
+1.  **Expo Go Workflow** (represented in the top part of the diagram): In this model, your React Native JavaScript code (A) is processed by the Metro bundler (B) and served via a development server (C) to the Expo Go application (D) running on a mobile device or simulator. Expo Go (D) contains its own React Native runtime (E) and a pre-defined, fixed set of native modules (F). This workflow is excellent for rapid iteration when custom native code is not needed.
+2.  **Development Build Workflow** (represented in the bottom part of the diagram): Here, your JavaScript code (G) is similarly bundled (H) and served (I). However, it's loaded into your custom-built application (J) – a Development Build. This custom app (J) also has a React Native runtime (K) but, critically, it includes any custom native modules (L) you've added to your project, plus the `expo-dev-client` for developer tooling.
 
-The fundamental difference is where the native code resides and how customizable it is. With Expo Go, you're limited to the modules pre-bundled in the Expo Go app. With a Development Build, you can include _any_ native modules your project requires.
+The fundamental difference lies in the native capabilities and customization. Expo Go offers a convenient, sandboxed environment with a limited set of pre-included native modules. In contrast, a Development Build gives you full control to incorporate any native module, making it essential for apps with specific native dependencies or custom native code. We will delve deeper into creating and using Development Builds in Module 16.
 
 > [!CAUTION]
 > If your JavaScript code attempts to call a native module that is _not_ included in the installed Expo Go build (e.g., a third-party library with native code, or your own custom native code), the app will crash because the corresponding native code doesn't exist within the Expo Go sandbox. ([Source](https://docs.expo.dev/develop/development-builds/introduction/))

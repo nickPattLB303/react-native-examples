@@ -14,7 +14,7 @@ HTML's roots go back to Tim Berners-Lee at CERN in the late 1980s and early 1990
 HTML (HyperText Markup Language) is the standard language for creating web pages. A typical HTML document has a hierarchical structure:
 
 - `<!DOCTYPE html>`: Declares the document type (HTML5) and ensures browsers use standards mode.
-- `<html>`: The root element, enclosing all other content. Crucially, specify the document language using the `lang` attribute (e.g., `<html lang="en">`) for accessibility and search engines.
+- `<html lang="en">`: The root element, enclosing all other content. Crucially, specify the document language using the `lang` attribute (e.g., `<html lang="en">`) for accessibility and search engines.
 - `<head>`: Contains meta-information about the document (not displayed directly). This includes:
   - `<title>`: The page title shown in the browser tab.
   - `<meta charset="UTF-8">`: Specifies the character encoding.
@@ -25,7 +25,7 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Page Title</title>
     <!-- Other meta-information -->

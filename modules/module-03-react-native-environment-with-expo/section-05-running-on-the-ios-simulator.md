@@ -141,6 +141,8 @@ const styles = StyleSheet.create({
 });
 ```
 
+This example demonstrates a simple `HomeScreen` component for the SpeedyMeds app. After adding the 'Nearby Pharmacies' button (highlighted by the comment) and saving the `HomeScreen.tsx` file, you should observe the new button appear almost instantly in the iOS Simulator. This is due to Fast Refresh, which updates the UI without a full application reload. Pressing either button will log a message to the Metro server console running in your terminal, confirming basic event handling is working. This exercise showcases the rapid development cycle enabled by Expo and the iOS Simulator.
+
 > 📲 **(Native iOS Developers):**
 >
 > **Comparison:** `npx expo run:ios` automates your standard Xcode "Build and Run" (Cmd+R) process for the simulator. It handles `pod install`, calls `xcodebuild`, and uses `simctl` to install/launch. The key difference is that after launching, the React Native app connects to Metro for its JavaScript bundle, rather than executing purely compiled Swift/Objective-C code. Fast Refresh replaces your traditional build-and-run cycle for most code changes.

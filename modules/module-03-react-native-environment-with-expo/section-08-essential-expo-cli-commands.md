@@ -64,7 +64,7 @@ Starts the Metro development server, which bundles your JavaScript code, serves 
   - `--offline`: Attempts to start offline (may fail if caches aren't populated).
   - `--clear`: Clears the Metro cache before starting.
   - `--port <number>`: Use a specific port number.
-  - `--tunnel`: Creates a public URL using Expo's tunnel service (via ngrok) to share or connect when not on the same network. Requires `@expo/ngrok`.
+  - `--tunnel`: Creates a public URL using Expo's tunnel service (via ngrok) to share or connect when not on the same network. Modern Expo CLI versions will prompt to install `ngrok` if required and not already available.
   - `-a`, `-i`, `-w`: Shortcut flags to attempt opening on Android, iOS, or Web automatically after starting.
 - **Usage:** `npx expo start` (Defaults to Expo Go mode)
 
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-This code example demonstrates how you might use `npx expo install` to add the barcode scanner package to your SpeedyMeds app, then run it with `npx expo start` to test scanning medication barcodes.
+This code snippet illustrates a `MedicationScanScreen` component for the SpeedyMeds app, utilizing the `expo-barcode-scanner` package (which should be installed using `npx expo install expo-barcode-scanner`). The component first requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` in a `useEffect` hook. If permission is granted, it renders the `<BarCodeScanner>` component to display the camera feed. When a barcode is detected, `handleBarCodeScanned` updates the state with the scanned data (`medicationCode`) and logs it. The UI then conditionally displays the scanned code and a button to allow further scans. This example showcases how Expo CLI commands facilitate adding features and testing them in an iterative development loop.
 
 Mastering these commands provides a solid foundation for your daily Expo development workflow.
 

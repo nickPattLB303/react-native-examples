@@ -164,38 +164,76 @@ In summary, while `npm`/`yarn` manage packages and run basic scripts, `npx expo 
 
 If you encounter issues with package installation or command execution, try these common remedies:
 
-- **Dependency conflict errors**: Use `npx expo doctor` to diagnose issues
-- **"Module not found" errors**: Run `npm install` or `yarn` to ensure all dependencies are properly installed
-- **Version mismatch warnings**: Always use `npx expo install` for new packages with native code
-- **Command not found errors**: Ensure you're in your project directory before running commands
+- **Dependency conflict errors**: Use `npx expo doctor` to diagnose issues.
+- **"Module not found" errors**: Run `npm install` or `yarn` to ensure all dependencies are properly installed from your `package-lock.json` or `yarn.lock` file.
+- **Version mismatch warnings**: Always use `npx expo install` for new packages, especially those with native code, to ensure Expo SDK compatibility.
+- **Command not found errors**: Ensure you're in the root directory of your Expo project before running commands like `npx expo start`.
+
+The following example illustrates the correct way to install a package like `expo-barcode-scanner` for a feature in our SpeedyMeds app, and then shows a conceptual outline of how it might be used:
 
 ```typescript
-// Example: Installing a package for medication barcode scanning in SpeedyMeds
+// Example: Installing and using a package for barcode scanning in SpeedyMeds
+
+// Step 1: Install the package using the correct command
 // CORRECT:
 // npx expo install expo-barcode-scanner
 
-// INCORRECT:
+// INCORRECT (Avoid these for packages with native code in Expo projects):
 // npm install expo-barcode-scanner
 // yarn add expo-barcode-scanner
 
-// Using the scanner in a component
+// Step 2: Using the scanner in a component (conceptual outline)
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useState, useEffect } from "react";
+import { Text, View, Button } from "react-native"; // Assuming basic RN components
 
 function MedicationScannerScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [scanned, setScanned] = useState(false);
+  const [scannedData, setScannedData] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
+    const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
-    })();
+    };
+    getBarCodeScannerPermissions();
   }, []);
 
-  // Rest of implementation...
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
+    setScannedData(data);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // Here you would typically process the scanned data (e.g., look up medication)
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission...</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera. Please enable it in settings.</Text>;
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Scan a Medication Barcode</Text>
+      {/* BarCodeScanner component would be rendered here if not for brevity */}
+      {/* <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} /> */}
+      {scannedData && <Text>Scanned: {scannedData}</Text>}
+      <Button
+        title={"Tap to Scan Again (Simulated)"}
+        onPress={() => setScannedData(null)}
+      />
+    </View>
+  );
 }
 ```
+
+This TypeScript snippet outlines a `MedicationScannerScreen` component. The crucial first step, highlighted in the comments, is installing the `expo-barcode-scanner` package using `npx expo install`. This ensures version compatibility with your Expo SDK. The component then requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` inside a `useEffect` hook. Based on the `hasPermission` state, it would either show a permission request message or, if permission is granted, render the `BarCodeScanner` UI (conceptualized in comments for brevity). When a barcode is successfully scanned, `handleBarCodeScanned` is triggered, updating the state and simulating feedback. This example emphasizes the correct installation method and basic API usage for an Expo SDK package.
 
 > 📚 **Official Documentation:**
 >

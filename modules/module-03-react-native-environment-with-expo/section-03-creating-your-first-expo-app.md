@@ -106,7 +106,7 @@ export function MedicationItem({ medication, onPress }: MedicationItemProps) {
 
 This exercise guides you through creating your first Expo project, specifically tailored to the SpeedyMeds theme we'll be using throughout the course.
 
-[**Exercise 3.1: Create Your SpeedyMeds Project (Expo Snack)**](https://snack.expo.dev/@example/speedymeds-starter-exercise3-1)
+**(https://snack.expo.dev/@example/speedymeds-starter-exercise3-1)**
 
 In this exercise, you'll:
 

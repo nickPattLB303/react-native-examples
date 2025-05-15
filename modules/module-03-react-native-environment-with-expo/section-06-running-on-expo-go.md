@@ -36,19 +36,17 @@ Expo Go makes it incredibly easy to run your app on a physical iPhone or Android
 
 ### Connecting via Tunnel (Alternative)
 
-If your device cannot connect over the local network (e.g., different networks, firewalls), you can use Expo CLI's tunneling feature:
+If your device cannot connect to your computer over the local network (due to restrictive firewalls, complex network configurations, or being on different networks), Expo CLI offers a tunneling feature. This routes the connection through a public URL.
 
-1.  **Install Tunneling Tool (if needed):** `ngrok` is commonly used.
-    ```bash
-    npm install -g @expo/ngrok
-    ```
-    ([Source](https://docs.expo.dev/more/expo-cli/))
-2.  **Start with Tunnel Flag:**
+1.  **Start the development server with the tunnel flag:**
+
     ```bash
     npx expo start --tunnel
     ```
-    ([Source](https://docs.expo.dev/more/expo-cli/))
-3.  **Scan Tunnel QR Code:** This creates a public URL (e.g., `exp://u.expo.dev/...`). Scan the new QR code displayed in the terminal using Expo Go. The connection will route through Expo's servers.
+
+    Modern versions of Expo CLI bundle tunneling capabilities or will prompt you to install `ngrok` (a common tunneling tool) if it's required and not already available on your system. Follow any on-screen prompts to install `ngrok` if necessary. ([Source](https://docs.expo.dev/more/expo-cli/))
+
+2.  **Scan the Tunnel QR Code:** Once the tunnel is established, the terminal will display a new QR code with a URL typically starting `exp://u.expo.dev/...`. Scan this QR code using the Expo Go app on your physical device. Your app will then load via the public tunnel.
 
 > [!NOTE]
 > Tunneling is generally slower than direct local connections and requires an active internet connection on both your computer and device.
@@ -65,37 +63,55 @@ The experience mirrors the simulator:
 For a pharmacy application like SpeedyMeds, physical devices unlock several important features that simulators can't fully replicate:
 
 ```typescript
-// Example of camera access for medication barcode scanning in SpeedyMeds
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { Camera } from "expo-camera";
+import { Text, View, StyleSheet, Alert, Button } from "react-native";
+import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
+import { Camera, CameraType } from "expo-camera";
 
-export default function MedicationScannerScreen() {
+/**
+ * @component MedicationScannerScreen
+ * @description A screen component for scanning medication barcodes using the device camera.
+ * It requests camera permission, displays a camera preview, and handles barcode scanning.
+ * This component is designed to illustrate hardware interaction (camera) that is best tested on a physical device.
+ */
+export default function MedicationScannerScreen(): JSX.Element {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState<boolean>(false);
+  const [scannedData, setScannedData] = useState<BarCodeScannerResult | null>(
+    null
+  );
 
+  /**
+   * @effect Requests camera permission when the component mounts.
+   * Updates the `hasPermission` state based on the user's response.
+   */
   useEffect(() => {
-    (async () => {
+    const requestCameraPermission = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
-    })();
+    };
+    requestCameraPermission();
   }, []);
 
-  const handleBarCodeScanned = ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
+  /**
+   * @function handleBarCodeScanned
+   * @description Callback function triggered when a barcode is successfully scanned.
+   * It updates the `scanned` state to prevent multiple scans and displays an alert
+   * with the scanned data. In a real application, this would involve looking up
+   * medication details based on the scanned data.
+   * @param {BarCodeScannerResult} result - The result object from the barcode scanner,
+   * containing `type` and `data` of the scanned barcode.
+   */
+  const handleBarCodeScanned = (result: BarCodeScannerResult): void => {
     setScanned(true);
+    setScannedData(result);
+    console.log(`Barcode Scanned: Type: ${result.type}, Data: ${result.data}`);
 
-    // In a real app, this would look up the medication in a database
-    if (data.startsWith("RXMED")) {
+    // Simulate medication lookup and display
+    if (result.data.startsWith("RXMED")) {
       Alert.alert(
         "Medication Found",
-        `Prescription ID: ${data}\nAcetaminophen 500mg\nTake 1-2 tablets every 6 hours as needed`,
+        `Prescription ID: ${result.data}\nAcetaminophen 500mg\nTake 1-2 tablets every 6 hours as needed.`,
         [
           { text: "OK" },
           {
@@ -113,11 +129,13 @@ export default function MedicationScannerScreen() {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting camera permission...</Text>;
+    return (
+      <Text style={styles.statusText}>Requesting camera permission...</Text>
+    );
   }
   if (hasPermission === false) {
     return (
-      <Text>
+      <Text style={styles.statusText}>
         Camera access denied. Please enable camera permissions in your device
         settings.
       </Text>
@@ -127,13 +145,32 @@ export default function MedicationScannerScreen() {
   return (
     <View style={styles.container}>
       <Camera
-        style={styles.camera}
-        type={Camera.Constants.Type.back}
+        style={styles.cameraPreview}
+        type={CameraType.back} // Use CameraType enum for type safety
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        barCodeScannerSettings={{
+          barCodeTypes: [
+            BarCodeScanner.Constants.BarCodeType.qr,
+            BarCodeScanner.Constants.BarCodeType.ean13,
+            BarCodeScanner.Constants.BarCodeType.code128,
+          ],
+        }}
       >
         <View style={styles.overlay}>
           <Text style={styles.scanText}>Scan Medication Barcode</Text>
-          {scanned && <Text style={styles.rescanText}>Tap to scan again</Text>}
+          <View style={styles.focusBox} />
+          {scanned && (
+            <View style={styles.scannedInfoContainer}>
+              <Text style={styles.scannedDataText}>
+                Last Scanned: {scannedData?.data}
+              </Text>
+              <Button
+                title="Tap to Scan Again"
+                onPress={() => setScanned(false)}
+                color="#66ff66"
+              />
+            </View>
+          )}
         </View>
       </Camera>
     </View>
@@ -143,31 +180,72 @@ export default function MedicationScannerScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "black", // Ensure background for camera view
   },
-  camera: {
+  cameraPreview: {
     flex: 1,
   },
   overlay: {
     flex: 1,
     backgroundColor: "transparent",
-    justifyContent: "flex-end",
+    justifyContent: "space-between", // Changed for better layout
     alignItems: "center",
-    paddingBottom: 60,
+    paddingVertical: 40, // Added vertical padding
   },
   scanText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 20, // Increased size
     fontWeight: "bold",
+    backgroundColor: "rgba(0,0,0,0.5)", // Added background for readability
+    padding: 10,
+    borderRadius: 5,
   },
-  rescanText: {
+  focusBox: {
+    width: 250,
+    height: 150,
+    borderWidth: 2,
+    borderColor: "white",
+    borderStyle: "dashed",
+    borderRadius: 10,
+    marginBottom: 100, // Pushed up from bottom
+  },
+  scannedInfoContainer: {
+    backgroundColor: "rgba(0,0,0,0.7)",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  scannedDataText: {
     color: "#66ff66",
-    fontSize: 14,
-    marginTop: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  statusText: {
+    // Style for permission messages
+    flex: 1,
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 16,
   },
 });
 ```
 
-This code example demonstrates a common use case for our SpeedyMeds app that requires a physical device: scanning medication barcodes. While simulators can simulate camera access, they cannot actually scan physical barcodes.
+This code example provides a more complete `MedicationScannerScreen` component for the SpeedyMeds app, designed to demonstrate hardware interaction (camera for barcode scanning) that is best experienced on a physical device.
+
+**Purpose and Functionality:** The primary goal is to scan medication barcodes. It first requests camera permission using `Camera.requestCameraPermissionsAsync()` within a `useEffect` hook. The UI conditionally renders messages based on this permission status (`hasPermission` state). If permission is granted, it displays a full-screen camera preview using the `<Camera>` component from `expo-camera`. The `onBarCodeScanned` prop of the `<Camera>` is wired to the `handleBarCodeScanned` function, which processes the scanned data.
+
+**Key Code Sections:**
+
+- **Permission Handling (`useEffect`):** On component mount, it asynchronously requests camera permissions and updates the `hasPermission` state. This is crucial for accessing the camera.
+- **`handleBarCodeScanned` Function:** This callback receives the `BarCodeScannerResult` (which includes `type` and `data`). It sets the `scanned` state to `true` to prevent continuous scanning and updates `scannedData`. It then simulates a medication lookup using an `Alert` based on the scanned data. In a real application, this function would likely involve an API call to a backend to retrieve medication details.
+- **Conditional Rendering:** The component renders different UI elements based on the `hasPermission` state: a loading message, a permission denied message, or the camera view.
+- **`<Camera>` Component:** This Expo SDK component provides the live camera feed. Key props used include `type` (to specify back camera), `onBarCodeScanned` (callback for detected barcodes), and `barCodeScannerSettings` (to specify which barcode types to recognize, e.g., QR codes, EAN13 for retail products).
+- **Overlay UI:** A semi-transparent overlay is rendered on top of the camera view to guide the user, including a text prompt ("Scan Medication Barcode"), a visual focus box, and a section to display scanned data and a "Tap to Scan Again" button.
+- **Styling (`StyleSheet`):** The `StyleSheet.create` API is used to define styles for the camera preview, overlay elements, and status messages, ensuring a clear and usable interface.
+
+**Expected Outcome:** When run on a physical device, the user will first be prompted for camera permission. If granted, they will see the live camera view. Pointing the camera at a supported barcode (like a QR code or EAN13) will trigger the `handleBarCodeScanned` function, display an alert with mock medication data, and show the scanned data on screen. The user can then tap a button to allow further scans. This demonstrates a complete flow from permission request to data handling using a device's hardware feature.
+
+**Adaptation and Reuse:** This example can be adapted for various scanning needs. The `handleBarCodeScanned` function is the primary point for customization to integrate with actual data lookup services. The UI overlay can be modified to match specific branding or provide different user instructions. The `barCodeScannerSettings` can be adjusted if different barcode symbologies are required.
 
 Other hardware features relevant to SpeedyMeds that work best on physical devices include:
 

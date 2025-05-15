@@ -200,17 +200,30 @@ This diagram illustrates the standard folder hierarchy within a new Expo project
 TypeScript is integrated throughout the project, with `.tsx` files for React components and `.ts` files for non-component code. Let's look at how TypeScript typing might be used in a SpeedyMeds app structure:
 
 ```typescript
-// types/index.ts - Central location for shared types
+/**
+ * @file types/index.ts (Conceptual)
+ * @description Central location for shared TypeScript type definitions for the SpeedyMeds application.
+ * This approach promotes consistency and reusability of types across different modules and components.
+ */
+
+/**
+ * @interface Medication
+ * @description Represents a medication item within the SpeedyMeds app.
+ */
 export interface Medication {
-  id: string;
-  name: string;
-  dosage: string;
-  frequency: string;
-  expiryDate: Date;
-  instructions: string;
-  isRefillable: boolean;
+  id: string; // Unique identifier for the medication
+  name: string; // Brand or generic name of the medication
+  dosage: string; // Dosage information (e.g., "500mg", "10mL")
+  frequency: string; // How often to take the medication (e.g., "Once daily")
+  expiryDate: Date; // Expiration date of the medication
+  instructions: string; // Special instructions for taking the medication
+  isRefillable: boolean; // Indicates if the medication is refillable
 }
 
+/**
+ * @interface Pharmacy
+ * @description Represents a pharmacy location.
+ */
 export interface Pharmacy {
   id: string;
   name: string;
@@ -219,85 +232,238 @@ export interface Pharmacy {
   hours: {
     open: string;
     close: string;
-    days: string[];
+    days: string[]; // e.g., ["Mon", "Tue", "Wed", "Thu", "Fri"]
   };
 }
 
+/**
+ * @interface User
+ * @description Represents a user of the SpeedyMeds application.
+ */
 export interface User {
   id: string;
   name: string;
-  prescriptions: string[]; // IDs of medications
-  preferredPharmacy?: string; // ID of pharmacy
+  prescriptions: string[]; // Array of medication IDs
+  preferredPharmacyId?: string; // Optional ID of the user's preferred pharmacy
 }
 
-// Example of how these types would be used in various project files:
+// --- Example of how these types would be used in various project files ---
 
-// app/(tabs)/medications.tsx - A screen component in the routing structure
-import { View, Text, FlatList } from "react-native";
-import { Medication } from "../../types";
-import { MedicationCard } from "../../components/MedicationCard";
-import { useGetMedications } from "../../hooks/useGetMedications";
+/**
+ * @file app/(tabs)/medications.tsx (Conceptual)
+ * @description Screen component to display a list of user's medications.
+ * This would be part of the Expo Router file-based routing structure.
+ */
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet as AppStyles,
+} from "react-native";
+// Assume types are imported from a central file, e.g., '@/types'
+// import { Medication } from "@/types";
+// Assume MedicationCard is a reusable component, e.g., from '@/components/MedicationCard'
+// import { MedicationCard } from "@/components/MedicationCard";
+// Assume useGetMedications is a custom hook for fetching medication data
+// import { useGetMedications } from "@/hooks/useGetMedications";
 
-export default function MedicationsScreen() {
-  const { medications, isLoading } = useGetMedications();
+/**
+ * @component MedicationsScreen
+ * @description Displays a list of medications for the current user.
+ * It simulates fetching data using a conceptual custom hook (`useGetMedications_conceptual`).
+ * Uses `FlatList` for efficient rendering of the medication list, demonstrating type safety with generics.
+ */
+export default function MedicationsScreen(): JSX.Element {
+  // Simulated hook usage (implementation of useGetMedications_conceptual is below for demo purposes)
+  const { medications, isLoading } = useGetMedications_conceptual();
+
+  if (isLoading) {
+    return (
+      <View style={AppStyles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text>Loading your prescriptions...</Text>
+      </View>
+    );
+  }
 
   return (
-    <View>
-      <Text>Your Medications</Text>
-      {isLoading ? (
-        <Text>Loading your prescriptions...</Text>
-      ) : (
-        <FlatList<Medication>
-          data={medications}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <MedicationCard medication={item} />}
-        />
+    <View style={AppStyles.screenContainer}>
+      <Text style={AppStyles.screenTitle}>Your Medications</Text>
+      <FlatList<Medication> // Generic FlatList for type safety
+        data={medications}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <MedicationCard medication={item} />}
+        ListEmptyComponent={<Text>No medications found.</Text>}
+        contentContainerStyle={AppStyles.listContentContainer}
+      />
+    </View>
+  );
+}
+
+/**
+ * @interface MedicationCardProps
+ * @description Defines the props accepted by the MedicationCard component.
+ */
+interface MedicationCardProps {
+  /** The medication object containing details to display. */
+  medication: Medication;
+  /** Optional callback function to be invoked when the card is pressed. Receives medication ID. */
+  onPress?: (id: string) => void;
+}
+
+/**
+ * @component MedicationCard
+ * @description A reusable UI component designed to display information about a single medication.
+ * It receives a `medication` object as a prop and renders its details in a styled card format.
+ * @param {MedicationCardProps} props - The props for the component, including the medication data.
+ */
+export function MedicationCard({
+  medication,
+  onPress,
+}: MedicationCardProps): JSX.Element {
+  return (
+    <View style={cardStyles.card} onTouchEnd={() => onPress?.(medication.id)}>
+      <Text style={cardStyles.name}>{medication.name}</Text>
+      <Text style={cardStyles.detail}>Dosage: {medication.dosage}</Text>
+      <Text style={cardStyles.detail}>Frequency: {medication.frequency}</Text>
+      <Text style={cardStyles.detail}>
+        Instructions: {medication.instructions}
+      </Text>
+      <Text style={cardStyles.detail}>
+        Expires: {medication.expiryDate.toLocaleDateString()}
+      </Text>
+      {medication.isRefillable && (
+        <Text style={cardStyles.refillable}>Refillable</Text>
       )}
     </View>
   );
 }
 
-// components/MedicationCard.tsx - A reusable component
-import { View, Text, StyleSheet } from "react-native";
-import { Medication } from "../types";
+/**
+ * @function useGetMedications_conceptual
+ * @description A conceptual custom hook to simulate fetching a list of medications.
+ * In a real application, this would likely involve an API call (e.g., using TanStack Query).
+ * @returns {{ medications: Medication[], isLoading: boolean }} An object containing the list of medications and a loading state.
+ */
+const useGetMedications_conceptual = () => {
+  const [medications, setMedications] = useState<Medication[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-interface MedicationCardProps {
-  medication: Medication;
-  onPress?: (id: string) => void;
-}
+  /**
+   * @effect Simulates fetching medication data with a delay when the component mounts.
+   */
+  useEffect(() => {
+    setTimeout(() => {
+      setMedications([
+        {
+          id: "med1",
+          name: "Amoxicillin",
+          dosage: "250mg",
+          frequency: "Every 8 hours",
+          expiryDate: new Date(2025, 11, 31),
+          instructions: "Take with food.",
+          isRefillable: true,
+        },
+        {
+          id: "med2",
+          name: "Lisinopril",
+          dosage: "10mg",
+          frequency: "Once daily",
+          expiryDate: new Date(2026, 5, 30),
+          instructions: "Monitor blood pressure.",
+          isRefillable: true,
+        },
+        {
+          id: "med3",
+          name: "Metformin",
+          dosage: "500mg",
+          frequency: "Twice daily",
+          expiryDate: new Date(2025, 8, 15),
+          instructions: "Take with meals.",
+          isRefillable: false,
+        },
+      ]);
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
-export function MedicationCard({ medication, onPress }: MedicationCardProps) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.name}>{medication.name}</Text>
-      <Text>{medication.dosage}</Text>
-      <Text>{medication.frequency}</Text>
-      <Text>{medication.instructions}</Text>
-    </View>
-  );
-}
+  return { medications, isLoading };
+};
 
-const styles = StyleSheet.create({
+// Styles (kept separate for clarity in the example)
+const AppStyles = StyleSheet.create({
+  screenContainer: { flex: 1, padding: 16, backgroundColor: "#f4f7f9" },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#333",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f4f7f9",
+  },
+  listContentContainer: { paddingBottom: 20 },
+});
+
+const cardStyles = StyleSheet.create({
   card: {
     padding: 16,
-    borderRadius: 8,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
-    marginBottom: 12,
+    borderRadius: 10,
+    backgroundColor: "#ffffff",
+    shadowColor: "#000000",
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+    marginBottom: 16,
+    borderLeftWidth: 6,
+    borderLeftColor: "#007AFF", // Accent color
   },
   name: {
     fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 6,
+    fontWeight: "600", // Semibold
+    marginBottom: 8,
+    color: "#2c3e50",
+  },
+  detail: {
+    fontSize: 15,
+    lineHeight: 22, // Improved readability
+    marginBottom: 4,
+    color: "#34495e",
+  },
+  refillable: {
+    fontSize: 14,
+    color: "#27ae60", // Green for positive status
+    fontWeight: "500",
+    marginTop: 8,
   },
 });
 ```
 
-This example demonstrates how TypeScript integrates with your project structure, providing type safety across different files and components.
+This extended TypeScript example illustrates how shared types and typed components contribute to a robust and maintainable structure within an Expo project like SpeedyMeds. This structure is vital for building scalable applications and ensuring code quality.
+
+**Purpose and Structure:** The primary goal is to showcase the definition and consumption of custom TypeScript types (like `Medication`, `Pharmacy`, `User`), which would typically be defined in a central `types/index.ts` file (or a similar structured approach, possibly using path aliases like `@/types`). These defined types are then instrumental in enforcing data consistency and providing type safety across various parts of the application, such as screen components (e.g., `MedicationsScreen`) and reusable UI elements (e.g., `MedicationCard`).
+
+**Key Code Sections and Concepts Illustrated:**
+
+- **Type Definitions (`types/index.ts` conceptual block):** Clear interfaces are defined for core data entities relevant to the SpeedyMeds theme. Each property within these interfaces is explicitly typed (e.g., `id: string`, `expiryDate: Date`, `isRefillable: boolean`), and JSDoc comments are provided to explain their purpose and usage. This practice makes the data structure self-documenting, aids in IntelliSense within IDEs, and helps prevent common errors when these objects are passed around or manipulated.
+- **`MedicationsScreen` Component (conceptual `app/(tabs)/medications.tsx`):** This screen component demonstrates how to fetch (simulated via a custom hook) and display a list of medications. It highlights:
+  - **Custom Hook Usage:** It employs a conceptual `useGetMedications_conceptual` hook to encapsulate data fetching logic. This hook returns a typed array of `Medication` objects and an `isLoading` boolean state. This separation of concerns keeps the screen component cleaner.
+  - **Typed `FlatList`:** The `FlatList<Medication>` component utilizes TypeScript generics. This ensures that its `data` prop expects an array of `Medication` objects, and the `renderItem` function correctly infers the type of `item` as `Medication`. This provides strong compile-time checking for list rendering.
+  - **Conditional Rendering:** The screen displays an `ActivityIndicator` while `isLoading` is true, or a "No medications found" message if the `medications` array is empty, enhancing user experience.
+- **`MedicationCard` Component (conceptual `components/MedicationCard.tsx`):** This is a reusable presentational component responsible for displaying the details of a single medication.
+  - **Typed Props (`MedicationCardProps`):** It defines an interface `MedicationCardProps` for its props, ensuring that it always receives a valid `medication` object (of type `Medication`) and an optional `onPress` handler. This strict contract prevents incorrect props from being passed.
+  - **Data Display:** The component destructures the `medication` prop and renders its properties using styled `<Text>` elements. The `onPress` handler is attached to the card's root view.
+- **Styling (`StyleSheet.create`):** Both the `MedicationsScreen` (using `AppStyles`) and `MedicationCard` (using `cardStyles`) utilize the `StyleSheet.create` API. This is the standard and performant way to define styles in React Native, promoting organization and reusability of style definitions. The styles are also slightly enhanced for better visual presentation in this example.
+
+**Expected Outcome and Benefits:** Implementing TypeScript in this comprehensive manner significantly improves the reliability and maintainability of the development process. Type errors, such as attempting to pass an incorrect data structure to the `MedicationCard` component or accessing a non-existent property on a `Medication` object, would be caught by the TypeScript compiler during development or flagged by the IDE. This early detection of errors prevents them from becoming runtime issues. This structured and typed approach leads to higher code quality, enhances readability (as types serve as documentation), and makes collaboration more efficient, particularly as the SpeedyMeds project grows in complexity. The clear separation of concerns (types, data-fetching logic via hooks, UI components) also promotes a cleaner, more scalable architecture.
+
+**Adaptation and Reuse:** The patterns demonstrated here—defining shared types in a central location and creating typed, reusable UI components—are highly adaptable and recommended for any non-trivial React Native application. For the SpeedyMeds capstone project, similar types could be defined for `Prescription`, `Doctor`, `Appointment`, etc. The `MedicationCard` component can be easily modified, extended, or used as a template for other card-like UI elements. The custom hook pattern for data fetching is a fundamental concept that can be reused for various data sources and API interactions, eventually integrating with libraries like TanStack Query for more advanced server state management. The key principle is to maintain type consistency throughout the data lifecycle, from its source (e.g., API response) to its display in the UI.
 
 > 🔁 **(Asynchronous Learners):** When setting up your own project or joining an existing codebase, spend extra time familiarizing yourself with the project structure. Creating a personal "map" of key files and relationships will help you navigate efficiently when working independently.
 
@@ -305,10 +471,8 @@ This example demonstrates how TypeScript integrates with your project structure,
 
 This structure highlights Expo's philosophy: manage native configuration primarily through `app.json`/`app.config.js` and Expo Router's file-based system, using `prebuild` to generate the native projects as needed. This simplifies the developer experience, especially for those without deep native platform expertise.
 
-> **Key Insight: The Power of Centralized Configuration and CNG**
-> The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This contrasts sharply with traditional native development or even standard React Native CLI projects, where configurations are often scattered across various platform-specific files (like `AndroidManifest.xml`, `build.gradle`, `Info.plist`, Xcode project settings).
->
-> Expo provides a unified, JavaScript-based layer for managing these settings. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling **Continuous Native Generation (CNG)**. With CNG, the `ios` and `android` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
+> [!TIP] > **Understanding Centralized Configuration and Continuous Native Generation (CNG)**
+> The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling **Continuous Native Generation (CNG)**. With CNG, the `ios` and `android/` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
 
 > 📲 **(Native Developers):**
 >

@@ -29,13 +29,13 @@ The primary goal of this module is to guide you through the process of successfu
 >
 > **Example:** Instead of configuring CocoaPods dependencies or Gradle files manually, Expo manages native dependencies through simple JavaScript commands.
 
-### Learning Paths
-
-This module serves as a critical foundation for all learning paths:
-
-- 📝 **Instructor-Led:** Active participation in setup sessions is encouraged. Use the live coding demonstrations as an opportunity to follow along and ask clarifying questions regarding environment configuration or Expo concepts.
-- 🧗 **Self-Led:** Proceed through the steps sequentially. Utilize the provided links to official documentation for deeper understanding. Do not hesitate to request instructor support via Webex chat or huddles if installation or configuration issues arise.
-- 🔄 **Asynchronous:** This module is fundamental, regardless of the specific topics targeted later. Ensure the development environment is correctly set up by carefully following these instructions. If specific setup errors are encountered later, the Troubleshooting section can be referenced directly.
+> 🛣️ **(All Learners):** This module serves as a critical foundation for all learning paths.
+>
+> 🧑‍🏫 **(Instructor-Led):** Active participation in setup sessions is encouraged. Use the live coding demonstrations as an opportunity to follow along and ask clarifying questions regarding environment configuration or Expo concepts.
+>
+> 🧗‍♀️ **(Self-Led):** Proceed through the steps sequentially. Utilize the provided links to official documentation for deeper understanding. Do not hesitate to request instructor support via Webex chat or huddles if installation or configuration issues arise.
+>
+> 🔁 **(Asynchronous):** This module is fundamental, regardless of the specific topics targeted later. Ensure the development environment is correctly set up by carefully following these instructions. If specific setup errors are encountered later, the Troubleshooting section can be referenced directly.
 
 ## Learning Objectives
 
@@ -73,7 +73,7 @@ By the end of this module, you will be able to:
 
 ## Module Challenge
 
-[**Challenge 3: Environment Setup Verification (Microsoft Forms)**](https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)
+**(https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)**
 
 This challenge involves verifying your environment setup through a checklist in Microsoft Forms. You'll confirm that your environment is correctly configured and essential commands are working properly.
 

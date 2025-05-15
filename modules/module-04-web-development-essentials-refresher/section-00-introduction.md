@@ -40,6 +40,18 @@ By the end of this module, you will be able to:
 - Basic understanding of programming concepts (variables, functions, control flow).
 - Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-setting-up-your-react-native-environment-with-expo/section-00-introduction.md).
 
+## Module Sections
+
+- [Section 1: Core HTML Concepts](./section-01-core-html-concepts.md)
+- [Section 2: Core CSS Concepts](./section-02-core-css-concepts.md)
+- [Section 3: Bridging Web Concepts to React Native](./section-03-bridging-web-concepts-to-react-native.md)
+
+## Module Challenge
+
+**(Placeholder_URL_to_CodeSandbox_Challenge_4)**
+
+This challenge involves recreating a simple web layout using HTML and CSS, reinforcing the core concepts covered and preparing you to see how these map to React Native layout techniques.
+
 ## Module Summary
 
 This module has provided a crucial refresher on web development fundaments essential for React Native. You revisited core HTML concepts, focusing on structure and semantics, and dived into key CSS principles like selectors, the box model, and the cascade. A significant emphasis was placed on understanding and using Flexbox for layout, a skill directly transferable to React Native.

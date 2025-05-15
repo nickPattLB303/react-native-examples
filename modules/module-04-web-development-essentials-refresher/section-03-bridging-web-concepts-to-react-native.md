@@ -440,7 +440,3 @@ Recreate a simple web layout using React Native components and StyleSheet based 
 Understanding this bridge between web concepts and React Native is crucial. You now have the foundational context for how React Native structures UI and applies styling. In the next module, we'll dive into JavaScript essentials, which form the core logic behind React Native applications.
 
 ---
-
-## Module Summary
-
-This module provided a concise refresher on essential web development concepts, focusing on their relevance to React Native. We reviewed core HTML structure and elements, fundamental CSS principles like the box model and selectors, and emphasized the Flexbox layout model. Critically, we explored how these web paradigms map conceptually to React Native's Core Components (like `<View>`, `<Text>`, `<Image>`) and its JavaScript-based `StyleSheet` API. Recognizing these parallels and differences, especially regarding Flexbox defaults and styling syntax, provides a solid foundation for building user interfaces in React Native.
