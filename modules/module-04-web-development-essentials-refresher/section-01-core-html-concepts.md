@@ -91,6 +91,16 @@ HTML uses "tags" (like `<p>` for paragraph) to define elements. Here are a few c
 - **Tables:** `<table>`, `<tr>` (row), `<th>` (header cell), `<td>` (data cell). Use `<thead>`, `<tbody>`, `<tfoot>`, `<caption>` for better structure. Tables are for tabular data, not page layout.
 - **Forms:** `<form>` contains interactive controls. Common elements include `<input>` (various types like `text`, `password`, `checkbox`, `radio`, `submit`), `<textarea>`, `<select>`, `<option>`, `<button>`, and `<label>` (essential for accessibility).
 
+To further clarify how these fundamental HTML elements relate to both native development and React Native, consider the following conceptual mapping:
+
+| Concept           | HTML Example            | Native iOS Example      | Native Android Example | React Native Component |
+| :---------------- | :---------------------- | :---------------------- | :--------------------- | :--------------------- |
+| Generic Container | `<div>`                 | `UIView`                | `ViewGroup`            | `<View>`               |
+| Text Display      | `<p>`, `<h1>`, `<span>` | `UILabel`, `UITextView` | `TextView`             | `<Text>`               |
+| Image Display     | `<img>`                 | `UIImageView`           | `ImageView`            | `<Image>`              |
+
+> **Background Bridge Note:** As shown in the table, common HTML tags for structure, text, and images have direct conceptual parallels in native iOS/Android UI elements and, subsequently, in React Native's core components. The `<View>` component is React Native's fundamental building block for UI structure, much like `<div>` in HTML or `UIView`/`ViewGroup` in native development. Similarly, `<Text>` is essential for all text rendering, and `<Image>` for displaying images. React Native abstracts these platform-specific elements into a unified JavaScript API. You'll learn more about these mappings and the "why" behind them in Section 3.
+
 #### Under the Hood: HTML Parsing and the DOM
 
 When a browser receives an HTML document, it parses the markup to understand and render it:

@@ -4,16 +4,26 @@
 
 _A conceptual bridge showing how HTML elements and CSS styles map to React Native components and StyleSheet properties._
 
-This module serves as a focused refresher on the core concepts of HTML and CSS that are most relevant to understanding React Native development. While React Native doesn't use HTML and CSS directly, its component structure and styling system draw heavily on web paradigms. A solid understanding of HTML's structural concepts and CSS's styling and layout principles, particularly Flexbox, is invaluable. Understanding these fundamentals provides a crucial foundation for effectively building and styling user interfaces in React Native.
+This module serves as a focused refresher on the core concepts of HTML and CSS that are most relevant to understanding React Native development.
+The purpose is not to teach you to build websites, but because React Native's approach to building user interfaces is heavily inspired by them. Understanding these foundations provides crucial context for grasping how React Native structures UI (e.g., `<View>`, `<Text>`), applies styles (`StyleSheet`), and manages layout (Flexbox). We'll explore core web concepts and immediately connect them to their React Native counterparts, highlighting key similarities and, more importantly, critical differences.
 
-This module revisits the fundamentals, assuming varying levels of prior web development experience among learners. The goal is to establish a common ground, ensuring everyone possesses the foundational knowledge needed to effectively grasp React Native's UI paradigms, write cleaner code, and debug layout and style issues more effectively. We will refresh key concepts including semantic HTML for meaningful structure, CSS selectors for targeting elements, the cascade and specificity for managing styles, the box model for understanding element space, and Flexbox for modern layout.
+**Foundational Analogy, Not Direct Equivalence**
 
-> [!TIP]
-> Experienced web developers (React, Angular, or others) may find the concepts in Sections 1 and 2 familiar. It's recommended to skim these sections for review, paying particular attention to the "Background Bridge Notes" which highlight key differences and parallels relevant to React Native. Developers coming from a native background (iOS/Android) should review these sections carefully as they introduce foundational web concepts essential for understanding React Native's approach.
+React Native's core value proposition involves creating genuinely native user interfaces using JavaScript. Unlike frameworks that rely on web views, React Native renders using the host platform's actual UI building blocks (`UIView` on iOS, `ViewGroup` on Android). This direct rendering contributes significantly to the near-native performance achievable with React Native apps.
 
-> 🌐 **(Web Developers):** This module bridges your existing HTML/CSS knowledge to React Native's components and styling. Focus on the mapping concepts in Section 3.
+However, to provide a familiar development experience for those coming from web backgrounds, React Native adopts paradigms inspired by HTML and CSS. The relationship is primarily one of analogy; React Native selectively borrows concepts like component structure, styling properties, and layout models but implements them atop native APIs, not by embedding a web browser. This means developers cannot assume identical behavior to the web. Understanding the web concept provides a useful starting point, but mastering the specific React Native implementation—including its nuances and deviations—is essential for effective development. This module aims to build that understanding by exploring both the analogies and the critical differences.
+
+While React Native doesn't use HTML and CSS directly, its component structure and styling system draw heavily on web paradigms. A solid understanding of HTML's structural concepts and CSS\'s styling and layout principles, particularly Flexbox, is invaluable. Understanding these fundamentals provides a crucial foundation for effectively building and styling user interfaces in React Native.
+
+This module revisits the fundamentals, assuming varying levels of prior web development experience among learners. The goal is to establish a common ground, ensuring everyone possesses the foundational knowledge needed to effectively grasp React Native\'s UI paradigms, write cleaner code, and debug layout and style issues more effectively. We will refresh key concepts including semantic HTML for meaningful structure, CSS selectors for targeting elements, the cascade and specificity for managing styles, the box model for understanding element space, and Flexbox for modern layout.
+
+> [!TIP] > **Guidance for Different Backgrounds:**
 >
-> 📲 **(Native Developers):** This module introduces the web-based concepts (HTML structure, CSS layout with Flexbox) that underpin React Native's UI layer. Understanding these is key before diving into React Native components.
+> 📲 **Native Developers (Android/iOS):** This module is particularly important for you. We'll draw explicit parallels between web concepts, native UI elements you're familiar with (like `UIView`, `ViewGroup`, `UILabel`, `TextView`), and the React Native components you'll be using. Pay close attention to the comparisons and how web-inspired concepts are mapped to native behavior.
+>
+> 🌐 **Web Developers (React, Angular, Vue, etc.):** Much of this will be a refresher. Focus on the sections highlighting the differences between web standards and React Native's implementation (e.g., `StyleSheet` vs. CSS, the pervasiveness of Flexbox, unitless values). Skim familiar concepts but ensure you grasp the distinctions and how React Native adapts web paradigms for the native environment. For experienced web developers, while Sections 1 and 2 might seem familiar, it's recommended to review them, paying particular attention to notes that bridge your existing knowledge to React Native's specific approach, especially before focusing on the mapping concepts in Section 3.
+>
+> ✨ **All Learners:** Regardless of your background, understanding _why_ React Native deviates from web standards (e.g., for performance, native integration, platform consistency) is key to becoming proficient. This module supports all learning paths (Instructor-led, Self-led, Asynchronous) and aims to build a solid understanding of the "why" behind React Native's UI layer.
 
 ## Learning Objectives
 

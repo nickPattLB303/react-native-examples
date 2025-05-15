@@ -75,7 +75,15 @@ This table summarizes the common conceptual mappings.
 
 #### Mapping CSS Concepts to React Native StyleSheet
 
-React Native uses JavaScript objects created via `StyleSheet.create` to style components. This approach offers performance benefits (sending styles over the bridge once) and better organization.
+React Native uses JavaScript objects, typically created via the `StyleSheet.create` method, to define styles for components. This is the standard and recommended approach.
+
+**Benefits of `StyleSheet.create`:**
+
+Using `StyleSheet.create` offers several advantages over defining styles inline directly within the component's JSX:
+
+- **Performance:** It allows React Native to perform optimizations. Style objects are assigned unique IDs, and in the legacy architecture, only these IDs were sent across the communication bridge between JavaScript and the native side. While the new architecture (Fabric) changes some of these dynamics, `StyleSheet.create` still allows for styles to be processed and potentially optimized ahead of time. This can lead to performance improvements, especially in complex applications with many styled components.
+- **Organization & Maintainability:** It promotes better code organization by separating styling concerns from the component's rendering logic. This makes the code easier to read, maintain, and reuse. Styles are defined in a centralized, static manner, which helps in understanding the component's appearance at a glance.
+- **Error Detection:** `StyleSheet.create` can also help validate your style declarations at compile time or soon after, catching typos or invalid property values early.
 
 **Example `StyleSheet.create` Usage:**
 
@@ -110,13 +118,89 @@ const styles = StyleSheet.create({
 1.  **Syntax:** Styles are defined in JavaScript objects, not separate `.css` files.
 2.  **Property Names:** CSS properties are written in `camelCase` (e.g., `backgroundColor` instead of `background-color`, `fontSize` instead of `font-size`).
 3.  **Units:** Most dimensions (width, height, margin, padding, fontSize, etc.) and positioning properties (top, left, etc.) are unitless numbers interpreted as density-independent pixels (dp). Strings with units (e.g., `'5em'`) are not supported. Percentage values (e.g., `'50%'`) are accepted for some properties like width, height, margin, padding.
-4.  **No Cascading/Specificity (Mostly):** Styles are typically not inherited from parent elements in the same way as web CSS. There's no complex cascade calculation or specificity wars between rules defined in `StyleSheet`. Styles applied directly via the `style` prop (especially inline styles `style={{...}}`) generally take precedence. An exception is text styling: nested `<Text>` components inherit text-related styles (like `color`, `fontSize`) from their parent `<Text>` component.
+4.  **No Cascading & Very Limited Inheritance (Component Encapsulation by Design):**
+    - Styles are typically not inherited from parent elements in the same way as web CSS's cascade. For example, setting `margin` or `padding` on a parent `<View>` will not affect its children.
+    - There's no complex cascade calculation or specificity wars between rules defined in `StyleSheet`. Styles applied directly via the `style` prop generally take precedence.
+    - **Exception: `<Text>` Components:** The primary exception involves text styling properties within nested `<Text>` components. Properties like `color`, `fontSize`, `fontWeight`, `fontFamily`, `lineHeight`, etc., _do_ inherit from a parent `<Text>` component to its direct `<Text>` children.
+      ```tsx
+      // Example of Text style inheritance
+      <Text style={{ color: "navy", fontSize: 16 }}>
+        This is navy, 16pt.
+        <Text style={{ fontWeight: "bold" }}>
+          {/* This inherits navy color and 16pt size, but adds bold weight. */}
+          This is also navy, 16pt, but bold.
+          <Text style={{ color: "darkred", fontSize: 12 }}>
+            {/* This inherits bold weight, but overrides color and font size. */}
+            This is dark red, 12pt, and bold.
+          </Text>
+        </Text>
+      </Text>
+      ```
+    - **Why Limited Inheritance? Component Encapsulation:** This limited inheritance model is a deliberate design choice in React Native, aligning with the core principles of React itself, particularly component encapsulation and isolation. In React, components are intended to be self-contained and reusable units. Relying heavily on inherited styles (like the CSS cascade) can make a component's appearance overly dependent on its context within the application tree, potentially leading to unexpected visual changes when the component is moved or reused elsewhere. By requiring styles to be more explicitly applied, React Native encourages the creation of components that are more predictable and maintainable. While this might seem like more work initially compared to relying on the CSS cascade, it often prevents complex specificity issues and makes debugging styles easier in large applications. It encourages developers to define styles locally within components or create explicitly shared style modules or theme objects rather than depending on implicit inheritance through the component hierarchy.
 5.  **Limited Selectors & Subset:** There are no complex CSS selectors (like attribute or pseudo-selectors). Styles are applied directly to components via the `style` prop. React Native implements a subset of CSS properties, primarily focusing on layout (Flexbox), text styling, colors, backgrounds, borders, and transformations. Not all web CSS properties are available.
 6.  **Flexbox is Default & Different:** Flexbox is the **default** layout model for `<View>` components; you don't need `display: flex`. Key differences from web Flexbox include:
     - `flexDirection` defaults to `column` (aligning items vertically) instead of `row`.
     - `alignItems` defaults to `stretch`.
     - `flex: 1` is a common pattern on a root container `<View>` to make it expand and fill all available space along the main axis.
     - Properties like `justifyContent`, `alignItems`, `alignSelf`, `flexWrap`, `flexGrow`, `flexShrink`, `flexBasis` work very similarly.
+
+**Applying Styles and Combining Multiple Styles:**
+
+Styles are applied to components using the `style` prop. This prop can accept a single style object (e.g., `style={styles.container}`) or an array of style objects (e.g., `style={[styles.base, styles.modifier, dynamicStyles]}`).
+
+When an array is used:
+
+- Styles are merged from left to right.
+- Properties in later objects in the array override those in earlier objects if they conflict.
+- This is useful for applying base styles and then conditionally adding or overriding specific styles.
+- Falsy values (like `false`, `null`, or `undefined`) in the array are safely ignored, allowing for easy conditional styling.
+
+```tsx
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+const ComponentWithCombinedStyles = ({ isHighlighted, isError }) => {
+  return (
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.baseText,
+          isHighlighted && styles.highlightedText, // Applied if isHighlighted is true
+          isError ? styles.errorText : styles.normalPriorityText, // Ternary operator for conditional style
+          { marginTop: 10 }, // Inline style object, will override marginTop if present in others
+        ]}
+      >
+        This text combines multiple styles.
+      </Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+  baseText: {
+    fontSize: 16,
+    color: "black",
+  },
+  highlightedText: {
+    backgroundColor: "yellow",
+    fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    textDecorationLine: "underline",
+  },
+  normalPriorityText: {
+    fontStyle: "italic",
+  },
+});
+
+export default ComponentWithCombinedStyles;
+```
+
+This example shows how `styles.baseText` is always applied. If `isHighlighted` is true, `styles.highlightedText` is merged in. Then, either `styles.errorText` or `styles.normalPriorityText` is applied. Finally, an inline style `{ marginTop: 10 }` is merged, potentially overriding `marginTop` from previous styles.
 
 **Table: Mapping Common Web CSS to React Native Styles**
 
@@ -136,6 +220,97 @@ This table highlights common property translations.
 | `flex-direction`   | `flexDirection`                                                                | `row`               | `'column'` (default), `'row'`            | Default differs from web (`row`).                                   |
 | `justify-content`  | `justifyContent`                                                               | `center`            | `'center'`                               | Same values as web (`flex-start`, `flex-end`, `center`, etc.).      |
 | `align-items`      | `alignItems`                                                                   | `center`            | `'center'` / `'stretch'` (default)       | Same values as web (`flex-start`, `flex-end`, `center`, `stretch`). |
+
+**React Native Box Model in Practice:**
+
+The CSS Box Model concepts (content, padding, border, margin) are directly applicable in React Native. You control these using `StyleSheet` properties. Here's an example demonstrating their use:
+
+```tsx
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+const BoxModelDemoCard = ({ title, children }) => {
+  return (
+    // The outer View demonstrates margin, border, and padding
+    <View style={styles.cardContainer}>
+      {/* This inner View represents the Content Area conceptually */}
+      <View style={styles.contentArea}>
+        {title && <Text style={styles.titleText}>{title}</Text>}
+        {children}
+      </View>
+    </View>
+  );
+};
+
+const App = () => (
+  <View style={styles.screenContainer}>
+    <BoxModelDemoCard title="Medication Reminder">
+      <Text style={styles.contentText}>
+        Take 1 pill of Amoxicillin at 8:00 AM.
+      </Text>
+      <Text style={styles.contentText}>Next refill due: 2023-12-31</Text>
+    </BoxModelDemoCard>
+    <BoxModelDemoCard title="Appointment Note">
+      <Text style={styles.contentText}>
+        Follow-up with Dr. Smith on Friday.
+      </Text>
+    </BoxModelDemoCard>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    paddingTop: 40, // Ensure content is not under status bar
+    backgroundColor: "#f0f0f0",
+  },
+  cardContainer: {
+    // --- Margin Area --- (Space OUTSIDE the border)
+    marginVertical: 10, // 10 units space top and bottom
+    marginHorizontal: 15, // 15 units space left and right
+
+    // --- Border Area --- (The visible boundary)
+    borderWidth: 2, // 2 units thick border
+    borderColor: "navy", // Color of the border
+    borderRadius: 8, // Rounds the corners
+
+    // --- Padding Area --- (Space INSIDE the border, around contentArea)
+    padding: 12, // 12 units padding on all sides inside the border
+
+    backgroundColor: "#e0e0ff", // Background for the card itself (padding area visible)
+  },
+  contentArea: {
+    // --- Content Area --- (Where actual children are placed)
+    backgroundColor: "#ffffff", // White background for the content itself
+    padding: 8, // Internal padding for the content area
+    borderRadius: 4, // Slightly rounded corners for the content block
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#333333",
+  },
+  contentText: {
+    fontSize: 14,
+    color: "#555555",
+    marginBottom: 4,
+  },
+});
+
+export default App;
+```
+
+**Explanation:**
+
+- The `cardContainer` style clearly defines `margin`, `borderWidth`, `borderColor`, `borderRadius`, and `padding`. These directly correspond to the Box Model layers.
+- `marginVertical` and `marginHorizontal` create space _around_ each card.
+- `borderWidth` and `borderColor` define the visible boundary of the card.
+- `padding` creates space _inside_ the border, before the `contentArea` begins. The `backgroundColor` of `cardContainer` makes this padding area visually distinct if the `contentArea` has a different background.
+- The `contentArea` style then defines the appearance of the actual content block within the padded box.
+- Remember that these unitless values are interpreted as density-independent pixels (dp).
+
+This example illustrates how to use `StyleSheet` to control the sizing and spacing of elements according to the Box Model principles, which is fundamental for structuring UI layouts in React Native.
 
 > 📚 **Official Documentation:**
 >

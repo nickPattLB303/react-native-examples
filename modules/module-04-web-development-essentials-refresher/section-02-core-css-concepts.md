@@ -115,6 +115,59 @@ Understanding the box model is crucial for controlling element size and spacing.
 **Margin Collapsing:**
 Vertical margins (top/bottom) of adjacent block-level boxes can collapse into a single margin (usually the size of the larger margin). This occurs only vertically under specific conditions.
 
+#### Basic Box Model Example (HTML/CSS)
+
+This example visually demonstrates the different parts of the CSS Box Model.
+
+**HTML:**
+
+```html
+<div class="box-model-example">
+  <div class="content">This is the content area.</div>
+</div>
+```
+
+**CSS:**
+
+```css
+.box-model-example {
+  /* Margin Area - Space outside the border */
+  margin: 20px; /* 20px margin on all sides */
+
+  /* Border Area - The visible boundary */
+  border: 5px solid navy; /* 5px solid navy border */
+
+  /* Padding Area - Space between border and content */
+  padding: 15px; /* 15px padding on all sides */
+
+  background-color: lightgray; /* Background for the padding area to visualize it */
+  width: 300px; /* Width of the content-box by default */
+  box-sizing: content-box; /* Explicitly content-box for clarity */
+}
+
+.content {
+  /* Content Area - Where the actual content resides */
+  background-color: lightblue; /* Background for the content area */
+  padding: 10px; /* Adding some padding within the content itself for visual */
+  border: 1px dashed darkcyan; /* A border for the content itself */
+  height: 50px; /* Height of the content */
+  text-align: center;
+}
+```
+
+**Explanation:**
+
+In this example:
+
+- The `.box-model-example` div represents our main box.
+  - `margin: 20px;` creates a 20-pixel transparent space around the entire box, separating it from other elements.
+  - `border: 5px solid navy;` draws a 5-pixel thick, solid navy line around the padding and content.
+  - `padding: 15px;` creates a 15-pixel transparent space inside the border, before the content starts. The `background-color: lightgray;` on `.box-model-example` makes this padding area visible.
+  - `width: 300px;` with `box-sizing: content-box;` means the content area itself will be 300px wide. The total width of the visible box will be `300px (content) + 30px (left/right padding) + 10px (left/right border) = 340px`.
+- The inner `.content` div has its own background and a small padding/border to clearly delineate the content area itself from the padding of its parent.
+
+This setup helps visualize how `margin`, `border`, and `padding` contribute to the overall space an element occupies.
+
 #### Layout with Flexbox
 
 Flexbox (Flexible Box Layout) is a one-dimensional layout model designed for distributing space among items in an interface and aligning them. It's the **primary layout system in React Native**.
