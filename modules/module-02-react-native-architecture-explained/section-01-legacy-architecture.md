@@ -39,7 +39,9 @@ sequenceDiagram
     JS->>JS: 10. Update React state
 ```
 
-This diagram illustrates the key steps in Bridge communication. When a React component creates a button, the request travels from JavaScript through serialization, across the Bridge, and to the native side for rendering. Similarly, when a user taps that button, the event travels back through serialization and the Bridge before it can be handled by your JavaScript code. This roundtrip process introduces the inherent latency of the legacy architecture.
+This diagram illustrates the key steps in Bridge communication. When a React component, such as a button in our SpeedyMeds app for refilling a prescription, needs to be rendered, the request originates in the JavaScript Thread (1). This request, containing information like the button's properties and style, is sent to the Bridge. The Bridge then serializes this data into a JSON string (2) to prepare it for inter-process communication. This serialized message is subsequently transferred to the Native Thread (3). On the native side, the message is deserialized from JSON back into a format the native platform can understand (4), and then the corresponding native UI operation is executed to create and display the actual button on the screen (5).
+
+Conversely, when a user interacts with this native button (e.g., by tapping it), the Native Thread captures this event. This event data (e.g., "Button Pressed") is then sent back to the Bridge (6). Similar to the outbound communication, the Bridge serializes this event data into JSON (7) and transfers it to the JavaScript Thread (8). The JavaScript environment deserializes the JSON payload (9), allowing your React application logic to finally process the event, perhaps by updating the component's state or navigating to a new screen (10). This entire roundtrip process, involving multiple steps of serialization, deserialization, and inter-thread messaging, introduces the inherent latency characteristic of the legacy architecture and highlights why it can become a bottleneck, especially for applications with frequent or complex UI updates.
 
 ### How Communication Works:
 

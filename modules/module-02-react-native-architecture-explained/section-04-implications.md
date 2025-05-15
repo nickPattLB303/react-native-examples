@@ -164,28 +164,7 @@ Expo effectively acts as a helpful layer, managing the transition to the New Arc
 > - [React Native's New Architecture - Expo Documentation](https://docs.expo.dev/guides/new-architecture/)
 > - [Tools for development (expo-doctor) - Expo Documentation](https://docs.expo.dev/develop/tools/)
 
-> 🎯 **Tip for All Learners:** While the underlying C++ and native platform details of JSI, Fabric, and TurboModules are complex, you don't need to master them to be productive. Focus on understanding the _benefits_ they provide (smoother UI, faster startup, ability to use modern React features) and the practical _implications_ (like the importance of checking library compatibility using tools like `expo-doctor` and the React Native Directory). React Native's goal is often to abstract these complexities away, letting you focus on building your app's features.
+> [!TIP]
+> While the underlying C++ and native platform details of JSI, Fabric, and TurboModules are complex, you don't need to master them to be productive. Focus on understanding the _benefits_ they provide (smoother UI, faster startup, ability to use modern React features) and the practical _implications_ (like the importance of checking library compatibility using tools like `expo-doctor` and the React Native Directory). React Native's goal is often to abstract these complexities away, letting you focus on building your app's features.
 
 The New Architecture represents a significant leap forward, aiming to bridge the gap between JavaScript's developer experience and native application performance.
-
----
-
-## Module Challenge: Architecture Diagramming
-
-In this challenge, you'll create diagrams illustrating both the Legacy and New Architectures of React Native, focusing on the communication flow between JavaScript and native components. This exercise will reinforce your understanding of the key architectural differences.
-
-**(https://whiteboard.microsoft.com/architecture-diagramming)**
-
-### Module Summary
-
-In this module, we explored the evolution of React Native's architecture. We started with the **Legacy Architecture**, identifying its core component, the **Bridge**, and the limitations imposed by its asynchronous, serialized communication model across the JS, Native, and Shadow threads. This led to performance bottlenecks and challenges in complex interactions.
-
-We then dived into the **New Architecture**, a significant overhaul designed to address these issues. Key components like the **JavaScript Interface (JSI)** enable direct, potentially synchronous communication between JavaScript and C++ objects, eliminating much of the Bridge's overhead. **TurboModules** offer lazily-loaded, type-safe native modules, while **Fabric** provides a more efficient, C++ based rendering system that supports modern React features like concurrency. **Codegen** automates the creation of boilerplate interface code, enhancing type safety.
-
-Understanding these architectural differences is crucial for building high-performing, modern React Native applications like SpeedyMeds. The New Architecture's performance improvements, type safety, and synchronous capabilities will allow us to create a responsive, reliable pharmacy application that handles medication data efficiently and provides a smooth user experience.
-
-### Additional Resources
-
-- [React Native New Architecture Working Group Discussions](https://github.com/react-native-community/discussions-and-proposals/labels/new%20architecture)
-- [React Native New Architecture - Deep Dive Blog Post](https://medium.com/@DhruvHarsora/deep-dive-into-react-natives-new-architecture-jsi-turbomodules-fabric-yoga-234bbdf853b4)
-- [React Native Upgrade Helper](https://react-native-community.github.io/upgrade-helper/)
