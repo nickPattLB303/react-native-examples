@@ -36,9 +36,15 @@ Cross-platform development isn't a single technique; various approaches have eme
 
 1.  **Webviews / Hybrid Apps:**
 
-    - **Concept:** These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a `WebView`). Originating with tools like PhoneGap (created in 2008, later becoming Apache Cordova), this approach allowed web developers to create installable mobile apps.
+    - **Concept:** These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a `WebView`). Originating with tools like PhoneGap (created by Nitobi Software in 2008, later acquired by Adobe and contributed to the Apache Software Foundation as Apache Cordova), this approach allowed web developers to create installable mobile apps. The core idea was to display a web app using the platform's built-in WebView component (a chromeless browser view), with plugins often used to bridge JavaScript to native device features.
     - **Pros:** Leverages existing web development skills, very high code reuse, access to some native features via plugins.
     - **Cons:** Performance limitations (runs in a web browser view, not native components), difficulty accessing _all_ native device features, often doesn't feel truly "native" in terms of UI/UX, potential plugin maintenance issues.
+
+    - **Key WebView Limitations:**
+      - **Performance Bottlenecks:** The abstraction layer and WebView performance could lead to sluggishness, especially for complex UIs, animations, or computationally intensive tasks. Graphics-heavy apps were particularly challenging.
+      - **Non-Native Look and Feel:** Achieving a UI that perfectly matched platform design guidelines and native component behavior was difficult, often resulting in apps that felt "web-like."
+      - **Limited Native API Access:** While plugins helped, WebView-based apps often couldn't leverage the full spectrum of native APIs as seamlessly as native apps.
+      - **User Experience Compromises:** The combination of performance issues and a non-native feel could lead to a suboptimal user experience. Facebook famously pivoted away from an HTML5-based mobile strategy in 2012 due to these limitations, highlighting the need for better cross-platform solutions.
 
 2.  **Compiled to Native Code:**
 
@@ -104,6 +110,21 @@ While specific approaches vary, some general advantages and disadvantages apply:
 > 🔁 **(Asynchronous Learners):** This section on cross-platform development approaches is particularly valuable as standalone knowledge, even if you're jumping directly to this topic. The concepts covered here apply broadly to mobile development decisions regardless of which specific framework you ultimately choose. The trade-offs between development speed, performance, and platform integration are universal considerations in the mobile space.
 
 The decision between native and cross-platform development depends heavily on the specific project requirements, budget, timeline, and performance needs. However, the increasing sophistication of cross-platform tools has made them a viable and often preferred option for many applications. The next section focuses specifically on React Native, a popular choice in the "compiled to native" category.
+
+### Comparing Development Approaches
+
+The following table summarizes the key trade-offs between Native Development, WebView-based approaches, and a modern compiled cross-platform solution like React Native, illustrating where React Native aims to fit:
+
+| Feature               | Native Development (iOS/Android) | WebView Approach (e.g., Cordova)       | React Native (Modern Cross-Platform)      |
+| :-------------------- | :------------------------------- | :------------------------------------- | :---------------------------------------- |
+| Development Cost/Time | High (Separate Codebases)        | Lower (Shared Web Code)                | Medium (High Code Sharing)                |
+| Performance           | Optimal (Direct Platform Access) | Often Sub-optimal (WebView Bottleneck) | Near-Native (Native Components, New Arch) |
+| UI/UX (Native Feel)   | Excellent (Platform Standard)    | Challenging (Web Rendering)            | Excellent (Renders Native Components)     |
+| Native API Access     | Full                             | Limited (Via Plugins)                  | Extensive (Native Modules, New Arch)      |
+| Code Sharing          | None                             | High (HTML, CSS, JS)                   | Very High (JavaScript/React Logic & UI)   |
+| Maintenance           | Complex (Two Codebases)          | Simpler (Single Web Codebase)          | Simpler (Mostly Single Codebase)          |
+
+Understanding this evolution is key. The shortcomings of purely native development (cost, time) and early cross-platform attempts (performance, UX) created the specific need that frameworks like React Native were designed to fill: achieving efficient development _with_ a high-quality, native user experience.
 
 > 📚 **Official Documentation:**
 >

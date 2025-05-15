@@ -1,6 +1,6 @@
 ## Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)
 
-The limitations of the legacy Bridge architecture prompted a significant re-engineering effort, resulting in React Native's **New Architecture**. This modern approach aims to improve performance, enhance type safety, and provide more flexible communication between JavaScript and native code. It introduces several key components: JSI, TurboModules, Fabric, and Codegen. The New Architecture became the default in React Native version 0.76, marking a major step forward for applications like our SpeedyMeds pharmacy app.
+The limitations of the legacy Bridge architecture prompted a significant re-engineering effort, resulting in React Native's **New Architecture**. This modern approach aims to improve performance, enhance type safety, and provide more flexible communication between JavaScript and native code. It introduces several key components: JSI, TurboModules, Fabric, and Codegen. The New Architecture became the default in React Native version 0.76 and for projects initialized with **Expo SDK 52 and later**, marking a major step forward for applications like our SpeedyMeds pharmacy app.
 
 > 🛣️ **(All Learners):** Understanding the New Architecture is particularly important as it's now the default in React Native. Even if you don't directly work with its lowest-level components, the performance improvements and capabilities it enables will affect how you build your applications.
 
@@ -8,10 +8,48 @@ The limitations of the legacy Bridge architecture prompted a significant re-engi
 
 JSI is the foundational change in the New Architecture. Instead of the asynchronous, JSON-based Bridge, JSI provides a lightweight, general-purpose C++ interface that allows JavaScript code to directly hold references to C++ host objects and invoke methods on them **synchronously**.
 
-- **Direct Communication:** JavaScript can now interact with native code more directly, bypassing the need for serialization and asynchronous message passing for many operations.
+- **Direct Communication:** JavaScript can now interact with native code more directly, bypassing the need for serialization and asynchronous message passing for many operations. This allows for high-throughput data exchange; for example, the popular `react-native-vision-camera` library uses JSI to process camera frames in real-time, handling data rates infeasible with the old Bridge.
 - **JavaScript Engine Agnostic:** JSI is designed to work with any modern JavaScript engine that provides C++ APIs, such as Hermes (React Native's optimized default engine), V8, or JavaScriptCore. This flexibility ensures broader compatibility.
-- **Shared Ownership:** JSI enables shared ownership of objects between the JavaScript and Native realms, reducing the overhead of data transfer.
-- **Enables Synchronous Operations:** A key benefit is the ability to synchronously access native functionality (e.g., layout information via `measure` on a component ref), preventing issues like layout jumps common in the legacy architecture.
+- **Shared Ownership & Host Objects:** JSI enables shared ownership of objects between the JavaScript and Native realms. JavaScript can obtain a reference to a C++ object (often referred to as a **Host Object**) exposed by the native side and directly invoke methods on this C++ object reference as if it were a local JavaScript object. Similarly, native C++ code can hold references to JavaScript functions or objects and invoke them directly.
+- **Enables Synchronous Operations:** A key benefit is the ability to synchronously access native functionality (e.g., layout information via `measure` on a component ref), preventing issues like layout jumps common in the legacy architecture. _(Note: While JSI enables synchronous calls, it's important to use them judiciously. A long-running synchronous native call invoked from JavaScript can still block the JS thread. The advantage is having the option for efficient synchronous execution when necessary.)_
+
+> 🤿 **Deep Dive: C++ Host Objects & JSI References**
+> At its core, JSI provides a C++ API that lets JavaScript interact with C++ objects. When a TurboModule or Fabric component is needed, the native side creates a C++ object representing it. JSI allows the JavaScript environment to obtain a **pointer** or **reference** to this C++ object in memory. This reference is exposed to JavaScript, often looking like a regular JS object. When your JavaScript code calls a method on this reference (e.g., `MyNativeModule.doSomething()`), JSI intercepts this call. Instead of serializing anything, it directly invokes the corresponding C++ method on the C++ object that the reference points to. The C++ class that native modules often inherit from to be exposed via JSI is `facebook::jsi::HostObject`. This mechanism eliminates the serialization bottleneck of the Bridge.
+
+**Diagram: Legacy Bridge vs. JSI Communication Flow**
+
+```mermaid
+    graph TD
+        subgraph Legacy Bridge Architecture
+            direction LR
+            JS_App_Legacy["JS App Code"] --> JS_Bridge_Legacy["JS Bridge"];
+            JS_Bridge_Legacy -- "Serialize (JSON)
+Batched, Async" --> Native_Bridge_Legacy["Native Bridge"];
+            Native_Bridge_Legacy -- "Deserialize" --> Native_Code_Legacy["Native Code/UI"];
+            Native_Code_Legacy -- "Native Events" --> Native_Bridge_Legacy;
+            Native_Bridge_Legacy -- "Serialize (JSON)
+Async" --> JS_Bridge_Legacy;
+            JS_Bridge_Legacy -- "Deserialize" --> JS_App_Legacy;
+            style JS_Bridge_Legacy fill:#f99,stroke:#333,stroke-width:2px
+            style Native_Bridge_Legacy fill:#f99,stroke:#333,stroke-width:2px
+        end
+
+        subgraph New Architecture with JSI
+            direction LR
+            JS_App_JSI["JS App Code (Hermes)"] --> JSI_Layer["JSI (C++ Layer)"];
+            JSI_Layer -- "Direct C++ Calls
+(Synchronous or Async)" --> Native_Cpp_JSI["Native C++ (TurboModule/Fabric)"];
+            Native_Cpp_JSI -- "Direct C++ Calls/Events" --> JSI_Layer;
+            JSI_Layer --> JS_App_JSI;
+            style JSI_Layer fill:#9cf,stroke:#333,stroke-width:2px
+        end
+```
+
+> **Diagram Explanation (Legacy Bridge vs. JSI):**
+>
+> This diagram contrasts the communication flow. The Legacy Bridge (top) shows JS code communicating indirectly with Native code through distinct JS and Native Bridge components, relying on asynchronous, batched, and serialized (JSON) messages. This introduces overhead and latency.
+>
+> The New Architecture with JSI (bottom) shows JS code interacting with a C++ JSI layer. This layer allows direct C++ method calls (synchronous or asynchronous) to Native C++ components (TurboModules/Fabric), eliminating the serialization bottleneck and the explicit Bridge queue. This direct interaction is significantly more efficient.
 
 > 🌐 **(Web Developers):**
 >
