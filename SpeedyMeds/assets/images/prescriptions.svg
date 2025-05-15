@@ -1,0 +1,140 @@
+<svg width="375" height="812" viewBox="0 0 375 812" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="375" height="812" fill="#F8F9FA"/>
+
+  <!-- Header -->
+  <g id="header">
+    <rect width="375" height="90" fill="#B0E0E6"/>
+    <text x="187.5" y="65" font-family="sans-serif" font-size="18" font-weight="bold" fill="#495057" text-anchor="middle">Prescriptions</text>
+  </g>
+
+  <!-- Search Area -->
+  <g id="search-area" transform="translate(0, 100)">
+    <text x="15" y="15" font-family="sans-serif" font-size="14" fill="#6C757D">Search prescriptions for</text>
+    <rect x="15" y="25" width="300" height="40" rx="8" ry="8" fill="#FFFFFF" stroke="#CED4DA" stroke-width="1"/>
+    <text x="25" y="50" font-family="sans-serif" font-size="14" fill="#ADB5BD">example Zocor 20 mg tablet</text>
+    <!-- Filter Icon (simple funnel) -->
+    <g id="filter-icon" transform="translate(325, 30)">
+       <path d="M 0 0 L 20 0 L 12 10 L 12 18 L 8 22 L 8 10 Z" fill="#5EADD3"/>
+       <text x="0" y="35" font-family="sans-serif" font-size="12" fill="#5EADD3">Filter</text>
+    </g>
+  </g>
+
+  <!-- Prescription List -->
+  <g id="prescription-list" transform="translate(0, 180)">
+
+    <!-- Card 1: Aripiprazole -->
+    <g id="card-1" transform="translate(15, 0)">
+      <rect width="345" height="190" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+
+      <!-- Drug Info -->
+      <text x="15" y="25" font-family="sans-serif" font-size="18" font-weight="bold" fill="#495057">Aripiprazole</text>
+      <text x="15" y="45" font-family="sans-serif" font-size="14" fill="#6C757D">10 mg tablet</text>
+
+      <!-- Status Info -->
+      <g transform="translate(15, 65)">
+         <!-- Days Remaining (Good) -->
+         <path d="M20 6L9 17l-5-5" stroke="#28A745" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2, -2) scale(0.7)"/> <!-- Outline Checkmark -->
+         <text x="15" y="10" font-family="sans-serif" font-size="14" fill="#28A745">21 estimated days</text>
+         <!-- Patient -->
+         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2, 16) scale(0.6)"/> <!-- Outline Person Icon -->
+         <circle cx="12" cy="7" r="4" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2, 16) scale(0.6)"/>
+         <text x="15" y="30" font-family="sans-serif" font-size="14" fill="#6C757D">Terry (1974)</text>
+      </g>
+
+       <!-- Refills -->
+       <g transform="translate(280, 20)">
+          <path d="M10.5 20.5 A 10 10 0 0 1 10.5 0.5 A 10 10 0 0 1 10.5 20.5 M 5 10 L 16 10 M 10.5 5 L 10.5 15" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="scale(0.7) translate(0, -2)"/> <!-- Outline Capsule Icon -->
+          <text x="25" y="10" font-family="sans-serif" font-size="14" fill="#495057">x 1</text>
+          <text x="25" y="25" font-family="sans-serif" font-size="12" fill="#6C757D">Refills</text>
+       </g>
+
+      <!-- Contextual Info: Price Rising -->
+      <g transform="translate(15, 100)">
+         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="#E69900" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/> <!-- Outline Warning Triangle -->
+         <line x1="12" y1="9" x2="12" y2="13" stroke="#E69900" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/>
+         <line x1="12" y1="17" x2="12.01" y2="17" stroke="#E69900" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/>
+         <text x="20" y="12" font-family="sans-serif" font-size="14" fill="#E69900">Price rising</text>
+      </g>
+
+      <!-- Action Buttons -->
+      <g transform="translate(15, 130)">
+        <rect x="0" y="0" width="315" height="40" rx="4" ry="4" fill="#FFFFFF" stroke="#5EADD3" stroke-width="1"/>
+        <text x="157.5" y="25" font-family="sans-serif" font-size="14" font-weight="500" fill="#5EADD3" text-anchor="middle">Find Savings</text>
+      </g>
+       <!-- Second button removed for minimalist approach, assuming 'Find Savings' is primary -->
+       <!--
+       <g transform="translate(175, 130)">
+         <rect x="0" y="0" width="155" height="40" rx="4" ry="4" fill="#FFFFFF" stroke="#6C757D" stroke-width="1"/>
+         <text x="77.5" y="25" font-family="sans-serif" font-size="14" font-weight="500" fill="#6C757D" text-anchor="middle">Add to Cart</text>
+       </g>
+       -->
+    </g>
+
+    <!-- Card 2: HCTZ -->
+    <g id="card-2" transform="translate(15, 205)">
+       <rect width="345" height="150" rx="8" ry="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+
+       <!-- Drug Info -->
+       <text x="15" y="25" font-family="sans-serif" font-size="18" font-weight="bold" fill="#495057">HCTZ (hydrochlorothiazide)</text>
+       <text x="15" y="45" font-family="sans-serif" font-size="14" fill="#6C757D">10 mg tablet</text>
+
+       <!-- Status Info -->
+       <g transform="translate(15, 65)">
+          <!-- Days Remaining (Warning) -->
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="#DC3545" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/> <!-- Outline Warning Triangle -->
+          <line x1="12" y1="9" x2="12" y2="13" stroke="#DC3545" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/>
+          <line x1="12" y1="17" x2="12.01" y2="17" stroke="#DC3545" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/>
+          <text x="15" y="10" font-family="sans-serif" font-size="14" fill="#DC3545">5 estimated days</text>
+          <!-- Patient -->
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2, 16) scale(0.6)"/> <!-- Outline Person Icon -->
+          <circle cx="12" cy="7" r="4" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2, 16) scale(0.6)"/>
+          <text x="15" y="30" font-family="sans-serif" font-size="14" fill="#6C757D">Jerry (1969)</text>
+       </g>
+
+        <!-- Refills -->
+        <g transform="translate(280, 20)">
+           <path d="M10.5 20.5 A 10 10 0 0 1 10.5 0.5 A 10 10 0 0 1 10.5 20.5 M 5 10 L 16 10 M 10.5 5 L 10.5 15" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="scale(0.7) translate(0, -2)"/> <!-- Outline Capsule Icon -->
+           <text x="25" y="10" font-family="sans-serif" font-size="14" fill="#495057">x 6</text>
+           <text x="25" y="25" font-family="sans-serif" font-size="12" fill="#6C757D">Refills</text>
+        </g>
+
+       <!-- Contextual Info: Savings -->
+       <g transform="translate(15, 100)">
+          <line x1="12" y1="1" x2="12" y2="23" stroke="#28A745" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/> <!-- Outline Dollar Sign -->
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#28A745" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -2) scale(0.7)"/>
+          <text x="20" y="12" font-family="sans-serif" font-size="14" fill="#28A745">Save $38.04 with delivery</text>
+       </g>
+       <!-- No explicit buttons shown in original for this card type -->
+    </g>
+  </g>
+
+  <!-- Bottom Navigation Bar -->
+  <g id="bottom-nav" transform="translate(0, 728)">
+    <rect width="375" height="84" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+    <!-- Icons -->
+    <g transform="translate(36.875, 15)"> <!-- Home -->
+       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <polyline points="9 22 9 12 15 12 15 22" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <text x="10" y="35" font-family="sans-serif" font-size="10" fill="#6C757D" text-anchor="middle">Home</text>
+    </g>
+     <g transform="translate(130.625, 15)"> <!-- Prescriptions (Selected) -->
+       <path d="M10.5 20.5 A 10 10 0 0 1 10.5 0.5 A 10 10 0 0 1 10.5 20.5 M 5 10 L 16 10 M 10.5 5 L 10.5 15" stroke="#5EADD3" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/> <!-- Capsule Icon -->
+       <text x="10" y="35" font-family="sans-serif" font-size="10" fill="#5EADD3" text-anchor="middle" font-weight="bold">Prescriptions</text>
+    </g>
+     <g transform="translate(224.375, 15)"> <!-- Orders -->
+        <path d="M1 3h15v13H1z M16 8h4l3 3v5h-7V8z" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/> <!-- Truck Icon -->
+        <circle cx="5.5" cy="18.5" r="2.5" stroke="#6C757D" stroke-width="1.5" fill="none"/>
+        <circle cx="18.5" cy="18.5" r="2.5" stroke="#6C757D" stroke-width="1.5" fill="none"/>
+       <text x="10" y="35" font-family="sans-serif" font-size="10" fill="#6C757D" text-anchor="middle">Orders</text>
+    </g>
+     <g transform="translate(318.125, 15)"> <!-- Account -->
+       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <circle cx="12" cy="7" r="4" stroke="#6C757D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+       <text x="10" y="35" font-family="sans-serif" font-size="10" fill="#6C757D" text-anchor="middle">Account</text>
+    </g>
+    <!-- Home indicator -->
+    <rect x="121" y="70" width="134" height="5" rx="2.5" fill="#495057"/>
+  </g>
+
+</svg>
