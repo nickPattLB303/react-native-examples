@@ -2,8 +2,8 @@
 
 Objects and arrays are two of JavaScript's most powerful data types, used extensively in React Native applications. This section will explore their syntax, features, and common operations.
 
-> 📲 **(Native Developers):** 
-> 
+> 📲 **(Native Developers):**
+>
 > **Comparison:** JavaScript's objects and arrays differ from similar structures in native platforms. In Swift, you'd use `Dictionary` and `Array`, which have strong typing. In Kotlin/Java, you'd use `Map` and `List` interfaces. JavaScript objects are more like dynamic dictionaries with no required interface or class definition.
 >
 > **Key Takeaway:** JavaScript objects and arrays are more flexible but less type-safe than their native counterparts. They're also directly serializable to/from JSON, which is heavily used in API communication in React Native.
@@ -20,19 +20,26 @@ Objects and arrays are two of JavaScript's most powerful data types, used extens
 >     "medications": ["Lisinopril", "Metformin"]
 > ]
 > patient["age"] = 43 // Mutable Dictionary
-> let meds = patient["medications"] as? [String] ?? []
-> meds.forEach { print($0) }
+> // In Swift, direct array mutation in dictionary needs care if it's Any.
+> // Assuming meds is correctly cast and mutable:
+> if var meds = patient["medications"] as? [String] {
+>     meds.append("Amlodipine")
+>     patient["medications"] = meds
+>     meds.forEach { print($0) }
+> }
 > ```
 >
 > ```kotlin
 > // Kotlin MutableMap and MutableList
-> val patient = mutableMapOf(
+> val patient = mutableMapOf<String, Any>(
 >     "name" to "John Doe",
 >     "age" to 42,
 >     "medications" to mutableListOf("Lisinopril", "Metformin")
 > )
 > patient["age"] = 43 // Mutable Map
+> @Suppress("UNCHECKED_CAST")
 > val meds = patient["medications"] as? MutableList<String> ?: mutableListOf()
+> meds.add("Amlodipine")
 > meds.forEach { println(it) }
 > ```
 >
@@ -44,6 +51,7 @@ Objects and arrays are two of JavaScript's most powerful data types, used extens
 >   medications: ["Lisinopril", "Metformin"],
 > };
 > patient.age = 43; // Objects are mutable
+> patient.medications.push("Amlodipine"); // Arrays are mutable
 > patient.medications.forEach((med) => console.log(med));
 > ```
 
@@ -68,6 +76,8 @@ An object is an unordered collection of key-value pairs, where keys are typicall
     },
   };
   ```
+
+  This code defines a `medication` object using an object literal. It stores various properties like `name`, `dosageForm`, `strength` (all strings), and `quantityInStock` (a number). It also includes a method `getDetails`, which is a function associated with the object. When `medication.getDetails()` is called, `this` inside the function refers to the `medication` object itself, allowing it to access `this.name`, `this.strength`, and `this.quantityInStock` to construct and return a descriptive string about the medication. This demonstrates a common way to group related data and functionality.
 
 - **Using `new Object()`:** Less common for simple objects.
   ```javascript
@@ -182,6 +192,33 @@ console.log(combinedMedInfo);
 // Output: { genericName: 'Metformin', brandName: 'Glucophage', class: 'Antidiabetic', location: 'Shelf A-3', temperature: 'Room' }
 ```
 
+```mermaid
+graph TD
+    subgraph OriginalData [Original Data Structures]
+        direction LR
+        Obj["Object: const O = { a: 1, b: 2, c: 3 }"]
+        Arr["Array: const A = [10, 20, 30]"]
+    end
+
+    subgraph DestructuringOps [Destructuring Assignment]
+        direction TB
+        ObjDestructure["Object Destructuring: const { a, b } = O;"] --> Res1["Variables Created: a = 1, b = 2"]
+        ArrDestructure["Array Destructuring: const [x, y] = A;"] --> Res2["Variables Created: x = 10, y = 20"]
+    end
+
+    subgraph SpreadOps [Spread Syntax]
+        direction TB
+        ArrSpread["In Array Literal: const newA = [...A, 40];"] --> Res3["newA = [10, 20, 30, 40]"]
+        ObjSpread["In Object Literal: const newO = { ...O, d: 4 };"] --> Res4["newO = { a:1, b:2, c:3, d:4 }"]
+        FuncSpread["In Function Call: Math.max(...A);"] --> Res5["Equivalent to: Math.max(10, 20, 30)"]
+    end
+
+    OriginalData --> DestructuringOps
+    OriginalData --> SpreadOps
+```
+
+This diagram illustrates how destructuring and spread syntax work with JavaScript objects and arrays. **Destructuring Assignment** (middle section) allows you to unpack values from arrays or properties from objects into distinct variables. For instance, `const { a, b } = O;` extracts `a` and `b` from object `O`. Similarly, `const [x, y] = A;` extracts the first two elements from array `A`. **Spread Syntax** (right section) expands iterables (like arrays) into individual elements or object properties into key-value pairs. It can be used to create new arrays (`[...A, 40]`), new objects (`{ ...O, d: 4 }`), or to pass array elements as individual arguments to functions (`Math.max(...A)`). Both features provide more concise and readable ways to work with data structures.
+
 ### Arrays
 
 An array is an ordered, zero-indexed list of values. Array elements can be of any data type, including other arrays or objects.
@@ -266,6 +303,8 @@ JavaScript arrays come with a rich set of built-in methods for manipulation and 
   // Output: [ { patientId: 'P001', ... }, { patientId: 'P003', ... } ]
   ```
 
+  This block showcases three powerful array iteration methods. First, `forEach` iterates over `refillRequests`, logging a processing message for each request but not creating a new array. Second, `map` transforms `refillRequests` into a new array, `patientIds`, containing only the `patientId` from each request object. This is useful for extracting specific data. Finally, `filter` creates `lisinoprilRequests`, another new array, containing only the request objects where the `medication` property is "Lisinopril". These methods provide declarative and often more readable ways to work with array data compared to traditional `for` loops, and they emphasize immutability by returning new arrays (for `map` and `filter`).
+
 - **Finding Elements:**
 
   - `find(callbackFn(element, index, array))`: Returns the **first element** in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
@@ -302,6 +341,13 @@ JavaScript arrays come with a rich set of built-in methods for manipulation and 
   console.log(`Total items in refill requests: ${totalStockValue}`); // Output: 150 (30+90+30)
   ```
 
+> [!IMPORTANT]
+> When working with arrays in state managed by libraries like React (which is the foundation of React Native), it's crucial to treat arrays as immutable. Directly mutating an array that is part of the state (e.g., using `push()`, `pop()`, `splice()` directly on the state array) can lead to unpredictable behavior and bugs because React might not detect the change correctly.
+>
+> **Favor immutable operations:** Create new arrays with the changes instead of modifying the original. Methods like `map()`, `filter()`, `reduce()`, `slice()`, `concat()`, and the spread syntax (`...`) help achieve this. For example, to add an item:
+> `const newArray = [...oldArray, newItem];` (instead of `oldArray.push(newItem)`)
+> This practice ensures that state updates are predictable and can be tracked effectively.
+
 ### ES6+ Features for Objects and Arrays
 
 #### Destructuring Assignment
@@ -329,6 +375,13 @@ Destructuring provides a concise way to extract values from arrays or properties
   // Default values: if a property doesn't exist
   const { fullName: name, allergies = "None reported" } = patientFile;
   console.log(`${name} has allergies: ${allergies}`); // Output: James Bond has allergies: None reported
+
+  // Destructuring into existing variables (Assignment Pattern)
+  let currentPatientName = "Unknown";
+  let currentCondition = "N/A";
+  ({ fullName: currentPatientName, primaryCondition: currentCondition } =
+    patientFile);
+  console.log(`Assigned: ${currentPatientName} - ${currentCondition}`); // Output: Assigned: James Bond - Hypertension
   ```
 
   **Nested Object Destructuring:**
@@ -492,6 +545,9 @@ While they use the same syntax (`...`), their role depends on the context:
 > - [MDN Web Docs: Destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 > - [MDN Web Docs: Spread syntax (...)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 > - [MDN Web Docs: Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
+> - [MDN Web Docs: Object initializer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+> - [MDN Web Docs: Property accessors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors)
+> - [MDN Web Docs: Method definitions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions)
 
 ### Exercise 5.2: Data Manipulation
 

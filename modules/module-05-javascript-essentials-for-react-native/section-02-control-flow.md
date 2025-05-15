@@ -22,6 +22,8 @@ if (patientAge < 18) {
 console.log(`Needs Consent: ${needsGuardianConsent}`); // Output: Needs Consent: true
 ```
 
+This code demonstrates a simple conditional check. The `patientAge` is 17. The `if` statement evaluates the condition `patientAge < 18`. Since 17 is less than 18, the condition is `true`. Consequently, the code block within the `if` statement executes: `needsGuardianConsent` is set to `true`, and the message "Patient is a minor and requires guardian consent." is printed. Finally, the last `console.log` confirms that `needsGuardianConsent` is indeed `true`, illustrating how the `if` statement directed the program flow based on the patient's age.
+
 #### `else if` Statement
 
 Use `else if` to specify a new condition to test, if the first `if` condition is false.
@@ -51,6 +53,9 @@ if (temperatureCelsius > 38) {
   console.log("Patient temperature is within normal range."); // This block executes
 }
 ```
+
+> [!TIP]
+> It is strongly recommended to always use curly braces `{}` for `if`, `else if`, and `else` blocks, even if they contain only a single statement. This prevents ambiguity and potential errors, especially with nested conditions (the "dangling else" problem).
 
 #### `switch` Statement
 
@@ -84,6 +89,11 @@ switch (dosageForm) {
 console.log(`Instructions for ${dosageForm}: ${instructions}`);
 // Output: Instructions for Tablet: Swallow whole with water. Do not crush or chew.
 ```
+
+This `switch` statement elegantly handles routing based on `dosageForm`. Since `dosageForm` is "Tablet", it matches the first `case "Tablet":`. Due to the fall-through mechanism (no `break` after `case "Tablet":`), execution continues to `case "Capsule":` and assigns the corresponding `instructions`. The `break;` statement then ensures that no further cases are evaluated. If `dosageForm` were "Liquid", only the "Liquid" case's instructions would be assigned. The `default` case provides a fallback if no specific match is found, ensuring `instructions` always gets a value. This example shows how `switch` can simplify multi-condition logic compared to many `else if` statements, especially with the useful fall-through for shared logic.
+
+> [!TIP]
+> As with `if/else` statements, always use curly braces `{}` for loop bodies, even for single statements, to enhance readability and prevent errors.
 
 #### Truthy and Falsy Values
 
@@ -139,6 +149,8 @@ for (let i = 1; i <= 3; i++) {
 // Refill reminder #3 sent.
 ```
 
+This `for` loop is designed to send three refill reminders. It starts by initializing a counter `i` to 1. Before each iteration, it checks if `i <= 3`. If true, the code inside the loop (printing the reminder message with the current value of `i`) executes. After each execution, the final expression `i++` increments the counter. This process repeats: `i` becomes 1 (prints), then 2 (prints), then 3 (prints). When `i` becomes 4, the condition `4 <= 3` is false, so the loop terminates. This demonstrates a common use of `for` loops for a fixed number of iterations.
+
 #### `while` Loop
 
 The `while` loop executes a block of code as long as a specified condition is true. The condition is evaluated _before_ each iteration.
@@ -173,6 +185,9 @@ do {
 
 console.log(`Confirmation code 7 generated after ${attempt} attempts.`);
 ```
+
+> [!NOTE]
+> While the `for`, `while`, and `do...while` loops are fundamental, for iterating specifically over arrays, modern JavaScript often favors array iteration methods like `forEach()`, `map()`, `filter()`, and `reduce()` (which will be covered in detail in the Arrays section). These methods can be more declarative and less prone to common looping errors (like off-by-one errors).
 
 #### `for...of` Loop (ES6)
 
@@ -279,9 +294,17 @@ for (const propertyKey in patientRecord) {
   console.log("Loop finished");
   ```
 
+> 📲 **(Native Developers): Control Flow Comparisons**
+>
+> The syntax and fundamental behavior of `if/else`, `switch`, `for`, `while`, and `do...while` loops in JavaScript are highly similar to their counterparts in Java, Kotlin, and Swift, which should make this section feel familiar.
+>
+> - **`switch` Statement:** Be mindful that JavaScript's `switch` uses strict (`===`) comparison for its `case` values and requires explicit `break` statements to prevent "fall-through" into subsequent cases. This might differ slightly from default behaviors or syntax in other languages (e.g., Swift's `switch` does not fall through by default and is more powerful with pattern matching).
+> - **Looping Constructs:** The classic C-style `for` loop (`for (init; condition; afterthought)`) is common across these languages. JavaScript also offers `for...of` for iterating over iterable values (like arrays, strings), which is similar to Kotlin's `for (item in collection)` or Swift's `for item in collection`. JavaScript's `for...in` is for object property iteration and is distinct.
+> - **`while` / `do...while`:** These loops function almost identically across the languages in terms of their core logic (condition before vs. condition after).
+
 #### Loop Comparison Summary
 
-| Loop Type    | Syntax                          | Primary Use Case                                                      | Condition Check       | Executes At Least Once? |
+| Loop type    | Syntax                          | Primary use case                                                      | Condition check       | Executes at least once? |
 | :----------- | :------------------------------ | :-------------------------------------------------------------------- | :-------------------- | :---------------------- |
 | `for`        | `for (init; cond; final)`       | Known number of iterations, iterating with a counter                  | Before each iteration | No                      |
 | `while`      | `while (condition)`             | Iterations based on a condition, number unknown                       | Before each iteration | No                      |

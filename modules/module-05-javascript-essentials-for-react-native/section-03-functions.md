@@ -73,6 +73,8 @@ const getMedicationInfo = function medicationInfo(medicationId) {
 console.log(getMedicationInfo("AMX250")); // Output: Amoxicillin 250mg
 ```
 
+This code block first demonstrates hoisting with the `greetPatient` function. Notice `greetPatient("Maria Rodriguez")` is called _before_ its declaration, yet it executes correctly, outputting "Welcome to SpeedyMeds, Maria Rodriguez!". This is because function declarations are fully hoisted. The subsequent call after the declaration behaves identically. The second part shows a named function expression, `medicationInfo`, assigned to `getMedicationInfo`. While the name `medicationInfo` can be useful for debugging (e.g., in stack traces), the function is invoked via the constant `getMedicationInfo`. This example primarily illustrates the basic syntax of function declaration and a named function expression, and highlights the hoisting behavior unique to declarations.
+
 **Hoisting Differences: Declarations vs. Expressions:**
 
 - **Function Declarations:** Fully hoisted (name and body). Callable anywhere in their scope.
@@ -101,6 +103,8 @@ scheduleRefill("P001", "Lisinopril");
 scheduleRefill("P002", "Metformin", 90);
 // Output: Scheduling a 90-day refill for Metformin for patient P002.
 ```
+
+This example showcases ES6 default parameters. The `scheduleRefill` function defines `daysSupply = 30`, meaning if the third argument isn't provided during a call, `daysSupply` will automatically be 30. In the first call, `scheduleRefill("P001", "Lisinopril")`, only two arguments are passed, so `daysSupply` defaults to 30, resulting in the output "Scheduling a 30-day refill...". In the second call, `scheduleRefill("P002", "Metformin", 90)`, three arguments are provided, so the passed value `90` overrides the default for `daysSupply`, leading to "Scheduling a 90-day refill...". This feature simplifies function calls by making certain parameters optional with sensible defaults.
 
 #### Rest Parameters (`...`) (ES6)
 
@@ -222,6 +226,7 @@ console.log(processOrder("ORD123")); // Output: Processing order ORD123... { ord
 - **No `arguments` Object:** Use rest parameters (`...args`) instead.
 - **Cannot be used as Constructors:** Arrow functions throw a `TypeError` if used with `new`.
 - **No `prototype` Property:** Arrow functions do not have a `prototype` property.
+- **Cannot be used as Generator Functions:** Arrow functions cannot use the `yield` keyword.
 
 ### The `this` Keyword Explained
 
@@ -276,6 +281,17 @@ The `this` keyword is a common source of confusion in JavaScript because its val
 
     const boundLogData1 = logDetails.bind(data1);
     boundLogData1("Data 1 Bound"); // Output: Data 1 Bound: 100
+
+    // .bind() can also be used for partial application (pre-loading arguments)
+    const boundLogData1WithLabel = logDetails.bind(
+      data1,
+      "Fixed Label for Data1"
+    );
+    boundLogData1WithLabel(); // Output: Fixed Label for Data1: 100
+
+    // While still important, the need for .bind() in particular has decreased in contexts
+    // like React class components or event handlers due to the prevalence of arrow functions
+    // for preserving the 'this' context correctly.
     ```
 
 #### `this` in Arrow Functions
@@ -303,6 +319,33 @@ function Timer() {
 
 // const myTimer = new Timer(); // Uncomment to run the timer
 ```
+
+```mermaid
+graph TD
+    subgraph OuterScope ["Outer Scope (e.g., a Method or Global space)"]
+        direction LR
+        OuterContextValue{{this = outerContextValue}}
+        AF["Arrow Function: const fn = () => this;"] -- Inherits & captures --> OuterContextValue
+    end
+
+    subgraph InvocationTypes [Regular Function Invocation Types]
+        direction TB
+        RF["Regular Function: function fn() { this }"]
+        CallSite1["Standalone: fn()"] --> IC1["this = global/undefined (strict)"]
+        CallSite2["Method: obj.fn()"] --> IC2["this = obj"]
+        CallSite3["Constructor: new fn()"] --> IC3["this = new instance"]
+        CallSite4["Explicit: fn.call(ctx)"] --> IC4["this = ctx"]
+        RF -.-> CallSite1
+        RF -.-> CallSite2
+        RF -.-> CallSite3
+        RF -.-> CallSite4
+    end
+
+    style AF fill:#D5F5E3,stroke:#2ECC71
+    style RF fill:#EBF5FB,stroke:#3498DB
+```
+
+This diagram contrasts how `this` is determined in arrow functions versus regular functions. For an **Arrow Function** (green box), its `this` value is lexically inherited from its surrounding scope (Outer Scope) when it's defined. It captures the `this` of its enclosing context (shown as `outerContextValue`) and retains it, regardless of how or where the arrow function is later invoked. This provides a predictable `this`. In contrast, a **Regular Function** (blue box) has a dynamic `this`. Its `this` value is determined at call time based on how it's invoked: a standalone call might set `this` to the global object (or `undefined` in strict mode); a method call (`obj.fn()`) sets `this` to `obj`; a constructor call (`new fn()`) sets `this` to the newly created instance; and explicit binding (`fn.call(ctx)`) sets `this` to `ctx`. This dynamic nature is powerful but can be a source of errors if not carefully managed, a problem largely solved by arrow functions for many common use cases like callbacks.
 
 > [!IMPORTANT]
 > The predictable lexical `this` of arrow functions eliminates many common bugs and the need for workarounds like `const self = this;` or `.bind(this)` that were prevalent with traditional function callbacks.
@@ -410,14 +453,14 @@ In this example, `fillPrescription` is a closure. It has access to `medicationNa
 
 #### Function Definition Comparison
 
-| Feature                           | Function Declaration  | Function Expression            | Arrow Function            |
-| :-------------------------------- | :-------------------- | :----------------------------- | :------------------------ |
-| **Syntax Example**                | `function greet() {}` | `const greet = function() {};` | `const greet = () => {};` |
-| **Hoisting Behavior**             | Fully hoisted         | Variable hoisted/TDZ only      | Variable hoisted/TDZ only |
-| **`this` Binding**                | Dynamic               | Dynamic                        | Lexical                   |
-| **`arguments` Object**            | Available             | Available                      | Not available             |
-| **Usable as Constructor (`new`)** | Yes                   | Yes (if not arrow)             | No (`TypeError`)          |
-| **`prototype` Property**          | Yes                   | Yes (if not arrow)             | No                        |
+| Feature                       | Function declaration  | Function expression            | Arrow function            |
+| :---------------------------- | :-------------------- | :----------------------------- | :------------------------ |
+| Syntax example                | `function greet() {}` | `const greet = function() {};` | `const greet = () => {};` |
+| Hoisting behavior             | Fully hoisted         | Variable hoisted/TDZ only      | Variable hoisted/TDZ only |
+| `this` binding                | Dynamic               | Dynamic                        | Lexical                   |
+| `arguments` object            | Available             | Available                      | Not available             |
+| Usable as constructor (`new`) | Yes                   | Yes (if not arrow)             | No (`TypeError`)          |
+| `prototype` property          | Yes                   | Yes (if not arrow)             | No                        |
 
 ### Higher-Order Functions
 
@@ -434,6 +477,10 @@ Closures are often created by higher-order functions (like `createPrescriptionTr
 > - [MDN Web Docs: Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 > - [MDN Web Docs: Scope](https://developer.mozilla.org/en-US/docs/Glossary/Scope)
 > - [MDN Web Docs: Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+> - [MDN Web Docs: `this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+> - [MDN Web Docs: Function.prototype.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+> - [MDN Web Docs: Function.prototype.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+> - [MDN Web Docs: Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
 ### Exercise 5.1: Function Practice
 

@@ -29,6 +29,23 @@ Upon completing this module, you will be able to:
 
 Before starting this module, it's important that you have a basic understanding of web concepts. Please ensure you have completed:
 
-- [Module 4: Web Development Essentials Refresher](./../module-04-web-development-essentials-refresher/section-00-introduction.md) (Assuming a relative link structure, adjust if needed based on final course structure)
+- [Module 4: Web Development Essentials Refresher](../module-04-web-development-essentials-refresher/index.md)
 
 A general familiarity with basic programming concepts will also be beneficial.
+
+## What You'll Cover in This Module
+
+Throughout this module, we will explore the following key areas of JavaScript:
+
+- **Section 1: Variables, Data Types, and Operators:** Understanding the building blocks (`let`, `const`, various types).
+- **Section 2: Control Flow:** Mastering conditional logic and loops.
+- **Section 3: Functions:** Exploring arrow functions, scope, and closures. (_Includes Exercise 5.1_)
+- **Section 4: Objects and Arrays:** Working with data structures, methods, destructuring, and spread/rest operators. (_Includes Exercise 5.2_)
+- **Section 5: Asynchronous JavaScript:** Handling asynchronous operations with Callbacks, Promises, and `async/await`. (_Includes Exercise 5.3 and a Mermaid diagram_)
+- **Section 6: ES6 Modules:** Organizing code with `import` and `export`.
+
+You will apply these concepts in exercises and a culminating module challenge:
+
+- **Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)**
+
+This structured approach will help you build a strong command of JavaScript, preparing you for advanced React Native development.

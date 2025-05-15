@@ -32,8 +32,10 @@ JavaScript is single-threaded, meaning it can only execute one piece of code at 
   // Second: Patient data received (asynchronously).
   ```
 
-> 📲 **(Native Developers):** 
-> 
+This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
+
+> 📲 **(Native Developers):**
+>
 > **Comparison:** JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
 >
 > **Key Takeaway:** In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
@@ -103,6 +105,52 @@ JavaScript environments (like browsers, Node.js, and React Native's JavaScript e
 
 This mechanism ensures that long-running operations don't block the main thread, allowing the UI to remain responsive.
 
+```mermaid
+graph TD
+    subgraph JavaScriptRuntime [JavaScript Runtime]
+        CallStack["Call Stack (LIFO)"]
+        Heap["Heap (Memory Allocation)"]
+    end
+
+    subgraph EnvironmentAPIs [Browser/Node.js APIs (Background Processing)]
+        APIs["Web APIs / C++ APIs <br/>(setTimeout, fetch, DOM events, fs)"]
+    end
+
+    subgraph TaskQueues [Task Queues]
+        direction LR
+        CallbackQueue["Callback Queue (Macrotasks)"]
+        MicrotaskQueue["Microtask Queue <br/>(Promise .then/.catch/.finally, queueMicrotask)"]
+    end
+
+    EventLoop["(Event Loop)"]
+
+    CallStack -- "Executes Synchronous Code" --> Heap
+    CallStack -- "Initiates Async Operation" --> APIs
+    APIs -- "Operation Complete (e.g., timer done)" --> CallbackQueue
+    APIs -- "Promise Settles" --> MicrotaskQueue
+
+    EventLoop -.-> CallStack
+    EventLoop -.-> MicrotaskQueue
+    EventLoop -.-> CallbackQueue
+
+    MicrotaskQueue -- "Dequeues Task if Call Stack Empty" --> CallStack
+    CallbackQueue -- "Dequeues Task if Call Stack & Microtask Queue Empty" --> CallStack
+
+    note right of EventLoop
+      Monitors Call Stack & Task Queues:
+      1. If Call Stack empty, process ALL Microtasks.
+      2. If Call Stack & Microtask Queue empty, process ONE Macrotask.
+      3. Repeat.
+    end
+
+    style EventLoop fill:#f9f,stroke:#333,stroke-width:2px
+    style CallStack fill:#lightblue
+    style MicrotaskQueue fill:#lightgreen
+    style CallbackQueue fill:#orange
+```
+
+This diagram visualizes the JavaScript Event Loop mechanism. The **Call Stack** executes synchronous code. When an asynchronous operation (like `setTimeout` or `fetch`) is initiated, it's offloaded to **Browser/Node.js APIs** which run in the background. Upon completion, these APIs place their callbacks into one of two queues: the **Microtask Queue** (for Promise handlers like `.then()`, `.catch()`, which have higher priority) or the **Callback Queue** (also known as Macrotask Queue, for `setTimeout`, I/O). The **Event Loop** continuously monitors the Call Stack. When the Call Stack is empty, it first processes _all_ tasks in the Microtask Queue. Only if both the Call Stack and Microtask Queue are empty will it take _one_ task from the Callback Queue to push onto the Call Stack for execution. This ensures non-blocking behavior and prioritizes promise resolutions.
+
 ### Callbacks
 
 A callback is a function passed as an argument to another function, which is then invoked (called back) inside the outer function to complete some kind of routine or action, often after an asynchronous operation has finished.
@@ -167,7 +215,7 @@ Once a Promise is _settled_ (i.e., it is either fulfilled or rejected), its stat
 
 #### Promise States and Transitions
 
-| State       | Description                                   | How it's Reached                                            | Next Possible States    |
+| State       | Description                                   | How it's reached                                            | Next possible states    |
 | :---------- | :-------------------------------------------- | :---------------------------------------------------------- | :---------------------- |
 | `pending`   | Initial state, operation not yet completed    | When `new Promise()` is created                             | `fulfilled`, `rejected` |
 | `fulfilled` | Operation completed successfully, has a value | Executor calls `resolve(value)`                             | (Terminal state)        |
@@ -203,6 +251,8 @@ function fetchMedicationStock(medicationName) {
   });
 }
 ```
+
+This `fetchMedicationStock` function demonstrates Promise creation. It returns a `new Promise` that simulates fetching data asynchronously using `setTimeout`. Inside the executor function, after a 1-second delay, it checks a mock `inventory`. If the `medicationName` exists and has stock > 0, the Promise is `resolve`d with an object containing the medication and stock count. If the medication is out of stock or not found, the Promise is `reject`ed with an appropriate `Error` object. This encapsulates the asynchronous logic and provides a clear success (`resolve`) or failure (`reject`) path for consumers of the Promise.
 
 #### Consuming Promises
 

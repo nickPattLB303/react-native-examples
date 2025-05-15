@@ -132,6 +132,77 @@ Like `var`, declarations using `let` and `const` are also technically hoisted to
   ```
 - **Why TDZ?** This behavior prevents the use of variables before they are properly declared and initialized, leading to more reliable and less error-prone code compared to `var`'s hoisting behavior.
 
+Hoisting also applies to function declarations and expressions, but differently:
+
+- **Function Declarations:** Both the name and the function body are hoisted. This means you can call a function declaration before it's physically defined in the code.
+
+  ```javascript
+  hoistedFunc(); // Works! Output: Hoisted function was called.
+
+  function hoistedFunc() {
+    console.log("Hoisted function was called.");
+  }
+  ```
+
+- **Function Expressions (including Arrow Functions):** Only the variable declaration (if using `var`, `let`, or `const`) is hoisted, not the function assignment itself.
+
+  - If using `var`, the variable is hoisted and initialized with `undefined`. Calling it before assignment results in a `TypeError`.
+  - If using `let` or `const`, the variable is hoisted but enters the TDZ. Calling it before assignment results in a `ReferenceError`.
+
+  ```javascript
+  // notHoistedFuncExpr(); // TypeError: notHoistedFuncExpr is not a function (if var)
+  // ReferenceError: Cannot access 'notHoistedFuncExpr' before initialization (if let/const)
+
+  const notHoistedFuncExpr = function () {
+    console.log("Function expression called.");
+  };
+  notHoistedFuncExpr(); // Works here
+
+  // Similar behavior for arrow functions
+  // notHoistedArrowFunc(); // ReferenceError
+  const notHoistedArrowFunc = () => {
+    console.log("Arrow function called.");
+  };
+  notHoistedArrowFunc(); // Works here
+  ```
+
+This behavior (TDZ for `let`/`const`, and how function expressions are hoisted) prevents the use of variables or functions before they are properly declared and initialized, leading to more reliable code.
+
+#### Scope Explained
+
+Scope determines the accessibility (visibility) of variables. JavaScript has global scope, function scope, and block scope.
+
+- **Global Scope:** Variables declared outside any function or block have global scope. In non-module scripts, `var` creates global variables that are properties of the global object (`window` in browsers, `globalThis` generally), while `let` and `const` create global variables that are not properties of the global object. Global variables are accessible from anywhere in your code, which can lead to naming conflicts and unintended modifications, so minimizing their use is generally recommended.
+
+- **Function Scope:** Variables declared with `var` inside a function are scoped to that entire function, regardless of any blocks within it. Variables declared with `let` or `const` inside a function are also local to that function but are further restricted by block scope if declared within inner blocks.
+
+- **Block Scope:** Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
+
+```mermaid
+graph TD
+    subgraph GlobalScope [Global Scope]
+        direction LR
+        GV[Global Variable let, const, var]
+    end
+
+    subgraph FunctionScope [Function Scope function exampleFunc]
+        direction TB
+        FV[Function Variable var, let, const inside function]
+        subgraph BlockScope1 [Block Scope e.g., if block]
+            BV1[Block Variable let, const inside if]
+        end
+        subgraph BlockScope2 [Block Scope e.g., for loop]
+            BV2[Block Variable let, const inside for]
+        end
+        FV --> BlockScope1
+        FV --> BlockScope2
+    end
+
+    GlobalScope --> FunctionScope
+```
+
+This diagram illustrates the hierarchy of scopes in JavaScript. The outermost is the **Global Scope**, where variables declared outside any function or block reside. Variables like `GV` (Global Variable) defined here are accessible throughout your program, though `let` and `const` don't attach to the global object (e.g., `window`) like `var` does in non-module scripts. Nested within, a **Function Scope** is created by functions like `exampleFunc()`. Variables such as `FV` (Function Variable) declared directly inside a function are accessible anywhere within that function. Further nested are **Block Scopes**, created by constructs like `if` statements or `for` loops (represented by `BlockScope1` and `BlockScope2`). Variables like `BV1` or `BV2`, declared with `let` or `const` within these blocks, are only accessible within that specific block. This structured scoping helps manage variable lifetimes and prevent naming conflicts, making code more modular and predictable. Understanding how these scopes interact is fundamental to writing robust JavaScript.
+
 #### Best Practices for Variable Declaration (Modern JavaScript)
 
 1.  **Prefer `const` by default:** Use `const` whenever you declare a variable whose value is not intended to change after initialization. This makes your intentions clear and prevents accidental reassignments.
@@ -141,28 +212,29 @@ Like `var`, declarations using `let` and `const` are also technically hoisted to
 
 #### Comparison: `var` vs. `let` vs. `const`
 
-| Feature                         | `var`                     | `let`                               | `const`                    |
-| :------------------------------ | :------------------------ | :---------------------------------- | :------------------------- |
-| **Scope**                       | Function or Global        | Block (`{}`)                        | Block (`{}`)               |
-| **Hoisting (Declaration)**      | Yes                       | Yes                                 | Yes                        |
-| **Hoisting (Initialization)**   | Yes (to `undefined`)      | No (in TDZ)                         | No (in TDZ)                |
-| **Temporal Dead Zone (TDZ)**    | No                        | Yes                                 | Yes                        |
-| **Re-declaration (same scope)** | Yes                       | No (`SyntaxError`)                  | No (`SyntaxError`)         |
-| **Re-assignment**               | Yes                       | Yes                                 | No (`TypeError`)           |
-| **Must be initialized?**        | No (defaults `undefined`) | No (defaults `undefined` after TDZ) | Yes (`SyntaxError` if not) |
+| Feature                         | `var`                       | `let`                               | `const`                    |
+| :------------------------------ | :-------------------------- | :---------------------------------- | :------------------------- |
+| **Scope**                       | Function or global          | Block (`{}`)                        | Block (`{}`)               |
+| **Hoisting (declaration)**      | Yes                         | Yes                                 | Yes                        |
+| **Hoisting (initialization)**   | Yes (to `undefined`)        | No (in TDZ)                         | No (in TDZ)                |
+| **Temporal dead zone (TDZ)**    | No                          | Yes                                 | Yes                        |
+| **Re-declaration (same scope)** | Yes                         | No (`SyntaxError`)                  | No (`SyntaxError`)         |
+| **Re-assignment**               | Yes                         | Yes                                 | No (`TypeError`)           |
+| **Must be initialized?**        | No (defaults `undefined`)   | No (defaults `undefined` after TDZ) | Yes (`SyntaxError` if not) |
+| **Global object property?**     | Yes (in non-module scripts) | No                                  | No                         |
 
 > [!NOTE]
 > For this course, and in modern React Native development, you should primarily use `let` for variables whose values might change and `const` for variables whose values should remain constant. Avoid `var`.
 
 ### Data Types
 
-JavaScript is a dynamically typed language. This means you don't have to explicitly declare the data type of a variable; the type is determined automatically at runtime based on the value assigned. JavaScript has several built-in data types.
+JavaScript is a dynamically typed language. This means you don't have to explicitly declare the data type of a variable; the type is determined automatically at runtime based on the value assigned. JavaScript defines two fundamental categories of data types: **primitive types** and **objects (reference types)**. Understanding this distinction is crucial because they behave differently, especially concerning mutability and how they are passed around in your code.
 
 #### Primitive Data Types
 
 Primitive types are immutable, meaning their values cannot be changed once created. When you operate on a primitive value, you get a new value. JavaScript has seven primitive data types:
 
-1.  **String:** Represents textual data. Strings are enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``).
+1.  **String:** Represents textual data. Strings are enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``). Strings are encoded using **UTF-16**.
 
     ```javascript
     let pharmacyName = "SpeedyMeds Pharmacy";
@@ -217,11 +289,12 @@ Primitive types are immutable, meaning their values cannot be changed once creat
 
     **`null` vs. `undefined`:**
 
-    - `undefined` usually means a value hasn't been assigned _yet_ (default state).
-    - `null` usually means a variable _was explicitly assigned_ the value of "nothing".
-    - **Quirk:** `typeof null` returns `"object"`. This is a long-standing historical bug. To check for `null`, use strict equality: `myVar === null`.
+    - `undefined` usually means a value hasn't been assigned _yet_ (it's the default state of a declared but uninitialized variable, or for missing object properties/array elements, or function parameters not provided). It often represents an unintentional absence of value.
+    - `null` usually means a variable _was explicitly assigned_ the value of "nothing" or "empty." It represents the intentional absence of any object value.
+    - **Quirk 1:** `typeof null` returns `"object"`. This is a long-standing historical bug. To check for `null`, use strict equality: `myVar === null`.
+    - **Quirk 2:** While `null == undefined` is `true` (due to loose equality type coercion), `null === undefined` is `false` (because they are distinct types). It's generally better to check for them explicitly if the distinction matters.
 
-6.  **Symbol (ES6):** A unique and immutable primitive value that may be used as the key of an Object property. Symbols are primarily used to create unique property keys, helping avoid naming collisions, especially when dealing with third-party code or internal metaproperties.
+6.  **Symbol (ES6):** A unique and immutable primitive value that may be used as the key of an Object property. Symbols are primarily used to create unique property keys, helping avoid naming collisions, especially when dealing with third-party code or internal metaproperties. They are created using the `Symbol()` function: `const uniqueId = Symbol("description");`.
 
     ```javascript
     const uniqueId = Symbol("patientRecordId");
@@ -240,6 +313,79 @@ Primitive types are immutable, meaning their values cannot be changed once creat
     // console.log(veryLargeNumber + 1); // TypeError: Cannot mix BigInt and other types
     ```
 
+#### Immutability of Primitives vs. Mutability of Objects
+
+A core characteristic of primitive types is their **immutability**. This means that once a primitive value (like the number `42` or the string `"hello"`) is created, it cannot be internally changed.
+
+```javascript
+/**
+ * Demonstrates primitive immutability.
+ */
+function testPrimitiveImmutability() {
+  let message = "initial message";
+  let originalMessage = message; // Both variables point to the same string value
+
+  message = message.toUpperCase(); // This creates a NEW string "INITIAL MESSAGE"
+  // and 'message' is reassigned to this new string.
+  console.log(message); // Output: INITIAL MESSAGE
+  console.log(originalMessage); // Output: initial message (The original string value is unchanged)
+
+  let count = 10;
+  let originalCount = count;
+  count = count + 5; // Creates a new number 15, 'count' is reassigned.
+  console.log(count); // Output: 15
+  console.log(originalCount); // Output: 10 (The original number value is unchanged)
+}
+testPrimitiveImmutability();
+```
+
+Operations that appear to modify primitives (like string methods) actually return new primitive values. The original value remains untouched in memory. Variables holding primitives can be reassigned to point to different primitive values, but the values themselves don't change.
+
+This contrasts sharply with **objects**, which are **mutable**. Properties of an object can be changed after the object is created.
+
+```javascript
+/**
+ * Demonstrates object mutability.
+ */
+function testObjectMutability() {
+  const medication = { name: "Atorvastatin", dosage: 20 };
+  const anotherRefToMedication = medication; // Both variables reference the SAME object
+
+  console.log(medication.dosage); // Output: 20
+
+  // Modify a property of the object
+  medication.dosage = 40; // The object itself is mutated
+  console.log(medication.dosage); // Output: 40 (The original object has changed)
+  console.log(anotherRefToMedication.dosage); // Output: 40 (Change is visible via other references)
+}
+testObjectMutability();
+```
+
+This difference is fundamental to understanding how data behaves when passed to functions or assigned to variables in JavaScript. Passing a primitive copies the value; passing an object copies the reference, meaning modifications inside a function can affect the original object outside the function.
+
+#### Primitive Wrapper Objects
+
+JavaScript provides built-in "wrapper" objects corresponding to most primitive types: `String`, `Number`, `BigInt`, `Boolean`, and `Symbol`. `null` and `undefined` do not have corresponding wrapper objects.
+
+These wrappers provide methods for working with primitive values (e.g., `string.toUpperCase()`, `number.toFixed()`). Although primitives themselves don't have methods, JavaScript employs a mechanism called **auto-boxing**. When you try to access a property or method on a primitive value (except `null` or `undefined`), JavaScript temporarily creates an instance of the corresponding wrapper object behind the scenes, performs the operation on that wrapper object, and then discards the wrapper.
+
+```javascript
+const drugName = "warfarin";
+
+// Accessing a property (.length) - Auto-boxing occurs
+console.log(drugName.length); // Output: 8
+// JavaScript temporarily does something like: new String(drugName).length
+
+// Calling a method (.toUpperCase()) - Auto-boxing occurs
+console.log(drugName.toUpperCase()); // Output: WARFARIN
+// JavaScript temporarily does something like: new String(drugName).toUpperCase()
+
+// The original primitive remains unchanged
+console.log(drugName); // Output: warfarin
+```
+
+This auto-boxing makes working with primitives more convenient, allowing them to seemingly have methods without actually being objects. Understanding this mechanism clarifies why you can call methods on primitives but cannot, for instance, add custom properties directly to them that persist (e.g., `drugName.customProp = 1; console.log(drugName.customProp); // undefined`).
+
 #### Non-Primitive Data Type (Reference Type)
 
 1.  **Object:** Represents a collection of key-value pairs (properties and methods). Objects are mutable (their content can change) and are considered "reference types," meaning variables hold a reference (memory address) to the object, not the object itself.
@@ -254,6 +400,23 @@ Primitive types are immutable, meaning their values cannot be changed once creat
     console.log(prescription.medication); // Output: Atorvastatin
     ```
     We will cover objects in more detail in a later section.
+
+> 📲 **(Native Developers): Data Type Comparisons**
+>
+> - **Java:**
+>   - JS has fewer primitive numeric types (`number` for all floats/integers, `bigint`) compared to Java's specific types (`byte`, `short`, `int`, `long`, `float`, `double`).
+>   - JS `string` is primitive and immutable, similar to Java `String` (though Java `String` is technically an object, it's special-cased for immutability and string pooling).
+>   - JS `boolean` matches Java `boolean`.
+>   - JS `undefined` and `symbol` have no direct Java equivalents for variable types.
+>   - JS `null` is similar to Java `null`. Java variables for objects hold references, similar to JS objects.
+> - **Kotlin:**
+>   - Kotlin aims to treat all types as objects from a developer perspective, though it optimizes basic types to JVM primitives under the hood. Basic types like `Int`, `Double`, `Boolean`, `String` correspond well to their JS counterparts regarding usage.
+>   - Kotlin uses nullable types (e.g., `String?`) and smart casts for handling the absence of value, which is a more robust system than JS's `null` and `undefined` combination.
+> - **Swift:**
+>   - Swift's basic types (`Int`, `Double`, `Bool`, `String`) are value types (structs), not primitives in the JS sense, but they are copied on assignment/pass, which is conceptually similar to how JS primitives behave regarding immutability upon reassignment, but different from JS objects (which are reference types).
+>   - Swift uses `nil` within its optional type system (e.g., `String?`) to handle the absence of value, providing compile-time safety. This is different from JS's runtime `null` and `undefined`.
+>
+> **Key Takeaway:** While JS has primitives, its dynamic nature and the specific behaviors of `null` and `undefined` require careful attention, especially compared to the more strictly typed and often null-safe environments of modern native development.
 
 ### Operators
 
@@ -324,6 +487,28 @@ let priceB = 20.0;
 console.log(priceA < priceB); // Output: true
 ```
 
+**Understanding `==` (Loose Equality) vs. `===` (Strict Equality):**
+
+It is crucial to understand the difference, especially the pitfalls of loose equality (`==`) due to type coercion.
+
+| Expression          | `==` Result | `===` Result | Explanation                                                                                                   |
+| :------------------ | :---------- | :----------- | :------------------------------------------------------------------------------------------------------------ |
+| `5 == "5"`          | `true`      | `false`      | `==` coerces string "5" to number 5. `===` sees different types.                                              |
+| `0 == false`        | `true`      | `false`      | `==` coerces boolean `false` to number 0. `===` sees different types.                                         |
+| `null == undefined` | `true`      | `false`      | `==` treats `null` and `undefined` as equal (a special rule). `===` sees them as distinct types.              |
+| `NaN == NaN`        | `false`     | `false`      | `NaN` is not equal to anything, including itself, by both operators. Use `Number.isNaN()`.                    |
+| `+0 == -0`          | `true`      | `true`       | Both operators consider `+0` and `-0` equal. (`Object.is(+0, -0)` is `false`).                                |
+| `"" == 0`           | `true`      | `false`      | `==` coerces empty string `""` to number 0. `===` sees different types.                                       |
+| `"" == false`       | `true`      | `false`      | `==` coerces `""` to `0` and `false` to `0`. `===` sees different types.                                      |
+| `[] == false`       | `true`      | `false`      | Complex: `[]` -> `""` -> `0`. `false` -> `0`.                                                                 |
+| `[] == ""`          | `true`      | `false`      | Complex: `[]` -> `""`.                                                                                        |
+| `{}` == `{}`        | `false`     | `false`      | Objects (even empty ones) are compared by reference, not by value. These are two different objects in memory. |
+
+**Handling `NaN`, `+0`, and `-0`:**
+
+- `NaN` is not equal to anything, including itself, using either `==` or `===` (`NaN == NaN` and `NaN === NaN` are both `false`). Always use `Number.isNaN()` to check for `NaN`.
+- `+0` and `-0` are considered equal by both `==` and `===` (`+0 === -0` is `true`). However, they are distinct values. If you need to differentiate them, you can use `Object.is(+0, -0)`, which returns `false`.
+
 #### Logical Operators
 
 Perform logical operations, typically used with boolean values.
@@ -368,6 +553,29 @@ Logical operators can also work with non-boolean values (truthy/falsy values), o
   console.log(port); // Output: { port: 8080 }
   ```
 
+**Truthy and Falsy Values:**
+
+In JavaScript, every value has an inherent boolean quality when evaluated in a boolean context (like an `if` condition or by logical operators).
+
+- **Falsy values:** These values evaluate to `false` in a boolean context.
+  - `false`
+  - `0` (zero number)
+  - `-0` (negative zero number)
+  - `0n` (BigInt zero)
+  - `""` (empty string)
+  - `null`
+  - `undefined`
+  - `NaN` (Not a Number)
+- **Truthy values:** All other values are "truthy," meaning they evaluate to `true` in a boolean context. This includes:
+  - `true`
+  - Any non-empty string (e.g., `"hello"`, `"0"`, `"false"`)
+  - Any non-zero number (e.g., `1`, `-1`, `0.5`)
+  - Any non-zero BigInt (e.g., `1n`)
+  - All objects (including empty objects `{}` and empty arrays `[]`)
+  - Functions
+
+Understanding truthy/falsy is key to correctly using logical operators for short-circuiting and default value assignment.
+
 #### String Operators
 
 - `+` (Concatenation): Joins two strings together.
@@ -408,6 +616,8 @@ console.log(ageCategory); // Output: Adult
   console.log(anArray instanceof Array); // Output: true
   console.log(aDate instanceof Date); // Output: true
   ```
+
+This code demonstrates the `instanceof` operator. The variable `anArray` is initialized as an array literal `[1, 2, 3]`. When `anArray instanceof Array` is evaluated, it checks if `anArray`'s prototype chain includes `Array.prototype`, which is true, so it logs `true`. Similarly, `aDate` is created as an instance of the `Date` constructor. `aDate instanceof Date` correctly identifies `aDate` as an instance of `Date` (or its subclasses), logging `true`. This operator is useful for determining an object's type when dealing with complex object hierarchies or when you need to confirm if an object was created by a specific constructor.
 
 #### Other Operators
 
@@ -454,15 +664,15 @@ Understanding precedence is crucial for writing correct code. Here's a simplifie
 
 |  Precedence  | Operator(s)                                                         | Description                                                | Associativity |
 | :----------: | :------------------------------------------------------------------ | :--------------------------------------------------------- | :-----------: |
-| 19 (Highest) | `()`                                                                | Grouping                                                   |      n/a      |
-|      18      | `.` `?.` `[]` `new` (with args)                                     | Member Access, Optional Chaining, Call                     |      L-R      |
+| 19 (highest) | `()`                                                                | Grouping                                                   |      n/a      |
+|      18      | `.` `?.` `[]` `new` (with args)                                     | Member access, optional chaining, call                     |      L-R      |
 |      17      | `new` (without args)                                                | Instantiation                                              |      R-L      |
-|      16      | `++` `--` (postfix)                                                 | Postfix Increment/Decrement                                |      n/a      |
-|      15      | `!` `~` `+` `-` (unary) `++` `--` (prefix) `typeof` `void` `delete` | Logical/Bitwise NOT, Unary, Prefix Inc/Dec, Type Operators |  R-L (unary)  |
+|      16      | `++` `--` (postfix)                                                 | Postfix increment/decrement                                |      n/a      |
+|      15      | `!` `~` `+` `-` (unary) `++` `--` (prefix) `typeof` `void` `delete` | Logical/bitwise NOT, unary, prefix inc/dec, type operators |  R-L (unary)  |
 |      14      | `**`                                                                | Exponentiation                                             |      R-L      |
-|      13      | `*` `/` `%`                                                         | Multiplication, Division, Remainder                        |      L-R      |
-|      12      | `+` `-` (binary)                                                    | Addition, Subtraction                                      |      L-R      |
-|      11      | `<<` `>>` `>>>`                                                     | Bitwise Shifts                                             |      L-R      |
+|      13      | `*` `/` `%`                                                         | Multiplication, division, remainder                        |      L-R      |
+|      12      | `+` `-` (binary)                                                    | Addition, subtraction                                      |      L-R      |
+|      11      | `<<` `>>` `>>>`                                                     | Bitwise shifts                                             |      L-R      |
 |      10      | `<` `<=` `>` `>=` `in` `instanceof`                                 | Relational, `in`, `instanceof`                             |      L-R      |
 |      9       | `==` `!=` `===` `!==`                                               | Equality                                                   |      L-R      |
 |      8       | `&`                                                                 | Bitwise AND                                                |      L-R      |
@@ -470,10 +680,17 @@ Understanding precedence is crucial for writing correct code. Here's a simplifie
 |      6       | `\|`                                                                | Bitwise OR                                                 |      L-R      |
 |      5       | `&&`                                                                | Logical AND                                                |      L-R      |
 |      4       | `\|\|`                                                              | Logical OR                                                 |      L-R      |
-|      3       | `??`                                                                | Nullish Coalescing                                         |      L-R      |
-|      2       | `? :`                                                               | Conditional (Ternary)                                      |      R-L      |
-|      1       | `=` `+=` `-=` `**=` `*=`, etc. `&&=` `\|\|=` `??=`                  | Assignment, Logical Assignment                             |      R-L      |
-|  0 (Lowest)  | `,`                                                                 | Comma                                                      |      L-R      |
+|      3       | `??`                                                                | Nullish coalescing                                         |      L-R      |
+|      2       | `? :`                                                               | Conditional (ternary)                                      |      R-L      |
+|      1       | `=` `+=` `-=` `**=` `*=`, etc. `&&=` `\|\|=` `??=`                  | Assignment, logical assignment                             |      R-L      |
+|  0 (lowest)  | `,`                                                                 | Comma                                                      |      L-R      |
+
+> 📲 **(Native Developers): Operator Comparisons**
+>
+> - Most arithmetic (`+`, `-`, `*`, `/`, `%`), relational (`>`, `<`, `>=`, `<=`), and standard logical operators (`&&`, `||`, `!`) in JavaScript behave very similarly to their counterparts in Java, Kotlin, and Swift.
+> - **Equality:** The most significant difference lies in equality comparison. JavaScript's loose equality (`==`) with its type coercion is unique and a common source of bugs. Java (`equals()` method for objects, `==` for primitives), Kotlin (`==` which calls `equals()`, `===` for referential equality), and Swift (`==` for `Equatable` types, `===` for class instance identity) behave more like JavaScript's strict equality (`===`), which compares both value and type (or identity for reference types). **Always prefer `===` in JavaScript.**
+> - **Ternary Operator:** The ternary operator (`condition ? value1 : value2`) exists with similar syntax and function in Java, Kotlin (though `if` is an expression in Kotlin, often preferred), and Swift.
+> - **Type Operators:** JavaScript's `typeof` and `instanceof` have analogs like Java's `instanceof` and Kotlin's `is` / `!is` (for type checks and smart casts) and Swift's `is` (type check) and `as?`/`as!` (type casting).
 
 > [!TIP]
 > When in doubt, use parentheses `()` to make the order of operations explicit and improve code readability.
@@ -481,9 +698,21 @@ Understanding precedence is crucial for writing correct code. Here's a simplifie
 > 📚 **Official Documentation:**
 >
 > - [MDN Web Docs: JavaScript data types and data structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)
+> - [MDN Web Docs: `var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var)
 > - [MDN Web Docs: `let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
 > - [MDN Web Docs: `const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)
+> - [MDN Web Docs: Scope](https://developer.mozilla.org/en-US/docs/Glossary/Scope)
+> - [MDN Web Docs: Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)
+> - [MDN Web Docs: Temporal Dead Zone (TDZ)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz)
+> - [MDN: Primitive](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
+> - [MDN: null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null)
+> - [MDN: undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)
 > - [MDN Web Docs: Expressions and operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators)
+> - [MDN: Comparison Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#comparison_operators)
+> - [MDN: Equality comparisons and sameness](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness)
+> - [MDN: Logical Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#logical_operators)
+> - [MDN: Conditional (ternary) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator)
+> - [MDN: Operator Precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence)
 
 ### Next Steps
 
