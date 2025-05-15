@@ -121,7 +121,7 @@ Within each build profile, you can specify various properties to control the bui
 **1. Development Profile for Debugging:**
 
 ```json
-// In eas.json, under "build":
+// In eas.json, under "build.production":
 "development": {
   "developmentClient": true,
   "distribution": "internal",
@@ -145,7 +145,7 @@ This profile creates a development client, sets environment variables for a dev 
 **2. Production Profile for Store Submission:**
 
 ```json
-// In eas.json, under "build":
+// In eas.json, under "build.production":
 "production": {
   "distribution": "store",
   "env": {
@@ -255,11 +255,13 @@ Configuring `eas.json` thoughtfully is a critical step in establishing a robust 
 > - [Expo Docs: Environment variables and secrets in builds](https://docs.expo.dev/build/variables/)
 > - [Expo Docs: Build server infrastructure (Available Images)](https://docs.expo.dev/build-reference/infrastructure/)
 
+> 🧗‍♀️ **(Self-Led):** Before attempting the following exercise, try creating your own `eas.json` file based on what you've learned. Compare your configuration with the examples provided. If you're uncertain about certain properties, refer back to the property summary table above or consult the official documentation.
+
 ### Exercise 16.1: Configure `eas.json`
 
 This is a conceptual exercise to test your understanding of `eas.json` configurations.
 
-`**(https://forms.office.com/r/xxxxxxxxxx)**` (Note: The specific Microsoft Form for Exercise 16.1 will be provided or accessed via the learning platform.)
+`**(The URL for this Microsoft Forms exercise will be provided through your learning platform)**`
 
 (The Microsoft Forms quiz will present scenarios and ask you to choose or define appropriate `eas.json` properties and profile structures.)
 

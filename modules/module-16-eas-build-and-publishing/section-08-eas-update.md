@@ -184,7 +184,7 @@ You can view the history of updates, manage channels, and see which builds are p
 
 ### Rollbacks and Error Recovery
 
-- **Rollbacks (Server-Side):** If an update introduces an issue, you can use `eas update:rollback --branch <branch-name> --group <update-group-id>` to revert an update branch to a specific previously published update group. Or, via the Expo dashboard, re-point the channel to an older update from the same branch.
+- **Server-Side Rollbacks:** If an update introduces an issue, you can use `eas update:rollback --branch <branch-name> --group <update-group-id>` to revert an update branch to a specific previously published update group. Or, via the Expo dashboard, re-point the channel to an older update from the same branch.
 - **Error Recovery (Client-Side):** `expo-updates` has a built-in safety net. If a newly applied OTA update causes the app to crash repeatedly shortly after launch (e.g., multiple crashes within a few minutes), it may automatically attempt to roll back to the last known good update or the embedded update to prevent the app from becoming unusable ("bricked").
 
 ### Considerations and Limitations
@@ -225,6 +225,8 @@ EAS Update is an indispensable tool for maintaining and iterating on your React 
 > - [Expo Docs: Channels (for EAS Update)](https://docs.expo.dev/eas-update/channels/)
 > - [Expo Docs: `eas update` command reference](https://docs.expo.dev/eas-update/eas-update-command/)
 
+> 🔁 **(Asynchronous):** As an asynchronous learner, consider how EAS Update might fit into your current or future project workflow. The ability to deploy quick updates without going through app stores can dramatically reduce your maintenance burden. Think about what kinds of changes in your app could be handled via OTA updates versus when you'd need a full rebuild.
+
 ### Exercise 16.2: Publishing an EAS Update
 
 This exercise provides conceptual instructions on how you would publish an EAS Update. Since this requires a deployed app and specific project setup, we will focus on the commands and thought process.
@@ -233,7 +235,7 @@ This exercise provides conceptual instructions on how you would publish an EAS U
 
 **Task:** Conceptually outline the steps and the EAS CLI command you would use to deploy this fix as an OTA update.
 
-`**(https://forms.office.com/r/yyyyyyyyyy)**` (Note: The specific conceptual exercise for 16.2 will be provided or accessed via the learning platform.)
+`**(The URL for this Microsoft Forms exercise will be provided through your learning platform)**`
 
 (This would ideally be a document or a series of steps for the student to follow conceptually, or a quiz in Microsoft Forms asking them to identify the correct command and parameters.)
 

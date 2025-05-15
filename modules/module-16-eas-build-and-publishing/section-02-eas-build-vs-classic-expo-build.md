@@ -2,6 +2,10 @@
 
 This section delves into the evolution of Expo's build services, comparing the modern EAS Build with the legacy "classic" Expo build system (commands like `expo build:ios` and `expo build:android`). Understanding this transition is key to appreciating the power and flexibility that EAS Build brings to your development workflow, especially when dealing with custom native code and requiring more control over the build environment.
 
+> 🧑‍🏫 **(Instructor-Led):** During workshop sessions, we'll discuss real-world migration examples from Classic Build to EAS Build. Come prepared with questions about your specific project needs. Instructors may demonstrate a live EAS Build process to highlight key differences.
+
+> 🧗‍♀️ **(Self-Led):** If you're new to Expo, don't worry about the historical context too deeply - focus on understanding EAS Build capabilities as they are today. If you're migrating from Classic Build, pay special attention to the limitations section to identify potential challenges.
+
 ### Understanding Classic `expo build`
 
 The classic `expo build:[ios/android]` service (commonly referred to as "Classic Build") was Expo's original solution for creating standalone app binaries. For many years, it served developers by providing a way to build `ipa` and `apk`/`aab` files without needing to configure Xcode or Android Studio locally. It worked well for projects that stayed within the confines of the Expo Go environment, meaning they primarily used JavaScript and the pre-included native modules available in the Expo SDK.

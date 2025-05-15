@@ -159,6 +159,10 @@ Securely managing secrets is a fundamental aspect of app development. EAS Secret
 > - [Expo Docs: Using secrets in builds (EAS Build Variables)](https://docs.expo.dev/build/variables/#secrets-as-environment-variables)
 > - [Expo Docs: `eas secrets` command reference](https://docs.expo.dev/eas-cli/secrets-command/)
 
+> 🧑‍🏫 **(Instructor-Led):** During the Challenge 16 workshop, instructors will guide you through creating an EAS Build workflow diagram that includes security considerations for managing secrets. Come prepared with questions about how your team might handle sensitive information in your specific projects. This is an excellent opportunity for collaborative discussion about best practices.
+
+> 🧗‍♀️ **(Self-Led):** Before moving on to the module challenge, take a few minutes to think about all the sensitive information your applications might need (API keys, service URLs, credentials) and categorize them as either build-time secrets (which could use EAS Secrets) or runtime secrets (which would need a different approach). This mental model will help you design more secure applications.
+
 This concludes Module 16 on EAS Build and Publishing. You should now have a foundational understanding of how to build, update, and manage secrets for your React Native applications using Expo Application Services. Remember to consult the official Expo documentation for the most up-to-date and detailed information as these services evolve.
 
 ---

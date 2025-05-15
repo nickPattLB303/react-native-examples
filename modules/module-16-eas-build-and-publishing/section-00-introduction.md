@@ -2,6 +2,8 @@
 
 Welcome to Module 16! This module is your comprehensive guide to Expo Application Services (EAS), a powerful suite of tools that streamline the process of building, submitting, and updating your React Native applications. As you transition from development to production, EAS provides the cloud services necessary to create installable app binaries for iOS and Android, manage your app store submissions, and deploy updates seamlessly. Understanding EAS is crucial for any developer looking to efficiently deliver and maintain high-quality Expo and React Native apps. By the end of this module, you'll be equipped to take your projects from your local machine to the app stores and beyond.
 
+> 🛣️ **(All Learners):** This module covers concepts essential for deploying real-world applications. For instructor-led sessions, come prepared with questions about your specific deployment needs. Self-led learners should take time to understand each EAS service individually before attempting to use them together. Asynchronous learners may want to bookmark specific sections for reference when you reach the deployment stage of your own projects.
+
 This module is particularly relevant for developers looking to understand the full lifecycle of a React Native application, from coding to deployment.
 
 - 🍏 **(iOS Developers):** You'll find EAS Build offers a cloud-based alternative to building `ipa` files with Xcode, simplifying provisioning and certificate management. The concepts of app signing and submission will be familiar, but EAS provides a unified workflow.
@@ -35,7 +37,7 @@ Before starting this module, ensure you have a solid understanding of the follow
 
 At the end of this module, you'll apply your knowledge by completing a conceptual challenge:
 
-- **Challenge 16: EAS Build Workflow Diagram** `**(https://microsoft.com/whiteboard)**` (Note: The specific Whiteboard for Challenge 16 will be provided or accessed via the learning platform)
+- **Challenge 16: EAS Build Workflow Diagram** `**(The URL for this Microsoft Whiteboard challenge will be provided through your learning platform)**`
 
 ## Module Summary
 
