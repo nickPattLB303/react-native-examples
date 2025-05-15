@@ -6,10 +6,13 @@ Welcome to Module 17, where we'll explore several advanced features and capabili
 
 This module delves into topics that will appeal to developers from all backgrounds, offering new tools and perspectives:
 
-- **For Native Developers (Android/iOS):** You will find React Native Reanimated and Gesture Handler offer a declarative approach to animations and gestures, potentially contrasting with imperative methods you might be used to. The concepts of offline storage and push notifications will be familiar, but you will learn how Expo simplifies their cross-platform implementation.
-- **For Web Developers:**
-  - **React Developers:** Many concepts, like animations and testing strategies, will have parallels with web development. You will appreciate how Reanimated builds upon React's declarative paradigm and how testing tools are adapted for the native environment.
-  - **Angular Developers:** While the specific libraries will be new, the underlying principles of enhancing user interfaces with animations, handling complex user interactions, and managing data will resonate with your experience.
+> 📲 **(Native Developers):** You'll find React Native Reanimated and Gesture Handler offer a declarative approach to animations and gestures, potentially contrasting with imperative methods you're used to. The concepts of offline storage and push notifications will be familiar, but you'll learn how Expo simplifies their cross-platform implementation.
+>
+> 🌐 **(Web Developers):**
+>
+> ⚛️ **(React Developers):** Many concepts, like animations and testing strategies, will have parallels with web development. You'll appreciate how Reanimated builds upon React's declarative paradigm and how testing tools are adapted for the native environment.
+>
+> 🅰️ **(Angular Developers):** While the specific libraries will be new, the underlying principles of enhancing user interfaces with animations, handling complex user interactions, and managing data will resonate with your experience.
 
 ### Learning Objectives
 
@@ -54,7 +57,9 @@ This module is divided into the following sections, each covering a key advanced
 
 At the end of this module, you will apply the concepts learned to enhance the SpeedyMeds application:
 
-- **Challenge 17: Add an Animated Element to the Prescription Card** `**(https://snack.expo.dev/--replace-this-with-actual-challenge-17-url--)**`
+- **Challenge 17: Add an Animated Element to the Prescription Card** `**(https://snack.expo.dev/SpeedyMeds-Challenge-17)**`
+
+In this challenge, you'll enhance the existing SpeedyMeds Prescription Card component with engaging animations and gestures. You'll implement a card that animates when it first appears, responds to user touch with scale effects, and includes a swipe-to-dismiss gesture with spring animations. This challenge will test your understanding of Reanimated and Gesture Handler while adding a polished user experience to the medication management functionality.
 
 ### Module Summary
 

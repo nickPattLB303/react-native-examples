@@ -254,7 +254,7 @@ The core of the animation lies in several Reanimated hooks working in concert:
 
 Apply your understanding of these core concepts in the following exercise.
 
-- **Exercise 17.1: Basic Reanimated Animation** `**(https://snack.expo.dev/--replace-this-with-actual-exercise-17.1-url--)**`
+- **Exercise 17.1: Basic Reanimated Animation** `**(https://snack.expo.dev/SpeedyMeds-Exercise-17-1)**`
 
 > 📚 **Official Documentation:**
 >

@@ -298,7 +298,7 @@ By connecting `PanGestureHandler` with Reanimated's hooks, the entire drag inter
 
 Practice using `GestureHandler` components to create interactive elements.
 
-- **Exercise 17.2: Implementing a Basic Gesture** `**(https://snack.expo.dev/--replace-this-with-actual-exercise-17.2-url--)**`
+- **Exercise 17.2: Implementing a Basic Gesture** `**(https://snack.expo.dev/SpeedyMeds-Exercise-17-2)**`
 
 > 📚 **Official Documentation:**
 >

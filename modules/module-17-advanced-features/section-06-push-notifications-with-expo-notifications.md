@@ -486,6 +486,43 @@ This `SpeedyMedsNotificationScheduler` component provides a comprehensive demons
     - `expoPushToken` (state variable via `useState`): Stores the retrieved Expo Push Token to display it in the UI.
     - `notificationListener` and `responseListener` (via `useRef`): These refs hold references to the active notification event listeners, allowing them to be cleaned up properly.
     - `useEffect` hook: This is the heart of the component's setup and cleanup logic.
-      - On component mount, it calls `requestPermissionsAndGetToken()` and updates the `expoPushToken` state.
+      - On component mount, it calls `requestPermissionsAndGetTokenInComponent()` and updates the `expoPushToken` state.
       - `Notifications.addNotificationReceivedListener()`: Sets up a listener that fires whenever any notification is received by the device _while the app is running (foreground or background)_. The callback receives the `notification` object. This is useful for telemetry or updating app state silently.
-      - `
+      - `Notifications.addNotificationResponseReceivedListener()`: This listener fires when the user interacts with a notification (e.g., tapping on it). This is critical for handling user engagement with notifications, such as navigating to relevant screens.
+      - The callback in this example analyzes the notification data and could navigate to the appropriate screen. For demo purposes, it uses an alert to show what navigation would occur.
+      - The cleanup function in the `useEffect` return removes both listeners when the component unmounts to prevent memory leaks.
+
+4.  **Scheduling a Local Notification (`scheduleMedicationReminder` function):**
+
+    - This function demonstrates how to schedule a simple local notification to appear after a short delay (5 seconds).
+    - It configures a notification with a title, body, custom data payload, and sound.
+    - The trigger is set to fire after 5 seconds, making it easy to test during development.
+    - The notification includes a data payload (`screen` and `params`) that can be used to determine what screen to navigate to when the user interacts with the notification.
+    - In a real app, this function might be called when a user schedules a medication reminder, with appropriate timing based on the medication schedule.
+
+5.  **UI Rendering:**
+    - The component renders a simple UI displaying the Expo Push Token (if retrieved) and a button to schedule a test notification.
+    - This demonstrates both the token generation process (which is necessary for remote notifications) and local notification scheduling.
+
+This component encapsulates the core notification functionality needed for the SpeedyMeds app, where notifications are critical for medication reminders. By following this pattern and expanding upon it (e.g., with persistent scheduling, customization for different medications, integration with a backend notification service), you can implement a robust notification system for your application.
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** If you're familiar with `UserNotifications` on iOS or the notification framework on Android, `expo-notifications` provides a unified API that abstracts away the platform differences. The concept of requesting permissions, creating notification content, and setting triggers is similar, but Expo standardizes the approach.
+>
+> **Key Takeaway:** Expo handles many of the platform-specific details of notifications for you, letting you write mostly the same code for both platforms.
+>
+> **Source:** [iOS UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), [Android Notification Guide](https://developer.android.com/develop/ui/views/notifications)
+
+> [!IMPORTANT]
+> For production apps, always test notification behavior on real devices. Simulators/emulators can sometimes behave differently with notifications, especially with background/killed app states.
+
+> 📚 **Official Documentation:**
+>
+> - [Expo Notifications Documentation](https://docs.expo.dev/versions/latest/sdk/notifications/)
+> - [Push Notifications with Expo](https://docs.expo.dev/push-notifications/overview/)
+> - [Scheduling Local Notifications](https://docs.expo.dev/versions/latest/sdk/notifications/#scheduling-a-notification)
+
+### Next Steps
+
+Now that you understand how to implement push notifications, let's explore how to store data locally on the device for offline access.

@@ -346,8 +346,8 @@ These tests collectively ensure that the `CustomButton` component not only rende
 
 Practice writing a simple unit test for a utility function.
 
-- **Exercise 17.3: Writing a Simple Unit Test** `**(https://codesandbox.io/--replace-this-with-actual-exercise-17.3-url--)**`
-  (Complete this exercise using CodeSandbox, which is well-suited for testing standalone JavaScript/TypeScript utility functions.)
+- **Exercise 17.3: Writing a Simple Unit Test** `**(https://codesandbox.io/s/speedymeds-exercise-17-3)**`
+  (Complete this exercise using CodeSandbox, which is well-suited for testing standalone JavaScript/TypeScript utility functions. In this exercise, you'll implement unit tests for a medication dosage calculation utility that determines proper dosage based on patient weight and medication parameters.)
 
 > 📚 **Official Documentation:**
 >
