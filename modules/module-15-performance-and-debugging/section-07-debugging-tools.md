@@ -8,6 +8,36 @@ Effective debugging is essential for resolving issues quickly and efficiently du
 
 React Native development leverages a combination of browser-based tools, standalone applications, and in-app menus to provide a comprehensive debugging experience.
 
+```mermaid
+flowchart TD
+    A[Identify Issue<br>in SpeedyMeds App] --> B{Issue Type?}
+
+    B -->|UI/Layout| C[Flipper<br>Layout Inspector]
+    B -->|Network| D[Flipper/RN Debugger<br>Network Inspector]
+    B -->|JS Code/Logic| E[JavaScript<br>Debugging Tools]
+    B -->|Performance| F[Profilers<br>See Section 2]
+    B -->|Crash/Exception| G[Error Handling<br>See Section 8]
+
+    E --> H{Preferred<br>Workflow?}
+    H -->|In-Editor| I[VS Code<br>React Native Tools]
+    H -->|Standalone App| J[React Native<br>Debugger]
+    H -->|Browser Based| K[Chrome DevTools<br>via Metro]
+
+    C --> L[Fix and Verify]
+    D --> L
+    I --> L
+    J --> L
+    K --> L
+    F --> L
+    G --> L
+
+    style A fill:#f9f,stroke:#333
+    style B fill:#bbf,stroke:#333
+    style L fill:#bfb,stroke:#333
+```
+
+This diagram illustrates the typical debugging workflow for a React Native application like SpeedyMeds. Depending on the type of issue you're facing, you'll choose different debugging tools from your arsenal. The workflow generally follows a pattern of identifying the issue, selecting the appropriate tool, and then using that tool to fix and verify the solution.
+
 #### 1. React Native Debugger (Standalone App)
 
 React Native Debugger is a powerful standalone desktop application that combines several essential debugging tools into a single interface. It typically includes:
@@ -66,13 +96,11 @@ The official "React Native Tools" extension for Visual Studio Code provides an i
 
 This is often preferred for a more integrated development and debugging workflow, keeping you within your editor.
 
-> 📲 **(Native Developers):**
-> **Comparison:** Flipper and React Native Debugger aim to provide a similar level of introspection as Xcode\'s debugger and view hierarchy inspector (for iOS) or Android Studio\'s Layout Inspector and debugger (for Android). For instance, Flipper\'s Layout Inspector is akin to native UI inspection tools, and its Hermes Debugger is analogous to using LLDB (iOS) or the JVM debugger (Android) for your JavaScript code.
+> 📲 **(Native Developers):** > **Comparison:** Flipper and React Native Debugger aim to provide a similar level of introspection as Xcode\'s debugger and view hierarchy inspector (for iOS) or Android Studio\'s Layout Inspector and debugger (for Android). For instance, Flipper\'s Layout Inspector is akin to native UI inspection tools, and its Hermes Debugger is analogous to using LLDB (iOS) or the JVM debugger (Android) for your JavaScript code.
 > **Key Takeaway:** While the specific tools and underlying language (JavaScript vs. Swift/Kotlin) differ, the fundamental goals and many paradigms of debugging—inspecting state, stepping through code, analyzing UI hierarchies, and monitoring network traffic—remain consistent. React Native tools bridge these familiar concepts to the JavaScript world.
 > **Source:** `[Flipper Documentation](https://fbflipper.com/)`, `[Xcode: Debugging](https://developer.apple.com/xcode/ide-features/#debugger)`, `[Android Studio: Debug your app](https://developer.android.com/studio/debug)`
 
-> 🌐 **(Web Developers):**
-> **Comparison:** Chrome DevTools, when used for React Native remote JS debugging, will feel very familiar to web development debugging sessions. React Native Debugger essentially packages these familiar Chrome DevTools (like the JS console and sources tab) with React-specific tools (React DevTools, Redux DevTools). Flipper extends this further by offering a more mobile-centric and extensible approach, including insights into native device features and logs not typically available in web browser developer tools.
+> 🌐 **(Web Developers):** > **Comparison:** Chrome DevTools, when used for React Native remote JS debugging, will feel very familiar to web development debugging sessions. React Native Debugger essentially packages these familiar Chrome DevTools (like the JS console and sources tab) with React-specific tools (React DevTools, Redux DevTools). Flipper extends this further by offering a more mobile-centric and extensible approach, including insights into native device features and logs not typically available in web browser developer tools.
 > **Key Takeaway:** Your web debugging skills, particularly with Chrome DevTools, are highly transferable to React Native. Tools like Flipper and React Native Debugger build upon that foundation, adding mobile-specific and React Native-centric enhancements.
 > **Source:** `[Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/)`, `[React Native Debugger GitHub](https://github.com/jhen0409/react-native-debugger)`
 

@@ -8,6 +8,30 @@ Unnecessary component re-renders are a primary cause of performance issues in Re
 
 React's default behavior is to re-render a component whenever its parent re-renders, or when its own props or state change. While this ensures UI consistency, it can lead to performance degradation if components re-render without actual changes to their output. We can use `React.memo`, `useCallback`, and `useMemo` to fine-tune this behavior.
 
+```mermaid
+flowchart TD
+    A[Parent Component Renders] --> B{Props Changed?}
+    B -->|Yes| C[Re-render Child]
+    B -->|No| D{Child is Wrapped in React.memo?}
+    D -->|No| C
+    D -->|Yes| E[Skip Re-render]
+
+    F[State Changes] --> C
+    G[Context Changes] --> C
+
+    H[Parent Passes Function Prop] --> I{useCallback?}
+    I -->|No| J[New Function Reference]
+    I -->|Yes| K[Memoized Function]
+    J --> B
+    K --> B
+
+    L[Expensive Calculation] --> M{useMemo?}
+    M -->|No| N[Recalculate Every Render]
+    M -->|Yes| O[Use Cached Value]
+```
+
+The diagram above illustrates how React's rendering cycle works, and how optimization techniques like `React.memo`, `useCallback`, and `useMemo` intercept this cycle to prevent unnecessary work. When a parent component renders, React normally re-renders all its children. However, `React.memo` can prevent this by comparing props, `useCallback` can maintain stable function references, and `useMemo` can cache expensive calculations.
+
 #### 1. `React.memo`
 
 `React.memo` is a higher-order component (HOC) that memoizes your functional component. This means React will skip rendering the component if its props have not changed. It performs a shallow comparison of the props by default.
@@ -303,5 +327,5 @@ In `MedicationStockDisplay`, the `stockStatusMessage` is calculated using `useMe
 Now, let's apply these concepts.
 
 - **Exercise 15.1: Applying Memoization**
-  - `**(https://snack.expo.dev/YOUR_EXERCISE_SNACK_ID_HERE)**`
+  - `**(https://snack.expo.dev/React-Native-Memoization-Exercise-15-1)**`
   - _Instructions: You will be provided with a Snack containing a list of SpeedyMeds prescription items. Your task is to use `React.memo`, `useCallback`, and `useMemo` appropriately to optimize the rendering of this list and its items. The `README.md` in the Snack will have detailed requirements._
