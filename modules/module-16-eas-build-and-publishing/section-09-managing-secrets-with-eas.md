@@ -121,6 +121,24 @@ In the example above, `THIRD_PARTY_API_KEY_FROM_EAS_SECRET` would be a secret yo
 - **Regularly Review Secrets:** Periodically review your stored secrets and remove any that are no longer needed.
 - **Rotate Keys:** If a service provider allows or recommends key rotation, follow their guidelines.
 
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** Managing secrets with EAS is analogous to using Gradle's `buildConfigField` to embed values from `gradle.properties` or environment variables into your `BuildConfig.java` file, or accessing secrets from files not committed to version control (like a `local.properties` that your `.gitignore` excludes). EAS Secrets formalizes this by providing a secure cloud storage and injection mechanism tied to your build profile, rather than relying solely on local files or CI environment variables.
+>
+> **Key Takeaway:** EAS Secrets provide a centralized and secure way to inject build-time secrets, reducing the need to manage sensitive local property files or complex CI variable setups for API keys needed by the app.
+
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** This is similar to defining custom build settings in Xcode (perhaps populated from an `.xcconfig` file that is gitignored) and then accessing those values in your `Info.plist` or directly in Swift/Objective-C code. EAS Secrets centralizes the storage of these values in the cloud and injects them at build time, removing the need to manage `.xcconfig` files outside of version control for sensitive data.
+>
+> **Key Takeaway:** EAS Secrets offer a secure, cloud-based alternative to `.xcconfig` files or manual Xcode build setting configurations for injecting API keys and other build-time constants into your app.
+
+> 🌐 **(Web Developers - React/Angular):**
+>
+> **Comparison:** EAS Secrets are conceptually similar to how you manage environment variables in web development (e.g., using `.env` files for local development that are gitignored, and then having your CI/CD pipeline or hosting provider inject environment-specific variables during the build process for staging/production). Tools like Webpack (DefinePlugin) or Vite (env variables) make these available. EAS Secrets provide the secure storage and injection mechanism for the mobile build process.
+>
+> **Key Takeaway:** Like web build systems that embed environment-specific API keys, EAS Secrets does this for mobile apps, but with a focus on secure cloud storage and integration with native build tooling.
+
 ### Build Secrets vs. Runtime Secrets
 
 It's important to distinguish between:

@@ -1,10 +1,8 @@
 # Module 16: EAS Build and Publishing
 
-<!-- Optional: Module Introduction Image - A relevant banner image could be placed here. Ensure it has alt text and a caption if included. -->
-
 Welcome to Module 16! This module is your comprehensive guide to Expo Application Services (EAS), a powerful suite of tools that streamline the process of building, submitting, and updating your React Native applications. As you transition from development to production, EAS provides the cloud services necessary to create installable app binaries for iOS and Android, manage your app store submissions, and deploy updates seamlessly. Understanding EAS is crucial for any developer looking to efficiently deliver and maintain high-quality Expo and React Native apps. By the end of this module, you'll be equipped to take your projects from your local machine to the app stores and beyond.
 
-<TARGET_AUDIENCE_EMOJI> This module is particularly relevant for developers looking to understand the full lifecycle of a React Native application, from coding to deployment.
+This module is particularly relevant for developers looking to understand the full lifecycle of a React Native application, from coding to deployment.
 
 - 🍏 **(iOS Developers):** You'll find EAS Build offers a cloud-based alternative to building `ipa` files with Xcode, simplifying provisioning and certificate management. The concepts of app signing and submission will be familiar, but EAS provides a unified workflow.
 - 🤖 **(Android Developers):** You're likely familiar with generating APKs or AABs using Android Studio. EAS Build provides a similar capability in the cloud, integrated with the Expo ecosystem, making build and submission processes more streamlined.
@@ -37,7 +35,7 @@ Before starting this module, ensure you have a solid understanding of the follow
 
 At the end of this module, you'll apply your knowledge by completing a conceptual challenge:
 
-- **Challenge 16: EAS Build Workflow Diagram** `**(MICROSOFT_WHITEBOARD_URL_CHALLENGE_16)**` (You'll be asked to diagram the EAS Build process, highlighting key stages and configurations.)
+- **Challenge 16: EAS Build Workflow Diagram** `**(https://microsoft.com/whiteboard)**` (Note: The specific Whiteboard for Challenge 16 will be provided or accessed via the learning platform)
 
 ## Module Summary
 

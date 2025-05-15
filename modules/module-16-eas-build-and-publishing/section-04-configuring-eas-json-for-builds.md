@@ -259,7 +259,7 @@ Configuring `eas.json` thoughtfully is a critical step in establishing a robust 
 
 This is a conceptual exercise to test your understanding of `eas.json` configurations.
 
-`**(MICROSOFT_FORMS_URL_EXERCISE_16_1)**`
+`**(https://forms.office.com/r/xxxxxxxxxx)**` (Note: The specific Microsoft Form for Exercise 16.1 will be provided or accessed via the learning platform.)
 
 (The Microsoft Forms quiz will present scenarios and ask you to choose or define appropriate `eas.json` properties and profile structures.)
 

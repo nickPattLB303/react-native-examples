@@ -42,7 +42,7 @@ A `production` profile in your `eas.json` file is used to define the settings fo
   "distribution": "store",      // Critical: indicates this build is for app stores
   "env": {
     "EXPO_PUBLIC_APP_ENV": "production",
-    "EXPO_PUBLIC_API_URL": "https://api.yourproduct.com"
+    "EXPO_PUBLIC_API_URL": "https://api.speedymeds.com/v1"
     // Other production-specific environment variables
   },
   "android": {
@@ -98,9 +98,15 @@ Code signing is a critical security measure. Here's a bit more on what happens:
 
 EAS's role is to abstract away many of the manual and error-prone steps in managing and applying these credentials during the build process.
 
-> 🍏 **(iOS Developers):** If you've manually managed App IDs, Certificates (Development and Distribution), and Provisioning Profiles (Development, Ad Hoc, App Store) in the Apple Developer Portal and Xcode, you'll appreciate how EAS can automate much of this. EAS essentially acts as a secure intermediary, using your Apple Developer account to ensure your app is signed correctly for App Store distribution.
+> 🍏 **(iOS Developers):**
+>
+> **Comparison:** If you've manually managed App IDs, Certificates (Development and Distribution), and Provisioning Profiles (Development, Ad Hoc, App Store) in the Apple Developer Portal and Xcode, you'll find EAS Build's automated handling of these for cloud builds to be a significant parallel. It's like having Xcode's "Archive" feature for creating an `.ipa`, but managed and executed by EAS with your credentials.
+>
+> **Key Takeaway:** EAS streamlines the creation of App Store-ready `.ipa` files by handling the complex signing process and ensuring your app is built with release optimizations, often without needing direct Xcode interaction for these cloud builds.
 
-> 🤖 **(Android Developers):** You're likely familiar with generating a Keystore (`.jks` or `.keystore` file) and configuring your `build.gradle` file with signing configurations. EAS can handle the generation and secure storage of this Keystore, applying it automatically during the release build process. This avoids needing to store the Keystore in your repository or manage it manually on a CI server.
+> 🤖 **(Android Developers):**
+>
+> **Comparison:** You're likely familiar with generating a Keystore (`.jks` or `.keystore` file) and configuring your `build.gradle` file with signing configurations. EAS can handle the generation and secure storage of this Keystore, applying it automatically during the release build process. This avoids needing to store the Keystore in your repository or manage it manually on a CI server.
 
 ### Initiating a Production Build
 
@@ -108,16 +114,14 @@ To start a production build, use the EAS CLI with your `production` profile:
 
 1.  **Ensure your `eas.json` `production` profile is correctly configured.**
 2.  **Commit all your code changes to Git.** EAS Build typically requires a clean Git working tree and uses the latest commit.
-3.  **Run the build command:**
-    - **For Android:**
-      ```bash
+3.  **Run the build command:** - **For Android:**
+    `bash
       eas build -p production --platform android
-      ```
-    - **For iOS:**
-      `bash
+      ` - **For iOS:**
+    `bash
 eas build -p production --platform ios
 `
-      EAS CLI will then start the build process on the cloud servers. You can monitor the progress via the link provided in your terminal or on the Expo dashboard.
+    EAS CLI will then start the build process on the cloud servers. You can monitor the progress via the link provided in your terminal or on the Expo dashboard.
 
 ### Understanding Build Artifacts
 
