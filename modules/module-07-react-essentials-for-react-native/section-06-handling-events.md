@@ -60,6 +60,25 @@ In this example:
 - This function is passed as the `onPress` prop to the `<Button>` component.
 - When the button is pressed, `handlePress` is executed, and an `Alert` (from React Native's `Alert` API) is shown.
 
+```mermaid
+graph LR
+    subgraph UserInteraction
+        A[User Taps Button] --> B[Device Detects Touch];
+    end
+
+    subgraph ReactNativeApp
+        B --> C{React Native Component (e.g., <Button />)};
+        C -- "onPress Event Prop" --> D[Event Handler Function (e.g., handlePress)];
+        D -- "Executes Logic" --> E[App Logic (e.g., Alert.alert(), setState())];
+        E -- Optional State Update --> F{React Schedules Re-render};
+        F --> G[UI Updates];
+    end
+
+    G --> H[User Sees Result];
+```
+
+This diagram illustrates the typical event handling flow in a React Native application. It begins when a `User Taps` a component like a `Button`. The `Device Detects Touch` and forwards this to the `React Native App`. The specific `React Native Component` (e.g., `<Button />`) that was interacted with then triggers the function assigned to its relevant event prop, in this case, the `onPress` prop. This calls the `Event Handler Function` (e.g., `handlePress`) defined by the developer. Inside this handler, `App Logic` is executed, which could involve showing an alert, navigating, or, very commonly, calling a state setter function (`setState()`). If state is updated, React `Schedules a Re-render`. Consequently, the `UI Updates` to reflect any changes, and the `User Sees Result` of their interaction. This flow ensures a responsive and interactive user experience.
+
 ### Inline Event Handlers
 
 You can also define event handler functions inline using arrow functions, especially for very simple logic:

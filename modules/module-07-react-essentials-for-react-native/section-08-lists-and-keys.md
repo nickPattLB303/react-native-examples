@@ -54,6 +54,39 @@ export default MedicationListSimple;
 
 In this example, we map over the `medications` array and return a `<View>` with medication details for each item. However, this example is missing a crucial piece: the `key` prop.
 
+```mermaid
+graph TD
+    subgraph DataArray ["Data: medications Array"]
+        D1["{ id: 'm001', name: 'Lisinopril', ... }"]
+        D2["{ id: 'm002', name: 'Metformin', ... }"]
+        D3["{ id: 'm003', name: 'Simvastatin', ... }"]
+    end
+
+    subgraph MapFunction ["JavaScript .map(callback)"]
+        M["medications.map((med) => ...)"]
+    end
+    DataArray --> M;
+
+    subgraph JSXOutput ["Rendered JSX Elements"]
+        J1["<MedicationListItem key={med.id} medication={med} /> (for m001)"]
+        J2["<MedicationListItem key={med.id} medication={med} /> (for m002)"]
+        J3["<MedicationListItem key={med.id} medication={med} /> (for m003)"]
+    end
+    M --> J1;
+    M --> J2;
+    M --> J3;
+
+    J1 --> R1[React Component Instance 1 (with state)];
+    J2 --> R2[React Component Instance 2 (with state)];
+    J3 --> R3[React Component Instance 3 (with state)];
+
+    R1 --> U1[Native UI View for Item 1];
+    R2 --> U2[Native UI View for Item 2];
+    R3 --> U3[Native UI View for Item 3];
+```
+
+This diagram illustrates the process of rendering a list in React. An array of `Data` objects (e.g., `medications`) is processed by the JavaScript `.map()` function. For each item in the array, the callback function provided to `.map()` returns a JSX element (e.g., `<MedicationListItem />`). Crucially, each of these top-level JSX elements returned from the map callback must be assigned a unique and stable `key` prop, typically derived from a unique ID within the data item (like `med.id`). React then uses these keys to create and manage `React Component Instances`. If the list data changes (items are added, removed, or reordered), React uses these keys to efficiently update the corresponding component instances and their underlying `Native UI Views`, preserving state where appropriate and minimizing direct manipulation of the UI.
+
 ### The Importance of `key` Prop
 
 When you render a list of elements, React needs a way to uniquely identify each list item to efficiently update the UI when the list changes (e.g., items are added, removed, or reordered). This is where the `key` prop comes in.

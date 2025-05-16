@@ -31,6 +31,28 @@ const [stateVariable, setStateFunction] = useState(initialState);
   1.  `stateVariable`: The current value of the state. During the first render, it will be equal to the `initialState`.
   2.  `setStateFunction`: A function that you use to update the `stateVariable`. Calling this function will schedule a re-render of the component with the new state. The identity of this setter function is stable and does not change across re-renders, which is relevant for Hooks like `useEffect`.
 
+```mermaid
+graph LR
+    A[Component Renders Initially] --> B[Call useState(initialValue)];
+    B --> C[
+        stateVariable = initialValue
+        setStateFunction = (newValue) => ...
+    ];
+    C --> D[UI Renders with stateVariable];
+
+    E[Event Occurs (e.g., Button Press)] --> F[Call setStateFunction(newState)];
+    F --> G{React Schedules Re-render};
+    G --> H[Component Re-renders];
+    H --> I[Call useState(initialValue) again BUT React provides current stateValue];
+    I --> J[
+        stateVariable = newState (current value)
+        setStateFunction = (newValue) => ... (same function)
+    ];
+    J --> K[UI Re-renders with new stateVariable];
+```
+
+This diagram illustrates the lifecycle of the `useState` Hook. When a component renders for the first time, `useState` is called with an `initialValue`. It returns the current state (which is the `initialValue` at this point) and a `setStateFunction`. The UI then renders based on this initial state. When an event occurs (like a button press that calls an event handler), the `setStateFunction` is invoked with a new state value. This signals to React that the state has changed and a re-render is needed. React schedules this re-render. During the re-render, the component function executes again, and `useState` is called again. However, this time, React ignores the `initialValue` and instead returns the most recent (current) state value and the same stable `setStateFunction`. The UI then re-renders reflecting the updated state. This cycle continues for subsequent state updates.
+
 **Initial State and Lazy Initialization:**
 
 The `initialState` can be any JavaScript value: a primitive, an object, or an array. This value is used only during the component's first render.

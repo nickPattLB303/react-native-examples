@@ -174,7 +174,9 @@ graph TD
     end
 ```
 
-This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
+This diagram illustrates the data flow mechanism of React's Context API. At the top, the `App Component` is responsible for managing a piece of shared state, such as the application's theme (e.g., 'light' or 'dark') and a function to toggle it. To make this theme accessible to descendant components, the `App Component` wraps its children with a `ThemeContext.Provider`. This Provider is given a `value` prop, which in this case would be an object containing the current `theme` and the `toggleTheme` function.
+
+Any component within the subtree of this Provider can then subscribe to these context changes. For example, the `Grandchild Component (ThemedButton)` uses the `useContext(ThemeContext)` Hook to access the current `theme` and `toggleTheme` function directly. Importantly, intermediate components like `Child Component 1` and `Child Component 2` do not need to be aware of or pass down these theme-related props. This effectively bypasses prop drilling. When the `value` prop of the `ThemeContext.Provider` changes (e.g., the theme is toggled in the `App Component`), all components consuming this context, like `ThemedButton`, will automatically re-render with the new context value, ensuring the UI reflects the shared state consistently.
 
 > ⚛️ **(Web Developers with React Experience):**
 >

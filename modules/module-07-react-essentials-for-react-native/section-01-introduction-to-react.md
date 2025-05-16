@@ -60,6 +60,18 @@ For example, in our SpeedyMeds application, you might have components like:
 
 Each component can have its own logic and manage its own internal data (state). Components can also receive data from their parent components (props). A significant aspect of React's component model is that component logic is written in JavaScript rather than in separate template files. This allows developers to leverage the full power of JavaScript within their components, easily pass rich data structures through the application using props, and keep stateful logic encapsulated.
 
+```mermaid
+graph TD;
+    App["SpeedyMeds App (Root Component)"] --> Page["PatientDashboard Page"];
+    Page --> ProfileHeader["PatientProfileHeader Component"];
+    Page --> MedicationList["MedicationList Component"];
+    MedicationList --> MedicationCard1["MedicationCard Component (Med 1)"];
+    MedicationList --> MedicationCard2["MedicationCard Component (Med 2)"];
+    Page --> SearchBar["SearchBar Component"];
+```
+
+This diagram illustrates a simplified component hierarchy for the SpeedyMeds application. At the top, we have the `SpeedyMeds App` root component, which contains various page-level components like `PatientDashboard Page`. This page, in turn, is composed of several smaller, more focused components such as `PatientProfileHeader` for displaying user information, a `MedicationList` for showing medications, and a `SearchBar`. The `MedicationList` component itself is composed of multiple `MedicationCard` instances, each representing a single medication. This hierarchical and compositional structure is key to React's architecture. Each component is responsible for a part of the UI, making the overall application easier to develop, understand, and maintain. Components can be nested to any depth, promoting reusability (e.g., `MedicationCard` could be used elsewhere) and separation of concerns (e.g., `SearchBar` only handles search logic).
+
 **Benefits of Component-Based Architecture:**
 
 - **Reusability:** Write a component once and use it in multiple places throughout your application.
@@ -116,6 +128,15 @@ One of React's core principles is unidirectional data flow, which means data in 
 
 3. **Child-to-Parent Communication:** When a child needs to communicate back to a parent, it does so through callback functions passed down as props from the parent.
 
+```mermaid
+graph LR;
+    Parent["Parent Component (Owns State)"] -- "Props (Data)" --> Child["Child Component"];
+    Child -- "Callback Function (Event)" --> Parent;
+    StateStore["(State)"]-.->Parent
+```
+
+This diagram visualizes the unidirectional data flow in React. The `Parent Component` holds the primary data source, often as its internal `State`. This data is passed down to the `Child Component` via `Props`. The arrow indicates this downward flow. The `Child Component` receives these props as read-only values. If the `Child Component` needs to trigger a change or communicate an event back to the `Parent Component` (for example, due to a user interaction), it does so by invoking a `Callback Function` that was also passed down as a prop from the `Parent`. This callback function can then update the `Parent Component's` state, causing a potential re-render of the parent and subsequently its children with new props. This cycle ensures that data flows in a single, predictable direction, making it easier to trace changes and understand application behavior.
+
 **Benefits of Unidirectional Data Flow:**
 
 1. **Predictability:** With data flowing in only one direction, it's easier to understand how changes in your application occur and trace the source of changes.
@@ -130,20 +151,20 @@ This unidirectional flow contrasts with two-way data binding approaches used in 
 
 ### React vs React Native: A Comprehensive Comparison
 
-| Aspect | React | React Native |
-|--------|-------|--------------|
-| **Rendering Target** | Browser DOM | Native UI Components |
-| **Base Components** | HTML elements (`<div>`, `<span>`, etc.) | Platform-agnostic components (`<View>`, `<Text>`, etc.) |
-| **Styling** | CSS, CSS-in-JS | StyleSheet API (subset of CSS) |
-| **Layout System** | Various CSS layouts (Flexbox, Grid, etc.) | Primarily Flexbox |
-| **Event Handling** | DOM events (`onClick`, `onChange`, etc.) | Native events (`onPress`, `onChangeText`, etc.) |
-| **Animation** | CSS transitions, Web Animations API | Animated API, native drivers |
-| **Navigation** | React Router, etc. | React Navigation, Expo Router |
-| **Platform APIs** | Web APIs (fetch, localStorage, etc.) | Native APIs (Camera, Geolocation, etc.) |
-| **Threading Model** | Single-threaded | Multi-threaded (JS thread, UI thread, etc.) |
-| **Development Tools** | Browser DevTools | React Native DevTools, native debuggers |
-| **Build Process** | Webpack, Vite, etc. | Metro bundler, native build tools |
-| **Deployment** | Web servers, CDNs | App stores, OTA updates |
+| Aspect                | React                                     | React Native                                            |
+| --------------------- | ----------------------------------------- | ------------------------------------------------------- |
+| **Rendering Target**  | Browser DOM                               | Native UI Components                                    |
+| **Base Components**   | HTML elements (`<div>`, `<span>`, etc.)   | Platform-agnostic components (`<View>`, `<Text>`, etc.) |
+| **Styling**           | CSS, CSS-in-JS                            | StyleSheet API (subset of CSS)                          |
+| **Layout System**     | Various CSS layouts (Flexbox, Grid, etc.) | Primarily Flexbox                                       |
+| **Event Handling**    | DOM events (`onClick`, `onChange`, etc.)  | Native events (`onPress`, `onChangeText`, etc.)         |
+| **Animation**         | CSS transitions, Web Animations API       | Animated API, native drivers                            |
+| **Navigation**        | React Router, etc.                        | React Navigation, Expo Router                           |
+| **Platform APIs**     | Web APIs (fetch, localStorage, etc.)      | Native APIs (Camera, Geolocation, etc.)                 |
+| **Threading Model**   | Single-threaded                           | Multi-threaded (JS thread, UI thread, etc.)             |
+| **Development Tools** | Browser DevTools                          | React Native DevTools, native debuggers                 |
+| **Build Process**     | Webpack, Vite, etc.                       | Metro bundler, native build tools                       |
+| **Deployment**        | Web servers, CDNs                         | App stores, OTA updates                                 |
 
 This comparison highlights the key differences between React and React Native while emphasizing that the core principles—components, props, state, and lifecycle—remain consistent across both platforms. Understanding these differences helps developers effectively apply their React knowledge to mobile development with React Native.
 
@@ -169,6 +190,7 @@ React strongly favors composition over inheritance for building component hierar
 **Common Composition Patterns in React:**
 
 1. **Containment:** Using `children` props to nest components:
+
    ```jsx
    <Card>
      <CardTitle>User Profile</CardTitle>
@@ -176,10 +198,13 @@ React strongly favors composition over inheritance for building component hierar
    </Card>
    ```
 
+   In this containment example, the `Card` component acts as a generic container. Any content placed between its opening and closing tags (like `CardTitle` and `CardContent` in this case) is passed as the `children` prop. The `Card` component can then render these children within its own structure, allowing for flexible content composition.
+
 2. **Specialization:** Creating more specific components from generic ones:
+
    ```jsx
    // Generic component
-   function Dialog({title, message, children}) {
+   function Dialog({ title, message, children }) {
      return (
        <div className="dialog">
          <h1>{title}</h1>
@@ -188,9 +213,9 @@ React strongly favors composition over inheritance for building component hierar
        </div>
      );
    }
-   
+
    // Specialized component
-   function ConfirmationDialog({message, onConfirm, onCancel}) {
+   function ConfirmationDialog({ message, onConfirm, onCancel }) {
      return (
        <Dialog title="Confirmation" message={message}>
          <button onClick={onConfirm}>Confirm</button>
@@ -199,6 +224,8 @@ React strongly favors composition over inheritance for building component hierar
      );
    }
    ```
+
+   This specialization example demonstrates creating a `ConfirmationDialog` by composing the more generic `Dialog` component. The `ConfirmationDialog` configures the `Dialog` with a specific title and message, and then adds its own specialized content (Confirm/Cancel buttons) as children. This pattern promotes reuse of the generic `Dialog`'s structure and styling while allowing for specialized behavior and content.
 
 3. **Higher-Order Components (HOCs):** Functions that take a component and return a new enhanced component.
 

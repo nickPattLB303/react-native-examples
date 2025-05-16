@@ -174,6 +174,25 @@ While JSX provides a convenient and declarative syntax, browsers and JavaScript 
 
 The most common transpiler for JSX is Babel. Babel is a versatile JavaScript compiler that transforms modern JavaScript features (ES6+) and syntax extensions like JSX into older, more widely compatible versions of JavaScript (typically ES5). This transpilation step is usually integrated into the build pipeline of a React Native project, managed by tools like Metro (React Native's bundler).
 
+```mermaid
+graph LR
+    subgraph "Development Time"
+        A[Developer writes JSX in .tsx/.jsx file] --> B{JSX Syntax e.g., <MyComponent prop="value" />};
+    end
+    subgraph "Build Time (Transpilation)"
+        B --> C{Babel Compiler};
+        C -- Pre-React 17 Transform --> D[React.createElement(MyComponent, {prop: "value"})];
+        C -- New JSX Transform (React 17+) --> E[_jsx(MyComponent, {prop: "value"})];
+    end
+    subgraph "Runtime"
+        D --> F[JavaScript Engine Executes Function Call];
+        E --> F;
+        F --> G{React Element Object (Virtual DOM Node)};
+    end
+```
+
+This diagram illustrates the transformation journey of JSX. During development, a developer writes UI structures using JSX syntax (e.g., `<MyComponent prop="value" />`) in `.tsx` or `.jsx` files. At build time, a transpiler like Babel processes this code. Before React 17, Babel would convert the JSX into `React.createElement()` function calls. With React 17 and the new JSX transform, Babel converts it into calls to internal functions like `_jsx()` (imported from `react/jsx-runtime`). Both `React.createElement()` and `_jsx()` are standard JavaScript function calls that the JavaScript engine can execute at runtime. The execution of these functions results in the creation of a React Element, which is a lightweight JavaScript object describing the component type, its props, and any children. This object becomes part of React's Virtual DOM, used to efficiently update the actual UI.
+
 **2. From JSX to `React.createElement()` (Pre-React 17)**
 
 Historically, before React 17, Babel transformed JSX elements into calls to `React.createElement()`. This function typically takes three arguments:
@@ -214,6 +233,8 @@ You don't use web HTML elements like `<div>` or `<span>`. Instead, React Native 
 - `<ScrollView>`: For scrollable content.
 - `<Button>`: A basic button.
 
+This example demonstrates a simple React Native screen using Core Components:
+
 ```tsx
 import React from "react";
 import { View, Text, Button } from "react-native";
@@ -227,6 +248,8 @@ const MyScreen = () => {
   );
 };
 ```
+
+This `MyScreen` component renders a `View` that acts as a container, centering its children on the screen using Flexbox styles. Inside, it displays a `Text` element with a greeting and a `Button` component. When the button is pressed, it logs a message to the console. This structure is typical for a React Native screen, combining layout (`View`), text display (`Text`), and interactive elements (`Button`), all defined using JSX. You can try running this example in an Expo Snack to see it in action.
 
 **2. File Extensions for JSX**
 

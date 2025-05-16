@@ -47,9 +47,9 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a good understanding of the following:
 
-- Completion of **Module 4: Web Development Essentials Refresher** (especially HTML and CSS concepts)
-- Completion of **Module 5: JavaScript Essentials for React Native** (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
-- Completion of **Module 6: TypeScript Essentials** (all subsequent code examples in this course will use TypeScript)
+- Completion of [Module 4: Web Development Essentials Refresher](../module-04-web-development-essentials-refresher/section-00-introduction.md) (especially HTML and CSS concepts)
+- Completion of [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md) (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
+- Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md) (all subsequent code examples in this course will use TypeScript)
 
 With these prerequisites, you're ready to explore the powerful world of React! Let's begin.
 

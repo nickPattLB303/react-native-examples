@@ -135,6 +135,17 @@ Here, the urgent alert `View` is only rendered if `hasUrgentAlerts` is true.
 
 The ternary operator is useful for inline conditional rendering where you want to render one thing if a condition is true, and another thing if it's false.
 
+```mermaid
+graph TD
+    A[Start: Evaluate Ternary Operator] --> B{Condition is True?};
+    B -- Yes --> C[Render trueExpression];
+    B -- No  --> D[Render falseExpression];
+    C --> E[End: Output Result];
+    D --> E;
+```
+
+This diagram shows the execution flow of a ternary conditional operator (`condition ? trueExpression : falseExpression`). When encountered, the `condition` is first evaluated. If the `condition` resolves to a truthy value (evaluates to `true`), the `trueExpression` (the part after the `?` and before the `:`) is executed and its result is rendered or returned. If the `condition` resolves to a falsy value (evaluates to `false`), the `falseExpression` (the part after the `:`) is executed and its result is rendered or returned. This provides a concise way to choose between two different outputs directly within your JSX or JavaScript expressions, making it ideal for simple conditional logic that needs to be embedded inline.
+
 ```tsx
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";

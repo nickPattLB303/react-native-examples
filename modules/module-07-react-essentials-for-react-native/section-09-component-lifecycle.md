@@ -72,7 +72,14 @@ const PharmacyWelcomeMessage = () => {
     </View>
   );
 };
-// ... styles
+
+const stylesOne = StyleSheet.create({
+  container: { padding: 10, alignItems: "center" },
+});
+// Note: Styles moved to avoid conflict with later examples if this file were longer.
+// Actual styles would be defined once per file or imported.
+
+export default PharmacyWelcomeMessage; // Added export for completeness
 ```
 
 **2. Running an Effect When Dependencies Change (Component Did Update):**
@@ -96,13 +103,13 @@ const PatientDetailsFetcher: React.FC<PatientDetailsProps> = ({
     console.log(`PatientDetailsFetcher: Effect for patientId: ${patientId}`);
     setLoading(true);
     // Simulate fetching patient data for SpeedyMeds
-    let isActive = true;
+    let isActive = true; // Flag to prevent state updates on unmounted component
     const fetchPatientData = async () => {
       // In a real app, this would be an API call: fetch(`/api/patients/${patientId}`)
       // Consider using AbortController for real fetch requests
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
       if (isActive) {
-        // Only update state if the component is still mounted
+        // Only update state if the component is still active
         setPatientData({
           id: patientId,
           name: `Patient ${patientId.slice(-3)}`,
@@ -114,7 +121,9 @@ const PatientDetailsFetcher: React.FC<PatientDetailsProps> = ({
 
     fetchPatientData();
 
+    // Cleanup function: runs if patientId changes or component unmounts
     return () => {
+      console.log(`PatientDetailsFetcher: Cleanup for patientId: ${patientId}`);
       isActive = false; // Set flag to false on cleanup
     };
   }, [patientId]); // Dependency: effect runs if patientId changes
@@ -128,27 +137,32 @@ const PatientDetailsFetcher: React.FC<PatientDetailsProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={stylesTwo.container}>
       <Text>Patient ID: {patientData.id}</Text>
       <Text>Name: {patientData.name}</Text>
       <Text>Condition: {patientData.condition}</Text>
     </View>
   );
 };
-// ... styles
+
+const stylesTwo = StyleSheet.create({
+  container: { padding: 10, marginVertical: 5, backgroundColor: "#f0f0f0" },
+});
+// Added export for completeness
+// export default PatientDetailsFetcher;
 ```
 
-In this example, if the `patientId` prop changes, the effect will re-run, fetching data for the new patient.
+In this example, if the `patientId` prop changes, the effect will re-run, fetching data for the new patient. The `isActive` flag inside the effect is a common pattern to prevent calling `setState` on an unmounted component if the asynchronous operation (like `fetchPatientData`) completes after the component has unmounted or after the `patientId` prop has changed again, triggering a new fetch and a cleanup of the previous effect.
 
 **3. Cleanup (Component Will Unmount):**
-The cleanup function returned by the effect is crucial for preventing memory leaks and issues. It runs when the component is about to be removed from the UI (unmounted) or before the effect runs again.
+The cleanup function returned by the effect is crucial for preventing memory leaks and issues. It runs when the component is about to be removed from the UI (unmounted) or before the effect runs again due to dependency changes.
 Common use cases for cleanup:
 
 - Clearing timers (`clearTimeout`, `clearInterval`).
 - Removing event listeners.
 - Canceling API subscriptions or aborting fetch requests.
 
-Refer back to the `PharmacyWelcomeMessage` example for a `clearTimeout` cleanup.
+Refer back to the `PharmacyWelcomeMessage` example for a `clearTimeout` cleanup, and the `PatientDetailsFetcher` example for using a flag (`isActive`) to manage async operations during cleanup.
 
 ### Diagram: `useEffect` Lifecycle
 
@@ -200,7 +214,6 @@ The `useEffect` Hook is a powerful tool for managing side effects and synchroniz
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Hooks - Using the Effect Hook (`useEffect`)](https://react.dev/reference/react/useEffect)
-> - [React Docs: Hooks - `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
 > - [React Docs: Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
 > - [React Docs: You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) (Important considerations for when _not_ to use `useEffect`)
 
@@ -789,18 +802,16 @@ This diagram shows how the traditional class component lifecycle methods map to 
 
 ### A Note on `useLayoutEffect`
 
-React provides another Hook called `useLayoutEffect` which has the same signature as `useEffect` but fires _synchronously_ after all DOM mutations are complete, but _before_ the browser has painted the changes to the screen. This means it can block visual updates.
+React also provides a Hook called `useLayoutEffect`. It has the same signature as `useEffect` (it takes an effect function and a dependency array), but it fires **synchronously** after all DOM mutations are complete, and importantly, _before_ the browser has painted the changes to the screen. This means it can block visual updates if the work inside it is slow.
 
-- **Use Case:** `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
-- **Preference:** For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), **`useEffect` is preferred** because it does not block the browser from painting, leading to a more responsive UI.
+- **Primary Use Case:** `useLayoutEffect` is useful for tasks that need to read layout information from the DOM (e.g., an element's size or position after it has been rendered by React but before the user sees it) and then synchronously re-render the component based on that information. This can prevent visual flickering that might occur if `useEffect` were used, as `useEffect` runs asynchronously after the browser has painted.
+- **Performance Consideration:** Because it runs synchronously and blocks painting, `useLayoutEffect` should be used sparingly. For most side effects, such as data fetching, setting up subscriptions, or manual DOM changes that don't rely on immediate layout reads, **`useEffect` is the preferred choice** as it doesn't block the browser, leading to a more responsive UI.
 
-Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
+In React Native, the distinction is similar regarding the timing relative to native view updates. Use `useLayoutEffect` only when you need to perform measurements or make changes that must be reflected visually without any intermediate inconsistent state being shown to the user.
 
-> 📚 **Official Documentation:**
+> 📚 **Official Documentation (for `useLayoutEffect`):**
 >
-> - [React Docs: Hooks - Using the Effect Hook (`useEffect`)](https://react.dev/reference/react/useEffect)
-> - [React Docs: Hooks - `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
-> - [React Docs: Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
+> - [React Docs: `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
 
 ---
 

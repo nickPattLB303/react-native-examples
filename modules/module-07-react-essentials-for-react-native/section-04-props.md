@@ -12,6 +12,25 @@ Props are read-only data that a component receives from its parent. Think of the
 - **Unidirectional Data Flow:** Data flows downwards from parent to child. This makes it easier to understand how data changes affect different parts of your application. If a child component needs to communicate a change or trigger an action in its parent (e.g., based on a user interaction within the child), this is achieved by the parent passing a callback function as a prop to the child. The child then calls this function when appropriate, effectively sending information or a request back up to the parent, which owns and manages the actual state and the function to modify it.
 - **Configuration:** Props are used to configure and customize child components.
 
+```mermaid
+graph TD
+    ParentComponent["Parent Component (e.g., PrescriptionList)"] -- "Props (medicationName, dosage)" --> ChildComponent["Child Component (e.g., MedicationDisplay)"];
+    ChildComponent -- "Receives props object" --> AccessProps["Accesses props.medicationName, props.dosage"];
+    AccessProps --> RenderUI["Renders UI based on props"];
+
+    subgraph ParentComponent
+        direction LR
+        A1["<MedicationDisplay medicationName='Lisinopril' dosage='10mg' />"] --> B1{Prop object: {medicationName: ..., dosage: ...}};
+    end
+
+    subgraph ChildComponent
+        direction LR
+        C1["function MedicationDisplay(props) { ... }"] --> D1["props.medicationName"];
+    end
+```
+
+This diagram illustrates how props flow from a parent to a child component. The `ParentComponent` defines values for props (like `medicationName` and `dosage`) when it uses the `ChildComponent` in its JSX. Internally, React collects these attributes into a single `props` object. This object is then passed as an argument to the `ChildComponent` function (if it's a functional component). The `ChildComponent` can then access these values (e.g., `props.medicationName`) to customize its rendering and behavior. This mechanism ensures that data flows downwards in a predictable manner, allowing parent components to configure and control their children. The child component treats these props as read-only information to decide what to display.
+
 Props are fundamental to creating predictable and maintainable applications. Because data flows in only one direction and props cannot be altered by the receiving child components, tracing the origin of data and understanding how changes propagate becomes significantly easier. This simplifies debugging and reduces unintended side effects. Props also play a vital role in component decoupling, as child components operate based on the props they receive, without needing to know the internal workings of their parents.
 
 ### Defining and Passing Props
