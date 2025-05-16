@@ -131,6 +131,76 @@ A generic function uses a type variable (conventionally `T`, `U`, `K`, `V`, etc.
   logItemDetails("Simple string log"); // T is inferred as string
   ```
 
+  **Working with Multiple Type Variables:**
+  Generic functions are not limited to a single type variable. You can declare multiple type variables if the function's logic involves several independent types.
+
+  - **SpeedyMeds Example: Transforming Patient Data**
+
+    Imagine a function that takes an array of one type (e.g., raw patient data objects) and a transformation function, then returns an array of another type (e.g., simplified patient view models).
+
+    ```typescript
+    interface RawPatientData {
+      id: number;
+      fullName: string;
+      dob: string; // Date as string
+      fullAddress: string;
+    }
+
+    interface PatientViewModel {
+      patientId: string;
+      displayName: string;
+      age: number; // Calculated
+    }
+
+    function calculateAge(dateOfBirth: string): number {
+      const dob = new Date(dateOfBirth);
+      const diffMs = Date.now() - dob.getTime();
+      const ageDt = new Date(diffMs);
+      return Math.abs(ageDt.getUTCFullYear() - 1970);
+    }
+
+    /**
+     * Maps an array of items from one type (T) to another type (U)
+     * using a provided mapping function.
+     * @param arr The input array of type T.
+     * @param func The mapping function that takes an item of type T and returns type U.
+     * @returns A new array of type U.
+     */
+    function mapArrayData<T, U>(arr: T[], func: (arg: T) => U): U[] {
+      return arr.map(func);
+    }
+
+    const rawPatients: RawPatientData[] = [
+      {
+        id: 1,
+        fullName: "Jane Marie Doe",
+        dob: "1985-07-22",
+        fullAddress: "123 Main St, Anytown",
+      },
+      {
+        id: 2,
+        fullName: "John Robert Smith",
+        dob: "1992-02-15",
+        fullAddress: "456 Oak Rd, Anytown",
+      },
+    ];
+
+    const patientViewModels = mapArrayData(rawPatients, (patient) => ({
+      patientId: `PAT-${patient.id}`,
+      displayName: patient.fullName,
+      age: calculateAge(patient.dob),
+    }));
+
+    console.log(patientViewModels);
+    // Output:
+    // [
+    //   { patientId: 'PAT-1', displayName: 'Jane Marie Doe', age: ... },
+    //   { patientId: 'PAT-2', displayName: 'John Robert Smith', age: ... }
+    // ]
+    ```
+
+    In `mapArrayData<T, U>`, `T` represents the type of the elements in the input array (`RawPatientData`), and `U` represents the type of the elements in the output array (`PatientViewModel`). This allows for flexible and type-safe data transformations.
+
 **2. Generic Interfaces**
 
 You can also create generic interfaces. This is useful for defining shapes for objects that can hold or operate on data of various types.
@@ -184,6 +254,45 @@ You can also create generic interfaces. This is useful for defining shapes for o
   console.log(`Patient: ${patientApiResponse.data.name}`);
   console.log(`First medication: ${medicationApiResponse.data[0].name}`);
   ```
+
+  Interfaces can also use multiple type variables.
+
+  - **SpeedyMeds Example: `KeyValuePair<K, V>`**
+
+    Let's define a generic interface for a key-value pair, where the key and value can be of different types. This is useful for representing entries in a map or configuration settings.
+
+    ```typescript
+    interface KeyValuePair<TKey, TValue> {
+      key: TKey;
+      value: TValue;
+    }
+
+    // Usage examples:
+    const patientAgeSetting: KeyValuePair<string, number> = {
+      key: "defaultPatientAge",
+      value: 30,
+    };
+
+    const pharmacyFeatureFlag: KeyValuePair<string, boolean> = {
+      key: "enableOnlineRefills",
+      value: true,
+    };
+
+    const medicationFormPreference: KeyValuePair<number, string> = {
+      key: 101, // Could be a medication ID
+      value: "Tablet", // Preferred form
+    };
+
+    function displaySetting<K, V>(setting: KeyValuePair<K, V>): void {
+      console.log(`Setting Key: ${setting.key}, Value: ${setting.value}`);
+    }
+
+    displaySetting(patientAgeSetting);
+    displaySetting(pharmacyFeatureFlag);
+    displaySetting(medicationFormPreference);
+    ```
+
+    Here, `KeyValuePair<TKey, TValue>` allows us to define pairs with varying types for keys and values while maintaining type safety for each specific pair instance.
 
 **3. Generic Type Aliases**
 
@@ -274,6 +383,71 @@ Classes can also be generic. This allows you to create classes that can work wit
   console.log("Cached medication IDs:", medicationCache.listCachedIds());
   ```
 
+  **Using Class Types in Generics (Advanced)**
+
+  A more advanced use of generics with classes involves working with class types themselves. For instance, you might want to create a factory function that can produce instances of different classes.
+
+  - **SpeedyMeds Example: Generic Item Factory**
+
+    Imagine needing a factory that can create instances of various record types used in SpeedyMeds, where each record type might have a default constructor.
+
+    ```typescript
+    class PatientLogEntry {
+      timestamp: Date;
+      message: string;
+      constructor(message: string = "Log entry created") {
+        this.timestamp = new Date();
+        this.message = message;
+        console.log(
+          `PatientLogEntry: ${this.message} at ${this.timestamp.toISOString()}`
+        );
+      }
+    }
+
+    class InventoryUpdateRecord {
+      updateTime: Date;
+      medicationId: string;
+      quantityChange: number;
+      constructor(medId: string = "UNKNOWN", qtyChange: number = 0) {
+        this.updateTime = new Date();
+        this.medicationId = medId;
+        this.quantityChange = qtyChange;
+        console.log(
+          `InventoryUpdateRecord for ${this.medicationId}: ${
+            this.quantityChange
+          } at ${this.updateTime.toISOString()}`
+        );
+      }
+    }
+
+    /**
+     * A generic factory function that creates an instance of a class T.
+     * The class T must have a constructor that takes no arguments.
+     * @param ctor The constructor function for class T.
+     * @returns A new instance of class T.
+     */
+    function createRecordInstance<T>(
+      ctor: { new (...args: any[]): T },
+      ...args: any[]
+    ): T {
+      return new ctor(...args);
+    }
+
+    // Create instances using the factory
+    const newLogEntry = createRecordInstance(
+      PatientLogEntry,
+      "Patient file accessed"
+    );
+    const newInventoryRecord = createRecordInstance(
+      InventoryUpdateRecord,
+      "NDC123",
+      -5
+    );
+    const defaultInventoryRecord = createRecordInstance(InventoryUpdateRecord);
+    ```
+
+    In this example, `createRecordInstance` is a generic function. The type parameter `T` represents the instance type of the class. The parameter `ctor` is of type `{ new (...args: any[]): T }`, which means "any constructor function that, when called with `new` and any arguments, produces an instance of `T`." This allows the factory to be used with different classes like `PatientLogEntry` and `InventoryUpdateRecord`, as long as their constructors match the expected signature (or can be called with the provided arguments).
+
 **5. Generic Constraints**
 
 Sometimes you want to constrain the types that can be used with a generic type variable. You can use the `extends` keyword to require that the type variable implements a certain interface or has certain properties.
@@ -327,11 +501,19 @@ Generics are a cornerstone of creating flexible and type-safe libraries and util
 >
 > The crucial benefit of generics lies in the **static analysis and type safety they provide during the development phase**. The TypeScript compiler uses the generic information to catch errors and provide better tooling support _before_ the code is executed. This compile-time checking is what makes generics powerful, not any runtime generic type information (which generally doesn't exist in the output JavaScript).
 
+### Key Takeaways
+
+- **Reusable Code:** Generics allow you to write functions, classes, interfaces, and type aliases that can work with a variety of types without sacrificing type safety.
+- **Type Safety:** By using type variables (e.g., `<T>`), you ensure that operations are consistent for the specific type being used at instantiation, catching errors at compile time.
+- **Flexibility with Constraints:** Generic constraints (`extends`) allow you to specify that a type variable must have certain properties or adhere to a particular interface, narrowing the scope of applicable types while maintaining flexibility.
+- **Improved Abstraction:** Generics help in creating more abstract and robust data structures and utility functions applicable across different parts of your application (e.g., `ApiResponse<T>`, `DataCache<TItem>`).
+- **Compile-Time Construct:** Remember that generic type information is primarily for compile-time checking and is erased during transpilation to JavaScript.
+
 > 📚 **Official Documentation:**
 >
 > - [TypeScript Handbook - Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
 
-### Exercise 6.2: Generic Function
+### Exercise 6.3: Generic Function
 
 Let's put your understanding of generics into practice.
 
@@ -354,4 +536,40 @@ Let's put your understanding of generics into practice.
 
 **(https://codesandbox.io/s/speedymeds-typescript-generics-exercise-q4g9tz)**
 
----
+> 🍏 **(Native iOS Developers - Swift):**
+>
+> **Comparison:** Swift's generics are very similar to TypeScript's. You define generic functions, classes, structs, and enums using type parameters (e.g., `func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item]`). Both systems use angle brackets for type parameters (e.g., `Array<Element>`).
+>
+> **Key Differences & Takeaways:**
+>
+> - **Type Constraints:** Swift uses protocols for generic constraints (e.g., `func process<T: Equatable>(value: T)`), similar to TypeScript's `extends` keyword with interfaces (`function process<T extends Equatable>(value: T)`).
+> - **Type Erasure:** TypeScript erases generic types at compile time, meaning the JavaScript output doesn't retain generic information. Swift generics are typically reified, meaning type information can be available at runtime, allowing for more dynamic checks.
+> - **Associated Types:** Swift protocols can have `associatedtype` declarations, which are placeholders for types used within the protocol. This concept is somewhat analogous to how generic type parameters can be used within TypeScript interfaces or type aliases when defining complex relationships.
+>
+> You'll find the conceptual underpinning of writing flexible, reusable, and type-safe code with generics to be almost identical. The primary differences lie in syntax for constraints and runtime behavior due to type erasure in TypeScript vs. reification in Swift.
+>
+> **Source:** [Swift Language Guide - Generics](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/)
+
+> 🤖 **(Native Android Developers - Kotlin/Java):**
+>
+> **Comparison:** Kotlin and Java both have robust support for generics, conceptually very similar to TypeScript. You declare generic classes, interfaces, and functions using type parameters (e.g., Kotlin: `class Box<T>(t: T)`, Java: `class Box<T> { private T t; }`).
+>
+> **Key Differences & Takeaways:**
+>
+> - **Type Constraints (Bounds):** Kotlin uses the colon (`fun <T : Comparable<T>> sort(list: List<T>)`) and Java uses `extends` (`<T extends Comparable<T>>`) for upper bounds, similar to TypeScript's `extends`.
+> - **Type Erasure:** Both Java and TypeScript perform type erasure for generics. At runtime, instances of generic types generally don't know their actual type arguments (e.g., a `List<String>` becomes a raw `List` in Java bytecode). Kotlin, when targeting the JVM, also undergoes type erasure. However, Kotlin offers reified type parameters for inline functions (`inline fun <reified T> isInstanceOf(value: Any) = value is T`), which allows runtime checks against `T`. This is a specific Kotlin feature not present in TypeScript or standard Java generics.
+> - **Wildcards (Java) / Use-site Variance (Kotlin):** Java uses wildcards (e.g., `List<? extends Number>`, `List<? super Integer>`) for more flexible type assignments. Kotlin uses declaration-site variance (`out`, `in` modifiers on type parameters) and use-site variance (type projections like `Array<out String>`) to achieve similar flexibility. TypeScript's structural typing and inference often handle these scenarios without explicit wildcard-like syntax, though its variance rules are more aligned with declaration-site for `readonly` properties and use-site for function parameters.
+>
+> The core goal of achieving type-safe, reusable components is shared. Focus on TypeScript's syntax for constraints and how it applies to functions, interfaces, and classes.
+>
+> **Source:** [Kotlin Docs - Generics](https://kotlinlang.org/docs/generics.html), [Java Tutorials - Generics](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
+
+> 🌐 **(Web Developers - From Python, Ruby, C#, etc.):**
+>
+> **Comparison (C#/Java Background):** If you're familiar with generics in C# or Java, TypeScript generics will feel very natural. The syntax (`<T>`) and purpose (creating reusable, type-safe components) are largely the same. Key differences include type erasure in TypeScript (similar to Java, less so than C# which has more runtime type information for generics) and the use of structural typing for constraints.
+>
+> **Comparison (Python/Ruby Background):** Python (with type hints using `TypeVar`) and Ruby (through conventions or sorbet-like tools) are increasingly incorporating generic concepts, but they are often not as central or compile-time enforced as in TypeScript. The main shift will be explicitly defining type parameters and relying on the TypeScript compiler to enforce these generic contracts, rather than relying purely on duck typing at runtime.
+>
+> **Key Takeaway:** Generics in TypeScript provide compile-time safety for reusable components. If you've used them in other statically-typed languages, the concepts transfer well. If you're from a more dynamic background, generics introduce a way to define flexible yet type-checked abstractions.
+>
+> **Source:** [Python `typing.TypeVar`](https://docs.python.org/3/library/typing.html#typing.TypeVar)

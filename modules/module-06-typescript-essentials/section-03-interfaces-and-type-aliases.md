@@ -554,4 +554,244 @@ Now it's time to practice defining your own interfaces.
 
 **(https://codesandbox.io/s/speedymeds-typescript-interfaces-exercise-yt83mv)**
 
----
+### Advanced Type Concepts: Union and Intersection Types
+
+TypeScript allows you to combine existing types to create new ones using union and intersection operators. These are fundamental for modeling complex data structures and variations in your application logic, especially when dealing with data that can take one of several forms or needs to combine features from multiple sources.
+
+#### 1. Union Types (`|`)
+
+A union type, created using the pipe symbol (`|`), allows a variable, function parameter, or property to hold a value of **one of several possible types**. It signifies that the value can be, for example, a `string` OR a `number` OR a `boolean`.
+
+- **SpeedyMeds Example: `PatientIdentifier`**
+
+  ```typescript
+  /**
+   * Represents an identifier which could be a numeric internal ID
+   * or an alphanumeric Medical Record Number (MRN).
+   * @typedef {number | string} PatientIdentifier
+   */
+  type PatientIdentifier = number | string;
+
+  let patientRef: PatientIdentifier = 12345; // OK
+  console.log(`Patient Reference (as number): ${patientRef}`);
+
+  patientRef = "MRN67890"; // OK
+  console.log(`Patient Reference (as string): ${patientRef}`);
+
+  // patientRef = true; // Error: Type 'boolean' is not assignable to type 'PatientIdentifier'.
+  ```
+
+- **Working with Union Types (Narrowing):**
+  When you have a value of a union type, TypeScript will only allow you to access members that are **common to all types** in the union. To access members specific to a particular type within the union, you need to use **type narrowing**. Type narrowing is the process of convincing TypeScript that a value is of a more specific type within a certain code block. Common ways to narrow types include:
+
+  - `typeof` checks for primitive types.
+  - `instanceof` checks for class instances.
+  - `in` operator to check for property existence.
+  - Equality checks (e.g., `===`, `!==`) with literal types.
+  - Custom type guards (functions returning `parameterName is Type`).
+  - Discriminated unions (covered next).
+
+- **SpeedyMeds Example: Function with Union Type Parameter**
+
+  ```typescript
+  // Assuming Patient type is defined elsewhere
+  // type Patient = { patientId: string | number; name: string; ... };
+
+  function findPatient(id: PatientIdentifier): Patient | undefined {
+    if (typeof id === "string") {
+      // Inside this block, TypeScript knows 'id' is a string (MRN)
+      console.log(`Searching for patient by MRN: ${id.toUpperCase()}`);
+      // ... search logic using string id ...
+    } else {
+      // Inside this block, TypeScript knows 'id' is a number (Internal ID)
+      console.log(`Searching for patient by Internal ID: ${id}`);
+      // ... search logic using number id ...
+    }
+    // Placeholder: actual patient fetching logic would be here
+    return undefined;
+  }
+
+  findPatient(101);
+  findPatient("MRN-XYZ-789");
+  ```
+
+Union types are incredibly useful for modeling situations where a value can legitimately be one of several types, such as handling different kinds of API responses or function inputs.
+
+#### 2. Intersection Types (`&`)
+
+An intersection type, created using the ampersand symbol (`&`), allows you to combine multiple existing types into a **single new type that possesses all the properties and methods of each constituent type**. This is extremely useful for composing complex types from smaller, reusable pieces, promoting modularity and adhering to the DRY (Don't Repeat Yourself) principle in your type definitions.
+
+Think of it as creating a new type that is a mix-in or a composition of all the features from the types being intersected.
+
+- **SpeedyMeds Example: Composing `PrescriptionOrder`**
+
+  Let's imagine we have base types for order information and specific details for prescription refills and over-the-counter (OTC) supply orders.
+
+  ```typescript
+  /** Base properties common to all orders */
+  interface BaseOrderInfo {
+    orderId: string;
+    orderDate: Date;
+    status: "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled"; // Using literal union
+  }
+
+  /** Details specific to prescription refills */
+  interface PrescriptionRefillInfo {
+    prescriptionId: string;
+    medicationName: string;
+    patientId: string;
+    refillsRequested: number;
+  }
+
+  /** Details specific to over-the-counter (OTC) supply orders */
+  interface SupplyOrderInfo {
+    items: { itemName: string; quantity: number; price: number }[];
+    deliveryAddress: string;
+    shippingMethod?: "Standard" | "Express";
+  }
+
+  // Combine base properties with specific details using intersection types
+  type PrescriptionRefillOrder = BaseOrderInfo & PrescriptionRefillInfo;
+  type PharmacySupplyOrder = BaseOrderInfo & SupplyOrderInfo;
+
+  // Example Usage
+  const refillOrder: PrescriptionRefillOrder = {
+    orderId: "RXRF1122",
+    orderDate: new Date(),
+    status: "Processing",
+    prescriptionId: "RXC10098",
+    medicationName: "Lisinopril 20mg",
+    patientId: "P1001",
+    refillsRequested: 1,
+  };
+
+  const otcOrder: PharmacySupplyOrder = {
+    orderId: "SUPP3344",
+    orderDate: new Date(),
+    status: "Shipped",
+    items: [
+      { itemName: "Band-Aids (Box)", quantity: 1, price: 5.99 },
+      { itemName: "Antiseptic Wipes", quantity: 2, price: 3.49 },
+    ],
+    deliveryAddress: "123 Main St, Anytown, USA",
+    shippingMethod: "Express",
+  };
+
+  // You can access properties from all intersected types:
+  console.log(
+    `Refill Order ${refillOrder.orderId} for ${refillOrder.medicationName} is ${refillOrder.status}.`
+  );
+  console.log(
+    `OTC Order ${otcOrder.orderId} delivering to ${otcOrder.deliveryAddress} via ${otcOrder.shippingMethod} shipping.`
+  );
+  ```
+
+Intersection types are powerful for building up complex object shapes by combining simpler, focused type definitions. This makes your types more maintainable and easier to reason about.
+
+#### 3. Discriminating Unions (or Tagged Unions)
+
+Discriminating unions are a common and very powerful pattern in TypeScript for working with union types, especially for modeling different states, events, or action types (e.g., in state management like Redux or Zustand). This pattern makes it easier and safer to handle data that can take one of several distinct forms.
+
+The pattern involves three key components:
+
+1.  A **common, singleton type property** (the _discriminant_ or _tag_) present in all types within the union. This property usually has a string literal type.
+2.  Each type in the union has a **unique literal value** for this discriminant property.
+3.  Using `switch` statements (or a series of `if/else if` checks) on the discriminant property allows TypeScript to perform **type narrowing**, correctly inferring the specific type of the object within each corresponding code block.
+
+- **SpeedyMeds Example: `CartAction`**
+
+  Imagine managing a shopping cart in the SpeedyMeds app. Different actions can modify the cart:
+
+  ```typescript
+  // Define the different action types with a common 'type' property (the discriminant)
+  type AddItemAction = {
+    type: "ADD_ITEM"; // Discriminant
+    payload: { itemId: string; name: string; quantity: number };
+  };
+
+  type RemoveItemAction = {
+    type: "REMOVE_ITEM"; // Discriminant
+    payload: { itemId: string };
+  };
+
+  type UpdateQuantityAction = {
+    type: "UPDATE_QUANTITY"; // Discriminant
+    payload: { itemId: string; newQuantity: number };
+  };
+
+  type CheckoutAction = {
+    type: "CHECKOUT"; // Discriminant
+    payload: { paymentMethod: string };
+  };
+
+  // Create the union type representing all possible cart actions
+  type CartAction =
+    | AddItemAction
+    | RemoveItemAction
+    | UpdateQuantityAction
+    | CheckoutAction;
+
+  /**
+   * Processes different shopping cart actions based on their type.
+   * Demonstrates type narrowing using a discriminated union.
+   * @param {CartAction} action - The cart action to process.
+   * @returns {void}
+   */
+  function handleCartAction(action: CartAction): void {
+    switch (action.type) {
+      case "ADD_ITEM":
+        // TypeScript knows 'action' is AddItemAction here
+        console.log(
+          `Adding item: ${action.payload.name} (ID: ${action.payload.itemId}), Quantity: ${action.payload.quantity}`
+        );
+        // Access action.payload.quantity safely
+        break;
+
+      case "REMOVE_ITEM":
+        // TypeScript knows 'action' is RemoveItemAction here
+        console.log(`Removing item ID: ${action.payload.itemId}`);
+        break;
+
+      case "UPDATE_QUANTITY":
+        // TypeScript knows 'action' is UpdateQuantityAction here
+        console.log(
+          `Updating quantity for item ID: ${action.payload.itemId} to ${action.payload.newQuantity}`
+        );
+        break;
+
+      case "CHECKOUT":
+        // TypeScript knows 'action' is CheckoutAction here
+        console.log(`Checking out using: ${action.payload.paymentMethod}`);
+        break;
+
+      // Optional: Exhaustiveness Check using 'never'
+      // This ensures that if a new CartAction type is added but not handled in the switch,
+      // TypeScript will raise a compile-time error at the line below.
+      default:
+        const _exhaustiveCheck: never = action;
+        console.error(
+          `Unhandled action type: ${(_exhaustiveCheck as any).type}`
+        );
+        // return _exhaustiveCheck; // Or re-throw, depending on error handling strategy
+        break;
+    }
+  }
+
+  // Example Usage:
+  handleCartAction({
+    type: "ADD_ITEM",
+    payload: { itemId: "med101", name: "Lisinopril", quantity: 1 },
+  });
+  handleCartAction({
+    type: "UPDATE_QUANTITY",
+    payload: { itemId: "med101", newQuantity: 2 },
+  });
+  handleCartAction({
+    type: "CHECKOUT",
+    payload: { paymentMethod: "Credit Card" },
+  });
+  ```
+
+Discriminating unions provide a robust and type-safe way to model variants and ensure all possible cases are handled, significantly reducing the chances of runtime errors when dealing with heterogeneous data structures.
+
+### Comparing Interfaces and Type Aliases

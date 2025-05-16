@@ -138,6 +138,39 @@ console.log(patientProfile);
 // More specific types (interfaces/type aliases) are better for this.
 ```
 
+While the generic `object` type is available, it's often more useful to describe the _shape_ of an object inline, especially for simple, one-off structures. You can do this by listing its properties and their types within curly braces `{}`. This provides better type safety and autocompletion than the generic `object` type.
+
+- **SpeedyMeds Example (Inline Object Shape):**
+
+```typescript
+let medicationRecord: {
+  name: string;
+  form: "Tablet" | "Capsule" | "Liquid"; // Using string literal types for known forms
+  strength: number;
+  unit: string; // e.g., "mg", "ml"
+  isGeneric?: boolean; // Optional property
+};
+
+medicationRecord = {
+  name: "Lisinopril",
+  form: "Tablet",
+  strength: 10,
+  unit: "mg",
+  isGeneric: true,
+};
+
+// medicationRecord = { name: "Aspirin", strength: "100mg" }; // Error: Type 'string' is not assignable to type 'number' for strength.
+
+console.log(
+  `Medication: ${medicationRecord.name}, Form: ${medicationRecord.form}`
+);
+if (medicationRecord.isGeneric) {
+  console.log("This is a generic medication.");
+}
+```
+
+This approach is a stepping stone to using `interface` and `type` aliases, which are covered in detail in the next section and are generally preferred for reusable object shapes.
+
 **6. `any`**
 
 Represents a dynamic type. Using `any` essentially opts out of type checking for that particular variable. It can be useful during migration from JavaScript or when working with truly dynamic data, but it should be used sparingly as it sacrifices type safety. Overuse of `any` can lead to runtime errors that TypeScript would otherwise have caught.
@@ -223,7 +256,7 @@ By default (without `strictNullChecks` enabled), `null` and `undefined` are subt
 
 - `null` and `undefined` can only be assigned to `any`, `unknown`, or their respective types.
 - `undefined` can also be assigned to `void`.
-- To allow a variable to hold a specific type OR `null` / `undefined`, you MUST use union types (e.g., `string | null`, `number | undefined`). This forces you to explicitly account for potential `null` or `undefined` values, significantly reducing common runtime errors like "Cannot read property 'x' of undefined."
+- To allow a variable to hold a specific type OR `null` / `undefined`, you MUST use **union types** (e.g., `string | null`, `number | undefined`). A union type, denoted by the `|` (pipe) symbol, means the variable can hold a value of any one of the types listed in the union. This forces you to explicitly account for potential `null` or `undefined` values, significantly reducing common runtime errors like "Cannot read property 'x' of undefined."
 
 - **SpeedyMeds Example (with `strictNullChecks` in mind):**
 
@@ -241,13 +274,147 @@ if (nextAppointmentDate) {
 }
 ```
 
+**10. Type Inference and Contextual Typing**
+
+TypeScript is designed to provide robust type safety without requiring excessive verbosity. Two key mechanisms that help achieve this are **Type Inference** and **Contextual Typing**. These features allow the TypeScript compiler to determine types automatically in many common situations, reducing the need for explicit type annotations.
+
+**a. Type Inference**
+
+When you declare and initialize a variable without an explicit type annotation, TypeScript often **infers** its type based on the initial value.
+
+- **SpeedyMeds Example:**
+
+```typescript
+let orderId = "ORD12345"; // Inferred type: string
+let itemsInCart = 3; // Inferred type: number
+let isPrescriptionFilled = false; // Inferred type: boolean
+let medications = ["Lisinopril", "Metformin", "Simvastatin"]; // Inferred type: string[]
+
+// itemsInCart = "three"; // Error: Type 'string' is not assignable to type 'number'.
+```
+
+If you declare a variable without an initial value, and `noImplicitAny` is off (not recommended), it might be inferred as `any`. With `noImplicitAny` on, you'll generally need to provide an initial value or an explicit type.
+
+- **Best Common Type:**
+  When TypeScript infers types from multiple expressions, such as the elements in an array, it attempts to find the "best common type" that fits all expressions. If a single encompassing type exists (e.g., all elements are numbers), that type is used. If not, TypeScript may infer a union type.
+
+  ```typescript
+  // All elements are numbers or null
+  let glucoseReadings = [120, 122, null, 118, null]; // Inferred type: (number | null)[]
+
+  // Elements are different primitive types
+  let mixedDeliveryInfo = ["Express Shipping", 2, true]; // Inferred type: (string | number | boolean)[]
+  ```
+
+**b. Contextual Typing**
+
+Type inference can also work "backwards." Contextual typing occurs when the type of an expression is inferred based on its **location** or the context in which it's used. This is common in scenarios like:
+
+- **Callback Functions:** The types of parameters in a callback function are often inferred from the function signature it's being passed to.
+
+  ```typescript
+  type Medication = { id: number; name: string; dosage: string };
+  const availableMedications: Medication[] = [
+    { id: 1, name: "Loratadine", dosage: "10mg" },
+    { id: 2, name: "Omeprazole", dosage: "20mg" },
+  ];
+
+  // TypeScript infers 'med' as type 'Medication' (and 'index' as number)
+  // based on the 'forEach' signature for 'Medication[]'
+  availableMedications.forEach((med, index) => {
+    console.log(`${index + 1}. ${med.name.toUpperCase()} (${med.dosage})`); // Accessing 'name' and 'dosage' is safe
+  });
+  ```
+
+- **Assignments:** When assigning a value (like an object literal or a function) to a variable or property with a known type, TypeScript uses that known type as context for type checking the assigned value.
+
+  ```typescript
+  interface PatientUpdater {
+    (patientId: number, updates: Partial<Patient>): boolean; // Assuming Patient type exists
+  }
+
+  // The parameters 'id' and 'data' are contextually typed
+  const updatePatientRecord: PatientUpdater = (id, data) => {
+    console.log(`Updating patient ${id} with:`, data);
+    // id is inferred as number, data as Partial<Patient>
+    return true;
+  };
+  ```
+
+- **Function Return Statements:** The expected return type of a function (if explicitly annotated) can provide context for the `return` statements within it, helping to catch incorrect return values.
+
+Understanding when TypeScript can reliably infer types versus when explicit annotations are necessary is key to writing effective TypeScript. While inference is powerful for local variables and simple cases, explicit types are crucial for defining clear contracts at function boundaries (parameters, return types) and for complex data structures, ensuring both compiler safety and human readability.
+
+**11. Type Assertions**
+
+Type assertions are a way to tell the TypeScript compiler, "Trust me, I know the type of this value better than you do." They allow you to override the compiler's inferred type or treat a value as a more specific type when you have more information about the value than TypeScript does.
+
+Crucially, type assertions **only affect compile-time type checking**; they have **no impact on the runtime behavior** of your JavaScript code. They do not perform any type conversion, validation, or restructuring of the data at runtime. If an assertion is incorrect, it might lead to runtime errors.
+
+**a. Syntax**
+
+TypeScript provides two syntaxes for type assertions:
+
+1.  **`as` Syntax (Preferred):** This is the recommended and more common syntax, especially in React Native projects using JSX/TSX files, as it avoids ambiguity with JSX tags.
+
+    ```typescript
+    let someApiResponse: unknown = '{"patientId": 123, "name": "Jane Doe"}';
+    // Assume we've parsed it and know it's a Patient object
+    // type Patient = { patientId: number; name: string };
+    // const patientData = JSON.parse(someApiResponse as string) as Patient;
+    ```
+
+2.  **Angle-Bracket Syntax:** This older syntax (`<Type>value`) works similarly but can cause parsing conflicts in `.tsx` files because the angle brackets can be misinterpreted as JSX elements. Therefore, it's generally avoided in React/React Native development.
+
+    ```typescript
+    // Avoid this syntax in .tsx files
+    // const patientData = <Patient>JSON.parse(<string>someApiResponse);
+    ```
+
+**b. Common Use Cases**
+
+While assertions should be used sparingly, they are sometimes necessary:
+
+- **Working with `any` or `unknown`:** After receiving data typed as `any` or `unknown` (e.g., from a legacy API, `JSON.parse()`, or third-party libraries without precise types), if you have performed runtime checks or are certain of the type, you can assert it to a more specific type. This enables further type-safe operations and better autocompletion.
+
+  ```typescript
+  async function fetchPatientNotes(): Promise<unknown> {
+    // Simulates fetching data that might be a string or null
+    const response = Math.random() > 0.5 ? "Patient is stable." : null;
+    return response;
+  }
+
+  async function displayNotes() {
+    const notes = await fetchPatientNotes();
+    if (notes) {
+      // Basic check
+      // We assert 'notes' is a string after checking it's not null/undefined
+      const noteDetails = notes as string;
+      console.log(`Notes: ${noteDetails.toUpperCase()}`);
+    }
+  }
+  ```
+
+- **Interfacing with DOM APIs (Conceptual for React Native):** In web development, assertions are common when `document.getElementById` returns a generic `HTMLElement`, and you know it's a more specific type like `HTMLInputElement`. While direct DOM manipulation is less common in React Native, similar scenarios can arise with certain bridge modules or less-typed libraries.
+
+**c. Use with Caution!**
+
+Type assertions are a powerful tool, but they effectively tell the compiler to trust your judgment over its own analysis. This can be dangerous if your judgment is flawed.
+
+- **Potential for Runtime Errors:** If you assert a type incorrectly (e.g., asserting an object is a `string` when it's not), TypeScript won't complain at compile time, but your application will likely crash or behave unexpectedly at runtime when you attempt operations invalid for the actual type.
+- **Prefer Type Guards:** Whenever possible, use type guards (like `typeof`, `instanceof`, `in` operator, or custom predicate functions that return `value is Type`) instead of assertions. Type guards perform runtime checks that prove the type to TypeScript, making your code safer and more robust.
+- **Avoid Overuse:** Type assertions should not be a crutch for poorly designed types or a way to silence legitimate compiler errors. If you find yourself using assertions frequently, it might indicate an issue with your type definitions or logic.
+- **"Double Assertions" (`value as unknown as TargetType`):** Sometimes, to assert between types that TypeScript deems completely unrelated, a double assertion (first to `unknown`, then to the target type) is required. This is an even stronger signal that you are doing something potentially unsafe and should be a last resort, thoroughly justified by your understanding of the runtime types.
+
+Think of type assertions as an escape hatch for specific situations where you, the developer, have more information about the runtime type of a value than the compiler can statically determine. Always prioritize safer alternatives like type guards when they are applicable.
+
 > 🛣️ **(All Learners):** The next few types (`never`, `tuple`, `bigint`, `symbol`) are more advanced and less frequently used in day-to-day React Native development. However, understanding them will give you a complete picture of TypeScript's type system and help you recognize them when you encounter them in library definitions or advanced patterns.
 
 > 🧑‍🏫 **(Instructor-Led):** Consider conducting a quick quiz on the basic types covered so far before moving to these more advanced types. Ask students to provide examples of when they might use `null` vs. `undefined`, or how `unknown` differs from `any`.
 
 > 🧗‍♀️ **(Self-Led):** As you study these advanced types, try to come up with your own SpeedyMeds-related examples to reinforce your understanding. Creating your own examples is an effective way to internalize new concepts.
 
-**10. `never`**
+**12. `never`**
 
 The `never` type represents the type of values that never occur. It indicates that a function will not reach its normal completion point.
 Common use cases for `never` include:
@@ -310,7 +477,7 @@ console.log(handleReportStatus("Complete"));
 >
 > **Source:** [Kotlin - Nothing Type](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing.html)
 
-**11. `tuple`**
+**13. `tuple`**
 
 Represents an array with a fixed number of elements whose types are known, but need not be the same. This provides more structure than a general array of mixed types.
 
@@ -368,7 +535,7 @@ console.log(
 >
 > **Source:** [Python Tuples](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences)
 
-**12. `bigint`**
+**14. `bigint`**
 
 Represents whole numbers larger than 2<sup>53</sup> - 1. `bigint` literals are created by appending `n` to the end of an integer.
 
@@ -387,7 +554,7 @@ console.log(`Incremented ID: ${incrementedId}`);
 
 > [!IMPORTANT] > `bigint` and `number` are not interchangeable. You cannot mix them in arithmetic operations without explicit conversion. `bigint` also behaves differently with `Math` object methods.
 
-**13. `symbol`**
+**15. `symbol`**
 
 Represents a primitive data type that is always unique and immutable. Symbols are often used to add unique property keys to an object to avoid name collisions, especially when dealing with object extension or metadata. They are created using the global `Symbol()` function.
 
@@ -426,61 +593,117 @@ Symbol keys are a good way to define "private" or metadata properties on objects
 
 The following table summarizes TypeScript's basic types and their relationship to JavaScript's primitives and concepts.
 
-| TypeScript Type               | JavaScript Equivalent/Concept                                     | Notes                                                                                            |
-| ----------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `boolean`                     | `boolean` primitive                                               | `true` or `false`.                                                                               |
-| `number`                      | `number` primitive (includes integers and floats)                 | All numbers are floating-point in JS.                                                            |
-| `string`                      | `string` primitive                                                | Textual data.                                                                                    |
-| `bigint`                      | `bigint` primitive                                                | For arbitrarily large integers. Ends with `n`.                                                   |
-| `symbol`                      | `symbol` primitive                                                | For unique identifiers (less common in basic examples).                                          |
-| `null`                        | `null` primitive                                                  | Represents intentional absence of value. Treated as a distinct type with `strictNullChecks`.     |
-| `undefined`                   | `undefined` primitive                                             | Represents uninitialized variables or missing properties. Distinct type with `strictNullChecks`. |
-| `Type[]` or `Array<Type>`     | `Array` object                                                    | Ordered list of values of type `Type`.                                                           |
-| `[Type1, Type2, ...]` (Tuple) | `Array` object (conventionally)                                   | Fixed-size, ordered list with potentially different types at each position. TS specific.         |
-| `enum`                        | Typically objects or constants in JS                              | Set of named constants. TS specific feature (covered in detail later).                           |
-| `any`                         | Any JavaScript value (type checking disabled)                     | Use sparingly; opts out of type safety.                                                          |
-| `unknown`                     | Any JavaScript value (type checking enforced)                     | Safer alternative to `any`. Requires narrowing before use. TS specific.                          |
-| `void`                        | `undefined` (for function returns not returning value)            | Indicates no meaningful return value.                                                            |
-| `never`                       | No direct equivalent (conceptually, a non-terminating path)       | Represents values that never occur. TS specific.                                                 |
-| `object`                      | Any non-primitive value (`typeof x === 'object'` or `'function'`) | More specific than `any`, but less specific than an interface or `Record<string, unknown>`.      |
+| TypeScript Type               | JavaScript Equivalent/Concept                                   | Notes                                                                                            |
+| ----------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `boolean`                     | `boolean` primitive                                             | `true` or `false`.                                                                               |
+| `number`                      | `number` primitive (includes integers and floats)               | All numbers are floating-point in JS.                                                            |
+| `string`                      | `string` primitive                                              | Textual data.                                                                                    |
+| `bigint`                      | `bigint` primitive                                              | For arbitrarily large integers. Ends with `n`.                                                   |
+| `symbol`                      | `symbol` primitive                                              | For unique identifiers (less common in basic examples).                                          |
+| `null`                        | `null` primitive                                                | Represents intentional absence of value. Treated as a distinct type with `strictNullChecks`.     |
+| `undefined`                   | `undefined` primitive                                           | Represents uninitialized variables or missing properties. Distinct type with `strictNullChecks`. |
+| `Type[]` or `Array<Type>`     | `Array` object                                                  | Ordered list of values of type `Type`.                                                           |
+| `[Type1, Type2, ...]` (Tuple) | `Array` object (conventionally)                                 | Fixed-size, ordered list with potentially different types at each position. TS specific.         |
+| `enum`                        | Typically objects or constants in JS                            | Set of named constants. TS specific feature (covered in detail later).                           |
+| `any`                         | Any JavaScript value (type checking disabled)                   | Use sparingly; opts out of type safety.                                                          |
+| `unknown`                     | Any JavaScript value (type checking enforced)                   | Safer alternative to `any`. Requires narrowing before use. TS specific.                          |
+| `void`                        | `undefined` (for function returns not returning value)          | Indicates no meaningful return value.                                                            |
+| `never`                       | No direct equivalent (conceptually, a non-terminating path)     | Represents values that never occur. TS specific.                                                 |
+| `object`                      | Any non-primitive value (`typeof x === 'object'` or 'function') | More specific than `any`, but less specific than an interface or `Record<string, unknown>`.      |
 
-### 14. Literal Types
+### 16. Literal Types
 
-Literal types allow you to define types that represent exact, specific values. TypeScript supports string literal types, numeric literal types, and boolean literal types. They are most powerful when combined with union types (`|`) to constrain a variable to one of several specific values.
+Beyond enums, TypeScript allows you to define types that represent a specific, exact value. These are known as **literal types**. They are most powerful when combined with union types (`|`) to create a set of allowed literal values for a variable or property.
 
-- **String Literal Types:** Constrain a variable to a specific string.
+Literal types can be strings, numbers, or booleans.
 
-  - _SpeedyMeds Example:_
+- **String Literal Types:**
+  You can restrict a variable to a specific set of predefined strings. This is often a more lightweight and JavaScript-idiomatic alternative to string enums for simple cases, as it doesn't introduce a runtime object.
 
-  ```typescript
-  type MedicationForm = "Tablet" | "Capsule" | "Syrup" | "Injection";
-  let prescriptionForm: MedicationForm = "Tablet";
+  - **SpeedyMeds Example: `DosageInstructionTiming`**
 
-  // prescriptionForm = "Powder"; // Error: Type '"Powder"' is not assignable to type 'MedicationForm'.
+    ```typescript
+    /** Type representing allowed instruction timings for medication. */
+    type DosageInstructionTiming =
+      | "Before Meal"
+      | "After Meal"
+      | "With Meal"
+      | "Bedtime";
 
-  function setDispenseMethod(form: MedicationForm): string {
-    if (form === "Tablet" || form === "Capsule") {
-      return "Dispense in bottle.";
+    let instructionTiming: DosageInstructionTiming = "With Meal";
+    // instructionTiming = "Morning"; // Error: Type '"Morning"' is not assignable to type 'DosageInstructionTiming'.
+
+    function getMedicationReminder(timing: DosageInstructionTiming): string {
+      return `Remember to take your medication: ${timing}.`;
     }
-    return "Follow specific instructions.";
-  }
-  console.log(setDispenseMethod("Capsule"));
-  ```
+    console.log(getMedicationReminder("Bedtime"));
+    ```
 
-- **Numeric Literal Types:** Constrain a variable to a specific number.
+- **Numeric Literal Types:**
+  Similarly, you can restrict a variable to specific numbers.
 
-  - _SpeedyMeds Example:_
+  - **SpeedyMeds Example: `RefillPackSize`**
+
+    ```typescript
+    /** Type representing allowed pack sizes for a promotional refill. */
+    type RefillPackSize = 30 | 60 | 90;
+
+    let selectedPackSize: RefillPackSize = 90;
+    // selectedPackSize = 120; // Error: Type '120' is not assignable to type 'RefillPackSize'.
+
+    console.log(`Selected promotional pack size: ${selectedPackSize} days.`);
+    ```
+
+- **Boolean Literal Types:**
+  You can restrict a variable to specifically `true` or `false`. This is less common on its own but becomes very powerful in patterns like discriminated unions (which build upon literal types for the discriminant property).
+
+  - **SpeedyMeds Example: API Response Structure**
+
+    ```typescript
+    // (This pattern was also seen in Section 3 with Discriminating Unions)
+    type SuccessfulRefillResponse = {
+      success: true; // Boolean literal type as discriminant
+      prescriptionId: string;
+      refillsRemaining: number;
+      nextAvailableDate: Date;
+    };
+
+    type FailedRefillResponse = {
+      success: false; // Boolean literal type as discriminant
+      prescriptionId: string;
+      errorCode: string;
+      errorMessage: string;
+    };
+
+    type RefillApiResponse = SuccessfulRefillResponse | FailedRefillResponse;
+
+    function handleRefillResponse(response: RefillApiResponse) {
+      if (response.success) {
+        // TypeScript knows response is SuccessfulRefillResponse here
+        console.log(
+          `Refill for ${response.prescriptionId} successful. ${response.refillsRemaining} refills left.`
+        );
+      } else {
+        // TypeScript knows response is FailedRefillResponse here
+        console.error(
+          `Refill for ${response.prescriptionId} failed (${response.errorCode}): ${response.errorMessage}`
+        );
+      }
+    }
+    ```
+
+- **Literal Narrowing:**
+  When you declare a variable using `const` and initialize it with a literal value, TypeScript infers the most specific literal type possible because the value cannot change. If you use `let`, it generally infers the broader primitive type (`string`, `number`, etc.), unless context suggests a literal type.
 
   ```typescript
-  type AllowedRefills = 0 | 1 | 2 | 3 | 5;
-  let refillCount: AllowedRefills = 2;
+  const defaultOrderStatus = "Pending"; // Type inferred as literal "Pending"
+  let currentOrderStatus = "Pending"; // Type inferred as string
 
-  // refillCount = 4; // Error: Type '4' is not assignable to type 'AllowedRefills'.
+  // To make 'currentOrderStatus' also a literal type, you can explicitly annotate:
+  let specificOrderStatus: "Pending" | "Shipped" = "Pending";
   ```
 
-- **Boolean Literal Types:** The types `true` and `false` are themselves literal types. The `boolean` type is effectively an alias for the union `true | false`.
-
-Literal types provide a more precise way to define expectations than general primitive types, enhancing type safety and self-documentation, especially for things like status codes, action types, or predefined options.
+Literal types, especially when combined into unions, offer a flexible and type-safe way to handle fixed sets of known values, often providing a more direct and less verbose alternative to enums in many scenarios, particularly when a runtime enum object isn't necessary.
 
 > 🛣️ **(All Learners):** The concept of structural typing is central to how TypeScript works and is quite different from class-based typing in many other languages. Take your time to understand this section as it impacts how you will structure your types throughout your React Native projects.
 
@@ -488,7 +711,7 @@ Literal types provide a more precise way to define expectations than general pri
 
 > 🧗‍♀️ **(Self-Led):** Try creating several different object shapes and interfaces, then test your understanding by predicting which assignments TypeScript would allow or reject based on structural compatibility.
 
-### 15. Understanding Structural Typing (Duck Typing)
+### 17. Understanding Structural Typing (Duck Typing)
 
 Type compatibility in TypeScript is based on **structural subtyping**, often referred to as "duck typing" at compile time. This means that types are related based on their members (properties and methods), not on explicit declarations or names. If an object `x` possesses at least the same members (with compatible types) as an object `y` requires, then `x` is considered compatible with `y` and can be assigned to `y`.
 
@@ -526,7 +749,7 @@ logPatientName(minimalPatient); // OK!
 
 Understanding structural typing is fundamental to working effectively with TypeScript, especially when defining and using interfaces and object types.
 
-### 16. Type Annotations with Destructuring
+### 18. Type Annotations with Destructuring
 
 TypeScript extends JavaScript's destructuring capabilities by allowing type annotations, enhancing type safety when extracting values from arrays or properties from objects.
 
@@ -603,5 +826,3 @@ These basic types and foundational concepts form the building blocks for more co
 > - [TypeScript Handbook - Everyday Types (covers primitives, arrays, any, etc.)](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
 
 In the next section, we'll explore how to define more complex shapes for our data using interfaces and type aliases.
-
----

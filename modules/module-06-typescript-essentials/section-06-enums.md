@@ -78,6 +78,30 @@ enum SystemStatus {
 
 For most common use cases, constant enum members (numeric or string literals) are preferred for simplicity and predictability.
 
+> 🍏 **(Native iOS Developers - Swift):**
+>
+> **Comparison:** Swift's `enum` is significantly more powerful than TypeScript's. Swift enums can have associated values (e.g., `case barcode(String)`, `case qrCode(String)`), raw values (like TypeScript string/numeric enums), computed properties, instance methods, and even initializers. TypeScript enums are simpler, primarily mapping names to constant values.
+>
+> **Key Takeaway:** While TypeScript enums provide named constants, Swift enums are a much richer algebraic data type. For simple sets of related constants, TypeScript enums are fine. For more complex state modeling where each case might carry different data, you'd use discriminated unions in TypeScript (often with literal types as discriminants) to achieve something closer to Swift enums with associated values.
+>
+> **Source:** [Swift Language Guide - Enumerations](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations/)
+
+> 🤖 **(Native Android Developers - Kotlin/Java):**
+>
+> **Comparison:** Kotlin's `enum class` and Java's `enum` are also more powerful than TypeScript enums. They are true classes, meaning they can have properties, methods, and implement interfaces. Kotlin enum classes can also have abstract members.
+>
+> **Key Takeaway:** TypeScript enums are primarily for creating simple sets of named constants. Kotlin/Java enums offer more object-oriented capabilities. If you need simple named values, TypeScript enums (or `as const` objects / literal unions) work. For enums with custom behavior or properties, you'd typically define an object or class alongside your constants in TypeScript, or use discriminated unions for state modeling similar to how sealed classes with enum-like objects are used in Kotlin.
+>
+> **Source:** [Kotlin Docs - Enums](https://kotlinlang.org/docs/enum-classes.html), [Java Tutorials - Enums](https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html)
+
+> 🌐 **(Web Developers - Python, Ruby, etc.):**
+>
+> **Comparison:** Python (since 3.4) has an `Enum` base class in its standard library. Ruby doesn't have built-in enums in the same way, often relying on symbols, constants, or gems. JavaScript itself has no native enum construct; TypeScript enums compile down to JavaScript objects.
+>
+> **Key Takeaway:** TypeScript enums provide a JavaScript-compatible way to define named constants with some type safety. If you're used to Python's `Enum`, TypeScript's enums will feel somewhat familiar in purpose, though simpler in features (e.g., no methods directly on enums). For simple sets of values, string literal union types or `as const` objects are often preferred in modern TypeScript as they can be more lightweight (no runtime object generation if that's not needed) and align well with JavaScript patterns.
+>
+> **Source:** [Python `enum` Module](https://docs.python.org/3/library/enum.html)
+
 **2. String Enums**
 
 In a string enum, each member has to be explicitly initialized with a string literal, or with another string enum member. String enums offer better readability and debugging experience because the string value is directly available without needing to look up a numeric mapping.
@@ -246,10 +270,49 @@ Alternatives to enums in some cases include using string literal union types (e.
 
 The choice depends on the specific needs: if you need a runtime object with reverse mapping, numeric enums are suitable. If you only need type safety for a set of known string/number constants with no runtime footprint, literal unions are excellent. `as const` objects provide a runtime structure with strong type safety and are a good alternative to string enums if you prefer a plain object.
 
+### Key Takeaways
+
+- **Named Constants:** Enums provide a clear way to define a set of named constants (e.g., `OrderStatus.Pending`).
+- **Numeric vs. String:** Numeric enums support auto-incrementing and reverse mapping (value to name). String enums offer better debuggability as their values are human-readable strings.
+- **Runtime Object:** Standard enums generate JavaScript objects at runtime. `const enum` values are inlined at compile time, reducing bundle size but losing runtime discoverability.
+- **Alternatives:**
+  - **Literal Union Types** (e.g., `type Status = "Pending" | "Success";`): Excellent for type safety with no runtime overhead. Often preferred for simple, fixed sets of string/number values.
+  - **`as const` Objects:** Create readonly, literal-typed JavaScript objects. Good for when you need a runtime structure that can be iterated, along with strong type safety.
+- **Choose Wisely:** Select enums, literal unions, or `as const` objects based on whether you need a runtime object, reverse mapping, or the most lightweight compile-time safety.
+
+### Exercise 6.4: Working with Enums and Alternatives
+
+**Objective:** Define and use enums for different scenarios in the SpeedyMeds app, and also use literal union types as an alternative.
+
+**Instructions:**
+
+1.  **Refill Request Status (Numeric Enum):**
+
+    - Define a numeric enum `RefillStatus` with values: `Pending` (starts at 10), `Approved`, `Rejected`, `Processing`, `ReadyForPickup`.
+    - Create a function `logRefillStatus(status: RefillStatus): void` that logs a descriptive message based on the status (e.g., "Your refill is Pending Approval."). Use the reverse mapping for one of the logs.
+    - Call this function with a couple of different statuses.
+
+2.  **Notification Types (String Enum):**
+
+    - Define a string enum `NotificationType` with values: `SMS` ("sms_alert"), `Email` ("email_notification"), `Push` ("push_message").
+    - Create an interface `NotificationPreference` with `userId: string` and `notificationType: NotificationType`.
+    - Create an example `NotificationPreference` object.
+
+3.  **Delivery Options (Literal Union Type):**
+
+    - Define a literal union type `DeliveryOption` for values: "StandardShipping", "ExpressShipping", "InStorePickup".
+    - Create a function `calculateDeliveryCost(option: DeliveryOption, weightKg: number): number` that returns a cost (e.g., Standard: 5, Express: 15, Pickup: 0, plus some weight factor).
+    - Call this function with an example.
+
+4.  **Payment Methods (`as const` object):**
+    - Create an object `PaymentMethods` using `as const` with properties like `CreditCard: "CC"`, `PayPal: "PP"`, `Insurance: "INS"`.
+    - Define a type `PaymentMethodValue` that represents a union of the values from `PaymentMethods` (e.g., `"CC" | "PP" | "INS"`). Hint: Use `typeof PaymentMethods[keyof typeof PaymentMethods]`.
+    - Create a variable of type `PaymentMethodValue` and assign it one of the payment method values.
+
+**Access the Exercise:**
+
+**(https://codesandbox.io/s/speedymeds-typescript-enums-exercise-h9t2vx)**
+
 > 📚 **Official Documentation:**
->
-> - [TypeScript Handbook - Enums](https://www.typescriptlang.org/docs/handbook/enums.html)
 
 Enums provide a clean and type-safe way to work with sets of named constants, making your SpeedyMeds application logic clearer and more robust.
-
----

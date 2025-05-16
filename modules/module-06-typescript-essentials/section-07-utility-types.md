@@ -4,6 +4,10 @@ TypeScript comes with a set of built-in utility types that allow you to transfor
 
 > 🛣️ **(All Learners):** Utility types are powerful tools in TypeScript that will help you avoid redundant type definitions. Master these to significantly improve your code's maintainability.
 
+> 🧑‍🏫 **(Instructor-Led):** Emphasize that utility types are not magic; they are often compositions of more fundamental TypeScript features. Encourage students to look up their definitions in the official TypeScript lib.d.ts files or documentation to demystify them. Discuss common use cases for each major utility type in a typical React Native application (e.g., `Partial` for `setState` or update functions, `Readonly` for props, `Pick`/`Omit` for shaping API data for UI components).
+
+> 🧗‍♀️ **(Self-Led):** Experiment with each utility type in a sandbox environment. Try to combine them (e.g., `Partial<Readonly<T>>`). Think about how you might create your own custom utility types for specific scenarios in your projects.
+
 > 🔁 **(Asynchronous Learners):** If you're jumping directly to this section, make sure you understand interfaces and type aliases (Section 3) first, as utility types build upon those concepts.
 
 ```mermaid
@@ -274,6 +278,66 @@ These utility types are extremely powerful for creating precise and flexible typ
 >
 > - [TypeScript Handbook - Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
-Using utility types effectively can significantly enhance your ability to model complex data structures and interactions in your SpeedyMeds application while maintaining strong type safety.
+### Exercise 6.5: Leveraging Utility Types
 
----
+**Objective:** Practice using common utility types to transform existing interfaces in the SpeedyMeds application context.
+
+**Instructions:**
+
+1.  **Base Interface:** Start with the following `MedicationOrder` interface:
+
+    ```typescript
+    interface MedicationOrder {
+      orderId: string;
+      patientId: string;
+      medicationNdc: string;
+      quantity: number;
+      prescriptionId?: string; // Optional, might be an OTC order
+      status: "Pending" | "Processing" | "Filled" | "Shipped" | "Cancelled";
+      orderDate: Date;
+      filledDate?: Date;
+      pharmacistId?: string;
+    }
+    ```
+
+2.  **Create `OrderCreationData`:**
+
+    - Define a type `OrderCreationData` using utility types.
+    - This type should represent the data needed to create a new order. It should `Omit` `orderId`, `status`, `orderDate`, `filledDate`, and `pharmacistId` from `MedicationOrder` as these are usually set by the system or later in the process.
+    - Make `medicationNdc` and `quantity` required (if they weren't already, though they are in the base).
+
+3.  **Create `OrderUpdatePayload`:**
+
+    - Define a type `OrderUpdatePayload` using `Partial` based on `MedicationOrder`.
+    - This will be used for functions that update an order, so all fields should be optional.
+
+4.  **Create `ReadOnlyOrderView`:**
+
+    - Define a type `ReadOnlyOrderView` using `Readonly` based on `MedicationOrder`.
+    - This type would be used for displaying order details where modification is not allowed.
+
+5.  **Create `OrderSummary`:**
+
+    - Define a type `OrderSummary` using `Pick` from `MedicationOrder`.
+    - It should only include `orderId`, `patientId`, `medicationNdc`, and `status`.
+
+6.  **Create `OrderStatusMap`:**
+
+    - Define a type `OrderStatusMap` using `Record`.
+    - The keys should be the possible string literals for `MedicationOrder['status']`.
+    - The values should be a simple descriptive string (e.g., `{ Pending: "Order is awaiting processing." }`).
+
+7.  **(Optional Challenge) Create `FilledOrder`:**
+
+    - Define a type `FilledOrder` based on `MedicationOrder`.
+    - This type must represent an order that has been filled. Ensure `filledDate` and `pharmacistId` are `Required`, and the `status` must be one of "Filled" or "Shipped".
+    - _Hint: You might need to combine multiple utility types or use intersections._ `Extract` or `Pick` might be useful for status.
+
+8.  **Example Usage (Console Log):**
+    - Briefly instantiate or describe what a variable of each new type would look like or be used for (no need for full function implementations, just conceptual).
+
+**Access the Exercise:**
+
+**(https://codesandbox.io/s/speedymeds-typescript-utility-types-exercise-s7m2xf)**
+
+Using utility types effectively can significantly enhance your ability to model complex data structures and interactions in your SpeedyMeds application while maintaining strong type safety.

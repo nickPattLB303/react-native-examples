@@ -6,10 +6,10 @@ TypeScript, an open-source language developed and maintained by Microsoft, addre
 
 ```mermaid
 graph TD
-    A[TypeScript Code<br>(.ts, .tsx files)] --> B[TypeScript Compiler<br>tsc]
+    A["TypeScript Code (.ts, .tsx files)"] --> B[TypeScript Compiler<br>tsc]
     B -->|Static Type Checking| C{Errors?}
     C -->|Yes| D[Type Errors<br>Compilation Fails]
-    C -->|No| E[JavaScript Code<br>(.js files)]
+    C -->|No| E["JavaScript Code<br>(.js files)"]
     E --> F[Runtime<br>Browser/Node.js/React Native]
 
     style A fill:#d4f1f9
@@ -26,17 +26,31 @@ The core philosophy of TypeScript is to enable developers to write JavaScript al
 
 > 🍏 **(Native iOS Developers - Swift):**
 >
-> **Comparison:** Swift's robust static type system, where you explicitly define types for constants (`let name: String`), variables (`var count: Int`), function parameters, and return values, is very similar to TypeScript's approach. Both languages emphasize type safety at compile time to catch errors early. However, a key distinction is that Swift's type information is present and enforced at runtime, whereas TypeScript's type annotations are primarily for development-time checking and are erased when transpiled to JavaScript, which remains dynamically typed at its core.
+> **Comparison:** Swift\'s robust static type system, where you explicitly define types for constants (`let name: String`), variables (`var count: Int`), function parameters, and return values, is very similar to TypeScript\'s approach. Both languages emphasize type safety at compile time to catch errors early.
 >
-> **Key Takeaway:** You'll appreciate TypeScript's familiar compile-time checks and improved code clarity. Focus on understanding how TypeScript interfaces and types are used to describe existing JavaScript libraries and how its structural typing (based on shape) differs from Swift's nominal typing (based on declared name).
+> **Key Differences & Takeaways:**
+> You\'ll appreciate TypeScript\'s familiar compile-time checks and improved code clarity. Key distinctions to focus on include:
+>
+> - **Structural vs. Nominal Typing:** This is a fundamental shift. Swift uses _nominal_ typing (types match based on declared names and inheritance). TypeScript, in contrast, uses _structural_ typing, meaning an object is considered compatible with an interface if it has the same _shape_ (required properties and methods), regardless of whether it explicitly declares that it implements the interface.
+> - **Type Erasure:** TypeScript\'s type annotations are primarily for development-time checking and are _erased_ when transpiled to JavaScript, which remains dynamically typed at its core. Swift often retains and enforces type information at runtime.
+> - **Null Handling:** While not covered in detail in this introductory section, be aware that TypeScript\'s `strictNullChecks` feature (enabled by default in modern setups) provides a mechanism similar to Swift\'s optionals (`?`) for managing `null` and `undefined` values, promoting safer code.
+>
+> Understanding these differences, especially structural typing, is crucial for effectively using TypeScript.
 >
 > **Source:** [Swift Language Guide - Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/)
 
 > 🤖 **(Native Android Developers - Kotlin/Java):**
 >
-> **Comparison:** Kotlin's strong type inference (e.g., `val name = "Speedy"`) and null safety (e.g., `String?`) provide benefits similar to what TypeScript offers JavaScript. Java's static typing is also conceptually aligned. Like these languages, TypeScript aims for early error detection. A notable difference is TypeScript's structural type system (if it looks like a duck and quacks like a duck, it's a duck) compared to Java's or Kotlin's nominal typing. Also, TypeScript's type information is erased during transpilation to JavaScript, unlike in Java/Kotlin where type information is available at runtime.
+> **Comparison:** Kotlin's strong type inference (e.g., `val name = "Speedy"`) and null safety (e.g., `String?`) provide benefits similar to what TypeScript offers JavaScript. Java's static typing is also conceptually aligned. Like these languages, TypeScript aims for early error detection.
 >
-> **Key Takeaway:** The advantages of static type checking will be immediately apparent. Concentrate on TypeScript-specific features like union types, intersection types, and utility types, and how types are defined for JavaScript objects and functions.
+> **Key Differences & Takeaways:**
+> The advantages of static type checking will be immediately apparent. Concentrate on TypeScript-specific features like union types, intersection types, and utility types. Key differences to be mindful of include:
+>
+> - **Structural vs. Nominal Typing:** TypeScript uses a _structural_ type system (compatibility based on shape), which differs from the _nominal_ typing found in Java and Kotlin (compatibility based on declared names and inheritance).
+> - **Type Erasure:** Similar to the Swift comparison, TypeScript's type information is erased during transpilation to JavaScript. This contrasts with Java/Kotlin where type information is generally available at runtime via reflection.
+> - **Null Handling:** TypeScript's `strictNullChecks` (when enabled) offers robust null safety, akin to Kotlin's nullable types (`String?`) and Java's `Optional` class, by requiring explicit handling of potentially `null` or `undefined` values.
+>
+> Focus on how types are defined for JavaScript objects and functions, and how these differences, particularly structural typing, influence type compatibility.
 >
 > **Source:** [Kotlin Docs - Basic Types](https://kotlinlang.org/docs/basic-types.html)
 
@@ -55,6 +69,20 @@ The core philosophy of TypeScript is to enable developers to write JavaScript al
 > **Key Takeaway:** TypeScript will feel like a direct enhancement to your existing JavaScript workflow, improving autocompletion, refactoring capabilities, and especially the safety of your component interfaces (props and state) or service contracts. Understanding how to define types for these structures is key.
 >
 > **Source:** [MDN - JavaScript data types and data structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)
+
+> 🅰️ **(Web Developers - Angular):**
+>
+> **Comparison:** You are already familiar with TypeScript as it is the standard language for Angular development. Core TypeScript concepts like types, interfaces, classes, and generics will be directly transferable.
+>
+> **Key Takeaway & Differences:** Your learning curve will primarily involve understanding how TypeScript is applied within the React Native and Expo ecosystem, which differs from Angular\'s specific patterns. Focus on:
+>
+> - Typing functional components, props, and state (e.g., using `useState`, `useReducer` hooks) rather than class-based components with decorators like `@Component` and `@Input()`.
+> - JSX for templating instead of Angular\'s HTML-based templates with directives like `*ngFor` or `*ngIf`.
+> - React Native\'s approach to styling (e.g., `StyleSheet` API, Styled Components) compared to Angular\'s component-scoped CSS or global styles.
+> - Different state management libraries and patterns (e.g., Zustand, React Context, TanStack Query) compared to services and RxJS for state in Angular.
+>   While the underlying TypeScript language is the same, its application and the surrounding library ecosystem in React Native will be the new learning area.
+>
+> **Source:** [Angular - Introduction to TypeScript](https://angular.io/guide/typescript-configuration)
 
 > 🛣️ **(All Learners):** This module establishes a critical foundation for working with TypeScript in React Native. Take time to understand the core concepts and practice with the examples. For the remainder of the course, all code will use TypeScript.
 
@@ -118,5 +146,3 @@ This ensures that whenever you use `PatientBanner`, TypeScript will check if you
 > - [Expo Documentation: Using TypeScript](https://docs.expo.dev/guides/typescript/)
 
 While TypeScript introduces a compilation step and a learning curve for its type system, the long-term benefits in terms of code quality, error reduction, and maintainability make it a highly recommended choice for professional React Native development. This module will equip you with the foundational knowledge to harness these benefits.
-
----
