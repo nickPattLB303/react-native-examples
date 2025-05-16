@@ -1,8 +1,5 @@
 # Module 6: TypeScript Essentials
 
-<!-- Optional: Module Introduction Image -->
-<!-- A relevant banner image, such as a TypeScript logo or an abstract graphic related to static typing, could be placed here. Ensure it has appropriate alt text and a caption if included. -->
-
 Welcome to Module 6: TypeScript Essentials! TypeScript is an open-source programming language, developed and maintained by Microsoft, that acts as a strict syntactical superset of JavaScript, adding optional static typing to the language. Its core philosophy is to enable developers to leverage JavaScript alongside type definitions, thereby significantly enhancing code quality, understandability, and maintainability, particularly in large-scale projects. In modern React Native development, especially with Expo, TypeScript is not just a popular choice but an increasingly standard one for building robust, maintainable, and scalable applications.
 
 The primary benefits of adopting TypeScript revolve around **type safety**, **enhanced tooling**, and **improved maintainability**. Type safety, achieved through static type checking by the TypeScript compiler (tsc), allows developers to catch errors during compilation, long before the code reaches runtime. This early error detection drastically reduces bugs and improves application reliability. Furthermore, TypeScript\'s understanding of code structure and types powers advanced tooling features in code editors, such as intelligent autocompletion, code navigation, and safer refactoring, all contributing to a more productive development experience.
@@ -13,25 +10,25 @@ This module will equip you with the fundamental knowledge of TypeScript needed t
 
 Understanding TypeScript can significantly enhance your development workflow, regardless of your background:
 
-> 🍏 **(iOS Developers - Swift):** Your experience with Swift's strong, static type system provides an excellent foundation. You'll find TypeScript's explicit type annotations, compile-time error checking, interfaces (akin to protocols), and enums very familiar.
+> 🍏 **(iOS Developers - Swift):** Your experience with Swift\'s strong, static type system provides an excellent foundation. You\'ll find TypeScript\'s explicit type annotations, compile-time error checking, interfaces (akin to protocols), and enums very familiar.
 >
-> **Key Differences & Parallels:**
+> **Comparison:**
 >
-> - **Structural vs. Nominal Typing:** A key conceptual shift is from Swift's _nominal_ typing (where types match based on declared names/inheritance) to TypeScript's _structural_ typing (where types match if they have the same _shape_ or structure, regardless of explicit declaration). An object can satisfy a TypeScript interface simply by having the required properties.
-> - **Type Erasure:** Unlike Swift, which often retains type information at runtime, TypeScript types exist primarily at compile-time and are 'erased' when compiled to JavaScript.
-> - **Null Safety:** TypeScript's `strictNullChecks` (which we'll explore and is a course standard) provides robust handling of `null` and `undefined`, similar to Swift's `Optional` types, forcing explicit checks and preventing common runtime errors.
+> - **Structural vs. Nominal Typing:** A key conceptual shift is from Swift\'s _nominal_ typing (where types match based on declared names/inheritance) to TypeScript\'s _structural_ typing (where types match if they have the same _shape_ or structure, regardless of explicit declaration). An object can satisfy a TypeScript interface simply by having the required properties.
+> - **Type Erasure:** Unlike Swift, which often retains type information at runtime, TypeScript types exist primarily at compile-time and are \'erased\' when compiled to JavaScript.
+> - **Null Safety:** TypeScript\'s `strictNullChecks` (which we\'ll explore and is a course standard) provides robust handling of `null` and `undefined`, similar to Swift\'s `Optional` types, forcing explicit checks and preventing common runtime errors.
 >
 > **Key Takeaway:** TypeScript brings a Swift-like level of type safety and predictability to JavaScript, crucial for building reliable applications.
 >
 > **Source:** [Swift Language Guide - The Basics](https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html)
 
-> 🤖 **(Android Developers - Kotlin/Java):** Your background in statically-typed languages like Kotlin or Java will make TypeScript's type system feel natural. Defining explicit types for variables, function parameters, and return values to prevent runtime errors is a shared principle.
+> 🤖 **(Android Developers - Kotlin/Java):** Your background in statically-typed languages like Kotlin or Java will make TypeScript\'s type system feel natural. Defining explicit types for variables, function parameters, and return values to prevent runtime errors is a shared principle.
 >
-> **Key Differences & Parallels:**
+> **Comparison:**
 >
-> - **Structural vs. Nominal Typing:** Similar to the transition for Swift developers, you'll encounter TypeScript's _structural_ typing. This differs from the _nominal_ typing prevalent in Java and Kotlin, where class hierarchy and explicit interface implementation define type compatibility. In TypeScript, an object's shape (its properties and methods) determines if it matches a type.
-> - **Type Erasure:** TypeScript's types are checked at compile-time and then erased, meaning runtime type information is generally not present in the resulting JavaScript, unlike in Java/Kotlin where runtime type information is often available via reflection.
-> - **Null Safety:** Kotlin's robust null safety (e.g., `String?` for nullable types and platform types) has a strong parallel in TypeScript's `strictNullChecks` mode, which enforces explicit handling of `null` and `undefined`.
+> - **Structural vs. Nominal Typing:** Similar to the transition for Swift developers, you\'ll encounter TypeScript\'s _structural_ typing. This differs from the _nominal_ typing prevalent in Java and Kotlin, where class hierarchy and explicit interface implementation define type compatibility. In TypeScript, an object\'s shape (its properties and methods) determines if it matches a type.
+> - **Type Erasure:** TypeScript\'s types are checked at compile-time and then erased, meaning runtime type information is generally not present in the resulting JavaScript, unlike in Java/Kotlin where runtime type information is often available via reflection.
+> - **Null Safety:** Kotlin\'s robust null safety (e.g., `String?` for nullable types and platform types) has a strong parallel in TypeScript\'s `strictNullChecks` mode, which enforces explicit handling of `null` and `undefined`.
 >
 > **Key Takeaway:** TypeScript provides a familiar structure and compile-time error-prevention mechanism for JavaScript development, comparable to the safety and productivity benefits Kotlin and Java bring to the Android ecosystem.
 >
@@ -84,9 +81,9 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a good understanding of the concepts covered in:
 
-- [Module 5: JavaScript Essentials for React Native](./section-00-introduction.md) (Assumes you have completed Module 5, link will point to the introduction of Module 5)
+- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-00-introduction.md)
 
-> 🛣️ **(All Learners):** This module introduces TypeScript, which will be used for all subsequent code examples in this course. Even if you have prior TypeScript experience, reviewing this module will ensure your understanding aligns with its use in a React Native and Expo context. Let's dive into making our JavaScript code more robust and predictable!
+> 🛣️ **(All Learners):** This module introduces TypeScript, which will be used for all subsequent code examples in this course. Even if you have prior TypeScript experience, reviewing this module will ensure your understanding aligns with its use in a React Native and Expo context. Let\'s dive into making our JavaScript code more robust and predictable!
 
 ---
 
@@ -94,7 +91,8 @@ Before starting this module, ensure you have a good understanding of the concept
 
 Apply your TypeScript knowledge to model a complex API response.
 
-**[Challenge 6: Typing a Pharmacy API Response](./section-08-configuring-typescript.md#challenge-6-typing-a-pharmacy-api-response)**
+Challenge 6: Typing a Pharmacy API Response
+**(CODESANDBOX_CHALLENGE_6_URL_PLACEHOLDER)**
 
 ## Module Summary
 

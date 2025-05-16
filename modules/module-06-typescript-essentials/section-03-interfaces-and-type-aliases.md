@@ -604,6 +604,6 @@ Now it's time to practice what you've learned about interfaces.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (_Note: You will need to create a new TypeScript sandbox or use a provided template._)
+**(CODESANDBOX_EXERCISE_6_1_URL_PLACEHOLDER)**
 
 This exercise will help you solidify your understanding of creating, extending, and using interfaces to structure complex data, a common task in application development.

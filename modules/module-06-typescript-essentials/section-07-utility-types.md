@@ -2,6 +2,26 @@
 
 TypeScript comes with a set of built-in utility types that allow you to transform existing types in various common ways. These utilities help create new types based on existing ones without having to redefine them from scratch, promoting DRY (Don't Repeat Yourself) principles and enhancing type flexibility. This section will cover some of the most frequently used utility types like `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, and `Readonly<T>`, with examples relevant to managing data in SpeedyMeds, and then briefly introduce other useful ones.
 
+> 🍏 **(iOS Developers - Swift):**
+>
+> **Comparison:** Swift doesn't have a direct equivalent to TypeScript's broad set of utility types implemented as generic types that transform other types. However, concepts like making properties optional (often handled by `Optional<T>` or `?` syntax directly in property definitions), creating read-only views (e.g., using `let` for constants or computed properties with private setters), or defining subsets of data for specific purposes (achieved through different structs/classes or protocols) share similar goals. Swift's `Codable` protocol with custom `CodingKeys` can also achieve effects similar to `Pick` or `Omit` for serialization.
+>
+> **Key Takeaway:** TypeScript utility types provide a concise, generic way to create variations of existing types (optional, required, subsets). In Swift, similar outcomes are often achieved through language features like optionals, access control, and by defining distinct, related types or using protocol compositions.
+>
+> **Source:** [Swift Language Guide - Properties](https://docs.swift.org/swift-book/LanguageGuide/Properties.html), [Swift Language Guide - Protocols](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html)
+
+> 🤖 **(Android Developers - Kotlin/Java):**
+>
+> **Comparison:** Kotlin and Java don't have a directly analogous system of built-in utility types like TypeScript for transforming existing types at the type level. However, goals achieved by utility types are often met using different language features or patterns:
+>
+> - `Partial<T>`: Similar to using nullable types (`String?` in Kotlin) for all properties or employing the Builder pattern for object creation.
+> - `Readonly<T>`: Achieved through immutable data classes in Kotlin (`val` properties) or careful class design in Java (final fields, no setters, defensive copies).
+> - `Pick<T>`/`Omit<T>`: Often handled by creating specific Data Transfer Objects (DTOs) or using libraries like MapStruct (Java) or Kotlin's data class `copy()` method with modifications for specific views of data.
+>
+> **Key Takeaway:** TypeScript utility types offer a powerful, type-level way to create variations of types (making properties optional/required, selecting/omitting properties). In Kotlin/Java, similar results are achieved through immutable design, DTOs, builder patterns, or language features for nullability and immutability.
+>
+> **Source:** [Kotlin Docs - Data Classes](https://kotlinlang.org/docs/data-classes.html), [Effective Java (Item 17: Minimize mutability)](https://www.oreilly.com/library/view/effective-java/9780134686097/)
+
 ### Conceptual Content: Transforming Types with Utilities
 
 Utility types take one or more existing types as input and produce a new type as output, often by modifying properties (making them optional, required, read-only) or selecting/omitting specific properties.

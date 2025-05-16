@@ -6,7 +6,7 @@ This section introduces the fundamental data types in TypeScript. Understanding 
 
 TypeScript extends JavaScript's set of types with a static type system. When you declare a variable, you can (and often should) provide a type annotation to specify what kind of values it can hold.
 
-> **Quick Note on Type Casing:** It is a common convention and best practice to use lowercase type names for primitives (e.g., `string`, `number`, `boolean`) instead of their capitalized counterparts (`String`, `Number`, `Boolean`). The latter refer to special built-in JavaScript constructor functions for objects that wrap primitives and are rarely used directly in type annotations.
+> [!NOTE] > **Type Casing:** It is a common convention and best practice to use lowercase type names for primitives (e.g., `string`, `number`, `boolean`) instead of their capitalized counterparts (`String`, `Number`, `Boolean`). The latter refer to special built-in JavaScript constructor functions for objects that wrap primitives and are rarely used directly in type annotations.
 
 #### Core Primitive Types
 
@@ -265,14 +265,11 @@ TypeScript has a few special types that are important to understand:
   // let patientAge: number = null; // Error: Type 'null' is not assignable to type 'number' (if strictNullChecks is on)
   let refillCount: number | null = 5;
   refillCount = null;
+  ```
 
-  /*
   > 📲 **Native Developer Context:** Enabling `strictNullChecks` aligns TypeScript more closely with the explicit null-safety features found in Kotlin (`?` for nullable types) and Swift (`Optional<T>`), making the transition smoother by enforcing familiar safe coding practices.
-  */
 
   This demonstrates how to explicitly allow `null` or `undefined` for variables using union types. If `strictNullChecks` is enabled (as it should be for robust code), assigning `null` or `undefined` to a type that doesn't explicitly include it will cause an error. This helps prevent unexpected `null` or `undefined` errors at runtime. `strictNullChecks` forces developers to explicitly account for potential null or undefined values, significantly enhancing code reliability.
-
-  ```
 
 - **`never`**: Represents the type of values that never occur. This is different from `void`, which means "no meaningful return value." `never` indicates that a function will not reach its normal completion point, or that a variable can never have a value under certain type constraints.
 

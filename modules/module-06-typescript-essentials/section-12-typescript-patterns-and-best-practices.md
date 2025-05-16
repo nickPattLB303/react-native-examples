@@ -72,7 +72,7 @@ src/
 - **Avoid Default Exports for Types (Generally):** Named exports (`export interface User`) are often preferred for types as they make imports more explicit and refactoring easier.
 - **Leverage Declaration Merging and Module Augmentation Carefully:** For extending third-party types, place these declarations in appropriate global `.d.ts` files or specific setup files.
 
-> Effective type organization in a SpeedyMeds application would mean having `Medication`, `Prescription`, `Patient` interfaces in `src/types/`, while `MedicationListItemProps` might be co-located with the `MedicationListItem` component.
+Effective type organization in a SpeedyMeds application would mean having `Medication`, `Prescription`, `Patient` interfaces in `src/types/`, while `MedicationListItemProps` might be co-located with the `MedicationListItem` component.
 
 ### Type-Safe API Calls
 
@@ -225,9 +225,9 @@ export default function MedicationStockList() {
 }
 ```
 
-> In this SpeedyMeds example, `MedicationDTO` represents the raw API response. `Medication` is the clean model used by the app. The `transformMedicationDTO` function safely converts between them. `fetchAllMedications` is typed to return `Promise<Medication[]>`, so the component using it knows exactly what kind of data to expect.
->
-> **Runtime Validation:** Remember that TypeScript types are erased at runtime. For truly robust API interactions, especially with external APIs you don\'t control, combine TypeScript with runtime validation libraries like Zod or io-ts to ensure the data actually matches your DTOs at runtime.
+In this SpeedyMeds example, `MedicationDTO` represents the raw API response. `Medication` is the clean model used by the app. The `transformMedicationDTO` function safely converts between them. `fetchAllMedications` is typed to return `Promise<Medication[]>`, so the component using it knows exactly what kind of data to expect.
+
+> [!NOTE] > **Runtime Validation:** Remember that TypeScript types are erased at runtime. For truly robust API interactions, especially with external APIs you don't control, combine TypeScript with runtime validation libraries like Zod or io-ts to ensure the data actually matches your DTOs at runtime.
 
 ### TypeScript with React Navigation
 
@@ -361,7 +361,7 @@ export default PatientDetailsScreen;
 // export default App;
 ```
 
-> In this SpeedyMeds navigation example, `AppStackParamList` defines the screens and their parameters. `PatientDetailsScreen` uses `NativeStackScreenProps` to get typed `route.params` (so `patientId` is known to be a string) and a typed `navigation` object. This prevents errors like navigating to non-existent screens or passing incorrect/missing parameters.
+In this SpeedyMeds navigation example, `AppStackParamList` defines the screens and their parameters. `PatientDetailsScreen` uses `NativeStackScreenProps` to get typed `route.params` (so `patientId` is known to be a string) and a typed `navigation` object. This prevents errors like navigating to non-existent screens or passing incorrect/missing parameters.
 
 **Benefits:**
 

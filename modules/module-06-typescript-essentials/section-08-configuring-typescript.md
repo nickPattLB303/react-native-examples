@@ -92,6 +92,30 @@ The `tsconfig.json` file serves several important purposes:
 
 When you run commands like `npx expo start`, Expo and its underlying tools (like Metro bundler) use the `tsconfig.json` to understand how to process your TypeScript files.
 
+> 🍏 **(iOS Developers - Swift & Xcode):**
+>
+> **Comparison:** In Xcode, project settings, build configurations (Debug, Release), and compiler flags for Swift are managed through the Xcode UI (Build Settings). `tsconfig.json` serves a similar purpose for TypeScript projects, defining how the TypeScript compiler behaves, what files to include, and setting rules for type checking. While Xcode uses a graphical interface, `tsconfig.json` is a text-based JSON file, common in web development ecosystems.
+>
+> **Key Takeaway:** Think of `tsconfig.json` as the equivalent of your Xcode project's Build Settings for the TypeScript language itself. It controls linting-like rules (strictness) and compilation targets, though the final bundling in React Native is handled by Metro/Babel, analogous to Xcode's linker and archiving tools.
+>
+> **Source:** [Xcode Overview - Build configuration](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/WorkingwithProjects/WorkingwithProjects.html)
+
+> 🤖 **(Android Developers - Kotlin & Gradle):**
+>
+> **Comparison:** In Android development with Kotlin/Java, Gradle build scripts (`build.gradle`) are used to configure dependencies, build variants (debug, release), signing configurations, and Kotlin/Java compiler options (via `kotlinOptions` or `compileOptions`). `tsconfig.json` is TypeScript's dedicated configuration file, focusing on how TypeScript code is type-checked and pre-processed. The role of Metro/Babel in React Native (bundling, final JS transformation) is somewhat analogous to what Gradle orchestrates for Android builds.
+>
+> **Key Takeaway:** `tsconfig.json` is to TypeScript what `kotlinOptions` within your `build.gradle` file is to Kotlin—it dictates compiler behavior and language-specific rules. Just as Gradle manages the overall Android build, Metro (often configured via `metro.config.js`) manages the React Native bundling process.
+>
+> **Source:** [Configure your build - Gradle](https://developer.android.com/studio/build), [Kotlin compiler options](https://kotlinlang.org/docs/compiler-options.html)
+
+> 🌐 **(Web Developers - React/Angular with Webpack/CLI):**
+>
+> **Comparison:** If you've worked with TypeScript in web projects using Webpack (often via Create React App or Angular CLI), you're likely familiar with `tsconfig.json`. Its role is very similar in React Native: specifying compiler options for TypeScript. The main difference is that in React Native with Expo, the Metro bundler (with Babel) handles the actual transformation of TSX/TS to JavaScript suitable for the runtime, whereas in web projects, Webpack (with `ts-loader` or Babel) typically does this.
+>
+> **Key Takeaway:** Your understanding of `tsconfig.json` from web projects is directly transferable. The core options (`strict`, `target`, `jsx`, `paths`) serve the same purpose. The primary distinction in React Native/Expo is that `noEmit: true` is common because Metro/Babel handles the JS emission.
+>
+> **Source:** [TypeScript Handbook: `tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+
 #### Common Structure of an Expo `tsconfig.json`
 
 An auto-generated `tsconfig.json` in an Expo project often looks something like this (options may vary slightly based on the Expo SDK version and template):
@@ -298,6 +322,6 @@ The API response structure is as follows:
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (_Note: You will need to create a new TypeScript sandbox or use a provided template._)
+**(CODESANDBOX_CHALLENGE_6_URL_PLACEHOLDER)**
 
 This challenge will test your ability to translate a JSON structure into robust TypeScript types, a critical skill for working with APIs in any TypeScript application.

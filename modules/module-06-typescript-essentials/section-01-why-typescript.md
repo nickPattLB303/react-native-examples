@@ -131,7 +131,7 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 > - [TypeScript Handbook: Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
 > - [Expo Docs: Using TypeScript](https://docs.expo.dev/guides/typescript/)
 
-> 🍏 **(iOS Developers - Swift Background):**
+> 🍏 **(iOS Developers - Swift):**
 >
 > **Comparison:** Swift's strong type system and features like optionals (`Optional<T>` or `T?`) are designed to prevent null pointer exceptions and type errors at compile time. TypeScript brings a similar level of rigor to JavaScript. When you define a variable in Swift, you specify its type (e.g., `var medicationName: String = "Panadol"`). TypeScript allows similar explicit type definitions.
 >
@@ -139,7 +139,7 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 >
 > **Source:** [Swift Language Guide - Type Safety and Type Inference](https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html#ID322)
 
-> 🤖 **(Android Developers - Kotlin/Java Background):**
+> 🤖 **(Android Developers - Kotlin/Java):**
 >
 > **Comparison:** Kotlin and Java are statically-typed languages where type safety is paramount. Features like Kotlin's null safety (e.g., `String?` for nullable strings) help prevent `NullPointerExceptions`. TypeScript offers comparable benefits by allowing you to define types, including how `null` and `undefined` are handled, thus reducing runtime surprises.
 >

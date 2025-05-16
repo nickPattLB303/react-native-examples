@@ -93,6 +93,22 @@ processPrescription(newRx);
 
 Here, `PrescriptionType` uses string values for its members. This makes logs and debugging easier because you see meaningful strings like `"NEW_PRESCRIPTION"` instead of numbers. String enums do not have reverse mapping like numeric enums. String enum members can also be initialized with other string enum members.
 
+> 🍏 **(iOS Developers - Swift):**
+>
+> **Comparison:** Swift's `enum` keyword is very powerful, allowing for associated values, raw values (strings, characters, or any integer or floating-point type), methods, and computed properties. TypeScript enums are simpler, primarily focusing on creating sets of named constants, similar to Swift enums with raw values (especially string or integer raw values). Swift's `CaseIterable` protocol for iterating over enum cases doesn't have a direct, built-in counterpart for TypeScript enums (though you can iterate over object keys for non-const enums).
+>
+> **Key Takeaway:** TypeScript enums provide a way to define named constants similar to Swift's basic enum usage with raw values. For more complex enum behaviors like associated values, you'd use TypeScript's discriminated unions and other patterns.
+>
+> **Source:** [Swift Language Guide - Enumerations](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html)
+
+> 🤖 **(Android Developers - Kotlin/Java):**
+>
+> **Comparison:** Java `enum` types and Kotlin `enum class` are both more feature-rich than basic TypeScript enums, allowing members to have their own properties and methods. TypeScript enums are closer to a simple set of named integer or string constants. Kotlin's `sealed class` offers a more analogous way to represent restricted hierarchies, similar to how discriminated unions are used in TypeScript for more complex "enum-like" scenarios.
+>
+> **Key Takeaway:** Use TypeScript enums for defining simple sets of related constants. If you need enum members with distinct data or behavior, discriminated unions (covered previously/later) are often a better fit in TypeScript, akin to sealed classes in Kotlin.
+>
+> **Source:** [Kotlin Docs - Enum Classes](https://kotlinlang.org/docs/enum-classes.html), [Java Tutorials - Enum Types](https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html)
+
 #### Constant vs. Computed Enum Members
 
 Enum members can have values that are either constant or computed.

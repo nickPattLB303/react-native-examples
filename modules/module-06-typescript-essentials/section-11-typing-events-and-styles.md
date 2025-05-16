@@ -137,14 +137,14 @@ const styles = StyleSheet.create({
 });
 ```
 
-> In this SpeedyMeds-related scenario, `CustomButtonProps` defines `onCustomPress` expecting a `GestureResponderEvent` and a `string`.
-> The `EventDemoScreen` demonstrates:
->
-> - Handling `GestureResponderEvent` from `CustomButton`, where `event.nativeEvent.locationX` can be safely accessed because TypeScript knows its type.
-> - Using `onChangeText` with `TextInput`, which directly provides the `text: string`.
-> - Using `onChange` with `TextInput`, which provides a `NativeSyntheticEvent<TextInputChangeEventData>`, from which `event.nativeEvent.text` is accessed.
->
-> TypeScript ensures these handlers are used correctly, preventing runtime errors from trying to access non-existent properties or passing incorrect arguments.
+In this SpeedyMeds-related scenario, `CustomButtonProps` defines `onCustomPress` expecting a `GestureResponderEvent` and a `string`.
+The `EventDemoScreen` demonstrates:
+
+- Handling `GestureResponderEvent` from `CustomButton`, where `event.nativeEvent.locationX` can be safely accessed because TypeScript knows its type.
+- Using `onChangeText` with `TextInput`, which directly provides the `text: string`.
+- Using `onChange` with `TextInput`, which provides a `NativeSyntheticEvent<TextInputChangeEventData>`, from which `event.nativeEvent.text` is accessed.
+
+TypeScript ensures these handlers are used correctly, preventing runtime errors from trying to access non-existent properties or passing incorrect arguments.
 
 #### Typing Styles with `StyleSheet.create`
 
@@ -265,8 +265,8 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
           source={
             imageUrl
               ? { uri: imageUrl }
-              : require("./assets/default-med-icon.png")
-          } // Assuming a local default asset
+              : { uri: "https://via.placeholder.com/60" }
+          }
           style={styles.medicationImage}
         />
       </View>
@@ -298,14 +298,14 @@ export default function MedicationDashboard() {
 // or remove the Image component / provide a valid URI for imageUrl.
 ```
 
-> In this SpeedyMeds `MedicationCard` example:
->
-> - The `MedicationCardStyles` interface explicitly types each key in our `styles` object with `ViewStyle`, `TextStyle`, or `ImageStyle`.
-> - When `StyleSheet.create<MedicationCardStyles>({...})` is used, TypeScript validates that each style object (`cardContainer`, `nameText`, etc.) conforms to its specified type.
-> - The commented-out errors show examples of what TypeScript would catch: assigning a string to `borderWidth` (expects a number), or trying to use `flex` (a `ViewStyle` property) within `nameText` (a `TextStyle`).
-> - The `dynamicStatusStyle` demonstrates how to create dynamic styles while still maintaining type safety by explicitly typing the `dynamicStatusStyle` variable as `ViewStyle`.
->
-> This rigorous type checking for styles helps prevent visual bugs and runtime errors, making your UI code more predictable.
+In this SpeedyMeds `MedicationCard` example:
+
+- The `MedicationCardStyles` interface explicitly types each key in our `styles` object with `ViewStyle`, `TextStyle`, or `ImageStyle`.
+- When `StyleSheet.create<MedicationCardStyles>({...})` is used, TypeScript validates that each style object (`cardContainer`, `nameText`, etc.) conforms to its specified type.
+- The commented-out errors show examples of what TypeScript would catch: assigning a string to `borderWidth` (expects a number), or trying to use `flex` (a `ViewStyle` property) within `nameText` (a `TextStyle`).
+- The `dynamicStatusStyle` demonstrates how to create dynamic styles while still maintaining type safety by explicitly typing the `dynamicStatusStyle` variable as `ViewStyle`.
+
+This rigorous type checking for styles helps prevent visual bugs and runtime errors, making your UI code more predictable.
 
 > 📚 **Official Documentation & Resources:**
 >

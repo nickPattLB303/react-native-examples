@@ -256,6 +256,22 @@ processLoggableItem(myPrescription);
 In the `logLength` function, `T extends Lengthwise` constrains `T` to be any type that has a `length` property of type `number`. This allows us to safely access `arg.length`. Calls with types not meeting this constraint (like a plain number or an object without `length`) would result in a compile-time error.
 Similarly, `processLoggableItem<T extends Loggable>` ensures that `item` will have a `log` method. This makes the function more robust and its usage clearer.
 
+> 🍏 **(iOS Developers - Swift):**
+>
+> **Comparison:** Swift's generics system (e.g., `func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {}` or `struct Stack<Element> {}`) is very similar to TypeScript's. Both use type parameters (like `Item` or `Element` in Swift, `T` in TypeScript examples) to create functions, structures, classes, and enumerations that can work with any type in a type-safe way. The use of angle brackets (`<T>`) is also a common convention.
+>
+> **Key Takeaway:** If you understand generics in Swift for creating reusable and type-flexible components while maintaining type safety, you'll find TypeScript generics conceptually identical and easy to adopt.
+>
+> **Source:** [Swift Language Guide - Generics](https://docs.swift.org/swift-book/LanguageGuide/Generics.html)
+
+> 🤖 **(Android Developers - Kotlin/Java):**
+>
+> **Comparison:** Kotlin and Java both have robust support for generics (e.g., Kotlin's `class Box<T>(t: T) { var value = t }` or Java's `List<String>`). The core idea of defining components that can operate on different types without sacrificing type safety, using type parameters (e.g., `<T>`), and constraints (e.g., `T extends SomeClass` in Java/Kotlin) directly maps to TypeScript generics.
+>
+> **Key Takeaway:** TypeScript generics provide the same powerful mechanism for abstraction and type-safe reusability that you are familiar with from Kotlin or Java, allowing you to write flexible components and data structures.
+>
+> **Source:** [Kotlin Docs - Generics](https://kotlinlang.org/docs/generics.html), [Java Tutorials - Generics](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
+
 #### Common Use Cases for Generics
 
 Generics are fundamental for writing robust, reusable, and scalable TypeScript code. They are widely used for:
@@ -487,7 +503,25 @@ function SpeedyMedsPrescriptionForm() {
 // e.g., in your App.tsx: export default SpeedyMedsPrescriptionForm;
 ```
 
-This `GenericSelect` component demonstrates how generics, combined with constraints, enable the creation of highly reusable and type-safe UI elements. The `onValueChange` callback provides the fully-typed selected item, allowing access to all its properties (including those beyond `id` and `label`) in a type-safe manner. This is crucial for building complex and reliable applications like SpeedyMeds efficiently.
+This `GenericSelect` component example effectively showcases the power of TypeScript generics in creating reusable and type-safe React Native components. The overall purpose was to build a picker that could adapt to various data sources (medications, patients, etc.) while ensuring that the data structure for items passed to it adheres to a minimum contract (`SelectableItem` with `id` and `label`) and that the component user receives strongly-typed feedback, particularly through the `onValueChange` callback.
+
+Key sections of this example include:
+
+1.  **`SelectableItem` Interface:** This defines the generic constraint, ensuring any item used with `GenericSelect` has at least an `id` and a `label`. This is crucial for the picker's internal rendering logic.
+2.  **`GenericSelectProps<TItem extends SelectableItem>` Type:** This uses a generic type parameter `TItem` constrained by `SelectableItem`. It defines the props for the component, making it clear that `items` will be an array of `TItem` and `onValueChange` will deal with an item of type `TItem`.
+3.  **`GenericSelect<TItem extends SelectableItem>` Component Implementation:** This functional component uses the generic props. Inside, `items.map` can safely access `item.id` and `item.label` due to the constraint. The `handleValueChange` function correctly finds the full `TItem` object to pass to the `onValueChange` callback, preserving all type information of the original item, not just the `id`.
+4.  **Usage with `MedicationOption` and `PatientOption`:** These specific types extend `SelectableItem` with additional properties relevant to their domain (e.g., `dosageForm` for medications, `mrn` for patients). When `GenericSelect` is instantiated with these types (e.g., `GenericSelect<MedicationOption>`), the `onValueChange` callback correctly infers the type of its parameter as `MedicationOption | undefined`, allowing type-safe access to properties like `medication.dosageForm` or `patient.mrn` within the respective handler functions.
+
+The outcome demonstrated is a picker component that is not only reusable across different data types but also enhances developer experience by providing strong type checking at compile time. For instance, if you tried to pass an array of items that do not have `id` or `label` properties to `GenericSelect`, TypeScript would flag an error. Similarly, within the `handleMedicationChange` callback, TypeScript knows that `medication` (if defined) has `dosageForm` and `stock` properties.
+
+To adapt this `GenericSelect` component for other uses, a developer would:
+
+- Define a new specific item type that extends `SelectableItem` (e.g., `DoctorOption extends SelectableItem { specialty: string; }`).
+- Prepare an array of data conforming to this new type.
+- Instantiate `GenericSelect` with the new type: `GenericSelect<DoctorOption> ... />`.
+- The `onValueChange` callback would then correctly provide a `DoctorOption | undefined` object.
+
+This example encapsulates several important TypeScript concepts: generics for reusability, interfaces for defining contracts and constraints (`extends`), type aliases for defining prop shapes, and type inference within the component and its usage. For further exploration, one could refer to the official React Native documentation for the `<Picker>` component itself (or `@react-native-picker/picker` library documentation) to understand its base capabilities, and the TypeScript handbook sections on Generics and Interfaces to deepen understanding of the underlying type system features.
 
 #### Under the Hood: Type Erasure
 
@@ -525,6 +559,6 @@ Time to apply your knowledge of generics by creating a versatile function.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io)** (_Note: You will need to create a new TypeScript sandbox or use a provided template._)
+**(CODESANDBOX_EXERCISE_6_2_URL_PLACEHOLDER)**
 
 This exercise will help you understand how to create flexible and type-safe functions using generics, a common pattern for utility functions.

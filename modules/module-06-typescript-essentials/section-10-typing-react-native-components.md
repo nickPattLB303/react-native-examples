@@ -145,9 +145,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-> In this SpeedyMeds example, `MedicationDisplayProps` defines the contract for the `MedicationDisplay` component. It expects `name`, `dosage`, `onPressMedication`, and `isActive` as required props, and `instructions` as an optional prop. The `React.FC<MedicationDisplayProps>` type annotation connects this interface to the component.
->
-> When `MedicationDisplay` is used in `PatientMedicationList`, TypeScript checks if all required props are passed with the correct types. For instance, if you were to forget the `dosage` prop or pass a number where a string is expected for `name`, TypeScript would flag this as an error during development. The `onPressMedication` prop is a function type, ensuring that the parent provides a compatible callback.
+In this SpeedyMeds example, `MedicationDisplayProps` defines the contract for the `MedicationDisplay` component. It expects `name`, `dosage`, `onPressMedication`, and `isActive` as required props, and `instructions` as an optional prop. The `React.FC<MedicationDisplayProps>` type annotation connects this interface to the component.
+
+When `MedicationDisplay` is used in `PatientMedicationList`, TypeScript checks if all required props are passed with the correct types. For instance, if you were to forget the `dosage` prop or pass a number where a string is expected for `name`, TypeScript would flag this as an error during development. The `onPressMedication` prop is a function type, ensuring that the parent provides a compatible callback.
 
 #### Optional and Default Props
 
@@ -266,9 +266,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-> In the `PillButtonProps` interface, `color`, `size`, and `disabled` are optional. Inside the `PillButton` component, default values are provided for these props using destructuring (`color = '#007AFF'`, `size = 'medium'`, `disabled = false`).
->
-> This pattern allows the `PillButton` to be used with minimal props (just `title` and `onPress`), while still offering customization. TypeScript ensures that if `color` or `size` _are_ provided, they match their expected types (`string` for color, and `'small' | 'medium' | 'large'` for size).
+In the `PillButtonProps` interface, `color`, `size`, and `disabled` are optional. Inside the `PillButton` component, default values are provided for these props using destructuring (`color = '#007AFF'`, `size = 'medium'`, `disabled = false`).
+
+This pattern allows the `PillButton` to be used with minimal props (just `title` and `onPress`), while still offering customization. TypeScript ensures that if `color` or `size` _are_ provided, they match their expected types (`string` for color, and `'small' | 'medium' | 'large'` for size).
 
 #### Typing Component State with `useState`
 
@@ -421,14 +421,14 @@ const styles = StyleSheet.create({
 });
 ```
 
-> In the `AddMedicationReminder` component for our SpeedyMeds app:
->
-> - `reminders` state is explicitly typed as `MedicationReminder[]` because it's an array of complex objects. This ensures we can only add objects conforming to the `MedicationReminder` interface to this array.
-> - `medicationNameInput` and `timeInput` state types are inferred by TypeScript as `string` from their initial values (`''` and `'09:00'`).
-> - `showForm` is inferred as `boolean`.
-> - `validationMessage` is explicitly typed as `string | null` to indicate it can be a string or `null`.
->
-> If you try to set a state variable to a value of an incompatible type (e.g., `setTimeInput(0)` where `timeInput` is a string), TypeScript will generate an error. This compile-time checking is invaluable for preventing state-related bugs.
+In the `AddMedicationReminder` component for our SpeedyMeds app:
+
+- `reminders` state is explicitly typed as `MedicationReminder[]` because it's an array of complex objects. This ensures we can only add objects conforming to the `MedicationReminder` interface to this array.
+- `medicationNameInput` and `timeInput` state types are inferred by TypeScript as `string` from their initial values (`''` and `'09:00'`).
+- `showForm` is inferred as `boolean`.
+- `validationMessage` is explicitly typed as `string | null` to indicate it can be a string or `null`.
+
+If you try to set a state variable to a value of an incompatible type (e.g., `setTimeInput(0)` where `timeInput` is a string), TypeScript will generate an error. This compile-time checking is invaluable for preventing state-related bugs.
 
 #### Alternative: Typing Props Directly on Functional Components
 
@@ -518,7 +518,7 @@ const bannerStyles = StyleSheet.create({
 // Choose a consistent style for your project.
 ```
 
-> This `PatientBanner` example demonstrates defining props directly on the functional component. The `PatientBannerProps` type explicitly includes `children?: React.ReactNode` if the component is designed to accept them. The component's return type is also explicitly `React.JSX.Element`. This approach is often considered cleaner and more aligned with modern TypeScript and React practices.
+This `PatientBanner` example demonstrates defining props directly on the functional component. The `PatientBannerProps` type explicitly includes `children?: React.ReactNode` if the component is designed to accept them. The component's return type is also explicitly `React.JSX.Element`. This approach is often considered cleaner and more aligned with modern TypeScript and React practices.
 
 #### Typing Component State with `useReducer`
 
@@ -630,7 +630,7 @@ const ReducerStyles = StyleSheet.create({
 });
 ```
 
-> In this `CounterComponent`, `CounterState` defines the shape of the state, and `CounterAction` uses a discriminated union for all possible actions. The `counterReducer` function is strongly typed, ensuring that state updates are handled correctly according to the dispatched action type and payload. TypeScript provides autocompletion and error checking when calling `dispatch` with action objects.
+In this `CounterComponent`, `CounterState` defines the shape of the state, and `CounterAction` uses a discriminated union for all possible actions. The `counterReducer` function is strongly typed, ensuring that state updates are handled correctly according to the dispatched action type and payload. TypeScript provides autocompletion and error checking when calling `dispatch` with action objects.
 
 Using `useReducer` with TypeScript provides excellent type safety for more intricate state management logic within your components.
 
