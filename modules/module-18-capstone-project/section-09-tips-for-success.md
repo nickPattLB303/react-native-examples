@@ -46,12 +46,12 @@ Completing the SpeedyMeds capstone project is a significant achievement and a va
 - **Experiment (Within Scope):** While sticking to the core requirements is important, feel free to experiment with slight variations or explore related concepts if you have additional time and interest.
 - **Be Proud of Your Work:** Building a complete application like SpeedyMeds is a significant accomplishment. Take pride in what you create!
 
-> 🧑‍🏫 **(Learners new to large-scale projects or more self-directed learning):**
+> 🧗‍♀️ **(Learners new to large-scale projects or more self-directed learning):**
 >
 > **Comparison:** Unlike smaller, isolated exercises, a capstone project requires integrating multiple concepts and managing a larger codebase over a more extended period. It tests not just your coding skills but also your ability to plan, problem-solve independently, and persevere.
 >
 > **Key Takeaway:** Don't be overwhelmed by the overall scope. Focus on one task at a time, as outlined in your `ROADMAP.md`. Celebrate small victories. The process of figuring things out, even when challenging, is where the most profound learning occurs. This project is as much about developing your skills as a self-sufficient developer as it is about the final product.
 >
-> **Source:** Revisit **Module 0, Section 3: How to Use This Course**. The strategies for engaging with course content are equally applicable to tackling this capstone.
+> **Source:** Revisit [Module 0, Section 3: How to Use This Course](../module-00-course-introduction/section-03-how-to-use-this-course.md).
 
 By applying these tips, you can navigate the complexities of the SpeedyMeds capstone project with greater confidence and transform it into a rewarding and enriching learning experience. Good luck!

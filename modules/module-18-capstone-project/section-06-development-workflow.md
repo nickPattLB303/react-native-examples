@@ -100,6 +100,6 @@ Ensure your application is accessible to users with disabilities:
 >
 > **Key Takeaway:** Invest a little time in learning the basics of each tool. The Expo Dev Menu is your go-to for quick app interactions. The JS Debugger is invaluable for `console.log` and stepping through code. Linters and formatters automate code consistency, saving you time in the long run. Don't feel you need to master them all at once, but gradually incorporate them into your workflow.
 >
-> **Source:** Revisit [Module 15: Performance and Debugging](LINK_TO_MODULE_15) for a more in-depth look at debugging tools and techniques. The official Expo documentation on [Debugging](https://docs.expo.dev/debugging/introduction/) is also an excellent resource.
+> **Source:** Revisit [Module 15: Performance and Debugging](../module-15-performance-and-debugging/section-00-introduction.md). The official Expo documentation on [Debugging](https://docs.expo.dev/debugging/introduction/) is also an excellent resource.
 
 By following this structured workflow, you can tackle the SpeedyMeds capstone project methodically, leading to a higher-quality implementation and a more rewarding development experience.

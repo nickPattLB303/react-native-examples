@@ -1,7 +1,5 @@
 # Module 18: Capstone Project
 
-<!-- Placeholder for a relevant banner image, e.g., a stylized graphic representing project culmination or the SpeedyMeds app icon. Ensure it adheres to image standards (IV.C of the blueprint), including alt text and caption. -->
-
 Welcome to Module 18, the Capstone Project for the React Native Training Course! This module is where you'll bring together all the knowledge and skills you've acquired throughout the course to build a substantial, real-world-inspired application: SpeedyMeds. Unlike previous modules focused on specific concepts, this module guides you through understanding, developing, and finalizing a comprehensive project. You will work with a pre-configured starter application, focusing on implementing features, UI, and logic based on a defined roadmap.
 
 > 🛣️ **(All Learners):** This module is the culmination of your learning journey. It's designed to simulate a practical development experience, from understanding requirements to implementing features within an existing codebase. Take your time, refer back to previous modules, and enjoy the process of building a complete application.
