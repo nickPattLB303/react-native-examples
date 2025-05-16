@@ -1,6 +1,6 @@
 ## Section 7: Utility Types
 
-TypeScript comes with a set of built-in utility types that allow you to transform existing types in various common ways. These utilities help create new types based on existing ones without having to redefine them from scratch, promoting DRY (Don't Repeat Yourself) principles and enhancing type flexibility. This section will cover some of the most frequently used utility types like `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, and `Readonly<T>`, with examples relevant to managing data in SpeedyMeds.
+TypeScript comes with a set of built-in utility types that allow you to transform existing types in various common ways. These utilities help create new types based on existing ones without having to redefine them from scratch, promoting DRY (Don't Repeat Yourself) principles and enhancing type flexibility. This section will cover some of the most frequently used utility types like `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, and `Readonly<T>`, with examples relevant to managing data in SpeedyMeds, and then briefly introduce other useful ones.
 
 ### Conceptual Content: Transforming Types with Utilities
 
@@ -205,16 +205,122 @@ console.log(
 
 `runtimeConfig` is a `Readonly<AppConfiguration>`, making all its top-level properties (like `apiVersion` and `pharmacyName`) read-only. Attempting to change them will result in a TypeScript error. Note that `Readonly<T>` provides shallow immutability; nested objects (like `featureFlags`) are not deeply made read-only by `Readonly<T>` itself unless their types are also `Readonly`.
 
-#### Other Utility Types
+#### Other Useful Utility Types
 
-TypeScript provides many other utility types, including:
+TypeScript provides many other utility types. Here are a few more with brief explanations and examples:
 
-- `Record<K, T>`: Constructs an object type whose property keys are `K` and property values are `T`.
-- `Exclude<T, U>`: Constructs a type by excluding from `T` all properties that are assignable to `U`.
-- `Extract<T, U>`: Constructs a type by extracting from `T` all properties that are assignable to `U`.
-- `NonNullable<T>`: Constructs a type by excluding `null` and `undefined` from `T`.
-- `ReturnType<T>`: Constructs a type consisting of the return type of function `T`.
-- `Parameters<T>`: Constructs a tuple type from the types used in the parameters of a function type `T`.
+- **`Record<Keys, Type>`**: Constructs an object type whose property keys are `Keys` (a string literal, numeric literal, symbol, or a union of these) and whose property values are `Type`. Useful for creating dictionaries or maps.
+
+  ```typescript
+  type MedicationForm = "Tablet" | "Capsule" | "Syrup";
+  type FormAvailability = Record<MedicationForm, boolean>;
+
+  const availableForms: FormAvailability = {
+    Tablet: true,
+    Capsule: true,
+    Syrup: false,
+  };
+  console.log(availableForms.Tablet); // Output: true
+  ```
+
+- **`Exclude<UnionType, ExcludedMembers>`**: Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`.
+
+  ```typescript
+  type OrderStatus =
+    | "Pending"
+    | "Processing"
+    | "Shipped"
+    | "Delivered"
+    | "Cancelled";
+  type ActiveOrderStatus = Exclude<OrderStatus, "Delivered" | "Cancelled">;
+  // ActiveOrderStatus is "Pending" | "Processing" | "Shipped"
+
+  let currentJob: ActiveOrderStatus = "Processing";
+  // currentJob = "Cancelled"; // Error
+  ```
+
+- **`Extract<Type, Union>`**: Constructs a type by extracting from `Type` all union members that are assignable to `Union`. This is the opposite of `Exclude`.
+
+  ```typescript
+  type PaymentMethod = "CreditCard" | "PayPal" | "BankTransfer" | "Cash";
+  type OnlinePaymentMethod = Extract<PaymentMethod, "CreditCard" | "PayPal">;
+  // OnlinePaymentMethod is "CreditCard" | "PayPal"
+
+  let chosenOnlineMethod: OnlinePaymentMethod = "PayPal";
+  ```
+
+- **`NonNullable<Type>`**: Constructs a type by excluding `null` and `undefined` from `Type`.
+
+  ```typescript
+  type PatientNotes = string | null | undefined;
+  type RequiredPatientNotes = NonNullable<PatientNotes>; // Type is string
+
+  let urgentNote: RequiredPatientNotes = "Patient needs immediate attention!";
+  // urgentNote = null; // Error
+  ```
+
+- **`Parameters<Type>`**: Constructs a tuple type from the types used in the parameters of a function type `Type`. For overloaded functions, it uses the last (most general) signature.
+
+  ```typescript
+  function logPrescription(
+    id: string,
+    medication: string,
+    quantity: number
+  ): void {}
+  type PrescriptionLogParams = Parameters<typeof logPrescription>;
+  // PrescriptionLogParams is [string, string, number]
+
+  const params: PrescriptionLogParams = ["RX123", "Amoxicillin", 30];
+  ```
+
+- **`ReturnType<Type>`**: Constructs a type consisting of the return type of a function type `Type`. For overloaded functions, it uses the last (most general) signature.
+
+  ```typescript
+  function getPatientRecord(
+    patientId: string
+  ): { id: string; name: string; history: object[] } | undefined {
+    return undefined;
+  }
+  type PatientRecordType = ReturnType<typeof getPatientRecord>;
+  // PatientRecordType is { id: string; name: string; history: object[] } | undefined
+
+  let record: PatientRecordType = { id: "P001", name: "John Doe", history: [] };
+  ```
+
+- **`InstanceType<Type>`**: Constructs a type consisting of the instance type of a constructor function type `Type`.
+
+  ```typescript
+  class Pharmacy {
+    constructor(public name: string, public address: string) {}
+  }
+  type PharmacyInstance = InstanceType<typeof Pharmacy>;
+
+  const speedyMedsCentral: PharmacyInstance = new Pharmacy(
+    "SpeedyMeds Central",
+    "123 Main St"
+  );
+  console.log(speedyMedsCentral.name); // Output: SpeedyMeds Central
+  ```
+
+#### Under the Hood: How Utility Types Work (Briefly)
+
+Many of these utility types are not "magic" compiler intrinsics but are themselves implemented using other advanced TypeScript features like **mapped types** and **conditional types** (which allow types to be chosen based on conditions involving other types). For example, `Partial<T>` can be conceptually defined using a mapped type like this:
+
+```typescript
+// Conceptual definition
+// type Partial<T> = {
+//   [P in keyof T]?: T[P];
+// };
+```
+
+This iterates over all properties (`P`) in the keys of type `T` (`keyof T`) and makes each one optional (`?`) while keeping its original type (`T[P]`).
+
+Understanding that these utilities are often built from more fundamental type operations empowers you to:
+
+1.  Better grasp how they work.
+2.  Potentially create your own custom utility types tailored to specific project needs if the built-in ones don't quite fit.
+
+This promotes DRY (Don't Repeat Yourself) principles at the type level, leading to more maintainable and expressive type definitions.
 
 > 📚 **Official Documentation:**
 >

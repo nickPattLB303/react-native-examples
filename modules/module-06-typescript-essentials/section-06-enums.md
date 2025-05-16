@@ -1,6 +1,6 @@
 ## Section 6: Enums
 
-Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less prone to errors caused by typos or using arbitrary "magic" numbers or strings. This section covers how to define and use numeric and string enums, which can be particularly useful in the SpeedyMeds application for representing fixed sets of values like order statuses, medication forms, or user roles.
+Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less prone to errors caused by typos or using arbitrary "magic" numbers or strings. This section covers how to define and use numeric and string enums, their JavaScript representation, `const enums` for optimization, and alternatives like `as const` objects and literal union types. These are particularly useful in the SpeedyMeds application for representing fixed sets of values like order statuses, medication forms, or user roles.
 
 ### Conceptual Content: Defining Sets of Named Constants
 
@@ -91,7 +91,40 @@ processPrescription(newRx);
 // You must use the enum member: newRx.type = PrescriptionType.Refill;
 ```
 
-Here, `PrescriptionType` uses string values for its members. This makes logs and debugging easier because you see meaningful strings like `"NEW_PRESCRIPTION"` instead of numbers. String enums do not have reverse mapping like numeric enums.
+Here, `PrescriptionType` uses string values for its members. This makes logs and debugging easier because you see meaningful strings like `"NEW_PRESCRIPTION"` instead of numbers. String enums do not have reverse mapping like numeric enums. String enum members can also be initialized with other string enum members.
+
+#### Constant vs. Computed Enum Members
+
+Enum members can have values that are either constant or computed.
+
+- **Constant Members:** Their values are known at compile time. This includes:
+
+  - Members without initializers (which get default numeric values, like in `OrderStatus`).
+  - Members initialized with numeric or string literals (like in `DosageForm` or `PrescriptionType`).
+  - Members initialized with expressions involving other constant enum members.
+
+- **Computed Members:** Their values are calculated at runtime. If an enum contains computed members, any uninitialized members that come _after_ a computed member _must_ be initialized.
+
+```typescript
+function getStartingValue() {
+  return 5;
+}
+
+enum ComplexEnum {
+  A, // 0 (constant)
+  B = getStartingValue(), // Computed member
+  // C, // Error! Enum member must have initializer if previous member is computed.
+  D = B + 1, // Computed (depends on B)
+  E = "E_VALUE".length, // Computed
+}
+
+console.log(ComplexEnum.A); // Output: 0
+console.log(ComplexEnum.B); // Output: 5
+console.log(ComplexEnum.D); // Output: 6
+console.log(ComplexEnum.E); // Output: 7
+```
+
+While computed members offer flexibility, they can make enums harder to reason about. Constant members are generally preferred for clarity and predictability.
 
 #### Heterogeneous Enums
 
@@ -121,9 +154,105 @@ console.log(`API call will use method: ${apiCallMethod}`); // Output: API call w
 // Reverse mapping is not supported for const enums.
 ```
 
-`const enums` can offer a slight performance benefit by reducing the amount of generated JavaScript code. However, they have limitations, such as not being able to iterate over their members or access them via computed property names. Reverse mapping is also not available.
+`const enums` can offer a slight performance benefit by reducing the amount of generated JavaScript code. However, they have limitations, such as not being able to iterate over their members or access them via computed property names. Reverse mapping is also not available. `const enum` members can only be initialized with constant enum expressions (not computed values).
 
-> 🛣️ **(All Learners):** String enums are often preferred in modern TypeScript development for their clarity and ease of debugging, as the string values are explicit. Numeric enums are useful when you need bitwise operations or when a numeric representation is more natural for the domain, but ensure their usage is well-documented.
+#### Under the Hood: How Enums are Compiled to JavaScript
+
+Understanding how enums are translated to JavaScript helps in grasping their runtime behavior (this does not apply to `const enum`s, which are inlined).
+
+- **Numeric Enums:** Compile into a JavaScript object that supports both forward (name to value) and reverse (value to name) mappings. This is often achieved using an Immediately Invoked Function Expression (IIFE).
+
+  ```typescript
+  // TypeScript
+  enum NumericDirection {
+    Up = 1,
+    Down,
+    Left,
+    Right,
+  }
+  ```
+
+  ```javascript
+  // Conceptual Compiled JavaScript (simplified)
+  var NumericDirection;
+  (function (NumericDirection) {
+    NumericDirection[(NumericDirection["Up"] = 1)] = "Up";
+    NumericDirection[(NumericDirection["Down"] = 2)] = "Down";
+    NumericDirection[(NumericDirection["Left"] = 3)] = "Left";
+    NumericDirection[(NumericDirection["Right"] = 4)] = "Right";
+  })(NumericDirection || (NumericDirection = {}));
+  // console.log(NumericDirection.Up); // 1
+  // console.log(NumericDirection[2]); // "Down"
+  ```
+
+- **String Enums:** Compile into a simpler JavaScript object that maps names to their string values. No reverse mapping is automatically generated.
+
+  ```typescript
+  // TypeScript
+  enum StringDirection {
+    Up = "UP_DIR",
+    Down = "DOWN_DIR",
+  }
+  ```
+
+  ```javascript
+  // Conceptual Compiled JavaScript (simplified)
+  var StringDirection = {
+    Up: "UP_DIR",
+    Down: "DOWN_DIR",
+  };
+  // console.log(StringDirection.Up); // "UP_DIR"
+  ```
+
+#### Alternatives to Enums: `as const` Objects and Literal Union Types
+
+While enums are useful, TypeScript offers other patterns that can sometimes be more idiomatic or lightweight, especially when a full runtime enum object isn\'t needed.
+
+1.  **Object Literals with `as const` (Const Assertions):**
+    This creates a true constant object where all properties are `readonly` and their values are treated as literal types. This is often considered more JavaScript-friendly.
+
+    ```typescript
+    const MedicationForm = {
+      TABLET: "TABLET",
+      CAPSULE: "CAPSULE",
+      SYRUP: "SYRUP",
+    } as const; // The 'as const' assertion is key here
+
+    // To get a union type of the values:
+    type MedicationFormValue =
+      (typeof MedicationForm)[keyof typeof MedicationForm];
+    // MedicationFormValue is "TABLET" | "CAPSULE" | "SYRUP"
+
+    let form: MedicationFormValue = MedicationForm.TABLET;
+    // form = "LIQUID"; // Error: Type '"LIQUID"' is not assignable to type 'MedicationFormValue'.
+
+    console.log(MedicationForm.CAPSULE); // Output: CAPSULE
+    ```
+
+    The `as const` object provides a runtime object with type-safe values, but no reverse mapping like numeric enums.
+
+2.  **Literal Union Types:**
+    For simple sets of string or numeric constants where no runtime object is needed at all, literal union types are the most lightweight and direct approach. They are purely type-level constructs.
+
+    ```typescript
+    type PaymentStatus = "Pending" | "Paid" | "Failed" | "Refunded";
+
+    let currentPayment: PaymentStatus = "Paid";
+    // currentPayment = "Error"; // Error: Type '"Error"' is not assignable to type 'PaymentStatus'.
+
+    console.log(`Payment status: ${currentPayment}`); // Output: Payment status: Paid
+    ```
+
+**Choosing Between Enums, `as const`, and Literal Unions:**
+
+- **Enums:** Use when you need a distinct nominal type, when reverse mapping for numeric values is beneficial, or when you prefer the explicit `Enum.Member` syntax. Be mindful that non-const enums add to the generated JavaScript bundle size.
+- **`const enum`:** Best for performance-critical scenarios where you need named constants and value inlining, and don\'t need a runtime object or reverse mapping.
+- **`as const` Objects:** Good when you want a runtime JavaScript object (e.g., for iteration over keys/values) with strong type safety for its values, and prefer a more standard JavaScript object pattern.
+- **Literal Union Types:** Ideal for simple, fixed sets of string or numeric values where you only need type checking and no runtime object representation. They have zero runtime overhead.
+
+For many common cases, especially with string constants, literal union types or `as const` objects offer excellent type safety with potentially less overhead or a more JavaScript-native feel than traditional enums.
+
+> 🛣️ **(All Learners):** String enums or `as const` objects with literal union types are often preferred in modern TypeScript development for their clarity and ease of debugging, as the string values are explicit. Numeric enums are useful when you need bitwise operations or when a numeric representation is more natural for the domain, but ensure their usage is well-documented.
 
 > 📚 **Official Documentation:**
 >

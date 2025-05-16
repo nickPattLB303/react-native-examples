@@ -1,10 +1,12 @@
 ## Section 2: Basic Types
 
-This section introduces the fundamental data types in TypeScript. Understanding these basic types is the first step towards leveraging TypeScript's type system to write safer and more predictable code. We'll cover common types like `string`, `number`, and `boolean`, as well as special types like `any`, `unknown`, `void`, `null`, and `undefined`.
+This section introduces the fundamental data types in TypeScript. Understanding these basic types is the first step towards leveraging TypeScript's type system to write safer and more predictable code. We'll cover common types like `string`, `number`, and `boolean`, as well as special types like `any`, `unknown`, `void`, `null`, `undefined`, `never`, `tuple`, `bigint`, and the generic `object` type.
 
 ### Conceptual Content: Everyday Types in TypeScript
 
 TypeScript extends JavaScript's set of types with a static type system. When you declare a variable, you can (and often should) provide a type annotation to specify what kind of values it can hold.
+
+> **Quick Note on Type Casing:** It is a common convention and best practice to use lowercase type names for primitives (e.g., `string`, `number`, `boolean`) instead of their capitalized counterparts (`String`, `Number`, `Boolean`). The latter refer to special built-in JavaScript constructor functions for objects that wrap primitives and are rarely used directly in type annotations.
 
 #### Core Primitive Types
 
@@ -66,6 +68,23 @@ These are the most basic data types available in JavaScript and, by extension, T
 
   This example shows two boolean variables relevant to SpeedyMeds. The `if` statement demonstrates conditional logic based on `requiresPrescription`. Attempting to assign a non-boolean value would result in a TypeScript error.
 
+- **`bigint`**: Represents whole numbers larger than 2<sup>53</sup> - 1. `bigint` literals are created by appending `n` to the end of an integer.
+  A short, self-contained example of using the `bigint` type:
+
+  ```typescript
+  let veryLargeInventoryItemCount: bigint = 9007199254740991n;
+  let anotherLargeNumber: bigint = veryLargeInventoryItemCount + 1n;
+
+  console.log(`Large item count: ${veryLargeInventoryItemCount}`);
+  console.log(`Another large number: ${anotherLargeNumber}`);
+  // Output: Large item count: 9007199254740991
+  // Output: Another large number: 9007199254740992
+
+  // veryLargeInventoryItemCount = 123; // Error: Type 'number' is not assignable to type 'bigint'.
+  ```
+
+  This example shows `bigint` used for very large integer values. Note the `n` suffix. Regular numbers cannot be assigned to `bigint` variables directly without conversion.
+
 #### Arrays
 
 TypeScript allows you to define arrays of values. You can specify the type of elements the array can hold using two syntaxes:
@@ -89,6 +108,36 @@ console.log(batchNumbers);
 ```
 
 This example demonstrates both syntaxes for declaring typed arrays. `activeIngredients` is an array of strings, and `batchNumbers` is an array of numbers. Standard array operations like `push` work as expected, but TypeScript enforces that only elements of the declared type can be added, as shown by the commented-out error line.
+
+#### Tuples
+
+Tuples allow you to express an array with a fixed number of elements whose types are known, but need not be the same. They are useful for representing a structure where the order and type of each element matter.
+
+A short, self-contained example of using a `tuple` type:
+
+```typescript
+// Declare a tuple type for a medication lot: [batchNumber: number, expiryDate: string, quantity: number]
+let medicationLot: [number, string, number];
+
+// Initialize it
+medicationLot = [10234, "2025-12-31", 1000];
+
+// Access elements by index
+console.log(
+  `Batch Number: ${medicationLot[0]}, Expires: ${medicationLot[1]}, Quantity: ${medicationLot[2]}`
+);
+// Output: Batch Number: 10234, Expires: 2025-12-31, Quantity: 1000
+
+// medicationLot = ["Batch-A", "2025-12-31", 1000]; // Error: Type 'string' is not assignable to type 'number' at index 0.
+// medicationLot = [10234, "2025-12-31"]; // Error: Type '[number, string]' is not assignable to type '[number, string, number]'. Source has 2 element(s) but target requires 3.
+
+// Destructuring a tuple
+const [batchNo, expiry, qty] = medicationLot;
+console.log(`Destructured: ${batchNo}, ${expiry}, ${qty}`);
+// Output: Destructured: 10234, 2025-12-31, 1000
+```
+
+In this example, `medicationLot` is defined as a tuple that must contain a number, then a string, then a number. Attempting to assign values of incorrect types or an incorrect number of elements will result in a TypeScript error.
 
 #### Objects
 
@@ -147,7 +196,18 @@ TypeScript has a few special types that are important to understand:
 
   This example shows `flexibleData` assigned values of different types without TypeScript raising an error. While `any` provides flexibility, it sacrifices type safety. Accessing `nonExistentProperty` would not cause a compile-time error but would likely lead to a runtime error. It's often a sign that you might need to define a more specific type or use `unknown`.
 
-- **`unknown`**: Similar to `any`, `unknown` can represent any value. However, it's safer because you must perform type checking (e.g., using `typeof` or type assertions) before you can operate on a value of type `unknown`.
+  **Best Practices for `any`:**
+
+  - Avoid `any` whenever possible. It should be a last resort.
+  - Reserve it for situations where type checking is genuinely impossible (e.g., highly dynamic content, third-party libraries without types during initial integration).
+  - If you must use `any`, consider it a temporary solution and aim to replace it with more specific types or `unknown` as you refactor.
+  - Enable the `noImplicitAny` compiler option in `tsconfig.json` to prevent variables from defaulting to `any` if their type isn't inferred or explicitly set.
+
+- **`unknown`**: Similar to `any`, `unknown` can represent any value. However, it's significantly safer because TypeScript enforces that you must perform type checking or type assertion before you can perform any operations on a value of type `unknown`. This forces you to explicitly handle the uncertainty of the type.
+
+  **Why `unknown` is Safer than `any`:**
+  `unknown` forces developers to acknowledge and address the ambiguity of a variable's type. Before performing operations that assume a specific type (e.g., calling a method, accessing a property), you must use a type guard (like `typeof`, `instanceof`) or a type assertion to convince the TypeScript compiler that the operation is safe for the current value. This prevents many common errors arising from incorrect assumptions, especially with external API data or user input.
+
   A short, self-contained example illustrating `unknown`:
 
   ```typescript
@@ -167,9 +227,12 @@ TypeScript has a few special types that are important to understand:
   }
   ```
 
-  Here, attempting to call `toUpperCase()` on `userInput` directly results in an error because its type is `unknown`. Only after checking its type with `typeof userInput === 'string'` can we safely call string methods on it. This makes `unknown` a type-safer alternative to `any` when dealing with values of uncertain type.
+  **Best Practices for `unknown`:**
 
-- **`void`**: Used as the return type for functions that do not return a value.
+  - Prefer `unknown` over `any` when dealing with values whose types are genuinely not known at compile time (e.g., API responses, user input).
+  - Always use type guards (e.g., `typeof value === 'string'`) or type assertions (e.g., `value as string`) to narrow an `unknown` type to a more specific type before performing operations on it.
+
+- **`void`**: Used as the return type for functions that do not return a value. It signifies that the function's return value, if any, should be ignored. While a JavaScript function without an explicit `return` statement implicitly returns `undefined`, `void` as a type annotation in TypeScript is more about signaling the absence of an intended, usable return value. A function declared to return `void` can technically return `undefined` or even another value, but TypeScript will generally ensure this returned value isn't meant to be used by the caller.
   A short, self-contained example illustrating `void`:
 
   ```typescript
@@ -204,7 +267,92 @@ TypeScript has a few special types that are important to understand:
   refillCount = null;
   ```
 
-  This demonstrates how to explicitly allow `null` or `undefined` for variables using union types. If `strictNullChecks` is enabled (as it should be for robust code), assigning `null` or `undefined` to a type that doesn't explicitly include it will cause an error. This helps prevent unexpected `null` or `undefined` errors at runtime.
+  This demonstrates how to explicitly allow `null` or `undefined` for variables using union types. If `strictNullChecks` is enabled (as it should be for robust code), assigning `null` or `undefined` to a type that doesn't explicitly include it will cause an error. This helps prevent unexpected `null` or `undefined` errors at runtime. `strictNullChecks` forces developers to explicitly account for potential null or undefined values, significantly enhancing code reliability.
+
+- **`never`**: Represents the type of values that never occur. This is different from `void`, which means "no meaningful return value." `never` indicates that a function will not reach its normal completion point, or that a variable can never have a value under certain type constraints.
+
+  **Common Use Cases for `never`:**
+
+  1.  **Functions that always throw an exception:**
+      ```typescript
+      function reportError(message: string): never {
+        throw new Error(message);
+        // This function never successfully returns
+      }
+      ```
+  2.  **Functions with infinite loops:**
+      ```typescript
+      function infiniteProcessingLoop(): never {
+        while (true) {
+          // ... processing ...
+        }
+        // This function never exits normally
+      }
+      ```
+  3.  **Exhaustive type checking in control flow (e.g., `switch` statements):** When checking all possible cases of a union type, the `default` case might correctly result in a type of `never`, indicating all valid paths have been handled. If a new member is added to the union without updating the `switch`, the type in the `default` case would no longer be `never`, signaling a compile-time error.
+      ```typescript
+      type Vehicle = "car" | "truck" | "bike";
+      function getVehicleSound(vehicle: Vehicle): string {
+        switch (vehicle) {
+          case "car":
+            return "vroom";
+          case "truck":
+            return "honk";
+          case "bike":
+            return "ring-ring";
+          default:
+            // If all cases are handled, `exhaustiveCheck` will be `never`
+            const exhaustiveCheck: never = vehicle;
+            return exhaustiveCheck; // This line would error if a new vehicle type was added
+        }
+      }
+      ```
+
+- **`object` (lowercase `o`)**: Represents any value that is not a primitive type (`string`, `number`, `boolean`, `bigint`, `symbol`, `null`, or `undefined`). This includes user-defined objects, arrays, functions, etc.
+
+  It is important to distinguish `object` from:
+
+  - **`Object` (uppercase `O`)**: This refers to the JavaScript global `Object` type. All values (including primitives, due to JavaScript's auto-boxing) are assignable to `Object`. It is generally too broad and less useful for specific typing than lowercase `object`.
+  - **`{}` (empty object type)**: This type represents an object with no properties. While any non-null, non-undefined value can be assigned to `{}`, it doesn't provide much type safety as it doesn't describe any specific structure or allow access to any properties without type assertion.
+
+  A short, self-contained example illustrating the `object` type:
+
+  ```typescript
+  function logNonPrimitive(data: object): void {
+    console.log("Received a non-primitive:", data);
+  }
+
+  logNonPrimitive({ name: "Ibuprofen", form: "tablet" }); // OK
+  logNonPrimitive([1, 2, 3]); // OK (arrays are objects)
+  logNonPrimitive(() => console.log("Function")); // OK (functions are objects)
+
+  // logNonPrimitive("a string"); // Error: Argument of type 'string' is not assignable to parameter of type 'object'.
+  // logNonPrimitive(123);      // Error: Argument of type 'number' is not assignable to parameter of type 'object'.
+  // logNonPrimitive(null);      // Error: Argument of type 'null' is not assignable to parameter of type 'object'.
+  ```
+
+  The `object` type should be used when a function or variable is expected to hold any non-primitive value, but the specific shape or properties of that object are not known or not relevant to the current context. However, for better type safety and code clarity, it is generally preferable to use more specific types like interfaces, type aliases (covered in Section 3), or `Record<string, unknown>` when the structure of the object is known or needs to be constrained.
+
+#### Summary Table: Basic TypeScript Types
+
+Here's a quick reference table comparing TypeScript basic types with their JavaScript equivalents and typical usage:
+
+| TypeScript Type               | JavaScript Equivalent/Concept                                | Notes                                                                                                     |
+| :---------------------------- | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
+| `string`                      | `string` primitive                                           | Textual data.                                                                                             |
+| `number`                      | `number` primitive (includes integers and floats)            | All numbers are floating-point in JS.                                                                     |
+| `boolean`                     | `boolean` primitive                                          | `true` or `false`.                                                                                        |
+| `bigint`                      | `bigint` primitive                                           | For arbitrarily large integers (e.g., `100n`). TS specific type.                                          |
+| `symbol`                      | `symbol` primitive                                           | For unique identifiers. (Not explicitly covered in examples, but good to know)                            |
+| `Type[]` or `Array<Type>`     | `Array` object                                               | Ordered list of values of type `Type`.                                                                    |
+| `[Type1, Type2, ...]` (Tuple) | `Array` object (conventionally)                              | Fixed-size, ordered list with potentially different types at each position. TS specific.                  |
+| `any`                         | Any JavaScript value (type checking disabled)                | Use sparingly; undermines type safety.                                                                    |
+| `unknown`                     | Any JavaScript value (type checking enforced before use)     | Safer alternative to `any`. Requires narrowing. TS specific.                                              |
+| `void`                        | `undefined` (for function returns that don't return a value) | Indicates no intended return value.                                                                       |
+| `null`                        | `null` primitive                                             | Represents intentional absence of value. Treat as distinct type with `strictNullChecks`.                  |
+| `undefined`                   | `undefined` primitive                                        | Represents uninitialized variables or missing properties. Treat as distinct type with `strictNullChecks`. |
+| `never`                       | No direct equivalent (conceptually, a non-terminating path)  | Represents values that never occur. Useful for exhaustive checks. TS specific.                            |
+| `object`                      | Any non-primitive value (`typeof x === 'object'              |                                                                                                           | 'function'`) | More specific than `any`, but less specific than an interface or `Record<string, unknown>`. TS specific. |
 
 > 📚 **Official Documentation:**
 >

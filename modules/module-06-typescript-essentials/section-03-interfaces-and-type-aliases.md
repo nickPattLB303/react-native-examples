@@ -8,7 +8,7 @@ Both interfaces and type aliases allow you to create custom names for type annot
 
 #### Interfaces
 
-An `interface` is a way to define a contract for an object's shape. It specifies what properties an object should have and what their types should be. Interfaces are particularly well-suited for describing the shapes of objects and classes.
+An `interface` is a way to define a contract for an object\'s shape. It specifies what properties an object should have and what their types should be. Interfaces are particularly well-suited for describing the shapes of objects and classes.
 
 **Defining an Interface:**
 
@@ -53,11 +53,67 @@ displayMedicationInfo(ibuprofen);
 
 In this SpeedyMeds example, the `Medication` interface clearly defines the structure for medication objects. It includes properties like `medicationId`, `name`, `dosage`, `quantity`, and `requiresPrescription`. It also demonstrates an optional property `manufacturer` (using `?`) and a `readonlyNDC` property (using `readonly`). The `displayMedicationInfo` function expects an argument that conforms to the `Medication` interface. TypeScript will ensure that any object passed to this function has the required properties and types. Attempting to modify a `readonly` property after object creation results in a compile-time error.
 
-**Optional Properties:** Properties can be marked as optional by adding a `?` after their name (e.g., `manufacturer?: string`).
+**Interface Features:**
 
-**Read-only Properties:** Properties can be marked as read-only using the `readonly` keyword. This means they can only be set when the object is first created.
+- **Optional Properties:** Properties can be marked as optional by adding a `?` after their name (e.g., `manufacturer?: string`).
 
-**Extending Interfaces:** Interfaces can extend other interfaces, inheriting their members. This is a powerful way to create more specialized interfaces from general ones.
+- **Read-only Properties:** Properties can be marked as read-only using the `readonly` keyword. This means they can only be set when the object is first created.
+
+- **Excess Property Checks:** When assigning an object literal _directly_ to a variable or passing it as an argument where an interface type is expected, TypeScript performs "excess property checking." If the object literal has properties not defined in the interface, a compile-time error occurs. This helps catch typos or misunderstandings about the expected shape. This check can be bypassed by assigning the object literal to another variable first or by using a type assertion, though these workarounds should be used cautiously.
+
+- **Function Types in Interfaces:** Interfaces can describe function types. This is useful for defining contracts for functions.
+
+  ```typescript
+  interface MedicationSearchFunc {
+    (searchTerm: string, includeOutOfStock: boolean): Medication[];
+  }
+
+  let searchMedications: MedicationSearchFunc;
+  searchMedications = (term, includeOutOfStock) => {
+    // Actual search logic for SpeedyMeds inventory would go here...
+    console.log(
+      `Searching for \'${term}\', include out of stock: ${includeOutOfStock}`
+    );
+    if (term.toLowerCase() === "ibuprofen") {
+      return [ibuprofen]; // Assuming ibuprofen is defined as in the previous example
+    }
+    return [];
+  };
+  const results = searchMedications("ibuprofen", false);
+  console.log(results.length > 0 ? results[0].name : "No results");
+  // Output:
+  // Searching for 'ibuprofen', include out of stock: false
+  // Ibuprofen
+  ```
+
+- **Indexable Types in Interfaces:** Interfaces can describe types that can be "indexed into," like arrays or dictionaries where you access elements/properties using an index (number or string).
+
+  ```typescript
+  interface StockLevels {
+    [medicationId: string]: number; // String index signature
+  }
+
+  const currentStock: StockLevels = {
+    MED001: 100,
+    MED002: 50,
+    MED003: 0,
+  };
+
+  console.log(`Stock for MED001: ${currentStock["MED001"]}`); // Output: Stock for MED001: 100
+  // currentStock[0] = 10; // Error if mixing index types without multiple signatures.
+
+  interface PharmacyNotes {
+    [noteIndex: number]: string; // Numeric index signature
+  }
+  const notes: PharmacyNotes = [];
+  notes[0] = "Patient requested refill.";
+  notes[1] = "Insurance pre-authorization pending.";
+  console.log(notes[0]); // Output: Patient requested refill.
+  ```
+
+  Here, `StockLevels` describes an object where string keys map to number values (stock counts). `PharmacyNotes` describes an array-like structure where numeric indices map to string notes.
+
+- **Extending Interfaces:** Interfaces can extend other interfaces, inheriting their members. This is a powerful way to create more specialized interfaces from general ones.
 
 A short, self-contained example of extending an interface:
 
@@ -141,11 +197,79 @@ console.log(
 
 This example demonstrates various uses of `type` aliases. `PatientID` is an alias for `string`. `MedicationStatus` is an alias for a union type, restricting its values to specific strings. `PharmacyLocation` defines an object shape, much like an interface. Type aliases provide a concise way to refer to complex types, improving code readability. The error for `loratadineStatus` shows how the union type restricts possible values.
 
+**Further Versatility of Type Aliases:**
+
+Type aliases can also be used for:
+
+- **Intersection Types:** Combining multiple types into one.
+
+  ```typescript
+  type ContactInfo = { email: string; phone?: string };
+  type Identity = { id: string; name: string };
+  type EmployeeProfile = Identity & ContactInfo & { department: string };
+
+  const employee: EmployeeProfile = {
+    id: "emp123",
+    name: "John Smith",
+    email: "john.s@example.com",
+    department: "Logistics",
+  };
+  ```
+
+- **Function Types:** Aliasing function signatures.
+
+  ```typescript
+  type NotificationService = (
+    message: string,
+    recipientId: PatientID
+  ) => boolean;
+  const sendSmsNotification: NotificationService = (message, recipientId) => {
+    console.log(`SMS to ${recipientId}: ${message}`);
+    return true;
+  };
+  sendSmsNotification("Your prescription is ready for pickup.", "PAT456");
+  ```
+
+- **Tuple Types:** (As covered in basic types, they can be aliased for clarity)
+
+  ```typescript
+  type MedicationLotInfo = [
+    batchNumber: number,
+    expiryDate: string,
+    quantity: number
+  ];
+  let lotX: MedicationLotInfo = [12345, "2026-01-31", 500];
+  ```
+
+- **Recursive Types:** Type aliases can refer to themselves, which is essential for defining recursive data structures like trees or linked lists.
+
+  ```typescript
+  type TreeNode<T> = {
+    value: T;
+    leftChild?: TreeNode<T>;
+    rightChild?: TreeNode<T>;
+  };
+  const numberTree: TreeNode<number> = {
+    value: 10,
+    leftChild: { value: 5 },
+    rightChild: { value: 15 },
+  };
+  ```
+
+- **Generic Types:** Type aliases can themselves be generic.
+  ```typescript
+  type DataWrapper<T> = { data: T; timestamp: Date };
+  const medicationData: DataWrapper<Medication> = {
+    data: ibuprofen,
+    timestamp: new Date(),
+  };
+  ```
+
 #### Differences Between Interfaces and Type Aliases
 
 While interfaces and type aliases can often be used interchangeably for object shapes, there are some key differences:
 
-1.  **Extensibility (Declaration Merging):**
+1.  **Extensibility (Declaration Merging & Augmentation):**
 
     - **Interfaces** can be defined multiple times with the same name, and TypeScript will merge their definitions. This is called "declaration merging." This is useful for augmenting interfaces over time or from different sources.
     - **Type aliases** cannot be merged. If you define a type alias with the same name twice, TypeScript will report an error (duplicate identifier).
@@ -176,6 +300,9 @@ While interfaces and type aliases can often be used interchangeably for object s
 
     The `UserProfile` interface is defined twice. TypeScript merges these definitions, so the `user` object must conform to all properties from both declarations (`userId`, `username`, `email`, `lastLogin`). This feature is particularly useful when extending existing interfaces, perhaps from third-party libraries.
 
+    - `Type` aliases describing an object shape can also be implemented by a class (in recent TypeScript versions), but interfaces are generally preferred for this purpose due to their traditional role in object-oriented programming.
+    - Type aliases can achieve a form of "extension" using intersection types: `type ExtendedType = BaseType & { additionalProp: string; };` This creates a new type by combining others, rather than modifying an existing one.
+
 2.  **Implementation (for Classes):**
 
     - An `interface` can be `implemented` by a class, meaning the class agrees to adhere to the interface's structure.
@@ -184,19 +311,20 @@ While interfaces and type aliases can often be used interchangeably for object s
 3.  **Mapping Types and Conditional Types:**
     - `Type` aliases are more versatile when it comes to creating more complex types using mapped types or conditional types, which are advanced TypeScript features we might touch upon later. For instance, utility types like `Partial<T>` or `Pick<T, K>` often work more directly with types defined via `type` aliases when constructing new shapes dynamically.
 
-**When to Use Which?**
+For most object shape definitions in React Native applications, either can work. However, the community often leans towards `interface` for defining props for React components and object shapes, and `type` for union types or more complex type manipulations. The error messages from TypeScript can sometimes be slightly clearer when an interface is mismatched compared to a complex type alias.
 
-- **Use `interface` when:**
-  - Defining the shape of objects or classes.
-  - You need extensibility through declaration merging.
-  - You want to define a contract that a class must implement.
-- **Use `type` when:**
-  - Defining aliases for primitive types (e.g., `type UserID = string;`).
-  - Defining aliases for union types (e.g., `type Status = "success" | "error";`).
-  - Defining aliases for tuple types.
-  - You need to use mapped types or conditional types to create complex utility types.
+**Summary Table: Interfaces vs. Type Aliases**
 
-For most object shape definitions in React Native applications, either can work. However, the community often leans towards `interface` for defining props for React components and object shapes, and `type` for union types or more complex type manipulations.
+| Feature                     | Interface                                                      | Type Alias                                                                      |
+| :-------------------------- | :------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+| **Primary Use**             | Defining object shapes, class contracts                        | Naming any type (primitives, unions, intersections, objects, tuples, etc.)      |
+| **Declaration Merging**     | Yes                                                            | No                                                                              |
+| **Extending/Implementing**  | `extends` for interfaces, `implements` for classes             | Can simulate extension via intersections (`&`); can be `implemented` by classes |
+| **Aliasing Non-Objects**    | No (primarily for object shapes, can describe function types)  | Yes (primitives, unions, tuples, function types, etc.)                          |
+| **Recursive Types**         | Possible, but sometimes more straightforward with type aliases | Yes, can directly refer to themselves in their definition.                      |
+| **Complex Type Creation**   | Less direct for mapped/conditional types                       | Often used as the target for utility, mapped, or conditional types.             |
+| **Readability for Objects** | Often preferred for object shapes due to `interface` keyword   | Can be very readable, especially for complex or combined types.                 |
+| **Error Messages**          | Sometimes considered slightly clearer for object mismatches    | Generally good, but can be complex for deeply nested/utility types.             |
 
 > 🛣️ **(All Learners):** Consistency is key. Whichever you choose for defining object shapes, try to stick with it within a project or team for better readability and maintainability. Many projects use interfaces for public API definitions (like component props) and type aliases for internal state or simpler type combinations.
 
