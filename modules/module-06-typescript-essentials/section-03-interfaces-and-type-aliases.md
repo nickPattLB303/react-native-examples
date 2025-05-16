@@ -536,6 +536,24 @@ While interfaces and type aliases can often be used interchangeably for object s
 
 For most object shape definitions in React Native applications, either can work. However, the community often leans towards `interface` for defining props for React components and object shapes, and `type` for union types or more complex type manipulations. The error messages from TypeScript can sometimes be slightly clearer when an interface is mismatched compared to a complex type alias.
 
+#### Choosing Between Interfaces and Type Aliases: Practical Guidance
+
+While many features overlap, especially for defining object shapes, here's some common guidance to help you decide when to use `interface` versus `type`:
+
+- **Use `interface` when:**
+
+  - Defining the shape of objects or class contracts, especially if you anticipate or need declaration merging. This is common for library authors who want to allow users to augment the library's types.
+  - You prefer the `extends` keyword for inheritance-like patterns between object shapes (interfaces extending other interfaces can sometimes be slightly more performant for the compiler than type intersections, though this is often negligible).
+  - Your project or team style guide explicitly prefers interfaces for object shapes.
+
+- **Use `type` alias when:**
+  - Defining unions, intersections, tuples, or creating aliases for primitive types (e.g., `type UserID = string;`).
+  - Working with advanced mapped types or conditional types, as type aliases are often more flexible for these complex transformations.
+  - You want to ensure a type definition is "closed" and cannot be implicitly extended via declaration merging elsewhere in the codebase.
+  - Defining types for React component props and state. Many developers prefer `type` aliases for this purpose because component APIs are generally more constrained and don't typically require declaration merging. The flexibility of `type` aliases for unions and intersections also aligns well with the compositional patterns in React.
+
+**Consistency is Key:** More important than strict adherence to one over the other is consistency within your project or team. Choose a convention (e.g., "use `interface` for all object shapes unless a `type` alias feature like unions is specifically needed," or "always use `type` for component props and state") and apply it uniformly. This improves readability and maintainability.
+
 **Summary Table: Interfaces vs. Type Aliases**
 
 | Feature                     | Interface                                                      | Type Alias                                                                      |

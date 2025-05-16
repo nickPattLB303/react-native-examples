@@ -20,6 +20,13 @@ interface Medication {
   quantity: number;
 }
 
+/**
+ * Generates a summary string for a given medication.
+ * Includes details such as name and dosage, and optionally quantity.
+ * @param {Medication} medication - The medication object containing details like name, dosage, and quantity.
+ * @param {boolean} includeQuantity - A flag to determine if the medication quantity should be included in the summary.
+ * @returns {string} A descriptive summary string of the medication.
+ */
 function getMedicationSummary(
   medication: Medication,
   includeQuantity: boolean
@@ -91,6 +98,14 @@ Just like in JavaScript, you can have optional and default-initialized parameter
 A short, self-contained example illustrating optional and default parameters:
 
 ```typescript
+/**
+ * Records a patient visit with optional notes and a default visit type.
+ * This function logs the details of a patient's visit to the console.
+ * @param {string} patientId - The unique identifier for the patient.
+ * @param {string} [visitType="Routine Checkup"] - The type of the visit (e.g., "Follow-up", "Emergency"). Defaults to "Routine Checkup".
+ * @param {string} [notes] - Optional notes or comments about the visit.
+ * @returns {void} This function does not return any value.
+ */
 function recordPatientVisit(
   patientId: string,
   visitType: string = "Routine Checkup", // Default parameter
@@ -133,6 +148,12 @@ Rest parameters allow a function to accept an indefinite number of arguments as 
 A short, self-contained example using rest parameters:
 
 ```typescript
+/**
+ * Logs a prescription order for a patient, listing multiple medications.
+ * @param {string} patientId - The unique identifier for the patient.
+ * @param {...string} medicationNames - A list of medication names to be prescribed.
+ * @returns {void} This function does not return any value.
+ */
 function prescribeMedications(
   patientId: string,
   ...medicationNames: string[]

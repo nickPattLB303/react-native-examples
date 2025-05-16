@@ -155,6 +155,7 @@ This JSON configuration tells the TypeScript compiler how to process the project
   - `esModuleInterop` and `allowSyntheticDefaultImports` enhance compatibility with different module formats.
   - `skipLibCheck: true` can speed up compilation by not type-checking all `.d.ts` files in `node_modules`.
   - `noEmit: true` is important because TypeScript itself doesn\'t output the final JS files in an Expo/React Native setup; Metro/Babel does this. TypeScript\'s role is primarily type checking.
+  - `isolatedModules` is often `true` in modern setups or via base configs like `expo/tsconfig.base` and places certain restrictions on your code (e.g., `const enum`s, which require cross-file information, cannot be used).
   - `baseUrl` and `paths` allow for custom import aliases (e.g., `@components/MyComponent` instead of `../../components/MyComponent`), which can make imports cleaner in larger projects.
 - `include` specifies an array of glob patterns that determine which files TypeScript will process.
 - `exclude` specifies glob patterns for files or directories that TypeScript should ignore, commonly `node_modules`.
@@ -197,6 +198,7 @@ Developers can override or extend these base configurations by specifying option
 - **`allowSyntheticDefaultImports`**: (boolean) Allows default imports from modules with no default export. Often works with `esModuleInterop`.
 - **`skipLibCheck`**: (boolean) If `true`, skips type checking of declaration files (`.d.ts`) from dependencies, speeding up compilation.
 - **`resolveJsonModule`**: (boolean) If `true`, allows importing `.json` files directly as modules.
+- **`isolatedModules`**: (boolean, default `false`, but often `true` in modern setups or via base configs like `expo/tsconfig.base`) When `true`, ensures that each file can be transpiled independently without relying on information from other files. This is important for tools like Babel (used by Metro) that transpile files in isolation. It places certain restrictions on your code (e.g., `const enum`s, which require cross-file information, cannot be used). Recommended `true` for compatibility with modern build systems used in React Native/Expo development.
 - **`baseUrl` and `paths`**: Configure custom module path aliases (e.g., `"@components/*": ["src/components/*"]`) for cleaner imports.
 
 #### TypeScript Compilation and Build Process in React Native/Expo

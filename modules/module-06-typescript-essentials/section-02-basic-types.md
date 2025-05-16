@@ -265,9 +265,14 @@ TypeScript has a few special types that are important to understand:
   // let patientAge: number = null; // Error: Type 'null' is not assignable to type 'number' (if strictNullChecks is on)
   let refillCount: number | null = 5;
   refillCount = null;
-  ```
+
+  /*
+  > 📲 **Native Developer Context:** Enabling `strictNullChecks` aligns TypeScript more closely with the explicit null-safety features found in Kotlin (`?` for nullable types) and Swift (`Optional<T>`), making the transition smoother by enforcing familiar safe coding practices.
+  */
 
   This demonstrates how to explicitly allow `null` or `undefined` for variables using union types. If `strictNullChecks` is enabled (as it should be for robust code), assigning `null` or `undefined` to a type that doesn't explicitly include it will cause an error. This helps prevent unexpected `null` or `undefined` errors at runtime. `strictNullChecks` forces developers to explicitly account for potential null or undefined values, significantly enhancing code reliability.
+
+  ```
 
 - **`never`**: Represents the type of values that never occur. This is different from `void`, which means "no meaningful return value." `never` indicates that a function will not reach its normal completion point, or that a variable can never have a value under certain type constraints.
 
@@ -412,6 +417,372 @@ const dosageForPatient = calculateDosage(70, 1.5);
 ```
 
 This example further illustrates TypeScript's ability to infer types for both simple variables and function return values, reducing verbosity while maintaining type safety.
+
+#### Deep Dive: Contextual Typing
+
+Type inference can also work "backwards." Contextual typing occurs when the type of an expression is inferred based on its **location** or the context in which it's used. This is a powerful feature that reduces the need for explicit annotations in many common JavaScript patterns, making TypeScript code cleaner while still ensuring type safety.
+
+This is common in scenarios like:
+
+- **Callback Functions:** The types of parameters in a callback function are often inferred from the function signature it's being passed to.
+
+  ```typescript
+  // Assume Prescription type is defined elsewhere (e.g., in interfaces/types section)
+  type Prescription = { id: number; name: string; dosage: string };
+  const prescriptions: Prescription[] = [
+    { id: 1, name: "Lisinopril", dosage: "10mg" },
+    { id: 2, name: "Amoxicillin", dosage: "250mg" },
+  ];
+
+  // TypeScript infers 'rx' as type 'Prescription'
+  // based on the 'forEach' signature for 'Prescription[]'
+  prescriptions.forEach((rx) => {
+    // rx is contextually typed as Prescription
+    console.log(rx.name.toUpperCase()); // Accessing 'name' is safe
+  });
+  ```
+
+- **Assignments:** When assigning a value (like a function or object literal) to a variable or property with a known type, TypeScript uses that known type as context.
+
+  ```typescript
+  // Define the expected type for an event handler
+  // React and MouseEvent would typically be imported
+  // For now, let's define a simplified event structure for illustration
+  type SimplifiedMouseEvent = { currentTarget: { id: string } };
+  type ButtonClickHandler = (event: SimplifiedMouseEvent) => void;
+
+  // Assigning a function to a variable with the ButtonClickHandler type
+  const handleRefillClick: ButtonClickHandler = (event) => {
+    // 'event' is contextually typed as SimplifiedMouseEvent
+    console.log(`Button ID: ${event.currentTarget.id}`);
+  };
+
+  // For object literals
+  type PatientRecord = { name: string; age: number };
+  const newPatient: PatientRecord = {
+    // Contextually typed
+    name: "Alice",
+    age: 30,
+    // specialty: "Cardiology" // Error: Object literal may only specify known properties...
+  };
+  ```
+
+- **Function Return Statements:** The expected return type of a function (if explicitly annotated) can provide context for the `return` statements within it, ensuring they conform to the declared return type.
+  ```typescript
+  function getPatientSummary(patientId: number): string | null {
+    if (patientId < 0) {
+      return null; // OK, as null is part of the return type
+    }
+    // const summary = { id: patientId, notes: "All clear" };
+    // return summary; // Error: Type '{ id: number; notes: string; }' is not assignable to type 'string | null'.
+    return `Patient ID: ${patientId}, Status: Healthy`; // OK
+  }
+  ```
+
+Understanding when TypeScript can reliably infer types and when explicit annotations are necessary is key. While inference is powerful for local variables and simple cases, explicit types are crucial for defining clear contracts at function boundaries (parameters, return types) and for complex data structures.
+
+### Union Types (`|`)
+
+A union type allows a variable, parameter, or return value to hold a value of **one of several possible types**. It's created using the pipe symbol (`|`) between type options. This is extremely useful for modeling situations where a value can legitimately be one of a few different things.
+
+```typescript
+/**
+ * Represents an identifier which could be a numeric patient ID
+ * or an alphanumeric Medical Record Number (MRN).
+ * @typedef {number | string} PatientIdentifier
+ */
+type PatientIdentifier = number | string;
+
+let patientRef: PatientIdentifier = 12345; // OK
+console.log(`Patient Ref (ID): ${patientRef}`);
+
+patientRef = "MRN67890"; // OK
+console.log(`Patient Ref (MRN): ${patientRef}`);
+
+// patientRef = true; // Error: Type 'boolean' is not assignable to type 'PatientIdentifier'.
+
+/**
+ * Finds a patient record using either their ID or MRN.
+ * This demonstrates type narrowing within the function.
+ * @param {PatientIdentifier} id - The patient's ID or MRN.
+ * @returns {string} A message indicating search method.
+ */
+function findPatient(id: PatientIdentifier): string {
+  // To operate on 'id', we often need to narrow down its type
+  if (typeof id === "string") {
+    // Inside this block, TypeScript knows 'id' is a string (MRN)
+    // We can safely use string-specific methods
+    return `Searching by MRN: ${id.toUpperCase()}`;
+  } else {
+    // Inside this block, TypeScript knows 'id' is a number (Patient ID)
+    // We can safely use number-specific methods/operations
+    return `Searching by Patient ID: ${id.toFixed(0)}`;
+  }
+}
+
+console.log(findPatient(12345));
+console.log(findPatient("MRNXYZ"));
+```
+
+**Working with Union Types:**
+
+When you have a value of a union type, TypeScript will only allow you to access members that are **common to all types** in the union. To use type-specific members, you must first narrow down the type using a **type guard**. Common type guards include:
+
+- `typeof variable === "string"` (or "number", "boolean", "function", etc.)
+- `variable instanceof ClassName`
+- Property checks using the `in` operator (e.g., `'propertyName' in object`)
+- Equality checks against literal values (especially in discriminated unions, covered next).
+
+This process of using type guards to determine a more specific type within a block of code is called **narrowing**.
+
+### Intersection Types (`&`)
+
+An intersection type, created using the ampersand symbol (`&`), combines multiple types into a **single type that possesses all the properties and methods of each constituent type**. This is extremely useful for composing new types from smaller, reusable pieces, promoting modularity and the DRY (Don't Repeat Yourself) principle.
+
+```typescript
+/** Base properties common to all orders in SpeedyMeds */
+interface BaseOrder {
+  orderId: string;
+  orderDate: Date;
+  status: "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled"; // Using a literal union
+}
+
+/** Details specific to prescription refills */
+interface PrescriptionRefillDetails {
+  prescriptionId: number;
+  medicationName: string;
+  patientId: number;
+  refillsRemaining: number;
+}
+
+/** Details specific to over-the-counter (OTC) supply orders */
+interface SupplyOrderDetails {
+  items: { itemName: string; quantity: number; price: number }[];
+  deliveryAddress: string;
+  isGift: boolean;
+}
+
+// Combine base properties with specific details using intersection types
+type PrescriptionRefillOrder = BaseOrder & PrescriptionRefillDetails;
+type SupplyOrder = BaseOrder & SupplyOrderDetails;
+
+// Example Usage
+let refillOrder: PrescriptionRefillOrder = {
+  orderId: "RXRF1122",
+  orderDate: new Date(),
+  status: "Processing",
+  prescriptionId: 9876,
+  medicationName: "Lisinopril",
+  patientId: 12345,
+  refillsRemaining: 2,
+};
+
+let otcOrder: SupplyOrder = {
+  orderId: "SUPP3344",
+  orderDate: new Date(),
+  status: "Shipped",
+  items: [{ itemName: "Vitamin C", quantity: 1, price: 10.99 }],
+  deliveryAddress: "123 Wellness Ave, Healthtown",
+  isGift: false,
+};
+
+// Accessing properties from all intersected types is possible and type-safe
+console.log(
+  `Refill Order ${refillOrder.orderId} for ${refillOrder.medicationName}`
+);
+console.log(`OTC Order ${otcOrder.orderId} to ${otcOrder.deliveryAddress}`);
+```
+
+Think of intersection types as a way to "mix in" capabilities or properties from multiple type definitions to create a more comprehensive one.
+
+### Discriminating Unions (Tagged Unions)
+
+Discriminating unions are a very common and powerful pattern in TypeScript for working with union types, especially for modeling different states, events, or action types (e.g., in state management like Redux or Zustand, or handling variant API responses). This pattern makes it easier and safer to work with objects that can take one of several distinct forms.
+
+It involves three key components:
+
+1.  A **common, literal-typed property** (the _discriminant_ or _tag_). This property must exist on every type within the union, and its type is typically a string literal, number literal, or enum member.
+2.  A **union of types**, where each type has a different literal value for the discriminant property.
+3.  **Type narrowing** using `switch` statements or `if/else if` chains on the discriminant property. TypeScript can then correctly infer the specific type of the object within each corresponding code block.
+
+```typescript
+// Define different types of pharmacy actions, each with a 'type' property as the discriminant
+type AddMedicationAction = {
+  type: "ADD_MEDICATION"; // Discriminant
+  payload: {
+    medicationId: string;
+    name: string;
+    dosage: string;
+    quantity: number;
+  };
+};
+
+type UpdateStockAction = {
+  type: "UPDATE_STOCK"; // Discriminant
+  payload: { medicationId: string; newStockLevel: number };
+};
+
+type ProcessSaleAction = {
+  type: "PROCESS_SALE"; // Discriminant
+  payload: {
+    transactionId: string;
+    items: { medicationId: string; quantitySold: number }[];
+  };
+};
+
+// Create the union type representing all possible pharmacy actions
+type PharmacyAction =
+  | AddMedicationAction
+  | UpdateStockAction
+  | ProcessSaleAction;
+
+/**
+ * Processes different pharmacy actions based on their type.
+ * Demonstrates type narrowing using a discriminated union.
+ * @param {PharmacyAction} action - The pharmacy action to process.
+ * @returns {void}
+ */
+function handlePharmacyAction(action: PharmacyAction): void {
+  switch (action.type) {
+    case "ADD_MEDICATION":
+      // TypeScript knows 'action' is AddMedicationAction here
+      console.log(
+        `Adding medication: ${action.payload.name} (ID: ${action.payload.medicationId})`
+      );
+      // Safely access action.payload.dosage, action.payload.quantity
+      break;
+
+    case "UPDATE_STOCK":
+      // TypeScript knows 'action' is UpdateStockAction here
+      console.log(
+        `Updating stock for med ID ${action.payload.medicationId} to ${action.payload.newStockLevel}`
+      );
+      break;
+
+    case "PROCESS_SALE":
+      // TypeScript knows 'action' is ProcessSaleAction here
+      console.log(
+        `Processing sale for transaction ID: ${action.payload.transactionId}`
+      );
+      action.payload.items.forEach((item) => {
+        console.log(
+          `  Sold ${item.quantitySold} of med ID ${item.medicationId}`
+        );
+      });
+      break;
+
+    // Optional but recommended: Exhaustiveness Check using 'never'
+    default:
+      // If a new action type is added to PharmacyAction but not handled in the switch,
+      // this line will cause a compile-time error because 'action' can't be assigned to 'never'.
+      const _exhaustiveCheck: never = action;
+      console.error(`Unhandled action type: ${(_exhaustiveCheck as any).type}`);
+      return _exhaustiveCheck; // Ensures all cases are handled
+  }
+}
+
+// Example Usage:
+handlePharmacyAction({
+  type: "ADD_MEDICATION",
+  payload: {
+    medicationId: "med001",
+    name: "Loratadine",
+    dosage: "10mg",
+    quantity: 100,
+  },
+});
+handlePharmacyAction({
+  type: "UPDATE_STOCK",
+  payload: { medicationId: "med002", newStockLevel: 150 },
+});
+```
+
+Discriminating unions provide a robust and type-safe way to model variants and ensure all possible cases are handled, especially when combined with exhaustiveness checks using the `never` type. This pattern significantly reduces the chances of runtime errors when dealing with varied object structures.
+
+### Type Assertions
+
+Type assertions are a mechanism to tell the TypeScript compiler, "Trust me, I know the type of this value better than you do right now." They allow you to override the compiler's inferred type or treat a value as a more specific or different type, effectively casting it.
+
+**Crucially, type assertions only affect the compile-time type checking; they have no impact on the runtime behavior of your JavaScript code.** They do not perform any type conversion, validation, or restructuring of data at runtime. If your assertion is incorrect, the compiler won't warn you, but your application might crash or behave unexpectedly.
+
+**Syntax:**
+
+TypeScript provides two syntaxes for type assertions:
+
+1.  **`as` Syntax (Preferred):** This is the generally recommended syntax, especially in React Native projects using JSX/TSX files, because it avoids ambiguity with JSX tags.
+
+    ```typescript
+    let someValue: unknown = "this is a string from an API";
+    // Assert 'someValue' to be a string to access string properties
+    let strLength: number = (someValue as string).length;
+    console.log(`String length: ${strLength}`);
+    ```
+
+2.  **Angle-Bracket Syntax:** This older syntax (`<Type>value`) works similarly but can cause parsing conflicts in `.tsx` files.
+    ```typescript
+    // let strLengthAngleBracket: number = (<string>someValue).length; // Avoid in .tsx files
+    ```
+    Due to potential conflicts with JSX syntax, the `as` syntax is strongly preferred.
+
+**Common Use Cases:**
+
+While assertions should be used judiciously, they are sometimes necessary:
+
+- **Working with `any` or `unknown`:** After receiving data typed as `any` or `unknown` (e.g., from `JSON.parse`, a legacy API, or weakly-typed third-party library), if you have performed runtime checks or are certain of the actual type, you can assert it to a more specific type.
+
+  ```typescript
+  async function fetchConfiguration(): Promise<unknown> {
+    // In a real scenario, this would fetch data
+    return { theme: "dark", version: "1.2.0", features: ["A", "B"] };
+  }
+
+  type AppConfig = { theme: string; version: string; features: string[] };
+
+  async function applyConfig() {
+    const configData = await fetchConfiguration();
+    // We assert because we 'know' the shape of the data after fetching
+    const appConfig = configData as AppConfig;
+    console.log(`Theme: ${appConfig.theme}, Version: ${appConfig.version}`);
+  }
+  ```
+
+- **Interfacing with DOM APIs (Conceptual for React Native):** In web development, assertions are common when `document.getElementById` returns a generic `HTMLElement`, and you know it's a more specific type like `HTMLInputElement`. While React Native abstracts the DOM, similar situations can arise with native module calls or less-typed libraries.
+  ```typescript
+  // Conceptual example, not direct React Native
+  // const myInput = document.getElementById('user-input') as HTMLInputElement;
+  // console.log(myInput.value); // Access 'value' safely after assertion
+  ```
+- **When TypeScript's inference is too conservative or incorrect:** In rare complex scenarios, TypeScript might not be able to infer the most precise type, and an assertion can guide it.
+
+**Use with Extreme Caution!**
+
+Type assertions are a powerful tool, but they are also potentially dangerous because they bypass TypeScript's static analysis for the asserted type. If your assertion is incorrect, the compiler won't catch it, and you might introduce runtime errors.
+
+**Best Practices for Type Assertions:**
+
+- **Use Sparingly:** Only use assertions when you are absolutely certain about the type, and TypeScript cannot infer it or validate it through type guards.
+- **Prefer Type Guards:** Whenever possible, use type guards (`typeof`, `instanceof`, `in` operator, custom predicate functions) to narrow types. Type guards perform runtime checks, making your code inherently safer than assertions.
+  ```typescript
+  function processValue(val: unknown) {
+    if (typeof val === "string") {
+      // No assertion needed, val is string here
+      console.log(val.toUpperCase());
+    } else {
+      console.log("Value is not a string.");
+    }
+  }
+  ```
+- **Avoid Asserting to `any` if Possible:** Asserting to `any` (e.g., `value as any`) completely defeats the purpose of TypeScript for that expression. If you must assert, assert to the most specific and accurate type possible.
+- **Double Assertions (`value as unknown as TargetType`):** Sometimes, to assert between two types that TypeScript believes are completely unrelated, you might need a double assertion (first to `unknown`, then to the target type). This is an even stronger signal that your types might be mismatched or your design could be improved. Use with extreme caution and only if absolutely necessary after careful consideration.
+  ```typescript
+  // type Point2D = { x: number; y: number };
+  // type Point3D = { x: number; y: number; z: number };
+  // let p2d: Point2D = {x:1, y:1};
+  // If you are absolutely sure p2d is actually a Point3D from some external source:
+  // let p3d = p2d as unknown as Point3D; // Highly risky if not true!
+  ```
+
+Think of type assertions as a last resort, an escape hatch for situations where you, the developer, have more information about a value's type than the compiler can statically determine. Always prioritize safer alternatives like type guards and well-defined type structures.
 
 #### Summary Table: Basic TypeScript Types
 

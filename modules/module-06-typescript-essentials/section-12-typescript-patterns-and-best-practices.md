@@ -370,6 +370,283 @@ export default PatientDetailsScreen;
 - Type-safe access to `route.params`.
 - Autocompletion for screen names and parameters.
 
+### Balancing Type Inference and Explicit Annotations
+
+TypeScript excels at type inference, often deducing types automatically. However, knowing when to rely on inference versus when to provide explicit type annotations is key to writing clear and maintainable code.
+
+- **Rely on Inference for:**
+
+  - **Local Variables:** For variables declared and initialized within a function scope where their type is immediately obvious from the assigned value (e.g., `let name = "SpeedyMeds";` - `string` is clearly inferred).
+  - **Simple Function Return Types:** If a function's logic is straightforward and its return type is easily and unambiguously inferred by TypeScript, an explicit annotation might be omitted for brevity (though explicit is often still preferred for clarity).
+
+- **Use Explicit Annotations for:**
+  - **Function Signatures:** Always explicitly type function parameters and return values. This forms the "contract" of the function, making its usage clear and preventing accidental changes to its API.
+    ```typescript
+    /**
+     * Calculates the total cost including tax.
+     * @param subtotal - The subtotal amount before tax.
+     * @param taxRate - The tax rate (e.g., 0.07 for 7%).
+     * @returns The total cost including tax.
+     */
+    function calculateTotal(subtotal: number, taxRate: number): number {
+      return subtotal * (1 + taxRate);
+    }
+    ```
+  - **Component Props and State:** As covered in Section 10, always explicitly define types or interfaces for component props and state.
+  - **Complex Object Structures:** When defining objects with multiple properties, especially if they are not immediately assigned or if their structure is part of a larger data model.
+  - **API Boundaries:** Data coming from or going to external systems (e.g., API responses, data from storage) should have explicit types.
+  - **Variables Initialized with `null` or `undefined` (that will later hold a specific type):**
+    ```typescript
+    // Assuming UserProfile is defined elsewhere
+    // type UserProfile = { id: string; name: string; /* ... */ };
+    let currentUser: UserProfile | null = null; // Explicitly typed
+    // Later: currentUser = fetchUserProfile();
+    ```
+  - **When TypeScript's Inference is Ambiguous or Defaults to `any`:** If TypeScript cannot confidently infer a type or infers `any` (and `noImplicitAny` is not strictly enforced), provide an explicit type to ensure safety.
+
+Striking a good balance improves code readability: inference reduces verbosity for simple cases, while explicit annotations provide clarity and safety at critical boundaries.
+
+### The Crucial Role of `strictNullChecks`
+
+Enabling `"strictNullChecks": true` in your `tsconfig.json` (which is part of the recommended `"strict": true` setting) is one of the most impactful configurations for writing robust TypeScript and React Native applications.
+
+**Why is it Crucial?**
+
+JavaScript's `null` and `undefined` values are common sources of runtime errors (e.g., "Cannot read property 'x' of undefined"). Without `strictNullChecks`, these values can be assigned to any type, hiding potential bugs until your app crashes.
+
+With `strictNullChecks` enabled:
+
+- `null` and `undefined` become distinct types.
+- You cannot assign `null` or `undefined` to a variable of another type (e.g., `string`, `number`) unless you explicitly include `null` or `undefined` in a union type (e.g., `string | null`).
+- TypeScript forces you to consciously handle situations where a value might be `null` or `undefined` before trying to use it.
+
+**Common Patterns for Handling Potential `null` or `undefined` Values:**
+
+1.  **Explicit Checks (Type Guards):**
+
+    ```typescript
+    function printName(user: { name?: string }): void {
+      if (user.name !== undefined && user.name !== null) {
+        console.log(user.name.toUpperCase()); // Safe
+      } else {
+        console.log("User name not provided.");
+      }
+    }
+    ```
+
+2.  **Optional Chaining (`?.`):**
+    Safely access properties or call methods on potentially `null` or `undefined` objects. If any part of the chain is `null` or `undefined`, the expression short-circuits and returns `undefined`.
+
+    ```typescript
+    interface Patient {
+      id: string;
+      details?: {
+        address?: {
+          street?: string;
+          city: string;
+        };
+      };
+    }
+    const patient: Patient = { id: "p123" };
+    const streetName = patient.details?.address?.street; // Type: string | undefined
+    console.log(streetName); // undefined, no error
+    ```
+
+3.  **Nullish Coalescing (`??`):**
+    Provide a default value if an expression evaluates to `null` or `undefined`. It only coalesces for `null` or `undefined`, unlike `||` which coalesces for any falsy value (e.g., `''`, `0`).
+
+    ```typescript
+    // Assuming 'settings' is an object that might have 'customPharmacyName'
+    // const settings: { customPharmacyName?: string | null } = { customPharmacyName: null };
+    const pharmacyName =
+      settings.customPharmacyName ?? "SpeedyMeds Default Pharmacy";
+    // If settings.customPharmacyName is null or undefined, pharmacyName becomes "SpeedyMeds Default Pharmacy".
+    // If it's an empty string "", it remains "".
+    ```
+
+4.  **Conditional Rendering (in React Native components):**
+    Only render a component or part of the UI if the required data is available.
+
+    ```tsx
+    // {medicationDetails && <Text>{medicationDetails.description}</Text>}
+    // or
+    // {isLoading ? <ActivityIndicator /> : <DataDisplay data={data} />}
+    ```
+
+5.  **Non-null Assertion Operator (`!`):**
+    Use with extreme caution. The `!` operator after an expression (e.g., `user!.name`) tells TypeScript that you are certain the value is not `null` or `undefined`. This silences the compiler but provides no runtime safety. Only use it if you have performed checks or have guarantees that TypeScript cannot see.
+    ```typescript
+    // interface User { profile: { name: string } };
+    // function getKnownUser(): User { /* ... guarantees user and profile are returned ... */ return { profile: { name: "Test" } } };
+    // const userName = getKnownUser()!.profile.name; // Use only if absolutely sure
+    ```
+    It's generally better to refactor code to avoid needing `!`.
+
+By embracing `strictNullChecks` and using these patterns, you significantly reduce a major category of runtime errors in your React Native applications.
+
+### Leveraging JSDoc with TypeScript for Comprehensive Documentation
+
+As established in the course introduction, combining TypeScript with JSDoc comments is our standard for creating well-documented, maintainable code. While TypeScript defines the _structure_ and _type contracts_ for the compiler, JSDoc describes the _purpose_, _intent_, _usage context_, and _nuances_ for human developers.
+
+**Why Both?**
+
+- **TypeScript** provides compile-time type safety and enables powerful tooling (autocompletion, refactoring). Its type annotations are a form of structural documentation.
+- **JSDoc** provides narrative documentation, explains complex logic, clarifies parameter meanings beyond their types, describes side effects, provides usage examples, and can document non-obvious behaviors or design decisions.
+
+This dual approach ensures maximum clarity: types guarantee structural correctness, while JSDoc provides essential human-readable context.
+
+**Common JSDoc Tags with TypeScript:**
+
+Many JSDoc tags work seamlessly with TypeScript, and IDEs often use them to enhance tooltips and code intelligence:
+
+- `@param {paramType} paramName - Description.` (Type can often be omitted if clear from TS)
+- `@returns {returnType} Description.` (Type can often be omitted if clear from TS)
+- `@typedef {(object|TypeExpression)} TypeName - Description.` (Useful for defining complex types or shapes that JSDoc tools can pick up, especially if you want to document properties within an object type alias).
+- `@property {propertyType} propertyName - Description.` (Used within `@typedef` for object properties).
+- `@template T - Description of generic type parameter.`
+- `@throws {ErrorType} Description of error.`
+- `@deprecated Explanation for deprecation.`
+- `@example Caption for example\n codeFencedJsOrTsBlock()`
+- `@see Link or reference.`
+- `@author AuthorName`
+- `@since VersionNumber`
+
+**Illustrative Example:**
+
+Consider a function for submitting a complex order in the SpeedyMeds system. It involves an asynchronous operation, specific data structures, and potential error handling.
+
+```typescript
+// Assuming these types are defined elsewhere for clarity in a real project:
+interface OrderItem {
+  productId: string;
+  quantity: number;
+  unitPrice: number;
+}
+interface ShippingAddress {
+  street: string;
+  city: string;
+  zipCode: string;
+  country: string;
+}
+interface ApiResponse<TData> {
+  success: boolean;
+  data: TData | null;
+  error?: { message: string; code?: number };
+}
+
+/**
+ * @typedef {object} SubmitOrderPayloadDef
+ * @property {OrderItem[]} items - The list of items in the order.
+ * @property {ShippingAddress} shippingAddress - The address for shipping.
+ * @property {string} customerId - The ID of the customer placing the order.
+ * @property {string} paymentMethodId - The ID of the payment method to use.
+ */
+type SubmitOrderPayload = {
+  items: OrderItem[];
+  shippingAddress: ShippingAddress;
+  customerId: string;
+  paymentMethodId: string;
+};
+
+/**
+ * @typedef {object} SubmitOrderResponseDataDef
+ * @property {string} orderId - The unique ID of the successfully created order.
+ * @property {string} estimatedDeliveryDate - An ISO date string for estimated delivery.
+ * @property {number} totalAmount - The final amount charged.
+ */
+type SubmitOrderResponseData = {
+  orderId: string;
+  estimatedDeliveryDate: string; // ISO Date string
+  totalAmount: number;
+};
+
+/**
+ * Submits a new medication or supply order to the backend system.
+ * This function handles the API call, basic validation (conceptual),
+ * and returns a structured response indicating success or failure.
+ *
+ * @async
+ * @param {SubmitOrderPayload} orderPayload - The complete order data to be submitted.
+ * @param {string} authToken - The user's authentication token for the API request.
+ * @returns {Promise<ApiResponse<SubmitOrderResponseData>>} A promise that resolves to a standardized API response.
+ *          If successful, `data` will contain an object conforming to {@link SubmitOrderResponseDataDef}.
+ *          If failed, `error` will contain error details.
+ * @throws {Error} Throws a generic Error for unexpected issues during submission
+ *                 (e.g., network failure not caught as an API error).
+ *                 Specific API errors should be checked within the 'error' property of the returned ApiResponse.
+ *
+ * @example
+ * async function handlePlaceOrder() {
+ *   const payload: SubmitOrderPayload = {
+ *     items: [{ productId: "med123", quantity: 2, unitPrice: 10.50 }],
+ *     shippingAddress: { street: "123 Main St", city: "Anytown", zipCode: "12345", country: "USA" },
+ *     customerId: "cust789",
+ *     paymentMethodId: "pm_abcdef123456",
+ *   };
+ *   const token = "some_auth_token";
+ *   try {
+ *     const response = await submitSpeedyMedsOrder(payload, token);
+ *     if (response.success && response.data) {
+ *       console.log("Order placed successfully! ID:", response.data.orderId);
+ *       console.log("Estimated Delivery:", response.data.estimatedDeliveryDate);
+ *     } else {
+ *       console.error("Order submission failed:", response.error?.message);
+ *     }
+ *   } catch (e) {
+ *     console.error("Critical error during order submission:", e);
+ *   }
+ * }
+ */
+async function submitSpeedyMedsOrder(
+  orderPayload: SubmitOrderPayload,
+  authToken: string
+): Promise<ApiResponse<SubmitOrderResponseData>> {
+  console.log(`Submitting order for customer ${orderPayload.customerId}...`);
+
+  // --- Actual implementation would involve a fetch/axios call ---
+  // Placeholder mock implementation:
+  await new Promise((resolve) => setTimeout(resolve, 750)); // Simulate network delay
+
+  if (orderPayload.items.length === 0) {
+    return {
+      success: false,
+      data: null,
+      error: { message: "Order must contain items.", code: 400 },
+    };
+  }
+
+  if (Math.random() > 0.15) {
+    // Simulate 85% success rate
+    const mockResponseData: SubmitOrderResponseData = {
+      orderId: `ORD-${Date.now()}`,
+      estimatedDeliveryDate: new Date(
+        Date.now() + 3 * 24 * 60 * 60 * 1000
+      ).toISOString(),
+      totalAmount:
+        orderPayload.items.reduce(
+          (sum, item) => sum + item.unitPrice * item.quantity,
+          0
+        ) * 1.07, //  with 7% tax
+    };
+    return { success: true, data: mockResponseData, error: undefined };
+  } else {
+    // Simulate API error
+    return {
+      success: false,
+      data: null,
+      error: {
+        message: "Payment processing failed due to insufficient funds.",
+        code: 402,
+      },
+    };
+  }
+}
+```
+
+In this example, JSDoc provides context on the function's purpose, its asynchronous nature (`@async`), detailed descriptions for parameters (`@param`) and the complex return type (`@returns`), a link to a related type (`@link`), potential errors (`@throws`), and a usage example (`@example`). This complements the TypeScript types, making the function much easier to understand and use correctly.
+
+By consistently applying both TypeScript for type safety and JSDoc for descriptive context, you create a high-quality, robust, and developer-friendly codebase.
+
 ### Common TypeScript Pitfalls in React Native
 
 While TypeScript brings many benefits, some common pitfalls can undermine its effectiveness if not addressed:
