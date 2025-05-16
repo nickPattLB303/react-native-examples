@@ -32,6 +32,27 @@ TypeScript addresses this by adding an optional layer of static typing on top of
 - **Better Scalability for Large Projects:** As applications grow, managing a JavaScript codebase can become challenging. TypeScript helps maintain order and consistency, making it easier to scale your project without sacrificing quality. The structured nature of TypeScript codebases facilitates easier onboarding for new team members.
 - **Seamless Integration with JavaScript:** TypeScript is a superset of JavaScript, meaning any valid JavaScript code is also valid TypeScript code. You can adopt TypeScript incrementally in existing JavaScript projects. TypeScript compiles down to plain JavaScript, which runs in any browser or Node.js environment, including React Native's JavaScript engine (typically Hermes).
 
+The following diagram illustrates the basic workflow of using TypeScript:
+
+```mermaid
+graph TD
+    A["TypeScript Code (.ts, .tsx files)"] --> B[TypeScript Compiler<br>(tsc)];
+    B -- Transpilation & Static Type Checking --> C{Type Errors Found?};
+    C -- Yes --> D[Developer Fixes Errors<br>(Iterative Process)];
+    D --> B;
+    C -- No --> E["JavaScript Code (.js, .jsx files)<br>(Type Information Erased)"];
+    E --> F[JavaScript Runtime<br>(Browser, Node.js, React Native/Hermes)];
+
+    style A fill:#d4f1f9,stroke:#333,stroke-width:2px
+    style B fill:#cce5ff,stroke:#333,stroke-width:2px
+    style C fill:#fff9c4,stroke:#333,stroke-width:2px,font-style:italic
+    style D fill:#ffebee,stroke:#333,stroke-width:2px
+    style E fill:#e6ffed,stroke:#333,stroke-width:2px
+    style F fill:#e0f7fa,stroke:#333,stroke-width:2px
+```
+
+This diagram visually represents the TypeScript development lifecycle. Developers write TypeScript code in `.ts` or `.tsx` files (Node A). The TypeScript Compiler, commonly invoked via the `tsc` command (Node B), then processes this code. This compilation step involves two key actions: static type checking and transpilation. During static type checking (Edge B to C), the compiler analyzes the code against the defined types. If type errors are discovered (Node C leading to D), the compiler reports these errors, and the developer must fix them, iterating back to the compilation step. If no type errors are found (Node C leading to E), the compiler transpiles the TypeScript code into standard JavaScript code (.js or .jsx files), stripping away the TypeScript-specific type annotations. This resulting JavaScript code (Node E) is what actually runs in the target JavaScript runtime environment (Node F), such as a web browser, Node.js, or the Hermes engine within a React Native application. This process ensures that type-related issues are caught during development, leading to more robust JavaScript output.
+
 A short, self-contained example demonstrating a type mismatch error caught by TypeScript:
 
 ```typescript
@@ -146,7 +167,14 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 >
 > **Comparison:** Swift's strong type system and features like optionals (`Optional<T>` or `T?`) are designed to prevent null pointer exceptions and type errors at compile time. TypeScript brings a similar level of rigor to JavaScript. When you define a variable in Swift, you specify its type (e.g., `var medicationName: String = "Panadol"`). TypeScript allows similar explicit type definitions.
 >
-> **Key Takeaway:** TypeScript introduces compile-time type checking to JavaScript, akin to Swift's safety features, leading to more robust and predictable code by catching type-related errors early.
+> **Key Differences & Takeaways:**
+> The advantages of static typing will be immediately apparent. Key distinctions to be mindful of include:
+>
+> - **Structural vs. Nominal Typing:** TypeScript uses a _structural_ type system (compatibility based on object shape), which differs from Swift's _nominal_ typing (compatibility based on declared names and inheritance).
+> - **Type Erasure:** TypeScript's type annotations exist only during development and are erased during compilation to JavaScript, unlike Swift where type information is generally available at runtime.
+> - **Null Handling:** TypeScript's `strictNullChecks` (when enabled) offers similar null safety to Swift's optionals (`String?`), by requiring explicit handling of potentially `null` or `undefined` values.
+>
+> Focus on understanding how TypeScript's structural typing differs from Swift's nominal typing, as this affects how you design your types and interfaces.
 >
 > **Source:** [Swift Language Guide - Type Safety and Type Inference](https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html#ID322)
 
@@ -154,7 +182,14 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 >
 > **Comparison:** Kotlin and Java are statically-typed languages where type safety is paramount. Features like Kotlin's null safety (e.g., `String?` for nullable strings) help prevent `NullPointerExceptions`. TypeScript offers comparable benefits by allowing you to define types, including how `null` and `undefined` are handled, thus reducing runtime surprises.
 >
-> **Key Takeaway:** TypeScript provides JavaScript developers with a type system similar to Kotlin or Java, enabling the detection of type errors during development rather than at runtime, leading to more reliable applications.
+> **Key Differences & Takeaways:**
+> The advantages of static type checking will be immediately apparent. Concentrate on TypeScript-specific features like union types, intersection types, and utility types. Key differences to be mindful of include:
+>
+> - **Structural vs. Nominal Typing:** TypeScript uses a _structural_ type system (compatibility based on shape), which differs from the _nominal_ typing found in Java and Kotlin (compatibility based on declared names and inheritance).
+> - **Type Erasure:** TypeScript's type information is erased during transpilation to JavaScript. This contrasts with Java/Kotlin where type information is generally available at runtime via reflection.
+> - **Null Handling:** TypeScript's `strictNullChecks` (when enabled) offers robust null safety, akin to Kotlin's nullable types (`String?`) and Java's `Optional` class, by requiring explicit handling of potentially `null` or `undefined` values.
+>
+> Focus on how types are defined for JavaScript objects and functions, and how these differences, particularly structural typing, influence type compatibility.
 >
 > **Source:** [Kotlin Docs - Null Safety](https://kotlinlang.org/docs/null-safety.html)
 
@@ -168,7 +203,14 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 >
 > 🅰 **(Angular Developers):** Angular is built with TypeScript, making it a core part of the development experience. All the benefits you enjoy with TypeScript in Angular—such as strong typing for components, services, and modules, as well as excellent tooling support—are directly applicable when using TypeScript with React Native.
 >
-> **Key Takeaway:** Your existing TypeScript knowledge from Angular development is a massive advantage and directly translates to writing high-quality React Native applications.
+> **Key Takeaway & Differences:** Your TypeScript knowledge from Angular development is a massive advantage, but you'll need to adapt to React Native's patterns. Focus on:
+>
+> - Typing functional components, props, and state (e.g., using `useState`, `useReducer` hooks) rather than class-based components with decorators like `@Component` and `@Input()`.
+> - JSX for templating instead of Angular's HTML-based templates with directives like `*ngFor` or `*ngIf`.
+> - React Native's approach to styling (e.g., `StyleSheet` API, Styled Components) compared to Angular's component-scoped CSS or global styles.
+> - Different state management libraries and patterns (e.g., Zustand, React Context, TanStack Query) compared to services and RxJS for state in Angular.
+>
+> While the underlying TypeScript language is the same, its application in the React Native ecosystem will be the new learning area.
 >
 > **Source:** [Angular Docs - Introduction to TypeScript](https://angular.io/guide/typescript-configuration#why-typescript)
 

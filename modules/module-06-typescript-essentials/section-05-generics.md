@@ -611,9 +611,4 @@ Time to apply your knowledge of generics by creating a versatile function.
 
 **Tool:** CodeSandbox
 
-**(https://codesandbox.io/s/your-exercise-6-2-link)**
-
-> [!IMPORTANT]
-> The link above is a placeholder. You will need to replace `https://codesandbox.io/s/your-exercise-6-2-link` with the actual URL for the CodeSandbox exercise.
-
 This exercise will help you understand how to create flexible and type-safe functions using generics, a common pattern for utility functions.

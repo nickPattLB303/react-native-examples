@@ -6,6 +6,50 @@ In the previous section, we learned about basic types and how to define the shap
 
 Both interfaces and type aliases allow you to create custom names for type annotations, making your code more readable and maintainable.
 
+#### Understanding Structural vs. Nominal Typing
+
+Before diving into interfaces and type aliases, it's important to understand TypeScript's structural typing system, which is a key difference from many other statically-typed languages.
+
+**Structural typing** means that TypeScript determines type compatibility based on the structure or shape of the data, rather than explicit type declarations or inheritance. If two objects have the same properties with compatible types, they are considered compatible, regardless of their declared type names or inheritance hierarchies.
+
+A short, self-contained example of structural typing:
+
+```typescript
+// Define two separate interfaces
+interface MedicationA {
+  name: string;
+  dosage: string;
+  quantity: number;
+}
+
+interface MedicationB {
+  name: string;
+  dosage: string;
+  quantity: number;
+}
+
+// Define a function that accepts MedicationA
+function displayMedication(med: MedicationA): string {
+  return `${med.name} - ${med.dosage}`;
+}
+
+// Create an object that structurally matches MedicationB
+const aspirinB: MedicationB = {
+  name: "Aspirin",
+  dosage: "81mg",
+  quantity: 30,
+};
+
+// This works! Even though aspirinB is declared as MedicationB,
+// it can be passed to a function expecting MedicationA because
+// the structure is compatible
+const display = displayMedication(aspirinB); // No error!
+```
+
+In **nominal typing** languages (like Java, C#, Swift), the example above would fail because `MedicationA` and `MedicationB` are considered different types regardless of having the same structure. In those languages, types are compatible only if they are explicitly declared to be related through inheritance or implementation.
+
+This structural approach makes TypeScript more flexible and better suited to JavaScript's dynamic nature, but it's important to be aware of this behavior when designing your types.
+
 #### Interfaces
 
 An `interface` is a way to define a contract for an object\'s shape. It specifies what properties an object should have and what their types should be. Interfaces are particularly well-suited for describing the shapes of objects and classes.
@@ -629,10 +673,5 @@ Now it's time to practice what you've learned about interfaces.
 4.  Create an example object instance for `PrescriptionRecord` and log some of its properties to the console.
 
 **Tool:** CodeSandbox
-
-**(https://codesandbox.io/s/your-exercise-6-1-link)**
-
-> [!IMPORTANT]
-> The link above is a placeholder. You will need to replace `https://codesandbox.io/s/your-exercise-6-1-link` with the actual URL for the CodeSandbox exercise.
 
 This exercise will help you solidify your understanding of creating, extending, and using interfaces to structure complex data, a common task in application development.

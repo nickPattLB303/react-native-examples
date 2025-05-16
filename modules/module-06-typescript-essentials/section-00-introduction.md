@@ -57,15 +57,6 @@ Understanding TypeScript can significantly enhance your development workflow, re
 >
 > **Source:** [Angular Docs - TypeScript Configuration](https://angular.io/guide/typescript-configuration)
 
-## Course Standard: TypeScript + JSDoc
-
-Throughout this course, we'll combine TypeScript and JSDoc. TypeScript defines the _structure_ and _contract_ of your code for compile-time type safety. JSDoc comments describe the _purpose_, _intent_, _usage_, and _nuances_ for human developers. This dual approach ensures maximum clarity and maintainability:
-
-- **TypeScript:** Guarantees structural correctness and catches type-related errors early.
-- **JSDoc:** Provides vital context, explanations, usage examples, and clarifies complex logic or intent, especially for APIs like those in the SpeedyMeds capstone project.
-
-You'll see this combination in examples, reinforcing the importance of both type-safe and well-documented code.
-
 ## Learning Objectives
 
 By the end of this module, you'll be able to:
@@ -95,10 +86,6 @@ Before starting this module, ensure you have a good understanding of the concept
 Apply your TypeScript knowledge to model a complex API response.
 
 Challenge 6: Typing a Pharmacy API Response
-**(https://codesandbox.io/s/your-challenge-6-link)**
-
-> [!IMPORTANT]
-> The link above is a placeholder. You will need to replace `https://codesandbox.io/s/your-challenge-6-link` with the actual URL for the CodeSandbox challenge.
 
 ## Module Summary
 

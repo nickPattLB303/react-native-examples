@@ -329,8 +329,6 @@ The API response structure is as follows:
 
 This challenge will test your ability to translate a JSON structure into robust TypeScript types, a critical skill for working with APIs in any TypeScript application.
 
----
-
 ### Module Summary
 
 In this module, "TypeScript Essentials," we embarked on a journey to understand and utilize TypeScript to enhance our React Native development. We started by exploring _why_ TypeScript is a valuable addition, focusing on its core benefits: static type safety for early error detection, superior tooling support, and improved code maintainability and scalability, especially crucial for larger applications like our SpeedyMeds capstone project.

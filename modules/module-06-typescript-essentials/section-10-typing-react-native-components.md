@@ -2,6 +2,9 @@
 
 TypeScript significantly enhances React Native development by enabling strong typing for component props and state. This leads to more robust, maintainable, and understandable components, catching many common errors at compile time rather than at runtime. This section explores how to define types for component props (including optional and default props) and component state.
 
+> [!NOTE]
+> React Native projects created with Expo or the React Native CLI now use TypeScript by default. The standard project structure includes a `tsconfig.json` file and `.tsx` extensions for component files. If you're migrating an existing JavaScript React Native project to TypeScript, you would need to add TypeScript dependencies, create a `tsconfig.json` file, and gradually convert `.js/.jsx` files to `.ts/.tsx`.
+
 ### Conceptual Content: Ensuring Component Integrity with Types
 
 React Native components are the fundamental building blocks of your UI. Ensuring that these components receive the correct data (props) and manage their internal data (state) correctly is crucial for application stability.
