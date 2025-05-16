@@ -36,12 +36,12 @@ The following diagram illustrates the basic workflow of using TypeScript:
 
 ```mermaid
 graph TD
-    A["TypeScript Code (.ts, .tsx files)"] --> B[TypeScript Compiler<br>(tsc)];
+    A["TypeScript Code (.ts, .tsx files)"] --> B["TypeScript Compiler (tsc)"];
     B -- Transpilation & Static Type Checking --> C{Type Errors Found?};
-    C -- Yes --> D[Developer Fixes Errors<br>(Iterative Process)];
+    C -- Yes --> D["Developer Fixes Errors<br>(Iterative Process)"];
     D --> B;
     C -- No --> E["JavaScript Code (.js, .jsx files)<br>(Type Information Erased)"];
-    E --> F[JavaScript Runtime<br>(Browser, Node.js, React Native/Hermes)];
+    E --> F["JavaScript Runtime<br>(Browser, Node.js, React Native/Hermes)"];
 
     style A fill:#d4f1f9,stroke:#333,stroke-width:2px
     style B fill:#cce5ff,stroke:#333,stroke-width:2px
@@ -206,8 +206,11 @@ The ability of static typing to catch errors before runtime is a cornerstone of 
 > **Key Takeaway & Differences:** Your TypeScript knowledge from Angular development is a massive advantage, but you'll need to adapt to React Native's patterns. Focus on:
 >
 > - Typing functional components, props, and state (e.g., using `useState`, `useReducer` hooks) rather than class-based components with decorators like `@Component` and `@Input()`.
+>
 > - JSX for templating instead of Angular's HTML-based templates with directives like `*ngFor` or `*ngIf`.
+>
 > - React Native's approach to styling (e.g., `StyleSheet` API, Styled Components) compared to Angular's component-scoped CSS or global styles.
+>
 > - Different state management libraries and patterns (e.g., Zustand, React Context, TanStack Query) compared to services and RxJS for state in Angular.
 >
 > While the underlying TypeScript language is the same, its application in the React Native ecosystem will be the new learning area.
@@ -218,4 +221,4 @@ Understanding these benefits provides a strong foundation for appreciating the f
 
 ## Next Steps
 
-Now that you understand why TypeScript is a valuable addition to your development toolkit, let's move on to explore the fundamental building blocks: the basic types that TypeScript provides. This will be covered in the next section.
+Now that you understand why TypeScript is a valuable addition to your development toolkit, let's move on to explore the fundamental building blocks: the basic types that TypeScript provides. This will be covered in the next section, [Section 2: Basic Types](./section-02-basic-types.md).

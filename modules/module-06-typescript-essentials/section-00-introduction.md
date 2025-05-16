@@ -11,7 +11,7 @@ Understanding TypeScript can significantly enhance your development workflow, re
 
 > 🍏 **(iOS Developers - Swift):**
 >
-> Your experience with Swift's strong, static type system provides an excellent foundation. You'll find TypeScript's explicit type annotations, compile-time error checking, interfaces (akin to protocols), and enums very familiar.
+> **Comparison:** Your experience with Swift's strong, static type system provides an excellent foundation. You'll find TypeScript's explicit type annotations, compile-time error checking, interfaces (akin to protocols), and enums very familiar.
 >
 > **Comparison:**
 >
@@ -25,7 +25,7 @@ Understanding TypeScript can significantly enhance your development workflow, re
 
 > 🤖 **(Android Developers - Kotlin/Java):**
 >
-> Your background in statically-typed languages like Kotlin or Java will make TypeScript's type system feel natural. Defining explicit types for variables, function parameters, and return values is a shared principle.
+> **Comparison:** Your background in statically-typed languages like Kotlin or Java will make TypeScript's type system feel natural. Defining explicit types for variables, function parameters, and return values is a shared principle.
 >
 > **Comparison:**
 >
@@ -75,7 +75,7 @@ By the end of this module, you'll be able to:
 
 Before starting this module, ensure you have a good understanding of the concepts covered in:
 
-- Module 5: JavaScript Essentials for React Native (ensure you have completed this module)
+- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-XX-YYY.md)
 
 ## Module Sections
 
