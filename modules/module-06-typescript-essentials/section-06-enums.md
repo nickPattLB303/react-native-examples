@@ -252,6 +252,76 @@ While enums are useful, TypeScript offers other patterns that can sometimes be m
 
 For many common cases, especially with string constants, literal union types or `as const` objects offer excellent type safety with potentially less overhead or a more JavaScript-native feel than traditional enums.
 
+### More on Literal Types
+
+Beyond simple union types of string or number literals, TypeScript offers more advanced ways to use literal types, including boolean literals and template literal types.
+
+**1. Boolean Literal Types**
+
+You can use `true` or `false` as types to restrict a variable to a specific boolean value. This is often used in discriminated unions or conditional types.
+
+```typescript
+interface SuccessResponse {
+  status: "success";
+  isValid: true;
+  data: object;
+}
+
+interface ErrorResponse {
+  status: "error";
+  isValid: false;
+  errorCode: number;
+  errorMessage: string;
+}
+
+type ApiResponse = SuccessResponse | ErrorResponse;
+
+function handleResponse(response: ApiResponse) {
+  if (response.isValid === true) {
+    // Or simply if (response.isValid)
+    // TypeScript knows response is SuccessResponse here
+    console.log("Data:", response.data);
+  } else {
+    // TypeScript knows response is ErrorResponse here
+    console.log("Error:", response.errorMessage);
+  }
+}
+```
+
+**2. Template Literal Types**
+
+Introduced in TypeScript 4.1, template literal types allow you to construct new string literal types by concatenating or manipulating existing string literal types. They build on string literal types and have the ability to expand into many strings via unions.
+
+```typescript
+// Basic string literal types
+type MedicationColor = "Red" | "Blue" | "Green";
+type MedicationForm = "Pill" | "Syrup" | "Capsule";
+
+// Template literal type combining the above
+type MedicationSKU = `${MedicationColor}-${MedicationForm}`;
+// This type expands to: "Red-Pill" | "Red-Syrup" | "Red-Capsule" |
+//                       "Blue-Pill" | "Blue-Syrup" | "Blue-Capsule" |
+//                       "Green-Pill" | "Green-Syrup" | "Green-Capsule"
+
+let sku1: MedicationSKU = "Red-Pill"; // Valid
+let sku2: MedicationSKU = "Blue-Capsule"; // Valid
+// let sku3: MedicationSKU = "Red-Liquid";   // Error: Type '"Red-Liquid"' is not assignable to type 'MedicationSKU'.
+// let sku4: MedicationSKU = "Yellow-Pill"; // Error: Type '"Yellow-Pill"' is not assignable to type 'MedicationSKU'.
+
+console.log(`Selected SKU: ${sku1}`); // Output: Selected SKU: Red-Pill
+
+// Can also be used with built-in string manipulation types like Capitalize, Uncapitalize, Lowercase, Uppercase
+type EventName<T extends string> = `${T}Changed`;
+type MedicationName = "aspirin" | "ibuprofen";
+type MedicationEvent = EventName<Capitalize<MedicationName>>;
+// MedicationEvent becomes "AspirinChanged" | "IbuprofenChanged"
+
+let event1: MedicationEvent = "AspirinChanged";
+// let event2: MedicationEvent = "aspirinChanged"; // Error
+```
+
+Template literal types are very powerful for creating precise string types that reflect patterns in your data, such as event names, style variants, or API route patterns, providing strong type safety for string-based APIs.
+
 > 🛣️ **(All Learners):** String enums or `as const` objects with literal union types are often preferred in modern TypeScript development for their clarity and ease of debugging, as the string values are explicit. Numeric enums are useful when you need bitwise operations or when a numeric representation is more natural for the domain, but ensure their usage is well-documented.
 
 > 📚 **Official Documentation:**

@@ -302,12 +302,69 @@ TypeScript provides many other utility types. Here are a few more with brief exp
   console.log(speedyMedsCentral.name); // Output: SpeedyMeds Central
   ```
 
-#### Under the Hood: How Utility Types Work (Briefly)
+#### Under the Hood: How Utility Types Work & Introduction to Mapped Types
 
-Many of these utility types are not "magic" compiler intrinsics but are themselves implemented using other advanced TypeScript features like **mapped types** and **conditional types** (which allow types to be chosen based on conditions involving other types). For example, `Partial<T>` can be conceptually defined using a mapped type like this:
+Many of these built-in utility types are not "magic" compiler intrinsics but are themselves implemented using other advanced TypeScript features like **mapped types** and **conditional types**. Mapped types are a powerful way to create new object types by transforming the properties of an existing type. Conditional types allow types to be chosen based on conditions involving other types.
+
+**Mapped Types Explained**
+
+Mapped types iterate over the keys of an existing type (`keyof T`) and create a new property for each key, potentially transforming its type or modifiers (like `readonly` or `?`).
+
+The general syntax for a mapped type is:
 
 ```typescript
-// Conceptual definition
+// For some existing object type T
+type NewType = {
+  [PropertyKey in keyof T]: TransformedType; // PropertyKey gets each key from T
+  // TransformedType is the new type for that property
+};
+```
+
+**Key Features of Mapped Types:**
+
+1.  **Iterating over Keys:** `K in keyof T` iterates through each property name `K` in the type `T`.
+2.  **Accessing Property Types:** `T[K]` looks up the type of the property `K` in the original type `T`.
+3.  **Adding Modifiers:** You can add `readonly` or `?` (optional) modifiers to the properties in the new type.
+    ```typescript
+    type AllOptional<T> = { [P in keyof T]?: T[P] }; // This is Partial<T>
+    type AllReadonly<T> = { readonly [P in keyof T]: T[P] }; // This is Readonly<T>
+    ```
+4.  **Removing Modifiers:** You can also remove modifiers using `-readonly` or `-?`.
+    ```typescript
+    type AllMutable<T> = { -readonly [P in keyof T]: T[P] };
+    type AllRequired<T> = { [P in keyof T]-?: T[P] }; // This is Required<T>
+    ```
+5.  **Key Remapping via `as`:** You can change the names of the properties in the new type using an `as` clause within the mapped type. This is powerful for creating new shapes or prefixing/suffixing property names.
+
+    ```typescript
+    interface ExampleUser {
+      id: string;
+      name: string;
+      email: string;
+    }
+    // Creates getter methods for each property: e.g., getId, getName
+    type Getters<T> = {
+      [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+    };
+    type UserGetters = Getters<ExampleUser>;
+    // UserGetters is:
+    // {
+    //   getId: () => string;
+    //   getName: () => string;
+    //   getEmail: () => string;
+    // }
+    ```
+
+    This example uses template literal types and intrinsic string manipulation types (`Capitalize`) for sophisticated key remapping.
+
+6.  **Filtering Properties with `as` and `never`:** You can filter out keys by remapping them to the `never` type. If a key is remapped to `never`, it won\'t be included in the resulting type.
+
+7.  **Conditional Property Types:** The type of each property in the new mapped type can be determined by a conditional type.
+
+**Example of a Mapped Type (Conceptual Definition of `Partial<T>`):**
+
+```typescript
+// Conceptual definition of Partial<T>
 // type Partial<T> = {
 //   [P in keyof T]?: T[P];
 // };
@@ -315,7 +372,54 @@ Many of these utility types are not "magic" compiler intrinsics but are themselv
 
 This iterates over all properties (`P`) in the keys of type `T` (`keyof T`) and makes each one optional (`?`) while keeping its original type (`T[P]`).
 
-Understanding that these utilities are often built from more fundamental type operations empowers you to:
+**Advanced Mapped Type Example: Creating Form Field Types**
+
+Let\'s take a `Medication` interface and create a mapped type that transforms its properties into a structure suitable for form fields, where each field has a `value` and an optional `error` string.
+
+```typescript
+interface Medication {
+  id: string; // Will be included
+  name: string; // Will be included
+  dosage: number; // Will be included
+  unit: string; // Will be included
+  manufacturer: { name: string; country: string }; // Will be excluded by the conditional type below
+}
+
+// Mapped type that creates form field objects for string or number properties only
+type MedicationFormFields<T> = {
+  // For each property K in T...
+  [K in keyof T]: T[K] extends string | number // If the property type is string or number...
+    ? { value: T[K]; error?: string } // ...then create this field structure
+    : never; // ...otherwise, exclude this property from the result
+};
+
+// Filter out properties that became 'never'
+type ValidFormFields<T> = {
+  [K in keyof T as T[K] extends never ? never : K]: T[K];
+};
+
+type MedicationForm = ValidFormFields<MedicationFormFields<Medication>>;
+
+// Example usage:
+const medicationFormState: MedicationForm = {
+  id: { value: "med-001" },
+  name: { value: "Aspirin", error: "Name might be too generic" },
+  dosage: { value: 100 },
+  unit: { value: "mg" },
+  // 'manufacturer' is not present because its type ({ name: string; country: string })
+  // did not satisfy 'string | number', so it became 'never' and was filtered out.
+};
+
+console.log(medicationFormState.name.value); // Output: Aspirin
+if (medicationFormState.name.error) {
+  console.log(`Error for name: ${medicationFormState.name.error}`);
+  // Output: Error for name: Name might be too generic
+}
+```
+
+This more complex example (`MedicationFormFields` and `ValidFormFields`) first transforms properties based on a condition (if they are `string` or `number`). Properties not matching the condition become `never`. Then, `ValidFormFields` filters out these `never` properties to produce the final form type. This showcases the power of combining mapped types with conditional types and key remapping to create highly specific and useful derived types.
+
+Understanding that these utilities are often built from more fundamental type operations like mapped and conditional types empowers you to:
 
 1.  Better grasp how they work.
 2.  Potentially create your own custom utility types tailored to specific project needs if the built-in ones don't quite fit.

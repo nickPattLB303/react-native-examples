@@ -197,6 +197,40 @@ console.log(
 
 This example demonstrates various uses of `type` aliases. `PatientID` is an alias for `string`. `MedicationStatus` is an alias for a union type, restricting its values to specific strings. `PharmacyLocation` defines an object shape, much like an interface. Type aliases provide a concise way to refer to complex types, improving code readability. The error for `loratadineStatus` shows how the union type restricts possible values.
 
+**Working with Union Types (`|`)**
+
+A union type describes a value that can be one of several types. TypeScript uses the vertical bar (`|`) to denote a union type.
+
+```typescript
+// Simple union type
+type MedicationIdentifier = string | number;
+
+function findMedicationById(id: MedicationIdentifier) {
+  // Before we can use methods specific to string or number,
+  // TypeScript needs to know which type 'id' currently is.
+  if (typeof id === "string") {
+    // Here, TypeScript knows 'id' is a string
+    console.log(`Searching for medication with string ID: ${id.toUpperCase()}`);
+  } else {
+    // Here, TypeScript knows 'id' is a number
+    console.log(`Searching for medication with numeric ID: ${id.toFixed(0)}`);
+  }
+}
+
+findMedicationById("MED-123"); // Output: Searching for medication with string ID: MED-123
+findMedicationById(45678); // Output: Searching for medication with numeric ID: 45678
+```
+
+**Type Narrowing with `typeof` and `instanceof`:**
+
+When you have a value of a union type, TypeScript needs to know which specific type it is before you can use operations unique to that type. This process is called **narrowing**. TypeScript understands common JavaScript constructs like `typeof` and `instanceof` to narrow types within conditional blocks.
+
+- `typeof value === "string"` (or `"number"`, `"boolean"`, `"function"`, etc.)
+- `value instanceof ClassName`
+- Property presence checks (`'propertyName' in object`)
+
+If TypeScript can determine the specific type within a block, it will allow operations specific to that type.
+
 **Further Versatility of Type Aliases:**
 
 Type aliases can also be used for:
@@ -265,6 +299,158 @@ Type aliases can also be used for:
   };
   ```
 
+**Advanced Union Type Patterns**
+
+Working effectively with union types often involves more sophisticated patterns for type narrowing and ensuring all cases are handled.
+
+**1. Discriminated Unions (Tagged Unions)**
+
+A common and powerful pattern for working with union types is the **discriminated union**. This involves creating a union where each member type shares a common property (the "discriminant" or "tag") whose literal type is unique to that member. This allows TypeScript to narrow down the type easily using `switch` statements or conditional checks on the discriminant.
+
+```typescript
+interface TabletMedication {
+  kind: "tablet"; // Discriminant property
+  medicationName: string;
+  tabletCount: number;
+  strengthMg: number;
+}
+
+interface SyrupMedication {
+  kind: "syrup"; // Discriminant property
+  medicationName: string;
+  volumeMl: number;
+  concentrationMgPerMl: number;
+}
+
+interface CreamMedication {
+  kind: "cream"; // Discriminant property
+  medicationName: string;
+  tubeSizeGrams: number;
+  applicationArea: string;
+}
+
+type DispensedMedication = TabletMedication | SyrupMedication | CreamMedication;
+
+function getDosageInstructions(med: DispensedMedication): string {
+  switch (med.kind) {
+    case "tablet":
+      // TypeScript knows 'med' is TabletMedication here
+      return `Take ${med.tabletCount} tablet(s) of ${med.medicationName} (${med.strengthMg}mg).`;
+    case "syrup":
+      // TypeScript knows 'med' is SyrupMedication here
+      return `Take ${med.volumeMl}ml of ${med.medicationName} (${med.concentrationMgPerMl}mg/ml).`;
+    case "cream":
+      // TypeScript knows 'med' is CreamMedication here
+      return `Apply ${med.medicationName} cream to ${med.applicationArea} as directed. Tube size: ${med.tubeSizeGrams}g.`;
+    default:
+      // Exhaustiveness check: if a new type is added to DispensedMedication
+      // and not handled above, this line will cause a TypeScript error.
+      const _exhaustiveCheck: never = med;
+      return `Unknown medication kind: ${(_exhaustiveCheck as any).kind}`;
+  }
+}
+
+const pill: DispensedMedication = {
+  kind: "tablet",
+  medicationName: "Amoxicillin",
+  tabletCount: 1,
+  strengthMg: 250,
+};
+const liquid: DispensedMedication = {
+  kind: "syrup",
+  medicationName: "Cough Syrup",
+  volumeMl: 10,
+  concentrationMgPerMl: 5,
+};
+
+console.log(getDosageInstructions(pill));
+// Output: Take 1 tablet(s) of Amoxicillin (250mg).
+console.log(getDosageInstructions(liquid));
+// Output: Take 10ml of Cough Syrup (5mg/ml).
+```
+
+In this SpeedyMeds example, `DispensedMedication` is a discriminated union. Each member (`TabletMedication`, `SyrupMedication`, `CreamMedication`) has a `kind` property with a unique string literal. Inside `getDosageInstructions`, the `switch (med.kind)` statement allows TypeScript to correctly infer the specific type of `med` within each `case` block, enabling safe access to type-specific properties.
+
+**2. User-Defined Type Guards**
+
+Sometimes, `typeof` or `instanceof` aren\'t enough for complex type checking. You can create **user-defined type guards**, which are functions whose return type is a _type predicate_ in the form `parameterName is Type`.
+
+```typescript
+interface Prescription {
+  prescriptionId: string;
+  items: string[];
+}
+
+interface OverTheCounterSale {
+  saleId: string;
+  items: string[];
+  loyaltyCardUsed: boolean;
+}
+
+type PharmacyTransaction = Prescription | OverTheCounterSale;
+
+// User-defined type guard
+function isPrescription(tx: PharmacyTransaction): tx is Prescription {
+  return (tx as Prescription).prescriptionId !== undefined;
+}
+
+function processTransaction(tx: PharmacyTransaction): void {
+  console.log("Processing transaction...");
+  if (isPrescription(tx)) {
+    // TypeScript knows 'tx' is a Prescription here
+    console.log(
+      `Prescription ID: ${tx.prescriptionId}. Items: ${tx.items.join(", ")}`
+    );
+  } else {
+    // TypeScript knows 'tx' is an OverTheCounterSale here (by elimination)
+    console.log(
+      `OTC Sale ID: ${tx.saleId}. Loyalty card: ${tx.loyaltyCardUsed}`
+    );
+  }
+}
+
+const rx: PharmacyTransaction = {
+  prescriptionId: "RX123",
+  items: ["Aspirin", "Vitamin C"],
+};
+const otc: PharmacyTransaction = {
+  saleId: "SALE456",
+  items: ["Band-aids"],
+  loyaltyCardUsed: true,
+};
+
+processTransaction(rx);
+// Output:
+// Processing transaction...
+// Prescription ID: RX123. Items: Aspirin, Vitamin C
+processTransaction(otc);
+// Output:
+// Processing transaction...
+// OTC Sale ID: SALE456. Loyalty card: true
+```
+
+If `isPrescription` returns `true`, TypeScript will narrow the type of `tx` to `Prescription` within the `if` block. This is useful for encapsulating complex type checking logic.
+
+**3. Exhaustiveness Checking with `never`**
+
+When working with union types, especially in `switch` statements or a series of `if/else if` blocks, you want to ensure that all possible cases of the union are handled. TypeScript can help with this using the `never` type.
+
+The idea is to assign the variable to a type `never` in the `default` case (or final `else`). If all legitimate cases of the union have been covered, the variable at that point in the code path would indeed be of type `never` (meaning it shouldn\'t be possible to reach that code with a valid member of the union). If you later add a new member to the union type but forget to update the `switch` statement, TypeScript will raise an error because the variable can no longer be considered `never` in the `default` path.
+
+This technique was demonstrated in the `DispensedMedication` example above within the `default` case of the `switch` statement:
+
+```typescript
+    default:
+      // If all cases are handled, `_exhaustiveCheck` will be `never`
+      const _exhaustiveCheck: never = med;
+      // If a new medication kind is added to the DispensedMedication union
+      // and not handled in a case, 'med' will not be 'never',
+      // and this assignment will cause a TypeScript error, reminding you to update the switch.
+      return `Unknown medication kind: ${(_exhaustiveCheck as any).kind}`;
+```
+
+This is a powerful pattern to make your code more robust against future changes.
+
 #### Differences Between Interfaces and Type Aliases
 
 While interfaces and type aliases can often be used interchangeably for object shapes, there are some key differences:
@@ -302,6 +488,43 @@ While interfaces and type aliases can often be used interchangeably for object s
 
     - `Type` aliases describing an object shape can also be implemented by a class (in recent TypeScript versions), but interfaces are generally preferred for this purpose due to their traditional role in object-oriented programming.
     - Type aliases can achieve a form of "extension" using intersection types: `type ExtendedType = BaseType & { additionalProp: string; };` This creates a new type by combining others, rather than modifying an existing one.
+
+    **Module Augmentation (Advanced Declaration Merging):**
+    A particularly powerful use of declaration merging is **module augmentation**. This allows you to extend the types defined in external modules, such as libraries or even React Native itself, without modifying their original source code. This is extremely useful for adding custom properties or specializing existing types to fit your application\'s needs.
+
+    For example, you might want to add custom properties to React Native\'s built-in `TextStyle` interface if your application uses a custom text rendering component or has global text style conventions:
+
+    ```typescript
+    // In one of your .ts or .d.ts files (e.g., global.d.ts or theme.ts)
+    declare module "react-native" {
+      // Augment the existing TextStyle interface
+      interface TextStyle {
+        fontFamilySystem?: string; // Example: for a custom font loading system
+        textShadowColorAndroid?: string; // Example: Android-specific property
+      }
+    }
+
+    // Now you can use these custom properties in your StyleSheet.create calls,
+    // and TypeScript will recognize them as valid TextStyle properties.
+    // import { StyleSheet } from 'react-native';
+    // const styles = StyleSheet.create({
+    //   customText: {
+    //     fontSize: 16,
+    //     fontFamilySystem: 'YourCustomFont-Regular',
+    //     textShadowColorAndroid: '#00000033'
+    //   }
+    // });
+    ```
+
+    In this example, we use `declare module 'react-native'` to tell TypeScript we are augmenting the `react-native` module. Inside this block, we redefine the `TextStyle` interface, adding our new optional properties. TypeScript intelligently merges this with the original `TextStyle` definition from React Native.
+
+    Module augmentation is essential for:
+
+    - Extending theme types from styling libraries.
+    - Adding custom properties to navigation parameters for React Navigation.
+    - Making third-party library types more specific to your project.
+
+    It should be used carefully, typically in dedicated type definition files (`.d.ts`) or specific setup files, to keep track of these global augmentations.
 
 2.  **Implementation (for Classes):**
 

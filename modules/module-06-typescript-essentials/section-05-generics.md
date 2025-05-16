@@ -8,6 +8,12 @@ Imagine you need a function that returns the first element of an array. Without 
 
 Generics solve this by allowing you to define a placeholder type, often denoted by `T` (for Type), which will be specified when the generic component is used.
 
+**Key Aspects of Generics:**
+
+- **Type Parameters:** These are placeholders for actual types, typically written as `<T>`, `<U>`, `<K, V>`, etc. You can use multiple type parameters if needed.
+- **Generic Inference:** In many cases, TypeScript can infer the type argument for a generic from the context, so you don\'t always have to specify it explicitly (e.g., `getFirstElement(myArray)` vs. `getFirstElement<string>(myStringArray)`).
+- **Default Type Parameters:** You can provide a default type for a generic type parameter, e.g., `<E = Error>` in `DataOrError<D, E = Error>`, which is used if no explicit type is provided for `E`.
+
 #### Generic Functions
 
 A generic function uses a type parameter (e.g., `<T>`) in its signature. This type parameter can then be used to type the function's parameters, return value, or internal variables.

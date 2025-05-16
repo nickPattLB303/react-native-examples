@@ -8,6 +8,17 @@ JavaScript, by its nature, is a dynamically-typed language. This means that the 
 
 TypeScript addresses this by adding an optional layer of static typing on top of JavaScript. It's important to note that JavaScript itself remains dynamically typed at its core; TypeScript code is transpiled into plain JavaScript. However, during the development phase, TypeScript allows developers to add type annotations that are checked by its compiler. "Static typing" means that variable types are checked during development (at compile-time, before the code runs). This allows you to catch many common errors early, long before they reach your users.
 
+**Key Characteristics of TypeScript:**
+
+- **Superset of JavaScript:** All valid JavaScript code is also valid TypeScript code. You can gradually introduce TypeScript into existing JavaScript projects.
+- **Compiles to JavaScript:** The TypeScript compiler (`tsc`) transforms TypeScript code into standard JavaScript that can run in any environment where JavaScript runs, including React Native.
+- **Static Type-Checking:** This is TypeScript's core feature, allowing developers to define and verify types during development.
+- **Error Prevention:** Helps prevent common JavaScript errors such as:
+  - Accessing properties on `undefined` or `null` values.
+  - Mistakes due to JavaScript's type coercion.
+  - Passing invalid arguments to functions.
+  - Using misspelled property names.
+
 **Key Benefits of TypeScript:**
 
 - **Early Error Detection (Compile-Time Checks):** This is the most significant advantage. TypeScript's compiler analyzes your code and flags type mismatches, undefined properties, and other potential issues. For example, if you try to call a function with the wrong type of arguments, or access a property that doesn't exist on an object, TypeScript will warn you immediately in your code editor.
@@ -46,6 +57,60 @@ console.log(`Stock for medication 101: ${stockForMed101}`); // Output: Stock for
 ```
 
 This code defines a function `getMedicationStock` which strictly expects a `medicationId` of type `number` and returns a `number` representing the stock level. The example shows a correct call. The commented-out line demonstrates an incorrect call with a string argument. TypeScript would highlight this error during development, preventing a potential runtime issue where the function might return `undefined` or cause an error if it tried to use a string in a numerical operation. This early detection is invaluable for building reliable applications.
+
+### TypeScript vs. JavaScript: A Clearer Look
+
+To further illustrate the differences, let's consider a direct comparison:
+
+**Feature Comparison:**
+
+| Feature             | JavaScript                              | TypeScript                                      |
+| ------------------- | --------------------------------------- | ----------------------------------------------- |
+| **Type System**     | Dynamic typing (checked at runtime)     | Static typing (checked at compile-time)         |
+| **Error Detection** | Primarily at runtime                    | Primarily at compile-time, plus runtime errors  |
+| **Tooling**         | Good (linters, basic autocomplete)      | Excellent (rich IntelliSense, refactoring)      |
+| **Learning Curve**  | Lower initial barrier                   | Moderate (requires learning the type system)    |
+| **Code Safety**     | More prone to type-related runtime bugs | Fewer type-related runtime bugs                 |
+| **Verbosity**       | Less verbose                            | Can be more verbose due to type annotations     |
+| **Adoption**        | Universal for web                       | Growing standard, especially in React Native    |
+| **Code Size**       | Smaller source files                    | Slightly larger source (compiles to similar JS) |
+
+**Code Example: `calculateDosage`**
+
+Consider a function to calculate medication dosage:
+
+```javascript
+// JavaScript - No type safety
+function calculateJSDosage(weight, concentration) {
+  // Potential issues:
+  // 1. If weight or concentration are strings, might concatenate: e.g., "70" + "5" = "705"
+  // 2. If undefined or null, result is NaN without warning.
+  // 3. No clear contract for what types are expected or returned.
+  return (weight * concentration) / 100;
+}
+
+const jsResult = calculateJSDosage("70", "5"); // Incorrectly produces "3.5" if JS coerces, or NaN, or error
+console.log(`JS Dosage Result: ${jsResult}`);
+```
+
+```typescript
+// TypeScript - With type safety
+function calculateTSDosage(weight: number, concentration: number): number {
+  // 1. Compiler flags errors if called with non-number arguments.
+  // 2. Clear contract: expects numbers, returns a number.
+  // 3. IDE provides better autocomplete and parameter hints.
+  return (weight * concentration) / 100; // Errors caught during development
+}
+
+const tsResult = calculateTSDosage(70, 5);
+console.log(`TS Dosage Result: ${tsResult}`); // Correctly 3.5
+
+// const tsErrorResult = calculateTSDosage("70", "5"); // TypeScript Error: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+In the JavaScript version of `calculateJSDosage`, there are no type checks. If strings are passed, JavaScript might attempt to coerce them, potentially leading to unexpected results (like string concatenation if `+` were used instead of `*`, or `NaN` with `*`). If `undefined` values are passed, the result will be `NaN`. The function signature doesn't tell other developers what kind of data to pass.
+
+In the TypeScript version, `calculateTSDosage` explicitly declares that `weight` and `concentration` must be `number`s, and the function itself will return a `number`. If you try to call it with strings, TypeScript will immediately show an error in your editor. This prevents a common class of bugs, especially critical in an application like SpeedyMeds where dosage calculations must be accurate.
 
 ### Perceived Trade-offs and How TypeScript Mitigates Them
 

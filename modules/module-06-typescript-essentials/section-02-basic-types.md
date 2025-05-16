@@ -333,6 +333,86 @@ TypeScript has a few special types that are important to understand:
 
   The `object` type should be used when a function or variable is expected to hold any non-primitive value, but the specific shape or properties of that object are not known or not relevant to the current context. However, for better type safety and code clarity, it is generally preferable to use more specific types like interfaces, type aliases (covered in Section 3), or `Record<string, unknown>` when the structure of the object is known or needs to be constrained.
 
+### Understanding Type Inference
+
+TypeScript is smart! In many cases, it can automatically determine the type of a variable without you needing to write an explicit type annotation. This is called **type inference**.
+
+- **Variable Initialization:** When you declare a variable and initialize it with a value, TypeScript will infer its type from the value.
+  ```typescript
+  let inferredMedication = "Paracetamol"; // TypeScript infers 'string'
+  let inferredDosage = 500; // TypeScript infers 'number'
+  let isInStock = true; // TypeScript infers 'boolean'
+  ```
+- **Function Return Types:** TypeScript can often infer the return type of a function by looking at its `return` statements.
+  ```typescript
+  function calculateArea(radius: number) {
+    // Return type inferred as 'number'
+    return Math.PI * radius * radius;
+  }
+  ```
+- **Contextual Typing:** In some cases, the type of an expression is inferred from its location or context. For example, the type of a parameter in a callback function might be inferred from the function signature it\'s being passed to.
+
+**When to Use Explicit Annotations vs. Relying on Inference:**
+
+While type inference is convenient, it\'s not always best to rely on it. Here\'s a general guide:
+
+- **Rely on inference for:**
+  - Local variables within functions where the assigned value makes the type obvious.
+  - Simple function return types where the logic is straightforward.
+- **Use explicit annotations for:**
+  - **Function parameters:** Always type function parameters to ensure the function receives the correct input types. This forms the function\'s contract.
+  - **Function return types (for public APIs or complex functions):** Explicitly typing the return value of functions, especially those part of a module\'s public API or complex functions, makes the contract clear and helps prevent unintentional changes to the return type if the function\'s internal logic is modified.
+  - **Object literals that are not immediately assigned to a typed variable:** If you create an object that will be used later, or whose shape isn\'t immediately obvious, providing a type or interface is beneficial.
+  - **Variables initialized with `null` or `undefined` if they will later hold a specific type:** e.g., `let currentUser: User | null = null;`
+  - **Properties in classes or interfaces.**
+  - **When TypeScript can\'t infer the type or infers `any`** (and `noImplicitAny` is off).
+
+**Type Widening and `as const`:**
+
+When TypeScript infers a type from a literal value (like a string or number), it sometimes "widens" the type. For example:
+
+```typescript
+let medicationStatus = "active"; // Type inferred as 'string', not the literal 'active'
+```
+
+This means `medicationStatus` can later be assigned any string. If you want TypeScript to infer the most specific literal type, you can use a `const` assertion:
+
+```typescript
+const preciseStatus = "pending" as const; // Type inferred as literal 'pending'
+// preciseStatus = "active"; // Error: Type '"active"' is not assignable to type '"pending"'.
+
+let medicationDetails = {
+  name: "Lisinopril",
+  form: "Tablet",
+} as const; // All properties become readonly and have literal types
+
+// medicationDetails.name = "Enalapril"; // Error: Cannot assign to 'name' because it is a read-only property.
+```
+
+`as const` is useful for creating true constants or when you need exact literal types for discriminated unions or API contracts.
+
+**Type Inference Code Example (from legacy docs):**
+
+```typescript
+// TypeScript infers these types automatically
+let patientName = "John Smith"; // inferred as string
+let patientAge = 45; // inferred as number
+let isAllergic = false; // inferred as boolean
+let medications = ["Aspirin", "Ibuprofen"]; // inferred as string[]
+
+// Type inference with functions
+const calculateDosage = (weight: number, multiplier: number) => {
+  // 'result' is inferred as number because 'weight' and 'multiplier' are numbers
+  const result = weight * multiplier;
+  return result; // Return type of calculateDosage is inferred as 'number'
+};
+
+const dosageForPatient = calculateDosage(70, 1.5);
+// dosageForPatient is inferred as number
+```
+
+This example further illustrates TypeScript's ability to infer types for both simple variables and function return values, reducing verbosity while maintaining type safety.
+
 #### Summary Table: Basic TypeScript Types
 
 Here's a quick reference table comparing TypeScript basic types with their JavaScript equivalents and typical usage:
