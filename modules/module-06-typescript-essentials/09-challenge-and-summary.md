@@ -1,0 +1,27 @@
+## Challenge 6: Typing a Pharmacy API Response
+
+Now it's time to apply what you've learned about TypeScript's types, interfaces, and utility types to a practical scenario. In this challenge, you will define types for a mock API response that the SpeedyMeds application might receive when fetching pharmacy or medication data.
+
+This will involve creating interfaces for nested data structures, using type aliases for clarity, and potentially employing utility types to represent variations of your data models (e.g., a partial update or a summary view).
+
+**Objective:**
+
+Define comprehensive TypeScript types for a complex API response structure related to pharmacy operations. Ensure your types are robust and accurately represent the data.
+
+**(https://codesandbox.io/s/module6-challenge-typing-api-response-SPEEDYMEDS_UNIQUE_ID)**
+
+_The CodeSandbox environment contains the detailed requirements for the API response structure and the specific tasks for this challenge in its `README.md` file. A separate link to a potential solution will be provided by your instructor or in the course materials._
+
+## Module Summary
+
+Congratulations on completing Module 6: TypeScript Essentials! You've taken a significant step towards writing more robust, maintainable, and understandable code for your React Native applications.
+
+Throughout this module, we explored the "why" behind TypeScript, understanding its benefits in terms of type safety, early error detection, and improved developer tooling. We delved into the fundamental building blocks, including basic types (`string`, `number`, `boolean`, `array`, `object`, `any`, `unknown`, `void`, `null`, `undefined`), and learned how to define custom data structures using interfaces and type aliases. We also covered how to type functions effectively, harness the power of generics for reusable code, organize constants with enums, and leverage utility types for common type transformations. Finally, we had a brief look at the `tsconfig.json` file and its role in configuring the TypeScript compiler, particularly within an Expo project.
+
+Mastering these TypeScript concepts will be invaluable as you progress through this course and build more complex features for the SpeedyMeds application. The ability to define clear data contracts and catch errors at compile time will save you significant debugging time and lead to higher-quality software.
+
+> [!IMPORTANT] > **Moving Forward: TypeScript is Mandatory**
+>
+> From this point onwards in the course, all JavaScript, React, and React Native code examples, exercises, and challenge solutions **MUST** be written in TypeScript. This will reinforce your learning and ensure you are applying these concepts consistently.
+
+Continue to practice these TypeScript fundamentals. The more you use them, the more natural they will become, and the more you'll appreciate the safety and clarity they bring to your development workflow.

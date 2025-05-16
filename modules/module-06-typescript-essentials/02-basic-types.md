@@ -1,0 +1,171 @@
+## Section 2: Basic Types
+
+Now that we understand why TypeScript is beneficial, let's explore its fundamental building blocks: the basic types. These types allow you to define the kinds of values your variables and functions will work with, forming the core of TypeScript's type system.
+
+### Type Annotation and Inference
+
+TypeScript can often infer the type of a variable from its initial value. For example, if you write `let medicationName = "Amoxicillin";`, TypeScript will infer that `medicationName` is a `string`.
+
+However, it's often good practice to use explicit **type annotations**, especially for function signatures and when a variable's type isn't immediately obvious from its initialization.
+
+```typescript
+// Type inference
+let quantity = 100; // TypeScript infers 'number'
+
+// Explicit type annotation
+let patientName: string = "Jane Doe";
+let temperature: number = 36.6;
+let isFeverish: boolean = false;
+```
+
+Let's look at the most common basic types.
+
+### `string`
+
+The `string` type represents textual data, enclosed in single quotes (`'`), double quotes (`"`), or backticks (`` ` ``) for template literals.
+
+```typescript
+let medicationName: string = "Lisinopril";
+let instructions: string = `Take one tablet of ${medicationName} daily.`;
+
+console.log(instructions); // Output: Take one tablet of Lisinopril daily.
+```
+
+### `number`
+
+The `number` type represents all numeric values, including integers and floating-point numbers. TypeScript does not differentiate between `int`, `float`, or `double` like some other languages.
+
+```typescript
+let dosageMg: number = 20;
+let pricePerTablet: number = 0.75;
+let totalTablets: number = 30;
+let totalCost: number = pricePerTablet * totalTablets;
+
+console.log(`Total cost for ${medicationName}: $${totalCost.toFixed(2)}`); // Output: Total cost for Lisinopril: $22.50
+```
+
+### `boolean`
+
+The `boolean` type represents logical values: `true` or `false`.
+
+```typescript
+let needsRefill: boolean = true;
+let hasAllergies: boolean = false;
+
+if (needsRefill) {
+  console.log("Patient needs a refill.");
+} else {
+  console.log("No refill currently needed.");
+}
+```
+
+### `array`
+
+The `array` type allows you to define typed collections of values. You can denote array types using `typeName[]` or `Array<typeName>`.
+
+```typescript
+let activeMedicationCodes: string[] = ["RXCUI123", "RXCUI456"];
+let dosagesAvailableMg: Array<number> = [5, 10, 20, 50];
+
+// Example: Accessing an array element
+console.log(`First available dosage: ${dosagesAvailableMg[0]}mg`);
+
+// Adding to an array
+activeMedicationCodes.push("RXCUI789");
+```
+
+### `object`
+
+The `object` type represents any non-primitive type (i.e., not `string`, `number`, `boolean`, `symbol`, `null`, or `undefined`). It's a general type, and while you can use it, you'll often want to define more specific object shapes using interfaces or type aliases, which we'll cover in the next section.
+
+```typescript
+let patientProfile: object;
+
+patientProfile = { name: "John Smith", age: 45 };
+
+// This is valid, but doesn't give much type information about the object's properties.
+// patientProfile.name; // TypeScript will complain here if `noImplicitAny` is on, or if it cannot infer structure
+```
+
+> [!NOTE]
+> While `object` is a basic type, for defining the structure of objects with known properties, it's almost always better to use interfaces or type aliases for better type safety and autocompletion.
+
+### `any`
+
+The `any` type is a powerful escape hatch. It tells TypeScript to opt-out of type checking for a particular variable. You can assign any kind of value to an `any` type, and access any property on it without compile-time checks.
+
+```typescript
+let flexibleData: any = "Could be a string";
+flexibleData = 100; // No error
+flexibleData = { message: "Or an object" }; // No error
+
+console.log(flexibleData.nonExistentProperty); // No compile-time error, but will likely be an error at runtime!
+```
+
+> [!CAUTION]
+> Use `any` sparingly. While it can be useful during migration from JavaScript to TypeScript or when working with truly dynamic data, overuse of `any` defeats the purpose of using TypeScript and can hide potential bugs.
+
+### `unknown`
+
+The `unknown` type is a safer alternative to `any`. Like `any`, it can hold a value of any type. However, TypeScript won't let you perform operations on an `unknown` value until you've performed some kind of type checking (like using `typeof`, `instanceof`, or type assertion) to narrow down its type.
+
+```typescript
+let userInput: unknown = getExternalInput(); // Function returning some unknown data structure
+
+// console.log(userInput.length); // Error: Object is of type 'unknown'.
+
+if (typeof userInput === "string") {
+  console.log(userInput.toUpperCase()); // OK, userInput is now known to be a string
+} else if (typeof userInput === "number") {
+  console.log(userInput.toFixed(2)); // OK, userInput is now known to be a number
+}
+
+function getExternalInput(): unknown {
+  // Simulate fetching data from an external source
+  return Math.random() > 0.5 ? "Some user text" : 123.456;
+}
+```
+
+> [!TIP]
+> Prefer `unknown` over `any` when you have data of an indeterminate type. It forces you to handle the type safely before using the value, preventing runtime errors.
+
+### `void`
+
+The `void` type is used primarily as the return type for functions that do not return a value.
+
+```typescript
+function logMedicationEvent(message: string): void {
+  console.log(`[Medication Log]: ${message}`);
+  // No return statement
+}
+
+logMedicationEvent("Patient took Lisinopril 20mg.");
+```
+
+### `null` and `undefined`
+
+In TypeScript, `null` and `undefined` are distinct types that represent the absence of a value.
+
+- `undefined`: Typically means a variable has been declared but not yet assigned a value.
+- `null`: Represents an intentional absence of an object value.
+
+By default, `null` and `undefined` can be assigned to any other type. However, when the `strictNullChecks` compiler option is enabled (which is highly recommended and often default in modern `tsconfig.json` files, including Expo's), `null` and `undefined` can only be assigned to `any`, `unknown`, or their respective types. To allow a variable to hold `null` or `undefined` explicitly, you can use a union type (e.g., `string | null`).
+
+```typescript
+// With strictNullChecks: true (recommended)
+let prescriptionNotes: string | null = null; // Can be a string or explicitly null
+let lastLoginDate: Date | undefined;
+
+prescriptionNotes = "Take with food.";
+// prescriptionNotes = undefined; // Error if not part of the union type
+
+lastLoginDate = new Date();
+```
+
+> 📚 **Official Documentation:**
+>
+> - [TypeScript Handbook: Basic Types](https://www.typescriptlang.org/docs/handbook/2/basic-types.html)
+> - [TypeScript Handbook: Everyday Types (includes primitives, arrays, any, unknown, etc.)](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+> - [TypeScript `strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#stricternullundefined-checking)
+
+Understanding these basic types is crucial as they form the foundation for more complex type definitions and patterns you'll encounter. In the next section, we'll explore how to create your own custom types using interfaces and type aliases.
