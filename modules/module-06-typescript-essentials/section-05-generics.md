@@ -11,7 +11,7 @@ Generics solve this by allowing you to define a placeholder type, often denoted 
 **Key Aspects of Generics:**
 
 - **Type Parameters:** These are placeholders for actual types, typically written as `<T>`, `<U>`, `<K, V>`, etc. You can use multiple type parameters if needed.
-- **Generic Inference:** In many cases, TypeScript can infer the type argument for a generic from the context, so you don\'t always have to specify it explicitly (e.g., `getFirstElement(myArray)` vs. `getFirstElement<string>(myStringArray)`).
+- **Generic Inference:** In many cases, TypeScript can infer the type argument for a generic from the context, so you don't always have to specify it explicitly (e.g., `getFirstElement(myArray)` vs. `getFirstElement<string>(myStringArray)`).
 - **Default Type Parameters:** You can provide a default type for a generic type parameter, e.g., `<E = Error>` in `DataOrError<D, E = Error>`, which is used if no explicit type is provided for `E`.
 
 #### Generic Functions
@@ -21,6 +21,12 @@ A generic function uses a type parameter (e.g., `<T>`) in its signature. This ty
 A short, self-contained example of a generic function:
 
 ```typescript
+/**
+ * Returns the first element of an array of any type, or undefined if the array is empty.
+ * @template T - The type of elements in the array.
+ * @param {T[]} arr - The input array.
+ * @returns {T | undefined} The first element of the array, or undefined if the array is empty.
+ */
 function getFirstElement<T>(arr: T[]): T | undefined {
   return arr.length > 0 ? arr[0] : undefined;
 }
@@ -121,17 +127,34 @@ Classes can also be generic. This allows you to create classes that can work wit
 A short, self-contained example of a generic class:
 
 ```typescript
+/**
+ * A generic data store that can hold a collection of items of any type.
+ * @template T - The type of items to be stored.
+ */
 class DataStore<T> {
   private items: T[] = [];
 
+  /**
+   * Adds an item to the data store.
+   * @param {T} item - The item to add.
+   */
   addItem(item: T): void {
     this.items.push(item);
   }
 
+  /**
+   * Retrieves an item from the data store by its index.
+   * @param {number} index - The index of the item to retrieve.
+   * @returns {T | undefined} The item at the specified index, or undefined if the index is out of bounds.
+   */
   getItem(index: number): T | undefined {
     return this.items[index];
   }
 
+  /**
+   * Retrieves all items from the data store.
+   * @returns {T[]} A new array containing all items in the store.
+   */
   getAllItems(): T[] {
     return [...this.items]; // Return a copy
   }
@@ -221,6 +244,11 @@ interface Lengthwise {
 }
 
 // Constraint: T must have a 'length' property of type number
+/**
+ * Logs the length of an argument that has a 'length' property.
+ * @template T - A type that extends Lengthwise (i.e., has a length property).
+ * @param {T} arg - The argument whose length is to be logged.
+ */
 function logLength<T extends Lengthwise>(arg: T): void {
   console.log(`Length is: ${arg.length}`);
 }
@@ -231,13 +259,25 @@ logLength([1, 2, 3, 4, 5]); // Arrays have a length property. Output: Length is:
 // logLength({ name: "Test" }); // Error: Argument of type '{ name: string; }' is not assignable to parameter of type 'Lengthwise'.
 
 // Constraint: T must be an object that has a 'log' method.
+/**
+ * Processes an item that is loggable (i.e., has a 'log' method).
+ * @template T - A type that extends Loggable.
+ * @param {T} item - The loggable item to process.
+ */
 function processLoggableItem<T extends Loggable>(item: T): void {
   console.log("Processing item...");
   item.log(); // We know 'item' has a 'log' method due to the constraint
 }
 
+/**
+ * Represents a prescription with an ID and medication name.
+ * Includes a log method for displaying its details.
+ */
 class Prescription {
   constructor(public id: string, public medication: string) {}
+  /**
+   * Logs the prescription details to the console.
+   */
   log() {
     console.log(`Prescription ID: ${this.id}, Medication: ${this.medication}`);
   }
@@ -439,6 +479,10 @@ const registeredPatients: PatientOption[] = [
   { id: "pat2", label: "John K. Smith (MRN456)", mrn: "MRN456", age: 62 },
 ];
 
+/**
+ * A React Native form component for creating SpeedyMeds prescriptions.
+ * Demonstrates usage of the GenericSelect component for medications and patients.
+ */
 function SpeedyMedsPrescriptionForm() {
   const [selectedMedId, setSelectedMedId] = useState<string | undefined>(
     availableMedications[0]?.id
@@ -448,6 +492,10 @@ function SpeedyMedsPrescriptionForm() {
   >(undefined);
 
   // Type safety: onValueChange receives the full MedicationOption object
+  /**
+   * Handles changes in the selected medication.
+   * @param {MedicationOption | undefined} medication - The selected medication object, or undefined if cleared.
+   */
   const handleMedicationChange = (medication: MedicationOption | undefined) => {
     setSelectedMedId(medication?.id);
     if (medication) {
@@ -460,6 +508,10 @@ function SpeedyMedsPrescriptionForm() {
   };
 
   // Type safety: onValueChange receives the full PatientOption object
+  /**
+   * Handles changes in the selected patient.
+   * @param {PatientOption | undefined} patient - The selected patient object, or undefined if cleared.
+   */
   const handlePatientChange = (patient: PatientOption | undefined) => {
     setSelectedPatientId(patient?.id);
     if (patient) {
@@ -525,13 +577,13 @@ This example encapsulates several important TypeScript concepts: generics for re
 
 #### Under the Hood: Type Erasure
 
-It\'s important to understand that generic type information in TypeScript is primarily a **compile-time construct**. During the compilation process, when TypeScript code is transpiled to JavaScript, these generic type parameters are typically **erased**. The resulting JavaScript code often uses `any` or relies on JavaScript\'s dynamic typing for the parts that were generic.
+It's important to understand that generic type information in TypeScript is primarily a **compile-time construct**. During the compilation process, when TypeScript code is transpiled to JavaScript, these generic type parameters are typically **erased**. The resulting JavaScript code often uses `any` or relies on JavaScript's dynamic typing for the parts that were generic.
 
 For example, `function identity<T>(arg: T): T { return arg; }` might compile down to `function identity(arg) { return arg; }` in JavaScript.
 
-The crucial benefit of generics lies in the **static analysis and type safety** they provide during the development phase. The TypeScript compiler uses this information to catch errors, provide better autocompletion, and enable safer refactoring _before_ the code is executed. This compile-time checking is what makes generics so valuable, even though the type information isn\'t present in the final JavaScript bundle.
+The crucial benefit of generics lies in the **static analysis and type safety** they provide during the development phase. The TypeScript compiler uses this information to catch errors, provide better autocompletion, and enable safer refactoring _before_ the code is executed. This compile-time checking is what makes generics so valuable, even though the type information isn't present in the final JavaScript bundle.
 
-Understanding type constraints is particularly important, as it enables generic components to safely interact with the specific characteristics of the types they operate on, moving beyond simple pass-through behavior. This combination of flexibility and compile-time safety is a key advantage of TypeScript\'s type system.
+Understanding type constraints is particularly important, as it enables generic components to safely interact with the specific characteristics of the types they operate on, moving beyond simple pass-through behavior. This combination of flexibility and compile-time safety is a key advantage of TypeScript's type system.
 
 > 📚 **Official Documentation:**
 >
@@ -559,6 +611,9 @@ Time to apply your knowledge of generics by creating a versatile function.
 
 **Tool:** CodeSandbox
 
-**(CODESANDBOX_EXERCISE_6_2_URL_PLACEHOLDER)**
+**(https://codesandbox.io/s/your-exercise-6-2-link)**
+
+> [!IMPORTANT]
+> The link above is a placeholder. You will need to replace `https://codesandbox.io/s/your-exercise-6-2-link` with the actual URL for the CodeSandbox exercise.
 
 This exercise will help you understand how to create flexible and type-safe functions using generics, a common pattern for utility functions.

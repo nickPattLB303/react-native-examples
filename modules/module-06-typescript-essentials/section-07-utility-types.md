@@ -1,6 +1,6 @@
 ## Section 7: Utility Types
 
-TypeScript comes with a set of built-in utility types that allow you to transform existing types in various common ways. These utilities help create new types based on existing ones without having to redefine them from scratch, promoting DRY (Don't Repeat Yourself) principles and enhancing type flexibility. This section will cover some of the most frequently used utility types like `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, and `Readonly<T>`, with examples relevant to managing data in SpeedyMeds, and then briefly introduce other useful ones.
+TypeScript comes with a set of built-in utility types that allow you to transform existing types in various common ways. These utilities help create new types based on existing ones without having to redefine them from scratch, promoting DRY (Don't Repeat Yourself) principles and enhancing type flexibility. This section covers some of the most frequently used utility types like `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, and `Readonly<T>`, with examples relevant to managing data in SpeedyMeds, and then briefly introduces other useful ones.
 
 > 🍏 **(iOS Developers - Swift):**
 >
@@ -44,6 +44,13 @@ interface MedicationDetails {
 
 // Function to update medication details in SpeedyMeds
 // It accepts a partial object containing only the fields to be updated.
+/**
+ * Updates specific details of a medication.
+ * Accepts a partial medication object containing only the fields to be updated.
+ * @param {string} id - The ID of the medication to update.
+ * @param {Partial<MedicationDetails>} updates - An object with properties of MedicationDetails to update.
+ * @returns {MedicationDetails} The fully updated medication object (mocked).
+ */
 function updateMedication(
   id: string,
   updates: Partial<MedicationDetails>
@@ -377,7 +384,7 @@ type NewType = {
 
     This example uses template literal types and intrinsic string manipulation types (`Capitalize`) for sophisticated key remapping.
 
-6.  **Filtering Properties with `as` and `never`:** You can filter out keys by remapping them to the `never` type. If a key is remapped to `never`, it won\'t be included in the resulting type.
+6.  **Filtering Properties with `as` and `never`:** You can filter out keys by remapping them to the `never` type. If a key is remapped to `never`, it won't be included in the resulting type.
 
 7.  **Conditional Property Types:** The type of each property in the new mapped type can be determined by a conditional type.
 
@@ -394,7 +401,7 @@ This iterates over all properties (`P`) in the keys of type `T` (`keyof T`) and 
 
 **Advanced Mapped Type Example: Creating Form Field Types**
 
-Let\'s take a `Medication` interface and create a mapped type that transforms its properties into a structure suitable for form fields, where each field has a `value` and an optional `error` string.
+Let's take a `Medication` interface and create a mapped type that transforms its properties into a structure suitable for form fields, where each field has a `value` and an optional `error` string.
 
 ```typescript
 interface Medication {
@@ -405,7 +412,11 @@ interface Medication {
   manufacturer: { name: string; country: string }; // Will be excluded by the conditional type below
 }
 
-// Mapped type that creates form field objects for string or number properties only
+/**
+ * @template T - The base type whose properties will be transformed into form fields.
+ * Transforms properties of T into form field objects ({ value: T[K]; error?: string })
+ * if the property type is a string or number. Other property types become 'never'.
+ */
 type MedicationFormFields<T> = {
   // For each property K in T...
   [K in keyof T]: T[K] extends string | number // If the property type is string or number...
@@ -413,7 +424,11 @@ type MedicationFormFields<T> = {
     : never; // ...otherwise, exclude this property from the result
 };
 
-// Filter out properties that became 'never'
+/**
+ * @template T - An object type, typically the result of MedicationFormFields<T>.
+ * Filters out properties from T that are of type 'never'.
+ * Useful for cleaning up mapped types where some properties were conditionally excluded.
+ */
 type ValidFormFields<T> = {
   [K in keyof T as T[K] extends never ? never : K]: T[K];
 };

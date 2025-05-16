@@ -115,11 +115,175 @@ export default MedicationDisplay;
 
 This example defines a `MedicationDisplay` component that accepts `medicationName` and `dosage` as props and displays them. It also includes some basic styling using `StyleSheet` (which we'll cover in detail later). Notice the use of `React.FC<MedicationDisplayProps>` (Functional Component) as a type for the component. `React.FC` is a utility type in TypeScript for React functional components; it provides type checking for props and implicitly includes `children` as an optional prop.
 
-### Class Components (Brief Mention)
+### Class Components
 
 Before Hooks were introduced in React 16.8, class components were the only way to have state and lifecycle methods within a component. Understanding their structure and lifecycle is crucial for developers who may need to work with or migrate older React projects, and it provides valuable context for understanding why Hooks were introduced and the problems they aimed to solve.
 
 Class components are ES6 classes that extend `React.Component`.
+
+**Example: A Class Component with State and Lifecycle Methods**
+
+```tsx
+import React, { Component } from "react";
+import { Text, View, StyleSheet, Button } from "react-native";
+
+interface MedicationReminderProps {
+  medicationName: string;
+  initialDosesRemaining: number;
+}
+
+interface MedicationReminderState {
+  dosesRemaining: number;
+  lastTakenAt: Date | null;
+  isLowStock: boolean;
+}
+
+class MedicationReminder extends Component<MedicationReminderProps, MedicationReminderState> {
+  // Class property for timer ID (doesn't need to be in state)
+  private checkStockTimer: NodeJS.Timeout | null = null;
+  
+  // Constructor for initialization
+  constructor(props: MedicationReminderProps) {
+    super(props); // Must call super(props) first
+    
+    // Initialize state
+    this.state = {
+      dosesRemaining: props.initialDosesRemaining,
+      lastTakenAt: null,
+      isLowStock: props.initialDosesRemaining < 5
+    };
+    
+    // Binding methods to this instance (necessary for callbacks)
+    this.takeDose = this.takeDose.bind(this);
+    this.refillMedication = this.refillMedication.bind(this);
+  }
+  
+  // Lifecycle method: after component mounts
+  componentDidMount() {
+    console.log(`MedicationReminder for ${this.props.medicationName} mounted`);
+    
+    // Set up a timer to check stock periodically
+    this.checkStockTimer = setInterval(() => {
+      if (this.state.dosesRemaining < 5 && !this.state.isLowStock) {
+        this.setState({ isLowStock: true });
+      }
+    }, 60000); // Check every minute
+  }
+  
+  // Lifecycle method: after component updates
+  componentDidUpdate(prevProps: MedicationReminderProps, prevState: MedicationReminderState) {
+    // Compare previous props/state to current to decide what to do
+    if (prevState.dosesRemaining !== this.state.dosesRemaining) {
+      console.log(`Doses remaining changed: ${this.state.dosesRemaining}`);
+      
+      // Update isLowStock based on new dosesRemaining
+      if (this.state.dosesRemaining < 5 && !this.state.isLowStock) {
+        this.setState({ isLowStock: true });
+      } else if (this.state.dosesRemaining >= 5 && this.state.isLowStock) {
+        this.setState({ isLowStock: false });
+      }
+    }
+  }
+  
+  // Lifecycle method: before component unmounts
+  componentWillUnmount() {
+    console.log(`MedicationReminder for ${this.props.medicationName} will unmount`);
+    
+    // Clean up timer to prevent memory leaks
+    if (this.checkStockTimer) {
+      clearInterval(this.checkStockTimer);
+    }
+  }
+  
+  // Class method to handle taking a dose
+  takeDose() {
+    this.setState(prevState => ({
+      dosesRemaining: prevState.dosesRemaining - 1,
+      lastTakenAt: new Date()
+    }));
+  }
+  
+  // Class method to handle refilling medication
+  refillMedication() {
+    this.setState({
+      dosesRemaining: 30, // Refill to 30 doses
+      isLowStock: false
+    });
+  }
+  
+  // Required render method
+  render() {
+    const { medicationName } = this.props;
+    const { dosesRemaining, lastTakenAt, isLowStock } = this.state;
+    
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{medicationName}</Text>
+        <Text style={styles.dosage}>Doses remaining: {dosesRemaining}</Text>
+        
+        {lastTakenAt && (
+          <Text style={styles.lastTaken}>
+            Last taken: {lastTakenAt.toLocaleTimeString()}
+          </Text>
+        )}
+        
+        {isLowStock && (
+          <Text style={styles.warning}>Low stock! Please refill soon.</Text>
+        )}
+        
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Take Dose"
+            onPress={this.takeDose}
+            disabled={dosesRemaining <= 0}
+          />
+          <Button
+            title="Refill"
+            onPress={this.refillMedication}
+          />
+        </View>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    backgroundColor: "#f8f8f8",
+    borderRadius: 8,
+    marginVertical: 8,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  dosage: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  lastTaken: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 4,
+  },
+  warning: {
+    color: "red",
+    fontWeight: "bold",
+    marginVertical: 8,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 12,
+  },
+});
+
+export default MedicationReminder;
+```
+
+This comprehensive example demonstrates the key aspects of class components:
 
 **1. Constructor and `super(props)`**
 
@@ -181,6 +345,262 @@ export default GreetingClass;
 ```
 
 While you might encounter class components in older codebases or some third-party libraries, **new development in React and React Native strongly favors functional components with Hooks.** Hooks provide a more direct and composable way to manage state and side effects.
+
+### Component Composition Patterns
+
+Component composition is a powerful pattern in React that allows you to build complex UIs by combining smaller, focused components. Here are some common composition patterns that you'll encounter and use in React and React Native development:
+
+#### 1. Container and Presentational Components
+
+This pattern separates components into two categories:
+
+- **Container Components:** Handle data fetching, state management, and business logic
+- **Presentational Components:** Focus on how things look, receiving data via props and rendering UI
+
+```tsx
+// Container Component
+const MedicationListContainer: React.FC = () => {
+  const [medications, setMedications] = useState<Medication[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Fetch data, manage state, handle business logic
+    fetchMedications()
+      .then(data => {
+        setMedications(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Failed to fetch medications:", error);
+        setLoading(false);
+      });
+  }, []);
+  
+  return (
+    <MedicationList
+      medications={medications}
+      loading={loading}
+    />
+  );
+};
+
+// Presentational Component
+interface MedicationListProps {
+  medications: Medication[];
+  loading: boolean;
+}
+
+const MedicationList: React.FC<MedicationListProps> = ({ medications, loading }) => {
+  if (loading) {
+    return <Text>Loading medications...</Text>;
+  }
+  
+  return (
+    <View>
+      <Text style={styles.heading}>Your Medications</Text>
+      {medications.length === 0 ? (
+        <Text>No medications found.</Text>
+      ) : (
+        medications.map(med => (
+          <MedicationItem key={med.id} medication={med} />
+        ))
+      )}
+    </View>
+  );
+};
+```
+
+#### 2. Compound Components
+
+Compound components work together to provide a cohesive experience, with a parent component managing shared state and child components that are meant to be used together.
+
+```tsx
+// A simplified example of compound components
+import React, { createContext, useContext, useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+// Create a context for the accordion state
+const AccordionContext = createContext<{
+  expandedId: string | null;
+  toggleItem: (id: string) => void;
+}>({
+  expandedId: null,
+  toggleItem: () => {},
+});
+
+// Parent component
+const Accordion: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  
+  const toggleItem = (id: string) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+  
+  return (
+    <AccordionContext.Provider value={{ expandedId, toggleItem }}>
+      <View style={styles.accordion}>
+        {children}
+      </View>
+    </AccordionContext.Provider>
+  );
+};
+
+// Child component for accordion items
+interface AccordionItemProps {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+}
+
+const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) => {
+  const { expandedId, toggleItem } = useContext(AccordionContext);
+  const isExpanded = expandedId === id;
+  
+  return (
+    <View style={styles.item}>
+      <Pressable
+        style={styles.header}
+        onPress={() => toggleItem(id)}
+      >
+        <Text style={styles.title}>{title}</Text>
+        <Text>{isExpanded ? '▼' : '▶'}</Text>
+      </Pressable>
+      
+      {isExpanded && (
+        <View style={styles.content}>
+          {children}
+        </View>
+      )}
+    </View>
+  );
+};
+
+// Usage
+const MedicationAccordion = () => (
+  <Accordion>
+    <AccordionItem id="med1" title="Amoxicillin">
+      <Text>Take 500mg three times daily with food.</Text>
+    </AccordionItem>
+    <AccordionItem id="med2" title="Lisinopril">
+      <Text>Take 10mg once daily in the morning.</Text>
+    </AccordionItem>
+  </Accordion>
+);
+
+const styles = StyleSheet.create({
+  accordion: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  item: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontWeight: 'bold',
+  },
+  content: {
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+});
+```
+
+#### 3. Higher-Order Components (HOCs)
+
+HOCs are functions that take a component and return a new enhanced component. While less common in modern React with the introduction of Hooks, they're still found in many libraries.
+
+```tsx
+// A simple HOC that adds loading functionality
+function withLoading<P extends object>(
+  WrappedComponent: React.ComponentType<P>
+) {
+  return function WithLoading(props: P & { isLoading?: boolean; loadingMessage?: string }) {
+    const { isLoading = false, loadingMessage = "Loading...", ...componentProps } = props;
+    
+    if (isLoading) {
+      return <Text>{loadingMessage}</Text>;
+    }
+    
+    return <WrappedComponent {...(componentProps as P)} />;
+  };
+}
+
+// Usage
+const MedicationDetails: React.FC<{ medication: Medication }> = ({ medication }) => (
+  <View>
+    <Text>{medication.name}</Text>
+    <Text>{medication.dosage}</Text>
+  </View>
+);
+
+const MedicationDetailsWithLoading = withLoading(MedicationDetails);
+
+// Then in a parent component:
+// <MedicationDetailsWithLoading isLoading={loading} medication={medication} />
+```
+
+#### 4. Render Props
+
+This pattern involves passing a function as a prop that a component can call to render something.
+
+```tsx
+interface DataFetcherProps<T> {
+  fetchFunction: () => Promise<T>;
+  render: (data: T | null, loading: boolean, error: Error | null) => React.ReactNode;
+}
+
+function DataFetcher<T>({ fetchFunction, render }: DataFetcherProps<T>) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  
+  useEffect(() => {
+    setLoading(true);
+    fetchFunction()
+      .then(result => {
+        setData(result);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setLoading(false);
+      });
+  }, [fetchFunction]);
+  
+  return <>{render(data, loading, error)}</>;
+}
+
+// Usage
+const MedicationScreen = () => (
+  <DataFetcher
+    fetchFunction={() => api.fetchMedications()}
+    render={(medications, loading, error) => {
+      if (loading) return <Text>Loading medications...</Text>;
+      if (error) return <Text>Error: {error.message}</Text>;
+      if (!medications || medications.length === 0) return <Text>No medications found</Text>;
+      
+      return (
+        <View>
+          {medications.map(med => (
+            <MedicationItem key={med.id} medication={med} />
+          ))}
+        </View>
+      );
+    }}
+  />
+);
+```
+
+These composition patterns provide powerful ways to organize your React and React Native code, promoting reusability, separation of concerns, and maintainability. Modern React development often combines these patterns with Hooks to create even more flexible and composable components.
 
 > ⚛️ **(Web Developers with React Experience):**
 >
@@ -351,31 +771,106 @@ React strongly recommends composition over class inheritance for reusing code an
 
 The compositional model in React allows significantly greater flexibility and reusability. A single generic component can be adapted for numerous use cases by passing different children or props.
 
-### React's Virtual DOM and Reconciliation (Conceptual Overview)
+### React's Virtual DOM and Reconciliation
 
 One of React's key innovations for performance and its declarative programming model is the use of a Virtual DOM and an efficient reconciliation process.
 
-**1. The Virtual DOM: An In-Memory Representation**
+#### The Virtual DOM: An In-Memory Representation
 
-React creates and maintains a lightweight, in-memory representation of the actual UI structure. This is known as the Virtual DOM – essentially a JavaScript object tree mirroring the UI elements. Manipulating JavaScript objects in memory is much faster than making direct changes to the browser's Real DOM (on the web) or native UI elements, which can be resource-intensive.
+The Virtual DOM is a lightweight JavaScript representation of the actual UI structure. It's essentially a tree of JavaScript objects that mirrors what the real UI should look like. This concept is fundamental to React's performance optimization strategy.
 
-**2. Reconciliation: The Diffing Algorithm**
+**How the Virtual DOM Works:**
 
-When a component's state or props change, React doesn't immediately update the real UI. Instead:
+1. **Creation:** When you render a React component, React creates a Virtual DOM tree representing the UI structure.
 
-1.  A new Virtual DOM tree is created for the updated state/props.
-2.  This new Virtual DOM tree is compared with the previous one. This comparison is called **reconciliation**.
-3.  React uses a heuristic algorithm (the "diffing algorithm") to efficiently identify the differences ("diff") between the two Virtual DOM trees.
+2. **Immutability:** Each time state or props change, React creates a completely new Virtual DOM tree rather than modifying the existing one.
 
-Key heuristics of the diffing algorithm include:
+3. **Efficiency:** Manipulating JavaScript objects in memory is much faster than directly manipulating the browser's DOM or native UI elements.
 
-- **Different Element Types:** If root elements being compared have different types (e.g., `<View>` changes to `<Text>`), React tears down the old tree and builds the new tree from scratch. Old DOM nodes are destroyed, and component state is lost.
-- **Same Element Types:** If elements are of the same type, React looks at their attributes (props). It only updates the underlying native view for attributes that changed. The component instance is preserved, and its state is maintained.
-- **Keys for Lists:** When reconciling lists of child elements (covered in detail later), the `key` prop helps React identify stable elements across renders (added, removed, reordered), optimizing updates.
+4. **Abstraction:** The Virtual DOM provides a consistent programming model regardless of the rendering target (web DOM, native views, etc.).
 
-**3. Efficient UI Updates**
+In React Native, the concept is similar, but instead of representing DOM elements, the Virtual DOM represents native UI components. The JavaScript thread maintains this virtual representation, which is then used to determine what changes need to be sent to the native UI thread.
 
-After diffing, React calculates the minimal set of changes needed to bring the real UI into sync with the new Virtual DOM. It then batches these updates and applies them to the native UI in an optimized manner. This minimizes direct manipulation of native views, which is costly.
+#### Reconciliation: The Diffing Algorithm
+
+Reconciliation is the process of comparing a new Virtual DOM tree with the previous one to determine what changes need to be made to the actual UI.
+
+**The Reconciliation Process:**
+
+1. **Tree Generation:** When a component's state or props change, React generates a new Virtual DOM tree.
+
+2. **Diffing:** React compares this new tree with the previous one using a diffing algorithm.
+
+3. **Change Calculation:** React identifies the minimal set of changes needed to update the actual UI.
+
+4. **Batch Updates:** React batches these changes and applies them efficiently to the real UI.
+
+**Key Reconciliation Heuristics:**
+
+React's diffing algorithm uses several heuristics to achieve O(n) complexity instead of the theoretical O(n³) for tree comparison:
+
+1. **Element Type Comparison:**
+   - **Different Types:** If two elements have different types (e.g., `<View>` changes to `<Text>`), React tears down the old subtree and builds a new one from scratch.
+   - **Same Type:** If elements have the same type, React keeps the same DOM node/native view and only updates the changed attributes.
+
+   ```jsx
+   // React will rebuild the entire subtree
+   // Old: <View><Text>Hello</Text></View>
+   // New: <Text>Hello</Text>
+   
+   // React will only update attributes
+   // Old: <Text style={{color: 'red'}}>Hello</Text>
+   // New: <Text style={{color: 'blue'}}>Hello</Text>
+   ```
+
+2. **Component Instances:**
+   - When a component type stays the same, its instance is preserved between renders.
+   - This means state is maintained and only the props are updated.
+
+3. **List Reconciliation:**
+   - When updating lists, React by default compares items at the same position in both trees.
+   - This can be inefficient for reordered lists, which is why the `key` prop is crucial.
+   - With keys, React can identify which items have been added, removed, or reordered.
+
+   ```jsx
+   // Without keys, reordering is inefficient
+   <View>
+     {items.map(item => <ListItem item={item} />)}
+   </View>
+   
+   // With keys, React can track items across renders
+   <View>
+     {items.map(item => <ListItem key={item.id} item={item} />)}
+   </View>
+   ```
+
+#### Diagram: Virtual DOM and Reconciliation Process
+
+```mermaid
+graph TD
+    A[Component Renders] --> B[Create Virtual DOM Tree]
+    C[State/Props Change] --> D[Create New Virtual DOM Tree]
+    D --> E[Reconciliation/Diffing]
+    B --> E
+    E --> F[Calculate Minimal Changes]
+    F --> G[Batch Updates]
+    G --> H[Apply to Real UI]
+    H --> I[User Sees Updated UI]
+```
+
+#### Performance Implications
+
+The Virtual DOM and reconciliation process have significant performance benefits:
+
+1. **Batched Updates:** Multiple state changes can be batched into a single update, reducing the number of expensive UI operations.
+
+2. **Minimal Changes:** Only the parts of the UI that actually need to change are updated, rather than re-rendering everything.
+
+3. **Abstraction Layer:** Developers can write declarative code without worrying about the optimal sequence of imperative UI updates.
+
+4. **Cross-Platform Consistency:** The same reconciliation process works for both web and mobile, providing a consistent development experience.
+
+Understanding the Virtual DOM and reconciliation is crucial for optimizing React and React Native applications, especially when dealing with complex UIs or performance-sensitive scenarios. This knowledge helps you make informed decisions about component structure, state management, and rendering optimizations.
 
 The Virtual DOM and reconciliation are fundamental to React's performance. They allow developers to declaratively define the UI for any given state, and React handles the complex task of efficiently transitioning the actual UI to that state. This principle also applies to React Native, where changes determined by reconciliation in the JavaScript thread are communicated to the native UI thread to update native views.
 

@@ -6,7 +6,7 @@ This section introduces the fundamental data types in TypeScript. Understanding 
 
 TypeScript extends JavaScript's set of types with a static type system. When you declare a variable, you can (and often should) provide a type annotation to specify what kind of values it can hold.
 
-> [!NOTE] > **Type Casing:** It is a common convention and best practice to use lowercase type names for primitives (e.g., `string`, `number`, `boolean`) instead of their capitalized counterparts (`String`, `Number`, `Boolean`). The latter refer to special built-in JavaScript constructor functions for objects that wrap primitives and are rarely used directly in type annotations.
+> [!NOTE] > **Type Casing:** It's a common convention and best practice to use lowercase type names for primitives (e.g., `string`, `number`, `boolean`) instead of their capitalized counterparts (`String`, `Number`, `Boolean`). The latter refer to special built-in JavaScript constructor functions for objects that wrap primitives and are rarely used directly in type annotations.
 
 #### Core Primitive Types
 
@@ -111,7 +111,7 @@ This example demonstrates both syntaxes for declaring typed arrays. `activeIngre
 
 #### Tuples
 
-Tuples allow you to express an array with a fixed number of elements whose types are known, but need not be the same. They are useful for representing a structure where the order and type of each element matter.
+Tuples allow you to express an array with a fixed number of elements whose types are known, but need not be the same. They're useful for representing a structure where the order and type of each element matter.
 
 A short, self-contained example of using a `tuple` type:
 
@@ -171,7 +171,7 @@ console.log(`Patient: ${patientProfile.name}, Age: ${patientProfile.age}`);
 
 Here, `patientProfile` is an object whose structure is explicitly defined. It must have `patientId`, `name`, `age`, and `hasInsurance` properties with specified types. The `allergies` property is marked as optional with `?`. Assigning a value of the wrong type to a property or adding an undefined property will result in TypeScript errors.
 
-Later in Section 3, we will explore more powerful ways to define object shapes using `interfaces` and `type` aliases.
+Later in Section 3, we'll explore more powerful ways to define object shapes using `interfaces` and `type` aliases.
 
 #### Special Types
 
@@ -194,7 +194,7 @@ TypeScript has a few special types that are important to understand:
   // console.log(flexibleData.nonExistentProperty.anotherCall());
   ```
 
-  This example shows `flexibleData` assigned values of different types without TypeScript raising an error. While `any` provides flexibility, it sacrifices type safety. Accessing `nonExistentProperty` would not cause a compile-time error but would likely lead to a runtime error. It's often a sign that you might need to define a more specific type or use `unknown`.
+  This example shows `flexibleData` assigned values of different types without TypeScript raising an error. While `any` provides flexibility, it sacrifices type safety. Accessing `nonExistentProperty` wouldn't cause a compile-time error but would likely lead to a runtime error. It's often a sign that you might need to define a more specific type or use `unknown`.
 
   **Best Practices for `any`:**
 
@@ -216,12 +216,14 @@ TypeScript has a few special types that are important to understand:
   // console.log(userInput.toUpperCase()); // Error: 'userInput' is of type 'unknown'.
 
   if (typeof userInput === "string") {
+    // It's safe to use string methods here
     console.log(userInput.toUpperCase()); // OK: userInput is now known to be a string
     // Output: 123 MAIN ST
   }
 
   let responseCode: unknown = 404;
   if (typeof responseCode === "number") {
+    // And number properties/methods here
     console.log(`API Response Code: ${responseCode}`);
     // Output: API Response Code: 404
   }
@@ -236,6 +238,12 @@ TypeScript has a few special types that are important to understand:
   A short, self-contained example illustrating `void`:
 
   ```typescript
+  /**
+   * Logs medication order details to the console.
+   * Doesn't return any value.
+   * @param orderId - The unique identifier for the order.
+   * @param medication - The name of the medication ordered.
+   */
   function logMedicationOrder(orderId: string, medication: string): void {
     console.log(`Order ${orderId} placed for ${medication}. No return value.`);
     // No return statement, or an empty return (return;)
@@ -277,6 +285,12 @@ TypeScript has a few special types that are important to understand:
 
   1.  **Functions that always throw an exception:**
       ```typescript
+      /**
+       * Reports an error by throwing an exception.
+       * This function never returns normally.
+       * @param message - The error message to report.
+       * @throws Error with the provided message.
+       */
       function reportError(message: string): never {
         throw new Error(message);
         // This function never successfully returns
@@ -284,6 +298,10 @@ TypeScript has a few special types that are important to understand:
       ```
   2.  **Functions with infinite loops:**
       ```typescript
+      /**
+       * Represents a function that enters an infinite processing loop.
+       * This function never returns normally.
+       */
       function infiniteProcessingLoop(): never {
         while (true) {
           // ... processing ...
@@ -294,6 +312,13 @@ TypeScript has a few special types that are important to understand:
   3.  **Exhaustive type checking in control flow (e.g., `switch` statements):** When checking all possible cases of a union type, the `default` case might correctly result in a type of `never`, indicating all valid paths have been handled. If a new member is added to the union without updating the `switch`, the type in the `default` case would no longer be `never`, signaling a compile-time error.
       ```typescript
       type Vehicle = "car" | "truck" | "bike";
+      /**
+       * Gets the sound a vehicle makes.
+       * Demonstrates exhaustive checking with 'never'.
+       * @param vehicle - The type of vehicle.
+       * @returns The sound the vehicle makes as a string.
+       * @throws Error if an unhandled vehicle type is provided (caught by 'never' type check).
+       */
       function getVehicleSound(vehicle: Vehicle): string {
         switch (vehicle) {
           case "car":
@@ -303,7 +328,7 @@ TypeScript has a few special types that are important to understand:
           case "bike":
             return "ring-ring";
           default:
-            // If all cases are handled, `exhaustiveCheck` will be `never`
+            // If all cases are handled, 'exhaustiveCheck' will be 'never'
             const exhaustiveCheck: never = vehicle;
             return exhaustiveCheck; // This line would error if a new vehicle type was added
         }
@@ -312,32 +337,36 @@ TypeScript has a few special types that are important to understand:
 
 - **`object` (lowercase `o`)**: Represents any value that is not a primitive type (`string`, `number`, `boolean`, `bigint`, `symbol`, `null`, or `undefined`). This includes user-defined objects, arrays, functions, etc.
 
-  It is important to distinguish `object` from:
+  It's important to distinguish `object` from:
 
-  - **`Object` (uppercase `O`)**: This refers to the JavaScript global `Object` type. All values (including primitives, due to JavaScript's auto-boxing) are assignable to `Object`. It is generally too broad and less useful for specific typing than lowercase `object`.
+  - **`Object` (uppercase `O`)**: This refers to the JavaScript global `Object` type. All values (including primitives, due to JavaScript's auto-boxing) are assignable to `Object`. It's generally too broad and less useful for specific typing than lowercase `object`.
   - **`{}` (empty object type)**: This type represents an object with no properties. While any non-null, non-undefined value can be assigned to `{}`, it doesn't provide much type safety as it doesn't describe any specific structure or allow access to any properties without type assertion.
 
-  A short, self-contained example illustrating the `object` type:
+A short, self-contained example illustrating the `object` type:
 
-  ```typescript
-  function logNonPrimitive(data: object): void {
-    console.log("Received a non-primitive:", data);
-  }
+```typescript
+/**
+ * Logs any non-primitive data to the console.
+ * @param data - The non-primitive data to log. Must be an object.
+ */
+function logNonPrimitive(data: object): void {
+  console.log("Received a non-primitive:", data);
+}
 
-  logNonPrimitive({ name: "Ibuprofen", form: "tablet" }); // OK
-  logNonPrimitive([1, 2, 3]); // OK (arrays are objects)
-  logNonPrimitive(() => console.log("Function")); // OK (functions are objects)
+logNonPrimitive({ name: "Ibuprofen", form: "tablet" }); // OK
+logNonPrimitive([1, 2, 3]); // OK (arrays are objects)
+logNonPrimitive(() => console.log("Function")); // OK (functions are objects)
 
-  // logNonPrimitive("a string"); // Error: Argument of type 'string' is not assignable to parameter of type 'object'.
-  // logNonPrimitive(123);      // Error: Argument of type 'number' is not assignable to parameter of type 'object'.
-  // logNonPrimitive(null);      // Error: Argument of type 'null' is not assignable to parameter of type 'object'.
-  ```
+// logNonPrimitive("a string"); // Error: Argument of type 'string' is not assignable to parameter of type 'object'.
+// logNonPrimitive(123);      // Error: Argument of type 'number' is not assignable to parameter of type 'object'.
+// logNonPrimitive(null);      // Error: Argument of type 'null' is not assignable to parameter of type 'object'.
+```
 
-  The `object` type should be used when a function or variable is expected to hold any non-primitive value, but the specific shape or properties of that object are not known or not relevant to the current context. However, for better type safety and code clarity, it is generally preferable to use more specific types like interfaces, type aliases (covered in Section 3), or `Record<string, unknown>` when the structure of the object is known or needs to be constrained.
+The `object` type should be used when a function or variable is expected to hold any non-primitive value, but the specific shape or properties of that object are not known or not relevant to the current context. However, for better type safety and code clarity, it's generally preferable to use more specific types like interfaces, type aliases (covered in Section 3), or `Record<string, unknown>` when the structure of the object is known or needs to be constrained.
 
 ### Understanding Type Inference
 
-TypeScript is smart! In many cases, it can automatically determine the type of a variable without you needing to write an explicit type annotation. This is called **type inference**.
+TypeScript is smart. In many cases, it can automatically determine the type of a variable without you needing to write an explicit type annotation. This is called **type inference**.
 
 - **Variable Initialization:** When you declare a variable and initialize it with a value, TypeScript will infer its type from the value.
   ```typescript
@@ -347,27 +376,32 @@ TypeScript is smart! In many cases, it can automatically determine the type of a
   ```
 - **Function Return Types:** TypeScript can often infer the return type of a function by looking at its `return` statements.
   ```typescript
+  /**
+   * Calculates the area of a circle.
+   * @param radius - The radius of the circle.
+   * @returns The area of the circle.
+   */
   function calculateArea(radius: number) {
     // Return type inferred as 'number'
     return Math.PI * radius * radius;
   }
   ```
-- **Contextual Typing:** In some cases, the type of an expression is inferred from its location or context. For example, the type of a parameter in a callback function might be inferred from the function signature it\'s being passed to.
+- **Contextual Typing:** In some cases, the type of an expression is inferred from its location or context. For example, the type of a parameter in a callback function might be inferred from the function signature it's being passed to.
 
 **When to Use Explicit Annotations vs. Relying on Inference:**
 
-While type inference is convenient, it\'s not always best to rely on it. Here\'s a general guide:
+While type inference is convenient, it's not always best to rely on it. Here's a general guide:
 
 - **Rely on inference for:**
   - Local variables within functions where the assigned value makes the type obvious.
   - Simple function return types where the logic is straightforward.
 - **Use explicit annotations for:**
-  - **Function parameters:** Always type function parameters to ensure the function receives the correct input types. This forms the function\'s contract.
-  - **Function return types (for public APIs or complex functions):** Explicitly typing the return value of functions, especially those part of a module\'s public API or complex functions, makes the contract clear and helps prevent unintentional changes to the return type if the function\'s internal logic is modified.
-  - **Object literals that are not immediately assigned to a typed variable:** If you create an object that will be used later, or whose shape isn\'t immediately obvious, providing a type or interface is beneficial.
+  - **Function parameters:** Always type function parameters to ensure the function receives the correct input types. This forms the function's contract.
+  - **Function return types (for public APIs or complex functions):** Explicitly typing the return value of functions, especially those part of a module's public API or complex functions, makes the contract clear and helps prevent unintentional changes to the return type if the function's internal logic is modified.
+  - **Object literals that are not immediately assigned to a typed variable:** If you create an object that will be used later, or whose shape isn't immediately obvious, providing a type or interface is beneficial.
   - **Variables initialized with `null` or `undefined` if they will later hold a specific type:** e.g., `let currentUser: User | null = null;`
   - **Properties in classes or interfaces.**
-  - **When TypeScript can\'t infer the type or infers `any`** (and `noImplicitAny` is off).
+  - **When TypeScript can't infer the type or infers `any`** (and `noImplicitAny` is off).
 
 **Type Widening and `as const`:**
 
@@ -403,6 +437,13 @@ let isAllergic = false; // inferred as boolean
 let medications = ["Aspirin", "Ibuprofen"]; // inferred as string[]
 
 // Type inference with functions
+/**
+ * Calculates dosage based on weight and a multiplier.
+ * Return type is inferred as number.
+ * @param weight - The patient's weight.
+ * @param multiplier - The dosage multiplier.
+ * @returns The calculated dosage.
+ */
 const calculateDosage = (weight: number, multiplier: number) => {
   // 'result' is inferred as number because 'weight' and 'multiplier' are numbers
   const result = weight * multiplier;
@@ -434,7 +475,8 @@ This is common in scenarios like:
   // TypeScript infers 'rx' as type 'Prescription'
   // based on the 'forEach' signature for 'Prescription[]'
   prescriptions.forEach((rx) => {
-    // rx is contextually typed as Prescription
+    // 'rx' is contextually typed as Prescription
+    // It's good practice to ensure rx and its properties are what you expect
     console.log(rx.name.toUpperCase()); // Accessing 'name' is safe
   });
   ```
@@ -499,10 +541,10 @@ console.log(`Patient Ref (MRN): ${patientRef}`);
 // patientRef = true; // Error: Type 'boolean' is not assignable to type 'PatientIdentifier'.
 
 /**
- * Finds a patient record using either their ID or MRN.
- * This demonstrates type narrowing within the function.
- * @param {PatientIdentifier} id - The patient's ID or MRN.
- * @returns {string} A message indicating search method.
+ * Finds a patient record using either their ID (number) or MRN (string).
+ * This function demonstrates type narrowing within its body.
+ * @param id - The patient's identifier, which can be a number (Patient ID) or a string (MRN).
+ * @returns A message indicating the search method and the identifier used.
  */
 function findPatient(id: PatientIdentifier): string {
   // To operate on 'id', we often need to narrow down its type
@@ -636,8 +678,7 @@ type PharmacyAction =
 /**
  * Processes different pharmacy actions based on their type.
  * Demonstrates type narrowing using a discriminated union.
- * @param {PharmacyAction} action - The pharmacy action to process.
- * @returns {void}
+ * @param action - The pharmacy action to process.
  */
 function handlePharmacyAction(action: PharmacyAction): void {
   switch (action.type) {
@@ -723,11 +764,16 @@ TypeScript provides two syntaxes for type assertions:
 
 **Common Use Cases:**
 
-While assertions should be used judiciously, they are sometimes necessary:
+While assertions should be used judiciously, they're sometimes necessary:
 
 - **Working with `any` or `unknown`:** After receiving data typed as `any` or `unknown` (e.g., from `JSON.parse`, a legacy API, or weakly-typed third-party library), if you have performed runtime checks or are certain of the actual type, you can assert it to a more specific type.
 
   ```typescript
+  /**
+   * Fetches application configuration.
+   * In a real scenario, this would fetch data from an API.
+   * @returns A promise that resolves to the configuration data (of unknown type).
+   */
   async function fetchConfiguration(): Promise<unknown> {
     // In a real scenario, this would fetch data
     return { theme: "dark", version: "1.2.0", features: ["A", "B"] };
@@ -735,9 +781,14 @@ While assertions should be used judiciously, they are sometimes necessary:
 
   type AppConfig = { theme: string; version: string; features: string[] };
 
+  /**
+   * Fetches and applies application configuration.
+   * Demonstrates type assertion after fetching unknown data.
+   */
   async function applyConfig() {
     const configData = await fetchConfiguration();
     // We assert because we 'know' the shape of the data after fetching
+    // It's crucial that this assertion is correct to avoid runtime errors.
     const appConfig = configData as AppConfig;
     console.log(`Theme: ${appConfig.theme}, Version: ${appConfig.version}`);
   }
@@ -753,16 +804,22 @@ While assertions should be used judiciously, they are sometimes necessary:
 
 **Use with Extreme Caution!**
 
-Type assertions are a powerful tool, but they are also potentially dangerous because they bypass TypeScript's static analysis for the asserted type. If your assertion is incorrect, the compiler won't catch it, and you might introduce runtime errors.
+Type assertions are a powerful tool, but they're also potentially dangerous because they bypass TypeScript's static analysis for the asserted type. If your assertion is incorrect, the compiler won't catch it, and you might introduce runtime errors.
 
 **Best Practices for Type Assertions:**
 
-- **Use Sparingly:** Only use assertions when you are absolutely certain about the type, and TypeScript cannot infer it or validate it through type guards.
+- **Use Sparingly:** Only use assertions when you're absolutely certain about the type, and TypeScript cannot infer it or validate it through type guards.
 - **Prefer Type Guards:** Whenever possible, use type guards (`typeof`, `instanceof`, `in` operator, custom predicate functions) to narrow types. Type guards perform runtime checks, making your code inherently safer than assertions.
   ```typescript
+  /**
+   * Processes a value that could be a string or something else.
+   * Demonstrates safe type handling using a type guard instead of assertion.
+   * @param val - The value to process, of unknown type.
+   */
   function processValue(val: unknown) {
     if (typeof val === "string") {
       // No assertion needed, val is string here
+      // It's safe to use string methods.
       console.log(val.toUpperCase());
     } else {
       console.log("Value is not a string.");
@@ -783,7 +840,7 @@ Think of type assertions as a last resort, an escape hatch for situations where 
 
 #### Summary Table: Basic TypeScript Types
 
-Here's a quick reference table comparing TypeScript basic types with their JavaScript equivalents and typical usage:
+Here's a quick reference table comparing TypeScript basic types with their JavaScript equivalents and typical usage.
 
 | TypeScript Type               | JavaScript Equivalent/Concept                                | Notes                                                                                                     |
 | :---------------------------- | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
@@ -800,7 +857,7 @@ Here's a quick reference table comparing TypeScript basic types with their JavaS
 | `null`                        | `null` primitive                                             | Represents intentional absence of value. Treat as distinct type with `strictNullChecks`.                  |
 | `undefined`                   | `undefined` primitive                                        | Represents uninitialized variables or missing properties. Treat as distinct type with `strictNullChecks`. |
 | `never`                       | No direct equivalent (conceptually, a non-terminating path)  | Represents values that never occur. Useful for exhaustive checks. TS specific.                            |
-| `object`                      | Any non-primitive value (`typeof x === 'object'              |                                                                                                           | 'function'`) | More specific than `any`, but less specific than an interface or `Record<string, unknown>`. TS specific. |
+| `object`                      | Any non-primitive value (`typeof x === 'object'`             |                                                                                                           | 'function'`) | More specific than `any`, but less specific than an interface or `Record<string, unknown>`. TS specific. |
 
 > 📚 **Official Documentation:**
 >

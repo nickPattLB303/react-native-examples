@@ -36,6 +36,11 @@ A short, self-contained example demonstrating a type mismatch error caught by Ty
 
 ```typescript
 // Conceptual Example: Type Mismatch
+/**
+ * Retrieves the stock level for a given medication ID.
+ * @param medicationId - The unique identifier for the medication (must be a number).
+ * @returns The stock level as a number, or 0 if not found.
+ */
 function getMedicationStock(medicationId: number): number {
   // In a real app, this would fetch from a database or API
   // For SpeedyMeds, imagine this connects to our inventory system.
@@ -60,7 +65,7 @@ This code defines a function `getMedicationStock` which strictly expects a `medi
 
 ### TypeScript vs. JavaScript: A Clearer Look
 
-To further illustrate the differences, let's consider a direct comparison:
+To further illustrate the differences, let's consider a direct comparison.
 
 **Feature Comparison:**
 
@@ -95,6 +100,12 @@ console.log(`JS Dosage Result: ${jsResult}`);
 
 ```typescript
 // TypeScript - With type safety
+/**
+ * Calculates medication dosage based on weight and concentration.
+ * @param weight - The patient's weight (e.g., in kg). Must be a number.
+ * @param concentration - The medication's concentration (e.g., mg/ml). Must be a number.
+ * @returns The calculated dosage as a number.
+ */
 function calculateTSDosage(weight: number, concentration: number): number {
   // 1. Compiler flags errors if called with non-number arguments.
   // 2. Clear contract: expects numbers, returns a number.

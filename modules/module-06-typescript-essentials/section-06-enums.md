@@ -75,6 +75,10 @@ const newRx: PrescriptionRequest = {
   medicationName: "Lisinopril",
 };
 
+/**
+ * Processes a prescription request based on its type.
+ * @param {PrescriptionRequest} request - The prescription request object.
+ */
 function processPrescription(request: PrescriptionRequest): void {
   console.log(
     `Processing a "${request.type}" for patient ${request.patientId} for ${request.medicationName}.`
@@ -122,6 +126,10 @@ Enum members can have values that are either constant or computed.
 - **Computed Members:** Their values are calculated at runtime. If an enum contains computed members, any uninitialized members that come _after_ a computed member _must_ be initialized.
 
 ```typescript
+/**
+ * Returns a starting value, used here to demonstrate computed enum members.
+ * @returns {number} The starting value (5).
+ */
 function getStartingValue() {
   return 5;
 }
@@ -292,6 +300,10 @@ interface ErrorResponse {
 
 type ApiResponse = SuccessResponse | ErrorResponse;
 
+/**
+ * Handles an API response by checking its 'isValid' status.
+ * @param {ApiResponse} response - The API response object (either SuccessResponse or ErrorResponse).
+ */
 function handleResponse(response: ApiResponse) {
   if (response.isValid === true) {
     // Or simply if (response.isValid)

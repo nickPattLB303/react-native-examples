@@ -69,6 +69,12 @@ interface Patient {
   fullName: string;
 }
 
+/**
+ * Formats a greeting message for a patient.
+ * @param patient - The patient object, containing patientId and fullName.
+ * @param greeting - The greeting string (e.g., "Welcome back").
+ * @returns A formatted greeting string.
+ */
 const formatPatientGreeting = (patient: Patient, greeting: string): string => {
   return `${greeting}, ${patient.fullName} (ID: ${patient.patientId})!`;
 };
@@ -201,6 +207,12 @@ interface Order {
 // Define a function type for processing orders
 type OrderProcessor = (order: Order) => boolean;
 
+/**
+ * Processes a payment for a given order.
+ * It marks the order as paid if payment is successful.
+ * @param order - The order object to process.
+ * @returns True if the payment was processed or already paid, false otherwise.
+ */
 const processPayment: OrderProcessor = (order) => {
   if (!order.isPaid && order.totalAmount > 0) {
     console.log(
@@ -217,6 +229,11 @@ const processPayment: OrderProcessor = (order) => {
   return false;
 };
 
+/**
+ * Sends a confirmation email for a paid order.
+ * @param order - The order object for which to send confirmation.
+ * @returns True if the confirmation email was sent (or would be sent), false if the order is not paid.
+ */
 const sendConfirmationEmail: OrderProcessor = (order) => {
   if (order.isPaid) {
     console.log(`Sending confirmation email for order ${order.orderId}.`);
@@ -259,6 +276,15 @@ function findPatient(
 ): Patient[] | undefined;
 
 // Implementation signature (must encompass all overloads)
+/**
+ * Finds patient(s) based on ID or name.
+ * If ID (number) is provided, it attempts to find a single patient.
+ * If name (string) is provided, it filters patients by name, with an option to include inactive patients.
+ * This is the implementation function for the overloaded findPatient signatures.
+ * @param param1 - Either a patient ID (number) or a patient name (string).
+ * @param param2 - If param1 is a name, this boolean indicates whether to include inactive patients (defaults to true).
+ * @returns A single Patient object, an array of Patient objects, or undefined if no match is found.
+ */
 function findPatient(
   param1: number | string,
   param2?: boolean
@@ -327,7 +353,17 @@ A short, self-contained example illustrating `this` typing:
 interface PharmacyInventory {
   pharmacyName: string;
   medications: Medication[]; // Using Medication from previous example
+  /**
+   * Gets the total count of distinct medication types in the inventory.
+   * @this PharmacyInventory - Ensures 'this' refers to a PharmacyInventory instance.
+   * @returns The number of medication types.
+   */
   getMedicationCount(this: PharmacyInventory): number;
+  /**
+   * Generates a formatted string listing all medications in the inventory.
+   * @this PharmacyInventory - Ensures 'this' refers to a PharmacyInventory instance.
+   * @returns A string with the formatted inventory list.
+   */
   getFormattedInventory(this: PharmacyInventory): string;
 }
 
@@ -337,9 +373,19 @@ const mainStreetPharmacyInventory: PharmacyInventory = {
     { name: "Lisinopril", dosage: "10mg", quantity: 200 },
     { name: "Metformin", dosage: "500mg", quantity: 150 },
   ],
+  /**
+   * Gets the total count of distinct medication types in this specific inventory instance.
+   * @this PharmacyInventory
+   * @returns The number of medication types in this inventory.
+   */
   getMedicationCount: function (this: PharmacyInventory) {
     return this.medications.length;
   },
+  /**
+   * Generates a formatted string listing all medications in this specific inventory instance.
+   * @this PharmacyInventory
+   * @returns A string with the formatted inventory list for this pharmacy.
+   */
   getFormattedInventory: function (this: PharmacyInventory) {
     let inventoryList = `${this.pharmacyName} Inventory:\n`;
     this.medications.forEach((med) => {

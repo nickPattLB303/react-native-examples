@@ -35,6 +35,10 @@ const ibuprofen: Medication = {
   readonlyNDC: "12345-678-90",
 };
 
+/**
+ * Displays medication information to the console.
+ * @param med - The medication object adhering to the Medication interface.
+ */
 function displayMedicationInfo(med: Medication): void {
   console.log(`Medication: ${med.name} (${med.dosage})`);
   console.log(`Quantity: ${med.quantity}`);
@@ -69,6 +73,13 @@ In this SpeedyMeds example, the `Medication` interface clearly defines the struc
   }
 
   let searchMedications: MedicationSearchFunc;
+  /**
+   * Searches for medications based on a search term and stock availability.
+   * This is a sample implementation for demonstration.
+   * @param term - The search term string.
+   * @param includeOutOfStock - Boolean indicating whether to include out-of-stock items.
+   * @returns An array of Medication objects that match the criteria.
+   */
   searchMedications = (term, includeOutOfStock) => {
     // Actual search logic for SpeedyMeds inventory would go here...
     console.log(
@@ -331,6 +342,12 @@ interface CreamMedication {
 
 type DispensedMedication = TabletMedication | SyrupMedication | CreamMedication;
 
+/**
+ * Generates dosage instructions based on the type of dispensed medication.
+ * Uses a discriminated union to safely access type-specific properties.
+ * @param med - The dispensed medication object (Tablet, Syrup, or Cream).
+ * @returns A string containing dosage instructions.
+ */
 function getDosageInstructions(med: DispensedMedication): string {
   switch (med.kind) {
     case "tablet":
@@ -389,11 +406,20 @@ interface OverTheCounterSale {
 
 type PharmacyTransaction = Prescription | OverTheCounterSale;
 
-// User-defined type guard
+/**
+ * Checks if a given pharmacy transaction is a prescription.
+ * This is a user-defined type guard.
+ * @param tx - The pharmacy transaction to check.
+ * @returns True if the transaction is a Prescription, false otherwise.
+ */
 function isPrescription(tx: PharmacyTransaction): tx is Prescription {
   return (tx as Prescription).prescriptionId !== undefined;
 }
 
+/**
+ * Processes a pharmacy transaction, handling prescriptions and OTC sales differently.
+ * @param tx - The pharmacy transaction to process.
+ */
 function processTransaction(tx: PharmacyTransaction): void {
   console.log("Processing transaction...");
   if (isPrescription(tx)) {
@@ -604,6 +630,9 @@ Now it's time to practice what you've learned about interfaces.
 
 **Tool:** CodeSandbox
 
-**(CODESANDBOX_EXERCISE_6_1_URL_PLACEHOLDER)**
+**(https://codesandbox.io/s/your-exercise-6-1-link)**
+
+> [!IMPORTANT]
+> The link above is a placeholder. You will need to replace `https://codesandbox.io/s/your-exercise-6-1-link` with the actual URL for the CodeSandbox exercise.
 
 This exercise will help you solidify your understanding of creating, extending, and using interfaces to structure complex data, a common task in application development.
