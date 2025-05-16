@@ -52,7 +52,7 @@ This structural approach makes TypeScript more flexible and better suited to Jav
 
 #### Interfaces
 
-An `interface` is a way to define a contract for an object\'s shape. It specifies what properties an object should have and what their types should be. Interfaces are particularly well-suited for describing the shapes of objects and classes.
+An `interface` is a way to define a contract for an object's shape. It specifies what properties an object should have and what their types should be. Interfaces are particularly well-suited for describing the shapes of objects and classes.
 
 **Defining an Interface:**
 

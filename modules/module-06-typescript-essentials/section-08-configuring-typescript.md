@@ -45,13 +45,13 @@ If you have an existing JavaScript-based Expo project, you can convert it to Typ
     ```
 
 2.  **Create or Update `tsconfig.json`:**
-    If you don\'t have a `tsconfig.json` file, you can generate a basic one by running:
+    If you don't have a `tsconfig.json` file, you can generate a basic one by running:
 
     ```bash
     npx tsc --init
     ```
 
-    This will create a `tsconfig.json` file with many options commented out. You\'ll then need to configure it for your React Native/Expo project. A good starting point is to extend `expo/tsconfig.base`:
+    This will create a `tsconfig.json` file with many options commented out. You'll then need to configure it for your React Native/Expo project. A good starting point is to extend `expo/tsconfig.base`:
 
     ```json
     {
@@ -80,7 +80,7 @@ If you have an existing JavaScript-based Expo project, you can convert it to Typ
 5.  **Update Imports (if necessary):**
     Ensure your import statements correctly resolve after renaming files.
 
-Adding TypeScript to an existing project can be done incrementally. You don\'t need to convert all files at once. TypeScript can coexist with JavaScript files in the same project if your `tsconfig.json` is configured to allow JS files (e.g., `"allowJs": true`, often a default in Expo templates).
+Adding TypeScript to an existing project can be done incrementally. You don't need to convert all files at once. TypeScript can coexist with JavaScript files in the same project if your `tsconfig.json` is configured to allow JS files (e.g., `"allowJs": true`, often a default in Expo templates).
 
 ### Conceptual Content: The Role of `tsconfig.json`
 
@@ -124,65 +124,50 @@ A short, conceptual example of a typical `tsconfig.json` structure in an Expo pr
 
 ```json
 {
-  "extends": "expo/tsconfig.base", // Inherits base configuration from Expo
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    // Base options from expo/tsconfig.base are inherited
-    // Add your project-specific overrides and additions here
-    "strict": true, // Enables all strict type-checking options. Highly recommended.
-
-    // Overrides from expo/tsconfig.base if needed, or new options:
-    "jsx": "react-native", // Instructs TypeScript to preserve JSX for React Native (Metro bundler will handle it).
-    "lib": ["DOM", "ESNext"], // Specifies standard library files to include. "DOM" is for Expo Web and some shared libraries.
-    "target": "ESNext", // Target modern JavaScript version, suitable for Hermes engine.
-    "module": "ESNext", // Use modern ES module syntax.
-    "moduleResolution": "node", // Standard module resolution strategy for Node.js/React Native.
-
-    "esModuleInterop": true, // Improves compatibility between CommonJS and ES modules.
-    "allowSyntheticDefaultImports": true, // Allows default imports from modules without a default export (works with esModuleInterop).
-    "skipLibCheck": true, // Skips type checking of declaration files in node_modules, speeding up compilation.
-    "resolveJsonModule": true, // Allows importing .json files as modules.
-    "noEmit": true, // Prevents TypeScript from outputting JavaScript files directly, as Metro/Babel handles this.
-    "forceConsistentCasingInFileNames": true, // Ensures file name casing is consistent, important for cross-platform compatibility.
-
-    "baseUrl": ".", // Base directory for resolving non-absolute module names.
+    "strict": true,
+    "jsx": "react-native",
+    "lib": ["DOM", "ESNext"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
     "paths": {
-      // Optional: Define path aliases for cleaner imports (example)
       "@components/*": ["src/components/*"],
       "@screens/*": ["src/screens/*"],
       "@utils/*": ["src/utils/*"]
-      // Adjust paths based on your project structure, e.g., remove "src/" if components are at root.
     }
   },
-  "include": [
-    // Specifies files TypeScript should include in compilation
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts", // Expo-generated type definitions
-    "expo-env.d.ts" // Environment variable type definitions for Expo
-  ],
-  "exclude": [
-    // Specifies files/directories to exclude from compilation
-    "node_modules" // Usually excluded to speed up compilation and avoid type conflicts.
-    // Babel.config.js, metro.config.js etc can also be excluded if not needed for TS awareness.
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "exclude": ["node_modules"]
 }
 ```
 
-This JSON configuration tells the TypeScript compiler how to process the project.
+This JSON configuration tells the TypeScript compiler how to process the project. Let's break down its key parts:
 
-- The `extends`: `"expo/tsconfig.base"` line is crucial as it pulls in many default configurations optimized by the Expo team for React Native projects. These base settings handle much of the React Native-specific setup.
-- `compilerOptions` allows you to customize the TypeScript compiler\'s behavior:
-  - `strict: true` enables a suite of strict type-checking rules, which is highly recommended for catching more errors early. Beginners might sometimes start with `false` but aiming for `true` is a best practice.
-  - `jsx: "react-native"` tells TypeScript to preserve JSX syntax, as the Metro bundler (with Babel) will handle its transformation.
-  - `target` and `module` are often set to `"ESNext"` to use modern JavaScript features, which are then transpiled by Babel as needed.
-  - `lib` includes type definitions for standard JavaScript features and, often, `"DOM"` for web compatibility (relevant for Expo Web).
-  - `esModuleInterop` and `allowSyntheticDefaultImports` enhance compatibility with different module formats.
-  - `skipLibCheck: true` can speed up compilation by not type-checking all `.d.ts` files in `node_modules`.
-  - `noEmit: true` is important because TypeScript itself doesn\'t output the final JS files in an Expo/React Native setup; Metro/Babel does this. TypeScript\'s role is primarily type checking.
-  - `isolatedModules` is often `true` in modern setups or via base configs like `expo/tsconfig.base` and places certain restrictions on your code (e.g., `const enum`s, which require cross-file information, cannot be used).
-  - `baseUrl` and `paths` allow for custom import aliases (e.g., `@components/MyComponent` instead of `../../components/MyComponent`), which can make imports cleaner in larger projects.
-- `include` specifies an array of glob patterns that determine which files TypeScript will process.
-- `exclude` specifies glob patterns for files or directories that TypeScript should ignore, commonly `node_modules`.
+- The `"extends": "expo/tsconfig.base"` line is crucial as it pulls in many default configurations optimized by the Expo team for React Native projects. These base settings handle much of the React Native-specific setup.
+- `"compilerOptions"` allows you to customize the TypeScript compiler's behavior:
+  - `"strict": true` enables a suite of strict type-checking rules, which is highly recommended for catching more errors early. Beginners might sometimes start with `false` but aiming for `true` is a best practice.
+  - `"jsx": "react-native"` tells TypeScript to preserve JSX syntax, as the Metro bundler (with Babel) will handle its transformation.
+  - `"target": "ESNext"` and `"module": "ESNext"` are often used to leverage modern JavaScript features, which are then transpiled by Babel as needed.
+  - `"lib": ["DOM", "ESNext"]` includes type definitions for standard JavaScript features and, often, `"DOM"` for web compatibility (relevant for Expo Web).
+  - `"esModuleInterop": true` and `"allowSyntheticDefaultImports": true` enhance compatibility with different module formats.
+  - `"skipLibCheck": true` can speed up compilation by not type-checking all `.d.ts` files in `node_modules`.
+  - `"resolveJsonModule": true` allows importing `.json` files as modules.
+  - `"noEmit": true` is important because TypeScript itself doesn't output the final JS files in an Expo/React Native setup; Metro/Babel does this. TypeScript's role is primarily type checking.
+  - `"forceConsistentCasingInFileNames": true` ensures file name casing is consistent, important for cross-platform compatibility.
+  - `"baseUrl": "."` is the base directory for resolving non-absolute module names.
+  - `"paths": { ... }` allows for custom import aliases (e.g., `"@components/*": ["src/components/*"]`) for cleaner imports. Adjust paths based on your project structure, e.g., remove `"src/"` if components are at the root.
+  - (Other options like `isolatedModules` are often `true` in modern setups or via base configs like `expo/tsconfig.base` and place certain restrictions on your code, e.g., `const enum`s cannot be used).
+- `"include"` specifies an array of glob patterns that determine which files TypeScript will process (e.g., `"**/*.ts"`, `"**/*.tsx"`, `".expo/types/**/*.ts"`, `"expo-env.d.ts"`).
+- `"exclude"` specifies glob patterns for files or directories that TypeScript should ignore (e.g., `"node_modules"`). Babel.config.js, metro.config.js etc can also be excluded if not needed for TS awareness.
 
 #### Understanding `expo/tsconfig.base`
 
@@ -202,7 +187,7 @@ Developers can override or extend these base configurations by specifying option
 
 #### Key `compilerOptions` Relevant to Expo/React Native
 
-- **`extends`**: Usually `"expo/tsconfig.base"`. Imports Expo\'s base configuration.
+- **`extends`**: Usually `"expo/tsconfig.base"`. Imports Expo's base configuration.
 - **`strict`**: (boolean, default `false`) When `true`, enables a suite of strict type checking options like:
   - `noImplicitAny`: Flags variables/parameters that implicitly have an `any` type.
   - `strictNullChecks`: Makes `null` and `undefined` distinct types, requiring explicit handling.
@@ -227,7 +212,7 @@ Developers can override or extend these base configurations by specifying option
 
 #### TypeScript Compilation and Build Process in React Native/Expo
 
-It\'s helpful to understand the general flow:
+It's helpful to understand the general flow:
 
 1.  **Type Checking (`tsc`):** The TypeScript compiler (`tsc`) reads your `tsconfig.json`, parses your `.ts`/`.tsx` files into an Abstract Syntax Tree (AST), and performs type checking based on your annotations and type inference. This is where type errors are caught.
 2.  **Transformation/Transpilation (Babel via Metro):** In React Native/Expo, `tsc` is usually _not_ directly emitting the final JavaScript that runs in your app. Instead, the Metro bundler uses Babel (with plugins like `@babel/preset-typescript`) to:
@@ -240,7 +225,7 @@ It\'s helpful to understand the general flow:
 
 **Caveats with Babel Transformation:** While Babel handles most TypeScript features well, some very advanced or niche TypeScript features that rely on `tsc` for specific JavaScript output (like `const enum` inlining, or certain behaviors of `namespaces` if not configured carefully with Babel plugins) might behave slightly differently or require specific Babel configurations. For most common TypeScript usage in React Native, this is not an issue.
 
-> 🛣️ **(All Learners):** You generally won\'t need to modify `tsconfig.json` frequently, especially when starting with an Expo template. However, understanding its role and common options is beneficial if you need to troubleshoot build issues, integrate specific libraries, or customize your project\'s compilation behavior (like adding path aliases).
+> 🛣️ **(All Learners):** You generally won't need to modify `tsconfig.json` frequently, especially when starting with an Expo template. However, understanding its role and common options is beneficial if you need to troubleshoot build issues, integrate specific libraries, or customize your project's compilation behavior (like adding path aliases).
 
 > ⚠️ **(Caution):** Incorrectly modifying `tsconfig.json` can lead to build errors or unexpected behavior. Always ensure your changes are compatible with your Expo SDK version and React Native setup. Refer to the official TypeScript and Expo documentation when making significant changes.
 
@@ -251,100 +236,3 @@ It\'s helpful to understand the general flow:
 > - [Expo Docs: Using TypeScript (mentions `tsconfig.json`)](https://docs.expo.dev/guides/typescript/)
 
 While a deep dive into every compiler option is beyond this module's scope, knowing that `tsconfig.json` is the central configuration file for TypeScript empowers you to understand how your project is compiled and how to make adjustments if needed.
-
-### Challenge 6: Typing a Pharmacy API Response
-
-Now it's time for a challenge to apply what you've learned about TypeScript types, interfaces, and potentially utility types to model a real-world data structure.
-
-**Objective:** Define TypeScript interfaces and types to accurately represent a complex API response for medication details from the SpeedyMeds system. Then, create a mock API function that returns data conforming to these types.
-
-**Scenario:** SpeedyMeds has an API endpoint `/api/medications/:id` that returns detailed information about a specific medication.
-
-The API response structure is as follows:
-
-```json
-{
-  "medicationId": "MED456",
-  "genericName": "Atorvastatin Calcium",
-  "brandNames": ["Lipitor", "Atorva"],
-  "strength": "20mg",
-  "dosageForm": "Tablet", // Could be 'Tablet', 'Capsule', 'Syrup', 'Injection'
-  "routeOfAdministration": "Oral",
-  "pharmacologicalClass": "Statins",
-  "indications": [
-    "Hypercholesterolemia",
-    "Prevention of cardiovascular disease"
-  ],
-  "contraindications": ["Active liver disease", "Pregnancy"],
-  "sideEffects": {
-    "common": ["Diarrhea", "Arthralgia", "Nasopharyngitis"],
-    "rare": ["Myopathy", "Rhabdomyolysis", "Liver enzyme abnormalities"]
-  },
-  "storageInstructions": "Store at controlled room temperature 15-30°C (59-86°F). Protect from light and moisture.",
-  "interactions": [
-    {
-      "drugName": "Cyclosporine",
-      "severity": "Major",
-      "description": "Increased risk of myopathy or rhabdomyolysis."
-    },
-    {
-      "drugName": "Grapefruit juice",
-      "severity": "Moderate",
-      "description": "May increase atorvastatin plasma concentrations."
-    }
-  ],
-  "isInStock": true,
-  "stockLevel": {
-    "current": 1500,
-    "lowStockThreshold": 200
-  },
-  "lastStockUpdate": "2023-10-27T10:30:00Z" // ISO 8601 Date String
-}
-```
-
-**Instructions:**
-
-1.  **Define Enums (Optional but Recommended):**
-    - Create a string enum `DosageFormType` for `dosageForm` (e.g., `Tablet`, `Capsule`, `Syrup`, `Injection`).
-    - Create a string enum `InteractionSeverity` for `interactions[].severity` (e.g., `Major`, `Moderate`, `Minor`).
-2.  **Define Interfaces:**
-    - Create an interface `DrugInteraction` for the objects within the `interactions` array.
-    - Create an interface `StockDetails` for the `stockLevel` object.
-    - Create the main interface `MedicationApiResponse` that accurately types the entire API response structure shown above. Use your enums and other interfaces where appropriate.
-    - Pay attention to optional properties if any might not always be present (though for this challenge, assume all shown fields are present unless logically optional, like if `stockLevel` was only present if `isInStock` is true - for this exercise, assume `stockLevel` is always present).
-3.  **Create a Mock API Function:**
-    - Write a function `fetchMedicationDetails(medicationId: string): Promise<MedicationApiResponse>`.
-    - This function should simulate an API call. Inside, create a mock `MedicationApiResponse` object that matches the structure and your defined types. You can hardcode the data based on the example JSON.
-    - The function should return a `Promise` that resolves with your mock data.
-4.  **Test Your Types:**
-    - Call `fetchMedicationDetails` with a sample ID.
-    - Use `.then()` to access the resolved data and log some of its properties to the console to verify its structure and type correctness (e.g., `console.log(details.brandNames[0])`, `console.log(details.sideEffects.common)`).
-
-**Tool:** CodeSandbox
-
-**(https://codesandbox.io/s/your-challenge-6-link)**
-
-> [!IMPORTANT]
-> The link above is a placeholder. You'll need to replace `https://codesandbox.io/s/your-challenge-6-link` with the actual URL for the CodeSandbox challenge.
-
-This challenge will test your ability to translate a JSON structure into robust TypeScript types, a critical skill for working with APIs in any TypeScript application.
-
-### Module Summary
-
-In this module, "TypeScript Essentials," we embarked on a journey to understand and utilize TypeScript to enhance our React Native development. We started by exploring _why_ TypeScript is a valuable addition, focusing on its core benefits: static type safety for early error detection, superior tooling support, and improved code maintainability and scalability, especially crucial for larger applications like our SpeedyMeds capstone project.
-
-We then dove into the fundamental building blocks of TypeScript. We covered basic types (`string`, `number`, `boolean`, `array`, `object`, `bigint`), special types (`any`, `unknown`, `void`, `null`, `undefined`, `never`), and how to effectively use `interfaces` and `type aliases` to define custom data structures and contracts. We learned to type `functions` comprehensively—including parameters, return values, optional/default/rest parameters, and function types themselves—and explored function overloading and `this` typing. `Generics` were introduced as a powerful mechanism for writing reusable, type-safe components and functions that can operate on a variety of types. We also examined `enums` for creating sets of named constants and discussed practical alternatives like `as const` objects and literal union types. Finally, we delved into a suite of built-in `utility types` that allow for flexible transformation of existing types and got an overview of the `tsconfig.json` file, which configures the TypeScript compiler within an Expo project.
-
-**Key principles to carry forward from this module include:**
-
-- **Embrace TypeScript for Safety and Productivity:** Recognize that TypeScript's static typing is a powerful tool for catching errors early, improving code quality, and enhancing the developer experience.
-- **Master the Core Concepts:** Solidify your understanding of basic types, object shaping with interfaces/types, function typing, and the power of generics for reusability.
-- **Balance Inference with Explicitness:** Leverage TypeScript's type inference for brevity in simple cases, but always be explicit at API boundaries (function signatures, component props) and for complex types.
-- **Prioritize Type Safety:** Make full use of `strictNullChecks`, prefer `unknown` over `any` where types are truly uncertain, use type assertions cautiously, and employ type guards for runtime validation.
-- **Organize Types Effectively:** As your projects grow, implement a clear strategy for organizing your type definitions to maintain clarity and scalability.
-- **Document Comprehensively:** Consistently use JSDoc comments alongside TypeScript types to explain the _why_ and _how_ of your code, not just the _what_.
-
-By internalizing these TypeScript concepts and adhering to these principles, you're now well-equipped to write high-quality, maintainable, and robust React Native applications. The foundation laid in this module is crucial for success in all subsequent modules.
-
-> [!IMPORTANT]
-> All subsequent JavaScript, React, and React Native code examples in this course MUST use TypeScript.

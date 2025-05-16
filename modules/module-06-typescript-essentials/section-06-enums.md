@@ -230,7 +230,7 @@ Understanding how enums are translated to JavaScript helps in grasping their run
 
 #### Alternatives to Enums: `as const` Objects and Literal Union Types
 
-While enums are useful, TypeScript offers other patterns that can sometimes be more idiomatic or lightweight, especially when a full runtime enum object isn\'t needed.
+While enums are useful, TypeScript offers other patterns that can sometimes be more idiomatic or lightweight, especially when a full runtime enum object isn't needed.
 
 1.  **Object Literals with `as const` (Const Assertions):**
     This creates a true constant object where all properties are `readonly` and their values are treated as literal types. This is often considered more JavaScript-friendly.
@@ -270,7 +270,7 @@ While enums are useful, TypeScript offers other patterns that can sometimes be m
 **Choosing Between Enums, `as const`, and Literal Unions:**
 
 - **Enums:** Use when you need a distinct nominal type, when reverse mapping for numeric values is beneficial, or when you prefer the explicit `Enum.Member` syntax. Be mindful that non-const enums add to the generated JavaScript bundle size.
-- **`const enum`:** Best for performance-critical scenarios where you need named constants and value inlining, and don\'t need a runtime object or reverse mapping.
+- **`const enum`:** Best for performance-critical scenarios where you need named constants and value inlining, and don't need a runtime object or reverse mapping.
 - **`as const` Objects:** Good when you want a runtime JavaScript object (e.g., for iteration over keys/values) with strong type safety for its values, and prefer a more standard JavaScript object pattern.
 - **Literal Union Types:** Ideal for simple, fixed sets of string or numeric values where you only need type checking and no runtime object representation. They have zero runtime overhead.
 
