@@ -47,3 +47,27 @@ Upon completing this module, you will be able to:
 - Completion of [Module 10: Styling in React Native](../module-10-styling-in-react-native/section-00-introduction.md) (especially for styling form elements)
 - Familiarity with TypeScript (as covered in [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md))
 - Basic understanding of state management with `useState` (covered in Module 7).
+
+### Module Sections
+
+This module is divided into the following sections:
+
+- [Section 1: Recap: TextInput Component](./section-01-recap-textinput-component.md)
+- [Section 2: Handling Text Changes (`onChangeText`)](./section-02-handling-text-changes.md)
+- [Section 3: Form State Management Strategies](./section-03-form-state-management-strategies.md)
+- [Section 4: Controlled Components Pattern](./section-04-controlled-components-pattern.md)
+- [Section 5: Introduction to Form Libraries](./section-05-introduction-to-form-libraries.md)
+- [Section 6: Setting up React Hook Form](./section-06-setting-up-react-hook-form.md)
+- [Section 7: Basic Form Validation with React Hook Form](./section-07-basic-form-validation-with-react-hook-form.md)
+- [Section 8: Handling Form Submission](./section-08-handling-form-submission.md)
+- [Section 9: Other Input Types](./section-09-other-input-types.md)
+
+### Module Challenge
+
+Apply your form handling skills in **Challenge 12: Create a Patient Information Form**:
+
+**(https://snack.expo.dev/INSERT_ACTUAL_CHALLENGE_12_URL_HERE)**
+
+## Module Summary
+
+This module provided a comprehensive guide to handling user input and building forms in React Native. You recapped the `TextInput` component, learned to manage text changes and form state effectively using controlled components, and explored the benefits of form management libraries like React Hook Form. Key concepts included setting up React Hook Form, implementing basic validation, handling form submissions, and integrating other input types like switches and pickers from React Native Paper. This knowledge will enable you to create robust and user-friendly forms for data collection in your SpeedyMeds application.

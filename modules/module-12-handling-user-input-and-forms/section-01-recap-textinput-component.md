@@ -117,11 +117,13 @@ export default SimpleInputScreen;
 
 This basic example renders a styled `TextInput` field where a user could visually type. However, in this uncontrolled state, the application isn't actively managing or storing the typed text in its state. If you were to type into this input, the text would appear on the screen due to native behavior, but React would not be aware of its current value. This distinction is key to understanding why controlled components, which we'll explore in Section 4, are the preferred pattern in React for managing form data. We'll soon cover how to capture and manage the input's value using state.
 
-Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
+### Next Steps
+
+With this recap of the `TextInput` component's core features, you're ready to learn how to capture and manage the text a user enters. Proceed to [Section 2: Handling Text Changes (`onChangeText`)](./section-02-handling-text-changes.md).
 
 > 📚 **Official Documentation:**
->
-> - [React Native Docs: `TextInput`](https://reactnative.dev/docs/textinput)
-> - [Expo Docs: `TextInput`](https://docs.expo.dev/ui-programming/user-interface-libraries/#textinput) (Often links to React Native core docs for these components)
-> - [React Native New Architecture: Fabric](https://reactnative.dev/docs/the-new-architecture/pillars-fabric)
-> - [React Native New Architecture: JSI](https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface)
+
+- [React Native Docs: `TextInput`](https://reactnative.dev/docs/textinput)
+- [Expo Docs: `TextInput`](https://docs.expo.dev/ui-programming/user-interface-libraries/#textinput) (Often links to React Native core docs for these components)
+- [React Native New Architecture: Fabric](https://reactnative.dev/docs/the-new-architecture/pillars-fabric)
+- [React Native New Architecture: JSI](https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface)

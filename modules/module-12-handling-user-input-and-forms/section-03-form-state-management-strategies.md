@@ -327,8 +327,12 @@ The following table summarizes the key characteristics, pros, and cons of these 
 | **Cons**              | Can get messy for complex state, potential for scattered logic           | Verbose for simple state, learning curve for reducer pattern                           | Performance issues with frequent input value changes            |
 | **Performance Notes** | Re-renders component on state change. Can be optimized with memoization. | `dispatch` is stable; can prevent unnecessary prop drilling of callbacks.              | Consumers re-render when context value changes.                 |
 
+### Next Steps
+
+You've now explored various strategies for managing form state. The recommended approach for most React and React Native forms is the controlled components pattern. Proceed to [Section 4: Controlled Components Pattern](./section-04-controlled-components-pattern.md) to dive deeper into this fundamental concept.
+
 > 📚 **Official Documentation:**
->
-> - [React `useState` Hook](https://react.dev/reference/react/useState)
-> - [React `useReducer` Hook](https://react.dev/reference/react/useReducer)
-> - [React Context API](https://react.dev/reference/react/useContext) (and `createContext`)
+
+- [React `useState` Hook](https://react.dev/reference/react/useState)
+- [React `useReducer` Hook](https://react.dev/reference/react/useReducer)
+- [React Context API](https://react.dev/reference/react/useContext) (and `createContext`)

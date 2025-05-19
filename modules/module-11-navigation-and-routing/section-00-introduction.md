@@ -87,29 +87,31 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the following:
 
-- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-setting-up-environment-with-expo/section-00-introduction.md)
+- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-react-native-environment-with-expo/section-00-introduction.md)
 - Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)
-- Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials/section-00-introduction.md)
-- Completion of [Module 8: React Native Core Components](../module-08-core-components/section-00-introduction.md)
-- Completion of [Module 10: Styling in React Native](../module-10-styling/section-00-introduction.md)
+- Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md)
+- Completion of [Module 8: React Native Core Components](../module-08-react-native-core-components/section-00-introduction.md)
+- Completion of [Module 10: Styling in React Native](../module-10-styling-in-react-native/section-00-introduction.md)
 
-## Module Sections
+### Module Sections
 
 This module is divided into the following sections:
 
-1.  **Section 1: Navigation Concepts:** Understanding stacks, tabs, and drawers.
-2.  **Section 2: Introduction to React Navigation (v6):** Overview and setup.
-3.  **Section 3: Stack Navigator Setup and Usage:** Building basic screen flows.
-4.  **Section 4: Tab Navigator Setup and Usage:** Implementing main app navigation.
-5.  **Section 5: Drawer Navigator Setup and Usage:** Creating side menus.
-6.  **Section 6: Passing Parameters Between Screens:** Sharing data during navigation.
-7.  **Section 7: Configuring Headers and Tabs:** Customizing appearance.
-8.  **Section 8: Introduction to Expo Router:** Exploring file-based routing.
-9.  **Section 9: File-Based Routing with Expo Router:** Practical implementation.
-10. **Section 10: Expo Router vs. React Navigation Configuration:** A comparative look.
-11. **Section 11: Deep Linking:** Handling external navigation.
+- [Section 1: Navigation Concepts](./section-01-navigation-concepts.md)
+- [Section 2: Introduction to React Navigation (v6)](./section-02-introduction-to-react-navigation.md)
+- [Section 3: Stack Navigator Setup and Usage](./section-03-stack-navigator-setup-and-usage.md)
+- [Section 4: Tab Navigator Setup and Usage](./section-04-tab-navigator-setup-and-usage.md)
+- [Section 5: Drawer Navigator Setup and Usage](./section-05-drawer-navigator-setup-and-usage.md)
+- [Section 6: Passing Parameters Between Screens](./section-06-passing-parameters-between-screens.md)
+- [Section 7: Configuring Headers and Tabs](./section-07-configuring-headers-and-tabs.md)
+- [Section 8: Introduction to Expo Router](./section-08-introduction-to-expo-router.md)
+- [Section 9: File-Based Routing with Expo Router](./section-09-file-based-routing-with-expo-router.md)
+- [Section 10: Expo Router vs. React Navigation Configuration](./section-10-expo-router-vs-react-navigation-configuration.md)
+- [Section 11: Deep Linking](./section-11-deep-linking.md)
 
 ---
+
+## Module Challenge
 
 **(https://snack.expo.dev/SpeedyMedsNavChallenge11)**
 

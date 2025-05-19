@@ -241,6 +241,6 @@ Understanding these state concepts will help you debug navigation flows and buil
 >
 > **Key Takeaway:** Mobile navigation libraries often have more complex dependencies due to their interaction with native UI elements, gestures, and animations.
 
-#### Next Steps
+### Next Steps
 
-With React Navigation installed and your app wrapped in `NavigationContainer`, you're ready to start building navigation structures. In the next section, we'll focus on setting up and using the Stack Navigator.
+With React Navigation installed and your app wrapped in `NavigationContainer`, you're ready to start building navigation structures. In the next section, we'll focus on setting up and using the Stack Navigator to manage a series of screens. Proceed to [Section 3: Stack Navigator Setup and Usage](./section-03-stack-navigator-setup-and-usage.md).

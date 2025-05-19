@@ -82,6 +82,8 @@ Let's compare how common navigation tasks and general characteristics differ bet
 - **React Navigation:** Lazy loading of screens (e.g., in `Tab.Navigator` where `lazy={true}` is default) is an explicit feature developers can control. Overall performance often depends on how developers structure their navigators and optimize screen components (e.g., using `React.memo`, avoiding unnecessary re-renders).
 - **Expo Router:** Aims for build-time optimizations by pre-constructing route configurations from the file system. Lazy loading of routes is also a general default behavior. Performance characteristics are largely inherited from the underlying React Navigation components it generates and uses.
 
+The following table provides a side-by-side summary of key features and characteristics:
+
 #### Table: Feature Comparison Summary
 
 | Feature                      | React Navigation (v6)                                                                           | Expo Router (v3)                                                                         |

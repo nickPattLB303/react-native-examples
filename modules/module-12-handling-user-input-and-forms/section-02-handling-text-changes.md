@@ -189,3 +189,7 @@ This architectural evolution from the legacy bridge to JSI/Fabric for event prop
 > - [React Native Docs: `TextInput` (onChangeText prop)](https://reactnative.dev/docs/textinput#onchangetext)
 > - [React Native New Architecture: JSI](https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface)
 > - [React Native New Architecture: Fabric](https://reactnative.dev/docs/the-new-architecture/pillars-fabric)
+
+### Next Steps
+
+You now know how to capture user input using `onChangeText`. The next step is to explore different strategies for managing the overall state of your forms. Proceed to [Section 3: Form State Management Strategies](./section-03-form-state-management-strategies.md).

@@ -210,11 +210,27 @@ While React Hook Form (which we will cover later) cleverly uses refs for perform
 
 Mastering controlled components is a key step towards building complex forms. In the next sections, we'll see how libraries can help manage the state and validation for larger forms more efficiently.
 
-**Exercise 12.1: Building a Controlled Form Input**
+### Exercise 12.1: Building a Controlled Form Input
 
-**(TODO: Link to Expo Snack for Exercise 12.1 - Building a Controlled Form Input. The Snack should guide the student to build a controlled TextInput for a field like 'Patient Emergency Contact Name' or similar, including state management and displaying the captured value, reinforcing the concepts from this section. Ensure the Snack README has clear objectives and instructions.)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_12_1_URL_HERE)**
+
+> **Instructions for Expo Snack `README.md` (Exercise 12.1):**
+>
+> **Objective:** Build a controlled `TextInput` for a field like 'Patient Emergency Contact Name', including state management and displaying the captured value.
+>
+> **Tasks:**
+>
+> 1. Create a state variable using `useState` to hold the input value.
+> 2. Render a `TextInput` and bind its `value` prop to your state variable.
+> 3. Implement the `onChangeText` handler to update the state.
+> 4. Display the current state value in a `<Text>` component.
+> 5. (Optional) Add a button to clear the input field.
 
 > 📚 **Official Documentation:**
 >
 > - [React Docs: Controlled Components](https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components)
 > - [React Native Docs: `TextInput` (value prop)](https://reactnative.dev/docs/textinput#value)
+
+### Next Steps
+
+Mastering the controlled components pattern is essential for handling forms in React Native. While effective, for more complex forms with extensive validation and submission logic, dedicated libraries can simplify development. Proceed to [Section 5: Introduction to Form Libraries](./section-05-introduction-to-form-libraries.md) to explore these solutions.

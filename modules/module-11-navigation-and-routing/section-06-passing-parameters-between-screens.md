@@ -346,7 +346,7 @@ This will update the URL and the values returned by `useLocalSearchParams` witho
 
 This exercise will help you practice passing and receiving parameters between screens.
 
-**(Placeholder: URL_to_Expo_Snack_for_Exercise_11.3)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_11_3_URL_HERE)**
 
 > **Instructions for Expo Snack `README.md` (Exercise 11.3):**
 >
