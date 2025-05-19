@@ -150,6 +150,12 @@ Your feedback helps improve the course for future learners. Consider these aspec
 
 Specific, actionable feedback is most helpful. For example, rather than "The navigation section was confusing," more useful feedback would be "The explanation of nested navigators would be clearer with a diagram showing the relationship between different navigators."
 
+#### Submitting Your Feedback
+
+We highly value your input. Please take a few minutes to complete our official course feedback form. Your anonymous responses will help us enhance the learning experience for future students.
+
+**[Course Feedback Form](https://forms.office.com/YOUR_FEEDBACK_FORM_LINK_PLACEHOLDER)**
+
 #### Instructor-Specific Feedback
 
 > 🧑‍🏫 **(Instructor-Led):** Your instructor would appreciate feedback on teaching effectiveness, including:

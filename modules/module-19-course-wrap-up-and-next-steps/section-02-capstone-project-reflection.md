@@ -68,6 +68,8 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
 };
 ```
 
+This `MedicationCard` component is a functional React component that takes `medication` data, an `onPress` handler, and an optional `compact` prop. It uses React Native Paper's `Card` component to display medication details, conditionally rendering more information based on the `compact` prop.
+
 #### State Management Implementation
 
 You applied various state management strategies depending on the complexity and scope of the data:
@@ -95,6 +97,8 @@ const useFilterStore = create<FilterState>((set) => ({
   resetFilters: () => set({ searchQuery: "", statusFilter: "all" }),
 }));
 ```
+
+This `useFilterStore` is a Zustand store created for managing medication filter states. It defines state variables like `searchQuery` and `statusFilter`, along with actions (`setSearchQuery`, `setStatusFilter`, `resetFilters`) to update these states, providing a centralized way to manage filter logic.
 
 #### Navigation Structure
 
@@ -145,6 +149,8 @@ export default function AppLayout() {
   );
 }
 ```
+
+This `AppLayout` component utilizes Expo Router's `Tabs` navigator to define the primary tab-based navigation for the SpeedyMeds app. Each `Tabs.Screen` configures a tab with a name, title, and an icon using `Ionicons` from `@expo/vector-icons`.
 
 #### UI/UX Design Implementation
 
