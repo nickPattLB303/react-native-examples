@@ -196,163 +196,37 @@ Custom Hooks are a fundamental pattern for building scalable and maintainable Re
 >
 > **Key Takeaway:** The power and patterns of custom Hooks are fully transferable. You can leverage this to share complex UI-independent logic between your React web and React Native projects if structured carefully.
 
-### Exercise
+### Exercise 9.3: Building a Custom Hook (`useTimer`)
 
-- **Exercise 9.3: Building a Custom Hook (`useTimer`)**
+**Objective:** Create a custom Hook `useTimer` that encapsulates timer logic (start, stop, reset, and current time), suitable for features like a medication adherence reminder countdown in SpeedyMeds.
 
-  - **Objective:** Create a custom Hook `useTimer` that encapsulates timer logic (start, stop, reset, and current time), suitable for features like a medication adherence reminder countdown in SpeedyMeds.
-  - **Instructions:**
-    1.  Define a custom Hook named `useTimer` that accepts `initialSeconds: number = 0` and an optional `isCountdown: boolean = false`.
-    2.  Inside `useTimer`:
-        - Use `useState` to manage `seconds` (initialized with `initialSeconds`).
-        - Use `useState` to manage `isActive` (boolean, initially `false`).
-        - Use `useRef` to store the interval ID (e.g., `intervalRef.current`).
-    3.  Implement a `useEffect` Hook to handle the `setInterval` logic:
-        - The effect should run when `isActive` changes (and potentially `isCountdown` or `initialSeconds` if reset behavior depends on them changing, though `reset` function is better for `initialSeconds`).
-        - If `isActive` is `true`, set up an interval that decrements `seconds` every 1000ms if `isCountdown` is `true` and `seconds > 0`, or increments `seconds` if `isCountdown` is `false` (stopwatch mode).
-        - If `isCountdown` is `true` and `seconds` reaches `0`, the timer should stop (set `isActive` to `false` and clear the interval).
-        - The `useEffect` cleanup function MUST clear the interval (`clearInterval(intervalRef.current)`) to prevent memory leaks when the component unmounts or before the effect re-runs.
-    4.  Implement `start`, `stop`, and `reset` functions within the hook:
-        - `start()`: Sets `isActive` to `true` (and potentially resets `seconds` to `initialSeconds` if it's a fresh start for a countdown that had reached zero, depending on desired behavior).
-        - `stop()`: Sets `isActive` to `false`.
-        - `reset()`: Calls `stop()` and sets `seconds` back to `initialSeconds` (or the passed `initialSeconds` if the hook is designed to be re-configurable).
-    5.  Wrap `start`, `stop`, and `reset` in `useCallback` to ensure they have stable references.
-    6.  The `useTimer` hook should return an object: `{ seconds, isActive, start, stop, reset }`. Define an interface for this return type (e.g., `TimerHookResult`).
-    7.  Create a `TimerDisplayComponent` that uses your `useTimer` hook. For example, instantiate it for a 60-second countdown: `const { seconds, isActive, start, stop, reset } = useTimer(60, true);`.
-    8.  The component should render the `seconds` and `isActive` status.
-    9.  Render "Start", "Stop", and "Reset" buttons that call the respective functions from the hook.
-    10. Test thoroughly to ensure the timer starts, stops, resets correctly, and handles countdown completion. Also, verify that the interval is cleared if the component were to unmount (conceptually, as direct unmount testing in Snack is tricky without navigation).
-  - **Tool:** **(https://snack.expo.dev/)**
-  - **Conceptual Code for `useTimer.ts` (Guidance - implement your own version):**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_9_3_URL_HERE)**
 
-    ```tsx
-    import { useState, useEffect, useRef, useCallback } from "react";
+**Instructions & Guidance (to be adapted for Expo Snack `README.md` or as comments in the starter code):**
 
-    /**
-     * Represents the values returned by the useTimer custom Hook.
-     */
-    export interface TimerHookResult {
-      /** The current number of seconds on the timer. */
-      seconds: number;
-      /** A boolean indicating whether the timer is currently active. */
-      isActive: boolean;
-      /** Function to start or resume the timer. */
-      start: () => void;
-      /** Function to stop or pause the timer. */
-      stop: () => void;
-      /** Function to reset the timer to its initial state and stop it. */
-      reset: () => void;
-    }
+1.  Define a custom Hook named `useTimer` that accepts `initialSeconds: number = 0` and an optional `isCountdown: boolean = false`.
+2.  Inside `useTimer`:
+    - Use `useState` to manage `seconds` (initialized with `initialSeconds`).
+    - Use `useState` to manage `isActive` (boolean, initially `false`).
+    - Use `useRef` to store the interval ID (e.g., `intervalRef.current`).
+3.  Implement a `useEffect` Hook to handle the `setInterval` logic:
+    - The effect should run when `isActive` changes (and potentially `isCountdown` or `initialSeconds` if reset behavior depends on them changing, though `reset` function is better for `initialSeconds`).
+    - If `isActive` is `true`, set up an interval that decrements `seconds` every 1000ms if `isCountdown` is `true` and `seconds > 0`, or increments `seconds` if `isCountdown` is `false` (stopwatch mode).
+    - If `isCountdown` is `true` and `seconds` reaches `0`, the timer should stop (set `isActive` to `false` and clear the interval).
+    - The `useEffect` cleanup function MUST clear the interval (`clearInterval(intervalRef.current)`) to prevent memory leaks when the component unmounts or before the effect re-runs.
+4.  Implement `start`, `stop`, and `reset` functions within the hook:
+    - `start()`: Sets `isActive` to `true` (and potentially resets `seconds` to `initialSeconds` if it's a fresh start for a countdown that had reached zero, depending on desired behavior).
+    - `stop()`: Sets `isActive` to `false`.
+    - `reset()`: Calls `stop()` and sets `seconds` back to `initialSeconds` (or the passed `initialSeconds` if the hook is designed to be re-configurable).
+5.  Wrap `start`, `stop`, and `reset` in `useCallback` to ensure they have stable references.
+6.  The `useTimer` hook should return an object: `{ seconds, isActive, start, stop, reset }`. Define an interface for this return type (e.g., `TimerHookResult`).
+7.  Create a `TimerDisplayComponent` that uses your `useTimer` hook. For example, instantiate it for a 60-second countdown: `const { seconds, isActive, start, stop, reset } = useTimer(60, true);`.
+8.  The component should render the `seconds` and `isActive` status.
+9.  Render "Start", "Stop", and "Reset" buttons that call the respective functions from the hook.
+10. Test thoroughly to ensure the timer starts, stops, resets correctly, and handles countdown completion. Also, verify that the interval is cleared if the component were to unmount (conceptually, as direct unmount testing in Snack is tricky without navigation).
 
-    /**
-     * A custom Hook to encapsulate timer logic (countdown or stopwatch).
-     *
-     * @param {number} [initialSeconds=0] - The initial number of seconds for the timer.
-     * @param {boolean} [isCountdown=false] - If true, the timer acts as a countdown; otherwise, as a stopwatch.
-     * @returns {TimerHookResult} An object containing timer state and control functions.
-     */
-    function useTimer(
-      initialSeconds: number = 0,
-      isCountdown: boolean = false
-    ): TimerHookResult {
-      const [seconds, setSeconds] = useState<number>(initialSeconds);
-      const [isActive, setIsActive] = useState<boolean>(false);
-      const intervalRef = useRef<NodeJS.Timeout | null>(null);
+### Next Steps
 
-      useEffect(() => {
-        if (isActive) {
-          intervalRef.current = setInterval(() => {
-            if (isCountdown) {
-              setSeconds((prevSeconds) => {
-                if (prevSeconds > 0) {
-                  return prevSeconds - 1;
-                } else {
-                  setIsActive(false); // Stop timer
-                  if (intervalRef.current) clearInterval(intervalRef.current);
-                  return 0;
-                }
-              });
-            } else {
-              // Stopwatch mode
-              setSeconds((prevSeconds) => prevSeconds + 1);
-            }
-          }, 1000);
-        } else {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-        }
-        return () => {
-          // Cleanup function
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-          }
-        };
-      }, [isActive, isCountdown]); // Effect dependencies
+Creating custom Hooks is a powerful way to write cleaner, more reusable React Native code. This concludes Module 9, where you've explored key React Native APIs and advanced Hook patterns. Test your comprehensive understanding with the module challenge, linked in the main introduction file for this module.
 
-      const start = useCallback(
-        () => {
-          // Optional: if already at 0 in countdown, reset before starting
-          // if (isCountdown && seconds === 0) setSeconds(initialSeconds);
-          setIsActive(true);
-        },
-        [
-          /* isCountdown, initialSeconds, seconds (if reset logic is here) */
-        ]
-      );
-
-      const stop = useCallback(() => {
-        setIsActive(false);
-      }, []);
-
-      const reset = useCallback(() => {
-        setIsActive(false);
-        setSeconds(initialSeconds);
-      }, [initialSeconds]);
-
-      return { seconds, isActive, start, stop, reset };
-    }
-
-    export default useTimer;
-    ```
-
-  - **Conceptual Code for `TimerDisplayComponent.tsx` (Guidance):**
-
-    ```tsx
-    import React from "react";
-    import { View, Text, Button, StyleSheet } from "react-native";
-    import useTimer from "./useTimer"; // Adjust path as needed
-
-    const TimerDisplayComponent = () => {
-      const { seconds, isActive, start, stop, reset } = useTimer(30, true); // 30-sec countdown
-
-      return (
-        <View style={styles.container}>
-          <Text style={styles.timerText}>Time: {seconds}s</Text>
-          <Text>Status: {isActive ? "Running" : "Stopped"}</Text>
-          <View style={styles.buttonContainer}>
-            {!isActive ? (
-              <Button title="Start Countdown" onPress={start} />
-            ) : (
-              <Button title="Stop Countdown" onPress={stop} />
-            )}
-            <Button title="Reset Countdown" onPress={reset} />
-          </View>
-        </View>
-      );
-    };
-
-    const styles = StyleSheet.create({
-      container: { flex: 1, justifyContent: "center", alignItems: "center" },
-      timerText: { fontSize: 30, marginBottom: 10 },
-      buttonContainer: {
-        flexDirection: "row",
-        marginTop: 20,
-        justifyContent: "space-around",
-        width: "90%",
-      },
-    });
-
-    export default TimerDisplayComponent;
-    ```
+You are now ready to proceed to [Module 10: Styling in React Native](../module-10-styling-in-react-native/section-00-introduction.md).

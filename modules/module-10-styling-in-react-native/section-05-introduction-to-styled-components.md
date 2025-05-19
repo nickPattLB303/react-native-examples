@@ -241,3 +241,7 @@ _Instructions and requirements for the exercise are provided within the Expo Sna
 
 - [Styled Components: Basics](https://styled-components.com/docs/basics)
 - [Styled Components: React Native](https://styled-components.com/docs/basics#react-native)
+
+### Next Steps
+
+You've now been introduced to `styled-components` and how to use them for basic styling and prop-based adaptations. The next step is to explore how `styled-components` facilitate theming for consistent application-wide styling. Proceed to [Section 6: Theming with Styled Components](./section-06-theming-with-styled-components.md).

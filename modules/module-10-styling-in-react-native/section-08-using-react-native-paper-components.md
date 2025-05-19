@@ -485,7 +485,9 @@ Time to get hands-on with React Native Paper. This exercise involves building a 
 
 _Instructions and requirements for the exercise are provided within the Expo Snack linked above._
 
-Next, we'll learn how to customize the look and feel of these React Native Paper components using its theming system.
+### Next Steps
+
+You've now seen how to use several common components from React Native Paper to build UIs. Next, we'll learn how to customize the look and feel of these components using React Native Paper's theming system. Proceed to [Section 9: Theming with React Native Paper (v5)](./section-09-theming-with-react-native-paper.md).
 
 📚 **Official Documentation:**
 

@@ -208,50 +208,14 @@ export default ComposedStylesExample;
 
 ### Utility Styles and Methods
 
-The `StyleSheet` API also provides several helpful utility properties and methods:
+The `StyleSheet` API also provides several helpful utility properties and methods.
 
-- **`StyleSheet.flatten()`**: This method takes an array of style objects (or a single style object) and merges them into a single, "flat" style object. This can be useful for debugging, inspecting computed styles, or when you need to pass a unified style object to a child component that expects a single style object rather than an array.
-
-  ```tsx
-  const style1 = { color: "blue", fontSize: 16 };
-  const style2 = { fontWeight: "bold" };
-  const flattenedStyle = StyleSheet.flatten([style1, style2]);
-  // flattenedStyle is now { color: 'blue', fontSize: 16, fontWeight: 'bold' }
-  ```
-
-  > [!NOTE]
-  > For React Native for Web, using `StyleSheet.flatten()` might interfere with static style extraction optimizations. Use it judiciously if web compatibility is a primary concern.
-
-- **`StyleSheet.absoluteFill` and `StyleSheet.absoluteFillObject`**: These provide a convenient shorthand for creating overlay styles that cover the entire parent.
-
-  - `StyleSheet.absoluteFill` is a reference to a pre-defined style object: `{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }`. You can use it directly in your style array.
-  - `StyleSheet.absoluteFillObject` is the object itself. This is useful if you need to spread it into another style object or modify parts of it.
-
-  ```tsx
-  // Using StyleSheet.absoluteFill
-  // <View style={[styles.parentContainer, StyleSheet.absoluteFill]} />
-
-  // Using StyleSheet.absoluteFillObject to add a semi-transparent background
-  // <View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' }} />
-  ```
-
-- **`StyleSheet.hairlineWidth`**: This is a platform-aware constant representing the thinnest possible line width that can be drawn on the device's screen without being aliased. Its value is typically `1 / PixelRatio.get()`. It's ideal for creating crisp borders or separators that look consistent across different screen densities.
-  ```tsx
-  const styles = StyleSheet.create({
-    separator: {
-      height: StyleSheet.hairlineWidth,
-      backgroundColor: "grey",
-      marginVertical: 10,
-    },
-    thinBorderCard: {
-      borderWidth: StyleSheet.hairlineWidth,
-      borderColor: "lightgrey",
-      padding: 10,
-    },
-  });
-  ```
-  > [!TIP]
-  > Be aware that hairline borders might not render correctly or appear thicker if the iOS Simulator is scaled down (e.g., "Fit to Screen" on a large monitor). Always test on actual devices or at 100% scale in the simulator for accurate visual representation.
+| API Element                     | Description                                                                                                                                                                                                                                                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `StyleSheet.flatten()`          | This method takes an array of style objects (or a single style object) and merges them into a single, "flat" style object. This can be useful for debugging, inspecting computed styles, or when you need to pass a unified style object to a child component that expects a single style object rather than an array. |
+| `StyleSheet.absoluteFill`       | This is a reference to a pre-defined style object: `{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }`. You can use it directly in your style array.                                                                                                                                                      |
+| `StyleSheet.absoluteFillObject` | This is the object itself. This is useful if you need to spread it into another style object or modify parts of it.                                                                                                                                                                                                    |
+| `StyleSheet.hairlineWidth`      | This is a platform-aware constant representing the thinnest possible line width that can be drawn on the device's screen without being aliased. Its value is typically `1 / PixelRatio.get()`. It's ideal for creating crisp borders or separators that look consistent across different screen densities.             |
 
 ### Best Practices for `StyleSheet`
 

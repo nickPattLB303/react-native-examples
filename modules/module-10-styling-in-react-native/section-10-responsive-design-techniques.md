@@ -564,3 +564,9 @@ This concludes Module 10 on Styling in React Native. You should now have a solid
 - [React Native Docs: `useWindowDimensions` hook](https://reactnative.dev/docs/usewindowdimensions)
 - [React Native Docs: Platform Module](https://reactnative.dev/docs/platform-specific-code)
 - [React Native Docs: PixelRatio (for density-specific resources)](https://reactnative.dev/docs/pixelratio)
+
+### Next Steps
+
+You've now explored various techniques for creating responsive designs in React Native, from leveraging Flexbox and the `Dimensions` API to handling platform specifics and safe areas. This knowledge is crucial for building applications that provide a consistent and optimal user experience across all devices.
+
+This concludes Module 10 on Styling. It's time to apply all these styling concepts in the module challenge, which you can find linked in the main introduction file for this module. After successfully completing the challenge, you'll be ready to tackle [Module 11: Navigation and Routing](../module-11-navigation-and-routing/section-00-introduction.md).

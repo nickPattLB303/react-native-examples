@@ -95,7 +95,9 @@ This setup makes the theme (default or custom) available to all React Native Pap
 >
 > **Key Takeaway:** React Native Paper brings a comprehensive, Material Design-compliant component suite to your mobile development workflow, abstracting away much of the low-level styling and behavior implementation.
 
-In the next section, we will start using some of the common components provided by React Native Paper and see how they can be integrated into our SpeedyMeds application.
+### Next Steps
+
+Now that you have an overview of React Native Paper and how to install it, we'll move on to explore some of its common components and see how they can be integrated into our SpeedyMeds application. Proceed to [Section 8: Using React Native Paper Components](./section-08-using-react-native-paper-components.md).
 
 📚 **Official Documentation:**
 

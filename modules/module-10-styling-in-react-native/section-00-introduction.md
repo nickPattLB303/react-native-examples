@@ -61,20 +61,20 @@ Before starting this module, ensure you have completed:
 
 ---
 
-## Module Sections Overview
+### Module Sections
 
-This module is divided into the following sections, each building upon the last to provide a comprehensive understanding of styling in React Native:
+This module is divided into the following sections:
 
-1.  **Styling Approaches Overview:** A high-level look at `StyleSheet`, inline styles, CSS-in-JS, and UI libraries.
-2.  **StyleSheet Deep Dive (Best Practices, Performance):** Best practices and performance considerations for `StyleSheet.create()`.
-3.  **Inline Styles (Usage and Limitations):** Appropriate usage and limitations of direct style application.
-4.  **Layout with Flexbox (Comprehensive Guide):** A comprehensive guide to React Native's layout engine.
-5.  **Introduction to Styled Components:** Using this popular CSS-in-JS library.
-6.  **Theming with Styled Components:** Creating consistent designs with themes.
-7.  **Introduction to UI Libraries: React Native Paper:** Leveraging pre-built Material Design components.
-8.  **Using React Native Paper Components:** Practical examples of common Paper components.
-9.  **Theming with React Native Paper (v5):** Customizing the look and feel of Paper components.
-10. **Responsive Design Techniques (Platform, Dimensions):** Adapting your UI to various screen sizes and platforms.
+- [Section 1: Styling Approaches Overview](./section-01-styling-approaches-overview.md)
+- [Section 2: StyleSheet Deep Dive (Best Practices, Performance)](./section-02-stylesheet-deep-dive.md)
+- [Section 3: Inline Styles (Usage and Limitations)](./section-03-inline-styles.md)
+- [Section 4: Layout with Flexbox (Comprehensive Guide)](./section-04-layout-with-flexbox.md)
+- [Section 5: Introduction to Styled Components](./section-05-introduction-to-styled-components.md)
+- [Section 6: Theming with Styled Components](./section-06-theming-with-styled-components.md)
+- [Section 7: Introduction to UI Libraries: React Native Paper](./section-07-introduction-to-ui-libraries-react-native-paper.md)
+- [Section 8: Using React Native Paper Components](./section-08-using-react-native-paper-components.md)
+- [Section 9: Theming with React Native Paper (v5)](./section-09-theming-with-react-native-paper.md)
+- [Section 10: Responsive Design Techniques (Platform, Dimensions)](./section-10-responsive-design-techniques.md)
 
 ## Module Challenge
 

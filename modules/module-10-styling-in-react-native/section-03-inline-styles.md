@@ -143,11 +143,9 @@ export default DynamicStatusPillCombined;
 > [!TIP]
 > When combining styles in an array, React Native handles falsy values (like `null`, `undefined`, or `false`) gracefully by ignoring them. This is useful for conditional styling: `style={[styles.base, condition && styles.conditionalStyle]}`.
 
-### Conclusion
+### Next Steps
 
-Inline styles are a convenient tool in your React Native styling toolkit, especially for dynamic styles. However, for the sake of readability, maintainability, and potential performance benefits, prefer `StyleSheet.create` for the majority of your styling needs. Use inline styles thoughtfully and consider refactoring them into `StyleSheet` if they become complex or are reused.
-
-In the next section, we will delve into Flexbox, the powerful layout system that underpins how you arrange components in React Native.
+Inline styles offer flexibility for dynamic styling. Now that you understand their usage and limitations, we will delve into Flexbox, the powerful layout system that underpins how you arrange components in React Native. Proceed to [Section 4: Layout with Flexbox (Comprehensive Guide)](./section-04-layout-with-flexbox.md).
 
 📚 **Official Documentation:**
 

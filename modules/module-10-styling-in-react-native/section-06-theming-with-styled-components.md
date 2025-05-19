@@ -314,9 +314,9 @@ const PatientAdvisoryNotice: React.FC<PatientAdvisoryNoticeProps> = ({
 > [!TIP]
 > You can create helper functions or utilities to access nested theme properties more easily if your theme object becomes very complex. However, for most cases, direct access like `props.theme.colors.primary` is clear and effective.
 
-Theming with `styled-components` provides a robust and flexible way to manage the visual identity of your SpeedyMeds application. It promotes consistency, simplifies maintenance, and enables powerful features like dynamic theme switching.
+### Next Steps
 
-Next, we'll shift our focus to UI component libraries, specifically React Native Paper, and see how it can accelerate UI development.
+Theming with `styled-components` offers a powerful way to manage your application's visual identity. Now that you've seen how to create consistent designs with themes, we'll shift our focus to UI component libraries, which can further accelerate your development. Proceed to [Section 7: Introduction to UI Libraries: React Native Paper](./section-07-introduction-to-ui-libraries-react-native-paper.md).
 
 📚 **Official Documentation:**
 

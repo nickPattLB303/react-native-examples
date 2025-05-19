@@ -556,3 +556,7 @@ In the next section, we'll explore another powerful styling technique: Styled Co
 - [React Native Docs: Layout with Flexbox](https://reactnative.dev/docs/flexbox)
 - [React Native Docs: Height and Width](https://reactnative.dev/docs/height-and-width) (Related to sizing items within Flexbox)
 - [A Complete Guide to Flexbox (CSS-Tricks)](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) (Excellent resource for general Flexbox concepts, highly transferable)
+
+### Next Steps
+
+Mastering Flexbox is key to creating sophisticated layouts in React Native. Having covered `StyleSheet` and Flexbox, we'll now explore another popular approach to styling: CSS-in-JS libraries, specifically Styled Components. Proceed to [Section 5: Introduction to Styled Components](./section-05-introduction-to-styled-components.md).

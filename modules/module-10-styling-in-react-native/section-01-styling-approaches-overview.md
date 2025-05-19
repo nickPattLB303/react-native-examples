@@ -82,3 +82,7 @@ Later sections in this module will dive deeper into each of these methods, provi
 
 - [React Native Docs: Style](https://reactnative.dev/docs/style)
 - [React Native Docs: StyleSheet](https://reactnative.dev/docs/stylesheet)
+
+### Next Steps
+
+Now that you have an overview of the different styling approaches, we'll take a deeper dive into the most fundamental one: the `StyleSheet` API. Proceed to [Section 2: StyleSheet Deep Dive (Best Practices, Performance)](./section-02-stylesheet-deep-dive.md).

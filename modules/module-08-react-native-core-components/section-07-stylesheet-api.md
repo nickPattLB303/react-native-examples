@@ -110,7 +110,7 @@ The following table highlights some common CSS properties and their camelCased e
 > 📚 **Official Documentation:**
 >
 > - [React Native Docs: StyleSheet API](https://reactnative.dev/docs/stylesheet)
-> - [React Native Docs: Style Prop](https://reactnative.dev/docs/style)
+> - [React Native Docs: Style](https://reactnative.dev/docs/style)
 > - [React Native Docs: View Style Props](https://reactnative.dev/docs/view-style-props)
 > - [React Native Docs: Text Style Props](https://reactnative.dev/docs/text-style-props)
 > - [React Native Docs: Image Style Props](https://reactnative.dev/docs/image-style-props)
@@ -250,6 +250,8 @@ Practice using `StyleSheet` to style a basic prescription information card for t
     - Style the dosage and quantity texts appropriately.
     - Arrange the elements within the card in a clear and readable manner.
 5.  Render an instance of your `PrescriptionCard` with sample data.
+
+**Tool:** Expo Snack
 
 **(https://snack.expo.dev/@speedymeds/rn-exercise-8-2-stylesheet-styling)**
 

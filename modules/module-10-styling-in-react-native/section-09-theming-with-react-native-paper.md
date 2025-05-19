@@ -207,7 +207,9 @@ This exercise focuses on applying the theming concepts you've learned to customi
 
 _Instructions and requirements for the exercise are provided within the Expo Snack linked above._
 
-In the final section of this module, we will discuss responsive design techniques to ensure your styled application looks great on various screen sizes.
+### Next Steps
+
+Theming with React Native Paper allows for consistent and branded UIs. To ensure your styled application looks great on all devices, the final section of this module will cover responsive design techniques. Proceed to [Section 10: Responsive Design Techniques (Platform, Dimensions)](./section-10-responsive-design-techniques.md).
 
 📚 **Official Documentation:**
 
