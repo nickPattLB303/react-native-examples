@@ -420,21 +420,27 @@ Here, the "Delete" button has `style: 'destructive'`. On iOS, this usually rende
 >
 > **Comparison:** The closest web equivalents are `window.alert()`, `window.confirm()`, and `window.prompt()`. However, these are very basic, often considered intrusive, and cannot be styled or customized as much as native alerts. Unlike web `alert()`, `confirm()`, and `prompt()`, which are synchronous and block JavaScript execution, React Native\'s `Alert` API calls are asynchronous. The `onPress`, `onDismiss` (Android), or prompt callback functions are invoked when the user interacts with the native dialog.
 
-### Exercise
+### Exercise 9.1: Using the Alert API
 
-- **Exercise 9.1: Using the Alert API**
-  - **Objective:** Create a simple application that demonstrates the use of the `Alert.alert()` method to display different types of alerts, and `Alert.prompt()` on iOS.
-  - **Instructions:**
-    1.  Create a new Expo Snack or a new file in your local Expo project.
-    2.  Import `Alert`, `Button`, `View`, `StyleSheet`, and `Platform` from `react-native`.
-    3.  Create a functional component, for example, `AlertsDemoComponent`.
-    4.  Inside `AlertsDemoComponent`, implement functions to trigger different alerts:
-        - `showSimpleAlert()`: Displays an alert with a title "Medication Logged", a message "Paracetamol 500mg has been logged.", and a single "OK" button that logs "OK Pressed" to the console.
-        - `showConfirmationAlert()`: Displays an alert with title "Confirm Action", message "Are you sure you want to submit your monthly health report?", a "Cancel" button (logs "Report submission canceled", style `cancel`), and a "Submit Report" button (logs "Health report submitted!", style `default`, `isPreferred: true` for iOS).
-        - `showDestructiveAlert()`: Displays an alert with title "Delete Account", message "Are you sure you want to delete your SpeedyMeds account? This is irreversible.", a "Keep Account" button (style `cancel`), and a "Delete My Account" button (logs "Account deletion initiated...", style `destructive`).
-        - `showAndroidCancelable()`: If `Platform.OS === \'android\'`, shows an alert with title "Android Special", message "This alert can be dismissed by tapping outside.", an "Understood" button, and options `{ cancelable: true, onDismiss: () => console.log(\'Android alert dismissed (not via button)\') }`. Otherwise, show a simple alert saying this feature is Android-only.
-        - `showIOSInputPrompt()`: If `Platform.OS === \'ios\'`, use `Alert.prompt` to ask "What is your primary pharmacy?", with a placeholder "e.g., SpeedyMeds Central", and log the entered text.
-    5.  In the `AlertsDemoComponent` JSX, render `Button` components to trigger each of these alert functions.
-    6.  Add basic styling.
-    7.  Test on both iOS and Android simulators/devices (or Expo Snack web previews) to observe behaviors and platform differences.
-  - **Tool:** **(https://snack.expo.dev/)**
+**Objective:** Create a simple application that demonstrates the use of the `Alert.alert()` method to display different types of alerts, and `Alert.prompt()` on iOS.
+
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_9_1_URL_HERE)**
+
+**Instructions (to be placed in Expo Snack `README.md` or description):**
+
+1.  Create a new Expo Snack or a new file in your local Expo project.
+2.  Import `Alert`, `Button`, `View`, `StyleSheet`, and `Platform` from `react-native`.
+3.  Create a functional component, for example, `AlertsDemoComponent`.
+4.  Inside `AlertsDemoComponent`, implement functions to trigger different alerts:
+    - `showSimpleAlert()`: Displays an alert with a title "Medication Logged", a message "Paracetamol 500mg has been logged.", and a single "OK" button that logs "OK Pressed" to the console.
+    - `showConfirmationAlert()`: Displays an alert with title "Confirm Action", message "Are you sure you want to submit your monthly health report?", a "Cancel" button (logs "Report submission canceled", style `cancel`), and a "Submit Report" button (logs "Health report submitted!", style `default`, `isPreferred: true` for iOS).
+    - `showDestructiveAlert()`: Displays an alert with title "Delete Account", message "Are you sure you want to delete your SpeedyMeds account? This is irreversible.", a "Keep Account" button (style `cancel`), and a "Delete My Account" button (logs "Account deletion initiated...", style `destructive`).
+    - `showAndroidCancelable()`: If `Platform.OS === \'android\'`, shows an alert with title "Android Special", message "This alert can be dismissed by tapping outside.", an "Understood" button, and options `{ cancelable: true, onDismiss: () => console.log(\'Android alert dismissed (not via button)\') }`. Otherwise, show a simple alert saying this feature is Android-only.
+    - `showIOSInputPrompt()`: If `Platform.OS === \'ios\'`, use `Alert.prompt` to ask "What is your primary pharmacy?", with a placeholder "e.g., SpeedyMeds Central", and log the entered text.
+5.  In the `AlertsDemoComponent` JSX, render `Button` components to trigger each of these alert functions.
+6.  Add basic styling.
+7.  Test on both iOS and Android simulators/devices (or Expo Snack web previews) to observe behaviors and platform differences.
+
+### Next Steps
+
+The `Alert` API provides a simple way to show native dialogs. To build on your understanding of React's core mechanisms, we'll now recap essential React Hooks. Proceed to [Section 4: Core React Hooks Recap](./section-04-core-react-hooks-recap.md).

@@ -508,3 +508,7 @@ export default MedicationRefillForm;
 This table helps clarify the distinct roles and behaviors of `useRef` compared to other mechanisms for referencing elements or storing mutable data, which is particularly useful for learners transitioning from different programming paradigms.
 
 `useRef` is a powerful Hook for breaking out of the typical declarative React flow when you need to interact imperatively with components or manage mutable values without triggering re-renders. Use it judiciously where direct interaction or non-rendering state is genuinely required.
+
+### Next Steps
+
+The `useRef` Hook provides powerful ways to interact with component instances and manage mutable values. Now, let's turn our attention to performance optimization with two other essential Hooks: `useCallback` and `useMemo`. Proceed to [Section 6: `useCallback` and `useMemo` Hooks](./section-06-usecallback-and-usememo-hooks.md).

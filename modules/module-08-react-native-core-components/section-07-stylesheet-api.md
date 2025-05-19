@@ -75,6 +75,8 @@ Pass an array to the `style` prop. Later styles override earlier ones.
 
 **3. Other `StyleSheet` Utilities:**
 
+In addition to `create`, the `StyleSheet` API offers other utility properties and methods:
+
 | API Element                     | Description                                                                                                                              |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `StyleSheet.flatten(style)`     | Merges an array of style objects (or registered style IDs) into a single plain JavaScript object. Useful for debugging or introspection. |
@@ -84,6 +86,8 @@ Pass an array to the `style` prop. Later styles override earlier ones.
 | `StyleSheet.hairlineWidth`      | A constant for the thinnest possible line width on the current device (typically 1 physical pixel, as a density-independent value).      |
 
 **Table: React Native Style Property vs. CSS Equivalent (Common Examples)**
+
+The following table highlights some common CSS properties and their camelCased equivalents in React Native's StyleSheet, along with notes on differences:
 
 | React Native Style (camelCase)    | CSS Equivalent (kebab-case)    | Notes                                                                                                                              |
 | --------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -248,3 +252,7 @@ Practice using `StyleSheet` to style a basic prescription information card for t
 5.  Render an instance of your `PrescriptionCard` with sample data.
 
 **(https://snack.expo.dev/@speedymeds/rn-exercise-8-2-stylesheet-styling)**
+
+### Next Steps
+
+You've now learned the basics of styling components using the `StyleSheet` API. Next, we'll explore how to make your UIs interactive by handling user taps with `<Button>` and the more flexible `<Pressable>` components. Proceed to [Section 8: Button and Pressable (`<Button>`, `<Pressable>`) - Handling Taps](./section-08-button-and-pressable.md).

@@ -41,7 +41,7 @@ This approach makes the application state more predictable and easier to debug.
 
 ### Referential Content: Common `<TextInput>` Props and Methods
 
-Below is a table summarizing important props for the `<TextInput>` component:
+Below is a table summarizing important props for the `<TextInput>` component.
 
 | Prop                   | Type                                                                     | Description                                                                                                                                                                |
 | ---------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | -------------------- | --------------------------------------------------------------------- |
@@ -205,3 +205,7 @@ Now it's time to practice! Create a simple form for the SpeedyMeds app where use
 4.  Add a `<Button>` that, when pressed, displays an alert showing the entered medication name and dosage.
 
 **(https://snack.expo.dev/@speedymeds/rn-exercise-8-1-textinput-form)**
+
+### Next Steps
+
+Now that you can capture text input, the next step is to learn how to handle content that might exceed the screen's visible area using the `<ScrollView>` component. Proceed to [Section 6: ScrollView (`<ScrollView>`) - Enabling Scrolling](./section-06-scrollview.md).

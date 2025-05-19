@@ -351,3 +351,7 @@ This component initializes its `dimensions` state with the current window dimens
 This table helps bridge the understanding for developers coming from different backgrounds, clarifying how React Native\'s unit system relates to familiar concepts, thereby aiding in the creation of robust responsive designs.
 
 While the `Dimensions` API and `useWindowDimensions` hook are powerful, always consider using Flexbox and percentage-based sizing first, as they can often create responsive layouts without needing to query screen dimensions directly. Use these dimensioning tools when you need more explicit control or when element sizes depend on the absolute screen/window size or specific device characteristics.
+
+### Next Steps
+
+Knowing the device dimensions is crucial for responsive UIs. Next, you'll learn how to communicate important information or warnings to the user using the `Alert` API. Proceed to [Section 3: Alert API](./section-03-alert-api.md).

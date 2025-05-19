@@ -64,12 +64,11 @@ Before starting this module, ensure you have a good understanding of the followi
 
 ## Module Challenge
 
-Throughout this module, you've learned about various core APIs and Hooks. Now it's time to combine this knowledge.
+Throughout this module, you've learned about various core APIs and Hooks. Now it's time to combine this knowledge with **Challenge 9: Custom Hook for Device Information**.
 
-- **Challenge 9: Custom Hook for Device Information**
-  - **Objective:** Create a custom Hook named `useScreenGuard` that provides information about the current screen orientation (portrait or landscape) and whether a minimum screen width for the SpeedyMeds app (e.g., 320dp) is met. If the screen width is below the minimum, the hook should also provide a function to show an `Alert` recommending a better viewing experience.
-  - **Instructions:** You will need to create a new Expo Snack for this challenge. Your Snack should demonstrate the `useScreenGuard` hook in action. Consider building upon the `useDeviceInformation` custom hook concepts from Section 7 or developing it from scratch.
-  - **Tool:** **(https://snack.expo.dev/)**
+- **Objective:** Create a custom Hook named `useScreenGuard` that provides information about the current screen orientation (portrait or landscape) and whether a minimum screen width for the SpeedyMeds app (e.g., 320dp) is met. If the screen width is below the minimum, the hook should also provide a function to show an `Alert` recommending a better viewing experience.
+- **Instructions:** You will need to create a new Expo Snack for this challenge. Your Snack should demonstrate the `useScreenGuard` hook in action. Consider building upon the `useDeviceInformation` custom hook concepts from Section 7 or developing it from scratch.
+- **Access the Challenge:** **(https://snack.expo.dev/INSERT_ACTUAL_CHALLENGE_9_URL_HERE)**
 
 ## Module Summary
 

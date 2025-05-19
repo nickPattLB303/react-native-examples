@@ -380,3 +380,7 @@ This component uses `useContext` to access `theme` properties (like `colors.back
 This table provides a conceptual mapping to help developers from various backgrounds understand how `useEffect` manages side effects in relation to familiar lifecycle patterns.
 
 Mastering these core Hooks is foundational. The subsequent sections in this module will build upon this knowledge by introducing more specific Hooks and APIs pertinent to React Native development.
+
+### Next Steps
+
+With this recap of core React Hooks, you're well-prepared to explore more specialized Hooks in React Native. The next section introduces the `useRef` Hook, which is essential for accessing underlying component instances and managing mutable values that don't trigger re-renders. Proceed to [Section 5: `useRef` Hook](./section-05-useref-hook.md).

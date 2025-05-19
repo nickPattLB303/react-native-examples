@@ -479,3 +479,7 @@ Time to build a list using `<FlatList>` for the SpeedyMeds application.
 8.  (Optional) Add a `ListHeaderComponent` to display a title like 'Today\'s Appointments'.
 
 **(https://snack.expo.dev/@speedymeds/rn-exercise-8-4-flatlist-appointments)**
+
+### Next Steps
+
+You've now learned how to render simple and sectioned lists efficiently using `<FlatList>` and `<SectionList>`. To round out your knowledge of React Native's Core Components, the next section will provide an overview of several other useful components. Proceed to [Section 10: Other Core Components Overview](./section-10-other-core-components-overview.md).

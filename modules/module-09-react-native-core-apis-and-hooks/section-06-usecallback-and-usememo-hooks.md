@@ -303,6 +303,15 @@ Memoization with `useCallback` and `useMemo` is not a silver bullet and comes wi
 - **Native Performance:** While these React hooks optimize the JavaScript side of your application, remember that overall app performance (e.g., smooth animations, efficient list rendering with `FlashList` or an optimized `FlatList`) also heavily depends on native platform capabilities and how React Native interacts with them. Efficient native modules and offloading CPU-intensive tasks from the JS thread (where possible) are separate but related concerns.
 - **Avoid Masking Issues:** Over-reliance on `useCallback` and `useMemo` without understanding the root cause of re-renders can sometimes mask deeper problems in your component structure or state management strategy. Simplifying component logic, optimizing data structures, or improving state flow can often be more effective initial steps.
 
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
 ### Background Bridge Notes
 
 > 📲 **(Native Developers):**
@@ -342,3 +351,950 @@ Apply `useCallback` to optimize a component that passes a function to a memoized
         - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
         - Verify that deleting a reminder still works correctly.
   - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.
+
+- **Exercise 9.2: Optimizing with `useCallback`**
+  - **Objective:** You are given a parent component `ReminderDashboard` that lists medication reminders and a memoized child component `ReminderItem` that displays each reminder and has a delete button. The `ReminderItem` re-renders unnecessarily when the parent re-renders due to unrelated state changes (e.g., a counter). Optimize this using `useCallback` for the delete handler passed to `ReminderItem`.
+  - **Instructions:**
+    1.  Define an interface for a `Reminder` (e.g., `{ id: string; text: string; }`).
+    2.  Create a functional component `ReminderItem` that accepts a `reminder: Reminder` object and an `onDelete: (id: string) => void` function prop. It should display the reminder text and a "Delete" button that calls `onDelete(reminder.id)`. Add a `console.log('Rendering ReminderItem:', reminder.text);` to see when it renders. Wrap `ReminderItem` with `React.memo`.
+    3.  Create a parent component `ReminderDashboard`. This component should:
+        - Manage an array of `Reminder` objects in state (e.g., `reminders`, `setReminders`). Initialize with a few sample reminders for SpeedyMeds (e.g., "Take Vitamin D at 8 AM", "Refill Metformin by Friday").
+        - Manage another piece of state, for example, `unrelatedCounter`, initialized to `0`.
+        - Define a function `handleDeleteReminder(id: string)` that removes a reminder from the `reminders` state by its ID. Initially, do _not_ wrap this function with `useCallback`.
+        - Render the `unrelatedCounter` and a button to increment it (this button will be used to trigger parent re-renders).
+        - Render a `FlatList` (or map over the `reminders` array) to display `ReminderItem` components, passing the `reminder` object and the `handleDeleteReminder` function as props.
+    4.  **Observation (Part 1 - Without `useCallback`):**
+        - Run the app.
+        - Press the button that increments `unrelatedCounter`. Observe the console logs. You should see that all `ReminderItem` components re-render, even though their individual `reminder` props and the behavior of `handleDeleteReminder` haven\'t semantically changed (only the reference to `handleDeleteReminder` changed because the parent re-rendered).
+    5.  **Modification (Part 2 - With `useCallback`):**
+        - In `ReminderDashboard`, modify the `handleDeleteReminder` function by wrapping it with `useCallback`. Ensure its dependency array is correctly specified (it will likely depend on `setReminders`, but since setter functions from `useState` are stable, an empty array `[]` might be appropriate if `setReminders` is used with a functional update; otherwise, `reminders` might be needed if you filter based on the current `reminders` state directly).
+    6.  **Observation (Part 2 - With `useCallback`):**
+        - Run the app again. Press the button that increments `unrelatedCounter`.
+        - Observe the console logs. This time, the `ReminderItem` components should _not_ re-render (or re-render far less frequently), demonstrating that `useCallback` provided a stable reference for the `onDelete` prop, allowing `React.memo` to effectively skip re-renders.
+        - Verify that deleting a reminder still works correctly.
+  - **Tool:** **(https://snack.expo.dev/)**
+
+### When to Use Each Optimization Technique
+
+Choosing the right optimization technique depends on the specific performance issue you're facing.
+
+| Technique          | Use When                                  | Avoid When                       |
+| ------------------ | ----------------------------------------- | -------------------------------- |
+| **React.memo**     | Component renders often with same props   | Props change frequently          |
+| **useMemo**        | Expensive calculations are repeated       | Calculations are simple          |
+| **useCallback**    | Callbacks are passed to memoized children | Callbacks change on every render |
+| **Virtualization** | Rendering large lists                     | Lists are small (< 20 items)     |
+
+### Background Bridge Notes
+
+> 📲 **(Native Developers):**
+>
+> **Comparison:** The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
+>
+> **Key Takeaway:** `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
+
+> 🌐 **(Web Developers - React):**
+>
+> **Comparison:** `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
+>
+> **Key Takeaway:** Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
+
+### Exercise
+
+Apply `useCallback` to optimize a component that passes a function to a memoized child.

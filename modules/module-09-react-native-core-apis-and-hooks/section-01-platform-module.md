@@ -434,3 +434,7 @@ This native sourcing ensures accuracy, as the information comes directly from th
 > **Source:** [Expo Tree Shaking](https://docs.expo.dev/guides/tree-shaking/)
 
 Using the `Platform` module effectively allows you to embrace the unique strengths and conventions of each platform while maintaining a largely shared codebase for your SpeedyMeds application.
+
+### Next Steps
+
+Understanding the `Platform` module allows you to tailor your application to different operating systems. Next, you'll learn how to get information about the device's screen dimensions to create responsive UIs using the `Dimensions` API. Proceed to [Section 2: Dimensions API](./section-02-dimensions-api.md).

@@ -36,6 +36,8 @@ A critical requirement for `<ScrollView>` to function correctly is that it must 
 
 ### Referential Content: Common `<ScrollView>` Props and Methods
 
+The following table summarizes some of the most important props for the `<ScrollView>` component:
+
 | Prop                             | Type                                                       | Description                                                                                                                          |
 | -------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `style`                          | `StyleProp<ViewStyle>`                                     | Styles for the `<ScrollView>` itself (the outer container). Must ensure bounded height/width.                                        |
