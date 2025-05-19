@@ -1,12 +1,12 @@
-# Setting Up Your Learning Environment
+## Setting Up Your Learning Environment
 
-This section covers the essential tools and accounts you'll need to get the most out of this course. While we'll set up the specific React Native development environment in Module 3, this section focuses on tools needed for learning and completing exercises.
+This section covers the essential tools and accounts you'll need to get the most out of this course. While we'll set up the specific React Native development environment in Module Three, this section focuses on tools needed for learning and completing exercises.
 
-## Required Software
+### Required Software
 
 Install these tools before proceeding with the course:
 
-### Code Editor
+#### Code Editor
 
 [Visual Studio Code (VS Code)](https://code.visualstudio.com/) is highly recommended for this course. It's free, cross-platform, and has excellent support for JavaScript, TypeScript, and React Native development.
 
@@ -23,7 +23,7 @@ For the best experience, install these extensions in VS Code:
 > [!TIP]
 > You can install extensions directly from the Extensions panel in VS Code (shortcut: Ctrl+Shift+X or Cmd+Shift+X on Mac).
 
-### Web Browsers
+#### Web Browsers
 
 A modern web browser is required for:
 
@@ -38,38 +38,38 @@ Any of these browsers will work well:
 - **Microsoft Edge**
 - **Safari**
 
-## Required Accounts
+### Required Accounts
 
 You'll need accounts for the following platforms:
 
-### Expo Account
+#### Expo Account
 
 We'll use this for Expo Snack exercises and (optionally) for deploying your apps:
 
-1. Visit [expo.dev](https://expo.dev/)
+1. Visit [the Expo official website](https://expo.dev/)
 2. Click "Sign Up" and follow the registration process
 3. Verify your email address
 
-### CodeSandbox Account (Optional but Recommended)
+#### CodeSandbox Account (Optional but Recommended)
 
 For saving your progress on JavaScript, TypeScript, and React exercises:
 
-1. Visit [codesandbox.io](https://codesandbox.io/)
+1. Visit [the CodeSandbox official website](https://codesandbox.io/)
 2. Click "Sign In" and follow the registration process (you can use GitHub or Google account)
 
-### GitHub Account (Optional)
+#### GitHub Account (Optional)
 
 Useful for accessing course repositories and examples:
 
-1. Visit [github.com](https://github.com/)
+1. Visit [the GitHub official website](https://github.com/)
 2. Click "Sign Up" and follow the registration process
 3. Verify your email address
 
-## Exercise and Challenge Environments
+### Exercise and Challenge Environments
 
 The course uses two primary environments for hands-on practice:
 
-### CodeSandbox
+#### CodeSandbox
 
 We'll use CodeSandbox for JavaScript, TypeScript, and React fundamentals in earlier modules.
 
@@ -80,7 +80,7 @@ We'll use CodeSandbox for JavaScript, TypeScript, and React fundamentals in earl
 - Support for various templates (JavaScript, TypeScript, React)
 - Real-time display of code output
 
-### Expo Snack
+#### Expo Snack
 
 Expo Snack will be our primary playground for React Native-specific exercises.
 
@@ -93,12 +93,12 @@ Expo Snack will be our primary playground for React Native-specific exercises.
 
 To access Expo Snack:
 
-1. Visit [snack.expo.dev](https://snack.expo.dev/)
+1. Visit [the Expo Snack website](https://snack.expo.dev/)
 2. Sign in with your Expo account (recommended for saving your work)
 
-## Setting Up Communication Channels
+### Setting Up Communication Channels
 
-### Discussion Forums
+#### Discussion Forums
 
 If you're taking this course as part of a cohort or learning group:
 
@@ -108,7 +108,7 @@ If you're taking this course as part of a cohort or learning group:
   - Clarification on course content
   - Exercise help
 
-### Personal Note-Taking System
+#### Personal Note-Taking System
 
 Choose a note-taking system to capture key concepts, code snippets, and questions:
 
@@ -120,19 +120,19 @@ Choose a note-taking system to capture key concepts, code snippets, and question
 
 > 🧗‍♀️ **(Self-Led):** Consider joining online communities like the Expo forums, React Native community discussions, or Stack Overflow to get help when you're stuck.
 
-## Preparing Your Schedule
+### Preparing Your Schedule
 
-### Time Commitment
+#### Time Commitment
 
 For effective learning:
 
 - **Instructor-Led Path**: Schedule time to review materials before and after sessions
 - **Self-Led Path**: Aim for regular, consistent study sessions
-  - 1-2 hours per day is often more effective than occasional longer sessions
+  - one to two hours per day is often more effective than occasional longer sessions
   - Include dedicated time for exercises and challenges
 - **Asynchronous Path**: Plan focused sessions around specific topics you need to learn
 
-### Creating a Distraction-Free Environment
+#### Creating a Distraction-Free Environment
 
 Maximize your learning by:
 
@@ -141,9 +141,9 @@ Maximize your learning by:
 - Having water and snacks available for longer sessions
 - Taking short breaks every 45-60 minutes
 
-## Module 3 Preview
+### Module Three Preview
 
-While this section covered the learning tools, note that in Module 3, we'll set up your actual React Native development environment, including:
+While this section covered the learning tools, note that in Module Three, we'll set up your actual React Native development environment, including:
 
 - Installing Node.js and npm/yarn
 - Setting up Expo CLI
@@ -151,7 +151,7 @@ While this section covered the learning tools, note that in Module 3, we'll set 
 - Configuring your first Expo project
 
 > [!IMPORTANT]
-> You don't need to install these development tools yet. We'll cover this systematically in Module 3, with detailed instructions for your specific operating system.
+> You don't need to install these development tools yet. We'll cover this systematically in Module Three, with detailed instructions for your specific operating system.
 
 ## Ready to Begin!
 

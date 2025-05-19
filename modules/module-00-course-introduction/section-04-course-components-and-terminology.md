@@ -1,4 +1,4 @@
-# Course Components and Terminology
+## Course Components and Terminology
 
 This section introduces the key terminology used throughout the course and explains important concepts you'll encounter as you learn React Native.
 
@@ -71,7 +71,7 @@ Throughout the course, examples and exercises will be connected to the SpeedyMed
 
 All code examples follow these conventions:
 
-- **TypeScript** is used for all examples from Module 6 onwards
+- **TypeScript** is used for all examples from Module Six onwards
 - **Functional components** are preferred over class components
 - **Modern React patterns** (hooks, context) are emphasized
 - **Expo** features and workflows are used throughout

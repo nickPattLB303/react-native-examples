@@ -1,4 +1,4 @@
-# Target Audience and Prerequisites
+## Target Audience and Prerequisites
 
 This section clarifies who this course is designed for and what foundational knowledge will help you get the most out of it.
 
@@ -31,16 +31,16 @@ To successfully complete this course, you should have:
 ### Essential Prerequisites
 
 - **Programming fundamentals**: Variables, functions, conditionals, loops, and data structures
-- **Basic JavaScript knowledge**: Function syntax, object manipulation, arrays, and asynchronous operations (we'll review these concepts in Module 5)
+- **Basic JavaScript knowledge**: Function syntax, object manipulation, arrays, and asynchronous operations (we'll review these concepts in Module Five)
 - **Command-line basics**: Navigating directories, running commands
 - **Text editor or IDE experience**: VS Code is recommended and used throughout the examples
 
 ### Helpful But Not Required
 
-- **React experience**: We'll cover React essentials in Module 7, but prior experience will accelerate your learning
-- **TypeScript fundamentals**: Introduced in Module 6
+- **React experience**: We'll cover React essentials in Module Seven, but prior experience will accelerate your learning
+- **TypeScript fundamentals**: Introduced in Module Six
 - **Git basics**: Useful for version control but not essential for following the course
-- **HTML/CSS knowledge**: Helpful for understanding web-to-mobile transitions (briefly covered in Module 4)
+- **HTML/CSS knowledge**: Helpful for understanding web-to-mobile transitions (briefly covered in Module Four)
 
 > [!IMPORTANT]
 > This course assumes no prior knowledge of React Native or Expo. All concepts are built from the ground up. However, complete beginners to programming may find the pace challenging.
@@ -54,7 +54,7 @@ To fully participate in this course, you'll need:
 - **Computer**: macOS, Windows, or Linux (macOS required for iOS development)
 - **Mobile device**: Optional but helpful for testing (can use iOS Simulator or Android Emulator)
 
-### Software (We'll help you install these in Module 3)
+### Software (We'll help you install these in Module Three)
 
 - **Node.js** (LTS version)
 - **npm** or **yarn** package manager

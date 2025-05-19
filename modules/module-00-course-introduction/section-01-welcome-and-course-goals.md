@@ -1,4 +1,4 @@
-# Welcome and Course Goals
+## Welcome and Course Goals
 
 Welcome to the React Native Training Course! This comprehensive program is designed to take you from zero knowledge of React Native to production-level proficiency. Whether you're coming from a native mobile development background or web development experience, this course will equip you with the skills needed to build professional, high-quality mobile applications using React Native and Expo.
 
