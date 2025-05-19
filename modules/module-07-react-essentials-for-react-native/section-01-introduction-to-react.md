@@ -151,6 +151,8 @@ This unidirectional flow contrasts with two-way data binding approaches used in 
 
 ### React vs React Native: A Comprehensive Comparison
 
+The following table provides a comprehensive comparison between React (for web) and React Native:
+
 | Aspect                | React                                     | React Native                                            |
 | --------------------- | ----------------------------------------- | ------------------------------------------------------- |
 | **Rendering Target**  | Browser DOM                               | Native UI Components                                    |

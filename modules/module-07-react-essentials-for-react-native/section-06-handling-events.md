@@ -132,12 +132,27 @@ To do this, you typically use an arrow function in the `onPress` prop that then 
 import React from "react";
 import { View, Text, Button, Alert, StyleSheet } from "react-native";
 
+/**
+ * @interface MedicationItemProps
+ * @description Props for the MedicationItem component.
+ * @property {string} id - The unique identifier for the medication.
+ * @property {string} name - The name of the medication.
+ * @property {(id: string, name: string) => void} onSelectMedication - Callback function invoked when the item's select button is pressed.
+ */
 interface MedicationItemProps {
   id: string;
   name: string;
   onSelectMedication: (id: string, name: string) => void;
 }
 
+/**
+ * @function MedicationItem
+ * @description A component that displays a medication's name and a "Select" button.
+ * It demonstrates how to pass arguments to an event handler passed down as a prop.
+ *
+ * @param {MedicationItemProps} props - The props for the component.
+ * @returns {JSX.Element} A View containing the medication name and a select button.
+ */
 const MedicationItem: React.FC<MedicationItemProps> = ({
   id,
   name,
@@ -155,6 +170,14 @@ const MedicationItem: React.FC<MedicationItemProps> = ({
 };
 
 // Example Usage (Conceptual - would be part of a list)
+/**
+ * @function PrescriptionSelector
+ * @description An example component that demonstrates rendering multiple `MedicationItem`
+ * components and handling their selection events. This component would typically
+ * be part of a larger prescription management screen in the SpeedyMeds app.
+ *
+ * @returns {JSX.Element} A View containing a list of MedicationItem components.
+ */
 const PrescriptionSelector = () => {
   const handleMedicationSelection = (id: string, name: string) => {
     Alert.alert(
@@ -193,7 +216,11 @@ const styles = StyleSheet.create({
 export default PrescriptionSelector;
 ```
 
-In `MedicationItem`, `onPress={() => onSelectMedication(id, name)}` creates a new function that, when called, executes `onSelectMedication` with the specific `id` and `name` of that item.
+This example features two components, `MedicationItem` and `PrescriptionSelector`, to illustrate a common pattern: rendering a list of items where each item has an interactive element (like a button) that needs to communicate specific data back to a parent or handler function. The `MedicationItem` component is designed to be reusable, displaying the `name` of a medication and a "Select" button. Crucially, it accepts an `onSelectMedication` prop, which is a callback function passed down from its parent (`PrescriptionSelector` in this case).
+
+When the "Select" button within a `MedicationItem` is pressed, its `onPress` handler is an inline arrow function: `() => onSelectMedication(id, name)`. This is a key technique for passing specific data associated with that particular item (its unique `id` and `name`) to the `onSelectMedication` callback. If we had written `onPress={onSelectMedication(id, name)}` directly, the function would execute immediately upon render, not when the button is pressed. The arrow function wrapper ensures that `onSelectMedication` is only called upon the press event, and with the correct arguments corresponding to the item that was pressed.
+
+The `PrescriptionSelector` component demonstrates how to use `MedicationItem`. It defines its own `handleMedicationSelection` function which matches the signature expected by `MedicationItem`'s `onSelectMedication` prop. This handler receives the `id` and `name` of the selected medication and, in this example, simply displays an alert. In a real SpeedyMeds application, this handler might update state, navigate to a detail screen, or add the medication to a refill list. By rendering multiple `MedicationItem` instances and passing the same `handleMedicationSelection` handler to each, the parent maintains control over what happens when an item is selected, while each child item correctly identifies itself upon interaction. This pattern is fundamental for building interactive lists and delegating event handling in React applications.
 
 > [!IMPORTANT]
 > Avoid calling the event handler function directly in the prop, like `onPress={onSelectMedication(id, name)}`. This would execute the function when the component renders, not when the event occurs. Always pass a function reference or an arrow function.
@@ -230,3 +257,7 @@ React Native provides a consistent way to handle user interactions across platfo
 > - [React Native Docs: Handling Touches (covers `Button`, `Pressable` etc.)](https://reactnative.dev/docs/handling-touches)
 > - [React Native Docs: `Button`](https://reactnative.dev/docs/button)
 > - [React Native Docs: `Pressable`](https://reactnative.dev/docs/pressable)
+
+### Next Steps
+
+Handling user events is crucial for interactivity. Now that you can respond to user actions, the next step is to learn how to dynamically change what your components render based on different conditions. Proceed to [Section 7: Conditional Rendering](./section-07-conditional-rendering.md).

@@ -502,10 +502,28 @@ React strongly recommends composition over class inheritance for reusing code an
 The compositional model in React allows significantly greater flexibility and reusability. A single generic component can be adapted for numerous use cases by passing different children or props.
 
 > ⚛️ **(Web Developers with React Experience):**
+>
+> **Comparison:** The composition patterns like `props.children` for containment and creating specialized components by wrapping generic ones are identical to how you build UIs in React for the web. Custom Hooks for reusable logic also apply directly.
+>
+> **Key Takeaway:** Your existing mental model for React component composition is fully applicable. React Native simply provides a different set of primitive building blocks (like `<View>` instead of `<div>`).
+>
+> **Source:** [React Docs - Composition vs Inheritance](https://legacy.reactjs.org/docs/composition-vs-inheritance.html)
 
 > 🅰️ **(Web Developers with Angular/Other Framework Experience):**
+>
+> **Comparison:** Angular's content projection (`<ng-content>`) is very similar to React's `props.children` for containment. Creating specialized components by wrapping and configuring more generic ones is also a common pattern in Angular. However, React's emphasis on functional composition, especially with Hooks, might feel different from Angular's more class-based or service-oriented approaches to logic reuse.
+>
+> **Key Takeaway:** The concept of building UIs by assembling smaller components is familiar. Focus on React's specific mechanisms like `props.children` and the preference for functional composition over class inheritance for UI reusability.
+>
+> **Source:** [Angular Docs - Content Projection](https://angular.io/guide/content-projection)
 
 > 📲 **(Native Developers - Android/iOS):**
+>
+> **Comparison:** Composition is a natural way to build UIs natively (e.g., nesting `ViewGroups` in Android, or `UIViews` in iOS). React's composition model translates this into a JavaScript/JSX paradigm. Instead of inflating XML layouts or programmatically adding subviews, you define the hierarchy declaratively in JSX. Reusable "custom views" you might create natively are analogous to React components.
+>
+> **Key Takeaway:** Think of React components as custom, reusable native view controllers or view groups that you define in JavaScript. Composition allows you to build complex screens by assembling these smaller, self-contained UI pieces.
+>
+> **Source:** [Android Dev - Building a Flexible UI with Fragments](https://developer.android.com/guide/fragments/create)
 
 Understanding how to create and use components is central to React development. In the next sections, we'll explore how to pass data into components using props and how components can manage their own internal data using state.
 
@@ -534,6 +552,6 @@ Now it's time to practice creating your own functional components.
 
 **(https://codesandbox.io/s/react-native-exercise-7-1-patient-info-card-m5c7xj)**
 
-```
+### Next Steps
 
-```
+Now that you can create components, the next step is to learn how to pass data into them to make them dynamic and configurable. Proceed to [Section 4: Props (Passing Data Down)](./section-04-props.md).

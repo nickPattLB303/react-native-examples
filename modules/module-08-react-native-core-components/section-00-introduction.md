@@ -63,10 +63,10 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have completed:
 
-- **Module 3: Setting Up Your React Native Environment with Expo**
-- **Module 5: JavaScript Essentials for React Native**
-- **Module 6: TypeScript Essentials**
-- **Module 7: React Essentials for React Native**
+- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-react-native-environment-with-expo/section-00-introduction.md)
+- Completion of [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md)
+- Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)
+- Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md)
 
 ## Sections in This Module
 
@@ -99,8 +99,6 @@ This module provides a comprehensive exploration of React Native's Core Componen
 
 ## Additional Resources
 
-> 📚 **Official Documentation:**
->
-> - [React Native Docs: Core Components and APIs](https://reactnative.dev/docs/core-components-and-apis)
-> - [React Native Docs: Components Section (Browse individual components)](https://reactnative.dev/docs/components-and-apis)
-> - [Expo Docs: React Native Core Components (Often mirrors RN docs but good to be aware of)](https://docs.expo.dev/ui-programming/react-native-styling/)
+- [React Native Docs: Core Components and APIs](https://reactnative.dev/docs/core-components-and-apis)
+- [React Native Docs: Components Section (Browse individual components)](https://reactnative.dev/docs/components-and-apis)
+- [Expo Docs: React Native Core Components (Often mirrors RN docs but good to be aware of)](https://docs.expo.dev/ui-programming/react-native-styling/)

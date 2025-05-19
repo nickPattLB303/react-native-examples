@@ -55,7 +55,7 @@ This requirement is a direct consequence of React Native's need to efficiently m
 
 ### Referential Content: Common `<Text>` Props
 
-Here is a table summarizing some of the most common and important props for the `<Text>` component:
+Here is a table summarizing some of the most common and important props for the `<Text>` component.
 
 | Prop                   | Type                                     | Description                                                                                                             |
 | ---------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- | ------- | --------------------------------------------------------------------------------------- |

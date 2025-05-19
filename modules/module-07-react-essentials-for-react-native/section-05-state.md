@@ -205,7 +205,7 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 >
 > **Source:** [Android Dev Docs: ViewModel Overview](https://developer.android.com/topic/libraries/architecture/viewmodel), [Apple Dev Docs: SwiftUI State and Data Flow - @State](https://developer.apple.com/documentation/swiftui/managing-user-interface-state#Managing-Local-State-with-State)
 
-Here's a table comparing `useState` with common local state management in native development:
+Here's a table comparing `useState` with common local state management in native development.
 
 | Feature                  | React (`useState`)                                                               | Android (Local variables in Activity/Fragment/View)                             | iOS (SwiftUI `@State` / UIKit local properties)                                     |
 | ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -248,3 +248,7 @@ Let's get some practice using the `useState` Hook to manage component state.
 **(https://codesandbox.io/s/react-native-exercise-7-3-medication-counter-state-9z3dkr)**
 
 _A solution will be provided by your instructor or in the course materials._
+
+### Next Steps
+
+Managing local component state with `useState` is fundamental for creating interactive UIs. Now that your components can "remember" things, the next step is to learn how they can respond to user input. Proceed to [Section 6: Handling Events](./section-06-handling-events.md).

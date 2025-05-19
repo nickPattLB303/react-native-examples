@@ -140,7 +140,7 @@ JSX elements can have attributes, just like HTML. These attributes are passed to
 > - Attribute names are generally camelCased (e.g., `onClick` vs `onclick`, `tabIndex` vs `tabindex`, `htmlFor` vs `for`). However, standard `data-*` and `aria-*` attributes retain their hyphenated HTML syntax (more relevant for web React).
 > - In React Native, you won't use HTML tags like `div`, `p`, `img`. Instead, you use React Native Core Components like `<View>`, `<Text>`, `<Image>` which compile to native UI elements.
 >
-> **Key Takeaway:** While JSX syntax feels familiar if you know HTML, remember it's JavaScript with specific rules. Pay attention to the differences in attribute naming (camelCase), how `style` works, and that the elements themselves are specific to React Native. Below is a quick reference table for common HTML attributes and their JSX counterparts:
+> **Key Takeaway:** While JSX syntax feels familiar if you know HTML, remember it's JavaScript with specific rules. Pay attention to the differences in attribute naming (camelCase), how `style` works, and that the elements themselves are specific to React Native. Below is a quick reference table for common HTML attributes and their JSX counterparts.
 >
 > | HTML Feature/Attribute                | JSX Equivalent                 | Reason/Note                                                                    |
 > | ------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------ |
@@ -263,3 +263,7 @@ This `MyScreen` component renders a `View` that acts as a container, centering i
 > - [React Blog: Introducing the New JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
 > - [React Native Docs: Core Components - JSX](https://reactnative.dev/docs/jsx)
 > - [TypeScript Docs: Basic Types - `.tsx` files](https://www.typescriptlang.org/docs/handbook/basic-types.html#typescript-files-tsx)
+
+### Next Steps
+
+Now that you're familiar with JSX syntax for describing UI structure, the next logical step is to understand how these structures are organized into reusable pieces of code. Proceed to [Section 3: Components](./section-03-components.md) to learn about creating and using React components.

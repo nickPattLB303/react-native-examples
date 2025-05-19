@@ -239,3 +239,9 @@ Let's practice using the Context API to share simple data.
 **(https://codesandbox.io/s/react-native-exercise-7-6-theme-context-api-p24rvt)**
 
 _A solution will be provided by your instructor or in the course materials._
+
+### Next Steps
+
+You've now learned the fundamentals of React, from components and JSX to state, props, lifecycle events with `useEffect`, and sharing data with the Context API. This forms a solid foundation for building React Native applications. Before moving on, test your understanding with the module challenge.
+
+After completing the challenge, you will be ready for [Module 8: React Native Core Components](../module-08-react-native-core-components/section-00-introduction.md).

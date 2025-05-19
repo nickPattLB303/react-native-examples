@@ -304,7 +304,7 @@ As part of this transformation, all the attributes (like `propA` and `propB`) an
 >
 > **Source:** [Android Dev Docs: Pass data between activities](https://developer.android.com/training/basics/firstapp/starting-activity#BuildIntent), [Apple Dev Docs: Passing Data between View Controllers](https://developer.apple.com/documentation/uikit/view_controllers/passing_data_between_view_controllers)
 
-Here's a table summarizing how React props compare to some common native data passing mechanisms:
+Here's a table summarizing how React props compare to some common native data passing mechanisms.
 
 | Feature                  | React Props                                                                  | Android (Intents / Fragment Bundles)                                                  | iOS (Segues / Direct Property Setting / Delegates)                                      |
 | ------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
@@ -348,3 +348,7 @@ Let's practice passing and using props to make components more dynamic.
 **(https://codesandbox.io/s/react-native-exercise-7-2-medication-info-props-fn38xt)**
 
 _A solution will be provided by your instructor or in the course materials._
+
+### Next Steps
+
+Understanding props is key to building configurable and reusable components. Now that you can pass data down the component tree, the next essential concept is how components manage their own internal data that can change over time. Proceed to [Section 5: State (`useState` Hook)](./section-05-state.md) to learn about managing component state.

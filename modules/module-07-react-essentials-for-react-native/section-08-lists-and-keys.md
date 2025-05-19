@@ -305,3 +305,7 @@ Time to practice rendering lists of data with keys.
 **Tool:** CodeSandbox
 
 **(https://codesandbox.io/s/react-native-exercise-7-4-medication-list-f4gkwr)**
+
+### Next Steps
+
+You've learned how to render dynamic lists of data efficiently using keys. The next critical aspect of component-based development is understanding how components manage their lifecycle and perform side effects. Proceed to [Section 9: Component Lifecycle (`useEffect` Hook)](./section-09-component-lifecycle.md).

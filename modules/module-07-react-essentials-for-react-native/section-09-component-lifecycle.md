@@ -227,13 +227,13 @@ The `useRef` Hook is a versatile tool in React that serves two primary purposes:
 #### Syntax and Basic Usage
 
 ```tsx
-import React, { useRef, useEffect } from 'react';
-import { TextInput, View, Button, Text } from 'react-native';
+import React, { useRef, useEffect } from "react";
+import { TextInput, View, Button, Text } from "react-native";
 
 const MedicationSearchComponent = () => {
   // Create a ref with initial value null
   const inputRef = useRef<TextInput>(null);
-  
+
   // Function to focus the input
   const focusInput = () => {
     // Access the current property to get the actual DOM/native element
@@ -241,7 +241,7 @@ const MedicationSearchComponent = () => {
       inputRef.current.focus();
     }
   };
-  
+
   return (
     <View>
       <TextInput
@@ -259,19 +259,19 @@ const MedicationSearchComponent = () => {
 In React Native, `useRef` is commonly used to access and manipulate native components:
 
 ```tsx
-import React, { useRef, useEffect } from 'react';
-import { TextInput, View, Button, StyleSheet, Animated } from 'react-native';
+import React, { useRef, useEffect } from "react";
+import { TextInput, View, Button, StyleSheet, Animated } from "react-native";
 
 const AnimatedSearchBar = () => {
   const inputRef = useRef<TextInput>(null);
   const animationValue = useRef(new Animated.Value(0)).current;
-  
+
   const expandSearchBar = () => {
     // Focus the input
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    
+
     // Animate the width
     Animated.timing(animationValue, {
       toValue: 1,
@@ -279,12 +279,12 @@ const AnimatedSearchBar = () => {
       useNativeDriver: false,
     }).start();
   };
-  
+
   const width = animationValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['50%', '80%'],
+    outputRange: ["50%", "80%"],
   });
-  
+
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.searchContainer, { width }]}>
@@ -301,12 +301,12 @@ const AnimatedSearchBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
   },
   searchContainer: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     borderRadius: 20,
     marginRight: 10,
   },
@@ -321,8 +321,8 @@ const styles = StyleSheet.create({
 The second key use case for `useRef` is to persist values between renders without triggering re-renders:
 
 ```tsx
-import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useRef, useEffect, useState } from "react";
+import { View, Text, Button } from "react-native";
 
 const MedicationTimer = () => {
   const [seconds, setSeconds] = useState(0);
@@ -330,36 +330,36 @@ const MedicationTimer = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   // Track previous seconds value without causing re-renders
   const prevSecondsRef = useRef<number>(0);
-  
+
   useEffect(() => {
     // Store the previous value after each render
     prevSecondsRef.current = seconds;
   });
-  
+
   const startTimer = () => {
     if (intervalRef.current !== null) return; // Prevent multiple intervals
-    
+
     intervalRef.current = setInterval(() => {
-      setSeconds(s => s + 1);
+      setSeconds((s) => s + 1);
     }, 1000);
   };
-  
+
   const stopTimer = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   };
-  
+
   const resetTimer = () => {
     stopTimer();
     setSeconds(0);
   };
-  
+
   // Calculate if seconds changed by an odd or even number
-  const isOddChange = seconds !== 0 &&
-    (seconds - prevSecondsRef.current) % 2 === 1;
-  
+  const isOddChange =
+    seconds !== 0 && (seconds - prevSecondsRef.current) % 2 === 1;
+
   return (
     <View>
       <Text>Medication Timer: {seconds} seconds</Text>
@@ -377,10 +377,12 @@ const MedicationTimer = () => {
 Understanding when to use `useRef` versus `useState` is important:
 
 1. **Re-rendering Behavior:**
+
    - Changes to `useState` values trigger re-renders
    - Changes to `useRef.current` do NOT trigger re-renders
 
 2. **Use Cases:**
+
    - Use `useState` for values that should affect the UI when they change
    - Use `useRef` for:
      - References to DOM/native elements
@@ -395,12 +397,14 @@ Understanding when to use `useRef` versus `useState` is important:
 #### Best Practices for useRef
 
 1. **Type Your Refs:** Always use TypeScript to properly type your refs:
+
    ```tsx
    const inputRef = useRef<TextInput>(null);
    const countRef = useRef<number>(0);
    ```
 
 2. **Null Checking:** Always check if a ref is not null before accessing its properties:
+
    ```tsx
    if (inputRef.current) {
      inputRef.current.focus();
@@ -434,26 +438,26 @@ Custom Hooks are a powerful feature in React that allows you to extract componen
 #### Basic Structure of a Custom Hook
 
 ```tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // A custom hook always starts with "use"
 function useCustomHook(initialValue) {
   // Can use any built-in Hooks
   const [state, setState] = useState(initialValue);
-  
+
   useEffect(() => {
     // Side effects here
   }, []);
-  
+
   // Can define helper functions
   const updateState = (newValue) => {
     setState(newValue);
   };
-  
+
   // Return values and functions the component needs
   return {
     state,
-    updateState
+    updateState,
   };
 }
 ```
@@ -463,7 +467,7 @@ function useCustomHook(initialValue) {
 Let's create a custom Hook for fetching data that can be reused across components:
 
 ```tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface FetchState<T> {
   data: T | null;
@@ -475,29 +479,29 @@ function useFetchData<T>(url: string) {
   const [state, setState] = useState<FetchState<T>>({
     data: null,
     loading: true,
-    error: null
+    error: null,
   });
-  
+
   useEffect(() => {
     let isMounted = true;
-    
+
     const fetchData = async () => {
-      setState(prev => ({ ...prev, loading: true }));
-      
+      setState((prev) => ({ ...prev, loading: true }));
+
       try {
         const response = await fetch(url);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         if (isMounted) {
           setState({
             data,
             loading: false,
-            error: null
+            error: null,
           });
         }
       } catch (error) {
@@ -505,33 +509,35 @@ function useFetchData<T>(url: string) {
           setState({
             data: null,
             loading: false,
-            error: error instanceof Error ? error : new Error(String(error))
+            error: error instanceof Error ? error : new Error(String(error)),
           });
         }
       }
     };
-    
+
     fetchData();
-    
+
     return () => {
       isMounted = false;
     };
   }, [url]);
-  
+
   return state;
 }
 
 // Usage in a component
 const MedicationList = () => {
-  const { data, loading, error } = useFetchData<Medication[]>('https://api.speedymeds.com/medications');
-  
+  const { data, loading, error } = useFetchData<Medication[]>(
+    "https://api.speedymeds.com/medications"
+  );
+
   if (loading) return <Text>Loading medications...</Text>;
   if (error) return <Text>Error: {error.message}</Text>;
   if (!data || data.length === 0) return <Text>No medications found</Text>;
-  
+
   return (
     <View>
-      {data.map(medication => (
+      {data.map((medication) => (
         <Text key={medication.id}>{medication.name}</Text>
       ))}
     </View>
@@ -543,14 +549,14 @@ const MedicationList = () => {
 
 ```tsx
 // For React Native, we'd use AsyncStorage instead
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function useAsyncStorage<T>(key: string, initialValue: T) {
   // State to store our value
   const [storedValue, setStoredValue] = useState<T>(initialValue);
   const [loading, setLoading] = useState(true);
-  
+
   // Initialize with stored value
   useEffect(() => {
     const getStoredValue = async () => {
@@ -565,10 +571,10 @@ function useAsyncStorage<T>(key: string, initialValue: T) {
         setLoading(false);
       }
     };
-    
+
     getStoredValue();
   }, [key, initialValue]);
-  
+
   // Return a wrapped version of useState's setter function that
   // persists the new value to AsyncStorage
   const setValue = async (value: T | ((val: T) => T)) => {
@@ -576,31 +582,34 @@ function useAsyncStorage<T>(key: string, initialValue: T) {
       // Allow value to be a function so we have the same API as useState
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
-        
+
       // Save state
       setStoredValue(valueToStore);
-      
+
       // Save to AsyncStorage
       await AsyncStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   return { storedValue, setValue, loading };
 }
 
 // Usage
 const MedicationReminders = () => {
-  const { storedValue: reminders, setValue: setReminders, loading } =
-    useAsyncStorage<string[]>('medication_reminders', []);
-  
+  const {
+    storedValue: reminders,
+    setValue: setReminders,
+    loading,
+  } = useAsyncStorage<string[]>("medication_reminders", []);
+
   const addReminder = (reminder: string) => {
     setReminders([...reminders, reminder]);
   };
-  
+
   if (loading) return <Text>Loading reminders...</Text>;
-  
+
   return (
     <View>
       <Text>Your Medication Reminders</Text>
@@ -609,7 +618,9 @@ const MedicationReminders = () => {
       ))}
       <Button
         title="Add Reminder"
-        onPress={() => addReminder(`Take medication at ${new Date().toLocaleTimeString()}`)}
+        onPress={() =>
+          addReminder(`Take medication at ${new Date().toLocaleTimeString()}`)
+        }
       />
     </View>
   );
@@ -619,7 +630,7 @@ const MedicationReminders = () => {
 #### Example: Creating a useTimer Hook
 
 ```tsx
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from "react";
 
 interface TimerHookOptions {
   initialSeconds?: number;
@@ -630,44 +641,44 @@ interface TimerHookOptions {
 function useTimer({
   initialSeconds = 0,
   autoStart = false,
-  onComplete
+  onComplete,
 }: TimerHookOptions = {}) {
   const [seconds, setSeconds] = useState(initialSeconds);
   const [isActive, setIsActive] = useState(autoStart);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const clearTimer = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   }, []);
-  
+
   const start = useCallback(() => {
     setIsActive(true);
     setIsPaused(false);
   }, []);
-  
+
   const pause = useCallback(() => {
     setIsPaused(true);
   }, []);
-  
+
   const resume = useCallback(() => {
     setIsPaused(false);
   }, []);
-  
+
   const reset = useCallback(() => {
     clearTimer();
     setSeconds(initialSeconds);
     setIsActive(false);
     setIsPaused(false);
   }, [initialSeconds, clearTimer]);
-  
+
   useEffect(() => {
     if (isActive && !isPaused) {
       intervalRef.current = setInterval(() => {
-        setSeconds(s => {
+        setSeconds((s) => {
           if (s <= 0) {
             clearTimer();
             if (onComplete) {
@@ -681,10 +692,10 @@ function useTimer({
     } else {
       clearTimer();
     }
-    
+
     return clearTimer;
   }, [isActive, isPaused, clearTimer, onComplete]);
-  
+
   return {
     seconds,
     isActive,
@@ -692,25 +703,19 @@ function useTimer({
     start,
     pause,
     resume,
-    reset
+    reset,
   };
 }
 
 // Usage
 const MedicationReminder = () => {
-  const {
-    seconds,
-    isActive,
-    isPaused,
-    start,
-    pause,
-    resume,
-    reset
-  } = useTimer({
-    initialSeconds: 60,
-    onComplete: () => alert('Time to take your medication!')
-  });
-  
+  const { seconds, isActive, isPaused, start, pause, resume, reset } = useTimer(
+    {
+      initialSeconds: 60,
+      onComplete: () => alert("Time to take your medication!"),
+    }
+  );
+
   return (
     <View>
       <Text>Medication Reminder: {seconds} seconds remaining</Text>
@@ -736,11 +741,12 @@ const MedicationReminder = () => {
 3. **Composition:** Build complex Hooks by composing simpler ones.
 
 4. **TypeScript:** Use TypeScript to provide type safety for your Hooks:
+
    ```tsx
    function useFormField<T>(initialValue: T) {
      const [value, setValue] = useState<T>(initialValue);
      // ...
-     return { value, setValue, /* other values/functions */ };
+     return { value, setValue /* other values/functions */ };
    }
    ```
 
@@ -763,7 +769,7 @@ graph TD
         D1 --> B1
         D1 --> E1[componentWillUnmount]
     end
-    
+
     subgraph "Functional Component with Hooks"
         A2[Component Function] --> B2[useState initialization]
         B2 --> C2[JSX rendering]
@@ -773,27 +779,27 @@ graph TD
         F2 --> D2
         F2 --> G2["Final cleanup on unmount"]
     end
-    
+
     A1 -.equivalent to.-> A2
     A1 -.equivalent to.-> B2
     B1 -.equivalent to.-> C2
     C1 -.equivalent to.-> D2
     D1 -.equivalent to.-> E2
     E1 -.equivalent to.-> G2
-    
+
     style A1 fill:#f9d5e5,stroke:#333,stroke-width:2px
     style A2 fill:#f9d5e5,stroke:#333,stroke-width:2px
     style B2 fill:#f9d5e5,stroke:#333,stroke-width:2px
-    
+
     style B1 fill:#eeeeee,stroke:#333,stroke-width:2px
     style C2 fill:#eeeeee,stroke:#333,stroke-width:2px
-    
+
     style C1 fill:#d5e8f9,stroke:#333,stroke-width:2px
     style D2 fill:#d5e8f9,stroke:#333,stroke-width:2px
-    
+
     style D1 fill:#d5f9e8,stroke:#333,stroke-width:2px
     style E2 fill:#d5f9e8,stroke:#333,stroke-width:2px
-    
+
     style E1 fill:#f9e8d5,stroke:#333,stroke-width:2px
     style G2 fill:#f9e8d5,stroke:#333,stroke-width:2px
 ```
@@ -839,3 +845,7 @@ Let's practice using `useEffect` to perform a side effect, such as fetching data
 **Tool:** CodeSandbox
 
 **(https://codesandbox.io/s/react-native-exercise-7-5-user-profile-useeffect-c38kt9)**
+
+### Next Steps
+
+You've now learned how to manage side effects and component lifecycle events using the powerful `useEffect` Hook, as well as leveraging `useRef` and creating custom Hooks. The final core React concept we'll cover in this module is sharing state across different parts of your application. Proceed to [Section 10: React Context API (Introduction for State Management)](./section-10-react-context-api.md).
