@@ -29,7 +29,7 @@ Expo is a set of tools, libraries, and services built around React Native that a
 
 Using Expo, especially the managed workflow, dramatically lowers the barrier to entry for React Native development and streamlines many common tasks.
 
-> 🤖🍏 **(Native Developers):**
+> 📲 **(Native Developers):**
 >
 > **Comparison:** Expo, particularly the managed workflow, abstracts away much of the native build configuration (Gradle scripts, Xcode project settings, provisioning profiles) that you typically handle manually. Expo Go is similar in concept to running debug builds on a device/simulator, but it bundles many common native modules already. EAS Build is like using a cloud CI/CD service specifically tailored for React Native/Expo builds.
 >
@@ -120,7 +120,7 @@ While the official documentation is paramount, the vibrant React Native and Expo
 
 ### Ecosystem components and their roles
 
-To further clarify the roles of various parts of the React Native world, the following table summarizes key ecosystem components:
+To further clarify the roles of various parts of the React Native world, the following table summarizes key ecosystem components.
 
 | Component          | Role                                                    |
 | ------------------ | ------------------------------------------------------- |
@@ -164,17 +164,3 @@ Underpinning the development process is the 'Metro Bundler,' which is integral t
 > - [Community Resources (React Native Docs)](https://reactnative.dev/community/overview)
 
 Together, React Native core, the Expo platform, and the vibrant community form a powerful ecosystem for building cross-platform mobile applications efficiently. It's important to remember that the strength of the surrounding ecosystem—the quality of tooling like Expo, the availability of libraries, the responsiveness of the community, and the clarity of documentation—is often just as critical to a project's success as the technical features of the core framework itself. With this foundational understanding of the mobile development landscape and React Native's place within it, you are ready to move on to exploring the architecture that powers these applications.
-
-### Challenge
-
-Now that you've learned about the mobile development landscape, cross-platform solutions, and React Native's ecosystem, test your knowledge with the following challenge:
-
-- **Challenge 1: Mobile Development Quiz**
-  - **(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-MOBILE-DEV-QUIZ)**
-
-### Module Summary
-
-Congratulations on completing Module 1! Continue to the module summary to reinforce what you've learned before moving on to the next module.
-
-- **Module 1 Summary: The Landscape of Mobile Development**
-  - **(./module-summary.md)**

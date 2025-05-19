@@ -45,7 +45,7 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-- Completion of [Module 1: The Landscape of Mobile Development](../module-01-mobile-landscape/section-00-introduction.md)
+- Completion of [Module 1: The Landscape of Mobile Development](../module-01-the-landscape-of-mobile-development/section-00-introduction.md)
 - Basic understanding of JavaScript and React concepts
 - Familiarity with general application development principles
 

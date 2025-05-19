@@ -75,7 +75,7 @@ It's helpful to think of these approaches on a spectrum based on how closely the
 
 The limitations of early approaches like PWAs and hybrid apps (especially around performance and UX) were key drivers for the development of modern compiled frameworks like React Native, which aim to deliver a more native-like result while retaining cross-platform efficiency.
 
-> 🤖🍏 **(Native Developers):**
+> 📲 **(Native Developers):**
 >
 > **Comparison:** Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
 >

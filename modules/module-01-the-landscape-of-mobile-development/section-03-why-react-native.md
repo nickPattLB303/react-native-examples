@@ -119,9 +119,8 @@ It might be less suitable for:
 
 ### Exercise
 
-Now it's time to do a bit of your own research to compare React Native with other popular cross-platform frameworks.
+Now it's time to do a bit of your own research to compare React Native with other popular cross-platform frameworks. Complete **Exercise 1.1: Framework Comparison Research**:
 
-- **Exercise 1.1: Framework Comparison Research**
-  - **(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-FRAMEWORK-COMPARISON)**
+**(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-FRAMEWORK-COMPARISON)**
 
 React Native offers a powerful and efficient way to build high-quality mobile applications for both iOS and Android. By understanding its strengths and limitations, you can make informed decisions about when and how to leverage it effectively. The next section explores the broader ecosystem surrounding React Native.

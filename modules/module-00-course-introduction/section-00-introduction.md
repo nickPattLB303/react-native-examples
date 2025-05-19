@@ -23,7 +23,7 @@ graph TD
     style A fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-This diagram shows your learning journey, starting with this introduction and progressing through foundational concepts, core React Native skills, and culminating in a practical capstone project, where you will build an application called **SpeedyMeds**. The highlighted module is your current position in the course.
+This diagram provides a visual roadmap of your learning journey throughout this React Native Training Course. It begins with **Module 0: Course Introduction** (your current position, highlighted for clarity), which lays the essential groundwork. From there, you'll progress sequentially through key stages: **Module 1** explores the broader **Landscape of Mobile Development**, followed by **Module 2** which delves into **React Native Architecture**. **Module 3** focuses on **Environment Setup with Expo**. A crucial phase, **Modules 4-7**, covers **Prerequisites** including Web Development Essentials, JavaScript, TypeScript, and React fundamentals, ensuring you have a strong base. The core of your learning happens in **Modules 8-17**, where you'll master **Core React Native Components, APIs, Hooks, Styling, Navigation, State Management, Native Modules, Performance, Publishing, and Advanced Features**. This comprehensive knowledge then culminates in **Module 18: Capstone Project**, where you will apply everything you've learned to build a real-world application, **SpeedyMeds**. Finally, **Module 19: Course Wrap-up** consolidates your learning and outlines next steps for your continued development journey. Each arrow signifies a direct progression, guiding you step-by-step towards React Native proficiency.
 
 ## Learning Objectives
 

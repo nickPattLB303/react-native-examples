@@ -28,7 +28,7 @@ graph TD
     style B fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-This diagram illustrates the three different approaches to navigating this course. You can select the path that best matches your learning situation and preferences.
+This diagram provides a visual guide to the flexible **Learning Paths** available in this course, starting from the central decision point: "Choose Learning Path" (highlighted). You can opt for the **Instructor-Led** path, characterized by **Scheduled Sessions**, interactive **Classroom Exercises**, direct **Instructor Feedback**, and collaborative **Group Discussions**. Alternatively, the **Self-Led** path offers autonomy through **Self-Paced Learning**, supported by **Independent Exercises**, robust **Self-Assessment** opportunities, and the encouragement of **Personal Projects** to deepen understanding. Finally, the **Asynchronous** path caters to learners seeking **Topic-Based Reference**, allowing them to access modules based on **Specific Knowledge Needs**, use the content as **Reference Material**, and aim for **Direct Application** of concepts into their ongoing work. Each path is designed to lead to successful course completion, tailored to different learning styles and circumstances.
 
 #### Instructor-Led Path (🧑‍🏫)
 

@@ -107,9 +107,9 @@ Understanding these rendering processes helps us make informed decisions about c
 
 Understanding these rendering differences highlights how the New Architecture tackles core performance issues present in the legacy system, aiming for a smoother and more native-like user experience.
 
-## Exercise 2.1: Architecture Concepts Review
+### Exercise
 
-Test your understanding of React Native's architectural rendering with a short quiz:
+Test your understanding of React Native's architectural rendering with **Exercise 2.1: Architecture Concepts Review**, a short quiz:
 
 **(https://forms.microsoft.com/architecture-concepts-review)**
 

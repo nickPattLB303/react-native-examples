@@ -4,7 +4,7 @@ The limitations of the legacy Bridge architecture prompted a significant re-engi
 
 > 🛣️ **(All Learners):** Understanding the New Architecture is particularly important as it's now the default in React Native. Even if you don't directly work with its lowest-level components, the performance improvements and capabilities it enables will affect how you build your applications.
 
-![Diagram: React Native's New Architecture](../../assets/diagrams/react-native-new-architecture.png)
+![Diagram illustrating React Native's New Architecture, showing JavaScript layer interacting with C++ layer (JSI, Codegen, TurboModules, Fabric) which then connects to native device APIs and UI.](../../assets/diagrams/react-native-new-architecture.png)
 
 This diagram illustrates React Native's New Architecture, highlighting key layers and components. The **JavaScript Layer**, containing your application code, interacts via the **JavaScript Interface (JSI)**. JSI enables direct, high-performance communication with the **C++ Layer**. Here, **Codegen** automatically generates bindings for **TurboModules** (for native device APIs) and **Fabric** (the new UI management system). Dotted lines from JSI show these direct call capabilities. At the base, the **Native Layer** depicts TurboModules accessing **Device APIs** (e.g., camera, sensors) and Fabric managing platform-specific **Native UI** elements. This streamlined structure aims for enhanced performance and type safety.
 

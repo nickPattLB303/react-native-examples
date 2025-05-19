@@ -2,30 +2,6 @@
 
 This section introduces the key terminology used throughout the course and explains important concepts you'll encounter as you learn React Native.
 
-### React Native Ecosystem Terminology
-
-To ensure clarity throughout the course, we'll consistently use these key terms:
-
-| Term               | Definition                                                                                                                          |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **React Native**   | The framework that allows you to build native mobile applications using JavaScript and React.                                       |
-| **Expo**           | A platform and set of tools built around React Native that simplifies development, building, and deployment.                        |
-| **Component**      | Reusable UI building blocks. Divided into Core Components (provided by React Native) and Custom Components (created by developers). |
-| **Props**          | (Properties) Data passed down from parent to child components.                                                                      |
-| **State**          | Data managed within a component that can change over time.                                                                          |
-| **Hook**           | Functions allowing functional components to use state and lifecycle features.                                                       |
-| **Native Modules** | Platform-specific code (Swift/Objective-C for iOS, Kotlin/Java for Android) bridged for use in React Native.                        |
-| **JSI**            | JavaScript Interface - The C++ layer enabling synchronous communication between JavaScript and native code in the New Architecture. |
-| **Expo Go**        | The client app used for development and testing Expo projects without native builds.                                                |
-| **Exercise**       | Short, focused practice activity (15-20 mins).                                                                                      |
-| **Challenge**      | More complex application of concepts (30-60 mins).                                                                                  |
-
-> 📚 **Official Documentation:**
->
-> - [React Native: Core Components and APIs](https://reactnative.dev/docs/components-and-apis)
-> - [Expo: SDK Documentation](https://docs.expo.dev/versions/latest/)
-> - [React: Main Concepts](https://react.dev/learn)
-
 ### Core Technologies
 
 - **React Native**: The framework that allows you to build native mobile applications using JavaScript and React.
@@ -78,6 +54,10 @@ To ensure clarity throughout the course, we'll consistently use these key terms:
 - **Module**: A major topical unit of the course.
 - **Section**: A subdivision within a module, focusing on a specific concept or API.
 
+### Common Application Terms
+
+- **Sign in / Sign out**: Preferred terms for user authentication actions, rather than "Log in / Log out".
+
 ## Important Concepts and Conventions
 
 ### SpeedyMeds Capstone Project
@@ -109,7 +89,7 @@ graph TD
     D --> M[Notifications]
 ```
 
-This diagram shows the main feature areas of the SpeedyMeds app that we'll build throughout the course. This model helps provide consistent context for the examples and exercises.
+This diagram outlines the primary feature areas of the **SpeedyMeds App**, the capstone project you will develop. The application is structured around three core domains: **Medication Management**, **Pharmacy Services**, and **User Settings**. Under Medication Management, key functionalities include viewing a **Medication List**, accessing **Medication Details** for each entry, and managing **Reminders**. Pharmacy Services encompass features like a **Pharmacy Locator**, tools for **Prescription Management**, and handling **Refill Orders**. Finally, User Settings will allow users to manage their **Profile**, set **Preferences**, and control **Notifications**. This consistent application model will provide a practical and relatable context for the numerous code examples, exercises, and challenges you encounter throughout the course, helping you understand how concepts apply in a real-world scenario.
 
 > [!TIP]
 > While you'll formally start working on the SpeedyMeds capstone project in Module 18, you can familiarize yourself with its overall goals and features by reviewing the `README.md` file located in the `SpeedyMeds` project directory provided with the course materials.

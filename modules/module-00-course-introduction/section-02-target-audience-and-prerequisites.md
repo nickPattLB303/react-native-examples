@@ -24,7 +24,7 @@ graph TD
     style A fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-This diagram shows the different developer backgrounds accommodated by this course. Throughout the course, you'll find specific notes that connect React Native concepts to your existing knowledge.
+This diagram illustrates the diverse **Developer Backgrounds** this course is designed to accommodate, ensuring a tailored learning experience. The central node, "Developer Backgrounds" (highlighted for focus), branches into three primary categories: **Native Mobile** developers, those from **Web Development**, and individuals with **Other Backgrounds**. Specifically, under Native Mobile, we cater to **Android Developers (🤖)** familiar with Java/Kotlin and **iOS Developers (🍏)** experienced with Swift/Objective-C. Within Web Development, we address **React Developers (⚛️)** who can leverage their existing framework knowledge, and **Angular Developers (🅰️)** bringing TypeScript and web principles. The "Other Backgrounds" category acknowledges developers from **Other Web Frameworks** (like Vue or Svelte) and **Backend Developers** transitioning to mobile. Throughout the course, specialized "Background Bridge Notes" will connect new React Native concepts to the existing knowledge paradigms of these distinct groups, facilitating a smoother learning curve for everyone.
 
 #### Native Mobile Developers
 
