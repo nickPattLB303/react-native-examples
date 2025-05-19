@@ -70,13 +70,11 @@ While the New Architecture brings many benefits, developers should be mindful of
 - **Ecosystem Maturity:** While rapidly evolving, some third-party libraries may still be in the process of fully adopting the New Architecture. Compatibility needs to be checked.
 - **Synchronous Nature of JSI:** While powerful, synchronous calls from JS to native, if misused for long-running native tasks, could potentially block the JS thread. Proper design of native module APIs remains important.
 
-> 📲 **(Native Developers):**
-> **Comparison:** The New Architecture, particularly with JSI enabling direct C++ interop, moves React Native closer to how native components often interact with the system or each other—more directly and with less marshaling or serialization overhead than the old bridge. Fabric\'s approach to rendering off the main JS thread and allowing for prioritized updates shares principles with how native UI frameworks (like UIKit on iOS or Android\'s UI toolkit) manage their rendering pipelines to ensure responsiveness.
+> 📲 **(Native Developers):** > **Comparison:** The New Architecture, particularly with JSI enabling direct C++ interop, moves React Native closer to how native components often interact with the system or each other—more directly and with less marshaling or serialization overhead than the old bridge. Fabric\'s approach to rendering off the main JS thread and allowing for prioritized updates shares principles with how native UI frameworks (like UIKit on iOS or Android\'s UI toolkit) manage their rendering pipelines to ensure responsiveness.
 > **Key Takeaway:** The New Architecture aims to make React Native feel more "native" in its performance characteristics by reducing indirection and overhead in the communication between JavaScript and native code, leading to potentially smoother UIs and faster interactions.
 > **Source:** `[React Native Docs: The New Architecture - JSI](https://reactnative.dev/docs/the-new-architecture/jsi)`, `[React Native Docs: The New Architecture - Fabric](https://reactnative.dev/docs/the-new-architecture/fabric-renderer)`
 
-> 🌐 **(Web Developers):**
-> **Comparison:** JSI enabling direct calls between JavaScript and C++ is somewhat analogous to how WebAssembly (Wasm) allows near-native performance for compiled C++/Rust/etc. code running in the browser, or how Node.js C++ addons can be called synchronously or asynchronously from JavaScript. Fabric\'s concurrency features, designed to work with React 18+, align with modern React\'s capabilities for smoother, non-blocking rendering updates on the web (e.g., `startTransition`).
+> 🌐 **(Web Developers):** > **Comparison:** JSI enabling direct calls between JavaScript and C++ is somewhat analogous to how WebAssembly (Wasm) allows near-native performance for compiled C++/Rust/etc. code running in the browser, or how Node.js C++ addons can be called synchronously or asynchronously from JavaScript. Fabric\'s concurrency features, designed to work with React 18+, align with modern React\'s capabilities for smoother, non-blocking rendering updates on the web (e.g., `startTransition`).
 > **Key Takeaway:** The New Architecture brings a more sophisticated and performant execution model to React Native, addressing limitations that were more apparent when comparing the legacy bridge architecture to typical web or native execution models. It allows for more direct interop and better UI rendering strategies.
 > **Source:** `[WebAssembly.org](https://webassembly.org/)`, `[React Docs: Concurrent Rendering](https://react.dev/blog/2022/03/29/react-v18#new-features-automatic-batching)`
 
@@ -106,3 +104,11 @@ Enabling the New Architecture involves several steps and can vary slightly betwe
 > - [Expo Docs on New Architecture (Search for latest guides)](https://docs.expo.dev/)
 
 The New Architecture represents the future of React Native performance. As it matures and library support becomes ubiquitous, apps like SpeedyMeds will be able to deliver even smoother and more responsive user experiences.
+
+### Next Steps
+
+Understanding the performance implications of the New Architecture provides insight into the future of React Native. This concludes Module 15 on Performance and Debugging.
+
+It's time to test your knowledge with the **Challenge 15: Profile and Identify Optimization Opportunity**, which is linked in the main introduction file for this module ([Section 0: Introduction](./section-00-introduction.md)).
+
+After completing the challenge, you will be ready for [Module 16: EAS Build and Publishing](../module-16-eas-build-and-publishing/section-00-introduction.md).

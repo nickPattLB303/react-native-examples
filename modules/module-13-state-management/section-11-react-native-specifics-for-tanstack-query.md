@@ -468,4 +468,10 @@ By paying attention to these React Native specifics, you can fine-tune TanStack 
 > - [TanStack Query - SSR and Initial Data (Conceptual, for understanding server/client state boundaries)](https://tanstack.com/query/v5/docs/react/guides/ssr)
 > - [TanStack Query Persist Client (Experimental, primarily web-focused)](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient)
 
-This concludes our exploration of TanStack Query for server state management in React Native. You now have a solid foundation to fetch, cache, and update remote data effectively.
+### Next Steps
+
+This concludes our exploration of state management strategies, from fundamental React hooks to advanced client and server state libraries. You've learned about `useState`, `useReducer`, Context API, Zustand, and TanStack Query, equipping you to handle a wide range of data management challenges in your SpeedyMeds application.
+
+It's now time to apply this comprehensive knowledge in the **Module 13 Challenge: Integrate Zustand and TanStack Query for Medication Data**, which is linked in the main introduction file for this module ([Section 0: Introduction](./section-00-introduction.md)).
+
+After mastering state management, you'll be ready to explore how to interact with device-specific native capabilities in [Module 14: Working with Native Modules](../module-14-working-with-native-modules/section-00-introduction.md).

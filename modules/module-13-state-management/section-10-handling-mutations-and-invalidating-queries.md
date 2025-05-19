@@ -348,6 +348,10 @@ Let's practice using `useMutation` to post data and then update the UI.
 - **Objective:** Implement a feature to add a new patient note using `useMutation` and then refresh the list of notes for that patient.
 - **Task:** You'll create a form to submit a new note. Upon successful submission, you will invalidate the query that fetches patient notes to display the newly added note.
 
-**(https://snack.expo.dev/@course-author/m13-ex04-usemutation)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_13_4_URL_HERE)**
 
 Mastering mutations and how they interact with your cached query data is fundamental to building dynamic, interactive applications with TanStack Query. In the next section, we'll look at some React Native specific considerations when using this powerful library.
+
+### Next Steps
+
+After understanding how to perform mutations and manage cache consistency, it's important to consider some aspects specific to using TanStack Query within a React Native environment. Proceed to [Section 11: React Native Specifics for TanStack Query](./section-11-react-native-specifics-for-tanstack-query.md).

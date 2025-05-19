@@ -60,8 +60,7 @@ Memory leaks occur when objects are no longer needed but are still referenced, p
 - **Impact:** Increased memory usage over time, eventual app crashes, general sluggishness.
 - **SpeedyMeds Example:** A listener for real-time prescription updates not being removed when the user navigates away from the prescriptions screen.
 
-> 📲 **(Native Developers):**
-> **Comparison:** This is analogous to memory leaks encountered in native mobile development, such as forgetting to unregister broadcast receivers or observers in Android, or creating retain cycles with closures or delegates in Swift/Objective-C.
+> 📲 **(Native Developers):** > **Comparison:** This is analogous to memory leaks encountered in native mobile development, such as forgetting to unregister broadcast receivers or observers in Android, or creating retain cycles with closures or delegates in Swift/Objective-C.
 > **Key Takeaway:** Vigilance in cleaning up resources is essential. This includes removing listeners, clearing timers, and nullifying subscriptions, typically within `useEffect` cleanup functions (for functional components) or `componentWillUnmount` (for class components).
 > **Source:** `[Android Developer Documentation: Detect and fix memory leaks](https://developer.android.com/topic/performance/memory-leaks)`, `[Apple Developer Documentation: Avoiding Retain Cycles When Working with Closures](https://developer.apple.com/documentation/swift/automatic_reference_counting#Avoiding-Retain-Cycles-When-Working-with-Closures)`
 
@@ -83,8 +82,7 @@ A large JavaScript bundle means more code to parse and execute on app startup, l
 - **Impact:** Slow app startup, increased memory usage during startup.
 - **SpeedyMeds Example:** Including many large third-party libraries or unused code, bloating the initial JS bundle for the SpeedyMeds app.
 
-> 🌐 **(Web Developers):**
-> **Comparison:** This directly parallels the issue of large JavaScript files slowing down website initial load times (Time to Interactive). Techniques familiar from web development, such as code splitting (though less common in basic RN apps), tree shaking by bundlers like Metro, and careful analysis of bundle contents, are relevant.
+> 🌐 **(Web Developers):** > **Comparison:** This directly parallels the issue of large JavaScript files slowing down website initial load times (Time to Interactive). Techniques familiar from web development, such as code splitting (though less common in basic RN apps), tree shaking by bundlers like Metro, and careful analysis of bundle contents, are relevant.
 > **Key Takeaway:** Monitor your application\'s dependencies and periodically analyze your bundle composition. Prioritize reducing the amount of JavaScript that needs to be parsed and executed at startup.
 > **Source:** `[web.dev: Reduce JavaScript payloads with code splitting](https://web.dev/articles/reduce-javascript-payloads-with-code-splitting)`
 
@@ -95,8 +93,7 @@ In React Native's legacy architecture, every communication between JavaScript an
 - **Impact:** Delayed native responses, UI jank if the JS thread is waiting or overwhelmed by bridge traffic.
 - **SpeedyMeds Example:** A custom native module for barcode scanning sending continuous streams of individual pixel data across the bridge instead of processing the image natively and sending only the result.
 
-> 📲 **(Native Developers):**
-> **Comparison:** In the legacy React Native architecture, the asynchronous bridge introduces overhead for each call due to serialization/deserialization of data and context switching between the JavaScript and native threads. This is less of an issue with the New Architecture\'s JavaScript Interface (JSI), which allows for more direct, synchronous communication.
+> 📲 **(Native Developers):** > **Comparison:** In the legacy React Native architecture, the asynchronous bridge introduces overhead for each call due to serialization/deserialization of data and context switching between the JavaScript and native threads. This is less of an issue with the New Architecture\'s JavaScript Interface (JSI), which allows for more direct, synchronous communication.
 > **Key Takeaway:** When working with or creating native modules (especially in the legacy architecture), aim to batch calls, send only the minimal necessary data, and be mindful of the frequency of communication across the bridge. The New Architecture significantly improves this interaction model.
 > **Source:** `[React Native Documentation: The New Architecture - JavaScript Interface (JSI)](https://reactnative.dev/docs/the-new-architecture/jsi)`
 
@@ -107,8 +104,8 @@ In React Native's legacy architecture, every communication between JavaScript an
 > - [Debugging in React Native (includes performance profiling)](https://reactnative.dev/docs/debugging)
 > - [Images - React Native](https://reactnative.dev/docs/image) (touches on image sources and props that can affect performance)
 
-### Troubleshooting and Next Steps
+### Next Steps
 
-Identifying these bottlenecks is the first step. Subsequent sections in this module will delve into specific tools and techniques to measure, diagnose, and resolve these common performance issues. For example, we will explore how to use the profiler to pinpoint over-rendering and how to optimize list rendering with `FlatList` best practices.
+Now that you're familiar with common performance bottlenecks, the next step is to learn how to identify and quantify them in your application. Proceed to [Section 2: Measuring Performance](./section-02-measuring-performance.md) to explore various tools and techniques for profiling your React Native app.
 
 Understanding these common pitfalls will help you proactively design and develop more performant React Native applications for SpeedyMeds, ensuring a smooth and responsive experience for users managing their medications.

@@ -297,3 +297,7 @@ Time to practice implementing an Error Boundary.
 - **Exercise 15.2: Implementing an Error Boundary**
   - `**(https://snack.expo.dev/Error-Boundary-Exercise-15-2)**`
   - _Instructions: You will be provided with a Snack that includes a component prone to errors when rendering SpeedyMeds data. Your task is to create and implement an `ErrorBoundary` component to gracefully handle these errors and display a fallback UI. The `README.md` in the Snack will have detailed requirements._
+
+### Next Steps
+
+Robust error handling makes your application more resilient. Another significant factor in React Native performance, especially on Android, is the JavaScript engine. Proceed to [Section 9: Understanding Hermes Engine Benefits](./section-09-understanding-hermes-engine-benefits.md) to learn about this optimized engine.

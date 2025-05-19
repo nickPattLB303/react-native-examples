@@ -235,7 +235,7 @@ This exercise provides conceptual instructions on how you would publish an EAS U
 
 **Task:** Conceptually outline the steps and the EAS CLI command you would use to deploy this fix as an OTA update.
 
-`**(The URL for this Microsoft Forms exercise will be provided through your learning platform)**`
+`**(MICROSOFT_FORMS_URL_PLACEHOLDER_EXERCISE_16_2)**`
 
 (This would ideally be a document or a series of steps for the student to follow conceptually, or a quiz in Microsoft Forms asking them to identify the correct command and parameters.)
 

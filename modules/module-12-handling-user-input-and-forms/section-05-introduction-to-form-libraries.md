@@ -77,4 +77,6 @@ In the following sections, we will dive into setting up React Hook Form, registe
 > - [Formik - Website](https://formik.org/)
 > - [React Final Form - GitHub](https://github.com/final-form/react-final-form)
 
-Choosing to use a form library is a significant step towards writing more maintainable, performant, and robust form code. React Hook Form provides a powerful yet accessible solution for React Native developers.
+### Next Steps
+
+Understanding the benefits of form libraries, particularly React Hook Form, sets the stage for practical implementation. In the next section, you'll learn how to install and set up React Hook Form in your Expo project. Proceed to [Section 6: Setting up React Hook Form](./section-06-setting-up-react-hook-form.md).

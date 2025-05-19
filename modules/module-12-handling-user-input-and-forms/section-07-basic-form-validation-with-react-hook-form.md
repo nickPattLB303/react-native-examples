@@ -167,6 +167,13 @@ interface PatientFormData {
   patientAge: string; // Keep as string for TextInput, convert on submit if needed
 }
 
+/**
+ * @function ValidationRHFScreen
+ * @description Demonstrates basic form validation with React Hook Form,
+ * including required fields, min/max length, patterns, and displaying error messages.
+ * It also shows how to disable the submit button based on form validity.
+ * @returns {JSX.Element} The rendered screen with a validated RHF form.
+ */
 const ValidationRHFScreen = () => {
   const {
     control,
@@ -181,6 +188,12 @@ const ValidationRHFScreen = () => {
     mode: "onChange", // Validate as user types and on blur
   });
 
+  /**
+   * @function onSubmit
+   * @description Handles form submission after successful validation.
+   * Logs the data and resets the form.
+   * @param {PatientFormData} data - The validated form data.
+   */
   const onSubmit = (data: PatientFormData) => {
     // Convert age to number if necessary before submission
     const ageAsNumber = parseInt(data.patientAge, 10);
@@ -358,8 +371,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ValidationRHFScreen;
-```
+// export default ValidationRHFScreen; // Keep this if it's the main export for a standalone file
 
 **Explanation of the Example:**
 
@@ -383,29 +395,6 @@ export default ValidationRHFScreen;
 
 This example demonstrates how to effectively use React Hook Form's built-in validation rules to create more robust and user-friendly forms. For more complex validation scenarios, React Hook Form can also be integrated with schema validation libraries like Yup or Zod, which we might explore later if needed.
 
-**Exercise 12.2: Form with React Hook Form Validation**
-
-Now, let's apply these validation concepts.
-
-- **Objective:** Extend a basic form using React Hook Form to include validation for several fields relevant to a medication logging feature in the SpeedyMeds app.
-- **Requirements:**
-  1.  Create an Expo Snack with React Hook Form installed.
-  2.  Design a form with fields for: `medicationName` (string), `dosage` (string, e.g., "1 tablet", "10mg"), and `frequency` (string, e.g., "Once a day").
-  3.  Implement the following validation rules using the `rules` prop:
-      - `medicationName`: `required`, `minLength: 3`.
-      - `dosage`: `required`.
-      - `frequency`: `required`.
-  4.  Display appropriate error messages next to each field if validation fails.
-  5.  Use `mode: 'onChange'` for `useForm`.
-  6.  The submit button should be disabled if the form is not valid (`!isValid`).
-  7.  On successful submission (when `handleSubmit` calls your `onSubmit` function), show an `Alert` with the submitted data.
-
-**(URL_to_Tool)** _(Link to Expo Snack for Exercise 12.2)_
-
-Refer to the `README.md` within the Snack for detailed instructions and starter code if provided.
-
-By implementing these basic validation techniques, you can significantly improve the quality and reliability of the data collected through your SpeedyMeds application forms.
-
 **Table: React Hook Form Validation Rules Summary**
 
 The following table provides a quick reference for the common validation rules discussed, their parameters, and example usage within the `rules` prop of a React Hook Form `Controller`.
@@ -420,7 +409,34 @@ The following table provides a quick reference for the common validation rules d
 | `pattern`   | `{ value: RegExp, message: string }`                       | `pattern: { value: /^\d+$/, message: 'Numbers only' }`    | "Pattern does not match"                      |
 | `validate`  | `function` or `object_of_functions`                        | `validate: value => value === 'test' \|\| 'Must be test'` | (No default, message comes from function)     |
 
+### Exercise 12.2: Form with React Hook Form Validation
+
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_12_2_URL_HERE)**
+
+> **Instructions for Expo Snack `README.md` (Exercise 12.2):**
+>
+> **Objective:** Extend a basic form using React Hook Form to include validation for several fields relevant to a medication logging feature in the SpeedyMeds app.
+>
+> **Tasks:**
+> 1.  Create an Expo Snack with React Hook Form installed.
+> 2.  Design a form with fields for: `medicationName` (string), `dosage` (string, e.g., "1 tablet", "10mg"), and `frequency` (string, e.g., "Once a day").
+> 3.  Implement the following validation rules using the `rules` prop on each `Controller`:
+>     - `medicationName`: `required`, `minLength: 3`.
+>     - `dosage`: `required`.
+>     - `frequency`: `required`.
+> 4.  Display appropriate error messages next to each field if validation fails (use `fieldState.error.message`).
+> 5.  Configure `useForm` with `mode: 'onChange'` for instant validation feedback.
+> 6.  The submit button should be disabled if the form is not valid (use `formState.isValid`).
+> 7.  On successful submission (when `handleSubmit` calls your `onSubmit` function), show an `Alert` with the submitted data.
+
+By implementing these basic validation techniques, you can significantly improve the quality and reliability of the data collected through your SpeedyMeds application forms.
+
+### Next Steps
+
+With basic validation in place, the next logical step is to handle what happens when the user submits the form, including managing asynchronous operations. Proceed to [Section 8: Handling Form Submission](./section-08-handling-form-submission.md).
+
 > 📚 **Official Documentation:**
 >
 > - [React Hook Form - Validation (`register` rules, applicable to `Controller` `rules` prop)](https://react-hook-form.com/docs/useform/register#validation)
 > - [React Hook Form - `formState` (for errors)](https://react-hook-form.com/docs/useform/formstate)
+```

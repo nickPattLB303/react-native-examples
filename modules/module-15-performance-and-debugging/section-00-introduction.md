@@ -41,9 +41,9 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-- Completion of [Module 7: React Essentials for React Native](../../module-07-react-essentials/section-00-introduction.md)
-- Completion of [Module 8: React Native Core Components](../../module-08-core-components/section-00-introduction.md)
-- Completion of [Module 9: React Native Core APIs and Hooks](../../module-09-core-apis-hooks/section-00-introduction.md)
+- Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md)
+- Completion of [Module 8: React Native Core Components](../module-08-react-native-core-components/section-00-introduction.md)
+- Completion of [Module 9: React Native Core APIs and Hooks](../module-09-react-native-core-apis-and-hooks/section-00-introduction.md)
 - Familiarity with basic JavaScript and TypeScript concepts.
 
 ## Module Sections

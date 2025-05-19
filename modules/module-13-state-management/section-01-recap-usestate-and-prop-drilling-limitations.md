@@ -1,4 +1,4 @@
-## Section 1: Recap: `useState` and Prop Drilling Limitations
+## Section 1: Recap: `useState`, `useReducer`, and Prop Drilling Limitations
 
 Welcome to the first section of our deep dive into state management in React Native! Before we explore more advanced techniques, it's essential to solidify our understanding of the foundational tools React provides for managing state and to recognize their limitations, especially as applications like our SpeedyMeds app begin to scale.
 
@@ -105,6 +105,159 @@ Adherence to the Rules of Hooks is mandatory for `useState` (and all other hooks
 > - [React `useState` Hook (Current)](https://react.dev/reference/react/useState)
 > - [React `useState` Hook (Legacy)](https://legacy.reactjs.org/docs/hooks-state.html)
 > - [How `useState` works internally (Community Article)](https://dev.to/nadim_ch0wdhury/how-does-reactjs-usestate-hook-work-under-the-hood-44lk)
+
+### Introducing `useReducer`: For More Complex Local State Logic
+
+While `useState` is excellent for simple state, managing more complex state objects or scenarios where the next state depends on the previous one can become cumbersome. For instance, if updating one piece of state requires updating several others in a coordinated way, or if the state update logic itself is non-trivial, `useState` can lead to verbose and harder-to-maintain code. In such cases, `useReducer` provides a more structured and powerful alternative for managing local component state.
+
+**What is `useReducer`?**
+
+`useReducer` is another built-in React Hook that is preferable to `useState` when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. It is often used for managing the state of components that have several interconnected pieces of data or require well-defined state transitions.
+
+**Syntax and Mechanics:**
+
+```tsx
+const [state, dispatch] = useReducer(reducer, initialArg, init?);
+```
+
+- **`reducer`**: A function `(prevState, action) => newState` that specifies how the state gets updated. It receives the current `state` and an `action` object, and it must return the new `state`. The reducer function should be pure, meaning it should not cause side effects and should return the same output for the same inputs.
+- **`initialArg`**: The value from which the initial state is calculated. This can be the initial state itself, or an argument passed to an `init` function.
+- **`init` (optional)**: An initializer function. If provided, the initial state will be set to `init(initialArg)`. This allows for lazy initialization of the state, similar to the functional update form in `useState`, which can be useful if calculating the initial state is expensive.
+
+React then returns an array with two elements:
+
+1.  **`state`**: The current state value (e.g., `formState`).
+2.  **`dispatch`**: A function `(action) => void` that you use to send ("dispatch") actions to the reducer. An action is typically an object with a `type` property (a string describing the action) and an optional `payload` (any data needed to compute the new state).
+
+**How it Works:**
+
+1.  You call `dispatch` with an `action` object.
+2.  React passes the current `state` and your `action` object to your `reducer` function.
+3.  Your `reducer` function computes and returns the `newState` based on the `prevState` and `action`.
+4.  React then stores this `newState`, and if it's different from the previous state, it triggers a re-render of the component and its children.
+
+The `dispatch` function identity is stable and will not change across re-renders, making it safe to pass down to child components without causing unnecessary re-renders of those children if they are memoized.
+
+**Example: A Simple Counter with `useReducer`**
+
+```tsx
+import React, { useReducer } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+
+interface CounterState {
+  count: number;
+}
+
+type CounterAction =
+  | { type: "INCREMENT" }
+  | { type: "DECREMENT" }
+  | { type: "RESET"; payload: number };
+
+const initialState: CounterState = { count: 0 };
+
+function counterReducer(
+  state: CounterState,
+  action: CounterAction
+): CounterState {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    case "DECREMENT":
+      return { count: state.count - 1 };
+    case "RESET":
+      return { count: action.payload };
+    default:
+      // For exhaustive checks with TypeScript, you can use:
+      // const _exhaustiveCheck: never = action;
+      // throw new Error('Unhandled action type');
+      return state; // Or throw an error for unhandled actions
+  }
+}
+
+const CounterWithReducer: React.FC = () => {
+  const [state, dispatch] = useReducer(counterReducer, initialState);
+
+  return (
+    <View style={styles.reducerContainer}>
+      <Text style={styles.reducerCountText}>Count: {state.count}</Text>
+      <View style={styles.reducerButtonRow}>
+        <Button
+          title="Increment"
+          onPress={() => dispatch({ type: "INCREMENT" })}
+        />
+        <Button
+          title="Decrement"
+          onPress={() => dispatch({ type: "DECREMENT" })}
+        />
+        <Button
+          title="Reset to 0"
+          onPress={() => dispatch({ type: "RESET", payload: 0 })}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  // ... (previous styles from useState example can be here or define new ones)
+  reducerContainer: {
+    padding: 15,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#007bff",
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  reducerCountText: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  reducerButtonRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+  // Ensure other styles like container, medicationText are defined if used elsewhere
+  container: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  medicationText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+});
+
+export default CounterWithReducer; // Changed export to the reducer example
+```
+
+**Pros of `useReducer` for Local State:**
+
+- **Predictable State Transitions:** All logic for updating state is centralized in the reducer function, making state changes more explicit and easier to trace.
+- **Testability:** Reducer functions are pure functions, making them straightforward to test in isolation without needing to render components.
+- **Complex State Objects:** Easier to manage state objects with multiple properties, especially when updates involve relationships between these properties.
+- **Optimized `dispatch`:** The `dispatch` function returned by `useReducer` has a stable identity across re-renders. This means you can pass it down to child components without needing to wrap it in `useCallback` to prevent unnecessary re-renders of those children (if they are memoized).
+
+**Cons of `useReducer` for Local State:**
+
+- **More Boilerplate:** For simple state (like a single boolean toggle or a simple string), `useReducer` involves more setup (defining state types, action types, reducer function) compared to `useState`.
+- **Learning Curve:** The reducer pattern might be less intuitive for developers new to it compared to the directness of `useState`.
+
+**Limitations of `useState` and `useReducer` for Global or Shared State:**
+
+Both `useState` and `useReducer` are primarily designed for managing **local component state**. While you can pass state values and dispatch functions down as props to child components, this leads directly to the problem of **prop drilling** when state needs to be accessed by deeply nested components or components far apart in the component tree.
+
+- **State is Not Truly Global:** The state managed by `useState` or `useReducer` is tied to the component instance where the hook is called. It's not inherently accessible from anywhere in the application without prop passing.
+- **Prop Drilling:** As discussed next, lifting state up to a common ancestor and passing it down can become very cumbersome.
+- **No Built-in Solution for Cross-Component Communication (Sibling/Distant):** These hooks don't offer a direct way for sibling components or distantly related components to share or react to the same state without involving a common ancestor and prop drilling.
+
+While `useReducer` can manage more complex local state structures more cleanly than many `useState` calls, it doesn't inherently solve the problem of sharing that state broadly across an application without prop drilling. This limitation is a key reason why the React Context API and dedicated state management libraries (like Zustand or Redux) are introduced for managing global or widely shared application state.
+
+> 📚 **Official Documentation:**
+>
+> - [React `useReducer` Hook (Current)](https://react.dev/reference/react/useReducer)
+> - [React `useReducer` Hook (Legacy)](https://legacy.reactjs.org/docs/hooks-reference.html#usereducer)
 
 ### The Challenge of Sharing State: Introducing Prop Drilling
 

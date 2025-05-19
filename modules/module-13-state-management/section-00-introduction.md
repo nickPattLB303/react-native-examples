@@ -54,10 +54,10 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the following:
 
-- Completion of [Module 5: JavaScript Essentials for React Native](../../module-05-javascript-essentials/section-00-introduction.md) (especially Asynchronous JavaScript: Callbacks, Promises, `async`/`await`).
-- Completion of [Module 6: TypeScript Essentials](../../module-06-typescript-essentials/section-00-introduction.md).
-- Completion of [Module 7: React Essentials for React Native](../../module-07-react-essentials/section-00-introduction.md) (especially `useState`, `useEffect`, props, and the initial introduction to Context API).
-- Completion of [Module 8: React Native Core Components](../../module-08-react-native-core-components/section-00-introduction.md).
+- Completion of [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md) (especially Asynchronous JavaScript: Callbacks, Promises, `async`/`await`).
+- Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md).
+- Completion of [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md) (especially `useState`, `useEffect`, props, and the initial introduction to Context API).
+- Completion of [Module 8: React Native Core Components](../module-08-react-native-core-components/section-00-introduction.md).
 
 ## Module Sections
 
@@ -80,7 +80,7 @@ This module is divided into the following sections:
 At the end of this module, you will apply your knowledge in a practical challenge:
 
 - **Challenge 13: Integrate Zustand and TanStack Query for Medication Data**
-  - **(https://snack.expo.dev/@course-author/module-13-challenge)**
+  - **(https://snack.expo.dev/INSERT_ACTUAL_CHALLENGE_13_URL_HERE)**
 
 ## Module Summary
 

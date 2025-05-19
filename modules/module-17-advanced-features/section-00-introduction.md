@@ -32,11 +32,11 @@ Upon completing this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the concepts covered in the previous modules, particularly:
 
-- Module 7: React Essentials for React Native ([../module-07/section-00-introduction.md](../module-07/section-00-introduction.md))
-- Module 8: React Native Core Components ([../module-08/section-00-introduction.md](../module-08/section-00-introduction.md))
-- Module 9: React Native Core APIs and Hooks ([../module-09/section-00-introduction.md](../module-09/section-00-introduction.md))
-- Module 10: Styling in React Native ([../module-10/section-00-introduction.md](../module-10/section-00-introduction.md))
-- Module 13: State Management ([../module-13/section-00-introduction.md](../module-13/section-00-introduction.md))
+- Module 7: React Essentials for React Native ([../module-07-react-essentials-for-react-native/section-00-introduction.md](../module-07-react-essentials-for-react-native/section-00-introduction.md))
+- Module 8: React Native Core Components ([../module-08-react-native-core-components/section-00-introduction.md](../module-08-react-native-core-components/section-00-introduction.md))
+- Module 9: React Native Core APIs and Hooks ([../module-09-react-native-core-apis-and-hooks/section-00-introduction.md](../module-09-react-native-core-apis-and-hooks/section-00-introduction.md))
+- Module 10: Styling in React Native ([../module-10-styling-in-react-native/section-00-introduction.md](../module-10-styling-in-react-native/section-00-introduction.md))
+- Module 13: State Management ([../module-13-state-management/section-00-introduction.md](../module-13-state-management/section-00-introduction.md))
 
 A strong grasp of TypeScript and JavaScript is also essential.
 

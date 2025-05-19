@@ -58,7 +58,7 @@ This diagram illustrates the communication flow in React Native's legacy archite
 On the native side (iOS or Android), the platform's infrastructure dequeues this message. The JSON string is deserialized back into a usable format. The system then looks up the specified native module and method. Once identified, the native code is executed with the provided arguments (after type conversion). If the JavaScript call included a callback or expected a Promise resolution, the native code, after completing its task (which might involve its own asynchronous operations), would prepare a result. This result is then packaged, serialized back into JSON, and sent back across the Bridge to the JavaScript realm, where it's processed by the original callback or Promise. The key characteristics are the asynchronous nature and the JSON serialization/deserialization at each step of the communication.
 
 > [!IMPORTANT]
->  **Key Characteristics of the Legacy Bridge:** The defining traits of the Bridge were its **asynchronous nature** (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the **serialization overhead** (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
+> **Key Characteristics of the Legacy Bridge:** The defining traits of the Bridge were its **asynchronous nature** (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the **serialization overhead** (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
 
 #### New Architecture: JSI (JavaScript Interface)
 
@@ -174,3 +174,7 @@ Here are some practical examples where native modules are essential:
 > - [React Native Docs: Communication between Native and React Native (New Architecture focus)](https://reactnative.dev/docs/communication-native-react-native)
 > - [Expo Docs: Overview of Expo modules](https://docs.expo.dev/modules/overview/)
 > - [Expo Docs: Why use Expo Modules API?](https://docs.expo.dev/modules/overview/#when-should-i-use-turbo-modules-and-when-should-i-use-the-expo-modules-api)
+
+### Next Steps
+
+Now that you have a solid understanding of what native modules are and why they are used, the next step is to learn how to incorporate and utilize existing native modules that have been developed by the community or are part of the Expo SDK. Proceed to [Section 2: Using Existing Native Modules](./section-02-using-existing-native-modules.md).

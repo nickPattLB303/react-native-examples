@@ -277,7 +277,7 @@ This `ThemeContext` example illustrates a common and effective use of the Contex
 - **Objective:** Apply the `ThemeContext` created in this section to a small set of components, allowing them to display themed content and toggle the theme.
 - **Task:** Implement a settings screen where the user can tap a button to switch between light and dark themes. Ensure other components on a mock "home" screen react to this theme change.
 
-**(https://snack.expo.dev/@course-author/m13-ex01-context-theme)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_13_1_URL_HERE)**
 
 ### Next Steps
 

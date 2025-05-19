@@ -25,7 +25,7 @@ Before starting this module, you should have a good understanding of the followi
 
 - Completion of [Module 1: The Landscape of Mobile Development](../module-01-the-landscape-of-mobile-development/section-00-introduction.md)
 - Completion of [Module 2: React Native Architecture Explained](../module-02-react-native-architecture-explained/section-00-introduction.md)
-- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-setting-up-your-react-native-environment-with-expo/section-00-introduction.md)
+- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-react-native-environment-with-expo/section-00-introduction.md)
 - Completion of [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md) (particularly Asynchronous JavaScript)
 - Completion of [Module 6: TypeScript Essentials](../module-06-typescript-essentials/section-00-introduction.md)
 - Completion of [Module 8: React Native Core Components](../module-08-react-native-core-components/section-00-introduction.md)

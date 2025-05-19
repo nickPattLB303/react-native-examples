@@ -265,3 +265,7 @@ Time to put your knowledge into practice! This exercise will guide you through u
 3. Display this information using `<Text>` components.
 
 **(https://snack.expo.dev/@speedymeds/module-14-exercise-1-device-info)**
+
+### Next Steps
+
+Having explored the rich ecosystem of pre-built modules within the Expo SDK, you're now equipped to leverage many common native functionalities with ease. However, situations may arise where a specific native feature isn't covered, or you need highly custom native code. The next section will provide a conceptual introduction to the process of creating your own native modules. Proceed to [Section 4: Introduction to Creating Native Modules (Conceptual Overview)](./section-04-introduction-to-creating-native-modules.md).

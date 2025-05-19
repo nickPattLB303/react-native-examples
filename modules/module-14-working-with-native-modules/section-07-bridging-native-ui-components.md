@@ -16,7 +16,7 @@ Bridging Native UI Components allows developers to embed native views directly w
 In the legacy architecture (pre-New Architecture), bridging native UI components involved several key pieces:
 
 1.  **Native View Implementation:** Creating the custom native view class (e.g., extending `View` or `ViewGroup` on Android, `UIView` on iOS).
-2.  **ViewManager:** Creating a corresponding manager class (e.g., extending `SimpleViewManager<T>` on Android, `RCTViewManager` on iOS). This manager was responsible for:
+2.  **ViewManager:** Creating a corresponding manager class (e.g., extending `SimpleViewManager<T>` on Android, `RCT_EXPORT_VIEW_PROPERTY` on iOS). This manager was responsible for:
     - Creating instances of the native view.
     - Exposing its properties (props) to JavaScript, typically using annotations (`@ReactProp` on Android) or macros (`RCT_EXPORT_VIEW_PROPERTY` on iOS).
 3.  **UIManager:** On the JavaScript side, React Native's `UIManager` module communicated with the native ViewManagers via the asynchronous Bridge. When a React Native component representing the native view was rendered or updated, `UIManager` would send messages across the Bridge to create the view or update its props.
@@ -153,3 +153,11 @@ This table highlights the comprehensive nature of the New Architecture's improve
 > - [React Native New Architecture: Codegen](https://reactnative.dev/docs/the-new-architecture/modules-codegen) (Sections relevant to Fabric Components)
 > - [Legacy Native UI Components (iOS)](https://reactnative.dev/docs/native-components-ios)
 > - [Legacy Native UI Components (Android)](https://reactnative.dev/docs/native-components-android)
+
+### Next Steps
+
+This section concludes our conceptual overview of bridging native UI components using Fabric. Understanding this, along with TurboModules and JSI, provides a solid grasp of how React Native's New Architecture enhances native integration.
+
+It's now time to apply your understanding from this module in the **Challenge 14: Research Native Module Alternatives**, which is linked in the main introduction file for this module ([Section 0: Introduction](./section-00-introduction.md)).
+
+After completing the challenge, you will be ready to tackle [Module 15: Performance and Debugging](../module-15-performance-and-debugging/section-00-introduction.md).

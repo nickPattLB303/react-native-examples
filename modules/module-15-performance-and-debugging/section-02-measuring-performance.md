@@ -20,8 +20,7 @@ Flipper is an extensible mobile app debugger platform created by Facebook (now M
 - **Performance Profiler (Systrace / Perfetto):** This is one of the most powerful features for in-depth performance analysis. It provides a detailed timeline of what's happening on both the native side (UI thread, background threads) and the JavaScript thread. You can see CPU usage, thread states, bridge messages (in legacy architecture), and JavaScript execution times. This helps identify if the bottleneck is on the JS side, native side, or in their interaction.
   - With Hermes, you can also generate and view Hermes trace profiles, which give very detailed insight into JS execution.
 
-> 📲 **(Native Developers):**
-> **Comparison:** Flipper acts as a comprehensive debugging platform, somewhat analogous to Xcode\'s Instruments or Android Studio\'s Profiler suite. For instance, its performance profiler (Systrace/Perfetto) provides views similar to Time Profiler on iOS or Android Studio\'s CPU Profiler, helping visualize activity across different threads.
+> 📲 **(Native Developers):** > **Comparison:** Flipper acts as a comprehensive debugging platform, somewhat analogous to Xcode\'s Instruments or Android Studio\'s Profiler suite. For instance, its performance profiler (Systrace/Perfetto) provides views similar to Time Profiler on iOS or Android Studio\'s CPU Profiler, helping visualize activity across different threads.
 > **Key Takeaway:** Flipper offers a unified view for both JavaScript and native code, crucial for understanding React Native\'s cross-platform performance characteristics.
 > **Source:** `[Flipper Documentation](https://fbflipper.com/docs/getting-started/index/)`, `[Xcode Instruments User Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/)`, `[Android Studio Profiler Documentation](https://developer.android.com/studio/profile)`
 
@@ -116,3 +115,7 @@ This diagram illustrates the iterative process of performance tuning. You start 
 > - [React DevTools Profiler](https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools)
 
 By familiarizing yourself with these tools, you can move from guessing about performance to making data-driven decisions to optimize your SpeedyMeds app.
+
+### Next Steps
+
+Now that you know how to measure performance and identify areas for improvement, the next section will focus on specific techniques for optimizing component rendering. Proceed to [Section 3: Optimizing Rendering](./section-03-optimizing-rendering.md).

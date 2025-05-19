@@ -112,3 +112,7 @@ The ability of JSI to facilitate synchronous calls has profound implications:
 > - [Expo Docs: JSI and TurboModules](https://docs.expo.dev/new-architecture/jsi-turbomodules-fabric/)
 > - [Hermes Engine - JSI](https://hermesengine.dev/docs/jsi/) (Hermes specific documentation on its JSI implementation)
 > - [Blog Post: Understanding JSI by Oscar Franco](https://www.oscarfranco.dev/p/understanding-jsi) (Community resource, often cited for its clarity)
+
+### Next Steps
+
+Understanding JSI is crucial for grasping how the New Architecture achieves its performance and integration goals. While TurboModules leverage JSI for API-like interactions, another important aspect of native integration is bringing custom native UI elements into your React Native application. The next section will provide a conceptual overview of bridging native UI components. Proceed to [Section 7: Bridging Native UI Components (Conceptual Overview)](./section-07-bridging-native-ui-components.md).

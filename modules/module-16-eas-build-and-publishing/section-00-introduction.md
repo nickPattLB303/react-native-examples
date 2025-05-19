@@ -28,16 +28,30 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the following:
 
-- Completion of [Module 3: Setting Up Your React Native Environment with Expo](./../module-03-setting-up-your-react-native-environment-with-expo/section-00-introduction.md) (Specifically, understanding of Expo projects).
+- Completion of [Module 3: Setting Up Your React Native Environment with Expo](../module-03-react-native-environment-with-expo/section-00-introduction.md) (Specifically, understanding of Expo projects).
 - Familiarity with basic terminal/command-line usage.
 - An Expo account (you can create one for free at [expo.dev](https://expo.dev)).
 - A conceptual understanding of mobile app deployment (though prior experience is not strictly required).
+
+## Module Sections
+
+This module is divided into the following sections:
+
+- [Section 1: Introduction to EAS (Expo Application Services)](./section-01-introduction-to-eas.md)
+- [Section 2: EAS Build vs. Classic Expo Build (`expo build`)](./section-02-eas-build-vs-classic-expo-build.md)
+- [Section 3: Setting up EAS CLI and Logging In](./section-03-setting-up-eas-cli.md)
+- [Section 4: Configuring `eas.json` for Builds (Profiles, Credentials)](./section-04-configuring-eas-json-for-builds.md)
+- [Section 5: Creating Development Builds with EAS](./section-05-creating-development-builds.md)
+- [Section 6: Creating Production Builds with EAS](./section-06-creating-production-builds.md)
+- [Section 7: Submitting to App Stores (iOS and Android)](./section-07-submitting-to-app-stores.md)
+- [Section 8: Introduction to EAS Update](./section-08-eas-update.md)
+- [Section 9: Managing Build Secrets with EAS](./section-09-managing-secrets-with-eas.md)
 
 ## Module Challenge
 
 At the end of this module, you'll apply your knowledge by completing a conceptual challenge:
 
-- **Challenge 16: EAS Build Workflow Diagram** `**(The URL for this Microsoft Whiteboard challenge will be provided through your learning platform)**`
+- **Challenge 16: EAS Build Workflow Diagram** `**(MICROSOFT_WHITEBOARD_URL_PLACEHOLDER_CHALLENGE_16)**`
 
 ## Module Summary
 

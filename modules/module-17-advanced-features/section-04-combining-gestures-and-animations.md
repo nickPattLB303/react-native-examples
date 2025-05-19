@@ -205,6 +205,12 @@ This combination of direct manipulation during the `onActive` phase (dragging an
 >
 > **Key Takeaway:** Reanimated and Gesture Handler provide a high-level, declarative way to achieve complex, physics-based interactions that feel native, managing the UI thread updates for you.
 
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** Creating draggable elements with dynamic visual feedback (like rotation based on drag distance) and physics-based animations (like spring-back on release) on the web often involves a combination of mouse/touch event listeners, CSS transforms, and JavaScript animation libraries (e.g., GSAP, Framer Motion) or the Web Animations API. Reanimated and Gesture Handler provide a cohesive, mobile-optimized system for these types of interactions within the React paradigm, focusing on UI thread performance.
+> **Key Takeaway:** If you've built complex drag-and-drop interfaces or physics-based animations on the web, you'll recognize the types of interactions being achieved. Reanimated and Gesture Handler offer a powerful, integrated toolkit for bringing these to React Native with high performance.
+> **Source:** `[MDN Web Docs: Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)`, `[GSAP (GreenSock Animation Platform)](https://greensock.com/gsap/)`
+
 > 📚 **Official Documentation:**
 >
 > - [React Native Reanimated - Combining with Gesture Handler](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/events#using-usedeclarativegesturehandler)

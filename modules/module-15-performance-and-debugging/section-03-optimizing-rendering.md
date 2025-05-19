@@ -329,3 +329,7 @@ Now, let's apply these concepts.
 - **Exercise 15.1: Applying Memoization**
   - `**(https://snack.expo.dev/React-Native-Memoization-Exercise-15-1)**`
   - _Instructions: You will be provided with a Snack containing a list of SpeedyMeds prescription items. Your task is to use `React.memo`, `useCallback`, and `useMemo` appropriately to optimize the rendering of this list and its items. The `README.md` in the Snack will have detailed requirements._
+
+### Next Steps
+
+Mastering `React.memo`, `useCallback`, and `useMemo` is crucial for fine-tuning rendering performance. While these optimize individual components, special attention is needed for long lists of data. Proceed to [Section 4: Optimizing Lists](./section-04-optimizing-lists.md) to learn about best practices for `FlatList` and `FlashList`.

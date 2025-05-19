@@ -56,10 +56,15 @@ Shopify developed **`FlashList`** as a drop-in replacement for `FlatList`, aimin
 > [!TIP]
 > If you encounter performance issues with `FlatList` even after applying standard optimizations, consider trying `FlashList`. It often provides noticeable improvements, especially for lists with complex items or frequent updates.
 
-> 📲 **(Native Developers):**
-> **Comparison:** `FlatList` and `FlashList` implement virtualization and view recycling, concepts similar to `UITableView` with cell reuse (`dequeueReusableCell(withIdentifier:)`) on iOS and `RecyclerView` with `ViewHolder` recycling on Android. `FlashList`, in particular, aims for highly efficient view recycling.
+> 📲 **(Native Developers):** > **Comparison:** `FlatList` and `FlashList` implement virtualization and view recycling, concepts similar to `UITableView` with cell reuse (`dequeueReusableCell(withIdentifier:)`) on iOS and `RecyclerView` with `ViewHolder` recycling on Android. `FlashList`, in particular, aims for highly efficient view recycling.
 > **Key Takeaway:** The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
 > **Source:** `[Apple Developer Docs: UITableView](https://developer.apple.com/documentation/uikit/uitableview)`, `[Android Developer Docs: RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)`
+
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** The concept of list virtualization is very similar to techniques used in web development with libraries like `react-window`, `react-virtualized`, or TanStack Virtual. These libraries also render only the visible items in a long list to maintain performance. `FlatList` and `FlashList` provide this functionality as built-in React Native components.
+> **Key Takeaway:** If you're familiar with virtual scrolling on the web, the principles behind `FlatList` and `FlashList` will be quite intuitive. The main difference is the specific API and props provided by these React Native components.
+> **Source:** `[web.dev: Virtualize large lists with react-window](https://web.dev/articles/virtualize-long-lists-with-react-window)`
 
 ### Procedural Content: Implementing Optimized Lists
 
@@ -352,3 +357,7 @@ To use `FlashList`, you install `@shopify/flash-list` and import it. The main ch
 > - [Expo Docs: `FlashList` with Expo](https://docs.expo.dev/versions/latest/sdk/flash-list/)
 
 By applying these list optimization techniques, you can ensure that even extensive lists in the SpeedyMeds app, like a patient's entire medication history or a large pharmacy inventory, scroll smoothly and efficiently.
+
+### Next Steps
+
+Effective list optimization is key for smooth user interfaces. Another common area impacting mobile performance is image handling. Proceed to [Section 5: Image Optimization Strategies](./section-05-image-optimization-strategies.md) to learn how to efficiently load and display images.

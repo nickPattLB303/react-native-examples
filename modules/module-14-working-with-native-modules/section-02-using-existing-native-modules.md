@@ -150,3 +150,7 @@ After installation, using a native module in your JavaScript or TypeScript code 
 > - [Expo Docs: Config Plugins](https://docs.expo.dev/guides/config-plugins/)
 > - [React Native Docs: Linking Libraries (Explains autolinking)](https://reactnative.dev/docs/linking-libraries-ios) (iOS section, concept applies to Android too)
 > - [React Native Directory](https://reactnative.directory/)
+
+### Next Steps
+
+Now that you know how to find, evaluate, and install existing native modules, the next section will provide a more detailed overview of the rich set of modules available within the Expo SDK, which are often the first choice for common native functionalities in Expo projects. Proceed to [Section 3: Expo SDK Modules Overview](./section-03-expo-sdk-modules-overview.md).

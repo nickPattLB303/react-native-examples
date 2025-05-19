@@ -569,7 +569,7 @@ Time to practice integrating these non-text input types.
   5.  Display validation errors if any.
   6.  On submit, show an `Alert` with all collected form data.
 
-**(URL_to_Tool)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_12_3_URL_HERE)**
 
 Refer to the `README.md` in the Snack for detailed instructions.
 
@@ -603,10 +603,12 @@ This challenge tasks you with building a comprehensive Patient Information form 
   5.  On successful submission, display an `Alert` with all the collected patient data and then reset the form.
   6.  Ensure the form is scrollable to accommodate all fields.
 
-**(URL_to_Tool)**
+**(https://snack.expo.dev/INSERT_ACTUAL_CHALLENGE_12_URL_HERE)**
 
-## Module 12 Summary
+### Next Steps
 
-Congratulations on completing Module 12: Handling User Input and Forms! This module equipped you with essential skills for capturing and managing user data effectively in React Native applications. We began by recapping the fundamental `TextInput` component and how to handle text changes with `onChangeText`. You explored various form state management strategies, understanding the importance and implementation of the controlled components pattern.
+This section concludes our exploration of various input types with React Hook Form and React Native Paper. You are now equipped to handle diverse form requirements for the SpeedyMeds application.
 
-A significant portion of this module was dedicated to React Hook Form, a powerful library that simplifies form development. You learned how to install and set it up, integrate various input types (including `TextInput`, React Native Paper `Switch`, and pickers) using the `Controller` component, implement robust validation rules, and handle form submissions gracefully, including asynchronous operations and user feedback. By applying these concepts, particularly in the context of the SpeedyMeds application theme, you are now well-prepared to build complex, performant, and user-friendly forms in your React Native projects.
+Before moving on, ensure you complete the Module Challenge 12 (detailed above) to solidify your understanding of form handling in React Native.
+
+After completing the challenge, you will be ready for [Module 13: Working with Data (Fetching, Storing)](../module-13-working-with-data/section-00-introduction.md).

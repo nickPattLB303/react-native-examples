@@ -152,3 +152,7 @@ While Codegen simplifies the bridging aspect, implementing TurboModules still de
 > - [React Native New Architecture: Codegen](https://reactnative.dev/docs/the-new-architecture/modules-codegen)
 > - [React Native New Architecture: JSI](https://reactnative.dev/docs/the-new-architecture/pillars-jsi) (Referred to as a pillar)
 > - [Expo Docs: What is the New Architecture?](https://docs.expo.dev/new-architecture/overview/)
+
+### Next Steps
+
+Having understood TurboModules and their reliance on JSI, the next section will delve deeper into the JavaScript Interface (JSI) itself, exploring how it facilitates direct, high-performance communication between JavaScript and native C++ code, which in turn bridges to platform-specific native languages. Proceed to [Section 6: JSI for Direct Communication](./section-06-jsi-for-direct-communication.md).

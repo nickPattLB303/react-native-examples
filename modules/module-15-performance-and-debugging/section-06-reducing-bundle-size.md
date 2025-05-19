@@ -53,13 +53,11 @@ Before you can reduce your bundle size, you need to understand what's contributi
 6.  **Dynamic Imports (Experimental/Limited):**
     - While full-fledged code splitting isn't standard, experimental support for dynamic `import()` statements is evolving in the React Native ecosystem. This could allow more web-like on-demand loading of modules in the future. Keep an eye on the React Native and Metro documentation for updates.
 
-> 🌐 **(Web Developers):**
-> **Comparison:** You\'re likely familiar with bundle analysis and optimization techniques from web development, using tools like Webpack Bundle Analyzer or Rollup, and employing strategies such as code splitting, tree shaking, and lazy loading routes/components.
+> 🌐 **(Web Developers):** > **Comparison:** You\'re likely familiar with bundle analysis and optimization techniques from web development, using tools like Webpack Bundle Analyzer or Rollup, and employing strategies such as code splitting, tree shaking, and lazy loading routes/components.
 > **Key Takeaway:** While Metro (React Native\'s bundler) handles some optimizations like tree shaking automatically, direct control over advanced code splitting is less straightforward compared to web setups. Analyzing your bundle composition and making informed choices about dependencies are key transferable skills. The impact of bundle size on mobile app startup can be even more critical than on desktop web experiences.
 > **Source:** `[Webpack: Bundle Analysis](https://webpack.js.org/guides/bundle-analysis/)`, `[web.dev: Reduce JavaScript payloads with tree shaking](https://web.dev/articles/reduce-javascript-payloads-with-tree-shaking)`
 
-> 📲 **(Native Developers):**
-> **Comparison:** While native app size management involves optimizing compiled native code (e.g., Swift, Kotlin/Java), assets, and dependencies using tools like Proguard/R8 for Android or App Thinning for iOS, the JavaScript bundle is an additional, distinct component specific to React Native that requires its own set of optimization strategies and analysis tools.
+> 📲 **(Native Developers):** > **Comparison:** While native app size management involves optimizing compiled native code (e.g., Swift, Kotlin/Java), assets, and dependencies using tools like Proguard/R8 for Android or App Thinning for iOS, the JavaScript bundle is an additional, distinct component specific to React Native that requires its own set of optimization strategies and analysis tools.
 > **Key Takeaway:** The JS bundle significantly contributes to the overall React Native app size and directly impacts startup performance. Tools and techniques for analyzing and optimizing this JS bundle are different from those used for native code.
 > **Source:** `[Android Developer Docs: Shrink, obfuscate, and optimize your app](https://developer.android.com/studio/build/shrink-code)`, `[Apple Developer Docs: Reducing your app's size](https://developer.apple.com/documentation/xcode/reducing-your-app-s-size)`
 
@@ -127,3 +125,7 @@ This analysis will guide your efforts in removing unused code, finding lighter a
 > - [BundlePhobia](https://bundlephobia.com/) (Check npm package sizes)
 
 By actively monitoring and managing your JavaScript bundle size, you can ensure the SpeedyMeds app starts quickly and runs efficiently for all users.
+
+### Next Steps
+
+Reducing bundle size is a key optimization. However, even with an optimized bundle, bugs and issues can arise. The next section will cover various tools and techniques for debugging your React Native application. Proceed to [Section 7: Debugging Tools](./section-07-debugging-tools.md).

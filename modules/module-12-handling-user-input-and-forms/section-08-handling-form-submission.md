@@ -336,7 +336,6 @@ const styles = StyleSheet.create({
 });
 
 export default AsyncSubmitRHFScreen;
-```
 
 **Explanation of the Asynchronous Example:**
 
@@ -369,8 +368,13 @@ Effectively handling form submissions, including managing loading states and pot
 > **For Web Developers (React/Angular):**
 > The concept of a submit handler function is standard. RHF's `handleSubmit` is analogous to how one might handle an `onSubmit` event on a `<form>` element in web React, but with the significant advantage of built-in validation integration before your custom handler is invoked. Angular Reactive Forms also have mechanisms like `(ngSubmit)` on the form and methods to access form values and validity status (`formGroup.value`, `formGroup.valid`) that serve a similar purpose of orchestrating submission.
 
+### Next Steps
+
+Now that you can handle form submissions effectively, including asynchronous operations and user feedback, the next step is to explore how to integrate other types of input fields beyond basic text inputs into your React Hook Forms. Proceed to [Section 9: Other Input Types](./section-09-other-input-types.md).
+
 > 📚 **Official Documentation:**
 >
 > - [React Hook Form - `handleSubmit`](https://react-hook-form.com/docs/useform/handlesubmit)
 > - [React Hook Form - `formState`](https://react-hook-form.com/docs/useform/formstate)
 > - [React Hook Form - `reset`](https://react-hook-form.com/docs/useform/reset)
+```

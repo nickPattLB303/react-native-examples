@@ -208,7 +208,7 @@ Now it's your turn to get hands-on with Zustand!
 - **Objective:** Create a Zustand store to manage a simple counter.
 - **Task:** Define a store with a `count` state and actions to `increment`, `decrement`, and `reset` the count. Display the count and provide buttons to interact with these actions in a React Native component.
 
-**(https://snack.expo.dev/@course-author/m13-ex02-zustand-store)**
+**(https://snack.expo.dev/INSERT_ACTUAL_EXERCISE_13_2_URL_HERE)**
 
 > 🍏 **(iOS Developers):**
 >

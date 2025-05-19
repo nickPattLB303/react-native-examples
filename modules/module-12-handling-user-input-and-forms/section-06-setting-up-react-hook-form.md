@@ -162,6 +162,13 @@ interface PatientFormData {
   // condition: string;
 }
 
+/**
+ * @function BasicRHFScreen
+ * @description A screen component demonstrating the basic setup and usage of React Hook Form
+ * with a controlled TextInput for patient name registration in the SpeedyMeds app.
+ * It showcases form state management, input registration via Controller, and handling submission.
+ * @returns {JSX.Element} The rendered screen with a basic RHF form.
+ */
 const BasicRHFScreen = () => {
   const {
     control,
@@ -175,6 +182,12 @@ const BasicRHFScreen = () => {
     mode: "onChange", // Validate as user types
   });
 
+  /**
+   * @function onSubmit
+   * @description Handles the form submission when validation is successful.
+   * It logs the submitted data and can optionally reset the form.
+   * @param {PatientFormData} data - The validated form data.
+   */
   const onSubmit = (data: PatientFormData) => {
     Alert.alert("Form Submitted", `Patient Name: ${data.patientName}`);
     console.log("SpeedyMeds Patient Data:", data);
@@ -313,3 +326,7 @@ This setup provides a solid foundation for building forms with React Hook Form i
 > - [React Hook Form - `useForm`](https://react-hook-form.com/docs/useform)
 > - [React Hook Form - `Controller`](https://react-hook-form.com/docs/usecontroller/controller)
 > - [React Hook Form - Get Started](https://react-hook-form.com/get-started)
+
+### Next Steps
+
+You've successfully set up React Hook Form and integrated it with a basic `TextInput`. The next crucial step is to implement validation to ensure the data users enter is correct and complete. Proceed to [Section 7: Basic Form Validation with React Hook Form](./section-07-basic-form-validation-with-react-hook-form.md).
