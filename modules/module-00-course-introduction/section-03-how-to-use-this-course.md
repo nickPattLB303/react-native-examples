@@ -1,10 +1,34 @@
-## How to Use This Course
+## Section 3: How to Use This Course
 
 This section explains the different learning paths, course structure, and tools you'll encounter throughout your React Native learning journey.
 
 ### Learning Paths
 
 This course supports three primary learning paths, each with a slightly different approach:
+
+```mermaid
+graph TD
+    A[Start Here] --> B{Choose Learning Path}
+    B -->|Instructor-Led| C[Scheduled Sessions]
+    B -->|Self-Led| D[Self-Paced Learning]
+    B -->|Asynchronous| E[Topic-Based Reference]
+
+    C --> F[Classroom Exercises]
+    C --> G[Instructor Feedback]
+    C --> H[Group Discussions]
+
+    D --> I[Independent Exercises]
+    D --> J[Self-Assessment]
+    D --> K[Personal Projects]
+
+    E --> L[Specific Knowledge Needs]
+    E --> M[Reference Material]
+    E --> N[Direct Application]
+
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+This diagram illustrates the three different approaches to navigating this course. You can select the path that best matches your learning situation and preferences.
 
 #### Instructor-Led Path (🧑‍🏫)
 
@@ -30,6 +54,9 @@ If you're working through the course independently at your own pace:
 
 > 🧗‍♀️ **(Self-Led):** Set a consistent schedule for your learning. Try to work on this course regularly (e.g., 3-4 times per week) rather than in marathon sessions. Test your understanding by explaining concepts to yourself or others.
 
+> [!IMPORTANT]
+> If you're following the self-led path, it's especially crucial to complete all exercises and challenges. These practical activities solidify your understanding and build the muscle memory needed for React Native development.
+
 #### Asynchronous Path (🔁)
 
 If you're accessing specific modules or sections as reference material:
@@ -54,6 +81,12 @@ The course is organized into twenty modules, each focusing on a specific aspect 
 - **Modules 18-19**: Capstone project and wrap-up
 
 Each module contains multiple sections that break down the topic into manageable concepts.
+
+> 📚 **Official Documentation:**
+>
+> - [React Native: Getting Started](https://reactnative.dev/docs/getting-started)
+> - [Expo: Documentation](https://docs.expo.dev/)
+> - [React Navigation: Fundamentals](https://reactnavigation.org/docs/getting-started/)
 
 #### Special Content Elements
 
@@ -88,7 +121,7 @@ These notes help connect React Native concepts to your existing knowledge:
 >
 > **Key Takeaway:** The most important difference or similarity.
 >
-> <!-- Example Source: [Official Android Documentation on Activities](https://developer.android.com/guide/components/activities/intro-activities) -->
+> **Source:** [Official Android Documentation on Activities](https://developer.android.com/guide/components/activities/intro-activities)
 
 > 🌐 **(Web Developers):**
 >
@@ -96,7 +129,7 @@ These notes help connect React Native concepts to your existing knowledge:
 >
 > **Key Takeaway:** The most important difference or similarity.
 >
-> <!-- Example Source: [MDN Web Docs: Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) -->
+> **Source:** [MDN Web Docs: Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
 
 ##### Learning Path Guidance
 
@@ -131,6 +164,9 @@ Short, focused practice activities that reinforce specific concepts. You'll find
 - Provide clear step-by-step instructions
 - Include starter code when needed
 - Offer immediate feedback or solutions for verification
+
+> [!TIP]
+> Don't skip exercises! They're designed to reinforce the concepts immediately after learning them, which significantly improves retention and understanding.
 
 #### Challenges (30-60 minutes)
 

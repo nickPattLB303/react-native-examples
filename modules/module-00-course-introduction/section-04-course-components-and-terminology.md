@@ -1,10 +1,30 @@
-## Course Components and Terminology
+## Section 4: Course Components and Terminology
 
 This section introduces the key terminology used throughout the course and explains important concepts you'll encounter as you learn React Native.
 
-## React Native Ecosystem Terminology
+### React Native Ecosystem Terminology
 
 To ensure clarity throughout the course, we'll consistently use these key terms:
+
+| Term               | Definition                                                                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **React Native**   | The framework that allows you to build native mobile applications using JavaScript and React.                                       |
+| **Expo**           | A platform and set of tools built around React Native that simplifies development, building, and deployment.                        |
+| **Component**      | Reusable UI building blocks. Divided into Core Components (provided by React Native) and Custom Components (created by developers). |
+| **Props**          | (Properties) Data passed down from parent to child components.                                                                      |
+| **State**          | Data managed within a component that can change over time.                                                                          |
+| **Hook**           | Functions allowing functional components to use state and lifecycle features.                                                       |
+| **Native Modules** | Platform-specific code (Swift/Objective-C for iOS, Kotlin/Java for Android) bridged for use in React Native.                        |
+| **JSI**            | JavaScript Interface - The C++ layer enabling synchronous communication between JavaScript and native code in the New Architecture. |
+| **Expo Go**        | The client app used for development and testing Expo projects without native builds.                                                |
+| **Exercise**       | Short, focused practice activity (15-20 mins).                                                                                      |
+| **Challenge**      | More complex application of concepts (30-60 mins).                                                                                  |
+
+> 📚 **Official Documentation:**
+>
+> - [React Native: Core Components and APIs](https://reactnative.dev/docs/components-and-apis)
+> - [Expo: SDK Documentation](https://docs.expo.dev/versions/latest/)
+> - [React: Main Concepts](https://react.dev/learn)
 
 ### Core Technologies
 
@@ -33,6 +53,9 @@ To ensure clarity throughout the course, we'll consistently use these key terms:
 - **Codegen**: The tool generating interface code between JS/TS and native modules in the New Architecture.
 - **Expo Go**: The client app used for development and testing Expo projects without native builds.
 - **Simulator (iOS) / Emulator (Android)**: Software for running mobile apps on a desktop.
+
+> [!NOTE]
+> The distinction between the Legacy Architecture (Bridge) and New Architecture (JSI, Fabric) is important. We'll cover these concepts in detail in Module 2.
 
 ### Development and Styling
 
@@ -67,6 +90,27 @@ Throughout the course, examples and exercises will be connected to the SpeedyMed
 - Medication tracking
 - Pharmacy locator
 
+```mermaid
+graph TD
+    A[SpeedyMeds App] --> B[Medication Management]
+    A --> C[Pharmacy Services]
+    A --> D[User Settings]
+
+    B --> E[Medication List]
+    B --> F[Medication Details]
+    B --> G[Reminders]
+
+    C --> H[Pharmacy Locator]
+    C --> I[Prescription Management]
+    C --> J[Refill Orders]
+
+    D --> K[Profile]
+    D --> L[Preferences]
+    D --> M[Notifications]
+```
+
+This diagram shows the main feature areas of the SpeedyMeds app that we'll build throughout the course. This model helps provide consistent context for the examples and exercises.
+
 ### Code Conventions
 
 All code examples follow these conventions:
@@ -99,5 +143,13 @@ This course teaches the following target technologies and versions:
 
 > [!NOTE]
 > While the course targets specific versions, the concepts apply broadly. Changes to APIs or best practices in newer versions will be noted where significant.
+
+> 📚 **Official Documentation:**
+>
+> - [React Navigation Documentation](https://reactnavigation.org/docs/getting-started)
+> - [React Native Paper](https://callstack.github.io/react-native-paper/)
+> - [TanStack Query (React Query)](https://tanstack.com/query/latest)
+> - [Zustand State Management](https://github.com/pmndrs/zustand)
+> - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 
 Now that you're familiar with the key terminology and course components, let's prepare your development environment.
