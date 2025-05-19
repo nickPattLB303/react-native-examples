@@ -127,26 +127,27 @@ A short, conceptual example of a typical `tsconfig.json` structure in an Expo pr
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-native",
-    "lib": ["DOM", "ESNext"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
+    // "noEmit": true, // Often in expo/tsconfig.base, crucial for Expo/RN
+    // "jsx": "react-native", // Also typically in expo/tsconfig.base
+
+    // Optional but recommended strictness flags:
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+
+    // Example path alias (adjust to your project structure)
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@screens/*": ["src/screens/*"],
-      "@utils/*": ["src/utils/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+    // "babel.config.js", // If not needed for TS awareness
+    // "metro.config.js"
+  ]
 }
 ```
 
@@ -154,20 +155,15 @@ This JSON configuration tells the TypeScript compiler how to process the project
 
 - The `"extends": "expo/tsconfig.base"` line is crucial as it pulls in many default configurations optimized by the Expo team for React Native projects. These base settings handle much of the React Native-specific setup.
 - `"compilerOptions"` allows you to customize the TypeScript compiler's behavior:
-  - `"strict": true` enables a suite of strict type-checking rules, which is highly recommended for catching more errors early. Beginners might sometimes start with `false` but aiming for `true` is a best practice.
-  - `"jsx": "react-native"` tells TypeScript to preserve JSX syntax, as the Metro bundler (with Babel) will handle its transformation.
-  - `"target": "ESNext"` and `"module": "ESNext"` are often used to leverage modern JavaScript features, which are then transpiled by Babel as needed.
-  - `"lib": ["DOM", "ESNext"]` includes type definitions for standard JavaScript features and, often, `"DOM"` for web compatibility (relevant for Expo Web).
-  - `"esModuleInterop": true` and `"allowSyntheticDefaultImports": true` enhance compatibility with different module formats.
-  - `"skipLibCheck": true` can speed up compilation by not type-checking all `.d.ts` files in `node_modules`.
-  - `"resolveJsonModule": true` allows importing `.json` files as modules.
-  - `"noEmit": true` is important because TypeScript itself doesn't output the final JS files in an Expo/React Native setup; Metro/Babel does this. TypeScript's role is primarily type checking.
-  - `"forceConsistentCasingInFileNames": true` ensures file name casing is consistent, important for cross-platform compatibility.
-  - `"baseUrl": "."` is the base directory for resolving non-absolute module names.
-  - `"paths": { ... }` allows for custom import aliases (e.g., `"@components/*": ["src/components/*"]`) for cleaner imports. Adjust paths based on your project structure, e.g., remove `"src/"` if components are at the root.
-  - (Other options like `isolatedModules` are often `true` in modern setups or via base configs like `expo/tsconfig.base` and place certain restrictions on your code, e.g., `const enum`s cannot be used).
-- `"include"` specifies an array of glob patterns that determine which files TypeScript will process (e.g., `"**/*.ts"`, `"**/*.tsx"`, `".expo/types/**/*.ts"`, `"expo-env.d.ts"`).
-- `"exclude"` specifies glob patterns for files or directories that TypeScript should ignore (e.g., `"node_modules"`). Babel.config.js, metro.config.js etc can also be excluded if not needed for TS awareness.
+  - `"strict": true` enables a suite of strict type-checking rules, which is highly recommended for catching more errors early.
+  - `"forceConsistentCasingInFileNames": true` helps prevent issues on case-sensitive file systems.
+  - Additional flags like `"noUnusedLocals"`, `"noUnusedParameters"`, and `"noImplicitReturns"` can further enhance code quality by flagging unused code and ensuring functions have explicit returns.
+  - `"baseUrl": "."` and `"paths": { "@/*": ["src/*"] }` allow for custom import aliases (e.g., `"@/*": ["src/*"]`) for cleaner imports. You'd adjust paths based on your project structure.
+  - Many other essential options like `"jsx": "react-native"`, `"target"`, `"module"`, `"lib"`, `"esModuleInterop"`, and `"noEmit": true` are often included in `expo/tsconfig.base`.
+- `"include"` specifies an array of glob patterns that determine which files TypeScript will process.
+- `"exclude"` specifies glob patterns for files or directories that TypeScript should ignore (e.g., `"node_modules"`).
+
+The `SpeedyMeds` capstone project utilizes a similar `tsconfig.json` structure, extending `expo/tsconfig.base` and enabling `strict: true` along with options like `noUnusedLocals`, `noUnusedParameters`, and `noImplicitReturns` to enforce high code quality. This ensures that as you work on the capstone, you'll be operating within a well-configured TypeScript environment.
 
 #### Understanding `expo/tsconfig.base`
 

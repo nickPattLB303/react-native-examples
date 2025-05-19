@@ -23,7 +23,7 @@ graph TD
     style A fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-This diagram shows your learning journey, starting with this introduction and progressing through foundational concepts, core React Native skills, and culminating in a practical capstone project. The highlighted module is your current position in the course.
+This diagram shows your learning journey, starting with this introduction and progressing through foundational concepts, core React Native skills, and culminating in a practical capstone project, where you will build an application called **SpeedyMeds**. The highlighted module is your current position in the course.
 
 ## Learning Objectives
 

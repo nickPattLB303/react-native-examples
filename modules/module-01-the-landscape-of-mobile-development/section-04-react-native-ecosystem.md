@@ -152,6 +152,9 @@ Another major output from the core is its support for 'Community Libraries.' The
 
 Underpinning the development process is the 'Metro Bundler,' which is integral to React Native Core for packaging JavaScript code. This visualization effectively demonstrates that developing a React Native application involves leveraging not just the core framework but also a rich suite of tools, platforms like Expo, and a diverse array of community-driven libraries to build full-featured applications. Understanding these relationships helps in navigating the ecosystem and selecting the right tools for specific project needs.
 
+> [!NOTE]
+> The **SpeedyMeds** capstone project, which you will build throughout this course, leverages many of these ecosystem components. Specifically, it uses Expo for the development workflow and builds, React Navigation for screen management, React Native Paper for UI components, TanStack Query for handling data from a server, and Zustand for managing global application state. This practical application will give you hands-on experience with these key technologies.
+
 > 📚 **Official Documentation:**
 >
 > - [React Native Documentation](https://reactnative.dev/docs/getting-started)

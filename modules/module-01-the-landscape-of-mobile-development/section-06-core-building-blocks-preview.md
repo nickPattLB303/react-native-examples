@@ -16,14 +16,22 @@ Here are a few of the most commonly used Core Components:
   import React from "react";
   import { View, Text, StyleSheet } from "react-native";
 
-  const MyCard = () => (
-    <View style={styles.cardContainer}>
-      <Text>This is a card</Text>
+  const MedicationInfoBox = () => (
+    <View style={styles.infoBoxContainer}>
+      <Text style={styles.infoText}>Aspirin 100mg</Text>
+      <Text style={styles.subText}>Take one daily</Text>
     </View>
   );
 
   const styles = StyleSheet.create({
-    cardContainer: { padding: 10, backgroundColor: "#eee" },
+    infoBoxContainer: {
+      padding: 10,
+      backgroundColor: "#eef",
+      borderWidth: 1,
+      borderColor: "#ccd",
+    },
+    infoText: { fontSize: 16, fontWeight: "bold" },
+    subText: { fontSize: 14, color: "gray" },
   });
   ```
 
@@ -38,15 +46,16 @@ Here are a few of the most commonly used Core Components:
   import React from "react";
   import { Text, StyleSheet } from "react-native";
 
-  const Greeting = () => (
-    <Text style={styles.greeting}>
-      Hello, <Text style={styles.name}>React Native</Text>!
+  const PatientWelcomeMessage = () => (
+    <Text style={styles.welcomeMessage}>
+      Welcome, <Text style={styles.patientName}>Jane Doe</Text>!{"\\n"}Check
+      your medication schedule.
     </Text>
   );
 
   const styles = StyleSheet.create({
-    greeting: { fontSize: 18 },
-    name: { fontWeight: "bold" },
+    welcomeMessage: { fontSize: 18, textAlign: "center", marginVertical: 10 },
+    patientName: { fontWeight: "bold", color: "#007bff" },
   });
   ```
 
@@ -59,20 +68,24 @@ Here are a few of the most commonly used Core Components:
 
   ```tsx
   import React from "react";
-  import { Image, StyleSheet, View } from "react-native";
+  import { Image, StyleSheet, View, Text } from "react-native";
 
-  const LogoDisplay = () => (
-    <View>
+  const PharmacyBrandImage = () => (
+    <View style={styles.imageContainer}>
+      <Text style={styles.imageCaption}>SpeedyMeds Pharmacy</Text>
       <Image
-        style={styles.logo}
-        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+        style={styles.pharmacyLogo}
+        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} // Placeholder for a pharmacy/health logo
+        accessibilityLabel="SpeedyMeds Pharmacy Logo"
       />
       {/* <Image style={styles.localImage} source={require('./assets/my-icon.png')} /> */}
     </View>
   );
 
   const styles = StyleSheet.create({
-    logo: { width: 50, height: 50 },
+    imageContainer: { alignItems: "center", marginVertical: 10 },
+    pharmacyLogo: { width: 60, height: 60, resizeMode: "contain" },
+    imageCaption: { fontSize: 12, color: "gray", marginBottom: 5 },
     // localImage: { width: 100, height: 100 },
   });
   ```
@@ -96,17 +109,22 @@ Here are a few of the most commonly used Core Components:
   import React from "react";
   import { Button, Alert, View, StyleSheet } from "react-native";
 
-  const ActionButton = () => (
-    <View style={styles.buttonContainer}>
+  const RefillRequestButton = () => (
+    <View style={styles.buttonWrapper}>
       <Button
-        title="Press Me"
-        onPress={() => Alert.alert("Button Pressed!")}
-        color="#841584"
+        title="Request Refill"
+        onPress={() =>
+          Alert.alert(
+            "Refill Requested",
+            "Your request for Amoxicillin has been submitted."
+          )
+        }
+        color="#007bff"
       />
     </View>
   );
   const styles = StyleSheet.create({
-    buttonContainer: { margin: 10 },
+    buttonWrapper: { marginVertical: 10, marginHorizontal: 20 },
   });
   ```
 

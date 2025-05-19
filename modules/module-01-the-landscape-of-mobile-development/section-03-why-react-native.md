@@ -100,6 +100,7 @@ React Native excels in a variety of application types:
 - **Social Media & Content:** (e.g., Facebook, Instagram, Pinterest)
 - **E-commerce & Retail:** (e.g., Walmart, Shopify Point of Sale)
 - **Lifestyle & Utility Apps:** (e.g., Airbnb, Tesla)
+- **Custom business applications or specialized utility apps:** (e.g., health and wellness trackers, internal enterprise tools, or a medication management app like the **SpeedyMeds** capstone project)
 - **Data Visualization Dashboards**
 - **Apps requiring rapid prototyping and iteration.**
 - **Projects where web and mobile teams want to share logic (using React).**

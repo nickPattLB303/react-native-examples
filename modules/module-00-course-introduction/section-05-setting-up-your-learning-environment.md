@@ -45,6 +45,9 @@ For the best experience, install these extensions in VS Code:
 - **TypeScript React code snippets**: Useful code snippets for React
 - **Material Icon Theme**: Helpful file icons (optional)
 
+> [!NOTE]
+> These extensions provide general support for React Native development. Specific projects, including the **SpeedyMeds** capstone project you will build later in the course, will often include their own configuration files (e.g., `.eslintrc.js` for ESLint, `prettierrc.js` for Prettier). These configurations customize how the extensions operate for that particular project, ensuring consistent code style and quality across the team. You'll learn more about project-specific configurations as you progress.
+
 > [!TIP]
 > You can install extensions directly from the Extensions panel in VS Code (shortcut: Ctrl+Shift+X or Cmd+Shift+X on Mac).
 

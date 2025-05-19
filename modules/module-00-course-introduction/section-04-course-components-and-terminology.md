@@ -111,6 +111,9 @@ graph TD
 
 This diagram shows the main feature areas of the SpeedyMeds app that we'll build throughout the course. This model helps provide consistent context for the examples and exercises.
 
+> [!TIP]
+> While you'll formally start working on the SpeedyMeds capstone project in Module 18, you can familiarize yourself with its overall goals and features by reviewing the `README.md` file located in the `SpeedyMeds` project directory provided with the course materials.
+
 ### Code Conventions
 
 All code examples follow these conventions:
