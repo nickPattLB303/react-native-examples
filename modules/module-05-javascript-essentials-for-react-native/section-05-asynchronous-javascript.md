@@ -521,7 +521,7 @@ Understanding this event loop mechanism is key to predicting the behavior of com
 
 Practice working with asynchronous JavaScript by implementing functions that simulate fetching data, first using Promises directly, and then refactoring to use `async/await`.
 
-**(https://codesandbox.io/s/module-5-exercise-3-async-functions-placeholder-g9x4b)**
+**(https://codesandbox.io/s/INSERT_ACTUAL_EXERCISE_5_3_URL_HERE)**
 
 _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
 

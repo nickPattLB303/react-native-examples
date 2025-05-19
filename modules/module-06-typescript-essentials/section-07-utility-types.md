@@ -466,3 +466,7 @@ This promotes DRY (Don't Repeat Yourself) principles at the type level, leading 
 > - [TypeScript Handbook: Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 Utility types are extremely helpful for creating precise and maintainable type definitions without excessive boilerplate. They allow you to build upon existing types in expressive ways, which is essential for managing complex data models and API contracts in applications like SpeedyMeds.
+
+### Next Steps
+
+Utility types provide sophisticated ways to transform and manage your types. Now that you are familiar with these, the next step is to understand how to configure the TypeScript compiler itself within an Expo project using `tsconfig.json`. Proceed to [Section 8: Configuring TypeScript](./section-08-configuring-typescript.md).

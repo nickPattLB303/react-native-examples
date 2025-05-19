@@ -102,7 +102,7 @@ A Development Build is a special "debug" version of _your_ app, built using your
 - Testing features tightly coupled with native configurations (push notification certificates).
 - Using older Expo SDK versions on physical iOS devices (due to App Store limitations).
 
-> 🤖 **(Native Developers):**
+> 📲 **(Native Developers):**
 >
 > **Comparison:** Think of Expo Go as a pre-compiled shell where your contribution is primarily JavaScript injected at runtime; you don't control the shell's native dependencies. Development Builds are analogous to your standard native workflow – you compile the _entire_ application from source, managing all native libraries and configurations directly. `expo-dev-client` just adds tooling for the JS server connection.
 >
@@ -113,6 +113,8 @@ A Development Build is a special "debug" version of _your_ app, built using your
 > **Comparison:** Imagine Expo Go as a specialized browser with a fixed set of built-in "Web APIs" (the bundled native modules). You can only use those APIs. A Development Build is like compiling your own custom version of this browser, where you can include _any_ specific "APIs" (native modules) you require.
 >
 > **Key Takeaway:** Expo Go provides a limited, fixed native runtime; Development Builds let you define and compile your own native runtime.
+
+The following table summarizes the key differences between using Expo Go and Development Builds for your projects.
 
 **Table 1: Expo Go vs. Development Builds Comparison**
 

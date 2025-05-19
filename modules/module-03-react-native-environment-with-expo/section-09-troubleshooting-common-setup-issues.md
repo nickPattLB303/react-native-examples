@@ -230,26 +230,6 @@ export default function HomeScreen() {
 
 This type of import path or missing dependency issue is very common. Systematically checking paths and ensuring dependencies are installed (using `npx expo install`) will resolve many such errors.
 
-### Challenge 3: Environment Setup Verification
-
-This challenge verifies that you have successfully installed all the necessary tools and can run the core commands covered in this module.
-
-[**Challenge 3: Environment Setup Verification (Microsoft Forms)**](https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)
-
-In this challenge, you'll complete a checklist and answer questions to confirm that your development environment is properly set up. You'll verify your:
-
-1. Node.js and npm/yarn installation
-2. Watchman installation (macOS)
-3. Xcode/Command Line Tools setup
-4. Android Studio setup (optional)
-5. Successful project creation with `create-expo-app`
-6. Ability to run the project on iOS Simulator
-7. Understanding of key `npx expo` commands
-
-The form includes screenshots demonstrating proper output for various verification commands, allowing you to compare your results.
-
-> 🧑‍🏫 **(Instructor-Led):** Take time in class to go through the verification process together. This will help identify and resolve any lingering setup issues before moving to more complex modules.
-
 ### Key Insight: Debugging as a Core Competency
 
 The prevalence of troubleshooting sections in documentation and the volume of setup-related questions in community forums underscore a critical reality: debugging is a core competency for mobile developers. The complexity arises from the multiple layers involved – the JavaScript runtime (Node.js, Hermes), the React Native framework itself, the native platform (iOS/Android SDKs), build tools (Xcode, Gradle), the bundler (Metro), and the Expo-specific tooling and services. An error can originate in any of these layers.

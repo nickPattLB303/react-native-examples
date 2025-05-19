@@ -6,7 +6,7 @@ The introduction of the New Architecture—a significant re-architecture effort 
 
 ### Architecture Comparison: Legacy Bridge vs. New Architecture
 
-This table explicitly connects the problems of the old architecture to the solutions provided by the new components:
+This table explicitly connects the problems of the old architecture to the solutions provided by the new components.
 
 | Limitation                   | Description                                                                  | Primary Solution(s) | How it Solves the Limitation                                                                                                 |
 | :--------------------------- | :--------------------------------------------------------------------------- | :------------------ | :--------------------------------------------------------------------------------------------------------------------------- |

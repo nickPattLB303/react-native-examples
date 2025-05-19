@@ -223,7 +223,8 @@ It's helpful to understand the general flow:
 
 > 🛣️ **(All Learners):** You generally won't need to modify `tsconfig.json` frequently, especially when starting with an Expo template. However, understanding its role and common options is beneficial if you need to troubleshoot build issues, integrate specific libraries, or customize your project's compilation behavior (like adding path aliases).
 
-> ⚠️ **(Caution):** Incorrectly modifying `tsconfig.json` can lead to build errors or unexpected behavior. Always ensure your changes are compatible with your Expo SDK version and React Native setup. Refer to the official TypeScript and Expo documentation when making significant changes.
+> [!CAUTION]
+> Incorrectly modifying `tsconfig.json` can lead to build errors or unexpected behavior. Always ensure your changes are compatible with your Expo SDK version and React Native setup. Refer to the official TypeScript and Expo documentation when making significant changes.
 
 > 📚 **Official Documentation:**
 >
@@ -232,3 +233,9 @@ It's helpful to understand the general flow:
 > - [Expo Docs: Using TypeScript (mentions `tsconfig.json`)](https://docs.expo.dev/guides/typescript/)
 
 While a deep dive into every compiler option is beyond this module's scope, knowing that `tsconfig.json` is the central configuration file for TypeScript empowers you to understand how your project is compiled and how to make adjustments if needed.
+
+### Next Steps
+
+You now have a foundational understanding of TypeScript, from its basic types to advanced features like generics, utility types, and project configuration via `tsconfig.json`. This knowledge is crucial for writing modern, robust React Native applications. Before moving to the next module, you'll have a chance to apply these TypeScript skills in the module challenge.
+
+After completing the challenge, you will be ready for [Module 7: React Essentials for React Native](../module-07-react-essentials-for-react-native/section-00-introduction.md).

@@ -553,7 +553,7 @@ While they use the same syntax (`...`), their role depends on the context:
 
 This exercise will challenge you to use various object and array methods, along with destructuring, spread, and rest parameters, to manage and transform data related to SpeedyMeds pharmacy operations.
 
-**(https://codesandbox.io/s/module-5-exercise-2-data-manipulation-placeholder-g9x3a)**
+**(https://codesandbox.io/s/INSERT_ACTUAL_EXERCISE_5_2_URL_HERE)**
 
 _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
 

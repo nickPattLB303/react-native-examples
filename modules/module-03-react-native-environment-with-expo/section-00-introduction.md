@@ -55,7 +55,7 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-- Completion of [Module 0: Course Introduction](../module-00-course-introduction/section-00-introduction.md) (Understanding course structure and tools).
+- Completion of [Module 2: React Native Architecture Explained](../module-02-react-native-architecture-explained/section-00-introduction.md).
 - Basic familiarity with using the command line/terminal.
 - Administrator privileges on your macOS machine for software installation.
 
@@ -79,12 +79,32 @@ This challenge involves verifying your environment setup through a checklist in 
 
 ## Module Summary
 
-This module equipped you with the foundational knowledge and practical skills to set up a complete React Native development environment using Expo. You learned about the roles of Expo and Expo Go, installed all necessary prerequisites including Node.js, npm/yarn, Watchman, and Xcode Command Line Tools. You successfully created your first Expo application, `SpeedyMedsPrototype`, using `create-expo-app` and explored the differences between `npx expo` commands and traditional `npm`/`yarn` scripts.
+This module provided a comprehensive guide to establishing a local development environment using the Expo framework on macOS, with a focus on the iOS Simulator. We covered understanding the Expo ecosystem (Framework, SDK, EAS), the advantages of Expo CLI including Continuous Native Generation (CNG), and walked through installing essential tools like Node.js (LTS via nvm), Watchman, and Xcode. You created your first Expo project (`SpeedyMedsPrototype`) using `npx create-expo-app@latest` and explored its structure, focusing on `app/` for Expo Router and `app.json`/`app.config.js` for configuration. You learned to run your app on the iOS Simulator via `npx expo start` and `npx expo run:ios`, understanding the client-server model.
 
-Key takeaways include understanding how to run your application on both the iOS Simulator and optionally on a physical device via Expo Go, navigating the Expo project structure, and utilizing essential Expo CLI commands like `start`, `install`, and `run:ios`. Finally, you were introduced to common troubleshooting techniques to address setup issues. With this environment in place, you are now fully prepared to dive into building React Native applications.
+A key distinction was made between Expo Go (for quick starts) and Development Builds (for custom native needs). We also covered essential Expo CLI commands (`start`, `run:ios`/`android`, `install`, `prebuild`, `doctor`), troubleshooting techniques, and the role of Expo Snack.
+
+**Key Takeaways from this module include:**
+
+- A correctly configured environment is foundational for efficient React Native development.
+- Expo significantly streamlines setup and iteration by managing native complexities.
+- Understanding the difference between Expo Go and Development Builds is crucial for choosing the right workflow.
+- Configuration files like `app.config.js` offer powerful control.
+- Systematic troubleshooting is a vital skill for mobile developers.
+- `npx expo install` is essential for adding compatible dependencies.
+
+With this environment in place, you are now fully prepared to dive into building React Native applications.
 
 ## Additional Resources
 
 - [Awesome Expo: A curated list of awesome Expo tools, resources and examples](https://github.com/expo/awesome-expo)
 - [Expo Blog](https://blog.expo.dev/) (For latest news and updates from the Expo team)
 - [Setting up Continuous Integration for Expo](https://docs.expo.dev/guides/setting-up-continuous-integration/)
+- [Expo Documentation - Get Started](https://docs.expo.dev/get-started/create-a-new-app/)
+- [Expo CLI Reference](https://docs.expo.dev/more/expo-cli/)
+- [Expo Configuration (`app.json`/`app.config.js`)](https://docs.expo.dev/versions/latest/config/app/)
+- [Expo Development Builds](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Expo Go](https://docs.expo.dev/get-started/expo-go/)
+- [Expo Snack](https://snack.expo.dev/)
+- [Expo Troubleshooting](https://docs.expo.dev/troubleshooting/errors/)
+- [Continuous Native Generation (CNG)](https://docs.expo.dev/workflow/continuous-native-generation/)
+- [React Native Docs - Setting up the development environment](https://reactnative.dev/docs/environment-setup)

@@ -100,6 +100,17 @@ Understanding this separation is key for troubleshooting. Problems might origina
 // The changes will be reflected in the Simulator via Fast Refresh
 import { View, Text, Button, StyleSheet } from "react-native";
 
+/**
+ * @function HomeScreen
+ * @description A simple functional component representing the home screen for the
+ * SpeedyMeds application. It displays a title, subtitle, and a couple of buttons
+ * to demonstrate basic UI structure and event handling.
+ * This component is used to illustrate the Fast Refresh feature when developing
+ * with Expo and the iOS Simulator. Changes made to this component's code
+ * should reflect almost instantly in the simulator without a full app reload.
+ *
+ * @returns {JSX.Element} The JSX element representing the home screen.
+ */
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -141,7 +152,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-This example demonstrates a simple `HomeScreen` component for the SpeedyMeds app. After adding the 'Nearby Pharmacies' button (highlighted by the comment) and saving the `HomeScreen.tsx` file, you should observe the new button appear almost instantly in the iOS Simulator. This is due to Fast Refresh, which updates the UI without a full application reload. Pressing either button will log a message to the Metro server console running in your terminal, confirming basic event handling is working. This exercise showcases the rapid development cycle enabled by Expo and the iOS Simulator.
+This TypeScript example presents a basic `HomeScreen` component for the conceptual SpeedyMeds application, primarily designed to illustrate the effectiveness of Expo's Fast Refresh feature when using the iOS Simulator. The component is structured using React Native's core building blocks: a main `<View>` acts as the container, styled using `StyleSheet.create` for layout (centering its children with `flex: 1`, `alignItems: "center"`, and `justifyContent: "center"`). Inside this container, two `<Text>` components display the application's title ("SpeedyMeds") and a subtitle ("Your medication assistant"), styled for appropriate visual hierarchy with different font sizes, weights, and margins.
+
+Two `<Button>` components are included. The first, "View Prescriptions," demonstrates a basic button with an `onPress` handler that logs a message to the Metro server console. The key part of this example, as highlighted by the inline comment, is the addition of the second button, "Nearby Pharmacies." When you add this button (or modify any part of the component's JSX or styles) and save the `.tsx` file, Expo's Fast Refresh mechanism should immediately update the application running in the iOS Simulator. You'll see the new button appear, or style changes reflect, typically within a second or two, without losing the current state of the application (if any state were being managed). This rapid feedback loop is a cornerstone of React Native and Expo development, dramatically speeding up the UI development and iteration process compared to traditional native development cycles that require full recompilations. Pressing either button logs to the console, which you can observe in the terminal where `npx expo start` is running, confirming that event handlers are correctly wired and functional. This entire setup showcases a typical, efficient development workflow.
 
 > 📲 **(Native iOS Developers):**
 >

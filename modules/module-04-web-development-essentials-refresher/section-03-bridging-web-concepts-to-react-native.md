@@ -159,15 +159,38 @@ When an array is used:
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const ComponentWithCombinedStyles = ({ isHighlighted, isError }) => {
+/**
+ * @interface ComponentWithCombinedStylesProps
+ * @description Props for the ComponentWithCombinedStyles component.
+ * @property {boolean} [isHighlighted] - Optional. If true, applies highlighting styles.
+ * @property {boolean} [isError] - Optional. If true, applies error styles; otherwise, applies normal priority styles.
+ */
+interface ComponentWithCombinedStylesProps {
+  isHighlighted?: boolean;
+  isError?: boolean;
+}
+
+/**
+ * @function ComponentWithCombinedStyles
+ * @description Demonstrates how multiple style objects can be combined in React Native
+ * using an array in the `style` prop. It shows conditional application of styles
+ * based on props and how later styles in the array override earlier ones.
+ *
+ * @param {ComponentWithCombinedStylesProps} props - The props for the component.
+ * @returns {JSX.Element} A View containing a Text component with combined styles.
+ */
+const ComponentWithCombinedStyles = ({
+  isHighlighted,
+  isError,
+}: ComponentWithCombinedStylesProps) => {
   return (
     <View style={styles.container}>
       <Text
         style={[
           styles.baseText,
-          isHighlighted && styles.highlightedText, // Applied if isHighlighted is true
-          isError ? styles.errorText : styles.normalPriorityText, // Ternary operator for conditional style
-          { marginTop: 10 }, // Inline style object, will override marginTop if present in others
+          isHighlighted && styles.highlightedText,
+          isError ? styles.errorText : styles.normalPriorityText,
+          { marginTop: 10 },
         ]}
       >
         This text combines multiple styles.
@@ -200,7 +223,9 @@ const styles = StyleSheet.create({
 export default ComponentWithCombinedStyles;
 ```
 
-This example shows how `styles.baseText` is always applied. If `isHighlighted` is true, `styles.highlightedText` is merged in. Then, either `styles.errorText` or `styles.normalPriorityText` is applied. Finally, an inline style `{ marginTop: 10 }` is merged, potentially overriding `marginTop` from previous styles.
+This TypeScript example, `ComponentWithCombinedStyles`, effectively demonstrates a powerful feature of React Native's styling system: the ability to combine multiple style objects by passing an array to the `style` prop. This technique is crucial for creating dynamic and reusable components whose appearance can change based on props or state. The component accepts two optional boolean props, `isHighlighted` and `isError`, which control the conditional application of specific styles to a `<Text>` element.
+
+The `style` prop on the `<Text>` component receives an array: `[styles.baseText, isHighlighted && styles.highlightedText, isError ? styles.errorText : styles.normalPriorityText, { marginTop: 10 }]`. React Native processes this array from left to right. `styles.baseText` provides the foundational styling (fontSize, color). The expression `isHighlighted && styles.highlightedText` conditionally includes `styles.highlightedText` only if `isHighlighted` is true; otherwise, `false` is passed, which is ignored by the style processor. This is a common pattern for toggling styles. Similarly, the ternary operator `isError ? styles.errorText : styles.normalPriorityText` selects one style object based on the `isError` prop. Finally, an inline style object `{ marginTop: 10 }` is included. If any of the preceding style objects in the array also define `marginTop`, this inline style will take precedence because it appears later in the array. This merging behavior, where later styles override earlier ones for conflicting properties, allows for precise control over the final computed styles. This example clearly illustrates a flexible and common approach to dynamic styling in React Native.
 
 **Table: Mapping Common Web CSS to React Native Styles**
 
@@ -229,7 +254,27 @@ The CSS Box Model concepts (content, padding, border, margin) are directly appli
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const BoxModelDemoCard = ({ title, children }) => {
+/**
+ * @interface BoxModelDemoCardProps
+ * @description Props for the BoxModelDemoCard component.
+ * @property {string} [title] - Optional title for the card.
+ * @property {React.ReactNode} children - Content to be rendered inside the card.
+ */
+interface BoxModelDemoCardProps {
+  title?: string;
+  children: React.ReactNode;
+}
+
+/**
+ * @function BoxModelDemoCard
+ * @description A reusable component designed to visually demonstrate the CSS Box Model
+ * (margin, border, padding, content) within a React Native context.
+ * It accepts a title and children to display within a styled card.
+ *
+ * @param {BoxModelDemoCardProps} props - The props for the component.
+ * @returns {JSX.Element} A styled card component.
+ */
+const BoxModelDemoCard = ({ title, children }: BoxModelDemoCardProps) => {
   return (
     // The outer View demonstrates margin, border, and padding
     <View style={styles.cardContainer}>
@@ -242,6 +287,14 @@ const BoxModelDemoCard = ({ title, children }) => {
   );
 };
 
+/**
+ * @function App
+ * @description A simple root component that demonstrates the usage of the
+ * `BoxModelDemoCard` to display multiple cards, showcasing how margin
+ * creates space between them. This example helps visualize the box model in action.
+ *
+ * @returns {JSX.Element} The main application view with demo cards.
+ */
 const App = () => (
   <View style={styles.screenContainer}>
     <BoxModelDemoCard title="Medication Reminder">
@@ -303,14 +356,11 @@ export default App;
 
 **Explanation:**
 
-- The `cardContainer` style clearly defines `margin`, `borderWidth`, `borderColor`, `borderRadius`, and `padding`. These directly correspond to the Box Model layers.
-- `marginVertical` and `marginHorizontal` create space _around_ each card.
-- `borderWidth` and `borderColor` define the visible boundary of the card.
-- `padding` creates space _inside_ the border, before the `contentArea` begins. The `backgroundColor` of `cardContainer` makes this padding area visually distinct if the `contentArea` has a different background.
-- The `contentArea` style then defines the appearance of the actual content block within the padded box.
-- Remember that these unitless values are interpreted as density-independent pixels (dp).
+This TypeScript example effectively demonstrates the practical application of the CSS Box Model concepts (margin, border, padding, content) within a React Native application using the `StyleSheet` API. It features a reusable `BoxModelDemoCard` component and an `App` component to showcase its usage.
 
-This example illustrates how to use `StyleSheet` to control the sizing and spacing of elements according to the Box Model principles, which is fundamental for structuring UI layouts in React Native.
+The `BoxModelDemoCard` component is designed to visually distinguish these layers. Its root `<View>`, styled by `styles.cardContainer`, explicitly defines properties for each layer: `marginVertical` and `marginHorizontal` create space _around_ the card, separating it from other elements or the screen edges. `borderWidth`, `borderColor`, and `borderRadius` define the card's visible boundary. Crucially, `padding` creates space _inside_ this border, before the actual content begins. The `backgroundColor` of `styles.cardContainer` helps visualize this padding area. Inside this, another `<View>`, styled by `styles.contentArea`, represents the content box itself, with its own background and padding to house the `title` and `children` props. All dimensional values are unitless, interpreted as density-independent pixels (dp).
+
+The `App` component then renders two instances of `BoxModelDemoCard`, passing different titles and textual content as children. This showcases not only the individual box model of each card but also how the margins on `cardContainer` create separation between the two cards and from the edges of the `screenContainer`. The example reinforces how styles are defined in JavaScript objects via `StyleSheet.create` and applied using the `style` prop, providing a clear illustration of layout and spacing control fundamental to React Native UI development. This approach ensures a structured and maintainable way to manage visual presentation.
 
 > 📚 **Official Documentation:**
 >
@@ -421,19 +471,14 @@ const styles = StyleSheet.create({
 export default MedicationCard;
 
 // Example Usage (in another component):
-// import MedicationCard from './MedicationCard';
 // <MedicationCard name="Amoxicillin 500mg" instructions="Take one capsule every 8 hours." />
 ```
 
 **Explanation (approx. 150 words):**
 
-This example demonstrates the mapping. The HTML `div` with class `card` becomes a React Native `<View>` component. The HTML paragraphs (`<p>`) become `<Text>` components, as all text must be inside `<Text>`. Styles defined in CSS classes are translated into JavaScript objects within `StyleSheet.create`. Notice the direct mapping of properties: `border` becomes `borderWidth` and `borderColor`, `padding` remains `padding`, `background-color` becomes `backgroundColor` (camelCase), `font-weight` becomes `fontWeight`, and `font-size` becomes `fontSize` (using unitless numbers). The styles object (`styles`) is then referenced in the `style` prop of each component (e.g., `style={styles.card}`). This structure keeps styles organized and applies them directly to the corresponding elements.
+This React Native (`tsx`) example effectively translates a simple HTML/CSS card structure into its equivalent using React Native's Core Components and `StyleSheet` API, specifically for a `MedicationCard` component relevant to the SpeedyMeds theme. The conceptual HTML `<div class="card">` directly maps to a React Native `<View style={styles.card}>`, serving as the primary container. Similarly, the HTML paragraphs (`<p class="title">` and `<p class="details">`) are translated into `<Text style={styles.title}>` and `<Text style={styles.details}>` components, respectively, reinforcing the rule that all text content in React Native must be explicitly wrapped in a `<Text>` component.
 
-### Challenge
-
-Recreate a simple web layout using React Native components and StyleSheet based on provided HTML/CSS.
-
-**(https://codesandbox.io/s/module-4-challenge-speedymeds-prescription-card-layout-k2m6p8)**
+The CSS styles are mirrored in the JavaScript object created by `StyleSheet.create`. Key translations include: CSS `border: 1px solid gray;` becomes `borderWidth: 1, borderColor: 'gray'`; `padding: 15px;` becomes `padding: 15`; `background-color: #f0f0f0;` becomes `backgroundColor: '#f0f0f0'` (note the camelCase property name); and font properties like `font-weight` and `font-size` become `fontWeight` and `fontSize`, with `fontSize` taking a unitless number interpreted as density-independent pixels (dp). The `MedicationCard` component itself is defined as a functional component accepting typed props (`MedicationCardProps`) for `name` and `instructions`, showcasing good practice with TypeScript. This example clearly illustrates the direct, albeit syntactically adjusted, mapping of web styling concepts to React Native, emphasizing how developers can leverage their CSS understanding while adapting to the JavaScript-based styling environment.
 
 ### Next Steps
 

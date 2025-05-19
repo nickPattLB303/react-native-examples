@@ -38,7 +38,7 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 </html>
 ```
 
-This example illustrates the fundamental boilerplate of an HTML5 document, including the `<!DOCTYPE>` declaration, the root `<html>` element with a language attribute, the `<head>` for metadata like the title and character set, and the `<body>` where all visible content resides. This hierarchical structure is foundational to how web pages are organized and later interpreted by browsers to build the DOM.
+This example illustrates the fundamental boilerplate of an HTML5 document. It includes the essential `<!DOCTYPE html>` declaration, the root `<html>` element correctly specifying the language via `lang="en"`, and the distinct `<head>` and `<body>` sections. The `<head>` contains crucial metadata like the page `<title>`. The `<body>` holds the user-visible content, here shown with a simple heading and paragraph. This hierarchical structure is foundational to how web pages are organized by developers and subsequently parsed by browsers to construct the Document Object Model (DOM).
 
 > 📲 **(Native Developers):**
 >
@@ -91,7 +91,7 @@ HTML uses "tags" (like `<p>` for paragraph) to define elements. Here are a few c
 - **Tables:** `<table>`, `<tr>` (row), `<th>` (header cell), `<td>` (data cell). Use `<thead>`, `<tbody>`, `<tfoot>`, `<caption>` for better structure. Tables are for tabular data, not page layout.
 - **Forms:** `<form>` contains interactive controls. Common elements include `<input>` (various types like `text`, `password`, `checkbox`, `radio`, `submit`), `<textarea>`, `<select>`, `<option>`, `<button>`, and `<label>` (essential for accessibility).
 
-To further clarify how these fundamental HTML elements relate to both native development and React Native, consider the following conceptual mapping:
+To further clarify how these fundamental HTML elements relate to both native development and React Native, consider the following conceptual mapping.
 
 | Concept           | HTML Example            | Native iOS Example      | Native Android Example | React Native Component |
 | :---------------- | :---------------------- | :---------------------- | :--------------------- | :--------------------- |
@@ -99,7 +99,13 @@ To further clarify how these fundamental HTML elements relate to both native dev
 | Text Display      | `<p>`, `<h1>`, `<span>` | `UILabel`, `UITextView` | `TextView`             | `<Text>`               |
 | Image Display     | `<img>`                 | `UIImageView`           | `ImageView`            | `<Image>`              |
 
-> **Background Bridge Note:** As shown in the table, common HTML tags for structure, text, and images have direct conceptual parallels in native iOS/Android UI elements and, subsequently, in React Native's core components. The `<View>` component is React Native's fundamental building block for UI structure, much like `<div>` in HTML or `UIView`/`ViewGroup` in native development. Similarly, `<Text>` is essential for all text rendering, and `<Image>` for displaying images. React Native abstracts these platform-specific elements into a unified JavaScript API. You'll learn more about these mappings and the "why" behind them in Section 3.
+> 🛣️ **(All Learners):**
+>
+> **Comparison:** The table above highlights a key principle: common HTML tags for structure (`<div>`), text (`<p>`), and images (`<img>`) have direct conceptual counterparts in native UI elements (like `UIView` or `TextView`) and consequently in React Native's Core Components (`<View>`, `<Text>`, `<Image>`).
+>
+> **Key Takeaway:** React Native leverages these familiar web paradigms but translates them into genuine native components, offering a unified JavaScript API. Section 3 will explore these mappings in more detail.
+>
+> **Source:** [React Native Core Components and APIs](https://reactnative.dev/docs/components-and-apis)
 
 #### Under the Hood: HTML Parsing and the DOM
 

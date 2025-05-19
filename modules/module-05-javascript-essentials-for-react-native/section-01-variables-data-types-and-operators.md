@@ -7,7 +7,7 @@ Welcome to the foundational concepts of JavaScript! Variables, data types, and o
 In JavaScript, a variable is a named container for storing data values. Think of it as a label you can attach to a value, allowing you to refer to and manipulate that value throughout your code. In modern JavaScript (ES6 and later), we primarily use `let` and `const` to declare variables.
 
 > 📲 **(Native Developers):**
-> 
+>
 > **Comparison:** JavaScript's variable and type system differs significantly from Swift (iOS) and Kotlin/Java (Android). While Swift uses type inference but is statically typed (`var` and `let`), and Kotlin/Java use explicit type declarations, JavaScript is dynamically typed with no need to specify types when declaring variables. Types are associated with values, not variables.
 >
 > **Key Takeaway:** In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
@@ -660,7 +660,7 @@ let resultWithParens = (3 + 5) * 2; // 3 + 5 is evaluated first (8), then 8 * 2
 console.log(resultWithParens); // Output: 16
 ```
 
-Understanding precedence is crucial for writing correct code. Here's a simplified table of common operator precedence (higher number means higher precedence):
+Understanding precedence is crucial for writing correct code. Here's a simplified table of common operator precedence (higher number means higher precedence).
 
 |  Precedence  | Operator(s)                                                         | Description                                                | Associativity |
 | :----------: | :------------------------------------------------------------------ | :--------------------------------------------------------- | :-----------: |

@@ -23,7 +23,7 @@ This module revisits the fundamentals, assuming varying levels of prior web deve
 >
 > 🌐 **Web Developers (React, Angular, Vue, etc.):** Much of this will be a refresher. Focus on the sections highlighting the differences between web standards and React Native's implementation (e.g., `StyleSheet` vs. CSS, the pervasiveness of Flexbox, unitless values). Skim familiar concepts but ensure you grasp the distinctions and how React Native adapts web paradigms for the native environment. For experienced web developers, while Sections 1 and 2 might seem familiar, it's recommended to review them, paying particular attention to notes that bridge your existing knowledge to React Native's specific approach, especially before focusing on the mapping concepts in Section 3.
 >
-> ✨ **All Learners:** Regardless of your background, understanding _why_ React Native deviates from web standards (e.g., for performance, native integration, platform consistency) is key to becoming proficient. This module supports all learning paths (Instructor-led, Self-led, Asynchronous) and aims to build a solid understanding of the "why" behind React Native's UI layer.
+> 🛣️ **(All Learners):** Regardless of your background, understanding _why_ React Native deviates from web standards (e.g., for performance, native integration, platform consistency) is key to becoming proficient. This module supports all learning paths (Instructor-led, Self-led, Asynchronous) and aims to build a solid understanding of the "why" behind React Native's UI layer.
 
 ## Learning Objectives
 
@@ -48,7 +48,7 @@ By the end of this module, you will be able to:
 
 ## Module Challenge
 
-**(Placeholder_URL_to_CodeSandbox_Challenge_4)**
+**(https://codesandbox.io/s/INSERT_ACTUAL_CHALLENGE_4_URL_HERE)**
 
 This challenge involves recreating a simple web layout using HTML and CSS, reinforcing the core concepts covered and preparing you to see how these map to React Native layout techniques.
 

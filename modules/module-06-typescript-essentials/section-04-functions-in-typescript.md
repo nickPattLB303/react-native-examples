@@ -438,3 +438,7 @@ Here, `getMedicationCount` and `getFormattedInventory` in the `PharmacyInventory
 > - [TypeScript Handbook: More on Functions (covers optional, default, rest params, etc.)](https://www.typescriptlang.org/docs/handbook/2/functions.html#more-on-functions)
 
 Properly typing functions is a cornerstone of writing robust TypeScript code. It not only catches errors early but also makes your code self-documenting, greatly aiding collaboration and long-term maintenance.
+
+### Next Steps
+
+You now have a strong understanding of how to define and type functions in TypeScript, including parameters, return values, arrow functions, and the nuances of `this`. The next crucial concept for writing flexible and reusable typed code is generics. Proceed to [Section 5: Generics](./section-05-generics.md) to explore how they can enhance your components and utilities.

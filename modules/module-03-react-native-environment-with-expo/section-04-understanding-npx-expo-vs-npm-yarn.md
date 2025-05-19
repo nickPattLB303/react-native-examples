@@ -187,6 +187,19 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useState, useEffect } from "react";
 import { Text, View, Button } from "react-native"; // Assuming basic RN components
 
+/**
+ * @function MedicationScannerScreen
+ * @description A conceptual screen component for the SpeedyMeds app that demonstrates
+ * barcode scanning functionality for medications.
+ * It handles requesting camera permissions, displays the scanner UI (conceptually),
+ * processes scanned barcode data, and shows feedback to the user.
+ * This example primarily illustrates the correct method for installing Expo packages
+ * (like expo-barcode-scanner) and basic usage patterns within a React Native component,
+ * including state management with `useState` and side effects with `useEffect` for permissions.
+ * Note: The actual BarCodeScanner UI rendering is commented out for brevity in this example.
+ *
+ * @returns {JSX.Element} The JSX element representing the medication scanner screen.
+ */
 function MedicationScannerScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scannedData, setScannedData] = useState<string | null>(null);
@@ -233,7 +246,11 @@ function MedicationScannerScreen() {
 }
 ```
 
-This TypeScript snippet outlines a `MedicationScannerScreen` component. The crucial first step, highlighted in the comments, is installing the `expo-barcode-scanner` package using `npx expo install`. This ensures version compatibility with your Expo SDK. The component then requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` inside a `useEffect` hook. Based on the `hasPermission` state, it would either show a permission request message or, if permission is granted, render the `BarCodeScanner` UI (conceptualized in comments for brevity). When a barcode is successfully scanned, `handleBarCodeScanned` is triggered, updating the state and simulating feedback. This example emphasizes the correct installation method and basic API usage for an Expo SDK package.
+This TypeScript snippet outlines a MedicationScannerScreen component, designed conceptually for the SpeedyMeds application to handle medication barcode scanning. The primary lesson from this example is the correct installation of Expo packages: the comments emphasize using `npx expo install expo-barcode-scanner` over generic npm or yarn commands. This specific Expo command is crucial because it ensures that the version of `expo-barcode-scanner` installed is compatible with the project's Expo SDK version, preventing potential build or runtime errors that can arise from version mismatches with native dependencies.
+
+Functionally, the component demonstrates several key React Native patterns. It utilizes the `useState` hook to manage three pieces of state: `hasPermission` (to track camera permission status), and `scannedData` (to store the data from a successfully scanned barcode). The `useEffect` hook is employed to request camera permissions asynchronously via `BarCodeScanner.requestPermissionsAsync()` when the component mounts. The UI conditionally renders messages based on the `hasPermission` state – prompting the user if permission is pending or denied.
+
+The `handleBarCodeScanned` callback function is triggered upon a successful scan. It receives an object containing the `type` and `data` of the scanned barcode. In this illustrative example, it updates the `scannedData` state and displays an alert with the scanned information. In a real-world SpeedyMeds scenario, this function would contain more complex logic, such as looking up the medication details in a database using the scanned data or navigating to a medication information screen. The actual `<BarCodeScanner />` component, which would display the live camera feed for scanning, is commented out for brevity but its placement and the `onBarCodeScanned` prop usage are indicated. A simple button is included to simulate resetting the scan state. This comprehensive example serves not only to reinforce correct package installation but also to provide a practical illustration of state management, effect handling for permissions, and event callbacks within an Expo-powered React Native component.
 
 > 📚 **Official Documentation:**
 >

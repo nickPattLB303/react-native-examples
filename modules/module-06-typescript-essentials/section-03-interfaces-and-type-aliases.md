@@ -674,4 +674,10 @@ Now it's time to practice what you've learned about interfaces.
 
 **Tool:** CodeSandbox
 
+**(https://codesandbox.io/s/INSERT_ACTUAL_EXERCISE_6_1_URL_HERE)**
+
 This exercise will help you solidify your understanding of creating, extending, and using interfaces to structure complex data, a common task in application development.
+
+### Next Steps
+
+With a solid understanding of how to define custom types using interfaces and type aliases, you are now ready to explore how TypeScript enhances functions. Proceed to [Section 4: Functions in TypeScript](./section-04-functions-in-typescript.md) to learn about typing parameters, return values, and more advanced function patterns.

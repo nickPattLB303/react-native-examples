@@ -9,7 +9,7 @@ Before you can create and run your first React Native Expo app, you need to inst
 
 **Purpose:** Node.js is a JavaScript runtime environment that executes JavaScript code outside of a web browser. It is fundamental to the React Native ecosystem, powering the Expo CLI, the Metro bundler (which packages the JavaScript code), and Node Package Manager (npm) or Yarn, which are used to manage project dependencies. Using the LTS (Long-Term Support) version is strongly recommended for stability and compatibility. ([Source](https://app.studyraid.com/en/read/2370/47234/installing-nodejs-and-watchman))
 
-> 💡 **Why LTS?** Long-Term Support versions receive critical bug fixes and security updates for an extended period, ensuring a stable foundation for your projects.
+> [!NOTE] > **Why LTS?** Long-Term Support versions receive critical bug fixes and security updates for an extended period, ensuring a stable foundation for your projects.
 
 **Target Version:** Use the latest **LTS (Long-Term Support)** version. LTS versions offer greater stability and longer support periods, crucial for development. As of mid-2025, Node.js 22.x is the active LTS. ([Source](https://nodejs.org/en/about/previous-releases))
 
@@ -196,6 +196,8 @@ If you intend to run your app on an iOS Simulator or a physical iOS device, you 
 
 ### Summary: Prerequisite Installation Commands (Recommended Methods)
 
+The following table provides a quick summary of the recommended installation commands for macOS and Windows, along with verification steps.
+
 **Table 2: Prerequisite Installation Commands Summary**
 
 | Prerequisite            | macOS Command (Homebrew Recommended)                         | Windows Command (Installer/Choco Recommended)                | Verification Command                                                         |
@@ -211,7 +213,7 @@ If you intend to run your app on an iOS Simulator or a physical iOS device, you 
 
 With these prerequisites installed, you are now ready to create your first Expo application!
 
-> 💡 **Reflecting on the Setup Process:**
+> [!NOTE] > **Reflecting on the Setup Process:**
 > The multi-step process involving Node.js, package managers, native IDEs like Xcode (for iOS) or Android Studio (for Android), and specific tools such as Watchman highlights the inherent complexity involved in setting up any mobile development environment, including standard React Native. Native mobile development necessitates large, platform-specific toolchains. React Native builds upon this by adding the JavaScript ecosystem tooling. This combination can present a significant initial hurdle, particularly for developers new to mobile development. This initial setup complexity underscores the value proposition of the Expo framework, which aims to abstract and simplify many of these initial native configuration steps, facilitating a faster start to development. Therefore, while navigating this setup is essential, it also serves to motivate this course's focus on Expo as a means to accelerate onboarding and focus more quickly on React Native application logic.
 
 > 📚 **Official Documentation:**

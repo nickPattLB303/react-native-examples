@@ -611,4 +611,10 @@ Time to apply your knowledge of generics by creating a versatile function.
 
 **Tool:** CodeSandbox
 
+**(https://codesandbox.io/s/INSERT_ACTUAL_EXERCISE_6_2_URL_HERE)**
+
 This exercise will help you understand how to create flexible and type-safe functions using generics, a common pattern for utility functions.
+
+### Next Steps
+
+Generics provide powerful tools for creating reusable and type-safe code. Now that you can leverage them, we'll explore another useful TypeScript feature for defining sets of named constants: Enums. Proceed to [Section 6: Enums](./section-06-enums.md).

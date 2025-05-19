@@ -358,3 +358,7 @@ Template literal types are very powerful for creating precise string types that 
 > - [TypeScript Docs: Enums (more detailed explanation)](https://www.typescriptlang.org/docs/handbook/enums.html)
 
 Enums help make your code more robust by restricting variables to a predefined set of values, improving type safety and making intentions clearer. They are a valuable tool for representing states, types, or categories within your SpeedyMeds application logic.
+
+### Next Steps
+
+Enums and literal types provide excellent ways to define fixed sets of values. Now, let's explore TypeScript's utility types, which offer powerful ways to transform and manipulate existing types to create new ones. Proceed to [Section 7: Utility Types](./section-07-utility-types.md).

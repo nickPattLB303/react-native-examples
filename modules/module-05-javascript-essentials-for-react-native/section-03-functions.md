@@ -6,8 +6,8 @@ Functions are fundamental building blocks in JavaScript. They are reusable block
 
 There are several ways to define functions in JavaScript.
 
-> 📲 **(Native Developers):** 
-> 
+> 📲 **(Native Developers):**
+>
 > **Comparison:** JavaScript functions differ from Swift and Kotlin methods in several important ways. In Swift, functions are first-class types with clear parameter/return types. In Kotlin/Java, methods belong to classes with explicit typing. JavaScript functions are more flexible - they can be declared multiple ways, passed as values, and don't require explicit type annotations.
 >
 > **Key Takeaway:** JavaScript's arrow functions (`=>`) are similar to Swift closures and Kotlin lambdas, but with a critical difference in how `this` is handled - arrow functions inherit `this` from their parent scope, which is especially important in React Native.
@@ -486,7 +486,7 @@ Closures are often created by higher-order functions (like `createPrescriptionTr
 
 Apply your understanding of JavaScript functions by completing the exercises in CodeSandbox. This exercise will involve creating functions related to pharmacy operations, practicing parameters, return values, and potentially closures.
 
-**(https://codesandbox.io/s/module-5-exercise-1-function-practice-placeholder-g9x2z)**
+**(https://codesandbox.io/s/INSERT_ACTUAL_EXERCISE_5_1_URL_HERE)**
 
 _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
 

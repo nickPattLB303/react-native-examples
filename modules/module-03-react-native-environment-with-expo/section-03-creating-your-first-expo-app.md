@@ -102,6 +102,12 @@ export function MedicationItem({ medication, onPress }: MedicationItemProps) {
 
 > 🛣️ **(All Learners):** Using TypeScript from the beginning of your project provides significant advantages in code quality and developer experience. Even if you're new to TypeScript, the basic types are straightforward to learn, and the benefits of catching errors early are substantial.
 
+#### Prerequisites for this Exercise
+
+- Node.js and npm installed (Section 2)
+- Xcode Command Line Tools installed (Section 2)
+- Watchman installed (Section 2)
+
 ### Exercise 3.1: Create and Run Initial App
 
 This exercise guides you through creating your first Expo project, specifically tailored to the SpeedyMeds theme we'll be using throughout the course.
@@ -116,12 +122,6 @@ In this exercise, you'll:
 4. Run the app on the iOS Simulator
 
 The Snack provides a virtual environment to verify your understanding of the concepts, but you should also complete these steps on your local machine to ensure your development environment is properly configured.
-
-#### Prerequisites for this Exercise
-
-- Node.js and npm installed (Section 2)
-- Xcode Command Line Tools installed (Section 2)
-- Watchman installed (Section 2)
 
 > [!NOTE]
 > This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators in the upcoming sections.

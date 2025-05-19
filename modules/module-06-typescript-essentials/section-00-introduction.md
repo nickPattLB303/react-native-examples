@@ -57,6 +57,8 @@ Understanding TypeScript can significantly enhance your development workflow, re
 >
 > **Source:** [Angular Docs - TypeScript Configuration](https://angular.io/guide/typescript-configuration)
 
+> 🛣️ **(All Learners):** This module introduces TypeScript, which we'll use for all subsequent code examples. Even if you have prior TypeScript experience, reviewing this module will ensure your understanding aligns with its use in a React Native and Expo context. Let's dive into making our JavaScript code more robust and predictable!
+
 ## Learning Objectives
 
 By the end of this module, you'll be able to:
@@ -75,26 +77,26 @@ By the end of this module, you'll be able to:
 
 Before starting this module, ensure you have a good understanding of the concepts covered in:
 
-- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials/section-XX-YYY.md)
+- [Module 5: JavaScript Essentials for React Native](../module-05-javascript-essentials-for-react-native/section-00-introduction.md)
 
 ## Module Sections
 
 This module is divided into the following sections:
 
-- Section 1: Why TypeScript? (Benefits: Type Safety, Tooling)
-- Section 2: Basic Types
-- Section 3: Interfaces and Type Aliases
-- Section 4: Functions in TypeScript
-- Section 5: Generics
-- Section 6: Enums
-- Section 7: Utility Types
-- Section 8: Configuring TypeScript (`tsconfig.json` overview)
+- [Section 1: Why TypeScript? (Benefits: Type Safety, Tooling)](./section-01-why-typescript.md)
+- [Section 2: Basic Types](./section-02-basic-types.md)
+- [Section 3: Interfaces and Type Aliases](./section-03-interfaces-and-type-aliases.md)
+- [Section 4: Functions in TypeScript](./section-04-functions-in-typescript.md)
+- [Section 5: Generics](./section-05-generics.md)
+- [Section 6: Enums](./section-06-enums.md)
+- [Section 7: Utility Types](./section-07-utility-types.md)
+- [Section 8: Configuring TypeScript (`tsconfig.json` overview)](./section-08-configuring-typescript.md)
 
 ## Module Challenge
 
-After completing all sections, you will apply your knowledge in:
+After completing all sections, you will apply your knowledge in **Challenge 6: Typing a Pharmacy API Response**:
 
-- Challenge 6: Typing a Pharmacy API Response **(URL_PLACEHOLDER_CHALLENGE_6)**
+**(https://codesandbox.io/s/INSERT_ACTUAL_CHALLENGE_6_URL_HERE)**
 
 ## Module Summary
 
@@ -115,7 +117,5 @@ By internalizing these TypeScript concepts and adhering to these principles, you
 
 > [!IMPORTANT]
 > All subsequent JavaScript, React, and React Native code examples in this course MUST use TypeScript.
-
-> 🛣️ **(All Learners):** This module introduces TypeScript, which we'll use for all subsequent code examples. Even if you have prior TypeScript experience, reviewing this module will ensure your understanding aligns with its use in a React Native and Expo context. Let's dive into making our JavaScript code more robust and predictable!
 
 ---

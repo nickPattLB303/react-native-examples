@@ -158,6 +158,8 @@ Manages authentication with your Expo account, which is required for using Expo 
 | `npx expo customize [file]`    | Copy default config files for customization                       |
 | `npx expo login/logout/whoami` | Manage Expo account session (for EAS)                             |
 
+This table provides a quick reference for the essential Expo CLI commands discussed in this section and their primary purpose.
+
 > 📲 **(Native Developers):**
 >
 > **Comparison:** `start` manages Metro (like running `react-native start` but integrated). `run:*` orchestrates `xcodebuild`/`gradlew`. `install` is a package manager wrapper with version validation. `prebuild` automates native project generation based on JS config (akin to code generation tools). `config` introspects this generation process. `doctor` is a diagnostic tool.
@@ -189,6 +191,16 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
+/**
+ * @function MedicationScanScreen
+ * @description A screen component for the SpeedyMeds app that demonstrates barcode scanning
+ * using the `expo-barcode-scanner` package. It handles requesting camera permissions,
+ * displays the camera preview, and processes scanned barcode data.
+ * This example illustrates how Expo CLI commands like `npx expo install` and `npx expo start`
+ * facilitate adding and testing such features.
+ *
+ * @returns {JSX.Element} The JSX element representing the medication scanner screen.
+ */
 export default function MedicationScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
@@ -258,7 +270,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-This code snippet illustrates a `MedicationScanScreen` component for the SpeedyMeds app, utilizing the `expo-barcode-scanner` package (which should be installed using `npx expo install expo-barcode-scanner`). The component first requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` in a `useEffect` hook. If permission is granted, it renders the `<BarCodeScanner>` component to display the camera feed. When a barcode is detected, `handleBarCodeScanned` updates the state with the scanned data (`medicationCode`) and logs it. The UI then conditionally displays the scanned code and a button to allow further scans. This example showcases how Expo CLI commands facilitate adding features and testing them in an iterative development loop.
+This TypeScript code snippet provides a functional example of a `MedicationScanScreen` component, intended for the SpeedyMeds application, which integrates the `expo-barcode-scanner` library. The comments preceding the code emphasize the correct installation method: `npx expo install expo-barcode-scanner`. This CLI command is crucial for ensuring that the installed version of the scanner library is compatible with the project's Expo SDK, a key theme of this section. The component itself demonstrates a common pattern for using hardware-dependent features: it first requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` within a `useEffect` hook to run once when the component mounts. The user's permission status is stored in the `hasPermission` state variable using `useState`.
+
+Conditional rendering is employed to manage the UI based on permission status: messages are shown if permission is pending or denied. If permission is granted, the `<BarCodeScanner>` component is rendered, filling the screen (via `StyleSheet.absoluteFillObject`) to display the live camera feed. The `onBarCodeScanned` prop is set to the `handleBarCodeScanned` function, but only if a barcode hasn't already been scanned (controlled by the `scanned` state variable), preventing multiple rapid scans. The `handleBarCodeScanned` callback receives the scan `type` and `data`, updates the `scanned` state to true, stores the `data` in `medicationCode`, and logs the information. In a production SpeedyMeds app, this data would trigger a lookup or other business logic. The UI then displays the `medicationCode` and a "Scan Again" button, which resets the `scanned` state, allowing for new scans. This entire workflow, from installing a package with an Expo CLI command to implementing and testing a feature that uses it (which would be run using `npx expo start` and tested on a device/simulator), encapsulates the iterative development cycle facilitated by the Expo CLI.
 
 Mastering these commands provides a solid foundation for your daily Expo development workflow.
 
