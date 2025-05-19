@@ -81,3 +81,7 @@ Before diving into feature development, it's crucial to ensure your project is c
 > **Source:** Review the `App.tsx` file in the `SpeedyMeds` project for a top-level view of provider setup.
 
 Once you've verified the setup and initial functionality, you're ready to explore the project's structure in more detail in the next section.
+
+### Next Steps
+
+With your project set up and verified, the next step is to understand its internal structure. Proceed to [Section 02: Understanding the Project Scaffolding](./section-02-understanding-the-project-scaffolding.md) to learn about the directory layout and key files.

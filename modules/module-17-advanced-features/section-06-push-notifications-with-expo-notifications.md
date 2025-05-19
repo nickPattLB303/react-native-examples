@@ -548,6 +548,13 @@ This component encapsulates the core notification functionality needed for the S
 >
 > **Source:** [iOS UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), [Android Notification Guide](https://developer.android.com/develop/ui/views/notifications)
 
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** While web applications can use the Push API and Service Workers for push notifications, the setup, permission model, and token management (e.g., VAPID keys) are quite different. `expo-notifications` provides a mobile-centric abstraction over APNs (Apple) and FCM (Firebase/Android), which are the native push services for mobile platforms. The concept of a device-specific push token is central to mobile push, similar to a subscription object in web push.
+>
+> **Key Takeaway:** `expo-notifications` simplifies sending both local and remote notifications on mobile. While the goal of user engagement is similar to web push, the underlying services and APIs are platform-specific to iOS/Android, which Expo helps abstract.
+> **Source:** `[MDN Web Docs: Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)`, `[web.dev: Web Push Notifications](https://web.dev/articles/push-notifications-overview)`
+
 > [!IMPORTANT]
 > For production apps, always test notification behavior on real devices. Simulators/emulators can sometimes behave differently with notifications, especially with background/killed app states.
 

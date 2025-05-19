@@ -93,3 +93,7 @@ Always refer to the specific submission instructions provided by your instructor
 > **(Instructor-Led Path):** Pay close attention to any interim milestones or submission requirements your instructor sets. Feedback provided during the project development is invaluable for your final submission.
 
 Preparing a clean, well-documented, and fully functional project according to the requirements will be key to a successful capstone evaluation.
+
+### Next Steps
+
+Understanding the evaluation criteria and submission guidelines sets you up for a successful project completion. To further aid you, the next section offers some valuable tips and best practices. Proceed to [Section 09: Tips for Success](./section-09-tips-for-success.md).

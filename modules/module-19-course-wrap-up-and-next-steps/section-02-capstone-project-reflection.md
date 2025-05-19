@@ -443,3 +443,7 @@ As you consider how to further develop your SpeedyMeds project beyond this cours
 >
 > - [UI/UX Best Practices for Mobile Apps](https://www.smashingmagazine.com/2018/08/best-practices-mobile-form-design/)
 > - [Real-World React Native Applications](https://github.com/ReactNativeNews/React-Native-Apps)
+
+### Next Steps
+
+Reflecting on your capstone project is a vital part of solidifying your learning. To continue your growth, it's important to know where to find ongoing support and information. Proceed to [Section 3: Resources for Continued Learning](./section-03-resources-for-continued-learning.md).

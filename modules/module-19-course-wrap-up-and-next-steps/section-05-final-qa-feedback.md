@@ -232,7 +232,7 @@ Specific, actionable feedback is most helpful. For example, rather than "The nav
 
 We highly value your input. Please take a few minutes to complete our official course feedback form. Your anonymous responses will help us enhance the learning experience for future students.
 
-**[Course Feedback Form](https://forms.office.com/YOUR_FEEDBACK_FORM_LINK_PLACEHOLDER)**
+**[Course Feedback Form](https://forms.office.com/YOUR_COURSE_FEEDBACK_FORM_URL_PLACEHOLDER)**
 
 > 📚 **Official Documentation: Feedback Channels**
 >

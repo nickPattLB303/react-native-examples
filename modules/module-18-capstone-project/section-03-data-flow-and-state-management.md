@@ -170,3 +170,7 @@ This architecture provides a clear separation of concerns: TanStack Query handle
 > **Source:** Check out the official documentation for both [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) and [TanStack Query](https://tanstack.com/query/v5/docs/react/overview) to see their core philosophies.
 
 By understanding these state management strategies and the overall data flow, you'll be better equipped to implement features that correctly display, update, and persist data within the SpeedyMeds application.
+
+### Next Steps
+
+With a clear picture of how data and state are managed, the next step is to understand how users will navigate through the different parts of the SpeedyMeds app. Proceed to [Section 04: Navigation Implementation](./section-04-navigation-implementation.md) to explore the app's routing structure.

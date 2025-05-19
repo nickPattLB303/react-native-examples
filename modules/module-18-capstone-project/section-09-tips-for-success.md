@@ -55,3 +55,17 @@ Completing the SpeedyMeds capstone project is a significant achievement and a va
 > **Source:** Revisit [Module 0, Section 3: How to Use This Course](../module-00-course-introduction/section-03-how-to-use-this-course.md).
 
 By applying these tips, you can navigate the complexities of the SpeedyMeds capstone project with greater confidence and transform it into a rewarding and enriching learning experience. Good luck!
+
+## Module Summary
+
+Module 18, the Capstone Project, has guided you through the process of building the SpeedyMeds application. You started with an overview of the project's goals and technology stack, ensuring your development environment was correctly set up. You then delved into understanding the project's scaffolding, including its directory structure and key configuration files. A crucial part was grasping the data flow and state management strategies, utilizing Zustand for client-side state and TanStack Query for server-side interactions with a mock API.
+
+You explored the navigation implementation using React Navigation, covering tab and stack navigators, and the importance of type safety. The module also detailed the UI layer, including the theming system (light/dark modes) with React Native Paper and Styled Components. A recommended development workflow was outlined, emphasizing iterative implementation, testing, debugging, and code quality. Core requirements and milestones were provided, referencing the project's `ROADMAP.md`. Finally, general evaluation criteria and submission guidelines were discussed, followed by tips for success.
+
+This capstone experience aimed to consolidate your learning from all previous modules, challenging you to apply your knowledge in a practical, project-based setting to build a feature-rich React Native application.
+
+### Next Steps
+
+This concludes Module 18. The primary task now is to complete the **SpeedyMeds Capstone Project** by implementing the features outlined in the `ROADMAP.md` and [Section 07: Core Requirements and Milestones](./section-07-core-requirements-and-milestones.md).
+
+Once you have completed and (if applicable) submitted your capstone project, you will be ready for the final module of this course: [Module 19: Course Wrap-up and Next Steps](../module-19-course-wrap-up-and-next-steps/section-00-introduction.md).

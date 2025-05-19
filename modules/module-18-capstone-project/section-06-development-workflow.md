@@ -103,3 +103,7 @@ Ensure your application is accessible to users with disabilities:
 > **Source:** Revisit [Module 15: Performance and Debugging](../module-15-performance-and-debugging/section-00-introduction.md). The official Expo documentation on [Debugging](https://docs.expo.dev/debugging/introduction/) is also an excellent resource.
 
 By following this structured workflow, you can tackle the SpeedyMeds capstone project methodically, leading to a higher-quality implementation and a more rewarding development experience.
+
+### Next Steps
+
+Now that you have a clear development workflow, it's time to understand the specific features and milestones you'll be working towards. Proceed to [Section 07: Core Requirements and Milestones](./section-07-core-requirements-and-milestones.md) to see the checklist of what needs to be built.

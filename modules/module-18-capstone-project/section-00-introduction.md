@@ -20,11 +20,11 @@ By the end of this module, you will be able to:
 
 Before starting this module, ensure you have a solid understanding of the concepts covered in all preceding modules (Modules 0-17). Specifically, you should be comfortable with:
 
-- React Native Core Components and APIs (Module 8 & 9)
-- Styling with StyleSheet, Flexbox, React Native Paper, and Styled Components (Module 10)
-- Navigation with React Navigation and/or Expo Router (Module 11)
-- Handling User Input and Forms (Module 12)
-- State Management with `useState`, Context API, Zustand, and TanStack Query (Module 13)
+- React Native Core Components and APIs ([Module 8](../module-08-react-native-core-components/section-00-introduction.md) & [Module 9](../module-09-react-native-core-apis-and-hooks/section-00-introduction.md))
+- Styling with StyleSheet, Flexbox, React Native Paper, and Styled Components ([Module 10](../module-10-styling-in-react-native/section-00-introduction.md))
+- Navigation with React Navigation and/or Expo Router ([Module 11](../module-11-navigation-and-routing/section-00-introduction.md))
+- Handling User Input and Forms ([Module 12](../module-12-handling-user-input-and-forms/section-00-introduction.md))
+- State Management with `useState`, Context API, Zustand, and TanStack Query ([Module 13](../module-13-state-management/section-00-introduction.md))
 - Working with an existing Expo project environment.
 - TypeScript and its application in React Native.
 - Asynchronous JavaScript and API interactions.

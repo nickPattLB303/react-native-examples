@@ -153,3 +153,7 @@ As you build out the SpeedyMeds features, you will create more domain-specific r
 > **Source:** Examine the contents of the `src/theme/` directory in the SpeedyMeds project to see how color palettes, typography, and spacing are defined and assembled into theme objects.
 
 By leveraging the theming capabilities of React Native Paper and Styled Components, along with the custom `ThemeContext`, you can build a visually consistent and adaptable UI for the SpeedyMeds application that looks great in both light and dark modes.
+
+### Next Steps
+
+With a solid understanding of the UI layer, theming, and styling approaches in SpeedyMeds, you're now equipped to start building out features. The next section will outline a recommended development workflow for tackling these features effectively. Proceed to [Section 06: Development Workflow](./section-06-development-workflow.md).

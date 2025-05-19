@@ -266,4 +266,15 @@ This setup allows for both broad top-level navigation via tabs and focused, hier
 >
 > **Source:** Review the React Navigation documentation on [Nesting Navigators](https://reactnavigation.org/docs/nesting-navigators) to understand how different navigator types are combined.
 
+> 🌐 **(Web Developers - React/Angular):**
+>
+> **Comparison:** React Navigation is conceptually similar to routing libraries used in web applications like React Router (for React) or Angular Router. You define routes (screens), navigators (like stacks or tabs), and handle parameter passing. The main difference is that React Navigation is designed for the native mobile navigation paradigms (e.g., native stack transitions, bottom tabs that integrate with OS features) rather than browser history and URL-based routing.
+>
+> **Key Takeaway:** The principles of defining routes and navigating between views are similar. Focus on understanding how React Navigation's specific navigators (`createNativeStackNavigator`, `createBottomTabNavigator`) map to mobile UI patterns and how type safety for parameters is handled.
+> **Source:** [React Router Docs](https://reactrouter.com/), [Angular Router Guide](https://angular.io/guide/routing-overview)
+
 By grasping how navigation is structured and typed in SpeedyMeds, you can confidently add new screens, modify navigation flows, and pass data between views as you implement the project's features.
+
+### Next Steps
+
+Understanding the navigation flow is crucial for building out the app's screens. Next, we'll explore how the visual appearance of SpeedyMeds is managed through theming and styling. Proceed to [Section 05: UI Layer: Theming and Styling](./section-05-ui-layer-theming-and-styling.md).

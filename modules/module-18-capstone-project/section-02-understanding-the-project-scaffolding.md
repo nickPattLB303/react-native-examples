@@ -82,4 +82,14 @@ The `src` directory is where you'll spend most of your time. It's organized to s
 >
 > **Source:** Explore the ["Bare Workflow" vs "Managed Workflow"](https://docs.expo.dev/workflow/managed-and-bare/) documentation on the Expo site to understand these differences more deeply.
 
+> 🌐 **(Web Developers):**
+>
+> **Comparison:** The project structure, especially within the `src` directory (with `components`, `screens`, `hooks`, `utils`, etc.), will feel familiar if you've worked with modern JavaScript frameworks like React, Vue, or Angular. The root-level configuration files (`package.json`, `tsconfig.json`, `eslint`, `prettier`) are also standard. The main differences are mobile-specific files like `app.json` (for Expo) and the absence of HTML/CSS files in favor of JSX and `StyleSheet` or CSS-in-JS for styling.
+>
+> **Key Takeaway:** The organization of source code is very similar to modern web app structures. Pay attention to how Expo manages app-level configuration through `app.json` and how native modules and assets are handled.
+
 Understanding this scaffolding is the first step to confidently navigating and contributing to the SpeedyMeds project. In the next sections, we'll look at how data flows through this structure and how specific features like navigation and theming are implemented.
+
+### Next Steps
+
+Now that you're familiar with the project's file and directory layout, the next crucial aspect to understand is how data is managed and flows through the application. Proceed to [Section 03: Data Flow and State Management](./section-03-data-flow-and-state-management.md).

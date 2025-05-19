@@ -68,3 +68,7 @@ These tasks apply across all feature implementations:
 > **(Instructor-Led Path):** Your instructor may provide a more structured timeline or specific focus areas from this list for each session or milestone. Be prepared to discuss your progress and challenges.
 
 Completing these requirements will demonstrate your ability to apply the concepts learned throughout the course to build a functional and well-structured React Native application.
+
+### Next Steps
+
+Now that you have a clear understanding of the core requirements and the features to be implemented, it's important to know how your work will be assessed. Proceed to [Section 08: Evaluation and Submission](./section-08-evaluation-and-submission.md) for details on project assessment and submission guidelines.

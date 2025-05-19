@@ -239,3 +239,7 @@ This diagram illustrates the ongoing journey of a React Native developer beyond 
 
 > [!IMPORTANT]
 > As you reflect on this journey, remember that becoming proficient in React Native is an ongoing process. The ecosystem evolves rapidly, and continuous learning is essential. Use the skills and learning strategies you've developed during this course to adapt to new changes and advancements in the React Native world.
+
+### Next Steps
+
+Having summarized the entire course, it's time to specifically reflect on your experience with the capstone project. Proceed to [Section 2: Capstone Project Reflection and Review](./section-02-capstone-project-reflection.md) to consolidate your practical learnings.
