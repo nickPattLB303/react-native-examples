@@ -1,6 +1,6 @@
 # Section 8: Essential Expo CLI commands
 
-Mastering Expo CLI commands is crucial for efficient React Native development. This section provides a comprehensive reference to the most important commands you'll use daily, along with practical examples and usage patterns.
+Mastering Expo CLI commands is crucial for efficient React Native development. This section provides a comprehensive reference to the most important commands you'll use daily, along with practical examples and usage patterns for cross-platform development.
 
 ## Command categories overview
 
@@ -11,7 +11,7 @@ Expo CLI commands are organized into logical categories based on their purpose i
 Commands for daily development tasks:
 
 - **`npx expo start`** - Start the development server
-- **`npx expo run:ios`** - Build and run on iOS Simulator
+- **`npx expo run:ios`** - Build and run on iOS Simulator (macOS only)
 - **`npx expo run:android`** - Build and run on Android emulator
 - **`npx expo install`** - Install packages with SDK compatibility
 
@@ -73,6 +73,8 @@ npx expo start
 - **`--tunnel`**: When working on corporate networks or sharing with remote devices
 - **`--dev-client`**: When testing custom native code or using development builds
 - **`--offline`**: When working without internet or to test offline functionality
+- **`--ios`**: Quick start with iOS Simulator (macOS only)
+- **`--android`**: Quick start with Android emulator (all platforms)
 
 **Example development session:**
 
@@ -80,8 +82,14 @@ npx expo start
 # Start with cache clear after installing new packages
 npx expo start --clear
 
-# Or start and immediately open iOS Simulator
+# Or start and immediately open iOS Simulator (macOS only)
 npx expo start --ios
+
+# Or start and immediately open Android emulator (all platforms)
+npx expo start --android
+
+# Start with tunnel for network-restricted environments
+npx expo start --tunnel
 ```
 
 ### npx expo install
@@ -97,7 +105,7 @@ npx expo install package-name
 **Installing multiple packages:**
 
 ```bash
-npx expo install react-navigation/native @react-navigation/stack expo-permissions
+npx expo install @react-navigation/native @react-navigation/stack expo-permissions
 ```
 
 **Key benefits over npm install:**
@@ -121,7 +129,7 @@ npx expo install expo-camera expo-location expo-notifications
 
 ### npx expo run:ios
 
-Builds and runs your app on iOS Simulator with development build capabilities.
+Builds and runs your app on iOS Simulator with development build capabilities (macOS only).
 
 **Basic usage:**
 
@@ -146,14 +154,14 @@ npx expo run:ios
   - Working with development builds
   - Need full native build control
 
-- **Use `expo start` + iOS option** when:
+- **Use `expo start --ios`** when:
   - Using managed workflow
   - Standard development without custom native code
   - Want faster iteration cycles
 
 ### npx expo run:android
 
-Similar to `run:ios` but targets Android emulators and devices.
+Builds and runs your app on Android emulator with development build capabilities (all platforms).
 
 **Basic usage:**
 
@@ -161,18 +169,49 @@ Similar to `run:ios` but targets Android emulators and devices.
 npx expo run:android
 ```
 
-**Device targeting:**
+**Common options:**
+
+| **Flag**           | **Purpose**             | **Usage Example**                              |
+| ------------------ | ----------------------- | ---------------------------------------------- |
+| `--device`         | Specify emulator device | `npx expo run:android --device Pixel_7_API_34` |
+| `--clear`          | Clear build cache       | `npx expo run:android --clear`                 |
+| `--variant`        | Specify build variant   | `npx expo run:android --variant release`       |
+| `--no-build-cache` | Disable build caching   | `npx expo run:android --no-build-cache`        |
+
+**Android-specific options:**
 
 ```bash
-# List available devices
+# List available Android devices
 npx expo run:android --device
 
-# Run on specific device
-npx expo run:android --device AVD_NAME
+# Run on specific Android Virtual Device
+npx expo run:android --device Pixel_7_API_34
+
+# Build release variant for testing
+npx expo run:android --variant release
 ```
 
-> [!NOTE]
-> This course focuses on iOS development, but `run:android` follows similar patterns. The main difference is device management - Android uses AVD (Android Virtual Device) names instead of iOS Simulator device names.
+**When to use run:android vs expo start:**
+
+- **Use `run:android`** when:
+
+  - Testing custom native modules
+  - Working with development builds
+  - Need to test Android-specific features
+  - Testing production build variants
+
+- **Use `expo start --android`** when:
+  - Using managed workflow
+  - Standard development without custom native code
+  - Want faster iteration cycles
+
+> 🤖 **Android Developers:**
+>
+> **Comparison:** The `run:android` command works similarly to running your app from Android Studio. It compiles the native Android project and installs the APK on your emulator or device. The main difference is that you're working with React Native/Expo project structure instead of traditional Android project structure.
+>
+> **Key Takeaway:** Your existing Android build and deployment knowledge applies directly to React Native development.
+>
+> **Source:** [Android Developer Build Guide](https://developer.android.com/studio/run)
 
 ## Project configuration commands
 
@@ -206,6 +245,9 @@ npx expo config
   "platforms": ["ios", "android", "web"],
   "ios": {
     "bundleIdentifier": "com.yourcompany.speedymeds"
+  },
+  "android": {
+    "package": "com.yourcompany.speedymeds"
   }
 }
 ```
@@ -240,11 +282,11 @@ npx expo doctor
 ✅ Expo CLI is up to date
 ✅ Expo SDK dependencies are compatible
 ⚠️  react-native-gesture-handler is not compatible with SDK 52
-❌ Xcode Command Line Tools not found
+❌ Android SDK not found
 
 Issues found:
 1. Run: npx expo install react-native-gesture-handler
-2. Install Xcode Command Line Tools: xcode-select --install
+2. Install Android SDK or set ANDROID_HOME environment variable
 ```
 
 ### npx expo prebuild
@@ -264,6 +306,19 @@ npx expo prebuild
 | `--clear`    | Clear existing native directories | `npx expo prebuild --clear`                 |
 | `--platform` | Generate for specific platform    | `npx expo prebuild --platform ios`          |
 | `--template` | Use specific template             | `npx expo prebuild --template bare-minimum` |
+
+**Platform-specific prebuild:**
+
+```bash
+# Generate only iOS native code (macOS only)
+npx expo prebuild --platform ios
+
+# Generate only Android native code (all platforms)
+npx expo prebuild --platform android
+
+# Generate both platforms
+npx expo prebuild
+```
 
 **When to use prebuild:**
 
@@ -305,13 +360,28 @@ Exports your app for web deployment or static hosting.
 npx expo export
 ```
 
+**Platform-specific export:**
+
+```bash
+# Export for all platforms
+npx expo export
+
+# Export for specific platform
+npx expo export --platform ios
+npx expo export --platform android
+npx expo export --platform web
+```
+
 **Output structure:**
 
 ```
 dist/
 ├── assets/           # Optimized images and fonts
-├── bundles/         # JavaScript bundles
-├── index.html       # Entry point for web
+├── bundles/         # Platform-specific JavaScript bundles
+│   ├── ios/         # iOS-specific bundle
+│   ├── android/     # Android-specific bundle
+│   └── web/         # Web-specific bundle
+├── index.html       # Entry point for web (if web platform enabled)
 └── manifest.json    # App manifest
 ```
 
@@ -364,10 +434,17 @@ eas login
 eas build:configure
 ```
 
-**Build for iOS:**
+**Build for specific platforms:**
 
 ```bash
+# Build for iOS (macOS only for local testing)
 eas build --platform ios
+
+# Build for Android (all platforms)
+eas build --platform android
+
+# Build for all platforms
+eas build --platform all
 ```
 
 > [!NOTE]
@@ -380,9 +457,18 @@ Combine commands effectively for common development scenarios.
 ### Daily development workflow
 
 ```bash
-# Morning setup
+# Morning setup - choose your platform
 cd SpeedyMeds
+
+# Option 1: iOS development (macOS only)
 npx expo start --clear --ios
+
+# Option 2: Android development (all platforms)
+npx expo start --clear --android
+
+# Option 3: Multi-platform development
+npx expo start --clear
+# Then press 'i' for iOS or 'a' for Android
 
 # Install new package during development
 npx expo install react-native-elements
@@ -390,6 +476,22 @@ npx expo install react-native-elements
 # Restart development server after package installation
 # (Press Ctrl+C to stop, then restart)
 npx expo start
+```
+
+### Cross-platform testing workflow
+
+```bash
+# Test on both platforms during development
+npx expo start
+
+# In terminal interface:
+# Press 'i' to test on iOS Simulator (macOS only)
+# Press 'a' to test on Android Emulator
+# Press 'w' to test in web browser
+
+# Or use tunnel for physical devices
+npx expo start --tunnel
+# Scan QR code with Expo Go on multiple devices
 ```
 
 ### Troubleshooting workflow
@@ -416,11 +518,11 @@ npx expo start --clear
 # Verify configuration
 npx expo config --full
 
-# Run final tests
+# Run final tests on all platforms
 npx expo start --clear
 
 # Export for web (if needed)
-npx expo export
+npx expo export --platform web
 
 # Build for app stores (modern approach)
 eas build --platform all
@@ -432,12 +534,12 @@ Understanding common flags helps you use commands more effectively.
 
 ### Global flags (work with most commands)
 
-| **Flag**            | **Purpose**              | **Commands**                   |
-| ------------------- | ------------------------ | ------------------------------ |
-| `--help`            | Show command help        | All commands                   |
-| `--version`         | Show CLI version         | All commands                   |
-| `--non-interactive` | Skip interactive prompts | Most commands                  |
-| `--clear`           | Clear caches             | `start`, `run:ios`, `prebuild` |
+| **Flag**            | **Purpose**              | **Commands**                                  |
+| ------------------- | ------------------------ | --------------------------------------------- |
+| `--help`            | Show command help        | All commands                                  |
+| `--version`         | Show CLI version         | All commands                                  |
+| `--non-interactive` | Skip interactive prompts | Most commands                                 |
+| `--clear`           | Clear caches             | `start`, `run:ios`, `run:android`, `prebuild` |
 
 ### Platform-specific flags
 
@@ -456,6 +558,56 @@ Understanding common flags helps you use commands more effectively.
 | `--offline`    | Work offline          | `start`      |
 | `--port`       | Specify port          | `start`      |
 
+## Platform-specific command patterns
+
+### iOS development patterns (macOS only)
+
+```bash
+# Quick iOS development start
+npx expo start --ios
+
+# iOS with development build
+npx expo run:ios --configuration Debug
+
+# iOS release build for testing
+npx expo run:ios --configuration Release
+
+# iOS with specific simulator
+npx expo run:ios --device "iPhone 15 Pro Max"
+```
+
+### Android development patterns (all platforms)
+
+```bash
+# Quick Android development start
+npx expo start --android
+
+# Android with development build
+npx expo run:android --variant debug
+
+# Android release build for testing
+npx expo run:android --variant release
+
+# Android with specific emulator
+npx expo run:android --device Pixel_7_API_34
+```
+
+### Cross-platform development patterns
+
+```bash
+# Start development server for all platforms
+npx expo start
+
+# Export for all platforms
+npx expo export --platform all
+
+# Install packages (works for all platforms)
+npx expo install react-native-paper
+
+# Publish to Expo Go (works on all devices)
+npx expo publish
+```
+
 ## Best practices for command usage
 
 Follow these patterns for efficient development workflows.
@@ -464,10 +616,10 @@ Follow these patterns for efficient development workflows.
 
 ```bash
 # Good: Clear intent
-npx expo start --clear --ios
+npx expo start --clear --android
 
 # Less clear: Abbreviated flags might be confusing to teammates
-npx expo start -c -i
+npx expo start -c -a
 ```
 
 ### Combine related operations
@@ -486,7 +638,8 @@ Instead of always using command flags, configure defaults in `package.json`:
   "scripts": {
     "start": "expo start --clear",
     "ios": "expo start --ios",
-    "android": "expo start --android"
+    "android": "expo start --android",
+    "tunnel": "expo start --tunnel"
   }
 }
 ```
@@ -495,8 +648,9 @@ Then use shorter npm commands:
 
 ```bash
 npm start
-npm run ios
-npm run android
+npm run ios      # macOS only
+npm run android  # All platforms
+npm run tunnel   # Network-restricted environments
 ```
 
 ### Document team conventions
@@ -507,7 +661,9 @@ Create a project README documenting which commands and flags your team uses:
 ## Development Commands
 
 - `npm start` - Start development server with cache clear
-- `npm run ios` - Start and open iOS Simulator
+- `npm run ios` - Start and open iOS Simulator (macOS only)
+- `npm run android` - Start and open Android Emulator (all platforms)
+- `npm run tunnel` - Start with tunnel for network issues
 - `npx expo install PACKAGE` - Install packages (always use this over npm install)
 - `npx expo doctor` - Run before reporting bugs
 ```
@@ -528,4 +684,4 @@ Create a project README documenting which commands and flags your team uses:
 
 ## Next steps
 
-You now have a comprehensive understanding of essential Expo CLI commands for React Native development. These commands will become second nature as you progress through your development journey. The next section addresses common setup and configuration issues you might encounter, providing practical solutions to keep your development environment running smoothly.
+You now have a comprehensive understanding of essential Expo CLI commands for cross-platform React Native development. These commands will become second nature as you progress through your development journey. The next section addresses common setup and configuration issues you might encounter across different platforms, providing practical solutions to keep your development environment running smoothly.
