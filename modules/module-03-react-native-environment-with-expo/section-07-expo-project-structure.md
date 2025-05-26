@@ -1,8 +1,8 @@
-# Section 7: Expo project structure
+## Section 7: Expo Project Structure
 
 Understanding your Expo project's file and folder structure is essential for effective development. This section provides a comprehensive overview of how Expo projects are organized, what each file and directory does, and best practices for maintaining a clean, scalable project structure.
 
-## High-level project overview
+### High-level project overview
 
 When you created your SpeedyMeds project using `create-expo-app`, several files and folders were automatically generated. Each serves a specific purpose in the React Native development ecosystem.
 

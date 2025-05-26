@@ -1,8 +1,8 @@
-# Section 2: Installing prerequisites
+## Section 2: Installing Prerequisites
 
 Before creating your first Expo application, you need to install several essential tools that form the foundation of React Native development. This section provides step-by-step instructions for installing Node.js, package managers, Watchman, and platform-specific development tools on Windows, macOS, and Linux.
 
-## Prerequisites for this section
+### Prerequisites for this section
 
 - Computer running Windows 10+, macOS 10.15+, or recent Linux distribution
 - Administrative access to install software
@@ -12,15 +12,15 @@ Before creating your first Expo application, you need to install several essenti
 > [!IMPORTANT]
 > This course supports multiple development approaches. Choose the setup that matches your platform and preferred development method: iOS Simulator (macOS only), Android Emulator (Windows, macOS, Linux), or Expo Go on physical devices (all platforms).
 
-## Installing Node.js
+### Installing Node.js
 
 Node.js is the JavaScript runtime that powers React Native development tools and enables you to run JavaScript code outside the browser. Expo CLI requires Node.js to function.
 
-### Recommended installation method: Node Version Manager
+#### Recommended installation method: Node Version Manager
 
 Node Version Manager allows you to install and switch between multiple Node.js versions easily. This flexibility is valuable when working on different projects with varying Node.js requirements.
 
-#### Windows Installation (nvm-windows)
+##### Windows Installation (nvm-windows)
 
 1. **Download nvm-windows:**
 
@@ -58,7 +58,7 @@ node --version
 npm --version
 ```
 
-#### macOS and Linux Installation (nvm)
+##### macOS and Linux Installation (nvm)
 
 1. **Install nvm using the official install script:**
 
@@ -102,7 +102,7 @@ node --version
 npm --version
 ```
 
-### Alternative installation method: Direct download
+#### Alternative installation method: Direct download
 
 If you prefer not to use a version manager, you can download Node.js directly:
 
@@ -119,11 +119,11 @@ If you prefer not to use a version manager, you can download Node.js directly:
 >
 > **Source:** [Node.js Documentation](https://nodejs.org/en/docs/)
 
-## Installing package managers
+### Installing package managers
 
 While npm comes bundled with Node.js, you have options for package management. This course supports both npm and Yarn, with slight preference for npm due to its universal availability.
 
-### Using npm (included with Node.js)
+#### Using npm (included with Node.js)
 
 npm is automatically installed with Node.js, so no additional installation is required. Update npm to the latest version:
 
@@ -137,7 +137,7 @@ Verify the update:
 npm --version
 ```
 
-### Installing Yarn (optional)
+#### Installing Yarn (optional)
 
 Yarn is an alternative package manager that some developers prefer for its speed and deterministic installations:
 
@@ -156,11 +156,11 @@ yarn --version
 > [!TIP]
 > Both npm and Yarn work excellently with Expo. Choose based on your preference or team standards. This course provides commands for both, typically showing npm first.
 
-## Installing Watchman
+### Installing Watchman
 
 Watchman is a tool developed by Facebook that watches files and triggers actions when they change. React Native uses Watchman to monitor your source code and automatically reload your application during development.
 
-### Windows Installation
+#### Windows Installation
 
 Watchman is optional on Windows as Metro bundler (React Native's JavaScript bundler) has built-in file watching that works well on Windows.
 
@@ -178,7 +178,7 @@ If you want to install Watchman on Windows:
 choco install watchman
 ```
 
-### macOS Installation
+#### macOS Installation
 
 **Using Homebrew (recommended):**
 
@@ -200,7 +200,7 @@ brew install watchman
 watchman --version
 ```
 
-### Linux Installation
+#### Linux Installation
 
 **Using package managers:**
 
@@ -241,7 +241,7 @@ make
 sudo make install
 ```
 
-### Understanding Watchman's role
+#### Understanding Watchman's role
 
 ```mermaid
 graph LR
@@ -251,16 +251,18 @@ graph LR
     D --> E[App Hot Reloads]
 ```
 
+This workflow diagram illustrates the critical role Watchman plays in creating an efficient React Native development experience through automated file monitoring and hot reloading. The process begins when you make changes to your source code files, whether modifying JavaScript components, updating styles, or adding new functionality. Watchman, running continuously in the background, immediately detects these file system changes using efficient native file watching APIs that are optimized for each operating system. Once Watchman identifies the changes, it notifies the React Native development system, specifically the Metro bundler, which is Facebook's JavaScript bundler designed for React Native applications. The Metro bundler then quickly rebuilds only the affected parts of your application bundle, leveraging incremental compilation to minimize rebuild time. Finally, the updated code is automatically pushed to your running application through hot reloading, updating the app's interface and functionality without requiring a full restart or losing the current application state. This entire process typically completes within seconds, creating a seamless development experience where you can see your changes reflected immediately as you code, dramatically improving productivity compared to traditional mobile development workflows that require manual compilation and app restarts.
+
 Watchman continuously monitors your project files for changes. When you save a file, Watchman immediately notifies the React Native Metro bundler, which rebuilds your application and triggers a hot reload. This creates the near-instantaneous feedback loop that makes React Native development so efficient.
 
 > [!NOTE]
 > While Watchman isn't strictly required for Expo development (especially on Windows), it significantly improves performance and reliability of the hot reload system, especially in larger projects.
 
-## Platform-specific development tools
+### Platform-specific development tools
 
 Depending on your chosen development approach, you may need additional platform-specific tools.
 
-### For iOS Simulator (macOS only)
+#### For iOS Simulator (macOS only)
 
 If you plan to use iOS Simulator for development, you need Xcode Command Line Tools:
 
@@ -294,11 +296,11 @@ gcc --version
 >
 > **Source:** [Xcode Command Line Tools Guide](https://developer.apple.com/xcode/)
 
-### For Android Emulator (all platforms)
+#### For Android Emulator (all platforms)
 
 If you plan to use Android Emulator for development, you have two options:
 
-#### Option 1: Android Studio (recommended)
+##### Option 1: Android Studio (recommended)
 
 1. **Download Android Studio:**
 
@@ -336,7 +338,7 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 ```
 
-#### Option 2: Command Line Tools Only
+##### Option 2: Command Line Tools Only
 
 For a lighter installation, you can install only the Android SDK without Android Studio:
 
@@ -355,7 +357,7 @@ For a lighter installation, you can install only the Android SDK without Android
 >
 > **Source:** [Android Developer Documentation](https://developer.android.com/)
 
-### For Expo Go (all platforms)
+#### For Expo Go (all platforms)
 
 If you plan to use Expo Go on physical devices, no additional development tools are required on your computer. You'll only need:
 
@@ -366,7 +368,7 @@ If you plan to use Expo Go on physical devices, no additional development tools 
 
 2. **Network connectivity** between your development computer and mobile device
 
-## Verifying your complete setup
+### Verifying your complete setup
 
 After installing all prerequisites, verify everything is working correctly:
 
@@ -417,7 +419,7 @@ npm install -g @expo/cli@latest
 expo --version
 ```
 
-### Expected output summary
+#### Expected output summary
 
 Your terminal should show similar versions:
 
@@ -438,9 +440,9 @@ v18.18.0
 > [!IMPORTANT]
 > Version numbers will vary based on when you install these tools. The important thing is that all commands execute successfully without errors.
 
-## Troubleshooting common installation issues
+### Troubleshooting common installation issues
 
-### Cross-platform Node.js issues
+#### Cross-platform Node.js issues
 
 **Issue**: `nvm: command not found` after installation
 
@@ -471,7 +473,7 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### Android setup issues
+#### Android setup issues
 
 **Issue**: Android environment variables not recognized
 
@@ -489,7 +491,7 @@ source ~/.zshrc
 2. Check BIOS virtualization settings
 3. Verify sufficient RAM allocation for emulator
 
-### Platform-specific issues
+#### Platform-specific issues
 
 **Windows firewall blocking connections:**
 

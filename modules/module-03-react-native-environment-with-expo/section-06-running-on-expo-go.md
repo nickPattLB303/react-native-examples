@@ -1,12 +1,12 @@
-# Section 6: Running on Expo Go
+## Section 6: Running on Expo Go
 
 While simulators and emulators provide excellent development environments, testing on physical devices offers the most authentic user experience. Expo Go enables you to run your development builds on real iOS and Android devices without the complex provisioning and deployment processes typically required for native development. This section provides comprehensive coverage of Expo Go setup, including advanced networking options like tunneling for various development scenarios.
 
-## Introduction to Expo Go
+### Introduction to Expo Go
 
 Expo Go is a mobile application that serves as a universal client for running Expo projects during development. Think of it as a specialized browser for React Native applications built with Expo's managed workflow.
 
-### Key benefits of testing on physical devices
+#### Key benefits of testing on physical devices
 
 Testing on real devices provides advantages that simulators cannot replicate:
 
@@ -26,18 +26,18 @@ Testing on real devices provides advantages that simulators cannot replicate:
 >
 > **Source:** [iOS App Distribution Guide](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
 
-## Installing Expo Go
+### Installing Expo Go
 
 Expo Go is available for free on both iOS and Android app stores. This setup works on all platforms.
 
-### iOS installation
+#### iOS installation
 
 1. **Open the App Store** on your iOS device
 2. **Search for "Expo Go"**
 3. **Install the app** from Expo, Inc.
 4. **Open Expo Go** and allow any requested permissions
 
-### Android installation
+#### Android installation
 
 1. **Open Google Play Store** on your Android device
 2. **Search for "Expo Go"**
@@ -53,11 +53,11 @@ The app will ask for several permissions that enable development features:
 > [!IMPORTANT]
 > Grant camera and local network permissions to Expo Go. These are essential for the development workflow and don't affect your production app's permissions.
 
-## Connecting to your development server
+### Connecting to your development server
 
 Expo Go connects to your development server using the same Metro bundler that serves simulators and emulators. There are multiple connection methods depending on your network situation.
 
-### Method 1: QR code scanning (standard connection)
+#### Method 1: QR code scanning (standard connection)
 
 This is the most convenient method for connecting when your development machine and mobile device are on the same network:
 
@@ -79,11 +79,11 @@ npx expo start
 
 5. **Your app will load** on your physical device
 
-### Method 2: Tunnel connection (--tunnel command)
+#### Method 2: Tunnel connection (--tunnel command)
 
 Tunneling is essential when standard local network connections don't work due to firewalls, restrictive networks, or when you need to test from remote locations.
 
-#### Understanding tunneling
+##### Understanding tunneling
 
 ```mermaid
 graph TD
@@ -98,9 +98,11 @@ graph TD
     I -.-> J[Tunnel Bypasses Firewall]
 ```
 
+This network architecture diagram illustrates how Expo's tunneling feature solves common connectivity challenges in React Native development by creating a secure bridge between your local development environment and mobile devices across different networks. The process begins with your developer machine running a local Metro server that bundles and serves your React Native application. Instead of requiring direct network access, the tunnel service (powered by ngrok) establishes a secure connection to your local server and exposes it through a public HTTPS URL accessible from anywhere on the internet. When your mobile device running Expo Go connects to this public URL, the tunnel service routes all traffic back to your local development server, effectively bypassing corporate firewalls, restrictive WiFi networks, and complex network configurations that would otherwise prevent direct connections. This architecture is particularly valuable in enterprise environments where security policies block local network discovery, public WiFi scenarios where device-to-device communication is restricted, or when collaborating with remote team members who need to test your application from different geographic locations. The tunnel maintains end-to-end encryption and provides the same development experience as local connections while offering the flexibility to work in any network environment.
+
 Tunneling creates a secure public URL that routes traffic to your local development server, bypassing network restrictions and enabling connections from anywhere with internet access.
 
-#### Setting up tunnel connection
+##### Setting up tunnel connection
 
 1. **Install the ngrok tunnel dependency:**
 
@@ -126,7 +128,7 @@ npx expo start --tunnel
 
 4. **Scan the QR code** as usual - Expo Go will automatically use the tunnel URL
 
-#### When to use tunnel connection
+##### When to use tunnel connection
 
 **Use `--tunnel` when:**
 
@@ -153,7 +155,7 @@ npx expo start --tunnel
 npx expo start --tunnel
 ```
 
-### Method 3: Manual URL entry
+#### Method 3: Manual URL entry
 
 If QR code scanning isn't working, you can connect manually:
 
@@ -164,7 +166,7 @@ If QR code scanning isn't working, you can connect manually:
    - **Tunnel**: `exp://abc123.tunnel.expo.dev:443`
 4. **Tap "Connect"** to load your application
 
-### Understanding the connection process
+#### Understanding the connection process
 
 ```mermaid
 sequenceDiagram
@@ -188,11 +190,13 @@ sequenceDiagram
     ExpoGo->>Device: Render React Native app
 ```
 
-## Network requirements and configuration
+This sequence diagram demonstrates the sophisticated connection and app loading process that enables Expo Go to provide a seamless development experience across different network configurations. The workflow begins when a user scans a QR code or manually enters a URL in the Expo Go app, which contains the connection information for the development server. The Expo Go app then initiates a network connection, with the diagram showing two possible paths: a standard direct LAN connection for local network scenarios, or a tunnel connection that routes through external services for complex network environments. Once the connection is established, Expo Go requests the application bundle from the development server, which triggers the Metro bundler to compile the JavaScript code and any dependencies into a format suitable for mobile execution. The Metro bundler returns the compiled application to the development server, which then transmits the complete app bundle to the Expo Go client. Finally, Expo Go renders the React Native application on the mobile device, providing the same user experience as a natively compiled app. This entire process typically completes within seconds and supports hot reloading, meaning subsequent code changes trigger only the compilation and transmission steps, enabling rapid iteration during development.
+
+### Network requirements and configuration
 
 Understanding network requirements helps ensure reliable connections between your development machine and mobile devices.
 
-### Network requirements for standard connection
+#### Network requirements for standard connection
 
 **Same Network Requirement:**
 
@@ -206,7 +210,7 @@ Understanding network requirements helps ensure reliable connections between you
 - **Expo DevTools**: Ports 19000-19006 (configurable)
 - **Network Discovery**: Various UDP ports for service discovery
 
-### Network requirements for tunnel connection
+#### Network requirements for tunnel connection
 
 **Internet Connection:**
 
@@ -220,9 +224,9 @@ Understanding network requirements helps ensure reliable connections between you
 - May have higher latency than local connections
 - Uses HTTPS encryption for security
 
-### Verifying network connectivity
+#### Verifying network connectivity
 
-#### For standard connections:
+##### For standard connections:
 
 1. **Check your computer's IP address:**
 
@@ -239,7 +243,7 @@ ipconfig | findstr "IPv4"
    - Navigate to `http://YOUR_IP_ADDRESS:8081`
    - You should see Metro bundler information
 
-#### For tunnel connections:
+##### For tunnel connections:
 
 1. **Verify tunnel URL accessibility:**
 
@@ -252,9 +256,9 @@ ipconfig | findstr "IPv4"
    - Check for "Tunnel connection closed" messages
    - Restart with `--tunnel` if connection drops
 
-### Troubleshooting network issues
+#### Troubleshooting network issues
 
-#### Standard connection issues:
+##### Standard connection issues:
 
 **Issue**: Cannot connect to development server
 
@@ -286,7 +290,7 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate off
    - Navigate to `http://YOUR_IP:8081`
    - Should show Metro bundler page
 
-#### Tunnel connection issues:
+##### Tunnel connection issues:
 
 **Issue**: Tunnel fails to establish
 
@@ -329,11 +333,11 @@ npx expo start --tunnel
 - Switch back to local connection when possible
 - Consider development builds for better performance
 
-## Development workflow with Expo Go
+### Development workflow with Expo Go
 
 Using Expo Go effectively requires understanding its integration with your development workflow and its capabilities compared to simulators.
 
-### Hot reload and live reload
+#### Hot reload and live reload
 
 Expo Go supports the same hot reload capabilities as simulators and emulators:
 
@@ -341,7 +345,7 @@ Expo Go supports the same hot reload capabilities as simulators and emulators:
 - **Live Reload**: Completely reloads the app when files change
 - **Manual Reload**: Shake device or use developer menu to reload
 
-### Developer menu access
+#### Developer menu access
 
 Access the React Native developer menu on physical devices:
 
@@ -361,7 +365,7 @@ Access the React Native developer menu on physical devices:
 
 - Use the Expo Go app's built-in menu options
 
-### Debugging capabilities with Expo Go
+#### Debugging capabilities with Expo Go
 
 **Available debugging:**
 
@@ -383,11 +387,11 @@ Access the React Native developer menu on physical devices:
 - Use simulators/emulators for intensive debugging sessions
 - Use development builds for advanced debugging needs
 
-## Sharing your app with others
+### Sharing your app with others
 
 One powerful feature of Expo Go is the ability to easily share your work-in-progress app with team members, stakeholders, or testers.
 
-### Sharing via QR code
+#### Sharing via QR code
 
 **Real-time sharing (development server running):**
 
@@ -408,7 +412,7 @@ One powerful feature of Expo Go is the ability to easily share your work-in-prog
 - Recipients need Expo Go installed
 - Network connectivity for all participants
 
-### Sharing via tunnel (recommended for teams)
+#### Sharing via tunnel (recommended for teams)
 
 For reliable team sharing, especially with remote members:
 
@@ -433,7 +437,7 @@ npx expo start --tunnel
 # Works regardless of location or network setup
 ```
 
-### Publishing for sharing (alternative method)
+#### Publishing for sharing (alternative method)
 
 For more permanent sharing that doesn't require your development server:
 
@@ -457,11 +461,11 @@ npx expo publish
 > [!NOTE]
 > Publishing to Expo's service is different from publishing to app stores. This feature is for development and testing purposes only.
 
-## Limitations and considerations
+### Limitations and considerations
 
 While Expo Go provides tremendous value for development, understanding its limitations helps set appropriate expectations and plan your development workflow.
 
-### Technical limitations
+#### Technical limitations
 
 **Bundle Size:**
 
@@ -481,7 +485,7 @@ While Expo Go provides tremendous value for development, understanding its limit
 - Certain iOS/Android features may behave differently
 - Production builds may have access to additional capabilities
 
-### Development vs. production behavior
+#### Development vs. production behavior
 
 **Performance:**
 
@@ -501,7 +505,7 @@ While Expo Go provides tremendous value for development, understanding its limit
 - App store features (like push notifications) may behave differently
 - Development vs. production environment differences
 
-### When to transition from Expo Go
+#### When to transition from Expo Go
 
 **Consider development builds when:**
 
@@ -519,11 +523,11 @@ While Expo Go provides tremendous value for development, understanding its limit
 - Learning React Native concepts
 - Rapid iteration on JavaScript-only features
 
-## Advanced tunnel configuration
+### Advanced tunnel configuration
 
 For specialized development scenarios, Expo CLI provides additional tunnel configuration options.
 
-### Environment variables for tunnel customization
+#### Environment variables for tunnel customization
 
 ```bash
 # Set custom tunnel subdomain (experimental)
@@ -539,7 +543,7 @@ export EXPO_TUNNEL_SUBDOMAIN=false
 npx expo start --tunnel
 ```
 
-### Tunnel URL customization
+#### Tunnel URL customization
 
 **Custom subdomain usage:**
 
@@ -564,7 +568,7 @@ npx expo start --tunnel
 - Could conflict with other projects
 - Not guaranteed to be available
 
-### Tunnel troubleshooting and optimization
+#### Tunnel troubleshooting and optimization
 
 **Common tunnel issues and solutions:**
 
@@ -589,7 +593,7 @@ npx expo start --tunnel --ios
 npx expo start --tunnel --android
 ```
 
-## Official documentation
+### Official documentation
 
 > 📚 **Official Documentation:**
 >
@@ -607,6 +611,6 @@ npx expo start --tunnel --android
 > - [Mobile Development Best Practices](https://docs.expo.dev/guides/testing-on-devices/)
 > - [Network Troubleshooting Guide](https://docs.expo.dev/workflow/debugging/#network-debugging)
 
-## Next steps
+### Next steps
 
 You now have comprehensive knowledge of using Expo Go for testing React Native applications on physical devices, including advanced networking configurations with tunneling. This approach complements simulator and emulator development by providing authentic device testing with flexible connectivity options. The next section will explore the structure of Expo projects, helping you understand how files and folders are organized to support effective development across all the approaches you've learned.

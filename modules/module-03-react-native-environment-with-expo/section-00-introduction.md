@@ -38,7 +38,6 @@ Setting up a development environment is the foundation of any successful React N
 - Navigate and understand the Expo project structure
 - Execute essential Expo CLI commands for development workflows
 - Identify and resolve common setup and configuration issues across different platforms
-- Utilize Expo Snack for rapid prototyping and learning
 
 ## Prerequisites
 

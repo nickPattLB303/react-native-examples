@@ -1,19 +1,19 @@
-# Section 3: Creating your first Expo app
+## Section 3: Creating Your First Expo App
 
 Now that you have all prerequisites installed, it's time to create your first React Native application using Expo. This section walks you through the modern `create-expo-app` command and gets your first application running.
 
-## Prerequisites for this section
+### Prerequisites for this section
 
 - Completion of Section 2: Installing prerequisites
 - Node.js, npm, Watchman, and Xcode Command Line Tools installed and verified
 - Expo CLI installed globally (`@expo/cli@latest`)
 - Terminal application open and ready
 
-## Understanding create-expo-app
+### Understanding create-expo-app
 
 The `create-expo-app` command is the modern way to scaffold new Expo projects. It replaces the older `expo init` command and provides a streamlined experience with up-to-date templates and dependencies.
 
-### Key benefits of create-expo-app
+#### Key benefits of create-expo-app
 
 - **Latest dependencies**: Always uses the most recent stable versions of Expo SDK and React Native
 - **Modern templates**: Includes current best practices and file structures
@@ -21,11 +21,11 @@ The `create-expo-app` command is the modern way to scaffold new Expo projects. I
 - **Zero configuration**: Works immediately without manual setup
 - **Template variety**: Offers different starting points based on your needs
 
-## Creating your first project
+### Creating your first project
 
 Let's create a new project for a pharmacy management application called "SpeedyMeds" - the theme we'll use throughout this course.
 
-### Step-by-step project creation
+#### Step-by-step project creation
 
 1. **Navigate to your development directory:**
 
@@ -73,7 +73,7 @@ SpeedyMeds/
 └── node_modules/        # Installed dependencies
 ```
 
-### Understanding the creation process
+#### Understanding the creation process
 
 When you run `create-expo-app`, several things happen behind the scenes:
 
@@ -88,13 +88,15 @@ graph TD
     G --> H[Ready for Development]
 ```
 
+This workflow diagram illustrates the comprehensive setup process that occurs when you execute the `create-expo-app` command, demonstrating why this tool is so powerful for React Native development. The process begins when you run the command, which triggers a sequence of automated steps that would otherwise require manual configuration. First, the command downloads the latest project template from Expo's servers, ensuring you always start with the most current best practices and dependency versions. Next, it automatically installs all necessary dependencies by running npm install, setting up everything from React Native core to Expo SDK modules. The process then configures Babel with appropriate presets for React Native development, followed by setting up the Expo configuration file that defines your app's metadata and build settings. The tool creates all initial project files including the main App component, asset directories, and necessary configuration files. Finally, it initializes a Git repository with appropriate .gitignore rules for React Native projects, making your project ready for version control from day one. This entire automated process typically takes just a few minutes but saves hours of manual setup time and ensures your project starts with optimal configuration.
+
 1. **Template Download**: Downloads the most current project template from Expo's servers
 2. **Dependency Installation**: Automatically runs `npm install` to set up all required packages
 3. **Configuration Setup**: Creates necessary configuration files for Babel, Expo, and development tools
 4. **Asset Generation**: Includes placeholder app icons and splash screens
 5. **Git Initialization**: Sets up a Git repository with appropriate .gitignore rules
 
-## Examining your first app
+### Examining your first app
 
 Let's look at the main application file to understand what was created:
 
@@ -138,11 +140,11 @@ This simple app demonstrates several fundamental React Native concepts:
 >
 > **Source:** [React Components and Props](https://react.dev/learn/your-first-component)
 
-## Running your application
+### Running your application
 
 With your project created, let's start the development server and see your app in action.
 
-### Starting the development server
+#### Starting the development server
 
 1. **Ensure you're in your project directory:**
 
@@ -159,7 +161,7 @@ npx expo start
 
 This command starts the Metro bundler and opens a development interface in your terminal.
 
-### Understanding the development server output
+#### Understanding the development server output
 
 After running `expo start`, you'll see output similar to:
 
@@ -187,7 +189,7 @@ This interface provides several ways to run your application:
 - **Web Browser**: Press `w` to run in your web browser
 - **Reload Commands**: Various shortcuts for development workflow
 
-### Development server architecture
+#### Development server architecture
 
 ```mermaid
 graph LR
@@ -201,6 +203,8 @@ graph LR
     F --> I[Error Reporting]
 ```
 
+This architecture diagram shows how the Expo development server orchestrates multiple components to create a seamless React Native development experience. The Expo Dev Server acts as the central coordinator that manages the entire development workflow. It connects to the Metro Bundler, which is Facebook's JavaScript bundler specifically designed for React Native that compiles, transforms, and bundles your JavaScript code into a format that can run on mobile devices. The Metro Bundler then distributes this bundled code to various targets: iOS Simulator for macOS development, the Expo Go mobile app for testing on physical devices, and web browsers when developing for web platforms. Meanwhile, the Expo Dev Server maintains a Development Interface that provides several critical development features. The File Watching system continuously monitors your source code for changes, enabling the Hot Reload functionality that automatically pushes updates to all connected devices without requiring manual refreshes or app restarts. The Error Reporting component captures and displays JavaScript errors and warnings in a developer-friendly format. This interconnected system creates an efficient development loop where code changes are instantly reflected across all testing platforms, dramatically speeding up the development process compared to traditional native development workflows.
+
 The development server consists of several components working together:
 
 - **Metro Bundler**: Compiles and bundles your JavaScript code
@@ -208,13 +212,13 @@ The development server consists of several components working together:
 - **Hot Reload System**: Pushes updates to connected devices automatically
 - **Development Interface**: Provides commands and feedback in your terminal
 
-## Exercise 3.1: Create and run initial app
+### Exercise 3.1: Create and run initial app
 
 **[Create and Run Your First Expo App](https://snack.expo.dev/@reactnative-course/exercise-3-1-create-first-app)**
 
 This exercise will guide you through creating your own version of the SpeedyMeds application and making your first modifications to see the development workflow in action.
 
-## Verifying successful setup
+### Verifying successful setup
 
 After creating and starting your application, verify everything is working correctly:
 
@@ -223,14 +227,14 @@ After creating and starting your application, verify everything is working corre
 3. **Dependencies installed**: `node_modules` folder contains packages
 4. **Hot reload works**: Changes to App.js trigger automatic updates
 
-### Common success indicators
+#### Common success indicators
 
 - **Clean terminal output**: No red error messages in the development server logs
 - **Port availability**: Metro bundler successfully binds to port 8081
 - **File watching active**: The server responds when you save file changes
 - **QR code displayed**: A scannable QR code appears in your terminal
 
-### Initial troubleshooting
+#### Initial troubleshooting
 
 If you encounter issues, try these common solutions:
 
@@ -256,11 +260,11 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-## Understanding project initialization
+### Understanding project initialization
 
 The project creation process sets up several important aspects of your development environment:
 
-### Dependency management
+#### Dependency management
 
 Your `package.json` file now contains all necessary dependencies for React Native development:
 
@@ -284,7 +288,7 @@ Your `package.json` file now contains all necessary dependencies for React Nativ
 }
 ```
 
-### Expo configuration
+#### Expo configuration
 
 The `app.json` file contains Expo-specific settings:
 
@@ -309,7 +313,7 @@ The `app.json` file contains Expo-specific settings:
 
 This configuration controls how your app appears and behaves when published or built.
 
-## Official documentation
+### Official documentation
 
 > 📚 **Official Documentation:**
 >
@@ -323,6 +327,6 @@ This configuration controls how your app appears and behaves when published or b
 > - [Expo App Configuration](https://docs.expo.dev/workflow/configuration/)
 > - [Understanding Metro](https://docs.expo.dev/guides/customizing-metro/)
 
-## Next steps
+### Next steps
 
 Your first Expo application is now created and running! In the next section, you'll learn about the differences between Expo CLI commands and traditional npm/yarn package management commands, giving you a deeper understanding of how these tools work together in your development workflow.
