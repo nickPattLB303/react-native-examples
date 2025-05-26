@@ -84,7 +84,7 @@ Consistency in terminology is paramount. The following terms MUST be used consis
 - `Fabric`: The New Architecture's rendering system.
 - `Codegen`: The tool generating interface code between JS/TS and native modules in the New Architecture.
 - `Expo Go`: The client app used for development and testing Expo projects without native builds.
-- `Simulator (iOS) / Emulator (Android)`: Software for running mobile apps on a desktop. Course focuses on iOS Simulator.
+- `Simulator (iOS) / Emulator (Android)`: Software for running mobile apps on a desktop.
 - `StyleSheet`: React Native's API for creating styles.
 - `Styled Components`: The specific CSS-in-JS library used for styling.
 - `React Native Paper`: The specific UI component library used.
