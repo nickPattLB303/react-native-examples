@@ -1,147 +1,426 @@
-## Section 6: Core Building Blocks (A Preview)
+## Core building blocks preview
 
-React Native provides a set of essential, pre-built components that work across both iOS and Android. These **Core Components** are the basic tools in your UI toolkit, each mapping to corresponding native UI elements for optimal performance and look-and-feel. This section offers a brief preview of some fundamental ones. Later modules will delve much deeper into each component, exploring their props, styling, layout, and interactions.
+Let's peek under the hood of React Native and preview the essential building blocks you'll master in upcoming modules. Think of this as your roadmap to React Native proficiency!
 
-### Key Core Components
+### The component model: Everything is a component
 
-Here are a few of the most commonly used Core Components:
+In React Native, your entire app is built from components - reusable pieces of UI that manage their own state and appearance:
 
-#### `<View>`
+```typescript
+// A simple component for displaying a medication
+const MedicationPill: React.FC<{ name: string; dosage: string }> = ({ name, dosage }) => {
+    return (
+        <View style={styles.pill}>
+            <Text style={styles.pillName}>{name}</Text>
+            <Text style={styles.pillDosage}>{dosage}</Text>
+        </View>
+    );
+};
 
-- **Role:** The most basic container component. Use it to group other components, apply styles, and control layout using Flexbox.
-- **Analogy:** Think of it like a `<div>` in web development, or `UIView` on iOS / `ViewGroup` on Android.
-- **Example:**
+// Components compose into larger components
+const MedicationList: React.FC = () => {
+    return (
+        <ScrollView>
+            <MedicationPill name="Aspirin" dosage="100mg" />
+            <MedicationPill name="Ibuprofen" dosage="200mg" />
+            <MedicationPill name="Acetaminophen" dosage="500mg" />
+        </ScrollView>
+    );
+};
+```
 
-  ```tsx
-  import React from "react";
-  import { View, Text, StyleSheet } from "react-native";
+> **💡 TIP**  
+> Think of components like LEGO blocks - small, focused pieces that combine to build complex applications.
 
-  const MedicationInfoBox = () => (
-    <View style={styles.infoBoxContainer}>
-      <Text style={styles.infoText}>Aspirin 100mg</Text>
-      <Text style={styles.subText}>Take one daily</Text>
-    </View>
-  );
+### Core components: Your UI toolkit
 
-  const styles = StyleSheet.create({
-    infoBoxContainer: {
-      padding: 10,
-      backgroundColor: "#eef",
-      borderWidth: 1,
-      borderColor: "#ccd",
+React Native provides a set of core components that map to native platform widgets:
+
+```typescript
+import {
+    View,        // Like UIView (iOS) or android.view.View
+    Text,        // Like UILabel (iOS) or TextView (Android)
+    Image,       // Like UIImageView (iOS) or ImageView (Android)
+    ScrollView,  // Like UIScrollView (iOS) or ScrollView (Android)
+    TextInput,   // Like UITextField (iOS) or EditText (Android)
+    Button,      // Native button implementation
+    TouchableOpacity, // Touchable wrapper with opacity feedback
+} from 'react-native';
+
+// Building a simple form
+const PrescriptionForm: React.FC = () => {
+    const [medication, setMedication] = useState('');
+    
+    return (
+        <View style={styles.form}>
+            <Text style={styles.label}>Medication Name</Text>
+            <TextInput
+                style={styles.input}
+                value={medication}
+                onChangeText={setMedication}
+                placeholder="Enter medication name"
+            />
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Add Prescription</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+```
+
+### Styling: Flexbox everywhere
+
+React Native uses Flexbox for layout, making responsive design intuitive:
+
+```typescript
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,                    // Take up all available space
+        flexDirection: 'column',    // Stack children vertically
+        justifyContent: 'center',   // Center vertically
+        alignItems: 'center',       // Center horizontally
+        padding: 20,
     },
-    infoText: { fontSize: 16, fontWeight: "bold" },
-    subText: { fontSize: 14, color: "gray" },
-  });
-  ```
+    row: {
+        flexDirection: 'row',       // Arrange children horizontally
+        justifyContent: 'space-between', // Space items evenly
+        width: '100%',
+    },
+    box: {
+        flex: 1,                    // Equal width boxes
+        height: 100,
+        margin: 5,
+        backgroundColor: '#007AFF',
+    }
+});
+```
 
-#### `<Text>`
+```mermaid
+graph TD
+    A[Container<br/>flex: 1] --> B[Header<br/>height: 60]
+    A --> C[Content<br/>flex: 1]
+    A --> D[Footer<br/>height: 50]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#cfc,stroke:#333,stroke-width:2px
+```
 
-- **Role:** Used for displaying all text content. Any text string in your JSX _must_ be wrapped within a `<Text>` component.
-- **Features:** Supports nesting `<Text>` components for varied styling and can handle touch events.
-- **Analogy:** Similar to `<p>` or `<span>` in web development, or `UILabel`/`UITextView` on iOS / `TextView` on Android.
-- **Example:**
+### State management: Making apps interactive
 
-  ```tsx
-  import React from "react";
-  import { Text, StyleSheet } from "react-native";
+State is what makes your app dynamic. React Native uses hooks for state management:
 
-  const PatientWelcomeMessage = () => (
-    <Text style={styles.welcomeMessage}>
-      Welcome, <Text style={styles.patientName}>Jane Doe</Text>!{"\\n"}Check
-      your medication schedule.
-    </Text>
-  );
-
-  const styles = StyleSheet.create({
-    welcomeMessage: { fontSize: 18, textAlign: "center", marginVertical: 10 },
-    patientName: { fontWeight: "bold", color: "#007bff" },
-  });
-  ```
-
-#### `<Image>`
-
-- **Role:** Displays images from various sources: network URLs, static project resources (using `require('./path/to/image.png')`), or local device storage.
-- **Requirement:** Network images _must_ have `width` and `height` styles specified.
-- **Analogy:** Like `<img>` in web development, or `UIImageView` on iOS / `ImageView` on Android.
-- **Example:**
-
-  ```tsx
-  import React from "react";
-  import { Image, StyleSheet, View, Text } from "react-native";
-
-  const PharmacyBrandImage = () => (
-    <View style={styles.imageContainer}>
-      <Text style={styles.imageCaption}>SpeedyMeds Pharmacy</Text>
-      <Image
-        style={styles.pharmacyLogo}
-        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} // Placeholder for a pharmacy/health logo
-        accessibilityLabel="SpeedyMeds Pharmacy Logo"
-      />
-      {/* <Image style={styles.localImage} source={require('./assets/my-icon.png')} /> */}
-    </View>
-  );
-
-  const styles = StyleSheet.create({
-    imageContainer: { alignItems: "center", marginVertical: 10 },
-    pharmacyLogo: { width: 60, height: 60, resizeMode: "contain" },
-    imageCaption: { fontSize: 12, color: "gray", marginBottom: 5 },
-    // localImage: { width: 100, height: 100 },
-  });
-  ```
-
-#### `<StyleSheet>`
-
-- **Role:** An API (not a component itself) used to define reusable style objects in JavaScript. `StyleSheet.create()` is used to centralize style definitions.
-- **Benefits:** Improves code organization by separating styles from rendering logic and can offer performance optimizations by sending styles over the bridge only once.
-- **Analogy:** Conceptually similar to creating CSS rules in a `<style>` tag or `.css` file on the web.
-- **Example:** (See `styles` objects in the examples above and below – they all use `StyleSheet.create`)
-
-#### `<Button>`
-
-- **Role:** A simple, cross-platform button component for basic user interactions.
-- **Props:** Requires `title` (string for button text) and `onPress` (function to call when tapped). Optional `color` and `disabled` props.
-- **Customization:** Offers minimal styling customization. For more control, use `<Pressable>` or build custom touchable components.
-- **Analogy:** Like `<button>` in web development, or `UIButton` on iOS / `Button` on Android.
-- **Example:**
-
-  ```tsx
-  import React from "react";
-  import { Button, Alert, View, StyleSheet } from "react-native";
-
-  const RefillRequestButton = () => (
-    <View style={styles.buttonWrapper}>
-      <Button
-        title="Request Refill"
-        onPress={() =>
-          Alert.alert(
-            "Refill Requested",
-            "Your request for Amoxicillin has been submitted."
-          )
+```typescript
+const MedicationTracker: React.FC = () => {
+    // Local component state
+    const [medications, setMedications] = useState<Medication[]>([]);
+    const [loading, setLoading] = useState(true);
+    
+    // Side effects with useEffect
+    useEffect(() => {
+        loadMedications();
+    }, []);
+    
+    const loadMedications = async () => {
+        try {
+            const meds = await fetchMedications();
+            setMedications(meds);
+        } finally {
+            setLoading(false);
         }
-        color="#007bff"
-      />
-    </View>
-  );
-  const styles = StyleSheet.create({
-    buttonWrapper: { marginVertical: 10, marginHorizontal: 20 },
-  });
-  ```
+    };
+    
+    const addMedication = (med: Medication) => {
+        setMedications([...medications, med]);
+    };
+    
+    if (loading) {
+        return <ActivityIndicator size="large" />;
+    }
+    
+    return (
+        <View>
+            {medications.map(med => (
+                <MedicationCard key={med.id} medication={med} />
+            ))}
+        </View>
+    );
+};
+```
 
-### Component Mapping Reference
+### Navigation: Moving between screens
 
-This table helps visualize how common React Native Core Components relate to their native counterparts and web equivalents:
+Apps need multiple screens. React Navigation makes this elegant:
 
-| React Native Component | Android Native View         | iOS Native View        | Web Analog              | Description                                                                   |
-| :--------------------- | :-------------------------- | :--------------------- | :---------------------- | :---------------------------------------------------------------------------- |
-| `<View>`               | `android.view.ViewGroup`    | `UIView`               | `<div>`                 | Fundamental container supporting Flexbox layout, styling, and touch handling. |
-| `<Text>`               | `android.widget.TextView`   | `UILabel`/`UITextView` | `<p>`, `<span>`         | Displays styled text; must wrap all text nodes.                               |
-| `<Image>`              | `android.widget.ImageView`  | `UIImageView`          | `<img>`                 | Displays network or static images.                                            |
-| `<TextInput>`          | `android.widget.EditText`   | `UITextField`          | `<input type="text">`   | Allows user text input via keyboard.                                          |
-| `<ScrollView>`         | `android.widget.ScrollView` | `UIScrollView`         | `<div>` (with overflow) | Generic scrolling container for heterogeneous content.                        |
-| `<Button>`             | `android.widget.Button`     | `UIButton`             | `<button>`              | Basic, minimally customizable button.                                         |
-| `StyleSheet` (API)     | N/A (Style System)          | N/A (Style System)     | CSS                     | JavaScript API for defining optimized style objects.                          |
+```typescript
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-_(Note: This mapping is conceptual; the underlying implementation involves complex bridging and rendering logic, especially with the New Architecture.)_
+const Stack = createStackNavigator();
 
-This preview is just the tip of the iceberg. Subsequent modules will explore these and other Core Components (like `<TextInput>`, `<ScrollView>`, `<FlatList>`, `<Pressable>`) in much greater detail, including their full range of props, advanced usage patterns, styling techniques, layout with Flexbox, and handling user interactions.
+const App: React.FC = () => {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Medications" component={MedicationsScreen} />
+                <Stack.Screen name="MedicationDetail" component={MedicationDetailScreen} />
+                <Stack.Screen name="AddPrescription" component={AddPrescriptionScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+};
+
+// Navigate between screens
+const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+    return (
+        <View>
+            <Button
+                title="View Medications"
+                onPress={() => navigation.navigate('Medications')}
+            />
+        </View>
+    );
+};
+```
+
+### 🍏 iOS Developer Perspective
+
+These building blocks map to familiar iOS concepts:
+- Components → UIViewController + UIView
+- Props → Initializer parameters
+- State → @State in SwiftUI
+- Navigation → UINavigationController
+
+### 🤖 Android Developer Perspective
+
+Android developers will recognize:
+- Components → Activity/Fragment + Views
+- Props → Constructor/Bundle arguments
+- State → ViewModel + LiveData
+- Navigation → Navigation Component
+
+### Platform-specific code
+
+React Native lets you handle platform differences elegantly:
+
+```typescript
+import { Platform } from 'react-native';
+
+// Platform-specific styling
+const styles = StyleSheet.create({
+    shadow: {
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 3,
+            },
+            android: {
+                elevation: 5,
+            },
+        }),
+    },
+});
+
+// Platform-specific components
+const DatePicker = Platform.select({
+    ios: () => require('./DatePicker.ios').default,
+    android: () => require('./DatePicker.android').default,
+})();
+
+// Platform-specific logic
+const requestPermissions = async () => {
+    if (Platform.OS === 'ios') {
+        // iOS-specific permission flow
+    } else {
+        // Android-specific permission flow
+    }
+};
+```
+
+### APIs and device features
+
+Access native device capabilities through React Native APIs:
+
+```typescript
+// Camera access
+import * as ImagePicker from 'expo-image-picker';
+
+const takePrescriptionPhoto = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.8,
+    });
+    
+    if (!result.canceled) {
+        // Process the photo
+        uploadPrescription(result.assets[0].uri);
+    }
+};
+
+// Push notifications
+import * as Notifications from 'expo-notifications';
+
+const scheduleMedicationReminder = async (medication: Medication) => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "Medication Reminder",
+            body: `Time to take your ${medication.name}`,
+            data: { medicationId: medication.id },
+        },
+        trigger: {
+            hour: medication.reminderHour,
+            minute: medication.reminderMinute,
+            repeats: true,
+        },
+    });
+};
+
+// Location services
+import * as Location from 'expo-location';
+
+const findNearbyPharmacies = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') return;
+    
+    const location = await Location.getCurrentPositionAsync({});
+    return searchPharmacies(location.coords);
+};
+```
+
+### ⚛️ React Developer Perspective
+
+If you know React, these additions are what make it "Native":
+- Platform-specific components and APIs
+- Different styling system (no CSS)
+- Mobile gestures and interactions
+- App lifecycle events
+
+### The architecture that makes it work
+
+Understanding how React Native works helps you build better apps:
+
+```mermaid
+graph TB
+    subgraph "JavaScript Thread"
+        A[React Components]
+        B[Business Logic]
+        C[State Management]
+    end
+    
+    subgraph "Bridge"
+        D[Serialization]
+        E[Message Queue]
+    end
+    
+    subgraph "Native Thread"
+        F[iOS: UIKit]
+        G[Android: View System]
+        H[Native Modules]
+    end
+    
+    A -->|Props/State| D
+    D --> E
+    E --> F
+    E --> G
+    B -->|API Calls| H
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#ff9,stroke:#333,stroke-width:2px
+    style F fill:#9cf,stroke:#333,stroke-width:2px
+    style G fill:#9fc,stroke:#333,stroke-width:2px
+```
+
+### Performance optimization preview
+
+Building smooth apps requires understanding performance:
+
+```typescript
+// Optimize list rendering
+const MedicationItem = React.memo(({ medication, onPress }) => {
+    return (
+        <TouchableOpacity onPress={() => onPress(medication.id)}>
+            <Text>{medication.name}</Text>
+        </TouchableOpacity>
+    );
+});
+
+// Use FlatList for large lists
+<FlatList
+    data={medications}
+    renderItem={({ item }) => <MedicationItem medication={item} />}
+    keyExtractor={item => item.id}
+    getItemLayout={(data, index) => ({
+        length: ITEM_HEIGHT,
+        offset: ITEM_HEIGHT * index,
+        index,
+    })}
+/>
+
+// Optimize images
+<Image
+    source={{ uri: medication.imageUrl }}
+    style={styles.medicationImage}
+    resizeMode="cover"
+    // Cache control
+    defaultSource={require('./placeholder.png')}
+/>
+```
+
+> **🎯 IMPORTANT**  
+> These building blocks are the foundation of every React Native app. Master these, and you can build anything!
+
+### What's coming in future modules
+
+This preview just scratches the surface. Here's what you'll learn in depth:
+
+| Module | What You'll Master |
+|--------|-------------------|
+| **Module 7** | React essentials and component patterns |
+| **Module 8** | All core components in detail |
+| **Module 9** | Hooks and React Native APIs |
+| **Module 10** | Advanced styling and theming |
+| **Module 11** | Navigation patterns |
+| **Module 12** | Forms and user input |
+| **Module 13** | State management at scale |
+
+### Your SpeedyMeds pharmacy app journey
+
+Throughout this course, you'll build a complete pharmacy app using these building blocks:
+
+1. **Authentication screens** - Secure login with biometrics
+2. **Medication management** - Track prescriptions and dosages
+3. **Reminder system** - Push notifications for medications
+4. **Pharmacy locator** - Maps integration
+5. **Prescription camera** - Photo capture and upload
+6. **Refill ordering** - Complete e-commerce flow
+7. **Health tracking** - Charts and data visualization
+
+### Ready to dive deeper?
+
+You now have a bird's-eye view of React Native's core concepts. In the upcoming modules, we'll explore each building block in detail, with hands-on exercises and real-world examples.
+
+> **📖 OFFICIAL DOCUMENTATION**  
+> Bookmark these essential references:
+> - [React Native Components and APIs](https://reactnative.dev/docs/components-and-apis)
+> - [React Navigation](https://reactnavigation.org/docs/getting-started)
+> - [Expo SDK Reference](https://docs.expo.dev/versions/latest/)
+
+### Looking ahead
+
+With this foundation, you're ready to start your React Native journey. Remember:
+
+- **Start simple**: Master the basics before tackling complex features
+- **Build often**: Practice with small projects
+- **Read the docs**: Official documentation is your friend
+- **Join the community**: Learn from other developers
+- **Stay curious**: Mobile development is always evolving
+
+---
+
+**Congratulations!** You've completed Module 1 and understand the mobile development landscape. Ready to set up your development environment?
+
+**Next Module**: [Module 3: React Native environment with Expo →](../module-03-react-native-environment-with-expo/section-00-introduction.md)
+
+**[🚀 Module Challenge](../challenges/challenge-01-mobile-landscape-quiz.md)**: Test your knowledge of the mobile development landscape!
