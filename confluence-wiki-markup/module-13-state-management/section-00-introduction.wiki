@@ -1,4 +1,4 @@
-h1. Module 13: State Management
+{toc}
 
 bq. [!NOTE] > *Preliminary Note on Target Versions:*
 This module adheres to the following target versions for all technical information, API descriptions, and code examples:
@@ -31,7 +31,7 @@ bq. *Comparison:* You've managed state using {{ViewModel}}s, {{LiveData}}, {{Sta
 bq. *Comparison:* If you're coming from a web background, especially with React, many concepts will be familiar. {{useState}}, {{useEffect}}, and Context API are directly from React. Libraries like Zustand share similarities with Redux (though simpler) or other flux-pattern-inspired libraries. TanStack Query (formerly React Query) is a popular choice for data fetching in React web apps as well. If you're from an Angular background, you might compare React's local component state to component properties, Context API or Zustand to shared services or NgRx store, and TanStack Query to using services with HttpClient and RxJS for handling asynchronous data, caching, and state synchronization.
 > *Key Takeaway:* While core React state concepts translate directly, this module will emphasize their application and best practices within the React Native environment. For Angular developers, the shift to a more component-centric state model and the specific libraries covered will be key learning points. The JavaScript-based ecosystem of libraries is a significant aspect.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe the limitations of {{useState}} and prop drilling for managing complex application state.
@@ -44,7 +44,7 @@ By the end of this module, you will be able to:
 * Apply React Native specific configurations for TanStack Query.
 * Combine client and server state management strategies effectively in a React Native application.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have a solid understanding of the following:
 * Completion of [../../module-05-javascript-essentials/section-00-introduction.md|Module 5: JavaScript Essentials for React Native] (especially Asynchronous JavaScript: Callbacks, Promises, {{async}}/{{await}}).
@@ -52,7 +52,7 @@ Before starting this module, ensure you have a solid understanding of the follow
 * Completion of [../../module-07-react-essentials/section-00-introduction.md|Module 7: React Essentials for React Native] (especially {{useState}}, {{useEffect}}, props, and the initial introduction to Context API).
 * Completion of [../../module-08-react-native-core-components/section-00-introduction.md|Module 8: React Native Core Components].
 
-h2. Module Sections
+h1. Module Sections
 
 This module is divided into the following sections:
 * Section 1: Recap: {{useState}} and Prop Drilling Limitations
@@ -67,16 +67,16 @@ This module is divided into the following sections:
 * Section 10: Handling Mutations and Invalidating Queries
 * Section 11: React Native Specifics for TanStack Query (Online Manager, Focus Refetching)
 
-h2. Module Challenge
+h1. Module Challenge
 
 At the end of this module, you will apply your knowledge in a practical challenge:
 * *Challenge 13: Integrate Zustand and TanStack Query for Medication Data*
 ** *(https://snack.expo.dev/@course-author/module-13-challenge)*
 
-h2. Module Summary
+h1. Module Summary
 
 State management is a critical skill in developing sophisticated React Native applications. This module has revisited fundamental React state mechanisms and introduced powerful libraries like Zustand for client state and TanStack Query for server state. You've learned about their core concepts, use cases, and how to integrate them into a React Native project like SpeedyMeds. By understanding these tools and techniques, you are now better equipped to design scalable, performant, and maintainable applications by choosing the right state management strategy for various scenarios.
 
-h2. Additional Resources
+h1. Additional Resources
 * [https://react.dev/reference/react/useState#sharing-state-between-components|React Docs: State Management] - Official React documentation on sharing state.
 * [https://www.robinwieruch.de/react-state-management-libraries/|Choosing a State Management Library] - A blog post offering perspectives on different state management libraries (though focused on React web, many principles apply).

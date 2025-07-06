@@ -1,17 +1,26 @@
-h2. Section 1: Platform Module
+{toc}
+
+h1. Section 1: Platform Module
 
 React Native allows you to build applications for multiple platforms from a single codebase. However, there are often times when you need to apply platform-specific styles, implement different logic, or even render entirely different components based on whether the app is running on iOS or Android. The {{Platform}} module is React Native's built-in solution for handling these scenarios.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 The {{Platform}} module provides information about the platform your application is currently running on. This is crucial for tailoring the user experience to meet platform conventions and for accessing platform-specific functionalities when necessary. For instance, UI patterns often differ between iOS and Android; iOS apps might have a certain type of header, while Android apps might use Material Design components with different navigation patterns. The {{Platform}} module helps you gracefully manage these differences.
 
 *Why use the {{Platform}} module?*
-* *Platform-Specific Styling:* Apply different styles (e.g., padding, fonts, colors) to components depending on the OS. For example, the status bar height on iOS might require additional top padding for your content, which is not needed on Android.
-* *Conditional Logic:* Execute different pieces of code based on the platform. This could involve calling different functions, setting different default values, or handling user interactions in a platform-aware manner.
-* *Rendering Platform-Specific Components:* Sometimes, a UI element or behavior is so distinct that it warrants using a completely different component for each platform. {{Platform.select()}} can help manage this.
 
-h3. Referential Content
+h2. Platform-Specific Styling
+
+Apply different styles (e.g., padding, fonts, colors) to components depending on the OS. For example, the status bar height on iOS might require additional top padding for your content, which is not needed on Android.
+h2. Conditional Logic
+
+Execute different pieces of code based on the platform. This could involve calling different functions, setting different default values, or handling user interactions in a platform-aware manner.
+h2. Rendering Platform-Specific Components
+
+Sometimes, a UI element or behavior is so distinct that it warrants using a completely different component for each platform. {{Platform.select()}} can help manage this.
+
+h2. Referential Content
 
 The {{Platform}} module exposes several key properties and methods:
 * *{{Platform.OS}}*: A string that indicates the operating system. It returns:
@@ -26,24 +35,24 @@ The {{Platform}} module exposes several key properties and methods:
 * *{{Platform.constants}}*: An object containing various platform-specific constants. This is particularly useful for finer-grained device-specific logic or analytics. Some key constants are detailed below, and a summary of important ones is provided in the table.
 ** {{isTesting}} (boolean): Indicates if the app is running in a test environment.
 ** {{reactNativeVersion}} (object): Contains {{major}}, {{minor}}, {{patch}}, and optional {{prerelease}} numbers for the React Native version.
-** *Android-specific constants:*
-*** {{Version}} (number): Android API Level.
-*** {{Release}} (string): Android OS release name (e.g., "12").
-*** {{Serial}} (string): Hardware serial number.
-*** {{Fingerprint}} (string): Build fingerprint.
-*** {{Model}} (string): End-user-visible device name.
-*** {{Brand}} (string): Consumer-visible brand.
-*** {{Manufacturer}} (string): Device manufacturer.
-*** {{uiMode}} (string): UI mode (e.g., 'normal', 'tv', 'car').
-** *iOS-specific constants:*
-*** {{forceTouchAvailable}} (boolean): Indicates if 3D Touch is available.
-*** {{interfaceIdiom}} (string): Interface type (e.g., 'phone', 'pad', 'vision').
-*** {{osVersion}} (string): OS version string.
-*** {{systemName}} (string): OS name (e.g., "iOS").
-** *Other useful constants (may be on one or both platforms):*
-*** {{isPad}} (boolean, iOS only): True if the device is an iPad.
-*** {{isTV}} (boolean): True if the device is an Apple TV or Android TV.
-*** {{isVision}} (boolean, iOS only): True if the device is an Apple Vision Pro.
+h3. Android-specific constants
+* {{Version}} (number): Android API Level.
+* {{Release}} (string): Android OS release name (e.g., "12").
+* {{Serial}} (string): Hardware serial number.
+* {{Fingerprint}} (string): Build fingerprint.
+* {{Model}} (string): End-user-visible device name.
+* {{Brand}} (string): Consumer-visible brand.
+* {{Manufacturer}} (string): Device manufacturer.
+* {{uiMode}} (string): UI mode (e.g., 'normal', 'tv', 'car').
+h3. iOS-specific constants
+* {{forceTouchAvailable}} (boolean): Indicates if 3D Touch is available.
+* {{interfaceIdiom}} (string): Interface type (e.g., 'phone', 'pad', 'vision').
+* {{osVersion}} (string): OS version string.
+* {{systemName}} (string): OS name (e.g., "iOS").
+h3. Other useful constants (may be on one or both platforms)
+* {{isPad}} (boolean, iOS only): True if the device is an iPad.
+* {{isTV}} (boolean): True if the device is an Apple TV or Android TV.
+* {{isVision}} (boolean, iOS only): True if the device is an Apple Vision Pro.
 
 {info}
 The availability of specific constants can vary slightly between React Native versions. Always consult the latest official documentation for the most current list of all available constants.
@@ -77,7 +86,7 @@ bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/platform-specific-code|React Native Docs: Platform Specific Code] (Covers {{Platform.OS}}, {{Platform.select}}, and platform-specific file extensions)
 - [https://reactnative.dev/docs/platform|React Native Docs: Platform API] (Covers {{Platform.Version}} and {{Platform.constants}})
 
-h3. Procedural Content
+h2. Procedural Content
 
 Let's look at some common ways to use the {{Platform}} module in your SpeedyMeds application.
 
@@ -389,18 +398,25 @@ export default PlatformSpecificDatePicker;
 
 This example conceptually shows how `Platform.select` can return a function that resolves to the correct component. For real date pickers, you'd typically use a library that handles this abstraction for you (like `react-native-datetimepicker`), but this illustrates the pattern for custom components.
 
-h3. "Under the Hood": How `Platform` Works
+h2. "Under the Hood": How `Platform` Works
 
 The `Platform` module is a native module. This means that its core logic for determining the OS and its properties resides in native code (Java/Kotlin for Android, Objective-C/Swift for iOS).
-* *Initialization:* When your React Native application starts, the native side gathers relevant platform information from the device (like OS type, version, device model, screen density, etc.).
-* *Exporting Constants:* This information is then exposed to the JavaScript environment as constants. `Platform.OS`, `Platform.Version`, and all the values within `Platform.constants` are essentially JavaScript representations of these natively-derived values.
-* *Access in JS:* When your JavaScript code accesses `Platform.OS` or `Platform.constants.Model`, it's reading a pre-populated value that was determined natively during the app's startup. There isn't a dynamic "check" to the native side for every access of these basic properties; rather, these are constants available in the JS context after the native module initializes.
-** On Android, native code might use `android.os.Build.VERSION.SDK_INT` for `Platform.Version`, `android.os.Build.MODEL` for `Platform.constants.Model`, etc.
-** On iOS, native code might use `UIDevice.current.systemName` for `Platform.constants.systemName`, `UIDevice.current.systemVersion` for `Platform.Version`, and `UIDevice.current.userInterfaceIdiom` to determine `Platform.isPad` or `Platform.constants.interfaceIdiom`.
+
+h2. Initialization
+
+When your React Native application starts, the native side gathers relevant platform information from the device (like OS type, version, device model, screen density, etc.).
+h2. Exporting Constants
+
+This information is then exposed to the JavaScript environment as constants. `Platform.OS`, `Platform.Version`, and all the values within `Platform.constants` are essentially JavaScript representations of these natively-derived values.
+h2. Access in JS
+
+When your JavaScript code accesses `Platform.OS` or `Platform.constants.Model`, it's reading a pre-populated value that was determined natively during the app's startup. There isn't a dynamic "check" to the native side for every access of these basic properties; rather, these are constants available in the JS context after the native module initializes.
+* On Android, native code might use `android.os.Build.VERSION.SDK_INT` for `Platform.Version`, `android.os.Build.MODEL` for `Platform.constants.Model`, etc.
+* On iOS, native code might use `UIDevice.current.systemName` for `Platform.constants.systemName`, `UIDevice.current.systemVersion` for `Platform.Version`, and `UIDevice.current.userInterfaceIdiom` to determine `Platform.isPad` or `Platform.constants.interfaceIdiom`.
 
 This native sourcing ensures accuracy, as the information comes directly from the operating system's APIs. The `Platform.select()` method is a JavaScript utility that uses the already available `Platform.OS` value to pick the correct configuration from the object you provide.
 
-h3. Background Bridge Notes
+h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
 > *Comparison:*

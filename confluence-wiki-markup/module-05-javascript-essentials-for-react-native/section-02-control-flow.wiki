@@ -1,12 +1,14 @@
-h2. Section 2: Control Flow
+{toc}
+
+h1. Section 2: Control Flow
 
 Control flow statements are essential tools in JavaScript that allow you to dictate the order in which your code is executed. They enable your programs to make decisions, repeat actions, and respond dynamically to different situations. This section covers conditional statements for decision-making and looping statements for repetitive tasks.
 
-h3. Conditional Statements
+h2. Conditional Statements
 
 Conditional statements execute different blocks of code based on whether a specified condition evaluates to {{true}} or {{false}}.
 
-h4. {{if}} Statement
+h3. {{if}} Statement
 
 The {{if}} statement executes a block of code only if a specified condition is true.
 
@@ -24,7 +26,7 @@ console.log(`Needs Consent: ${needsGuardianConsent}`); // Output: Needs Consent:
 
 This code demonstrates a simple conditional check. The `patientAge` is 17. The `if` statement evaluates the condition `patientAge < 18`. Since 17 is less than 18, the condition is `true`. Consequently, the code block within the `if` statement executes: `needsGuardianConsent` is set to `true`, and the message "Patient is a minor and requires guardian consent." is printed. Finally, the last `console.log` confirms that `needsGuardianConsent` is indeed `true`, illustrating how the `if` statement directed the program flow based on the patient's age.
 
-h4. `else if` Statement
+h3. `else if` Statement
 
 Use `else if` to specify a new condition to test, if the first `if` condition is false.
 
@@ -41,7 +43,7 @@ if (medicationStock <= 0) {
 
 {code}
 
-h4. `else` Statement
+h3. `else` Statement
 
 The `else` statement executes a block of code if all preceding `if` and `else if` conditions are false.
 
@@ -59,7 +61,7 @@ if (temperatureCelsius > 38) {
 {tip}
 It is strongly recommended to always use curly braces `{}` for `if`, `else if`, and `else` blocks, even if they contain only a single statement. This prevents ambiguity and potential errors, especially with nested conditions (the "dangling else" problem).
 {tip}
-h4. `switch` Statement
+h3. `switch` Statement
 
 The `switch` statement is used to perform different actions based on different conditions (cases). It's often a more elegant way to handle multiple `else if` scenarios when checking a single variable against multiple values.
 * The `switch` expression is evaluated once.
@@ -67,7 +69,9 @@ The `switch` statement is used to perform different actions based on different c
 * If there is a match, the associated block of code is executed.
 * The `break` keyword exits the `switch` block. If `break` is omitted, execution will continue into the next `case` (fall-through), which is usually unintended.
 * The `default` keyword specifies the code to run if there is no `case` match.
-* *Important:* `switch` uses *strict equality (`===`)* for comparisons, similar to the `===` operator. No type coercion is performed.
+h2. Important
+
+`switch` uses *strict equality (`===`)* for comparisons, similar to the `===` operator. No type coercion is performed.
 
 {code:language=js}
 let dosageForm = "Tablet";
@@ -96,7 +100,7 @@ This `switch` statement elegantly handles routing based on `dosageForm`. Since `
 {tip}
 As with `if/else` statements, always use curly braces `{}` for loop bodies, even for single statements, to enhance readability and prevent errors.
 {tip}
-h4. Truthy and Falsy Values
+h3. Truthy and Falsy Values
 
 In JavaScript, conditions don't strictly need to be boolean values. JavaScript uses the concept of "truthy" and "falsy" to evaluate non-boolean values in a boolean context (like an `if` statement).
 * *Falsy values* are values that translate to `false` when evaluated in a Boolean context. The falsy values in JavaScript are:
@@ -125,11 +129,11 @@ if (appointments) {
 
 {code}
 
-h3. Looping Statements
+h2. Looping Statements
 
 Loops are used to execute a block of code repeatedly, based on a condition or for a specific number of iterations.
 
-h4. `for` Loop
+h3. `for` Loop
 
 The `for` loop repeats a block of code as long as a specified condition evaluates to true. It's commonly used when you know the number of iterations beforehand.
 
@@ -151,7 +155,7 @@ for (let i = 1; i <= 3; i++) {
 
 This `for` loop is designed to send three refill reminders. It starts by initializing a counter `i` to 1. Before each iteration, it checks if `i <= 3`. If true, the code inside the loop (printing the reminder message with the current value of `i`) executes. After each execution, the final expression `i++` increments the counter. This process repeats: `i` becomes 1 (prints), then 2 (prints), then 3 (prints). When `i` becomes 4, the condition `4 <= 3` is false, so the loop terminates. This demonstrates a common use of `for` loops for a fixed number of iterations.
 
-h4. `while` Loop
+h3. `while` Loop
 
 The `while` loop executes a block of code as long as a specified condition is true. The condition is evaluated _before_ each iteration.
 
@@ -170,7 +174,7 @@ console.log("Queue is empty.");
 // Queue is empty.
 {code}
 
-h4. `do...while` Loop
+h3. `do...while` Loop
 
 The `do...while` loop is similar to the `while` loop, but the code block is executed _at least once_ before the condition is checked. The condition is evaluated _after_ each iteration.
 
@@ -189,7 +193,7 @@ console.log(`Confirmation code 7 generated after ${attempt} attempts.`);
 {info}
 While the `for`, `while`, and `do...while` loops are fundamental, for iterating specifically over arrays, modern JavaScript often favors array iteration methods like `forEach()`, `map()`, `filter()`, and `reduce()` (which will be covered in detail in the Arrays section). These methods can be more declarative and less prone to common looping errors (like off-by-one errors).
 {info}
-h4. `for...of` Loop (ES6)
+h3. `for...of` Loop (ES6)
 
 The `for...of` loop iterates over the *values* of iterable objects. Iterable objects include built-in types like `Array`, `String`, `Map`, `Set`, etc. It provides a simple and direct way to access the elements of a collection.
 
@@ -205,14 +209,20 @@ for (const medication of medications) {
 // Paracetamol
 {code}
 
-h4. `for...in` Loop
+h3. `for...in` Loop
 
 The `for...in` loop iterates over the enumerable string *property names (keys)* of an object. The order of iteration is not guaranteed.
 
 {warning}
-* *Use with Objects:* `for...in` is intended for iterating over the keys of plain objects.
-* *Avoid with Arrays:* Do not use `for...in` to iterate over Arrays. It iterates over indices (as strings) and potentially any other added properties, including inherited ones. The order is not guaranteed. Use `for...of` or array methods (`forEach`, `map`, etc.) for arrays.
-* *Check `hasOwnProperty`:* When using `for...in` with objects, it's often wise to check if the property belongs directly to the object and is not inherited from its prototype chain, using `Object.prototype.hasOwnProperty.call(object, key)` or `object.hasOwnProperty(key)`.
+h2. Use with Objects
+
+`for...in` is intended for iterating over the keys of plain objects.
+h2. Avoid with Arrays
+
+Do not use `for...in` to iterate over Arrays. It iterates over indices (as strings) and potentially any other added properties, including inherited ones. The order is not guaranteed. Use `for...of` or array methods (`forEach`, `map`, etc.) for arrays.
+h2. Check `hasOwnProperty`
+
+When using `for...in` with objects, it's often wise to check if the property belongs directly to the object and is not inherited from its prototype chain, using `Object.prototype.hasOwnProperty.call(object, key)` or `object.hasOwnProperty(key)`.
 {warning}
 
 {code:language=js}
@@ -235,61 +245,70 @@ for (const propertyKey in patientRecord) {
 // insuranceProvider: SpeedyHealth Inc.
 {code}
 
-h4. Loop Control Statements
-* *`break`:* Terminates the current loop (or `switch` statement) and transfers program control to the statement following the terminated statement.
+h3. Loop Control Statements
 
-  ```javascript
-  const medicationBatchNumbers = [101, 102, 0, 104, 105]; // 0 indicates an error/end of valid batches
-  console.log("Checking medication batches:");
-  for (const batchNum of medicationBatchNumbers) {
-    if (batchNum === 0) {
-      console.log("Invalid batch number found. Stopping process.");
-      break; // Exit the loop
-    }
-    console.log(`Processing batch: ${batchNum}`);
-  }
-  // Output:
-  // Processing batch: 101
-  // Processing batch: 102
-  // Invalid batch number found. Stopping process.
-  ```
-* *`continue`:* Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
+h2. `break`
 
-  ```javascript
-  const patientAges = [25, 17, 65, 12, 40]; // Ages for a clinical trial
-  console.log("Eligible adult patients for trial (age 18-60):");
-  for (const age of patientAges) {
-    if (age < 18 || age > 60) {
-      console.log(`Patient aged ${age} is not eligible, skipping.`);
-      continue; // Skip to the next patient
-    }
-    console.log(`Patient aged ${age} is eligible.`);
+Terminates the current loop (or `switch` statement) and transfers program control to the statement following the terminated statement.
+
+{code:language=js}
+const medicationBatchNumbers = [101, 102, 0, 104, 105]; // 0 indicates an error/end of valid batches
+console.log("Checking medication batches:");
+for (const batchNum of medicationBatchNumbers) {
+  if (batchNum === 0) {
+    console.log("Invalid batch number found. Stopping process.");
+    break; // Exit the loop
   }
-  // Output:
-  // Patient aged 25 is eligible.
-  // Patient aged 17 is not eligible, skipping.
-  // Patient aged 65 is not eligible, skipping.
-  // Patient aged 12 is not eligible, skipping.
-  // Patient aged 40 is eligible.
-  ```
-* *Labeled Statements (Advanced):* JavaScript allows you to label loops. You can then use `break labelName;` or `continue labelName;` to control nested loops more precisely, jumping to the statement after the labeled loop (`break`) or starting the next iteration of the labeled loop (`continue`). This is less common but useful in specific complex scenarios.
-  ```javascript
-  // Example (Conceptual)
-  outerLoop: for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (i === 1 && j === 1) {
-        console.log(`Continuing outer loop at i=${i}, j=${j}`);
-        continue outerLoop; // Skips rest of inner loop and starts next outer loop iteration
-      }
-      if (i === 2 && j === 0) {
-        console.log(`Breaking outer loop at i=${i}, j=${j}`);
-        break outerLoop; // Exits both loops
-      }
-      console.log(`i=${i}, j=${j}`);
-    }
+  console.log(`Processing batch: ${batchNum}`);
+}
+// Output:
+// Processing batch: 101
+// Processing batch: 102
+// Invalid batch number found. Stopping process.
+{code}
+
+h2. `continue`
+
+Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
+
+{code:language=js}
+const patientAges = [25, 17, 65, 12, 40]; // Ages for a clinical trial
+console.log("Eligible adult patients for trial (age 18-60):");
+for (const age of patientAges) {
+  if (age < 18 || age > 60) {
+    console.log(`Patient aged ${age} is not eligible, skipping.`);
+    continue; // Skip to the next patient
   }
-  console.log("Loop finished");
-  ```
+  console.log(`Patient aged ${age} is eligible.`);
+}
+// Output:
+// Patient aged 25 is eligible.
+// Patient aged 17 is not eligible, skipping.
+// Patient aged 65 is not eligible, skipping.
+// Patient aged 12 is not eligible, skipping.
+// Patient aged 40 is eligible.
+{code}
+
+h2. Labeled Statements (Advanced)
+
+JavaScript allows you to label loops. You can then use `break labelName;` or `continue labelName;` to control nested loops more precisely, jumping to the statement after the labeled loop (`break`) or starting the next iteration of the labeled loop (`continue`). This is less common but useful in specific complex scenarios.
+{code:language=js}
+// Example (Conceptual)
+outerLoop: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) {
+      console.log(`Continuing outer loop at i=${i}, j=${j}`);
+      continue outerLoop; // Skips rest of inner loop and starts next outer loop iteration
+    }
+    if (i === 2 && j === 0) {
+      console.log(`Breaking outer loop at i=${i}, j=${j}`);
+      break outerLoop; // Exits both loops
+    }
+    console.log(`i=${i}, j=${j}`);
+  }
+}
+console.log("Loop finished");
+{code}
 
 bq. 📲 *(Native Developers): Control Flow Comparisons*
 > The syntax and fundamental behavior of `if/else`, `switch`, `for`, `while`, and `do...while` loops in JavaScript are highly similar to their counterparts in Java, Kotlin, and Swift, which should make this section feel familiar.
@@ -297,7 +316,7 @@ bq. 📲 *(Native Developers): Control Flow Comparisons*
 - *Looping Constructs:* The classic C-style `for` loop (`for (init; condition; afterthought)`) is common across these languages. JavaScript also offers `for...of` for iterating over iterable values (like arrays, strings), which is similar to Kotlin's `for (item in collection)` or Swift's `for item in collection`. JavaScript's `for...in` is for object property iteration and is distinct.
 - *`while` / `do...while`:* These loops function almost identically across the languages in terms of their core logic (condition before vs. condition after).
 
-h4. Loop Comparison Summary
+h3. Loop Comparison Summary
 
 ||Loop type||Syntax||Primary use case||Condition check||Executes at least once?||
 |`for`|`for (init; cond; final)`|Known number of iterations, iterating with a counter|Before each iteration|No|
@@ -317,6 +336,6 @@ bq. 📚 *Official Documentation:*
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break|MDN Web Docs: `break`]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue|MDN Web Docs: `continue`]
 
-h3. Next Steps
+h2. Next Steps
 
 With a solid understanding of how to control the flow of your JavaScript code, you are now prepared to explore one of the most powerful features of the language: functions. Proceed to [./section-03-functions.md|Section 3: Functions] to learn how to create reusable blocks of code.

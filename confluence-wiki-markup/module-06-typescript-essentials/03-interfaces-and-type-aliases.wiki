@@ -1,8 +1,10 @@
-h2. Section 3: Interfaces and Type Aliases
+{toc}
+
+h1. Section 3: Interfaces and Type Aliases
 
 While basic types are essential, most real-world applications deal with more complex data structures. TypeScript provides two primary ways to define these custom types: *interfaces* and *type aliases*. These constructs allow you to create named types that describe the shape of objects and other data structures, significantly enhancing code clarity and type safety.
 
-h3. Interfaces
+h2. Interfaces
 
 An interface in TypeScript is a way to define a "contract" for an object's shape. It specifies what properties an object should have and what types those properties should be. If an object claims to implement an interface, it must adhere to the structure defined by that interface.
 
@@ -43,8 +45,13 @@ displayMedication(amoxicillin);
 {code}
 
 *Key features of interfaces:*
-* *Optional Properties:* Mark a property as optional by adding a `?` after its name (e.g., `instructions?: string`).
-* *Readonly Properties:* Use the `readonly` modifier to specify properties that can only be set when an object is first created and cannot be modified afterward (e.g., `readonly rxCUI: string`).
+
+h2. Optional Properties
+
+Mark a property as optional by adding a `?` after its name (e.g., `instructions?: string`).
+h2. Readonly Properties
+
+Use the `readonly` modifier to specify properties that can only be set when an object is first created and cannot be modified afterward (e.g., `readonly rxCUI: string`).
 
 *Extending Interfaces:*
 
@@ -76,7 +83,7 @@ bq. 📲 *(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):
 > *Comparison:* TypeScript interfaces are similar to `interface` in Java/Kotlin or `protocol` in Swift. They define a contract that classes or objects can adhere to. The concept of defining expected properties and their types will be very familiar.
 > *Key Takeaway:* Use interfaces to define clear structures for your objects, just as you would in native development to ensure consistency and type safety for data models or service contracts.
 
-h3. Type Aliases
+h2. Type Aliases
 
 A type alias allows you to create a new name (an alias) for any type. This can be a primitive type, an object type, a union type, a tuple, or any other type.
 
@@ -116,12 +123,12 @@ let warfarinDetails: MedicationTuple = ["Warfarin", 5, "mg"];
 
 Type aliases are very flexible. You can use them to make your code more readable by giving descriptive names to complex types.
 
-h3. Interfaces vs. Type Aliases
+h2. Interfaces vs. Type Aliases
 
 Interfaces and type aliases can often be used for similar purposes, especially for describing object shapes. However, there are some key differences:
 # *Declaration Merging (Interfaces):* Interfaces can be defined multiple times with the same name, and TypeScript will merge their definitions. This is useful for augmenting existing interfaces, perhaps from third-party libraries.
 
-    ```typescript
+{code:language=js}
     interface User {
       name: string;
     }
@@ -132,14 +139,14 @@ Interfaces and type aliases can often be used for similar purposes, especially f
 
     // User now has both name and age
     let user: User = { name: "Bob", age: 30 };
-    ```
+{code}
 
     Type aliases cannot be merged in this way; defining a type alias with the same name twice will result in an error.
 # *Extending (Interfaces vs. Type Aliases with Intersection Types):*
 *** Interfaces use the `extends` keyword to inherit from other interfaces.
 *** Type aliases can achieve similar results using intersection types (`&`).
 
-    ```typescript
+{code:language=js}
     // Using interfaces (as shown before)
     interface Animal {
       name: string;
@@ -153,18 +160,19 @@ Interfaces and type aliases can often be used for similar purposes, especially f
     type Cat = Pet & { livesLeft: number };
 
     let myCat: Cat = { name: "Whiskers", livesLeft: 9 };
-    ```
+{code}
 # *Implementation (Primarily Interfaces for Classes):* While not covered in detail in this module, when working with classes and object-oriented patterns, interfaces are traditionally used with the `implements` keyword to ensure a class adheres to a contract.
 
 *When to use which?*
-* *Use `interface` when:*
-** Defining the shape of an object or the contract for a class.
-** You anticipate needing declaration merging (e.g., for extensibility by others).
-* *Use `type` alias when:*
-** Defining aliases for primitive types (e.g., `type UserID = string;`).
-** Defining union types (e.g., `type Status = "success" | "error";`).
-** Defining tuple types.
-** You need to create a named type for a more complex type that isn't easily represented by an interface (e.g., a mapped type, though this is more advanced).
+
+h2. Use `interface` when
+* Defining the shape of an object or the contract for a class.
+* You anticipate needing declaration merging (e.g., for extensibility by others).
+h2. Use `type` alias when
+* Defining aliases for primitive types (e.g., `type UserID = string;`).
+* Defining union types (e.g., `type Status = "success" | "error";`).
+* Defining tuple types.
+* You need to create a named type for a more complex type that isn't easily represented by an interface (e.g., a mapped type, though this is more advanced).
 
 {tip}
 For defining object shapes, both are often viable. Many teams choose one and stick with it for consistency. Interfaces are often preferred for public APIs or when defining shapes that might be extended or implemented by others, while type aliases can be more concise for simpler object shapes or union/intersection types.
@@ -177,7 +185,7 @@ bq. 📚 *Official Documentation:*
 
 By mastering interfaces and type aliases, you can create highly descriptive and robust data models for your SpeedyMeds application, such as defining patient profiles, medication details, prescription structures, and API responses.
 
-h3. Exercise 6.1: Defining Interfaces
+h2. Exercise 6.1: Defining Interfaces
 
 Practice defining interfaces for common data structures you might encounter in the SpeedyMeds application.
 

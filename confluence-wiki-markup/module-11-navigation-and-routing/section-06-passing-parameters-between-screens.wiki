@@ -1,12 +1,14 @@
-h2. Section 6: Passing Parameters Between Screens
+{toc}
+
+h1. Section 6: Passing Parameters Between Screens
 
 In most applications, you'll need to pass data from one screen to another. For example, when a user taps on a list item in the SpeedyMeds app (like a specific medication), you'll want to navigate to a detail screen and show information specific to that selected item. React Navigation provides a straightforward way to pass parameters to routes during navigation.
 
 bq. 🛣️ *(All Learners):* Understanding how to type these parameters with TypeScript is crucial for building robust and maintainable applications. We'll build upon the {{RootStackParamList}} (or similar param lists for other navigators) concept introduced earlier.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Why Pass Parameters?
+h3. Conceptual Content: Why Pass Parameters?
 
 Passing parameters allows you to make your screens dynamic and context-aware. Instead of creating a separate screen for every single item or piece of data, you can create a generic screen component that renders content based on the parameters it receives.
 
@@ -16,7 +18,7 @@ Passing parameters allows you to make your screens dynamic and context-aware. In
 * Passing configuration options to a screen.
 * Indicating the source or reason for navigating to a screen.
 
-h4. Procedural Content: Passing and Reading Route Parameters
+h3. Procedural Content: Passing and Reading Route Parameters
 
 React Navigation allows you to pass parameters as a second argument to the {{navigation.navigate()}} or {{navigation.push()}} functions. The receiving screen can then access these parameters through its {{route.params}} prop.
 
@@ -218,7 +220,7 @@ bq. [!IMPORTANT] > *Best Practices for Passing Parameters (React Navigation):*
 - *Avoid Passing Complex Data:* Instead of passing large or complex data objects (like full user profiles or fetched API responses) as parameters, it's often better to pass only an identifier (e.g., `userId`, `itemId`). The destination screen can then use this ID to fetch the required data itself, potentially using a global state management solution (like Zustand or TanStack Query, covered later) if the data is shared or needs to be cached.
 - *Functions are Not Serializable:* Do not pass functions as parameters. If you need to trigger an action in a previous screen, use the "passing parameters back" pattern or a shared state/event system.
 
-h3. Passing Parameters with Expo Router
+h2. Passing Parameters with Expo Router
 
 Expo Router, with its file-based routing, handles parameters in a way that aligns closely with web URL conventions, primarily through dynamic route segments and query parameters.
 
@@ -231,41 +233,48 @@ To create a route that accepts a parameter as part of its path, you name the fil
 *2. Passing Parameters via `<Link>` and `router.push/navigate`:*
 
 Parameters are embedded in the `href` prop of the `<Link>` component or as arguments to imperative navigation functions like `router.push()` or `router.navigate()`.
-* *For Dynamic Segments:* Include the value directly in the path string.
 
-  {code:language=js}
+h2. For Dynamic Segments
+
+Include the value directly in the path string.
+
+{code:language=js}
 import { Link, router } from 'expo-router';
 
-  // Using Link
-  <Link href="/users/bob">View Bob's Profile</Link>
-  <Link href={{ pathname: '/users/[id]', params: { id: 'carol' } }}>View Carol's Profile</Link>
+// Using Link
+<Link href="/users/bob">View Bob's Profile</Link>
+<Link href={{ pathname: '/users/[id]', params: { id: 'carol' } }}>View Carol's Profile</Link>
 
-  // Imperative navigation
-  router.push('/users/dave');
-  router.push({ pathname: '/users/[id]', params: { id: 'eve' } });
-  ```
-* *For Query Parameters:* Append them to the URL string or use a `params` object where keys not matching dynamic segments become query parameters.
+// Imperative navigation
+router.push('/users/dave');
+router.push({ pathname: '/users/[id]', params: { id: 'eve' } });
+{code}
 
-  ```tsx
-  import { Link, router } from 'expo-router';
+h2. For Query Parameters
 
-  // Query string in href
-  <Link href="/search?query=reactnative&sort=newest">Search</Link>
+Append them to the URL string or use a `params` object where keys not matching dynamic segments become query parameters.
 
-  // Using params object with Link (for query params)
-  <Link href={{ pathname: '/search', params: { query: 'expo', category: 'tools' } }}>Search Tools</Link>
+{code:language=js}
+import { Link, router } from 'expo-router';
 
-  // Query string with router.push
-  router.push('/search?filter=popular');
+// Query string in href
+<Link href="/search?query=reactnative&sort=newest">Search</Link>
 
-  // Using params object with router.push (for query params)
-  router.push({ pathname: '/search', params: { term: 'routing' } });
-  ```
+// Using params object with Link (for query params)
+<Link href={{ pathname: '/search', params: { query: 'expo', category: 'tools' } }}>Search Tools</Link>
+
+// Query string with router.push
+router.push('/search?filter=popular');
+
+// Using params object with router.push (for query params)
+router.push({ pathname: '/search', params: { term: 'routing' } });
+{code}
 
 *3. Accessing Parameters with `useLocalSearchParams`:*
 
 In the destination screen component, all parameters (from dynamic route segments and query strings) are accessed using the `useLocalSearchParams()` hook provided by `expo-router`.
-{code}tsx
+
+{code:language=js}
 // app/users/[id].tsx
 import { useLocalSearchParams, Stack } from "expo-router";
 import { View, Text } from "react-native";
@@ -294,20 +303,21 @@ export default function UserProfileScreen() {
     </View>
   );
 }
-{code:language=text}
+{code}
 * The `useLocalSearchParams` hook returns an object where keys are the parameter names and values are their corresponding string values from the URL. If a parameter can be an array (from a rest segment like `[...slug]`), its type will be `string[]`.
 * You can provide a generic type argument to `useLocalSearchParams` for better type safety (e.g., `useLocalSearchParams<{ id: string; category?: string }>()`).
 
 *4. Updating Current Route Parameters with `router.setParams`:*
 
 To modify query parameters on the current route without triggering a full navigation transition (useful for filters, sorting, pagination), use the `router.setParams()` method.
-{code}tsx
+
+{code:language=js}
 import { router } from "expo-router";
 
 // Assuming current route is /search?query=react
 // To update the sort parameter:
 // router.setParams({ sort: 'relevance' }); // Updates URL to /search?query=react&sort=relevance
-```
+{code}
 
 This will update the URL and the values returned by `useLocalSearchParams` without re-mounting the screen, allowing for reactive updates based on params.
 
@@ -327,7 +337,7 @@ bq. 🤖 *(Android Developers):*
 bq. 🌐 *(Web Developers):*
 > *Comparison:* If you've used React Router, this is similar to route parameters (e.g., `/users/:id`) and query parameters. `route.params` in React Navigation often serves both purposes, though you primarily pass data through the `navigate` call rather than encoding it all in the URL string directly (unless dealing with deep linking, covered later).
 
-h4. Exercise 11.3: Passing Data via Navigation
+h3. Exercise 11.3: Passing Data via Navigation
 
 This exercise will help you practice passing and receiving parameters between screens.
 
@@ -376,6 +386,6 @@ searchQuery?: string; // Optional: the query that found this med
 - Set `initialParams` for the `MedicationInfoScreen` in the navigator configuration with some default medication data.
 ````
 
-h4. Next Steps
+h3. Next Steps
 
 Being able to pass data is essential, but so is making your navigation look and feel like part of your app. The next section will cover how to configure and customize the appearance of headers and tabs.

@@ -1,4 +1,4 @@
-h1. Module 11: Navigation and Routing
+{toc}
 
 Welcome to Module 11: Navigation and Routing! In any mobile application with more than a single screen, a robust navigation system is essential. Navigation forms the backbone of an application, dictating how users move between different sections and functionalities, and managing the presentation of, and transitions between, multiple screens. The effectiveness of an application's navigation system is paramount to its success; a poorly designed or unintuitive navigation structure can significantly hinder usability and lead to user frustration, potentially causing users to abandon the app. Conversely, a seamless, logical, and predictable navigation flow enhances the overall user experience (UX) significantly. Effective navigation acts as a silent guide, enabling users to discover features, complete tasks, and access information with minimal friction, directly contributing to higher user engagement and satisfaction. The chosen navigation patterns and underlying library are critical architectural decisions that shape the user's journey and perception of the application by structuring its information architecture.
 
@@ -21,20 +21,31 @@ bq. 🌐 *(Web Developers):* If you've used routing libraries like React Router 
 > *Key Takeaway:* While the core idea of routing is similar, be prepared for mobile-specific UI paradigms, native screen transition animations, and managing navigation state that deeply integrates with the mobile OS back button behavior.
 > *Source:* [https://reactrouter.com/|React Router Docs]
 
-h2. Understanding the Ecosystem: Versions and Compatibility
+h1. Understanding the Ecosystem: Versions and Compatibility
 
 Navigating the version landscape of React Native, Expo, and associated navigation libraries is crucial due to their rapid release cycles and the potential for compatibility issues. Understanding the interplay between these components is essential for stable development and a smooth learning experience.
 
-h3. Key Considerations:
-* *Version Alignment:* The version of React Native used in a project directly impacts the compatibility and feature availability of navigation libraries and their dependencies. Expo SDKs bundle specific React Native versions (e.g., Expo SDK 52 uses React Native 0.76), and upgrading one often necessitates upgrading the other. Navigation libraries, in turn, specify minimum React Native versions.
-* *Rapid Releases & Stability:* The React Native and Expo ecosystems evolve quickly. While this brings new features, new SDK releases can sometimes introduce temporary stability issues or library compatibility problems. It's wise to check community feedback and be prepared for minor adjustments, especially when adopting the very latest versions.
-* *Dependency Management with Expo:* When working with Expo, it is *strongly recommended* to use {{npx expo install <package-name>}} rather than {{npm install}} or {{yarn add}}. The {{npx expo install}} command attempts to install versions of libraries that are known to be compatible with your project's Expo SDK version. Tools like {{npx expo doctor}} can help identify and resolve inconsistencies in your project's dependencies.
-* *Expo Go Limitations:* The Expo Go app, used for quick testing on devices, has a limited support window for older SDKs. Eventually, support for an SDK is dropped from Expo Go, which may require you to upgrade your project or use development builds for testing. Furthermore, with newer SDKs (like SDK 52+), Expo Go primarily supports projects using the New Architecture (Fabric).
-* *The New Architecture (Fabric):* React Native is gradually transitioning to a New Architecture, which includes a new rendering system called Fabric. Newer Expo SDKs (e.g., SDK 52 enabled Fabric by default for new projects) are increasingly adopting it. Libraries, including crucial navigation dependencies like {{react-native-screens}}, need to explicitly support Fabric, and may have different version requirements depending on whether Fabric is enabled.
+h2. Key Considerations:
+
+h2. Version Alignment
+
+The version of React Native used in a project directly impacts the compatibility and feature availability of navigation libraries and their dependencies. Expo SDKs bundle specific React Native versions (e.g., Expo SDK 52 uses React Native 0.76), and upgrading one often necessitates upgrading the other. Navigation libraries, in turn, specify minimum React Native versions.
+h2. Rapid Releases & Stability
+
+The React Native and Expo ecosystems evolve quickly. While this brings new features, new SDK releases can sometimes introduce temporary stability issues or library compatibility problems. It's wise to check community feedback and be prepared for minor adjustments, especially when adopting the very latest versions.
+h2. Dependency Management with Expo
+
+When working with Expo, it is *strongly recommended* to use {{npx expo install <package-name>}} rather than {{npm install}} or {{yarn add}}. The {{npx expo install}} command attempts to install versions of libraries that are known to be compatible with your project's Expo SDK version. Tools like {{npx expo doctor}} can help identify and resolve inconsistencies in your project's dependencies.
+h2. Expo Go Limitations
+
+The Expo Go app, used for quick testing on devices, has a limited support window for older SDKs. Eventually, support for an SDK is dropped from Expo Go, which may require you to upgrade your project or use development builds for testing. Furthermore, with newer SDKs (like SDK 52+), Expo Go primarily supports projects using the New Architecture (Fabric).
+h2. The New Architecture (Fabric)
+
+React Native is gradually transitioning to a New Architecture, which includes a new rendering system called Fabric. Newer Expo SDKs (e.g., SDK 52 enabled Fabric by default for new projects) are increasingly adopting it. Libraries, including crucial navigation dependencies like {{react-native-screens}}, need to explicitly support Fabric, and may have different version requirements depending on whether Fabric is enabled.
 
 Being mindful of these factors will help you manage dependencies effectively and troubleshoot setup issues more efficiently.
 
-h3. Library Version Compatibility (Targeting Expo SDK 52 / RN 0.76)
+h2. Library Version Compatibility (Targeting Expo SDK 52 / RN 0.76)
 
 The following table provides a reference for potentially compatible library versions when targeting an environment based on Expo SDK 52 (which uses React Native 0.76). Note that specific patch versions can be crucial, and thorough testing is always recommended. Compatibility can also depend on whether the New Architecture (Fabric) is enabled.
 
@@ -43,7 +54,7 @@ The following table provides a reference for potentially compatible library vers
 {info}
 Always prioritize versions recommended by {{npx expo install <package-name>}} for your specific Expo SDK version, as this tool attempts to resolve compatible dependencies.
 {info}
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe core navigation concepts like stack, tab, and drawer navigators.
@@ -57,7 +68,7 @@ By the end of this module, you will be able to:
 * Compare and contrast the setup, configuration, and usage of React Navigation and Expo Router.
 * Implement deep linking to allow users to navigate to specific screens from external URLs using Expo Router.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have a solid understanding of the following:
 * Completion of [../module-03-setting-up-environment-with-expo/section-00-introduction.md|Module 3: Setting Up Your React Native Environment with Expo]
@@ -66,7 +77,7 @@ Before starting this module, ensure you have a solid understanding of the follow
 * Completion of [../module-08-core-components/section-00-introduction.md|Module 8: React Native Core Components]
 * Completion of [../module-10-styling/section-00-introduction.md|Module 10: Styling in React Native]
 
-h2. Module Sections
+h1. Module Sections
 
 This module is divided into the following sections:
 # *Section 1: Navigation Concepts:* Understanding stacks, tabs, and drawers.
@@ -87,11 +98,11 @@ This module is divided into the following sections:
 
 bq. This link will direct you to an Expo Snack for the Module 11 Challenge. Detailed instructions are provided within the Snack's {{README.md}} file.
 
-h2. Module Summary
+h1. Module Summary
 
 In this module, you explored the critical role of navigation in mobile applications. You started by understanding fundamental navigation patterns: stack, tab, and drawer. You then dove into practical implementation using React Navigation, learning how to set up and use its various navigators, pass data between screens, and customize their appearance. Following that, you were introduced to Expo Router, a file-system-based routing solution, and learned how to create routes and navigate using this newer paradigm. The module also provided a comparison between React Navigation and Expo Router, and covered how to implement deep linking. By mastering these tools and concepts, you are now equipped to build complex, multi-screen React Native applications with intuitive user flows, a crucial skill for developing the SpeedyMeds app.
 
-h2. Additional Resources
+h1. Additional Resources
 * [https://reactnavigation.org/|React Navigation Official Documentation]
 * [https://docs.expo.dev/router/introduction/|Expo Router Official Documentation]
 * [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator | React Navigation]

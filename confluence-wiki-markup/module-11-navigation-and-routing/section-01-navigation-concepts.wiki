@@ -1,10 +1,12 @@
-h2. Section 1: Navigation Concepts
+{toc}
+
+h1. Section 1: Navigation Concepts
 
 This section introduces the fundamental patterns for navigation in mobile applications. Understanding these concepts is crucial before you dive into specific implementation details with React Navigation or Expo Router.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Navigation Patterns in Mobile Apps
+h3. Conceptual Content: Navigation Patterns in Mobile Apps
 
 Mobile applications typically employ one or more of the following navigation patterns:
 
@@ -105,34 +107,48 @@ The dotted arrows represent common navigation paths between screens, while solid
 
 This architecture provides a flexible foundation that can be adapted to the specific needs of the SpeedyMeds application while maintaining familiar navigation patterns that users expect.
 
-h4. Platform Considerations: Designing for User Expectations
+h3. Platform Considerations: Designing for User Expectations
 
 While React Native allows for cross-platform development, users have expectations based on their device's operating system. Adhering to platform-specific navigation guidelines can significantly improve the user experience, making your app feel more intuitive and "native."
 
-h5. iOS Human Interface Guidelines (HIG)
+h4. iOS Human Interface Guidelines (HIG)
 
 Apple's HIG emphasizes clarity, deference (UI doesn't overshadow content), and depth (visual layers guide users). For navigation, this translates to:
-* *Navigation Styles:* iOS primarily uses three navigation styles:
-** *Hierarchical:* Sequential choices screen by screen (e.g., Settings app). Typically uses a Navigation Bar at the top with a title and back button.
-** *Flat:* Switching between distinct categories (e.g., Music app). Often uses a Tab Bar at the bottom or a Page Control for swiping.
-** *Content-driven:* Navigation emerges from the content itself (e.g., games, books).
-* *Core Principles:* Navigation should feel natural, predictable, and logical. The UI should support the user's task without being obtrusive.
-* *Standard Components:* Using standard iOS navigation controls (or their React Native equivalents like Native Stack for {{UINavigationBar}} and well-styled tab components for {{UITabBar}}) is strongly encouraged for familiarity.
-* *Consistency and Usability:* Ensure clear and predictable navigation paths. Transitions should be consistent. Interactive elements (icons, buttons) need clear iconography and appropriate touch target sizes.
 
-h5. Android Material Design Guidelines
+h2. Navigation Styles
+
+iOS primarily uses three navigation styles:
+* *Hierarchical:* Sequential choices screen by screen (e.g., Settings app). Typically uses a Navigation Bar at the top with a title and back button.
+* *Flat:* Switching between distinct categories (e.g., Music app). Often uses a Tab Bar at the bottom or a Page Control for swiping.
+* *Content-driven:* Navigation emerges from the content itself (e.g., games, books).
+h2. Core Principles
+
+Navigation should feel natural, predictable, and logical. The UI should support the user's task without being obtrusive.
+h2. Standard Components
+
+Using standard iOS navigation controls (or their React Native equivalents like Native Stack for {{UINavigationBar}} and well-styled tab components for {{UITabBar}}) is strongly encouraged for familiarity.
+h2. Consistency and Usability
+
+Ensure clear and predictable navigation paths. Transitions should be consistent. Interactive elements (icons, buttons) need clear iconography and appropriate touch target sizes.
+
+h4. Android Material Design Guidelines
 
 Google's Material Design (currently Material 3 or M3) provides comprehensive guidelines for Android. Key navigation aspects include:
-* *Key Navigation Components (M3):*
-** *Navigation Bar:* Replaces the older "Bottom Navigation." Used for 3-5 top-level destinations, typically on compact screens. Features updated M3 styling (e.g., pill-shaped active indicator).
-** *Navigation Drawer:* Recommended for apps with 5+ top-level destinations or complex hierarchies. Can be Modal (overlaying content on smaller screens) or Standard (alongside content on larger screens).
-** *Navigation Rail:* A compact vertical navigation component for medium and expanded screen sizes (tablets/desktops).
-** *Top App Bar:* Often contains navigation controls like a back button (Up action) or a menu icon to open a Navigation Drawer.
-* *Navigation Directions:* Material Design defines three primary navigation directions:
-** *Lateral:* Moving between screens at the same hierarchy level (e.g., using Navigation Bar, Drawer, Tabs).
-** *Forward:* Moving deeper into the hierarchy or through steps in a flow.
-** *Reverse:* Moving backward, either chronologically (system Back button) or hierarchically within the app (Up action in the Top App Bar).
-* *Back Stack Behavior:* Android's navigation relies heavily on a back stack. The system Back button typically pops the current screen. Apps should ensure that the "Up" action (often in the app bar) and the system back button provide a consistent and predictable experience for navigating the screen history within the app.
+
+h2. Key Navigation Components (M3)
+* *Navigation Bar:* Replaces the older "Bottom Navigation." Used for 3-5 top-level destinations, typically on compact screens. Features updated M3 styling (e.g., pill-shaped active indicator).
+* *Navigation Drawer:* Recommended for apps with 5+ top-level destinations or complex hierarchies. Can be Modal (overlaying content on smaller screens) or Standard (alongside content on larger screens).
+* *Navigation Rail:* A compact vertical navigation component for medium and expanded screen sizes (tablets/desktops).
+* *Top App Bar:* Often contains navigation controls like a back button (Up action) or a menu icon to open a Navigation Drawer.
+h2. Navigation Directions
+
+Material Design defines three primary navigation directions:
+* *Lateral:* Moving between screens at the same hierarchy level (e.g., using Navigation Bar, Drawer, Tabs).
+* *Forward:* Moving deeper into the hierarchy or through steps in a flow.
+* *Reverse:* Moving backward, either chronologically (system Back button) or hierarchically within the app (Up action in the Top App Bar).
+h2. Back Stack Behavior
+
+Android's navigation relies heavily on a back stack. The system Back button typically pops the current screen. Apps should ensure that the "Up" action (often in the app bar) and the system back button provide a consistent and predictable experience for navigating the screen history within the app.
 
 By considering these platform-specific guidelines, you can tailor your SpeedyMeds app's navigation to meet user expectations on both iOS and Android, leading to a more polished and professional feel.
 
@@ -153,6 +169,6 @@ bq. 🌐 *(Web Developers):*
 > *Comparison:* Stack navigation is like browser history. Tabs can be like different sections of a single-page application (SPA) controlled by a router. Drawers are common as responsive menus on mobile web.
 > *Key Takeaway:* The main difference in mobile is the tight integration with native gestures and transitions, and the expectation of persistent states within each tab or section.
 
-h4. Next Steps
+h3. Next Steps
 
 In the next section, we will introduce React Navigation, a popular library for implementing these navigation concepts in React Native.

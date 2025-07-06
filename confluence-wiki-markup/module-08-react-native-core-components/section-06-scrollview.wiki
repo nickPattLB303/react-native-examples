@@ -1,8 +1,10 @@
-h2. Section 6: ScrollView ({{<ScrollView>}}) - Enabling Scrolling
+{toc}
+
+h1. Section 6: ScrollView ({{<ScrollView>}}) - Enabling Scrolling
 
 Often, content in your application will exceed the available screen space. The {{<ScrollView>}} component is designed to handle this by providing a scrolling container for other components. This section explores how to use {{<ScrollView>}} to make your UIs scrollable.
 
-h3. Conceptual Content: Understanding {{<ScrollView>}}
+h2. Conceptual Content: Understanding {{<ScrollView>}}
 
 A {{<ScrollView>}} is a generic scrolling container that can host multiple components and views. It allows users to scroll vertically or horizontally if the content within it is larger than the {{<ScrollView>}} itself.
 
@@ -10,12 +12,25 @@ A {{<ScrollView>}} is a generic scrolling container that can host multiple compo
 A critical requirement for {{<ScrollView>}} to function correctly is that it must have a *bounded height* (for vertical scrolling) or *width* (for horizontal scrolling). Since {{<ScrollView>}} contains children of potentially unbounded dimensions within a bounded container, the container itself needs to know its own dimensions. This can be achieved by setting a direct {{height}} or {{width}} style (generally discouraged for responsiveness) or, more commonly, by ensuring that all its parent views have bounded dimensions, often by using {{flex: 1}} to allow the {{<ScrollView>}} to expand and fill available space. This requirement arises because native scrolling views ({{UIScrollView}} on iOS, {{android.widget.ScrollView}} on Android) need a defined frame to calculate the scrollable content area relative to their viewport.
 
 *Key Characteristics of {{<ScrollView>}}:*
-* *Scrollable Container:* Its primary purpose is to enable scrolling of its child components.
-* *Direction:* Can scroll vertically (default) or horizontally (by setting the {{horizontal={true}}} prop).
-* *Renders All Children:* {{<ScrollView>}} renders all its React children simultaneously. This is fine for a small number of items but can be inefficient for long lists. For long, structured lists, {{<FlatList>}} or {{<SectionList>}} (covered later) are generally preferred due to their virtualization capabilities.
-* *Styling:* Can be styled like a {{<View>}}, but also has specific content container styles ({{contentContainerStyle}}).
-* *Scroll Indicators:* Shows default scroll indicators (scrollbars) which can be customized or hidden.
-* *Interaction with Keyboard:* Props like {{keyboardDismissMode}} and {{keyboardShouldPersistTaps}} allow intelligent interaction with the keyboard, crucial for forms or chat interfaces within scrollable content.
+
+h2. Scrollable Container
+
+Its primary purpose is to enable scrolling of its child components.
+h2. Direction
+
+Can scroll vertically (default) or horizontally (by setting the {{horizontal={true}}} prop).
+h2. Renders All Children
+
+{{<ScrollView>}} renders all its React children simultaneously. This is fine for a small number of items but can be inefficient for long lists. For long, structured lists, {{<FlatList>}} or {{<SectionList>}} (covered later) are generally preferred due to their virtualization capabilities.
+h2. Styling
+
+Can be styled like a {{<View>}}, but also has specific content container styles ({{contentContainerStyle}}).
+h2. Scroll Indicators
+
+Shows default scroll indicators (scrollbars) which can be customized or hidden.
+h2. Interaction with Keyboard
+
+Props like {{keyboardDismissMode}} and {{keyboardShouldPersistTaps}} allow intelligent interaction with the keyboard, crucial for forms or chat interfaces within scrollable content.
 
 bq. 📲 *(Native Developers):*
 > *Comparison:* {{<ScrollView>}} is analogous to {{UIScrollView}} on iOS and {{ScrollView}} (or {{HorizontalScrollView}}) on Android. It provides the same fundamental capability of a scrollable viewport. The need for a bounded height/width mirrors how native scroll views require a defined frame.
@@ -27,7 +42,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* {{<ScrollView>}} enables scrolling. For optimal performance with lists, React Native offers specialized list components like {{<FlatList>}}.
 > *Source:* [https://developer.mozilla.org/en-US/docs/Web/CSS/overflow|MDN Web Docs: {{overflow}}]
 
-h3. Referential Content: Common {{<ScrollView>}} Props and Methods
+h2. Referential Content: Common {{<ScrollView>}} Props and Methods
 
 ||Prop||Type||Description||
 |{{style}}|{{StyleProp<ViewStyle>}}|Styles for the {{<ScrollView>}} itself (the outer container). Must ensure bounded height/width.|
@@ -62,7 +77,7 @@ bq. 📚 *Official Documentation:*
 - _(Native Docs)_ [https://developer.android.com/reference/android/widget/ScrollView|Android Developer: ScrollView]
 - _(Native Docs)_ [https://developer.android.com/reference/android/widget/HorizontalScrollView|Android Developer: HorizontalScrollView]
 
-h3. "Under the Hood": {{<ScrollView>}} Internals
+h2. "Under the Hood": {{<ScrollView>}} Internals
 
 *Native Mapping:*
 * On iOS, {{<ScrollView>}} wraps the native {{UIScrollView}} class. Many of its props directly correspond to {{UIScrollView}} properties.
@@ -74,7 +89,7 @@ h3. "Under the Hood": {{<ScrollView>}} Internals
 *Fabric Architecture:*
 In Fabric, a {{ScrollViewShadowNode}} manages layout and props. The actual scrolling mechanics (physics, gesture handling) are primarily managed by the underlying native scroll views. Fabric aims to improve communication efficiency for prop updates and event bridging. Some advanced interactions, particularly with animations, might involve wrappers like the {{ScrollView}} from {{react-native-reanimated}} which builds upon the core component.
 
-h3. Procedural Content: Basic {{<ScrollView>}} Usage
+h2. Procedural Content: Basic {{<ScrollView>}} Usage
 
 Let's imagine a section in the SpeedyMeds app that displays a long list of terms and conditions or detailed medication information that requires scrolling.
 
@@ -182,7 +197,7 @@ This example demonstrates how `<ScrollView>` can be used to display content that
 
 Remember, for very long lists of items where performance is a concern (e.g., a list of hundreds of medications), `<FlatList>` is a more optimized solution because it only renders items that are currently visible on the screen (virtualization). We will cover `<FlatList>` in Section 9.
 
-h3. Next Steps
+h2. Next Steps
 
 Understanding how to group and style components with `<View>` and how to make content scrollable with `<ScrollView>` are crucial layout skills. Next, we'll dive deeper into styling by looking at the `StyleSheet` API.
 * [./section-07-stylesheet-api.md|Next Section: StyleSheet API - Basic Styling]

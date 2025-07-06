@@ -1,8 +1,10 @@
-h2. Section 3: Inline Styles (Usage and Limitations)
+{toc}
+
+h1. Section 3: Inline Styles (Usage and Limitations)
 
 While {{StyleSheet.create}} is the generally recommended approach for styling in React Native, there are situations where applying styles directly to a component—known as inline styles—can be useful. This section explores how to use inline styles, their appropriate use cases, and their limitations, particularly in the context of building our SpeedyMeds application.
 
-h3. What are Inline Styles?
+h2. What are Inline Styles?
 
 Inline styles are JavaScript objects passed directly to the {{style}} prop of a React Native component. Instead of referencing a style defined in a {{StyleSheet}} object, you write the style properties directly within the component's JSX.
 
@@ -51,7 +53,7 @@ export default DynamicStatusPill;
 * Style properties like `paddingVertical`, `paddingHorizontal`, `borderRadius`, `color`, `fontWeight`, and `fontSize` are all defined directly as JavaScript objects within the `style` prop.
 * Notice that style property names are camelCased (e.g., `backgroundColor`, `paddingVertical`).
 
-h3. When to Use Inline Styles
+h2. When to Use Inline Styles
 
 Inline styles are most appropriate in a few specific scenarios:
 # *Dynamic Styles:* When style properties need to change based on component state, props, or animations. If only one or two properties are dynamic, inline styles can be simpler than managing multiple `StyleSheet` entries and conditional arrays.
@@ -59,7 +61,7 @@ Inline styles are most appropriate in a few specific scenarios:
 # *Very Small, Specific Adjustments:* For minor, one-off styling tweaks that are unlikely to be reused and are specific to a single instance of a component. For example, adding a small amount of margin to a single element in a complex layout.
 # *Prototyping and Quick Experiments:* When quickly trying out styles, inline styling can be faster than setting up `StyleSheet` entries. However, it's good practice to refactor these into `StyleSheet` if they become permanent or complex.
 
-h3. Limitations of Inline Styles
+h2. Limitations of Inline Styles
 
 While convenient, inline styles have several drawbacks, especially if overused:
 # *Readability:* Large inline style objects can clutter your JSX, making the component's rendering logic harder to read and understand. `StyleSheet` promotes separation of concerns.
@@ -75,7 +77,7 @@ bq. 🌐 *(Web Developers):*
 > *Comparison:* This is very similar to using the `style` attribute directly on HTML elements (e.g., `<div style={{color: 'blue'}}></div>` in React for web). The same principles apply: convenient for dynamic or very specific styles, but generally discouraged for overall styling architecture due to maintainability and separation of concerns.
 > *Key Takeaway:* The trade-offs are largely the same as on the web. Use inline styles judiciously.
 
-h3. Combining Inline Styles with `StyleSheet`
+h2. Combining Inline Styles with `StyleSheet`
 
 You can combine `StyleSheet` definitions with inline styles by using an array in the `style` prop. This is a common and powerful pattern for applying base styles from a `StyleSheet` and then overriding or adding dynamic styles inline.
 
@@ -129,7 +131,7 @@ export default DynamicStatusPillCombined;
 {tip}
 When combining styles in an array, React Native handles falsy values (like `null`, `undefined`, or `false`) gracefully by ignoring them. This is useful for conditional styling: `style={[styles.base, condition && styles.conditionalStyle]}`.
 {tip}
-h3. Conclusion
+h2. Conclusion
 
 Inline styles are a convenient tool in your React Native styling toolkit, especially for dynamic styles. However, for the sake of readability, maintainability, and potential performance benefits, prefer `StyleSheet.create` for the majority of your styling needs. Use inline styles thoughtfully and consider refactoring them into `StyleSheet` if they become complex or are reused.
 

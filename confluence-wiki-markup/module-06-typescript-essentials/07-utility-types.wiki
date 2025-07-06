@@ -1,8 +1,10 @@
-h2. Section 7: Utility Types
+{toc}
+
+h1. Section 7: Utility Types
 
 TypeScript comes with a set of built-in utility types that help you transform existing types into new ones. These are incredibly useful for common type manipulations, reducing boilerplate and making your type definitions more expressive and maintainable. Let's explore some of the most frequently used utility types.
 
-h3. {{Partial<Type>}}
+h2. {{Partial<Type>}}
 
 {{Partial<Type>}} constructs a type with all properties of {{Type}} set to optional. This is useful when you want to represent an object where only some properties might be present, such as when updating an entity.
 
@@ -52,7 +54,7 @@ function getPatientById(id: string): PatientProfile {
 }
 {code}
 
-h3. `Required<Type>`
+h2. `Required<Type>`
 
 `Required<Type>` constructs a type with all properties of `Type` set to required. This is useful when you want to ensure all properties of an object are present, even if they were originally optional in `Type`.
 
@@ -79,7 +81,7 @@ const finalOrder: FinalizedMedicationOrder = {
 // Error: Property 'pharmacistNotes' is missing...
 {code}
 
-h3. `Readonly<Type>`
+h2. `Readonly<Type>`
 
 `Readonly<Type>` constructs a type with all properties of `Type` set to `readonly`. This means the properties cannot be reassigned after the object is created.
 
@@ -99,7 +101,7 @@ const currentConfig: Readonly<AppConfig> = {
 // Note: Readonly is shallow. For deep readonly, you might need a custom utility or library.
 {code}
 
-h3. `Pick<Type, Keys>`
+h2. `Pick<Type, Keys>`
 
 `Pick<Type, Keys>` constructs a type by picking a specified set of properties (`Keys`) from `Type`. `Keys` must be a union of property names from `Type`.
 
@@ -131,7 +133,7 @@ const amlodipineSummary: MedicationSummary = {
 // Error: Object literal may only specify known properties, and 'manufacturer' does not exist in type 'MedicationSummary'.
 {code}
 
-h3. `Omit<Type, Keys>`
+h2. `Omit<Type, Keys>`
 
 `Omit<Type, Keys>` constructs a type by picking all properties from `Type` and then removing `Keys` (a union of property names from `Type`).
 
@@ -161,7 +163,7 @@ const publicView: PublicUserProfile = {
 // console.log(publicView.passwordHash); // Error: Property 'passwordHash' does not exist on type 'PublicUserProfile'.
 {code}
 
-h3. `Record<Keys, Type>`
+h2. `Record<Keys, Type>`
 
 `Record<Keys, Type>` constructs an object type whose property keys are `Keys` (a union of strings, numbers, or symbols) and whose property values are of `Type`.
 

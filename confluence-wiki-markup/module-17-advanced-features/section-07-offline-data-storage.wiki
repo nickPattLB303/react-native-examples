@@ -1,105 +1,130 @@
-h2. Section 7: Offline Data Storage
+{toc}
+
+h1. Section 7: Offline Data Storage
 
 This section explores strategies for storing data offline in your React Native application. Offline data storage is crucial for creating apps that remain functional without an internet connection, improve performance by caching data, and provide a seamless user experience. We will cover {{AsyncStorage}} for simple key-value storage, {{expo-sqlite}} for relational data, and briefly mention MMKV as a high-performance alternative.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 Many mobile applications need to store data locally on the device. This could be user preferences, application settings, cached API responses, or even a full dataset for offline functionality. For SpeedyMeds, this could include storing user login tokens, drafted prescription notes, or a local cache of medication information.
 
 *Why Offline Storage?*
-* *Offline Access:* Allows users to access data and use app features even when they are not connected to the internet.
-* *Performance:* Reduces the need for frequent network requests by caching data locally, leading to faster load times.
-* *Reduced Data Usage:* Minimizes data transfer by relying on local data when possible.
-* *Improved User Experience:* Provides a smoother experience by minimizing loading states and handling network interruptions gracefully.
+
+h2. Offline Access
+
+Allows users to access data and use app features even when they are not connected to the internet.
+h2. Performance
+
+Reduces the need for frequent network requests by caching data locally, leading to faster load times.
+h2. Reduced Data Usage
+
+Minimizes data transfer by relying on local data when possible.
+h2. Improved User Experience
+
+Provides a smoother experience by minimizing loading states and handling network interruptions gracefully.
 
 *Choosing an Offline Storage Solution*
 
 The choice of storage solution depends on the type and complexity of the data you need to store:
-* *Simple Key-Value Data:* For settings, user preferences, or small pieces of unstructured data, a key-value store is often sufficient.
-* *Structured/Relational Data:* For more complex data with relationships (e.g., a list of medications with dosages and schedules), a local SQL database is more appropriate.
-* *Performance-Critical Data:* For scenarios requiring very fast read/write operations, specialized storage libraries might be considered.
 
-h3. Referential Content
+h2. Simple Key-Value Data
+
+For settings, user preferences, or small pieces of unstructured data, a key-value store is often sufficient.
+h2. Structured/Relational Data
+
+For more complex data with relationships (e.g., a list of medications with dosages and schedules), a local SQL database is more appropriate.
+h2. Performance-Critical Data
+
+For scenarios requiring very fast read/write operations, specialized storage libraries might be considered.
+
+h2. Referential Content
 
 *1. AsyncStorage ({{@react-native-async-storage/async-storage}})*
 
 AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system that is global to the app. It's suitable for storing small amounts of data, like user preferences or authentication tokens.
-* *Characteristics:*
-** Asynchronous API (returns Promises).
-** Stores data as strings. You need to serialize (e.g., {{JSON.stringify}}) objects/arrays before storing and deserialize ({{JSON.parse}}) after retrieving.
-** Unencrypted: Not suitable for sensitive data without an additional encryption layer.
-** Can be slow for large amounts of data due to its asynchronous nature and serialization overhead.
-* *Installation:*
 
-  {code:language=bash}
+h2. Characteristics
+* Asynchronous API (returns Promises).
+* Stores data as strings. You need to serialize (e.g., {{JSON.stringify}}) objects/arrays before storing and deserialize ({{JSON.parse}}) after retrieving.
+* Unencrypted: Not suitable for sensitive data without an additional encryption layer.
+* Can be slow for large amounts of data due to its asynchronous nature and serialization overhead.
+h2. Installation
+
+{code:language=bash}
 npx expo install @react-native-async-storage/async-storage
-  ```
-* *Common Methods:*
-** `setItem(key: string, value: string): Promise<void>`
-** `getItem(key: string): Promise<string | null>`
-** `removeItem(key: string): Promise<void>`
-** `mergeItem(key: string, value: string): Promise<void>` (merges a JSON value into an existing JSON value)
-** `getAllKeys(): Promise<string[]>`
-** `clear(): Promise<void>` (clears all AsyncStorage for all keys)
+{code}
+
+h2. Common Methods
+* `setItem(key: string, value: string): Promise<void>`
+* `getItem(key: string): Promise<string | null>`
+* `removeItem(key: string): Promise<void>`
+* `mergeItem(key: string, value: string): Promise<void>` (merges a JSON value into an existing JSON value)
+* `getAllKeys(): Promise<string[]>`
+* `clear(): Promise<void>` (clears all AsyncStorage for all keys)
 
 *2. `expo-sqlite`*
 
 `expo-sqlite` provides an API to interact with a SQLite database stored on the device. SQLite is a lightweight, file-based relational database, ideal for storing structured data.
-* *Characteristics:*
-** SQL-based relational database.
-** Supports transactions for atomic operations.
-** Data is persistent.
-** Good for managing larger datasets and complex queries.
-* *Installation:*
 
-  ```bash
-  npx expo install expo-sqlite
-  ```
-* *Core API:*
-** `SQLite.openDatabase(name: string, version?: string, description?: string, size?: number, callback?: (db: WebSQLDatabase) => void): WebSQLDatabase`
-** `db.transaction(callback: (tx: SQLTransaction) => void, errorCallback?: (error: SQLError) => void, successCallback?: () => void)`
-** `tx.executeSql(sqlStatement: string, arguments?: any[], successCallback?: (transaction: SQLTransaction, resultSet: SQLResultSet) => void, errorCallback?: (transaction: SQLTransaction, error: SQLError) => boolean)`
-*** `SQLResultSet` contains `rowsAffected`, `insertId`, and `rows` (an array of objects).
+h2. Characteristics
+* SQL-based relational database.
+* Supports transactions for atomic operations.
+* Data is persistent.
+* Good for managing larger datasets and complex queries.
+h2. Installation
+
+{code:language=bash}
+npx expo install expo-sqlite
+{code}
+
+h2. Core API
+* `SQLite.openDatabase(name: string, version?: string, description?: string, size?: number, callback?: (db: WebSQLDatabase) => void): WebSQLDatabase`
+* `db.transaction(callback: (tx: SQLTransaction) => void, errorCallback?: (error: SQLError) => void, successCallback?: () => void)`
+* `tx.executeSql(sqlStatement: string, arguments?: any[], successCallback?: (transaction: SQLTransaction, resultSet: SQLResultSet) => void, errorCallback?: (transaction: SQLTransaction, error: SQLError) => boolean)`
+** `SQLResultSet` contains `rowsAffected`, `insertId`, and `rows` (an array of objects).
 
 *3. MMKV (`react-native-mmkv`)*
 
 MMKV (Multi-Process Key-Value) is a high-performance, persistent key-value storage framework developed by Tencent. `react-native-mmkv` provides a React Native binding for it.
-* *Characteristics:*
-** Extremely fast read/write operations (often faster than AsyncStorage).
-** Synchronous API (though asynchronous wrappers can be built).
-** Supports storing strings, numbers, booleans, and `Uint8Array`.
-** Offers built-in encryption capabilities.
-** Can be a good alternative to AsyncStorage for performance-sensitive key-value storage or when encryption is needed out-of-the-box.
+
+h2. Characteristics
+* Extremely fast read/write operations (often faster than AsyncStorage).
+* Synchronous API (though asynchronous wrappers can be built).
+* Supports storing strings, numbers, booleans, and `Uint8Array`.
+* Offers built-in encryption capabilities.
+* Can be a good alternative to AsyncStorage for performance-sensitive key-value storage or when encryption is needed out-of-the-box.
 * \*\*Installation (requires a development build for native modules if not already set up):
 
-  ```bash
+{code:language=bash}
   npm install react-native-mmkv
   # or
   yarn add react-native-mmkv
-  ```
+{code}
 
   Then, `npx expo prebuild` (if you haven't already) or use a development build with EAS Build.
-* *Basic Usage:*
 
-  ```typescript
-  import { MMKV } from "react-native-mmkv";
-  const storage = new MMKV({
-    id: "user-preferences",
-    encryptionKey: "your-secure-key",
-  });
-  storage.set("username", "SpeedyUser");
-  const username = storage.getString("username");
-  ```
+h2. Basic Usage
+
+{code:language=js}
+import { MMKV } from "react-native-mmkv";
+const storage = new MMKV({
+  id: "user-preferences",
+  encryptionKey: "your-secure-key",
+});
+storage.set("username", "SpeedyUser");
+const username = storage.getString("username");
+{code}
 
 {note}
 While MMKV offers excellent performance and encryption, it adds native dependencies. Ensure your build process (e.g., EAS Build with a development client) can handle this if you choose to use it. For this course, we will primarily focus on AsyncStorage and `expo-sqlite` as they are more commonly integrated with Expo Go compatible examples.
 {note}
-h3. Procedural Content
+h2. Procedural Content
 
 *Example 1: Using AsyncStorage to Store User Preferences*
 
 Let's say SpeedyMeds allows users to choose a theme (light/dark). We can store this preference using AsyncStorage.
-{code}tsx
+
+{code:language=js}
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, Button, StyleSheet, Switch } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -206,7 +231,8 @@ const styles = StyleSheet.create({
 });
 
 export default ThemePreference;
-{code:language=text}
+{code}
+
 *Explanation of Example 1:*
 
 The `ThemePreference` component demonstrates a practical use of AsyncStorage for storing simple user preferences in the SpeedyMeds app. The component manages a light/dark theme preference that persists even when the app is closed and reopened.
@@ -223,7 +249,8 @@ This pattern can be extended to store various user preferences in SpeedyMeds, su
 *Example 2: Using expo-sqlite for Medication Records*
 
 Let's create a component that demonstrates using `expo-sqlite` to manage a more complex data structure: a list of medications with their details.
-{code}tsx
+
+{code:language=js}
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -600,7 +627,7 @@ const styles = StyleSheet.create({
 });
 
 export default MedicationManager;
-```
+{code}
 
 *Explanation of Example 2:*
 
@@ -608,17 +635,31 @@ This `MedicationManager` component demonstrates a comprehensive implementation o
 # *Database Initialization:*
    The `initDatabase` function ensures a `medications` table exists with the necessary columns. This is wrapped in a `db.transaction` which provides atomicity—either all SQL statements within the transaction succeed, or none do.
 # *CRUD Operations:*
-*** *Create:* The `addMedication` function inserts a new record into the database using parameterized SQL (`?` placeholders) for security and to prevent SQL injection.
-** *Read:* The `loadMedications` function queries all records, ordered by name, and updates the component's state with the results.
-** *Delete:* The `deleteMedication` function removes a record by ID after user confirmation.
+
+h3. Create
+
+The `addMedication` function inserts a new record into the database using parameterized SQL (`?` placeholders) for security and to prevent SQL injection.
+h3. Read
+
+The `loadMedications` function queries all records, ordered by name, and updates the component's state with the results.
+h3. Delete
+
+The `deleteMedication` function removes a record by ID after user confirmation.
 ** (Update could be added for a complete CRUD implementation but is omitted for brevity.)
 # *Structured Data Model:*
    The `Medication` interface defines a clear type structure for medication records, ensuring consistency in how data is stored and retrieved.
 # *Transaction Pattern:*
    All database operations use the `transaction` method, which provides:
-*** *Error Handling:* Each transaction has success and error callbacks.
-** *Rollback Support:* By returning `false` from error callbacks, the transaction is rolled back.
-** *Atomicity:* Multiple SQL operations can be grouped to succeed or fail together.
+
+h3. Error Handling
+
+Each transaction has success and error callbacks.
+h3. Rollback Support
+
+By returning `false` from error callbacks, the transaction is rolled back.
+h3. Atomicity
+
+Multiple SQL operations can be grouped to succeed or fail together.
 # *User Experience Considerations:*
 *** Loading states are managed to inform users when data is being retrieved.
 ** Form validation ensures required fields are filled.
@@ -644,6 +685,6 @@ bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/versions/latest/sdk/sqlite/|Expo SQLite Documentation]
 - [https://www.sqlite.org/docs.html|SQLite Official Documentation]
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you've learned about storing data offline using both key-value storage (AsyncStorage) and relational databases (SQLite), let's explore testing strategies in React Native.

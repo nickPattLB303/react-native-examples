@@ -1,4 +1,6 @@
-h2. Section 4: Controlled Components Pattern
+{toc}
+
+h1. Section 4: Controlled Components Pattern
 
 In React, a "controlled component" is an input form element whose value is controlled by React state. This is the most common and recommended way to handle form inputs in both React and React Native. This section will explain the pattern in detail, demonstrate its implementation, and highlight its benefits and performance considerations for creating predictable and manageable forms.
 
@@ -11,36 +13,48 @@ An input component (like {{TextInput}}) becomes a controlled component when you 
 This creates a closed loop: user input triggers a state update, and the updated state then dictates what is displayed in the input field. React state becomes the single source of truth for the input's value.
 
 *Benefits of Controlled Components:*
-* *Single Source of Truth:* The React state is the definitive source for the input's value. This centralizes data management and makes it easier to reason about the data flow and debug issues.
-* *Predictable Behavior:* Because the state controls the value, the input's behavior is highly predictable. The value can be programmatically changed by modifying the state.
-* *Instant Validation & Formatting:* You can validate or format input on every keystroke because the value is available in the state immediately after each change (e.g., converting text to uppercase, restricting input length, formatting currency).
-* *Conditional Logic:* Easily implement logic based on the input's value (e.g., enabling/disabling a submit button, showing/hiding other UI elements).
-* *Integration with React State Management:* This pattern integrates seamlessly with React's built-in state management hooks ({{useState}}, {{useReducer}}) and can also be used with more comprehensive state management libraries.
+
+h2. Single Source of Truth
+
+The React state is the definitive source for the input's value. This centralizes data management and makes it easier to reason about the data flow and debug issues.
+h2. Predictable Behavior
+
+Because the state controls the value, the input's behavior is highly predictable. The value can be programmatically changed by modifying the state.
+h2. Instant Validation & Formatting
+
+You can validate or format input on every keystroke because the value is available in the state immediately after each change (e.g., converting text to uppercase, restricting input length, formatting currency).
+h2. Conditional Logic
+
+Easily implement logic based on the input's value (e.g., enabling/disabling a submit button, showing/hiding other UI elements).
+h2. Integration with React State Management
+
+This pattern integrates seamlessly with React's built-in state management hooks ({{useState}}, {{useReducer}}) and can also be used with more comprehensive state management libraries.
 
 *Implementation Steps:*
 
 Let's consider a {{TextInput}} for a patient's age in our SpeedyMeds app.
 # *Initialize State:* Use {{useState}} to create a state variable for the input's value.
-    {code:language=js}
-const [patientAge, setPatientAge] = useState<string>("");
-    ```
+{code:language=js}
+    const [patientAge, setPatientAge] = useState<string>("");
+{code}
 # *Set `value` Prop:* Bind the `TextInput`'s `value` prop to this state variable.
-    ```tsx
+{code:language=js}
     <TextInput value={patientAge} /* ...other props */ />
-    ```
+{code}
 # *Handle Changes with `onChangeText`:* Provide a callback to `onChangeText` that updates the state.
-    ```tsx
+{code:language=js}
     <TextInput
       value={patientAge}
       onChangeText={(newAge) => setPatientAge(newAge)}
       // ...other props
     />
-    ```
+{code}
 
 *Short, Self-Contained Example: A Controlled `TextInput`*
 
 This example demonstrates a controlled `TextInput` for capturing a patient's contact number. It enforces that only numbers can be entered and displays the current value.
-{code}tsx
+
+{code:language=js}
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -132,7 +146,8 @@ const styles = StyleSheet.create({
 });
 
 export default ControlledInputDemoScreen;
-{code:language=text}
+{code}
+
 *Explanation of the Example:*
 # `patientContact` state is initialized as an empty string.
 # The `TextInput`'s `value` prop is bound to `patientContact`.
@@ -148,12 +163,13 @@ export default ControlledInputDemoScreen;
 This pattern ensures that `patientContact` state always holds a valid (numeric, up to 10 digits) representation of the user's input, making it reliable for further processing or submission.
 
 While this example uses a simple string for state, you could also manage multiple related form inputs within a single state object:
-{code}typescript
+
+{code:language=js}
 const [patientDetails, setPatientDetails] = useState({ name: '', age: '' });
 
 // Then, in onChangeText for the name input:
 onChangeText={(newName) => setPatientDetails(prevDetails => ({ ...prevDetails, name: newName }))}
-```
+{code}
 
 This approach can be useful for grouping related data but requires careful handling of state updates (using the spread operator to preserve other fields).
 
@@ -174,12 +190,13 @@ The benefits of controlled components—such as having a single source of truth 
 *Comparison with Uncontrolled Components*
 
 In contrast to controlled components, uncontrolled components allow the form data to be handled by the native component itself, rather than by React state. The values are typically read from the input field using a `ref` when needed, such as during form submission.
-* *Pros of Uncontrolled Components:*
-** Can be simpler for very basic forms where real-time state tracking isn't necessary.
-** Potentially better performance by avoiding re-renders on every keystroke, as React isn't managing the input's value in its state.
-* *Cons of Uncontrolled Components:*
-** Harder to implement real-time validation or dynamic formatting, as the value isn't readily available in React state.
-** Managing data flow can become more complex if you need to react to input changes programmatically.
+
+h2. Pros of Uncontrolled Components
+* Can be simpler for very basic forms where real-time state tracking isn't necessary.
+* Potentially better performance by avoiding re-renders on every keystroke, as React isn't managing the input's value in its state.
+h2. Cons of Uncontrolled Components
+* Harder to implement real-time validation or dynamic formatting, as the value isn't readily available in React state.
+* Managing data flow can become more complex if you need to react to input changes programmatically.
 
 While React Hook Form (which we will cover later) cleverly uses refs for performance similar to uncontrolled components, it provides an API that often makes working with inputs feel like they are controlled.
 

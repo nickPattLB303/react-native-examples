@@ -1,8 +1,10 @@
-h2. Section 4: Introduction to Zustand (Client State)
+{toc}
+
+h1. Section 4: Introduction to Zustand (Client State)
 
 While the React Context API is excellent for prop drilling avoidance and managing relatively simple global state, more complex applications often benefit from dedicated state management libraries. Zustand emerges as a popular alternative, offering a different approach compared to Context API or more complex libraries like Redux.
 
-h3. What is Zustand? Core Principles
+h2. What is Zustand? Core Principles
 
 Zustand presents itself as a small, fast, and scalable *bearbones state management solution*. Its core philosophy revolves around simplicity and performance, built upon a *hook-based API*. Key characteristics include:
 # *Minimalism & Minimal Boilerplate:* It avoids excessive boilerplate and complex setup procedures. Setting up a store and using it is incredibly straightforward.
@@ -14,25 +16,26 @@ Zustand presents itself as a small, fast, and scalable *bearbones state manageme
 # *Middleware Support:* Zustand has a simple yet powerful middleware system (e.g., for persistence, DevTools integration).
 # *TypeScript Support:* It's built with TypeScript in mind, offering excellent type safety.
 
-h3. Installation and Setup
+h2. Installation and Setup
 
 Integrating Zustand is straightforward:
 # *Install:* Add the library to your project.
-    {code:language=bash}
-npm install zustand
+{code:language=bash}
+    npm install zustand
     # or
     yarn add zustand
-    ```
+{code}
 # *Create Store:* Define your state logic, typically in a separate file (e.g., `store.ts`).
 
-h3. Creating a Store (the `create` function)
+h2. Creating a Store (the `create` function)
 
 The central piece of Zustand is the `create` function, used to build your state store. You import it from `zustand`.
 
 The `create` function takes a single argument: a setup function. This setup function receives helper functions (most importantly `set` and optionally `get`) and must return the initial state object. This object defines the structure of your store, including state properties and action functions that modify the state.
 
 Let's create a very simple counter store:
-{code}tsx
+
+{code:language=js}
 // src/stores/counterStore.ts
 import { create } from "zustand";
 
@@ -54,11 +57,13 @@ export const useCounterStore = create<CounterState>((set) => ({
   decrement: () => set((state) => ({ count: state.count - 1 })),
   setCount: (newCount: number) => set({ count: newCount }),
 }));
-{code:language=text}
+{code}
+
 The result of `create(...)` (e.g., `useCounterStore`) is itself a custom hook. This hook is used within your React Native components to access the store\'s state and actions.
 
-h3. Using the Store Hook in Components
-{code}tsx
+h2. Using the Store Hook in Components
+
+{code:language=js}
 // src/components/CounterDisplay.tsx
 import React from "react";
 import { View, Text, Button } from "react-native";
@@ -82,8 +87,9 @@ const CounterDisplay: React.FC = () => {
 };
 
 export default CounterDisplay;
-{code:language=text}
-h3. Selecting State Slices for Performance
+{code}
+
+h2. Selecting State Slices for Performance
 
 A key feature of Zustand is its selector-based subscription model. When using the store hook, you provide a selector function (e.g., `(state) => state.count`). This tells Zustand precisely which part(s) of the state this component instance cares about.
 
@@ -91,24 +97,33 @@ Crucially, the component calling the hook will *only re-render if the value retu
 
 *"Under the Hood" (Selectors):* Zustand maintains a list of listeners (components using the hook) along with their associated selector functions and last selected values. When the `set` function is called to update the state, Zustand iterates through its listeners. For each listener, it re-runs the selector function with the new state, compares the newly selected value with the previously stored value, and only notifies (triggers a re-render) the component if the value has changed.
 
-h3. Updating State (the `set` function)
+h2. Updating State (the `set` function)
 
 Actions within the store modify the state using the `set` function provided by the `create` callback.
-* *Merging State:* By default, `set` performs a *shallow merge*. When you provide an object to `set`, it merges those properties into the existing state, leaving other properties untouched (similar to `this.setState` in React class components).
-  ```tsx
-  // Assuming state is { count: 0, user: 'guest' }
-  set({ count: 1 }); // State becomes { count: 1, user: 'guest' }
-  ```
-* *Functional Updates:* For updates that depend on the previous state, pass a function to `set`. This function receives the current state and should return the partial state object to be merged.
-  ```tsx
-  set((state) => ({ count: state.count + 1 }));
-  ```
-* *Replacing State:* To completely replace the state instead of merging, pass `true` as the second argument to `set`: `set(newState, true)`. Use this with caution, as it overwrites the entire state.
 
-h3. Middleware: Persisting State with `AsyncStorage`
+h2. Merging State
+
+By default, `set` performs a *shallow merge*. When you provide an object to `set`, it merges those properties into the existing state, leaving other properties untouched (similar to `this.setState` in React class components).
+{code:language=js}
+// Assuming state is { count: 0, user: 'guest' }
+set({ count: 1 }); // State becomes { count: 1, user: 'guest' }
+
+{code}
+h2. Functional Updates
+
+For updates that depend on the previous state, pass a function to `set`. This function receives the current state and should return the partial state object to be merged.
+{code:language=js}
+set((state) => ({ count: state.count + 1 }));
+{code}
+h2. Replacing State
+
+To completely replace the state instead of merging, pass `true` as the second argument to `set`: `set(newState, true)`. Use this with caution, as it overwrites the entire state.
+
+h2. Middleware: Persisting State with `AsyncStorage`
 
 Zustand supports middleware to extend its functionality. A common use case in React Native is persisting state to `AsyncStorage`.
-{code}tsx
+
+{code:language=js}
 // src/stores/medicationStore.ts (Example with persistence)
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -161,11 +176,13 @@ export const useFavoriteMedicationsStore = create<FavoriteMedicationsState>()(
     }
   )
 );
-{code:language=text}
+{code}
+
 This example uses the `persist` middleware to save the `favoriteMedications` state to `AsyncStorage`.
 
-h3. Zustand Store Interaction Diagram
-{code}mermaid
+h2. Zustand Store Interaction Diagram
+
+{mermaid}
 graph TD
     A[React Component] -- "Calls useStore(state => state.slice)" --> H((Zustand Hook))
     H -- "Accesses Store" --> S[Zustand Store]
@@ -179,7 +196,7 @@ graph TD
     end
     S -- "Notifies Hook (if selected slice changed)" --> H
     H -- "Triggers Re-render" --> A
-```
+{mermaid}
 
 *Explanation of the Diagram:*
 
@@ -190,11 +207,16 @@ bq. 📚 *Official Documentation:*
 - [https://zustand.docs.pmnd.rs/|Zustand Docs Website (pmnd.rs)]
 - [https://github.com/pmndrs/zustand/blob/main/docs/integrations/persisting-store-data.md|Zustand: `persist` middleware]
 
-h3. Exercise 13.2: Implementing a Zustand Store
+h2. Exercise 13.2: Implementing a Zustand Store
 
 Now it's your turn to get hands-on with Zustand!
-* *Objective:* Create a Zustand store to manage a simple counter.
-* *Task:* Define a store with a `count` state and actions to `increment`, `decrement`, and `reset` the count. Display the count and provide buttons to interact with these actions in a React Native component.
+
+h2. Objective
+
+Create a Zustand store to manage a simple counter.
+h2. Task
+
+Define a store with a `count` state and actions to `increment`, `decrement`, and `reset` the count. Display the count and provide buttons to interact with these actions in a React Native component.
 
 *(https://snack.expo.dev/@course-author/m13-ex02-zustand-store)*
 
@@ -211,6 +233,6 @@ bq. 🌐 *(Web Developers):*
 *Comparison (Angular):* Zustand's global store is similar to an Angular service holding state (e.g., with an RxJS `BehaviorSubject`). Components would inject the service and subscribe to the `Observable`. Zustand's `set` is like calling `.next()` on a Subject. The hook-based access in Zustand is idiomatic to React, whereas Angular uses DI and `async` pipes or manual subscriptions.
 > *Key Takeaway:* Zustand offers a minimalistic and performant global state solution for React/React Native, often simpler than Redux and more optimized for dynamic updates than Context API. For Angular devs, it's a different paradigm but shares the goal of centralized, accessible state.
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you've seen how Zustand works for managing client-side state, it's valuable to compare it directly with React's Context API to understand the specific scenarios where each might be more appropriate. The next section provides this detailed comparison.

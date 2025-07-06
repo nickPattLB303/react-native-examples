@@ -1,10 +1,12 @@
-h2. Section 3: How Rendering Works (Legacy vs. Fabric)
+{toc}
+
+h1. Section 3: How Rendering Works (Legacy vs. Fabric)
 
 A core function of React Native is translating your React component hierarchy into actual native UI elements displayed on the screen. The way this rendering process occurs differs significantly between the Legacy Architecture and the New Architecture's Fabric renderer. Understanding these rendering differences is crucial when developing sophisticated UIs like those needed in our SpeedyMeds pharmacy application.
 
 bq. 🧗‍♀️ *(Self-Led):* As you work through this section, try to visualize the rendering flow in both architectures. Consider drawing your own diagrams to reinforce your understanding of how UI elements move from JavaScript to the screen.
 
-h3. Legacy Rendering Process (UI Manager)
+h2. Legacy Rendering Process (UI Manager)
 
 In the Legacy Architecture, rendering involved multiple steps across different threads:
 # *JS Thread:* React executes your component code and creates a tree of React elements (the virtual DOM).
@@ -15,7 +17,7 @@ In the Legacy Architecture, rendering involved multiple steps across different t
 
 This multi-step, asynchronous process, heavily reliant on the Bridge, could lead to delays, especially during complex updates or animations, resulting in dropped frames and a less fluid user experience. Coordinating layout calculations on the Shadow Thread with UI updates on the native main thread via the asynchronous bridge was a key challenge.
 
-h3. New Architecture Rendering (Fabric)
+h2. New Architecture Rendering (Fabric)
 
 Fabric streamlines the rendering process by leveraging JSI and integrating layout calculation more tightly, often moving work off the main native thread:
 # *Render Phase (JS Thread -> C++ via JSI):* React executes your JS code to create a React Element Tree. Fabric immediately uses this, via JSI, to create a corresponding React Shadow Tree directly in C++. This bypasses the need to send serialized descriptions of the UI over the Bridge.
@@ -65,12 +67,23 @@ The diagram above illustrates the fundamental differences between the legacy and
 
 In contrast, the Fabric Rendering flow (bottom) shows a more streamlined process. Through JSI, JavaScript can directly communicate with the C++ layer to create the Shadow Tree. The layout calculations still use Yoga but occur within the C++ environment, eliminating a Bridge crossing. The final mounting process is more direct and controlled, with better diffing and prioritization capabilities. These improvements result in faster, smoother rendering performance with fewer dropped frames—essential for responsive UIs like medication lists or patient records in our SpeedyMeds application.
 
-h3. Key Differences and Benefits of Fabric:
-* *Reduced Bridge Overhead:* Fabric minimizes reliance on the asynchronous Bridge for rendering, reducing serialization costs and latency significantly.
-* *Synchronous Operations:* JSI allows for more synchronous communication between JavaScript and the rendering system when needed (e.g., layout measurement), improving responsiveness for things like text input measurement or gesture handling.
-* *Improved Threading Model:* Layout calculations happen in C++ (often off the main thread), freeing the main native UI thread to respond to user interactions more quickly. Fabric enables better prioritization of UI updates.
-* *Faster Mounting:* Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
-* *Concurrent React Features:* Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
+h2. Key Differences and Benefits of Fabric:
+
+h2. Reduced Bridge Overhead
+
+Fabric minimizes reliance on the asynchronous Bridge for rendering, reducing serialization costs and latency significantly.
+h2. Synchronous Operations
+
+JSI allows for more synchronous communication between JavaScript and the rendering system when needed (e.g., layout measurement), improving responsiveness for things like text input measurement or gesture handling.
+h2. Improved Threading Model
+
+Layout calculations happen in C++ (often off the main thread), freeing the main native UI thread to respond to user interactions more quickly. Fabric enables better prioritization of UI updates.
+h2. Faster Mounting
+
+Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
+h2. Concurrent React Features
+
+Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
 bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/architecture/fabric-renderer|Fabric Renderer | React Native]
@@ -86,7 +99,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
 > *Source:* [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
 
-h3. Implications for SpeedyMeds Development
+h2. Implications for SpeedyMeds Development
 
 In our SpeedyMeds pharmacy application, the rendering process has direct implications for user experience:
 * The medication list will benefit from Fabric's optimized rendering, especially when scrolling through large numbers of prescriptions. The improved diffing and priority management can keep the list smooth, even when new prescriptions are added.
@@ -97,12 +110,12 @@ Understanding these rendering processes helps us make informed decisions about c
 
 Understanding these rendering differences highlights how the New Architecture tackles core performance issues present in the legacy system, aiming for a smoother and more native-like user experience.
 
-h2. Exercise 2.1: Architecture Concepts Review
+h1. Exercise 2.1: Architecture Concepts Review
 
 Test your understanding of React Native's architectural rendering with a short quiz:
 
 *(https://forms.microsoft.com/architecture-concepts-review)*
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you understand how rendering works in both architectures, let's explore the practical implications these architectural differences have for you as a developer, including performance considerations and new capabilities the architecture enables.

@@ -1,12 +1,14 @@
-h2. Section 4: Tab Navigator Setup and Usage
+{toc}
+
+h1. Section 4: Tab Navigator Setup and Usage
 
 This section explores the Tab Navigator, a common pattern for top-level navigation where different sections of an app are accessible via tabs, typically at the bottom of the screen. We will use React Navigation's Bottom Tab Navigator ({{@react-navigation/bottom-tabs}}) to implement this pattern in our SpeedyMeds app, allowing users to easily switch between main features like a list of medications and pharmacy information.
 
 bq. 🛣️ *(All Learners):* A solid understanding of Stack Navigator concepts from the previous section will be beneficial, as tabs often manage their own independent navigation stacks.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Understanding Bottom Tab Navigation
+h3. Conceptual Content: Understanding Bottom Tab Navigation
 
 The Tab Navigator is a common mobile UI pattern that places a tab bar at the bottom of the screen (iOS pattern) or sometimes at the top (Material Design / Android pattern). Each tab acts as a gateway to a separate section of your app, allowing users to quickly switch between different features or content categories.
 
@@ -59,7 +61,7 @@ This diagram illustrates several key characteristics of tab-based navigation:
 
 This navigation pattern works well for SpeedyMeds because it allows users to quickly access different primary features of the application without losing their context within each feature area.
 
-h4. Procedural Content: Implementing a Bottom Tab Navigator
+h3. Procedural Content: Implementing a Bottom Tab Navigator
 
 Let's add a tab navigator to our SpeedyMeds app. We'll imagine two main sections: {{MedicationsStack}} (which could be the stack navigator we started building in the previous section) and a new {{PharmacyInfoScreen}}.
 
@@ -276,7 +278,7 @@ bq. 🍏 *(iOS Developers):*
 bq. 🤖 *(Android Developers):*
 > *Comparison:* This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
 
-h4. Referential Content: Key Tab Navigator Configuration Options
+h3. Referential Content: Key Tab Navigator Configuration Options
 
 Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` shown in the example, `@react-navigation/bottom-tabs` offers more options to customize its appearance and behavior. These can typically be set in the `screenOptions` prop of `<Tab.Navigator>` or the `options` prop of individual `<Tab.Screen>` components.
 
@@ -305,7 +307,7 @@ For projects requiring a tab bar that strictly adheres to the native platform's 
 *Cons:* Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
 The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.
 
-h4. Exercise 11.2: Basic Tab Navigation
+h3. Exercise 11.2: Basic Tab Navigation
 
 Now it's time to practice! In this exercise, you'll create a simple tab navigator for the SpeedyMeds app.
 
@@ -313,6 +315,6 @@ Now it's time to practice! In this exercise, you'll create a simple tab navigato
 
 bq. *Instructions for Expo Snack `README.md` (Exercise 11.2):*
 
-h4. Next Steps
+h3. Next Steps
 
 With stack and tab navigators covered, we'll move on to another common pattern: the Drawer Navigator, which is useful for side menus and less frequently accessed application sections.

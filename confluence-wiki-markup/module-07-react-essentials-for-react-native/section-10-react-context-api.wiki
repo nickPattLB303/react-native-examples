@@ -1,8 +1,10 @@
-h2. Section 10: React Context API (Introduction for State Management)
+{toc}
+
+h1. Section 10: React Context API (Introduction for State Management)
 
 As your application grows, passing props down through many levels of components (a phenomenon known as "prop drilling") can become cumbersome. The React Context API provides a way to share data that can be considered "global" for a tree of React components, such as user authentication status, theme preferences, or application settings, without having to pass props down manually at every level.
 
-h3. What is Prop Drilling?
+h2. What is Prop Drilling?
 
 Imagine you have a deeply nested component structure:
 
@@ -17,13 +19,13 @@ If the user data originates in `App`, you would need to pass it down through `La
 
 Context provides a cleaner way to make this data available to `UserAvatar` directly.
 
-h3. The React Context API
+h2. The React Context API
 
 The Context API consists of three main parts:
 # *`React.createContext()`:* This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching `Provider` above it in the tree.
 
-    {code:language=js}
-import React from "react";
+{code:language=js}
+    import React from "react";
 
     interface AppTheme {
       mode: "light" | "dark";
@@ -44,12 +46,12 @@ import React from "react";
     // const UserContext = React.createContext<User | null>(null);
 
     export default ThemeContext;
-    ```
+{code}
 
     The default value is used only when a component that consumes the context does not have a matching `Provider` above it in the component tree. If a component tries to consume a context value that is `undefined` (because no provider was found and the default was `undefined`), it can lead to errors if not handled carefully.
 # *`Context.Provider`:* Every Context object comes with a Provider component. The Provider component accepts a `value` prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
 
-    ```tsx
+{code:language=js}
     // In your App.tsx or a top-level component
     import React, { useState } from "react";
     import ThemeContext from "./ThemeContext";
@@ -70,60 +72,66 @@ import React from "react";
     };
 
     export default App;
-    ```
+{code}
 
     All components within `<MyPageLayout />` can now access the `themeMode` and `toggleMode` function.
 # *`useContext` Hook (or `Context.Consumer`):*
-*** *`useContext(MyContext)`:* This Hook is the modern and preferred way to consume a context value. It accepts a context object (the result of `React.createContext`) and returns the current context value for that context. The context value is determined by the `value` prop of the nearest `Context.Provider` above the calling component in the tree.
 
-      When this nearest `Context.Provider` updates (i.e., its `value` prop changes), the `useContext` Hook will trigger a re-render of the component consuming the context, providing it with the latest context `value`.
+h3. `useContext(MyContext)`
 
-      ```tsx
-      // Inside a component like MyPageLayout.tsx or a deeper child
-      import React, { useContext } from "react";
-      import { View, Text, Button, StyleSheet } from "react-native";
-      import ThemeContext from "./ThemeContext";
+This Hook is the modern and preferred way to consume a context value. It accepts a context object (the result of `React.createContext`) and returns the current context value for that context. The context value is determined by the `value` prop of the nearest `Context.Provider` above the calling component in the tree.
 
-      const ThemedButton = () => {
-        const theme = useContext(ThemeContext); // theme will match the AppTheme interface
+When this nearest `Context.Provider` updates (i.e., its `value` prop changes), the `useContext` Hook will trigger a re-render of the component consuming the context, providing it with the latest context `value`.
 
-        // No need to check for !theme if a meaningful default is provided in createContext
-        // if (!theme) {
-        //   // This should ideally not happen if Provider is set up correctly at the top level
-        //   throw new Error("ThemedButton must be used within a ThemeProvider");
-        // }
+{code:language=js}
+// Inside a component like MyPageLayout.tsx or a deeper child
+import React, { useContext } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import ThemeContext from "./ThemeContext";
 
-        const buttonStyles =
-          theme.mode === "dark" ? styles.darkButton : styles.lightButton;
-        const textStyles =
-          theme.mode === "dark" ? styles.darkText : styles.lightText;
+const ThemedButton = () => {
+  const theme = useContext(ThemeContext); // theme will match the AppTheme interface
 
-        return (
-          <View style={styles.container}>
-            <Text style={textStyles}>Current theme: {theme.mode}</Text>
-            <Button
-              title="Toggle Theme"
-              onPress={theme.toggleMode}
-              color={buttonStyles.backgroundColor} // Button color prop might not work this way directly
-            />
-            {/* For more custom button styling, use <Pressable> */}
-          </View>
-        );
-      };
+  // No need to check for !theme if a meaningful default is provided in createContext
+  // if (!theme) {
+  //   // This should ideally not happen if Provider is set up correctly at the top level
+  //   throw new Error("ThemedButton must be used within a ThemeProvider");
+  // }
 
-      const styles = StyleSheet.create({
-        container: { padding: 10, alignItems: "center" },
-        lightButton: { backgroundColor: "#DDD" },
-        darkButton: { backgroundColor: "#333" },
-        lightText: { color: "#000" },
-        darkText: { color: "#FFF" },
-      });
+  const buttonStyles =
+    theme.mode === "dark" ? styles.darkButton : styles.lightButton;
+  const textStyles =
+    theme.mode === "dark" ? styles.darkText : styles.lightText;
 
-      export default ThemedButton;
-      ```
-*** *`Context.Consumer`:* An older way to consume context using a render prop pattern. You'll rarely need this if you're using Hooks.
+  return (
+    <View style={styles.container}>
+      <Text style={textStyles}>Current theme: {theme.mode}</Text>
+      <Button
+        title="Toggle Theme"
+        onPress={theme.toggleMode}
+        color={buttonStyles.backgroundColor} // Button color prop might not work this way directly
+      />
+      {/* For more custom button styling, use <Pressable> */}
+    </View>
+  );
+};
 
-h3. When to Use Context
+const styles = StyleSheet.create({
+  container: { padding: 10, alignItems: "center" },
+  lightButton: { backgroundColor: "#DDD" },
+  darkButton: { backgroundColor: "#333" },
+  lightText: { color: "#000" },
+  darkText: { color: "#FFF" },
+});
+
+export default ThemedButton;
+{code}
+
+h3. `Context.Consumer`
+
+An older way to consume context using a render prop pattern. You'll rarely need this if you're using Hooks.
+
+h2. When to Use Context
 
 Context is designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme, or preferred language.
 
@@ -142,10 +150,11 @@ Using Context can make component reuse more difficult since a component consumin
 {info}
 Any component calling `useContext` will re-render whenever the context value provided by its nearest Provider changes. This is usually the desired behavior. However, for performance-critical scenarios with large component trees, if only a small part of a consuming component actually depends on the context data that changes frequently, you might explore advanced optimization patterns. These could involve splitting the component into smaller pieces or using memoization techniques (like `React.memo`), which we'll touch upon later in the course. For most common use cases of Context (like theming or user authentication), the default behavior is perfectly fine.
 {info}
-h3. Diagram: Context API Flow
+h2. Diagram: Context API Flow
 
 The following diagram illustrates how data flows from a `Provider` to a consuming component via the Context API.
-{code}mermaid
+
+{mermaid}
 graph TD
     A[App Component]
     A -- Manages State (e.g., theme) --> A;
@@ -165,7 +174,7 @@ graph TD
         B
         C
     end
-```
+{mermaid}
 
 This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
 
@@ -193,7 +202,7 @@ bq. 📚 *Official Documentation:*
 
 ----
 
-h3. Exercise 7.6: Basic Context Usage
+h2. Exercise 7.6: Basic Context Usage
 
 Let's practice using the Context API to share simple data.
 

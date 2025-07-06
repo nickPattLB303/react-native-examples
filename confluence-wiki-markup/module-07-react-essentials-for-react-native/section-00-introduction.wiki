@@ -1,4 +1,4 @@
-h1. Module 7: React Essentials for React Native
+{toc}
 
 Welcome to Module 7! Now that you have a solid understanding of JavaScript and TypeScript, it's time to dive into the core concepts of React. React is the JavaScript library that powers React Native, and mastering its fundamentals is essential for building robust and efficient mobile applications. This module will equip you with the foundational React knowledge you'll need to start creating dynamic user interfaces in React Native.
 
@@ -19,7 +19,7 @@ bq. 📲 *(Native Developers - Android/iOS):*
 > *Key Takeaway:* Shift your thinking from direct manipulation of UI elements to describing UI based on state, and learn how {{useEffect}} manages component behavior over time.
 > *Source:* [https://react.dev/learn/describing-the-ui|React Docs: Describing the UI], [https://react.dev/learn/lifecycle-of-reactive-effects|React Docs: Lifecycle of Reactive Effects]
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe React's declarative UI paradigm and component-based architecture.
@@ -33,7 +33,7 @@ By the end of this module, you will be able to:
 * Manage component side effects and lifecycle events using the {{useEffect}} Hook.
 * Understand and use the React Context API for basic global state management.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have a good understanding of the following:
 * Completion of *Module 4: Web Development Essentials Refresher* (especially HTML and CSS concepts)
@@ -44,7 +44,7 @@ With these prerequisites, you're ready to explore the powerful world of React! L
 
 ----
 
-h2. Module Sections
+h1. Module Sections
 
 This module is divided into the following sections. You can navigate to them directly if you are looking for specific information, or proceed sequentially for a comprehensive understanding.
 * [./section-01-introduction-to-react.md|Section 1: Introduction to React (Declarative UI, Component-Based)]
@@ -60,7 +60,7 @@ This module is divided into the following sections. You can navigate to them dir
 
 ----
 
-h2. Module Challenge
+h1. Module Challenge
 
 After completing all sections, put your knowledge to the test with this module's challenge!
 
@@ -74,7 +74,7 @@ After completing all sections, put your knowledge to the test with this module's
 
 ----
 
-h2. Module Summary
+h1. Module Summary
 
 In this module, you've covered the essential concepts of React that form the bedrock of React Native development. You started with an understanding of React's declarative nature and component-based architecture. You then learned JSX, the syntax for building UIs, and how to create functional components.
 
@@ -84,7 +84,7 @@ Finally, you were introduced to the {{useEffect}} Hook for managing side effects
 
 These core React concepts are fundamental. As you move into subsequent modules focusing on React Native specific components and APIs, you will continuously apply and build upon this foundational knowledge.
 
-h2. Additional Resources (Optional)
+h1. Additional Resources (Optional)
 * [https://react.dev/learn|The Official React Documentation]: An excellent and comprehensive resource for all things React. It includes tutorials, guides, and an API reference.
 * [https://egghead.io/q/react|Egghead.io - React Courses]: Offers many high-quality, concise video tutorials on React concepts, often by well-known developers in the community.
 * [https://kentcdodds.com/|Kent C. Dodds - Blog & Courses]: A highly respected voice in the React community, offering deep insights and practical advice on React development best practices.

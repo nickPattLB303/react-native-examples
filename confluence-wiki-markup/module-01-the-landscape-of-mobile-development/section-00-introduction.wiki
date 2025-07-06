@@ -1,8 +1,8 @@
-h1. Module 1: The Landscape of Mobile Development
+{toc}
 
 Welcome to the first step in your journey to mastering React Native! This module explores the dynamic world of mobile development. We'll look at how mobile platforms have evolved, understand the shift towards cross-platform solutions, and discover where React Native fits into this exciting ecosystem. By understanding the context of mobile development, you'll be better prepared to appreciate the power and benefits of React Native.
 
-h3. Target Audience Adaptation
+h2. Target Audience Adaptation
 
 This module is designed to provide foundational knowledge for all aspiring mobile developers, regardless of your background:
 
@@ -18,7 +18,7 @@ bq. 🌐 *(All Web Developers):* If your background is primarily in web developm
 
 bq. 🛣️ *(All Learners):* Understanding the history and current trends in mobile development provides a solid foundation for appreciating why React Native is a compelling choice for building modern mobile applications.
 
-h3. Learning Objectives
+h2. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe the key milestones in the history of mobile platforms.
@@ -27,10 +27,10 @@ By the end of this module, you will be able to:
 * Articulate the core value proposition of React Native, including its pros, cons, and typical use cases.
 * Identify the main components of the React Native ecosystem, including the role of Expo and the community.
 
-h3. Prerequisites
+h2. Prerequisites
 * Completion of [./../module-00-course-introduction/section-01-welcome-and-course-goals.md|Module 0: Course Introduction]
 
-h3. Additional Resources
+h2. Additional Resources
 
 For further exploration of mobile development trends and history, you might find these resources insightful:
 * [https://www.infoq.com/articles/history-mobile-app-development|The History of Mobile App Development] - A look back at how mobile app development has evolved.

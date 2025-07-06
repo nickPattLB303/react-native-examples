@@ -1,4 +1,4 @@
-h1. Module 4: Web Development Essentials Refresher
+{toc}
 
 ![./assets/images/module-4/web-to-react-native-bridge.png "Bridging web concepts to React Native"|Web Development concepts (HTML structure and CSS styling) bridging to React Native components and StyleSheet]
 
@@ -22,7 +22,7 @@ bq. [!TIP] > *Guidance for Different Backgrounds:*
 > 🌐 *Web Developers (React, Angular, Vue, etc.):* Much of this will be a refresher. Focus on the sections highlighting the differences between web standards and React Native's implementation (e.g., {{StyleSheet}} vs. CSS, the pervasiveness of Flexbox, unitless values). Skim familiar concepts but ensure you grasp the distinctions and how React Native adapts web paradigms for the native environment. For experienced web developers, while Sections 1 and 2 might seem familiar, it's recommended to review them, paying particular attention to notes that bridge your existing knowledge to React Native's specific approach, especially before focusing on the mapping concepts in Section 3.
 > ✨ *All Learners:* Regardless of your background, understanding _why_ React Native deviates from web standards (e.g., for performance, native integration, platform consistency) is key to becoming proficient. This module supports all learning paths (Instructor-led, Self-led, Asynchronous) and aims to build a solid understanding of the "why" behind React Native's UI layer.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Identify core HTML structural elements and their semantic purpose.
@@ -31,22 +31,22 @@ By the end of this module, you will be able to:
 * Articulate how HTML elements map conceptually to React Native Core Components.
 * Explain how CSS concepts translate to React Native's {{StyleSheet}} API and Flexbox layout.
 
-h2. Prerequisites
+h1. Prerequisites
 * Basic understanding of programming concepts (variables, functions, control flow).
 * Completion of [../module-03-setting-up-your-react-native-environment-with-expo/section-00-introduction.md|Module 3: Setting Up Your React Native Environment with Expo].
 
-h2. Module Sections
+h1. Module Sections
 * [./section-01-core-html-concepts.md|Section 1: Core HTML Concepts]
 * [./section-02-core-css-concepts.md|Section 2: Core CSS Concepts]
 * [./section-03-bridging-web-concepts-to-react-native.md|Section 3: Bridging Web Concepts to React Native]
 
-h2. Module Challenge
+h1. Module Challenge
 
 *(Placeholder_URL_to_CodeSandbox_Challenge_4)*
 
 This challenge involves recreating a simple web layout using HTML and CSS, reinforcing the core concepts covered and preparing you to see how these map to React Native layout techniques.
 
-h2. Module Summary
+h1. Module Summary
 
 This module has provided a crucial refresher on web development fundaments essential for React Native. You revisited core HTML concepts, focusing on structure and semantics, and dived into key CSS principles like selectors, the box model, and the cascade. A significant emphasis was placed on understanding and using Flexbox for layout, a skill directly transferable to React Native.
 

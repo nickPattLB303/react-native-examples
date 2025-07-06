@@ -1,8 +1,10 @@
-h2. Section 1: Recap: {{useState}} and Prop Drilling Limitations
+{toc}
+
+h1. Section 1: Recap: {{useState}} and Prop Drilling Limitations
 
 Welcome to the first section of our deep dive into state management in React Native! Before we explore more advanced techniques, it's essential to solidify our understanding of the foundational tools React provides for managing state and to recognize their limitations, especially as applications like our SpeedyMeds app begin to scale.
 
-h3. Revisiting {{useState}}: The Building Block of Local State
+h2. Revisiting {{useState}}: The Building Block of Local State
 
 As you learned in Module 7: React Essentials, the {{useState}} Hook is the primary way to introduce state into your functional components. It allows a component to remember information and re-render when that information changes.
 
@@ -74,13 +76,13 @@ const [stateVariable, setStateFunction] = useState(initialState);
 * `setStateFunction`: A function used to update the `stateVariable` and trigger a re-render of the component.
 * `initialState`: The value assigned to `stateVariable` during the component's initial render. This argument is ignored on subsequent renders. For computationally expensive initial states, an initializer function can be passed: `useState(() => computeInitialValue())`. This function is executed only once, during the initial render.
 
-h4. "Under the Hood" - How `useState` Works
+h3. "Under the Hood" - How `useState` Works
 
 React manages the state declared via `useState` internally. While variables declared directly within a function's scope are typically lost when the function execution completes, React associates `useState` variables with the specific component instance. It effectively "remembers" the state value between renders. When a component re-renders, React ensures that calls to `useState` return the most up-to-date value for that state variable.
 
 This persistence is achieved by React maintaining a data structure (conceptually, a list or array) for each component instance, storing the state values and their corresponding update functions in the order the `useState` hooks were called. This ordered tracking mechanism is why the Rules of Hooks (calling hooks at the top level and in the same order) are essential for React to correctly associate state with the right `useState` call across renders.
 
-h4. Setter Function (`setStateFunction`)
+h3. Setter Function (`setStateFunction`)
 
 The setter function provides the mechanism to change the state. It can be used in two ways:
 # *Direct Value:* Pass the new state value directly: `setCount(count + 1)`.
@@ -90,19 +92,24 @@ It is critical to understand that state updates scheduled via the setter functio
 
 Furthermore, React includes an optimization: if the value passed to the setter function is identical to the current state (compared using the `Object.is` algorithm), React may skip the re-render process for that component and its children.
 
-h4. Rules of Hooks (Recap)
+h3. Rules of Hooks (Recap)
 
 Adherence to the Rules of Hooks is mandatory for `useState` (and all other hooks) to function correctly:
-* *Top Level Only:* Call Hooks only at the top level of a React functional component or a custom Hook.
-* *No Conditions/Loops:* Do not call Hooks inside loops, conditional statements (`if`/`else`), or nested functions.
-  Violating these rules disrupts the order in which Hooks are called, preventing React from correctly associating state and effects with their respective Hook calls between renders.
+
+h2. Top Level Only
+
+Call Hooks only at the top level of a React functional component or a custom Hook.
+h2. No Conditions/Loops
+
+Do not call Hooks inside loops, conditional statements (`if`/`else`), or nested functions.
+Violating these rules disrupts the order in which Hooks are called, preventing React from correctly associating state and effects with their respective Hook calls between renders.
 
 bq. 📚 *Official Documentation:*
 > - [https://react.dev/reference/react/useState|React `useState` Hook (Current)]
 - [https://legacy.reactjs.org/docs/hooks-state.html|React `useState` Hook (Legacy)]
 - [https://dev.to/nadim_ch0wdhury/how-does-reactjs-usestate-hook-work-under-the-hood-44lk|How `useState` works internally (Community Article)]
 
-h3. The Challenge of Sharing State: Introducing Prop Drilling
+h2. The Challenge of Sharing State: Introducing Prop Drilling
 
 What happens when state needs to be shared or accessed by components that are not directly connected in the component tree? This is a common scenario. For instance, imagine a `PatientDashboard` component in our SpeedyMeds app that needs to display a summary of medications, and a `MedicationList` component nested deep within it also needs access to this medication data, perhaps to allow individual medications to be updated.
 
@@ -210,7 +217,7 @@ bq. 📚 *Official Documentation & Explanations:*
 > - [https://www.geekster.in/articles/props-drilling-in-react/|Geekster - Props Drilling in React]
 - [https://www.angularminds.com/blog/what-is-prop-drilling-in-react|AngularMinds - What is Prop Drilling in React]
 
-h3. Limitations and Drawbacks of Prop Drilling
+h2. Limitations and Drawbacks of Prop Drilling
 
 While prop drilling works for simple cases or shallow component trees, it quickly becomes cumbersome and presents several drawbacks in larger, more complex applications:
 # *Code Complexity and Reduced Readability:* Tracing the flow of data becomes increasingly difficult as the component tree deepens and the number of drilled props increases. Understanding where a specific prop originates and how it reaches its destination requires inspecting multiple intermediate components, making the codebase harder to navigate and comprehend.
@@ -236,6 +243,6 @@ bq. 🅰️ *(Angular Developers):*
 
 In the next sections, we'll explore solutions like the React Context API, Zustand, and TanStack Query, which offer different strategies to mitigate the challenges posed by prop drilling and manage global or remote state more effectively.
 
-h3. Next Steps
+h2. Next Steps
 
 Now that we've recapped the basics of `useState` and the challenges of prop drilling, we're ready to look at our first solution for more global state management. In the next section, we'll take a deeper dive into the React Context API.

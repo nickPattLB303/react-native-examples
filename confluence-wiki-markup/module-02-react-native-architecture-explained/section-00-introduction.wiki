@@ -1,4 +1,4 @@
-h1. Module 2: React Native Architecture Explained
+{toc}
 
 ![./assets/images/module-02/architecture-overview-banner.png|React Native architecture showing JavaScript thread and native components connected via bridges and interfaces]
 
@@ -23,7 +23,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Understanding this architecture is vital as it explains why some React patterns work differently in React Native and how performance considerations differ from web.
 > *Source:* [https://reactnative.dev/architecture/glossary#bridge|React Native: Bridging in React Native]
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe the key components and limitations of React Native's Legacy Architecture (the Bridge).
@@ -33,28 +33,28 @@ By the end of this module, you will be able to:
 * Create a basic diagram illustrating the core components of both architectures.
 * Apply architectural understanding to make informed decisions for the SpeedyMeds application development.
 
-h2. Prerequisites
+h1. Prerequisites
 * Completion of [../module-01-mobile-landscape/section-00-introduction.md|Module 1: The Landscape of Mobile Development]
 * Basic understanding of JavaScript and React concepts
 * Familiarity with general application development principles
 
-h2. Module Sections
+h1. Module Sections
 * [./section-01-legacy-architecture.md|Section 1: Legacy Architecture: The Bridge (Concepts, Limitations)]
 * [./section-02-new-architecture.md|Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)]
 * [./section-03-rendering.md|Section 3: How Rendering Works (Legacy vs. Fabric)]
 * [./section-04-implications.md|Section 4: Implications for Developers (Performance, Synchronous Operations)]
 
-h2. Module Challenge
+h1. Module Challenge
 
 After completing all sections, you'll test your understanding by creating architectural diagrams in the module challenge:
 
 *(https://whiteboard.microsoft.com/architecture-diagramming)*
 
-h2. Module Summary
+h1. Module Summary
 
 This module explores the evolution of React Native's architecture from the Legacy Bridge model to the modern New Architecture. You'll gain insight into how JavaScript code communicates with native platforms, the rendering process for UI components, and the practical implications of these architectural designs on performance and development. This knowledge forms a crucial foundation for building efficient React Native applications, including our SpeedyMeds pharmacy app, where understanding these principles will help us make better technical decisions throughout development.
 
-h2. Additional Resources
+h1. Additional Resources
 * [https://reactnative.dev/architecture/overview|React Native Architecture Documentation]
 * [https://hermesengine.dev/|Hermes Engine: Improving React Native Performance]
 * [https://github.com/react-native-community/discussions-and-proposals/labels/new%20architecture|React Native New Architecture Working Group Discussions]

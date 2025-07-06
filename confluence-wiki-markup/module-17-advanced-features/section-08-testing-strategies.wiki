@@ -1,4 +1,6 @@
-h2. Section 8: Testing Strategies
+{toc}
+
+h1. Section 8: Testing Strategies
 
 This section provides an introduction to testing strategies in React Native. Writing tests is a crucial part of software development that helps ensure your application's quality, reliability, and maintainability. We will focus on unit testing with Jest and component testing with React Native Testing Library.
 
@@ -7,32 +9,57 @@ bq. 🧑‍🏫 *(Instructor-Led):* In a classroom setting, consider forming sma
 > 🔁 *(Asynchronous):* If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
 > 🛣️ *(All Learners):* Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 *Why Test?*
 
 Testing your code offers numerous benefits:
-* *Bug Prevention:* Catch bugs early in the development cycle before they reach users.
-* *Confidence in Refactoring:* Allows you to refactor code and make changes with greater confidence, knowing that tests will catch regressions.
-* *Documentation:* Tests serve as a form of documentation, illustrating how components and functions are intended to be used.
-* *Improved Design:* Thinking about how to test your code can often lead to better, more modular designs.
-* *Collaboration:* Facilitates collaboration by providing a clear, verifiable standard for code contributions.
+
+h2. Bug Prevention
+
+Catch bugs early in the development cycle before they reach users.
+h2. Confidence in Refactoring
+
+Allows you to refactor code and make changes with greater confidence, knowing that tests will catch regressions.
+h2. Documentation
+
+Tests serve as a form of documentation, illustrating how components and functions are intended to be used.
+h2. Improved Design
+
+Thinking about how to test your code can often lead to better, more modular designs.
+h2. Collaboration
+
+Facilitates collaboration by providing a clear, verifiable standard for code contributions.
 
 *Types of Tests in React Native:*
-* *Unit Tests:* Focus on testing individual functions, modules, or small pieces of logic in isolation. They are typically fast to run.
-** _Example for SpeedyMeds:_ Testing a helper function that formats a prescription dosage string.
-* *Component Tests:* Verify the behavior and rendering of individual React components. This includes checking if they render correctly given certain props, if they respond to user interactions (simulated), and if they manage their state appropriately.
-** _Example for SpeedyMeds:_ Testing if a {{MedicationCard}} component displays the correct medication name and dosage passed as props.
-* *Integration Tests:* Test the interaction between multiple components or modules. They ensure that different parts of your application work together as expected.
-** _Example for SpeedyMeds:_ Testing if adding a medication to a list correctly updates the summary view.
-* *End-to-End (E2E) Tests:* Simulate real user scenarios by testing the entire application flow from the user's perspective. These are typically slower and more complex to set up.
-** _Example for SpeedyMeds:_ Testing the entire flow of a user logging in, searching for a medication, and adding it to their reminder list.
+
+h2. Unit Tests
+
+Focus on testing individual functions, modules, or small pieces of logic in isolation. They are typically fast to run.
+* _Example for SpeedyMeds:_ Testing a helper function that formats a prescription dosage string.
+h2. Component Tests
+
+Verify the behavior and rendering of individual React components. This includes checking if they render correctly given certain props, if they respond to user interactions (simulated), and if they manage their state appropriately.
+* _Example for SpeedyMeds:_ Testing if a {{MedicationCard}} component displays the correct medication name and dosage passed as props.
+h2. Integration Tests
+
+Test the interaction between multiple components or modules. They ensure that different parts of your application work together as expected.
+* _Example for SpeedyMeds:_ Testing if adding a medication to a list correctly updates the summary view.
+h2. End-to-End (E2E) Tests
+
+Simulate real user scenarios by testing the entire application flow from the user's perspective. These are typically slower and more complex to set up.
+* _Example for SpeedyMeds:_ Testing the entire flow of a user logging in, searching for a medication, and adding it to their reminder list.
 
 This section will primarily focus on unit and component testing, which form the foundation of a solid testing strategy.
 
 *Common Testing Tools:*
-* *Jest:* A popular JavaScript testing framework developed by Facebook. It's often the default choice for React and React Native projects. Jest provides a test runner, assertion library, and mocking capabilities.
-* *React Native Testing Library (RNTL):* Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
+
+h2. Jest
+
+A popular JavaScript testing framework developed by Facebook. It's often the default choice for React and React Native projects. Jest provides a test runner, assertion library, and mocking capabilities.
+h2. React Native Testing Library (RNTL)
+
+Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
 
 {mermaid}
 graph TD
@@ -68,17 +95,17 @@ This diagram shows the test execution flow when running Jest tests for React Nat
 Expo projects typically come with Jest pre-configured or can be easily set up.
 # *Install dev dependencies:*
 
-    {code:language=bash}
-npx expo install jest jest-expo @testing-library/react-native @types/jest
+{code:language=bash}
+    npx expo install jest jest-expo @testing-library/react-native @types/jest
     # For TypeScript projects, also install type definitions
     # npm install --save-dev @types/jest (if not already included by jest-expo or similar)
-    ```
+{code}
 # *Configure Jest (`jest.config.js` or in `package.json`):*
     Expo projects usually have a `jest.config.js` or Jest configuration within `package.json`. The `jest-expo` preset handles much of the React Native specific configuration.
 
     A typical `jest.config.js` might look like:
 
-    ```javascript
+{code:language=js}
     module.exports = {
       preset: "jest-expo",
       transformIgnorePatterns: [
@@ -86,12 +113,12 @@ npx expo install jest jest-expo @testing-library/react-native @types/jest
       ],
       setupFilesAfterEnv: ["@testing-library/react-native/extend-expect"], // Optional: for RNTL custom matchers
     };
-    ```
+{code}
 
     The `transformIgnorePatterns` array is crucial for telling Jest to transform certain `node_modules` that are written in ES6+ syntax.
 # *Add Test Script to `package.json`:*
 
-    ```json
+{code:language=js}
     // package.json
     {
       "scripts": {
@@ -99,40 +126,51 @@ npx expo install jest jest-expo @testing-library/react-native @types/jest
         "test": "jest"
       }
     }
-    ```
+{code}
 
     You can then run your tests using `npm test` or `yarn test`.
 
-h3. Referential Content
+h2. Referential Content
 
 *Writing Tests with Jest*
-* *Test Files:* Jest typically looks for files with `.test.js`, `.spec.js`, `.test.tsx`, or `.spec.tsx` extensions, or files within a `*tests*` directory.
-* *Core Jest Functions:*
-** `describe(name, fn)`: Creates a block that groups together several related tests.
-** `it(name, fn)` or `test(name, fn)`: Defines an individual test case.
-** `expect(value)`: Used to create an assertion. It's typically chained with matcher functions.
-** *Matchers:* Functions used with `expect` to assert values (e.g., `toBe()`, `toEqual()`, `toBeTruthy()`, `toContain()`, `toHaveBeenCalled()`).
-* *Mocking:* Jest allows you to mock functions, modules, or timers to isolate tests and control dependencies.
-** `jest.fn()`: Creates a mock function whose calls can be tracked.
-** `jest.mock('./moduleName')`: Mocks an entire module.
+
+h2. Test Files
+
+Jest typically looks for files with `.test.js`, `.spec.js`, `.test.tsx`, or `.spec.tsx` extensions, or files within a `*tests*` directory.
+h2. Core Jest Functions
+* `describe(name, fn)`: Creates a block that groups together several related tests.
+* `it(name, fn)` or `test(name, fn)`: Defines an individual test case.
+* `expect(value)`: Used to create an assertion. It's typically chained with matcher functions.
+* *Matchers:* Functions used with `expect` to assert values (e.g., `toBe()`, `toEqual()`, `toBeTruthy()`, `toContain()`, `toHaveBeenCalled()`).
+h2. Mocking
+
+Jest allows you to mock functions, modules, or timers to isolate tests and control dependencies.
+* `jest.fn()`: Creates a mock function whose calls can be tracked.
+* `jest.mock('./moduleName')`: Mocks an entire module.
 
 *Writing Component Tests with React Native Testing Library (RNTL)*
 
 React Native Testing Library helps you write tests that resemble how users interact with your components.
-* *Philosophy:* Test your components from the user's perspective. Query for elements by their text content, accessibility labels, or test IDs rather than relying on internal component structure or state.
-* *Core RNTL Functions:*
-** `render(Component)`: Renders a React component into a virtual tree.
-** *Queries:* Functions to find elements in the rendered output (e.g., `getByText`, `queryByText`, `findByText`, `getByTestId`, `getByRole`, `getByLabelText`).
-** `fireEvent`: Used to simulate user interactions (e.g., `fireEvent.press(button)`).
-** `waitFor`: Useful for asynchronous operations, waiting for an assertion to pass.
-* *Custom Matchers:* RNTL extends Jest's `expect` with custom matchers like `toBeVisible()`, `toHaveTextContent()`, etc. (requires `setupFilesAfterEnv` configuration as shown above).
 
-h3. Procedural Content
+h2. Philosophy
+
+Test your components from the user's perspective. Query for elements by their text content, accessibility labels, or test IDs rather than relying on internal component structure or state.
+h2. Core RNTL Functions
+* `render(Component)`: Renders a React component into a virtual tree.
+* *Queries:* Functions to find elements in the rendered output (e.g., `getByText`, `queryByText`, `findByText`, `getByTestId`, `getByRole`, `getByLabelText`).
+* `fireEvent`: Used to simulate user interactions (e.g., `fireEvent.press(button)`).
+* `waitFor`: Useful for asynchronous operations, waiting for an assertion to pass.
+h2. Custom Matchers
+
+RNTL extends Jest's `expect` with custom matchers like `toBeVisible()`, `toHaveTextContent()`, etc. (requires `setupFilesAfterEnv` configuration as shown above).
+
+h2. Procedural Content
 
 *Example 1: Unit Test for a Helper Function (Jest)*
 
 Let's say SpeedyMeds has a helper function to format a medication schedule.
-{code}typescript
+
+{code:language=js}
 // utils/medicationFormatter.ts
 /**
 * Formats a medication schedule instruction string based on how many times per day
@@ -153,9 +191,11 @@ export function formatSchedule(
   }
   return `${timesPerDay} times daily: ${dosageInstruction}`;
 }
-{code:language=text}
+{code}
+
 A unit test for this function might look like:
-{code}typescript
+
+{code:language=js}
 // *tests*/utils/medicationFormatter.test.ts
 import { formatSchedule } from "../../utils/medicationFormatter";
 
@@ -184,7 +224,8 @@ describe("formatSchedule", () => {
     );
   });
 });
-{code:language=text}
+{code}
+
 *Explanation of Example 1:*
 * The test file imports the function to be tested (`formatSchedule`).
 * `describe("formatSchedule", ...)` groups all tests related to the `formatSchedule` function, enhancing organization and readability of test outputs.
@@ -198,7 +239,8 @@ describe("formatSchedule", () => {
 *Example 2: Component Test for a Basic Button (RNTL)*
 
 Consider a simple `CustomButton` component for SpeedyMeds.
-{code}tsx
+
+{code:language=js}
 // components/CustomButton.tsx
 import React from "react";
 import {
@@ -255,9 +297,11 @@ const styles = StyleSheet.create({
 });
 
 export default CustomButton;
-{code:language=text}
+{code}
+
 A component test for `CustomButton`:
-{code}tsx
+
+{code:language=js}
 // *tests*/components/CustomButton.test.tsx
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
@@ -340,7 +384,7 @@ describe("<CustomButton />", () => {
     );
   });
 });
-```
+{code}
 
 *Explanation of Example 2:*
 
@@ -355,7 +399,7 @@ These tests collectively ensure that the `CustomButton` component not only rende
 {tip}
 Aim for tests that are resilient to minor implementation changes. Querying by text content visible to users or by `testID` (for elements without distinct text) is generally more robust than querying by component hierarchy or internal structure.
 {tip}
-h3. Section Exercise
+h2. Section Exercise
 
 Practice writing tests for medication-related utilities in the SpeedyMeds app.
 * *Exercise 17.3: Writing a Simple Unit Test for SpeedyMeds*
@@ -380,7 +424,7 @@ Practice writing tests for medication-related utilities in the SpeedyMeds app.
 
   *Sample test case from the exercise:*
 
-  ```typescript
+{code:language=js}
   // Example of one of the test cases you'll complete
   describe("calculateDosage", () => {
     it("calculates correct dosage for standard weight", () => {
@@ -399,7 +443,7 @@ Practice writing tests for medication-related utilities in the SpeedyMeds app.
     // You'll write more test cases for edge cases
     // such as maximum dose limits and invalid inputs
   });
-  ```
+{code}
 
 bq. 📚 *Official Documentation:*
 > - [https://jestjs.io/docs/getting-started|Jest Documentation]
@@ -407,6 +451,6 @@ bq. 📚 *Official Documentation:*
 - [https://docs.expo.dev/develop/unit-testing/|Expo: Unit Testing Guide]
 - [https://reactnative.dev/docs/testing-overview|React Native Docs: Testing]
 
-h3. Next Steps
+h2. Next Steps
 
 Congratulations on completing the core content of Module 17! You've explored animations, gestures, SVGs, push notifications, offline storage, and testing strategies. These advanced features are essential for building polished, professional-grade React Native applications. The final step in this module is to apply some of these new skills in the Module Challenge.

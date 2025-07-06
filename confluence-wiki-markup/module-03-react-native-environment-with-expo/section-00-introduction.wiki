@@ -1,15 +1,15 @@
-h1. Module 3: Setting Up Your React Native Environment with Expo
+{toc}
 
 ![./assets/images/module-3/module-banner.png|Abstract graphic related to environment setup]
 _Setting up the foundation for your React Native development journey with Expo._
 
 Welcome to Module 3! This module is your starting point for hands-on React Native development. We'll guide you through setting up a robust development environment using Expo, a powerful platform that simplifies building and iterating on React Native applications. By the end of this module, you'll have a working local setup, understand the core tools, and be ready to start building your first components.
 
-h2. Module Goal
+h1. Module Goal
 
 The primary goal of this module is to guide you through the process of successfully setting up a local development environment tailored for React Native development using Expo. By the end of this module, you will understand the core tools and workflows within the Expo ecosystem and be able to run your first React Native application on an iOS simulator and, optionally, on a physical device using Expo Go.
 
-h2. Target Audience Adaptation
+h1. Target Audience Adaptation
 
 bq. 🌐 *(Web Developers):*
 > *Comparison:* If you've set up Node.js web applications before, this process will feel familiar with package managers and command-line tools. Expo abstracts away the complex native build configurations you'd otherwise need to manage with vanilla React Native. Concepts related to native mobile development, simulators/emulators (Xcode), and the specifics of React Native's component system and styling (vs. HTML/CSS) will be emphasized. Expo's tooling aims to make this transition smoother.
@@ -27,7 +27,7 @@ bq. 🛣️ *(All Learners):* This module serves as a critical foundation for al
 > 🧗‍♀️ *(Self-Led):* Proceed through the steps sequentially. Utilize the provided links to official documentation for deeper understanding. Do not hesitate to request instructor support via Webex chat or huddles if installation or configuration issues arise.
 > 🔁 *(Asynchronous):* This module is fundamental, regardless of the specific topics targeted later. Ensure the development environment is correctly set up by carefully following these instructions. If specific setup errors are encountered later, the Troubleshooting section can be referenced directly.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Install and configure all necessary prerequisite software (Node.js, Watchman, Xcode, iOS Simulator) on a macOS system.
@@ -42,12 +42,12 @@ By the end of this module, you will be able to:
 * Launch and run your Expo application using the Expo Go app on a physical device (optional).
 * Execute essential Expo CLI commands for development ({{start}}, {{install}}, {{run:ios}}).
 
-h2. Prerequisites
+h1. Prerequisites
 * Completion of [../module-00-course-introduction/section-00-introduction.md|Module 0: Course Introduction] (Understanding course structure and tools).
 * Basic familiarity with using the command line/terminal.
 * Administrator privileges on your macOS machine for software installation.
 
-h2. Module Sections
+h1. Module Sections
 * [./section-01-introduction-to-expo-and-expo-go.md|Section 1: Introduction to Expo and Expo Go]
 * [./section-02-installing-prerequisites.md|Section 2: Installing Prerequisites]
 * [./section-03-creating-your-first-expo-app.md|Section 3: Creating Your First Expo App ({{npx create-expo-app@latest}})]
@@ -58,19 +58,19 @@ h2. Module Sections
 * [./section-08-essential-expo-cli-commands.md|Section 8: Essential Expo CLI Commands ({{start}}, {{install}}, {{run:ios}})]
 * [./section-09-troubleshooting-common-setup-issues.md|Section 9: Troubleshooting Common Setup Issues]
 
-h2. Module Challenge
+h1. Module Challenge
 
 *(https://forms.office.com/Pages/ResponsePage.aspx?id=example-challenge-3-form-id)*
 
 This challenge involves verifying your environment setup through a checklist in Microsoft Forms. You'll confirm that your environment is correctly configured and essential commands are working properly.
 
-h2. Module Summary
+h1. Module Summary
 
 This module equipped you with the foundational knowledge and practical skills to set up a complete React Native development environment using Expo. You learned about the roles of Expo and Expo Go, installed all necessary prerequisites including Node.js, npm/yarn, Watchman, and Xcode Command Line Tools. You successfully created your first Expo application, {{SpeedyMedsPrototype}}, using {{create-expo-app}} and explored the differences between {{npx expo}} commands and traditional {{npm}}/{{yarn}} scripts.
 
 Key takeaways include understanding how to run your application on both the iOS Simulator and optionally on a physical device via Expo Go, navigating the Expo project structure, and utilizing essential Expo CLI commands like {{start}}, {{install}}, and {{run:ios}}. Finally, you were introduced to common troubleshooting techniques to address setup issues. With this environment in place, you are now fully prepared to dive into building React Native applications.
 
-h2. Additional Resources
+h1. Additional Resources
 * [https://github.com/expo/awesome-expo|Awesome Expo: A curated list of awesome Expo tools, resources and examples]
 * [https://blog.expo.dev/|Expo Blog] (For latest news and updates from the Expo team)
 * [https://docs.expo.dev/guides/setting-up-continuous-integration/|Setting up Continuous Integration for Expo]

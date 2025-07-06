@@ -1,8 +1,10 @@
-h2. Section 4: Functions in TypeScript
+{toc}
+
+h1. Section 4: Functions in TypeScript
 
 Functions are fundamental to any application, and TypeScript enhances them by allowing you to define types for their parameters and return values. This brings greater clarity, predictability, and error prevention to your function definitions and calls.
 
-h3. Typing Parameters
+h2. Typing Parameters
 
 You can specify the type for each parameter a function accepts. If you call the function with arguments of incorrect types, TypeScript will issue a compile-time error.
 
@@ -28,7 +30,7 @@ console.log(getPatientGreeting(aPatient, "Welcome"));
 // Type 'string' is not assignable to type 'number' for property 'age', and 'id' is missing.
 {code}
 
-h3. Typing Return Values
+h2. Typing Return Values
 
 You can also explicitly set the type of the value a function returns. While TypeScript can often infer the return type, being explicit can improve readability and catch errors if the function accidentally returns an unexpected type.
 
@@ -80,7 +82,7 @@ logPrescriptionIssue("Amoxicillin", "PAT789");
 {tip}
 It's a good practice to explicitly type function return values, especially for complex functions or functions in a public API. This makes the function's contract clearer and helps TypeScript catch errors if the function's logic changes and it unintentionally returns a different type.
 {tip}
-h3. Optional and Default Parameters
+h2. Optional and Default Parameters
 
 TypeScript allows you to define optional parameters in functions by adding a `?` after the parameter name. Optional parameters must come after required parameters.
 
@@ -123,7 +125,7 @@ recordVitalSigns("PAT103", 65, 36.8, "Patient calm and resting.");
 // Notes: Patient calm and resting.
 {code}
 
-h3. Rest Parameters
+h2. Rest Parameters
 
 You can define functions that accept a variable number of arguments using rest parameters. These are specified with a `...` prefix and must be an array type.
 
@@ -151,7 +153,7 @@ listAllergies("Jane Smith");
 // No known allergies.
 {code}
 
-h3. Function Types
+h2. Function Types
 
 Just like you can create type aliases for objects or primitives, you can also define a type for a function. This is useful when you want to ensure consistency for callback functions or when functions are passed as parameters.
 

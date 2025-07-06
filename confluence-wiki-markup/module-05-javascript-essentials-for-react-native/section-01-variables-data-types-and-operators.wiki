@@ -1,8 +1,10 @@
-h2. Section 1: Variables, Data Types, and Operators (ES6+ Focus: {{let}}, {{const}})
+{toc}
+
+h1. Section 1: Variables, Data Types, and Operators (ES6+ Focus: {{let}}, {{const}})
 
 Welcome to the foundational concepts of JavaScript! Variables, data types, and operators are the basic building blocks you'll use in every JavaScript program, including your React Native applications. Understanding them thoroughly is key to writing effective and bug-free code.
 
-h3. Variables
+h2. Variables
 
 In JavaScript, a variable is a named container for storing data values. Think of it as a label you can attach to a value, allowing you to refer to and manipulate that value throughout your code. In modern JavaScript (ES6 and later), we primarily use {{let}} and {{const}} to declare variables.
 
@@ -11,7 +13,7 @@ bq. 📲 *(Native Developers):*
 > *Key Takeaway:* In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
 > *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/|Swift Language Guide: The Basics] and [https://kotlinlang.org/docs/basic-syntax.html#variables|Kotlin Basic Syntax]
 > *Example:*
-> {code:language=swift}
+> ```swift
 // Swift: Type is inferred but fixed
 let name: String = "John"
 // name = 42 // Error: Cannot assign value of type 'Int' to type 'String'
@@ -27,14 +29,20 @@ let name = "John";
 name = 42; // Valid in JavaScript
 ```
 
-h4. {{let}}
+h3. {{let}}
 
 The {{let}} keyword declares a block-scoped local variable, optionally initializing it to a value. Block scope means the variable is only accessible within the block of code (typically defined by curly braces {{{}}}) where it is declared.
-* *Re-assignable:* You can change the value of a {{let}} variable after it's declared.
-* *Block-scoped:* Accessible only within the block it's defined in.
+
+h2. Re-assignable
+
+You can change the value of a {{let}} variable after it's declared.
+h2. Block-scoped
+
+Accessible only within the block it's defined in.
 
 This example demonstrates declaring and re-assigning a {{let}} variable:
-{code}javascript
+
+{code:language=js}
 let patientName = "John Doe";
 console.log(patientName); // Output: John Doe
 
@@ -46,27 +54,36 @@ if (true) {
   console.log(age); // Output: 30
 }
 // console.log(age); // This would cause an error: age is not defined outside the block
-{code:language=text}
-h4. `const`
+{code}
+
+h3. `const`
 
 The `const` keyword declares a block-scoped local variable, similar to `let`, but with a crucial difference: its value cannot be reassigned after declaration. This makes `const` ideal for values that you know shouldn't change, promoting code predictability and preventing accidental modifications.
-* *Not Re-assignable (for primitive types):* Once a primitive value is assigned to a `const` variable, it cannot be changed.
-* *Block-scoped:* Accessible only within the block it's defined in.
-* *Must be initialized:* You must assign a value when you declare a `const` variable.
-{code}javascript
+
+h2. Not Re-assignable (for primitive types)
+
+Once a primitive value is assigned to a `const` variable, it cannot be changed.
+h2. Block-scoped
+
+Accessible only within the block it's defined in.
+h2. Must be initialized
+
+You must assign a value when you declare a `const` variable.
+
+{code:language=js}
 const birthYear = 1990;
 console.log(birthYear); // Output: 1990
 // birthYear = 1991; // This would cause an error: Assignment to constant variable.
 
 const PI = 3.14159;
 // PI = 3.14; // Error!
-{code:language=text}
+{code}
 
 {note}
 When `const` is used with objects or arrays, the variable still cannot be reassigned to a _new_ object or array. However, the _contents_ of the object (its properties) or the array (its elements) can still be modified. We'll explore objects and arrays in detail later in this module.
 {note}
 
-{code}javascript
+{code:language=js}
 const medicationDetails = {
   name: "Lisinopril",
   dosage: "10mg",
@@ -78,85 +95,115 @@ console.log(medicationDetails.dosage); // Output: 20mg
 
 // But we cannot reassign medicationDetails to a new object
 // medicationDetails = { name: 'Amoxicillin', dosage: '250mg' }; // This would cause an error
-{code:language=text}
-h4. What about `var`?
+{code}
+
+h3. What about `var`?
 
 You might encounter `var` in older JavaScript code or examples. `var` was the original way to declare variables before ES6 introduced `let` and `const`. It differs significantly in its scoping and hoisting behavior:
-* *Scope:* `var` variables are either *function-scoped* or *globally-scoped*. They are _not_ block-scoped like `let` and `const`. This means a `var` declared inside an `if` block or `for` loop is still accessible outside of that block, within the enclosing function or global scope.
-* *Hoisting:* `var` declarations are "hoisted" to the top of their scope (function or global) during compilation. However, only the declaration is hoisted, not the initialization. The variable is implicitly initialized with `undefined`. This allows you to reference a `var` variable before its textual declaration in the code, although its value will be `undefined` until the assignment line is reached.
 
-  ```javascript
-  console.log(oldVariable); // Output: undefined (due to hoisting)
-  var oldVariable = "I am old";
-  console.log(oldVariable); // Output: I am old
+h2. Scope
 
-  // This behaves as if the code were:
-  // var oldVariable; // Declaration hoisted, initialized to undefined
-  // console.log(oldVariable);
-  // oldVariable = "I am old"; // Assignment happens here
-  // console.log(oldVariable);
-  ```
-* *Re-declaration:* `var` variables can be re-declared within the same scope without error.
-  ```javascript
-  var x = 10;
-  var x = 20; // This is allowed with var
-  console.log(x); // Output: 20
-  ```
+`var` variables are either *function-scoped* or *globally-scoped*. They are _not_ block-scoped like `let` and `const`. This means a `var` declared inside an `if` block or `for` loop is still accessible outside of that block, within the enclosing function or global scope.
+h2. Hoisting
 
-h4. Hoisting and the Temporal Dead Zone (TDZ) with `let` and `const`
+`var` declarations are "hoisted" to the top of their scope (function or global) during compilation. However, only the declaration is hoisted, not the initialization. The variable is implicitly initialized with `undefined`. This allows you to reference a `var` variable before its textual declaration in the code, although its value will be `undefined` until the assignment line is reached.
+
+{code:language=js}
+console.log(oldVariable); // Output: undefined (due to hoisting)
+var oldVariable = "I am old";
+console.log(oldVariable); // Output: I am old
+
+// This behaves as if the code were:
+// var oldVariable; // Declaration hoisted, initialized to undefined
+// console.log(oldVariable);
+// oldVariable = "I am old"; // Assignment happens here
+// console.log(oldVariable);
+{code}
+
+h2. Re-declaration
+
+`var` variables can be re-declared within the same scope without error.
+{code:language=js}
+var x = 10;
+var x = 20; // This is allowed with var
+console.log(x); // Output: 20
+{code}
+
+h3. Hoisting and the Temporal Dead Zone (TDZ) with `let` and `const`
 
 Like `var`, declarations using `let` and `const` are also technically hoisted to the top of their _block_ scope. However, they are *not* initialized with `undefined`. Instead, they enter a state known as the *Temporal Dead Zone (TDZ)*.
-* *TDZ:* The TDZ starts at the beginning of the block and ends when the `let` or `const` declaration statement is evaluated. Attempting to access the variable within the TDZ (before its declaration) results in a `ReferenceError`.
-  ```javascript
-  {
-    // Start of TDZ for myScopedVar
-    // console.log(myScopedVar); // ReferenceError: Cannot access 'myScopedVar' before initialization
-    let myScopedVar = "Now accessible"; // End of TDZ for myScopedVar
-    console.log(myScopedVar); // Output: Now accessible
-  }
-  ```
+
+h2. TDZ
+
+The TDZ starts at the beginning of the block and ends when the `let` or `const` declaration statement is evaluated. Attempting to access the variable within the TDZ (before its declaration) results in a `ReferenceError`.
+{code:language=js}
+
+{
+  // Start of TDZ for myScopedVar
+  // console.log(myScopedVar); // ReferenceError: Cannot access 'myScopedVar' before initialization
+  let myScopedVar = "Now accessible"; // End of TDZ for myScopedVar
+  console.log(myScopedVar); // Output: Now accessible
+}
+{code}
 * *Why TDZ?* This behavior prevents the use of variables before they are properly declared and initialized, leading to more reliable and less error-prone code compared to `var`'s hoisting behavior.
 
 Hoisting also applies to function declarations and expressions, but differently:
-* *Function Declarations:* Both the name and the function body are hoisted. This means you can call a function declaration before it's physically defined in the code.
 
-  ```javascript
-  hoistedFunc(); // Works! Output: Hoisted function was called.
+h2. Function Declarations
 
-  function hoistedFunc() {
-    console.log("Hoisted function was called.");
-  }
-  ```
-* *Function Expressions (including Arrow Functions):* Only the variable declaration (if using `var`, `let`, or `const`) is hoisted, not the function assignment itself.
-** If using `var`, the variable is hoisted and initialized with `undefined`. Calling it before assignment results in a `TypeError`.
-** If using `let` or `const`, the variable is hoisted but enters the TDZ. Calling it before assignment results in a `ReferenceError`.
+Both the name and the function body are hoisted. This means you can call a function declaration before it's physically defined in the code.
 
-  ```javascript
-  // notHoistedFuncExpr(); // TypeError: notHoistedFuncExpr is not a function (if var)
-  // ReferenceError: Cannot access 'notHoistedFuncExpr' before initialization (if let/const)
+{code:language=js}
+hoistedFunc(); // Works! Output: Hoisted function was called.
 
-  const notHoistedFuncExpr = function () {
-    console.log("Function expression called.");
-  };
-  notHoistedFuncExpr(); // Works here
+function hoistedFunc() {
+  console.log("Hoisted function was called.");
+}
 
-  // Similar behavior for arrow functions
-  // notHoistedArrowFunc(); // ReferenceError
-  const notHoistedArrowFunc = () => {
-    console.log("Arrow function called.");
-  };
-  notHoistedArrowFunc(); // Works here
-  ```
+{code}
+
+h2. Function Expressions (including Arrow Functions)
+
+Only the variable declaration (if using `var`, `let`, or `const`) is hoisted, not the function assignment itself.
+* If using `var`, the variable is hoisted and initialized with `undefined`. Calling it before assignment results in a `TypeError`.
+* If using `let` or `const`, the variable is hoisted but enters the TDZ. Calling it before assignment results in a `ReferenceError`.
+
+{code:language=js}
+// notHoistedFuncExpr(); // TypeError: notHoistedFuncExpr is not a function (if var)
+// ReferenceError: Cannot access 'notHoistedFuncExpr' before initialization (if let/const)
+
+const notHoistedFuncExpr = function () {
+  console.log("Function expression called.");
+};
+notHoistedFuncExpr(); // Works here
+
+// Similar behavior for arrow functions
+// notHoistedArrowFunc(); // ReferenceError
+const notHoistedArrowFunc = () => {
+  console.log("Arrow function called.");
+};
+notHoistedArrowFunc(); // Works here
+{code}
 
 This behavior (TDZ for `let`/`const`, and how function expressions are hoisted) prevents the use of variables or functions before they are properly declared and initialized, leading to more reliable code.
 
-h4. Scope Explained
+h3. Scope Explained
 
 Scope determines the accessibility (visibility) of variables. JavaScript has global scope, function scope, and block scope.
-* *Global Scope:* Variables declared outside any function or block have global scope. In non-module scripts, `var` creates global variables that are properties of the global object (`window` in browsers, `globalThis` generally), while `let` and `const` create global variables that are not properties of the global object. Global variables are accessible from anywhere in your code, which can lead to naming conflicts and unintended modifications, so minimizing their use is generally recommended.
-* *Function Scope:* Variables declared with `var` inside a function are scoped to that entire function, regardless of any blocks within it. Variables declared with `let` or `const` inside a function are also local to that function but are further restricted by block scope if declared within inner blocks.
-* *Block Scope:* Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
-{code}mermaid
+
+h2. Global Scope
+
+Variables declared outside any function or block have global scope. In non-module scripts, `var` creates global variables that are properties of the global object (`window` in browsers, `globalThis` generally), while `let` and `const` create global variables that are not properties of the global object. Global variables are accessible from anywhere in your code, which can lead to naming conflicts and unintended modifications, so minimizing their use is generally recommended.
+
+h2. Function Scope
+
+Variables declared with `var` inside a function are scoped to that entire function, regardless of any blocks within it. Variables declared with `let` or `const` inside a function are also local to that function but are further restricted by block scope if declared within inner blocks.
+
+h2. Block Scope
+
+Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
+
+{mermaid}
 graph TD
     subgraph GlobalScope [Global Scope]
         direction LR
@@ -177,16 +224,17 @@ graph TD
     end
 
     GlobalScope --> FunctionScope
-{code:language=text}
+{mermaid}
+
 This diagram illustrates the hierarchy of scopes in JavaScript. The outermost is the *Global Scope*, where variables declared outside any function or block reside. Variables like `GV` (Global Variable) defined here are accessible throughout your program, though `let` and `const` don't attach to the global object (e.g., `window`) like `var` does in non-module scripts. Nested within, a *Function Scope* is created by functions like `exampleFunc()`. Variables such as `FV` (Function Variable) declared directly inside a function are accessible anywhere within that function. Further nested are *Block Scopes*, created by constructs like `if` statements or `for` loops (represented by `BlockScope1` and `BlockScope2`). Variables like `BV1` or `BV2`, declared with `let` or `const` within these blocks, are only accessible within that specific block. This structured scoping helps manage variable lifetimes and prevent naming conflicts, making code more modular and predictable. Understanding how these scopes interact is fundamental to writing robust JavaScript.
 
-h4. Best Practices for Variable Declaration (Modern JavaScript)
+h3. Best Practices for Variable Declaration (Modern JavaScript)
 # *Prefer `const` by default:* Use `const` whenever you declare a variable whose value is not intended to change after initialization. This makes your intentions clear and prevents accidental reassignments.
 # *Use `let` only when necessary:* Use `let` only for variables whose values you expect to reassign later in their scope (e.g., loop counters, state variables that change over time).
 # *Avoid `var`:* In modern ES6+ codebases (including React Native), avoid using `var`. `let` and `const` offer superior block scoping and TDZ behavior, preventing common bugs associated with `var`.
 # *Declare at the top:* Declare variables (`let` and `const`) at the top of their respective blocks for better readability, even though they are block-scoped regardless of position.
 
-h4. Comparison: `var` vs. `let` vs. `const`
+h3. Comparison: `var` vs. `let` vs. `const`
 
 ||Feature||`var`||`let`||`const`||
 |*Scope*|Function or global|Block (`{}`)|Block (`{}`)|
@@ -197,30 +245,32 @@ h4. Comparison: `var` vs. `let` vs. `const`
 {info}
 For this course, and in modern React Native development, you should primarily use `let` for variables whose values might change and `const` for variables whose values should remain constant. Avoid `var`.
 {info}
-h3. Data Types
+h2. Data Types
 
 JavaScript is a dynamically typed language. This means you don't have to explicitly declare the data type of a variable; the type is determined automatically at runtime based on the value assigned. JavaScript defines two fundamental categories of data types: *primitive types* and *objects (reference types)*. Understanding this distinction is crucial because they behave differently, especially concerning mutability and how they are passed around in your code.
 
-h4. Primitive Data Types
+h3. Primitive Data Types
 
 Primitive types are immutable, meaning their values cannot be changed once created. When you operate on a primitive value, you get a new value. JavaScript has seven primitive data types:
 # *String:* Represents textual data. Strings are enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (`` `...` ``). Strings are encoded using *UTF-16*.
 
-    ```javascript
+{code:language=js}
     let pharmacyName = "SpeedyMeds Pharmacy";
     let greeting = "Welcome to " + pharmacyName;
     let message = `Order ready for ${patientName}`;
     console.log(message); // Example Output: Order ready for Jane Smith
-    ```
+{code}
 
     Backticks allow for template literals, which make embedding expressions in strings easier.
 # *Number:* Represents both integer and floating-point numbers. JavaScript uses a single 64-bit floating-point format (IEEE 754 standard) for all numbers.
 
     Special numeric values include `Infinity`, `-Infinity`, and `NaN` (Not a Number).
 *** `NaN` often results from invalid operations like `0 / 0` or `parseInt("hello")`.
-*** *Quirk:* `NaN` is the only JavaScript value not equal to itself (`NaN === NaN` is `false`). To check if a value is `NaN`, use the global `isNaN()` function or the more reliable `Number.isNaN()` method.
+h3. Quirk
 
-    ```javascript
+`NaN` is the only JavaScript value not equal to itself (`NaN === NaN` is `false`). To check if a value is `NaN`, use the global `isNaN()` function or the more reliable `Number.isNaN()` method.
+
+{code:language=js}
     let quantity = 100;
     let pricePerUnit = 1.25;
     let totalCost = quantity * pricePerUnit;
@@ -230,54 +280,59 @@ Primitive types are immutable, meaning their values cannot be changed once creat
     console.log(notANumber); // Output: NaN
     console.log(NaN === NaN); // Output: false
     console.log(Number.isNaN(notANumber)); // Output: true
-    ```
+{code}
 # *Boolean:* Represents a logical entity and can have two values: `true` or `false`.
 
-    ```javascript
+{code:language=js}
     let isPrescriptionRequired = true;
     let isOverTheCounter = false;
     console.log(isPrescriptionRequired); // Output: true
-    ```
+{code}
 # *Undefined:* A variable that has been declared but not yet assigned a value has the type `undefined`. It also signifies the value returned by functions that don't explicitly return anything or the value of accessing a non-existent object property.
 
-    ```javascript
+{code:language=js}
     let deliveryAddress;
     console.log(deliveryAddress); // Output: undefined
-    ```
+{code}
 # *Null:* Represents the intentional absence of any object value. It's a primitive value explicitly assigned by developers to signify "no value" or "empty".
 
-    ```javascript
+{code:language=js}
     let selectedMedication = null;
     // Later, this might be assigned an object: selectedMedication = { name: 'Ibuprofen', strength: '200mg' };
     console.log(selectedMedication); // Output: null
-    ```
+{code}
 
     *`null` vs. `undefined`:*
 *** `undefined` usually means a value hasn't been assigned _yet_ (it's the default state of a declared but uninitialized variable, or for missing object properties/array elements, or function parameters not provided). It often represents an unintentional absence of value.
 *** `null` usually means a variable _was explicitly assigned_ the value of "nothing" or "empty." It represents the intentional absence of any object value.
-*** *Quirk 1:* `typeof null` returns `"object"`. This is a long-standing historical bug. To check for `null`, use strict equality: `myVar === null`.
-*** *Quirk 2:* While `null == undefined` is `true` (due to loose equality type coercion), `null === undefined` is `false` (because they are distinct types). It's generally better to check for them explicitly if the distinction matters.
+h3. Quirk 1
+
+`typeof null` returns `"object"`. This is a long-standing historical bug. To check for `null`, use strict equality: `myVar === null`.
+h3. Quirk 2
+
+While `null == undefined` is `true` (due to loose equality type coercion), `null === undefined` is `false` (because they are distinct types). It's generally better to check for them explicitly if the distinction matters.
 # *Symbol (ES6):* A unique and immutable primitive value that may be used as the key of an Object property. Symbols are primarily used to create unique property keys, helping avoid naming collisions, especially when dealing with third-party code or internal metaproperties. They are created using the `Symbol()` function: `const uniqueId = Symbol("description");`.
 
-    ```javascript
+{code:language=js}
     const uniqueId = Symbol("patientRecordId");
     console.log(uniqueId.toString()); // Output: Symbol(patientRecordId)
-    ```
+{code}
 # *BigInt (ES2020):* Represents whole numbers larger than 2<sup>53</sup> - 1 (the `Number.MAX_SAFE_INTEGER`), which is the largest integer JavaScript can reliably represent with the standard `Number` type.
 *** Create `BigInt`s by appending `n` to an integer literal or using `BigInt()`.
 *** Cannot be mixed directly with `Number`s in arithmetic operations; requires explicit conversion.
 
-    ```javascript
+{code:language=js}
     const veryLargeNumber = 9007199254740991n;
     const anotherLargeNumber = BigInt("9007199254740992");
     console.log(veryLargeNumber + 1n); // Output: 9007199254740992n
     // console.log(veryLargeNumber + 1); // TypeError: Cannot mix BigInt and other types
-    ```
+{code}
 
-h4. Immutability of Primitives vs. Mutability of Objects
+h3. Immutability of Primitives vs. Mutability of Objects
 
 A core characteristic of primitive types is their *immutability*. This means that once a primitive value (like the number `42` or the string `"hello"`) is created, it cannot be internally changed.
-{code}javascript
+
+{code:language=js}
 /**
 * Demonstrates primitive immutability.
  */
@@ -297,11 +352,13 @@ function testPrimitiveImmutability() {
   console.log(originalCount); // Output: 10 (The original number value is unchanged)
 }
 testPrimitiveImmutability();
-{code:language=text}
+{code}
+
 Operations that appear to modify primitives (like string methods) actually return new primitive values. The original value remains untouched in memory. Variables holding primitives can be reassigned to point to different primitive values, but the values themselves don't change.
 
 This contrasts sharply with *objects*, which are *mutable*. Properties of an object can be changed after the object is created.
-{code}javascript
+
+{code:language=js}
 /**
 * Demonstrates object mutability.
  */
@@ -317,15 +374,17 @@ function testObjectMutability() {
   console.log(anotherRefToMedication.dosage); // Output: 40 (Change is visible via other references)
 }
 testObjectMutability();
-{code:language=text}
+{code}
+
 This difference is fundamental to understanding how data behaves when passed to functions or assigned to variables in JavaScript. Passing a primitive copies the value; passing an object copies the reference, meaning modifications inside a function can affect the original object outside the function.
 
-h4. Primitive Wrapper Objects
+h3. Primitive Wrapper Objects
 
 JavaScript provides built-in "wrapper" objects corresponding to most primitive types: `String`, `Number`, `BigInt`, `Boolean`, and `Symbol`. `null` and `undefined` do not have corresponding wrapper objects.
 
 These wrappers provide methods for working with primitive values (e.g., `string.toUpperCase()`, `number.toFixed()`). Although primitives themselves don't have methods, JavaScript employs a mechanism called *auto-boxing*. When you try to access a property or method on a primitive value (except `null` or `undefined`), JavaScript temporarily creates an instance of the corresponding wrapper object behind the scenes, performs the operation on that wrapper object, and then discards the wrapper.
-{code}javascript
+
+{code:language=js}
 const drugName = "warfarin";
 
 // Accessing a property (.length) - Auto-boxing occurs
@@ -338,13 +397,14 @@ console.log(drugName.toUpperCase()); // Output: WARFARIN
 
 // The original primitive remains unchanged
 console.log(drugName); // Output: warfarin
-{code:language=text}
+{code}
+
 This auto-boxing makes working with primitives more convenient, allowing them to seemingly have methods without actually being objects. Understanding this mechanism clarifies why you can call methods on primitives but cannot, for instance, add custom properties directly to them that persist (e.g., `drugName.customProp = 1; console.log(drugName.customProp); // undefined`).
 
-h4. Non-Primitive Data Type (Reference Type)
+h3. Non-Primitive Data Type (Reference Type)
 # *Object:* Represents a collection of key-value pairs (properties and methods). Objects are mutable (their content can change) and are considered "reference types," meaning variables hold a reference (memory address) to the object, not the object itself.
 *** Includes generic objects (`{}`), arrays (`[]`), functions (`function() {}`), `Date`, `RegExp`, etc.
-    ```javascript
+{code:language=js}
     let prescription = {
       patientId: "P1001",
       medication: "Atorvastatin",
@@ -352,7 +412,7 @@ h4. Non-Primitive Data Type (Reference Type)
       refillsRemaining: 2,
     };
     console.log(prescription.medication); // Output: Atorvastatin
-    ```
+{code}
     We will cover objects in more detail in a later section.
 
 bq. 📲 *(Native Developers): Data Type Comparisons*
@@ -370,11 +430,11 @@ bq. 📲 *(Native Developers): Data Type Comparisons*
 - Swift uses `nil` within its optional type system (e.g., `String?`) to handle the absence of value, providing compile-time safety. This is different from JS's runtime `null` and `undefined`.
 > *Key Takeaway:* While JS has primitives, its dynamic nature and the specific behaviors of `null` and `undefined` require careful attention, especially compared to the more strictly typed and often null-safe environments of modern native development.
 
-h3. Operators
+h2. Operators
 
 Operators are special symbols used to perform operations on operands (values and variables).
 
-h4. Assignment Operators
+h3. Assignment Operators
 
 Assigns a value to its left operand based on the value of its right operand.
 * `=` (Assignment): Assigns the value of the right operand to the left operand.
@@ -385,7 +445,7 @@ console.log(stockLevel); // Output: 70
 `
   Other assignment operators include `+=`, `-=`, `*=`, `/=`, `%=`.
 
-h4. Arithmetic Operators
+h3. Arithmetic Operators
 
 Perform arithmetic on numbers.
 * `+` (Addition)
@@ -396,7 +456,8 @@ Perform arithmetic on numbers.
 * `*` (Exponentiation - ES7)
 * `++` (Increment)
 * `--` (Decrement)
-{code}javascript
+
+{code:language=js}
 let itemsInCart = 5;
 itemsInCart++; // itemsInCart is now 6
 
@@ -407,8 +468,9 @@ console.log(finalAmount); // Output: 110.25
 
 console.log(10 % 3); // Output: 1 (remainder of 10 divided by 3)
 console.log(2 * 3); // Output: 8 (2 to the power of 3)
-{code:language=text}
-h4. Comparison Operators
+{code}
+
+h3. Comparison Operators
 
 Compare two operands and return a boolean value (`true` or `false`).
 * `==` (Equal to - performs type coercion)
@@ -424,7 +486,7 @@ Compare two operands and return a boolean value (`true` or `false`).
 Always prefer strict equality (`===`) and strict inequality (`!==`) operators over their loose counterparts (`==` and `!=`). Strict operators prevent unexpected behavior by not performing type coercion, meaning they check if both the value and the type are the same.
 {note}
 
-{code}javascript
+{code:language=js}
 let refillCount = 3;
 console.log(refillCount === 3); // Output: true
 console.log(refillCount === "3"); // Output: false (different types)
@@ -433,7 +495,8 @@ console.log(refillCount == "3"); // Output: true (type coercion happens)
 let priceA = 15.0;
 let priceB = 20.0;
 console.log(priceA < priceB); // Output: true
-{code:language=text}
+{code}
+
 *Understanding `==` (Loose Equality) vs. `===` (Strict Equality):*
 
 It is crucial to understand the difference, especially the pitfalls of loose equality (`==`) due to type coercion.
@@ -450,24 +513,26 @@ It is crucial to understand the difference, especially the pitfalls of loose equ
 * `NaN` is not equal to anything, including itself, using either `==` or `===` (`NaN == NaN` and `NaN === NaN` are both `false`). Always use `Number.isNaN()` to check for `NaN`.
 * `+0` and `-0` are considered equal by both `==` and `===` (`+0 === -0` is `true`). However, they are distinct values. If you need to differentiate them, you can use `Object.is(+0, -0)`, which returns `false`.
 
-h4. Logical Operators
+h3. Logical Operators
 
 Perform logical operations, typically used with boolean values.
 * `&&` (Logical AND): Returns `true` if both operands are true.
 * `||` (Logical OR): Returns `true` if at least one operand is true.
 * `!` (Logical NOT): Returns `true` if the operand is false, and vice versa.
-{code}javascript
+
+{code:language=js}
 let hasValidPrescription = true;
 let medicationInStock = false;
 
 console.log(hasValidPrescription && medicationInStock); // Output: false
 console.log(hasValidPrescription || medicationInStock); // Output: true
 console.log(!medicationInStock); // Output: true
-{code:language=text}
+{code}
+
 Logical operators can also work with non-boolean values (truthy/falsy values), often used for *short-circuiting*:
 * `&&` (Logical AND): Returns the _first_ falsy operand it encounters, or the _last_ operand if all are truthy. If the first operand is falsy, the second operand is *not evaluated*. This is useful for conditional execution.
 
-  ```javascript
+{code:language=js}
   let userProfile = { name: "Alice" };
   let displayName = userProfile && userProfile.name; // If userProfile exists, get name
   console.log(displayName); // Output: Alice
@@ -476,10 +541,10 @@ Logical operators can also work with non-boolean values (truthy/falsy values), o
   // settings.apply() is never called because settings is falsy
   let result = settings && settings.apply();
   console.log(result); // Output: null
-  ```
+{code}
 * `||` (Logical OR): Returns the _first_ truthy operand it encounters, or the _last_ operand if all are falsy. If the first operand is truthy, the second operand is *not evaluated*. This is commonly used for providing default values.
 
-  ```javascript
+{code:language=js}
   let inputUsername = "";
   let username = inputUsername || "Guest"; // If input is empty (falsy), use 'Guest'
   console.log(username); // Output: Guest
@@ -487,105 +552,121 @@ Logical operators can also work with non-boolean values (truthy/falsy values), o
   let configValue = { port: 8080 };
   let port = configValue || { port: 3000 }; // configValue is truthy, so it's used
   console.log(port); // Output: { port: 8080 }
-  ```
+
+{code}
 
 *Truthy and Falsy Values:*
 
 In JavaScript, every value has an inherent boolean quality when evaluated in a boolean context (like an `if` condition or by logical operators).
-* *Falsy values:* These values evaluate to `false` in a boolean context.
-** `false`
-** `0` (zero number)
-** `-0` (negative zero number)
-** `0n` (BigInt zero)
-** `""` (empty string)
-** `null`
-** `undefined`
-** `NaN` (Not a Number)
-* *Truthy values:* All other values are "truthy," meaning they evaluate to `true` in a boolean context. This includes:
-** `true`
-** Any non-empty string (e.g., `"hello"`, `"0"`, `"false"`)
-** Any non-zero number (e.g., `1`, `-1`, `0.5`)
-** Any non-zero BigInt (e.g., `1n`)
-** All objects (including empty objects `{}` and empty arrays `[]`)
-** Functions
+
+h2. Falsy values
+
+These values evaluate to `false` in a boolean context.
+* `false`
+* `0` (zero number)
+* `-0` (negative zero number)
+* `0n` (BigInt zero)
+* `""` (empty string)
+* `null`
+* `undefined`
+* `NaN` (Not a Number)
+h2. Truthy values
+
+All other values are "truthy," meaning they evaluate to `true` in a boolean context. This includes:
+* `true`
+* Any non-empty string (e.g., `"hello"`, `"0"`, `"false"`)
+* Any non-zero number (e.g., `1`, `-1`, `0.5`)
+* Any non-zero BigInt (e.g., `1n`)
+* All objects (including empty objects `{}` and empty arrays `[]`)
+* Functions
 
 Understanding truthy/falsy is key to correctly using logical operators for short-circuiting and default value assignment.
 
-h4. String Operators
+h3. String Operators
 * `+` (Concatenation): Joins two strings together.
-  ```javascript
+{code:language=js}
   let firstName = "Sarah";
   let lastName = "Connor";
   let fullName = firstName + " " + lastName;
   console.log(fullName); // Output: Sarah Connor
-  ```
+{code}
 
-h4. Ternary Operator
+h3. Ternary Operator
 
 Also known as the conditional operator, it's a shorthand for an `if...else` statement.
 * `condition ? exprIfTrue : exprIfFalse`
-{code}javascript
+
+{code:language=js}
 let patientAge = 25;
 let ageCategory = patientAge >= 18 ? "Adult" : "Pediatric";
 console.log(ageCategory); // Output: Adult
-{code:language=text}
-h4. Type Operators
+{code}
+
+h3. Type Operators
 * `typeof`: Returns a string indicating the type of an unevaluated operand.
-  ```javascript
+{code:language=js}
   let drugName = "Aspirin";
   let dosageMg = 100;
   console.log(typeof drugName); // Output: string
   console.log(typeof dosageMg); // Output: number
   console.log(typeof { id: 1 }); // Output: object
   console.log(typeof null); // Output: object (this is a known quirk in JavaScript)
-  ```
+{code}
 * `instanceof`: Returns `true` if the specified object is an instance of the specified constructor or any of its ancestors.
-  ```javascript
+{code:language=js}
   let anArray = [1, 2, 3];
   let aDate = new Date();
   console.log(anArray instanceof Array); // Output: true
   console.log(aDate instanceof Date); // Output: true
-  ```
+{code}
 
 This code demonstrates the `instanceof` operator. The variable `anArray` is initialized as an array literal `[1, 2, 3]`. When `anArray instanceof Array` is evaluated, it checks if `anArray`'s prototype chain includes `Array.prototype`, which is true, so it logs `true`. Similarly, `aDate` is created as an instance of the `Date` constructor. `aDate instanceof Date` correctly identifies `aDate` as an instance of `Date` (or its subclasses), logging `true`. This operator is useful for determining an object's type when dealing with complex object hierarchies or when you need to confirm if an object was created by a specific constructor.
 
-h4. Other Operators
+h3. Other Operators
 
 JavaScript includes other operators for more specific tasks:
-* *Logical Assignment Operators (ES2021+):* Combine logical operations with assignment.
-** `&&=` (Logical AND assignment): `x &&= y` is like `x && (x = y)`. Assigns `y` to `x` only if `x` is truthy.
-** `||=` (Logical OR assignment): `x ||= y` is like `x || (x = y)`. Assigns `y` to `x` only if `x` is falsy.
-** `??=` (Nullish Coalescing assignment): `x ??= y` is like `x ?? (x = y)`. Assigns `y` to `x` only if `x` is `null` or `undefined`.
-* *Unary Operators:*
-** `+` (Unary Plus): Tries to convert its operand to a number (e.g., `+"42"` results in `42`).
-** `-` (Unary Negation): Negates its numeric operand.
-* *Bitwise Operators:* Perform operations on the binary representation of numbers (`&`, `|`, `^`, `~`, `<<`, `>>`, `>>>`). Less common in typical application logic.
-* *Comma Operator:* Evaluates multiple expressions left-to-right and returns the value of the last expression. Rarely used.
-* *Relational Operators:*
-** `in`: Checks if an object has a given property (including inherited ones).
-    ```javascript
-    const car = { make: "Toyota", model: "Camry" };
-    console.log("make" in car); // Output: true
-    console.log("toString" in car); // Output: true (inherited from Object prototype)
-    ```
 
-h3. Operator Precedence and Associativity
+h2. Logical Assignment Operators (ES2021+)
+
+Combine logical operations with assignment.
+* `&&=` (Logical AND assignment): `x &&= y` is like `x && (x = y)`. Assigns `y` to `x` only if `x` is truthy.
+* `||=` (Logical OR assignment): `x ||= y` is like `x || (x = y)`. Assigns `y` to `x` only if `x` is falsy.
+* `??=` (Nullish Coalescing assignment): `x ??= y` is like `x ?? (x = y)`. Assigns `y` to `x` only if `x` is `null` or `undefined`.
+h2. Unary Operators
+* `+` (Unary Plus): Tries to convert its operand to a number (e.g., `+"42"` results in `42`).
+* `-` (Unary Negation): Negates its numeric operand.
+h2. Bitwise Operators
+
+Perform operations on the binary representation of numbers (`&`, `|`, `^`, `~`, `<<`, `>>`, `>>>`). Less common in typical application logic.
+h2. Comma Operator
+
+Evaluates multiple expressions left-to-right and returns the value of the last expression. Rarely used.
+h2. Relational Operators
+* `in`: Checks if an object has a given property (including inherited ones).
+{code:language=js}
+  const car = { make: "Toyota", model: "Camry" };
+  console.log("make" in car); // Output: true
+  console.log("toString" in car); // Output: true (inherited from Object prototype)
+{code}
+
+h2. Operator Precedence and Associativity
 
 When an expression contains multiple operators, JavaScript follows specific rules to determine the order of evaluation:
 # *Precedence:* Which operations are performed first. Operators with higher precedence are evaluated before those with lower precedence. For example, multiplication (`*`) has higher precedence than addition (`+`).
-    ```javascript
+{code:language=js}
     let result = 3 + 5 * 2; // 5 * 2 is evaluated first (10), then 3 + 10
     console.log(result); // Output: 13
-    ```
+{code}
 # *Associativity:* Which order operators with the _same_ precedence are evaluated in (left-to-right or right-to-left).
 *** Most operators are *left-to-right* (e.g., `a - b + c` is evaluated as `(a - b) + c`).
 *** Assignment (`=`, `+=`, etc.), ternary (`? :`), and exponentiation (`*`) operators are *right-to-left* (e.g., `a = b = 5` is evaluated as `a = (b = 5)`).
 
 *Parentheses `()`** can always be used to override the default precedence and associativity rules and explicitly control the order of evaluation.
-{code}javascript
+
+{code:language=js}
 let resultWithParens = (3 + 5) * 2; // 3 + 5 is evaluated first (8), then 8 * 2
 console.log(resultWithParens); // Output: 16
-```
+{code}
 
 Understanding precedence is crucial for writing correct code. Here's a simplified table of common operator precedence (higher number means higher precedence):
 
@@ -618,6 +699,6 @@ bq. 📚 *Official Documentation:*
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator|MDN: Conditional (ternary) operator]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence|MDN: Operator Precedence]
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you have a grasp of variables, data types, and operators, you're ready to learn how to control the flow of your JavaScript programs. Proceed to [./section-02-control-flow.md|Section 2: Control Flow] to explore conditional statements and loops.

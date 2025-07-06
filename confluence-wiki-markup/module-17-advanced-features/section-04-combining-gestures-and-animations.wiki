@@ -1,8 +1,10 @@
-h2. Section 4: Combining Gestures and Animations
+{toc}
+
+h1. Section 4: Combining Gestures and Animations
 
 This section explores the powerful synergy between React Native Gesture Handler and React Native Reanimated. By combining these libraries, you can create sophisticated, interactive animations that respond fluidly to user touch input, all running smoothly on the UI thread.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 The true potential of Reanimated and Gesture Handler is unlocked when they are used together. Gesture Handler captures user input and provides rich contextual data (like translation, scale, velocity), while Reanimated uses this data to drive animations in real-time on the UI thread. This combination allows for the creation of highly interactive and performant user experiences that feel native.
 
@@ -23,7 +25,7 @@ The true potential of Reanimated and Gesture Handler is unlocked when they are u
 {tip}
 Start with simple interactions and gradually add complexity. Debugging combined gestures and animations can be tricky, so breaking down the problem into smaller parts is often helpful. Use {{console.log}} within your gesture handler worklets (they will log to the native console, visible in Xcode/Android Studio or via Flipper) to inspect event data and shared value states.
 {tip}
-h3. Procedural Content
+h2. Procedural Content
 
 *Example: Draggable Card with Spring-Back and Rotation*
 
@@ -201,6 +203,6 @@ bq. 📚 *Official Documentation:*
 - [https://docs.swmansion.com/react-native-reanimated/docs/utilities/interpolate|React Native Reanimated - `interpolate`]
 - [https://docs.swmansion.com/react-native-reanimated/docs/animations/with-spring|React Native Reanimated - `withSpring`]
 
-h3. Next Steps
+h2. Next Steps
 
 Having explored animations and gestures, we will now shift our focus to another important aspect of UI development: working with Scalable Vector Graphics (SVGs) to include resolution-independent images and icons in your application.

@@ -1,16 +1,23 @@
-h2. Section 8: Configuring TypeScript ({{tsconfig.json}} Overview)
+{toc}
+
+h1. Section 8: Configuring TypeScript ({{tsconfig.json}} Overview)
 
 The {{tsconfig.json}} file is the heart of a TypeScript project. It specifies the root files and the compiler options required to compile the project. Understanding its role and some key options is important, especially when working with Expo and React Native.
 
-h3. What is {{tsconfig.json}}?
+h2. What is {{tsconfig.json}}?
 
 When you have a {{tsconfig.json}} file in the root directory of your TypeScript project, it signifies that the directory is the root of a TypeScript project. The file itself contains JSON that outlines:
-* *Project Files:* Which files TypeScript should compile.
-* *Compiler Options:* How TypeScript should compile those files (e.g., what JavaScript version to target, which strictness checks to apply, how to handle modules).
+
+h2. Project Files
+
+Which files TypeScript should compile.
+h2. Compiler Options
+
+How TypeScript should compile those files (e.g., what JavaScript version to target, which strictness checks to apply, how to handle modules).
 
 When you run the TypeScript compiler ({{tsc}}), it looks for this file in the current directory and then progressively up the directory chain.
 
-h3. Key Compiler Options in an Expo Project
+h2. Key Compiler Options in an Expo Project
 
 When you create a new Expo project with TypeScript (e.g., using {{npx create-expo-app@latest}}), it comes with a pre-configured {{tsconfig.json}} file. This file includes sensible defaults for React Native development. While you might not need to modify it often, understanding some key options can be helpful:
 
@@ -52,7 +59,7 @@ Let's break down some of these common options:
   > [!NOTE]
   > If you use path aliases in `tsconfig.json` for a React Native project, you also need to configure them in your Babel configuration (`babel.config.js`) using a plugin like `babel-plugin-module-resolver` for them to work correctly at runtime.
 
-h3. Expo's Default Configuration
+h2. Expo's Default Configuration
 
 Expo provides a `tsconfig.base.json` (usually via the `expo` package) that new projects extend. This base configuration is tailored for React Native development with Expo and includes many best-practice settings.
 

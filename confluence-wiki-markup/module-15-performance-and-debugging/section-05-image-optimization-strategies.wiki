@@ -1,39 +1,59 @@
-h2. Section 5: Image Optimization Strategies
+{toc}
+
+h1. Section 5: Image Optimization Strategies
 
 Images are vital for a rich user experience, but unoptimized images can be a major performance drag, especially in mobile apps like SpeedyMeds where medication images or health banners might be common. This section explores strategies to optimize image loading and display in React Native, ensuring your app remains fast and responsive.
 
 bq. 🛣️ *(All Learners):* Properly optimized images lead to faster load times, reduced memory consumption, and a smoother overall experience. Paying attention to image assets is a high-impact area for performance improvement.
 
-h3. Conceptual Content: The Burden of Heavy Images
+h2. Conceptual Content: The Burden of Heavy Images
 
 Large, unoptimized images can significantly impact your app by:
-* *Increasing Load Times:* Larger files take longer to download and decode.
-* *Consuming Excessive Memory:* High-resolution images decoded into memory can lead to Out Of Memory (OOM) crashes, especially on low-end devices.
-* *Causing UI Jank:* Decoding large images on the main thread can block rendering and lead to stuttering animations or slow interactions.
 
-h4. Strategies for Image Optimization
+h2. Increasing Load Times
+
+Larger files take longer to download and decode.
+h2. Consuming Excessive Memory
+
+High-resolution images decoded into memory can lead to Out Of Memory (OOM) crashes, especially on low-end devices.
+h2. Causing UI Jank
+
+Decoding large images on the main thread can block rendering and lead to stuttering animations or slow interactions.
+
+h3. Strategies for Image Optimization
 
 Several strategies can mitigate these issues:
 # *Choosing Appropriate Image Formats:*
-*** *JPEG (JPG):* Best for photographic images. Offers good compression but is lossy.
-*** *PNG:* Best for graphics with transparency or sharp lines (like icons, logos). Can be lossless but often results in larger file sizes than JPEG for photos.
-*** *WebP:* A modern image format that provides superior lossless and lossy compression for images on the web and mobile. WebP images are often significantly smaller than JPEGs and PNGs at equivalent quality, and it supports transparency and animation. Support for WebP is widespread in React Native, especially with libraries like {{expo-image}}.
-      > [!TIP]
-      > Prefer WebP where possible for its excellent compression-to-quality ratio. For the SpeedyMeds app, using WebP for medication packaging images could significantly reduce asset sizes.
+
+h3. JPEG (JPG)
+
+Best for photographic images. Offers good compression but is lossy.
+h3. PNG
+
+Best for graphics with transparency or sharp lines (like icons, logos). Can be lossless but often results in larger file sizes than JPEG for photos.
+h3. WebP
+
+A modern image format that provides superior lossless and lossy compression for images on the web and mobile. WebP images are often significantly smaller than JPEGs and PNGs at equivalent quality, and it supports transparency and animation. Support for WebP is widespread in React Native, especially with libraries like {{expo-image}}.
+bq. [!TIP]
+Prefer WebP where possible for its excellent compression-to-quality ratio. For the SpeedyMeds app, using WebP for medication packaging images could significantly reduce asset sizes.
 # *Resizing Images to Display Dimensions:*
 *** Avoid serving images that are much larger than their display size. For example, don't use a 2000x2000 pixel image for a 100x100 pixel thumbnail in a medication list.
-*** *Server-Side Resizing:* The best approach is to resize images on the server or use an image CDN that can serve appropriately sized images based on request parameters. This saves bandwidth and processing time on the client.
-*** *Client-Side Resizing:* While possible (e.g., using {{expo-image-manipulator}}), resizing large images on the client can be resource-intensive itself. It's better used for user-generated content or when server-side resizing isn't an option.
+h3. Server-Side Resizing
+
+The best approach is to resize images on the server or use an image CDN that can serve appropriately sized images based on request parameters. This saves bandwidth and processing time on the client.
+h3. Client-Side Resizing
+
+While possible (e.g., using {{expo-image-manipulator}}), resizing large images on the client can be resource-intensive itself. It's better used for user-generated content or when server-side resizing isn't an option.
 # *Using Image Compression Tools:*
 *** Tools like ImageOptim, TinyPNG/TinyJPG, or Squoosh can significantly reduce image file sizes without much loss in visual quality by stripping metadata and applying optimized compression algorithms.
 # *Leveraging {{expo-image}}:*
 *** Expo provides the {{expo-image}} library, which is a powerful and performant replacement for React Native's built-in {{<Image>}} component.
-*** *Features:*
-**** *Aggressive Caching:* Caches images efficiently on disk and in memory.
-**** *Placeholders:* Supports showing placeholder content while the image loads.
-**** *Transitions:* Allows for smooth transitions (e.g., cross-dissolve, flip) when the image loads.
-**** *Performance:* Generally offers better performance due to its native implementation and caching strategies.
-**** *WebP Support:* Excellent support for WebP format.
+h3. Features
+* *Aggressive Caching:* Caches images efficiently on disk and in memory.
+* *Placeholders:* Supports showing placeholder content while the image loads.
+* *Transitions:* Allows for smooth transitions (e.g., cross-dissolve, flip) when the image loads.
+* *Performance:* Generally offers better performance due to its native implementation and caching strategies.
+* *WebP Support:* Excellent support for WebP format.
 # *Lazy Loading Images:*
 *** Load images only when they are about to scroll into view. This is particularly useful for long lists or carousels of images.
 *** {{FlatList}} and {{FlashList}} inherently help with this for off-screen items, but for images within the viewport that are initially below the fold, or for {{<ScrollView>}} content, custom lazy loading might be needed.
@@ -52,9 +72,9 @@ bq. 🌐 *(Web Developers):*
 *Key Takeaway:* While the underlying principles of image optimization are similar between web and React Native, the implementation details and available tools differ. In React Native, you often rely more on component libraries like {{expo-image}} or third-party solutions to achieve these optimizations, rather than direct browser-level support.
 *Source:* {{[https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images|MDN Web Docs: Responsive images]}}, {{[https://web.dev/articles/lazy-loading-images|web.dev: Lazy loading images]}}
 
-h3. Procedural Content: Implementing Image Optimizations
+h2. Procedural Content: Implementing Image Optimizations
 
-h4. Using {{expo-image}}
+h3. Using {{expo-image}}
 
 First, ensure you have {{expo-image}} installed:
 
@@ -127,7 +147,7 @@ export default MedicationImageDisplay;
 
 In this example, `expo-image` is used to display an image. It shows a placeholder image from `via.placeholder.com` while the main image loads. A 500ms cross-dissolve transition is applied when the image is loaded. The `contentFit` prop controls how the image is resized, similar to `resizeMode` in the core `<Image>` component. Error handling is also demonstrated.
 
-h4. Conceptual Lazy Loading in a List
+h3. Conceptual Lazy Loading in a List
 
 While `FlatList` and `FlashList` handle virtualization (not rendering off-screen items), you might want to lazy-load images _within_ items that are already rendered but not yet visible (e.g., if an item is tall). A common strategy is to use a state variable to control whether the actual image URI is passed to the `<Image>` component, only setting it when the item is determined to be visible (e.g., using `onViewableItemsChanged` in `FlatList` or intersection observer concepts if implementing manually).
 

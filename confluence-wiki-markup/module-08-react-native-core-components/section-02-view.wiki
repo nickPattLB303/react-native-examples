@@ -1,8 +1,10 @@
-h2. Section 2: View ({{<View>}}) - The Fundamental Container
+{toc}
+
+h1. Section 2: View ({{<View>}}) - The Fundamental Container
 
 This section introduces the {{<View>}} component, arguably the most fundamental building block for UIs in React Native. Think of it as a versatile container that helps you organize and style other components.
 
-h3. Conceptual Content: Understanding {{<View>}}
+h2. Conceptual Content: Understanding {{<View>}}
 
 The {{<View>}} component is designed to be a container for other components. It supports layout with Flexbox, styling, some touch handling, and accessibility controls.
 
@@ -16,21 +18,34 @@ A crucial aspect of {{<View>}} is its direct mapping to the native view equivale
 This mapping ensures that the UI benefits from native performance and behavior.
 
 *Key Characteristics of {{<View>}}:*
-* *Layout:* {{<View>}} is the primary component for structuring the layout of your application. It uses Flexbox by default, allowing you to arrange child components in a flexible and responsive way.
-** *Default Direction:* Unlike CSS on the web where {{flex-direction}} defaults to {{row}}, in React Native, it defaults to {{column}} for {{<View>}} components. This means children are laid out vertically by default.
-** *Key Flexbox Properties:* While Flexbox is covered in detail in Module 10, common properties applied to {{<View>}} styles include:
-*** {{flex}} (number): Defines how a view will fill available space along the main axis.
-*** {{flexDirection}} (enum: {{'row'}}, {{'column'}}, {{'row-reverse'}}, {{'column-reverse'}}): Specifies the direction of the main axis.
-*** {{justifyContent}} (enum: {{'flex-start'}}, {{'flex-end'}}, {{'center'}}, {{'space-between'}}, {{'space-around'}}, {{'space-evenly'}}): Aligns children along the main axis.
-*** {{alignItems}} (enum: {{'stretch'}}, {{'flex-start'}}, {{'flex-end'}}, {{'center'}}, {{'baseline'}}): Aligns children along the cross axis.
-*** {{flexWrap}} (enum: {{'wrap'}}, {{'nowrap'}}, {{'wrap-reverse'}}): Controls whether children wrap.
-*** {{width}}, {{height}}: Can be absolute numbers (density-independent pixels) or percentages.
-*** {{position}} (enum: {{'relative'}}, {{'absolute'}}): Defines how a view is positioned.
-* *Styling:* You can apply styles to a {{<View>}} to control its background color, borders, margins, padding, and more using the {{StyleSheet}} API.
-* *Nesting:* {{<View>}} components can be nested within each other to create complex UI hierarchies. This is essential for grouping related elements and applying layout rules.
-* *Touch Handling:* While {{<Pressable>}} (covered later) is generally preferred for interactive elements, {{<View>}} can respond to touch events through its props like {{onStartShouldSetResponder}}. The {{pointerEvents}} prop ({{'auto'}}, {{'none'}}, {{'box-none'}}, {{'box-only'}}) controls whether a {{<View>}} can be the target of touch events and if its children can be. The {{hitSlop}} prop can define how far a touch can stray from the view's bounds and still be registered.
-* *No Intrinsic Visuals (Usually):* By default, a {{<View>}} itself doesn't render anything visible unless you give it a background color, border, or it contains other visible child components. Its main purpose is to group and arrange its children.
-* *Collapsable (Android):* The {{collapsable}} prop (Android only), if true (default), allows this view to be potentially removed from the native hierarchy as an optimization if it's purely for layout and doesn't draw anything or handle touches. Using {{nativeID}} or {{testID}} disables this.
+
+h2. Layout
+
+{{<View>}} is the primary component for structuring the layout of your application. It uses Flexbox by default, allowing you to arrange child components in a flexible and responsive way.
+* *Default Direction:* Unlike CSS on the web where {{flex-direction}} defaults to {{row}}, in React Native, it defaults to {{column}} for {{<View>}} components. This means children are laid out vertically by default.
+* *Key Flexbox Properties:* While Flexbox is covered in detail in Module 10, common properties applied to {{<View>}} styles include:
+** {{flex}} (number): Defines how a view will fill available space along the main axis.
+** {{flexDirection}} (enum: {{'row'}}, {{'column'}}, {{'row-reverse'}}, {{'column-reverse'}}): Specifies the direction of the main axis.
+** {{justifyContent}} (enum: {{'flex-start'}}, {{'flex-end'}}, {{'center'}}, {{'space-between'}}, {{'space-around'}}, {{'space-evenly'}}): Aligns children along the main axis.
+** {{alignItems}} (enum: {{'stretch'}}, {{'flex-start'}}, {{'flex-end'}}, {{'center'}}, {{'baseline'}}): Aligns children along the cross axis.
+** {{flexWrap}} (enum: {{'wrap'}}, {{'nowrap'}}, {{'wrap-reverse'}}): Controls whether children wrap.
+** {{width}}, {{height}}: Can be absolute numbers (density-independent pixels) or percentages.
+** {{position}} (enum: {{'relative'}}, {{'absolute'}}): Defines how a view is positioned.
+h2. Styling
+
+You can apply styles to a {{<View>}} to control its background color, borders, margins, padding, and more using the {{StyleSheet}} API.
+h2. Nesting
+
+{{<View>}} components can be nested within each other to create complex UI hierarchies. This is essential for grouping related elements and applying layout rules.
+h2. Touch Handling
+
+While {{<Pressable>}} (covered later) is generally preferred for interactive elements, {{<View>}} can respond to touch events through its props like {{onStartShouldSetResponder}}. The {{pointerEvents}} prop ({{'auto'}}, {{'none'}}, {{'box-none'}}, {{'box-only'}}) controls whether a {{<View>}} can be the target of touch events and if its children can be. The {{hitSlop}} prop can define how far a touch can stray from the view's bounds and still be registered.
+h2. No Intrinsic Visuals (Usually)
+
+By default, a {{<View>}} itself doesn't render anything visible unless you give it a background color, border, or it contains other visible child components. Its main purpose is to group and arrange its children.
+h2. Collapsable (Android)
+
+The {{collapsable}} prop (Android only), if true (default), allows this view to be potentially removed from the native hierarchy as an optimization if it's purely for layout and doesn't draw anything or handle touches. Using {{nativeID}} or {{testID}} disables this.
 
 bq. 📲 *(Native Developers):*
 > *Comparison:* {{<View>}} directly maps to {{UIView}} on iOS and {{ViewGroup}} on Android. Just as you'd use {{UIView}} or a {{LinearLayout}}/{{FrameLayout}} to group and arrange other UI elements, you use {{<View>}} in React Native. The layout mechanism (Flexbox) will be the main new concept compared to Auto Layout or Android's XML layout system.
@@ -42,7 +57,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Use {{<View>}} wherever you would typically use a {{<div>}} for layout and grouping purposes.
 > *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div|MDN Web Docs: {{<div>}}]
 
-h3. Referential Content: Common {{<View>}} Props
+h2. Referential Content: Common {{<View>}} Props
 
 The {{<View>}} component supports a variety of props to control its behavior and appearance. Below is a table summarizing some of the most important ones.
 
@@ -72,7 +87,7 @@ bq. 📚 *Official Documentation:*
 - _(Native Docs)_ [https://developer.android.com/reference/android/view/View|Android Developer: View]
 - _(Native Docs)_ [https://developer.android.com/reference/android/view/ViewGroup|Android Developer: ViewGroup]
 
-h3. "Under the Hood": {{<View>}} Internals
+h2. "Under the Hood": {{<View>}} Internals
 
 *Mapping to {{android.view.ViewGroup}} on Android:*
 The reason a React Native {{<View>}} often maps to an {{android.view.ViewGroup}} (like {{LinearLayout}}, {{RelativeLayout}}, etc., though React Native manages its own layout via Yoga) rather than a simple {{android.view.View}} on Android is fundamental to its role as a container. A basic {{android.view.View}} is a standalone visual component that cannot, by default, contain other child views. In contrast, {{android.view.ViewGroup}} is specifically designed to hold and arrange child views. Since React Native's {{<View>}} is inherently a container, it must be backed by a native component with similar capabilities. React Native utilizes a {{ViewGroupManager}} to create native UI components that can manage child views, ensuring the hierarchical structure of React components translates correctly to the Android native UI. On iOS, {{UIView}} inherently supports subviews, so this distinction is less pronounced.
@@ -86,7 +101,7 @@ In React Native's New Architecture, featuring Fabric, the rendering of component
 
 The {{<View>}} component serves as the universal layout primitive in React Native. The {{collapsable}} prop on Android offers a glimpse into how React Native performs native-level optimizations, removing views that are purely for layout to flatten the native view hierarchy and improve rendering performance.
 
-h3. Background Bridge Notes: Layout Systems
+h2. Background Bridge Notes: Layout Systems
 
 bq. 📲 *(Native Developers - Android & iOS):*
 > *Comparison:* React Native's {{<View>}} is the primary container, similar to {{UIView}} (iOS) or {{ViewGroup}} (Android). Layout is primarily managed by Flexbox properties applied via the {{style}} prop. This differs from XML-based layouts ({{LinearLayout}}, {{RelativeLayout}}, {{ConstraintLayout}}) in Android or Auto Layout/programmatic frames in iOS. The concept of {{flex: 1}} is key for making views expand to fill available space, analogous to certain weight/constraint configurations in native layouts. Units are density-independent pixels by default, simplifying cross-resolution design compared to manually managing dp/sp (Android) or points and scale factors (iOS).
@@ -98,7 +113,7 @@ bq. 🌐 *(Web Developers - React & Angular):*
 > *Key Takeaway:* Your web Flexbox knowledge is highly applicable, but be mindful of React Native's defaults and specific property implementations.
 > *Source:* [https://reactnative.dev/docs/flexbox|React Native Docs: Layout with Flexbox]
 
-h3. Procedural Content: Basic {{<View>}} Usage
+h2. Procedural Content: Basic {{<View>}} Usage
 
 Let's see a simple example of how to use {{<View>}} to structure a basic UI element for our SpeedyMeds app. We'll create a simple card-like container.
 
@@ -164,7 +179,7 @@ This structure, achieved by nesting `<View>` components and applying styles, is 
 
 In the subsequent sections, we'll explore other Core Components like `<Text>`, `<Image>`, and `<TextInput>`, which you would typically place inside `<View>` containers to build out your application's UI.
 
-h3. Next Steps
+h2. Next Steps
 
 With an understanding of `<View>`, you're ready to learn how to display text content using the `<Text>` component.
 * [./section-03-text.md|Next Section: Text (`<Text>`) - Displaying Text]

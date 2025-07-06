@@ -1,8 +1,10 @@
-h2. Section 6: JSI for Direct Communication
+{toc}
+
+h1. Section 6: JSI for Direct Communication
 
 This section focuses on the JavaScript Interface (JSI), a fundamental part of React Native's New Architecture. You'll learn what JSI is, how it enables direct and synchronous communication between JavaScript and native code, its advantages over the legacy bridge, and the implications of this powerful mechanism.
 
-h3. What is JSI (JavaScript Interface)?
+h2. What is JSI (JavaScript Interface)?
 
 JSI, or JavaScript Interface, is a lightweight, general-purpose API written in C++ that allows JavaScript code to hold references to C++ objects and invoke methods on them. Conversely, it allows C++ code to hold references to JavaScript objects and invoke their methods.
 
@@ -10,7 +12,7 @@ In the context of React Native's New Architecture, JSI serves as the foundationa
 
 JSI is the single most critical architectural innovation enabling the performance leap and enhanced capabilities of the New Architecture. It directly tackles the limitations of the legacy bridge by providing a more direct and efficient communication pathway.
 
-h3. How JSI Works and Enables Direct Communication (Under the Hood)
+h2. How JSI Works and Enables Direct Communication (Under the Hood)
 
 Instead of sending JSON messages over a bridge, JSI allows JavaScript to directly interact with C++ code, which in turn interfaces with platform-native code (Swift/Kotlin).
 
@@ -53,26 +55,44 @@ In the *JSI Communication (Synchronous Example)* (bottom part):
 # The JSI Layer returns the result directly to the JavaScript Thread.
    This model allows for synchronous execution and avoids the serialization overhead of the bridge for certain types of calls. It signifies a tighter, more direct integration between the JavaScript and native realms.
 
-h3. Implications of Synchronous Communication via JSI
+h2. Implications of Synchronous Communication via JSI
 
 The ability of JSI to facilitate synchronous calls has profound implications:
-* *Performance Gains:* For interactions that require immediate responses or high frequency, JSI offers substantial performance improvements by eliminating the latency and overhead associated with the Bridge's asynchronous queuing and JSON serialization. This is crucial for smooth animations driven by native events or real-time updates from sensors.
-* *Simplified Logic:* In the legacy system, managing sequences of operations involving native calls often required complex Promise chains or nested callbacks. Synchronous JSI calls can simplify this logic, making code easier to write, read, and debug in scenarios where an immediate result from native code is needed.
-* *New Capabilities:* JSI unlocks possibilities that were previously impractical. For example, JavaScript can synchronously query native state information needed for immediate UI rendering calculations, or complex C++ libraries can be exposed directly to JS for instant invocation.
 
-h3. JSI vs. The Bridge (Comparison)
+h2. Performance Gains
+
+For interactions that require immediate responses or high frequency, JSI offers substantial performance improvements by eliminating the latency and overhead associated with the Bridge's asynchronous queuing and JSON serialization. This is crucial for smooth animations driven by native events or real-time updates from sensors.
+h2. Simplified Logic
+
+In the legacy system, managing sequences of operations involving native calls often required complex Promise chains or nested callbacks. Synchronous JSI calls can simplify this logic, making code easier to write, read, and debug in scenarios where an immediate result from native code is needed.
+h2. New Capabilities
+
+JSI unlocks possibilities that were previously impractical. For example, JavaScript can synchronously query native state information needed for immediate UI rendering calculations, or complex C++ libraries can be exposed directly to JS for instant invocation.
+
+h2. JSI vs. The Bridge (Comparison)
 
 ||Aspect||Legacy Bridge||JSI (New Architecture)||Key Difference||
 |*Communication*|Indirect (Message Queue), Asynchronous|Direct (C++ Layer), Synchronous Capable|Synchronicity, Latency|
 |*Data Transfer*|JSON Serialization/Deserialization (Overhead)|More Direct (Less Serialization Overhead)|Efficiency, Reduced Bottleneck|
 |*Performance*|Slower (Async Latency, Serialization Bottleneck)|Significantly Faster (for many operations)|Speed, Responsiveness|
 |*JS Interaction*|Callbacks, Promises|Direct Method Calls (on Host Objects), Promises|Potential for Simpler Logic (Synchronous cases)|
-h3. Advantages of JSI over the Legacy Bridge (Summary)
-* *Performance:* Direct method calls are much faster than sending serialized messages.
-* *Synchronous Access:* Simplifies certain interactions needing immediate native results.
-* *Concurrency:* Allows native modules to expose methods callable from any thread (advanced).
-* *Reduced Serialization Overhead:* More efficient data transfer for common types.
-* *Foundation for TurboModules and Fabric:* Core enabler for the New Architecture's pillars.
+h2. Advantages of JSI over the Legacy Bridge (Summary)
+
+h2. Performance
+
+Direct method calls are much faster than sending serialized messages.
+h2. Synchronous Access
+
+Simplifies certain interactions needing immediate native results.
+h2. Concurrency
+
+Allows native modules to expose methods callable from any thread (advanced).
+h2. Reduced Serialization Overhead
+
+More efficient data transfer for common types.
+h2. Foundation for TurboModules and Fabric
+
+Core enabler for the New Architecture's pillars.
 
 {note}
 While JSI enables synchronous native method calls, it's crucial to understand that long-running or blocking operations should still be performed asynchronously (e.g., by returning a Promise from the JSI method) to avoid freezing the JavaScript thread and negatively impacting UI responsiveness. Synchronous calls are best suited for quick, non-blocking operations.

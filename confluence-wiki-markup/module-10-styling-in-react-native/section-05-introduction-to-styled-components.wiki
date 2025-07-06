@@ -1,8 +1,10 @@
-h2. Section 5: Introduction to Styled Components
+{toc}
+
+h1. Section 5: Introduction to Styled Components
 
 Beyond {{StyleSheet}} and inline styles, the React Native community widely uses CSS-in-JS libraries to create more dynamic, reusable, and themeable styling solutions. One of the most popular such libraries is {{styled-components}}. This section introduces {{styled-components}}, its core concepts, benefits, and how to start using it in your SpeedyMeds application.
 
-h3. What are Styled Components?
+h2. What are Styled Components?
 
 {{styled-components}} allow you to write actual CSS code to style your components using tagged template literals. It brings the power of ES6 template literals and CSS together to create React components with styles attached directly to them. This approach results in components that are inherently styled, making your styling logic more colocated and component-centric.
 
@@ -14,14 +16,14 @@ h3. What are Styled Components?
 # *Automatic Vendor Prefixing (for web):* While less relevant for React Native, it showcases the library's robustness.
 # *Better Readability (Subjective):* Some developers find that colocating styles with component definitions improves readability and maintainability.
 
-h3. Installation
+h2. Installation
 
 To use {{styled-components}} in your Expo React Native project, you need to install it.
 
 First, install the library itself:
 
 {code:language=bash}
-h1. Using npm
+
 npm install styled-components
 
 h1. Or using yarn
@@ -42,7 +44,7 @@ yarn add --dev @types/styled-components-react-native
 For React Native, you specifically import from `styled-components/native`.
 As of `styled-components` v6 and later, the library is written in TypeScript and typically bundles its own type definitions. The separate `@types/styled-components-react-native` package might still be needed for older versions or specific project configurations, but always check the official `styled-components` documentation for the most up-to-date TypeScript integration instructions for the version you are using.
 {note}
-h3. Basic Usage
+h2. Basic Usage
 
 Let's create a simple styled button for our SpeedyMeds app.
 
@@ -141,7 +143,7 @@ export default SpeedyButton;
 *** This is a powerful feature where style rules can be functions that receive the component's props and return a style value.
 # *Usage:* The `SpeedyButton` component then uses `StyledButtonContainer` and `StyledButtonText` just like regular React Native components, passing props like `primary` and `disabled` to control their appearance.
 
-h3. Styling Any Component
+h2. Styling Any Component
 
 You can wrap existing React Native components (or your custom components) to style them. To style a third-party component or a custom component you've created, you can pass it to the `styled()` function:
 
@@ -186,7 +188,7 @@ const StyledCustomCard = styled(MyCustomCard)`
 // <StyledCustomCard title="Urgent Medication Alert" urgent />
 {code}
 
-h3. Extending Styles
+h2. Extending Styles
 
 You can extend styles from another styled component, similar to class inheritance in CSS.
 
@@ -215,14 +217,21 @@ bq. 🌐 *(Web Developers):*
 > *Comparison:* Styled Components work almost identically in React and React Native. The main difference is the set of valid CSS properties (React Native uses a subset and its own specific properties like `elevation` for Android shadow) and the base elements you style (e.g., `styled.View` instead of `styled.div`).
 > *Key Takeaway:* If you've used Styled Components on the web, you'll feel right at home. Just remember to import from `styled-components/native` and use React Native compatible style properties.
 
-h3. Considerations
-* *Performance:* Styled Components is generally performant. It intelligently injects styles and avoids unnecessary re-renders. However, very complex dynamic styles within frequently updated components could potentially have an impact. As always, profile if you encounter issues.
-* *Bundle Size:* Adding any library increases your app's bundle size. Styled Components is a reasonably sized library, but it's a factor to consider.
-* *Learning Curve:* While CSS syntax is familiar, the concept of tagged template literals and function-based styles might take a little getting used to for those new to these JavaScript features.
+h2. Considerations
+
+h2. Performance
+
+Styled Components is generally performant. It intelligently injects styles and avoids unnecessary re-renders. However, very complex dynamic styles within frequently updated components could potentially have an impact. As always, profile if you encounter issues.
+h2. Bundle Size
+
+Adding any library increases your app's bundle size. Styled Components is a reasonably sized library, but it's a factor to consider.
+h2. Learning Curve
+
+While CSS syntax is familiar, the concept of tagged template literals and function-based styles might take a little getting used to for those new to these JavaScript features.
 
 Styled Components offer a powerful and expressive way to handle styling in React Native, particularly for applications with dynamic styling needs or those benefiting from a theming system. We will explore theming with Styled Components in the next section.
 
-h3. Exercise 10.2: Styling with Styled Components
+h2. Exercise 10.2: Styling with Styled Components
 
 Practice using `styled-components` to create a styled version of the SpeedyMeds `PrescriptionCard` from a previous example or a new UI element for the application.
 

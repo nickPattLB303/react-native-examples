@@ -1,8 +1,10 @@
-h2. Section 5: TextInput ({{<TextInput>}}) - User Input
+{toc}
+
+h1. Section 5: TextInput ({{<TextInput>}}) - User Input
 
 Capturing user input is a fundamental requirement for most applications. In React Native, the {{<TextInput>}} component is the standard way to allow users to enter text. This section will cover its usage, common props, and how to handle text input for an app like SpeedyMeds, for instance, when a patient needs to enter their information.
 
-h3. Conceptual Content: Understanding {{<TextInput>}}
+h2. Conceptual Content: Understanding {{<TextInput>}}
 
 The {{<TextInput>}} component is a foundational component that allows users to enter text into your app via a keyboard. It can be configured for single-line or multi-line input and supports various features like placeholders, password masking, and different keyboard types.
 
@@ -15,11 +17,22 @@ The standard and highly recommended way to use {{<TextInput>}} in React Native i
 This approach makes the application state more predictable and easier to debug.
 
 *Key Characteristics of {{<TextInput>}}:*
-* *Text Entry:* Its primary purpose is to provide a field for users to type text.
-* *State Management:* Best managed as a controlled component with its value tied to React state.
-* *Event Handling:* Key props like {{onChangeText}} (to update state as the user types), {{onSubmitEditing}} (when the user presses the submit button on the keyboard), {{onFocus}}, and {{onBlur}} allow you to respond to user interactions.
-* *Customization:* You can customize its appearance (placeholder text, borders, background) and behavior (keyboard type, auto-capitalization, secure text entry for passwords).
-* *Styling:* {{<TextInput>}} can be styled using {{StyleSheet}}. Common styles include {{height}}, {{borderColor}}, {{borderWidth}}, {{padding}}, {{fontSize}}, and {{color}}.
+
+h2. Text Entry
+
+Its primary purpose is to provide a field for users to type text.
+h2. State Management
+
+Best managed as a controlled component with its value tied to React state.
+h2. Event Handling
+
+Key props like {{onChangeText}} (to update state as the user types), {{onSubmitEditing}} (when the user presses the submit button on the keyboard), {{onFocus}}, and {{onBlur}} allow you to respond to user interactions.
+h2. Customization
+
+You can customize its appearance (placeholder text, borders, background) and behavior (keyboard type, auto-capitalization, secure text entry for passwords).
+h2. Styling
+
+{{<TextInput>}} can be styled using {{StyleSheet}}. Common styles include {{height}}, {{borderColor}}, {{borderWidth}}, {{padding}}, {{fontSize}}, and {{color}}.
 
 bq. 📲 *(Native Developers):*
 > *Comparison:* {{<TextInput>}} is analogous to {{UITextField}} or {{UITextView}} (for multi-line) on iOS, and {{EditText}} on Android. React Native provides a unified API for these native input elements. The controlled component pattern, where {{value}} is set from state and {{onChangeText}} updates that state, differs from typical native approaches of getting text directly (e.g., {{editText.getText().toString()}}) and listening for changes via delegates or watchers.
@@ -31,7 +44,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Use {{<TextInput>}} for all text input needs. The controlled component pattern is standard practice.
 > *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text|MDN Web Docs: {{<input type="text">}}], [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea|MDN Web Docs: {{<textarea>}}]
 
-h3. Referential Content: Common {{<TextInput>}} Props and Methods
+h2. Referential Content: Common {{<TextInput>}} Props and Methods
 
 Below is a table summarizing important props for the {{<TextInput>}} component:
 
@@ -70,7 +83,7 @@ bq. 📚 *Official Documentation:*
 - _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uitextview|Apple Developer: UITextView] (for multiline)
 - _(Native Docs)_ [https://developer.android.com/reference/android/widget/EditText|Android Developer: EditText]
 
-h3. "Under the Hood": {{<TextInput>}} Internals
+h2. "Under the Hood": {{<TextInput>}} Internals
 
 *Native Mapping:*
 * On iOS, {{<TextInput>}} typically maps to a native {{UITextField}} for single-line inputs. If {{multiline={true}}} is set, it maps to a {{UITextView}}.
@@ -82,7 +95,7 @@ User interactions with the native input element (keystrokes, focus changes, subm
 *Fabric Architecture:*
 In the Fabric architecture, a {{TextInputShadowNode}} would manage the properties, layout, and state of the text input. Communication with the native {{UITextField}}/{{UITextView}} or {{EditText}} for text manipulation, cursor updates, and keyboard event handling becomes more direct and potentially synchronous through JSI. This can lead to improved responsiveness for text input operations.
 
-h3. Procedural Content: Basic {{<TextInput>}} Usage
+h2. Procedural Content: Basic {{<TextInput>}} Usage
 
 Let's create a simple form for SpeedyMeds where a user can enter their name and age.
 
@@ -170,7 +183,7 @@ const styles = StyleSheet.create({
 
 This example provides a solid foundation for creating forms and capturing user text input in your React Native applications. You'll frequently use `<TextInput>` in various parts of the SpeedyMeds app, such as patient registration, medication search, or feedback forms.
 
-h3. Exercise 8.1: Basic Form with TextInput
+h2. Exercise 8.1: Basic Form with TextInput
 
 Now it's time to practice! Create a simple form for the SpeedyMeds app where users can enter a "Medication Name" and "Dosage Instructions."
 

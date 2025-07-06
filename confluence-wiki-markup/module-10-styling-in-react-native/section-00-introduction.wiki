@@ -1,4 +1,4 @@
-h1. Module 10: Styling in React Native
+{toc}
 
 <!-- Optional: Relevant banner image (e.g., abstract graphic related to styling) -->
 <!-- ![./assets/images/module-10/styling-banner.png|Styling Banner] -->
@@ -6,7 +6,7 @@ h1. Module 10: Styling in React Native
 
 Welcome to Module 10, where we'll explore the diverse world of styling in React Native. Effective styling is crucial for creating visually appealing, brand-aligned, and user-friendly mobile applications. This module will equip you with the knowledge and skills to implement various styling strategies, from fundamental {{StyleSheet}} techniques to advanced theming with UI libraries, all within the context of our SpeedyMeds application.
 
-h2. Target Audience Adaptation
+h1. Target Audience Adaptation
 
 Styling in React Native draws concepts from web development, particularly CSS, but with its own unique APIs and paradigms.
 
@@ -25,7 +25,7 @@ bq. 🍏 *(iOS Developers):*
 > *Key Takeaway:* Shift from visual tools or Swift/Objective-C styling APIs to JavaScript objects and Flexbox. The direct manipulation of style objects in code offers flexibility.
 > *Source:* [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe various styling approaches available in React Native.
@@ -39,7 +39,7 @@ By the end of this module, you will be able to:
 * Apply theming to React Native Paper components to match application branding.
 * Implement responsive design techniques to adapt UIs to different screen sizes and platforms.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have completed:
 * [../module-07-react-essentials-for-react-native/section-00-introduction.md|Module 7: React Essentials for React Native]
@@ -50,7 +50,7 @@ If you have extensive experience with CSS, particularly Flexbox, you may find so
 {tip}
 ----
 
-h2. Module Sections Overview
+h1. Module Sections Overview
 
 This module is divided into the following sections, each building upon the last to provide a comprehensive understanding of styling in React Native:
 # *Styling Approaches Overview:* A high-level look at {{StyleSheet}}, inline styles, CSS-in-JS, and UI libraries.
@@ -64,7 +64,7 @@ This module is divided into the following sections, each building upon the last 
 # *Theming with React Native Paper (v5):* Customizing the look and feel of Paper components.
 # *Responsive Design Techniques (Platform, Dimensions):* Adapting your UI to various screen sizes and platforms.
 
-h2. Module Challenge
+h1. Module Challenge
 
 After completing all sections, you will apply your knowledge in a practical challenge:
 
@@ -76,7 +76,7 @@ This challenge involves taking a basic {{PrescriptionCard}} component (similar t
 
 _Detailed requirements and starter code for the challenge are provided within the Expo Snack linked above._
 
-h2. Module Summary
+h1. Module Summary
 
 In this module, we've journeyed through the multifaceted landscape of styling in React Native. We started by understanding the core styling mechanisms: the efficient {{StyleSheet}} API and the flexible, albeit more cautiously used, inline styles. A significant portion was dedicated to mastering Flexbox, the cornerstone of layout in React Native, enabling you to arrange components with precision and adaptability.
 
@@ -84,7 +84,7 @@ We then explored more advanced and opinionated styling solutions. {{styled-compo
 
 By now, you should be equipped to make informed decisions about which styling strategies to employ for different parts of your SpeedyMeds application, balancing code organization, performance, and development speed to create beautiful and functional user interfaces.
 
-h2. Additional Resources (Optional)
+h1. Additional Resources (Optional)
 * [https://www.sgrider.com/archive/react-native-style-sheet-cheat-sheet/|React Native Styling Cheatsheet by Stephen Grider]: A handy quick reference for common React Native style properties.
 * [https://m3.material.io/|Material Design 3 Specification]: For a deeper understanding of the design principles behind React Native Paper v5.
 * [https://caniuse.com/|Can I use... Support tables for HTML5, CSS3, etc.]: While web-focused, it can be helpful for understanding CSS property support which often informs React Native styling capabilities (though always verify with React Native docs).

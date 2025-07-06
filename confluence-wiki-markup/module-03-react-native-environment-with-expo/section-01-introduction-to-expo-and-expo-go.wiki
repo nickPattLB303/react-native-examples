@@ -1,25 +1,44 @@
-h2. Section 1: Introduction to Expo and Expo Go
+{toc}
+
+h1. Section 1: Introduction to Expo and Expo Go
 
 This section introduces Expo, a key platform in the React Native ecosystem that we'll use throughout this course, and its companion development tool, Expo Go. Understanding Expo and its different development approaches is fundamental before setting up the environment.
 
-h3. What is Expo?
+h2. What is Expo?
 
 Expo is an open-source platform for making universal native apps for Android, iOS, and the web with JavaScript and React. Think of it as a set of tools, libraries, and services built _around_ React Native that significantly simplifies the development experience, especially for those new to mobile development or those coming from a web background. ([https://docs.expo.dev/get-started/introduction/|Source])
 
 Key benefits of using Expo include:
-* *Simplified Setup:* Expo handles much of the complex configuration required for native mobile development. You often don't need to directly use Xcode or Android Studio during development.
-* *Expo SDK:* A curated collection of native modules (accessing device features like camera, location, sensors) that are pre-built and readily available in your JavaScript code. This avoids the need to manually link native libraries early on.
-* *Expo Go App:* A development client app that lets you instantly run and test your project on physical devices or simulators without compiling native code yourself.
-* *Expo Router:* A file-based routing system inspired by web frameworks, simplifying navigation logic within your app. ([https://docs.expo.dev/router/installation/|Source])
-* *Over-the-Air (OTA) Updates:* Easily push updates to your app's JavaScript bundle without needing a full App Store resubmission (using EAS Update).
-* *Build Service (EAS Build):* A cloud service (part of Expo Application Services - EAS) that compiles your native app binaries ({{.ipa}} for iOS, {{.apk}}/{{.aab}} for Android) when you're ready to distribute them.
-* *Development Workflow:* Tools (like Expo CLI) and services (like EAS) that streamline common tasks like managing secrets, running development servers, and creating development builds.
-* *Community:* An active community forum ([https://chat.expo.dev|chat.expo.dev]) and GitHub presence.
+
+h2. Simplified Setup
+
+Expo handles much of the complex configuration required for native mobile development. You often don't need to directly use Xcode or Android Studio during development.
+h2. Expo SDK
+
+A curated collection of native modules (accessing device features like camera, location, sensors) that are pre-built and readily available in your JavaScript code. This avoids the need to manually link native libraries early on.
+h2. Expo Go App
+
+A development client app that lets you instantly run and test your project on physical devices or simulators without compiling native code yourself.
+h2. Expo Router
+
+A file-based routing system inspired by web frameworks, simplifying navigation logic within your app. ([https://docs.expo.dev/router/installation/|Source])
+h2. Over-the-Air (OTA) Updates
+
+Easily push updates to your app's JavaScript bundle without needing a full App Store resubmission (using EAS Update).
+h2. Build Service (EAS Build)
+
+A cloud service (part of Expo Application Services - EAS) that compiles your native app binaries ({{.ipa}} for iOS, {{.apk}}/{{.aab}} for Android) when you're ready to distribute them.
+h2. Development Workflow
+
+Tools (like Expo CLI) and services (like EAS) that streamline common tasks like managing secrets, running development servers, and creating development builds.
+h2. Community
+
+An active community forum ([https://chat.expo.dev|chat.expo.dev]) and GitHub presence.
 
 {note}
 While Expo simplifies many aspects, it's still built on top of React Native. Understanding core React Native concepts (covered in later modules) remains essential. Expo provides powerful abstractions, but knowing what's happening underneath is crucial for advanced development and troubleshooting.
 {note}
-h3. What is Expo Go?
+h2. What is Expo Go?
 
 Expo Go is a free mobile client app available on the App Store (iOS) and Google Play Store (Android). ([https://expo.dev/go|Source]) It allows you to open and run Expo projects instantly during development without needing to build the native code yourself via Xcode or Android Studio.
 
@@ -32,7 +51,7 @@ Here's how it works:
 
 This provides a very fast feedback loop: make a change in your code, save it, and see the update almost instantly in Expo Go.
 
-h4. Under the Hood: How Expo Go Functions
+h3. Under the Hood: How Expo Go Functions
 
 Understanding Expo Go requires recognizing two distinct parts: ([https://docs.expo.dev/develop/development-builds/introduction/|Source])
 # *The Native App (Expo Go):* This is the application installed from the app store. It contains the React Native runtime and a specific, fixed set of native modules and APIs bundled by the Expo team for a particular Expo SDK version. Think of it as a pre-compiled native shell. Once installed, this native part doesn't change unless you update Expo Go itself.
@@ -77,17 +96,26 @@ The fundamental difference lies in the native capabilities and customization. Ex
 {warning}
 If your JavaScript code attempts to call a native module that is _not_ included in the installed Expo Go build (e.g., a third-party library with native code, or your own custom native code), the app will crash because the corresponding native code doesn't exist within the Expo Go sandbox. ([https://docs.expo.dev/develop/development-builds/introduction/|Source])
 {warning}
-h3. Expo Go vs. Development Builds
+h2. Expo Go vs. Development Builds
 
 While Expo Go offers the quickest start, its pre-packaged nature imposes limitations. For most real-world applications requiring custom native features or dependencies, *Development Builds* become essential. ([https://docs.expo.dev/develop/development-builds/introduction/|Source])
 
 A Development Build is a special "debug" version of _your_ app, built using your local tools (Xcode/Android Studio) or EAS Build. It includes the {{expo-dev-client}} library, providing a similar developer menu for connecting to the Metro server, but crucially, it packages _your_ app's specific native code and dependencies.
 
 *Key Differences:*
-* *Native Modules:* Expo Go is limited to modules bundled by Expo. Development Builds can include _any_ native module (Expo SDK, community libraries, custom ones).
-* *Custom Native Code:* Not possible in Expo Go. Fully supported in Development Builds.
-* *Setup:* Expo Go requires only the app install. Development Builds require setting up the native toolchain (Xcode/Android Studio).
-* *Build Process:* Expo Go uses the pre-built app. Development Builds require a local build ({{npx expo run:ios}}/{{run:android}}) or an EAS Build.
+
+h2. Native Modules
+
+Expo Go is limited to modules bundled by Expo. Development Builds can include _any_ native module (Expo SDK, community libraries, custom ones).
+h2. Custom Native Code
+
+Not possible in Expo Go. Fully supported in Development Builds.
+h2. Setup
+
+Expo Go requires only the app install. Development Builds require setting up the native toolchain (Xcode/Android Studio).
+h2. Build Process
+
+Expo Go uses the pre-built app. Development Builds require a local build ({{npx expo run:ios}}/{{run:android}}) or an EAS Build.
 
 *Scenarios Requiring a Development Build:* ([https://docs.expo.dev/develop/development-builds/introduction/|Source])
 * Using third-party React Native libraries with native code not included in Expo Go (e.g., {{react-native-firebase}}, many Bluetooth libraries).

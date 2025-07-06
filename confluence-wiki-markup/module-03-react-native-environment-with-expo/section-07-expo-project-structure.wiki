@@ -1,4 +1,6 @@
-h2. Section 7: Expo Project Structure (File/Folder Overview)
+{toc}
+
+h1. Section 7: Expo Project Structure (File/Folder Overview)
 
 When you create a new project with {{create-expo-app}} using the default template (or the {{tabs}} template), it generates a specific directory structure built around *Expo Router* for file-based navigation. Understanding this structure is essential for navigating your project, adding screens, managing assets, and configuring your application.
 
@@ -81,7 +83,7 @@ graph TD
 
 This diagram illustrates the standard folder hierarchy within a new Expo project created using the default Expo Router template (`SpeedyMedsPrototype`). Key directories like `app/` (containing screen routes and layouts), `assets/`, `components/`, and `constants/` hold your source code and resources. Configuration files such as `app.json`, `package.json`, and `tsconfig.json` define project settings and dependencies. Other folders like `.expo/`, `.git/`, and `node_modules/` are typically generated or managed by development tools and version control. Understanding the roles of these core directories, especially the `app/` directory for routing and `app.json` for configuration, is fundamental to navigating and building your application effectively with Expo.
 
-h3. Key Files and Folders Explained
+h2. Key Files and Folders Explained
 * *`app/` Directory*: The heart of *Expo Router*. Each `.tsx` file inside `app/` typically defines a screen (React component) and automatically becomes a route in your navigation hierarchy based on its filename. ([https://docs.expo.dev/router/basics/project-structure/|Source])
 ** `_layout.tsx`: Special files that define shared UI layouts (like navigation bars, tab bars) for segments (directories) of your app. The root `app/_layout.tsx` often sets up the primary navigation (e.g., a Stack navigator). Layouts in subdirectories (like `app/(tabs)/_layout.tsx`) define nested navigation.
 ** `index.tsx`: Represents the default screen for a directory segment.
@@ -89,46 +91,50 @@ h3. Key Files and Folders Explained
 ** `[param].tsx`: Defines dynamic routes where `param` is a URL parameter.
 ** `modal.tsx`: A convention for screens presented modally.
 * *`app.json` / `app.config.js`*: The *primary Expo configuration file*. Defines metadata (name, version, icon, splash), platform-specific settings (bundle identifiers, permissions), SDK version, plugins (native module configurations), update settings (EAS Update), orientation, web support, and more. Expo uses this file to generate native configuration files (`Info.plist`, `AndroidManifest.xml`) during the prebuild process, abstracting away much native complexity. ([https://docs.expo.dev/versions/latest/config/app/|Source])
-** *Static vs. Dynamic Configuration:*
-*** `app.json`: A static JSON file. Simple key-value pairs.
-*** `app.config.js` or `app.config.ts`: Allows for dynamic configuration. You export a function that receives the current config (which includes `app.json` if it exists) and can return a modified config object. This enables using JavaScript logic, environment variables (`process.env`), or even asynchronous operations (though the final returned config must be synchronous) to customize settings based on context (e.g., development vs. production).
 
-    *Dynamic Config Example (`app.config.js`):*
+h3. Static vs. Dynamic Configuration
+* `app.json`: A static JSON file. Simple key-value pairs.
+* `app.config.js` or `app.config.ts`: Allows for dynamic configuration. You export a function that receives the current config (which includes `app.json` if it exists) and can return a modified config object. This enables using JavaScript logic, environment variables (`process.env`), or even asynchronous operations (though the final returned config must be synchronous) to customize settings based on context (e.g., development vs. production).
 
-    {code:language=js}
+*Dynamic Config Example (`app.config.js`):*
+
+{code:language=js}
 // app.config.js
-    export default ({ config }) => {
-      // config contains the static config from app.json if it exists
-      // Modify config based on an environment variable
-      if (process.env.MY_ENVIRONMENT === "production") {
-        config.name = "SpeedyMeds Pro";
-        config.backgroundColor = "#FFFFFF";
-        // Add custom data accessible at runtime via Constants.expoConfig.extra
-        config.extra = {
-          ...config.extra, // Preserve existing extra fields
-          apiEndpoint: "https://prod.speedymeds.com/api",
-          eas: {
-            projectId: "your-production-project-id",
-          },
-        };
-      } else {
-        config.name = "SpeedyMeds Dev";
-        config.backgroundColor = "#EEEEEE";
-        config.extra = {
-          ...config.extra,
-          apiEndpoint: "https://dev.speedymeds.com/api",
-          eas: {
-            projectId: "your-development-project-id",
-          },
-        };
-      }
-      // Always return the modified config object
-      return config;
+export default ({ config }) => {
+  // config contains the static config from app.json if it exists
+  // Modify config based on an environment variable
+  if (process.env.MY_ENVIRONMENT === "production") {
+    config.name = "SpeedyMeds Pro";
+    config.backgroundColor = "#FFFFFF";
+    // Add custom data accessible at runtime via Constants.expoConfig.extra
+    config.extra = {
+      ...config.extra, // Preserve existing extra fields
+      apiEndpoint: "https://prod.speedymeds.com/api",
+      eas: {
+        projectId: "your-production-project-id",
+      },
     };
-    ```
+  } else {
+    config.name = "SpeedyMeds Dev";
+    config.backgroundColor = "#EEEEEE";
+    config.extra = {
+      ...config.extra,
+      apiEndpoint: "https://dev.speedymeds.com/api",
+      eas: {
+        projectId: "your-development-project-id",
+      },
+    };
+  }
+  // Always return the modified config object
+  return config;
+};
+{code}
 
-    ([https://docs.expo.dev/versions/latest/config/app/#dynamic-configuration-with-appconfigjs|Source])
-** *Runtime Access:* Many configuration values from your `app.json` or `app.config.js` (especially those under the `extra` key) are accessible within your application's JavaScript code at runtime via the `Constants.expoConfig` object from the `expo-constants` library. `import Constants from 'expo-constants'; console.log(Constants.expoConfig.extra.apiEndpoint);`
+([https://docs.expo.dev/versions/latest/config/app/#dynamic-configuration-with-appconfigjs|Source])
+
+h3. Runtime Access
+
+Many configuration values from your `app.json` or `app.config.js` (especially those under the `extra` key) are accessible within your application's JavaScript code at runtime via the `Constants.expoConfig` object from the `expo-constants` library. `import Constants from 'expo-constants'; console.log(Constants.expoConfig.extra.apiEndpoint);`
 * *`package.json`*: Standard Node.js manifest: lists metadata, dependencies (`react`, `react-native`, `expo`, `expo-router`), devDependencies, and scripts (`start`, `android`, `ios`, `web`). The `"main"` field usually points to `expo-router/entry` when using Expo Router.
 * *`assets/`*: Convention for static assets like images and fonts. Files here are bundled by Metro.
 * *`components/`*: A common *convention* (not strictly required) for storing reusable React components shared across multiple screens.
@@ -138,7 +144,7 @@ h3. Key Files and Folders Explained
   This preset intelligently configures Babel for React Native, extending the base `@react-native/babel-preset`. It includes necessary transforms for JSX, Flow/TypeScript stripping, and automatically enables plugins for libraries like `react-native-reanimated` if they are installed. It also handles platform-specific optimizations like tree-shaking for web builds.
   You can generate a basic `babel.config.js` by running `npx expo customize babel.config.js`. A typical file looks like this:
 
-  ```javascript
+{code:language=js}
   // babel.config.js
   module.exports = function (api) {
     api.cache(true); // Cache Babel's transformation results for faster builds
@@ -148,7 +154,7 @@ h3. Key Files and Folders Explained
       // plugins: ['my-custom-babel-plugin']
     };
   };
-  ```
+{code}
 
   Changes to `babel.config.js` usually require restarting the Metro bundler, often with the `--clear` flag (`npx expo start --clear`), to ensure the cache is updated.
 * *`tsconfig.json`*: TypeScript configuration. Defines compiler options like target JS version, JSX mode, module resolution, strictness settings, and path aliases (`"paths"`, `"baseUrl"`) for cleaner imports (e.g., `@/components/*`).
@@ -158,7 +164,7 @@ h3. Key Files and Folders Explained
   Expo provides a default Metro configuration (`expo/metro-config`) that handles most common React Native and Expo requirements. You can generate a `metro.config.js` file that extends this default by running `npx expo customize metro.config.js`.
   A common customization is adding new asset types. For example, to allow Metro to handle SVG files as assets:
 
-  ```javascript
+{code:language=js}
   // metro.config.js
   const { getDefaultConfig } = require("expo/metro-config");
 
@@ -171,16 +177,17 @@ h3. Key Files and Folders Explained
   // config.resolver.sourceExts.push('cjs');
 
   module.exports = config;
-  ```
+{code}
 
   Metro also reads `tsconfig.json` (or `jsconfig.json`) to support path aliases defined there, which can simplify import statements.
 * *`eas.json` (Optional)*: Configures *EAS Build profiles*. Generated when you run `eas build:configure`, it defines different build settings (e.g., development, preview, production) for creating builds on Expo Application Services.
 * *`ios/` and `android/` (Generated - Typically Ignored)*: These directories contain the *native platform projects* (Xcode project for iOS, Gradle project for Android). In the default Expo workflow (CNG), these are *generated artifacts* created by `npx expo prebuild` based on `app.json`/`app.config.js` and config plugins. *You generally should not edit files in these directories directly*, as changes will be overwritten the next time `prebuild` runs. They are usually added to `.gitignore`. (You only commit these if you _eject_ from the CNG workflow). ([https://docs.expo.dev/workflow/continuous-native-generation/|Source])
 
-h3. TypeScript in Your Project Structure
+h2. TypeScript in Your Project Structure
 
 TypeScript is integrated throughout the project, with `.tsx` files for React components and `.ts` files for non-component code. Let's look at how TypeScript typing might be used in a SpeedyMeds app structure:
-{code}typescript
+
+{code:language=js}
 /**
 * @file types/index.ts (Conceptual)
 * @description Central location for shared TypeScript type definitions for the SpeedyMeds application.
@@ -424,22 +431,31 @@ const cardStyles = StyleSheet.create({
     marginTop: 8,
   },
 });
-```
+{code}
 
 This extended TypeScript example illustrates how shared types and typed components contribute to a robust and maintainable structure within an Expo project like SpeedyMeds. This structure is vital for building scalable applications and ensuring code quality.
 
 *Purpose and Structure:* The primary goal is to showcase the definition and consumption of custom TypeScript types (like `Medication`, `Pharmacy`, `User`), which would typically be defined in a central `types/index.ts` file (or a similar structured approach, possibly using path aliases like `@/types`). These defined types are then instrumental in enforcing data consistency and providing type safety across various parts of the application, such as screen components (e.g., `MedicationsScreen`) and reusable UI elements (e.g., `MedicationCard`).
 
 *Key Code Sections and Concepts Illustrated:*
-* *Type Definitions (`types/index.ts` conceptual block):* Clear interfaces are defined for core data entities relevant to the SpeedyMeds theme. Each property within these interfaces is explicitly typed (e.g., `id: string`, `expiryDate: Date`, `isRefillable: boolean`), and JSDoc comments are provided to explain their purpose and usage. This practice makes the data structure self-documenting, aids in IntelliSense within IDEs, and helps prevent common errors when these objects are passed around or manipulated.
-* *`MedicationsScreen` Component (conceptual `app/(tabs)/medications.tsx`):* This screen component demonstrates how to fetch (simulated via a custom hook) and display a list of medications. It highlights:
-** *Custom Hook Usage:* It employs a conceptual `useGetMedications_conceptual` hook to encapsulate data fetching logic. This hook returns a typed array of `Medication` objects and an `isLoading` boolean state. This separation of concerns keeps the screen component cleaner.
-** *Typed `FlatList`:* The `FlatList<Medication>` component utilizes TypeScript generics. This ensures that its `data` prop expects an array of `Medication` objects, and the `renderItem` function correctly infers the type of `item` as `Medication`. This provides strong compile-time checking for list rendering.
-** *Conditional Rendering:* The screen displays an `ActivityIndicator` while `isLoading` is true, or a "No medications found" message if the `medications` array is empty, enhancing user experience.
-* *`MedicationCard` Component (conceptual `components/MedicationCard.tsx`):* This is a reusable presentational component responsible for displaying the details of a single medication.
-** *Typed Props (`MedicationCardProps`):* It defines an interface `MedicationCardProps` for its props, ensuring that it always receives a valid `medication` object (of type `Medication`) and an optional `onPress` handler. This strict contract prevents incorrect props from being passed.
-** *Data Display:* The component destructures the `medication` prop and renders its properties using styled `<Text>` elements. The `onPress` handler is attached to the card's root view.
-* *Styling (`StyleSheet.create`):* Both the `MedicationsScreen` (using `AppStyles`) and `MedicationCard` (using `cardStyles`) utilize the `StyleSheet.create` API. This is the standard and performant way to define styles in React Native, promoting organization and reusability of style definitions. The styles are also slightly enhanced for better visual presentation in this example.
+
+h2. Type Definitions (`types/index.ts` conceptual block)
+
+Clear interfaces are defined for core data entities relevant to the SpeedyMeds theme. Each property within these interfaces is explicitly typed (e.g., `id: string`, `expiryDate: Date`, `isRefillable: boolean`), and JSDoc comments are provided to explain their purpose and usage. This practice makes the data structure self-documenting, aids in IntelliSense within IDEs, and helps prevent common errors when these objects are passed around or manipulated.
+h2. `MedicationsScreen` Component (conceptual `app/(tabs)/medications.tsx`)
+
+This screen component demonstrates how to fetch (simulated via a custom hook) and display a list of medications. It highlights:
+* *Custom Hook Usage:* It employs a conceptual `useGetMedications_conceptual` hook to encapsulate data fetching logic. This hook returns a typed array of `Medication` objects and an `isLoading` boolean state. This separation of concerns keeps the screen component cleaner.
+* *Typed `FlatList`:* The `FlatList<Medication>` component utilizes TypeScript generics. This ensures that its `data` prop expects an array of `Medication` objects, and the `renderItem` function correctly infers the type of `item` as `Medication`. This provides strong compile-time checking for list rendering.
+* *Conditional Rendering:* The screen displays an `ActivityIndicator` while `isLoading` is true, or a "No medications found" message if the `medications` array is empty, enhancing user experience.
+h2. `MedicationCard` Component (conceptual `components/MedicationCard.tsx`)
+
+This is a reusable presentational component responsible for displaying the details of a single medication.
+* *Typed Props (`MedicationCardProps`):* It defines an interface `MedicationCardProps` for its props, ensuring that it always receives a valid `medication` object (of type `Medication`) and an optional `onPress` handler. This strict contract prevents incorrect props from being passed.
+* *Data Display:* The component destructures the `medication` prop and renders its properties using styled `<Text>` elements. The `onPress` handler is attached to the card's root view.
+h2. Styling (`StyleSheet.create`)
+
+Both the `MedicationsScreen` (using `AppStyles`) and `MedicationCard` (using `cardStyles`) utilize the `StyleSheet.create` API. This is the standard and performant way to define styles in React Native, promoting organization and reusability of style definitions. The styles are also slightly enhanced for better visual presentation in this example.
 
 *Expected Outcome and Benefits:* Implementing TypeScript in this comprehensive manner significantly improves the reliability and maintainability of the development process. Type errors, such as attempting to pass an incorrect data structure to the `MedicationCard` component or accessing a non-existent property on a `Medication` object, would be caught by the TypeScript compiler during development or flagged by the IDE. This early detection of errors prevents them from becoming runtime issues. This structured and typed approach leads to higher code quality, enhances readability (as types serve as documentation), and makes collaboration more efficient, particularly as the SpeedyMeds project grows in complexity. The clear separation of concerns (types, data-fetching logic via hooks, UI components) also promotes a cleaner, more scalable architecture.
 
@@ -447,7 +463,7 @@ This extended TypeScript example illustrates how shared types and typed componen
 
 bq. 🔁 *(Asynchronous Learners):* When setting up your own project or joining an existing codebase, spend extra time familiarizing yourself with the project structure. Creating a personal "map" of key files and relationships will help you navigate efficiently when working independently.
 
-h3. Expo's Abstraction Approach
+h2. Expo's Abstraction Approach
 
 This structure highlights Expo's philosophy: manage native configuration primarily through `app.json`/`app.config.js` and Expo Router's file-based system, using `prebuild` to generate the native projects as needed. This simplifies the developer experience, especially for those without deep native platform expertise.
 

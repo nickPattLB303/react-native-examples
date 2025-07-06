@@ -1,8 +1,10 @@
-h2. Section 8: Lists and Keys
+{toc}
+
+h1. Section 8: Lists and Keys
 
 Displaying lists of data is a common requirement in applications. React provides a straightforward way to render lists of components from an array of data. A crucial aspect of this process is the use of "keys," which help React identify and manage list items efficiently. This section covers how to render lists and the importance of keys.
 
-h3. Rendering Lists with {{.map()}}
+h2. Rendering Lists with {{.map()}}
 
 To render a list of items in React, you typically iterate over an array of data using the JavaScript {{.map()}} method. Inside the {{.map()}} callback, you return a JSX element for each item in the array.
 
@@ -54,18 +56,30 @@ export default MedicationListSimple;
 
 In this example, we map over the `medications` array and return a `<View>` with medication details for each item. However, this example is missing a crucial piece: the `key` prop.
 
-h3. The Importance of `key` Prop
+h2. The Importance of `key` Prop
 
 When you render a list of elements, React needs a way to uniquely identify each list item to efficiently update the UI when the list changes (e.g., items are added, removed, or reordered). This is where the `key` prop comes in.
 
 *Keys must be:*
-* *Strings:* Keys should be strings that uniquely identify a list item among its siblings.
-* *Stable:* The key for a specific item should not change between renders. If a key changes, React will destroy the old component instance and create a new one, meaning any internal state of that component will be lost.
-* *Unique (among siblings):* Keys only need to be unique among the direct children in the list, not globally unique in your entire application.
+
+h2. Strings
+
+Keys should be strings that uniquely identify a list item among its siblings.
+h2. Stable
+
+The key for a specific item should not change between renders. If a key changes, React will destroy the old component instance and create a new one, meaning any internal state of that component will be lost.
+h2. Unique (among siblings)
+
+Keys only need to be unique among the direct children in the list, not globally unique in your entire application.
 
 *Why are keys necessary?*
-* *Efficient Updates:* Keys are React's primary mechanism for identifying list items. When a list is updated (items added, removed, or reordered), React uses these keys to determine the minimal changes needed for the UI. If keys are stable and unique, React can efficiently reuse existing component instances by just updating their props if the data changed, or correctly reorder/add/remove component instances.
-* *Preserving State:* If list items have their own internal state (e.g., an input field in a to-do item, a toggle switch), stable keys ensure that React correctly associates the state with the specific item. Without proper keys, or if keys change unnecessarily, this state can be lost or incorrectly assigned to another item during re-renders, especially if the list order changes.
+
+h2. Efficient Updates
+
+Keys are React's primary mechanism for identifying list items. When a list is updated (items added, removed, or reordered), React uses these keys to determine the minimal changes needed for the UI. If keys are stable and unique, React can efficiently reuse existing component instances by just updating their props if the data changed, or correctly reorder/add/remove component instances.
+h2. Preserving State
+
+If list items have their own internal state (e.g., an input field in a to-do item, a toggle switch), stable keys ensure that React correctly associates the state with the specific item. Without proper keys, or if keys change unnecessarily, this state can be lost or incorrectly assigned to another item during re-renders, especially if the list order changes.
 
 If you don't provide keys, React will default to using array indices as keys, which can lead to performance issues and bugs with component state if the list items can be reordered, added to, or removed from anywhere but the end. React will also log a warning in the console in such cases.
 
@@ -121,7 +135,7 @@ If these conditions apply, using the index as a key can lead to performance issu
 
 Use the index as a key only if the list is static (never reorders, items are not added/removed from the middle) and you have no other stable ID.
 
-h3. Extracting List Items into Components
+h2. Extracting List Items into Components
 
 For more complex list items, it's good practice to extract the item rendering logic into its own component. This makes your code cleaner and promotes reusability.
 
@@ -239,7 +253,7 @@ bq. 📚 *Official Documentation:*
 
 ----
 
-h3. Exercise 7.4: Rendering Lists
+h2. Exercise 7.4: Rendering Lists
 
 Time to practice rendering lists of data with keys.
 

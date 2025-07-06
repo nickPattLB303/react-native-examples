@@ -1,10 +1,12 @@
-h2. Section 3: Optimizing Rendering
+{toc}
+
+h1. Section 3: Optimizing Rendering
 
 Unnecessary component re-renders are a primary cause of performance issues in React applications, including React Native. This section focuses on techniques to optimize rendering performance by preventing these needless updates, ensuring your SpeedyMeds app remains smooth and responsive.
 
 bq. 🛣️ *(All Learners):* Mastering these optimization techniques is fundamental to building high-performance UIs. Even small optimizations in frequently rendered components, like items in a medication list, can have a significant impact.
 
-h3. Conceptual Content: The Pillars of Render Optimization
+h2. Conceptual Content: The Pillars of Render Optimization
 
 React's default behavior is to re-render a component whenever its parent re-renders, or when its own props or state change. While this ensures UI consistency, it can lead to performance degradation if components re-render without actual changes to their output. We can use {{React.memo}}, {{useCallback}}, and {{useMemo}} to fine-tune this behavior.
 
@@ -32,23 +34,38 @@ flowchart TD
 
 The diagram above illustrates how React's rendering cycle works, and how optimization techniques like {{React.memo}}, {{useCallback}}, and {{useMemo}} intercept this cycle to prevent unnecessary work. When a parent component renders, React normally re-renders all its children. However, {{React.memo}} can prevent this by comparing props, {{useCallback}} can maintain stable function references, and {{useMemo}} can cache expensive calculations.
 
-h4. 1. {{React.memo}}
+h3. 1. {{React.memo}}
 
 {{React.memo}} is a higher-order component (HOC) that memoizes your functional component. This means React will skip rendering the component if its props have not changed. It performs a shallow comparison of the props by default.
-* *How it works:* When a component wrapped in {{React.memo}} is about to re-render due to its parent re-rendering, React compares its current props with the previous props. If they are shallowly equal, React reuses the last rendered result, skipping the render.
-* *Custom Comparison:* You can provide an optional second argument to {{React.memo}}, a custom comparison function, if a shallow comparison isn't sufficient (e.g., for complex prop objects).
 
-h4. 2. {{useCallback}}
+h2. How it works
+
+When a component wrapped in {{React.memo}} is about to re-render due to its parent re-rendering, React compares its current props with the previous props. If they are shallowly equal, React reuses the last rendered result, skipping the render.
+h2. Custom Comparison
+
+You can provide an optional second argument to {{React.memo}}, a custom comparison function, if a shallow comparison isn't sufficient (e.g., for complex prop objects).
+
+h3. 2. {{useCallback}}
 
 The {{useCallback}} Hook returns a memoized version of a callback function that only changes if one of its dependencies has changed. This is particularly useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary re-renders (e.g., a child component wrapped in {{React.memo}}).
-* *How it works:* If you pass a regular inline function as a prop to a child component, that function is recreated on every render of the parent. This new function reference will cause the memoized child to re-render, even if the function does the same thing. {{useCallback}} gives you the same function reference as long as its dependencies don't change.
-* *Dependency Array:* Similar to {{useEffect}}, {{useCallback}} takes a dependency array. The callback will be re-created if any value in this array changes.
 
-h4. 3. {{useMemo}}
+h2. How it works
+
+If you pass a regular inline function as a prop to a child component, that function is recreated on every render of the parent. This new function reference will cause the memoized child to re-render, even if the function does the same thing. {{useCallback}} gives you the same function reference as long as its dependencies don't change.
+h2. Dependency Array
+
+Similar to {{useEffect}}, {{useCallback}} takes a dependency array. The callback will be re-created if any value in this array changes.
+
+h3. 3. {{useMemo}}
 
 The {{useMemo}} Hook returns a memoized value. It recomputes the memoized value only when one of its dependencies has changed. This is useful for optimizing expensive calculations, preventing them from running on every render.
-* *How it works:* You provide a "create" function and an array of dependencies. {{useMemo}} will only recompute the memoized value when one of the dependencies has changed. Otherwise, it will return the cached value from the previous render.
-* *Use Cases:* Calculating derived data, performing complex transformations, or any computationally intensive operation that doesn't need to run on every single render.
+
+h2. How it works
+
+You provide a "create" function and an array of dependencies. {{useMemo}} will only recompute the memoized value when one of the dependencies has changed. Otherwise, it will return the cached value from the previous render.
+h2. Use Cases
+
+Calculating derived data, performing complex transformations, or any computationally intensive operation that doesn't need to run on every single render.
 
 bq. 🌐 *(Web Developers):*
 > - ⚛️ *(React Developers):* > *Comparison:* These are the exact same APIs ({{React.memo}}, {{useCallback}}, {{useMemo}}) you use in React for the web. Their purpose and behavior are identical.
@@ -58,11 +75,11 @@ bq. 🌐 *(Web Developers):*
 *Key Takeaway:* React\'s memoization tools offer fine-grained control, which can be powerful but also requires careful implementation to avoid premature optimization or incorrect dependency tracking, differing from some of Angular\'s more automated or convention-based approaches.
 *Source:* {{[https://angular.io/guide/performance|Angular Documentation: Optimizing Performance]}}
 
-h3. Procedural Content: Applying Render Optimizations
+h2. Procedural Content: Applying Render Optimizations
 
 Let's see how to apply these techniques in the context of our SpeedyMeds app.
 
-h4. Using {{React.memo}} for a {{MedicationListItem}}
+h3. Using {{React.memo}} for a {{MedicationListItem}}
 
 Imagine a {{MedicationListItem}} component in SpeedyMeds that displays medication details. If the list re-renders, we only want individual items to re-render if their specific data has changed.
 
@@ -113,7 +130,7 @@ export default MedicationListItem;
 
 When `MedicationListItem` is used in a list, `React.memo` will prevent it from re-rendering if its `name`, `dosage`, `id`, and `onPressItem` props remain the same between renders of the parent list component. The `console.log` helps observe when it renders. If `onPressItem` is defined inline in the parent, it will change on every parent render, negating `React.memo`'s benefit for that prop. This is where `useCallback` comes in.
 
-h4. Using `useCallback` for an `onPress` Handler
+h3. Using `useCallback` for an `onPress` Handler
 
 If the parent component of `MedicationListItem` defines `onPressItem` inline, it will be a new function on every render. To prevent this, the parent can use `useCallback`.
 
@@ -196,7 +213,7 @@ export default MedicationScreen;
 
 In `MedicationScreen`, `handlePressItem` is memoized with `useCallback`. Now, even if `MedicationScreen` re-renders (e.g., due to `selectedId` changing or `addMedication` being called), `MedicationListItem` components will not re-render solely because of `onPressItem` changing, as its reference remains stable thanks to `useCallback`. This allows `React.memo` on `MedicationListItem` to work effectively for the `onPressItem` prop.
 
-h4. Using `useMemo` for Optimizing a Calculation
+h3. Using `useMemo` for Optimizing a Calculation
 
 Suppose in our SpeedyMeds app, we need to display a stock status message based on a medication's quantity, which might involve some (potentially complex) logic.
 
@@ -317,7 +334,7 @@ bq. 📚 *Official Documentation:*
 - [https://react.dev/reference/react/useMemo|React Docs: `useMemo`]
 - [https://reactnative.dev/docs/performance#optimizing-your-app-state|React Native Docs: Performance - Optimizing Rendering]
 
-h3. Exercise
+h2. Exercise
 
 Now, let's apply these concepts.
 * *Exercise 15.1: Applying Memoization*

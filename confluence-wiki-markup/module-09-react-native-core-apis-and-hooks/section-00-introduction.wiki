@@ -1,8 +1,8 @@
-h1. Module 9: React Native Core APIs and Hooks
+{toc}
 
 This module delves into essential React Native Core APIs and Hooks that empower you to interact with device features, manage component behavior, and optimize performance. You'll learn to write platform-specific code, access device dimensions, display alerts, and master advanced Hook patterns like {{useRef}}, {{useCallback}}, {{useMemo}}, and custom Hooks. By the end of this module, you'll be able to leverage these powerful tools to build more dynamic, responsive, and efficient SpeedyMeds application features.
 
-h2. Target Audience Adaptation
+h1. Target Audience Adaptation
 
 Understanding how to interact with the underlying platform and manage component logic efficiently is crucial for all developers. Here's how this module connects to various backgrounds:
 
@@ -22,7 +22,7 @@ bq. 🅰 *(Angular Web Developers):*
 > *Comparison:* You will discover React Native's approach to component logic, side effects, and performance optimization through Hooks. This can be compared to Angular's services, lifecycle hooks, and change detection strategies. Understanding these Hooks will be key to building performant and maintainable components in React Native.
 > *Key Takeaway:* React Native utilizes a Hook-based system for component logic and state, contrasting with Angular's more structured approach using decorators, services, and specific lifecycle methods.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 Upon successful completion of this module, you will be able to:
 * Detect the user's platform (iOS or Android) and apply platform-specific styles or logic using the {{Platform}} module.
@@ -33,7 +33,7 @@ Upon successful completion of this module, you will be able to:
 * Optimize component rendering performance and prevent unnecessary computations using {{useCallback}} and {{useMemo}}.
 * Design and implement custom Hooks to encapsulate and reuse stateful logic across various components in the SpeedyMeds application.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have a good understanding of the following:
 * Completion of [../module-05-javascript-essentials-for-react-native/section-00-introduction.md|Module 5: JavaScript Essentials for React Native]
@@ -42,7 +42,7 @@ Before starting this module, ensure you have a good understanding of the followi
 * Completion of [../module-08-react-native-core-components/section-00-introduction.md|Module 8: React Native Core Components]
 * Familiarity with creating and styling basic React Native components.
 
-h2. Module Sections
+h1. Module Sections
 * [./section-01-platform-module.md|Section 1: Platform Module]
 * [./section-02-dimensions-api.md|Section 2: Dimensions API]
 * [./section-03-alert-api.md|Section 3: Alert API]
@@ -51,19 +51,25 @@ h2. Module Sections
 * [./section-06-usecallback-and-usememo-hooks.md|Section 6: \{{useCallback\}} and \{{useMemo\}} Hooks]
 * [./section-07-creating-custom-hooks.md|Section 7: Creating Custom Hooks]
 
-h2. Module Challenge
+h1. Module Challenge
 
 Throughout this module, you've learned about various core APIs and Hooks. Now it's time to combine this knowledge.
 * *Challenge 9: Custom Hook for Device Information*
-** *Objective:* Create a custom Hook named {{useScreenGuard}} that provides information about the current screen orientation (portrait or landscape) and whether a minimum screen width for the SpeedyMeds app (e.g., 320dp) is met. If the screen width is below the minimum, the hook should also provide a function to show an {{Alert}} recommending a better viewing experience.
-** *Instructions:* You will need to create a new Expo Snack for this challenge. Your Snack should demonstrate the {{useScreenGuard}} hook in action. Consider building upon the {{useDeviceInformation}} custom hook concepts from Section 7 or developing it from scratch.
-** *Tool:* *(https://snack.expo.dev/)*
+h3. Objective
 
-h2. Module Summary
+Create a custom Hook named {{useScreenGuard}} that provides information about the current screen orientation (portrait or landscape) and whether a minimum screen width for the SpeedyMeds app (e.g., 320dp) is met. If the screen width is below the minimum, the hook should also provide a function to show an {{Alert}} recommending a better viewing experience.
+h3. Instructions
+
+You will need to create a new Expo Snack for this challenge. Your Snack should demonstrate the {{useScreenGuard}} hook in action. Consider building upon the {{useDeviceInformation}} custom hook concepts from Section 7 or developing it from scratch.
+h3. Tool
+
+*(https://snack.expo.dev/)*
+
+h1. Module Summary
 
 In this module, you explored key React Native Core APIs and advanced Hook patterns. You learned how to use the {{Platform}} module to write OS-specific code and the {{Dimensions}} API to create responsive layouts. You also mastered displaying native alerts with the {{Alert}} API. We recapped essential React Hooks ({{useState}}, {{useEffect}}, {{useContext}}) and then delved deeper into {{useRef}} for accessing component instances and managing mutable values, and {{useCallback}} and {{useMemo}} for crucial performance optimizations. Finally, you learned the power of creating custom Hooks to encapsulate and reuse complex stateful logic, making your SpeedyMeds application code more modular, readable, and maintainable. These tools are fundamental for building sophisticated and high-performing mobile applications.
 
-h2. Additional Resources (Optional)
+h1. Additional Resources (Optional)
 * [https://reactnative.dev/docs/performance|React Native Performance] - Official documentation on various performance considerations.
 * [https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key|Understanding React's key prop] - Essential for list performance, often related to {{useCallback}} and {{useMemo}} in list items.
 * [https://alexsidorenko.com/blog/react-render-always/|A Visual Guide to React Rendering - It Always Re-renders? by Alex Sidorenko] - A blog post that can help understand React's rendering behavior, which is context for optimization Hooks.

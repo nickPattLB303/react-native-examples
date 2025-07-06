@@ -1,21 +1,27 @@
-h2. Section 5: Drawer Navigator Setup and Usage
+{toc}
+
+h1. Section 5: Drawer Navigator Setup and Usage
 
 This section introduces the Drawer Navigator, a navigation pattern where a panel slides in from the side of the screen (typically the left) to reveal a list of navigation links. We will use React Navigation's Drawer Navigator ({{@react-navigation/drawer}}) to implement this. Drawers are often used for primary navigation in some apps or for housing secondary items like settings, user profiles, or less frequently accessed sections of the SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Familiarity with {{NavigationContainer}} and the basic structure of React Navigation screens is assumed. Ensure {{react-native-gesture-handler}} and {{react-native-reanimated}} are correctly set up as they are crucial for drawer animations and gestures.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Understanding the Drawer Navigator
+h3. Conceptual Content: Understanding the Drawer Navigator
 
 The Drawer Navigator provides a slide-in menu, often referred to as a "hamburger menu" due to the common icon used to toggle it. It's a good way to offer navigation to multiple distinct sections without cluttering the main interface, especially if you have more items than would comfortably fit in a bottom tab bar.
 
 *Key Concepts:*
 * {{createDrawerNavigator}}: A function from {{@react-navigation/drawer}} that returns an object containing {{Navigator}} and {{Screen}} components for building a drawer-based navigation.
-* *Drawer Items:* Each item in the drawer typically navigates to a screen or another navigator.
-* *Opening/Closing Drawer:* The drawer can usually be opened by a swipe gesture from the edge of the screen or by tapping a dedicated menu icon in the header. It can be closed by swiping back, tapping the main content area, or selecting a drawer item.
+h2. Drawer Items
 
-h4. Procedural Content: Implementing a Basic Drawer Navigator
+Each item in the drawer typically navigates to a screen or another navigator.
+h2. Opening/Closing Drawer
+
+The drawer can usually be opened by a swipe gesture from the edge of the screen or by tapping a dedicated menu icon in the header. It can be closed by swiping back, tapping the main content area, or selecting a drawer item.
+
+h3. Procedural Content: Implementing a Basic Drawer Navigator
 
 Let's integrate a Drawer Navigator into our SpeedyMeds app. We might have our main Tab Navigator (from the previous section) as one of the drawer items, and perhaps a separate {{SettingsScreen}} accessible via the drawer.
 
@@ -184,10 +190,10 @@ export default function AppDrawerNavigator() {
 * `<Drawer.Screen>`: Defines each item in the drawer.
 ** `name="MainApp" component={MainAppWithHeader}`: This drawer item renders our `MainAppWithHeader` component. `MainAppWithHeader` is a small Stack navigator that wraps `MainAppTabs` simply to provide a header bar where we can place a button to open the drawer.
 ** `options={{ title: 'Dashboard', drawerLabel: 'Home / Dashboard' }}`: `title` can be used by headers (if shown by the drawer itself), and `drawerLabel` sets the text shown in the drawer menu for this item.
-* *Opening the Drawer:*
-** *Programmatically:* You can use `navigation.openDrawer()`, `navigation.closeDrawer()`, or `navigation.toggleDrawer()` from any screen within the drawer navigator (or its children, potentially using `navigation.getParent().openDrawer()`).
-** *Gesture:* By default, users can swipe from the left edge of the screen to open the drawer.
-** *Header Button:* In `MainAppWithHeader`, we added a `headerLeft` button to the Stack Navigator's screen options. This button calls `navigation.openDrawer()`. Note that the `navigation` prop available directly in `MainAppWithHeader` belongs to the Stack Navigator it creates. To control the _drawer_, if `MainAppWithHeader` was directly a screen of the drawer, its `navigation` prop would have `openDrawer`. Since `MainAppWithHeader` here _is_ a screen of the drawer, its navigation prop _is_ the drawer navigation prop. If `MainAppTabs` needed to open the drawer, it would use `navigation.getParent()?.openDrawer()`. The example `MainAppWithHeader` receives the drawer `navigation` prop because `MainAppWithHeader` is a direct screen of the `Drawer.Navigator`.
+h2. Opening the Drawer
+* *Programmatically:* You can use `navigation.openDrawer()`, `navigation.closeDrawer()`, or `navigation.toggleDrawer()` from any screen within the drawer navigator (or its children, potentially using `navigation.getParent().openDrawer()`).
+* *Gesture:* By default, users can swipe from the left edge of the screen to open the drawer.
+* *Header Button:* In `MainAppWithHeader`, we added a `headerLeft` button to the Stack Navigator's screen options. This button calls `navigation.openDrawer()`. Note that the `navigation` prop available directly in `MainAppWithHeader` belongs to the Stack Navigator it creates. To control the _drawer_, if `MainAppWithHeader` was directly a screen of the drawer, its `navigation` prop would have `openDrawer`. Since `MainAppWithHeader` here _is_ a screen of the drawer, its navigation prop _is_ the drawer navigation prop. If `MainAppTabs` needed to open the drawer, it would use `navigation.getParent()?.openDrawer()`. The example `MainAppWithHeader` receives the drawer `navigation` prop because `MainAppWithHeader` is a direct screen of the `Drawer.Navigator`.
 
 {note}
 For `react-native-gesture-handler` to work correctly, especially on Android, ensure your root component (usually `MainActivity.java` for Android or `AppDelegate.m` for iOS if you were not using Expo or had ejected) is properly set up. With Expo managed workflow, this is generally handled for you, but make sure `import 'react-native-gesture-handler';` is at the top of your `App.tsx` or entry file.
@@ -208,7 +214,7 @@ bq. 🍏 *(iOS Developers):*
 bq. 🤖 *(Android Developers):*
 > *Comparison:* This directly corresponds to Android's `DrawerLayout` and `NavigationView`. The swipe gesture and the concept of a main content area with a sliding drawer are identical. React Navigation provides the cross-platform abstraction.
 
-h4. Referential Content: Key Drawer Navigator Configuration Options
+h3. Referential Content: Key Drawer Navigator Configuration Options
 
 Beyond `drawerLabel` and `title`, the Drawer Navigator offers numerous options to customize its appearance and behavior. These can be set in the `screenOptions` prop of `<Drawer.Navigator>` or the `options` prop of individual `<Drawer.Screen>` components.
 
@@ -232,7 +238,7 @@ Beyond `drawerLabel` and `title`, the Drawer Navigator offers numerous options t
 *Note on `drawerContentOptions` (Legacy):*
 * In older versions of React Navigation (and somewhat functional in v6 for backward compatibility), many drawer styling options were grouped under a single `drawerContentOptions` object. While you might encounter this in older codebases, the current best practice is to use individual top-level options or the `drawerContent` prop for extensive customization.
 
-h4. Referential Content: Customizing Drawer Content
+h3. Referential Content: Customizing Drawer Content
 
 For more complex drawer layouts or to add elements beyond the standard navigation items (like a user profile header, branding, or footer links), React Navigation allows you to provide a custom component to render the entire drawer's content using the `drawerContent` prop on the `<Drawer.Navigator>`.
 
@@ -286,6 +292,6 @@ function CustomDrawerContent(props) {
 
 Using `drawerContent` provides full control over the drawer's appearance and functionality, allowing for highly tailored navigation experiences.
 
-h4. Next Steps
+h3. Next Steps
 
 Now that you've learned about Stack, Tab, and Drawer navigators, a crucial aspect of building multi-screen applications is passing data between these screens. The next section will cover exactly that: how to pass parameters to routes.

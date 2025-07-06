@@ -1,4 +1,6 @@
-h2. Section 6: Setting up React Hook Form
+{toc}
+
+h1. Section 6: Setting up React Hook Form
 
 Now that we've established the benefits of using a form library and recommended React Hook Form, let's walk through the process of installing and setting it up in your Expo project. This section will cover the initial steps to get you started with using its powerful features for your SpeedyMeds application forms.
 
@@ -8,17 +10,17 @@ Integrating React Hook Form into your Expo project is straightforward using {{np
 # *Open your terminal* in the root directory of your Expo project.
 # *Run the installation command:*
 
-    {code:language=bash}
-npx expo install react-hook-form
-    ```
+{code:language=bash}
+    npx expo install react-hook-form
+{code}
 
     Alternatively, using npm or yarn:
 
-    ```bash
+{code:language=bash}
     npm install react-hook-form
     # or
     yarn add react-hook-form
-    ```
+{code}
 
 This command will download and add `react-hook-form` to your project's `package.json` and `node_modules` directory.
 
@@ -30,7 +32,8 @@ React Hook Form itself does not have any native dependencies, so it works seamle
 The primary entry point for using React Hook Form is the `useForm` hook. This hook provides various methods and state values necessary for managing your form.
 
 When you call `useForm`, you get back an object containing several useful properties and functions. To use `useForm` with TypeScript, you first define an interface or type for your form data. This enables type safety for form values and errors.
-{code}typescript
+
+{code:language=js}
 import { useForm, Control, SubmitHandler, FieldErrors } from "react-hook-form";
 // Control, SubmitHandler, FieldErrors are types often used with useForm
 
@@ -70,7 +73,8 @@ const {
   mode: "onSubmit", // Default. Other options: 'onBlur', 'onChange', 'onTouched', 'all'
   reValidateMode: "onChange", // Default. How fields are re-validated after submission attempt
 });
-{code:language=text}
+{code}
+
 *Core Destructured Elements from `useForm` Explained:*
 * `control`: An object containing methods for registering components into React Hook Form and sharing their state. It is crucial for integrating controlled components in React Native using the `Controller` component.
 * `handleSubmit`: A function that you wrap around your form submission handler. It will first trigger validation, and only if validation passes will it call your provided `onValid` submit function with the form data. It can also accept an `onInvalid` callback.
@@ -100,9 +104,9 @@ These options control when validation is triggered. `mode` (default: `'onSubmit'
 Let's refine the basic structure for a form component using `useForm` as shown in the `BasicRHFScreen` example below.
 # *Import `useForm` and `Controller`:*
 
-    ```typescript
+{code:language=js}
     import { useForm, Controller } from "react-hook-form";
-    ```
+{code}
 # *Define `FormData` Interface and Call `useForm`:*
     (As shown in the `BasicRHFScreen` example below, where `PatientFormData` is used).
 
@@ -134,7 +138,8 @@ When the `Controller` mounts, it effectively registers the field it's managing w
 *Short, Self-Contained Example: Basic React Hook Form Setup with `Controller`*
 
 This example demonstrates setting up a simple form with one `TextInput` field for a patient's name, managed by React Hook Form using the `Controller` component.
-{code}tsx
+
+{code:language=js}
 import React from "react";
 import {
   SafeAreaView,
@@ -285,7 +290,7 @@ const styles = StyleSheet.create({
 });
 
 export default BasicRHFScreen;
-```
+{code}
 
 This setup provides a solid foundation for building forms with React Hook Form in React Native. You now have a mechanism to register inputs, handle their state, and prepare for validation and submission, all with significantly less boilerplate than manual state management for complex forms.
 

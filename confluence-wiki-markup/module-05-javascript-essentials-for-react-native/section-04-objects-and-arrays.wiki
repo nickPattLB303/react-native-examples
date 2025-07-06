@@ -1,4 +1,6 @@
-h2. Section 4: Objects and Arrays
+{toc}
+
+h1. Section 4: Objects and Arrays
 
 Objects and arrays are two of JavaScript's most powerful data types, used extensively in React Native applications. This section will explore their syntax, features, and common operations.
 
@@ -7,7 +9,7 @@ bq. 📲 *(Native Developers):*
 > *Key Takeaway:* JavaScript objects and arrays are more flexible but less type-safe than their native counterparts. They're also directly serializable to/from JSON, which is heavily used in API communication in React Native.
 > *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/|Swift Collection Types] and [https://kotlinlang.org/docs/collections-overview.html|Kotlin Collections]
 > *Example:*
-> {code:language=swift}
+> ```swift
 // Swift Dictionary and Array
 var patient: [String: Any] = [
 "name": "John Doe",
@@ -48,73 +50,90 @@ patient.medications.push("Amlodipine"); // Arrays are mutable
 patient.medications.forEach((med) => console.log(med));
 ```
 
-h3. Objects
+h2. Objects
 
 Objects in JavaScript are collections of key-value pairs, where each key is a string (or Symbol) and each value can be of any data type, including other objects, arrays, or functions. They are used to store related data and functionalities together.
 
 An object is an unordered collection of key-value pairs, where keys are typically strings (or Symbols) and values can be any JavaScript data type, including other objects or functions (which are then called methods).
 
-h4. Creating Objects
-* *Object Literals (most common):*
+h3. Creating Objects
 
-  ```javascript
-  const medication = {
-    name: "Lisinopril",
-    dosageForm: "Tablet",
-    strength: "10mg",
-    quantityInStock: 500,
-    getDetails: function () {
-      return {{${this.name} ${this.strength} - Stock: ${this.quantityInStock}}};
-    },
-  };
-  ```
+h2. Object Literals (most common)
 
-  This code defines a {{medication}} object using an object literal. It stores various properties like {{name}}, {{dosageForm}}, {{strength}} (all strings), and {{quantityInStock}} (a number). It also includes a method {{getDetails}}, which is a function associated with the object. When {{medication.getDetails()}} is called, {{this}} inside the function refers to the {{medication}} object itself, allowing it to access {{this.name}}, {{this.strength}}, and {{this.quantityInStock}} to construct and return a descriptive string about the medication. This demonstrates a common way to group related data and functionality.
-* *Using {{new Object()}}:* Less common for simple objects.
-  ```javascript
-  const patient = new Object();
-  patient.id = "P7890";
-  patient.name = "Eleanor Vance";
-  ```
+{code:language=js}
+const medication = {
+  name: "Lisinopril",
+  dosageForm: "Tablet",
+  strength: "10mg",
+  quantityInStock: 500,
+  getDetails: function () {
+    return `${this.name} ${this.strength} - Stock: ${this.quantityInStock}`;
+  },
+};
+{code}
 
-h4. Accessing Properties
-* *Dot Notation ({{.}}):* Used when the property key is a valid JavaScript identifier.
+This code defines a `medication` object using an object literal. It stores various properties like `name`, `dosageForm`, `strength` (all strings), and `quantityInStock` (a number). It also includes a method `getDetails`, which is a function associated with the object. When `medication.getDetails()` is called, `this` inside the function refers to the `medication` object itself, allowing it to access `this.name`, `this.strength`, and `this.quantityInStock` to construct and return a descriptive string about the medication. This demonstrates a common way to group related data and functionality.
 
-  ```javascript
-  console.log(medication.name); // Output: Lisinopril
-  console.log(medication.getDetails()); // Output: Lisinopril 10mg - Stock: 500
-  ```
-* *Bracket Notation ({{[]}}):* Required when the property key is dynamic (a variable), not a valid identifier (e.g., contains spaces or starts with a number), or when you want to use an expression to determine the property name.
+h2. Using `new Object()`
 
-  ```javascript
-  let propertyToAccess = "dosageForm";
-  console.log(medication[propertyToAccess]); // Output: Tablet
+Less common for simple objects.
+{code:language=js}
+const patient = new Object();
+patient.id = "P7890";
+patient.name = "Eleanor Vance";
+{code}
 
-  const patientPreferences = {
-    "contact method": "email",
-    language: "English",
-  };
-  console.log(patientPreferences["contact method"]); // Output: email
-  ```
+h3. Accessing Properties
 
-h4. Adding/Modifying/Deleting Properties
-* *Adding or Updating:* Assign a value to a new or existing property using dot or bracket notation.
+h2. Dot Notation (`.`)
 
-  ```javascript
-  medication.lastRestocked = "2023-10-15"; // New property
-  medication.quantityInStock = 450; // Updating existing property
-  console.log(medication.lastRestocked); // Output: 2023-10-15
-  ```
-* *Deleting Properties:* Use the {{delete}} operator.
-  ```javascript
-  delete medication.lastRestocked;
-  console.log(medication.lastRestocked); // Output: undefined
-  ```
+Used when the property key is a valid JavaScript identifier.
 
-h4. Computed Property Names (ES6)
+{code:language=js}
+console.log(medication.name); // Output: Lisinopril
+console.log(medication.getDetails()); // Output: Lisinopril 10mg - Stock: 500
+{code}
+
+h2. Bracket Notation (`[]`)
+
+Required when the property key is dynamic (a variable), not a valid identifier (e.g., contains spaces or starts with a number), or when you want to use an expression to determine the property name.
+
+{code:language=js}
+let propertyToAccess = "dosageForm";
+console.log(medication[propertyToAccess]); // Output: Tablet
+
+const patientPreferences = {
+  "contact method": "email",
+  language: "English",
+};
+console.log(patientPreferences["contact method"]); // Output: email
+{code}
+
+h3. Adding/Modifying/Deleting Properties
+
+h2. Adding or Updating
+
+Assign a value to a new or existing property using dot or bracket notation.
+
+{code:language=js}
+medication.lastRestocked = "2023-10-15"; // New property
+medication.quantityInStock = 450; // Updating existing property
+console.log(medication.lastRestocked); // Output: 2023-10-15
+{code}
+
+h2. Deleting Properties
+
+Use the `delete` operator.
+{code:language=js}
+delete medication.lastRestocked;
+console.log(medication.lastRestocked); // Output: undefined
+{code}
+
+h3. Computed Property Names (ES6)
 
 Allows you to use an expression for a property key within an object literal.
-{code}javascript
+
+{code:language=js}
 let propertyName = "dosageInstructions";
 const prescriptionDetails = {
   medication: "Ibuprofen",
@@ -124,11 +143,13 @@ const prescriptionDetails = {
 
 console.log(prescriptionDetails.dosageInstructions); // Output: Take with food
 console.log(prescriptionDetails.patientId); // Output: P999
-{code:language=text}
-h4. Object Methods
+{code}
+
+h3. Object Methods
 
 When a function is a property of an object, it's called a method. Inside a method defined using the `function` keyword *or the ES6 method shorthand syntax*, `this` refers to the object the method is called on.
-{code}javascript
+
+{code:language=js}
 const prescription = {
   medicationName: "Amoxicillin",
   patientName: "Carlos Ray",
@@ -144,19 +165,20 @@ const prescription = {
 };
 console.log(prescription.displayLabel()); // Output: Med: Amoxicillin, Patient: Carlos Ray
 prescription.updateMedication("Augmentin"); // Output: Medication updated to Augmentin
-{code:language=text}
+{code}
 
 {info}
 If you use an arrow function for an object method, `this` will not refer to the object itself but will be inherited from the surrounding (lexical) scope. For object methods where you need to access the object's properties via `this`, traditional function expressions are generally preferred.
 {info}
-h4. Common `Object` Static Methods
+h3. Common `Object` Static Methods
 
 These are methods called on the `Object` constructor itself:
 * `Object.keys(obj)`: Returns an array of a given object's own enumerable property *names* (keys).
 * `Object.values(obj)`: Returns an array of a given object's own enumerable property *values*.
 * `Object.entries(obj)`: Returns an array of a given object's own enumerable string-keyed property `[key, value]` pairs.
 * `Object.assign(target, ...sources)`: Copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object. Often used for merging objects or shallow copying.
-{code}javascript
+
+{code:language=js}
 const drugInfo = {
   genericName: "Metformin",
   brandName: "Glucophage",
@@ -173,9 +195,9 @@ const combinedMedInfo = Object.assign({}, drugInfo, storageInfo);
 console.log(combinedMedInfo);
 // Output: { genericName: 'Metformin', brandName: 'Glucophage', class: 'Antidiabetic', location: 'Shelf A-3', temperature: 'Room' }
 
-{code:language=text}
+{code}
 
-{code}mermaid
+{mermaid}
 graph TD
     subgraph OriginalData [Original Data Structures]
         direction LR
@@ -198,118 +220,128 @@ graph TD
 
     OriginalData --> DestructuringOps
     OriginalData --> SpreadOps
-{code:language=text}
+{mermaid}
+
 This diagram illustrates how destructuring and spread syntax work with JavaScript objects and arrays. *Destructuring Assignment* (middle section) allows you to unpack values from arrays or properties from objects into distinct variables. For instance, `const { a, b } = O;` extracts `a` and `b` from object `O`. Similarly, `const [x, y] = A;` extracts the first two elements from array `A`. *Spread Syntax* (right section) expands iterables (like arrays) into individual elements or object properties into key-value pairs. It can be used to create new arrays (`[...A, 40]`), new objects (`{ ...O, d: 4 }`), or to pass array elements as individual arguments to functions (`Math.max(...A)`). Both features provide more concise and readable ways to work with data structures.
 
-h3. Arrays
+h2. Arrays
 
 An array is an ordered, zero-indexed list of values. Array elements can be of any data type, including other arrays or objects.
 
-h4. Creating Arrays
-* *Array Literals (most common):*
-  ```javascript
-  const pendingPrescriptions = ["RX1001", "RX1002", "RX1003"];
-  const patientAges = [25, 42, 17, 65];
-  const mixedData = ["Paracetamol", 500, true];
-  ```
-* *Using `new Array()`:*
-  ```javascript
-  const otcDrugs = new Array("Ibuprofen", "Loratadine", "Ranitidine");
-  // const emptyArray = new Array(5); // Creates an array with 5 empty slots
-  ```
+h3. Creating Arrays
 
-h4. Accessing and Modifying Elements
+h2. Array Literals (most common)
+{code:language=js}
+const pendingPrescriptions = ["RX1001", "RX1002", "RX1003"];
+const patientAges = [25, 42, 17, 65];
+const mixedData = ["Paracetamol", 500, true];
+{code}
+h2. Using `new Array()`
+{code:language=js}
+const otcDrugs = new Array("Ibuprofen", "Loratadine", "Ranitidine");
+// const emptyArray = new Array(5); // Creates an array with 5 empty slots
+{code}
+
+h3. Accessing and Modifying Elements
 
 Elements are accessed by their numerical index (starting from 0).
-{code}javascript
+
+{code:language=js}
 console.log(pendingPrescriptions[0]); // Output: RX1001
 pendingPrescriptions[1] = "RX1005_UPDATED"; // Modify an element
 console.log(pendingPrescriptions); // Output: ['RX1001', 'RX1005_UPDATED', 'RX1003']
-{code:language=text}
-h4. Array Properties
+{code}
+
+h3. Array Properties
 * `length`: Returns the number of elements in the array.
-  ```javascript
+{code:language=js}
   console.log(
     `Number of pending prescriptions: ${pendingPrescriptions.length}`
   ); // Output: 3
-  ```
+{code}
 
-h4. Common Array Methods
+h3. Common Array Methods
 
 JavaScript arrays come with a rich set of built-in methods for manipulation and iteration.
-* *Adding/Removing Elements:*
-** `push(element1, ..., elementN)`: Adds one or more elements to the end of an array and returns the new length.
-** `pop()`: Removes the last element from an array and returns that element.
-** `unshift(element1, ..., elementN)`: Adds one or more elements to the beginning of an array and returns the new length.
-** `shift()`: Removes the first element from an array and returns that element.
-** `splice(start, deleteCount, item1, ..., itemN)`: Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place. Returns an array containing the deleted elements.
 
-  ```javascript
-  let deliveryQueue = ["PatientX", "PatientY"];
-  deliveryQueue.push("PatientZ"); // deliveryQueue is now ['PatientX', 'PatientY', 'PatientZ']
-  let nextDelivery = deliveryQueue.shift(); // nextDelivery is 'PatientX', deliveryQueue is ['PatientY', 'PatientZ']
-  console.log(`Next for delivery: ${nextDelivery}`);
-  ```
-* *Iteration Methods (Higher-Order Functions):* These methods often take a callback function as an argument.
-** `forEach(callbackFn(element, index, array))`: Executes a provided function once for each array element.
-** `map(callbackFn(element, index, array))`: Creates a *new array* populated with the results of calling a provided function on every element in the calling array.
-** `filter(callbackFn(element, index, array))`: Creates a *new array* with all elements that pass the test implemented by the provided function.
+h2. Adding/Removing Elements
+* `push(element1, ..., elementN)`: Adds one or more elements to the end of an array and returns the new length.
+* `pop()`: Removes the last element from an array and returns that element.
+* `unshift(element1, ..., elementN)`: Adds one or more elements to the beginning of an array and returns the new length.
+* `shift()`: Removes the first element from an array and returns that element.
+* `splice(start, deleteCount, item1, ..., itemN)`: Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place. Returns an array containing the deleted elements.
 
-  ```javascript
-  const refillRequests = [
-    { patientId: "P001", medication: "Lisinopril", quantity: 30 },
-    { patientId: "P002", medication: "Metformin", quantity: 90 },
-    { patientId: "P003", medication: "Lisinopril", quantity: 30 },
-  ];
+{code:language=js}
+let deliveryQueue = ["PatientX", "PatientY"];
+deliveryQueue.push("PatientZ"); // deliveryQueue is now ['PatientX', 'PatientY', 'PatientZ']
+let nextDelivery = deliveryQueue.shift(); // nextDelivery is 'PatientX', deliveryQueue is ['PatientY', 'PatientZ']
+console.log(`Next for delivery: ${nextDelivery}`);
+{code}
 
-  console.log("Processing refill requests:");
-  refillRequests.forEach((request) => {
-    console.log(`Processing ${request.medication} for ${request.patientId}`);
-  });
+h2. Iteration Methods (Higher-Order Functions)
 
-  const patientIds = refillRequests.map((request) => request.patientId);
-  console.log(patientIds); // Output: ['P001', 'P002', 'P003']
+These methods often take a callback function as an argument.
+* `forEach(callbackFn(element, index, array))`: Executes a provided function once for each array element.
+* `map(callbackFn(element, index, array))`: Creates a *new array* populated with the results of calling a provided function on every element in the calling array.
+* `filter(callbackFn(element, index, array))`: Creates a *new array* with all elements that pass the test implemented by the provided function.
 
-  const lisinoprilRequests = refillRequests.filter(
-    (request) => request.medication === "Lisinopril"
-  );
-  console.log(lisinoprilRequests);
-  // Output: [ { patientId: 'P001', ... }, { patientId: 'P003', ... } ]
-  ```
+{code:language=js}
+const refillRequests = [
+  { patientId: "P001", medication: "Lisinopril", quantity: 30 },
+  { patientId: "P002", medication: "Metformin", quantity: 90 },
+  { patientId: "P003", medication: "Lisinopril", quantity: 30 },
+];
 
-  This block showcases three powerful array iteration methods. First, `forEach` iterates over `refillRequests`, logging a processing message for each request but not creating a new array. Second, `map` transforms `refillRequests` into a new array, `patientIds`, containing only the `patientId` from each request object. This is useful for extracting specific data. Finally, `filter` creates `lisinoprilRequests`, another new array, containing only the request objects where the `medication` property is "Lisinopril". These methods provide declarative and often more readable ways to work with array data compared to traditional `for` loops, and they emphasize immutability by returning new arrays (for `map` and `filter`).
-* *Finding Elements:*
-** `find(callbackFn(element, index, array))`: Returns the *first element* in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
-** `findIndex(callbackFn(element, index, array))`: Returns the *index of the first element* in the array that satisfies the provided testing function. Otherwise, -1 is returned.
-** `includes(valueToFind, fromIndex)`: Determines whether an array includes a certain value among its entries, returning `true` or `false`.
+console.log("Processing refill requests:");
+refillRequests.forEach((request) => {
+  console.log(`Processing ${request.medication} for ${request.patientId}`);
+});
 
-  ```javascript
-  const urgentRequest = refillRequests.find((req) => req.quantity > 60);
-  console.log(urgentRequest); // Output: { patientId: 'P002', medication: 'Metformin', quantity: 90 }
+const patientIds = refillRequests.map((request) => request.patientId);
+console.log(patientIds); // Output: ['P001', 'P002', 'P003']
 
-  const hasMetformin = refillRequests.some(
-    (req) => req.medication === "Metformin"
-  ); // `some` checks if at least one element passes the test
-  console.log(`Has Metformin request? ${hasMetformin}`); // Output: true
-  ```
-* *Other Useful Methods:*
-** `reduce(callbackFn(accumulator, currentValue, currentIndex, array), initialValue)`: Executes a reducer function on each element of the array, resulting in a single output value.
-** `slice(start, end)`: Returns a shallow copy of a portion of an array into a new array object. The original array will not be modified.
-** `concat(array2, ..., arrayN)`: Used to merge two or more arrays. This method does not change the existing arrays but instead returns a new array.
-** `join(separator)`: Joins all elements of an array into a string.
-** `sort(compareFunction)`: Sorts the elements of an array in place and returns the sorted array. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values. This can lead to unexpected results for numbers (e.g., 10 comes before 2). Always provide a `compareFunction` for sorting numbers or complex objects.
+const lisinoprilRequests = refillRequests.filter(
+  (request) => request.medication === "Lisinopril"
+);
+console.log(lisinoprilRequests);
+// Output: [ { patientId: 'P001', ... }, { patientId: 'P003', ... } ]
+{code}
 
-  ```javascript
-  const prices = [10.99, 5.5, 23.0, 1.25];
-  prices.sort((a, b) => a - b); // Sorts numbers in ascending order
-  console.log(prices); // Output: [1.25, 5.50, 10.99, 23.00]
+This block showcases three powerful array iteration methods. First, `forEach` iterates over `refillRequests`, logging a processing message for each request but not creating a new array. Second, `map` transforms `refillRequests` into a new array, `patientIds`, containing only the `patientId` from each request object. This is useful for extracting specific data. Finally, `filter` creates `lisinoprilRequests`, another new array, containing only the request objects where the `medication` property is "Lisinopril". These methods provide declarative and often more readable ways to work with array data compared to traditional `for` loops, and they emphasize immutability by returning new arrays (for `map` and `filter`).
 
-  const totalStockValue = refillRequests.reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
-  console.log(`Total items in refill requests: ${totalStockValue}`); // Output: 150 (30+90+30)
-  ```
+h2. Finding Elements
+* `find(callbackFn(element, index, array))`: Returns the *first element* in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
+* `findIndex(callbackFn(element, index, array))`: Returns the *index of the first element* in the array that satisfies the provided testing function. Otherwise, -1 is returned.
+* `includes(valueToFind, fromIndex)`: Determines whether an array includes a certain value among its entries, returning `true` or `false`.
+
+{code:language=js}
+const urgentRequest = refillRequests.find((req) => req.quantity > 60);
+console.log(urgentRequest); // Output: { patientId: 'P002', medication: 'Metformin', quantity: 90 }
+
+const hasMetformin = refillRequests.some(
+  (req) => req.medication === "Metformin"
+); // `some` checks if at least one element passes the test
+console.log(`Has Metformin request? ${hasMetformin}`); // Output: true
+{code}
+
+h2. Other Useful Methods
+* `reduce(callbackFn(accumulator, currentValue, currentIndex, array), initialValue)`: Executes a reducer function on each element of the array, resulting in a single output value.
+* `slice(start, end)`: Returns a shallow copy of a portion of an array into a new array object. The original array will not be modified.
+* `concat(array2, ..., arrayN)`: Used to merge two or more arrays. This method does not change the existing arrays but instead returns a new array.
+* `join(separator)`: Joins all elements of an array into a string.
+* `sort(compareFunction)`: Sorts the elements of an array in place and returns the sorted array. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values. This can lead to unexpected results for numbers (e.g., 10 comes before 2). Always provide a `compareFunction` for sorting numbers or complex objects.
+
+{code:language=js}
+const prices = [10.99, 5.5, 23.0, 1.25];
+prices.sort((a, b) => a - b); // Sorts numbers in ascending order
+console.log(prices); // Output: [1.25, 5.50, 10.99, 23.00]
+
+const totalStockValue = refillRequests.reduce(
+  (sum, item) => sum + item.quantity,
+  0
+);
+console.log(`Total items in refill requests: ${totalStockValue}`); // Output: 150 (30+90+30)
+{code}
 
 {note}
 When working with arrays in state managed by libraries like React (which is the foundation of React Native), it's crucial to treat arrays as immutable. Directly mutating an array that is part of the state (e.g., using `push()`, `pop()`, `splice()` directly on the state array) can lead to unpredictable behavior and bugs because React might not detect the change correctly.
@@ -317,181 +349,193 @@ When working with arrays in state managed by libraries like React (which is the 
 `const newArray = [...oldArray, newItem];` (instead of `oldArray.push(newItem)`)
 This practice ensures that state updates are predictable and can be tracked effectively.
 {note}
-h3. ES6+ Features for Objects and Arrays
+h2. ES6+ Features for Objects and Arrays
 
-h4. Destructuring Assignment
+h3. Destructuring Assignment
 
 Destructuring provides a concise way to extract values from arrays or properties from objects into distinct variables.
-* *Object Destructuring:*
 
-  ```javascript
-  const patientFile = {
-    id: "PF007",
-    fullName: "James Bond",
-    lastVisit: "2023-01-10",
-    primaryCondition: "Hypertension",
-  };
+h2. Object Destructuring
 
-  // Extracting properties into variables
-  const { fullName, primaryCondition } = patientFile;
-  console.log(`${fullName} - ${primaryCondition}`); // Output: James Bond - Hypertension
+{code:language=js}
+const patientFile = {
+  id: "PF007",
+  fullName: "James Bond",
+  lastVisit: "2023-01-10",
+  primaryCondition: "Hypertension",
+};
 
-  // Aliasing: assigning to a new variable name
-  const { fullName: patientName, lastVisit: visitDate } = patientFile;
-  console.log(`${patientName} visited on ${visitDate}`); // Output: James Bond visited on 2023-01-10
+// Extracting properties into variables
+const { fullName, primaryCondition } = patientFile;
+console.log(`${fullName} - ${primaryCondition}`); // Output: James Bond - Hypertension
 
-  // Default values: if a property doesn't exist
-  const { fullName: name, allergies = "None reported" } = patientFile;
-  console.log(`${name} has allergies: ${allergies}`); // Output: James Bond has allergies: None reported
+// Aliasing: assigning to a new variable name
+const { fullName: patientName, lastVisit: visitDate } = patientFile;
+console.log(`${patientName} visited on ${visitDate}`); // Output: James Bond visited on 2023-01-10
 
-  // Destructuring into existing variables (Assignment Pattern)
-  let currentPatientName = "Unknown";
-  let currentCondition = "N/A";
-  ({ fullName: currentPatientName, primaryCondition: currentCondition } =
-    patientFile);
-  console.log(`Assigned: ${currentPatientName} - ${currentCondition}`); // Output: Assigned: James Bond - Hypertension
-  ```
+// Default values: if a property doesn't exist
+const { fullName: name, allergies = "None reported" } = patientFile;
+console.log(`${name} has allergies: ${allergies}`); // Output: James Bond has allergies: None reported
 
-  *Nested Object Destructuring:*
+// Destructuring into existing variables (Assignment Pattern)
+let currentPatientName = "Unknown";
+let currentCondition = "N/A";
+({ fullName: currentPatientName, primaryCondition: currentCondition } =
+  patientFile);
+console.log(`Assigned: ${currentPatientName} - ${currentCondition}`); // Output: Assigned: James Bond - Hypertension
+{code}
 
-  ```javascript
-  const order = {
-    orderId: "ORD555",
-    customer: {
-      name: "Alice Wonderland",
-      address: {
-        street: "123 Main St",
-        city: "Anytown",
-      },
+*Nested Object Destructuring:*
+
+{code:language=js}
+const order = {
+  orderId: "ORD555",
+  customer: {
+    name: "Alice Wonderland",
+    address: {
+      street: "123 Main St",
+      city: "Anytown",
     },
-  };
+  },
+};
 
-  const {
-    customer: {
-      name: customerName,
-      address: { city },
-    },
-  } = order;
-  console.log(`Customer: ${customerName}, City: ${city}`); // Output: Customer: Alice Wonderland, City: Anytown
-  ```
-* *Array Destructuring:*
+const {
+  customer: {
+    name: customerName,
+    address: { city },
+  },
+} = order;
+console.log(`Customer: ${customerName}, City: ${city}`); // Output: Customer: Alice Wonderland, City: Anytown
+{code}
 
-  ```javascript
-  const topSellingDrugs = [
-    "Atorvastatin",
-    "Levothyroxine",
-    "Lisinopril",
-    "Metformin",
-  ];
+h2. Array Destructuring
 
-  const [firstDrug, secondDrug] = topSellingDrugs;
-  console.log(`Top sellers: ${firstDrug}, ${secondDrug}`); // Output: Top sellers: Atorvastatin, Levothyroxine
+{code:language=js}
+const topSellingDrugs = [
+  "Atorvastatin",
+  "Levothyroxine",
+  "Lisinopril",
+  "Metformin",
+];
 
-  // Skipping elements
-  const [, , thirdDrug] = topSellingDrugs;
-  console.log(`Third best seller: ${thirdDrug}`); // Output: Third best seller: Lisinopril
-  ```
+const [firstDrug, secondDrug] = topSellingDrugs;
+console.log(`Top sellers: ${firstDrug}, ${secondDrug}`); // Output: Top sellers: Atorvastatin, Levothyroxine
 
-  *Swapping Variables:* A concise way to swap values.
+// Skipping elements
+const [, , thirdDrug] = topSellingDrugs;
+console.log(`Third best seller: ${thirdDrug}`); // Output: Third best seller: Lisinopril
+{code}
 
-  ```javascript
-  let first = "A";
-  let second = "B";
-  [first, second] = [second, first];
-  console.log(first, second); // Output: B A
-  ```
+*Swapping Variables:* A concise way to swap values.
 
-h4. Spread Operator (`...`)
+{code:language=js}
+let first = "A";
+let second = "B";
+[first, second] = [second, first];
+console.log(first, second); // Output: B A
+{code}
+
+h3. Spread Operator (`...`)
 
 The spread operator allows an iterable (like an array or string) to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected.
-* *With Arrays:*
 
-  ```javascript
-  const otcMedications = ["Ibuprofen", "Paracetamol"];
-  const prescriptionMedications = ["Amoxicillin", "Lisinopril"];
-  const allMedications = [
-    ...otcMedications,
-    ...prescriptionMedications,
-    "Aspirin",
-  ];
-  console.log(allMedications);
-  // Output: ['Ibuprofen', 'Paracetamol', 'Amoxicillin', 'Lisinopril', 'Aspirin']
+h2. With Arrays
 
-  const originalBatch = ["BatchA", "BatchB"];
-  const copiedBatch = [...originalBatch]; // Creates a shallow copy
-  copiedBatch.push("BatchC");
-  console.log(originalBatch); // Output: ['BatchA', 'BatchB'] (original is unchanged)
-  console.log(copiedBatch); // Output: ['BatchA', 'BatchB', 'BatchC']
-  ```
-* *With Objects (ES2018+):*
-** *Shallow Copying:* Creates a new object with copies of the original object's own enumerable properties. If a property value is an object or array, the _reference_ is copied, not the nested structure itself.
-** *Merging:* Combines properties from multiple objects. Properties from later objects overwrite earlier ones with the same key.
-** *Difference from `Object.assign()`:* Spread syntax (`{...obj}`) creates a new object and defines properties directly. `Object.assign(target, source)` _mutates_ the `target` object and calls setters if they exist on the target.
+{code:language=js}
+const otcMedications = ["Ibuprofen", "Paracetamol"];
+const prescriptionMedications = ["Amoxicillin", "Lisinopril"];
+const allMedications = [
+  ...otcMedications,
+  ...prescriptionMedications,
+  "Aspirin",
+];
+console.log(allMedications);
+// Output: ['Ibuprofen', 'Paracetamol', 'Amoxicillin', 'Lisinopril', 'Aspirin']
 
-  ```javascript
-  const basicPatientInfo = {
-    id: "P123",
-    name: "Sarah Connor",
-  };
-  const contactInfo = {
-    phone: "555-0199",
-    email: "sarah.connor@example.com",
-  };
+const originalBatch = ["BatchA", "BatchB"];
+const copiedBatch = [...originalBatch]; // Creates a shallow copy
+copiedBatch.push("BatchC");
+console.log(originalBatch); // Output: ['BatchA', 'BatchB'] (original is unchanged)
+console.log(copiedBatch); // Output: ['BatchA', 'BatchB', 'BatchC']
+{code}
 
-  const completePatientRecord = {
-    ...basicPatientInfo,
-    ...contactInfo,
-    lastScreening: "2023-05-20",
-  };
-  console.log(completePatientRecord);
-  // Output: { id: 'P123', name: 'Sarah Connor', phone: '555-0199', email: 'sarah.connor@example.com', lastScreening: '2023-05-20' }
+h2. With Objects (ES2018+)
+* *Shallow Copying:* Creates a new object with copies of the original object's own enumerable properties. If a property value is an object or array, the _reference_ is copied, not the nested structure itself.
+* *Merging:* Combines properties from multiple objects. Properties from later objects overwrite earlier ones with the same key.
+* *Difference from `Object.assign()`:* Spread syntax (`{...obj}`) creates a new object and defines properties directly. `Object.assign(target, source)` _mutates_ the `target` object and calls setters if they exist on the target.
 
-  // Can be used to update properties non-destructively (creating a new object)
-  const updatedRecord = { ...completePatientRecord, phone: "555-0200" };
-  console.log(updatedRecord);
-  ```
-* *In Function Calls:*
-  ```javascript
-  function logMedicationBatch(batchId, ...medications) {
-    console.log(`Batch ${batchId} contains: ${medications.join(", ")}`);
-  }
-  const medsForBatch = ["Simvastatin", "Omeprazole"];
-  logMedicationBatch("B001", ...medsForBatch);
-  // Output: Batch B001 contains: Simvastatin, Omeprazole
-  ```
+{code:language=js}
+const basicPatientInfo = {
+  id: "P123",
+  name: "Sarah Connor",
+};
+const contactInfo = {
+  phone: "555-0199",
+  email: "sarah.connor@example.com",
+};
 
-h4. Rest Parameters (`...`) and Rest Properties (`...`)
+const completePatientRecord = {
+  ...basicPatientInfo,
+  ...contactInfo,
+  lastScreening: "2023-05-20",
+};
+console.log(completePatientRecord);
+// Output: { id: 'P123', name: 'Sarah Connor', phone: '555-0199', email: 'sarah.connor@example.com', lastScreening: '2023-05-20' }
+
+// Can be used to update properties non-destructively (creating a new object)
+const updatedRecord = { ...completePatientRecord, phone: "555-0200" };
+console.log(updatedRecord);
+{code}
+
+h2. In Function Calls
+{code:language=js}
+function logMedicationBatch(batchId, ...medications) {
+  console.log(`Batch ${batchId} contains: ${medications.join(", ")}`);
+}
+const medsForBatch = ["Simvastatin", "Omeprazole"];
+logMedicationBatch("B001", ...medsForBatch);
+// Output: Batch B001 contains: Simvastatin, Omeprazole
+{code}
+
+h3. Rest Parameters (`...`) and Rest Properties (`...`)
 
 While they use the same syntax (`...`), their role depends on the context:
-* *Rest Parameters (in Function Definitions):* Collects an indefinite number of _function arguments_ into a single *array*. Must be the last parameter.
 
-  ```javascript
-  // (Example shown in Section 3: Functions)
-  function logPatientVitals(patientId, ...vitals) {
-    console.log(`Vitals for ${patientId}: ${vitals.join(", ")}`);
-  }
-  logPatientVitals("P123", "HR: 72", "BP: 120/80", "Temp: 37.0C");
-  // Output: Vitals for P123: HR: 72, BP: 120/80, Temp: 37.0C
-  ```
-* *Rest Properties (in Object Destructuring):* Collects the remaining own enumerable _object properties_ into a single *object*. Must be the last element in the destructuring pattern.
+h2. Rest Parameters (in Function Definitions)
 
-  ```javascript
-  const fullPatientData = {
-    patientId: "PXYZ",
-    name: "Laura Croft",
-    dob: "1996-02-14",
-    primaryDoctor: "Dr. Smith",
-    lastCheckup: "2023-11-01",
-  };
+Collects an indefinite number of _function arguments_ into a single *array*. Must be the last parameter.
 
-  const { patientId, name, ...medicalInfo } = fullPatientData;
+{code:language=js}
+// (Example shown in Section 3: Functions)
+function logPatientVitals(patientId, ...vitals) {
+  console.log(`Vitals for ${patientId}: ${vitals.join(", ")}`);
+}
+logPatientVitals("P123", "HR: 72", "BP: 120/80", "Temp: 37.0C");
+// Output: Vitals for P123: HR: 72, BP: 120/80, Temp: 37.0C
+{code}
 
-  console.log(`ID: ${patientId}, Name: ${name}`);
-  // Output: ID: PXYZ, Name: Laura Croft
+h2. Rest Properties (in Object Destructuring)
 
-  console.log("Medical Info:", medicalInfo);
-  // Output: Medical Info: { dob: '1996-02-14', primaryDoctor: 'Dr. Smith', lastCheckup: '2023-11-01' }
-  ```
+Collects the remaining own enumerable _object properties_ into a single *object*. Must be the last element in the destructuring pattern.
+
+{code:language=js}
+const fullPatientData = {
+  patientId: "PXYZ",
+  name: "Laura Croft",
+  dob: "1996-02-14",
+  primaryDoctor: "Dr. Smith",
+  lastCheckup: "2023-11-01",
+};
+
+const { patientId, name, ...medicalInfo } = fullPatientData;
+
+console.log(`ID: ${patientId}, Name: ${name}`);
+// Output: ID: PXYZ, Name: Laura Croft
+
+console.log("Medical Info:", medicalInfo);
+// Output: Medical Info: { dob: '1996-02-14', primaryDoctor: 'Dr. Smith', lastCheckup: '2023-11-01' }
+
+{code}
 
 {info}
 Remember the difference:
@@ -508,7 +552,7 @@ bq. 📚 *Official Documentation:*
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors|MDN Web Docs: Property accessors]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions|MDN Web Docs: Method definitions]
 
-h3. Exercise 5.2: Data Manipulation
+h2. Exercise 5.2: Data Manipulation
 
 This exercise will challenge you to use various object and array methods, along with destructuring, spread, and rest parameters, to manage and transform data related to SpeedyMeds pharmacy operations.
 
@@ -517,19 +561,19 @@ This exercise will challenge you to use various object and array methods, along 
 _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
 
 *Instructions for Exercise 5.2 (to be placed in CodeSandbox `README.md`):*
-{code}markdown
-h1. Exercise 5.2: Data Manipulation - SpeedyMeds Pharmacy
 
-h2. Objective
+{code:language=markdown}
+
+h1. Objective
 
 Practice manipulating JavaScript objects and arrays using various methods, destructuring, spread syntax, and rest parameters. All tasks will be themed around SpeedyMeds pharmacy data.
 
-h2. Data
+h1. Data
 
 Start with the following sample data in your `index.js`:
-{code:language=text}
+{code}
 
-{code}javascript
+{code:language=js}
 const patients = [
   {
     id: "P001",
@@ -555,10 +599,10 @@ const medicationsInventory = {
   Amoxicillin: { stock: 120, unitPrice: 0.3 },
   Warfarin: { stock: 50, unitPrice: 1.2 },
 };
-{code:language=text}
+{code}
 
-{code}markdown
-h2. Tasks
+{code:language=markdown}
+h1. Tasks
 # *List Patient Names:*
 *** Use an array method to create a new array containing only the names of all patients.
 *** Log this new array to the console.
@@ -586,15 +630,15 @@ h2. Tasks
 *** Call this function for a couple of patients, passing their medication names as individual arguments after their name.
 **** Example call: `logPrescriptionDetails('John Doe', 'Lisinopril', 'Aspirin');`
 
-h2. Getting Started
+h1. Getting Started
 # Copy the sample data into your `index.js`.
 # Implement the tasks one by one.
 # Use `console.log()` to display your results for each task.
 # Check the console in CodeSandbox to verify your outputs.
 
 Good luck!
-```
+{code}
 
-h3. Next Steps
+h2. Next Steps
 
 Understanding how to structure and manipulate data with objects and arrays is crucial. Next, we'll delve into how JavaScript handles operations that take time to complete, such as network requests or user interactions. Proceed to [./section-05-asynchronous-javascript.md|Section 5: Asynchronous JavaScript] to learn about callbacks, Promises, and async/await.

@@ -1,5 +1,3 @@
-h1. Module 12: Handling User Input and Forms
-
 Welcome to Module 12! This module delves into the critical aspects of capturing and managing user input within React Native applications. Building robust and user-friendly forms is a cornerstone of mobile app development. We will explore various strategies for handling form state, from fundamental React hooks to powerful dedicated libraries, with an emphasis on understanding the "under the hood" mechanics, ensuring performance, and adhering to best practices for accessibility and user experience. By the end of this module, you'll be proficient in creating robust and user-friendly forms for your SpeedyMeds application or any React Native project.
 
 This module builds upon foundational React concepts like state management and component composition. We'll cover how to capture user input, validate data, manage form state efficiently, and handle submissions, ensuring your apps collect accurate information and provide a smooth user experience.

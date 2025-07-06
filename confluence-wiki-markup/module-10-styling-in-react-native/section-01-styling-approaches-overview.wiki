@@ -1,8 +1,10 @@
-h2. Section 1: Styling Approaches Overview
+{toc}
+
+h1. Section 1: Styling Approaches Overview
 
 This section provides an overview of the primary methods you can use to style your React Native applications. Understanding these different approaches will help you choose the best strategy for various scenarios in your SpeedyMeds app, balancing maintainability, performance, and developer experience.
 
-h3. Core Styling Methods
+h2. Core Styling Methods
 
 React Native offers several built-in and community-driven ways to apply styles:
 # *{{StyleSheet.create()}}:* This is the most common and generally recommended approach for organizing styles in React Native. It involves defining styles in JavaScript objects, similar to CSS, but with camelCased property names. Styles are defined separately from the component rendering logic, promoting better organization and potential performance optimizations as styles can be sent to the native side efficiently.
@@ -23,7 +25,7 @@ React Native offers several built-in and community-driven ways to apply styles:
 # *CSS-in-JS Libraries (e.g., Styled Components):* These libraries allow you to write actual CSS syntax (or CSS-like syntax) directly within your JavaScript/TypeScript files to create styled React components. They offer benefits like scoped styles, prop-based styling, and theming capabilities, which can be very powerful for building complex UIs. We will explore {{styled-components}} in this module.
 # *UI Component Libraries (e.g., React Native Paper):* These libraries provide pre-built, pre-styled, and often themeable components (buttons, cards, navigation elements, etc.) that you can use out-of-the-box. They help accelerate development and ensure a consistent look and feel. We will delve into {{React Native Paper}} later in this module.
 
-h3. Choosing the Right Approach
+h2. Choosing the Right Approach
 
 The best styling approach often depends on the specific needs of your project or even individual components within it:
 * For most static styling and general component design, {{StyleSheet.create()}} is the standard and preferred method due to its clarity and performance benefits.
@@ -33,7 +35,7 @@ The best styling approach often depends on the specific needs of your project or
 
 In practice, you might use a combination of these approaches. For example, you could use React Native Paper for baseline components, customize them further with {{StyleSheet}} or Styled Components, and use inline styles for dynamic adjustments.
 
-h3. Understanding Style Property Mapping (CSS to React Native)
+h2. Understanding Style Property Mapping (CSS to React Native)
 
 For developers coming from a web background, it's helpful to see how common CSS properties map to React Native's {{StyleSheet}} system. Remember, React Native uses camelCase for property names.
 

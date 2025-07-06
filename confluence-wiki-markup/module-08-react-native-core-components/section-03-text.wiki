@@ -1,40 +1,55 @@
-h2. Section 3: Text ({{<Text>}}) - Displaying Text
+{toc}
+
+h1. Section 3: Text ({{<Text>}}) - Displaying Text
 
 This section focuses on the {{<Text>}} component, the primary way to display text in your React Native applications. All text content you want to show to the user must be wrapped within a {{<Text>}} component.
 
-h3. Conceptual Content: Understanding {{<Text>}}
+h2. Conceptual Content: Understanding {{<Text>}}
 
 The {{<Text>}} component is used to render strings of text. Unlike on the web where text can appear standalone or within various HTML elements like {{<p>}}, {{<h1>-<h6>}}, or {{<span>}}, in React Native, any text string you want to display must be a child of a {{<Text>}} component. You cannot render text directly within a {{<View>}} without wrapping it in {{<Text>}}.
 
 This requirement is a direct consequence of React Native's need to efficiently manage text rendering and styling on native platforms. Native operating systems typically use specific UI elements for text (like {{UILabel}} on iOS or {{TextView}} on Android). The {{<Text>}} component provides the necessary abstraction layer to interact with these native text elements, ensuring that text rendering goes through React Native's controlled pipeline for applying text-specific native properties and layout.
 
 *Key Characteristics of {{<Text>}}:*
-* *Text Rendering:* Its sole purpose is to display text content.
-* *Styling:* {{<Text>}} components can be styled using the {{StyleSheet}} API to control font size, color, font family, weight, alignment, line height, and more. Common text-specific style properties include {{color}}, {{fontFamily}}, {{fontSize}}, {{fontStyle}}, {{fontWeight}}, {{letterSpacing}}, {{lineHeight}}, {{textAlign}}, {{textDecorationLine}}, {{textShadowColor}}, {{textShadowOffset}}, {{textShadowRadius}}, {{textTransform}}, {{includeFontPadding}} (Android), and {{textAlignVertical}} (Android).
-* *Nesting:* {{<Text>}} components can be nested within each other. This is powerful because style inheritance works within nested {{<Text>}} components. For example, if an outer {{<Text>}} has a default font color, an inner {{<Text>}} will inherit that color unless explicitly overridden. This inheritance does _not_ apply from {{<View>}} to {{<Text>}}. Internally, React Native translates these nested structures into a flat {{NSAttributedString}} on iOS or a {{SpannableString}} on Android, which are the native mechanisms for handling styled text ranges.
-* *Text-Specific Props:* It supports various props for text layout and interaction, such as {{numberOfLines}}, {{ellipsizeMode}}, {{onPress}} (to make text tappable), {{selectable}}, {{allowFontScaling}}, {{adjustsFontSizeToFit}} (iOS), and {{minimumFontScale}} (iOS).
-* *Accessibility:* Text content within {{<Text>}} components is automatically accessible to screen readers.
-* *Text Layout vs. Flexbox:* Everything rendered inside a {{<Text>}} component uses text layout rules, not Flexbox. Child elements (which must also be {{<Text>}} components or raw strings) are treated as inline elements. They flow together and wrap to the next line when they reach the end of the parent {{<Text>}} container's boundary. This contrasts with {{<View>}} components, whose children are laid out as rectangular blocks according to Flexbox rules.
 
-  For example:
+h2. Text Rendering
 
-  {code:language=js}
+Its sole purpose is to display text content.
+h2. Styling
+
+{{<Text>}} components can be styled using the {{StyleSheet}} API to control font size, color, font family, weight, alignment, line height, and more. Common text-specific style properties include {{color}}, {{fontFamily}}, {{fontSize}}, {{fontStyle}}, {{fontWeight}}, {{letterSpacing}}, {{lineHeight}}, {{textAlign}}, {{textDecorationLine}}, {{textShadowColor}}, {{textShadowOffset}}, {{textShadowRadius}}, {{textTransform}}, {{includeFontPadding}} (Android), and {{textAlignVertical}} (Android).
+h2. Nesting
+
+{{<Text>}} components can be nested within each other. This is powerful because style inheritance works within nested {{<Text>}} components. For example, if an outer {{<Text>}} has a default font color, an inner {{<Text>}} will inherit that color unless explicitly overridden. This inheritance does _not_ apply from {{<View>}} to {{<Text>}}. Internally, React Native translates these nested structures into a flat {{NSAttributedString}} on iOS or a {{SpannableString}} on Android, which are the native mechanisms for handling styled text ranges.
+h2. Text-Specific Props
+
+It supports various props for text layout and interaction, such as {{numberOfLines}}, {{ellipsizeMode}}, {{onPress}} (to make text tappable), {{selectable}}, {{allowFontScaling}}, {{adjustsFontSizeToFit}} (iOS), and {{minimumFontScale}} (iOS).
+h2. Accessibility
+
+Text content within {{<Text>}} components is automatically accessible to screen readers.
+h2. Text Layout vs. Flexbox
+
+Everything rendered inside a {{<Text>}} component uses text layout rules, not Flexbox. Child elements (which must also be {{<Text>}} components or raw strings) are treated as inline elements. They flow together and wrap to the next line when they reach the end of the parent {{<Text>}} container's boundary. This contrasts with {{<View>}} components, whose children are laid out as rectangular blocks according to Flexbox rules.
+
+For example:
+
+{code:language=js}
 // Text container: text flows inline
-  <Text>
-    <Text>First part and </Text>
-    <Text>second part</Text>
-  </Text>
-  // Output might be: |First part and second part| (or wrapped)
+<Text>
+  <Text>First part and </Text>
+  <Text>second part</Text>
+</Text>
+// Output might be: |First part and second part| (or wrapped)
 
-  // View container: each Text is a block if not styled otherwise
-  <View>
-    <Text>First part and </Text>
-    <Text>second part</Text>
-  </View>
-  // Output might be:
-  // |First part and |
-  // |second part    |
-  ```
+// View container: each Text is a block if not styled otherwise
+<View>
+  <Text>First part and </Text>
+  <Text>second part</Text>
+</View>
+// Output might be:
+// |First part and |
+// |second part    |
+{code}
 
 bq. 📲 *(Native Developers):*
 > *Comparison:* `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering. Styling using JavaScript style objects is akin to working with `NSAttributedString` (iOS) or `SpannableString` (Android).
@@ -46,7 +61,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Always wrap your text in `<Text>`. Nested `<Text>` components allow for rich text styling through inheritance.
 > *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element#text-content|MDN Web Docs: Text-level semantics]
 
-h3. Referential Content: Common `<Text>` Props
+h2. Referential Content: Common `<Text>` Props
 
 Here is a table summarizing some of the most common and important props for the `<Text>` component:
 
@@ -70,7 +85,7 @@ bq. 📚 *Official Documentation:*
 - _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uitextview|Apple Developer: UITextView] (Relevant for selection capabilities)
 - _(Native Docs)_ [https://developer.android.com/reference/android/widget/TextView|Android Developer: TextView]
 
-h3. "Under the Hood": `<Text>` Internals
+h2. "Under the Hood": `<Text>` Internals
 
 *Native Mapping:*
 * On iOS, the React Native `<Text>` component typically maps to a native `UILabel`. `UILabel` is efficient for displaying static or simple styled text.
@@ -80,14 +95,15 @@ h3. "Under the Hood": `<Text>` Internals
 *Fabric Architecture:*
 In the Fabric architecture, a `TextShadowNode` is responsible for managing the properties and layout of `<Text>` components. Text layout itself is a complex process that often relies on native platform capabilities (e.g., CoreText on iOS, Android's text layout engine). Fabric, with JSI, allows for more efficient communication and coordination with these native text layout and rendering systems. For instance, measuring text size, which is crucial for layout, can be done more synchronously if needed.
 
-h3. Procedural Content: Basic `<Text>` Usage
+h2. Procedural Content: Basic `<Text>` Usage
 
 Let's enhance our SpeedyMeds medication card example from the previous section by adding more styled text.
 
 *Short, Self-Contained Example:*
 
 This example demonstrates using `<Text>` with various styles and nesting for a medication item.
-{code}tsx
+
+{code:language=js}
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
@@ -143,7 +159,7 @@ const styles = StyleSheet.create({
     color: "#95a5a6", // Lighter grey for less critical info
   },
 });
-```
+{code}
 
 *Explanation of the Example:*
 
@@ -157,7 +173,7 @@ The example effectively uses various text styling props like `fontSize`, `fontWe
 
 Remember, correct usage and styling of the `<Text>` component are key to presenting information clearly and effectively to your users in the SpeedyMeds app, whether it's medication details, patient instructions, or refill reminders.
 
-h3. Next Steps
+h2. Next Steps
 
 After learning about displaying text, the next logical step is to understand how to incorporate images into your application using the `<Image>` component.
 * [./section-04-image.md|Next Section: Image (`<Image>`) - Displaying Images]

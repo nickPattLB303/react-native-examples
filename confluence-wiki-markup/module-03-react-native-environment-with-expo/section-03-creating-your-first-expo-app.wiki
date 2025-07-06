@@ -1,8 +1,10 @@
-h2. Section 3: Creating Your First Expo App ({{npx create-expo-app@latest}})
+{toc}
+
+h1. Section 3: Creating Your First Expo App ({{npx create-expo-app@latest}})
 
 With all the prerequisites installed, you're now ready to create your first React Native application using Expo! We'll use the {{create-expo-app}} command-line tool, which sets up a new project with a sensible default configuration and template, embodying the principle of "convention over configuration" to get you started quickly.
 
-h3. The {{create-expo-app}} Command
+h2. The {{create-expo-app}} Command
 
 {{create-expo-app}} is the official command-line interface (CLI) tool for creating new Expo projects. Using {{npx}} (which comes with npm) allows you to run this tool without globally installing it first. {{npx create-expo-app@latest}} ensures you are always using the most recent version of the project creation tool.
 
@@ -22,17 +24,19 @@ You can also use other package managers: ([https://docs.expo.dev/more/create-exp
 * pnpm: {{pnpm create expo-app YourProjectName}}
 * Bun: {{bun create expo YourProjectName}}
 
-h3. Creating the Project
+h2. Creating the Project
 
 Let's create your first application. For this course, we'll be working towards building aspects of a pharmacy application we call "SpeedyMeds". Let's name our initial project {{SpeedyMedsPrototype}}.
 # *Open your Terminal.*
 # *Navigate to your desired projects directory (Optional):* Use {{cd}} to move to where you keep your development projects (e.g., {{cd ~/Developer}}).
 # *Run the create command:*
-    {code:language=bash}
-npx create-expo-app@latest SpeedyMedsPrototype
-    ```
+{code:language=bash}
+    npx create-expo-app@latest SpeedyMedsPrototype
+{code}
 # *Project Templates (If Prompted):* `create-expo-app` might prompt you to choose a template. Common options include: ([https://docs.expo.dev/more/create-expo|Source])
-*** *`default` (Recommended):* Sets up a multi-screen app with Expo Router and TypeScript. Often the default if no template is specified.
+h3. `default` (Recommended)
+
+Sets up a multi-screen app with Expo Router and TypeScript. Often the default if no template is specified.
 *** `blank`: Minimal template with only core Expo packages.
 *** `blank-typescript`: Minimal template with TypeScript enabled.
 *** `tabs`: Pre-configured with Expo Router and basic tab navigation (using TypeScript).
@@ -48,22 +52,22 @@ npx create-expo-app@latest SpeedyMedsPrototype
 *** Sets up configuration files (`app.json`, `package.json`, `tsconfig.json`, etc.).
       You should see output like:
 
-    ```
+{code:language=text}
     ✔ Creating project...
     ✔ Using Expo SDK: ...
     ✔ Downloaded and extracted project files.
     ✔ Installed JavaScript dependencies.
     ✔ Installed CocoaPods.
     ✔ Your project is ready!
-    ```
+{code}
 # *Navigate into your project directory:*
-    ```bash
+{code:language=bash}
     cd SpeedyMedsPrototype
-    ```
+{code}
 
 Congratulations! You've successfully created your first Expo project.
 
-h3. TypeScript in Expo Projects
+h2. TypeScript in Expo Projects
 
 Modern Expo templates come with TypeScript support out of the box. TypeScript adds static type checking to JavaScript, catching type-related errors early in development and providing better editor support through autocompletion and documentation.
 
@@ -72,7 +76,8 @@ The default template creates several TypeScript configuration files:
 * `types.tsx` or similar file: Contains shared type definitions for your project
 
 You'll see `.tsx` file extensions for React components (instead of `.jsx`) and `.ts` for non-component files (instead of `.js`).
-{code}typescript
+
+{code:language=js}
 // Example type definitions for a Medication in SpeedyMeds
 export interface Medication {
   id: string;
@@ -91,11 +96,12 @@ interface MedicationItemProps {
 export function MedicationItem({ medication, onPress }: MedicationItemProps) {
   // Component implementation
 }
-```
+
+{code}
 
 bq. 🛣️ *(All Learners):* Using TypeScript from the beginning of your project provides significant advantages in code quality and developer experience. Even if you're new to TypeScript, the basic types are straightforward to learn, and the benefits of catching errors early are substantial.
 
-h3. Exercise 3.1: Create and Run Initial App
+h2. Exercise 3.1: Create and Run Initial App
 
 This exercise guides you through creating your first Expo project, specifically tailored to the SpeedyMeds theme we'll be using throughout the course.
 
@@ -109,7 +115,7 @@ In this exercise, you'll:
 
 The Snack provides a virtual environment to verify your understanding of the concepts, but you should also complete these steps on your local machine to ensure your development environment is properly configured.
 
-h4. Prerequisites for this Exercise
+h3. Prerequisites for this Exercise
 * Node.js and npm installed (Section 2)
 * Xcode Command Line Tools installed (Section 2)
 * Watchman installed (Section 2)

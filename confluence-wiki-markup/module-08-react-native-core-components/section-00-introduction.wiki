@@ -1,4 +1,4 @@
-h1. Module 8: React Native Core Components
+{toc}
 
 React Native Core Components are the fundamental building blocks for creating user interfaces in your mobile applications. They provide a set of pre-built, platform-agnostic elements that translate to native UI widgets on iOS and Android. Understanding and effectively using these components is essential for any React Native developer. This module will equip you with the knowledge to leverage these essential tools to construct intuitive and performant user interfaces for applications like our SpeedyMeds pharmacy app.
 
@@ -10,7 +10,7 @@ bq. 🧗‍♀️ *(Self-Led):* Create small, focused examples for each Core Com
 
 bq. 🔁 *(Asynchronous Learners):* The official React Native documentation for each Core Component is an excellent supplementary resource. Refer to it often as you go through this module.
 
-h2. Target Audience Adaptation
+h1. Target Audience Adaptation
 
 bq. 🍏 *(iOS Developers):*
 > *Comparison:* React Native Core Components like {{<View>}}, {{<Text>}}, and {{<Image>}} are analogous to UIKit elements such as {{UIView}}, {{UILabel}}, and {{UIImageView}}. The primary difference is that you define and manipulate these components using JavaScript/JSX instead of Swift/Objective-C and Interface Builder or programmatic layout. Styling via {{StyleSheet}} (using Flexbox) will also differ from Auto Layout or SwiftUI modifiers.
@@ -32,7 +32,7 @@ bq. 🅰️ *(Web Developers with Angular/Other Frameworks):*
 > *Key Takeaway:* The concept of UI building blocks will be familiar. Concentrate on learning JSX for component definition, the available Core Components, and the {{StyleSheet}} API for styling.
 > *Source:* [https://reactnative.dev/docs/core-components-and-native-components|React Native Docs: Core Components and Native Components], [https://angular.io/guide/built-in-directives|Angular Docs: Built-in directives]
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Describe the role and importance of Core Components in React Native development.
@@ -46,7 +46,7 @@ By the end of this module, you will be able to:
 * Render efficient lists of data using {{<FlatList>}} and {{<SectionList>}}.
 * Identify and understand the use cases for other common Core Components like {{<ActivityIndicator>}} and {{<Modal>}}.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, ensure you have completed:
 * *Module 3: Setting Up Your React Native Environment with Expo*
@@ -54,7 +54,7 @@ Before starting this module, ensure you have completed:
 * *Module 6: TypeScript Essentials*
 * *Module 7: React Essentials for React Native*
 
-h2. Sections in This Module
+h1. Sections in This Module
 
 This module is divided into the following sections:
 * [./section-01-the-role-of-core-components.md|Section 1: The Role of Core Components]
@@ -68,7 +68,7 @@ This module is divided into the following sections:
 * [./section-09-flatlist-and-sectionlist.md|Section 9: FlatList and SectionList - Efficient List Rendering]
 * [./section-10-other-core-components-overview.md|Section 10: Other Core Components Overview]
 
-h2. Module Challenge
+h1. Module Challenge
 
 *Challenge 8: Build a Basic Prescription Item Card*
 
@@ -78,11 +78,11 @@ h2. Module Challenge
 
 *(https://snack.expo.dev/@speedymeds/rn-challenge-08-prescription-card)*
 
-h2. Module Summary
+h1. Module Summary
 
 This module provides a comprehensive exploration of React Native's Core Components. You'll learn that these components are the essential, pre-built UI pieces like {{<View>}}, {{<Text>}}, {{<Image>}}, {{<TextInput>}}, {{<ScrollView>}}, and interactive elements like {{<Button>}} and {{<Pressable>}}. We'll cover how they map to native platform widgets, ensuring a truly native look and feel. A key focus will be on understanding their props, styling using {{StyleSheet}}, and their role in constructing the UI of a React Native application. By mastering these foundational elements, you'll be well-prepared to build complex and interactive user interfaces.
 
-h2. Additional Resources
+h1. Additional Resources
 
 bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/core-components-and-apis|React Native Docs: Core Components and APIs]

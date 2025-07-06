@@ -1,34 +1,42 @@
-h2. Section 5: Asynchronous JavaScript
+{toc}
+
+h1. Section 5: Asynchronous JavaScript
 
 JavaScript is single-threaded, meaning it can only execute one piece of code at a time. However, many operations in web and mobile development, like fetching data from a server, reading files, or waiting for user input, can take time. If these operations were synchronous (blocking), they would freeze the entire application, leading to a poor user experience. Asynchronous JavaScript allows your program to perform long-running tasks without blocking the main thread, ensuring your application remains responsive.
 
-h3. Synchronous vs. Asynchronous Code
-* *Synchronous Code:* Executes in a sequence, one line at a time. Each operation must complete before the next one begins. If an operation takes a long time (e.g., a large network request), the application will be unresponsive until it finishes.
+h2. Synchronous vs. Asynchronous Code
 
-  {code:language=js}
+h2. Synchronous Code
+
+Executes in a sequence, one line at a time. Each operation must complete before the next one begins. If an operation takes a long time (e.g., a large network request), the application will be unresponsive until it finishes.
+
+{code:language=js}
 console.log("First: Preparing medication list...");
-  // Imagine a long, blocking operation here
-  // for (let i = 0; i < 1e9; i++) { /* do nothing */ }
-  console.log("Second: Medication list prepared."); // This logs only after the blocking operation
-  console.log("Third: Displaying list.");
-  ```
-* *Asynchronous Code:* Allows the program to initiate a task that might take time (like fetching data) and then continue executing other code without waiting for that task to complete. When the task finishes, a callback function or a Promise handler is executed with the result.
+// Imagine a long, blocking operation here
+// for (let i = 0; i < 1e9; i++) { /* do nothing */ }
+console.log("Second: Medication list prepared."); // This logs only after the blocking operation
+console.log("Third: Displaying list.");
+{code}
 
-  ```javascript
-  console.log("First: Requesting patient data...");
+h2. Asynchronous Code
 
-  setTimeout(() => {
-    // This function (callback) runs after 2 seconds
-    console.log("Second: Patient data received (asynchronously).");
-  }, 2000); // 2000 milliseconds = 2 seconds
+Allows the program to initiate a task that might take time (like fetching data) and then continue executing other code without waiting for that task to complete. When the task finishes, a callback function or a Promise handler is executed with the result.
 
-  console.log("Third: Continuing with other tasks (e.g., updating UI)...");
-  // Expected Output Order:
-  // First: Requesting patient data...
-  // Third: Continuing with other tasks (e.g., updating UI)...
-  // (after 2 seconds)
-  // Second: Patient data received (asynchronously).
-  ```
+{code:language=js}
+console.log("First: Requesting patient data...");
+
+setTimeout(() => {
+  // This function (callback) runs after 2 seconds
+  console.log("Second: Patient data received (asynchronously).");
+}, 2000); // 2000 milliseconds = 2 seconds
+
+console.log("Third: Continuing with other tasks (e.g., updating UI)...");
+// Expected Output Order:
+// First: Requesting patient data...
+// Third: Continuing with other tasks (e.g., updating UI)...
+// (after 2 seconds)
+// Second: Patient data received (asynchronously).
+{code}
 
 This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
 
@@ -82,7 +90,7 @@ return data;
 fetchData().then(processData).catch(handleError);
 ```
 
-h4. The Event Loop
+h3. The Event Loop
 
 JavaScript environments (like browsers, Node.js, and React Native's JavaScript engine) manage asynchronous operations using an *event loop*, a *call stack*, and a *message queue* (or task queue).
 # *Call Stack:* Where JavaScript keeps track of function calls. When a function is called, it's added to the stack. When it returns, it's removed.
@@ -91,7 +99,8 @@ JavaScript environments (like browsers, Node.js, and React Native's JavaScript e
 # *Event Loop:* Continuously checks if the call stack is empty. If it is, it takes the first message (callback) from the queue and pushes it onto the call stack for execution.
 
 This mechanism ensures that long-running operations don't block the main thread, allowing the UI to remain responsive.
-{code}mermaid
+
+{mermaid}
 graph TD
     subgraph JavaScriptRuntime [JavaScript Runtime]
         CallStack["Call Stack (LIFO)"]
@@ -133,13 +142,15 @@ graph TD
     style CallStack fill:#lightblue
     style MicrotaskQueue fill:#lightgreen
     style CallbackQueue fill:#orange
-{code:language=text}
+{mermaid}
+
 This diagram visualizes the JavaScript Event Loop mechanism. The *Call Stack* executes synchronous code. When an asynchronous operation (like `setTimeout` or `fetch`) is initiated, it's offloaded to *Browser/Node.js APIs* which run in the background. Upon completion, these APIs place their callbacks into one of two queues: the *Microtask Queue* (for Promise handlers like `.then()`, `.catch()`, which have higher priority) or the *Callback Queue* (also known as Macrotask Queue, for `setTimeout`, I/O). The *Event Loop* continuously monitors the Call Stack. When the Call Stack is empty, it first processes _all_ tasks in the Microtask Queue. Only if both the Call Stack and Microtask Queue are empty will it take _one_ task from the Callback Queue to push onto the Call Stack for execution. This ensures non-blocking behavior and prioritizes promise resolutions.
 
-h3. Callbacks
+h2. Callbacks
 
 A callback is a function passed as an argument to another function, which is then invoked (called back) inside the outer function to complete some kind of routine or action, often after an asynchronous operation has finished.
-{code}javascript
+
+{code:language=js}
 function getPatientDetails(patientId, callback) {
   console.log(`Fetching details for patient ${patientId}...`);
   // Simulate a delay (e.g., network request)
@@ -162,10 +173,12 @@ function displayPatientData(data) {
 
 getPatientDetails("P90210", displayPatientData);
 // After ~1.5 seconds, displayPatientData will be called with patientData
-{code:language=text}
+{code}
+
 *The "Pyramid of Doom":*
 When dealing with multiple dependent asynchronous operations using callbacks, you can end up with deeply nested callbacks. This pattern, often called the "pyramid of doom," makes code difficult to read, debug, and maintain.
-{code}javascript
+
+{code:language=js}
 // Conceptual example of the pyramid of doom
 /*
 fetchFirstResource(param1, function(result1) {
@@ -179,10 +192,11 @@ fetchFirstResource(param1, function(result1) {
   }, failureCallback);
 }, failureCallback);
 */
-{code:language=text}
+{code}
+
 Promises and `async/await` were introduced to solve these issues, offering more structured and readable ways to handle asynchronous operations.
 
-h3. Promises (ES6)
+h2. Promises (ES6)
 
 A Promise is an object representing the eventual completion (or failure) of an asynchronous operation and its resulting value. It allows you to associate handlers with an asynchronous action's eventual success value or failure reason.
 
@@ -193,16 +207,17 @@ A Promise can be in one of three states:
 
 Once a Promise is _settled_ (i.e., it is either fulfilled or rejected), its state and value/reason are immutable and will not change.
 
-h4. Promise States and Transitions
+h3. Promise States and Transitions
 
 ||State||Description||How it's reached||Next possible states||
 |`pending`|Initial state, operation not yet completed|When `new Promise()` is created|`fulfilled`, `rejected`|
 |`fulfilled`|Operation completed successfully, has a value|Executor calls `resolve(value)`|(Terminal state)|
 |`rejected`|Operation failed, has a reason (error)|Executor calls `reject(reason)` or error thrown in executor|(Terminal state)|
-h4. Creating Promises
+h3. Creating Promises
 
 You can create a Promise using the `Promise` constructor, which takes a function (executor) with two parameters: `resolve` and `reject`. `resolve` is a function to call when the operation succeeds, and `reject` is for when it fails.
-{code}javascript
+
+{code:language=js}
 function fetchMedicationStock(medicationName) {
   return new Promise((resolve, reject) => {
     console.log(`Checking stock for ${medicationName}...`);
@@ -227,16 +242,18 @@ function fetchMedicationStock(medicationName) {
     }, 1000);
   });
 }
-{code:language=text}
+{code}
+
 This `fetchMedicationStock` function demonstrates Promise creation. It returns a `new Promise` that simulates fetching data asynchronously using `setTimeout`. Inside the executor function, after a 1-second delay, it checks a mock `inventory`. If the `medicationName` exists and has stock > 0, the Promise is `resolve`d with an object containing the medication and stock count. If the medication is out of stock or not found, the Promise is `reject`ed with an appropriate `Error` object. This encapsulates the asynchronous logic and provides a clear success (`resolve`) or failure (`reject`) path for consumers of the Promise.
 
-h4. Consuming Promises
+h3. Consuming Promises
 * *`.then(onFulfilled, onRejected)`*: Attaches callbacks for the resolution and/or rejection of the Promise.
 ** `onFulfilled`: Called if the Promise is fulfilled (resolved).
 ** `onRejected`: Called if the Promise is rejected.
 * *`.catch(onRejected)`*: A shorthand for `promise.then(null, onRejected)`. Used for error handling.
 * *`.finally(onFinally)` (ES2018)*: Schedules a function to be called when the promise is settled (either fulfilled or rejected).
-{code}javascript
+
+{code:language=js}
 fetchMedicationStock("Amoxicillin")
   .then((result) => {
     console.log(`Success: ${result.medication} has ${result.stock} units.`);
@@ -259,13 +276,22 @@ fetchMedicationStock("Aspirin")
   .finally(() => {
     console.log("Stock check for Aspirin complete.");
   });
-{code:language=text}
+{code}
+
 *Chaining Promises:*
 `.then()`, `.catch()`, and `.finally()` return new Promises, allowing you to chain asynchronous operations. The way you return values or throw errors within these handlers determines the state and value of the chained Promise:
-* *Returning a Value:* If an `onFulfilled` or `onRejected` handler returns a regular value (not a Promise), the new Promise returned by `.then()` (or `.catch()`) is *fulfilled* with that value.
-* *Throwing an Error:* If a handler throws an error, the new Promise is *rejected* with that error.
-* *Returning a Promise:* If a handler returns another Promise (let's call it `P2`), the new Promise returned by `.then()` (or `.catch()`) will "adopt" the state of `P2`. It will wait for `P2` to settle and then settle with `P2`'s fulfillment value or rejection reason. This is key for sequencing dependent asynchronous operations.
-{code}javascript
+
+h2. Returning a Value
+
+If an `onFulfilled` or `onRejected` handler returns a regular value (not a Promise), the new Promise returned by `.then()` (or `.catch()`) is *fulfilled* with that value.
+h2. Throwing an Error
+
+If a handler throws an error, the new Promise is *rejected* with that error.
+h2. Returning a Promise
+
+If a handler returns another Promise (let's call it `P2`), the new Promise returned by `.then()` (or `.catch()`) will "adopt" the state of `P2`. It will wait for `P2` to settle and then settle with `P2`'s fulfillment value or rejection reason. This is key for sequencing dependent asynchronous operations.
+
+{code:language=js}
 function verifyPatient(patientId) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -292,15 +318,21 @@ verifyPatient("P123")
   .catch((error) => {
     console.error(`Operation failed: ${error.message}`);
   });
-{code:language=text}
-h4. Static Promise Methods
+{code}
+
+h3. Static Promise Methods
 * `Promise.all(iterable)`: Waits for all promises in an iterable to resolve, or for any one of them to reject. Returns a single Promise that resolves with an array of the results of the input promises (in the same order).
 * `Promise.race(iterable)`: Waits for the first promise in an iterable to settle (either resolve or reject). Returns a Promise that settles with the result/reason of the first promise that settles.
 * `Promise.resolve(value)`: Returns a Promise object that is resolved with the given value.
 * `Promise.reject(reason)`: Returns a Promise object that is rejected with the given reason.
-* *`Promise.allSettled(iterableOfPromises)` (ES2020+):* Takes an iterable of Promises. It returns a Promise that fulfills after _all_ of the given Promises have either fulfilled or rejected. The fulfillment value is an array of objects, each describing the outcome of a Promise: `{status: "fulfilled", value:...}` or `{status: "rejected", reason:...}`. This is useful when you need to know the outcome of all operations, regardless of individual failures.
-* *`Promise.any(iterableOfPromises)` (ES2021+):* Takes an iterable of Promises. It returns a Promise that fulfills as soon as _any_ of the input Promises fulfill, with the value of the first one that fulfilled. If all input Promises reject, it rejects with an `AggregateError` (an error object that groups all the individual rejection reasons).
-{code}javascript
+h2. `Promise.allSettled(iterableOfPromises)` (ES2020+)
+
+Takes an iterable of Promises. It returns a Promise that fulfills after _all_ of the given Promises have either fulfilled or rejected. The fulfillment value is an array of objects, each describing the outcome of a Promise: `{status: "fulfilled", value:...}` or `{status: "rejected", reason:...}`. This is useful when you need to know the outcome of all operations, regardless of individual failures.
+h2. `Promise.any(iterableOfPromises)` (ES2021+)
+
+Takes an iterable of Promises. It returns a Promise that fulfills as soon as _any_ of the input Promises fulfill, with the value of the first one that fulfilled. If all input Promises reject, it rejects with an `AggregateError` (an error object that groups all the individual rejection reasons).
+
+{code:language=js}
 Promise.all([
   fetchMedicationStock("Amoxicillin"),
   fetchMedicationStock("Ibuprofen"),
@@ -330,13 +362,20 @@ Promise.allSettled([
     }
   });
 });
-{code:language=text}
-h3. `async/await` (ES2017)
+{code}
+
+h2. `async/await` (ES2017)
 
 `async/await` is syntactic sugar built on top of Promises, making asynchronous code look and feel more like synchronous code. This greatly improves readability and maintainability.
-* *`async` function:* Declaring a function with the `async` keyword means it will automatically return a Promise. If the function returns a value, the Promise will be resolved with that value. If the function throws an error, the Promise will be rejected with that error.
-* *`await` operator:* Can only be used inside an `async` function. It pauses the execution of the `async` function and waits for the Promise to its right to settle (resolve or reject). If the Promise resolves, `await` returns the resolved value. If it rejects, `await` throws the rejected reason (which can be caught by `try...catch`).
-{code}javascript
+
+h2. `async` function
+
+Declaring a function with the `async` keyword means it will automatically return a Promise. If the function returns a value, the Promise will be resolved with that value. If the function throws an error, the Promise will be rejected with that error.
+h2. `await` operator
+
+Can only be used inside an `async` function. It pauses the execution of the `async` function and waits for the Promise to its right to settle (resolve or reject). If the Promise resolves, `await` returns the resolved value. If it rejects, `await` throws the rejected reason (which can be caught by `try...catch`).
+
+{code:language=js}
 async function processPrescription(patientId, medicationName) {
   console.log("--- Processing Prescription with async/await ---");
   try {
@@ -372,13 +411,15 @@ processPrescription("P456", "Amoxicillin") // P456 will cause verifyPatient to r
   .catch((error) =>
     console.error(`Final error handler for P456: ${error.message}`)
   );
-{code:language=text}
+{code}
+
 Error handling in `async/await` is typically done using standard `try...catch` blocks, similar to synchronous code.
 
-h3. Diagram: `async/await` Flow Conceptual Model
+h2. Diagram: `async/await` Flow Conceptual Model
 
 The following diagram illustrates conceptually how `async/await` simplifies asynchronous control flow, making it appear more synchronous while still being non-blocking under the hood.
-{code}mermaid
+
+{mermaid}
 sequenceDiagram
     participant Caller
     participant AsyncFunction as async processOrder()
@@ -401,10 +442,11 @@ sequenceDiagram
     AsyncFunction->>AsyncFunction: console.log('Stock checked')
     AsyncFunction-->>-Caller: Returns Promise (eventually resolves/rejects)
 
-{code:language=text}
+{mermaid}
+
 This diagram shows that when an `async` function encounters an `await` keyword, it pauses its own execution at that point, allowing other JavaScript code (like UI updates or other event handlers) to run. The `await` waits for the asynchronous operation (the Promise) to complete. Once the awaited Promise settles (resolves or rejects), the `async` function resumes from where it left off. This makes complex asynchronous sequences much easier to write and understand because the code flows top-to-bottom, similar to synchronous code, but without freezing the main thread. The Event Loop is crucial in managing these paused functions and resuming them when their awaited operations are done.
 
-h3. Under the Hood: Event Loop, Task Queues, and Microtasks
+h2. Under the Hood: Event Loop, Task Queues, and Microtasks
 
 To truly understand how JavaScript handles asynchronicity without multiple threads, we need to look at the runtime environment's components:
 # *JavaScript Engine & Call Stack:*
@@ -421,7 +463,9 @@ To truly understand how JavaScript handles asynchronicity without multiple threa
 # *Microtask Queue:*
 *** This queue holds callbacks from completed *microtasks*. Microtasks have a *higher priority* than macrotasks.
 *** The primary sources of microtasks are:
-**** *Promise handlers:* Callbacks attached via `.then()`, `.catch()`, and `.finally()`.
+h3. Promise handlers
+
+Callbacks attached via `.then()`, `.catch()`, and `.finally()`.
 **** Callbacks registered with `queueMicrotask()` (a way to schedule a function to run as a microtask).
 **** `MutationObserver` callbacks (in browsers).
 # *The Event Loop:*
@@ -432,29 +476,37 @@ To truly understand how JavaScript handles asynchronicity without multiple threa
 #### If the Call Stack is empty and the Microtask Queue is empty, take *one Macrotask* from the Callback Queue (if available) and push its callback function onto the Call Stack for execution. This brings us back to step 1 (the callback itself is synchronous code).
 
 *Implications for Developers:*
-* *Priority:* Microtasks (like Promise handlers) will always execute before Macrotasks (like `setTimeout` callbacks), even if both are scheduled at roughly the same time.
 
-  ```javascript
-  console.log("Start");
+h2. Priority
 
-  setTimeout(() => {
-    console.log("Timeout callback (Macrotask)");
-  }, 0);
+Microtasks (like Promise handlers) will always execute before Macrotasks (like `setTimeout` callbacks), even if both are scheduled at roughly the same time.
 
-  Promise.resolve().then(() => {
-    console.log("Promise.then callback (Microtask)");
-  });
+{code:language=js}
+console.log("Start");
 
-  console.log("End");
+setTimeout(() => {
+  console.log("Timeout callback (Macrotask)");
+}, 0);
 
-  // Expected Output:
-  // Start
-  // End
-  // Promise.then callback (Microtask)
-  // Timeout callback (Macrotask)
-  ```
-* *Non-Blocking:* This entire system ensures that the main JavaScript thread is not blocked by long-running I/O operations, keeping the UI responsive.
-* *`async/await` Integration:* `await` works by pausing the `async` function and letting the event loop continue. When the awaited Promise settles, the continuation of the `async` function is typically scheduled as a microtask.
+Promise.resolve().then(() => {
+  console.log("Promise.then callback (Microtask)");
+});
+
+console.log("End");
+
+// Expected Output:
+// Start
+// End
+// Promise.then callback (Microtask)
+// Timeout callback (Macrotask)
+{code}
+
+h2. Non-Blocking
+
+This entire system ensures that the main JavaScript thread is not blocked by long-running I/O operations, keeping the UI responsive.
+h2. `async/await` Integration
+
+`await` works by pausing the `async` function and letting the event loop continue. When the awaited Promise settles, the continuation of the `async` function is typically scheduled as a microtask.
 
 Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
@@ -467,7 +519,7 @@ bq. 📚 *Official Documentation:*
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function|MDN Web Docs: `async function`]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await|MDN Web Docs: `await`]
 
-h3. Exercise 5.3: Async Function Implementation
+h2. Exercise 5.3: Async Function Implementation
 
 Practice working with asynchronous JavaScript by implementing functions that simulate fetching data, first using Promises directly, and then refactoring to use `async/await`.
 
@@ -476,16 +528,16 @@ Practice working with asynchronous JavaScript by implementing functions that sim
 _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
 
 *Instructions for Exercise 5.3 (to be placed in CodeSandbox `README.md`):*
-{code}markdown
-h1. Exercise 5.3: Async Function Implementation - SpeedyMeds Pharmacy
 
-h2. Objective
+{code:language=markdown}
+
+h1. Objective
 
 Gain experience with asynchronous JavaScript by implementing functions that simulate network requests using Promises and then refactoring them to use `async/await` syntax for better readability.
 
-h2. Tasks
+h1. Tasks
 
-h3. Part 1: Using Promises
+h2. Part 1: Using Promises
 # *`fetchPatientProfile(patientId)` Function (Promise-based):*
 *** Define a function `fetchPatientProfile(patientId)` that returns a `Promise`.
 *** Inside the Promise executor, simulate a network request using `setTimeout` (e.g., delay of 1 second).
@@ -506,7 +558,7 @@ h3. Part 1: Using Promises
 *** Chain another `.then()` to log both the patient name and the medication details (e.g., "Patient [Name] is prescribed [Medication Name] ([Dosage])").
 *** Include a `.catch()` at the end of the chain to handle any errors from either Promise.
 
-h3. Part 2: Refactoring with `async/await`
+h2. Part 2: Refactoring with `async/await`
 # *`getPrescriptionInfoAsync(patientId, medicationName)` Function (`async/await`):*
 *** Define an `async` function `getPrescriptionInfoAsync(patientId, medicationName)`.
 *** Inside this function, use `await` to call `fetchPatientProfile(patientId)` and then `fetchMedicationDetails(medicationName)` sequentially.
@@ -514,15 +566,15 @@ h3. Part 2: Refactoring with `async/await`
 *** Use a `try...catch` block to handle any potential errors from the awaited promises and log an appropriate error message (e.g., "(Async) Error fetching prescription info: [error message]").
 *** Call `getPrescriptionInfoAsync` with valid data and also with data that would cause one of the underlying functions to reject (to test error handling).
 
-h2. Getting Started
+h1. Getting Started
 # Open the `index.js` file.
 # Implement the functions as described for Part 1 and then Part 2.
 # Use `console.log()` and `console.error()` to display the outputs.
 # Observe the behavior of Promises and `async/await`, especially how errors are handled and how `async/await` can simplify asynchronous code structure.
 
 Good luck!
-```
+{code}
 
-h3. Next Steps
+h2. Next Steps
 
 Asynchronous programming is a cornerstone of modern JavaScript and essential for building responsive React Native apps that interact with networks or perform other time-consuming tasks. You're now equipped to handle these scenarios effectively. Next, we'll explore how JavaScript organizes code into reusable pieces called modules. Proceed to [./section-06-es6-modules.md|Section 6: ES6 Modules].

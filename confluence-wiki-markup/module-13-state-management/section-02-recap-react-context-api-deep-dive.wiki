@@ -1,10 +1,12 @@
-h2. Section 2: Recap: React Context API Deep Dive
+{toc}
+
+h1. Section 2: Recap: React Context API Deep Dive
 
 In the previous section, we discussed the limitations of {{useState}} and prop drilling for managing state that needs to be shared across many components in your application. Prop drilling can make your code verbose and hard to maintain. React provides a built-in solution to this problem: the *Context API*.
 
 This section revisits the React Context API, which you were briefly introduced to in Module 7. We'll take a deeper look at how it works, its core components ({{Provider}}, {{Consumer}}, and the {{useContext}} Hook), and how it can help us manage global state more effectively in our SpeedyMeds application.
 
-h3. What is the React Context API?
+h2. What is the React Context API?
 
 The Context API provides a way to pass data through the component tree without having to pass props down manually at every level. It's designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme preferences (like light/dark mode), or preferred language.
 
@@ -13,7 +15,7 @@ Think of it as a global data store for a specific part of your component tree. A
 {info}
 While Context is powerful for avoiding prop drilling, it's not a replacement for all state management. For very complex state logic or high-frequency updates, other libraries (which we'll cover later in this module) might be more suitable due to performance considerations.
 {info}
-h3. Core Concepts of the Context API
+h2. Core Concepts of the Context API
 
 There are three main parts to understanding and using the Context API:
 # *{{React.createContext()}}*: This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching {{Provider}} above it in the tree.
@@ -25,7 +27,7 @@ There are three main parts to understanding and using the Context API:
 *** *{{useContext}} Hook*: (The modern and preferred way in functional components) This Hook accepts a context object (the result of {{React.createContext}}) and returns the current context value for that context. The {{useContext}} Hook makes consuming context cleaner and more straightforward within functional components. Any component calling {{useContext}} will re-render whenever the context value provided by the corresponding {{Provider}} changes.
 *** *{{Class.contextType}}*: (For class components) A class component can subscribe to a single context by assigning the Context object to a static {{contextType}} property on the class. The context value is then available as {{this.context}}. This is mentioned for completeness, as our course focuses on functional components.
 
-h3. Implementing Context API: SpeedyMeds Theme Example
+h2. Implementing Context API: SpeedyMeds Theme Example
 
 Let's create a simple example for our SpeedyMeds app to manage theme preferences (e.g., switching between light and dark mode). This is a classic use case for Context API because the theme is often needed by many components throughout the application.
 
@@ -260,12 +262,17 @@ bq. 🌐 *(Web Developers):*
 *Comparison (Angular):* Angular developers achieve similar goals using Services with Dependency Injection (DI). A shared service can hold state (e.g., using RxJS `BehaviorSubject` or Signals) and be injected into any component that needs it, regardless of its position in the component tree. This DI approach is Angular's primary way to share data and logic, effectively bypassing the need for manual prop drilling. Context API can be seen as React's more explicit, component-tree-based DI and state propagation mechanism for certain types of shared data.
 > *Key Takeaway:* Context API provides React's built-in solution for what Angular often solves with services and DI. The core idea is to make "global" data available to a subtree of components without manual prop passing.
 
-h3. Exercise 13.1: Managing Global Theme with Context
-* *Objective:* Apply the `ThemeContext` created in this section to a small set of components, allowing them to display themed content and toggle the theme.
-* *Task:* Implement a settings screen where the user can tap a button to switch between light and dark themes. Ensure other components on a mock "home" screen react to this theme change.
+h2. Exercise 13.1: Managing Global Theme with Context
+
+h2. Objective
+
+Apply the `ThemeContext` created in this section to a small set of components, allowing them to display themed content and toggle the theme.
+h2. Task
+
+Implement a settings screen where the user can tap a button to switch between light and dark themes. Ensure other components on a mock "home" screen react to this theme change.
 
 *(https://snack.expo.dev/@course-author/m13-ex01-context-theme)*
 
-h3. Next Steps
+h2. Next Steps
 
 While Context API is a great solution for many prop-drilling scenarios, it's crucial to understand its performance characteristics, especially as your application scales. The next section will delve into these performance considerations and how to optimize your Context API usage.

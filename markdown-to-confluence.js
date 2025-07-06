@@ -29,43 +29,124 @@ class MarkdownToConfluenceConverter {
   convertMarkdownToConfluence(markdown) {
     let confluence = markdown;
 
-    // 1. Handle admonitions first (before other conversions)
+    // 1. Add table of contents at the beginning
+    confluence = this.addTableOfContents(confluence);
+
+    // 2. Handle admonitions first (before other conversions)
     confluence = this.convertAdmonitions(confluence);
 
-    // 2. Handle code blocks (must be before inline code)
+    // 3. Improve structure - convert complex lists to headings
+    confluence = this.improveStructure(confluence);
+
+    // 4. Handle code blocks (must be before inline code) - improved for nested blocks
     confluence = this.convertCodeBlocks(confluence);
 
-    // 3. Handle text formatting (bold, italic) - before inline code to avoid conflicts
+    // 5. Handle text formatting (bold, italic) - before inline code to avoid conflicts
     confluence = this.convertTextFormatting(confluence);
 
-    // 4. Handle inline code (backticks) - after text formatting
+    // 6. Handle inline code (backticks) - after text formatting
     confluence = this.convertInlineCode(confluence);
 
-    // 5. Handle headers
+    // 7. Handle headers - improved to fix heading levels
     confluence = this.convertHeaders(confluence);
 
-    // 6. Handle tables
+    // 8. Handle tables
     confluence = this.convertTables(confluence);
 
-    // 7. Handle lists
+    // 9. Handle lists
     confluence = this.convertLists(confluence);
 
-    // 8. Handle links
+    // 10. Handle links
     confluence = this.convertLinks(confluence);
 
-    // 9. Handle images
+    // 11. Handle images
     confluence = this.convertImages(confluence);
 
-    // 10. Handle block quotes
+    // 12. Handle block quotes
     confluence = this.convertBlockQuotes(confluence);
 
-    // 11. Handle horizontal rules
+    // 13. Handle horizontal rules
     confluence = this.convertHorizontalRules(confluence);
 
-    // 12. Handle line breaks and spacing
+    // 14. Handle line breaks and spacing
     confluence = this.cleanupSpacing(confluence);
 
     return confluence;
+  }
+
+  /**
+   * Add table of contents at the beginning of the document
+   */
+  addTableOfContents(content) {
+    // Check if content has headers (excluding the first h1 which will be omitted)
+    const hasHeaders = /^#{2,6}\s+/m.test(content);
+    
+    if (hasHeaders) {
+      return '{toc}\n\n' + content;
+    }
+    
+    return content;
+  }
+
+  /**
+   * Improve document structure by converting complex nested lists to proper headings
+   */
+  improveStructure(content) {
+    // Convert list items that contain bold headers and code blocks to proper headings
+    // Look for patterns like:
+    // - **Title:** Description
+    //   ```code```
+    
+    const lines = content.split('\n');
+    const result = [];
+    let i = 0;
+    
+    while (i < lines.length) {
+      const line = lines[i];
+      
+      // Check if this is a list item with bold title that should become a heading
+      const listWithBoldMatch = line.match(/^(\s*)[-*+]\s+\*\*([^*]+):\*\*(.*)/);
+      
+      if (listWithBoldMatch) {
+        const indent = listWithBoldMatch[1];
+        const title = listWithBoldMatch[2];
+        const description = listWithBoldMatch[3];
+        
+        // Determine heading level based on indentation and context
+        const headingLevel = Math.min(4, Math.max(3, Math.floor(indent.length / 2) + 3));
+        
+        // Convert to heading
+        result.push(`${'#'.repeat(headingLevel)} ${title}`);
+        if (description.trim()) {
+          result.push('');
+          result.push(description.trim());
+        }
+        
+        // Look ahead for indented content (code blocks, additional text)
+        i++;
+        while (i < lines.length) {
+          const nextLine = lines[i];
+          
+          // If it's indented content or empty line, include it
+          if (nextLine.startsWith(indent + '  ') || nextLine.trim() === '') {
+            // Remove the extra indentation
+            const cleanedLine = nextLine.substring(indent.length + 2);
+            result.push(cleanedLine);
+            i++;
+          } else {
+            // Break if we hit non-indented content
+            i--;
+            break;
+          }
+        }
+      } else {
+        result.push(line);
+      }
+      
+      i++;
+    }
+    
+    return result.join('\n');
   }
 
   /**
@@ -95,46 +176,96 @@ class MarkdownToConfluenceConverter {
    * Convert code blocks to Confluence code macro
    */
   convertCodeBlocks(content) {
-    // Handle fenced code blocks with language specification
-    const fencedCodeRegex = /```(\w+)?\n([\s\S]*?)\n```/g;
+    // First handle indented code blocks that might be nested in lists
+    const lines = content.split('\n');
+    const result = [];
+    let i = 0;
+    let inCodeBlock = false;
+    let codeBlockBuffer = [];
+    let codeBlockLanguage = '';
     
-    return content.replace(fencedCodeRegex, (match, language, code) => {
-      const lang = language || 'text';
+    while (i < lines.length) {
+      const line = lines[i];
       
-      // Handle mermaid diagrams specially
-      if (lang === 'mermaid') {
-        return `{mermaid}\n${code.trim()}\n{mermaid}`;
+      // Check for fenced code block start
+      const fenceMatch = line.match(/^(\s*)```(\w+)?/);
+      
+      if (fenceMatch && !inCodeBlock) {
+        // Starting a code block
+        inCodeBlock = true;
+        codeBlockLanguage = fenceMatch[2] || 'text';
+        codeBlockBuffer = [];
+        
+        // Handle mermaid diagrams specially
+        if (codeBlockLanguage === 'mermaid') {
+          result.push(`{mermaid}`);
+        } else {
+          // Map common languages to Confluence equivalents
+          const languageMap = {
+            'javascript': 'js',
+            'typescript': 'js',
+            'tsx': 'js',
+            'jsx': 'js',
+            'bash': 'bash',
+            'shell': 'bash',
+            'json': 'js',
+            'yaml': 'yaml',
+            'yml': 'yaml',
+            'xml': 'xml',
+            'html': 'html',
+            'css': 'css',
+            'sql': 'sql',
+            'python': 'py',
+            'java': 'java',
+            'kotlin': 'kotlin',
+            'swift': 'swift',
+            'objective-c': 'objc',
+            'c': 'c',
+            'cpp': 'cpp',
+            'c++': 'cpp'
+          };
+          
+          const confluenceLanguage = languageMap[codeBlockLanguage.toLowerCase()] || codeBlockLanguage;
+          result.push(`{code:language=${confluenceLanguage}}`);
+        }
+      } else if (line.trim() === '```' && inCodeBlock) {
+        // Ending a code block
+        inCodeBlock = false;
+        
+        // Add the code content
+        result.push(...codeBlockBuffer);
+        
+        // Close the code block
+        if (codeBlockLanguage === 'mermaid') {
+          result.push(`{mermaid}`);
+        } else {
+          result.push(`{code}`);
+        }
+        
+        codeBlockBuffer = [];
+        codeBlockLanguage = '';
+      } else if (inCodeBlock) {
+        // Inside a code block, preserve the line as-is
+        codeBlockBuffer.push(line);
+      } else {
+        // Normal line, not in a code block
+        result.push(line);
       }
       
-      // Map common languages to Confluence equivalents
-      const languageMap = {
-        'javascript': 'js',
-        'typescript': 'js',
-        'tsx': 'js',
-        'jsx': 'js',
-        'bash': 'bash',
-        'shell': 'bash',
-        'json': 'js',
-        'yaml': 'yaml',
-        'yml': 'yaml',
-        'xml': 'xml',
-        'html': 'html',
-        'css': 'css',
-        'sql': 'sql',
-        'python': 'py',
-        'java': 'java',
-        'kotlin': 'kotlin',
-        'swift': 'swift',
-        'objective-c': 'objc',
-        'c': 'c',
-        'cpp': 'cpp',
-        'c++': 'cpp'
-      };
-      
-      const confluenceLanguage = languageMap[lang.toLowerCase()] || lang;
-      
-      return `{code:language=${confluenceLanguage}}\n${code.trim()}\n{code}`;
-    });
+      i++;
+    }
+    
+    // Handle any remaining code block buffer (unclosed code blocks)
+    if (inCodeBlock && codeBlockBuffer.length > 0) {
+      result.push(...codeBlockBuffer);
+      if (codeBlockLanguage === 'mermaid') {
+        result.push(`{mermaid}`);
+      } else {
+        result.push(`{code}`);
+      }
+    }
+    
+    return result.join('\n');
   }
 
   /**
@@ -171,11 +302,35 @@ class MarkdownToConfluenceConverter {
    * Convert markdown headers to Confluence headers
    */
   convertHeaders(content) {
-    // Convert headers (h1-h6)
-    return content.replace(/^(#{1,6})\s+(.+)$/gm, (match, hashes, title) => {
-      const level = hashes.length;
-      return `h${level}. ${title}`;
+    // Convert headers (h1-h6) but adjust levels:
+    // - Skip the first h1 (top level heading)
+    // - Make the first h2 become h1, h3 become h2, etc.
+    
+    const lines = content.split('\n');
+    let firstH1Found = false;
+    
+    const result = lines.map(line => {
+      const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
+      
+      if (headerMatch) {
+        const level = headerMatch[1].length;
+        const title = headerMatch[2];
+        
+        // Skip the very first h1 (usually the document title)
+        if (level === 1 && !firstH1Found) {
+          firstH1Found = true;
+          return ''; // Skip this line
+        }
+        
+        // Adjust header levels: h2->h1, h3->h2, h4->h3, etc.
+        const adjustedLevel = Math.max(1, level - 1);
+        return `h${adjustedLevel}. ${title}`;
+      }
+      
+      return line;
     });
+    
+    return result.join('\n');
   }
 
   /**

@@ -1,10 +1,12 @@
-h2. Section 4: Understanding {{npx expo}} vs. {{npm}}/{{yarn}}
+{toc}
+
+h1. Section 4: Understanding {{npx expo}} vs. {{npm}}/{{yarn}}
 
 Now that you've created your project and seen commands like {{npx create-expo-app}} and {{npx expo start}}, let's clarify the difference between running commands directly with {{npx expo}} versus using your package manager ({{npm}} or {{yarn}}). Understanding this helps you know which command to use in different situations.
 
 bq. 🧑‍🏫 *(Instructor-Led):* This section covers important command-line concepts that are fundamental to Expo development workflows. Take time to ensure all students understand the distinction between package management commands and Expo CLI commands to prevent common setup issues later.
 
-h3. Recap: Package Managers ({{npm}} and {{yarn}})
+h2. Recap: Package Managers ({{npm}} and {{yarn}})
 
 As covered in Section 2, {{npm}} (Node Package Manager) and {{yarn}} are tools for managing your project's JavaScript dependencies (the libraries and tools your project needs, listed in {{package.json}}). Their core function is interacting with the package registry (npmjs.com) to download, install, or update code packages in your {{node_modules}} directory.
 
@@ -33,7 +35,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Your existing knowledge of npm scripts transfers directly to Expo projects.
 > *Source:* [https://docs.npmjs.com/cli/v10/commands/npm-run-script|npm Docs: npm run]
 
-h3. The Expo CLI: `npx expo <command>`
+h2. The Expo CLI: `npx expo <command>`
 
 The `expo` package, installed as a dependency in your project, provides the *Expo Command Line Interface (CLI)*. This CLI is a dedicated toolset for interacting with Expo projects and services.
 
@@ -55,7 +57,7 @@ The Expo CLI offers many commands, acting as a high-level interface and orchestr
 * `npx expo doctor`: Diagnoses potential issues in your project setup.
 * EAS Commands: `npx eas build`, `npx eas submit`, etc. (covered later).
 
-h3. Command Relationship Visualization
+h2. Command Relationship Visualization
 
 {mermaid}
 graph TD
@@ -104,7 +106,7 @@ This diagram illustrates the four main ways you interact with your Expo project 
 
 The highlighted pink flow shows the recommended path for installing dependencies, which includes crucial version compatibility checking specific to Expo projects.
 
-h3. The Crucial Role of `npx expo install`
+h2. The Crucial Role of `npx expo install`
 
 One of the most important distinctions lies with installing dependencies.
 
@@ -120,14 +122,17 @@ The Expo team maintains a compatibility map defining known working versions of m
 # If the package isn't in the map or no specific version is needed, it typically defaults to standard package manager behavior (installing the latest compatible version based on semantic versioning rules in `package.json`). ([https://github.com/antfu-collective/ni/issues/212|Source])
 
 *Usage:*
-* *Strongly Recommended:* Always use `npx expo install <package>` when adding new dependencies to your Expo project.
+
+h2. Strongly Recommended
+
+Always use `npx expo install <package>` when adding new dependencies to your Expo project.
 * Example (Single): `npx expo install react-native-maps`
 * Example (Multiple): `npx expo install expo-camera expo-av`
 
 {note}
 Do *not* use `npm install` or `yarn add` for adding dependencies with native code in Expo projects unless you are certain about version compatibility. Stick to `npx expo install` to leverage the built-in compatibility checks.
 {note}
-h3. When to Use Which?
+h2. When to Use Which?
 # *Installing/Managing Dependencies:* *Always use `npx expo install <package>`* to add new dependencies. Use `npm uninstall <package>` or `yarn remove <package>` to remove them.
 # *Running Common Tasks:* Use the predefined scripts via `npm run <script>` or `yarn <script>` (e.g., `yarn start`, `yarn ios`) for convenience.
 # *Running Other Expo CLI Commands:* Use `npx expo <command>` directly for tasks not covered by basic scripts (e.g., `npx expo doctor`, `npx expo prebuild`, `npx expo config`, EAS commands).
@@ -146,7 +151,7 @@ bq. 🧗‍♀️ *(Self-Led):* Create a reference card for yourself with the ke
 
 In summary, while `npm`/`yarn` manage packages and run basic scripts, `npx expo install` is vital for safe dependency management in Expo, and `npx expo <command>` provides direct access to the rich features of the Expo CLI.
 
-h3. Common Troubleshooting for Package Management
+h2. Common Troubleshooting for Package Management
 
 If you encounter issues with package installation or command execution, try these common remedies:
 * *Dependency conflict errors*: Use `npx expo doctor` to diagnose issues.

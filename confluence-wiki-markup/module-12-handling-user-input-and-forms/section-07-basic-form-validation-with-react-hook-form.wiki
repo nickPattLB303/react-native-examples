@@ -1,4 +1,6 @@
-h2. Section 7: Basic Form Validation with React Hook Form
+{toc}
+
+h1. Section 7: Basic Form Validation with React Hook Form
 
 Validation is a crucial part of any form, ensuring that users provide data in the correct format and that all necessary information is captured. React Hook Form offers a straightforward and powerful way to implement validation directly within your form logic. This section focuses on its built-in validation capabilities using the {{rules}} prop in the {{Controller}} component.
 
@@ -31,23 +33,52 @@ React Hook Form allows you to define validation rules directly on the {{Controll
 
 React Hook Form provides several built-in validation rules that you can use. For each rule, you can provide a custom error message string that will be accessible via `formState.errors` if the validation fails.
 * *`required`*: Ensures the field must have a value.
-** *Type:* `boolean | string | { value: boolean, message: string }`
-** *Example:* `rules={{ required: 'This field is mandatory' }}` or `rules={{ required: { value: true, message: 'Patient email is required' } }}`
+
+h3. Type
+
+`boolean | string | { value: boolean, message: string }`
+h3. Example
+
+`rules={{ required: 'This field is mandatory' }}` or `rules={{ required: { value: true, message: 'Patient email is required' } }}`
 * *`minLength`*: Specifies the minimum allowed length for a string input.
-** *Type:* `number | { value: number, message: string }`
-** *Example:* `rules={{ minLength: { value: 8, message: 'Password must be at least 8 characters' } }}`
+
+h3. Type
+
+`number | { value: number, message: string }`
+h3. Example
+
+`rules={{ minLength: { value: 8, message: 'Password must be at least 8 characters' } }}`
 * *`maxLength`*: Specifies the maximum allowed length for a string input.
-** *Type:* `number | { value: number, message: string }`
-** *Example:* `rules={{ maxLength: { value: 100, message: 'Notes cannot exceed 100 characters' } }}`
+
+h3. Type
+
+`number | { value: number, message: string }`
+h3. Example
+
+`rules={{ maxLength: { value: 100, message: 'Notes cannot exceed 100 characters' } }}`
 * *`min`*: Specifies the minimum allowed numerical value for an input.
-** *Type:* `number | { value: number, message: string }`
-** *Example:* `rules={{ min: { value: 18, message: 'Patient must be at least 18 years old' } }}`
+
+h3. Type
+
+`number | { value: number, message: string }`
+h3. Example
+
+`rules={{ min: { value: 18, message: 'Patient must be at least 18 years old' } }}`
 * *`max`*: Specifies the maximum allowed numerical value for an input.
-** *Type:* `number | { value: number, message: string }`
-** *Example:* `rules={{ max: { value: 120, message: 'Age cannot exceed 120 years' } }}`
+
+h3. Type
+
+`number | { value: number, message: string }`
+h3. Example
+
+`rules={{ max: { value: 120, message: 'Age cannot exceed 120 years' } }}`
 * *`pattern`*: Validates the input value against a regular expression.
-** *Type:* `RegExp | { value: RegExp, message: string }`
-** *Example (for email validation):* `rules={{ pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email format' } }}`
+h3. Type
+
+`RegExp | { value: RegExp, message: string }`
+h3. Example (for email validation)
+
+`rules={{ pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email format' } }}`
 
 *Custom Validation with the `validate` Option*
 
@@ -368,18 +399,21 @@ This example demonstrates how to effectively use React Hook Form's built-in vali
 *Exercise 12.2: Form with React Hook Form Validation*
 
 Now, let's apply these validation concepts.
-* *Objective:* Extend a basic form using React Hook Form to include validation for several fields relevant to a medication logging feature in the SpeedyMeds app.
-* *Requirements:*
-## Create an Expo Snack with React Hook Form installed.
-## Design a form with fields for: `medicationName` (string), `dosage` (string, e.g., "1 tablet", "10mg"), and `frequency` (string, e.g., "Once a day").
-## Implement the following validation rules using the `rules` prop:
-**** `medicationName`: `required`, `minLength: 3`.
-**** `dosage`: `required`.
-**** `frequency`: `required`.
-## Display appropriate error messages next to each field if validation fails.
-## Use `mode: 'onChange'` for `useForm`.
-## The submit button should be disabled if the form is not valid (`!isValid`).
-## On successful submission (when `handleSubmit` calls your `onSubmit` function), show an `Alert` with the submitted data.
+
+h2. Objective
+
+Extend a basic form using React Hook Form to include validation for several fields relevant to a medication logging feature in the SpeedyMeds app.
+h2. Requirements
+# Create an Expo Snack with React Hook Form installed.
+# Design a form with fields for: `medicationName` (string), `dosage` (string, e.g., "1 tablet", "10mg"), and `frequency` (string, e.g., "Once a day").
+# Implement the following validation rules using the `rules` prop:
+*** `medicationName`: `required`, `minLength: 3`.
+*** `dosage`: `required`.
+*** `frequency`: `required`.
+# Display appropriate error messages next to each field if validation fails.
+# Use `mode: 'onChange'` for `useForm`.
+# The submit button should be disabled if the form is not valid (`!isValid`).
+# On successful submission (when `handleSubmit` calls your `onSubmit` function), show an `Alert` with the submitted data.
 
 *(URL_to_Tool)* _(Link to Expo Snack for Exercise 12.2)_
 

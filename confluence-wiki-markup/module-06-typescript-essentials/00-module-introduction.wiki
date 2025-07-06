@@ -1,4 +1,4 @@
-h1. Module 6: TypeScript Essentials
+{toc}
 
 Welcome to Module 6: TypeScript Essentials! In the ever-evolving landscape of web and mobile development, writing robust, maintainable, and scalable code is paramount. TypeScript, a statically typed superset of JavaScript, has emerged as a powerful tool that helps developers achieve these goals by adding type safety and modern features to JavaScript development. This module will equip you with the fundamental knowledge of TypeScript, enabling you to write cleaner, more reliable code for your React Native applications.
 
@@ -25,7 +25,7 @@ bq. 📲 *(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):
 > *Key Takeaway:* TypeScript offers familiar benefits of type safety in a JavaScript environment. Pay attention to how types are defined and inferred, and the flexibility of structural typing.
 > *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html|TypeScript for Java/C# Programmers]
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Explain the benefits of using TypeScript in a React Native project.
@@ -37,12 +37,12 @@ By the end of this module, you will be able to:
 * Leverage utility types to transform existing types for common use cases.
 * Understand the role and basic configuration of {{tsconfig.json}} in an Expo project.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, you should have a solid understanding of JavaScript concepts. It is highly recommended that you complete:
 * [../module-05-javascript-essentials/00-module-introduction.md|Module 5: JavaScript Essentials for React Native] (Assuming a relative link structure)
 
-h2. Module Sections
+h1. Module Sections
 
 This module will cover the following key topics:
 # *Why TypeScript?*: Understanding the advantages and motivation for using TypeScript.

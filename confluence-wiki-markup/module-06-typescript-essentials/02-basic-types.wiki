@@ -1,8 +1,10 @@
-h2. Section 2: Basic Types
+{toc}
+
+h1. Section 2: Basic Types
 
 Now that we understand why TypeScript is beneficial, let's explore its fundamental building blocks: the basic types. These types allow you to define the kinds of values your variables and functions will work with, forming the core of TypeScript's type system.
 
-h3. Type Annotation and Inference
+h2. Type Annotation and Inference
 
 TypeScript can often infer the type of a variable from its initial value. For example, if you write {{let medicationName = "Amoxicillin";}}, TypeScript will infer that {{medicationName}} is a {{string}}.
 
@@ -20,7 +22,7 @@ let isFeverish: boolean = false;
 
 Let's look at the most common basic types.
 
-h3. `string`
+h2. `string`
 
 The `string` type represents textual data, enclosed in single quotes (`'`), double quotes (`"`), or backticks (`` ` ``) for template literals.
 
@@ -31,7 +33,7 @@ let instructions: string = `Take one tablet of ${medicationName} daily.`;
 console.log(instructions); // Output: Take one tablet of Lisinopril daily.
 {code}
 
-h3. `number`
+h2. `number`
 
 The `number` type represents all numeric values, including integers and floating-point numbers. TypeScript does not differentiate between `int`, `float`, or `double` like some other languages.
 
@@ -44,7 +46,7 @@ let totalCost: number = pricePerTablet * totalTablets;
 console.log(`Total cost for ${medicationName}: $${totalCost.toFixed(2)}`); // Output: Total cost for Lisinopril: $22.50
 {code}
 
-h3. `boolean`
+h2. `boolean`
 
 The `boolean` type represents logical values: `true` or `false`.
 
@@ -60,7 +62,7 @@ if (needsRefill) {
 
 {code}
 
-h3. `array`
+h2. `array`
 
 The `array` type allows you to define typed collections of values. You can denote array types using `typeName[]` or `Array<typeName>`.
 
@@ -75,7 +77,7 @@ console.log(`First available dosage: ${dosagesAvailableMg[0]}mg`);
 activeMedicationCodes.push("RXCUI789");
 {code}
 
-h3. `object`
+h2. `object`
 
 The `object` type represents any non-primitive type (i.e., not `string`, `number`, `boolean`, `symbol`, `null`, or `undefined`). It's a general type, and while you can use it, you'll often want to define more specific object shapes using interfaces or type aliases, which we'll cover in the next section.
 
@@ -91,7 +93,7 @@ patientProfile = { name: "John Smith", age: 45 };
 {info}
 While `object` is a basic type, for defining the structure of objects with known properties, it's almost always better to use interfaces or type aliases for better type safety and autocompletion.
 {info}
-h3. `any`
+h2. `any`
 
 The `any` type is a powerful escape hatch. It tells TypeScript to opt-out of type checking for a particular variable. You can assign any kind of value to an `any` type, and access any property on it without compile-time checks.
 
@@ -106,7 +108,7 @@ console.log(flexibleData.nonExistentProperty); // No compile-time error, but wil
 {warning}
 Use `any` sparingly. While it can be useful during migration from JavaScript to TypeScript or when working with truly dynamic data, overuse of `any` defeats the purpose of using TypeScript and can hide potential bugs.
 {warning}
-h3. `unknown`
+h2. `unknown`
 
 The `unknown` type is a safer alternative to `any`. Like `any`, it can hold a value of any type. However, TypeScript won't let you perform operations on an `unknown` value until you've performed some kind of type checking (like using `typeof`, `instanceof`, or type assertion) to narrow down its type.
 
@@ -131,7 +133,7 @@ function getExternalInput(): unknown {
 {tip}
 Prefer `unknown` over `any` when you have data of an indeterminate type. It forces you to handle the type safely before using the value, preventing runtime errors.
 {tip}
-h3. `void`
+h2. `void`
 
 The `void` type is used primarily as the return type for functions that do not return a value.
 
@@ -144,7 +146,7 @@ function logMedicationEvent(message: string): void {
 logMedicationEvent("Patient took Lisinopril 20mg.");
 {code}
 
-h3. `null` and `undefined`
+h2. `null` and `undefined`
 
 In TypeScript, `null` and `undefined` are distinct types that represent the absence of a value.
 * `undefined`: Typically means a variable has been declared but not yet assigned a value.

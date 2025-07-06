@@ -1,8 +1,10 @@
-h2. Section 6: Enums
+{toc}
+
+h1. Section 6: Enums
 
 Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less error-prone by restricting variables to a predefined collection of values. They are particularly useful when you have a small, fixed set of related values that have semantic meaning.
 
-h3. Numeric Enums
+h2. Numeric Enums
 
 By default, enums are number-based. The first value is initialized to {{0}}, and subsequent values auto-increment from that point.
 
@@ -37,10 +39,15 @@ console.log(`Standard refill frequency: ${standardRefill} days`); // Output: Sta
 {code}
 
 *Key characteristics of numeric enums:*
-* *Auto-incrementing:* If you don't assign values, they auto-increment starting from 0.
-* *Reverse Mapping:* TypeScript generates a reverse mapping for numeric enums, allowing you to get the string name of an enum member from its numeric value (e.g., `PrescriptionStatus[1]` returns `"Approved"`).
 
-h3. String Enums
+h2. Auto-incrementing
+
+If you don't assign values, they auto-increment starting from 0.
+h2. Reverse Mapping
+
+TypeScript generates a reverse mapping for numeric enums, allowing you to get the string name of an enum member from its numeric value (e.g., `PrescriptionStatus[1]` returns `"Approved"`).
+
+h2. String Enums
 
 String enums are similar, but each member must be explicitly initialized with a string value. String enums offer better readability and debugging experiences because the string value is directly available and meaningful.
 
@@ -66,14 +73,21 @@ if (alertType === MedicationAlertType.Interaction) {
 {code}
 
 *Key characteristics of string enums:*
-* *Explicit Initialization:* Each member must be initialized with a string literal (or another string enum member).
-* *Readability:* String values are often more descriptive than numeric values, especially when debugging or logging.
-* *No Reverse Mapping:* Unlike numeric enums, string enums do not have an automatic reverse mapping.
+
+h2. Explicit Initialization
+
+Each member must be initialized with a string literal (or another string enum member).
+h2. Readability
+
+String values are often more descriptive than numeric values, especially when debugging or logging.
+h2. No Reverse Mapping
+
+Unlike numeric enums, string enums do not have an automatic reverse mapping.
 
 {info}
 String enums are often preferred over numeric enums for their improved readability and clarity, especially when the enum values might be serialized (e.g., sent to an API or stored in a database).
 {info}
-h3. Const Enums
+h2. Const Enums
 
 For performance-critical applications, you can use `const` enums. `const` enums are completely removed during compilation, and their values are inlined wherever they are used. This can result in more optimized JavaScript code.
 
@@ -94,12 +108,21 @@ let myDelivery: DeliveryStatus = DeliveryStatus.InProgress;
 {code}
 
 *Key characteristics of `const` enums:*
-* *Inlined Values:* Enum member values are inlined at compile time.
-* *No Generated JavaScript Object:* The enum itself doesn't exist as an object in the compiled JavaScript.
-* *Performance:* Can offer slight performance benefits due to inlining.
-* *Limitations:* Cannot have computed members. Accessing members via dynamic values (like `DeliveryStatus[myDelivery]`) is not allowed; you must use literal access (e.g. `DeliveryStatus.InProgress`).
 
-h3. When to Use Enums
+h2. Inlined Values
+
+Enum member values are inlined at compile time.
+h2. No Generated JavaScript Object
+
+The enum itself doesn't exist as an object in the compiled JavaScript.
+h2. Performance
+
+Can offer slight performance benefits due to inlining.
+h2. Limitations
+
+Cannot have computed members. Accessing members via dynamic values (like `DeliveryStatus[myDelivery]`) is not allowed; you must use literal access (e.g. `DeliveryStatus.InProgress`).
+
+h2. When to Use Enums
 
 Enums are best used when you have a small, distinct set of related constants where each constant has a specific semantic meaning. Examples in the SpeedyMeds context could include:
 * Order statuses (Pending, Processing, Shipped, Delivered)

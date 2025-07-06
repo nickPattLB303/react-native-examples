@@ -1,32 +1,60 @@
-h2. Section 9: FlatList and SectionList - Displaying Lists
+{toc}
+
+h1. Section 9: FlatList and SectionList - Displaying Lists
 
 Displaying lists of data is a common requirement in mobile apps. While {{<ScrollView>}} can display a list of items, it renders all items at once, which is inefficient for long lists. React Native provides two specialized list components, {{<FlatList>}} and {{<SectionList>}}, that offer better performance through virtualization (rendering only items currently visible or about to become visible).
 
-h3. Conceptual Content: Understanding {{<FlatList>}} and {{<SectionList>}}
+h2. Conceptual Content: Understanding {{<FlatList>}} and {{<SectionList>}}
 
 *{{<FlatList>}} Component:*
 
 {{<FlatList>}} is designed for rendering simple, flat lists of data. It's highly performant for long lists because it only renders the items that are currently on screen (or nearby) and recycles list items as you scroll.
 
 *Key Characteristics of {{<FlatList>}}:*
-* *Performant for Long Lists:* Uses virtualization to render only visible items.
-* *Flat Data Structure:* Expects a simple array of data items.
-* *{{renderItem}} Prop:* Requires a function ({{renderItem}}) that takes an item from your data array and returns a React component to render for that item.
-* *{{keyExtractor}} Prop:* Requires a function ({{keyExtractor}}) that returns a unique key for each item. This is crucial for React to manage list items efficiently during updates.
-* *Built-in Features:* Supports features like pull-to-refresh, scroll loading (infinite scroll), separators between items, and header/footer components.
-* *Optimization:* Provides props like {{initialNumToRender}}, {{maxToRenderPerBatch}}, {{windowSize}} to fine-tune rendering performance.
+
+h2. Performant for Long Lists
+
+Uses virtualization to render only visible items.
+h2. Flat Data Structure
+
+Expects a simple array of data items.
+h2. {{renderItem}} Prop
+
+Requires a function ({{renderItem}}) that takes an item from your data array and returns a React component to render for that item.
+h2. {{keyExtractor}} Prop
+
+Requires a function ({{keyExtractor}}) that returns a unique key for each item. This is crucial for React to manage list items efficiently during updates.
+h2. Built-in Features
+
+Supports features like pull-to-refresh, scroll loading (infinite scroll), separators between items, and header/footer components.
+h2. Optimization
+
+Provides props like {{initialNumToRender}}, {{maxToRenderPerBatch}}, {{windowSize}} to fine-tune rendering performance.
 
 *{{<SectionList>}} Component:*
 
 {{<SectionList>}} is similar to {{<FlatList>}} but is designed for rendering lists that are broken into logical sections, like a contacts list grouped by letter or a menu grouped by category.
 
 *Key Characteristics of {{<SectionList>}}:*
-* *Performant for Sectioned Lists:* Also uses virtualization.
-* *Sectioned Data Structure:* Expects data in a specific format: an array of section objects, where each section object has a {{title}} (or some identifier for the section header) and a {{data}} array (the items within that section).
-* *{{renderItem}} Prop:* Similar to {{<FlatList>}}, defines how to render each item within a section.
-* *{{renderSectionHeader}} Prop:* Requires a function that takes a section object and returns a React component to render as the header for that section.
-* *{{keyExtractor}} Prop:* Used for items, similar to {{<FlatList>}}.
-* *Sticky Section Headers:* By default, section headers stick to the top of the screen as you scroll through the items in that section (this can be configured).
+
+h2. Performant for Sectioned Lists
+
+Also uses virtualization.
+h2. Sectioned Data Structure
+
+Expects data in a specific format: an array of section objects, where each section object has a {{title}} (or some identifier for the section header) and a {{data}} array (the items within that section).
+h2. {{renderItem}} Prop
+
+Similar to {{<FlatList>}}, defines how to render each item within a section.
+h2. {{renderSectionHeader}} Prop
+
+Requires a function that takes a section object and returns a React component to render as the header for that section.
+h2. {{keyExtractor}} Prop
+
+Used for items, similar to {{<FlatList>}}.
+h2. Sticky Section Headers
+
+By default, section headers stick to the top of the screen as you scroll through the items in that section (this can be configured).
 
 *When to Use Which:*
 * Use {{<ScrollView>}} when:
@@ -50,7 +78,7 @@ bq. 🌐 *(Web Developers):*
 > *Comparison:* {{<FlatList>}} and {{<SectionList>}} provide functionality similar to virtualized list libraries on the web (e.g., {{react-window}} or {{react-virtualized}}). They address the performance issues of rendering a very large number of DOM elements by only rendering what's visible.
 > *Key Takeaway:* For lists, especially long ones, these components are essential for good performance, unlike simply mapping over an array to create many elements within a scrollable {{<div>}} which can be slow.
 
-h3. Referential Content: Common Props
+h2. Referential Content: Common Props
 
 *Common {{<FlatList>}} Props:*
 * {{data}}: (array, *required*) The array of data items for the list.
@@ -84,7 +112,7 @@ bq. 📚 *Official Documentation:*
 - [https://docs.expo.dev/ui-programming/flatlist/|Expo Docs: FlatList]
 - [https://docs.expo.dev/ui-programming/sectionlist/|Expo Docs: SectionList]
 
-h3. Procedural Content: Basic Usage
+h2. Procedural Content: Basic Usage
 
 *1. {{<FlatList>}} Example: SpeedyMeds Medication List*
 
@@ -446,7 +474,7 @@ const styles = StyleSheet.create({
 
 These examples demonstrate the power and flexibility of `<FlatList>` and `<SectionList>` for rendering various types of lists efficiently in applications like SpeedyMeds.
 
-h3. Exercise 8.4: Creating a List with FlatList
+h2. Exercise 8.4: Creating a List with FlatList
 
 Time to build a list using `<FlatList>` for the SpeedyMeds application.
 

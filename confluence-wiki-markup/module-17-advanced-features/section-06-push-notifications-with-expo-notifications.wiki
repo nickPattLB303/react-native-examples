@@ -1,15 +1,24 @@
-h2. Section 6: Push Notifications with {{expo-notifications}}
+{toc}
+
+h1. Section 6: Push Notifications with {{expo-notifications}}
 
 This section delves into implementing push notifications in your React Native application using the {{expo-notifications}} library. Push notifications are a vital tool for engaging users, delivering timely information, and encouraging interaction with your app, such as reminding a SpeedyMeds user to take their medication.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 *What are Push Notifications?*
 
 Push notifications are messages sent from a server to a user's device, appearing even when the app is not actively in use. They serve various purposes:
-* *Alerts & Reminders:* Informing users about important events (e.g., medication reminders, appointment confirmations).
-* *Updates:* Notifying users about new content or features.
-* *Re-engagement:* Encouraging inactive users to return to the app.
+
+h2. Alerts & Reminders
+
+Informing users about important events (e.g., medication reminders, appointment confirmations).
+h2. Updates
+
+Notifying users about new content or features.
+h2. Re-engagement
+
+Encouraging inactive users to return to the app.
 
 There are two main types of push notifications:
 # *Local Notifications:* Scheduled and triggered directly by the application on the device itself. They don't require a server. Useful for reminders or time-based alerts set within the app.
@@ -64,15 +73,15 @@ This diagram illustrates the complete lifecycle of both remote and local notific
 *Installation and Setup*
 # *Install the library:*
 
-    {code:language=bash}
-npx expo install expo-notifications
-    ```
+{code:language=bash}
+    npx expo install expo-notifications
+{code}
 # *Configuration (`app.json` / `app.config.js`):*
     For remote push notifications, you often need to configure platform-specific settings (like an FCM server key for Android or APNs setup for iOS). Expo attempts to simplify this, especially when using EAS Build. For basic local notifications, minimal configuration might be needed. However, to customize appearance and behavior (e.g., icons, sounds), you may need to add configuration to your `app.json` or `app.config.js`.
 
     Example for custom Android notification icon and color:
 
-    ```json
+{code:language=js}
     // app.json
     {
       "expo": {
@@ -88,17 +97,18 @@ npx expo install expo-notifications
         ]
       }
     }
-    ```
+{code}
 
 {note}
 For remote push notifications in production, you will need to configure credentials with APNs and FCM. EAS Build significantly helps in managing this process. Refer to the official Expo documentation for detailed setup instructions, especially when preparing for production builds.
 {note}
-h3. Referential Content
+h2. Referential Content
 
 *1. Requesting Permissions*
 
 Before you can send or receive notifications, you must request permission from the user.
-{code}typescript
+
+{code:language=js}
 import * as Notifications from "expo-notifications";
 
 /**
@@ -128,11 +138,13 @@ async function requestPermissionsAsync() {
   }
   return true;
 }
-{code:language=text}
+{code}
+
 *2. Getting the Expo Push Token*
 
 To send remote push notifications to a specific device, you need its unique Expo Push Token. This token is specific to Expo's notification service, which then routes messages via APNs/FCM.
-{code}typescript
+
+{code:language=js}
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef } from "react";
 import { Platform } from "react-native";
@@ -164,7 +176,7 @@ async function getPushTokenAsync() {
     return null;
   }
 }
-{code:language=text}
+{code}
 
 {warning}
 Expo Push Tokens are device-specific and can change. You should request and update the token on your server whenever the app starts or the token changes.
@@ -172,7 +184,8 @@ Expo Push Tokens are device-specific and can change. You should request and upda
 *3. Scheduling Local Notifications*
 
 You can schedule a notification to appear at a later time.
-{code}typescript
+
+{code:language=js}
 import * as Notifications from "expo-notifications";
 
 /**
@@ -216,11 +229,13 @@ async function scheduleLocalNotification(
 //   { medicationId: 'amox123', dosage: '250mg' },
 //   5 // In 5 seconds
 // );
-{code:language=text}
+{code}
+
 *4. Handling Received Notifications*
 
 You need to set up listeners to handle notifications when they are received while the app is foregrounded, and to respond when a user interacts with a notification (e.g., taps it) when the app is backgrounded or killed.
-{code}typescript
+
+{code:language=js}
 import * as Notifications from "expo-notifications";
 import { useEffect, useRef } from "react";
 import { Platform } from "react-native";
@@ -286,7 +301,7 @@ function setupNotificationHandlers() {
     };
   }, []);
 }
-{code:language=text}
+{code}
 
 {note}
 On Android, you might need to configure Notification Channels for more control over notification appearance and behavior. `expo-notifications` will use a default channel if none is specified. Refer to the Expo documentation for creating and managing channels.
@@ -296,7 +311,9 @@ On Android, you might need to configure Notification Channels for more control o
 To send remote push notifications, your backend server will make an HTTP POST request to the Expo Push API endpoint (`https://exp.host/--/api/v2/push/send`) with the Expo Push Token(s) and the notification payload.
 
 Example payload (JSON):
-{code}json
+
+{code:language=js}
+
 {
   "to": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
   "sound": "default",
@@ -304,15 +321,17 @@ Example payload (JSON):
   "body": "Your prescription for Metformin is ready for pickup!",
   "data": { "orderId": "xyz789", "type": "pickupReady" }
 }
-{code:language=text}
+{code}
+
 Consult the [https://docs.expo.dev/push-notifications/sending-notifications/#server-side-integrations|Expo Server SDKs] or build your own server logic to interact with this API.
 
-h3. Procedural Content
+h2. Procedural Content
 
 *Example: Setting up Basic Notification Handling and Scheduling a Local Reminder*
 
 Let's integrate the permission request and a simple local notification scheduler into a conceptual SpeedyMeds component. This example assumes the `requestPermissionsAsync` and `getPushTokenAsync` (renamed here to `requestPermissionsAndGetToken` for clarity in this component's context, but referring to the same logic) functions are available as defined in the Referential Content section.
-{code}tsx
+
+{code:language=js}
 import React, { useEffect, useRef, useState } from "react";
 import { View, Button, Text, Platform, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
@@ -480,7 +499,7 @@ const styles = StyleSheet.create({
 });
 
 export default SpeedyMedsNotificationScheduler;
-```
+{code}
 
 *Explanation of the Example:*
 
@@ -529,6 +548,6 @@ bq. 📚 *Official Documentation:*
 - [https://docs.expo.dev/push-notifications/overview/|Push Notifications with Expo]
 - [https://docs.expo.dev/versions/latest/sdk/notifications/#scheduling-a-notification|Scheduling Local Notifications]
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you understand how to implement push notifications, let's explore how to store data locally on the device for offline access.

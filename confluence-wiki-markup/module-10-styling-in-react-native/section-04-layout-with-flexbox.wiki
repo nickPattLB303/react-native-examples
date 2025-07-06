@@ -1,16 +1,27 @@
-h2. Section 4: Layout with Flexbox (Comprehensive Guide)
+{toc}
+
+h1. Section 4: Layout with Flexbox (Comprehensive Guide)
 
 Layout is a fundamental aspect of UI design, determining how components are arranged and sized on the screen. React Native uses Flexbox, a powerful and flexible layout module, to achieve this. This comprehensive guide will cover Flexbox concepts, its core properties, and how you can use them to build sophisticated and responsive layouts for your SpeedyMeds application.
 
-h3. What is Flexbox?
+h2. What is Flexbox?
 
 Flexbox is a one-dimensional layout model designed to provide a more efficient way to arrange, align, and distribute space among items in a container, even when their size is unknown or dynamic. In React Native, Flexbox works similarly to how it does on the web (CSS Flexbox), but with some differences in default values and property names.
 
 *Core Concepts:*
-* *Flex Container:* Any {{<View>}} component can become a flex container by setting its {{display}} style property to {{'flex'}}. In React Native, {{display: 'flex'}} is the default for all {{<View>}} components, so you don't usually need to set it explicitly.
-* *Flex Items:* Direct children of a flex container are called flex items.
-* *Main Axis:* The primary axis along which flex items are laid out. This is determined by the {{flexDirection}} property. If {{flexDirection}} is {{'row'}}, the main axis is horizontal. If it's {{'column'}}, the main axis is vertical.
-* *Cross Axis:* The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis is vertical, and vice versa.
+
+h2. Flex Container
+
+Any {{<View>}} component can become a flex container by setting its {{display}} style property to {{'flex'}}. In React Native, {{display: 'flex'}} is the default for all {{<View>}} components, so you don't usually need to set it explicitly.
+h2. Flex Items
+
+Direct children of a flex container are called flex items.
+h2. Main Axis
+
+The primary axis along which flex items are laid out. This is determined by the {{flexDirection}} property. If {{flexDirection}} is {{'row'}}, the main axis is horizontal. If it's {{'column'}}, the main axis is vertical.
+h2. Cross Axis
+
+The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis is vertical, and vice versa.
 
 bq. 🌐 *(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Flexbox*
 > *Comparison:* While the core concepts of Flexbox (containers, items, main/cross axes) are identical to CSS Flexbox, React Native's implementation has some crucial differences, primarily in default values. Understanding these is key to translating your web layout skills effectively.
@@ -24,7 +35,7 @@ bq. 🌐 *(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Fl
 | Property Names  | camelCased (e.g., {{alignItems}})                             | kebab-cased (e.g., {{align-items}})                      | Standard JavaScript convention for property naming.                                                                                                                                |
 > *Key Takeaway:* Your CSS Flexbox knowledge is highly transferable. However, you MUST be mindful of React Native's default {{flexDirection: 'column'}}, the nuanced {{flexShrink}} defaults, the behavior of the {{flex}} shorthand, and camelCased property names to avoid common layout frustrations.
 
-h3. Flex Container Properties
+h2. Flex Container Properties
 
 These properties are applied to the parent {{<View>}} (the flex container) to control the layout of its children.
 
@@ -167,7 +178,7 @@ const styles = StyleSheet.create({
 // </View>
 {code}
 
-h3. Flex Item Properties
+h2. Flex Item Properties
 
 These properties are applied to the children (flex items) to control their behavior within the flex container.
 
@@ -260,7 +271,7 @@ const styles = StyleSheet.create({
 });
 {code}
 
-h3. Diagram: Flexbox Layout Examples
+h2. Diagram: Flexbox Layout Examples
 
 The following diagram illustrates some common Flexbox property effects:
 
@@ -312,7 +323,7 @@ graph TD
 * *`alignItems: 'center'`*: Shows two items (Item A, Item B) of different heights, both centered along the cross axis (vertically in this column-direction container example).
 * *`flexGrowExample`*: Demonstrates how `flex: 1` (Y) and `flex: 2` (Z) items share the remaining space after accounting for a fixed-width item (X). Item Z will take twice as much of the available flexible space as item Y.
 
-h3. Building a Complex Layout: SpeedyMeds Prescription Card
+h2. Building a Complex Layout: SpeedyMeds Prescription Card
 
 Let's apply these concepts to build a layout for a `PrescriptionCard` component in SpeedyMeds.
 
@@ -443,7 +454,7 @@ export default PrescriptionCard;
 
 This example demonstrates how combining various Flexbox properties allows you to create structured and visually appealing component layouts.
 
-h3. Troubleshooting Flexbox
+h2. Troubleshooting Flexbox
 * *Check `flexDirection`*: This is the most common source of confusion, especially for web developers used to `row` as the default.
 * *Parent vs. Child Properties*: Ensure you are applying container properties (`flexDirection`, `justifyContent`, `alignItems`) to the parent `View` and item properties (`flex`, `alignSelf`) to the children.
 * *Use Background Colors for Debugging*: Temporarily add background colors to your `View` components to visually understand their boundaries and how Flexbox is affecting them.
@@ -454,7 +465,7 @@ Mastering Flexbox is crucial for React Native development. Experiment with these
 {note}
 Flexbox is a deep topic, but with these core properties, you can achieve most layouts required in mobile applications. Its power lies in its ability to create responsive designs that adapt to different content sizes and screen dimensions.
 
-h3. Exercise 10.1: Complex Flexbox Layout
+h2. Exercise 10.1: Complex Flexbox Layout
 
 Now it's time to put your Flexbox knowledge to the test. This exercise will challenge you to create a more intricate layout using various Flexbox properties.
 
@@ -464,7 +475,7 @@ Now it's time to put your Flexbox knowledge to the test. This exercise will chal
 
 _Instructions and requirements for the exercise are provided within the Expo Snack linked above._
 
-h3. Under the Hood: The Yoga Layout Engine
+h2. Under the Hood: The Yoga Layout Engine
 
 It's beneficial to understand that React Native doesn't implement the Flexbox algorithm directly in JavaScript or within its native view systems (like UIKit for iOS or Android UI toolkit). Instead, it relies on *Yoga*, an open-source, cross-platform layout engine developed by Meta.
 

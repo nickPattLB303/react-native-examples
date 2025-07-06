@@ -1,11 +1,11 @@
-h1. Module 5: JavaScript Essentials for React Native
+{toc}
 
 JavaScript is the backbone of React Native, and a strong command of its modern features is essential for building high-quality mobile applications. This module will equip you with the fundamental JavaScript knowledge and skills specifically tailored for React Native development. We'll dive into everything from variables and data types to asynchronous operations and ES6 modules, ensuring you have a solid foundation before tackling more complex React Native concepts.
 
 {tip}
 If you have extensive experience with modern JavaScript (ES6+), you might find some concepts in this module familiar. It's recommended to skim these sections for review, paying close attention to examples and explanations that highlight JavaScript's usage within the React Native context and any differences emphasized in "Background Bridge Notes."
 {tip}
-h2. Target Audience Adaptation
+h1. Target Audience Adaptation
 
 This module is designed to benefit all learners, regardless of your prior development background:
 * 🌐 *(Web Developers - React/Angular):* You'll likely recognize many JavaScript concepts. This module will serve as a valuable refresher, focusing on ES6+ syntax (like {{let}}/{{const}}, arrow functions, destructuring, and modules) and patterns commonly encountered in React Native. Pay attention to how these features are leveraged in a mobile-specific environment.
@@ -13,7 +13,7 @@ This module is designed to benefit all learners, regardless of your prior develo
 * 🤖 *(Android Developers):* If you're coming from Kotlin or Java, JavaScript will present a new programming paradigm. We'll focus on understanding its syntax, object model, and how asynchronous operations are handled, which are fundamental for effective React Native development.
 * 🛣️ *(All Learners):* Regardless of your background, this module will solidify your understanding of the essential JavaScript features that are heavily used in building React Native applications.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 Upon completing this module, you will be able to:
 * Declare variables using {{let}} and {{const}} and understand JavaScript's various data types and operators.
@@ -23,22 +23,35 @@ Upon completing this module, you will be able to:
 * Manage asynchronous operations proficiently using Callbacks, Promises, and {{async/await}}.
 * Organize your code into reusable ES6 modules using {{import}} and {{export}} statements.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, it's important that you have a basic understanding of web concepts. Please ensure you have completed:
 * [../module-04-web-development-essentials-refresher/index.md|Module 4: Web Development Essentials Refresher]
 
 A general familiarity with basic programming concepts will also be beneficial.
 
-h2. What You'll Cover in This Module
+h1. What You'll Cover in This Module
 
 Throughout this module, we will explore the following key areas of JavaScript:
-* *Section 1: Variables, Data Types, and Operators:* Understanding the building blocks ({{let}}, {{const}}, various types).
-* *Section 2: Control Flow:* Mastering conditional logic and loops.
-* *Section 3: Functions:* Exploring arrow functions, scope, and closures. (_Includes Exercise 5.1_)
-* *Section 4: Objects and Arrays:* Working with data structures, methods, destructuring, and spread/rest operators. (_Includes Exercise 5.2_)
-* *Section 5: Asynchronous JavaScript:* Handling asynchronous operations with Callbacks, Promises, and {{async/await}}. (_Includes Exercise 5.3 and a Mermaid diagram_)
-* *Section 6: ES6 Modules:* Organizing code with {{import}} and {{export}}.
+
+h2. Section 1: Variables, Data Types, and Operators
+
+Understanding the building blocks ({{let}}, {{const}}, various types).
+h2. Section 2: Control Flow
+
+Mastering conditional logic and loops.
+h2. Section 3: Functions
+
+Exploring arrow functions, scope, and closures. (_Includes Exercise 5.1_)
+h2. Section 4: Objects and Arrays
+
+Working with data structures, methods, destructuring, and spread/rest operators. (_Includes Exercise 5.2_)
+h2. Section 5: Asynchronous JavaScript
+
+Handling asynchronous operations with Callbacks, Promises, and {{async/await}}. (_Includes Exercise 5.3 and a Mermaid diagram_)
+h2. Section 6: ES6 Modules
+
+Organizing code with {{import}} and {{export}}.
 
 You will apply these concepts in exercises and a culminating module challenge:
 * *Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)*

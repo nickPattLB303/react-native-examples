@@ -1,8 +1,10 @@
-h2. Section 4: Introduction to Creating Native Modules (Conceptual Overview)
+{toc}
+
+h1. Section 4: Introduction to Creating Native Modules (Conceptual Overview)
 
 This section provides a conceptual overview of what's involved in creating your own native modules. While detailed implementation is an advanced topic, understanding the general process, when to consider it, and the foundational shift towards the New Architecture is important for appreciating how React Native can be extended.
 
-h3. When to Consider Creating Custom Modules
+h2. When to Consider Creating Custom Modules
 
 While the Expo SDK and the vast community library ecosystem cover a multitude of use cases, situations arise where creating a custom Native Module becomes necessary. However, this path involves significantly more complexity than using pre-built solutions. Therefore, the decision to build a custom module should be made deliberately, after exhausting other possibilities.
 
@@ -11,16 +13,27 @@ While the Expo SDK and the vast community library ecosystem cover a multitude of
 # *Community Modules:* Search for well-maintained Community Modules (using resources like React Native Directory) that might meet the need. For Expo projects, check if these modules have or can be used with an [https://docs.expo.dev/guides/config-plugins/|Expo Config Plugin].
 
 Custom Native Module development should typically be considered only in the following scenarios:
-* *Integrating Proprietary In-house Native SDKs:* When an organization needs to use its own existing, private native libraries (Android/iOS) within a React Native application.
-* *Accessing Niche Platform APIs:* When the application requires access to very specific or newly released OS features or hardware capabilities that are not yet wrapped by React Native core, the Expo SDK, or any suitable community module.
-* *Optimizing Critical Performance Bottlenecks:* If a core functionality suffers from severe performance issues even after optimizing JavaScript code (always profile first!), and existing native solutions are insufficient, writing highly optimized native code might be the only way to achieve the required performance.
-* *Needing Fine-Grained Control:* When an existing module provides the general functionality but lacks the specific configuration options, callbacks, or low-level control required for the application's unique needs.
-* *Contributing to the Ecosystem:* When developing a novel capability that could benefit other React Native developers, contributing it as a new open-source native module.
+
+h2. Integrating Proprietary In-house Native SDKs
+
+When an organization needs to use its own existing, private native libraries (Android/iOS) within a React Native application.
+h2. Accessing Niche Platform APIs
+
+When the application requires access to very specific or newly released OS features or hardware capabilities that are not yet wrapped by React Native core, the Expo SDK, or any suitable community module.
+h2. Optimizing Critical Performance Bottlenecks
+
+If a core functionality suffers from severe performance issues even after optimizing JavaScript code (always profile first!), and existing native solutions are insufficient, writing highly optimized native code might be the only way to achieve the required performance.
+h2. Needing Fine-Grained Control
+
+When an existing module provides the general functionality but lacks the specific configuration options, callbacks, or low-level control required for the application's unique needs.
+h2. Contributing to the Ecosystem
+
+When developing a novel capability that could benefit other React Native developers, contributing it as a new open-source native module.
 
 {note}
 The creation of custom native modules represents a substantial increase in complexity and required expertise compared to consuming pre-built ones. It pushes developers beyond the JavaScript/TypeScript realm into native platform development, native build systems, and the intricacies of React Native's cross-language communication architecture. Always weigh the benefits against the associated costs in development time and ongoing maintenance effort.
 {note}
-h3. High-Level Process Overview
+h2. High-Level Process Overview
 
 Creating a native module fundamentally involves bridging the JavaScript and native worlds. This requires writing code in multiple languages and environments:
 # *JavaScript/TypeScript Interface Definition:* Defining the API (methods, arguments, return types) that your JavaScript code will use to interact with the native module.
@@ -30,45 +43,80 @@ Creating a native module fundamentally involves bridging the JavaScript and nati
 
 Setting up a proper native development environment is also essential, requiring installations of Android Studio (with the Android SDK and NDK) and Xcode (with the iOS SDK and command-line tools).
 
-h3. Legacy Architecture Approach (Brief Historical Context)
+h2. Legacy Architecture Approach (Brief Historical Context)
 
 Before the advent of the New Architecture (JSI, TurboModules, Fabric), creating native modules followed a different pattern, heavily reliant on the asynchronous Bridge:
-* *Android (Legacy):* Developers typically created a Java class extending {{ReactContextBaseJavaModule}}. Methods intended to be callable from JavaScript were annotated with {{@ReactMethod}}. Data types were manually converted between JavaScript types and Java types. Communication back to JS usually involved invoking Callbacks or resolving Promises.
-* *iOS (Legacy):* Developers created an Objective-C class implementing the {{RCTBridgeModule}} protocol. Methods exposed to JavaScript were defined using the {{RCT_EXPORT_METHOD}} macro. Similar manual type checking and conversion were necessary. Callbacks ({{RCTResponseSenderBlock}}) or Promises ({{RCTPromiseResolveBlock}}, {{RCTPromiseRejectBlock}}) were used for returning results.
+
+h2. Android (Legacy)
+
+Developers typically created a Java class extending {{ReactContextBaseJavaModule}}. Methods intended to be callable from JavaScript were annotated with {{@ReactMethod}}. Data types were manually converted between JavaScript types and Java types. Communication back to JS usually involved invoking Callbacks or resolving Promises.
+h2. iOS (Legacy)
+
+Developers created an Objective-C class implementing the {{RCTBridgeModule}} protocol. Methods exposed to JavaScript were defined using the {{RCT_EXPORT_METHOD}} macro. Similar manual type checking and conversion were necessary. Callbacks ({{RCTResponseSenderBlock}}) or Promises ({{RCTPromiseResolveBlock}}, {{RCTPromiseRejectBlock}}) were used for returning results.
 
 This legacy approach suffered from the limitations of the Bridge: asynchronous communication overhead and the lack of built-in type safety between JS and native calls. While crucial for understanding older React Native codebases, this legacy method is not the recommended approach for creating new native modules.
 
-h3. New Architecture Prerequisite for Modern Native Modules
+h2. New Architecture Prerequisite for Modern Native Modules
 
 The modern, preferred, and future-facing approach for creating native integrations is through React Native's *New Architecture*. This architecture fundamentally redesigns the communication (JSI) and rendering (Fabric) layers for improved performance and capabilities.
 
 Key components relevant to native module creation in the New Architecture are:
-* *JSI (JavaScript Interface):* The underlying C++ communication layer enabling direct, synchronous interaction.
-* *TurboModules:* The new system for implementing native modules, leveraging JSI and code generation for type safety and performance (covered in Section 5).
-* *Fabric:* The new rendering system, which includes Fabric Native Components for bridging native UI elements (covered in Section 7).
+
+h2. JSI (JavaScript Interface)
+
+The underlying C++ communication layer enabling direct, synchronous interaction.
+h2. TurboModules
+
+The new system for implementing native modules, leveraging JSI and code generation for type safety and performance (covered in Section 5).
+h2. Fabric
+
+The new rendering system, which includes Fabric Native Components for bridging native UI elements (covered in Section 7).
 
 To utilize TurboModules or Fabric Components, the New Architecture must be enabled in your React Native application. This typically involves setting configuration flags:
-* *Android:* Set {{newArchEnabled=true}} in the {{android/gradle.properties}} file.
-* *iOS:* Run {{pod install}} within the {{ios}} directory after setting the environment variable {{RCT_NEW_ARCH_ENABLED=1}} (e.g., {{RCT_NEW_ARCH_ENABLED=1 bundle exec pod install}}).
+
+h2. Android
+
+Set {{newArchEnabled=true}} in the {{android/gradle.properties}} file.
+h2. iOS
+
+Run {{pod install}} within the {{ios}} directory after setting the environment variable {{RCT_NEW_ARCH_ENABLED=1}} (e.g., {{RCT_NEW_ARCH_ENABLED=1 bundle exec pod install}}).
 
 {note}
 The New Architecture signals a clear strategic direction from the React Native core team. Adopting it, especially for new native integrations, is crucial for performance, future compatibility, and avoiding technical debt associated with legacy approaches.
 {note}
-h3. Development Approaches and Tooling for Custom Modules
+h2. Development Approaches and Tooling for Custom Modules
 
 There are different ways to structure and develop a custom native module:
-* *Directly within your app's native projects:* If the module is highly specific to your application, you can add the native files directly into the {{ios}} and {{android}} directories of your (prebuilt) Expo project or bare React Native project.
-* *As a local library:* For better organization, you can create it as a separate local library and link it to your main application.
-* *As an NPM package:* If the module is generic and could be useful to others, you can package it for distribution via npm. Tools like {{create-react-native-library}} or {{expo-module-scripts}} (part of {{expo-modules-core}}) can help scaffold the necessary boilerplate for creating distributable native modules. The Expo Modules API is designed to simplify creating high-quality modules for multiple platforms.
 
-h3. Complexity Considerations
+h2. Directly within your app's native projects
+
+If the module is highly specific to your application, you can add the native files directly into the {{ios}} and {{android}} directories of your (prebuilt) Expo project or bare React Native project.
+h2. As a local library
+
+For better organization, you can create it as a separate local library and link it to your main application.
+h2. As an NPM package
+
+If the module is generic and could be useful to others, you can package it for distribution via npm. Tools like {{create-react-native-library}} or {{expo-module-scripts}} (part of {{expo-modules-core}}) can help scaffold the necessary boilerplate for creating distributable native modules. The Expo Modules API is designed to simplify creating high-quality modules for multiple platforms.
+
+h2. Complexity Considerations
 
 Creating custom native modules, even with the New Architecture's improvements, remains a complex task significantly exceeding the difficulty of typical application development purely within JavaScript/TypeScript and React Native components. It demands a solid understanding of:
-* *Native platform development:* Android (Java/Kotlin, Android SDK, lifecycles) and/or iOS (Objective-C/Swift, iOS SDK, lifecycles).
-* *Native build systems:* Gradle for Android, CocoaPods/Xcode for iOS.
-* *The intricacies of React Native's specific architecture:* JSI concepts, TurboModules/Fabric component structure, and Codegen (the code generation tool).
-* *Potentially C++:* For deeper JSI interactions or complex module implementations, some C++ knowledge might be beneficial or required.
-* *Debugging:* Often involves using native debugging tools (Xcode, Android Studio) in addition to JavaScript debuggers.
+
+h2. Native platform development
+
+Android (Java/Kotlin, Android SDK, lifecycles) and/or iOS (Objective-C/Swift, iOS SDK, lifecycles).
+h2. Native build systems
+
+Gradle for Android, CocoaPods/Xcode for iOS.
+h2. The intricacies of React Native's specific architecture
+
+JSI concepts, TurboModules/Fabric component structure, and Codegen (the code generation tool).
+h2. Potentially C++
+
+For deeper JSI interactions or complex module implementations, some C++ knowledge might be beneficial or required.
+h2. Debugging
+
+Often involves using native debugging tools (Xcode, Android Studio) in addition to JavaScript debuggers.
 
 {info}
 This course provides a conceptual overview of these advanced topics to ensure you understand the underlying mechanisms and the modern approach. It does not aim to be a comprehensive guide to implementing custom native modules from scratch, which would require dedicated, in-depth study of each platform and the New Architecture specifics.

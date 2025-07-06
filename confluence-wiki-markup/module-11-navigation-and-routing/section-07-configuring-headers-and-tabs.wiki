@@ -1,48 +1,52 @@
-h2. Section 7: Configuring Headers and Tabs (Styling, Options)
+{toc}
+
+h1. Section 7: Configuring Headers and Tabs (Styling, Options)
 
 Once you have your navigation structure in place, the next step is often to customize its appearance to match your app's branding and improve user experience. React Navigation provides extensive options for configuring headers (in Stack Navigators) and tab bars (in Tab Navigators). This section explores how to style these elements, set titles, add buttons, and manage their visibility for the SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Customization options can be applied at different levels: globally for a navigator or specifically for individual screens. Understanding this hierarchy is key to efficient styling.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Levels of Configuration
+h3. Conceptual Content: Levels of Configuration
 
 React Navigation allows you to configure visual elements like headers and tab bars in a few ways:
 # *{{screenOptions}} on the Navigator:* You can set default options for all screens within a specific navigator (e.g., {{Stack.Navigator}} or {{Tab.Navigator}}). This is useful for applying consistent styling across multiple screens.
 # *{{options}} on the Screen:* Each {{Stack.Screen}} or {{Tab.Screen}} component can also take an {{options}} prop to customize its appearance individually. These screen-specific options will override any defaults set by the navigator's {{screenOptions}}.
 # *Dynamic Options:* Both {{screenOptions}} and {{options}} can be functions that receive {{{ route, navigation }}} as arguments, allowing you to set options dynamically based on the current route's parameters or navigation state.
 
-h4. Procedural Content: Configuring Stack Navigator Headers
+h3. Procedural Content: Configuring Stack Navigator Headers
 
 Headers are a crucial part of stack navigation, providing context (title) and back navigation.
 
 *1. Setting Header Titles:*
-* *Static Title:*
-  {code:language=js}
+
+h2. Static Title
+{code:language=js}
 <Stack.Screen
-    name="Home"
-    component={HomeScreen}
-    options={{ title: "SpeedyMeds Dashboard" }}
-  />
-  ```
-* *Dynamic Title (based on route params):*
-  ```tsx
-  <Stack.Screen
-    name="PrescriptionDetail"
-    component={PrescriptionDetailScreen}
-    options={({ route }) => ({
-      title: `Details: ${route.params.prescriptionId}`,
-    })}
-  />
-  ```
-* *Setting title from within the screen component (less common for headers, but possible):*
-  You can use `navigation.setOptions({ title: 'Updated Title' })` inside a screen component. This is useful if the title depends on data fetched within the screen.
+  name="Home"
+  component={HomeScreen}
+  options={{ title: "SpeedyMeds Dashboard" }}
+/>
+{code}
+h2. Dynamic Title (based on route params)
+{code:language=js}
+<Stack.Screen
+  name="PrescriptionDetail"
+  component={PrescriptionDetailScreen}
+  options={({ route }) => ({
+    title: `Details: ${route.params.prescriptionId}`,
+  })}
+/>
+{code}
+h2. Setting title from within the screen component (less common for headers, but possible)
+You can use `navigation.setOptions({ title: 'Updated Title' })` inside a screen component. This is useful if the title depends on data fetched within the screen.
 
 *2. Styling the Header:*
 
 Header styles can be applied via the `options` (for a single screen) or `screenOptions` (for all screens in a stack navigator) prop.
-{code}tsx
+
+{code:language=js}
 // In Stack.Navigator screenOptions or Stack.Screen options
 options={{
   title: 'My Screen',
@@ -56,11 +60,13 @@ options={{
   },
   headerTitleAlign: 'center', // 'left' or 'center' (Android defaults to left, iOS to center)
 }}
-{code:language=text}
+{code}
+
 *3. Adding Buttons to the Header:*
 * `headerRight`: A function that returns a React element to display on the right side of the header.
 * `headerLeft`: A function that returns a React element to display on the left side (the back button is shown here by default, but you can override it).
-{code}tsx
+
+{code:language=js}
 // Example: Adding a Save button to headerRight
 <Stack.Screen
   name="EditProfile"
@@ -81,49 +87,53 @@ options={{
     ),
   })}
 />
-{code:language=text}
+{code}
 
 {tip}
 When using `headerLeft` to provide a custom component, you might lose the default back button functionality. You may need to implement back navigation yourself using `navigation.goBack()` or render the default back button component provided by `@react-navigation/elements` (`HeaderBackButton`).
 {tip}
 *4. Hiding the Header:*
-{code}tsx
+
+{code:language=js}
 <Stack.Screen
   name="FullScreenImage"
   component={FullScreenImageScreen}
   options={{ headerShown: false }}
 />
-{code:language=text}
-h4. Procedural Content: Configuring Tab Navigator Tab Bars
+{code}
+
+h3. Procedural Content: Configuring Tab Navigator Tab Bars
 
 Tab bars provide access to the main sections of your app.
 
 *1. Setting Tab Labels:*
-* *Static Label:*
-  ```tsx
-  <Tab.Screen
-    name="MedicationsTab"
-    component={MedicationsNavigator}
-    options={{ tabBarLabel: "My Meds" }}
-  />
-  ```
-* *Dynamic Label (less common for tabs, but possible via `tabBarLabel` as a function):*
-  ```tsx
-  <Tab.Screen
-    name="NotificationsTab"
-    component={NotificationsScreen}
-    options={{
-      tabBarLabel: "Inbox",
-      tabBarBadge: 3, // Display a badge with a count
-    }}
-  />
-  ```
+
+h2. Static Label
+{code:language=js}
+<Tab.Screen
+  name="MedicationsTab"
+  component={MedicationsNavigator}
+  options={{ tabBarLabel: "My Meds" }}
+/>
+{code}
+h2. Dynamic Label (less common for tabs, but possible via `tabBarLabel` as a function)
+{code:language=js}
+<Tab.Screen
+  name="NotificationsTab"
+  component={NotificationsScreen}
+  options={{
+    tabBarLabel: "Inbox",
+    tabBarBadge: 3, // Display a badge with a count
+  }}
+/>
+{code}
 * The `title` option in `Tab.Screen` often also sets the label if `tabBarLabel` isn't specified.
 
 *2. Setting Tab Icons:*
 
 This is typically done via the `tabBarIcon` function within `screenOptions` of the `Tab.Navigator` or `options` of a `Tab.Screen`.
-{code}tsx
+
+{code:language=js}
 // In Tab.Navigator screenOptions or Tab.Screen options
 options={{
   tabBarIcon: ({ focused, color, size }) => {
@@ -139,11 +149,13 @@ options={{
     return <Ionicons name={iconName as any} size={size} color={color} />;
   },
 }}
-{code:language=text}
+{code}
+
 *3. Styling the Tab Bar:*
 
 These options usually go into the `screenOptions` of the `Tab.Navigator`.
-{code}tsx
+
+{code:language=js}
 // In Tab.Navigator screenOptions
 screenOptions={{
   tabBarActiveTintColor: 'tomato',
@@ -164,11 +176,13 @@ screenOptions={{
   },
   // headerShown: false, // Common if tabs manage their own stack headers
 }}
-{code:language=text}
+{code}
+
 *4. Hiding the Tab Bar for a Specific Screen (usually within a nested stack):*
 
 If a screen within a stack (that is itself inside a tab navigator) should hide the bottom tab bar (e.g., a detail screen or a modal), you can set the `tabBarStyle: { display: 'none' }` option. This is often done dynamically.
-{code}tsx
+
+{code:language=js}
 // Inside a screen component that's part of a stack nested in a tab navigator
 React.useLayoutEffect(() => {
   // Get the parent TabNavigator's navigation object
@@ -187,7 +201,7 @@ React.useLayoutEffect(() => {
     }
   };
 }, [navigation]);
-```
+{code}
 
 A more common approach is to define a separate stack navigator for modal screens outside the tab navigator or leverage the `tabBarVisible` option if available and appropriate for your React Navigation version structure (though `tabBarStyle: {display: 'none'}` is more current for v6 fine-grained control).
 
@@ -209,6 +223,6 @@ bq. 🍏 *(iOS Developers):*
 bq. 🤖 *(Android Developers):*
 > *Comparison:* Styling the `Toolbar` or `AppBarLayout` (title, background, menu items) and `BottomNavigationView` (item icons, labels, colors, background) directly relates to these options.
 
-h4. Next Steps
+h3. Next Steps
 
 While React Navigation offers powerful imperative and component-based ways to define navigation, Expo has introduced its own file-system-based routing solution called Expo Router. The next section will introduce you to this alternative approach.

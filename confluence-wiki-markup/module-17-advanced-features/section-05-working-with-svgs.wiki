@@ -1,19 +1,32 @@
-h2. Section 5: Working with SVGs ({{react-native-svg}})
+{toc}
+
+h1. Section 5: Working with SVGs ({{react-native-svg}})
 
 This section covers how to incorporate Scalable Vector Graphics (SVGs) into your React Native applications using the {{react-native-svg}} library. SVGs are an excellent choice for icons, logos, and simple illustrations because they are resolution-independent and can be scaled without loss of quality.
 
-h3. Conceptual Content
+h2. Conceptual Content
 
 *What are SVGs?*
 
 SVG stands for Scalable Vector Graphics. Unlike raster graphics (like PNGs or JPEGs) which are made up of pixels, SVGs are XML-based markup that describe two-dimensional vector graphics. This means they define graphics as a set of points, lines, curves, and shapes. Because they are vector-based, SVGs can be scaled to any size without becoming pixelated or blurry, making them ideal for applications that need to support various screen densities and sizes.
 
 *Benefits of Using SVGs:*
-* *Scalability:* Perfect rendering at any size and resolution.
-* *Small File Size:* SVGs, especially for simpler graphics, can often have smaller file sizes compared to their raster counterparts.
-* *Manipulability:* SVG properties (like color, stroke, opacity) can be manipulated through code, allowing for dynamic icons or themed graphics.
-* *Accessibility:* SVGs can include text alternatives and semantic information, improving accessibility.
-* *Widely Supported:* It's a web standard, and {{react-native-svg}} brings this power to React Native.
+
+h2. Scalability
+
+Perfect rendering at any size and resolution.
+h2. Small File Size
+
+SVGs, especially for simpler graphics, can often have smaller file sizes compared to their raster counterparts.
+h2. Manipulability
+
+SVG properties (like color, stroke, opacity) can be manipulated through code, allowing for dynamic icons or themed graphics.
+h2. Accessibility
+
+SVGs can include text alternatives and semantic information, improving accessibility.
+h2. Widely Supported
+
+It's a web standard, and {{react-native-svg}} brings this power to React Native.
 
 *{{react-native-svg}} Library*
 
@@ -24,15 +37,15 @@ SVG stands for Scalable Vector Graphics. Unlike raster graphics (like PNGs or JP
 In an Expo project, {{react-native-svg}} is typically very easy to install:
 # *Install the library:*
 
-    {code:language=bash}
-npx expo install react-native-svg
-    ```
+{code:language=bash}
+    npx expo install react-native-svg
+{code}
 
     Expo's `install` command will ensure that a compatible version of the library is installed and linked correctly for your Expo SDK version.
 
 No further Babel or native configuration is usually required for basic usage in Expo-managed projects.
 
-h3. Referential Content
+h2. Referential Content
 
 `react-native-svg` allows you to render SVGs in a few ways:
 # *Inline SVG XML:* You can embed SVG elements directly as JSX components.
@@ -40,24 +53,29 @@ h3. Referential Content
 # *Using `SvgUri` or `SvgXml` components:* For loading SVGs from a remote URL or an XML string respectively.
 
 *Common `react-native-svg` Components:*
-* *`<Svg>`:* The root component for any SVG graphic. It defines the viewport for the SVG.
-** Props: `width`, `height`, `viewBox` (defines the internal coordinate system and aspect ratio).
-* *Shape Components:*
-** *`<Path d="..." />`:* Defines a path using SVG path data. This is one of the most versatile elements, capable of drawing complex shapes.
-** *`<Circle cx="..." cy="..." r="..." />`:* Draws a circle.
-** *`<Rect x="..." y="..." width="..." height="..." />`:* Draws a rectangle.
-** *`<Line x1="..." y1="..." x2="..." y2="..." />`:* Draws a line.
-** *`<Polygon points="..." />`:* Draws a shape with straight lines connecting a series of points.
-** *`<Polyline points="..." />`:* Similar to Polygon, but the path doesn't automatically close.
-** *`<Ellipse cx="..." cy="..." rx="..." ry="..." />`:* Draws an ellipse.
-* *Text Component:*
-** *`<Text x="..." y="..." />`:* Renders text within an SVG. Note this is `Svg.Text`, not `ReactNative.Text`.
-** *`<TSpan>`:* Used inside `<Text>` for more control over parts of the text.
-* *Grouping and Definition Components:*
-** *`<G>`:* Used to group multiple SVG elements together. Transformations applied to a `<G>` element affect all its children.
-** *`<Defs>`:* Used to define reusable elements like gradients, patterns, or symbols that can be referenced by other SVG elements.
-** *`<Use href="#id" />` or `xlinkHref="#id"`:* Allows you to reuse elements defined in `<Defs>`.
-* *Styling Props:* Most SVG elements accept presentation attributes like `fill` (fill color), `stroke` (stroke color), `strokeWidth`, `opacity`, etc.
+
+h2. `<Svg>`
+
+The root component for any SVG graphic. It defines the viewport for the SVG.
+* Props: `width`, `height`, `viewBox` (defines the internal coordinate system and aspect ratio).
+h2. Shape Components
+* *`<Path d="..." />`:* Defines a path using SVG path data. This is one of the most versatile elements, capable of drawing complex shapes.
+* *`<Circle cx="..." cy="..." r="..." />`:* Draws a circle.
+* *`<Rect x="..." y="..." width="..." height="..." />`:* Draws a rectangle.
+* *`<Line x1="..." y1="..." x2="..." y2="..." />`:* Draws a line.
+* *`<Polygon points="..." />`:* Draws a shape with straight lines connecting a series of points.
+* *`<Polyline points="..." />`:* Similar to Polygon, but the path doesn't automatically close.
+* *`<Ellipse cx="..." cy="..." rx="..." ry="..." />`:* Draws an ellipse.
+h2. Text Component
+* *`<Text x="..." y="..." />`:* Renders text within an SVG. Note this is `Svg.Text`, not `ReactNative.Text`.
+* *`<TSpan>`:* Used inside `<Text>` for more control over parts of the text.
+h2. Grouping and Definition Components
+* *`<G>`:* Used to group multiple SVG elements together. Transformations applied to a `<G>` element affect all its children.
+* *`<Defs>`:* Used to define reusable elements like gradients, patterns, or symbols that can be referenced by other SVG elements.
+* *`<Use href="#id" />` or `xlinkHref="#id"`:* Allows you to reuse elements defined in `<Defs>`.
+h2. Styling Props
+
+Most SVG elements accept presentation attributes like `fill` (fill color), `stroke` (stroke color), `strokeWidth`, `opacity`, etc.
 
 *`viewBox` Attribute*
 
@@ -66,12 +84,13 @@ The `viewBox` attribute is crucial for SVG scalability and responsiveness. It is
 * `width`, `height`: The width and height of the viewBox.
   This defines the coordinate system for the SVG graphic. The `width` and `height` props on the `<Svg>` component define how large this `viewBox` will be rendered on the screen. The browser/renderer will scale the `viewBox` to fit into the dimensions specified by `width` and `height`, preserving the aspect ratio by default.
 
-h3. Procedural Content
+h2. Procedural Content
 
 *Example 1: Inline SVG Icon for Medication*
 
 Let's create a pill/capsule icon for our SpeedyMeds app using inline SVG components. This could be used to represent different medications in the app.
-{code}tsx
+
+{code:language=js}
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path, Ellipse, G } from "react-native-svg";
@@ -189,7 +208,8 @@ const styles = StyleSheet.create({
 // );
 
 export default MedicationIcon;
-{code:language=text}
+{code}
+
 *Explanation of Example 1:*
 
 This `MedicationIcon` component demonstrates how to create a simple, reusable vector icon directly within your React Native code using `react-native-svg`. The icon is a standard pill/capsule shape, which could be used in the SpeedyMeds app to represent different medications.
@@ -211,16 +231,19 @@ Often, you'll have SVG files (e.g., icons from a design tool). While `react-nati
 Tools like [https://react-svgr.com/|SVGR] (specifically its `@svgr/cli` or webpack loader) can automate this process. For an Expo project, you might run a script or manually convert simple SVGs.
 
 Let's assume you have an `rx-logo.svg` file for SpeedyMeds:
-{code}xml
+
+{code:language=xml}
 <!-- rx-logo.svg -->
 <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="100" height="100" rx="15" fill="#2196F3"/>
   <path d="M30 70L30 30L45 30C55 30 55 40 45 40L30 40" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M55 70L70 30" stroke="white" stroke-width="5" stroke-linecap="round"/>
 </svg>
-{code:language=text}
+{code}
+
 You could convert this into a React Native component manually or using a tool:
-{code}tsx
+
+{code:language=js}
 // components/RxLogo.tsx
 import React from "react";
 import Svg, { Rect, Path } from "react-native-svg";
@@ -264,7 +287,7 @@ const RxLogo: React.FC<RxLogoProps> = ({ size = 100 }) => {
 };
 
 export default RxLogo;
-```
+{code}
 
 *Explanation of Example 2:*
 
@@ -286,10 +309,18 @@ Key steps and concepts involved:
       This conversion to camelCase is standard for React props that correspond to hyphenated HTML/SVG attributes.
 # *Component Encapsulation:* The translated SVG elements are wrapped in a functional React component (`RxLogo`). This component can accept props, such as `size`, to allow for easy customization of the logo's rendered dimensions while maintaining its aspect ratio due to the `viewBox`.
 # *Benefits of Componentization:*
-*** *Reusability:* Import and use `<RxLogo size={50} />` anywhere in the app.
-*** *Maintainability:* If the logo design changes, you update this single component.
-*** *Performance:* For static SVGs, this is generally efficient. `react-native-svg` renders these elements on the native side.
-*** *Type Safety:* With TypeScript, `RxLogoProps` provides type checking for the component's props.
+h3. Reusability
+
+Import and use `<RxLogo size={50} />` anywhere in the app.
+h3. Maintainability
+
+If the logo design changes, you update this single component.
+h3. Performance
+
+For static SVGs, this is generally efficient. `react-native-svg` renders these elements on the native side.
+h3. Type Safety
+
+With TypeScript, `RxLogoProps` provides type checking for the component's props.
 
 While manual conversion is feasible for simple SVGs like this logo, for projects with many complex SVGs, tools like SVGR (`@svgr/cli`) are highly recommended. SVGR can automate the conversion from `.svg` files to React Native components, handling optimizations and prop transformations, significantly streamlining the development workflow. This `RxLogo` could be used in various places within the SpeedyMeds application, such as in the header, on a splash screen, or as part of branding elements.
 
@@ -301,6 +332,6 @@ bq. 📚 *Official Documentation:*
 - [https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial|MDN Web Docs: SVG Tutorial]
 - [https://react-svgr.com/|SVGR Tool]
 
-h3. Next Steps
+h2. Next Steps
 
 Working with SVGs allows for crisp, scalable graphics. Next, we will move on to another important feature for engaging users: implementing push notifications using `expo-notifications`.

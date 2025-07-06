@@ -1,4 +1,6 @@
-h2. Section 5: Running on the iOS Simulator
+{toc}
+
+h1. Section 5: Running on the iOS Simulator
 
 One of the most common ways to test your React Native Expo application during development on macOS is by using the iOS Simulator. The iOS Simulator, which comes with Xcode, allows you to emulate various iPhone and iPad devices directly on your Mac.
 
@@ -8,7 +10,7 @@ bq. 🧑‍🏫 *(Instructor-Led):* Use screen sharing to demonstrate the simula
 
 bq. 🧗‍♀️ *(Self-Led):* If you encounter issues starting the simulator, try launching it manually first using the Spotlight search for "Simulator" before running your Expo commands. This can solve many common connection problems.
 
-h3. Prerequisites for Running on iOS Simulator
+h2. Prerequisites for Running on iOS Simulator
 # *macOS Operating System:* The iOS Simulator is only available on macOS.
 # *Full Xcode Installed:* You MUST have the full Xcode application installed from the Mac App Store. The Xcode Command Line Tools alone are not sufficient for running the iOS Simulator. Xcode includes the simulator runtimes and necessary build tools. ([https://reactnative.dev/docs/set-up-your-environment|Source])
 # *Project Created:* You need an Expo project, like {{SpeedyMedsPrototype}}.
@@ -16,7 +18,7 @@ h3. Prerequisites for Running on iOS Simulator
 {note}
 If you're not using macOS, you can still develop React Native apps using Expo Go on a physical iOS device (Section 6) or an Android emulator. However, the iOS Simulator specifically requires macOS and Xcode.
 {note}
-h3. Preparing and Launching the Simulator
+h2. Preparing and Launching the Simulator
 
 Before running your app, ensure you have a simulator runtime installed and optionally launch a simulator instance:
 # *Check/Install Simulator Runtimes:*
@@ -28,33 +30,44 @@ Before running your app, ensure you have a simulator runtime installed and optio
 *** Alternatively, within Xcode: {{Window > Devices and Simulators}}, select the "Simulators" tab, choose a simulator, and boot it up.
       Having a simulator instance already running can sometimes make the Expo CLI's job smoother.
 
-h3. Method 1: Using {{npx expo run:ios}} (Recommended for Local Native Builds)
+h2. Method 1: Using {{npx expo run:ios}} (Recommended for Local Native Builds)
 
 This is the primary command to build your app's native iOS project locally and run it on the simulator or a connected device.
 # *Navigate to your project directory:*
-    {code:language=bash}
-cd path/to/your/SpeedyMedsPrototype
-    ```
+{code:language=bash}
+    cd path/to/your/SpeedyMedsPrototype
+{code}
 # *Run the command:*
-    ```bash
+{code:language=bash}
     npx expo run:ios
-    ```
+{code}
 
 *What `npx expo run:ios` Does:* ([https://docs.expo.dev/more/expo-cli/#runios|Source])
-* *Prebuild Check/Execution:* It first checks if the native `ios` project directory exists. If not (common in new Expo projects), it automatically runs `npx expo prebuild --platform ios`. This generates the necessary Xcode project files in an `ios` folder based on your `app.json`/`app.config.js` and installed config plugins.
-* *Native Compilation:* It invokes Apple's `xcodebuild` tool to compile the native Swift/Objective-C code within the `ios` directory. This includes React Native itself and any other native modules in your project.
-* *Installation:* Once compilation succeeds, it creates an `.app` bundle and installs it onto the currently running iOS Simulator (or one specified via flags like `--simulator "iPhone 15"`).
-* *Launch:* It then launches your newly installed application on the simulator.
-* *Start Metro:* By default, it also starts the Metro development server (unless `--no-bundler` is used). Your app needs this server to load its JavaScript code.
 
-h3. Method 2: Using `npx expo start` and the Terminal UI
+h2. Prebuild Check/Execution
+
+It first checks if the native `ios` project directory exists. If not (common in new Expo projects), it automatically runs `npx expo prebuild --platform ios`. This generates the necessary Xcode project files in an `ios` folder based on your `app.json`/`app.config.js` and installed config plugins.
+h2. Native Compilation
+
+It invokes Apple's `xcodebuild` tool to compile the native Swift/Objective-C code within the `ios` directory. This includes React Native itself and any other native modules in your project.
+h2. Installation
+
+Once compilation succeeds, it creates an `.app` bundle and installs it onto the currently running iOS Simulator (or one specified via flags like `--simulator "iPhone 15"`).
+h2. Launch
+
+It then launches your newly installed application on the simulator.
+h2. Start Metro
+
+By default, it also starts the Metro development server (unless `--no-bundler` is used). Your app needs this server to load its JavaScript code.
+
+h2. Method 2: Using `npx expo start` and the Terminal UI
 
 You can also launch the app on the simulator via the Expo CLI's interactive terminal UI:
 # *Start the development server:*
 
-    ```bash
+{code:language=bash}
     npx expo start
-    ```
+{code}
 
     This starts Metro and displays a QR code and a menu of keyboard shortcuts.
 
@@ -65,18 +78,23 @@ You can also launch the app on the simulator via the Expo CLI's interactive term
 *** *Interactive Menu*: A list of keyboard commands to interact with the development process. Pressing `?` in the terminal where Expo is running will display all available commands (e.g., `r` to reload, `d` to open developer menu, etc.).
 # *Press `i` in the terminal.* This triggers a similar sequence: if the `ios` directory doesn't exist and the app isn't already built for the simulator, it will often run the equivalent of `npx expo run:ios` (prebuild, compile, install, launch). If launching in Expo Go on the simulator for the first time, you might be prompted to grant permission for Expo Go to open.
 
-h3. Connecting to Metro
+h2. Connecting to Metro
 
 Once your app (either built via `run:ios` or launched via `start` + `i`) starts on the simulator, its native code (specifically the React Native framework) automatically attempts to connect to the Metro server running on your Mac (usually `http://localhost:8081`). It fetches the initial JavaScript bundle and establishes a WebSocket for Fast Refresh / Hot Module Replacement updates when you save code changes.
 
 {tip}
 If you have multiple iOS Simulators installed, you can manage them via Xcode (`Xcode > Window > Devices and Simulators`). `npx expo run:ios --simulator "My Specific Simulator Name"` lets you target a specific one. ([https://docs.expo.dev/more/expo-cli/#runios|Source])
 {tip}
-h3. Development Workflow with the Simulator
-* *Fast Refresh:* Save changes in your JS/TS files, and Metro sends updates to the app on the simulator, often reflecting changes instantly without losing app state.
-* *Developer Menu:* Press `Cmd+Ctrl+Z` (or `Device > Shake` in Simulator menu) to open the developer menu for debugging options.
+h2. Development Workflow with the Simulator
 
-h3. Understanding the Client-Server Development Model
+h2. Fast Refresh
+
+Save changes in your JS/TS files, and Metro sends updates to the app on the simulator, often reflecting changes instantly without losing app state.
+h2. Developer Menu
+
+Press `Cmd+Ctrl+Z` (or `Device > Shake` in Simulator menu) to open the developer menu for debugging options.
+
+h2. Understanding the Client-Server Development Model
 
 The typical development workflow in React Native, especially with Expo, relies on a distinct client-server model:
 * A *client application* (e.g., your app running on the iOS Simulator, Expo Go, or a Development Build) runs on the target platform.
@@ -85,7 +103,8 @@ The typical development workflow in React Native, especially with Expo, relies o
 The client connects to the server (usually over the local network via `localhost` for the simulator) to fetch the JavaScript bundle containing your application logic and UI definitions. This architecture is what enables rapid iteration through features like Fast Refresh: when your JavaScript code is saved, Metro quickly rebundles only the changed parts and sends the update to the client, which applies the changes often without losing application state. This avoids the time-consuming native recompilation cycle required for native code changes.
 
 Understanding this separation is key for troubleshooting. Problems might originate from the client (e.g., simulator crashes, native module issues in a Development Build) or the server (e.g., Metro bundling errors, caching problems). This model is specific to development; production builds typically embed the final JavaScript bundle directly within the native application package.
-{code}typescript
+
+{code:language=js}
 // Example of adding a button to your SpeedyMeds home screen
 // The changes will be reflected in the Simulator via Fast Refresh
 import { View, Text, Button, StyleSheet } from "react-native";
@@ -129,7 +148,7 @@ const styles = StyleSheet.create({
     color: "#555",
   },
 });
-```
+{code}
 
 This example demonstrates a simple `HomeScreen` component for the SpeedyMeds app. After adding the 'Nearby Pharmacies' button (highlighted by the comment) and saving the `HomeScreen.tsx` file, you should observe the new button appear almost instantly in the iOS Simulator. This is due to Fast Refresh, which updates the UI without a full application reload. Pressing either button will log a message to the Metro server console running in your terminal, confirming basic event handling is working. This exercise showcases the rapid development cycle enabled by Expo and the iOS Simulator.
 

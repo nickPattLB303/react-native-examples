@@ -1,8 +1,10 @@
-h2. Section 4: Image ({{<Image>}}) - Displaying Images (Local and Network)
+{toc}
+
+h1. Section 4: Image ({{<Image>}}) - Displaying Images (Local and Network)
 
 Images are a vital part of most mobile applications, and React Native provides the {{<Image>}} component for this purpose. This section covers how to display images bundled with your app, loaded from a network URL, or from other sources.
 
-h3. Conceptual Content: Understanding {{<Image>}}
+h2. Conceptual Content: Understanding {{<Image>}}
 
 The {{<Image>}} component is used to display different types of images.
 
@@ -11,11 +13,15 @@ The {{<Image>}} component is used to display different types of images.
 The {{source}} prop is central and its value type depends on the image origin:
 # *Static Image Resources:*
 *** For images bundled with your project (e.g., in an {{assets}} folder), use {{require()}}: {{source={require('./path/to/image.png')}}}.
-*** *Density Suffixes:* React Native automatically selects the best image resolution for the device by looking for {{@2x}} or {{@3x}} suffixes (e.g., {{my-icon.png}}, {{my-icon@2x.png}}). This ensures crisp images on high-resolution displays.
+h3. Density Suffixes
+
+React Native automatically selects the best image resolution for the device by looking for {{@2x}} or {{@3x}} suffixes (e.g., {{my-icon.png}}, {{my-icon@2x.png}}). This ensures crisp images on high-resolution displays.
 *** The bundler can often determine dimensions, so explicit {{width}} and {{height}} might not always be needed unless for dynamic scaling.
 # *Network Images:*
 *** For remote URLs: {{source={{ uri: 'https://example.com/image.jpg' }}}}.
-*** *Mandatory Dimensions:* You MUST manually specify {{width}} and {{height}} via the {{style}} prop. React Native cannot determine remote image dimensions before download.
+h3. Mandatory Dimensions
+
+You MUST manually specify {{width}} and {{height}} via the {{style}} prop. React Native cannot determine remote image dimensions before download.
 *** Use {{https}} for URLs to comply with App Transport Security (ATS) on iOS.
 *** You can send HTTP headers or a body: {{source={{ uri: '...', method: 'POST', headers: { Authorization: 'Bearer ...' } }}}}.
 # *Temporary Local Images:*
@@ -28,10 +34,19 @@ The {{source}} prop is central and its value type depends on the image origin:
 *** Manual dimensions are also required.
 
 *Key Characteristics of {{<Image>}}:*
-* *Sizing:* As mentioned, {{<Image>}} components (especially network/data/local URI based) *must have a defined {{width}} and {{height}} style* to be visible.
-* *Image Formats:* Supports PNG, JPEG, WebP, GIF, BMP. SVG support needs {{react-native-svg}}.
-* *Resize Modes:* The {{resizeMode}} prop controls how the image is resized. Common values are {{cover}} (default), {{contain}}, {{stretch}}, {{repeat}} (iOS), and {{center}}.
-* *Styling:* Can be styled using {{StyleSheet}} for borders, opacity, etc.
+
+h2. Sizing
+
+As mentioned, {{<Image>}} components (especially network/data/local URI based) *must have a defined {{width}} and {{height}} style* to be visible.
+h2. Image Formats
+
+Supports PNG, JPEG, WebP, GIF, BMP. SVG support needs {{react-native-svg}}.
+h2. Resize Modes
+
+The {{resizeMode}} prop controls how the image is resized. Common values are {{cover}} (default), {{contain}}, {{stretch}}, {{repeat}} (iOS), and {{center}}.
+h2. Styling
+
+Can be styled using {{StyleSheet}} for borders, opacity, etc.
 
 bq. 📲 *(Native Developers):*
 > *Comparison:* {{<Image>}} is similar to {{UIImageView}} on iOS and {{ImageView}} on Android. React Native handles loading from various sources. The {{resizeMode}} prop unifies concepts like {{contentMode}} (iOS) and {{ScaleType}} (Android). Explicitly defining dimensions for most image sources is crucial.
@@ -43,7 +58,7 @@ bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Use {{<Image>}} for all image displays. Remember to set {{width}} and {{height}} styles, as images won't automatically size to their content like in HTML for many sources.
 > *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img|MDN Web Docs: {{<img>}}]
 
-h3. Referential Content: Common {{<Image>}} Props
+h2. Referential Content: Common {{<Image>}} Props
 
 ||Prop||Type||Description||
 |{{source}}|{{ImageSourcePropType}}|Specifies the image source (static {{require()}}, network URI object, local URI, data URI). See details above.|
@@ -68,19 +83,22 @@ bq. 📚 *Official Documentation:*
 - _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uiview/contentmode|Apple Developer: UIImageView contentMode]
 - _(Native Docs)_ [https://developer.android.com/reference/android/widget/ImageView.ScaleType|Android Developer: ImageView.ScaleType]
 
-h3. Image Caching & Performance
+h2. Image Caching & Performance
 
 Effective image handling is crucial for app performance and user experience.
-* *iOS {{source.cache}} Prop:* Provides fine-grained control over caching for network images on iOS (see props table).
-* *General Strategies:*
-** *Caching Libraries:* For advanced caching (disk caching, preloading), consider libraries like {{react-native-fast-image}}.
-** *Image Compression/Optimization:* Always compress and optimize images (e.g., using ImageOptim, TinyPNG) to reduce file sizes.
-** *Appropriate Formats:* Use JPEGs for photos, PNGs for graphics with transparency. WebP often offers better compression.
-** *Resizing to Dimensions:* Serve images from your backend appropriately sized for the display context. Avoid client-side downscaling of very large images.
-** *Lazy Loading:* For lists, ensure images load only when they are about to enter the viewport. {{<FlatList>}} handles this for its items.
-** *Placeholders:* Use {{defaultSource}} or {{loadingIndicatorSource}} for immediate visual feedback.
 
-h3. "Under the Hood": {{<Image>}} Internals
+h2. iOS {{source.cache}} Prop
+
+Provides fine-grained control over caching for network images on iOS (see props table).
+h2. General Strategies
+* *Caching Libraries:* For advanced caching (disk caching, preloading), consider libraries like {{react-native-fast-image}}.
+* *Image Compression/Optimization:* Always compress and optimize images (e.g., using ImageOptim, TinyPNG) to reduce file sizes.
+* *Appropriate Formats:* Use JPEGs for photos, PNGs for graphics with transparency. WebP often offers better compression.
+* *Resizing to Dimensions:* Serve images from your backend appropriately sized for the display context. Avoid client-side downscaling of very large images.
+* *Lazy Loading:* For lists, ensure images load only when they are about to enter the viewport. {{<FlatList>}} handles this for its items.
+* *Placeholders:* Use {{defaultSource}} or {{loadingIndicatorSource}} for immediate visual feedback.
+
+h2. "Under the Hood": {{<Image>}} Internals
 
 *Native Mapping:*
 * On iOS, {{<Image>}} primarily maps to {{UIImageView}}.
@@ -100,13 +118,18 @@ h3. "Under the Hood": {{<Image>}} Internals
 
 *Image Loading & Caching Internals:*
 React Native's internal image loader handles fetching and loading. On native platforms:
-* *iOS:* Uses {{NSURLSession}} for network requests and can leverage {{NSURLCache}}. The {{source.cache}} prop influences these.
-* *Android:* Historically used the Fresco library by Facebook for powerful image downloading, caching (memory and disk), and display, supporting features like progressive JPEGs. Specific implementations can evolve.
+
+h2. iOS
+
+Uses {{NSURLSession}} for network requests and can leverage {{NSURLCache}}. The {{source.cache}} prop influences these.
+h2. Android
+
+Historically used the Fresco library by Facebook for powerful image downloading, caching (memory and disk), and display, supporting features like progressive JPEGs. Specific implementations can evolve.
 
 *Fabric Architecture:*
 In Fabric, an {{ImageShadowNode}} manages props and layout. It instructs the native side (Mounting Layer) to create/update the native {{UIImageView}} or {{android.widget.ImageView}}. JSI facilitates more direct communication for events and control, aiming to improve UI responsiveness for image-heavy UIs.
 
-h3. Procedural Content: Basic {{<Image>}} Usage
+h2. Procedural Content: Basic {{<Image>}} Usage
 
 Let's illustrate how to use {{<Image>}} in our SpeedyMeds app. We'll show how to display a placeholder pill icon (local image) and a hypothetical network image for a medication.
 
@@ -212,7 +235,7 @@ const styles = StyleSheet.create({
 
 This example demonstrates the fundamental usage of `<Image>` for both local static assets (conceptually) and network images, highlighting the mandatory `width` and `height` styling and the utility of `resizeMode`.
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you can display text and images, it's time to learn how to capture user input using the `<TextInput>` component.
 * [./section-05-textinput.md|Next Section: TextInput (`<TextInput>`) - User Input]

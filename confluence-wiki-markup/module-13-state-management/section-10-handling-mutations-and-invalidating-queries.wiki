@@ -1,8 +1,10 @@
-h2. Section 10: Handling Mutations and Invalidating Queries
+{toc}
+
+h1. Section 10: Handling Mutations and Invalidating Queries
 
 In Section 8, we introduced {{useMutation}} as the hook for creating, updating, or deleting data on the server. A critical aspect of using mutations effectively is ensuring that your client-side cache and UI are updated to reflect these changes. TanStack Query provides robust mechanisms for this, primarily through query invalidation and, for more advanced scenarios, optimistic updates or direct cache manipulation.
 
-h3. Recap: {{useMutation}}
+h2. Recap: {{useMutation}}
 
 As a quick reminder, {{useMutation}} takes a {{mutationFn}} (an async function that performs the server update) and returns an object with a {{mutate}} function to trigger the operation, along with status indicators ({{isPending}}, {{isSuccess}}, {{isError}}) and callbacks like {{onSuccess}}, {{onError}}, and {{onSettled}}.
 
@@ -23,45 +25,75 @@ As a quick reminder, {{useMutation}} takes a {{mutationFn}} (an async function t
 
 The key question is: what happens in `onSuccess` to make sure our UI reflects the `newEmail` if it was displaying the user's profile?
 
-h3. Strategies for Post-Mutation Cache Updates
+h2. Strategies for Post-Mutation Cache Updates
 
 TanStack Query offers several ways to synchronize your client state after a mutation:
 # *Invalidating Queries (`queryClient.invalidateQueries`)*
     This is the most common and often the simplest approach. When you invalidate a query (or a set of queries), TanStack Query marks them as stale. If those queries are currently active (i.e., being used by a mounted component via `useQuery`), they will be automatically re-fetched from the server.
-*** *How it Works:* Inside the `onSuccess` (or `onSettled`) callback of `useMutation`, you use `queryClient.invalidateQueries({ queryKey: [...], ...filters })`.
-*** *Triggering Refetches:* Importantly, simply marking a query as stale doesn\'t necessarily trigger an immediate refetch for _all_ matching queries. A refetch is only triggered if the invalidated query is currently *active* (i.e., being observed by a mounted `useQuery` instance). Inactive queries are marked stale but will only refetch the next time they become active (or via other triggers like `refetchOnWindowFocus`).
-*** *Query Matching for Invalidation (Filters):* `invalidateQueries` provides flexible ways to specify which queries should be invalidated using filters within the options object:
-**** *Prefix Matching (Default):* If you only provide a `queryKey` (e.g., `{ queryKey: ['todos'] }`), TanStack Query will invalidate all queries whose keys _start with_ that array. This is useful for invalidating related data, like invalidating both the main todo list (`['todos']`) and individual todo details (`['todos', 5]`) after an update.
-**** *Exact Matching:* To invalidate only a query with a specific, exact key, add `exact: true` to the options: `{ queryKey: ['todos'], exact: true }`. This will invalidate `['todos']` but not `['todos', 5]`.
-**** *Predicate Function:* For complex scenarios, you can provide a `predicate` function. This function receives each `Query` object from the cache and should return `true` for queries that need invalidation: `{ predicate: (query) => query.queryKey[0] === 'todos' && query.state.data?.length > 10 }`.
-**** *Other Filters:* You can also filter by query state using options like `active: true` (only invalidate active queries), `inactive: true`, `stale: true`, or `fetchStatus: 'fetching'`.
-*** *Benefit:* Ensures your UI displays fresh data from the server after a change. It\'s a reliable way to keep data consistent.
+
+h3. How it Works
+
+Inside the `onSuccess` (or `onSettled`) callback of `useMutation`, you use `queryClient.invalidateQueries({ queryKey: [...], ...filters })`.
+h3. Triggering Refetches
+
+Importantly, simply marking a query as stale doesn\'t necessarily trigger an immediate refetch for _all_ matching queries. A refetch is only triggered if the invalidated query is currently *active* (i.e., being observed by a mounted `useQuery` instance). Inactive queries are marked stale but will only refetch the next time they become active (or via other triggers like `refetchOnWindowFocus`).
+h3. Query Matching for Invalidation (Filters)
+
+`invalidateQueries` provides flexible ways to specify which queries should be invalidated using filters within the options object:
+* *Prefix Matching (Default):* If you only provide a `queryKey` (e.g., `{ queryKey: ['todos'] }`), TanStack Query will invalidate all queries whose keys _start with_ that array. This is useful for invalidating related data, like invalidating both the main todo list (`['todos']`) and individual todo details (`['todos', 5]`) after an update.
+* *Exact Matching:* To invalidate only a query with a specific, exact key, add `exact: true` to the options: `{ queryKey: ['todos'], exact: true }`. This will invalidate `['todos']` but not `['todos', 5]`.
+* *Predicate Function:* For complex scenarios, you can provide a `predicate` function. This function receives each `Query` object from the cache and should return `true` for queries that need invalidation: `{ predicate: (query) => query.queryKey[0] === 'todos' && query.state.data?.length > 10 }`.
+* *Other Filters:* You can also filter by query state using options like `active: true` (only invalidate active queries), `inactive: true`, `stale: true`, or `fetchStatus: 'fetching'`.
+h3. Benefit
+
+Ensures your UI displays fresh data from the server after a change. It\'s a reliable way to keep data consistent.
 # *Direct Cache Updates with `queryClient.setQueryData`*
     Sometimes, the response from your mutation already contains the updated data. In such cases, instead of re-fetching, you can directly update the cache using `queryClient.setQueryData(queryKey, newData)` or `queryClient.setQueryData(queryKey, (oldData) => computeNewData(oldData))`. This can make the UI update feel instantaneous as it avoids an additional network request for the re-fetch.
-*** *How it Works:* In `onSuccess`, use the data returned by your `mutationFn` to update the relevant query cache.
-*** *Benefit:* Faster UI updates if the mutation response is sufficient. Avoids an extra fetch.
-*** *Caution:* You are manually manipulating the cache, so you need to ensure the data structure matches what `useQuery` expects for that `queryKey`. If other parts of the data that weren't returned by the mutation also changed on the server, `setQueryData` alone won't pick that up.
+
+h3. How it Works
+
+In `onSuccess`, use the data returned by your `mutationFn` to update the relevant query cache.
+h3. Benefit
+
+Faster UI updates if the mutation response is sufficient. Avoids an extra fetch.
+h3. Caution
+
+You are manually manipulating the cache, so you need to ensure the data structure matches what `useQuery` expects for that `queryKey`. If other parts of the data that weren't returned by the mutation also changed on the server, `setQueryData` alone won't pick that up.
 # *Optimistic Updates*
     This is a more advanced technique for making UIs feel extremely responsive. The idea is to update the UI _immediately_ as if the mutation was successful, even before the server has responded. If the server confirms success, the UI is already correct. If the server returns an error, the UI change is rolled back to its previous state.
 
     *Pattern with `useMutation` (v5):*
 ### *`onMutate`: (async (variables) => { ... })*
         This function executes _before_ the `mutationFn`. It\'s the ideal place to perform the optimistic update:
-***** *Cancel Ongoing Queries:* Prevent ongoing fetches for the relevant data from overwriting your optimistic update using `await queryClient.cancelQueries({ queryKey: [...] })`.
-***** *Snapshot Previous State:* Get the current data from the cache using `queryClient.getQueryData([...])`. This snapshot is crucial for enabling rollback if the mutation fails.
-***** *Apply Optimistic Update:* Modify the cache directly using `queryClient.setQueryData([...], (oldData) => /* new optimistic data */)`.
-***** *Return Context:* Return an object containing the `previousData` (and potentially other useful info like a temporary ID). This context object will be passed to `onError` and `onSettled`.
+
+h3. Cancel Ongoing Queries
+
+Prevent ongoing fetches for the relevant data from overwriting your optimistic update using `await queryClient.cancelQueries({ queryKey: [...] })`.
+h3. Snapshot Previous State
+
+Get the current data from the cache using `queryClient.getQueryData([...])`. This snapshot is crucial for enabling rollback if the mutation fails.
+h3. Apply Optimistic Update
+
+Modify the cache directly using `queryClient.setQueryData([...], (oldData) => /* new optimistic data */)`.
+h3. Return Context
+
+Return an object containing the `previousData` (and potentially other useful info like a temporary ID). This context object will be passed to `onError` and `onSettled`.
 ### *`onError`: (error, variables, context) => { ... }*
         If the `mutationFn` fails, this callback executes.
-***** *Rollback:* Use the `context.previousData` (saved in `onMutate`) to revert the cache changes made optimistically: `queryClient.setQueryData([...], context.previousData)`.
+
+h3. Rollback
+
+Use the `context.previousData` (saved in `onMutate`) to revert the cache changes made optimistically: `queryClient.setQueryData([...], context.previousData)`.
 ### *`onSettled`: (data, error, variables, context) => { ... }*
         This callback executes after the mutation completes, whether it succeeded or failed.
-***** *Ensure Consistency:* Always re-fetch the relevant query using `queryClient.invalidateQueries({ queryKey: [...] })`. This ensures that even after a successful optimistic update, the client eventually fetches the canonical state from the server, correcting any minor discrepancies (like server-generated IDs or timestamps) or confirming the rollback after an error.
+h3. Ensure Consistency
+
+Always re-fetch the relevant query using `queryClient.invalidateQueries({ queryKey: [...] })`. This ensures that even after a successful optimistic update, the client eventually fetches the canonical state from the server, correcting any minor discrepancies (like server-generated IDs or timestamps) or confirming the rollback after an error.
 
     *Conceptual Example (Adding a Todo - Illustrative):*
 
-    {code:language=js}
-// // Inside useMutation options:
+{code:language=js}
+    // // Inside useMutation options:
     // onMutate: async (newTodo) => {
     //   await queryClient.cancelQueries({ queryKey: ['todos'] });
     //   const previousTodos = queryClient.getQueryData(['todos']);
@@ -76,14 +108,20 @@ TanStack Query offers several ways to synchronize your client state after a muta
     // onSettled: () => {
     //   queryClient.invalidateQueries({ queryKey: ['todos'] });
     // },
-    ```
-*** *Benefit:* Provides the best perceived performance as UI updates instantly.
-*** *Complexity:* More complex to implement correctly, especially handling rollbacks and ensuring consistency. Only use when the UX benefit is significant and the rollback logic is manageable. While optimistic updates improve user experience, they introduce a temporary state of inconsistency between client and server, making rollback and eventual consistency steps vital.
+{code}
 
-h3. Example: Updating Medication Stock and Invalidating
+h3. Benefit
+
+Provides the best perceived performance as UI updates instantly.
+h3. Complexity
+
+More complex to implement correctly, especially handling rollbacks and ensuring consistency. Only use when the UX benefit is significant and the rollback logic is manageable. While optimistic updates improve user experience, they introduce a temporary state of inconsistency between client and server, making rollback and eventual consistency steps vital.
+
+h2. Example: Updating Medication Stock and Invalidating
 
 Let's imagine a scenario in SpeedyMeds where a pharmacist updates the stock level of a medication. After the update, we want to ensure that any component displaying the medication list or this specific medication's details shows the new stock level.
-{code}tsx
+
+{code:language=js}
 import React, { useState } from "react";
 import {
   useQuery,
@@ -283,7 +321,7 @@ const styles = StyleSheet.create({
 });
 
 export default App; // Or your specific component
-```
+{code}
 
 *Explanation of the Example:*
 # *`MedicationStockManager` Component:* Fetches details for a single medication using `useQuery` with the key `['medication', medicationId]`.
@@ -320,11 +358,16 @@ bq. 📚 *Official Documentation:*
 - [https://tanstack.com/query/v5/docs/react/guides/optimistic-updates|TanStack Query - Optimistic Updates]
 - [https://tanstack.com/query/v5/docs/react/reference/QueryClient#queryclientsetquerydata|TanStack Query - `setQueryData`]
 
-h3. Exercise 13.4: Posting Data with `useMutation`
+h2. Exercise 13.4: Posting Data with `useMutation`
 
 Let's practice using `useMutation` to post data and then update the UI.
-* *Objective:* Implement a feature to add a new patient note using `useMutation` and then refresh the list of notes for that patient.
-* *Task:* You'll create a form to submit a new note. Upon successful submission, you will invalidate the query that fetches patient notes to display the newly added note.
+
+h2. Objective
+
+Implement a feature to add a new patient note using `useMutation` and then refresh the list of notes for that patient.
+h2. Task
+
+You'll create a form to submit a new note. Upon successful submission, you will invalidate the query that fetches patient notes to display the newly added note.
 
 *(https://snack.expo.dev/@course-author/m13-ex04-usemutation)*
 

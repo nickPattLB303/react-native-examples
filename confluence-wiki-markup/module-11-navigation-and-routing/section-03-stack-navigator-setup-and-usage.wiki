@@ -1,19 +1,28 @@
-h2. Section 3: Stack Navigator Setup and Usage
+{toc}
+
+h1. Section 3: Stack Navigator Setup and Usage
 
 This section focuses on the Stack Navigator from React Navigation. You'll learn how to define a stack of screens, navigate between them, and understand the basic configuration options. The Stack Navigator is fundamental for creating linear flows where users move forwards and backwards through a sequence of screens, such as a sign-up process or drilling down into details within the SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Ensure you have completed the React Navigation installation steps from the previous section. The concepts here build directly on that foundation.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: Understanding the Stack Navigator
+h3. Conceptual Content: Understanding the Stack Navigator
 
 The Stack Navigator provides a way to transition between screens where each new screen is placed on top of a stack. When you navigate back, the top screen is removed from the stack, revealing the previous screen. It's managed by the {{@react-navigation/stack}} package.
 
 *Key Concepts:*
-* *Screen:* A React component that represents a single view in your application.
-* *Navigator:* A React component that defines a specific navigation pattern (e.g., Stack, Tab, Drawer). It takes route configuration as props and renders the active screen.
-* *Route:* A configuration object that maps a name to a screen component and can include options for how that screen is presented (e.g., header title).
+
+h2. Screen
+
+A React component that represents a single view in your application.
+h2. Navigator
+
+A React component that defines a specific navigation pattern (e.g., Stack, Tab, Drawer). It takes route configuration as props and renders the active screen.
+h2. Route
+
+A configuration object that maps a name to a screen component and can include options for how that screen is presented (e.g., header title).
 * {{createStackNavigator}}:
   A function that returns an object containing two components: {{Navigator}} and {{Screen}}. You use these to configure your stack.
 
@@ -69,7 +78,7 @@ This diagram illustrates the core operations of a stack navigator:
 
 This stack-based navigation model is ideal for drill-down flows, where users explore progressively more detailed information and need a clear path to return to previous screens.
 
-h4. Procedural Content: Implementing a Basic Stack Navigator
+h3. Procedural Content: Implementing a Basic Stack Navigator
 
 Let's create a simple two-screen stack for our SpeedyMeds app: a {{HomeScreen}} and a {{PrescriptionDetailScreen}}.
 
@@ -306,7 +315,7 @@ bq. 🤖 *(Android Developers):*
 > *Comparison:* This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
 > *Key Takeaway:* React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
 
-h4. Referential Content: Key Stack Navigator Configuration Options
+h3. Referential Content: Key Stack Navigator Configuration Options
 
 While we'll dive deeper into styling headers in Section 7, it's useful to be aware of some key configuration options available for the Stack Navigator. These options can be applied to individual screens via the `options` prop on `<Stack.Screen>` or to all screens in the navigator via the `screenOptions` prop on `<Stack.Navigator>`.
 
@@ -330,7 +339,7 @@ While we'll dive deeper into styling headers in Section 7, it's useful to be awa
 
 These options provide a high degree of control over the look, feel, and behavior of your Stack Navigator screens.
 
-h4. Exercise 11.1: Basic Stack Navigation
+h3. Exercise 11.1: Basic Stack Navigation
 
 Now it's time to practice! This exercise will guide you through setting up a basic two-screen stack navigator.
 
@@ -338,6 +347,6 @@ Now it's time to practice! This exercise will guide you through setting up a bas
 
 bq. *Instructions for Expo Snack `README.md` (Exercise 11.1):*
 
-h4. Next Steps
+h3. Next Steps
 
 Now that you can create a basic stack of screens, the next step is to explore other types of navigators. In the upcoming section, we will look at how to implement Tab Navigation for different sections of your app.

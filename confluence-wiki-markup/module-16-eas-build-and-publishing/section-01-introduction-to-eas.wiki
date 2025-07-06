@@ -1,8 +1,10 @@
-h2. Section 1: Introduction to EAS (Expo Application Services)
+{toc}
+
+h1. Section 1: Introduction to EAS (Expo Application Services)
 
 This section introduces you to Expo Application Services (EAS), a suite of hosted services built by Expo to simplify and enhance the lifecycle of your React Native applications. We'll explore what EAS is, its core components, and the significant benefits it brings to your development workflow, especially when preparing your app for production and distribution.
 
-h3. What is Expo Application Services (EAS)?
+h2. What is Expo Application Services (EAS)?
 
 Expo Application Services (EAS) is an integrated set of cloud services designed to work seamlessly with Expo and React Native projects. While the core Expo SDK and {{expo}} CLI help you develop your app locally and test it with Expo Go, EAS provides the necessary tools and infrastructure for the stages beyond local development: building distributable app binaries, submitting to app stores, managing updates, and handling other production-related tasks. Think of EAS as your DevOps toolkit for mobile app development with Expo.
 
@@ -10,7 +12,7 @@ EAS is designed to take over where Expo Go leaves off. Expo Go is fantastic for 
 
 EAS extends the capabilities of the local Expo development environment by providing robust cloud infrastructure and tooling for critical stages of the app lifecycle.
 
-h3. Core Components of EAS
+h2. Core Components of EAS
 
 EAS is composed of several key services, each addressing a specific part of the application lifecycle:
 # *EAS Build:* A cloud-based service that compiles and signs Android ({{.apk}}, {{.aab}}) and iOS ({{.ipa}}) applications. It offers full support for custom native code, allowing developers to generate installable app binaries without needing to manage complex local native build environments like Android Studio or Xcode for every build.
@@ -19,11 +21,22 @@ EAS is composed of several key services, each addressing a specific part of the 
 # *EAS CLI:* The command-line interface ({{eas-cli}}) is the primary tool for interacting with all EAS services. Developers use {{eas-cli}} to initiate builds, submit apps, publish updates, manage project configurations (like secrets and channels), and authenticate with their Expo accounts to utilize EAS.
 
 Beyond these core components, EAS also offers additional services that enhance the development and management workflow:
-* *EAS Workflows:* Facilitates the automation of Continuous Integration and Continuous Deployment (CI/CD) pipelines specifically for mobile app development.
-* *EAS Metadata:* Helps manage app store listing information such as descriptions, screenshots, and keywords directly from your project or via the EAS dashboard.
-* *EAS Insights:* Provides analytics on app performance and user engagement.
-* *EAS Hosting:* Offers infrastructure for deploying Expo web applications and their associated API routes.
-* *EAS Secrets:* A secure way to manage environment variables and other secrets (like API keys) for your application builds. These secrets are injected at build time, keeping them out of your source code.
+
+h2. EAS Workflows
+
+Facilitates the automation of Continuous Integration and Continuous Deployment (CI/CD) pipelines specifically for mobile app development.
+h2. EAS Metadata
+
+Helps manage app store listing information such as descriptions, screenshots, and keywords directly from your project or via the EAS dashboard.
+h2. EAS Insights
+
+Provides analytics on app performance and user engagement.
+h2. EAS Hosting
+
+Offers infrastructure for deploying Expo web applications and their associated API routes.
+h2. EAS Secrets
+
+A secure way to manage environment variables and other secrets (like API keys) for your application builds. These secrets are injected at build time, keeping them out of your source code.
 
 These services work together to provide a cohesive experience for building and managing your applications.
 
@@ -50,7 +63,7 @@ graph TD;
 
 This diagram illustrates the core components of Expo Application Services (EAS) and how they interact. The developer initiates processes like {{EAS Build}} and configures {{EAS Secrets}}. {{EAS Build}} produces a standalone app binary, which can then be sent to {{EAS Submit}} for uploading to the App Stores. The standalone app, once installed by users, can receive over-the-air updates via {{EAS Update}}. {{EAS Secrets}} provides necessary credentials and configurations to the build process. This entire suite of services, including others like EAS Workflows and EAS Hosting (not explicitly shown but related to the overall lifecycle), aims to streamline the journey from development to production and beyond, allowing developers to focus more on app features and less on complex build and deployment pipelines.
 
-h3. Understanding EAS's Role in the Expo Ecosystem
+h2. Understanding EAS's Role in the Expo Ecosystem
 
 The introduction and evolution of Expo Application Services mark a significant maturation of the Expo ecosystem. Initially, Expo's managed workflow, while user-friendly, presented limitations, especially concerning the integration of custom native code. This often led developers to "eject" to a bare React Native workflow to gain more control.
 
@@ -58,29 +71,59 @@ EAS, particularly EAS Build, has fundamentally altered this dynamic. It provides
 
 Consequently, Expo is no longer perceived merely as a framework for simpler projects or rapid prototyping. It has solidified its position as a comprehensive platform capable of supporting professional, scalable React Native development, directly rivaling and often simplifying traditional native build and deployment toolchains.
 
-h3. The Cloud-First Paradigm with EAS
+h2. The Cloud-First Paradigm with EAS
 
 The adoption of EAS fosters a "cloud-first" or "cloud-assisted" paradigm for mobile development workflows. This approach can reduce the dependency on specific local machine configurations for critical build and deployment tasks.
-* *Build Anywhere:* EAS Build enables the creation of iOS application binaries even from non-macOS development environments, as the actual compilation occurs in the cloud.
-* *Managed Complexity:* EAS services manage intricate processes like code signing and direct interactions with app store APIs, which can be challenging to configure and maintain locally.
-* *Consistency:* This standardization of the build and deployment environment helps mitigate the common "it works on my machine" problem.
-* *Accessibility:* New developers can become productive more quickly, as the need for extensive local setup of native development tools is diminished.
+
+h2. Build Anywhere
+
+EAS Build enables the creation of iOS application binaries even from non-macOS development environments, as the actual compilation occurs in the cloud.
+h2. Managed Complexity
+
+EAS services manage intricate processes like code signing and direct interactions with app store APIs, which can be challenging to configure and maintain locally.
+h2. Consistency
+
+This standardization of the build and deployment environment helps mitigate the common "it works on my machine" problem.
+h2. Accessibility
+
+New developers can become productive more quickly, as the need for extensive local setup of native development tools is diminished.
 
 While local builds remain an option (e.g., using {{eas build --local}}), the primary advantages and conveniences of EAS stem from its cloud-based services. This model, however, also introduces a reliance on EAS services and stable internet connectivity for these critical operations.
 
-h3. Benefits of Using EAS
+h2. Benefits of Using EAS
 
 Adopting EAS offers several significant advantages for your development and deployment workflow:
-* *Simplified Native Builds:* EAS Build abstracts away the complexities of native compilation (both Android and iOS), allowing developers to build apps in the cloud. This removes the need for extensive local setup of Android Studio or Xcode, which is particularly beneficial for developers who may not have macOS hardware for iOS builds or wish to avoid managing complex native toolchains.
-* *Seamless Custom Native Code Integration:* A fundamental advantage of EAS Build is its first-class support for projects containing custom native modules (written in Swift, Kotlin, Objective-C, or Java) and third-party native libraries. This overcomes a key limitation of older Expo build systems.
-* *Streamlined App Store Submissions:* EAS Submit automates many of the tedious, error-prone, and platform-specific steps involved in submitting applications to Apple's App Store Connect and the Google Play Console.
-* *Rapid Iteration with OTA Updates:* EAS Update allows for the quick deployment of JavaScript and asset changes directly to users. This often bypasses the lengthy app store review process for eligible updates, enabling faster bug fixes and feature rollouts.
-* *Cross-Platform Consistency:* EAS provides a unified set of tools and workflows for building, signing, and deploying both iOS and Android applications, promoting consistency and simplifying the management of multi-platform releases.
-* *Enhanced Team Collaboration:* EAS facilitates the sharing of builds for internal testing (e.g., development or preview builds) and helps manage releases more effectively within a team environment through a centralized platform.
-* *Robust CI/CD Automation:* Through EAS Workflows, teams can implement sophisticated automation for their build, test, and deployment processes, integrating with version control systems to trigger actions based on code changes.
-* *Scalability and Reliability:* By leveraging robust cloud infrastructure, EAS can handle the resource demands of building applications and distributing updates, scaling with your project's needs.
-* *Enhanced Security for Secrets:* EAS Secrets provide a secure and convenient way to manage sensitive information like API keys and build-time variables, preventing accidental exposure in your codebase.
-* *Integration with Expo Ecosystem:* EAS is tightly integrated with the Expo CLI, {{app.config.js}}, and your Expo project configuration, providing a smooth and cohesive developer experience.
+
+h2. Simplified Native Builds
+
+EAS Build abstracts away the complexities of native compilation (both Android and iOS), allowing developers to build apps in the cloud. This removes the need for extensive local setup of Android Studio or Xcode, which is particularly beneficial for developers who may not have macOS hardware for iOS builds or wish to avoid managing complex native toolchains.
+h2. Seamless Custom Native Code Integration
+
+A fundamental advantage of EAS Build is its first-class support for projects containing custom native modules (written in Swift, Kotlin, Objective-C, or Java) and third-party native libraries. This overcomes a key limitation of older Expo build systems.
+h2. Streamlined App Store Submissions
+
+EAS Submit automates many of the tedious, error-prone, and platform-specific steps involved in submitting applications to Apple's App Store Connect and the Google Play Console.
+h2. Rapid Iteration with OTA Updates
+
+EAS Update allows for the quick deployment of JavaScript and asset changes directly to users. This often bypasses the lengthy app store review process for eligible updates, enabling faster bug fixes and feature rollouts.
+h2. Cross-Platform Consistency
+
+EAS provides a unified set of tools and workflows for building, signing, and deploying both iOS and Android applications, promoting consistency and simplifying the management of multi-platform releases.
+h2. Enhanced Team Collaboration
+
+EAS facilitates the sharing of builds for internal testing (e.g., development or preview builds) and helps manage releases more effectively within a team environment through a centralized platform.
+h2. Robust CI/CD Automation
+
+Through EAS Workflows, teams can implement sophisticated automation for their build, test, and deployment processes, integrating with version control systems to trigger actions based on code changes.
+h2. Scalability and Reliability
+
+By leveraging robust cloud infrastructure, EAS can handle the resource demands of building applications and distributing updates, scaling with your project's needs.
+h2. Enhanced Security for Secrets
+
+EAS Secrets provide a secure and convenient way to manage sensitive information like API keys and build-time variables, preventing accidental exposure in your codebase.
+h2. Integration with Expo Ecosystem
+
+EAS is tightly integrated with the Expo CLI, {{app.config.js}}, and your Expo project configuration, providing a smooth and cohesive developer experience.
 
 {note}
 While EAS offers many services for free, some features or higher usage tiers may require a paid subscription. Always check the latest pricing and feature availability on the [https://expo.dev/pricing|Expo website].

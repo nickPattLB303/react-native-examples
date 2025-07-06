@@ -1,19 +1,28 @@
-h2. Section 5: State ({{useState}} Hook)
+{toc}
+
+h1. Section 5: State ({{useState}} Hook)
 
 While props allow components to receive data from their parents, {{state}} allows components to manage their own internal data that can change over time. This section introduces the {{useState}} Hook, the primary way to add state to functional React components.
 
-h3. What is State?
+h2. What is State?
 
 State is data that a component owns and can change during its lifecycle. When a component's state changes, React automatically re-renders the component (and potentially its children) to reflect the new state. This is key to creating interactive UIs.
 
 *Key characteristics of state:*
-* *Internal:* State is local and encapsulated within the component that defines it. It cannot be directly accessed or modified by parent or sibling components (though parents can pass down functions via props that can indirectly update a child's or parent's state).
-* *Mutable:* Unlike props, state can be updated by the component itself, usually in response to user interactions or other events.
-* *Triggers Re-renders:* Changes to state trigger React to re-render the component and its descendants.
+
+h2. Internal
+
+State is local and encapsulated within the component that defines it. It cannot be directly accessed or modified by parent or sibling components (though parents can pass down functions via props that can indirectly update a child's or parent's state).
+h2. Mutable
+
+Unlike props, state can be updated by the component itself, usually in response to user interactions or other events.
+h2. Triggers Re-renders
+
+Changes to state trigger React to re-render the component and its descendants.
 
 State allows components to "remember" information across renders and respond to user interactions or other events by changing what's displayed.
 
-h3. The {{useState}} Hook
+h2. The {{useState}} Hook
 
 The {{useState}} Hook is a function provided by React that allows you to add state to functional components. You call {{useState}} at the top level of your functional component.
 
@@ -106,20 +115,25 @@ In this `Counter` component (themed for SpeedyMeds as prescription refills):
 * `setCount` is the function used to update `count`.
 * When `increment` or `decrement` is called (e.g., by pressing a button), `setCount` updates the state, and React re-renders the `Counter` component, displaying the new `count`.
 
-h3. Updating State
+h2. Updating State
 
 When you call the `setStateFunction` (e.g., `setCount`):
-* *Batching & Asynchronous Updates:* React may batch multiple state updates for performance. State updates are asynchronous. This means that when you call a setter function (e.g., `setCount(1)`), the state variable (`count`) is not updated immediately within the currently executing code block of that render cycle. If you try to log or use the state variable right after calling its setter, you will still see the old value from the current render. React performs a single re-render at the end of the event loop tick, after all event handlers have run and called their respective setter functions.
-* *Functional Updates:* If your new state depends on the previous state, you *must* pass a function to the `setStateFunction`. This function receives the previous (or pending) state as its argument and should return the new state. React queues these updater functions and processes them in order during the next render, ensuring updates are based on the most up-to-date previous state.
 
-  {code:language=js}
+h2. Batching & Asynchronous Updates
+
+React may batch multiple state updates for performance. State updates are asynchronous. This means that when you call a setter function (e.g., `setCount(1)`), the state variable (`count`) is not updated immediately within the currently executing code block of that render cycle. If you try to log or use the state variable right after calling its setter, you will still see the old value from the current render. React performs a single re-render at the end of the event loop tick, after all event handlers have run and called their respective setter functions.
+h2. Functional Updates
+
+If your new state depends on the previous state, you *must* pass a function to the `setStateFunction`. This function receives the previous (or pending) state as its argument and should return the new state. React queues these updater functions and processes them in order during the next render, ensuring updates are based on the most up-to-date previous state.
+
+{code:language=js}
 const incrementSafely = () => {
-    // setCount(count + 1); // This might be problematic if updates are batched
-    setCount((prevCount) => prevCount + 1); // Safer: uses the previous state
-  };
-  ```
+  // setCount(count + 1); // This might be problematic if updates are batched
+  setCount((prevCount) => prevCount + 1); // Safer: uses the previous state
+};
+{code}
 
-h3. Rules of Hooks
+h2. Rules of Hooks
 
 There are two important rules for using Hooks (including `useState`):
 # *Only Call Hooks at the Top Level:* Don't call Hooks inside loops, conditions, or nested functions. Always use Hooks at the top level of your React function, before any early returns.
@@ -127,15 +141,18 @@ There are two important rules for using Hooks (including `useState`):
 
 ESLint plugins (like `eslint-plugin-react-hooks`) can help enforce these rules.
 
-h3. Typing State with TypeScript
+h2. Typing State with TypeScript
 
 TypeScript can infer the type of the state variable from the `initialState` argument to `useState`.
-{code}tsx
+
+{code:language=js}
 const [count, setCount] = useState(0); // TypeScript infers `count` is number, `setCount` is (value: number) => void
 const [medicationName, setMedicationName] = useState("Amoxicillin"); // `medicationName` is string
-{code:language=text}
+{code}
+
 If the initial state can be `null` or `undefined`, or if it's a complex object, you might want to provide an explicit type argument:
-{code}tsx
+
+{code:language=js}
 interface PatientProfile {
   id: string;
   name: string;
@@ -146,7 +163,7 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 
 // Later...
 // setPatient({ id: '123', name: 'Jane Doe', age: 34 });
-```
+{code}
 
 bq. ⚛️ *(Web Developers with React Experience):*
 > *Comparison:* `useState` and the rules of Hooks are identical in React Native and React for web. Your knowledge of managing local component state with `useState` is directly transferable.
@@ -183,7 +200,7 @@ bq. 📚 *Official Documentation:*
 
 ----
 
-h3. Exercise 7.3: Managing Component State
+h2. Exercise 7.3: Managing Component State
 
 Let's get some practice using the `useState` Hook to manage component state.
 

@@ -1,4 +1,6 @@
-h2. Section 8: Handling Form Submission
+{toc}
+
+h1. Section 8: Handling Form Submission
 
 Once you have your form fields set up and validation in place with React Hook Form, the next crucial step is handling the submission process. This involves taking the validated form data and performing an action, such as sending it to an API, storing it locally, or navigating to another screen. React Hook Form simplifies this with its {{handleSubmit}} function and by providing state to manage the submission process, including asynchronous operations.
 
@@ -7,16 +9,20 @@ Once you have your form fields set up and validation in place with React Hook Fo
 As we've seen in previous examples, the {{handleSubmit}} function is provided by the {{useForm}} hook. Its primary role is to orchestrate the validation and submission flow:
 # When invoked (e.g., by a button press), {{handleSubmit}} first triggers the validation rules defined for all registered form fields (based on your defined {{mode}} and rules).
 # Based on the validation outcome, it calls one of two callback functions that you can provide as arguments:
-*** *{{onValid}} (First Argument):* {{(data: YourFormData, event?: Event) => void | Promise<void>}}
-**** This function is executed only if all form validations pass successfully.
-**** {{data}}: An object containing the current values of all registered and validated form fields. The structure of this object matches the type you provided to {{useForm}} (e.g., {{MedicationFormData}}).
-**** {{event?}}: An optional event object (more relevant in web environments, often undefined or not used in React Native {{onPress}} handlers).
-**** This is where you'll typically put your logic for sending data to an API or performing other actions with the valid form data.
-*** *{{onInvalid}} (Optional Second Argument):* {{(errors: FieldErrors<YourFormData>, event?: Event) => void | Promise<void>}}
-**** This function is executed if any of the form's validation rules fail.
-**** {{errors}}: An object containing details about the validation errors for each invalid field. This is the same {{errors}} object available from {{formState}}.
-**** {{event?}}: An optional event object.
-**** You can use this callback to handle validation failures, such as focusing on the first invalid field or displaying a general error summary.
+h3. {{onValid}} (First Argument)
+
+{{(data: YourFormData, event?: Event) => void | Promise<void>}}
+* This function is executed only if all form validations pass successfully.
+* {{data}}: An object containing the current values of all registered and validated form fields. The structure of this object matches the type you provided to {{useForm}} (e.g., {{MedicationFormData}}).
+* {{event?}}: An optional event object (more relevant in web environments, often undefined or not used in React Native {{onPress}} handlers).
+* This is where you'll typically put your logic for sending data to an API or performing other actions with the valid form data.
+h3. {{onInvalid}} (Optional Second Argument)
+
+{{(errors: FieldErrors<YourFormData>, event?: Event) => void | Promise<void>}}
+* This function is executed if any of the form's validation rules fail.
+* {{errors}}: An object containing details about the validation errors for each invalid field. This is the same {{errors}} object available from {{formState}}.
+* {{event?}}: An optional event object.
+* You can use this callback to handle validation failures, such as focusing on the first invalid field or displaying a general error summary.
 
 *Usage:*
 

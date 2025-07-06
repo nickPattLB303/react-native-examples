@@ -1,4 +1,6 @@
-h2. Section 1: Recap: TextInput Component
+{toc}
+
+h1. Section 1: Recap: TextInput Component
 
 This section revisits the {{TextInput}} component, a fundamental building block for capturing user input in React Native. We previously introduced {{TextInput}} in Module 8, but a focused recap here is essential as it forms the basis for all text-based forms we'll be building. Understanding its core props and behavior is crucial before we dive into more advanced form handling techniques.
 

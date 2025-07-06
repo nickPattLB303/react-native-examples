@@ -1,8 +1,10 @@
-h2. Section 9: Component Lifecycle ({{useEffect}} Hook)
+{toc}
+
+h1. Section 9: Component Lifecycle ({{useEffect}} Hook)
 
 Components in React have a lifecycle: they are created (mounted), they update when their props or state change, and eventually, they are destroyed (unmounted). The {{useEffect}} Hook allows you to perform "side effects" in your functional components, which are operations that happen outside the normal rendering flow, often related to these lifecycle events.
 
-h3. What are Side Effects?
+h2. What are Side Effects?
 
 Side effects are actions that your component performs that interact with the outside world, beyond just rendering UI based on props and state. Common side effects include:
 * Fetching data from an API.
@@ -10,7 +12,7 @@ Side effects are actions that your component performs that interact with the out
 * Manually changing the DOM (less common in React Native, but possible).
 * Logging.
 
-h3. The {{useEffect}} Hook
+h2. The {{useEffect}} Hook
 
 The {{useEffect}} Hook lets you synchronize a component with an external system. You pass it a function (the "effect") and an optional array of dependencies.
 
@@ -30,14 +32,21 @@ useEffect(() => {
   };
 }, [dependency1, dependency2]); // Optional dependency array
 {code}
-* *Effect Function:* The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
-* *Dependency Array (Optional):* The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
-** If you *omit* the dependency array, the effect function runs after _every_ render.
-** If you provide an *empty array `[]`*, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
-** If you provide an array with *variables `[propA, stateB]`*, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
-* *Cleanup Function (Optional):* The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
 
-h3. Simulating Lifecycle Events with `useEffect`
+h2. Effect Function
+
+The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
+h2. Dependency Array (Optional)
+
+The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
+* If you *omit* the dependency array, the effect function runs after _every_ render.
+* If you provide an *empty array `[]`*, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
+* If you provide an array with *variables `[propA, stateB]`*, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
+h2. Cleanup Function (Optional)
+
+The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
+
+h2. Simulating Lifecycle Events with `useEffect`
 
 *1. Running an Effect Once (Component Did Mount):*
 To run an effect only once after the component mounts (similar to `componentDidMount` in class components), provide an empty dependency array `[]`.
@@ -147,7 +156,7 @@ Common use cases for cleanup:
 
 Refer back to the `PharmacyWelcomeMessage` example for a `clearTimeout` cleanup.
 
-h3. Diagram: `useEffect` Lifecycle
+h2. Diagram: `useEffect` Lifecycle
 
 The following diagram illustrates the basic flow of the `useEffect` Hook in relation to component rendering and updates.
 
@@ -191,11 +200,16 @@ bq. 📚 *Official Documentation:*
 - [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
 - [https://react.dev/learn/you-might-not-need-an-effect|React Docs: You Might Not Need an Effect] (Important considerations for when _not_ to use `useEffect`)
 
-h3. A Note on `useLayoutEffect`
+h2. A Note on `useLayoutEffect`
 
 React provides another Hook called `useLayoutEffect` which has the same signature as `useEffect` but fires _synchronously_ after all DOM mutations are complete, but _before_ the browser has painted the changes to the screen. This means it can block visual updates.
-* *Use Case:* `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
-* *Preference:* For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), *`useEffect` is preferred* because it does not block the browser from painting, leading to a more responsive UI.
+
+h2. Use Case
+
+`useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
+h2. Preference
+
+For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), *`useEffect` is preferred* because it does not block the browser from painting, leading to a more responsive UI.
 
 Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
 
@@ -206,7 +220,7 @@ bq. 📚 *Official Documentation:*
 
 ----
 
-h3. Exercise 7.5: Using `useEffect` for Side Effects
+h2. Exercise 7.5: Using `useEffect` for Side Effects
 
 Let's practice using `useEffect` to perform a side effect, such as fetching data (simulated).
 

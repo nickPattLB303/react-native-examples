@@ -1,25 +1,39 @@
-h2. Section 4: Optimizing Lists
+{toc}
+
+h1. Section 4: Optimizing Lists
 
 Displaying lists of data is a fundamental part of many mobile applications, including our SpeedyMeds app which might show lists of medications, prescriptions, or patient reminders. When these lists become long, performance can degrade significantly if not handled correctly. This section focuses on optimizing list rendering in React Native using {{FlatList}}, {{SectionList}}, and introducing {{FlashList}}.
 
 bq. 🛣️ *(All Learners):* Efficiently rendering lists is crucial for a smooth scrolling experience and preventing your app from becoming sluggish or consuming excessive memory, especially on less powerful devices.
 
-h3. Conceptual Content: The Challenge of Long Lists
+h2. Conceptual Content: The Challenge of Long Lists
 
-h4. Why {{ScrollView}} Isn't Enough
+h3. Why {{ScrollView}} Isn't Enough
 
 React Native's {{<ScrollView>}} component is simple for making content scrollable. However, it has a major drawback for long lists: it renders all its child components at once, even those not currently visible on the screen. For a list with hundreds or thousands of items (e.g., a comprehensive drug formulary in SpeedyMeds), this can lead to:
-* *High Memory Consumption:* All list items reside in memory.
-* *Slow Initial Render:* The app has to create and render every item before the list is usable.
-* *Poor Scrolling Performance:* The sheer number of views can overwhelm the rendering system.
 
-h4. Virtualization with {{FlatList}} and {{SectionList}}
+h2. High Memory Consumption
+
+All list items reside in memory.
+h2. Slow Initial Render
+
+The app has to create and render every item before the list is usable.
+h2. Poor Scrolling Performance
+
+The sheer number of views can overwhelm the rendering system.
+
+h3. Virtualization with {{FlatList}} and {{SectionList}}
 
 To address these issues, React Native provides {{<FlatList>}} and {{<SectionList>}}. These components implement *virtualization* (also known as windowing). Virtualization means rendering only the items currently visible on the screen (or a small buffer around them) and recycling (or unmounting/remounting) views as the user scrolls.
-* *{{<FlatList>}}:* For simple, flat lists of data.
-* *{{<SectionList>}}:* For sectioned lists, like a contact list grouped by alphabet or medications grouped by therapeutic class.
 
-h4. Key {{FlatList}} Props for Optimization
+h2. {{<FlatList>}}
+
+For simple, flat lists of data.
+h2. {{<SectionList>}}
+
+For sectioned lists, like a contact list grouped by alphabet or medications grouped by therapeutic class.
+
+h3. Key {{FlatList}} Props for Optimization
 
 Effectively using {{FlatList}} involves understanding and utilizing its various props:
 # *{{data}}*: An array of data items for the list.
@@ -40,14 +54,21 @@ Effectively using {{FlatList}} involves understanding and utilizing its various 
 *** It can break components that rely on maintaining native state (e.g., some third-party libraries, input fields within list items if not handled carefully).
 *** Use with caution and test thoroughly.
 
-h4. Introducing {{FlashList}} by Shopify
+h3. Introducing {{FlashList}} by Shopify
 
 While {{FlatList}} is a significant improvement over {{ScrollView}}, it can still have performance limitations for very complex lists or certain edge cases due to its underlying {{VirtualizedList}} implementation.
 
 Shopify developed *{{FlashList}}* as a drop-in replacement for {{FlatList}}, aiming for superior performance. Key features:
-* *Recycles Views:* {{FlashList}} recycles views created by {{renderItem}} instead of re-rendering them from scratch, which can drastically reduce JS execution time and memory churn.
-* *Optimized Architecture:* Built from the ground up for performance.
-* *Similar API:* Designed to be mostly API-compatible with {{FlatList}}, making migration relatively easy.
+
+h2. Recycles Views
+
+{{FlashList}} recycles views created by {{renderItem}} instead of re-rendering them from scratch, which can drastically reduce JS execution time and memory churn.
+h2. Optimized Architecture
+
+Built from the ground up for performance.
+h2. Similar API
+
+Designed to be mostly API-compatible with {{FlatList}}, making migration relatively easy.
 
 {tip}
 If you encounter performance issues with {{FlatList}} even after applying standard optimizations, consider trying {{FlashList}}. It often provides noticeable improvements, especially for lists with complex items or frequent updates.
@@ -57,9 +78,9 @@ bq. 📲 *(Native Developers):*
 *Key Takeaway:* The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
 *Source:* {{[https://developer.apple.com/documentation/uikit/uitableview|Apple Developer Docs: UITableView]}}, {{[https://developer.android.com/guide/topics/ui/layout/recyclerview|Android Developer Docs: RecyclerView]}}
 
-h3. Procedural Content: Implementing Optimized Lists
+h2. Procedural Content: Implementing Optimized Lists
 
-h4. Basic {{FlatList}} for SpeedyMeds Prescriptions
+h3. Basic {{FlatList}} for SpeedyMeds Prescriptions
 
 This example demonstrates a basic {{FlatList}} rendering a list of prescriptions for the SpeedyMeds app. It includes {{keyExtractor}} and a simple {{renderItem}}.
 
@@ -153,7 +174,7 @@ export default PrescriptionListScreen;
 
 This basic `FlatList` uses `React.memo` for its items, which is a good starting point. `keyExtractor` ensures stable IDs. The `console.log` in `PrescriptionItem` helps observe when items are rendered or re-rendered.
 
-h4. `FlatList` with `getItemLayout` and Other Optimizations
+h3. `FlatList` with `getItemLayout` and Other Optimizations
 
 If all prescription items have a fixed height, we can use `getItemLayout`.
 
@@ -264,7 +285,7 @@ export default OptimizedPrescriptionListScreen;
 
 In this version, `getItemLayout` is provided, which can significantly improve scrolling performance for long lists with fixed-height items. `initialNumToRender`, `maxToRenderPerBatch`, and `windowSize` are also tuned. `removeClippedSubviews` is commented out as it needs careful testing.
 
-h4. Using `FlashList` (Conceptual)
+h3. Using `FlashList` (Conceptual)
 
 Migrating to `FlashList` from `FlatList` is often straightforward.
 

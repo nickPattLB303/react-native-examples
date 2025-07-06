@@ -1,10 +1,12 @@
-h2. Section 8: Using React Native Paper Components
+{toc}
+
+h1. Section 8: Using React Native Paper Components
 
 Now that we've introduced React Native Paper and completed the basic setup, let's explore how to use some of its common components to build UIs for our SpeedyMeds application. React Native Paper offers a rich set of pre-styled Material Design components that can significantly speed up your development process.
 
 We'll cover examples of {{Appbar}}, {{Button}}, {{TextInput}}, and {{Card}} components. Remember to wrap your root component with {{<PaperProvider>}} as shown in the previous section for these components to render correctly with the default theme.
 
-h3. {{Appbar}} for Headers
+h2. {{Appbar}} for Headers
 
 The {{Appbar}} component is used to create top application bars, often containing a title, navigation actions (like a back button), and other actions.
 
@@ -77,7 +79,7 @@ export default SpeedyMedsAppbar;
 * `Appbar.Content`: Used to display the title of the app bar.
 * `Appbar.Action`: Used for displaying icon buttons for actions. We use a platform-specific icon for "more options".
 
-h3. `Button` for Actions
+h2. `Button` for Actions
 
 React Native Paper provides versatile `Button` components with different modes (`text`, `outlined`, `contained`).
 
@@ -147,7 +149,7 @@ export default PrescriptionActions;
 * `icon` prop can take the name of any Material Community Icon.
 * `style` prop can be used to apply additional custom styles.
 
-h3. `TextInput` for User Input
+h2. `TextInput` for User Input
 
 Paper's `TextInput` offers Material Design styling for input fields, including labels that float, helper text, and error states.
 
@@ -226,7 +228,7 @@ export default PatientSearchInput;
 * `error` prop highlights the input if there's an error.
 * `HelperText` component can be used to display messages below the input, including error messages.
 
-h3. `Card` for Displaying Content Sections
+h2. `Card` for Displaying Content Sections
 
 `Card` components are used to group related information in a visually distinct container, often with elevation/shadow.
 
@@ -329,7 +331,7 @@ export default PrescriptionDetailCard;
 * `Card.Actions`: A container for action buttons at the bottom of the card.
 * `Text` with `variant` prop can be used to quickly apply Material Design type scale styles.
 
-h3. `Text` for Displaying Themed Typography
+h2. `Text` for Displaying Themed Typography
 
 While React Native's core `<Text>` component is fundamental, React Native Paper's `Text` component is integrated with the Paper theme, especially its Material Design 3 type scale. By using the `variant` prop, you can apply standardized typographic styles consistently.
 
@@ -386,7 +388,7 @@ export default TypographyDemoScreen;
 * The `variant` prop on `Text` (e.g., `displayLarge`, `headlineMedium`, `bodyLarge`, `labelMedium`) automatically applies font size, weight, and line height according to the Material Design 3 type scale defined in your Paper theme.
 * This ensures typographic consistency across your SpeedyMeds app and makes it easy to update typography globally by customizing the theme.
 
-h3. `ActivityIndicator` for Loading States
+h2. `ActivityIndicator` for Loading States
 
 The `ActivityIndicator` component displays a circular loading spinner, useful for indicating background processes or data fetching in your SpeedyMeds app.
 
@@ -469,7 +471,7 @@ These examples showcase just a few of the many components available in React Nat
 {tip}
 Explore the official React Native Paper documentation to discover the full range of components and their props. Each component often has many customization options.
 {tip}
-h3. Exercise 10.3: Implementing UI with Paper Components
+h2. Exercise 10.3: Implementing UI with Paper Components
 
 Time to get hands-on with React Native Paper. This exercise involves building a screen for the SpeedyMeds app using various Paper components.
 

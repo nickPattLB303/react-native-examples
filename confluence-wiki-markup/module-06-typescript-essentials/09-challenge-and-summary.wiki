@@ -1,4 +1,6 @@
-h2. Challenge 6: Typing a Pharmacy API Response
+{toc}
+
+h1. Challenge 6: Typing a Pharmacy API Response
 
 Now it's time to apply what you've learned about TypeScript's types, interfaces, and utility types to a practical scenario. In this challenge, you will define types for a mock API response that the SpeedyMeds application might receive when fetching pharmacy or medication data.
 
@@ -12,7 +14,7 @@ Define comprehensive TypeScript types for a complex API response structure relat
 
 _The CodeSandbox environment contains the detailed requirements for the API response structure and the specific tasks for this challenge in its {{README.md}} file. A separate link to a potential solution will be provided by your instructor or in the course materials._
 
-h2. Module Summary
+h1. Module Summary
 
 Congratulations on completing Module 6: TypeScript Essentials! You've taken a significant step towards writing more robust, maintainable, and understandable code for your React Native applications.
 

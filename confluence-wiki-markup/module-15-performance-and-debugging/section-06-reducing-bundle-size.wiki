@@ -1,38 +1,59 @@
-h2. Section 6: Reducing Bundle Size
+{toc}
+
+h1. Section 6: Reducing Bundle Size
 
 The JavaScript bundle size of your React Native application directly impacts its startup performance and memory footprint. A smaller bundle means less code for the JavaScript engine to parse and execute, leading to a faster launch. This section discusses why bundle size matters and strategies to reduce it for your SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Keeping your app's bundle size in check is an ongoing process. Regularly analyzing and optimizing your bundle can lead to noticeable improvements in startup time, especially on older or less powerful devices.
 
-h3. Conceptual Content: The Impact of a Large Bundle
+h2. Conceptual Content: The Impact of a Large Bundle
 
 When a React Native application starts, the JavaScript engine (like Hermes or JavaScriptCore) needs to load, parse, and execute your application's JavaScript bundle. This bundle contains all your application code, React Native framework code, and any third-party libraries you've included.
-* *Startup Time:* A larger bundle takes longer to process, directly increasing the time it takes for your app to become interactive (Time To Interactive - TTI).
-* *Memory Usage:* The parsed JavaScript code and its associated objects consume memory. Larger bundles typically lead to higher initial memory usage.
-* *Over-the-Air (OTA) Updates:* If you use services like EAS Update, smaller bundles mean quicker OTA updates for your users.
 
-h4. Analyzing Your Bundle Contents
+h2. Startup Time
+
+A larger bundle takes longer to process, directly increasing the time it takes for your app to become interactive (Time To Interactive - TTI).
+h2. Memory Usage
+
+The parsed JavaScript code and its associated objects consume memory. Larger bundles typically lead to higher initial memory usage.
+h2. Over-the-Air (OTA) Updates
+
+If you use services like EAS Update, smaller bundles mean quicker OTA updates for your users.
+
+h3. Analyzing Your Bundle Contents
 
 Before you can reduce your bundle size, you need to understand what's contributing to it. Tools can help visualize the contents of your JavaScript bundle, showing which modules and libraries are taking up the most space.
-* *{{react-native-bundle-visualizer}} / {{expo-bundle-analyzer}}:* These tools generate an interactive treemap visualization of your bundle. You can use them to identify large dependencies or unexpectedly included modules.
-** {{react-native-bundle-visualizer}} is a general tool for React Native projects.
-** {{expo-bundle-analyzer}} is a convenient wrapper often used with Expo projects.
 
-h4. Strategies for Reducing Bundle Size
+h2. {{react-native-bundle-visualizer}} / {{expo-bundle-analyzer}}
+
+These tools generate an interactive treemap visualization of your bundle. You can use them to identify large dependencies or unexpectedly included modules.
+* {{react-native-bundle-visualizer}} is a general tool for React Native projects.
+* {{expo-bundle-analyzer}} is a convenient wrapper often used with Expo projects.
+
+h3. Strategies for Reducing Bundle Size
 # *Removing Unused Code (Tree Shaking):*
 *** Metro, the default bundler for React Native, performs tree shaking. Tree shaking is a process that eliminates unused exports from your JavaScript modules. Ensure your code is written in a way that facilitates tree shaking (e.g., using ES6 module syntax {{import}}/{{export}}).
 *** Regularly audit your codebase for dead code or unused features that can be removed.
 # *Optimizing Assets:*
-*** *Images:* As discussed in Section 5, use optimized image formats (like WebP), resize images appropriately, and compress them. Large image assets bundled with the app contribute to the overall app size (though not directly to the JS bundle size, they impact initial install size and memory).
-*** *SVGs:* If using SVGs, optimize them using tools like SVGO to remove unnecessary data.
-*** *Fonts:* Only include font weights and styles that your app actually uses.
+
+h3. Images
+
+As discussed in Section 5, use optimized image formats (like WebP), resize images appropriately, and compress them. Large image assets bundled with the app contribute to the overall app size (though not directly to the JS bundle size, they impact initial install size and memory).
+h3. SVGs
+
+If using SVGs, optimize them using tools like SVGO to remove unnecessary data.
+h3. Fonts
+
+Only include font weights and styles that your app actually uses.
 # *Choosing Lightweight Libraries:*
 *** When selecting third-party libraries, consider their impact on bundle size. Tools like [https://bundlephobia.com/|BundlePhobia] can help you analyze the size of npm packages.
 *** Look for libraries that are modular, allowing you to import only the parts you need.
 *** Sometimes, a smaller, more focused library or even a custom implementation might be preferable to a large, feature-rich one if you only need a subset of its functionality for SpeedyMeds.
 # *Code Splitting (Conceptual):*
 *** In web development, code splitting involves breaking down your bundle into smaller chunks that can be loaded on demand. While React Native's Metro bundler doesn't support arbitrary code splitting in the same way as Webpack for web apps, the concept of loading code or features lazily is still relevant.
-*** *RAM Bundles (Indexed RAM Bundles):* For very large apps, React Native supports Random Access Modules (RAM) bundles. These allow parts of the bundle to be loaded into memory as needed, rather than loading the entire bundle at once. Hermes is optimized for RAM bundles. This is an advanced technique typically used for optimizing very large applications.
+h3. RAM Bundles (Indexed RAM Bundles)
+
+For very large apps, React Native supports Random Access Modules (RAM) bundles. These allow parts of the bundle to be loaded into memory as needed, rather than loading the entire bundle at once. Hermes is optimized for RAM bundles. This is an advanced technique typically used for optimizing very large applications.
 *** Consider architectural patterns that might allow you to defer loading of non-critical features until they are needed, though this often requires more manual setup in React Native compared to automatic code splitting on the web.
 # *Using Hermes Engine:*
 *** Hermes is a JavaScript engine optimized for running React Native apps on Android (and increasingly on iOS). It pre-compiles JavaScript to bytecode during the app build process.
@@ -50,48 +71,48 @@ bq. 📲 *(Native Developers):*
 *Key Takeaway:* The JS bundle significantly contributes to the overall React Native app size and directly impacts startup performance. Tools and techniques for analyzing and optimizing this JS bundle are different from those used for native code.
 *Source:* {{[https://developer.android.com/studio/build/shrink-code|Android Developer Docs: Shrink, obfuscate, and optimize your app]}}, {{[https://developer.apple.com/documentation/xcode/reducing-your-app-s-size|Apple Developer Docs: Reducing your app's size]}}
 
-h3. Procedural Content: Analyzing Your Bundle
+h2. Procedural Content: Analyzing Your Bundle
 
-h4. Using {{expo-bundle-analyzer}} (Example with Expo)
+h3. Using {{expo-bundle-analyzer}} (Example with Expo)
 
 If you're using Expo, you can use {{expo-bundle-analyzer}} (which often uses {{react-native-bundle-visualizer}} under the hood).
 # *Generate a Bundle and Source Map:*
     First, you need to build your JavaScript bundle and its corresponding source map. For an Expo project, you might do this as part of an export or build process, or specifically for analysis.
 
-    ```bash
+{code:language=bash}
     # For Expo projects (SDK 49+ example)
     npx expo export --platform android --dev --entry-file App.tsx # or your entry file
     # This command will output bundle and source map typically in a dist/bundles directory.
     # The exact command might vary based on your Expo SDK version and project setup.
     # Refer to Expo documentation for the most current way to output a bundle and sourcemap.
-    ```
+{code}
 
     Alternatively, for a quick analysis during development, you can often get the bundle and map from Metro directly.
 # *Run the Analyzer:*
-    Once you have the bundle ({{.js}} file) and the source map ({{.map}} file), you can use a visualizer.
-    If {{react-native-bundle-visualizer}} is installed globally or as a project dependency:
+    Once you have the bundle (`.js` file) and the source map (`.map` file), you can use a visualizer.
+    If `react-native-bundle-visualizer` is installed globally or as a project dependency:
 
-    ```bash
+{code:language=bash}
     # npx react-native-bundle-visualizer -b <path-to-bundle.js> -m <path-to-sourcemap.map> -o output.html
     # Example with typical Expo export output (paths may vary):
     npx react-native-bundle-visualizer -b dist/bundles/android-xxxxxxxx.js -m dist/bundles/android-xxxxxxxx.map -o bundle-report.html
-    ```
+{code}
 
-    Some versions or setups might require different commands or use {{webpack-bundle-analyzer}} if your project uses Webpack for web builds (though this analyzes the web bundle, not the native one).
+    Some versions or setups might require different commands or use `webpack-bundle-analyzer` if your project uses Webpack for web builds (though this analyzes the web bundle, not the native one).
 
-    For {{expo-bundle-analyzer}} specifically (ensure it's installed: {{npm install -g expo-bundle-analyzer}} or add to project devDependencies):
+    For `expo-bundle-analyzer` specifically (ensure it's installed: `npm install -g expo-bundle-analyzer` or add to project devDependencies):
 
-    ```bash
+{code:language=bash}
     # This command attempts to automate finding the bundle and map after a build or export.
     # It might require specific project configurations or environment variables.
     # expo-bundle-analyzer
     # Or, you might point it to your output files similar to react-native-bundle-visualizer.
-    ```
+{code}
 
     > [!NOTE]
-    > The exact commands and best tools can evolve. Always refer to the documentation for {{react-native-bundle-visualizer}}, {{expo-bundle-analyzer}}, or your specific Expo SDK version for the most accurate instructions.
+    > The exact commands and best tools can evolve. Always refer to the documentation for `react-native-bundle-visualizer`, `expo-bundle-analyzer`, or your specific Expo SDK version for the most accurate instructions.
 # *Analyze the Output:*
-    The tool will typically generate an HTML file (e.g., {{bundle-report.html}}). Open this in your browser. You'll see an interactive treemap where larger boxes represent larger modules. Hover over or click on sections to see details about specific libraries or application code contributing to the size.
+    The tool will typically generate an HTML file (e.g., `bundle-report.html`). Open this in your browser. You'll see an interactive treemap where larger boxes represent larger modules. Hover over or click on sections to see details about specific libraries or application code contributing to the size.
 *** Look for large, unexpected dependencies.
 *** Identify if multiple versions of the same library are being bundled.
 *** See how much space your own application code takes up versus third-party libraries.
@@ -105,7 +126,7 @@ bq. 📚 *Official Documentation & Resources:*
 > - [https://reactnative.dev/docs/performance#ram-bundles-and-inline-requires|React Native Docs: Performance - RAM Bundles & Inline Requires] (Explains RAM bundles which relate to advanced bundle optimization)
 - [https://docs.expo.dev/guides/analyzing-bundle-size/|Expo Docs: Analyzing Bundle Size] (Often provides the most up-to-date guidance for Expo projects)
 - [https://hermesengine.dev/docs/reducing-app-size/|Hermes JS Engine: Reducing App Size]
-- [https://www.npmjs.com/package/react-native-bundle-visualizer|{{react-native-bundle-visualizer}} on npm]
+- [https://www.npmjs.com/package/react-native-bundle-visualizer|`react-native-bundle-visualizer` on npm]
 - [https://bundlephobia.com/|BundlePhobia] (Check npm package sizes)
 
 By actively monitoring and managing your JavaScript bundle size, you can ensure the SpeedyMeds app starts quickly and runs efficiently for all users.

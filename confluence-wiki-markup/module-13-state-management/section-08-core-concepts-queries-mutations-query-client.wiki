@@ -1,8 +1,10 @@
-h2. Section 8: Core Concepts: Queries ({{useQuery}}), Mutations ({{useMutation}}), Query Client
+{toc}
+
+h1. Section 8: Core Concepts: Queries ({{useQuery}}), Mutations ({{useMutation}}), Query Client
 
 Now that we have TanStack Query set up with {{QueryClientProvider}}, it's time to explore its core building blocks: queries for fetching data, mutations for changing data, and the {{QueryClient}} that orchestrates everything. These concepts are fundamental to leveraging TanStack Query effectively in your SpeedyMeds application.
 
-h3. Queries with {{useQuery}}
+h2. Queries with {{useQuery}}
 
 The {{useQuery}} hook is the primary tool for fetching, caching, and synchronizing asynchronous data from your server. You provide it with a unique {{queryKey}} and a {{queryFn}} that returns a promise resolving with your data (or throwing an error).
 
@@ -168,7 +170,7 @@ As mentioned, `queryKey` uniquely identifies your data and is foundational to Ta
 
 TanStack Query will automatically re-fetch if `medicationId` changes.
 
-h4. `useQuery` Data Flow Diagram
+h3. `useQuery` Data Flow Diagram
 
 {mermaid}
 graph TD
@@ -210,7 +212,7 @@ bq. 📚 *Official Documentation (`useQuery`):*
 - [https://tanstack.com/query/v5/docs/react/guides/query-functions|TanStack Query - Query Functions]
 - [https://tanstack.com/query/v5/docs/react/important-defaults|TanStack Query - Important Defaults (staleTime, gcTime)]
 
-h3. Mutations with `useMutation`
+h2. Mutations with `useMutation`
 
 While `useQuery` is for reading data, `useMutation` is used for creating, updating, or deleting data on the server (typically via POST, PUT, PATCH, DELETE requests).
 
@@ -399,25 +401,36 @@ bq. 📚 *Official Documentation (`useMutation`):*
 > - [https://tanstack.com/query/v5/docs/react/guides/mutations|TanStack Query - Mutations (`useMutation`)]
 - [https://tanstack.com/query/v5/docs/react/guides/query-invalidation|TanStack Query - Query Invalidation]
 
-h3. The `QueryClient`
+h2. The `QueryClient`
 
 The `QueryClient` instance you created and provided via `QueryClientProvider` is the heart of TanStack Query. It manages the cache and all query/mutation configurations and states.
 
 While you often interact with TanStack Query through its hooks (`useQuery`, `useMutation`), you can also access the `QueryClient` instance directly using the `useQueryClient()` hook inside your components or event handlers.
 
 Common uses for the `QueryClient` include:
-* *Invalidating Queries:* `queryClient.invalidateQueries({ queryKey: [...] })` to mark queries as stale and trigger re-fetches.
-* *Manually Setting Query Data:* `queryClient.setQueryData(queryKey, newData)` to optimistically update the cache or provide initial data.
-* *Manually Getting Query Data:* `queryClient.getQueryData(queryKey)` to synchronously access cached data (use with caution, as it might be stale).
-* *Prefetching Data:* `queryClient.prefetchQuery({ queryKey, queryFn })` to fetch data before it's needed by a `useQuery` hook, potentially improving perceived performance.
-* *Global Configuration:* You can set default options for all queries and mutations when creating the `QueryClient` instance (e.g., default `staleTime`, `gcTime`, retry policies).
+
+h2. Invalidating Queries
+
+`queryClient.invalidateQueries({ queryKey: [...] })` to mark queries as stale and trigger re-fetches.
+h2. Manually Setting Query Data
+
+`queryClient.setQueryData(queryKey, newData)` to optimistically update the cache or provide initial data.
+h2. Manually Getting Query Data
+
+`queryClient.getQueryData(queryKey)` to synchronously access cached data (use with caution, as it might be stale).
+h2. Prefetching Data
+
+`queryClient.prefetchQuery({ queryKey, queryFn })` to fetch data before it's needed by a `useQuery` hook, potentially improving perceived performance.
+h2. Global Configuration
+
+You can set default options for all queries and mutations when creating the `QueryClient` instance (e.g., default `staleTime`, `gcTime`, retry policies).
 
 We'll see more practical uses of `QueryClient` methods, especially for cache management and mutations, in the upcoming sections.
 
 bq. 📚 *Official Documentation (`QueryClient`):*
 > - [https://tanstack.com/query/v5/docs/react/reference/QueryClient|TanStack Query - `QueryClient`]
 
-h3. TanStack Query Core Concepts Summary
+h2. TanStack Query Core Concepts Summary
 
 ||Concept||Purpose||Key Options/Features (v5)||
 |`QueryClient`|Central hub for cache, configurations, and cache interaction methods.|`defaultOptions`, `getQueryData`, `setQueryData`, `invalidateQueries`, `prefetchQuery`, `cancelQueries`|
@@ -425,11 +438,16 @@ h3. TanStack Query Core Concepts Summary
 |`useMutation`|Perform asynchronous actions that modify server state (CUD operations).|`mutationFn`, `onSuccess`, `onError`, `onSettled`, `onMutate`. Returns `mutate`, `mutateAsync`, `status`, `data`, `error`, `isPending`.|
 This table serves as a quick reference, summarizing the distinct roles and primary features of the fundamental building blocks within TanStack Query, aiding learners in constructing a clear mental model of the library's architecture.
 
-h3. Exercise 13.3: Fetching Data with `useQuery`
+h2. Exercise 13.3: Fetching Data with `useQuery`
 
 Time to put your knowledge of `useQuery` into practice!
-* *Objective:* Fetch and display a list of patient appointments for the SpeedyMeds app using `useQuery`.
-* *Task:* You will simulate an API call to get appointment data and display it in a list format, handling loading and error states appropriately.
+
+h2. Objective
+
+Fetch and display a list of patient appointments for the SpeedyMeds app using `useQuery`.
+h2. Task
+
+You will simulate an API call to get appointment data and display it in a list format, handling loading and error states appropriately.
 
 *(https://snack.expo.dev/@course-author/m13-ex03-usequery)*
 

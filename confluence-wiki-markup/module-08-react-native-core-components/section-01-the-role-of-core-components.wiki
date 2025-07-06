@@ -1,8 +1,10 @@
-h2. Section 1: The Role of Core Components
+{toc}
+
+h1. Section 1: The Role of Core Components
 
 Welcome to the first section of Module 8. Here, we'll explore the fundamental concept of Core Components in React Native. Understanding their role is crucial because they are the primary tools you'll use to build the user interface (UI) of your mobile applications. Think of them as the essential Lego bricks provided by React Native for constructing everything the user sees and interacts with on the screen.
 
-h3. What are Core Components?
+h2. What are Core Components?
 
 *Conceptual Content*
 
@@ -85,12 +87,21 @@ This diagram shows the direct mapping between React Native Core Components and t
 Note that some React Native components may map to different native components depending on configuration. For example, {{<TextInput>}} maps to {{UITextField}} for single-line input on iOS but to {{UITextView}} for multiline input. Similarly, components like {{FlatList}} leverage optimized list views on each platform ({{UITableView}} on iOS and {{RecyclerView}} on Android) for efficient rendering of large data sets.
 
 *Key Characteristics:*
-* *Platform Agnostic (Mostly):* While they render to native widgets, the API you interact with in your JavaScript/TypeScript code is consistent across platforms. Some components might have platform-specific props, but the general usage is the same.
-* *Native Performance:* Because Core Components translate directly to native UI elements, they generally offer excellent performance, matching that of apps built with native languages.
-* *Fundamental Building Blocks:* They are designed to be composed. You'll rarely use just one Core Component in isolation; instead, you'll combine them to create screens, custom components, and entire application flows.
-* *Styleable:* React Native provides a {{StyleSheet}} API (which we'll cover in detail later in this module) that allows you to apply styles to Core Components, controlling their appearance and layout.
 
-h3. Why are Core Components Important?
+h2. Platform Agnostic (Mostly)
+
+While they render to native widgets, the API you interact with in your JavaScript/TypeScript code is consistent across platforms. Some components might have platform-specific props, but the general usage is the same.
+h2. Native Performance
+
+Because Core Components translate directly to native UI elements, they generally offer excellent performance, matching that of apps built with native languages.
+h2. Fundamental Building Blocks
+
+They are designed to be composed. You'll rarely use just one Core Component in isolation; instead, you'll combine them to create screens, custom components, and entire application flows.
+h2. Styleable
+
+React Native provides a {{StyleSheet}} API (which we'll cover in detail later in this module) that allows you to apply styles to Core Components, controlling their appearance and layout.
+
+h2. Why are Core Components Important?
 
 Core Components are the bedrock of React Native development for several reasons:
 # *Cross-Platform Development:* They are the primary mechanism that allows React Native to fulfill its promise of "Learn once, write anywhere." By providing a common set of UI primitives, they abstract away the platform-specific details of UI rendering.
@@ -112,7 +123,7 @@ bq. 📚 *Official Documentation:*
 - [https://legacy.reactjs.org/docs/components-and-props.html|React Docs: Components and Props (Legacy)]
 - [https://docs.expo.dev/tutorial/view-text-and-image/|Expo Docs: Learn the Basics - View, Text, and Image components]
 
-h3. Background Bridge Notes
+h2. Background Bridge Notes
 
 bq. 🍏 *(iOS Developers):*
 > *Comparison:* Think of React Native Core Components like the fundamental classes in UIKit such as {{UIView}}, {{UILabel}}, {{UIImageView}}, {{UIButton}}, and {{UITableView}}. The primary difference is that you define them declaratively using JSX instead of programmatically creating and configuring them in Swift or Objective-C. The layout system (Flexbox) will also be a significant shift from Auto Layout or manual frame setting.
@@ -133,7 +144,7 @@ Throughout this module, we will delve into the most commonly used Core Component
 
 By understanding the role and capabilities of each Core Component, you gain the power to translate UI designs into functional, cross-platform mobile applications.
 
-h3. Next Steps
+h2. Next Steps
 
 Now that you understand the role of Core Components, let's move on to exploring the most fundamental one: the {{<View>}} component.
 * [./section-02-view.md|Next Section: View ({{<View>}}) - The Fundamental Container]

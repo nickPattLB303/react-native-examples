@@ -1,31 +1,39 @@
-h2. Section 6: Handling Events (Press Events)
+{toc}
+
+h1. Section 6: Handling Events (Press Events)
 
 Interactive applications respond to user input. In React Native, this often involves handling touch events, such as a user pressing a button. This section focuses on how to handle these events, particularly "press" events, using React's event system, which provides a consistent API across platforms by abstracting native differences.
 
-h3. Event Handling in React
+h2. Event Handling in React
 
 Handling events in React (and React Native) is very similar to handling events on DOM elements in web development, but with a few syntactical differences:
-* *camelCase:* React event handlers are named using camelCase, rather than lowercase. For example, an {{onclick}} event in HTML becomes {{onClick}} in React/JSX. In React Native, a common event is {{onPress}}.
-* *Functions:* You pass a function as the event handler, rather than a string.
 
-  {code:language=js}
+h2. camelCase
+
+React event handlers are named using camelCase, rather than lowercase. For example, an {{onclick}} event in HTML becomes {{onClick}} in React/JSX. In React Native, a common event is {{onPress}}.
+h2. Functions
+
+You pass a function as the event handler, rather than a string.
+
+{code:language=js}
 // HTML (for comparison)
-  // <button onclick="handleLogin()">Login</button>
+// <button onclick="handleLogin()">Login</button>
 
-  // JSX (React/React Native)
-  <Button title="Login" onPress={handleLogin} />
-  ```
+// JSX (React/React Native)
+<Button title="Login" onPress={handleLogin} />
+{code}
 
 Event handler functions can also receive an optional argument, often called `event` (or `e`), which contains information about the user interaction. For basic `onPress` events with the `<Button>` component, this argument is often not explicitly used as the primary action is clear. However, for more complex interactions or components like `<Pressable>`, this event object can provide useful details (e.g., touch coordinates via `event.nativeEvent`). We will explore components like `<Pressable>` in more detail later.
 
-h3. Handling `onPress` Events
+h2. Handling `onPress` Events
 
 The most common touch event you'll handle in React Native is `onPress`. This event is available on several Core Components like `<Button>`, `<Pressable>`, and `<TouchableOpacity>` (though `<Pressable>` is now generally recommended over `TouchableOpacity`).
 
 *Example: A Simple Alert Button*
 
 Let's create a button that shows an alert when pressed.
-{code}tsx
+
+{code:language=js}
 import React from "react";
 import { View, Button, Alert, StyleSheet } from "react-native";
 
@@ -50,16 +58,18 @@ const styles = StyleSheet.create({
 });
 
 export default AlertButton;
-{code:language=text}
+{code}
+
 In this example:
 * We define a function `handlePress`.
 * This function is passed as the `onPress` prop to the `<Button>` component.
 * When the button is pressed, `handlePress` is executed, and an `Alert` (from React Native's `Alert` API) is shown.
 
-h3. Inline Event Handlers
+h2. Inline Event Handlers
 
 You can also define event handler functions inline using arrow functions, especially for very simple logic:
-{code}tsx
+
+{code:language=js}
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
@@ -94,15 +104,17 @@ const styles = StyleSheet.create({
 });
 
 export default DosageAdjuster;
-{code:language=text}
+{code}
+
 Here, the `onPress` handlers directly call `setDosage` using inline arrow functions.
 
-h3. Passing Arguments to Event Handlers
+h2. Passing Arguments to Event Handlers
 
 Sometimes you need to pass arguments to your event handler function. For example, if you have a list of items and each item has a button.
 
 To do this, you typically use an arrow function in the `onPress` prop that then calls your handler with the desired arguments.
-{code}tsx
+
+{code:language=js}
 import React from "react";
 import { View, Text, Button, Alert, StyleSheet } from "react-native";
 
@@ -165,7 +177,7 @@ const styles = StyleSheet.create({
 });
 
 export default PrescriptionSelector;
-```
+{code}
 
 In `MedicationItem`, `onPress={() => onSelectMedication(id, name)}` creates a new function that, when called, executes `onSelectMedication` with the specific `id` and `name` of that item.
 

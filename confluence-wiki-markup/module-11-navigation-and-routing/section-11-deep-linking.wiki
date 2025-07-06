@@ -1,28 +1,44 @@
-h2. Section 11: Deep Linking (Concepts and Setup with Expo Router)
+{toc}
+
+h1. Section 11: Deep Linking (Concepts and Setup with Expo Router)
 
 Deep linking allows users to open your application at a specific screen or with particular content loaded, by clicking a URL. This is crucial for features like navigating from a website to your app, handling push notifications that lead to specific content, or sharing links that open directly to a piece of information within your SpeedyMeds application (e.g., a link to a specific medication's details page).
 
 bq. 🛣️ *(All Learners):* Expo Router significantly simplifies deep linking setup compared to traditional React Navigation, as its URL-focused, file-system based routing naturally lends itself to this.
 
-h3. Core Content
+h2. Core Content
 
-h4. Conceptual Content: What is Deep Linking?
+h3. Conceptual Content: What is Deep Linking?
 
 Deep linking refers to the ability to use a Uniform Resource Identifier (URI) or URL to launch a mobile application and open it to a specific screen or state. Instead of just opening the app to its home screen, a deep link can take the user directly to the relevant content they are interested in.
 
 *Why is Deep Linking Important?*
-* *User Experience:* Seamlessly transitions users from other apps (like email or web browsers) or notifications directly to the relevant content.
-* *Marketing & Engagement:* Allows for targeted campaigns where users can be directed to specific product pages, promotional content, or features.
-* *Sharing:* Enables users to share links to specific parts of your app with others.
-* *Inter-App Communication:* Can be used for navigating between different apps.
+
+h2. User Experience
+
+Seamlessly transitions users from other apps (like email or web browsers) or notifications directly to the relevant content.
+h2. Marketing & Engagement
+
+Allows for targeted campaigns where users can be directed to specific product pages, promotional content, or features.
+h2. Sharing
+
+Enables users to share links to specific parts of your app with others.
+h2. Inter-App Communication
+
+Can be used for navigating between different apps.
 
 *Types of Links:*
-* *Custom URL Schemes:* e.g., {{speedymeds://medications/aspirin123}}.
-* *Universal Links (iOS) / App Links (Android):* Standard {{http}} or {{https}} web URLs that are associated with your app (e.g., {{https://speedymeds.example.com/medications/aspirin123}}). These are generally preferred over custom schemes for security and flexibility.
+
+h2. Custom URL Schemes
+
+e.g., {{speedymeds://medications/aspirin123}}.
+h2. Universal Links (iOS) / App Links (Android)
+
+Standard {{http}} or {{https}} web URLs that are associated with your app (e.g., {{https://speedymeds.example.com/medications/aspirin123}}). These are generally preferred over custom schemes for security and flexibility.
 
 Expo Router is designed with web principles in mind, so its routing system inherently supports URL-based navigation, making deep linking more straightforward.
 
-h4. Procedural Content: Deep Linking Setup with Expo Router
+h3. Procedural Content: Deep Linking Setup with Expo Router
 
 Expo Router handles most of the deep linking configuration automatically due to its file-system based routing which mirrors URL paths. When you build your app for production, you'll need to configure the associated domains (for Universal Links/App Links) and URL schemes.
 
@@ -55,26 +71,28 @@ You define a URL scheme for your app in the {{app.json}} or {{app.config.js}} fi
 *2. Universal Links (iOS) and App Links (Android) Configuration:*
 
 For production apps, using standard web URLs (`https` links) is recommended. This requires more setup:
-* *iOS (Universal Links):*
-## *Associated Domains:* You need to host an `apple-app-site-association` (AASA) file on your web server at `https://yourdomain.com/.well-known/apple-app-site-association`.
-## *Entitlement:* Add an Associated Domains entitlement to your app in your Apple Developer account and Xcode project (or via EAS Build configuration).
-## *`app.json` Configuration:* Specify the associated domain in your `app.json` under `ios.associatedDomains`.
-      {code:language=js}
-// app.json
-      {
-        "expo": {
-          // ...
-          "ios": {
-            "bundleIdentifier": "com.speedymeds.app",
-            "associatedDomains": ["applinks:yourdomain.com"]
-          }
+
+h2. iOS (Universal Links)
+# *Associated Domains:* You need to host an `apple-app-site-association` (AASA) file on your web server at `https://yourdomain.com/.well-known/apple-app-site-association`.
+# *Entitlement:* Add an Associated Domains entitlement to your app in your Apple Developer account and Xcode project (or via EAS Build configuration).
+# *`app.json` Configuration:* Specify the associated domain in your `app.json` under `ios.associatedDomains`.
+{code:language=js}
+    // app.json
+    {
+      "expo": {
+        // ...
+        "ios": {
+          "bundleIdentifier": "com.speedymeds.app",
+          "associatedDomains": ["applinks:yourdomain.com"]
         }
       }
-      ```
-* *Android (App Links):*
-## *Asset Links JSON:* Host a `assetlinks.json` file on your web server at `https://yourdomain.com/.well-known/assetlinks.json`.
-## *`app.json` Configuration:* Add an intent filter to your Android manifest. Expo CLI and EAS Build typically handle generating the necessary intent filters based on your `expo-router` configuration and `scheme` or associated domains.
-      You might need to specify `android.intentFilters` in `app.json` if you have specific needs, but Expo Router aims to configure this for you based on the `origin` if provided in the plugin options.
+    }
+{code}
+
+h2. Android (App Links)
+# *Asset Links JSON:* Host a `assetlinks.json` file on your web server at `https://yourdomain.com/.well-known/assetlinks.json`.
+# *`app.json` Configuration:* Add an intent filter to your Android manifest. Expo CLI and EAS Build typically handle generating the necessary intent filters based on your `expo-router` configuration and `scheme` or associated domains.
+    You might need to specify `android.intentFilters` in `app.json` if you have specific needs, but Expo Router aims to configure this for you based on the `origin` if provided in the plugin options.
 
 Expo's documentation provides detailed guides on setting up these `assetlinks.json` and AASA files, often managed via EAS services if you use them for hosting or builds.
 
@@ -96,22 +114,33 @@ When a user deep links into a deeply nested screen, you often want the back butt
 Essentially, by defining your navigation hierarchy with layouts, Expo Router ensures that parent navigators are part of the rendered tree, which helps React Navigation (used underneath) to establish a meaningful back stack. You generally don't need to do much extra for simple cases beyond correctly structuring your layouts.
 
 *5. Testing Deep Links:*
-* *Development (Expo Go):*
+
+h2. Development (Expo Go)
 * You can use `npx uri-scheme open <URL> --ios` or `npx uri-scheme open <URL> --android` to test custom schemes with the Expo Go app or development builds on simulators/emulators.
 * Replace `<URL>` with your deep link, e.g., `exp://<YOUR_EXPO_DEV_SERVER_ADDRESS>/--/orders/123` (for Expo Go, `exp://.../--/` acts as a prefix to your app's path).
 * If you have a custom scheme like `myapp://`, you can test `myapp://orders/123` directly on a development build.
-* *Production/Standalone Builds:*
+
+h2. Production/Standalone Builds
 * Test by clicking actual links from a website, email, or by using platform-specific CLI tools (`xcrun simctl openurl <device> <URL>` for iOS Simulator, `adb shell am start -W -a android.intent.action.VIEW -d "<URL>" <package_name>` for Android).
 
 *Example: Linking to a Medication Detail Screen*
-* *File:* `app/medications/[id].tsx` (handles routes like `/medications/some-rx-id`)
-* *URL Scheme:* `speedymeds`
-* *Deep Link:* `speedymeds://medications/rx789`
-* *Expo Router Action:* Opens the app, navigates to `app/medications/[id].tsx`, and `useLocalSearchParams()` in that screen will return `{ id: 'rx789' }`.
+
+h2. File
+
+`app/medications/[id].tsx` (handles routes like `/medications/some-rx-id`)
+h2. URL Scheme
+
+`speedymeds`
+h2. Deep Link
+
+`speedymeds://medications/rx789`
+h2. Expo Router Action
+
+Opens the app, navigates to `app/medications/[id].tsx`, and `useLocalSearchParams()` in that screen will return `{ id: 'rx789' }`.
 
 {note}
 The `origin` property in the `expo-router` plugin configuration in `app.json` is important for web support and can help in generating configuration for Universal Links/App Links if you are using services like EAS Metadata.
-{code}json
+{code:language=js}
 // app.json excerpt for expo-router plugin
 "plugins": [
 [
@@ -121,7 +150,8 @@ The `origin` property in the `expo-router` plugin configuration in `app.json` is
 }
 ]
 ]
-```
+{code}
+
 {note}
 bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/router/guides/deep-linking/|Expo Router: Deep Linking]
@@ -134,6 +164,6 @@ bq. 📚 *Official Documentation:*
 bq. 🌐 *(Web Developers):*
 > *Key Takeaway:* Deep linking in mobile with Expo Router feels very much like standard URL routing on the web. The primary additional complexity comes from configuring the native OS (iOS/Android) to correctly associate your web domain or custom scheme with your app through AASA and assetlinks.json files.
 
-h4. Next Steps
+h3. Next Steps
 
 This concludes the core topics for Module 11: Navigation and Routing. You've learned about fundamental navigation concepts, implementing stacks, tabs, and drawers with React Navigation, passing parameters, customizing appearance, and then explored file-system based routing and deep linking with Expo Router. The module challenge will allow you to apply these concepts to build a more comprehensive navigation structure for the SpeedyMeds app.

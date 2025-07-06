@@ -1,8 +1,10 @@
-h2. Section 2: Using Existing Native Modules (Community & Expo SDK)
+{toc}
+
+h1. Section 2: Using Existing Native Modules (Community & Expo SDK)
 
 This section focuses on how to leverage the rich ecosystem of pre-built native modules. You'll learn where to find them, how to evaluate them, how they are installed and linked (especially in Expo projects with Config Plugins), and the basic steps for using them in your application code.
 
-h3. The Power of Pre-Built Modules: The Ecosystem
+h2. The Power of Pre-Built Modules: The Ecosystem
 
 Fortunately, you don't always need to write native modules from scratch. The React Native ecosystem is vast, and a significant number of common (and even niche) native functionalities have already been wrapped into convenient JavaScript APIs. This ecosystem can be broadly categorized:
 # *React Native Core Modules:* These are fundamental modules bundled directly with React Native itself (e.g., {{Alert}}, {{Linking}}, {{AppState}}, {{Platform}}, {{Dimensions}}). They provide essential building blocks.
@@ -10,93 +12,122 @@ Fortunately, you don't always need to write native modules from scratch. The Rea
 # *Community Modules:* Beyond the core framework and the Expo SDK, a vast number of native modules are developed, shared, and maintained by the broader React Native community, including individual developers and companies (e.g., packages under {{@react-native-community}} like {{@react-native-async-storage/async-storage}}). These modules cover a diverse spectrum of functionalities.
 # *Third-Party Libraries:* Many other native modules are available on npm and GitHub, created by various organizations for specific services or features.
 
-h3. Finding and Evaluating Native Modules
+h2. Finding and Evaluating Native Modules
 
 When you need specific native functionality, here's how you can search:
-* *Expo Documentation:* If you\'re using Expo, the [https://docs.expo.dev/versions/latest/|Expo API Reference] is the best place to start for Expo SDK modules.
-* *React Native Directory:* [https://reactnative.directory/|reactnative.directory] is a searchable database.
-* *NPM Search:* Search on [https://www.npmjs.com/|npmjs.com] (e.g., "react native bluetooth", "expo chart").
-* *GitHub Search:* Searching on GitHub can also reveal relevant libraries.
+
+h2. Expo Documentation
+
+If you\'re using Expo, the [https://docs.expo.dev/versions/latest/|Expo API Reference] is the best place to start for Expo SDK modules.
+h2. React Native Directory
+
+[https://reactnative.directory/|reactnative.directory] is a searchable database.
+h2. NPM Search
+
+Search on [https://www.npmjs.com/|npmjs.com] (e.g., "react native bluetooth", "expo chart").
+h2. GitHub Search
+
+Searching on GitHub can also reveal relevant libraries.
 
 {note}
 Evaluating community modules demands careful consideration due to variability in quality, maintenance, and compatibility. Here's what to look for:
-* *Maintenance Activity:* Check the repository's commit history, release frequency, and responsiveness to issues and pull requests. An actively maintained library is more likely to stay compatible.
-* *Open Issues and Pull Requests:* Review open issues for known bugs, compatibility problems, or feature limitations. Look at pull requests to gauge community involvement and the maintainer\'s engagement.
-* *Documentation Quality:* Clear, comprehensive documentation is crucial for understanding how to install, configure, and use the module correctly.
-* *Compatibility:* Verify compatibility with your target React Native version (e.g., 0.7x+), target platform versions (iOS/Android), and crucially, with the Expo ecosystem if applicable (look for Config Plugin support or if it's an Expo module).
-* *New Architecture Support:* As the React Native ecosystem transitions, check if the module supports or has plans to support the New Architecture (TurboModules/Fabric). Using compatible modules is increasingly important.
+h2. Maintenance Activity
+
+Check the repository's commit history, release frequency, and responsiveness to issues and pull requests. An actively maintained library is more likely to stay compatible.
+h2. Open Issues and Pull Requests
+
+Review open issues for known bugs, compatibility problems, or feature limitations. Look at pull requests to gauge community involvement and the maintainer\'s engagement.
+h2. Documentation Quality
+
+Clear, comprehensive documentation is crucial for understanding how to install, configure, and use the module correctly.
+h2. Compatibility
+
+Verify compatibility with your target React Native version (e.g., 0.7x+), target platform versions (iOS/Android), and crucially, with the Expo ecosystem if applicable (look for Config Plugin support or if it's an Expo module).
+h2. New Architecture Support
+
+As the React Native ecosystem transitions, check if the module supports or has plans to support the New Architecture (TurboModules/Fabric). Using compatible modules is increasingly important.
 The process of vetting community modules requires greater diligence than selecting a typical pure JavaScript library because native modules introduce dependencies on native build systems and platform APIs.
 {note}
-h3. Installation and Linking (Under the Hood)
+h2. Installation and Linking (Under the Hood)
 
 Integrating a native module involves adding the JavaScript package and ensuring the associated native code is correctly included and linked during the mobile app build process.
 # *NPM/Yarn Installation:* Like any JavaScript dependency, native module packages are installed using a package manager:
 
-    ```bash
+{code:language=bash}
     # For Expo projects, prefer npx expo install (see below)
     npm install <package-name>
     # or
     yarn add <package-name>
-    ```
+{code}
 # *Linking (Legacy Context - Pre-RN 0.60):*
-    In earlier React Native versions, after installing a package containing native code, developers often had to run {{react-native link <package-name>}}. This command attempted to automate modifying native project files ({{Podfile}} for iOS, Gradle files for Android). This process was manual for complex cases and sometimes prone to errors.
+    In earlier React Native versions, after installing a package containing native code, developers often had to run `react-native link <package-name>`. This command attempted to automate modifying native project files (`Podfile` for iOS, Gradle files for Android). This process was manual for complex cases and sometimes prone to errors.
 # *Autolinking (RN 0.60+):*
-    React Native versions 0.60 and above introduced *autolinking*. The React Native build tools now automatically detect native modules within {{node_modules}} based on their package configuration.
-*** *iOS:* During {{pod install}} (part of {{npx react-native run:ios}} or Xcode build), CocoaPods detects the module's {{.podspec}} file and links the native dependency.
-*** *Android:* The Gradle build system detects the module's configuration and automatically includes it.
-      Autolinking removes the need for {{react-native link}} in most cases for standard React Native projects.
-# *Expo: {{npx expo install}}, Prebuild, and Config Plugins*
+    React Native versions 0.60 and above introduced *autolinking*. The React Native build tools now automatically detect native modules within `node_modules` based on their package configuration.
+
+h3. iOS
+
+During `pod install` (part of `npx react-native run:ios` or Xcode build), CocoaPods detects the module's `.podspec` file and links the native dependency.
+h3. Android
+
+The Gradle build system detects the module's configuration and automatically includes it.
+Autolinking removes the need for `react-native link` in most cases for standard React Native projects.
+# *Expo: `npx expo install`, Prebuild, and Config Plugins*
     The Expo ecosystem, particularly when not in the bare workflow, handles native dependencies differently and more seamlessly.
-*** *{{npx expo install <library-name>}}:*
-      This is the *strongly recommended* command for installing any library (especially those with native code) in Expo projects.
 
-      ```bash
-      npx expo install expo-camera
-      npx expo install react-native-maps
-      ```
+h3. `npx expo install <library-name>`
+This is the *strongly recommended* command for installing any library (especially those with native code) in Expo projects.
 
-      {{npx expo install}} ensures installation of a package version compatible with your project's Expo SDK version and, for many community native modules, it automatically configures the necessary *Config Plugins*.
-*** *Expo SDK Modules:* Modules part of the core Expo SDK are either pre-compiled into Expo Go or seamlessly included during Development Builds or EAS Builds.
-*** *Community Modules & Expo Config Plugins:*
-      Historically, the Expo Managed Workflow restricted using community modules with custom native code because developers didn't directly access native project files. *Expo Config Plugins* overcome this.
-      A Config Plugin is a script (usually JavaScript) associated with a native module. When Expo prepares the native projects (during {{expo prebuild}} or implicitly during {{eas build}}), it executes these Config Plugins. The plugins programmatically modify the native configuration files (like {{Info.plist}}, {{AndroidManifest.xml}}, {{build.gradle}}, {{Podfile}}) to correctly integrate the community module's native dependencies before native compilation.
-      This allows developers to use a wide range of community native modules within the Expo workflow without needing to "eject" or directly manage native code.
+{code:language=bash}
+npx expo install expo-camera
+npx expo install react-native-maps
+{code}
 
-      ```mermaid
-      graph TD
-          A[Developer runs {{npx expo install community-module}}] --> B{Module has Config Plugin?};
-          B -- Yes --> C[Config Plugin registered in app.json/app.config.js];
-          C -- eas build or expo prebuild --> D[Expo runs Config Plugin];
-          D --> E[Plugin modifies native project files Info.plist, build.gradle, etc.];
-          E --> F[Native code from community-module is linked];
-          F --> G[App builds successfully with native feature];
-          B -- No --> H{Module is pure JS?};
-          H -- Yes --> I[Works directly];
-          H -- No --> J[May require bare workflow or manual setup];
-      ```
+`npx expo install` ensures installation of a package version compatible with your project's Expo SDK version and, for many community native modules, it automatically configures the necessary *Config Plugins*.
 
-      This diagram illustrates the workflow when integrating a community native module into an Expo project using Config Plugins. The process starts when a developer runs {{npx expo install community-module}}. The system checks if this module includes a Config Plugin. If it does, the plugin is typically registered in the project's {{app.json}} or {{app.config.js}} file.
+h3. Expo SDK Modules
 
-      During the build process (triggered by {{eas build}} or {{expo prebuild}}), Expo identifies and executes these registered Config Plugins. Each plugin contains scripts that programmatically modify the native project configuration files (such as {{Info.plist}} for iOS or {{build.gradle}} and {{AndroidManifest.xml}} for Android). These modifications ensure that the native code from the community module is correctly linked and configured. As a result, the app can be built successfully, incorporating the desired native feature. If the module doesn't have a Config Plugin, the system then checks if it's a pure JavaScript library, which would work directly. If it's a native module without a Config Plugin, it might necessitate using the bare workflow or involve manual setup, highlighting the convenience Config Plugins offer for managed projects.
+Modules part of the core Expo SDK are either pre-compiled into Expo Go or seamlessly included during Development Builds or EAS Builds.
+
+h3. Community Modules & Expo Config Plugins
+Historically, the Expo Managed Workflow restricted using community modules with custom native code because developers didn't directly access native project files. *Expo Config Plugins* overcome this.
+A Config Plugin is a script (usually JavaScript) associated with a native module. When Expo prepares the native projects (during `expo prebuild` or implicitly during `eas build`), it executes these Config Plugins. The plugins programmatically modify the native configuration files (like `Info.plist`, `AndroidManifest.xml`, `build.gradle`, `Podfile`) to correctly integrate the community module's native dependencies before native compilation.
+This allows developers to use a wide range of community native modules within the Expo workflow without needing to "eject" or directly manage native code.
+
+{mermaid}
+graph TD
+    A[Developer runs `npx expo install community-module`] --> B{Module has Config Plugin?};
+    B -- Yes --> C[Config Plugin registered in app.json/app.config.js];
+    C -- eas build or expo prebuild --> D[Expo runs Config Plugin];
+    D --> E[Plugin modifies native project files Info.plist, build.gradle, etc.];
+    E --> F[Native code from community-module is linked];
+    F --> G[App builds successfully with native feature];
+    B -- No --> H{Module is pure JS?};
+    H -- Yes --> I[Works directly];
+    H -- No --> J[May require bare workflow or manual setup];
+{mermaid}
+
+This diagram illustrates the workflow when integrating a community native module into an Expo project using Config Plugins. The process starts when a developer runs `npx expo install community-module`. The system checks if this module includes a Config Plugin. If it does, the plugin is typically registered in the project's `app.json` or `app.config.js` file.
+
+During the build process (triggered by `eas build` or `expo prebuild`), Expo identifies and executes these registered Config Plugins. Each plugin contains scripts that programmatically modify the native project configuration files (such as `Info.plist` for iOS or `build.gradle` and `AndroidManifest.xml` for Android). These modifications ensure that the native code from the community module is correctly linked and configured. As a result, the app can be built successfully, incorporating the desired native feature. If the module doesn't have a Config Plugin, the system then checks if it's a pure JavaScript library, which would work directly. If it's a native module without a Config Plugin, it might necessitate using the bare workflow or involve manual setup, highlighting the convenience Config Plugins offer for managed projects.
 
     The evolution from manual linking to autolinking and then to the sophisticated Config Plugin system in Expo simplifies native code integration significantly.
 
-h3. Importing and Using Modules in Code
+h2. Importing and Using Modules in Code
 
 After installation, using a native module in your JavaScript or TypeScript code is usually straightforward:
 # *Import the module:*
 
-    ```typescript
+{code:language=js}
     import * as Device from "expo-device"; // Expo SDK module
     import NetInfo from "@react-native-community/netinfo"; // Community module
     import SomeThirdPartyModule from "some-third-party-module"; // Third-party module
-    ```
+{code}
 
     The exact import statement depends on how the library exports its functionalities (named exports vs. default export). Always refer to the library's documentation.
 # *Call its methods:*
     Native module methods are exposed as JavaScript functions. These functions might be synchronous or, more commonly, asynchronous (returning a Promise).
 
-    ```typescript
+{code:language=js}
     // Example using expo-device (synchronous properties)
     console.log("Device type:", Device.deviceType);
     console.log("OS Version:", Device.osVersion);
@@ -113,14 +144,14 @@ After installation, using a native module in your JavaScript or TypeScript code 
     };
 
     checkConnection();
-    ```
+{code}
 
-    The {{expo-device}} module provides synchronous access to device properties. For instance, {{Device.deviceType}} might return an enum or string like {{Device.DeviceType.PHONE}} or {{'TABLET'}}, and {{Device.osVersion}} would return the operating system version string (e.g., {{'15.0'}}). This information is readily available upon import.
+    The `expo-device` module provides synchronous access to device properties. For instance, `Device.deviceType` might return an enum or string like `Device.DeviceType.PHONE` or `'TABLET'`, and `Device.osVersion` would return the operating system version string (e.g., `'15.0'`). This information is readily available upon import.
 
-    The {{@react-native-community/netinfo}} module, on the other hand, typically provides network state information asynchronously. The {{NetInfo.fetch()}} method returns a Promise that resolves with an object containing details like {{state.type}} (e.g., {{'wifi'}}, {{'cellular'}}, {{'none'}}) and {{state.isConnected}} (a boolean). This asynchronous pattern is common for operations that might take time or involve system events.
+    The `@react-native-community/netinfo` module, on the other hand, typically provides network state information asynchronously. The `NetInfo.fetch()` method returns a Promise that resolves with an object containing details like `state.type` (e.g., `'wifi'`, `'cellular'`, `'none'`) and `state.isConnected` (a boolean). This asynchronous pattern is common for operations that might take time or involve system events.
 
 {note}
-Always check for compatibility between the native module, your React Native version, and your Expo SDK version (if applicable). {{npx expo install}} greatly helps with this for Expo projects. For other libraries, consult their documentation.
+Always check for compatibility between the native module, your React Native version, and your Expo SDK version (if applicable). `npx expo install` greatly helps with this for Expo projects. For other libraries, consult their documentation.
 {note}
 
 {warning}
@@ -131,7 +162,7 @@ When considering third-party libraries, especially smaller or less-known ones:
 An unmaintained library can become a source of bugs or compatibility issues.
 {warning}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/guides/using-libraries/|Expo Docs: Using Libraries (Explains {{npx expo install}})]
+> - [https://docs.expo.dev/guides/using-libraries/|Expo Docs: Using Libraries (Explains `npx expo install`)]
 - [https://docs.expo.dev/guides/config-plugins/|Expo Docs: Config Plugins]
 - [https://reactnative.dev/docs/linking-libraries-ios|React Native Docs: Linking Libraries (Explains autolinking)] (iOS section, concept applies to Android too)
 - [https://reactnative.directory/|React Native Directory]

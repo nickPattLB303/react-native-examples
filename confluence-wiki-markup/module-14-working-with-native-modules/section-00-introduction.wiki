@@ -1,4 +1,4 @@
-h1. Module 14: Working with Native Modules
+{toc}
 
 React Native offers a vast array of components and APIs to build powerful cross-platform applications. However, there are times when you need to access platform-specific APIs or integrate existing native code that isn't available out-of-the-box. This is where native modules come into play. This module explores what native modules are, why they're essential, how to use existing ones, and provides a conceptual overview of creating your own. Understanding native modules unlocks the full potential of React Native, allowing you to bridge the gap between JavaScript and the underlying native platforms.
 
@@ -6,7 +6,7 @@ React Native offers a vast array of components and APIs to build powerful cross-
 
 🌐 *(Web Developers):* Coming from a web background, the idea of interacting directly with device hardware or platform-specific operating system features might be new. This module will introduce you to how React Native extends JavaScript's capabilities into the native realm. You'll learn that while React Native abstracts many platform differences, native modules are the gateway to deeper device integration.
 
-h2. Learning Objectives
+h1. Learning Objectives
 
 By the end of this module, you will be able to:
 * Define native modules and explain their purpose in React Native.
@@ -18,7 +18,7 @@ By the end of this module, you will be able to:
 * Describe how JSI enables direct communication between JavaScript and native code.
 * Understand the concept of bridging native UI components.
 
-h2. Prerequisites
+h1. Prerequisites
 
 Before starting this module, you should have a good understanding of the following:
 * Completion of [../module-01-the-landscape-of-mobile-development/section-00-introduction.md|Module 1: The Landscape of Mobile Development]
@@ -28,7 +28,7 @@ Before starting this module, you should have a good understanding of the followi
 * Completion of [../module-06-typescript-essentials/section-00-introduction.md|Module 6: TypeScript Essentials]
 * Completion of [../module-08-react-native-core-components/section-00-introduction.md|Module 8: React Native Core Components]
 
-h2. Sections in this Module
+h1. Sections in this Module
 * Section 1: What are Native Modules? Why Use Them?
 * Section 2: Using Existing Native Modules (Community & Expo SDK)
 * Section 3: Expo SDK Modules Overview (Camera, Location, FileSystem, etc.)
@@ -37,7 +37,7 @@ h2. Sections in this Module
 * Section 6: JSI for Direct Communication
 * Section 7: Bridging Native UI Components (Conceptual Overview)
 
-h3. Module Challenge
+h2. Module Challenge
 
 *Challenge 14: Research Native Module Alternatives*
 
@@ -45,13 +45,13 @@ This challenge encourages you to think critically about problem-solving within t
 
 *(https://forms.office.com/Pages/ResponsePage.aspx?id=P8OfLypPdUKMZpniZLje-l5bk8z-NaFKvZ7BwsLr33RUN0pYVFUxU0JaREpJNEQ2TjJRWTlXQjBaQy4u)*
 
-h2. Module Summary
+h1. Module Summary
 
 This module provided a comprehensive overview of working with native modules in React Native. You learned what native modules are, why they are crucial for extending React Native's capabilities, and how to utilize existing modules from the Expo SDK and the broader community. We explored key Expo SDK modules and their common use cases, giving you a toolkit for accessing many common device features.
 
 Furthermore, we introduced the conceptual process of creating your own native modules, setting the stage for more advanced development. Crucially, this module shed light on the New Architecture, explaining the roles of TurboModules for more performant and type-safe native code, JSI for direct JavaScript-to-native communication, and the concept of bridging native UI components with Fabric. While creating custom native code is an advanced topic, understanding these concepts is vital for any React Native developer looking to build deeply integrated and high-performing applications.
 
-h2. Additional Resources
+h1. Additional Resources
 * [https://github.com/jondot/awesome-react-native#native-modules|Awesome React Native - Native Modules Section] (A curated list of community libraries)
 * [https://blog.expo.dev/|Expo Blog] (Often features articles on new modules and native capabilities)
 * [https://github.com/react-native-community/discussions-and-proposals/labels/new-architecture|React Native New Architecture Working Group Discussions] (For deep dives into the New Architecture evolution)

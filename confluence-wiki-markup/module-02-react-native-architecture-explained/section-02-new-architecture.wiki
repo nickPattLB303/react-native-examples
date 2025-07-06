@@ -1,4 +1,6 @@
-h2. Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)
+{toc}
+
+h1. Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)
 
 The limitations of the legacy Bridge architecture prompted a significant re-engineering effort, resulting in React Native's *New Architecture*. This modern approach aims to improve performance, enhance type safety, and provide more flexible communication between JavaScript and native code. It introduces several key components: JSI, TurboModules, Fabric, and Codegen. The New Architecture became the default in React Native version 0.76 and for projects initialized with *Expo SDK 52 and later*, marking a major step forward for applications like our SpeedyMeds pharmacy app.
 
@@ -8,22 +10,31 @@ bq. 🛣️ *(All Learners):* Understanding the New Architecture is particularly
 
 This diagram illustrates React Native's New Architecture, highlighting key layers and components. The *JavaScript Layer*, containing your application code, interacts via the *JavaScript Interface (JSI)*. JSI enables direct, high-performance communication with the *C++ Layer*. Here, *Codegen* automatically generates bindings for *TurboModules* (for native device APIs) and *Fabric* (the new UI management system). Dotted lines from JSI show these direct call capabilities. At the base, the *Native Layer* depicts TurboModules accessing *Device APIs* (e.g., camera, sensors) and Fabric managing platform-specific *Native UI* elements. This streamlined structure aims for enhanced performance and type safety.
 
-h3. JavaScript Interface (JSI)
+h2. JavaScript Interface (JSI)
 
 JSI is the foundational change in the New Architecture. Instead of the asynchronous, JSON-based Bridge, JSI provides a lightweight, general-purpose C++ interface that allows JavaScript code to directly hold references to C++ host objects and invoke methods on them *synchronously*.
-* *Direct Communication:* JavaScript can now interact with native code more directly, bypassing the need for serialization and asynchronous message passing for many operations. This allows for high-throughput data exchange; for example, the popular {{react-native-vision-camera}} library uses JSI to process camera frames in real-time, handling data rates infeasible with the old Bridge.
-* *JavaScript Engine Agnostic:* JSI is designed to work with any modern JavaScript engine that provides C++ APIs, such as Hermes (React Native's optimized default engine), V8, or JavaScriptCore. This flexibility ensures broader compatibility.
-* *Shared Ownership & Host Objects:* JSI enables shared ownership of objects between the JavaScript and Native realms. JavaScript can obtain a reference to a C++ object (often referred to as a *Host Object*) exposed by the native side and directly invoke methods on this C++ object reference as if it were a local JavaScript object. Similarly, native C++ code can hold references to JavaScript functions or objects and invoke them directly.
-* *Enables Synchronous Operations:* A key benefit is the ability to synchronously access native functionality (e.g., layout information via {{measure}} on a component ref), preventing issues like layout jumps common in the legacy architecture. _(Note: While JSI enables synchronous calls, it's important to use them judiciously. A long-running synchronous native call invoked from JavaScript can still block the JS thread. The advantage is having the option for efficient synchronous execution when necessary.)_
 
-h3. Understanding C++ Host Objects and JSI References
+h2. Direct Communication
+
+JavaScript can now interact with native code more directly, bypassing the need for serialization and asynchronous message passing for many operations. This allows for high-throughput data exchange; for example, the popular {{react-native-vision-camera}} library uses JSI to process camera frames in real-time, handling data rates infeasible with the old Bridge.
+h2. JavaScript Engine Agnostic
+
+JSI is designed to work with any modern JavaScript engine that provides C++ APIs, such as Hermes (React Native's optimized default engine), V8, or JavaScriptCore. This flexibility ensures broader compatibility.
+h2. Shared Ownership & Host Objects
+
+JSI enables shared ownership of objects between the JavaScript and Native realms. JavaScript can obtain a reference to a C++ object (often referred to as a *Host Object*) exposed by the native side and directly invoke methods on this C++ object reference as if it were a local JavaScript object. Similarly, native C++ code can hold references to JavaScript functions or objects and invoke them directly.
+h2. Enables Synchronous Operations
+
+A key benefit is the ability to synchronously access native functionality (e.g., layout information via {{measure}} on a component ref), preventing issues like layout jumps common in the legacy architecture. _(Note: While JSI enables synchronous calls, it's important to use them judiciously. A long-running synchronous native call invoked from JavaScript can still block the JS thread. The advantage is having the option for efficient synchronous execution when necessary.)_
+
+h2. Understanding C++ Host Objects and JSI References
 
 At its core, JSI provides a C++ API that lets JavaScript interact with C++ objects. When a TurboModule or Fabric component is needed, the native side creates a C++ object representing it. JSI allows the JavaScript environment to obtain a *pointer* or *reference* to this C++ object in memory. This reference is exposed to JavaScript, often looking like a regular JS object. When your JavaScript code calls a method on this reference (e.g., {{MyNativeModule.doSomething()}}), JSI intercepts this call. Instead of serializing anything, it directly invokes the corresponding C++ method on the C++ object that the reference points to. The C++ class that native modules often inherit from to be exposed via JSI is {{facebook::jsi::HostObject}}. This mechanism eliminates the serialization bottleneck of the Bridge.
 
 *Diagram: Legacy Bridge vs. JSI Communication Flow*
 
 {mermaid}
-graph TD
+    graph TD
         subgraph Legacy Bridge Architecture
             direction LR
             JS_App_Legacy["JS App Code"] --> JS_Bridge_Legacy["JS Bridge"];
@@ -68,13 +79,22 @@ bq. 🤖 *(Android Developers):*
 > *Key Takeaway:* JSI simplifies what would otherwise be complex JNI-style bindings between JavaScript and native code, while maintaining similar performance benefits.
 > *Source:* [https://developer.android.com/training/articles/perf-jni|Android JNI Tips | Android Developers]
 
-h3. TurboModules
+h2. TurboModules
 
 Built on top of JSI, TurboModules are the new generation of Native Modules, providing access to platform-specific APIs.
-* *Lazy Loading:* Unlike legacy Native Modules, which were often initialized eagerly at app startup, TurboModules are loaded only when they are first needed by your JavaScript code. This significantly improves app startup time and reduces initial memory consumption.
-* *Strong Typing:* TurboModules leverage type definitions (often written in TypeScript or Flow and processed by Codegen) to ensure type safety across the JSI boundary.
-* *Synchronous Access (Optional):* While asynchronous operations are still common, TurboModules can expose methods that can be called synchronously from JavaScript when necessary, thanks to JSI.
-* *Performance:* Interactions with TurboModules are generally faster due to JSI, avoiding the Bridge overhead.
+
+h2. Lazy Loading
+
+Unlike legacy Native Modules, which were often initialized eagerly at app startup, TurboModules are loaded only when they are first needed by your JavaScript code. This significantly improves app startup time and reduces initial memory consumption.
+h2. Strong Typing
+
+TurboModules leverage type definitions (often written in TypeScript or Flow and processed by Codegen) to ensure type safety across the JSI boundary.
+h2. Synchronous Access (Optional)
+
+While asynchronous operations are still common, TurboModules can expose methods that can be called synchronously from JavaScript when necessary, thanks to JSI.
+h2. Performance
+
+Interactions with TurboModules are generally faster due to JSI, avoiding the Bridge overhead.
 
 For the SpeedyMeds application, TurboModules will be particularly valuable for:
 * Securely accessing patient data with proper authentication
@@ -82,16 +102,25 @@ For the SpeedyMeds application, TurboModules will be particularly valuable for:
 * Processing medication information synchronously for immediate validation
 * Integrating with health-related native APIs while maintaining performance
 
-h3. Fabric
+h2. Fabric
 
 Fabric is the New Architecture's rendering system, replacing the legacy UI Manager. It's responsible for managing the UI tree and rendering native components.
-* *Direct UI Operations & C++ Core:* Fabric allows JavaScript to interact more directly and synchronously with the native UI thread via JSI. It features a unified C++ core, promoting consistency across platforms and enabling more efficient UI updates.
-* *Prioritization & Concurrency:* Fabric introduces the ability to prioritize certain UI updates (e.g., user interactions) and is designed to work with React 18+ concurrent features (like Suspense and Transitions), leading to a more responsive user experience.
-* *Conceptual Shadow Tree (in C++):* Like the legacy architecture, Fabric uses a "shadow tree" to represent the UI layout. However, this shadow tree is now created and managed in C++ and is directly accessible from both JavaScript and native code via JSI.
-* *Render Pipeline:* Fabric operates in three main phases:
-## *Render Phase:* React executes JS code, creating a React Element Tree. Fabric uses this to synchronously create a React Shadow Tree in C++.
-## *Commit Phase:* The Shadow Tree is finalized. Layout information is calculated (using Yoga), and the tree is promoted as the "next tree" to be mounted.
-## *Mount Phase:* The Shadow Tree (with layout data) is transformed into a Host View Tree (actual native views) on the native UI thread. This involves diffing against the previous tree and applying updates to the native views.
+
+h2. Direct UI Operations & C++ Core
+
+Fabric allows JavaScript to interact more directly and synchronously with the native UI thread via JSI. It features a unified C++ core, promoting consistency across platforms and enabling more efficient UI updates.
+h2. Prioritization & Concurrency
+
+Fabric introduces the ability to prioritize certain UI updates (e.g., user interactions) and is designed to work with React 18+ concurrent features (like Suspense and Transitions), leading to a more responsive user experience.
+h2. Conceptual Shadow Tree (in C++)
+
+Like the legacy architecture, Fabric uses a "shadow tree" to represent the UI layout. However, this shadow tree is now created and managed in C++ and is directly accessible from both JavaScript and native code via JSI.
+h2. Render Pipeline
+
+Fabric operates in three main phases:
+# *Render Phase:* React executes JS code, creating a React Element Tree. Fabric uses this to synchronously create a React Shadow Tree in C++.
+# *Commit Phase:* The Shadow Tree is finalized. Layout information is calculated (using Yoga), and the tree is promoted as the "next tree" to be mounted.
+# *Mount Phase:* The Shadow Tree (with layout data) is transformed into a Host View Tree (actual native views) on the native UI thread. This involves diffing against the previous tree and applying updates to the native views.
 
 For SpeedyMeds, Fabric's benefits include:
 * Smoother scrolling of medication lists with many items
@@ -99,11 +128,16 @@ For SpeedyMeds, Fabric's benefits include:
 * Fluid animations when transitioning between patient information screens
 * Better touch response when interacting with dosage inputs and forms
 
-h3. Codegen (Code Generation)
+h2. Codegen (Code Generation)
 
 To ensure type safety and reduce boilerplate code when creating TurboModules and Fabric components, the New Architecture utilizes Codegen.
-* *Interface Generation:* Developers define the interface between JavaScript and native code using strictly typed JavaScript (Flow) or TypeScript specification files.
-* *Automatic Code Creation:* Codegen runs at build time, reading these type definitions and automatically generating the C++ JSI bindings and platform-specific native interface code (e.g., Java interfaces for Android, Objective-C++ headers for iOS). This significantly reduces the amount of repetitive boilerplate code developers need to write manually and minimizes potential errors.
+
+h2. Interface Generation
+
+Developers define the interface between JavaScript and native code using strictly typed JavaScript (Flow) or TypeScript specification files.
+h2. Automatic Code Creation
+
+Codegen runs at build time, reading these type definitions and automatically generating the C++ JSI bindings and platform-specific native interface code (e.g., Java interfaces for Android, Objective-C++ headers for iOS). This significantly reduces the amount of repetitive boilerplate code developers need to write manually and minimizes potential errors.
 
 bq. ⚛️ *(React Developers):*
 > *Comparison:* Codegen's role in the New Architecture is somewhat analogous to how TypeScript's type checking works for your React components, but extended to cross the JavaScript-native boundary. It ensures consistency not just in your JS code, but between your JS and native code.
@@ -115,16 +149,27 @@ bq. 🅰 *(Angular Developers):*
 > *Key Takeaway:* Like Angular's AOT compilation, Codegen enhances both developer experience (through better typing) and runtime performance (through optimized bindings).
 > *Source:* [https://angular.io/guide/aot-compiler|Angular Ahead-of-Time Compilation]
 
-h3. Benefits of the New Architecture:
-* *Improved Performance:* Reduced serialization overhead, synchronous access capabilities, and optimized rendering lead to faster startup, smoother animations, and better responsiveness.
-* *Enhanced Type Safety:* Codegen enforces type consistency between JavaScript and native code, catching errors at build time rather than runtime.
-* *Increased Flexibility:* Direct JSI access opens up possibilities for more sophisticated native integrations and libraries.
-* *Better Debugging & Tooling:* The streamlined architecture facilitates improved debugging tools and performance monitoring.
-* *Modern React Alignment:* Enables the use of concurrent features from React 18+ for more advanced UI patterns.
+h2. Benefits of the New Architecture:
+
+h2. Improved Performance
+
+Reduced serialization overhead, synchronous access capabilities, and optimized rendering lead to faster startup, smoother animations, and better responsiveness.
+h2. Enhanced Type Safety
+
+Codegen enforces type consistency between JavaScript and native code, catching errors at build time rather than runtime.
+h2. Increased Flexibility
+
+Direct JSI access opens up possibilities for more sophisticated native integrations and libraries.
+h2. Better Debugging & Tooling
+
+The streamlined architecture facilitates improved debugging tools and performance monitoring.
+h2. Modern React Alignment
+
+Enables the use of concurrent features from React 18+ for more advanced UI patterns.
 
 It's worth noting that the shift towards a shared C++ core (JSI, Fabric) makes C++ a more central part of React Native's architecture. While many developers may not need to write C++ directly, familiarity with its concepts can be beneficial for advanced use cases or deep debugging.
 
-h3. SpeedyMeds Architecture Implications
+h2. SpeedyMeds Architecture Implications
 
 For our SpeedyMeds pharmacy application, the New Architecture delivers several key benefits:
 # *Performance for Health Data:* Medication lists, prescription details, and patient information can be rendered more efficiently, providing a smoother experience when browsing extensive health records.
@@ -226,6 +271,6 @@ bq. 📚 *Official Documentation:*
 - [https://shopify.engineering/react-native-at-shopify-benefits-of-the-new-architecture|Practical Guide to the New Architecture]
 - [https://reactnative.dev/docs/next/new-architecture-app-modules-android|Migrating to the New Architecture]
 
-h3. Next Steps
+h2. Next Steps
 
 Having explored both the Legacy and New Architectures, in the next section we'll look more closely at how rendering specifically works in each approach, examining the detailed mechanisms that translate your React components into native UI elements.

@@ -1,14 +1,16 @@
-h2. Section 5: Generics
+{toc}
+
+h1. Section 5: Generics
 
 Generics are one of TypeScript's most powerful features, enabling you to write reusable code that can work with a variety of types while still maintaining type safety. Think of generics as a way to create components or functions that act as templates, where the specific types they operate on can be specified later.
 
-h3. What are Generics?
+h2. What are Generics?
 
 Imagine you need a function that returns the first item of an array. Without generics, you might have to write separate functions for an array of numbers, an array of strings, and so on, or resort to using {{any}} which sacrifices type safety.
 
 Generics solve this by allowing you to define a *type variable* (often denoted by {{T}}, {{U}}, {{K}}, {{V}}, etc., by convention) that acts as a placeholder for the actual type. This type variable is then used to type the function's parameters, return value, or an interface's members.
 
-h3. Generic Functions
+h2. Generic Functions
 
 A common use case for generics is in functions. Let's create a simple identity function that takes an argument and returns it. With generics, this function can work with any type while preserving type information.
 
@@ -74,7 +76,7 @@ if (firstPatient) {
 
 This `getFirstElement` function works with an array of `Medication`, an array of `Patient`, or an array of any other type, while ensuring that the returned element is correctly typed.
 
-h3. Generic Interfaces
+h2. Generic Interfaces
 
 You can also use generics with interfaces to create flexible data structures.
 
@@ -115,7 +117,7 @@ processPatientData(patientResponse);
 
 Here, `ApiResponse<Data>` can be reused for any type of data payload, providing strong typing for `response.data`.
 
-h3. Generic Constraints
+h2. Generic Constraints
 
 Sometimes you want to write a generic function that only works with types that have certain properties. This is where generic constraints come in. You can use the `extends` keyword to constrain the type parameter to a specific type or to types that have a certain shape.
 
@@ -154,7 +156,7 @@ bq. 📚 *Official Documentation:*
 
 Generics are a key tool for building scalable and maintainable applications. They are particularly useful when creating utility functions, data structures, or working with APIs that handle various types of data.
 
-h3. Exercise 6.2: Generic Function
+h2. Exercise 6.2: Generic Function
 
 Time to practice! Create a generic function that can be used in the SpeedyMeds application to process different types of items while maintaining type safety.
 
