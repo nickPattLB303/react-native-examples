@@ -21,73 +21,9 @@ A side menu that slides in from the edge of the screen (usually the left), provi
 
 Let's examine how these patterns work together in a typical app architecture:
 
-{mermaid}
-graph TD
-    subgraph "Navigation Architecture"
-        Root[Root Navigation Container]
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Navigation%20Architecture%22%0A%20%20%20%20%20%20%20%20Root%5BRoot%20Navigation%20Container%5D%0A%0A%20%20%20%20%20%20%20%20subgraph%20%22Authentication%20Flow%22%0A%20%20%20%20%20%20%20%20%20%20%20%20Auth%5BAuth%20Navigator%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20Login%5BLogin%20Screen%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20Register%5BRegister%20Screen%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20Auth%20--%3E%20Login%0A%20%20%20%20%20%20%20%20%20%20%20%20Auth%20--%3E%20Register%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20subgraph%20%22Main%20App%20Flow%22%0A%20%20%20%20%20%20%20%20%20%20%20%20Drawer%5BDrawer%20Navigator%5D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20subgraph%20%22Tab%20Navigation%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Tabs%5BTab%20Navigator%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeTab%5BHome%20Tab%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ProfileTab%5BProfile%20Tab%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsTab%5BMedications%20Tab%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Tabs%20--%3E%20HomeTab%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Tabs%20--%3E%20ProfileTab%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Tabs%20--%3E%20MedsTab%0A%20%20%20%20%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20subgraph%20%22Home%20Stack%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeStack%5BHome%20Stack%20Navigator%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeDash%5BDashboard%20Screen%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Alerts%5BAlerts%20Screen%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeStack%20--%3E%20HomeDash%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeStack%20--%3E%20Alerts%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HomeDash%20-.-%3E%20Alerts%0A%20%20%20%20%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20subgraph%20%22Medications%20Stack%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsStack%5BMedications%20Stack%20Navigator%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsList%5BMedications%20List%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedDetail%5BMedication%20Detail%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20AddMed%5BAdd%20Medication%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsStack%20--%3E%20MedsList%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsStack%20--%3E%20MedDetail%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsStack%20--%3E%20AddMed%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsList%20-.-%3E%20MedDetail%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20MedsList%20-.-%3E%20AddMed%0A%20%20%20%20%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20Drawer%20--%3E%20Tabs%0A%20%20%20%20%20%20%20%20%20%20%20%20Drawer%20--%3E%20Settings%5BSettings%20Screen%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20HomeTab%20--%3E%20HomeStack%0A%20%20%20%20%20%20%20%20%20%20%20%20MedsTab%20--%3E%20MedsStack%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20Root%20--%3E%20Auth%0A%20%20%20%20%20%20%20%20Root%20--%3E%20Drawer%0A%20%20%20%20end%0A%0A%20%20%20%20classDef%20stack%20fill%3A%23ffcccb%2Cstroke%3A%23ff0000%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20tabs%20fill%3A%23cce5ff%2Cstroke%3A%230066cc%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20drawer%20fill%3A%23d6f5d6%2Cstroke%3A%2333cc33%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20screen%20fill%3A%23f2f2f2%2Cstroke%3A%23999999%2Cstroke-width%3A1px%3B%0A%0A%20%20%20%20class%20Auth%2CHomeStack%2CMedsStack%20stack%3B%0A%20%20%20%20class%20Tabs%20tabs%3B%0A%20%20%20%20class%20Drawer%20drawer%3B%0A%20%20%20%20class%20Login%2CRegister%2CHomeDash%2CAlerts%2CMedsList%2CMedDetail%2CAddMed%2CSettings%2CProfileTab%2CHomeTab%2CMedsTab%20screen%3B|View Mermaid Diagram]
 
-        subgraph "Authentication Flow"
-            Auth[Auth Navigator]
-            Login[Login Screen]
-            Register[Register Screen]
-            Auth --> Login
-            Auth --> Register
-        end
-
-        subgraph "Main App Flow"
-            Drawer[Drawer Navigator]
-
-            subgraph "Tab Navigation"
-                Tabs[Tab Navigator]
-                HomeTab[Home Tab]
-                ProfileTab[Profile Tab]
-                MedsTab[Medications Tab]
-                Tabs --> HomeTab
-                Tabs --> ProfileTab
-                Tabs --> MedsTab
-            end
-
-            subgraph "Home Stack"
-                HomeStack[Home Stack Navigator]
-                HomeDash[Dashboard Screen]
-                Alerts[Alerts Screen]
-                HomeStack --> HomeDash
-                HomeStack --> Alerts
-                HomeDash -.-> Alerts
-            end
-
-            subgraph "Medications Stack"
-                MedsStack[Medications Stack Navigator]
-                MedsList[Medications List]
-                MedDetail[Medication Detail]
-                AddMed[Add Medication]
-                MedsStack --> MedsList
-                MedsStack --> MedDetail
-                MedsStack --> AddMed
-                MedsList -.-> MedDetail
-                MedsList -.-> AddMed
-            end
-
-            Drawer --> Tabs
-            Drawer --> Settings[Settings Screen]
-            HomeTab --> HomeStack
-            MedsTab --> MedsStack
-        end
-
-        Root --> Auth
-        Root --> Drawer
-    end
-
-    classDef stack fill:#ffcccb,stroke:#ff0000,stroke-width:2px;
-    classDef tabs fill:#cce5ff,stroke:#0066cc,stroke-width:2px;
-    classDef drawer fill:#d6f5d6,stroke:#33cc33,stroke-width:2px;
-    classDef screen fill:#f2f2f2,stroke:#999999,stroke-width:1px;
-
-    class Auth,HomeStack,MedsStack stack;
-    class Tabs tabs;
-    class Drawer drawer;
-    class Login,Register,HomeDash,Alerts,MedsList,MedDetail,AddMed,Settings,ProfileTab,HomeTab,MedsTab screen;
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates a common navigation architecture for a mobile application like SpeedyMeds. The architecture combines multiple navigation patterns:
 # At the highest level, there's a *Root Navigation Container* that manages the main navigation state of the app.

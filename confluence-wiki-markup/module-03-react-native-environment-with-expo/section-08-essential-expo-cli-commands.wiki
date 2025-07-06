@@ -12,44 +12,9 @@ bq. 🧗‍♀️ *(Self-Led):* Create a command reference card or cheat sheet w
 
 h2. Expo CLI Command Workflow
 
-{mermaid}
-graph TD
-    subgraph "Project Creation"
-        A["npx create-expo-app"] --> B["New Project"]
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Project%20Creation%22%0A%20%20%20%20%20%20%20%20A%5B%22npx%20create-expo-app%22%5D%20--%3E%20B%5B%22New%20Project%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Development%20Workflow%22%0A%20%20%20%20%20%20%20%20B%20--%3E%20C%5B%22npx%20expo%20start%22%5D%0A%20%20%20%20%20%20%20%20C%20--%3E%20D%5B%22Metro%20Server%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D1%5B%22Press%20i%3A%20iOS%20Simulator%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D2%5B%22Press%20a%3A%20Android%20Emulator%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D3%5B%22Scan%20QR%3A%20Expo%20Go%22%5D%0A%0A%20%20%20%20%20%20%20%20B%20--%3E%20E%5B%22npx%20expo%20run%3Aios%2Fandroid%22%5D%0A%20%20%20%20%20%20%20%20E%20--%3E%20F%5B%22Native%20Build%22%5D%0A%20%20%20%20%20%20%20%20F%20--%3E%20G%5B%22Simulator%2FEmulator%22%5D%0A%0A%20%20%20%20%20%20%20%20H%5B%22npx%20expo%20install%20pkg%22%5D%20--%3E%20I%5B%22Compatible%20Dependencies%22%5D%0A%20%20%20%20%20%20%20%20I%20--%3E%20C%0A%20%20%20%20%20%20%20%20I%20--%3E%20E%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Configuration%20%26%20Maintenance%22%0A%20%20%20%20%20%20%20%20B%20--%3E%20J%5B%22npx%20expo%20prebuild%22%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%20K%5B%22iOS%2FAndroid%20Folders%22%5D%0A%20%20%20%20%20%20%20%20K%20--%3E%20E%0A%0A%20%20%20%20%20%20%20%20L%5B%22npx%20expo%20config%22%5D%20--%3E%20M%5B%22View%20Config%22%5D%0A%20%20%20%20%20%20%20%20N%5B%22npx%20expo%20doctor%22%5D%20--%3E%20O%5B%22Diagnose%20Issues%22%5D%0A%20%20%20%20%20%20%20%20P%5B%22npx%20expo%20upgrade%22%5D%20--%3E%20Q%5B%22Update%20SDK%22%5D%0A%20%20%20%20%20%20%20%20R%5B%22npx%20expo%20customize%22%5D%20--%3E%20S%5B%22Config%20Templates%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20C%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20E%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20H%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20N%20fill%3A%23ffe6cc%2Cstroke%3A%23333|View Mermaid Diagram]
 
-    subgraph "Development Workflow"
-        B --> C["npx expo start"]
-        C --> D["Metro Server"]
-        D --> D1["Press i: iOS Simulator"]
-        D --> D2["Press a: Android Emulator"]
-        D --> D3["Scan QR: Expo Go"]
-
-        B --> E["npx expo run:ios/android"]
-        E --> F["Native Build"]
-        F --> G["Simulator/Emulator"]
-
-        H["npx expo install pkg"] --> I["Compatible Dependencies"]
-        I --> C
-        I --> E
-    end
-
-    subgraph "Configuration & Maintenance"
-        B --> J["npx expo prebuild"]
-        J --> K["iOS/Android Folders"]
-        K --> E
-
-        L["npx expo config"] --> M["View Config"]
-        N["npx expo doctor"] --> O["Diagnose Issues"]
-        P["npx expo upgrade"] --> Q["Update SDK"]
-        R["npx expo customize"] --> S["Config Templates"]
-    end
-
-    style C fill:#d4f1f9,stroke:#333
-    style E fill:#d4f1f9,stroke:#333
-    style H fill:#d4f1f9,stroke:#333
-    style N fill:#ffe6cc,stroke:#333
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the relationships between key Expo CLI commands and their roles in the development workflow. The blue highlighted commands ({{start}}, {{run:ios}}/{{run:android}}, and {{install}}) are your core daily development commands, while the orange {{doctor}} command is especially useful for troubleshooting issues.
 

@@ -160,20 +160,9 @@ h2. Diagram: `useEffect` Lifecycle
 
 The following diagram illustrates the basic flow of the `useEffect` Hook in relation to component rendering and updates.
 
-{mermaid}
-graph TD
-    A[Component Renders / Re-renders] --> B{Has Dependency Array?};
-    B -- No (or omitted) --> C[Run Effect After Every Render];
-    B -- Yes --> D{Dependencies Changed (Object.is)?};
-    C --> E{Effect Returns Cleanup Function?};
-    D -- No --> F[Do Nothing];
-    D -- Yes --> G[PREV: Run Previous Effect's Cleanup (if any)];
-    G --> H[Run Current Effect Function];
-    H --> E;
-    E -- Yes --> I[Register Cleanup for Unmount / Next Effect Run];
-    E -- No --> J[No Cleanup Registered for this Effect];
-    K[Component Unmounts] --> L[Run All Registered Cleanups for this Component];
-{mermaid}
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BComponent%20Renders%20%2F%20Re-renders%5D%20--%3E%20B%7BHas%20Dependency%20Array%3F%7D%3B%0A%20%20%20%20B%20--%20No%20(or%20omitted)%20--%3E%20C%5BRun%20Effect%20After%20Every%20Render%5D%3B%0A%20%20%20%20B%20--%20Yes%20--%3E%20D%7BDependencies%20Changed%20(Object.is)%3F%7D%3B%0A%20%20%20%20C%20--%3E%20E%7BEffect%20Returns%20Cleanup%20Function%3F%7D%3B%0A%20%20%20%20D%20--%20No%20--%3E%20F%5BDo%20Nothing%5D%3B%0A%20%20%20%20D%20--%20Yes%20--%3E%20G%5BPREV%3A%20Run%20Previous%20Effect's%20Cleanup%20(if%20any)%5D%3B%0A%20%20%20%20G%20--%3E%20H%5BRun%20Current%20Effect%20Function%5D%3B%0A%20%20%20%20H%20--%3E%20E%3B%0A%20%20%20%20E%20--%20Yes%20--%3E%20I%5BRegister%20Cleanup%20for%20Unmount%20%2F%20Next%20Effect%20Run%5D%3B%0A%20%20%20%20E%20--%20No%20--%3E%20J%5BNo%20Cleanup%20Registered%20for%20this%20Effect%5D%3B%0A%20%20%20%20K%5BComponent%20Unmounts%5D%20--%3E%20L%5BRun%20All%20Registered%20Cleanups%20for%20this%20Component%5D%3B|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 This diagram shows that when a component mounts, the effect function runs (if dependencies allow or if no array). On subsequent re-renders, React checks if the dependencies (if specified) have changed using `Object.is` comparison. If they have (or if no dependency array), the cleanup function from the previous effect (if one was returned) runs, followed by the new effect function. When the component unmounts, the cleanup function for the last run effect is executed.
 

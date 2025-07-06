@@ -21,24 +21,9 @@ Think of the Bridge as a communication channel connecting the JavaScript Thread 
 
 *Bridge Communication Process Diagram*
 
-{mermaid}
-sequenceDiagram
-    participant JS as JavaScript Thread
-    participant Bridge as Bridge
-    participant Native as Native Thread
+[https://mermaid.ink/svg/sequenceDiagram%0A%20%20%20%20participant%20JS%20as%20JavaScript%20Thread%0A%20%20%20%20participant%20Bridge%20as%20Bridge%0A%20%20%20%20participant%20Native%20as%20Native%20Thread%0A%0A%20%20%20%20JS-%3E%3EBridge%3A%201.%20Send%20message%20(e.g.%2C%20%22Create%20Button%22)%0A%20%20%20%20Note%20over%20Bridge%3A%202.%20Serialize%20to%20JSON%0A%20%20%20%20Bridge-%3E%3ENative%3A%203.%20Transfer%20serialized%20message%0A%20%20%20%20Note%20over%20Native%3A%204.%20Deserialize%20JSON%0A%20%20%20%20Native-%3E%3ENative%3A%205.%20Execute%20native%20UI%20operation%0A%0A%20%20%20%20Native-%3E%3EBridge%3A%206.%20Send%20event%20(e.g.%2C%20%22Button%20Pressed%22)%0A%20%20%20%20Note%20over%20Bridge%3A%207.%20Serialize%20to%20JSON%0A%20%20%20%20Bridge-%3E%3EJS%3A%208.%20Transfer%20serialized%20event%0A%20%20%20%20Note%20over%20JS%3A%209.%20Deserialize%20JSON%0A%20%20%20%20JS-%3E%3EJS%3A%2010.%20Update%20React%20state|View Mermaid Diagram]
 
-    JS->>Bridge: 1. Send message (e.g., "Create Button")
-    Note over Bridge: 2. Serialize to JSON
-    Bridge->>Native: 3. Transfer serialized message
-    Note over Native: 4. Deserialize JSON
-    Native->>Native: 5. Execute native UI operation
-
-    Native->>Bridge: 6. Send event (e.g., "Button Pressed")
-    Note over Bridge: 7. Serialize to JSON
-    Bridge->>JS: 8. Transfer serialized event
-    Note over JS: 9. Deserialize JSON
-    JS->>JS: 10. Update React state
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the key steps in Bridge communication. When a React component, such as a button in our SpeedyMeds app for refilling a prescription, needs to be rendered, the request originates in the JavaScript Thread (1). This request, containing information like the button's properties and style, is sent to the Bridge. The Bridge then serializes this data into a JSON string (2) to prepare it for inter-process communication. This serialized message is subsequently transferred to the Native Thread (3). On the native side, the message is deserialized from JSON back into a format the native platform can understand (4), and then the corresponding native UI operation is executed to create and display the actual button on the screen (5).
 

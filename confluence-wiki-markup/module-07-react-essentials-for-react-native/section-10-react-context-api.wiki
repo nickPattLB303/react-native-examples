@@ -154,27 +154,9 @@ h2. Diagram: Context API Flow
 
 The following diagram illustrates how data flows from a `Provider` to a consuming component via the Context API.
 
-{mermaid}
-graph TD
-    A[App Component]
-    A -- Manages State (e.g., theme) --> A;
-    A -- Wraps children with --> P[ThemeContext.Provider value={theme, toggleTheme}];
-    P --> B[Child Component 1];
-    P --> C[Child Component 2 (Nested)];
-    C --> D[Grandchild Component (ThemedButton)];
-    D -- Uses useContext(ThemeContext) --> ThemeVal[Accesses theme & toggleTheme];
-    ThemeVal -.-> D; % Updates Grandchild UI
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BApp%20Component%5D%0A%20%20%20%20A%20--%20Manages%20State%20(e.g.%2C%20theme)%20--%3E%20A%3B%0A%20%20%20%20A%20--%20Wraps%20children%20with%20--%3E%20P%5BThemeContext.Provider%20value%3D%7Btheme%2C%20toggleTheme%7D%5D%3B%0A%20%20%20%20P%20--%3E%20B%5BChild%20Component%201%5D%3B%0A%20%20%20%20P%20--%3E%20C%5BChild%20Component%202%20(Nested)%5D%3B%0A%20%20%20%20C%20--%3E%20D%5BGrandchild%20Component%20(ThemedButton)%5D%3B%0A%20%20%20%20D%20--%20Uses%20useContext(ThemeContext)%20--%3E%20ThemeVal%5BAccesses%20theme%20%26%20toggleTheme%5D%3B%0A%20%20%20%20ThemeVal%20-.-%3E%20D%3B%20%25%20Updates%20Grandchild%20UI%0A%0A%20%20%20%20subgraph%20Consumer%0A%20%20%20%20%20%20%20%20D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20ProviderTree%0A%20%20%20%20%20%20%20%20P%0A%20%20%20%20%20%20%20%20B%0A%20%20%20%20%20%20%20%20C%0A%20%20%20%20end|View Mermaid Diagram]
 
-    subgraph Consumer
-        D
-    end
-
-    subgraph ProviderTree
-        P
-        B
-        C
-    end
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
 

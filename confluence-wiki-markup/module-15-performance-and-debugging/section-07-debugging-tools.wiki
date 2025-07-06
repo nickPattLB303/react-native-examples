@@ -10,33 +10,9 @@ h2. Conceptual Content: Your Debugging Arsenal
 
 React Native development leverages a combination of browser-based tools, standalone applications, and in-app menus to provide a comprehensive debugging experience.
 
-{mermaid}
-flowchart TD
-    A[Identify Issue<br>in SpeedyMeds App] --> B{Issue Type?}
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BIdentify%20Issue%3Cbr%3Ein%20SpeedyMeds%20App%5D%20--%3E%20B%7BIssue%20Type%3F%7D%0A%0A%20%20%20%20B%20--%3E%7CUI%2FLayout%7C%20C%5BFlipper%3Cbr%3ELayout%20Inspector%5D%0A%20%20%20%20B%20--%3E%7CNetwork%7C%20D%5BFlipper%2FRN%20Debugger%3Cbr%3ENetwork%20Inspector%5D%0A%20%20%20%20B%20--%3E%7CJS%20Code%2FLogic%7C%20E%5BJavaScript%3Cbr%3EDebugging%20Tools%5D%0A%20%20%20%20B%20--%3E%7CPerformance%7C%20F%5BProfilers%3Cbr%3ESee%20Section%202%5D%0A%20%20%20%20B%20--%3E%7CCrash%2FException%7C%20G%5BError%20Handling%3Cbr%3ESee%20Section%208%5D%0A%0A%20%20%20%20E%20--%3E%20H%7BPreferred%3Cbr%3EWorkflow%3F%7D%0A%20%20%20%20H%20--%3E%7CIn-Editor%7C%20I%5BVS%20Code%3Cbr%3EReact%20Native%20Tools%5D%0A%20%20%20%20H%20--%3E%7CStandalone%20App%7C%20J%5BReact%20Native%3Cbr%3EDebugger%5D%0A%20%20%20%20H%20--%3E%7CBrowser%20Based%7C%20K%5BChrome%20DevTools%3Cbr%3Evia%20Metro%5D%0A%0A%20%20%20%20C%20--%3E%20L%5BFix%20and%20Verify%5D%0A%20%20%20%20D%20--%3E%20L%0A%20%20%20%20I%20--%3E%20L%0A%20%20%20%20J%20--%3E%20L%0A%20%20%20%20K%20--%3E%20L%0A%20%20%20%20F%20--%3E%20L%0A%20%20%20%20G%20--%3E%20L%0A%0A%20%20%20%20style%20A%20fill%3A%23f9f%2Cstroke%3A%23333%0A%20%20%20%20style%20B%20fill%3A%23bbf%2Cstroke%3A%23333%0A%20%20%20%20style%20L%20fill%3A%23bfb%2Cstroke%3A%23333|View Mermaid Diagram]
 
-    B -->|UI/Layout| C[Flipper<br>Layout Inspector]
-    B -->|Network| D[Flipper/RN Debugger<br>Network Inspector]
-    B -->|JS Code/Logic| E[JavaScript<br>Debugging Tools]
-    B -->|Performance| F[Profilers<br>See Section 2]
-    B -->|Crash/Exception| G[Error Handling<br>See Section 8]
-
-    E --> H{Preferred<br>Workflow?}
-    H -->|In-Editor| I[VS Code<br>React Native Tools]
-    H -->|Standalone App| J[React Native<br>Debugger]
-    H -->|Browser Based| K[Chrome DevTools<br>via Metro]
-
-    C --> L[Fix and Verify]
-    D --> L
-    I --> L
-    J --> L
-    K --> L
-    F --> L
-    G --> L
-
-    style A fill:#f9f,stroke:#333
-    style B fill:#bbf,stroke:#333
-    style L fill:#bfb,stroke:#333
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the typical debugging workflow for a React Native application like SpeedyMeds. Depending on the type of issue you're facing, you'll choose different debugging tools from your arsenal. The workflow generally follows a pattern of identifying the issue, selecting the appropriate tool, and then using that tool to fix and verify the solution.
 

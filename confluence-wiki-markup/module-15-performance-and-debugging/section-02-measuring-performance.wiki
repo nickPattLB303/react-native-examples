@@ -114,19 +114,9 @@ h2. Performance Measurement Workflow
 
 The general workflow for measuring and addressing performance issues can be visualized as follows:
 
-{mermaid}
-graph TD
-    A[Identify Potential Bottleneck] --> B(Choose Appropriate Tool);
-    B --> C{Record Performance Data};
-    C -- User Interaction --> C;
-    C --> D[Analyze Results];
-    D -- Identify Root Cause --> E[Implement Optimization];
-    E --> F[Re-measure Performance];
-    F -- Issue Resolved? --> G((Done));
-    F -- No --> D;
-    A -- User Reports Slowness --> A;
-    A -- Code Review/Static Analysis --> A;
-{mermaid}
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BIdentify%20Potential%20Bottleneck%5D%20--%3E%20B(Choose%20Appropriate%20Tool)%3B%0A%20%20%20%20B%20--%3E%20C%7BRecord%20Performance%20Data%7D%3B%0A%20%20%20%20C%20--%20User%20Interaction%20--%3E%20C%3B%0A%20%20%20%20C%20--%3E%20D%5BAnalyze%20Results%5D%3B%0A%20%20%20%20D%20--%20Identify%20Root%20Cause%20--%3E%20E%5BImplement%20Optimization%5D%3B%0A%20%20%20%20E%20--%3E%20F%5BRe-measure%20Performance%5D%3B%0A%20%20%20%20F%20--%20Issue%20Resolved%3F%20--%3E%20G((Done))%3B%0A%20%20%20%20F%20--%20No%20--%3E%20D%3B%0A%20%20%20%20A%20--%20User%20Reports%20Slowness%20--%3E%20A%3B%0A%20%20%20%20A%20--%20Code%20Review%2FStatic%20Analysis%20--%3E%20A%3B|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the iterative process of performance tuning. You start by identifying a potential issue (e.g., slow rendering of the SpeedyMeds medication list). Then, you select a tool like the React DevTools Profiler. You record data while interacting with the problematic feature. After analyzing the results (e.g., noticing list items re-render unnecessarily), you implement an optimization (e.g., using `React.memo` on list items). Finally, you re-measure to confirm the improvement. If the issue persists or new ones arise, you repeat the analysis and optimization steps.
 

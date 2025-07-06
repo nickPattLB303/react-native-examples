@@ -12,29 +12,9 @@ React Native Reanimated (often referred to as "Reanimated") is a library that al
 
 The primary goal of Reanimated is to perform animation logic entirely on the UI thread. This means that even if your JavaScript thread is busy with complex calculations or rendering, your animations remain fluid. It achieves this through a JSI (JavaScript Interface) based architecture, enabling more direct and synchronous communication between the JavaScript and native environments.
 
-{mermaid}
-graph TD
-    subgraph "JavaScript Thread"
-        A[React Component] -->|1. Create| B[useSharedValue]
-        A -->|2. Define| C[useAnimatedStyle]
-        A -->|3. Trigger Animation| D[Animation Start]
-        D -->|"4. Update Shared Value<br>(e.g., withTiming, withSpring)"| B
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22JavaScript%20Thread%22%0A%20%20%20%20%20%20%20%20A%5BReact%20Component%5D%20--%3E%7C1.%20Create%7C%20B%5BuseSharedValue%5D%0A%20%20%20%20%20%20%20%20A%20--%3E%7C2.%20Define%7C%20C%5BuseAnimatedStyle%5D%0A%20%20%20%20%20%20%20%20A%20--%3E%7C3.%20Trigger%20Animation%7C%20D%5BAnimation%20Start%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%7C%224.%20Update%20Shared%20Value%3Cbr%3E(e.g.%2C%20withTiming%2C%20withSpring)%22%7C%20B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22UI%20Thread%20(Native)%22%0A%20%20%20%20%20%20%20%20E%5BSharedValue%5D%20%3C--%3E%7C%225.%20Synchronous%3Cbr%3EAccess%20via%20JSI%22%7C%20B%0A%20%20%20%20%20%20%20%20E%20--%3E%7C6.%20Value%20Changed%7C%20F%5BStyle%20Recalculation%5D%0A%20%20%20%20%20%20%20%20F%20--%3E%7C7.%20Update%7C%20G%5BNative%20View%20Props%5D%0A%20%20%20%20%20%20%20%20G%20--%3E%7C8.%20Render%7C%20H%5BScreen%20Update%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Animation%20State%20Flow%22%0A%20%20%20%20%20%20%20%20I%5BInitial%20State%5D%20--%3E%7CAnimation%20Begins%7C%20J%5BTransition%20State%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%7C%22Frame-by-Frame%3Cbr%3EUpdates%22%7C%20J%0A%20%20%20%20%20%20%20%20J%20--%3E%7CAnimation%20Complete%7C%20K%5BFinal%20State%5D%0A%20%20%20%20%20%20%20%20K%20--%3E%7C%22New%20Animation%3Cbr%3ETriggered%22%7C%20J%0A%20%20%20%20end|View Mermaid Diagram]
 
-    subgraph "UI Thread (Native)"
-        E[SharedValue] <-->|"5. Synchronous<br>Access via JSI"| B
-        E -->|6. Value Changed| F[Style Recalculation]
-        F -->|7. Update| G[Native View Props]
-        G -->|8. Render| H[Screen Update]
-    end
-
-    subgraph "Animation State Flow"
-        I[Initial State] -->|Animation Begins| J[Transition State]
-        J -->|"Frame-by-Frame<br>Updates"| J
-        J -->|Animation Complete| K[Final State]
-        K -->|"New Animation<br>Triggered"| J
-    end
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates how React Native Reanimated achieves smooth animations by executing the animation logic directly on the UI thread. For SpeedyMeds, this means medication reminder animations, prescription status transitions, and interactive UI elements can all run smoothly even when the app is performing other intensive tasks like data fetching or complex calculations. The key insight is that once the animation is initiated, all the frame-by-frame updates happen on the native side without needing to communicate back and forth with JavaScript for each frame.
 

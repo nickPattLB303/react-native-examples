@@ -344,30 +344,9 @@ function Timer() {
 // const myTimer = new Timer(); // Uncomment to run the timer
 {code}
 
-{mermaid}
-graph TD
-    subgraph OuterScope ["Outer Scope (e.g., a Method or Global space)"]
-        direction LR
-        OuterContextValue{{this = outerContextValue}}
-        AF["Arrow Function: const fn = () => this;"] -- Inherits & captures --> OuterContextValue
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20OuterScope%20%5B%22Outer%20Scope%20(e.g.%2C%20a%20Method%20or%20Global%20space)%22%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20OuterContextValue%7B%7Bthis%20%3D%20outerContextValue%7D%7D%0A%20%20%20%20%20%20%20%20AF%5B%22Arrow%20Function%3A%20const%20fn%20%3D%20()%20%3D%3E%20this%3B%22%5D%20--%20Inherits%20%26%20captures%20--%3E%20OuterContextValue%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20InvocationTypes%20%5BRegular%20Function%20Invocation%20Types%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20RF%5B%22Regular%20Function%3A%20function%20fn()%20%7B%20this%20%7D%22%5D%0A%20%20%20%20%20%20%20%20CallSite1%5B%22Standalone%3A%20fn()%22%5D%20--%3E%20IC1%5B%22this%20%3D%20global%2Fundefined%20(strict)%22%5D%0A%20%20%20%20%20%20%20%20CallSite2%5B%22Method%3A%20obj.fn()%22%5D%20--%3E%20IC2%5B%22this%20%3D%20obj%22%5D%0A%20%20%20%20%20%20%20%20CallSite3%5B%22Constructor%3A%20new%20fn()%22%5D%20--%3E%20IC3%5B%22this%20%3D%20new%20instance%22%5D%0A%20%20%20%20%20%20%20%20CallSite4%5B%22Explicit%3A%20fn.call(ctx)%22%5D%20--%3E%20IC4%5B%22this%20%3D%20ctx%22%5D%0A%20%20%20%20%20%20%20%20RF%20-.-%3E%20CallSite1%0A%20%20%20%20%20%20%20%20RF%20-.-%3E%20CallSite2%0A%20%20%20%20%20%20%20%20RF%20-.-%3E%20CallSite3%0A%20%20%20%20%20%20%20%20RF%20-.-%3E%20CallSite4%0A%20%20%20%20end%0A%0A%20%20%20%20style%20AF%20fill%3A%23D5F5E3%2Cstroke%3A%232ECC71%0A%20%20%20%20style%20RF%20fill%3A%23EBF5FB%2Cstroke%3A%233498DB|View Mermaid Diagram]
 
-    subgraph InvocationTypes [Regular Function Invocation Types]
-        direction TB
-        RF["Regular Function: function fn() { this }"]
-        CallSite1["Standalone: fn()"] --> IC1["this = global/undefined (strict)"]
-        CallSite2["Method: obj.fn()"] --> IC2["this = obj"]
-        CallSite3["Constructor: new fn()"] --> IC3["this = new instance"]
-        CallSite4["Explicit: fn.call(ctx)"] --> IC4["this = ctx"]
-        RF -.-> CallSite1
-        RF -.-> CallSite2
-        RF -.-> CallSite3
-        RF -.-> CallSite4
-    end
-
-    style AF fill:#D5F5E3,stroke:#2ECC71
-    style RF fill:#EBF5FB,stroke:#3498DB
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram contrasts how `this` is determined in arrow functions versus regular functions. For an *Arrow Function* (green box), its `this` value is lexically inherited from its surrounding scope (Outer Scope) when it's defined. It captures the `this` of its enclosing context (shown as `outerContextValue`) and retains it, regardless of how or where the arrow function is later invoked. This provides a predictable `this`. In contrast, a *Regular Function* (blue box) has a dynamic `this`. Its `this` value is determined at call time based on how it's invoked: a standalone call might set `this` to the global object (or `undefined` in strict mode); a method call (`obj.fn()`) sets `this` to `obj`; a constructor call (`new fn()`) sets `this` to the newly created instance; and explicit binding (`fn.call(ctx)`) sets `this` to `ctx`. This dynamic nature is powerful but can be a source of errors if not carefully managed, a problem largely solved by arrow functions for many common use cases like callbacks.
 

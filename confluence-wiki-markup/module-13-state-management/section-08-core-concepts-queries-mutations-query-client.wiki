@@ -172,23 +172,9 @@ TanStack Query will automatically re-fetch if `medicationId` changes.
 
 h3. `useQuery` Data Flow Diagram
 
-{mermaid}
-graph TD
-    A[Component Mounts / Query Key Changes] --> B{useQuery Hook Called};
-    B -- Query Key --> C{Cache Lookup};
-    C -- Data Found & Fresh --> D[Return Cached Data Instantly];
-    C -- Data Found & Stale --> E{Return Cached Data Instantly};
-    E --> F[Background: queryFn Execution];
-    C -- No Data Found --> G{Mark as isLoading/isPending};
-    G --> F;
-    F -- Promise Resolves --> H{Cache Data};
-    H --> I[Return Fresh Data];
-    F -- Promise Rejects --> J[Mark as isError, Store Error];
-    J --> K[Return Error Information];
-    I --> L[Component Re-renders with Data];
-    K --> L;
-    D --> L;
-{mermaid}
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BComponent%20Mounts%20%2F%20Query%20Key%20Changes%5D%20--%3E%20B%7BuseQuery%20Hook%20Called%7D%3B%0A%20%20%20%20B%20--%20Query%20Key%20--%3E%20C%7BCache%20Lookup%7D%3B%0A%20%20%20%20C%20--%20Data%20Found%20%26%20Fresh%20--%3E%20D%5BReturn%20Cached%20Data%20Instantly%5D%3B%0A%20%20%20%20C%20--%20Data%20Found%20%26%20Stale%20--%3E%20E%7BReturn%20Cached%20Data%20Instantly%7D%3B%0A%20%20%20%20E%20--%3E%20F%5BBackground%3A%20queryFn%20Execution%5D%3B%0A%20%20%20%20C%20--%20No%20Data%20Found%20--%3E%20G%7BMark%20as%20isLoading%2FisPending%7D%3B%0A%20%20%20%20G%20--%3E%20F%3B%0A%20%20%20%20F%20--%20Promise%20Resolves%20--%3E%20H%7BCache%20Data%7D%3B%0A%20%20%20%20H%20--%3E%20I%5BReturn%20Fresh%20Data%5D%3B%0A%20%20%20%20F%20--%20Promise%20Rejects%20--%3E%20J%5BMark%20as%20isError%2C%20Store%20Error%5D%3B%0A%20%20%20%20J%20--%3E%20K%5BReturn%20Error%20Information%5D%3B%0A%20%20%20%20I%20--%3E%20L%5BComponent%20Re-renders%20with%20Data%5D%3B%0A%20%20%20%20K%20--%3E%20L%3B%0A%20%20%20%20D%20--%3E%20L%3B|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 *Explanation of the Diagram:*
 

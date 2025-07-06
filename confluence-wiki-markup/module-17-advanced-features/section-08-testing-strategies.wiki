@@ -61,32 +61,9 @@ h2. React Native Testing Library (RNTL)
 
 Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
 
-{mermaid}
-graph TD
-    subgraph "Test Execution Flow"
-        A[Jest Test Runner] -->|1. Load Tests| B[Test Files]
-        B -->|2. Setup Environment| C[Test Environment<br>jsdom/node]
-        C -->|3. Before All Hooks| D[Global Setup]
-        D -->|4. For Each Test| E[Test Suite - describe()]
-        E -->|5. Before Each Hooks| F[Test Setup]
-        F -->|6. Run Test| G[Test Case - it()/test()]
-        G -->|7. Assertions| H{Pass/Fail?}
-        H -->|Pass| I[Report Success]
-        H -->|Fail| J[Report Error]
-        I -->|8. After Each Hooks| K[Test Cleanup]
-        J -->|8. After Each Hooks| K
-        K -->|9. Next Test or| F
-        K -->|10. All Tests Done| L[After All Hooks]
-        L -->|11. Finalize| M[Test Summary Report]
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Test%20Execution%20Flow%22%0A%20%20%20%20%20%20%20%20A%5BJest%20Test%20Runner%5D%20--%3E%7C1.%20Load%20Tests%7C%20B%5BTest%20Files%5D%0A%20%20%20%20%20%20%20%20B%20--%3E%7C2.%20Setup%20Environment%7C%20C%5BTest%20Environment%3Cbr%3Ejsdom%2Fnode%5D%0A%20%20%20%20%20%20%20%20C%20--%3E%7C3.%20Before%20All%20Hooks%7C%20D%5BGlobal%20Setup%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%7C4.%20For%20Each%20Test%7C%20E%5BTest%20Suite%20-%20describe()%5D%0A%20%20%20%20%20%20%20%20E%20--%3E%7C5.%20Before%20Each%20Hooks%7C%20F%5BTest%20Setup%5D%0A%20%20%20%20%20%20%20%20F%20--%3E%7C6.%20Run%20Test%7C%20G%5BTest%20Case%20-%20it()%2Ftest()%5D%0A%20%20%20%20%20%20%20%20G%20--%3E%7C7.%20Assertions%7C%20H%7BPass%2FFail%3F%7D%0A%20%20%20%20%20%20%20%20H%20--%3E%7CPass%7C%20I%5BReport%20Success%5D%0A%20%20%20%20%20%20%20%20H%20--%3E%7CFail%7C%20J%5BReport%20Error%5D%0A%20%20%20%20%20%20%20%20I%20--%3E%7C8.%20After%20Each%20Hooks%7C%20K%5BTest%20Cleanup%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%7C8.%20After%20Each%20Hooks%7C%20K%0A%20%20%20%20%20%20%20%20K%20--%3E%7C9.%20Next%20Test%20or%7C%20F%0A%20%20%20%20%20%20%20%20K%20--%3E%7C10.%20All%20Tests%20Done%7C%20L%5BAfter%20All%20Hooks%5D%0A%20%20%20%20%20%20%20%20L%20--%3E%7C11.%20Finalize%7C%20M%5BTest%20Summary%20Report%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Component%20Test%20Example%22%0A%20%20%20%20%20%20%20%20AA%5BRNTL%20render()%5D%20--%3E%7C1.%20Create%7C%20BB%5BVirtual%20Component%20Tree%5D%0A%20%20%20%20%20%20%20%20BB%20--%3E%7C2.%20Query%7C%20CC%5BFind%20Elements%3Cbr%3EgetByText%2FgetByTestId%5D%0A%20%20%20%20%20%20%20%20CC%20--%3E%7C3.%20Simulate%7C%20DD%5BUser%20Interactions%3Cbr%3EfireEvent.press()%5D%0A%20%20%20%20%20%20%20%20DD%20--%3E%7C4.%20Assert%7C%20EE%5BVerify%20Component%20State%3Cbr%3Eexpect(...).toBeTrue()%5D%0A%20%20%20%20end|View Mermaid Diagram]
 
-    subgraph "Component Test Example"
-        AA[RNTL render()] -->|1. Create| BB[Virtual Component Tree]
-        BB -->|2. Query| CC[Find Elements<br>getByText/getByTestId]
-        CC -->|3. Simulate| DD[User Interactions<br>fireEvent.press()]
-        DD -->|4. Assert| EE[Verify Component State<br>expect(...).toBeTrue()]
-    end
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram shows the test execution flow when running Jest tests for React Native applications. For SpeedyMeds, this process would be applied when testing medication-related components, prescription formatting utilities, and other app functionality. The first section demonstrates Jest's execution sequence from loading test files through running individual test cases to producing a final report. The second section illustrates how a typical component test using React Native Testing Library would operate, focusing on rendering components, finding elements, simulating user interactions, and making assertions about the component's behavior.
 

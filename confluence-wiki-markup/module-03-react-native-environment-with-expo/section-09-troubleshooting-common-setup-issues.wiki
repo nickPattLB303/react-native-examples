@@ -31,40 +31,9 @@ When faced with an error or unexpected behavior, adopt a systematic approach:
 
 h2. Troubleshooting Flow Diagram
 
-{mermaid}
-flowchart TD
-    A[Encounter Error] --> B{Error Type?}
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BEncounter%20Error%5D%20--%3E%20B%7BError%20Type%3F%7D%0A%0A%20%20%20%20B%20--%3E%7CCommand%20Not%20Found%7C%20C%5BInstallation%20Issue%5D%0A%20%20%20%20C%20--%3E%20C1%5BVerify%20installation%5D%0A%20%20%20%20C1%20--%3E%20C2%5BCheck%20PATH%20environment%5D%0A%20%20%20%20C2%20--%3E%20C3%5BReinstall%20if%20needed%5D%0A%0A%20%20%20%20B%20--%3E%7CBuild%20Error%7C%20D%5BNative%20Build%20Issue%5D%0A%20%20%20%20D%20--%3E%20D1%5BCheck%20native%20tools%5D%0A%20%20%20%20D1%20--%3E%20D2%5BClear%20caches%5D%0A%20%20%20%20D2%20--%3E%20D3%5BRun%20prebuild%20with%20clean%20flag%5D%0A%0A%20%20%20%20B%20--%3E%7CRuntime%20Error%7C%20E%5BApp%20Execution%20Issue%5D%0A%20%20%20%20E%20--%3E%20E1%5BCheck%20logs%20for%20specifics%5D%0A%20%20%20%20E1%20--%3E%20E2%5BTry%20with%20--clear%20flag%5D%0A%20%20%20%20E2%20--%3E%20E3%5BVerify%20package%20versions%5D%0A%0A%20%20%20%20B%20--%3E%7CConnection%20Error%7C%20F%5BNetworking%20Issue%5D%0A%20%20%20%20F%20--%3E%20F1%5BVerify%20same%20network%5D%0A%20%20%20%20F1%20--%3E%20F2%5BCheck%20firewall%20settings%5D%0A%20%20%20%20F2%20--%3E%20F3%5BTry%20tunnel%20mode%5D%0A%0A%20%20%20%20G%5BGeneral%20Solutions%5D%20--%3E%20G1%5BClear%20node_modules%5D%0A%20%20%20%20G%20--%3E%20G2%5BClear%20caches%5D%0A%20%20%20%20G%20--%3E%20G3%5BReinstall%20dependencies%5D%0A%20%20%20%20G%20--%3E%20G4%5BRestart%20services%2Fdevice%5D%0A%0A%20%20%20%20C3%20-.-%3E%20G%0A%20%20%20%20D3%20-.-%3E%20G%0A%20%20%20%20E3%20-.-%3E%20G%0A%20%20%20%20F3%20-.-%3E%20G|View Mermaid Diagram]
 
-    B -->|Command Not Found| C[Installation Issue]
-    C --> C1[Verify installation]
-    C1 --> C2[Check PATH environment]
-    C2 --> C3[Reinstall if needed]
-
-    B -->|Build Error| D[Native Build Issue]
-    D --> D1[Check native tools]
-    D1 --> D2[Clear caches]
-    D2 --> D3[Run prebuild with clean flag]
-
-    B -->|Runtime Error| E[App Execution Issue]
-    E --> E1[Check logs for specifics]
-    E1 --> E2[Try with --clear flag]
-    E2 --> E3[Verify package versions]
-
-    B -->|Connection Error| F[Networking Issue]
-    F --> F1[Verify same network]
-    F1 --> F2[Check firewall settings]
-    F2 --> F3[Try tunnel mode]
-
-    G[General Solutions] --> G1[Clear node_modules]
-    G --> G2[Clear caches]
-    G --> G3[Reinstall dependencies]
-    G --> G4[Restart services/device]
-
-    C3 -.-> G
-    D3 -.-> G
-    E3 -.-> G
-    F3 -.-> G
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates a systematic approach to troubleshooting common React Native and Expo setup issues. By identifying the general category of your error first, you can follow a specific branch of solutions. If those don't work, there are general solutions (clearing caches, reinstalling dependencies, etc.) that often resolve many issues regardless of their type.
 

@@ -10,27 +10,9 @@ h2. Conceptual Content: The Pillars of Render Optimization
 
 React's default behavior is to re-render a component whenever its parent re-renders, or when its own props or state change. While this ensures UI consistency, it can lead to performance degradation if components re-render without actual changes to their output. We can use {{React.memo}}, {{useCallback}}, and {{useMemo}} to fine-tune this behavior.
 
-{mermaid}
-flowchart TD
-    A[Parent Component Renders] --> B{Props Changed?}
-    B -->|Yes| C[Re-render Child]
-    B -->|No| D{Child is Wrapped in React.memo?}
-    D -->|No| C
-    D -->|Yes| E[Skip Re-render]
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BParent%20Component%20Renders%5D%20--%3E%20B%7BProps%20Changed%3F%7D%0A%20%20%20%20B%20--%3E%7CYes%7C%20C%5BRe-render%20Child%5D%0A%20%20%20%20B%20--%3E%7CNo%7C%20D%7BChild%20is%20Wrapped%20in%20React.memo%3F%7D%0A%20%20%20%20D%20--%3E%7CNo%7C%20C%0A%20%20%20%20D%20--%3E%7CYes%7C%20E%5BSkip%20Re-render%5D%0A%0A%20%20%20%20F%5BState%20Changes%5D%20--%3E%20C%0A%20%20%20%20G%5BContext%20Changes%5D%20--%3E%20C%0A%0A%20%20%20%20H%5BParent%20Passes%20Function%20Prop%5D%20--%3E%20I%7BuseCallback%3F%7D%0A%20%20%20%20I%20--%3E%7CNo%7C%20J%5BNew%20Function%20Reference%5D%0A%20%20%20%20I%20--%3E%7CYes%7C%20K%5BMemoized%20Function%5D%0A%20%20%20%20J%20--%3E%20B%0A%20%20%20%20K%20--%3E%20B%0A%0A%20%20%20%20L%5BExpensive%20Calculation%5D%20--%3E%20M%7BuseMemo%3F%7D%0A%20%20%20%20M%20--%3E%7CNo%7C%20N%5BRecalculate%20Every%20Render%5D%0A%20%20%20%20M%20--%3E%7CYes%7C%20O%5BUse%20Cached%20Value%5D|View Mermaid Diagram]
 
-    F[State Changes] --> C
-    G[Context Changes] --> C
-
-    H[Parent Passes Function Prop] --> I{useCallback?}
-    I -->|No| J[New Function Reference]
-    I -->|Yes| K[Memoized Function]
-    J --> B
-    K --> B
-
-    L[Expensive Calculation] --> M{useMemo?}
-    M -->|No| N[Recalculate Every Render]
-    M -->|Yes| O[Use Cached Value]
-{mermaid}
+_(Interactive diagram - click to view)_
 
 The diagram above illustrates how React's rendering cycle works, and how optimization techniques like {{React.memo}}, {{useCallback}}, and {{useMemo}} intercept this cycle to prevent unnecessary work. When a parent component renders, React normally re-renders all its children. However, {{React.memo}} can prevent this by comparing props, {{useCallback}} can maintain stable function references, and {{useMemo}} can cache expensive calculations.
 

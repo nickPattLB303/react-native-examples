@@ -44,42 +44,9 @@ SpeedyMedsPrototype/
 └── tsconfig.json            # Config: TypeScript compiler configuration
 {code}
 
-{mermaid}
-graph TD
-    ProjectRoot[SpeedyMedsPrototype/]
-    ProjectRoot --> DotExpo[.expo/]
-    ProjectRoot --> DotGit[.git/]
-    ProjectRoot --> DotGitignore[gitignore]
-    ProjectRoot --> AppDir[app/]
-    AppDir --> AppLayout[_layout.tsx]
-    AppDir --> AppIndex[index.tsx]
-    AppDir --> AppModal[modal.tsx]
-    AppDir --> AppTabsDir[(tabs)/]
-    AppTabsDir --> TabsLayout[_layout.tsx]
-    AppTabsDir --> TabsIndex[index.tsx]
-    AppTabsDir --> TabsTwo[two.tsx]
-    ProjectRoot --> AssetsDir[assets/]
-    AssetsDir --> ImagesDir[images/]
-    AssetsDir --> FontsDir[fonts/]
-    ProjectRoot --> ComponentsDir[components/]
-    ProjectRoot --> ConstantsDir[constants/]
-    ProjectRoot --> NodeModules[node_modules/]
-    ProjectRoot --> PublicDir[public/]
-    ProjectRoot --> AppJson[app.json]
-    ProjectRoot --> BabelConfig[babel.config.js]
-    ProjectRoot --> EASJson[eas.json]
-    ProjectRoot --> MetroConfig[metro.config.js]
-    ProjectRoot --> PackageJson[package.json]
-    ProjectRoot --> LockFile[yarn.lock / package-lock.json]
-    ProjectRoot --> TsconfigJson[tsconfig.json]
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20ProjectRoot%5BSpeedyMedsPrototype%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotExpo%5B.expo%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotGit%5B.git%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotGitignore%5Bgitignore%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AppDir%5Bapp%2F%5D%0A%20%20%20%20AppDir%20--%3E%20AppLayout%5B_layout.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppIndex%5Bindex.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppModal%5Bmodal.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppTabsDir%5B(tabs)%2F%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsLayout%5B_layout.tsx%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsIndex%5Bindex.tsx%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsTwo%5Btwo.tsx%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AssetsDir%5Bassets%2F%5D%0A%20%20%20%20AssetsDir%20--%3E%20ImagesDir%5Bimages%2F%5D%0A%20%20%20%20AssetsDir%20--%3E%20FontsDir%5Bfonts%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20ComponentsDir%5Bcomponents%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20ConstantsDir%5Bconstants%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20NodeModules%5Bnode_modules%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20PublicDir%5Bpublic%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AppJson%5Bapp.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20BabelConfig%5Bbabel.config.js%5D%0A%20%20%20%20ProjectRoot%20--%3E%20EASJson%5Beas.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20MetroConfig%5Bmetro.config.js%5D%0A%20%20%20%20ProjectRoot%20--%3E%20PackageJson%5Bpackage.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20LockFile%5Byarn.lock%20%2F%20package-lock.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20TsconfigJson%5Btsconfig.json%5D%0A%0A%20%20%20%20style%20DotExpo%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20DotGit%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20NodeModules%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20LockFile%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20EASJson%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20MetroConfig%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A1px|View Mermaid Diagram]
 
-    style DotExpo fill:#eee,stroke:#333,stroke-width:1px
-    style DotGit fill:#eee,stroke:#333,stroke-width:1px
-    style NodeModules fill:#eee,stroke:#333,stroke-width:1px
-    style LockFile fill:#eee,stroke:#333,stroke-width:1px
-    style EASJson fill:#f9f,stroke:#333,stroke-width:1px
-    style MetroConfig fill:#f9f,stroke:#333,stroke-width:1px
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the standard folder hierarchy within a new Expo project created using the default Expo Router template (`SpeedyMedsPrototype`). Key directories like `app/` (containing screen routes and layouts), `assets/`, `components/`, and `constants/` hold your source code and resources. Configuration files such as `app.json`, `package.json`, and `tsconfig.json` define project settings and dependencies. Other folders like `.expo/`, `.git/`, and `node_modules/` are typically generated or managed by development tools and version control. Understanding the roles of these core directories, especially the `app/` directory for routing and `app.json` for configuration, is fundamental to navigating and building your application effectively with Expo.
 

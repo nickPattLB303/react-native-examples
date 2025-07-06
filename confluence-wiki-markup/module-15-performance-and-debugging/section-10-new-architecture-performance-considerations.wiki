@@ -77,19 +77,9 @@ h3. Visualizing the Change: Bridge vs. JSI
 
 This diagram illustrates the conceptual difference in communication:
 
-{mermaid}
-graph TD
-    subgraph Legacy Architecture
-        JS[JavaScript Thread] -- JSON Messages --> Bridge[Async Bridge] -- JSON Messages --> Native[Native Modules/UI]
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20Legacy%20Architecture%0A%20%20%20%20%20%20%20%20JS%5BJavaScript%20Thread%5D%20--%20JSON%20Messages%20--%3E%20Bridge%5BAsync%20Bridge%5D%20--%20JSON%20Messages%20--%3E%20Native%5BNative%20Modules%2FUI%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20New%20Architecture%0A%20%20%20%20%20%20%20%20JS_NA%5BJavaScript%20Thread%5D%20%3C%3D%3D%20JSI%20%3D%3D%3E%20Native_NA%5BNative%20Modules%2FUI%20(Fabric%2FTurboModules)%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20Bridge%20fill%3A%23f96%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20JSI%20fill%3A%239cf%2Cstroke%3A%23333%2Cstroke-width%3A2px|View Mermaid Diagram]
 
-    subgraph New Architecture
-        JS_NA[JavaScript Thread] <== JSI ==> Native_NA[Native Modules/UI (Fabric/TurboModules)]
-    end
-
-    style Bridge fill:#f96,stroke:#333,stroke-width:2px
-    style JSI fill:#9cf,stroke:#333,stroke-width:2px
-{mermaid}
+_(Interactive diagram - click to view)_
 
 *Description:* In the Legacy Architecture, the JavaScript thread communicates with Native Modules and UI by sending JSON messages asynchronously across the Bridge. This introduces latency and serialization overhead. In the New Architecture, the JavaScript thread, through JSI (JavaScript Interface), can communicate more directly and often synchronously with Native Modules (TurboModules) and the UI rendering system (Fabric). This direct path reduces overhead and improves responsiveness.
 

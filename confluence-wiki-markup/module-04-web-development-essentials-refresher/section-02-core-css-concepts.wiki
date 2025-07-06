@@ -116,15 +116,9 @@ h2. Margin
 
 Transparent space around the border, separating the element from others.
 
-{mermaid}
-graph LR
-    subgraph Box Model
-        direction LR
-        A[Margin] --> B(Border);
-        B --> C(Padding);
-        C --> D[Content];
-    end
-{mermaid}
+[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20Box%20Model%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20A%5BMargin%5D%20--%3E%20B(Border)%3B%0A%20%20%20%20%20%20%20%20B%20--%3E%20C(Padding)%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%20D%5BContent%5D%3B%0A%20%20%20%20end|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 _Diagram: Conceptual layout of the CSS Box Model._ This diagram visually represents the layered structure of the CSS Box Model, which is fundamental to understanding how elements occupy space and how spacing is controlled on a webpage. At the very center is the *Content* area, which holds the actual text, images, or other media. Surrounding the content is the *Padding*, an optional transparent space that provides an inner cushion between the content and its border. The *Border* itself is a line that can be styled with various thicknesses, styles (solid, dashed, etc.), and colors, defining the visible edge of the element. Finally, the outermost layer is the *Margin*, another transparent space that separates this element from any adjacent elements on the page. Understanding these distinct layers—Content, Padding, Border, and Margin—and how their sizes interact (especially with the {{box-sizing}} property) is critical for precise layout and spacing in web design, a concept that also heavily influences React Native styling.
 

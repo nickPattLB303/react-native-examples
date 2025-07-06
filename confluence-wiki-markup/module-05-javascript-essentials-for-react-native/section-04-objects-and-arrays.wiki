@@ -197,30 +197,9 @@ console.log(combinedMedInfo);
 
 {code}
 
-{mermaid}
-graph TD
-    subgraph OriginalData [Original Data Structures]
-        direction LR
-        Obj["Object: const O = { a: 1, b: 2, c: 3 }"]
-        Arr["Array: const A = [10, 20, 30]"]
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20OriginalData%20%5BOriginal%20Data%20Structures%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20Obj%5B%22Object%3A%20const%20O%20%3D%20%7B%20a%3A%201%2C%20b%3A%202%2C%20c%3A%203%20%7D%22%5D%0A%20%20%20%20%20%20%20%20Arr%5B%22Array%3A%20const%20A%20%3D%20%5B10%2C%2020%2C%2030%5D%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20DestructuringOps%20%5BDestructuring%20Assignment%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20ObjDestructure%5B%22Object%20Destructuring%3A%20const%20%7B%20a%2C%20b%20%7D%20%3D%20O%3B%22%5D%20--%3E%20Res1%5B%22Variables%20Created%3A%20a%20%3D%201%2C%20b%20%3D%202%22%5D%0A%20%20%20%20%20%20%20%20ArrDestructure%5B%22Array%20Destructuring%3A%20const%20%5Bx%2C%20y%5D%20%3D%20A%3B%22%5D%20--%3E%20Res2%5B%22Variables%20Created%3A%20x%20%3D%2010%2C%20y%20%3D%2020%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20SpreadOps%20%5BSpread%20Syntax%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20ArrSpread%5B%22In%20Array%20Literal%3A%20const%20newA%20%3D%20%5B...A%2C%2040%5D%3B%22%5D%20--%3E%20Res3%5B%22newA%20%3D%20%5B10%2C%2020%2C%2030%2C%2040%5D%22%5D%0A%20%20%20%20%20%20%20%20ObjSpread%5B%22In%20Object%20Literal%3A%20const%20newO%20%3D%20%7B%20...O%2C%20d%3A%204%20%7D%3B%22%5D%20--%3E%20Res4%5B%22newO%20%3D%20%7B%20a%3A1%2C%20b%3A2%2C%20c%3A3%2C%20d%3A4%20%7D%22%5D%0A%20%20%20%20%20%20%20%20FuncSpread%5B%22In%20Function%20Call%3A%20Math.max(...A)%3B%22%5D%20--%3E%20Res5%5B%22Equivalent%20to%3A%20Math.max(10%2C%2020%2C%2030)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20OriginalData%20--%3E%20DestructuringOps%0A%20%20%20%20OriginalData%20--%3E%20SpreadOps|View Mermaid Diagram]
 
-    subgraph DestructuringOps [Destructuring Assignment]
-        direction TB
-        ObjDestructure["Object Destructuring: const { a, b } = O;"] --> Res1["Variables Created: a = 1, b = 2"]
-        ArrDestructure["Array Destructuring: const [x, y] = A;"] --> Res2["Variables Created: x = 10, y = 20"]
-    end
-
-    subgraph SpreadOps [Spread Syntax]
-        direction TB
-        ArrSpread["In Array Literal: const newA = [...A, 40];"] --> Res3["newA = [10, 20, 30, 40]"]
-        ObjSpread["In Object Literal: const newO = { ...O, d: 4 };"] --> Res4["newO = { a:1, b:2, c:3, d:4 }"]
-        FuncSpread["In Function Call: Math.max(...A);"] --> Res5["Equivalent to: Math.max(10, 20, 30)"]
-    end
-
-    OriginalData --> DestructuringOps
-    OriginalData --> SpreadOps
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates how destructuring and spread syntax work with JavaScript objects and arrays. *Destructuring Assignment* (middle section) allows you to unpack values from arrays or properties from objects into distinct variables. For instance, `const { a, b } = O;` extracts `a` and `b` from object `O`. Similarly, `const [x, y] = A;` extracts the first two elements from array `A`. *Spread Syntax* (right section) expands iterables (like arrays) into individual elements or object properties into key-value pairs. It can be used to create new arrays (`[...A, 40]`), new objects (`{ ...O, d: 4 }`), or to pass array elements as individual arguments to functions (`Math.max(...A)`). Both features provide more concise and readable ways to work with data structures.
 

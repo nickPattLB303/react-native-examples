@@ -196,9 +196,9 @@ class MarkdownToConfluenceConverter {
         codeBlockLanguage = fenceMatch[2] || 'text';
         codeBlockBuffer = [];
         
-        // Handle mermaid diagrams specially
+        // Handle mermaid diagrams specially - convert to mermaid.ink link
         if (codeBlockLanguage === 'mermaid') {
-          result.push(`{mermaid}`);
+          // Don't add opening tag here, we'll process the content first
         } else {
           // Map common languages to Confluence equivalents
           const languageMap = {
@@ -232,13 +232,14 @@ class MarkdownToConfluenceConverter {
         // Ending a code block
         inCodeBlock = false;
         
-        // Add the code content
-        result.push(...codeBlockBuffer);
-        
-        // Close the code block
         if (codeBlockLanguage === 'mermaid') {
-          result.push(`{mermaid}`);
+          // Convert mermaid diagram to mermaid.ink link
+          const mermaidCode = codeBlockBuffer.join('\n');
+          const mermaidLink = this.convertMermaidToLink(mermaidCode);
+          result.push(mermaidLink);
         } else {
+          // Add the code content and close the code block
+          result.push(...codeBlockBuffer);
           result.push(`{code}`);
         }
         
@@ -257,15 +258,32 @@ class MarkdownToConfluenceConverter {
     
     // Handle any remaining code block buffer (unclosed code blocks)
     if (inCodeBlock && codeBlockBuffer.length > 0) {
-      result.push(...codeBlockBuffer);
       if (codeBlockLanguage === 'mermaid') {
-        result.push(`{mermaid}`);
+        const mermaidCode = codeBlockBuffer.join('\n');
+        const mermaidLink = this.convertMermaidToLink(mermaidCode);
+        result.push(mermaidLink);
       } else {
+        result.push(...codeBlockBuffer);
         result.push(`{code}`);
       }
     }
     
     return result.join('\n');
+  }
+
+  /**
+   * Convert mermaid diagram code to a mermaid.ink link
+   */
+  convertMermaidToLink(mermaidCode) {
+    // Clean up the mermaid code
+    const cleanCode = mermaidCode.trim();
+    
+    // URL encode the mermaid code for mermaid.ink
+    const encodedCode = encodeURIComponent(cleanCode);
+    const mermaidUrl = `https://mermaid.ink/svg/${encodedCode}`;
+    
+    // Create a Confluence link with description
+    return `[${mermaidUrl}|View Mermaid Diagram]\n\n_(Interactive diagram - click to view)_`;
   }
 
   /**
@@ -289,7 +307,7 @@ class MarkdownToConfluenceConverter {
       
       // Only convert backticks if we're not in a code block
       if (!inCodeBlock) {
-        // Convert single backticks to Confluence monospace
+        // Convert single backticks to Confluence monospace with double braces
         // Avoid converting backticks that are already part of formatted text
         lines[i] = line.replace(/(?<!{)`([^`\n]+)`(?!})/g, '{{$1}}');
       }

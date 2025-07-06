@@ -85,13 +85,9 @@ h2. Comparing frameworks
 The table below summarizes how React Native compares to other popular mobile development approaches.
 
 ||Approach||Language(s)||UI Rendering||Code Sharing||Performance||Typical Use Cases||
-{mermaid}
-flowchart TD
-    A[JavaScript/TypeScript Code] --> B[React Native Bridge]
-    B --> C[iOS Native Components]
-    B --> D[Android Native Components]
-    C & D --> E[Mobile Device UI]
-{mermaid}
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BJavaScript%2FTypeScript%20Code%5D%20--%3E%20B%5BReact%20Native%20Bridge%5D%0A%20%20%20%20B%20--%3E%20C%5BiOS%20Native%20Components%5D%0A%20%20%20%20B%20--%3E%20D%5BAndroid%20Native%20Components%5D%0A%20%20%20%20C%20%26%20D%20--%3E%20E%5BMobile%20Device%20UI%5D|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 The flowchart above provides a simplified visual representation of React Native's core architectural concept. It starts with the 'JavaScript/TypeScript Code,' which is where developers write their application logic and define UI using React principles. This code doesn't run directly on the mobile device's native environment in the same way Swift or Kotlin code does. Instead, it communicates through an intermediary layer, labeled here as the 'React Native Bridge' (representing both the older Bridge architecture and the newer JSI – JavaScript Interface).
 

@@ -23,22 +23,9 @@ Instead of sending JSON messages over a bridge, JSI allows JavaScript to directl
 # *Efficient Data Transfer (Avoiding Serialization):* For many common data types (numbers, booleans, strings), JSI allows more direct manipulation and transfer between JavaScript and C++ compared to the legacy bridge's mandatory serialization/deserialization to/from JSON strings. While complex objects might still require some form of conversion, bypassing JSON for frequent, simple calls significantly reduces overhead.
 # *Asynchronous Operations Still Supported:* While JSI allows for synchronous calls, complex or long-running native operations will still be executed asynchronously to avoid blocking the JavaScript thread. In these cases, JavaScript would typically invoke a JSI method that returns a Promise.
 
-{mermaid}
-sequenceDiagram
-    participant JS as JavaScript Thread
-    participant JSI_Cpp as JSI (C++ Layer)
-    participant Native as Native Code (Swift/Kotlin)
+[https://mermaid.ink/svg/sequenceDiagram%0A%20%20%20%20participant%20JS%20as%20JavaScript%20Thread%0A%20%20%20%20participant%20JSI_Cpp%20as%20JSI%20(C%2B%2B%20Layer)%0A%20%20%20%20participant%20Native%20as%20Native%20Code%20(Swift%2FKotlin)%0A%0A%20%20%20%20Note%20over%20JS%2CNative%3A%20Legacy%20Bridge%20Communication%20(Asynchronous)%0A%20%20%20%20JS-%3E%3ENative%3A%20Send%20Message%20(JSON)%0A%20%20%20%20Native--%3E%3EJS%3A%20Send%20Callback%2FPromise%20(JSON)%0A%0A%20%20%20%20Note%20over%20JS%2CNative%3A%20JSI%20Communication%20(Synchronous%20Example)%0A%20%20%20%20JS-%3E%3EJSI_Cpp%3A%20Direct%20method%20call%20on%20C%2B%2B%20Host%20Object%0A%20%20%20%20JSI_Cpp-%3E%3ENative%3A%20Invoke%20corresponding%20native%20method%0A%20%20%20%20Native--%3E%3EJSI_Cpp%3A%20Return%20result%0A%20%20%20%20JSI_Cpp--%3E%3EJS%3A%20Return%20result%20directly|View Mermaid Diagram]
 
-    Note over JS,Native: Legacy Bridge Communication (Asynchronous)
-    JS->>Native: Send Message (JSON)
-    Native-->>JS: Send Callback/Promise (JSON)
-
-    Note over JS,Native: JSI Communication (Synchronous Example)
-    JS->>JSI_Cpp: Direct method call on C++ Host Object
-    JSI_Cpp->>Native: Invoke corresponding native method
-    Native-->>JSI_Cpp: Return result
-    JSI_Cpp-->>JS: Return result directly
-{mermaid}
+_(Interactive diagram - click to view)_
 
 *Diagram Description:*
 The diagram above illustrates the conceptual difference between the legacy bridge communication and JSI-based communication in React Native.

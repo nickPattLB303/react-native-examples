@@ -27,19 +27,9 @@ If you make any of these native-level changes, a new binary build must be create
 # If an update (a new JS bundle and assets) is found, it's downloaded in the background.
 # The next time the app is launched (or based on your configuration), it loads this new update.
 
-{mermaid}
-graph LR;
-    A[Developer Publishes Update via EAS CLI] --> B(EAS Update Service);
-    C(User's App on Device) -->|1 Checks for Update| B;
-    B -->|2 Update Available?| C;
-    C -->|3 Downloads Update| B;
-    C -- Upon Next Launch --> D[App Reloads with New JS & Assets];
+[https://mermaid.ink/svg/graph%20LR%3B%0A%20%20%20%20A%5BDeveloper%20Publishes%20Update%20via%20EAS%20CLI%5D%20--%3E%20B(EAS%20Update%20Service)%3B%0A%20%20%20%20C(User's%20App%20on%20Device)%20--%3E%7C1%20Checks%20for%20Update%7C%20B%3B%0A%20%20%20%20B%20--%3E%7C2%20Update%20Available%3F%7C%20C%3B%0A%20%20%20%20C%20--%3E%7C3%20Downloads%20Update%7C%20B%3B%0A%20%20%20%20C%20--%20Upon%20Next%20Launch%20--%3E%20D%5BApp%20Reloads%20with%20New%20JS%20%26%20Assets%5D%3B%0A%0A%20%20%20%20style%20A%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20B%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20C%20fill%3A%23cfc%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20D%20fill%3A%23cfc%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B|View Mermaid Diagram]
 
-    style A fill:#ccf,stroke:#333,stroke-width:2px;
-    style B fill:#f9f,stroke:#333,stroke-width:2px;
-    style C fill:#cfc,stroke:#333,stroke-width:2px;
-    style D fill:#cfc,stroke:#333,stroke-width:2px;
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram shows the basic flow of an Over-the-Air update. The developer uses EAS CLI to publish an update to the EAS Update Service. When a user opens their app, the app checks with the EAS Update Service. If a new update is available for the app's specific configuration (like its channel and runtime version), the app downloads it. On the subsequent launch (or as configured), the app reloads, applying the new JavaScript bundle and assets. This allows for rapid iteration and bug fixing directly to users.
 

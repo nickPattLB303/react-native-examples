@@ -28,17 +28,9 @@ h2. Simplified Maintenance
 
 Updates and bug fixes can often be implemented once and deployed everywhere, streamlining the maintenance effort.
 
-{mermaid}
-flowchart TD
-    A[Native iOS App] -- Separate codebase --> C[App Store]
-    B[Native Android App] -- Separate codebase --> D[Google Play]
-    A & B -- Duplicated effort, cost, inconsistency --> E[Developer Frustration]
-    E -- Early Solutions --> F[PhoneGap / Xamarin]
-    F -- Performance & UX trade-offs --> G[Modern Frameworks]
-    G -- Single codebase --> C
-    G -- Single codebase --> D
-    G[Modern Frameworks React Native, Flutter]
-{mermaid}
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BNative%20iOS%20App%5D%20--%20Separate%20codebase%20--%3E%20C%5BApp%20Store%5D%0A%20%20%20%20B%5BNative%20Android%20App%5D%20--%20Separate%20codebase%20--%3E%20D%5BGoogle%20Play%5D%0A%20%20%20%20A%20%26%20B%20--%20Duplicated%20effort%2C%20cost%2C%20inconsistency%20--%3E%20E%5BDeveloper%20Frustration%5D%0A%20%20%20%20E%20--%20Early%20Solutions%20--%3E%20F%5BPhoneGap%20%2F%20Xamarin%5D%0A%20%20%20%20F%20--%20Performance%20%26%20UX%20trade-offs%20--%3E%20G%5BModern%20Frameworks%5D%0A%20%20%20%20G%20--%20Single%20codebase%20--%3E%20C%0A%20%20%20%20G%20--%20Single%20codebase%20--%3E%20D%0A%20%20%20%20G%5BModern%20Frameworks%20React%20Native%2C%20Flutter%5D|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 The flowchart diagram above illustrates the conceptual journey and motivations behind the shift towards modern cross-platform development frameworks. It begins by depicting the traditional native development model: a 'Native iOS App' and a 'Native Android App', each requiring a 'Separate codebase' to reach their respective 'App Store' and 'Google Play' distribution channels. This bifurcated approach often leads to 'Duplicated effort, cost, inconsistency,' culminating in 'Developer Frustration.'
 

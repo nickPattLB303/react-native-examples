@@ -59,33 +59,9 @@ Understanding Expo Go requires recognizing two distinct parts: ([https://docs.ex
 
 React Native acts as the bridge, allowing your JavaScript code running inside the Expo Go shell to communicate with the native modules already compiled into that specific version of the Expo Go app.
 
-{mermaid}
-graph TD
-    subgraph "Your Computer"
-        A[Your React Native Code] --> B[Metro Bundler]
-        B --> C{Development Server}
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Your%20Computer%22%0A%20%20%20%20%20%20%20%20A%5BYour%20React%20Native%20Code%5D%20--%3E%20B%5BMetro%20Bundler%5D%0A%20%20%20%20%20%20%20%20B%20--%3E%20C%7BDevelopment%20Server%7D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Mobile%20Device%22%0A%20%20%20%20%20%20%20%20D%5BExpo%20Go%20App%5D%20--%3E%20E%5BReact%20Native%20Runtime%5D%0A%20%20%20%20%20%20%20%20E%20--%3E%20F%5BPre-bundled%20Native%20Modules%5D%0A%20%20%20%20end%0A%0A%20%20%20%20C%20--%3E%7CJavaScript%20Bundle%7C%20D%0A%0A%20%20%20%20subgraph%20%22Development%20Build%22%0A%20%20%20%20%20%20%20%20G%5BYour%20React%20Native%20Code%5D%20--%3E%20H%5BMetro%20Bundler%5D%0A%20%20%20%20%20%20%20%20H%20--%3E%20I%7BDevelopment%20Server%7D%0A%20%20%20%20%20%20%20%20I%20--%3E%7CJavaScript%20Bundle%7C%20J%5BYour%20Custom%20App%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%20K%5BReact%20Native%20Runtime%5D%0A%20%20%20%20%20%20%20%20K%20--%3E%20L%5BCustom%20Native%20Modules%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20D%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20J%20fill%3A%23ffe6cc%2Cstroke%3A%23333%0A%20%20%20%20style%20F%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20L%20fill%3A%23ffe6cc%2Cstroke%3A%23333|View Mermaid Diagram]
 
-    subgraph "Mobile Device"
-        D[Expo Go App] --> E[React Native Runtime]
-        E --> F[Pre-bundled Native Modules]
-    end
-
-    C -->|JavaScript Bundle| D
-
-    subgraph "Development Build"
-        G[Your React Native Code] --> H[Metro Bundler]
-        H --> I{Development Server}
-        I -->|JavaScript Bundle| J[Your Custom App]
-        J --> K[React Native Runtime]
-        K --> L[Custom Native Modules]
-    end
-
-    style D fill:#d4f1f9,stroke:#333
-    style J fill:#ffe6cc,stroke:#333
-    style F fill:#d4f1f9,stroke:#333
-    style L fill:#ffe6cc,stroke:#333
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram visually contrasts two primary development workflows facilitated by Expo.
 # *Expo Go Workflow* (represented in the top part of the diagram): In this model, your React Native JavaScript code (A) is processed by the Metro bundler (B) and served via a development server (C) to the Expo Go application (D) running on a mobile device or simulator. Expo Go (D) contains its own React Native runtime (E) and a pre-defined, fixed set of native modules (F). This workflow is excellent for rapid iteration when custom native code is not needed.

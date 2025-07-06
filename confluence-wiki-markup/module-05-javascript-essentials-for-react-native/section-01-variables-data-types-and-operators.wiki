@@ -203,28 +203,9 @@ h2. Block Scope
 
 Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
 
-{mermaid}
-graph TD
-    subgraph GlobalScope [Global Scope]
-        direction LR
-        GV[Global Variable let, const, var]
-    end
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20GlobalScope%20%5BGlobal%20Scope%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20GV%5BGlobal%20Variable%20let%2C%20const%2C%20var%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20FunctionScope%20%5BFunction%20Scope%20function%20exampleFunc%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20FV%5BFunction%20Variable%20var%2C%20let%2C%20const%20inside%20function%5D%0A%20%20%20%20%20%20%20%20subgraph%20BlockScope1%20%5BBlock%20Scope%20e.g.%2C%20if%20block%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20BV1%5BBlock%20Variable%20let%2C%20const%20inside%20if%5D%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20subgraph%20BlockScope2%20%5BBlock%20Scope%20e.g.%2C%20for%20loop%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20BV2%5BBlock%20Variable%20let%2C%20const%20inside%20for%5D%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20FV%20--%3E%20BlockScope1%0A%20%20%20%20%20%20%20%20FV%20--%3E%20BlockScope2%0A%20%20%20%20end%0A%0A%20%20%20%20GlobalScope%20--%3E%20FunctionScope|View Mermaid Diagram]
 
-    subgraph FunctionScope [Function Scope function exampleFunc]
-        direction TB
-        FV[Function Variable var, let, const inside function]
-        subgraph BlockScope1 [Block Scope e.g., if block]
-            BV1[Block Variable let, const inside if]
-        end
-        subgraph BlockScope2 [Block Scope e.g., for loop]
-            BV2[Block Variable let, const inside for]
-        end
-        FV --> BlockScope1
-        FV --> BlockScope2
-    end
-
-    GlobalScope --> FunctionScope
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the hierarchy of scopes in JavaScript. The outermost is the *Global Scope*, where variables declared outside any function or block reside. Variables like `GV` (Global Variable) defined here are accessible throughout your program, though `let` and `const` don't attach to the global object (e.g., `window`) like `var` does in non-module scripts. Nested within, a *Function Scope* is created by functions like `exampleFunc()`. Variables such as `FV` (Function Variable) declared directly inside a function are accessible anywhere within that function. Further nested are *Block Scopes*, created by constructs like `if` statements or `for` loops (represented by `BlockScope1` and `BlockScope2`). Variables like `BV1` or `BV2`, declared with `let` or `const` within these blocks, are only accessible within that specific block. This structured scoping helps manage variable lifetimes and prevent naming conflicts, making code more modular and predictable. Understanding how these scopes interact is fundamental to writing robust JavaScript.
 

@@ -190,18 +190,9 @@ To further clarify the roles of various parts of the React Native world, the fol
 |TanStack Query|Server state management (data fetching, caching)|
 |Zustand|Client state management|
 |Metro|JavaScript bundler for React Native|
-{mermaid}
-flowchart TD
-    A[React Native Core] --> B[Expo]
-    A --> C[Community Libraries]
-    B --> D[Expo CLI]
-    C --> E[React Navigation]
-    C --> F[React Native Paper]
-    C --> G[Zustand]
-    C --> H[TanStack Query]
-    A --> I[Metro Bundler]
-    B --> J[Expo Go]
-{mermaid}
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BReact%20Native%20Core%5D%20--%3E%20B%5BExpo%5D%0A%20%20%20%20A%20--%3E%20C%5BCommunity%20Libraries%5D%0A%20%20%20%20B%20--%3E%20D%5BExpo%20CLI%5D%0A%20%20%20%20C%20--%3E%20E%5BReact%20Navigation%5D%0A%20%20%20%20C%20--%3E%20F%5BReact%20Native%20Paper%5D%0A%20%20%20%20C%20--%3E%20G%5BZustand%5D%0A%20%20%20%20C%20--%3E%20H%5BTanStack%20Query%5D%0A%20%20%20%20A%20--%3E%20I%5BMetro%20Bundler%5D%0A%20%20%20%20B%20--%3E%20J%5BExpo%20Go%5D|View Mermaid Diagram]
+
+_(Interactive diagram - click to view)_
 
 The flowchart diagram provided illustrates the interconnected nature of the React Native ecosystem. At its heart is 'React Native Core,' the foundational framework. Branching from this, 'Expo' is shown as a significant platform that builds upon and extends the core, offering tools like the 'Expo CLI' and services like 'Expo Go' for development and testing.
 

@@ -59,44 +59,9 @@ The Expo CLI offers many commands, acting as a high-level interface and orchestr
 
 h2. Command Relationship Visualization
 
-{mermaid}
-graph TD
-    A[Your Terminal] --> B{Command Type?}
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BYour%20Terminal%5D%20--%3E%20B%7BCommand%20Type%3F%7D%0A%0A%20%20%20%20%25%25%20Package%20Management%20Path%0A%20%20%20%20B%20--%3E%7CPackage%20Management%7C%20C%5Bnpm%2Fyarn%2Fpnpm%5D%0A%20%20%20%20C%20--%3E%20D%5BDependency%20Management%5D%0A%20%20%20%20D%20--%3E%20D1%5Bnpm%20install%20pkg%5D%0A%20%20%20%20D%20--%3E%20D2%5Byarn%20add%20pkg%5D%0A%20%20%20%20D%20--%3E%20D3%5Bnpm%20uninstall%20pkg%5D%0A%20%20%20%20D%20--%3E%20D4%5Byarn%20remove%20pkg%5D%0A%0A%20%20%20%20%25%25%20Script%20Execution%20Path%0A%20%20%20%20B%20--%3E%7CScript%20Execution%7C%20E%5Bnpm%20run%20%2F%20yarn%5D%0A%20%20%20%20E%20--%3E%20F%5BRuns%20scripts%20from%20package.json%5D%0A%20%20%20%20F%20--%3E%20F1%5Bnpm%20run%20start%5D%0A%20%20%20%20F%20--%3E%20F2%5Byarn%20ios%5D%0A%20%20%20%20F1%20--%3E%20G%5BInternally%20calls%3A%20expo%20start%5D%0A%20%20%20%20F2%20--%3E%20H%5BInternally%20calls%3A%20expo%20run%3Aios%5D%0A%0A%20%20%20%20%25%25%20Direct%20Expo%20CLI%20Path%0A%20%20%20%20B%20--%3E%7CExpo%20CLI%7C%20I%5Bnpx%20expo%5D%0A%20%20%20%20I%20--%3E%20J%5BDirect%20CLI%20access%5D%0A%20%20%20%20J%20--%3E%20J1%5Bnpx%20expo%20start%5D%0A%20%20%20%20J%20--%3E%20J2%5Bnpx%20expo%20run%3Aios%5D%0A%20%20%20%20J%20--%3E%20J3%5Bnpx%20expo%20install%20pkg%5D%0A%20%20%20%20J%20--%3E%20J4%5Bnpx%20expo%20doctor%5D%0A%0A%20%20%20%20%25%25%20Specialized%20Install%20Path%0A%20%20%20%20B%20--%3E%7CAdding%20Dependencies%7C%20K%5Bnpx%20expo%20install%5D%0A%20%20%20%20K%20--%3E%20L%5BVersion%20compatibility%20check%5D%0A%20%20%20%20L%20--%3E%20M%5BInstalls%20exact%20compatible%20versions%5D%0A%0A%20%20%20%20style%20J3%20fill%3A%23f9d5e5%2Cstroke%3A%23333%0A%20%20%20%20style%20K%20fill%3A%23f9d5e5%2Cstroke%3A%23333%0A%20%20%20%20style%20L%20fill%3A%23f9d5e5%2Cstroke%3A%23333%0A%20%20%20%20style%20M%20fill%3A%23f9d5e5%2Cstroke%3A%23333|View Mermaid Diagram]
 
-    %% Package Management Path
-    B -->|Package Management| C[npm/yarn/pnpm]
-    C --> D[Dependency Management]
-    D --> D1[npm install pkg]
-    D --> D2[yarn add pkg]
-    D --> D3[npm uninstall pkg]
-    D --> D4[yarn remove pkg]
-
-    %% Script Execution Path
-    B -->|Script Execution| E[npm run / yarn]
-    E --> F[Runs scripts from package.json]
-    F --> F1[npm run start]
-    F --> F2[yarn ios]
-    F1 --> G[Internally calls: expo start]
-    F2 --> H[Internally calls: expo run:ios]
-
-    %% Direct Expo CLI Path
-    B -->|Expo CLI| I[npx expo]
-    I --> J[Direct CLI access]
-    J --> J1[npx expo start]
-    J --> J2[npx expo run:ios]
-    J --> J3[npx expo install pkg]
-    J --> J4[npx expo doctor]
-
-    %% Specialized Install Path
-    B -->|Adding Dependencies| K[npx expo install]
-    K --> L[Version compatibility check]
-    L --> M[Installs exact compatible versions]
-
-    style J3 fill:#f9d5e5,stroke:#333
-    style K fill:#f9d5e5,stroke:#333
-    style L fill:#f9d5e5,stroke:#333
-    style M fill:#f9d5e5,stroke:#333
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates the four main ways you interact with your Expo project through the command line:
 # *Package Management*: Using npm/yarn directly for general dependency management

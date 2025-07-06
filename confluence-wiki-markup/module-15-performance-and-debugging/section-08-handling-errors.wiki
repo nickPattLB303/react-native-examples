@@ -32,32 +32,9 @@ h2. SpeedyMeds Example
 
 Wrapping a complex {{PrescriptionDetailCard}} component with an Error Boundary to show a "Could not display details" message if an unexpected error occurs while rendering the card, rather than crashing the entire prescriptions screen.
 
-{mermaid}
-flowchart TD
-    A[App Component] --> B[ErrorBoundary]
-    B --> C[Prescriptions Screen]
-    C --> D[PrescriptionList]
-    D --> E[PrescriptionItem 1]
-    D --> F[PrescriptionItem 2]
-    D --> G[PrescriptionItem 3 - Throws Error]
+[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BApp%20Component%5D%20--%3E%20B%5BErrorBoundary%5D%0A%20%20%20%20B%20--%3E%20C%5BPrescriptions%20Screen%5D%0A%20%20%20%20C%20--%3E%20D%5BPrescriptionList%5D%0A%20%20%20%20D%20--%3E%20E%5BPrescriptionItem%201%5D%0A%20%20%20%20D%20--%3E%20F%5BPrescriptionItem%202%5D%0A%20%20%20%20D%20--%3E%20G%5BPrescriptionItem%203%20-%20Throws%20Error%5D%0A%0A%20%20%20%20subgraph%20Error%20Flow%0A%20%20%20%20G%20--%3E%20H%7BError%20During%20Render%7D%0A%20%20%20%20H%20--%3E%20I%5BError%20Propagates%20Up%5D%0A%20%20%20%20I%20--%3E%20J%7BErrorBoundary%20Catches%7D%0A%20%20%20%20J%20--%3E%7CYes%7C%20K%5B1.%20getDerivedStateFromError%20Called%3Cbr%3E2.%20State%20Updated%20with%20hasError%3Dtrue%5D%0A%20%20%20%20K%20--%3E%20L%5B3.%20ErrorBoundary%20Renders%20Fallback%20UI%3Cbr%3E4.%20componentDidCatch%20Logs%20Error%5D%0A%20%20%20%20J%20--%3E%7CNo%7C%20M%5BApp%20Crashes%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20G%20fill%3A%23f88%2Cstroke%3A%23f00%0A%20%20%20%20style%20H%20fill%3A%23f88%2Cstroke%3A%23f00%0A%20%20%20%20style%20I%20fill%3A%23f88%2Cstroke%3A%23f00%0A%20%20%20%20style%20J%20fill%3A%23ff8%2Cstroke%3A%23aa0%0A%20%20%20%20style%20K%20fill%3A%238f8%2Cstroke%3A%23080%0A%20%20%20%20style%20L%20fill%3A%238f8%2Cstroke%3A%23080%0A%20%20%20%20style%20M%20fill%3A%23f88%2Cstroke%3A%23f00|View Mermaid Diagram]
 
-    subgraph Error Flow
-    G --> H{Error During Render}
-    H --> I[Error Propagates Up]
-    I --> J{ErrorBoundary Catches}
-    J -->|Yes| K[1. getDerivedStateFromError Called<br>2. State Updated with hasError=true]
-    K --> L[3. ErrorBoundary Renders Fallback UI<br>4. componentDidCatch Logs Error]
-    J -->|No| M[App Crashes]
-    end
-
-    style G fill:#f88,stroke:#f00
-    style H fill:#f88,stroke:#f00
-    style I fill:#f88,stroke:#f00
-    style J fill:#ff8,stroke:#aa0
-    style K fill:#8f8,stroke:#080
-    style L fill:#8f8,stroke:#080
-    style M fill:#f88,stroke:#f00
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram illustrates how errors flow through a React Native application with Error Boundaries. When PrescriptionItem 3 throws an error during rendering, the error propagates up the component tree until it reaches the ErrorBoundary. The ErrorBoundary intercepts the error, updates its state, and renders a fallback UI instead of the problematic subtree. Without the ErrorBoundary, the error would continue to propagate up and potentially crash the entire application.
 

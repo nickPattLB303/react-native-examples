@@ -17,46 +17,9 @@ There isn't a direct one-to-one mapping for every HTML element, but common web e
 * {{<a>}}: There's no direct equivalent. Hyperlinks are typically implemented using {{<Text>}} styled appropriately and an {{onPress}} handler using the {{Linking}} module to open URLs.
 * {{<ul>}}, {{<ol>}}, {{<li>}}: Map to {{<FlatList>}} or {{<SectionList>}}. These components are optimized for displaying scrolling lists of data. You render list items using {{<View>}}, {{<Text>}}, and other components within the list's {{renderItem}} prop.
 
-{mermaid}
-graph LR
-    subgraph "HTML Elements"
-        H_DIV["&lt;div&gt;"]
-        H_SPAN["&lt;span&gt;"]
-        H_P["&lt;p&gt;"]
-        H_H1["&lt;h1&gt;-&lt;h6&gt;"]
-        H_TEXT_SPAN["&lt;span&gt; (text)"]
-        H_IMG["&lt;img&gt;"]
-        H_INPUT["&lt;input type='text'&gt;"]
-        H_BUTTON["&lt;button&gt;"]
-        H_A["&lt;a&gt;"]
-        H_LIST["&lt;ul&gt;/&lt;ol&gt;/&lt;li&gt;"]
-    end
+[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20%22HTML%20Elements%22%0A%20%20%20%20%20%20%20%20H_DIV%5B%22%26lt%3Bdiv%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_SPAN%5B%22%26lt%3Bspan%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_P%5B%22%26lt%3Bp%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_H1%5B%22%26lt%3Bh1%26gt%3B-%26lt%3Bh6%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_TEXT_SPAN%5B%22%26lt%3Bspan%26gt%3B%20(text)%22%5D%0A%20%20%20%20%20%20%20%20H_IMG%5B%22%26lt%3Bimg%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_INPUT%5B%22%26lt%3Binput%20type%3D'text'%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_BUTTON%5B%22%26lt%3Bbutton%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_A%5B%22%26lt%3Ba%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_LIST%5B%22%26lt%3Bul%26gt%3B%2F%26lt%3Bol%26gt%3B%2F%26lt%3Bli%26gt%3B%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22React%20Native%20Components%22%0A%20%20%20%20%20%20%20%20RN_VIEW%5B%22%26lt%3BView%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXT%5B%22%26lt%3BText%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_IMAGE%5B%22%26lt%3BImage%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXTINPUT%5B%22%26lt%3BTextInput%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_BUTTON%5B%22%26lt%3BButton%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_PRESSABLE%5B%22%26lt%3BPressable%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXT_PRESS%5B%22%26lt%3BText%26gt%3B%20%2B%20onPress%22%5D%0A%20%20%20%20%20%20%20%20RN_FLATLIST%5B%22%26lt%3BFlatList%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_SECTIONLIST%5B%22%26lt%3BSectionList%26gt%3B%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20H_DIV%20--%3E%20RN_VIEW%0A%20%20%20%20H_SPAN%20--%3E%20RN_VIEW%0A%20%20%20%20H_P%20--%3E%20RN_TEXT%0A%20%20%20%20H_H1%20--%3E%20RN_TEXT%0A%20%20%20%20H_TEXT_SPAN%20--%3E%20RN_TEXT%0A%20%20%20%20H_IMG%20--%3E%20RN_IMAGE%0A%20%20%20%20H_INPUT%20--%3E%20RN_TEXTINPUT%0A%20%20%20%20H_BUTTON%20--%3E%20RN_BUTTON%0A%20%20%20%20H_BUTTON%20--%3E%20RN_PRESSABLE%0A%20%20%20%20H_A%20--%3E%20RN_TEXT_PRESS%0A%20%20%20%20H_LIST%20--%3E%20RN_FLATLIST%0A%20%20%20%20H_LIST%20--%3E%20RN_SECTIONLIST|View Mermaid Diagram]
 
-    subgraph "React Native Components"
-        RN_VIEW["&lt;View&gt;"]
-        RN_TEXT["&lt;Text&gt;"]
-        RN_IMAGE["&lt;Image&gt;"]
-        RN_TEXTINPUT["&lt;TextInput&gt;"]
-        RN_BUTTON["&lt;Button&gt;"]
-        RN_PRESSABLE["&lt;Pressable&gt;"]
-        RN_TEXT_PRESS["&lt;Text&gt; + onPress"]
-        RN_FLATLIST["&lt;FlatList&gt;"]
-        RN_SECTIONLIST["&lt;SectionList&gt;"]
-    end
-
-    H_DIV --> RN_VIEW
-    H_SPAN --> RN_VIEW
-    H_P --> RN_TEXT
-    H_H1 --> RN_TEXT
-    H_TEXT_SPAN --> RN_TEXT
-    H_IMG --> RN_IMAGE
-    H_INPUT --> RN_TEXTINPUT
-    H_BUTTON --> RN_BUTTON
-    H_BUTTON --> RN_PRESSABLE
-    H_A --> RN_TEXT_PRESS
-    H_LIST --> RN_FLATLIST
-    H_LIST --> RN_SECTIONLIST
-{mermaid}
+_(Interactive diagram - click to view)_
 
 This diagram visualizes the conceptual mapping between common HTML elements and their React Native component counterparts. On the left are HTML elements grouped by their purpose (containers, text, media, etc.). The arrows show how these map to React Native Core Components on the right. Notice how several HTML elements can map to a single React Native component (e.g., multiple text-based HTML elements map to {{<Text>}}, and lists map to either {{<FlatList>}} or {{<SectionList>}}). This illustrates how React Native consolidates functionality into a more focused set of components while still providing the capabilities needed to build sophisticated mobile UIs. The mapping is conceptual rather than exact, reflecting how web developers can translate their mental models when moving to React Native development.
 

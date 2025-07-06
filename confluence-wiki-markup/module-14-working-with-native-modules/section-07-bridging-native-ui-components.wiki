@@ -64,32 +64,9 @@ h3. Native ViewManager interfaces/protocols
 Ensures the native ViewManager implementation conforms to the spec, guaranteeing type consistency for props and event handling.
 # *Fabric Renderer:* This is the core of the new rendering system. It uses JSI to communicate between JavaScript and the C++ Shadow Tree. When React updates a component, Fabric can efficiently update the corresponding C++ Shadow Node. Fabric then calculates the layout (using Yoga, also in C++) and orchestrates the creation and updating of the actual native views on the main thread based on the information in the Shadow Tree.
 
-{mermaid}
-    graph TD
-        A[React JS Component Tree] -->|Updates| B(Fabric Bridge - JSI);
-        B --> C{C++ Shadow Tree};
-        C -->|Layout via Yoga| C;
-        C -->|Diffing & Batching| D[Native View Manager Platform Specific];
-        D --> E[Native UI View iOS/Android];
+[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20%20%20%20%20A%5BReact%20JS%20Component%20Tree%5D%20--%3E%7CUpdates%7C%20B(Fabric%20Bridge%20-%20JSI)%3B%0A%20%20%20%20%20%20%20%20B%20--%3E%20C%7BC%2B%2B%20Shadow%20Tree%7D%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%7CLayout%20via%20Yoga%7C%20C%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%7CDiffing%20%26%20Batching%7C%20D%5BNative%20View%20Manager%20Platform%20Specific%5D%3B%0A%20%20%20%20%20%20%20%20D%20--%3E%20E%5BNative%20UI%20View%20iOS%2FAndroid%5D%3B%0A%0A%20%20%20%20%20%20%20%20subgraph%20JavaScript%20Realm%0A%20%20%20%20%20%20%20%20%20%20%20%20A%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20subgraph%20Bridging%20%26%20Core%20Logic%20C%2B%2B%0A%20%20%20%20%20%20%20%20%20%20%20%20B%0A%20%20%20%20%20%20%20%20%20%20%20%20C%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20subgraph%20Native%20Realm%0A%20%20%20%20%20%20%20%20%20%20%20%20D%0A%20%20%20%20%20%20%20%20%20%20%20%20E%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20style%20A%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20%20%20%20%20style%20E%20fill%3A%23cfc%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20%20%20%20%20style%20C%20fill%3A%23fcf%2Cstroke%3A%23333%2Cstroke-width%3A2px|View Mermaid Diagram]
 
-        subgraph JavaScript Realm
-            A
-        end
-
-        subgraph Bridging & Core Logic C++
-            B
-            C
-        end
-
-        subgraph Native Realm
-            D
-            E
-        end
-
-        style A fill:#ccf,stroke:#333,stroke-width:2px
-        style E fill:#cfc,stroke:#333,stroke-width:2px
-        style C fill:#fcf,stroke:#333,stroke-width:2px
-{mermaid}
+_(Interactive diagram - click to view)_
 
     This diagram illustrates the high-level architecture of Fabric, React Native's new rendering system. When your React application's JavaScript component tree updates, these changes are communicated via the Fabric Bridge (which utilizes JSI) to the C++ Shadow Tree. The Shadow Tree is a lightweight representation of the UI, existing entirely in C++. It's responsible for managing the layout (using the Yoga layout engine, also in C++) and calculating what has changed (diffing).
 
