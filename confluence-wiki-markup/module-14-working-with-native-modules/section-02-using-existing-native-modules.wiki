@@ -93,9 +93,20 @@ Historically, the Expo Managed Workflow restricted using community modules with 
 A Config Plugin is a script (usually JavaScript) associated with a native module. When Expo prepares the native projects (during `expo prebuild` or implicitly during `eas build`), it executes these Config Plugins. The plugins programmatically modify the native configuration files (like `Info.plist`, `AndroidManifest.xml`, `build.gradle`, `Podfile`) to correctly integrate the community module's native dependencies before native compilation.
 This allows developers to use a wide range of community native modules within the Expo workflow without needing to "eject" or directly manage native code.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BDeveloper%20runs%20%60npx%20expo%20install%20community-module%60%5D%20--%3E%20B%7BModule%20has%20Config%20Plugin%3F%7D%3B%0A%20%20%20%20B%20--%20Yes%20--%3E%20C%5BConfig%20Plugin%20registered%20in%20app.json%2Fapp.config.js%5D%3B%0A%20%20%20%20C%20--%20eas%20build%20or%20expo%20prebuild%20--%3E%20D%5BExpo%20runs%20Config%20Plugin%5D%3B%0A%20%20%20%20D%20--%3E%20E%5BPlugin%20modifies%20native%20project%20files%20Info.plist%2C%20build.gradle%2C%20etc.%5D%3B%0A%20%20%20%20E%20--%3E%20F%5BNative%20code%20from%20community-module%20is%20linked%5D%3B%0A%20%20%20%20F%20--%3E%20G%5BApp%20builds%20successfully%20with%20native%20feature%5D%3B%0A%20%20%20%20B%20--%20No%20--%3E%20H%7BModule%20is%20pure%20JS%3F%7D%3B%0A%20%20%20%20H%20--%20Yes%20--%3E%20I%5BWorks%20directly%5D%3B%0A%20%20%20%20H%20--%20No%20--%3E%20J%5BMay%20require%20bare%20workflow%20or%20manual%20setup%5D%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    A[Developer runs `npx expo install community-module`] --> B{Module has Config Plugin?};
+    B -- Yes --> C[Config Plugin registered in app.json/app.config.js];
+    C -- eas build or expo prebuild --> D[Expo runs Config Plugin];
+    D --> E[Plugin modifies native project files Info.plist, build.gradle, etc.];
+    E --> F[Native code from community-module is linked];
+    F --> G[App builds successfully with native feature];
+    B -- No --> H{Module is pure JS?};
+    H -- Yes --> I[Works directly];
+    H -- No --> J[May require bare workflow or manual setup];
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the workflow when integrating a community native module into an Expo project using Config Plugins. The process starts when a developer runs `npx expo install community-module`. The system checks if this module includes a Config Plugin. If it does, the plugin is typically registered in the project's `app.json` or `app.config.js` file.
 
@@ -153,7 +164,8 @@ When considering third-party libraries, especially smaller or less-known ones:
 An unmaintained library can become a source of bugs or compatibility issues.
 {warning}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/guides/using-libraries/|Expo Docs: Using Libraries (Explains `npx expo install`)]
-- [https://docs.expo.dev/guides/config-plugins/|Expo Docs: Config Plugins]
-- [https://reactnative.dev/docs/linking-libraries-ios|React Native Docs: Linking Libraries (Explains autolinking)] (iOS section, concept applies to Android too)
-- [https://reactnative.directory/|React Native Directory]
+>
+bq. - [https://docs.expo.dev/guides/using-libraries/|Expo Docs: Using Libraries (Explains `npx expo install`)]
+bq. - [https://docs.expo.dev/guides/config-plugins/|Expo Docs: Config Plugins]
+bq. - [https://reactnative.dev/docs/linking-libraries-ios|React Native Docs: Linking Libraries (Explains autolinking)] (iOS section, concept applies to Android too)
+bq. - [https://reactnative.directory/|React Native Directory]

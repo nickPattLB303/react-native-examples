@@ -127,26 +127,31 @@ Always refer to the official React Navigation documentation for the most up-to-d
     > [!IMPORTANT]
     > The `import 'react-native-gesture-handler';` statement should be at the very top of your entry file (e.g., `App.tsx` or `index.js`), before any other imports, especially before importing React.
 
-bq. [!TIP] > *Note for Bare React Native Projects:*
-While this course focuses on Expo, if you're working in a bare React Native project, the installation process for React Navigation and its dependencies involves a few extra native configuration steps:
-> - *Installation:* Use `npm install` or `yarn add` for the packages.
-- *iOS:* After adding dependencies, navigate to your `ios` directory and run `npx pod-install ios` (or `pod install`) to link the native modules.
-- *Android:* You may need to prevent crashes related to activity restarts when the app is in the background. In `android/app/src/main/java/<your-package-name>/MainActivity.java` (or `.kt`), modify the `onCreate` method:
->   ```java
-// MainActivity.java
-// ...other imports
-import android.os.Bundle;
->   public class MainActivity extends ReactActivity {
-// ...other methods
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(null); // Modified line for React Navigation
-}
-}
-```
->   (For Kotlin, the syntax is similar: `super.onCreate(null)` within `MainActivity.kt`).
-Additionally, ensure your `MainActivity` has `android:launchMode="singleTask"` in the `android/app/src/main/AndroidManifest.xml` file if it isn't already set.
-> Always consult the official React Navigation and respective dependency documentation for the most current bare workflow instructions.
+> [!TIP] > *Note for Bare React Native Projects:*
+bq. While this course focuses on Expo, if you're working in a bare React Native project, the installation process for React Navigation and its dependencies involves a few extra native configuration steps:
+>
+bq. - *Installation:* Use `npm install` or `yarn add` for the packages.
+bq. - *iOS:* After adding dependencies, navigate to your `ios` directory and run `npx pod-install ios` (or `pod install`) to link the native modules.
+bq. - *Android:* You may need to prevent crashes related to activity restarts when the app is in the background. In `android/app/src/main/java/<your-package-name>/MainActivity.java` (or `.kt`), modify the `onCreate` method:
+>
+bq. ```java
+bq. // MainActivity.java
+bq. // ...other imports
+bq. import android.os.Bundle;
+>
+bq. public class MainActivity extends ReactActivity {
+bq. // ...other methods
+bq. @Override
+bq. protected void onCreate(Bundle savedInstanceState) {
+bq. super.onCreate(null); // Modified line for React Navigation
+bq. }
+bq. }
+bq. ```
+>
+bq. (For Kotlin, the syntax is similar: `super.onCreate(null)` within `MainActivity.kt`).
+bq. Additionally, ensure your `MainActivity` has `android:launchMode="singleTask"` in the `android/app/src/main/AndroidManifest.xml` file if it isn't already set.
+>
+bq. Always consult the official React Navigation and respective dependency documentation for the most current bare workflow instructions.
 
 This completes the basic installation and setup of React Navigation. In the following sections, we will learn how to define screens and use these navigators to build navigation flows.
 
@@ -186,8 +191,8 @@ The `NavigationContainer` is the central manager for this state object.
 h2. State Structure
 
 While the exact internal structure is an implementation detail and subject to change, the core accessible properties of a navigator's state are typically `index` (pointing to the currently active route in the `routes` array) and `routes` (an array representing the screens currently in the navigator's stack or list). For nested navigators, the state object itself becomes hierarchical.
-bq. [!CAUTION]
-Direct manipulation of the navigation state object or reliance on its internal structure beyond officially documented APIs (like `index` and `routes` when using `getState` or `useNavigationState`) is strongly discouraged, as it can lead to unexpected behavior and break your app with library updates.
+> [!CAUTION]
+bq. Direct manipulation of the navigation state object or reliance on its internal structure beyond officially documented APIs (like `index` and `routes` when using `getState` or `useNavigationState`) is strongly discouraged, as it can lead to unexpected behavior and break your app with library updates.
 h2. Accessing State
 * `navigation.getState()`: This method, available on the `navigation` prop, returns a snapshot of the current navigation state for the navigator that the screen belongs to. However, it does not trigger component re-renders if the state changes later. It's mainly useful within event listeners or callbacks where immediate reactivity isn't needed.
 * `useNavigationState` Hook: This hook is the recommended way to access navigation state reactively within a component. It accepts a selector function that receives the full state and returns a specific piece of data (e.g., `state => state.index`). The component will only re-render if the value returned by the selector changes, optimizing performance. Passing `state => state` will return the whole state object and cause re-renders on any state change.
@@ -211,19 +216,24 @@ React Navigation relies on the immutability of the navigation state to detect ch
 Understanding these state concepts will help you debug navigation flows and build more advanced interactions when needed.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnavigation.org/docs/getting-started|React Navigation - Getting started]
-- [https://reactnavigation.org/docs/getting-started/#installation|React Navigation - Installation]
-- [https://docs.expo.dev/routing/react-navigation/|Expo Documentation - Using React Navigation]
-- [https://docs.swmansion.com/react-native-gesture-handler/docs/installation|`react-native-gesture-handler` Installation]
-- [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation|`react-native-reanimated` Installation]
+>
+bq. - [https://reactnavigation.org/docs/getting-started|React Navigation - Getting started]
+bq. - [https://reactnavigation.org/docs/getting-started/#installation|React Navigation - Installation]
+bq. - [https://docs.expo.dev/routing/react-navigation/|Expo Documentation - Using React Navigation]
+bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/installation|`react-native-gesture-handler` Installation]
+bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation|`react-native-reanimated` Installation]
 
 bq. 🍏 *(iOS Developers) / 🤖 (Android Developers):*
-> *Comparison:* The installation process might feel similar to adding dependencies using CocoaPods (iOS) or Gradle (Android). The key is that these are JavaScript libraries that often bridge to native capabilities.
-> *Key Takeaway:* `npx expo install` simplifies managing compatible native module versions for these libraries, which can otherwise be a common source of issues in React Native development.
+>
+bq. *Comparison:* The installation process might feel similar to adding dependencies using CocoaPods (iOS) or Gradle (Android). The key is that these are JavaScript libraries that often bridge to native capabilities.
+>
+bq. *Key Takeaway:* `npx expo install` simplifies managing compatible native module versions for these libraries, which can otherwise be a common source of issues in React Native development.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Similar to installing routing libraries like `react-router-dom` via npm or yarn. The main difference is the additional peer dependencies that interact with the native mobile environment (`react-native-screens`, `react-native-safe-area-context`, `react-native-gesture-handler`, `react-native-reanimated`).
-> *Key Takeaway:* Mobile navigation libraries often have more complex dependencies due to their interaction with native UI elements, gestures, and animations.
+>
+bq. *Comparison:* Similar to installing routing libraries like `react-router-dom` via npm or yarn. The main difference is the additional peer dependencies that interact with the native mobile environment (`react-native-screens`, `react-native-safe-area-context`, `react-native-gesture-handler`, `react-native-reanimated`).
+>
+bq. *Key Takeaway:* Mobile navigation libraries often have more complex dependencies due to their interaction with native UI elements, gestures, and animations.
 
 h3. Next Steps
 

@@ -62,8 +62,11 @@ class MarkdownToConfluenceConverter {
     // 11. Handle images
     confluence = this.convertImages(confluence);
 
-    // 12. Handle block quotes
+    // 12. Handle block quotes (after code blocks so nested code is handled)
     confluence = this.convertBlockQuotes(confluence);
+
+    // 13. Handle any remaining code blocks that might have been missed (post-processing)
+    confluence = this.postProcessCodeBlocks(confluence);
 
     // 13. Handle horizontal rules
     confluence = this.convertHorizontalRules(confluence);
@@ -272,18 +275,14 @@ class MarkdownToConfluenceConverter {
   }
 
   /**
-   * Convert mermaid diagram code to a mermaid.ink link
+   * Convert mermaid diagram code to a code block (since links don't work well in Confluence)
    */
   convertMermaidToLink(mermaidCode) {
     // Clean up the mermaid code
     const cleanCode = mermaidCode.trim();
     
-    // URL encode the mermaid code for mermaid.ink
-    const encodedCode = encodeURIComponent(cleanCode);
-    const mermaidUrl = `https://mermaid.ink/svg/${encodedCode}`;
-    
-    // Create a Confluence link with description
-    return `[${mermaidUrl}|View Mermaid Diagram]\n\n_(Interactive diagram - click to view)_`;
+    // Since mermaid.ink links don't work well when copy-pasted, use a code block instead
+    return `{code:title=Mermaid Diagram|language=text}\n${cleanCode}\n{code}\n\n_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_`;
   }
 
   /**
@@ -469,17 +468,133 @@ class MarkdownToConfluenceConverter {
   }
 
   /**
+   * Post-process any remaining code blocks that might have been missed
+   */
+  postProcessCodeBlocks(content) {
+    // Look for any remaining ``` patterns that weren't converted
+    const lines = content.split('\n');
+    const result = [];
+    let i = 0;
+    let inCodeBlock = false;
+    let codeBlockBuffer = [];
+    let codeBlockLanguage = '';
+    
+    while (i < lines.length) {
+      const line = lines[i];
+      
+      // Check for fenced code block start
+      const fenceMatch = line.match(/^(\s*)```(\w+)?/);
+      
+      if (fenceMatch && !inCodeBlock) {
+        // Starting a code block
+        inCodeBlock = true;
+        codeBlockLanguage = fenceMatch[2] || 'text';
+        codeBlockBuffer = [];
+        
+        // Handle mermaid diagrams specially
+        if (codeBlockLanguage === 'mermaid') {
+          // Don't add opening tag here, we'll process the content first
+        } else {
+          // Map common languages to Confluence equivalents
+          const languageMap = {
+            'javascript': 'js',
+            'typescript': 'js',
+            'tsx': 'js',
+            'jsx': 'js',
+            'bash': 'bash',
+            'shell': 'bash',
+            'json': 'js',
+            'yaml': 'yaml',
+            'yml': 'yaml',
+            'xml': 'xml',
+            'html': 'html',
+            'css': 'css',
+            'sql': 'sql',
+            'python': 'py',
+            'java': 'java',
+            'kotlin': 'kotlin',
+            'swift': 'swift',
+            'objective-c': 'objc',
+            'c': 'c',
+            'cpp': 'cpp',
+            'c++': 'cpp'
+          };
+          
+          const confluenceLanguage = languageMap[codeBlockLanguage.toLowerCase()] || codeBlockLanguage;
+          result.push(`{code:language=${confluenceLanguage}}`);
+        }
+      } else if (line.trim() === '```' && inCodeBlock) {
+        // Ending a code block
+        inCodeBlock = false;
+        
+        if (codeBlockLanguage === 'mermaid') {
+          // Convert mermaid diagram to code block
+          const mermaidCode = codeBlockBuffer.join('\n');
+          const mermaidBlock = this.convertMermaidToLink(mermaidCode);
+          result.push(mermaidBlock);
+        } else {
+          // Add the code content and close the code block
+          result.push(...codeBlockBuffer);
+          result.push(`{code}`);
+        }
+        
+        codeBlockBuffer = [];
+        codeBlockLanguage = '';
+      } else if (inCodeBlock) {
+        // Inside a code block, preserve the line as-is
+        codeBlockBuffer.push(line);
+      } else {
+        // Normal line, not in a code block
+        result.push(line);
+      }
+      
+      i++;
+    }
+    
+    // Handle any remaining code block buffer (unclosed code blocks)
+    if (inCodeBlock && codeBlockBuffer.length > 0) {
+      if (codeBlockLanguage === 'mermaid') {
+        const mermaidCode = codeBlockBuffer.join('\n');
+        const mermaidBlock = this.convertMermaidToLink(mermaidCode);
+        result.push(mermaidBlock);
+      } else {
+        result.push(...codeBlockBuffer);
+        result.push(`{code}`);
+      }
+    }
+    
+    return result.join('\n');
+  }
+
+  /**
    * Convert block quotes
    */
   convertBlockQuotes(content) {
-    // Handle multi-line block quotes that aren't admonitions
-    const blockQuoteRegex = /^>\s*([^[].*(?:\n>\s*.*)*)/gm;
+    // Handle all remaining > blockquotes that haven't been converted yet
+    // This includes nested blockquotes within existing bq. sections
+    const lines = content.split('\n');
+    const result = [];
     
-    return content.replace(blockQuoteRegex, (match, quote) => {
-      // Clean up the quote by removing the > prefix from each line
-      const cleanQuote = quote.replace(/\n>\s*/g, '\n').trim();
-      return `bq. ${cleanQuote}`;
-    });
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      // Check if this line starts with > and is not already part of an admonition
+      if (line.match(/^>\s+/) && !line.includes('[!')) {
+        // This is a blockquote line that needs conversion
+        const cleanedLine = line.replace(/^>\s*/, '').trim();
+        
+        // If it's not empty, add as blockquote
+        if (cleanedLine) {
+          result.push(`bq. ${cleanedLine}`);
+        } else {
+          result.push(''); // Preserve empty lines
+        }
+      } else {
+        result.push(line);
+      }
+    }
+    
+    return result.join('\n');
   }
 
   /**

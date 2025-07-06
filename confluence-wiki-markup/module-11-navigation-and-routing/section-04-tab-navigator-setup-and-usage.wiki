@@ -14,9 +14,46 @@ The Tab Navigator is a common mobile UI pattern that places a tab bar at the bot
 
 Unlike the Stack Navigator, which is designed for sequential navigation and going back, the Tab Navigator is designed for lateral movement between equally important sections of your app. The Bottom Tab Navigator specifically places the tab bar at the bottom of the screen, making it easy to reach with your thumb on mobile devices.
 
-[https://mermaid.ink/svg/stateDiagram-v2%0A%20%20%20%20%5B*%5D%20--%3E%20HomeTab%0A%0A%20%20%20%20state%20TabNavigator%20%7B%0A%20%20%20%20%20%20%20%20state%20%22Tab%20Bar%20UI%20Element%22%20as%20TabBar%0A%0A%20%20%20%20%20%20%20%20state%20HomeTab%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20HomeScreen%20--%3E%20PrescriptionDetail%3A%20tap%20item%0A%20%20%20%20%20%20%20%20%20%20%20%20PrescriptionDetail%20--%3E%20HomeScreen%3A%20back%20button%0A%20%20%20%20%20%20%20%20%20%20%20%20note%20right%20of%20HomeScreen%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Stack%20state%20preserved%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20when%20switching%20tabs%0A%20%20%20%20%20%20%20%20%20%20%20%20end%20note%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20state%20ProfileTab%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20ProfileScreen%20--%3E%20EditProfile%3A%20tap%20edit%0A%20%20%20%20%20%20%20%20%20%20%20%20EditProfile%20--%3E%20ProfileScreen%3A%20save%2Fcancel%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20state%20MedicationsTab%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20MedListScreen%20--%3E%20MedDetailScreen%3A%20tap%20medication%0A%20%20%20%20%20%20%20%20%20%20%20%20MedDetailScreen%20--%3E%20MedListScreen%3A%20back%20button%0A%20%20%20%20%20%20%20%20%20%20%20%20MedListScreen%20--%3E%20AddMedScreen%3A%20tap%20add%0A%20%20%20%20%20%20%20%20%20%20%20%20AddMedScreen%20--%3E%20MedListScreen%3A%20save%2Fcancel%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20TabBar%20--%3E%20HomeTab%3A%20tap%20Home%20icon%0A%20%20%20%20%20%20%20%20TabBar%20--%3E%20ProfileTab%3A%20tap%20Profile%20icon%0A%20%20%20%20%20%20%20%20TabBar%20--%3E%20MedicationsTab%3A%20tap%20Medications%20icon%0A%20%20%20%20%7D%0A%0A%20%20%20%20note%20right%20of%20TabNavigator%0A%20%20%20%20%20%20%20%20Each%20tab%20maintains%20its%20own%0A%20%20%20%20%20%20%20%20navigation%20state%20and%20history%0A%20%20%20%20end%20note|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+stateDiagram-v2
+    [*] --> HomeTab
 
-_(Interactive diagram - click to view)_
+    state TabNavigator {
+        state "Tab Bar UI Element" as TabBar
+
+        state HomeTab {
+            HomeScreen --> PrescriptionDetail: tap item
+            PrescriptionDetail --> HomeScreen: back button
+            note right of HomeScreen
+                Stack state preserved
+                when switching tabs
+            end note
+        }
+
+        state ProfileTab {
+            ProfileScreen --> EditProfile: tap edit
+            EditProfile --> ProfileScreen: save/cancel
+        }
+
+        state MedicationsTab {
+            MedListScreen --> MedDetailScreen: tap medication
+            MedDetailScreen --> MedListScreen: back button
+            MedListScreen --> AddMedScreen: tap add
+            AddMedScreen --> MedListScreen: save/cancel
+        }
+
+        TabBar --> HomeTab: tap Home icon
+        TabBar --> ProfileTab: tap Profile icon
+        TabBar --> MedicationsTab: tap Medications icon
+    }
+
+    note right of TabNavigator
+        Each tab maintains its own
+        navigation state and history
+    end note
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates several key characteristics of tab-based navigation:
 # *Independent Tab States:* Each tab (Home, Profile, Medications) maintains its own independent navigation state and history. This means if you navigate to a detail screen within the Home tab, then switch to the Profile tab and return to Home, you'll still be on the detail screen, not back at the home screen.
@@ -28,11 +65,11 @@ This navigation pattern works well for SpeedyMeds because it allows users to qui
 
 h3. Procedural Content: Implementing a Bottom Tab Navigator
 
-Let's add a tab navigator to our SpeedyMeds app. We'll imagine two main sections: {{MedicationsStack}} (which could be the stack navigator we started building in the previous section) and a new {{PharmacyInfoScreen}}.
+Let's add a tab navigator to our SpeedyMeds app. We'll imagine two main sections: `MedicationsStack` (which could be the stack navigator we started building in the previous section) and a new `PharmacyInfoScreen`.
 
 *1. Define Screen Components (if new ones are needed):*
 
-Assume we already have {{HomeScreen}} and {{PrescriptionDetailScreen}} from the previous section, which will form our {{MedicationsStack}}. Let's create a simple {{PharmacyInfoScreen}}.
+Assume we already have `HomeScreen` and `PrescriptionDetailScreen` from the previous section, which will form our `MedicationsStack`. Let's create a simple `PharmacyInfoScreen`.
 
 {code:language=js}
 // screens/PharmacyInfoScreen.tsx
@@ -232,16 +269,19 @@ export default function App() {
 When nesting navigators (e.g., a Stack inside a Tab), the `navigation` prop in screens of the inner navigator (Stack) will refer to the Stack navigator. To access the parent Tab navigator's `navigation` prop, you might need `navigation.getParent()`.
 {info}
 bq. 📚 *Official Documentation:*
-> - [https://reactnavigation.org/docs/bottom-tab-navigator/|Bottom Tab Navigator - React Navigation]
-- [https://reactnavigation.org/docs/nesting-navigators/|Nesting Navigators - React Navigation]
-- [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
-- [https://docs.expo.dev/guides/icons/|Icons - Expo Documentation] (for using `@expo/vector-icons`)
+>
+bq. - [https://reactnavigation.org/docs/bottom-tab-navigator/|Bottom Tab Navigator - React Navigation]
+bq. - [https://reactnavigation.org/docs/nesting-navigators/|Nesting Navigators - React Navigation]
+bq. - [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
+bq. - [https://docs.expo.dev/guides/icons/|Icons - Expo Documentation] (for using `@expo/vector-icons`)
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* `createBottomTabNavigator` is analogous to `UITabBarController`. Each `<Tab.Screen>` is like adding a `UIViewController` (or a `UINavigationController` if nesting) to the `viewControllers` array of the tab bar controller. Customizing `tabBarIcon` and `tabBarLabel` is similar to setting `tabBarItem` properties.
+>
+bq. *Comparison:* `createBottomTabNavigator` is analogous to `UITabBarController`. Each `<Tab.Screen>` is like adding a `UIViewController` (or a `UINavigationController` if nesting) to the `viewControllers` array of the tab bar controller. Customizing `tabBarIcon` and `tabBarLabel` is similar to setting `tabBarItem` properties.
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
+>
+bq. *Comparison:* This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
 
 h3. Referential Content: Key Tab Navigator Configuration Options
 
@@ -266,11 +306,12 @@ Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` 
 *Note on `tabBarOptions` (Legacy):*
 * In older versions of React Navigation (and still somewhat functional in v6 for backward compatibility, though not the primary way), many tab bar styling options were grouped under a single `tabBarOptions` object within `screenOptions` or `options`. While you might see this in older examples, the current best practice (and the direction from v7 onwards) is to use the individual top-level options like `tabBarActiveTintColor`, `tabBarStyle`, etc.
 
-bq. [!TIP] > *Native Tab Bar Alternatives:*
-For projects requiring a tab bar that strictly adheres to the native platform's look and feel (e.g., iOS blur effects, Material Design 3 ripple effects and theming), and potentially offers better performance for complex tab structures, you might explore third-party libraries like `react-native-bottom-tabs`. This library integrates native iOS (`UITabBar`) and Android (`BottomNavigationView`) components with React Navigation.
-> *Pros:* More authentic native appearance, platform-specific styling (like iOS blur, Material You theming), adapts layout across different devices (iPadOS, tvOS, etc.).
-*Cons:* Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
-The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.
+> [!TIP] > *Native Tab Bar Alternatives:*
+bq. For projects requiring a tab bar that strictly adheres to the native platform's look and feel (e.g., iOS blur effects, Material Design 3 ripple effects and theming), and potentially offers better performance for complex tab structures, you might explore third-party libraries like `react-native-bottom-tabs`. This library integrates native iOS (`UITabBar`) and Android (`BottomNavigationView`) components with React Navigation.
+>
+bq. *Pros:* More authentic native appearance, platform-specific styling (like iOS blur, Material You theming), adapts layout across different devices (iPadOS, tvOS, etc.).
+bq. *Cons:* Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
+bq. The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.
 
 h3. Exercise 11.2: Basic Tab Navigation
 

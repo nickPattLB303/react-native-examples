@@ -10,9 +10,35 @@ h2. Conceptual Content: Your Debugging Arsenal
 
 React Native development leverages a combination of browser-based tools, standalone applications, and in-app menus to provide a comprehensive debugging experience.
 
-[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BIdentify%20Issue%3Cbr%3Ein%20SpeedyMeds%20App%5D%20--%3E%20B%7BIssue%20Type%3F%7D%0A%0A%20%20%20%20B%20--%3E%7CUI%2FLayout%7C%20C%5BFlipper%3Cbr%3ELayout%20Inspector%5D%0A%20%20%20%20B%20--%3E%7CNetwork%7C%20D%5BFlipper%2FRN%20Debugger%3Cbr%3ENetwork%20Inspector%5D%0A%20%20%20%20B%20--%3E%7CJS%20Code%2FLogic%7C%20E%5BJavaScript%3Cbr%3EDebugging%20Tools%5D%0A%20%20%20%20B%20--%3E%7CPerformance%7C%20F%5BProfilers%3Cbr%3ESee%20Section%202%5D%0A%20%20%20%20B%20--%3E%7CCrash%2FException%7C%20G%5BError%20Handling%3Cbr%3ESee%20Section%208%5D%0A%0A%20%20%20%20E%20--%3E%20H%7BPreferred%3Cbr%3EWorkflow%3F%7D%0A%20%20%20%20H%20--%3E%7CIn-Editor%7C%20I%5BVS%20Code%3Cbr%3EReact%20Native%20Tools%5D%0A%20%20%20%20H%20--%3E%7CStandalone%20App%7C%20J%5BReact%20Native%3Cbr%3EDebugger%5D%0A%20%20%20%20H%20--%3E%7CBrowser%20Based%7C%20K%5BChrome%20DevTools%3Cbr%3Evia%20Metro%5D%0A%0A%20%20%20%20C%20--%3E%20L%5BFix%20and%20Verify%5D%0A%20%20%20%20D%20--%3E%20L%0A%20%20%20%20I%20--%3E%20L%0A%20%20%20%20J%20--%3E%20L%0A%20%20%20%20K%20--%3E%20L%0A%20%20%20%20F%20--%3E%20L%0A%20%20%20%20G%20--%3E%20L%0A%0A%20%20%20%20style%20A%20fill%3A%23f9f%2Cstroke%3A%23333%0A%20%20%20%20style%20B%20fill%3A%23bbf%2Cstroke%3A%23333%0A%20%20%20%20style%20L%20fill%3A%23bfb%2Cstroke%3A%23333|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+flowchart TD
+    A[Identify Issue<br>in SpeedyMeds App] --> B{Issue Type?}
 
-_(Interactive diagram - click to view)_
+    B -->|UI/Layout| C[Flipper<br>Layout Inspector]
+    B -->|Network| D[Flipper/RN Debugger<br>Network Inspector]
+    B -->|JS Code/Logic| E[JavaScript<br>Debugging Tools]
+    B -->|Performance| F[Profilers<br>See Section 2]
+    B -->|Crash/Exception| G[Error Handling<br>See Section 8]
+
+    E --> H{Preferred<br>Workflow?}
+    H -->|In-Editor| I[VS Code<br>React Native Tools]
+    H -->|Standalone App| J[React Native<br>Debugger]
+    H -->|Browser Based| K[Chrome DevTools<br>via Metro]
+
+    C --> L[Fix and Verify]
+    D --> L
+    I --> L
+    J --> L
+    K --> L
+    F --> L
+    G --> L
+
+    style A fill:#f9f,stroke:#333
+    style B fill:#bbf,stroke:#333
+    style L fill:#bfb,stroke:#333
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the typical debugging workflow for a React Native application like SpeedyMeds. Depending on the type of issue you're facing, you'll choose different debugging tools from your arsenal. The workflow generally follows a pattern of identifying the issue, selecting the appropriate tool, and then using that tool to fix and verify the solution.
 
@@ -56,7 +82,7 @@ h2. Crash Reporter
 View native crash logs.
 h2. Logs (Device and Application)
 
-Access native device logs (Logcat for Android, Console for iOS) and application-specific logs, including {{console.log}} output from JavaScript when Hermes is active.
+Access native device logs (Logcat for Android, Console for iOS) and application-specific logs, including `console.log` output from JavaScript when Hermes is active.
 
 h3. 3. Chrome DevTools (via Metro Bundler)
 
@@ -64,7 +90,7 @@ When your React Native application is running in development mode with "Debug JS
 
 h2. Console Tab
 
-View {{console.log}} statements, execute arbitrary JavaScript in the context of your app, and inspect objects.
+View `console.log` statements, execute arbitrary JavaScript in the context of your app, and inspect objects.
 h2. Sources Tab
 
 Set breakpoints in your JavaScript/TypeScript code, step through execution, inspect variables, and analyze call stacks.
@@ -79,7 +105,7 @@ h2. Caveats of Remote JS Debugging
 
 h3. 4. Expo Go Debugging Menu / React Native Developer Menu
 
-Both Expo Go and standard React Native development builds provide an in-app developer menu, typically accessed by shaking your device or using a keyboard shortcut on emulators/simulators (e.g., {{Cmd+D}} for iOS Simulator, {{Cmd+M}} or {{Ctrl+M}} for Android Emulator).
+Both Expo Go and standard React Native development builds provide an in-app developer menu, typically accessed by shaking your device or using a keyboard shortcut on emulators/simulators (e.g., `Cmd+D` for iOS Simulator, `Cmd+M` or `Ctrl+M` for Android Emulator).
 
 This menu offers several debugging options:
 
@@ -104,18 +130,18 @@ h3. 5. VS Code Debugger Extension for React Native
 The official "React Native Tools" extension for Visual Studio Code provides an integrated debugging experience. You can:
 * Set breakpoints directly in your VS Code editor.
 * Step through code, inspect variables, and view the call stack.
-* Use the Debug Console for {{console.log}} output and interaction.
+* Use the Debug Console for `console.log` output and interaction.
 * Configure launch profiles for different debugging scenarios.
 
 This is often preferred for a more integrated development and debugging workflow, keeping you within your editor.
 
 bq. 📲 *(Native Developers):* > *Comparison:* Flipper and React Native Debugger aim to provide a similar level of introspection as Xcode\'s debugger and view hierarchy inspector (for iOS) or Android Studio\'s Layout Inspector and debugger (for Android). For instance, Flipper\'s Layout Inspector is akin to native UI inspection tools, and its Hermes Debugger is analogous to using LLDB (iOS) or the JVM debugger (Android) for your JavaScript code.
-*Key Takeaway:* While the specific tools and underlying language (JavaScript vs. Swift/Kotlin) differ, the fundamental goals and many paradigms of debugging—inspecting state, stepping through code, analyzing UI hierarchies, and monitoring network traffic—remain consistent. React Native tools bridge these familiar concepts to the JavaScript world.
-*Source:* {{[https://fbflipper.com/|Flipper Documentation]}}, {{[https://developer.apple.com/xcode/ide-features/#debugger|Xcode: Debugging]}}, {{[https://developer.android.com/studio/debug|Android Studio: Debug your app]}}
+bq. *Key Takeaway:* While the specific tools and underlying language (JavaScript vs. Swift/Kotlin) differ, the fundamental goals and many paradigms of debugging—inspecting state, stepping through code, analyzing UI hierarchies, and monitoring network traffic—remain consistent. React Native tools bridge these familiar concepts to the JavaScript world.
+bq. *Source:* `[https://fbflipper.com/|Flipper Documentation]`, `[https://developer.apple.com/xcode/ide-features/#debugger|Xcode: Debugging]`, `[https://developer.android.com/studio/debug|Android Studio: Debug your app]`
 
 bq. 🌐 *(Web Developers):* > *Comparison:* Chrome DevTools, when used for React Native remote JS debugging, will feel very familiar to web development debugging sessions. React Native Debugger essentially packages these familiar Chrome DevTools (like the JS console and sources tab) with React-specific tools (React DevTools, Redux DevTools). Flipper extends this further by offering a more mobile-centric and extensible approach, including insights into native device features and logs not typically available in web browser developer tools.
-*Key Takeaway:* Your web debugging skills, particularly with Chrome DevTools, are highly transferable to React Native. Tools like Flipper and React Native Debugger build upon that foundation, adding mobile-specific and React Native-centric enhancements.
-*Source:* {{[https://developer.chrome.com/docs/devtools/|Chrome DevTools Documentation]}}, {{[https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]}}
+bq. *Key Takeaway:* Your web debugging skills, particularly with Chrome DevTools, are highly transferable to React Native. Tools like Flipper and React Native Debugger build upon that foundation, adding mobile-specific and React Native-centric enhancements.
+bq. *Source:* `[https://developer.chrome.com/docs/devtools/|Chrome DevTools Documentation]`, `[https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]`
 
 h2. Procedural Content: Getting Started with Debugging Tools
 
@@ -143,19 +169,20 @@ h3. Enabling JS Debugging with Chrome DevTools
 # Run your app on a simulator/device or in Expo Go.
 # Open the Developer Menu.
 # Select "Debug JS Remotely" or "Open JS Debugger".
-# This will open a new tab in Chrome (or prompt you to open one) at {{http://localhost:8081/debugger-ui/}} (port may vary).
-# Open Chrome DevTools (right-click -> Inspect, or {{Cmd+Opt+I}} / {{Ctrl+Shift+I}}).
+# This will open a new tab in Chrome (or prompt you to open one) at `http://localhost:8081/debugger-ui/` (port may vary).
+# Open Chrome DevTools (right-click -> Inspect, or `Cmd+Opt+I` / `Ctrl+Shift+I`).
 # Use the "Console" and "Sources" tabs for debugging.
 
 {tip}
 For a more streamlined debugging experience within your editor, the VS Code React Native Tools extension is highly recommended. It often provides a good balance of features without needing to switch between multiple windows as much.
 {tip}
 bq. 📚 *Official Documentation & Resources:*
-> - [https://reactnative.dev/docs/debugging|React Native Docs: Debugging]
-- [https://reactnative.dev/docs/debugging-hermes|React Native Docs: Debugging Hermes]
-- [https://fbflipper.com/|Flipper - Extensible Mobile App Debugger]
-- [https://docs.expo.dev/debugging/introduction/|Expo Docs: Debugging]
-- [https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]
-- [https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native|VS Code React Native Tools Extension]
+>
+bq. - [https://reactnative.dev/docs/debugging|React Native Docs: Debugging]
+bq. - [https://reactnative.dev/docs/debugging-hermes|React Native Docs: Debugging Hermes]
+bq. - [https://fbflipper.com/|Flipper - Extensible Mobile App Debugger]
+bq. - [https://docs.expo.dev/debugging/introduction/|Expo Docs: Debugging]
+bq. - [https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]
+bq. - [https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native|VS Code React Native Tools Extension]
 
 Mastering these debugging tools will empower you to efficiently find and fix issues in your SpeedyMeds app, from simple typos to complex state management bugs or UI anomalies.

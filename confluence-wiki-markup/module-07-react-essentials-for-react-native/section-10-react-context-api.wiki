@@ -154,33 +154,63 @@ h2. Diagram: Context API Flow
 
 The following diagram illustrates how data flows from a `Provider` to a consuming component via the Context API.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BApp%20Component%5D%0A%20%20%20%20A%20--%20Manages%20State%20(e.g.%2C%20theme)%20--%3E%20A%3B%0A%20%20%20%20A%20--%20Wraps%20children%20with%20--%3E%20P%5BThemeContext.Provider%20value%3D%7Btheme%2C%20toggleTheme%7D%5D%3B%0A%20%20%20%20P%20--%3E%20B%5BChild%20Component%201%5D%3B%0A%20%20%20%20P%20--%3E%20C%5BChild%20Component%202%20(Nested)%5D%3B%0A%20%20%20%20C%20--%3E%20D%5BGrandchild%20Component%20(ThemedButton)%5D%3B%0A%20%20%20%20D%20--%20Uses%20useContext(ThemeContext)%20--%3E%20ThemeVal%5BAccesses%20theme%20%26%20toggleTheme%5D%3B%0A%20%20%20%20ThemeVal%20-.-%3E%20D%3B%20%25%20Updates%20Grandchild%20UI%0A%0A%20%20%20%20subgraph%20Consumer%0A%20%20%20%20%20%20%20%20D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20ProviderTree%0A%20%20%20%20%20%20%20%20P%0A%20%20%20%20%20%20%20%20B%0A%20%20%20%20%20%20%20%20C%0A%20%20%20%20end|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    A[App Component]
+    A -- Manages State (e.g., theme) --> A;
+    A -- Wraps children with --> P[ThemeContext.Provider value={theme, toggleTheme}];
+    P --> B[Child Component 1];
+    P --> C[Child Component 2 (Nested)];
+    C --> D[Grandchild Component (ThemedButton)];
+    D -- Uses useContext(ThemeContext) --> ThemeVal[Accesses theme & toggleTheme];
+    ThemeVal -.-> D; % Updates Grandchild UI
 
-_(Interactive diagram - click to view)_
+    subgraph Consumer
+        D
+    end
+
+    subgraph ProviderTree
+        P
+        B
+        C
+    end
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
 
 bq. ⚛️ *(Web Developers with React Experience):*
-> *Comparison:* The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
-> *Key Takeaway:* Your existing knowledge of the Context API is directly transferable.
-> *Source:* [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Passing Data Deeply with Context]
+>
+bq. *Comparison:* The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
+>
+bq. *Key Takeaway:* Your existing knowledge of the Context API is directly transferable.
+>
+bq. *Source:* [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Passing Data Deeply with Context]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
-> *Comparison:* React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
-> *Key Takeaway:* Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
-> *Source:* [https://angular.io/guide/dependency-injection|Angular Docs: Dependency injection in Angular]
+>
+bq. *Comparison:* React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
+>
+bq. *Key Takeaway:* Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
+>
+bq. *Source:* [https://angular.io/guide/dependency-injection|Angular Docs: Dependency injection in Angular]
 
 bq. 📲 *(Native Developers - Android/iOS):*
-> *Comparison:* Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
-> *Key Takeaway:* When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
-> *Source:* [https://developer.android.com/reference/android/content/SharedPreferences|Android Dev Docs: SharedPreferences], [https://developer.apple.com/documentation/foundation/userdefaults|Apple Dev Docs: UserDefaults]
+>
+bq. *Comparison:* Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
+>
+bq. *Key Takeaway:* When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
+>
+bq. *Source:* [https://developer.android.com/reference/android/content/SharedPreferences|Android Dev Docs: SharedPreferences], [https://developer.apple.com/documentation/foundation/userdefaults|Apple Dev Docs: UserDefaults]
 
 The Context API is a valuable tool in your React toolkit for managing state that needs to be shared across many components. Used judiciously, it can simplify your component structure and make your application easier to maintain.
 
 bq. 📚 *Official Documentation:*
-> - [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Context - Passing Data Deeply]
-- [https://react.dev/reference/react/useContext|React Docs: Hooks - `useContext`]
-- [https://react.dev/reference/react/createContext|React Docs: `React.createContext`]
+>
+bq. - [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Context - Passing Data Deeply]
+bq. - [https://react.dev/reference/react/useContext|React Docs: Hooks - `useContext`]
+bq. - [https://react.dev/reference/react/createContext|React Docs: `React.createContext`]
 
 ----
 

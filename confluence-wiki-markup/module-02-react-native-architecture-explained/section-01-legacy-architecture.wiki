@@ -21,9 +21,26 @@ Think of the Bridge as a communication channel connecting the JavaScript Thread 
 
 *Bridge Communication Process Diagram*
 
-[https://mermaid.ink/svg/sequenceDiagram%0A%20%20%20%20participant%20JS%20as%20JavaScript%20Thread%0A%20%20%20%20participant%20Bridge%20as%20Bridge%0A%20%20%20%20participant%20Native%20as%20Native%20Thread%0A%0A%20%20%20%20JS-%3E%3EBridge%3A%201.%20Send%20message%20(e.g.%2C%20%22Create%20Button%22)%0A%20%20%20%20Note%20over%20Bridge%3A%202.%20Serialize%20to%20JSON%0A%20%20%20%20Bridge-%3E%3ENative%3A%203.%20Transfer%20serialized%20message%0A%20%20%20%20Note%20over%20Native%3A%204.%20Deserialize%20JSON%0A%20%20%20%20Native-%3E%3ENative%3A%205.%20Execute%20native%20UI%20operation%0A%0A%20%20%20%20Native-%3E%3EBridge%3A%206.%20Send%20event%20(e.g.%2C%20%22Button%20Pressed%22)%0A%20%20%20%20Note%20over%20Bridge%3A%207.%20Serialize%20to%20JSON%0A%20%20%20%20Bridge-%3E%3EJS%3A%208.%20Transfer%20serialized%20event%0A%20%20%20%20Note%20over%20JS%3A%209.%20Deserialize%20JSON%0A%20%20%20%20JS-%3E%3EJS%3A%2010.%20Update%20React%20state|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+sequenceDiagram
+    participant JS as JavaScript Thread
+    participant Bridge as Bridge
+    participant Native as Native Thread
 
-_(Interactive diagram - click to view)_
+    JS->>Bridge: 1. Send message (e.g., "Create Button")
+    Note over Bridge: 2. Serialize to JSON
+    Bridge->>Native: 3. Transfer serialized message
+    Note over Native: 4. Deserialize JSON
+    Native->>Native: 5. Execute native UI operation
+
+    Native->>Bridge: 6. Send event (e.g., "Button Pressed")
+    Note over Bridge: 7. Serialize to JSON
+    Bridge->>JS: 8. Transfer serialized event
+    Note over JS: 9. Deserialize JSON
+    JS->>JS: 10. Update React state
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the key steps in Bridge communication. When a React component, such as a button in our SpeedyMeds app for refilling a prescription, needs to be rendered, the request originates in the JavaScript Thread (1). This request, containing information like the button's properties and style, is sent to the Bridge. The Bridge then serializes this data into a JSON string (2) to prepare it for inter-process communication. This serialized message is subsequently transferred to the Native Thread (3). On the native side, the message is deserialized from JSON back into a format the native platform can understand (4), and then the corresponding native UI operation is executed to create and display the actual button on the screen (5).
 
@@ -37,35 +54,47 @@ Communication across the Bridge was fundamentally *asynchronous*, *serialized*, 
 # *Batched:* To avoid flooding the Bridge with too many small messages (which would be inefficient), React Native often batched multiple operations together into a single message sent across the Bridge, typically at the end of each iteration of the JavaScript event loop.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/architecture/glossary#bridge|React Native Glossary: Bridge]
-- [https://reactnative.dev/architecture/glossary#threading-model|React Native Glossary: Threading Model]
-- [https://yogalayout.com/|Yoga Layout Engine]
-- [https://reactnative.dev/docs/communication-android|Understanding the React Native Bridge Concept]
-> 🗂️ *Additional Resources:*
-> - [https://reactnative.dev/docs/performance#javascript-frame-rate|JavaScript Thread Performance]
-- [https://medium.com/react-native-training/react-native-internals-a-tour-of-the-codebase-811c3c3b6b1e|Deep Dive into React Native Internals]
+>
+bq. - [https://reactnative.dev/architecture/glossary#bridge|React Native Glossary: Bridge]
+bq. - [https://reactnative.dev/architecture/glossary#threading-model|React Native Glossary: Threading Model]
+bq. - [https://yogalayout.com/|Yoga Layout Engine]
+bq. - [https://reactnative.dev/docs/communication-android|Understanding the React Native Bridge Concept]
+>
+bq. 🗂️ *Additional Resources:*
+>
+bq. - [https://reactnative.dev/docs/performance#javascript-frame-rate|JavaScript Thread Performance]
+bq. - [https://medium.com/react-native-training/react-native-internals-a-tour-of-the-codebase-811c3c3b6b1e|Deep Dive into React Native Internals]
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* This asynchronous, message-passing approach is different from directly calling Java/Kotlin methods from C++ via JNI, which can be synchronous. The serialization step adds overhead not typically present in direct JNI calls.
-> *Key Takeaway:* The Bridge introduces inherent latency due to its asynchronous nature and the need for serialization/deserialization, unlike potentially faster, synchronous JNI interactions.
-> *Source:* [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
+>
+bq. *Comparison:* This asynchronous, message-passing approach is different from directly calling Java/Kotlin methods from C++ via JNI, which can be synchronous. The serialization step adds overhead not typically present in direct JNI calls.
+>
+bq. *Key Takeaway:* The Bridge introduces inherent latency due to its asynchronous nature and the need for serialization/deserialization, unlike potentially faster, synchronous JNI interactions.
+>
+bq. *Source:* [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* While Objective-C/Swift bridging allows communication between languages, the React Native Bridge imposes a specific asynchronous, JSON-based protocol. Directly calling native APIs from JavaScript isn't possible in the way you might call Swift code from Objective-C.
-> *Key Takeaway:* The Bridge acts as a necessary but potentially bottlenecking intermediary, unlike the more direct (though still rule-bound) interoperability between Objective-C and Swift.
-> *Source:* [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
+>
+bq. *Comparison:* While Objective-C/Swift bridging allows communication between languages, the React Native Bridge imposes a specific asynchronous, JSON-based protocol. Directly calling native APIs from JavaScript isn't possible in the way you might call Swift code from Objective-C.
+>
+bq. *Key Takeaway:* The Bridge acts as a necessary but potentially bottlenecking intermediary, unlike the more direct (though still rule-bound) interoperability between Objective-C and Swift.
+>
+bq. *Source:* [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
 
 bq. ⚛️ *(React Developers):*
-> *Comparison:* Unlike React for web where your JavaScript directly manipulates the DOM, React Native's Bridge creates a significant barrier between your JavaScript code and the native UI elements it controls. This asynchronous communication model means that UI updates in React Native follow a fundamentally different path than in web React.
-> *Key Takeaway:* Actions that are instant in React web can face small delays in React Native due to Bridge crossing, which can affect animations and gestures in particular.
-> *Source:* [https://react.dev/reference/react-dom/client/createRoot|React DOM Rendering | React Documentation]
+>
+bq. *Comparison:* Unlike React for web where your JavaScript directly manipulates the DOM, React Native's Bridge creates a significant barrier between your JavaScript code and the native UI elements it controls. This asynchronous communication model means that UI updates in React Native follow a fundamentally different path than in web React.
+>
+bq. *Key Takeaway:* Actions that are instant in React web can face small delays in React Native due to Bridge crossing, which can affect animations and gestures in particular.
+>
+bq. *Source:* [https://react.dev/reference/react-dom/client/createRoot|React DOM Rendering | React Documentation]
 
 h2. Limitations of the Bridge:
 
 While functional, the Bridge architecture presented several challenges for pharmacy apps like SpeedyMeds:
 # *Performance Bottlenecks:* The asynchronous nature meant delays. Heavy traffic across the Bridge (e.g., rapid UI updates during animations, large data transfers) could lead to performance issues, dropped frames, and a less responsive feel. The serialization/deserialization process also added computational overhead. For SpeedyMeds, this could impact the smoothness of scrolling through long medication lists or animating between patient record screens.
 # *The "Bridge Tax":* Every interaction between JS and native incurred the cost of serialization, crossing the asynchronous boundary, and deserialization. When retrieving large datasets like medication records or patient histories, this overhead could accumulate quickly.
-# *Asynchronicity Constraints:* The inherently asynchronous nature made certain UI patterns difficult to implement correctly. For example, measuring a view's layout using {{onLayout}} was asynchronous. This meant the layout information might arrive _after_ the component had already rendered, sometimes causing a visual "jump" as the layout corrected itself. This could affect precision layouts needed for medication dosage information or prescription details.
+# *Asynchronicity Constraints:* The inherently asynchronous nature made certain UI patterns difficult to implement correctly. For example, measuring a view's layout using `onLayout` was asynchronous. This meant the layout information might arrive _after_ the component had already rendered, sometimes causing a visual "jump" as the layout corrected itself. This could affect precision layouts needed for medication dosage information or prescription details.
 # *Threading Issues & Single-Threaded JS:* JavaScript itself is single-threaded. Heavy computations running on the JS thread could block the processing of incoming messages from the native side or delay sending UI updates across the Bridge. Coordinating between these threads via the asynchronous Bridge could be complex and prone to synchronization problems. For healthcare apps with complex calculations (like drug interaction checking), this could lead to UI freezes.
 # *Type Safety:* Passing data as JSON strings meant losing type information at the boundary, potentially leading to runtime errors if the data wasn't handled carefully on both sides. For pharmacy data with specific formats (dosages, medication identifiers), this introduced potential points of failure.
 # *Limited Synchronous Access:* It was difficult or impossible for JavaScript to synchronously call native methods and get an immediate result, which is sometimes necessary for certain calculations or initial setup. For authentication or secure data access needed in healthcare apps, this could complicate implementation.

@@ -43,8 +43,9 @@ h2. Build Process & Environment
 Mobile development involves native build toolchains (Xcode for iOS, Gradle/Android Studio for Android), simulators/emulators, and device provisioning, which are different from typical web deployment workflows. Expo significantly simplifies this.
 
 bq. 📚 *Further Reading:*
-> - [https://hygraph.com/blog/react-vs-react-native|React vs. React Native: What are the differences? - Hygraph]
-- [https://reactnative.dev/docs/style|Styles - React Native]
+>
+bq. - [https://hygraph.com/blog/react-vs-react-native|React vs. React Native: What are the differences? - Hygraph]
+bq. - [https://reactnative.dev/docs/style|Styles - React Native]
 
 h2. For Native Mobile Developers (iOS/Android)
 
@@ -80,7 +81,8 @@ h2. Build Tools & Abstraction
 While you understand the underlying native build processes, React Native (especially with Expo) adds layers of abstraction and its own CLI tools and bundlers (like Metro).
 
 bq. 📚 *Further Reading:*
-> - [https://dev.to/amazonappdev/an-android-developers-guide-to-react-native-j66|An Android Developer's Guide to React Native - DEV Community]
-- [https://www.obytes.com/blog/transitioning-from-ios-to-react-native-a-developers-guide|Transitioning from iOS to React Native: A Developer's Guide] (Example resource, many such guides exist)
+>
+bq. - [https://dev.to/amazonappdev/an-android-developers-guide-to-react-native-j66|An Android Developer's Guide to React Native - DEV Community]
+bq. - [https://www.obytes.com/blog/transitioning-from-ios-to-react-native-a-developers-guide|Transitioning from iOS to React Native: A Developer's Guide] (Example resource, many such guides exist)
 
 Understanding these parallels and differences will help you leverage your existing expertise while adapting to React Native's unique development model.

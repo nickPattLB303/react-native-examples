@@ -434,5 +434,6 @@ The following table provides a quick reference for the common validation rules d
 |`pattern`|`{ value: RegExp, message: string }`|`pattern: { value: /^\d+$/, message: 'Numbers only' }`|"Pattern does not match"|
 |`validate`|`function` or `object_of_functions`|`validate: value => value === 'test' \|\|'Must be test'`|(No default, message comes from function)|
 bq. 📚 *Official Documentation:*
-> - [https://react-hook-form.com/docs/useform/register#validation|React Hook Form - Validation (`register` rules, applicable to `Controller` `rules` prop)]
-- [https://react-hook-form.com/docs/useform/formstate|React Hook Form - `formState` (for errors)]
+>
+bq. - [https://react-hook-form.com/docs/useform/register#validation|React Hook Form - Validation (`register` rules, applicable to `Controller` `rules` prop)]
+bq. - [https://react-hook-form.com/docs/useform/formstate|React Hook Form - `formState` (for errors)]

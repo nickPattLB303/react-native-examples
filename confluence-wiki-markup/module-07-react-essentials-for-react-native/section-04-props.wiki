@@ -279,22 +279,33 @@ When React's JSX transpiler (like Babel) processes a component tag such as `<MyC
 As part of this transformation, all the attributes (like `propA` and `propB`) and their corresponding values are collected into a single JavaScript object. This object _is_ the `props` object. It is then passed as the first argument to the `MyComponent` function (if it's a functional component) or made available as `this.props` on the instance of `MyComponent` (if it's a class component). This mechanism is how components receive their configuration and data from their parents.
 
 bq. ⚛️ *(Web Developers with React Experience):*
-> *Comparison:* Props work identically in React Native as they do in React for the web. The concepts of passing data down, read-only nature, `props.children`, default props, and prop typing with TypeScript (or PropTypes in older JavaScript projects) are all the same.
-> *Key Takeaway:* Your understanding of React props is directly applicable here.
-> *Source:* [https://react.dev/learn/passing-props-to-a-component|React Docs: Passing Props to a Component]
+>
+bq. *Comparison:* Props work identically in React Native as they do in React for the web. The concepts of passing data down, read-only nature, `props.children`, default props, and prop typing with TypeScript (or PropTypes in older JavaScript projects) are all the same.
+>
+bq. *Key Takeaway:* Your understanding of React props is directly applicable here.
+>
+bq. *Source:* [https://react.dev/learn/passing-props-to-a-component|React Docs: Passing Props to a Component]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
-> *Comparison:* Props are similar to `@Input()` properties in Angular components. They are the primary way to pass data into a component from its parent. React's data flow is strictly unidirectional (parent to child via props), whereas Angular supports two-way data binding (though one-way is often preferred).
-> *Key Takeaway:* Focus on the unidirectional data flow. Data comes into a component via props, and the component treats these props as read-only.
-> *Source:* [https://angular.io/guide/component-interaction#pass-data-from-parent-to-child-with-input-binding|Angular Docs: Pass data from parent to child with input binding]
+>
+bq. *Comparison:* Props are similar to `@Input()` properties in Angular components. They are the primary way to pass data into a component from its parent. React's data flow is strictly unidirectional (parent to child via props), whereas Angular supports two-way data binding (though one-way is often preferred).
+>
+bq. *Key Takeaway:* Focus on the unidirectional data flow. Data comes into a component via props, and the component treats these props as read-only.
+>
+bq. *Source:* [https://angular.io/guide/component-interaction#pass-data-from-parent-to-child-with-input-binding|Angular Docs: Pass data from parent to child with input binding]
 
 bq. 📲 *(Native Developers - Android/iOS):*
-> *Comparison:* Props in React are how you pass data to configure your UI components. This is conceptually similar to how you might pass data when initializing a View or ViewController in native development, or how you set properties on an object to configure it after creation.
-> - 🤖 *Android Developers:* Think of props like the arguments you pass in a `Bundle` to a `Fragment` using `fragment.setArguments(bundle)`, or data passed to an `Activity` via `Intent extras`. When you inflate a custom View from XML, attributes you define in XML are like initial props for that View.
-- 🍏 *iOS Developers:* This is similar to passing parameters during the initialization of a `UIViewController` (e.g., in a custom `init` method) or setting properties on a `UIView` subclass after creating it. When using Segues, the `prepare(for:sender:)` method is where you'd typically access the destination view controller and set its properties (pass data).
-> The key difference is React's strict unidirectional data flow (parent to child) for props. For child-to-parent communication, React uses a pattern where the parent passes a callback function as a prop to the child.
-> *Key Takeaway:* Props are the input data that determines what a component renders and how it behaves. They are the primary way to customize and configure reusable UI components from their parents in React Native.
-> *Source:* [https://developer.android.com/training/basics/firstapp/starting-activity#BuildIntent|Android Dev Docs: Pass data between activities], [https://developer.apple.com/documentation/uikit/view_controllers/passing_data_between_view_controllers|Apple Dev Docs: Passing Data between View Controllers]
+>
+bq. *Comparison:* Props in React are how you pass data to configure your UI components. This is conceptually similar to how you might pass data when initializing a View or ViewController in native development, or how you set properties on an object to configure it after creation.
+>
+bq. - 🤖 *Android Developers:* Think of props like the arguments you pass in a `Bundle` to a `Fragment` using `fragment.setArguments(bundle)`, or data passed to an `Activity` via `Intent extras`. When you inflate a custom View from XML, attributes you define in XML are like initial props for that View.
+bq. - 🍏 *iOS Developers:* This is similar to passing parameters during the initialization of a `UIViewController` (e.g., in a custom `init` method) or setting properties on a `UIView` subclass after creating it. When using Segues, the `prepare(for:sender:)` method is where you'd typically access the destination view controller and set its properties (pass data).
+>
+bq. The key difference is React's strict unidirectional data flow (parent to child) for props. For child-to-parent communication, React uses a pattern where the parent passes a callback function as a prop to the child.
+>
+bq. *Key Takeaway:* Props are the input data that determines what a component renders and how it behaves. They are the primary way to customize and configure reusable UI components from their parents in React Native.
+>
+bq. *Source:* [https://developer.android.com/training/basics/firstapp/starting-activity#BuildIntent|Android Dev Docs: Pass data between activities], [https://developer.apple.com/documentation/uikit/view_controllers/passing_data_between_view_controllers|Apple Dev Docs: Passing Data between View Controllers]
 
 Here's a table summarizing how React props compare to some common native data passing mechanisms:
 
@@ -304,9 +315,10 @@ Here's a table summarizing how React props compare to some common native data pa
 Props are a cornerstone of building reusable and maintainable React components. By understanding how to effectively pass and utilize props, you can create a flexible and well-structured UI for your SpeedyMeds application.
 
 bq. 📚 *Official Documentation:*
-> - [https://react.dev/learn/passing-props-to-a-component|React Docs: Passing Props to a Component]
-- [https://react.dev/learn/typescript#typing-props|React Docs: Typing Props (using TypeScript)]
-- [https://react.dev/reference/react/Children|React Docs: `React.Children` Utilities] (For advanced manipulation of `props.children`)
+>
+bq. - [https://react.dev/learn/passing-props-to-a-component|React Docs: Passing Props to a Component]
+bq. - [https://react.dev/learn/typescript#typing-props|React Docs: Typing Props (using TypeScript)]
+bq. - [https://react.dev/reference/react/Children|React Docs: `React.Children` Utilities] (For advanced manipulation of `props.children`)
 
 ----
 

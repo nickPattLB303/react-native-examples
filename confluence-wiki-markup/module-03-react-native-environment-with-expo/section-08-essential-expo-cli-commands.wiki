@@ -12,15 +12,52 @@ bq. 🧗‍♀️ *(Self-Led):* Create a command reference card or cheat sheet w
 
 h2. Expo CLI Command Workflow
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Project%20Creation%22%0A%20%20%20%20%20%20%20%20A%5B%22npx%20create-expo-app%22%5D%20--%3E%20B%5B%22New%20Project%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Development%20Workflow%22%0A%20%20%20%20%20%20%20%20B%20--%3E%20C%5B%22npx%20expo%20start%22%5D%0A%20%20%20%20%20%20%20%20C%20--%3E%20D%5B%22Metro%20Server%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D1%5B%22Press%20i%3A%20iOS%20Simulator%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D2%5B%22Press%20a%3A%20Android%20Emulator%22%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%20D3%5B%22Scan%20QR%3A%20Expo%20Go%22%5D%0A%0A%20%20%20%20%20%20%20%20B%20--%3E%20E%5B%22npx%20expo%20run%3Aios%2Fandroid%22%5D%0A%20%20%20%20%20%20%20%20E%20--%3E%20F%5B%22Native%20Build%22%5D%0A%20%20%20%20%20%20%20%20F%20--%3E%20G%5B%22Simulator%2FEmulator%22%5D%0A%0A%20%20%20%20%20%20%20%20H%5B%22npx%20expo%20install%20pkg%22%5D%20--%3E%20I%5B%22Compatible%20Dependencies%22%5D%0A%20%20%20%20%20%20%20%20I%20--%3E%20C%0A%20%20%20%20%20%20%20%20I%20--%3E%20E%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Configuration%20%26%20Maintenance%22%0A%20%20%20%20%20%20%20%20B%20--%3E%20J%5B%22npx%20expo%20prebuild%22%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%20K%5B%22iOS%2FAndroid%20Folders%22%5D%0A%20%20%20%20%20%20%20%20K%20--%3E%20E%0A%0A%20%20%20%20%20%20%20%20L%5B%22npx%20expo%20config%22%5D%20--%3E%20M%5B%22View%20Config%22%5D%0A%20%20%20%20%20%20%20%20N%5B%22npx%20expo%20doctor%22%5D%20--%3E%20O%5B%22Diagnose%20Issues%22%5D%0A%20%20%20%20%20%20%20%20P%5B%22npx%20expo%20upgrade%22%5D%20--%3E%20Q%5B%22Update%20SDK%22%5D%0A%20%20%20%20%20%20%20%20R%5B%22npx%20expo%20customize%22%5D%20--%3E%20S%5B%22Config%20Templates%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20C%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20E%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20H%20fill%3A%23d4f1f9%2Cstroke%3A%23333%0A%20%20%20%20style%20N%20fill%3A%23ffe6cc%2Cstroke%3A%23333|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph "Project Creation"
+        A["npx create-expo-app"] --> B["New Project"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph "Development Workflow"
+        B --> C["npx expo start"]
+        C --> D["Metro Server"]
+        D --> D1["Press i: iOS Simulator"]
+        D --> D2["Press a: Android Emulator"]
+        D --> D3["Scan QR: Expo Go"]
 
-This diagram illustrates the relationships between key Expo CLI commands and their roles in the development workflow. The blue highlighted commands ({{start}}, {{run:ios}}/{{run:android}}, and {{install}}) are your core daily development commands, while the orange {{doctor}} command is especially useful for troubleshooting issues.
+        B --> E["npx expo run:ios/android"]
+        E --> F["Native Build"]
+        F --> G["Simulator/Emulator"]
+
+        H["npx expo install pkg"] --> I["Compatible Dependencies"]
+        I --> C
+        I --> E
+    end
+
+    subgraph "Configuration & Maintenance"
+        B --> J["npx expo prebuild"]
+        J --> K["iOS/Android Folders"]
+        K --> E
+
+        L["npx expo config"] --> M["View Config"]
+        N["npx expo doctor"] --> O["Diagnose Issues"]
+        P["npx expo upgrade"] --> Q["Update SDK"]
+        R["npx expo customize"] --> S["Config Templates"]
+    end
+
+    style C fill:#d4f1f9,stroke:#333
+    style E fill:#d4f1f9,stroke:#333
+    style H fill:#d4f1f9,stroke:#333
+    style N fill:#ffe6cc,stroke:#333
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
+
+This diagram illustrates the relationships between key Expo CLI commands and their roles in the development workflow. The blue highlighted commands (`start`, `run:ios`/`run:android`, and `install`) are your core daily development commands, while the orange `doctor` command is especially useful for troubleshooting issues.
 
 h2. Core Development Commands
 
-*1. {{npx expo start}}*
+*1. `npx expo start`*
 
 Starts the Metro development server, which bundles your JavaScript code, serves assets, and enables Fast Refresh.
 
@@ -28,34 +65,34 @@ h2. Role
 
 Runs Metro, provides a QR code, opens Dev Tools GUI, offers terminal UI options.
 h2. Common Options
-* {{--dev-client}}: Starts the server for a Development Build.
-* {{--go}}: Explicitly starts the server for Expo Go.
-* {{--offline}}: Attempts to start offline (may fail if caches aren't populated).
-* {{--clear}}: Clears the Metro cache before starting.
-* {{--port <number>}}: Use a specific port number.
-* {{--tunnel}}: Creates a public URL using Expo's tunnel service (via ngrok) to share or connect when not on the same network. Modern Expo CLI versions will prompt to install {{ngrok}} if required and not already available.
-* {{-a}}, {{-i}}, {{-w}}: Shortcut flags to attempt opening on Android, iOS, or Web automatically after starting.
+* `--dev-client`: Starts the server for a Development Build.
+* `--go`: Explicitly starts the server for Expo Go.
+* `--offline`: Attempts to start offline (may fail if caches aren't populated).
+* `--clear`: Clears the Metro cache before starting.
+* `--port <number>`: Use a specific port number.
+* `--tunnel`: Creates a public URL using Expo's tunnel service (via ngrok) to share or connect when not on the same network. Modern Expo CLI versions will prompt to install `ngrok` if required and not already available.
+* `-a`, `-i`, `-w`: Shortcut flags to attempt opening on Android, iOS, or Web automatically after starting.
 h2. Usage
 
-{{npx expo start}} (Defaults to Expo Go mode)
+`npx expo start` (Defaults to Expo Go mode)
 
-*2. {{npx expo run:[ios|android]}}*
+*2. `npx expo run:[ios|android]`*
 
 Builds the native project locally and runs it on a simulator/emulator or connected physical device.
 
 h2. Role
 
-Orchestrates native build tools (Xcodebuild, Gradle), installs dependencies (CocoaPods, Maven), builds the {{.app}}/{{.apk}}, installs, and launches.
+Orchestrates native build tools (Xcodebuild, Gradle), installs dependencies (CocoaPods, Maven), builds the `.app`/`.apk`, installs, and launches.
 h2. Common Options
-* {{--device [name|udid]}}: Target a specific physical device.
-* {{--simulator "Simulator Name"}} (iOS): Target a specific simulator (use {{xcrun simctl list devices}} to see names).
-* {{--variant [debug|release]}} (Android): Specify build variant.
-* {{--no-bundler}}: Builds and installs the app but does not start the Metro server.
+* `--device [name|udid]`: Target a specific physical device.
+* `--simulator "Simulator Name"` (iOS): Target a specific simulator (use `xcrun simctl list devices` to see names).
+* `--variant [debug|release]` (Android): Specify build variant.
+* `--no-bundler`: Builds and installs the app but does not start the Metro server.
 h2. Usage
 
-{{npx expo run:ios}} or {{npx expo run:android}}
+`npx expo run:ios` or `npx expo run:android`
 
-*3. {{npx expo install [package...]}}*
+*3. `npx expo install [package...]`*
 
 Installs JavaScript dependencies, ensuring versions are compatible with your project's Expo SDK.
 
@@ -64,44 +101,44 @@ h2. Role
 Checks Expo's compatibility map and instructs npm/yarn/pnpm to install the correct version. Essential for avoiding version mismatches with native modules.
 h2. Usage
 
-{{npx expo install package-name another-package}}
+`npx expo install package-name another-package`
 
 {note}
-Always use {{npx expo install}} over {{npm install}}/{{yarn add}} when adding libraries, especially those with native code.
+Always use `npx expo install` over `npm install`/`yarn add` when adding libraries, especially those with native code.
 {note}
 h2. Project Configuration & Maintenance
 
-*4. {{npx expo prebuild}}*
+*4. `npx expo prebuild`*
 
-Generates the native {{ios}} and {{android}} project directories based on {{app.json}}/{{app.config.js}} and installed config plugins. This is the core of *Continuous Native Generation (CNG)*.
+Generates the native `ios` and `android` project directories based on `app.json`/`app.config.js` and installed config plugins. This is the core of *Continuous Native Generation (CNG)*.
 
 h2. Role
 
-Reads Expo config, applies config plugins, creates/updates native project files ({{Info.plist}}, {{AndroidManifest.xml}}, build files, etc.).
+Reads Expo config, applies config plugins, creates/updates native project files (`Info.plist`, `AndroidManifest.xml`, build files, etc.).
 h2. Common Options
-* {{--platform [ios|android]}}: Generate only for a specific platform.
-* {{--clean}}: Deletes existing {{ios}}/{{android}} directories before generating.
-* {{--no-install}}: Skips running {{pod install}} after generating the {{ios}} directory.
-* {{--template <name|path>}}: Use a specific native project template (advanced).
+* `--platform [ios|android]`: Generate only for a specific platform.
+* `--clean`: Deletes existing `ios`/`android` directories before generating.
+* `--no-install`: Skips running `pod install` after generating the `ios` directory.
+* `--template <name|path>`: Use a specific native project template (advanced).
 h2. Usage
 
-{{npx expo prebuild}} (usually run automatically by {{run:*}} commands if needed, but can be run manually).
+`npx expo prebuild` (usually run automatically by `run:*` commands if needed, but can be run manually).
 
-*5. {{npx expo config}}*
+*5. `npx expo config`*
 
-Inspects the fully resolved configuration of your project after processing {{app.json}}/{{app.config.js}} and config plugins.
+Inspects the fully resolved configuration of your project after processing `app.json`/`app.config.js` and config plugins.
 
 h2. Role
 
 Useful for debugging configuration issues or seeing the final values that will be used during prebuild or builds.
 h2. Common Options
-* {{--type [public|prebuild|introspect]}}: Shows different views of the config ({{public}} is the static JSON, {{prebuild}} shows values used for native generation, {{introspect}} shows plugin details).
-* {{-p [ios|android]}}: Show platform-specific config.
+* `--type [public|prebuild|introspect]`: Shows different views of the config (`public` is the static JSON, `prebuild` shows values used for native generation, `introspect` shows plugin details).
+* `-p [ios|android]`: Show platform-specific config.
 h2. Usage
 
-{{npx expo config}} or {{npx expo config --type prebuild -p ios}}
+`npx expo config` or `npx expo config --type prebuild -p ios`
 
-*6. {{npx expo doctor}}*
+*6. `npx expo doctor`*
 
 Diagnoses potential issues with your project setup, dependencies, or environment.
 
@@ -110,66 +147,72 @@ h2. Role
 Checks for common problems like mismatched versions, missing dependencies, or environment setup issues.
 h2. Usage
 
-{{npx expo doctor}}
+`npx expo doctor`
 
-*7. {{npx expo upgrade}}*
+*7. `npx expo upgrade`*
 
 Upgrades your project's Expo SDK version and attempts to install compatible versions of core dependencies.
 
 h2. Role
 
-Modifies {{package.json}}, installs new versions using {{npx expo install}}. Read the upgrade guide for the target SDK version carefully before running.
+Modifies `package.json`, installs new versions using `npx expo install`. Read the upgrade guide for the target SDK version carefully before running.
 h2. Usage
 
-{{npx expo upgrade}} (Upgrades to the latest supported SDK) or {{npx expo upgrade <sdk-version>}}
+`npx expo upgrade` (Upgrades to the latest supported SDK) or `npx expo upgrade <sdk-version>`
 
-*8. {{npx expo customize [file]}}*
+*8. `npx expo customize [file]`*
 
-Copies default configuration files (like {{metro.config.js}}, {{babel.config.js}}, {{app.config.js}}) into your project for customization.
+Copies default configuration files (like `metro.config.js`, `babel.config.js`, `app.config.js`) into your project for customization.
 
 h2. Role
 
 Provides a starting point if you need to modify default build tool configurations.
 h2. Usage
 
-{{npx expo customize metro.config.js}}
+`npx expo customize metro.config.js`
 
 h2. Expo Account Management (for EAS)
 
-*9. {{npx expo login}} / {{logout}} / {{whoami}}*
+*9. `npx expo login` / `logout` / `whoami`*
 
 Manages authentication with your Expo account, which is required for using Expo Application Services (EAS).
 
 h2. Role
 
-{{login}} prompts for credentials, {{logout}} clears credentials, {{whoami}} shows the currently logged-in user.
+`login` prompts for credentials, `logout` clears credentials, `whoami` shows the currently logged-in user.
 h2. Usage
 
-{{npx expo login}}
+`npx expo login`
 
 h2. Summary Table
 
 ||Command||Primary Purpose||
-|{{npx expo start}}|Start Metro dev server, enable Fast Refresh, provide QR code/UI|
-|{{npx expo run:[ios\|android]}}|Build native project locally, run on simulator/emulator/device|
-|{{npx expo install [pkg...]}}|Install dependencies with Expo SDK compatibility checks|
-|{{npx expo prebuild}}|Generate/update native {{ios}}/{{android}} projects from config (CNG)|
-|{{npx expo config}}|Inspect resolved project configuration|
-|{{npx expo doctor}}|Diagnose project setup issues|
-|{{npx expo upgrade}}|Upgrade project to a newer Expo SDK version|
-|{{npx expo customize [file]}}|Copy default config files for customization|
-|{{npx expo login/logout/whoami}}|Manage Expo account session (for EAS)|
+|`npx expo start`|Start Metro dev server, enable Fast Refresh, provide QR code/UI|
+|`npx expo run:[ios\|android]`|Build native project locally, run on simulator/emulator/device|
+|`npx expo install [pkg...]`|Install dependencies with Expo SDK compatibility checks|
+|`npx expo prebuild`|Generate/update native `ios`/`android` projects from config (CNG)|
+|`npx expo config`|Inspect resolved project configuration|
+|`npx expo doctor`|Diagnose project setup issues|
+|`npx expo upgrade`|Upgrade project to a newer Expo SDK version|
+|`npx expo customize [file]`|Copy default config files for customization|
+|`npx expo login/logout/whoami`|Manage Expo account session (for EAS)|
 bq. 📲 *(Native Developers):*
-> *Comparison:* {{start}} manages Metro (like running {{react-native start}} but integrated). {{run:*}} orchestrates {{xcodebuild}}/{{gradlew}}. {{install}} is a package manager wrapper with version validation. {{prebuild}} automates native project generation based on JS config (akin to code generation tools). {{config}} introspects this generation process. {{doctor}} is a diagnostic tool.
-> *Key Takeaway:* Expo CLI wraps and extends native tools and package managers with Expo-specific logic and workflows (like CNG and compatibility checks).
-> *Source:* [https://docs.expo.dev/workflow/ios-simulator/|Expo Docs: Developing with the iOS Simulator]
+>
+bq. *Comparison:* `start` manages Metro (like running `react-native start` but integrated). `run:*` orchestrates `xcodebuild`/`gradlew`. `install` is a package manager wrapper with version validation. `prebuild` automates native project generation based on JS config (akin to code generation tools). `config` introspects this generation process. `doctor` is a diagnostic tool.
+>
+bq. *Key Takeaway:* Expo CLI wraps and extends native tools and package managers with Expo-specific logic and workflows (like CNG and compatibility checks).
+>
+bq. *Source:* [https://docs.expo.dev/workflow/ios-simulator/|Expo Docs: Developing with the iOS Simulator]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* {{start}} is like your {{npm run dev}} or {{vite}} command. {{run:*}} has no direct web equivalent but involves native compilation similar to a build process. {{install}} is {{npm install}} plus safety checks, like using a smart package manager that knows about compatibility. {{prebuild}}/{{config}} relate to generating the underlying native app structure from your config, somewhat analogous to how webpack might generate optimized bundles from your configuration.
-> *Key Takeaway:* Familiar concepts ({{start}}, {{install}}) have native-specific enhancements ({{run:*}}, {{prebuild}}, compatibility checks).
-> *Source:* [https://facebook.github.io/metro/|Metro Bundler Documentation] - The bundler under the hood of {{npx expo start}}
+>
+bq. *Comparison:* `start` is like your `npm run dev` or `vite` command. `run:*` has no direct web equivalent but involves native compilation similar to a build process. `install` is `npm install` plus safety checks, like using a smart package manager that knows about compatibility. `prebuild`/`config` relate to generating the underlying native app structure from your config, somewhat analogous to how webpack might generate optimized bundles from your configuration.
+>
+bq. *Key Takeaway:* Familiar concepts (`start`, `install`) have native-specific enhancements (`run:*`, `prebuild`, compatibility checks).
+>
+bq. *Source:* [https://facebook.github.io/metro/|Metro Bundler Documentation] - The bundler under the hood of `npx expo start`
 
-bq. 🔁 *(Asynchronous Learners):* Focus on remembering the most essential commands first: {{start}}, {{run:ios}}/{{run:android}}, and {{install}}. Once you're comfortable with those, gradually incorporate the maintenance commands like {{doctor}} and {{upgrade}} as needed. Creating a reference sheet with example usages will be helpful.
+bq. 🔁 *(Asynchronous Learners):* Focus on remembering the most essential commands first: `start`, `run:ios`/`run:android`, and `install`. Once you're comfortable with those, gradually incorporate the maintenance commands like `doctor` and `upgrade` as needed. Creating a reference sheet with example usages will be helpful.
 
 h2. Using Commands in SpeedyMeds Development
 
@@ -258,8 +301,9 @@ This code snippet illustrates a `MedicationScanScreen` component for the SpeedyM
 Mastering these commands provides a solid foundation for your daily Expo development workflow.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/more/expo-cli/|Expo Docs: Expo CLI Reference]
-- [https://docs.expo.dev/more/expo-cli/#npx-expo-start|Expo Docs: CLI commands list]
-- [https://docs.expo.dev/guides/customizing-metro/|Expo Docs: Metro Bundler Configuration]
-- [https://docs.expo.dev/versions/latest/config/app/|Expo Docs: Configuration system]
-- [https://facebook.github.io/metro/|Metro Bundler Documentation]
+>
+bq. - [https://docs.expo.dev/more/expo-cli/|Expo Docs: Expo CLI Reference]
+bq. - [https://docs.expo.dev/more/expo-cli/#npx-expo-start|Expo Docs: CLI commands list]
+bq. - [https://docs.expo.dev/guides/customizing-metro/|Expo Docs: Metro Bundler Configuration]
+bq. - [https://docs.expo.dev/versions/latest/config/app/|Expo Docs: Configuration system]
+bq. - [https://facebook.github.io/metro/|Metro Bundler Documentation]

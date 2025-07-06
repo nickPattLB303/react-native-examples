@@ -74,9 +74,9 @@ Designed to be mostly API-compatible with {{FlatList}}, making migration relativ
 If you encounter performance issues with {{FlatList}} even after applying standard optimizations, consider trying {{FlashList}}. It often provides noticeable improvements, especially for lists with complex items or frequent updates.
 {tip}
 bq. 📲 *(Native Developers):*
-*Comparison:* {{FlatList}} and {{FlashList}} implement virtualization and view recycling, concepts similar to {{UITableView}} with cell reuse ({{dequeueReusableCell(withIdentifier:)}}) on iOS and {{RecyclerView}} with {{ViewHolder}} recycling on Android. {{FlashList}}, in particular, aims for highly efficient view recycling.
-*Key Takeaway:* The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
-*Source:* {{[https://developer.apple.com/documentation/uikit/uitableview|Apple Developer Docs: UITableView]}}, {{[https://developer.android.com/guide/topics/ui/layout/recyclerview|Android Developer Docs: RecyclerView]}}
+bq. *Comparison:* {{FlatList}} and {{FlashList}} implement virtualization and view recycling, concepts similar to {{UITableView}} with cell reuse ({{dequeueReusableCell(withIdentifier:)}}) on iOS and {{RecyclerView}} with {{ViewHolder}} recycling on Android. {{FlashList}}, in particular, aims for highly efficient view recycling.
+bq. *Key Takeaway:* The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
+bq. *Source:* {{[https://developer.apple.com/documentation/uikit/uitableview|Apple Developer Docs: UITableView]}}, {{[https://developer.android.com/guide/topics/ui/layout/recyclerview|Android Developer Docs: RecyclerView]}}
 
 h2. Procedural Content: Implementing Optimized Lists
 
@@ -361,10 +361,11 @@ To use `FlashList`, you install `@shopify/flash-list` and import it. The main ch
 When implementing `getItemLayout`, ensure the `length` you provide is accurate. Incorrect values can lead to jumpy scrolling or items not rendering correctly.
 {warning}
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/flatlist|React Native Docs: `FlatList`]
-- [https://reactnative.dev/docs/sectionlist|React Native Docs: `SectionList`]
-- [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]
-- [https://shopify.github.io/flash-list/|Shopify Performance: `FlashList`]
-- [https://docs.expo.dev/versions/latest/sdk/flash-list/|Expo Docs: `FlashList` with Expo]
+>
+bq. - [https://reactnative.dev/docs/flatlist|React Native Docs: `FlatList`]
+bq. - [https://reactnative.dev/docs/sectionlist|React Native Docs: `SectionList`]
+bq. - [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]
+bq. - [https://shopify.github.io/flash-list/|Shopify Performance: `FlashList`]
+bq. - [https://docs.expo.dev/versions/latest/sdk/flash-list/|Expo Docs: `FlashList` with Expo]
 
 By applying these list optimization techniques, you can ensure that even extensive lists in the SpeedyMeds app, like a patient's entire medication history or a large pharmacy inventory, scroll smoothly and efficiently.

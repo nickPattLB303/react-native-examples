@@ -245,23 +245,30 @@ The following table provides a quick reference for some of the most important pr
 Configuring `eas.json` thoughtfully is a critical step in establishing a robust and reliable build pipeline for your React Native application using EAS.
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* Think of `eas.json` as a high-level configuration layer that sits on top of your project's native build files (like `build.gradle` for Android or Xcode project settings such as `.xcscheme` files and `Info.plist` for iOS). It doesn't entirely replace these native configuration files but rather controls how EAS Build interacts with them and sets up the overall build environment. Properties within `eas.json` such as `buildConfiguration` (for iOS) or `gradleCommand` (for Android) often map directly to concepts you're familiar with in native development.
-> *Key Takeaway:* `eas.json` provides declarative control over your Android build environment (JDK, NDK, Gradle commands) and outputs (`apk` vs. `aab`), abstracting much of the underlying complexity while still allowing deep customization.
+>
+bq. *Comparison:* Think of `eas.json` as a high-level configuration layer that sits on top of your project's native build files (like `build.gradle` for Android or Xcode project settings such as `.xcscheme` files and `Info.plist` for iOS). It doesn't entirely replace these native configuration files but rather controls how EAS Build interacts with them and sets up the overall build environment. Properties within `eas.json` such as `buildConfiguration` (for iOS) or `gradleCommand` (for Android) often map directly to concepts you're familiar with in native development.
+>
+bq. *Key Takeaway:* `eas.json` provides declarative control over your Android build environment (JDK, NDK, Gradle commands) and outputs (`apk` vs. `aab`), abstracting much of the underlying complexity while still allowing deep customization.
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* `eas.json` acts like a central hub for defining your various Xcode build configurations (`Debug`, `Release`) and build settings (like target simulator or device, specific Xcode image) for cloud builds. It translates your desired setup into instructions for the EAS Build service, which then executes the necessary `xcodebuild` commands in a managed environment.
-> *Key Takeaway:* You use `eas.json` to specify how your iOS app should be built in the cloud, including which Xcode version to use, whether it's a simulator or device build, and if it's for development, enterprise, or App Store distribution.
+>
+bq. *Comparison:* `eas.json` acts like a central hub for defining your various Xcode build configurations (`Debug`, `Release`) and build settings (like target simulator or device, specific Xcode image) for cloud builds. It translates your desired setup into instructions for the EAS Build service, which then executes the necessary `xcodebuild` commands in a managed environment.
+>
+bq. *Key Takeaway:* You use `eas.json` to specify how your iOS app should be built in the cloud, including which Xcode version to use, whether it's a simulator or device build, and if it's for development, enterprise, or App Store distribution.
 
 bq. 🌐 *(Web Developers - React/Angular):*
-> *Comparison:* The build profiles defined in `eas.json` are analogous to the different build configurations or environments you might manage in a web project (e.g., distinct configurations for development, staging, and production builds in a `webpack.config.js` file or an `angular.json` workspace configuration). A key difference is that `eas.json` also dictates aspects of the cloud infrastructure used for the build, such as the virtual machine size (`resourceClass`) and the operating system image, which is a layer of control not typically present in web build configurations that focus solely on asset bundling and optimization.
-> *Key Takeaway:* `eas.json` is where you define _how_ your mobile app is built in the cloud, including environment variables, target platforms, and specific build tool versions, similar to CI/CD configuration files but tailored for mobile.
+>
+bq. *Comparison:* The build profiles defined in `eas.json` are analogous to the different build configurations or environments you might manage in a web project (e.g., distinct configurations for development, staging, and production builds in a `webpack.config.js` file or an `angular.json` workspace configuration). A key difference is that `eas.json` also dictates aspects of the cloud infrastructure used for the build, such as the virtual machine size (`resourceClass`) and the operating system image, which is a layer of control not typically present in web build configurations that focus solely on asset bundling and optimization.
+>
+bq. *Key Takeaway:* `eas.json` is where you define _how_ your mobile app is built in the cloud, including environment variables, target platforms, and specific build tool versions, similar to CI/CD configuration files but tailored for mobile.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/build/eas-json/|Expo Docs: Configure EAS Build with `eas.json`]
-- [https://docs.expo.dev/eas/json/|Expo Docs: `eas.json` Full Schema Reference]
-- [https://docs.expo.dev/build/profiles/|Expo Docs: Build profiles]
-- [https://docs.expo.dev/build/variables/|Expo Docs: Environment variables and secrets in builds]
-- [https://docs.expo.dev/build-reference/infrastructure/|Expo Docs: Build server infrastructure (Available Images)]
+>
+bq. - [https://docs.expo.dev/build/eas-json/|Expo Docs: Configure EAS Build with `eas.json`]
+bq. - [https://docs.expo.dev/eas/json/|Expo Docs: `eas.json` Full Schema Reference]
+bq. - [https://docs.expo.dev/build/profiles/|Expo Docs: Build profiles]
+bq. - [https://docs.expo.dev/build/variables/|Expo Docs: Environment variables and secrets in builds]
+bq. - [https://docs.expo.dev/build-reference/infrastructure/|Expo Docs: Build server infrastructure (Available Images)]
 
 bq. 🧗‍♀️ *(Self-Led):* Before attempting the following exercise, try creating your own `eas.json` file based on what you've learned. Compare your configuration with the examples provided. If you're uncertain about certain properties, refer back to the property summary table above or consult the official documentation.
 

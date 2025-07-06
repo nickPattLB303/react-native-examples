@@ -194,14 +194,17 @@ This `PrescriptionCard` component showcases a sophisticated interactive element 
 This combination of direct manipulation during the `onActive` phase (dragging and rotating) and a physics-based animation on `onEnd` (spring-back) results in an engaging and polished user experience, demonstrating the power of using Gesture Handler and Reanimated in tandem.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* This pattern of capturing gesture data (like translation or velocity) and using it to drive animation parameters is very similar to how you might implement custom interactive animations on iOS (e.g., with `UIPanGestureRecognizer` and `UIViewPropertyAnimator`) or Android (e.g., `GestureDetector` and `ObjectAnimator` or spring physics).
-> *Key Takeaway:* Reanimated and Gesture Handler provide a high-level, declarative way to achieve complex, physics-based interactions that feel native, managing the UI thread updates for you.
+>
+bq. *Comparison:* This pattern of capturing gesture data (like translation or velocity) and using it to drive animation parameters is very similar to how you might implement custom interactive animations on iOS (e.g., with `UIPanGestureRecognizer` and `UIViewPropertyAnimator`) or Android (e.g., `GestureDetector` and `ObjectAnimator` or spring physics).
+>
+bq. *Key Takeaway:* Reanimated and Gesture Handler provide a high-level, declarative way to achieve complex, physics-based interactions that feel native, managing the UI thread updates for you.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/events#using-usedeclarativegesturehandler|React Native Reanimated - Combining with Gesture Handler]
-- [https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/overview|React Native Gesture Handler - Overview]
-- [https://docs.swmansion.com/react-native-reanimated/docs/utilities/interpolate|React Native Reanimated - `interpolate`]
-- [https://docs.swmansion.com/react-native-reanimated/docs/animations/with-spring|React Native Reanimated - `withSpring`]
+>
+bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/events#using-usedeclarativegesturehandler|React Native Reanimated - Combining with Gesture Handler]
+bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/overview|React Native Gesture Handler - Overview]
+bq. - [https://docs.swmansion.com/react-native-reanimated/docs/utilities/interpolate|React Native Reanimated - `interpolate`]
+bq. - [https://docs.swmansion.com/react-native-reanimated/docs/animations/with-spring|React Native Reanimated - `withSpring`]
 
 h2. Next Steps
 

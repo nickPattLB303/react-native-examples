@@ -17,42 +17,81 @@ There isn't a direct one-to-one mapping for every HTML element, but common web e
 * {{<a>}}: There's no direct equivalent. Hyperlinks are typically implemented using {{<Text>}} styled appropriately and an {{onPress}} handler using the {{Linking}} module to open URLs.
 * {{<ul>}}, {{<ol>}}, {{<li>}}: Map to {{<FlatList>}} or {{<SectionList>}}. These components are optimized for displaying scrolling lists of data. You render list items using {{<View>}}, {{<Text>}}, and other components within the list's {{renderItem}} prop.
 
-[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20%22HTML%20Elements%22%0A%20%20%20%20%20%20%20%20H_DIV%5B%22%26lt%3Bdiv%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_SPAN%5B%22%26lt%3Bspan%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_P%5B%22%26lt%3Bp%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_H1%5B%22%26lt%3Bh1%26gt%3B-%26lt%3Bh6%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_TEXT_SPAN%5B%22%26lt%3Bspan%26gt%3B%20(text)%22%5D%0A%20%20%20%20%20%20%20%20H_IMG%5B%22%26lt%3Bimg%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_INPUT%5B%22%26lt%3Binput%20type%3D'text'%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_BUTTON%5B%22%26lt%3Bbutton%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_A%5B%22%26lt%3Ba%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20H_LIST%5B%22%26lt%3Bul%26gt%3B%2F%26lt%3Bol%26gt%3B%2F%26lt%3Bli%26gt%3B%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22React%20Native%20Components%22%0A%20%20%20%20%20%20%20%20RN_VIEW%5B%22%26lt%3BView%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXT%5B%22%26lt%3BText%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_IMAGE%5B%22%26lt%3BImage%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXTINPUT%5B%22%26lt%3BTextInput%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_BUTTON%5B%22%26lt%3BButton%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_PRESSABLE%5B%22%26lt%3BPressable%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TEXT_PRESS%5B%22%26lt%3BText%26gt%3B%20%2B%20onPress%22%5D%0A%20%20%20%20%20%20%20%20RN_FLATLIST%5B%22%26lt%3BFlatList%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_SECTIONLIST%5B%22%26lt%3BSectionList%26gt%3B%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20H_DIV%20--%3E%20RN_VIEW%0A%20%20%20%20H_SPAN%20--%3E%20RN_VIEW%0A%20%20%20%20H_P%20--%3E%20RN_TEXT%0A%20%20%20%20H_H1%20--%3E%20RN_TEXT%0A%20%20%20%20H_TEXT_SPAN%20--%3E%20RN_TEXT%0A%20%20%20%20H_IMG%20--%3E%20RN_IMAGE%0A%20%20%20%20H_INPUT%20--%3E%20RN_TEXTINPUT%0A%20%20%20%20H_BUTTON%20--%3E%20RN_BUTTON%0A%20%20%20%20H_BUTTON%20--%3E%20RN_PRESSABLE%0A%20%20%20%20H_A%20--%3E%20RN_TEXT_PRESS%0A%20%20%20%20H_LIST%20--%3E%20RN_FLATLIST%0A%20%20%20%20H_LIST%20--%3E%20RN_SECTIONLIST|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph LR
+    subgraph "HTML Elements"
+        H_DIV["&lt;div&gt;"]
+        H_SPAN["&lt;span&gt;"]
+        H_P["&lt;p&gt;"]
+        H_H1["&lt;h1&gt;-&lt;h6&gt;"]
+        H_TEXT_SPAN["&lt;span&gt; (text)"]
+        H_IMG["&lt;img&gt;"]
+        H_INPUT["&lt;input type='text'&gt;"]
+        H_BUTTON["&lt;button&gt;"]
+        H_A["&lt;a&gt;"]
+        H_LIST["&lt;ul&gt;/&lt;ol&gt;/&lt;li&gt;"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph "React Native Components"
+        RN_VIEW["&lt;View&gt;"]
+        RN_TEXT["&lt;Text&gt;"]
+        RN_IMAGE["&lt;Image&gt;"]
+        RN_TEXTINPUT["&lt;TextInput&gt;"]
+        RN_BUTTON["&lt;Button&gt;"]
+        RN_PRESSABLE["&lt;Pressable&gt;"]
+        RN_TEXT_PRESS["&lt;Text&gt; + onPress"]
+        RN_FLATLIST["&lt;FlatList&gt;"]
+        RN_SECTIONLIST["&lt;SectionList&gt;"]
+    end
 
-This diagram visualizes the conceptual mapping between common HTML elements and their React Native component counterparts. On the left are HTML elements grouped by their purpose (containers, text, media, etc.). The arrows show how these map to React Native Core Components on the right. Notice how several HTML elements can map to a single React Native component (e.g., multiple text-based HTML elements map to {{<Text>}}, and lists map to either {{<FlatList>}} or {{<SectionList>}}). This illustrates how React Native consolidates functionality into a more focused set of components while still providing the capabilities needed to build sophisticated mobile UIs. The mapping is conceptual rather than exact, reflecting how web developers can translate their mental models when moving to React Native development.
+    H_DIV --> RN_VIEW
+    H_SPAN --> RN_VIEW
+    H_P --> RN_TEXT
+    H_H1 --> RN_TEXT
+    H_TEXT_SPAN --> RN_TEXT
+    H_IMG --> RN_IMAGE
+    H_INPUT --> RN_TEXTINPUT
+    H_BUTTON --> RN_BUTTON
+    H_BUTTON --> RN_PRESSABLE
+    H_A --> RN_TEXT_PRESS
+    H_LIST --> RN_FLATLIST
+    H_LIST --> RN_SECTIONLIST
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
+
+This diagram visualizes the conceptual mapping between common HTML elements and their React Native component counterparts. On the left are HTML elements grouped by their purpose (containers, text, media, etc.). The arrows show how these map to React Native Core Components on the right. Notice how several HTML elements can map to a single React Native component (e.g., multiple text-based HTML elements map to `<Text>`, and lists map to either `<FlatList>` or `<SectionList>`). This illustrates how React Native consolidates functionality into a more focused set of components while still providing the capabilities needed to build sophisticated mobile UIs. The mapping is conceptual rather than exact, reflecting how web developers can translate their mental models when moving to React Native development.
 
 *Table: Conceptual Mapping of Common Web Elements to React Native Components*
 
 This table summarizes the common conceptual mappings.
 
 ||HTML Element||React Native Core Component(s)||Notes||
-|{{<div>}}|{{<View>}}|Fundamental container for layout and grouping.|
-|{{<img>}}|{{<Image>}}|Displays images (local/network).|
-|{{<input type="text">}}|{{<TextInput>}}|For user text input.|
-|{{<button>}}|{{<Button>}}, {{<Pressable>}}|For user interactions (taps). {{<Pressable>}} is more customizable.|
-|{{<a>}} (link)|{{<Text>}} + {{Linking}}|Styled {{<Text>}} with {{onPress}} handler using {{Linking}} API.|
-|{{<ul>}}, {{<ol>}}, {{<li>}}|{{<FlatList>}}, {{<SectionList>}}|Efficiently renders scrolling lists of data using custom item components.|
+|`<div>`|`<View>`|Fundamental container for layout and grouping.|
+|`<img>`|`<Image>`|Displays images (local/network).|
+|`<input type="text">`|`<TextInput>`|For user text input.|
+|`<button>`|`<Button>`, `<Pressable>`|For user interactions (taps). `<Pressable>` is more customizable.|
+|`<a>` (link)|`<Text>` + `Linking`|Styled `<Text>` with `onPress` handler using `Linking` API.|
+|`<ul>`, `<ol>`, `<li>`|`<FlatList>`, `<SectionList>`|Efficiently renders scrolling lists of data using custom item components.|
 h3. Mapping CSS Concepts to React Native StyleSheet
 
-React Native uses JavaScript objects, typically created via the {{StyleSheet.create}} method, to define styles for components. This is the standard and recommended approach.
+React Native uses JavaScript objects, typically created via the `StyleSheet.create` method, to define styles for components. This is the standard and recommended approach.
 
-*Benefits of {{StyleSheet.create}}:*
+*Benefits of `StyleSheet.create`:*
 
-Using {{StyleSheet.create}} offers several advantages over defining styles inline directly within the component's JSX:
+Using `StyleSheet.create` offers several advantages over defining styles inline directly within the component's JSX:
 
 h2. Performance
 
-It allows React Native to perform optimizations. Style objects are assigned unique IDs, and in the legacy architecture, only these IDs were sent across the communication bridge between JavaScript and the native side. While the new architecture (Fabric) changes some of these dynamics, {{StyleSheet.create}} still allows for styles to be processed and potentially optimized ahead of time. This can lead to performance improvements, especially in complex applications with many styled components.
+It allows React Native to perform optimizations. Style objects are assigned unique IDs, and in the legacy architecture, only these IDs were sent across the communication bridge between JavaScript and the native side. While the new architecture (Fabric) changes some of these dynamics, `StyleSheet.create` still allows for styles to be processed and potentially optimized ahead of time. This can lead to performance improvements, especially in complex applications with many styled components.
 h2. Organization & Maintainability
 
 It promotes better code organization by separating styling concerns from the component's rendering logic. This makes the code easier to read, maintain, and reuse. Styles are defined in a centralized, static manner, which helps in understanding the component's appearance at a glance.
 h2. Error Detection
 
-{{StyleSheet.create}} can also help validate your style declarations at compile time or soon after, catching typos or invalid property values early.
+`StyleSheet.create` can also help validate your style declarations at compile time or soon after, catching typos or invalid property values early.
 
-*Example {{StyleSheet.create}} Usage:*
+*Example `StyleSheet.create` Usage:*
 
 {code:language=js}
 import { StyleSheet } from "react-native";
@@ -273,20 +312,25 @@ export default App;
 This example illustrates how to use `StyleSheet` to control the sizing and spacing of elements according to the Box Model principles, which is fundamental for structuring UI layouts in React Native.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]
-- [https://reactnative.dev/docs/style|React Native Docs: Style]
-- [https://reactnative.dev/docs/layout-props|React Native Docs: Layout with Flexbox] (Note: URL updated as `/flexbox` redirects to `/layout-props` which covers flex)
-- [https://reactnative.dev/docs/view-style-props|React Native Docs: View Style Props]
-- [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Style Props]
-- [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
+>
+bq. - [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]
+bq. - [https://reactnative.dev/docs/style|React Native Docs: Style]
+bq. - [https://reactnative.dev/docs/layout-props|React Native Docs: Layout with Flexbox] (Note: URL updated as `/flexbox` redirects to `/layout-props` which covers flex)
+bq. - [https://reactnative.dev/docs/view-style-props|React Native Docs: View Style Props]
+bq. - [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Style Props]
+bq. - [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* The mapping feels intuitive but requires adjusting to JavaScript syntax (camelCase, objects) and the absence of cascading/complex selectors. The biggest paradigm shift is often the `flexDirection: 'column'` default and the strict requirement to wrap all text in `<Text>`.
-> *Key Takeaway:* Reuse your understanding of component structure and CSS properties (especially Flexbox), but adapt to the `StyleSheet` API, camelCase syntax, unitless dimensions, and React Native's specific defaults and component requirements.
+>
+bq. *Comparison:* The mapping feels intuitive but requires adjusting to JavaScript syntax (camelCase, objects) and the absence of cascading/complex selectors. The biggest paradigm shift is often the `flexDirection: 'column'` default and the strict requirement to wrap all text in `<Text>`.
+>
+bq. *Key Takeaway:* Reuse your understanding of component structure and CSS properties (especially Flexbox), but adapt to the `StyleSheet` API, camelCase syntax, unitless dimensions, and React Native's specific defaults and component requirements.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* You'll recognize the mapping of elements to native views. The `StyleSheet` approach might feel different from XML layouts or programmatic constraints/frames. Think of `StyleSheet` as defining attributes for your views (like setting `backgroundColor`, `width`, `height` in native code), but centralized in JavaScript. Flexbox becomes your primary tool for positioning and sizing, replacing systems like Auto Layout or ConstraintLayout for most common scenarios.
-> *Key Takeaway:* React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
+>
+bq. *Comparison:* You'll recognize the mapping of elements to native views. The `StyleSheet` approach might feel different from XML layouts or programmatic constraints/frames. Think of `StyleSheet` as defining attributes for your views (like setting `backgroundColor`, `width`, `height` in native code), but centralized in JavaScript. Flexbox becomes your primary tool for positioning and sizing, replacing systems like Auto Layout or ConstraintLayout for most common scenarios.
+>
+bq. *Key Takeaway:* React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
 
 h3. Example: Basic Card Layout (React Native)
 

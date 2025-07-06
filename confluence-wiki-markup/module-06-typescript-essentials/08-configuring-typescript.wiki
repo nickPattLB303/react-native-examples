@@ -69,9 +69,10 @@ For most cases, especially when starting, it's best to rely on the default `tsco
 If you ever need to reset your `tsconfig.json` or create one for an existing JavaScript project you're migrating to TypeScript with Expo, you can often regenerate it or refer to the Expo documentation.
 
 bq. 📚 *Official Documentation:*
-> - [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html|TypeScript Handbook: `tsconfig.json`]
-- [https://www.typescriptlang.org/tsconfig|TypeScript Compiler Options Reference]
-- [https://docs.expo.dev/guides/typescript/|Expo: Using TypeScript (includes `tsconfig.json` info)]
-- [https://reactnative.dev/docs/typescript#using-custom-path-aliases-with-typescript|React Native Docs: Using Custom Path Aliases with TypeScript] (Explains `babel-plugin-module-resolver` setup)
+>
+bq. - [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html|TypeScript Handbook: `tsconfig.json`]
+bq. - [https://www.typescriptlang.org/tsconfig|TypeScript Compiler Options Reference]
+bq. - [https://docs.expo.dev/guides/typescript/|Expo: Using TypeScript (includes `tsconfig.json` info)]
+bq. - [https://reactnative.dev/docs/typescript#using-custom-path-aliases-with-typescript|React Native Docs: Using Custom Path Aliases with TypeScript] (Explains `babel-plugin-module-resolver` setup)
 
 While you might not interact with `tsconfig.json` daily, having a basic understanding of its purpose and key options helps in troubleshooting compilation issues and customizing your project's TypeScript behavior when necessary.

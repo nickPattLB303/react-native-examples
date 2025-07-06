@@ -168,18 +168,25 @@ The New Architecture, with Fabric and JSI, significantly changes this event prop
 This architectural evolution from the legacy bridge to JSI/Fabric for event propagation represents a pivotal advancement in React Native. It directly addresses one of the core challenges in cross-platform development: the speed and efficiency of communication between the JavaScript runtime and native platform capabilities. For developers, this translates to a more performant framework, but it's also important to understand the nuances. While JSI enables synchronous calls, the controlled component pattern (where JavaScript state dictates the `TextInput`'s `value` prop) still involves a round trip: native input change -> JSI -> JS `onChangeText` callback -> JS state update -> React re-render -> `value` prop updates native input. Even with JSI's speed, this loop isn't instantaneous. This can, in some scenarios with complex real-time formatting or masking, still lead to a perceptible delay or "flicker" where the native input might visually update momentarily before the JS-controlled value is re-applied. This subtlety highlights that while the communication mechanism is faster, the pattern of JS controlling native UI in real-time has inherent complexities.
 
 bq. 📲 *(Native Developers - Android/iOS):*
-> *Comparison:*
-> - *Android:* The `onChangeText` callback is analogous to implementing `android.text.TextWatcher` and using its `afterTextChanged(Editable s)` method. In `afterTextChanged`, `s.toString()` would provide the new text. React Native abstracts the listener registration and event handling, providing the string directly to your JS function.
-- *iOS:* `onChangeText` is similar in concept to the `UITextFieldDelegate` method `textField(_:shouldChangeCharactersIn:replacementString:)` or observing the `UITextField.textDidChangeNotification`. React Native manages the delegate pattern or notification subscription internally and surfaces the change as a direct string callback.
-> *Key Takeaway:* A key difference is that in React Native, you work directly with JavaScript strings in the callback, rather than native types like `CharSequence` (Android) or `NSString` (iOS).
+>
+bq. *Comparison:*
+>
+bq. - *Android:* The `onChangeText` callback is analogous to implementing `android.text.TextWatcher` and using its `afterTextChanged(Editable s)` method. In `afterTextChanged`, `s.toString()` would provide the new text. React Native abstracts the listener registration and event handling, providing the string directly to your JS function.
+bq. - *iOS:* `onChangeText` is similar in concept to the `UITextFieldDelegate` method `textField(_:shouldChangeCharactersIn:replacementString:)` or observing the `UITextField.textDidChangeNotification`. React Native manages the delegate pattern or notification subscription internally and surfaces the change as a direct string callback.
+>
+bq. *Key Takeaway:* A key difference is that in React Native, you work directly with JavaScript strings in the callback, rather than native types like `CharSequence` (Android) or `NSString` (iOS).
 
 bq. 🌐 *(Web Developers - React/Angular):*
-> *Comparison:*
-> - *React (Web):* The `onChangeText={(newText) => ...}` pattern in React Native is more direct than the typical web React approach for controlled inputs, which is `onChange={(event) => event.target.value}`. React Native\'s `onChangeText` directly provides the text string, eliminating the need to access it through an event object.
-- *Angular:* This is conceptually similar to handling the `(input)` event or `(ngModelChange)` event on an HTML `<input>` element and receiving the new value directly in the event handler.
-> *Key Takeaway:* The primary convenience for web developers is the directness of `onChangeText`, which bypasses the `event.target.value` boilerplate common in web forms.
+>
+bq. *Comparison:*
+>
+bq. - *React (Web):* The `onChangeText={(newText) => ...}` pattern in React Native is more direct than the typical web React approach for controlled inputs, which is `onChange={(event) => event.target.value}`. React Native\'s `onChangeText` directly provides the text string, eliminating the need to access it through an event object.
+bq. - *Angular:* This is conceptually similar to handling the `(input)` event or `(ngModelChange)` event on an HTML `<input>` element and receiving the new value directly in the event handler.
+>
+bq. *Key Takeaway:* The primary convenience for web developers is the directness of `onChangeText`, which bypasses the `event.target.value` boilerplate common in web forms.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/textinput#onchangetext|React Native Docs: `TextInput` (onChangeText prop)]
-- [https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface|React Native New Architecture: JSI]
-- [https://reactnative.dev/docs/the-new-architecture/pillars-fabric|React Native New Architecture: Fabric]
+>
+bq. - [https://reactnative.dev/docs/textinput#onchangetext|React Native Docs: `TextInput` (onChangeText prop)]
+bq. - [https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface|React Native New Architecture: JSI]
+bq. - [https://reactnative.dev/docs/the-new-architecture/pillars-fabric|React Native New Architecture: Fabric]

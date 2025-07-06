@@ -44,9 +44,44 @@ SpeedyMedsPrototype/
 └── tsconfig.json            # Config: TypeScript compiler configuration
 {code}
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20ProjectRoot%5BSpeedyMedsPrototype%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotExpo%5B.expo%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotGit%5B.git%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20DotGitignore%5Bgitignore%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AppDir%5Bapp%2F%5D%0A%20%20%20%20AppDir%20--%3E%20AppLayout%5B_layout.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppIndex%5Bindex.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppModal%5Bmodal.tsx%5D%0A%20%20%20%20AppDir%20--%3E%20AppTabsDir%5B(tabs)%2F%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsLayout%5B_layout.tsx%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsIndex%5Bindex.tsx%5D%0A%20%20%20%20AppTabsDir%20--%3E%20TabsTwo%5Btwo.tsx%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AssetsDir%5Bassets%2F%5D%0A%20%20%20%20AssetsDir%20--%3E%20ImagesDir%5Bimages%2F%5D%0A%20%20%20%20AssetsDir%20--%3E%20FontsDir%5Bfonts%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20ComponentsDir%5Bcomponents%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20ConstantsDir%5Bconstants%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20NodeModules%5Bnode_modules%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20PublicDir%5Bpublic%2F%5D%0A%20%20%20%20ProjectRoot%20--%3E%20AppJson%5Bapp.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20BabelConfig%5Bbabel.config.js%5D%0A%20%20%20%20ProjectRoot%20--%3E%20EASJson%5Beas.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20MetroConfig%5Bmetro.config.js%5D%0A%20%20%20%20ProjectRoot%20--%3E%20PackageJson%5Bpackage.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20LockFile%5Byarn.lock%20%2F%20package-lock.json%5D%0A%20%20%20%20ProjectRoot%20--%3E%20TsconfigJson%5Btsconfig.json%5D%0A%0A%20%20%20%20style%20DotExpo%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20DotGit%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20NodeModules%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20LockFile%20fill%3A%23eee%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20EASJson%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A1px%0A%20%20%20%20style%20MetroConfig%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A1px|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    ProjectRoot[SpeedyMedsPrototype/]
+    ProjectRoot --> DotExpo[.expo/]
+    ProjectRoot --> DotGit[.git/]
+    ProjectRoot --> DotGitignore[gitignore]
+    ProjectRoot --> AppDir[app/]
+    AppDir --> AppLayout[_layout.tsx]
+    AppDir --> AppIndex[index.tsx]
+    AppDir --> AppModal[modal.tsx]
+    AppDir --> AppTabsDir[(tabs)/]
+    AppTabsDir --> TabsLayout[_layout.tsx]
+    AppTabsDir --> TabsIndex[index.tsx]
+    AppTabsDir --> TabsTwo[two.tsx]
+    ProjectRoot --> AssetsDir[assets/]
+    AssetsDir --> ImagesDir[images/]
+    AssetsDir --> FontsDir[fonts/]
+    ProjectRoot --> ComponentsDir[components/]
+    ProjectRoot --> ConstantsDir[constants/]
+    ProjectRoot --> NodeModules[node_modules/]
+    ProjectRoot --> PublicDir[public/]
+    ProjectRoot --> AppJson[app.json]
+    ProjectRoot --> BabelConfig[babel.config.js]
+    ProjectRoot --> EASJson[eas.json]
+    ProjectRoot --> MetroConfig[metro.config.js]
+    ProjectRoot --> PackageJson[package.json]
+    ProjectRoot --> LockFile[yarn.lock / package-lock.json]
+    ProjectRoot --> TsconfigJson[tsconfig.json]
 
-_(Interactive diagram - click to view)_
+    style DotExpo fill:#eee,stroke:#333,stroke-width:1px
+    style DotGit fill:#eee,stroke:#333,stroke-width:1px
+    style NodeModules fill:#eee,stroke:#333,stroke-width:1px
+    style LockFile fill:#eee,stroke:#333,stroke-width:1px
+    style EASJson fill:#f9f,stroke:#333,stroke-width:1px
+    style MetroConfig fill:#f9f,stroke:#333,stroke-width:1px
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the standard folder hierarchy within a new Expo project created using the default Expo Router template (`SpeedyMedsPrototype`). Key directories like `app/` (containing screen routes and layouts), `assets/`, `components/`, and `constants/` hold your source code and resources. Configuration files such as `app.json`, `package.json`, and `tsconfig.json` define project settings and dependencies. Other folders like `.expo/`, `.git/`, and `node_modules/` are typically generated or managed by development tools and version control. Understanding the roles of these core directories, especially the `app/` directory for routing and `app.json` for configuration, is fundamental to navigating and building your application effectively with Expo.
 
@@ -434,25 +469,32 @@ h2. Expo's Abstraction Approach
 
 This structure highlights Expo's philosophy: manage native configuration primarily through `app.json`/`app.config.js` and Expo Router's file-based system, using `prebuild` to generate the native projects as needed. This simplifies the developer experience, especially for those without deep native platform expertise.
 
-bq. [!TIP] > *Understanding Centralized Configuration and Continuous Native Generation (CNG)*
-The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling *Continuous Native Generation (CNG)*. With CNG, the `ios` and `android/` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
+> [!TIP] > *Understanding Centralized Configuration and Continuous Native Generation (CNG)*
+bq. The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling *Continuous Native Generation (CNG)*. With CNG, the `ios` and `android/` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* `app.json`/`app.config.js` replaces direct editing of `Info.plist`/`AndroidManifest.xml` for many common settings. Config Plugins handle more complex native modifications programmatically. The `ios/` and `android/` folders are treated like build outputs, not primary source code, unless you specifically move away from the CNG workflow. Expo Router replaces manual setup of native navigation containers (like `UINavigationController` or Android Fragments/Activities for navigation structure).
-> *Key Takeaway:* Configuration is centralized in JS/JSON; native projects are generated artifacts.
-> *Source:* [https://docs.expo.dev/config-plugins/introduction/|Expo Config Plugins Documentation]
+>
+bq. *Comparison:* `app.json`/`app.config.js` replaces direct editing of `Info.plist`/`AndroidManifest.xml` for many common settings. Config Plugins handle more complex native modifications programmatically. The `ios/` and `android/` folders are treated like build outputs, not primary source code, unless you specifically move away from the CNG workflow. Expo Router replaces manual setup of native navigation containers (like `UINavigationController` or Android Fragments/Activities for navigation structure).
+>
+bq. *Key Takeaway:* Configuration is centralized in JS/JSON; native projects are generated artifacts.
+>
+bq. *Source:* [https://docs.expo.dev/config-plugins/introduction/|Expo Config Plugins Documentation]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Expo Router's `app/` directory feels similar to file-based routing in frameworks like Next.js or Remix. `app.json` is like a mix of `package.json` metadata and build configurations specific to mobile apps. The `ios/`/`android/` folders are analogous to a complex build output directory (`dist/`, `build/`) that you wouldn't typically edit directly.
-> *Key Takeaway:* File-based routing in `app/`, central configuration in `app.json`, native folders are generated.
-> *Source:* [https://nextjs.org/docs/app/building-your-application/routing|Next.js App Router Documentation]
+>
+bq. *Comparison:* Expo Router's `app/` directory feels similar to file-based routing in frameworks like Next.js or Remix. `app.json` is like a mix of `package.json` metadata and build configurations specific to mobile apps. The `ios/`/`android/` folders are analogous to a complex build output directory (`dist/`, `build/`) that you wouldn't typically edit directly.
+>
+bq. *Key Takeaway:* File-based routing in `app/`, central configuration in `app.json`, native folders are generated.
+>
+bq. *Source:* [https://nextjs.org/docs/app/building-your-application/routing|Next.js App Router Documentation]
 
 Understanding this structure, particularly the role of the `app/` directory and `app.json`, is key to developing effectively with Expo and Expo Router.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/router/basics/project-structure/|Expo Docs: Project Structure (Expo Router)]
-- [https://docs.expo.dev/versions/latest/config/app/|Expo Docs: Configuration with app.json / app.config.js]
-- [https://docs.expo.dev/workflow/continuous-native-generation/|Expo Docs: Continuous Native Generation (CNG)]
-- [https://docs.expo.dev/guides/customizing-metro/|Expo Docs: Customizing Metro]
-- [https://www.typescriptlang.org/tsconfig|TypeScript Documentation: tsconfig.json]
-- [https://reactnative.dev/docs/project-structure|React Native Docs: Project Structure] (General perspective)
+>
+bq. - [https://docs.expo.dev/router/basics/project-structure/|Expo Docs: Project Structure (Expo Router)]
+bq. - [https://docs.expo.dev/versions/latest/config/app/|Expo Docs: Configuration with app.json / app.config.js]
+bq. - [https://docs.expo.dev/workflow/continuous-native-generation/|Expo Docs: Continuous Native Generation (CNG)]
+bq. - [https://docs.expo.dev/guides/customizing-metro/|Expo Docs: Customizing Metro]
+bq. - [https://www.typescriptlang.org/tsconfig|TypeScript Documentation: tsconfig.json]
+bq. - [https://reactnative.dev/docs/project-structure|React Native Docs: Project Structure] (General perspective)

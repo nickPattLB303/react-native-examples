@@ -28,23 +28,61 @@ A configuration object that maps a name to a screen component and can include op
 
 Let's visualize how the stack navigator works with user interactions:
 
-[https://mermaid.ink/svg/sequenceDiagram%0A%20%20%20%20participant%20User%0A%20%20%20%20participant%20HomeScreen%0A%20%20%20%20participant%20StackNavigator%20as%20Stack%20Navigator%0A%20%20%20%20participant%20NavState%20as%20Navigation%20State%0A%20%20%20%20participant%20DetailScreen%0A%0A%20%20%20%20Note%20over%20NavState%3A%20Initial%20Stack%3A%20%5BHome%5D%0A%20%20%20%20User-%3E%3EHomeScreen%3A%20Opens%20App%0A%20%20%20%20HomeScreen-%3E%3EStackNavigator%3A%20Initialize%0A%20%20%20%20StackNavigator-%3E%3ENavState%3A%20Set%20initial%20route%3A%20%22Home%22%0A%20%20%20%20NavState--%3E%3EHomeScreen%3A%20Render%20screen%0A%0A%20%20%20%20User-%3E%3EHomeScreen%3A%20Taps%20%22Go%20to%20Details%22%20button%0A%20%20%20%20HomeScreen-%3E%3EStackNavigator%3A%20navigation.navigate(%22Detail%22%2C%20%7Bid%3A%20%22med123%22%7D)%0A%20%20%20%20StackNavigator-%3E%3ENavState%3A%20Push%20%22Detail%22%20screen%20onto%20stack%0A%20%20%20%20Note%20over%20NavState%3A%20Updated%20Stack%3A%20%5BHome%2C%20Detail%5D%0A%20%20%20%20NavState--%3E%3EDetailScreen%3A%20Render%20screen%20with%20params%20%7Bid%3A%20%22med123%22%7D%0A%0A%20%20%20%20User-%3E%3EDetailScreen%3A%20Taps%20back%20button%0A%20%20%20%20DetailScreen-%3E%3EStackNavigator%3A%20navigation.goBack()%0A%20%20%20%20StackNavigator-%3E%3ENavState%3A%20Pop%20top%20screen%20from%20stack%0A%20%20%20%20Note%20over%20NavState%3A%20Updated%20Stack%3A%20%5BHome%5D%0A%20%20%20%20NavState--%3E%3EHomeScreen%3A%20Render%20screen%0A%0A%20%20%20%20User-%3E%3EHomeScreen%3A%20Taps%20another%20%22Go%20to%20Details%22%20button%0A%20%20%20%20HomeScreen-%3E%3EStackNavigator%3A%20navigation.navigate(%22Detail%22%2C%20%7Bid%3A%20%22med456%22%7D)%0A%20%20%20%20StackNavigator-%3E%3ENavState%3A%20Push%20%22Detail%22%20screen%20onto%20stack%0A%20%20%20%20Note%20over%20NavState%3A%20Updated%20Stack%3A%20%5BHome%2C%20Detail%5D%0A%20%20%20%20NavState--%3E%3EDetailScreen%3A%20Render%20screen%20with%20params%20%7Bid%3A%20%22med456%22%7D%0A%0A%20%20%20%20User-%3E%3EDetailScreen%3A%20Taps%20%22View%20Related%22%20button%0A%20%20%20%20DetailScreen-%3E%3EStackNavigator%3A%20navigation.push(%22Detail%22%2C%20%7Bid%3A%20%22relatedMed789%22%7D)%0A%20%20%20%20StackNavigator-%3E%3ENavState%3A%20Push%20another%20%22Detail%22%20screen%20onto%20stack%0A%20%20%20%20Note%20over%20NavState%3A%20Updated%20Stack%3A%20%5BHome%2C%20Detail%2C%20Detail%5D%0A%20%20%20%20NavState--%3E%3EDetailScreen%3A%20Render%20new%20instance%20with%20params%20%7Bid%3A%20%22relatedMed789%22%7D|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+sequenceDiagram
+    participant User
+    participant HomeScreen
+    participant StackNavigator as Stack Navigator
+    participant NavState as Navigation State
+    participant DetailScreen
 
-_(Interactive diagram - click to view)_
+    Note over NavState: Initial Stack: [Home]
+    User->>HomeScreen: Opens App
+    HomeScreen->>StackNavigator: Initialize
+    StackNavigator->>NavState: Set initial route: "Home"
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med123"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med123"}
+
+    User->>DetailScreen: Taps back button
+    DetailScreen->>StackNavigator: navigation.goBack()
+    StackNavigator->>NavState: Pop top screen from stack
+    Note over NavState: Updated Stack: [Home]
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps another "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med456"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med456"}
+
+    User->>DetailScreen: Taps "View Related" button
+    DetailScreen->>StackNavigator: navigation.push("Detail", {id: "relatedMed789"})
+    StackNavigator->>NavState: Push another "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail, Detail]
+    NavState-->>DetailScreen: Render new instance with params {id: "relatedMed789"}
+
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the core operations of a stack navigator:
 # *Initial Rendering:* The app starts with HomeScreen on the stack.
-# *Navigation to a New Screen:* When a user taps "Go to Details," {{navigation.navigate()}} pushes the DetailScreen onto the stack with parameters.
-# *Going Back:* Tapping the back button triggers {{navigation.goBack()}}, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
-# *Navigate vs. Push:* The diagram also shows the difference between {{navigate()}} and {{push()}}:
-** {{navigate("Detail")}} will go to an existing "Detail" screen if it's already in the stack, but
-** {{push("Detail")}} will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
+# *Navigation to a New Screen:* When a user taps "Go to Details," `navigation.navigate()` pushes the DetailScreen onto the stack with parameters.
+# *Going Back:* Tapping the back button triggers `navigation.goBack()`, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
+# *Navigate vs. Push:* The diagram also shows the difference between `navigate()` and `push()`:
+** `navigate("Detail")` will go to an existing "Detail" screen if it's already in the stack, but
+** `push("Detail")` will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
 
 This stack-based navigation model is ideal for drill-down flows, where users explore progressively more detailed information and need a clear path to return to previous screens.
 
 h3. Procedural Content: Implementing a Basic Stack Navigator
 
-Let's create a simple two-screen stack for our SpeedyMeds app: a {{HomeScreen}} and a {{PrescriptionDetailScreen}}.
+Let's create a simple two-screen stack for our SpeedyMeds app: a `HomeScreen` and a `PrescriptionDetailScreen`.
 
 *1. Define Your Screen Components:*
 
@@ -128,7 +166,7 @@ import { RootStackParamList } from "./HomeScreen"; // Import the param list
 type PrescriptionDetailScreenProps = StackScreenProps<
   RootStackParamList,
   "PrescriptionDetail"
-bq. ;
+>;
 
 /**
 * Represents the prescription detail screen of the SpeedyMeds application.
@@ -266,18 +304,23 @@ This type definition helps React Navigation provide type checking for route name
 The keys in `RootStackParamList` (e.g., `Home`, `PrescriptionDetail`) MUST match the `name` prop of your `<Stack.Screen>` components.
 {note}
 bq. 📚 *Official Documentation:*
-> - [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator - React Navigation]
-- [https://reactnavigation.org/docs/navigating|Navigating to a new screen - React Navigation]
-- [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
-- [https://reactnavigation.org/docs/typescript/|TypeScript with React Navigation]
+>
+bq. - [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator - React Navigation]
+bq. - [https://reactnavigation.org/docs/navigating|Navigating to a new screen - React Navigation]
+bq. - [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
+bq. - [https://reactnavigation.org/docs/typescript/|TypeScript with React Navigation]
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
-> *Key Takeaway:* The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
+>
+bq. *Comparison:* `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
+>
+bq. *Key Takeaway:* The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
-> *Key Takeaway:* React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
+>
+bq. *Comparison:* This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
+>
+bq. *Key Takeaway:* React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
 
 h3. Referential Content: Key Stack Navigator Configuration Options
 

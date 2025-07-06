@@ -187,7 +187,8 @@ const handleRefillRequest: ButtonPressHandler = (eventTime, buttonId) => {
 {code}
 
 bq. 📚 *Official Documentation:*
-> - [https://www.typescriptlang.org/docs/handbook/2/functions.html|TypeScript Handbook: More on Functions]
-- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#function-type-expressions|TypeScript Handbook: Everyday Types (covers function types)]
+>
+bq. - [https://www.typescriptlang.org/docs/handbook/2/functions.html|TypeScript Handbook: More on Functions]
+bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#function-type-expressions|TypeScript Handbook: Everyday Types (covers function types)]
 
 Typed functions are a cornerstone of writing robust TypeScript code. They make your function contracts explicit, helping to prevent bugs and improve the overall maintainability of your SpeedyMeds application logic.

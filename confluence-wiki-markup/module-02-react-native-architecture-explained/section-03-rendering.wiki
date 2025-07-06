@@ -26,9 +26,44 @@ Fabric streamlines the rendering process by leveraging JSI and integrating layou
 
 *Diagram: Legacy vs. Fabric Rendering Flow*
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Legacy%20Rendering%22%0A%20%20%20%20%20%20%20%20A1%5BReact%20JS%20Code%5D%20--%3E%20B1%5BReact%20Element%20Tree%5D%0A%20%20%20%20%20%20%20%20B1%20--%3E%20C1%5B%22Bridge%20(Serialized%20JSON)%22%5D%0A%20%20%20%20%20%20%20%20C1%20--%3E%20D1%5B%22Shadow%20Thread%20(Yoga%20Layout)%22%5D%0A%20%20%20%20%20%20%20%20D1%20--%3E%20E1%5B%22Bridge%20(Serialized%20JSON)%22%5D%0A%20%20%20%20%20%20%20%20E1%20--%3E%20F1%5B%22Native%20UI%20Thread%20(UI%20Manager)%22%5D%0A%20%20%20%20%20%20%20%20F1%20--%3E%20G1%5B%22Native%20Views%20(UIView%2FViewGroup)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Fabric%20Rendering%22%0A%20%20%20%20%20%20%20%20A2%5BReact%20JS%20Code%5D%20--%3E%20B2%5BReact%20Element%20Tree%5D%0A%20%20%20%20%20%20%20%20B2%20--%3E%20C2%5B%22JSI%20(Direct%20C%2B%2B%20Calls)%22%5D%0A%20%20%20%20%20%20%20%20C2%20--%3E%20D2%5B%22C%2B%2B%20Shadow%20Tree%20Generation%22%5D%0A%20%20%20%20%20%20%20%20D2%20--%3E%20E2%5B%22Layout%20Calculation%20(C%2B%2B%20Yoga)%22%5D%0A%20%20%20%20%20%20%20%20E2%20--%3E%20F2%5B%22Diffing%20%26%20Mount%20Operations%22%5D%0A%20%20%20%20%20%20%20%20F2%20--%3E%20G2%5B%22Native%20Views%20(UIView%2FViewGroup)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20A1%20fill%3A%23D6EAF8%2Cstroke%3A%232E86C1%0A%20%20%20%20style%20B1%20fill%3A%23D6EAF8%2Cstroke%3A%232E86C1%0A%20%20%20%20style%20C1%20fill%3A%23FADBD8%2Cstroke%3A%23E74C3C%0A%20%20%20%20style%20D1%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20E1%20fill%3A%23FADBD8%2Cstroke%3A%23E74C3C%0A%20%20%20%20style%20F1%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20G1%20fill%3A%23FCF3CF%2Cstroke%3A%23F1C40F%0A%0A%20%20%20%20style%20A2%20fill%3A%23D6EAF8%2Cstroke%3A%232E86C1%0A%20%20%20%20style%20B2%20fill%3A%23D6EAF8%2Cstroke%3A%232E86C1%0A%20%20%20%20style%20C2%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20D2%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20E2%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20F2%20fill%3A%23D5F5E3%2Cstroke%3A%2327AE60%0A%20%20%20%20style%20G2%20fill%3A%23FCF3CF%2Cstroke%3A%23F1C40F|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph "Legacy Rendering"
+        A1[React JS Code] --> B1[React Element Tree]
+        B1 --> C1["Bridge (Serialized JSON)"]
+        C1 --> D1["Shadow Thread (Yoga Layout)"]
+        D1 --> E1["Bridge (Serialized JSON)"]
+        E1 --> F1["Native UI Thread (UI Manager)"]
+        F1 --> G1["Native Views (UIView/ViewGroup)"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph "Fabric Rendering"
+        A2[React JS Code] --> B2[React Element Tree]
+        B2 --> C2["JSI (Direct C++ Calls)"]
+        C2 --> D2["C++ Shadow Tree Generation"]
+        D2 --> E2["Layout Calculation (C++ Yoga)"]
+        E2 --> F2["Diffing & Mount Operations"]
+        F2 --> G2["Native Views (UIView/ViewGroup)"]
+    end
+
+    style A1 fill:#D6EAF8,stroke:#2E86C1
+    style B1 fill:#D6EAF8,stroke:#2E86C1
+    style C1 fill:#FADBD8,stroke:#E74C3C
+    style D1 fill:#D5F5E3,stroke:#27AE60
+    style E1 fill:#FADBD8,stroke:#E74C3C
+    style F1 fill:#D5F5E3,stroke:#27AE60
+    style G1 fill:#FCF3CF,stroke:#F1C40F
+
+    style A2 fill:#D6EAF8,stroke:#2E86C1
+    style B2 fill:#D6EAF8,stroke:#2E86C1
+    style C2 fill:#D5F5E3,stroke:#27AE60
+    style D2 fill:#D5F5E3,stroke:#27AE60
+    style E2 fill:#D5F5E3,stroke:#27AE60
+    style F2 fill:#D5F5E3,stroke:#27AE60
+    style G2 fill:#FCF3CF,stroke:#F1C40F
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 The diagram above illustrates the fundamental differences between the legacy and Fabric rendering flows. In the Legacy Rendering flow (top), you can see multiple Bridge crossings (red components) that require serialization/deserialization and asynchronous communication. This adds latency and potential bottlenecks, especially for complex UIs or rapid updates. The Yoga layout calculations happen on a dedicated Shadow Thread, but still need to communicate back through the Bridge.
 
@@ -53,18 +88,24 @@ h2. Concurrent React Features
 Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/architecture/fabric-renderer|Fabric Renderer | React Native]
-- [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric Native Components | React Native]
-- [https://react.dev/learn/render-and-commit|React Docs: Render and Commit]
-- [https://yogalayout.com/docs/|Understanding Yoga Layout Engine]
-> 🗂️ *Additional Resources:*
-> - [https://medium.com/shopify-engineering/react-native-at-shopify-benefits-of-the-new-architecture-edcecef0b5f|React Native New Architecture Deep Dive]
-- [https://formidable.com/blog/2019/lean-core-and-react-native-new-architecture/|The Evolution of React Native's Architecture]
+>
+bq. - [https://reactnative.dev/architecture/fabric-renderer|Fabric Renderer | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric Native Components | React Native]
+bq. - [https://react.dev/learn/render-and-commit|React Docs: Render and Commit]
+bq. - [https://yogalayout.com/docs/|Understanding Yoga Layout Engine]
+>
+bq. 🗂️ *Additional Resources:*
+>
+bq. - [https://medium.com/shopify-engineering/react-native-at-shopify-benefits-of-the-new-architecture-edcecef0b5f|React Native New Architecture Deep Dive]
+bq. - [https://formidable.com/blog/2019/lean-core-and-react-native-new-architecture/|The Evolution of React Native's Architecture]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
-> *Key Takeaway:* Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
-> *Source:* [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
+>
+bq. *Comparison:* Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
+>
+bq. *Key Takeaway:* Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
+>
+bq. *Source:* [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
 
 h2. Implications for SpeedyMeds Development
 

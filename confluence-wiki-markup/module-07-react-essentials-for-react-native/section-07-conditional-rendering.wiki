@@ -199,24 +199,34 @@ export default OptionalMessage;
 {code}
 
 bq. ⚛️ *(Web Developers with React Experience):*
-> *Comparison:* All these conditional rendering techniques (`if` statements, `&&`, ternary operator, returning `null`) are identical to how you'd do it in React for the web.
-> *Key Takeaway:* Your existing React conditional rendering patterns are directly applicable.
-> *Source:* [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
+>
+bq. *Comparison:* All these conditional rendering techniques (`if` statements, `&&`, ternary operator, returning `null`) are identical to how you'd do it in React for the web.
+>
+bq. *Key Takeaway:* Your existing React conditional rendering patterns are directly applicable.
+>
+bq. *Source:* [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
-> *Comparison:* Angular uses directives like `*ngIf` for conditional rendering. React integrates these concepts directly into JavaScript logic within JSX. The ternary operator and logical `&&` are common JavaScript idioms that React leverages effectively for this purpose.
-> *Key Takeaway:* Learn to use JavaScript's own conditional operators and `if` statements (outside JSX or by assigning JSX to variables) to control what gets rendered. There are no special template directives for this in React.
-> *Source:* [https://angular.io/guide/built-in-directives#ngif|Angular Docs: Built-in structural directives - NgIf]
+>
+bq. *Comparison:* Angular uses directives like `*ngIf` for conditional rendering. React integrates these concepts directly into JavaScript logic within JSX. The ternary operator and logical `&&` are common JavaScript idioms that React leverages effectively for this purpose.
+>
+bq. *Key Takeaway:* Learn to use JavaScript's own conditional operators and `if` statements (outside JSX or by assigning JSX to variables) to control what gets rendered. There are no special template directives for this in React.
+>
+bq. *Source:* [https://angular.io/guide/built-in-directives#ngif|Angular Docs: Built-in structural directives - NgIf]
 
 bq. 📲 *(Native Developers - Android/iOS):*
-> *Comparison:* This is similar to programmatically setting the visibility of UI elements (e.g., `view.setVisibility(View.GONE)` in Android or `view.isHidden = true` in iOS) or choosing which views to add to a layout based on conditions. React makes this declarative: you describe the conditions, and React handles the showing/hiding or swapping of native views.
-> *Key Takeaway:* You control the presence or appearance of UI elements by embedding JavaScript conditions directly or indirectly within your JSX structure.
-> *Source:* [<https://developer.android.com/reference/android/view/View#setVisibility(int|Android Dev Docs: View Visibility]>), [https://developer.apple.com/documentation/uikit/uiview/1622585-ishidden|Apple Dev Docs: UIView isHidden]
+>
+bq. *Comparison:* This is similar to programmatically setting the visibility of UI elements (e.g., `view.setVisibility(View.GONE)` in Android or `view.isHidden = true` in iOS) or choosing which views to add to a layout based on conditions. React makes this declarative: you describe the conditions, and React handles the showing/hiding or swapping of native views.
+>
+bq. *Key Takeaway:* You control the presence or appearance of UI elements by embedding JavaScript conditions directly or indirectly within your JSX structure.
+>
+bq. *Source:* [<https://developer.android.com/reference/android/view/View#setVisibility(int|Android Dev Docs: View Visibility]>), [https://developer.apple.com/documentation/uikit/uiview/1622585-ishidden|Apple Dev Docs: UIView isHidden]
 
 Conditional rendering is essential for creating responsive and dynamic UIs that adapt to changing data and application states. Mastering these techniques will allow you to build more sophisticated user experiences in your SpeedyMeds app.
 
 bq. 📚 *Official Documentation:*
-> - [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
+>
+bq. - [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
 
 h2. Using `switch` Statements
 

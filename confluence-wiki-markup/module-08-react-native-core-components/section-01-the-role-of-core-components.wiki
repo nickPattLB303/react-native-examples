@@ -26,13 +26,67 @@ Utilizing Core Components typically involves a straightforward process:
 
 The following diagram illustrates how React Native Core Components map to their native counterparts on iOS and Android platforms:
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22React%20Native%20Components%22%0A%20%20%20%20%20%20%20%20RN_View%5B%22%26lt%3BView%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_Text%5B%22%26lt%3BText%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_Image%5B%22%26lt%3BImage%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_Button%5B%22%26lt%3BButton%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_TextInput%5B%22%26lt%3BTextInput%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_ScrollView%5B%22%26lt%3BScrollView%26gt%3B%22%5D%0A%20%20%20%20%20%20%20%20RN_FlatList%5B%22%26lt%3BFlatList%26gt%3B%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22iOS%20Native%20Components%22%0A%20%20%20%20%20%20%20%20iOS_View%5B%22UIView%22%5D%0A%20%20%20%20%20%20%20%20iOS_Label%5B%22UILabel%22%5D%0A%20%20%20%20%20%20%20%20iOS_ImageView%5B%22UIImageView%22%5D%0A%20%20%20%20%20%20%20%20iOS_Button%5B%22UIButton%22%5D%0A%20%20%20%20%20%20%20%20iOS_TextField%5B%22UITextField%22%5D%0A%20%20%20%20%20%20%20%20iOS_TextView%5B%22UITextView%22%5D%0A%20%20%20%20%20%20%20%20iOS_ScrollView%5B%22UIScrollView%22%5D%0A%20%20%20%20%20%20%20%20iOS_TableView%5B%22UITableView%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Android%20Native%20Components%22%0A%20%20%20%20%20%20%20%20Android_View%5B%22ViewGroup%22%5D%0A%20%20%20%20%20%20%20%20Android_TextView%5B%22TextView%22%5D%0A%20%20%20%20%20%20%20%20Android_ImageView%5B%22ImageView%22%5D%0A%20%20%20%20%20%20%20%20Android_Button%5B%22Button%22%5D%0A%20%20%20%20%20%20%20%20Android_EditText%5B%22EditText%22%5D%0A%20%20%20%20%20%20%20%20Android_ScrollView%5B%22ScrollView%22%5D%0A%20%20%20%20%20%20%20%20Android_RecyclerView%5B%22RecyclerView%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20RN_View%20--%3E%20iOS_View%0A%20%20%20%20RN_View%20--%3E%20Android_View%0A%0A%20%20%20%20RN_Text%20--%3E%20iOS_Label%0A%20%20%20%20RN_Text%20--%3E%20Android_TextView%0A%0A%20%20%20%20RN_Image%20--%3E%20iOS_ImageView%0A%20%20%20%20RN_Image%20--%3E%20Android_ImageView%0A%0A%20%20%20%20RN_Button%20--%3E%20iOS_Button%0A%20%20%20%20RN_Button%20--%3E%20Android_Button%0A%0A%20%20%20%20RN_TextInput%20--%3E%20iOS_TextField%0A%20%20%20%20RN_TextInput%20--%3E%20iOS_TextView%0A%20%20%20%20RN_TextInput%20--%3E%20Android_EditText%0A%0A%20%20%20%20RN_ScrollView%20--%3E%20iOS_ScrollView%0A%20%20%20%20RN_ScrollView%20--%3E%20Android_ScrollView%0A%0A%20%20%20%20RN_FlatList%20--%3E%20iOS_TableView%0A%20%20%20%20RN_FlatList%20--%3E%20Android_RecyclerView|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph "React Native Components"
+        RN_View["&lt;View&gt;"]
+        RN_Text["&lt;Text&gt;"]
+        RN_Image["&lt;Image&gt;"]
+        RN_Button["&lt;Button&gt;"]
+        RN_TextInput["&lt;TextInput&gt;"]
+        RN_ScrollView["&lt;ScrollView&gt;"]
+        RN_FlatList["&lt;FlatList&gt;"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph "iOS Native Components"
+        iOS_View["UIView"]
+        iOS_Label["UILabel"]
+        iOS_ImageView["UIImageView"]
+        iOS_Button["UIButton"]
+        iOS_TextField["UITextField"]
+        iOS_TextView["UITextView"]
+        iOS_ScrollView["UIScrollView"]
+        iOS_TableView["UITableView"]
+    end
+
+    subgraph "Android Native Components"
+        Android_View["ViewGroup"]
+        Android_TextView["TextView"]
+        Android_ImageView["ImageView"]
+        Android_Button["Button"]
+        Android_EditText["EditText"]
+        Android_ScrollView["ScrollView"]
+        Android_RecyclerView["RecyclerView"]
+    end
+
+    RN_View --> iOS_View
+    RN_View --> Android_View
+
+    RN_Text --> iOS_Label
+    RN_Text --> Android_TextView
+
+    RN_Image --> iOS_ImageView
+    RN_Image --> Android_ImageView
+
+    RN_Button --> iOS_Button
+    RN_Button --> Android_Button
+
+    RN_TextInput --> iOS_TextField
+    RN_TextInput --> iOS_TextView
+    RN_TextInput --> Android_EditText
+
+    RN_ScrollView --> iOS_ScrollView
+    RN_ScrollView --> Android_ScrollView
+
+    RN_FlatList --> iOS_TableView
+    RN_FlatList --> Android_RecyclerView
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram shows the direct mapping between React Native Core Components and the corresponding native UI elements on both iOS and Android platforms. When you use a React Native component in your JavaScript code, React Native translates it to the appropriate native widget behind the scenes. The JavaScript bridge (in the legacy architecture) or JSI (in the New Architecture) facilitates this communication, allowing you to write cross-platform code while still leveraging native performance and appearance.
 
-Note that some React Native components may map to different native components depending on configuration. For example, {{<TextInput>}} maps to {{UITextField}} for single-line input on iOS but to {{UITextView}} for multiline input. Similarly, components like {{FlatList}} leverage optimized list views on each platform ({{UITableView}} on iOS and {{RecyclerView}} on Android) for efficient rendering of large data sets.
+Note that some React Native components may map to different native components depending on configuration. For example, `<TextInput>` maps to `UITextField` for single-line input on iOS but to `UITextView` for multiline input. Similarly, components like `FlatList` leverage optimized list views on each platform (`UITableView` on iOS and `RecyclerView` on Android) for efficient rendering of large data sets.
 
 *Key Characteristics:*
 
@@ -47,7 +101,7 @@ h2. Fundamental Building Blocks
 They are designed to be composed. You'll rarely use just one Core Component in isolation; instead, you'll combine them to create screens, custom components, and entire application flows.
 h2. Styleable
 
-React Native provides a {{StyleSheet}} API (which we'll cover in detail later in this module) that allows you to apply styles to Core Components, controlling their appearance and layout.
+React Native provides a `StyleSheet` API (which we'll cover in detail later in this module) that allows you to apply styles to Core Components, controlling their appearance and layout.
 
 h2. Why are Core Components Important?
 
@@ -66,33 +120,43 @@ It's important to distinguish Core Components from third-party UI libraries like
 While Core Components aim for a consistent API, their exact visual rendering and behavior can sometimes have subtle differences between iOS and Android due to the underlying native platforms. Always test your UI on both platforms.
 {note}
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components and Native Components]
-- [https://react.dev/learn/your-first-component|React Docs: Your First Component]
-- [https://legacy.reactjs.org/docs/components-and-props.html|React Docs: Components and Props (Legacy)]
-- [https://docs.expo.dev/tutorial/view-text-and-image/|Expo Docs: Learn the Basics - View, Text, and Image components]
+>
+bq. - [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components and Native Components]
+bq. - [https://react.dev/learn/your-first-component|React Docs: Your First Component]
+bq. - [https://legacy.reactjs.org/docs/components-and-props.html|React Docs: Components and Props (Legacy)]
+bq. - [https://docs.expo.dev/tutorial/view-text-and-image/|Expo Docs: Learn the Basics - View, Text, and Image components]
 
 h2. Background Bridge Notes
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* Think of React Native Core Components like the fundamental classes in UIKit such as {{UIView}}, {{UILabel}}, {{UIImageView}}, {{UIButton}}, and {{UITableView}}. The primary difference is that you define them declaratively using JSX instead of programmatically creating and configuring them in Swift or Objective-C. The layout system (Flexbox) will also be a significant shift from Auto Layout or manual frame setting.
-> *Key Takeaway:* You're still working with native-backed UI elements, but through a JavaScript abstraction layer that offers cross-platform benefits.
-> *Source:* [https://developer.apple.com/documentation/uikit|Apple Developer: UIKit]
+>
+bq. *Comparison:* Think of React Native Core Components like the fundamental classes in UIKit such as `UIView`, `UILabel`, `UIImageView`, `UIButton`, and `UITableView`. The primary difference is that you define them declaratively using JSX instead of programmatically creating and configuring them in Swift or Objective-C. The layout system (Flexbox) will also be a significant shift from Auto Layout or manual frame setting.
+>
+bq. *Key Takeaway:* You're still working with native-backed UI elements, but through a JavaScript abstraction layer that offers cross-platform benefits.
+>
+bq. *Source:* [https://developer.apple.com/documentation/uikit|Apple Developer: UIKit]
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* React Native Core Components are analogous to Android's View system classes like {{View}}, {{TextView}}, {{ImageView}}, {{Button}}, and {{RecyclerView}}. Instead of defining layouts in XML and manipulating Views in Kotlin or Java, you'll use JSX for structure and JavaScript for logic and styling. Flexbox will be your primary tool for layout, which differs from Android's ConstraintLayout, LinearLayout, etc.
-> *Key Takeaway:* The components map to native Android Views, providing familiar UI primitives but with a new way of defining and styling them.
-> *Source:* [https://developer.android.com/guide/topics/ui/declaring-layout|Android Developer: Views]
+>
+bq. *Comparison:* React Native Core Components are analogous to Android's View system classes like `View`, `TextView`, `ImageView`, `Button`, and `RecyclerView`. Instead of defining layouts in XML and manipulating Views in Kotlin or Java, you'll use JSX for structure and JavaScript for logic and styling. Flexbox will be your primary tool for layout, which differs from Android's ConstraintLayout, LinearLayout, etc.
+>
+bq. *Key Takeaway:* The components map to native Android Views, providing familiar UI primitives but with a new way of defining and styling them.
+>
+bq. *Source:* [https://developer.android.com/guide/topics/ui/declaring-layout|Android Developer: Views]
 
 bq. 🌐 *(Web Developers - React & Angular):*
-> *Comparison:* Unlike web development where you use HTML tags (e.g., {{<div>}}, {{<span>}}, {{<img>}}, {{<p>}}), React Native provides its own set of components like {{<View>}}, {{<Text>}}, {{<Image>}}. These are not HTML elements running in a WebView (unless you explicitly use a WebView component for a specific purpose). They are true native components.
-> *Key Takeaway:* You must use the components provided by React Native. Standard HTML tags will not work. The concept of components mapping to native elements is key, distinguishing React Native from web-based mobile frameworks.
-> *Source:* [https://reactnative.dev/docs/react-native-for-web-developers|React Native for Web Developers]
+>
+bq. *Comparison:* Unlike web development where you use HTML tags (e.g., `<div>`, `<span>`, `<img>`, `<p>`), React Native provides its own set of components like `<View>`, `<Text>`, `<Image>`. These are not HTML elements running in a WebView (unless you explicitly use a WebView component for a specific purpose). They are true native components.
+>
+bq. *Key Takeaway:* You must use the components provided by React Native. Standard HTML tags will not work. The concept of components mapping to native elements is key, distinguishing React Native from web-based mobile frameworks.
+>
+bq. *Source:* [https://reactnative.dev/docs/react-native-for-web-developers|React Native for Web Developers]
 
-Throughout this module, we will delve into the most commonly used Core Components, exploring their props, usage patterns, and how they can be combined to build user interfaces for an application like SpeedyMeds. For example, a patient's prescription list item in SpeedyMeds might be built using a {{<View>}} as a container, several {{<Text>}} components for displaying medication name, dosage, and instructions, and perhaps an {{<Image>}} for a pill icon.
+Throughout this module, we will delve into the most commonly used Core Components, exploring their props, usage patterns, and how they can be combined to build user interfaces for an application like SpeedyMeds. For example, a patient's prescription list item in SpeedyMeds might be built using a `<View>` as a container, several `<Text>` components for displaying medication name, dosage, and instructions, and perhaps an `<Image>` for a pill icon.
 
 By understanding the role and capabilities of each Core Component, you gain the power to translate UI designs into functional, cross-platform mobile applications.
 
 h2. Next Steps
 
-Now that you understand the role of Core Components, let's move on to exploring the most fundamental one: the {{<View>}} component.
-* [./section-02-view.md|Next Section: View ({{<View>}}) - The Fundamental Container]
+Now that you understand the role of Core Components, let's move on to exploring the most fundamental one: the `<View>` component.
+* [./section-02-view.md|Next Section: View (`<View>`) - The Fundamental Container]

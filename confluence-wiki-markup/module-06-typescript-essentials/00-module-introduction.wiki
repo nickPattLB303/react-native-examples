@@ -7,23 +7,34 @@ Understanding TypeScript is crucial as it has become the standard for many large
 <TARGET_AUDIENCE_EMOJI> *Target Audience Adaptation:*
 
 bq. 🌐 *(Web Developers with JavaScript Background):*
-> *Comparison:* If you're coming from a JavaScript background, TypeScript will feel familiar yet more structured. The key difference is the addition of static types. While JavaScript is dynamically typed (types are checked at runtime), TypeScript checks types at compile time, helping you catch errors before your code even runs. Think of it as adding guardrails to your JavaScript development process.
-> *Key Takeaway:* TypeScript empowers you to define explicit types for variables, function parameters, and return values, reducing runtime errors and improving code predictability.
-> *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html|TypeScript for JavaScript Programmers]
+>
+bq. *Comparison:* If you're coming from a JavaScript background, TypeScript will feel familiar yet more structured. The key difference is the addition of static types. While JavaScript is dynamically typed (types are checked at runtime), TypeScript checks types at compile time, helping you catch errors before your code even runs. Think of it as adding guardrails to your JavaScript development process.
+>
+bq. *Key Takeaway:* TypeScript empowers you to define explicit types for variables, function parameters, and return values, reducing runtime errors and improving code predictability.
+>
+bq. *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html|TypeScript for JavaScript Programmers]
 
 bq. ⚛️ *(Web Developers with React Experience):*
-> *Comparison:* Many React web projects already use TypeScript. If you've used it with React, you'll find its application in React Native very similar. Concepts like typing props, state, and component functions directly translate. The benefits of type-checking your component interfaces remain just as significant.
-> *Key Takeaway:* Your existing TypeScript knowledge with React is a strong foundation. This module will solidify those concepts and highlight any nuances relevant to the Expo and React Native ecosystem.
-> *Source:* [https://react-typescript-cheatsheet.netlify.app/|React TypeScript Cheatsheets]
+>
+bq. *Comparison:* Many React web projects already use TypeScript. If you've used it with React, you'll find its application in React Native very similar. Concepts like typing props, state, and component functions directly translate. The benefits of type-checking your component interfaces remain just as significant.
+>
+bq. *Key Takeaway:* Your existing TypeScript knowledge with React is a strong foundation. This module will solidify those concepts and highlight any nuances relevant to the Expo and React Native ecosystem.
+>
+bq. *Source:* [https://react-typescript-cheatsheet.netlify.app/|React TypeScript Cheatsheets]
 
 bq. 🅰 *(Web Developers with Angular Experience):*
-> *Comparison:* Angular developers are typically well-versed in TypeScript, as it's the primary language for Angular development. You'll find the core TypeScript concepts covered here (like types, interfaces, generics) directly applicable and familiar.
-> *Key Takeaway:* This module will serve as a focused refresher on TypeScript fundamentals, reinforcing how these concepts are leveraged within a React Native context, which might differ from Angular's specific patterns and decorators.
+>
+bq. *Comparison:* Angular developers are typically well-versed in TypeScript, as it's the primary language for Angular development. You'll find the core TypeScript concepts covered here (like types, interfaces, generics) directly applicable and familiar.
+>
+bq. *Key Takeaway:* This module will serve as a focused refresher on TypeScript fundamentals, reinforcing how these concepts are leveraged within a React Native context, which might differ from Angular's specific patterns and decorators.
 
 bq. 📲 *(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):*
-> *Comparison:* Coming from languages like Kotlin, Swift, or Java, you're already accustomed to statically typed systems. TypeScript brings a similar level of type safety to the JavaScript world. You'll appreciate the compile-time checks and explicit type definitions. However, TypeScript's type system is structural ("duck typing"), which might differ from the nominal typing you're used to.
-> *Key Takeaway:* TypeScript offers familiar benefits of type safety in a JavaScript environment. Pay attention to how types are defined and inferred, and the flexibility of structural typing.
-> *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html|TypeScript for Java/C# Programmers]
+>
+bq. *Comparison:* Coming from languages like Kotlin, Swift, or Java, you're already accustomed to statically typed systems. TypeScript brings a similar level of type safety to the JavaScript world. You'll appreciate the compile-time checks and explicit type definitions. However, TypeScript's type system is structural ("duck typing"), which might differ from the nominal typing you're used to.
+>
+bq. *Key Takeaway:* TypeScript offers familiar benefits of type safety in a JavaScript environment. Pay attention to how types are defined and inferred, and the flexibility of structural typing.
+>
+bq. *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html|TypeScript for Java/C# Programmers]
 
 h1. Learning Objectives
 

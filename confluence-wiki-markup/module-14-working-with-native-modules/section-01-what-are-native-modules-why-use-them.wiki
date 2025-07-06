@@ -33,9 +33,37 @@ h2. Callback (Optional)
 
 If the JavaScript call expected a result (via a callback or Promise), the native code would execute, potentially perform its own asynchronous operations, and eventually send a result back across the Bridge, again involving serialization and deserialization.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20JavaScript%20Realm%0A%20%20%20%20%20%20%20%20JS_Code%5BJavaScript%20Code%5D%20--%3E%20Format_Msg%5BFormat%20Message%20Module%2C%20Method%2C%20Args%5D%3B%0A%20%20%20%20%20%20%20%20Format_Msg%20--%3E%20Serialize_JSON%5BSerialize%20to%20JSON%5D%3B%0A%20%20%20%20%20%20%20%20Serialize_JSON%20--%3E%20JS_Queue%5BEnqueue%20Message%5D%3B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20Native%20Realm%0A%20%20%20%20%20%20%20%20Native_Queue%5BDequeue%20Message%5D%20--%3E%20Deserialize_JSON%5BDeserialize%20JSON%5D%3B%0A%20%20%20%20%20%20%20%20Deserialize_JSON%20--%3E%20Native_Lookup%5BLookup%20Native%20Module%2FMethod%5D%3B%0A%20%20%20%20%20%20%20%20Native_Lookup%20--%3E%20Execute_Native%5BExecute%20Native%20Code%5D%3B%0A%20%20%20%20%20%20%20%20Execute_Native%20--%3E%20Native_Result%5BNative%20Result%5D%3B%0A%20%20%20%20%20%20%20%20Native_Result%20--%3E%20Format_Callback_Msg%5BFormat%20Callback%20Message%20Optional%5D%3B%0A%20%20%20%20%20%20%20%20Format_Callback_Msg%20--%3E%20Serialize_Callback_JSON%5BSerialize%20to%20JSON%20Optional%5D%3B%0A%20%20%20%20%20%20%20%20Serialize_Callback_JSON%20--%3E%20Native_Queue_Callback%5BEnqueue%20Callback%20Message%20Optional%5D%3B%0A%20%20%20%20end%0A%0A%20%20%20%20JS_Queue%20--%3E%20Bridge_Transit%5BBridge%20Async%20Message%20Passing%5D%3B%0A%20%20%20%20Bridge_Transit%20--%3E%20Native_Queue%3B%0A%0A%20%20%20%20Native_Queue_Callback%20%3D%3D%3E%20Bridge_Return_Transit%5BBridge%20Async%20Message%20Passing%5D%3B%0A%20%20%20%20Bridge_Return_Transit%20%3D%3D%3E%20JS_Code_Callback%5BJavaScript%20Receives%20Callback%2FPromise%20Resolution%20Optional%5D%3B%0A%0A%20%20%20%20style%20Bridge_Transit%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A2px%2Ccolor%3A%23fff%0A%20%20%20%20style%20Bridge_Return_Transit%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A2px%2Ccolor%3A%23fff%0A%20%20%20%20style%20JS_Code%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20Execute_Native%20fill%3A%23cfc%2Cstroke%3A%23333%2Cstroke-width%3A2px|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code] --> Format_Msg[Format Message Module, Method, Args];
+        Format_Msg --> Serialize_JSON[Serialize to JSON];
+        Serialize_JSON --> JS_Queue[Enqueue Message];
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph Native Realm
+        Native_Queue[Dequeue Message] --> Deserialize_JSON[Deserialize JSON];
+        Deserialize_JSON --> Native_Lookup[Lookup Native Module/Method];
+        Native_Lookup --> Execute_Native[Execute Native Code];
+        Execute_Native --> Native_Result[Native Result];
+        Native_Result --> Format_Callback_Msg[Format Callback Message Optional];
+        Format_Callback_Msg --> Serialize_Callback_JSON[Serialize to JSON Optional];
+        Serialize_Callback_JSON --> Native_Queue_Callback[Enqueue Callback Message Optional];
+    end
+
+    JS_Queue --> Bridge_Transit[Bridge Async Message Passing];
+    Bridge_Transit --> Native_Queue;
+
+    Native_Queue_Callback ==> Bridge_Return_Transit[Bridge Async Message Passing];
+    Bridge_Return_Transit ==> JS_Code_Callback[JavaScript Receives Callback/Promise Resolution Optional];
+
+    style Bridge_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style Bridge_Return_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style JS_Code fill:#ccf,stroke:#333,stroke-width:2px
+    style Execute_Native fill:#cfc,stroke:#333,stroke-width:2px
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the communication flow in React Native's legacy architecture. The process begins in the JavaScript realm where application code intends to invoke a native function. The JavaScript code first formats a message specifying the target native module, the method to be called, and any arguments. This message is then serialized into a JSON string. This JSON payload is enqueued and passed asynchronously across the "Bridge" – a conceptual boundary between the JavaScript and native environments.
 
@@ -61,9 +89,35 @@ h2. Foundation for Modern Modules
 
 It's critical to understand that modern native module implementations (specifically TurboModules, discussed later) are built on top of JSI. JSI provides the underlying high-performance communication channel.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20JavaScript%20Realm%0A%20%20%20%20%20%20%20%20JS_Code%5BJavaScript%20Code%5D%0A%20%20%20%20%20%20%20%20JS_Engine%5BJavaScript%20Engine%20e.g.%2C%20Hermes%5D%0A%20%20%20%20%20%20%20%20JS_Code%20--%3E%20JS_Engine%3B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20Native%20Realm%0A%20%20%20%20%20%20%20%20Native_Code%5BPlatform%20Native%20Code%20Swift%2FKotlin%2FObj-C%2FJava%5D%0A%20%20%20%20%20%20%20%20Native_Object%5BNative%20Object%2FFunction%5D%0A%20%20%20%20%20%20%20%20Native_Code%20--%3E%20Native_Object%3B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20JSI_Layer%0A%20%20%20%20%20%20%20%20JSI_HostObject%5BC%2B%2B%20Host%20Object%20exposing%20Native%20Functionality%5D%0A%20%20%20%20%20%20%20%20JSI_Bindings%5BJSI%20Bindings%5D%0A%20%20%20%20%20%20%20%20JSI_HostObject%20%3C--%3E%20JSI_Bindings%3B%0A%20%20%20%20end%0A%0A%20%20%20%20JS_Engine%20%3C--%3E%7CDirect%2C%20Potentially%20Synchronous%20Calls%20via%20JSI%7C%20JSI_Bindings%3B%0A%20%20%20%20JSI_HostObject%20%3C--%3E%7CDirect%20Invocation%7C%20Native_Object%3B%0A%0A%0A%20%20%20%20style%20JS_Engine%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20Native_Object%20fill%3A%23cfc%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20JSI_Layer%20fill%3A%23fcf%2Cstroke%3A%23333%2Cstroke-width%3A1px%2Copacity%3A0.5|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code]
+        JS_Engine[JavaScript Engine e.g., Hermes]
+        JS_Code --> JS_Engine;
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph Native Realm
+        Native_Code[Platform Native Code Swift/Kotlin/Obj-C/Java]
+        Native_Object[Native Object/Function]
+        Native_Code --> Native_Object;
+    end
+
+    subgraph JSI_Layer
+        JSI_HostObject[C++ Host Object exposing Native Functionality]
+        JSI_Bindings[JSI Bindings]
+        JSI_HostObject <--> JSI_Bindings;
+    end
+
+    JS_Engine <-->|Direct, Potentially Synchronous Calls via JSI| JSI_Bindings;
+    JSI_HostObject <-->|Direct Invocation| Native_Object;
+
+    style JS_Engine fill:#ccf,stroke:#333,stroke-width:2px
+    style Native_Object fill:#cfc,stroke:#333,stroke-width:2px
+    style JSI_Layer fill:#fcf,stroke:#333,stroke-width:1px,opacity:0.5
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram depicts the communication model facilitated by the JavaScript Interface (JSI) in React Native's New Architecture. Unlike the legacy bridge, JSI allows for more direct and potentially synchronous interaction. The JavaScript code, running within its engine (like Hermes), can interact with native functionalities via a C++ layer. This C++ layer, enabled by JSI, exposes native objects or functions as "Host Objects" that JavaScript can hold references to and invoke methods on directly.
 
@@ -95,7 +149,7 @@ h2. Device Hardware Access
 * Advanced camera controls beyond basic capture.
 * Interacting with Bluetooth Low Energy (BLE) peripherals.
 * Reading data from specific sensors (e.g., barometer, pedometer, ambient light sensor if not covered by Expo).
-* Implementing biometric authentication (Face ID, Touch ID, Android BiometricPrompt) if more granular control is needed than provided by {{expo-local-authentication}}.
+* Implementing biometric authentication (Face ID, Touch ID, Android BiometricPrompt) if more granular control is needed than provided by `expo-local-authentication`.
 h2. Operating System Features
 * Deep integration with the native calendar or contacts.
 * Advanced file system operations or encrypted storage.
@@ -109,21 +163,30 @@ h2. Custom UI Components
 While this module focuses on native _modules_ (APIs), a related concept is bridging native _UI components_. If you need a highly specific native UI element not available in React Native (e.g., a platform-specific map view with custom annotations or a specialized video player), you'd create a native UI component. We'll briefly touch on this concept later.
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* Think of native modules as similar to creating a Swift or Objective-C class that you want to make accessible from another part of your app. In React Native, you'll use specific macros (Objective-C) or attributes (Swift, with {{expo-modules-core}}) to expose your native methods and properties to the JavaScript runtime. The "bridge" or JSI acts as the intermediary.
-> *Key Takeaway:* You're leveraging your existing iOS development skills to extend JavaScript's reach into the native iOS environment.
-> *Source:* [https://reactnative.dev/docs/native-modules-ios|Native Modules (iOS) | React Native]
+>
+bq. *Comparison:* Think of native modules as similar to creating a Swift or Objective-C class that you want to make accessible from another part of your app. In React Native, you'll use specific macros (Objective-C) or attributes (Swift, with `expo-modules-core`) to expose your native methods and properties to the JavaScript runtime. The "bridge" or JSI acts as the intermediary.
+>
+bq. *Key Takeaway:* You're leveraging your existing iOS development skills to extend JavaScript's reach into the native iOS environment.
+>
+bq. *Source:* [https://reactnative.dev/docs/native-modules-ios|Native Modules (iOS) | React Native]
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* This is akin to creating a Java or Kotlin class with public methods. To expose these to React Native, you'll typically extend {{ReactContextBaseJavaModule}} or use annotations provided by {{expo-modules-core}}. These methods can then be invoked from JavaScript.
-> *Key Takeaway:* Your Android development expertise is directly applicable in creating these Java/Kotlin counterparts to JavaScript functions.
-> *Source:* [https://reactnative.dev/docs/native-modules-android|Native Modules (Android) | React Native]
+>
+bq. *Comparison:* This is akin to creating a Java or Kotlin class with public methods. To expose these to React Native, you'll typically extend `ReactContextBaseJavaModule` or use annotations provided by `expo-modules-core`. These methods can then be invoked from JavaScript.
+>
+bq. *Key Takeaway:* Your Android development expertise is directly applicable in creating these Java/Kotlin counterparts to JavaScript functions.
+>
+bq. *Source:* [https://reactnative.dev/docs/native-modules-android|Native Modules (Android) | React Native]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Imagine if, in web development, you could define your own custom browser APIs (like {{navigator.geolocation}} or {{window.localStorage}}) that directly interact with the underlying operating system features of the user's computer. Native modules in React Native give you that power for mobile devices. JavaScript makes calls to these "custom APIs" you've defined, which then execute native code.
-> *Key Takeaway:* Native modules are your toolkit for breaking out of the JavaScript sandbox and tapping into the rich native capabilities of iOS and Android when standard React Native or Expo APIs don't suffice.
+>
+bq. *Comparison:* Imagine if, in web development, you could define your own custom browser APIs (like `navigator.geolocation` or `window.localStorage`) that directly interact with the underlying operating system features of the user's computer. Native modules in React Native give you that power for mobile devices. JavaScript makes calls to these "custom APIs" you've defined, which then execute native code.
+>
+bq. *Key Takeaway:* Native modules are your toolkit for breaking out of the JavaScript sandbox and tapping into the rich native capabilities of iOS and Android when standard React Native or Expo APIs don't suffice.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/native-modules-intro|React Native Docs: Native Modules Introduction]
-- [https://reactnative.dev/docs/communication-native-react-native|React Native Docs: Communication between Native and React Native (New Architecture focus)]
-- [https://docs.expo.dev/modules/overview/|Expo Docs: Overview of Expo modules]
-- [https://docs.expo.dev/modules/overview/#when-should-i-use-turbo-modules-and-when-should-i-use-the-expo-modules-api|Expo Docs: Why use Expo Modules API?]
+>
+bq. - [https://reactnative.dev/docs/native-modules-intro|React Native Docs: Native Modules Introduction]
+bq. - [https://reactnative.dev/docs/communication-native-react-native|React Native Docs: Communication between Native and React Native (New Architecture focus)]
+bq. - [https://docs.expo.dev/modules/overview/|Expo Docs: Overview of Expo modules]
+bq. - [https://docs.expo.dev/modules/overview/#when-should-i-use-turbo-modules-and-when-should-i-use-the-expo-modules-api|Expo Docs: Why use Expo Modules API?]

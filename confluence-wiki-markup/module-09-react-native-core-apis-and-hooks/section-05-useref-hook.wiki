@@ -47,11 +47,12 @@ h2. Referential Content
 *** {{ref.current}}: Initially set to {{initialValue}}. You can later set it to something else. If you pass a ref object to React as a {{ref}} attribute on a component (e.g., {{<TextInput ref={myRef} />}}), React will set its {{current}} property to the corresponding native component instance when the component mounts, and back to {{null}} when it unmounts.
 
 bq. 📚 *Official Documentation:*
-> - [https://react.dev/reference/react/useRef|React Docs: {{useRef}}]
-- [https://react.dev/learn/manipulating-the-dom-with-refs|React Docs: Manipulating the DOM with Refs] (Web-focused, but core concepts of attaching refs and calling methods apply)
-- [https://reactnative.dev/docs/refs-and-the-dom|React Native Docs: Refs and the DOM] (Explains differences from web DOM and focus on native components)
-- [https://react.dev/reference/react/forwardRef|React Docs: {{forwardRef}}]
-- [https://react.dev/reference/react/useImperativeHandle|React Docs: {{useImperativeHandle}}]
+>
+bq. - [https://react.dev/reference/react/useRef|React Docs: {{useRef}}]
+bq. - [https://react.dev/learn/manipulating-the-dom-with-refs|React Docs: Manipulating the DOM with Refs] (Web-focused, but core concepts of attaching refs and calling methods apply)
+bq. - [https://reactnative.dev/docs/refs-and-the-dom|React Native Docs: Refs and the DOM] (Explains differences from web DOM and focus on native components)
+bq. - [https://react.dev/reference/react/forwardRef|React Docs: {{forwardRef}}]
+bq. - [https://react.dev/reference/react/useImperativeHandle|React Docs: {{useImperativeHandle}}]
 
 h2. "Under the Hood": Refs and Native Interaction
 
@@ -489,12 +490,16 @@ export default MedicationRefillForm;
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* In native iOS (Swift/Objective-C), you might hold direct references to UI elements (like `UITextField` instances via `@IBOutlet` or programmatically). `useRef` for component instances is similar to having such a reference, allowing you to call methods on it. For mutable values not triggering UI updates, you'd use regular instance variables/properties.
-> *Key Takeaway:* `useRef` provides a React-idiomatic way to get hold of these instance-like references within functional components and to manage mutable data outside the standard state rendering flow.
+>
+bq. *Comparison:* In native iOS (Swift/Objective-C), you might hold direct references to UI elements (like `UITextField` instances via `@IBOutlet` or programmatically). `useRef` for component instances is similar to having such a reference, allowing you to call methods on it. For mutable values not triggering UI updates, you'd use regular instance variables/properties.
+>
+bq. *Key Takeaway:* `useRef` provides a React-idiomatic way to get hold of these instance-like references within functional components and to manage mutable data outside the standard state rendering flow.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* This is very similar to `useRef` in React for the web. You use it to get references to DOM elements (e.g., `<input ref={myRef} />`) to call methods like `focus()` or to store mutable values like animation IDs or subscription objects without causing re-renders.
-> *Key Takeaway:* The concept and usage of `useRef`, `forwardRef`, and `useImperativeHandle` are largely consistent between React for web and React Native. The main difference lies in _what_ you are referencing – native component instances in React Native versus DOM elements in web React, and thus the specific imperative methods available on those references will differ.
+>
+bq. *Comparison:* This is very similar to `useRef` in React for the web. You use it to get references to DOM elements (e.g., `<input ref={myRef} />`) to call methods like `focus()` or to store mutable values like animation IDs or subscription objects without causing re-renders.
+>
+bq. *Key Takeaway:* The concept and usage of `useRef`, `forwardRef`, and `useImperativeHandle` are largely consistent between React for web and React Native. The main difference lies in _what_ you are referencing – native component instances in React Native versus DOM elements in web React, and thus the specific imperative methods available on those references will differ.
 
 *Table: `useRef` vs. Other Referencing/Mutable Value Mechanisms*
 

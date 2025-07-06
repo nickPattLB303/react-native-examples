@@ -184,16 +184,22 @@ h3. (Windows PowerShell)
 The command should output the path you set. Also try running `adb version` to verify `platform-tools` are in the PATH. ([https://reactnative.dev/docs/set-up-your-environment|Source])
 
 bq. 🤖 *(Native Android Developers):*
-> *Comparison:* You're familiar with Android Studio and `ANDROID_SDK_ROOT`. The key differences are the specific SDK/Build Tools versions (35) required by React Native 0.7x+ and the need to install Node.js (LTS) and potentially Watchman (macOS/Linux).
-> *Key Takeaway:* Adapt your existing Android environment by installing Node/Watchman and ensuring the correct SDK/Build Tools versions are active.
+>
+bq. *Comparison:* You're familiar with Android Studio and `ANDROID_SDK_ROOT`. The key differences are the specific SDK/Build Tools versions (35) required by React Native 0.7x+ and the need to install Node.js (LTS) and potentially Watchman (macOS/Linux).
+>
+bq. *Key Takeaway:* Adapt your existing Android environment by installing Node/Watchman and ensuring the correct SDK/Build Tools versions are active.
 
 bq. 🍏 *(Native iOS Developers):*
-> *Comparison:* You have Xcode/CLTs. The new tools are Node.js (LTS), npm/Yarn (JS package managers like CocoaPods/SPM), and Watchman. If targeting Android, you also need to install and configure Android Studio and the Android SDK as described.
-> *Key Takeaway:* Install the JavaScript ecosystem tools (Node, npm/Yarn, Watchman) and the Android toolchain if needed.
+>
+bq. *Comparison:* You have Xcode/CLTs. The new tools are Node.js (LTS), npm/Yarn (JS package managers like CocoaPods/SPM), and Watchman. If targeting Android, you also need to install and configure Android Studio and the Android SDK as described.
+>
+bq. *Key Takeaway:* Install the JavaScript ecosystem tools (Node, npm/Yarn, Watchman) and the Android toolchain if needed.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Node.js, npm/Yarn are familiar. The major additions are the native development environments: Android Studio (+SDK config) and Xcode Command Line Tools (or full Xcode for iOS simulation). These provide the compilers and SDKs needed because React Native builds native apps.
-> *Key Takeaway:* Augment your web toolchain with platform-specific native SDKs and tools (Android Studio, Xcode CLTs).
+>
+bq. *Comparison:* Node.js, npm/Yarn are familiar. The major additions are the native development environments: Android Studio (+SDK config) and Xcode Command Line Tools (or full Xcode for iOS simulation). These provide the compilers and SDKs needed because React Native builds native apps.
+>
+bq. *Key Takeaway:* Augment your web toolchain with platform-specific native SDKs and tools (Android Studio, Xcode CLTs).
 
 h2. Summary: Prerequisite Installation Commands (Recommended Methods)
 
@@ -206,11 +212,12 @@ h2. Summary: Prerequisite Installation Commands (Recommended Methods)
 With these prerequisites installed, you are now ready to create your first Expo application!
 
 bq. 💡 *Reflecting on the Setup Process:*
-The multi-step process involving Node.js, package managers, native IDEs like Xcode (for iOS) or Android Studio (for Android), and specific tools such as Watchman highlights the inherent complexity involved in setting up any mobile development environment, including standard React Native. Native mobile development necessitates large, platform-specific toolchains. React Native builds upon this by adding the JavaScript ecosystem tooling. This combination can present a significant initial hurdle, particularly for developers new to mobile development. This initial setup complexity underscores the value proposition of the Expo framework, which aims to abstract and simplify many of these initial native configuration steps, facilitating a faster start to development. Therefore, while navigating this setup is essential, it also serves to motivate this course's focus on Expo as a means to accelerate onboarding and focus more quickly on React Native application logic.
+bq. The multi-step process involving Node.js, package managers, native IDEs like Xcode (for iOS) or Android Studio (for Android), and specific tools such as Watchman highlights the inherent complexity involved in setting up any mobile development environment, including standard React Native. Native mobile development necessitates large, platform-specific toolchains. React Native builds upon this by adding the JavaScript ecosystem tooling. This combination can present a significant initial hurdle, particularly for developers new to mobile development. This initial setup complexity underscores the value proposition of the Expo framework, which aims to abstract and simplify many of these initial native configuration steps, facilitating a faster start to development. Therefore, while navigating this setup is essential, it also serves to motivate this course's focus on Expo as a means to accelerate onboarding and focus more quickly on React Native application logic.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/environment-setup|React Native Docs: Setting up the development environment]
-- [https://nodejs.org/en/download/|Node.js Downloads]
-- [https://classic.yarnpkg.com/en/docs/install|Yarn Installation Guide] (Classic) / [https://yarnpkg.com/getting-started/install|Yarn Installation] (Modern)
-- [https://facebook.github.io/watchman/docs/install|Watchman Installation Guide]
-- [https://developer.android.com/studio/install|Install Android Studio]
+>
+bq. - [https://reactnative.dev/docs/environment-setup|React Native Docs: Setting up the development environment]
+bq. - [https://nodejs.org/en/download/|Node.js Downloads]
+bq. - [https://classic.yarnpkg.com/en/docs/install|Yarn Installation Guide] (Classic) / [https://yarnpkg.com/getting-started/install|Yarn Installation] (Modern)
+bq. - [https://facebook.github.io/watchman/docs/install|Watchman Installation Guide]
+bq. - [https://developer.android.com/studio/install|Install Android Studio]

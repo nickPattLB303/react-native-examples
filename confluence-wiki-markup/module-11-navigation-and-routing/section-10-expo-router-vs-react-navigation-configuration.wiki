@@ -155,8 +155,9 @@ h2. Choose Expo Router when
 Expo Router uses React Navigation for its core functionalities. So, you are still benefiting from the robustness of React Navigation. Expo Router primarily offers a different, often more convenient, way to define and manage your routes and layouts, particularly within the Expo ecosystem.
 {note}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/router/comparison/|Expo Router: Comparison to React Navigation]
-- [https://reactnavigation.org/docs/thinking-in-react-navigation/|React Navigation: Thinking in React Navigation]
+>
+bq. - [https://docs.expo.dev/router/comparison/|Expo Router: Comparison to React Navigation]
+bq. - [https://reactnavigation.org/docs/thinking-in-react-navigation/|React Navigation: Thinking in React Navigation]
 
 h3. Next Steps
 

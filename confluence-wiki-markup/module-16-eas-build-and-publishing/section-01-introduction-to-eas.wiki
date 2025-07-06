@@ -40,11 +40,30 @@ A secure way to manage environment variables and other secrets (like API keys) f
 
 These services work together to provide a cohesive experience for building and managing your applications.
 
-[https://mermaid.ink/svg/graph%20TD%3B%0A%20%20%20%20subgraph%20EAS%20%5BExpo%20Application%20Services%5D%0A%20%20%20%20%20%20%20%20A%5BEAS%20Build%5D%20--%3E%20%7CApp%20Binary%7C%20B(EAS%20Submit)%3B%0A%20%20%20%20%20%20%20%20A%20--%3E%20C%7BStandalone%20App%7D%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%20D%5BEAS%20Update%5D%3B%0A%20%20%20%20%20%20%20%20E%5BEAS%20Secrets%5D%20--%3E%20A%3B%0A%20%20%20%20%20%20%20%20B%20--%3E%20F%5B(App%20Stores)%5D%3B%0A%20%20%20%20%20%20%20%20D%20--%3E%20G(Users)%3B%0A%20%20%20%20end%0A%20%20%20%20H(Developer)%20--%3E%20A%3B%0A%20%20%20%20H%20--%3E%20E%3B%0A%20%20%20%20H%20--%3E%20D%3B%0A%0A%20%20%20%20style%20EAS%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A2px%2Ccolor%3A%23000%3B%0A%20%20%20%20style%20A%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20B%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20D%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B%0A%20%20%20%20style%20E%20fill%3A%23ccf%2Cstroke%3A%23333%2Cstroke-width%3A2px%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD;
+    subgraph EAS [Expo Application Services]
+        A[EAS Build] --> |App Binary| B(EAS Submit);
+        A --> C{Standalone App};
+        C --> D[EAS Update];
+        E[EAS Secrets] --> A;
+        B --> F[(App Stores)];
+        D --> G(Users);
+    end
+    H(Developer) --> A;
+    H --> E;
+    H --> D;
 
-_(Interactive diagram - click to view)_
+    style EAS fill:#f9f,stroke:#333,stroke-width:2px,color:#000;
+    style A fill:#ccf,stroke:#333,stroke-width:2px;
+    style B fill:#ccf,stroke:#333,stroke-width:2px;
+    style D fill:#ccf,stroke:#333,stroke-width:2px;
+    style E fill:#ccf,stroke:#333,stroke-width:2px;
+{code}
 
-This diagram illustrates the core components of Expo Application Services (EAS) and how they interact. The developer initiates processes like {{EAS Build}} and configures {{EAS Secrets}}. {{EAS Build}} produces a standalone app binary, which can then be sent to {{EAS Submit}} for uploading to the App Stores. The standalone app, once installed by users, can receive over-the-air updates via {{EAS Update}}. {{EAS Secrets}} provides necessary credentials and configurations to the build process. This entire suite of services, including others like EAS Workflows and EAS Hosting (not explicitly shown but related to the overall lifecycle), aims to streamline the journey from development to production and beyond, allowing developers to focus more on app features and less on complex build and deployment pipelines.
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
+
+This diagram illustrates the core components of Expo Application Services (EAS) and how they interact. The developer initiates processes like `EAS Build` and configures `EAS Secrets`. `EAS Build` produces a standalone app binary, which can then be sent to `EAS Submit` for uploading to the App Stores. The standalone app, once installed by users, can receive over-the-air updates via `EAS Update`. `EAS Secrets` provides necessary credentials and configurations to the build process. This entire suite of services, including others like EAS Workflows and EAS Hosting (not explicitly shown but related to the overall lifecycle), aims to streamline the journey from development to production and beyond, allowing developers to focus more on app features and less on complex build and deployment pipelines.
 
 h2. Understanding EAS's Role in the Expo Ecosystem
 
@@ -71,7 +90,7 @@ h2. Accessibility
 
 New developers can become productive more quickly, as the need for extensive local setup of native development tools is diminished.
 
-While local builds remain an option (e.g., using {{eas build --local}}), the primary advantages and conveniences of EAS stem from its cloud-based services. This model, however, also introduces a reliance on EAS services and stable internet connectivity for these critical operations.
+While local builds remain an option (e.g., using `eas build --local`), the primary advantages and conveniences of EAS stem from its cloud-based services. This model, however, also introduces a reliance on EAS services and stable internet connectivity for these critical operations.
 
 h2. Benefits of Using EAS
 
@@ -106,32 +125,39 @@ h2. Enhanced Security for Secrets
 EAS Secrets provide a secure and convenient way to manage sensitive information like API keys and build-time variables, preventing accidental exposure in your codebase.
 h2. Integration with Expo Ecosystem
 
-EAS is tightly integrated with the Expo CLI, {{app.config.js}}, and your Expo project configuration, providing a smooth and cohesive developer experience.
+EAS is tightly integrated with the Expo CLI, `app.config.js`, and your Expo project configuration, providing a smooth and cohesive developer experience.
 
 {note}
 While EAS offers many services for free, some features or higher usage tiers may require a paid subscription. Always check the latest pricing and feature availability on the [https://expo.dev/pricing|Expo website].
 {note}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/eas/|Expo Docs: Expo Application Services (EAS) Overview]
-- [https://docs.expo.dev/build/introduction/|Expo Docs: EAS Build]
-- [https://docs.expo.dev/submit/introduction/|Expo Docs: EAS Submit]
-- [https://docs.expo.dev/eas-update/introduction/|Expo Docs: EAS Update]
-- [https://docs.expo.dev/build/introduction/#why-eas-build|Expo Docs: Why EAS? (from Build introduction)]
-- [https://docs.expo.dev/build/concepts/|Expo Docs: Core concepts of EAS Build]
+>
+bq. - [https://docs.expo.dev/eas/|Expo Docs: Expo Application Services (EAS) Overview]
+bq. - [https://docs.expo.dev/build/introduction/|Expo Docs: EAS Build]
+bq. - [https://docs.expo.dev/submit/introduction/|Expo Docs: EAS Submit]
+bq. - [https://docs.expo.dev/eas-update/introduction/|Expo Docs: EAS Update]
+bq. - [https://docs.expo.dev/build/introduction/#why-eas-build|Expo Docs: Why EAS? (from Build introduction)]
+bq. - [https://docs.expo.dev/build/concepts/|Expo Docs: Core concepts of EAS Build]
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* EAS Build can be conceptualized as a cloud-hosted, managed equivalent of your local Android Studio build processes (using Gradle). It abstracts away much of the intricate environment setup and the often-complex management of signing keystores. EAS Submit automates interactions that would typically occur manually through the Google Play Console web interface.
-> *Key Takeaway:* OTA updates delivered via EAS Update are fundamentally different from native code updates. They target the JavaScript bundle and associated assets, enabling rapid deployments for UI and logic changes without a new store-reviewed {{.aab}} or {{.apk}}.
+>
+bq. *Comparison:* EAS Build can be conceptualized as a cloud-hosted, managed equivalent of your local Android Studio build processes (using Gradle). It abstracts away much of the intricate environment setup and the often-complex management of signing keystores. EAS Submit automates interactions that would typically occur manually through the Google Play Console web interface.
+>
+bq. *Key Takeaway:* OTA updates delivered via EAS Update are fundamentally different from native code updates. They target the JavaScript bundle and associated assets, enabling rapid deployments for UI and logic changes without a new store-reviewed `.aab` or `.apk`.
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* EAS Build is like having Xcode's build and archive process running in the cloud, managed for you. It handles the complexities of signing certificates and provisioning profiles. EAS Submit automates what you'd normally do through App Store Connect or with tools like Transporter.
-> *Key Takeaway:* OTA updates via EAS Update allow quick JS and asset changes without a full App Store review, distinct from native code updates which still require a new {{.ipa}} submission.
+>
+bq. *Comparison:* EAS Build is like having Xcode's build and archive process running in the cloud, managed for you. It handles the complexities of signing certificates and provisioning profiles. EAS Submit automates what you'd normally do through App Store Connect or with tools like Transporter.
+>
+bq. *Key Takeaway:* OTA updates via EAS Update allow quick JS and asset changes without a full App Store review, distinct from native code updates which still require a new `.ipa` submission.
 
 bq. 🌐 *(Web Developers - React/Angular):*
-> *Comparison:* Consider EAS as a comprehensive CI/CD and deployment platform tailored specifically for mobile applications, analogous to services like Vercel, Netlify, or AWS Amplify for web applications, but with the added complexities of native code compilation and app store interactions.
-> *Key Takeaway:* The "building" of an app within EAS involves native compilation into platform-specific package files ({{.ipa}} for iOS, {{.aab}} for Android). These are then installed directly onto devices. App store submission is a formal review process, not merely a {{git push}}. OTA updates share some conceptual similarities with Hot Module Replacement (HMR), but are for production users and involve a more structured delivery system.
+>
+bq. *Comparison:* Consider EAS as a comprehensive CI/CD and deployment platform tailored specifically for mobile applications, analogous to services like Vercel, Netlify, or AWS Amplify for web applications, but with the added complexities of native code compilation and app store interactions.
+>
+bq. *Key Takeaway:* The "building" of an app within EAS involves native compilation into platform-specific package files (`.ipa` for iOS, `.aab` for Android). These are then installed directly onto devices. App store submission is a formal review process, not merely a `git push`. OTA updates share some conceptual similarities with Hot Module Replacement (HMR), but are for production users and involve a more structured delivery system.
 
-In the next section, we'll compare EAS Build with the classic {{expo build}} system to understand its evolution and advantages more clearly.
+In the next section, we'll compare EAS Build with the classic `expo build` system to understand its evolution and advantages more clearly.
 
 ----
 

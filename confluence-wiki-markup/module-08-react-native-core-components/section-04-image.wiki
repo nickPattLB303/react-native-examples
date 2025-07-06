@@ -49,14 +49,20 @@ h2. Styling
 Can be styled using {{StyleSheet}} for borders, opacity, etc.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* {{<Image>}} is similar to {{UIImageView}} on iOS and {{ImageView}} on Android. React Native handles loading from various sources. The {{resizeMode}} prop unifies concepts like {{contentMode}} (iOS) and {{ScaleType}} (Android). Explicitly defining dimensions for most image sources is crucial.
-> *Key Takeaway:* {{<Image>}} is your component for displaying all types of images. Always ensure you specify its dimensions for proper rendering, especially for non-static sources.
-> *Source:* [https://reactnative.dev/docs/image|React Native Docs: Image]
+>
+bq. *Comparison:* {{<Image>}} is similar to {{UIImageView}} on iOS and {{ImageView}} on Android. React Native handles loading from various sources. The {{resizeMode}} prop unifies concepts like {{contentMode}} (iOS) and {{ScaleType}} (Android). Explicitly defining dimensions for most image sources is crucial.
+>
+bq. *Key Takeaway:* {{<Image>}} is your component for displaying all types of images. Always ensure you specify its dimensions for proper rendering, especially for non-static sources.
+>
+bq. *Source:* [https://reactnative.dev/docs/image|React Native Docs: Image]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* {{<Image>}} is analogous to the {{<img>}} tag in HTML. The {{source}} prop is similar to the {{src}} attribute. A significant difference is that React Native images require explicit width and height styles for many sources, whereas HTML {{<img>}} tags often render based on intrinsic size. {{resizeMode}} is conceptually similar to CSS {{object-fit}}.
-> *Key Takeaway:* Use {{<Image>}} for all image displays. Remember to set {{width}} and {{height}} styles, as images won't automatically size to their content like in HTML for many sources.
-> *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img|MDN Web Docs: {{<img>}}]
+>
+bq. *Comparison:* {{<Image>}} is analogous to the {{<img>}} tag in HTML. The {{source}} prop is similar to the {{src}} attribute. A significant difference is that React Native images require explicit width and height styles for many sources, whereas HTML {{<img>}} tags often render based on intrinsic size. {{resizeMode}} is conceptually similar to CSS {{object-fit}}.
+>
+bq. *Key Takeaway:* Use {{<Image>}} for all image displays. Remember to set {{width}} and {{height}} styles, as images won't automatically size to their content like in HTML for many sources.
+>
+bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img|MDN Web Docs: {{<img>}}]
 
 h2. Referential Content: Common {{<Image>}} Props
 
@@ -75,13 +81,14 @@ h2. Referential Content: Common {{<Image>}} Props
 |{{capInsets}}|{{Rect}} (iOS only)|Defines resizable regions for an image (e.g., for stretchable buttons).|
 |{{progressiveRenderingEnabled}}|{{boolean}} (Android only)|Enables progressive JPEG streaming if the image supports it.|
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/image|React Native Docs: Image]
-- [https://reactnative.dev/docs/images|React Native Docs: Images (Asset Handling)]
-- [https://reactnative.dev/docs/image-props|React Native Docs: Image Props]
-- [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
-- [https://docs.expo.dev/ui-programming/image/|Expo Docs: Image] (Note: Expo Image is a separate, more powerful component)
-- _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uiview/contentmode|Apple Developer: UIImageView contentMode]
-- _(Native Docs)_ [https://developer.android.com/reference/android/widget/ImageView.ScaleType|Android Developer: ImageView.ScaleType]
+>
+bq. - [https://reactnative.dev/docs/image|React Native Docs: Image]
+bq. - [https://reactnative.dev/docs/images|React Native Docs: Images (Asset Handling)]
+bq. - [https://reactnative.dev/docs/image-props|React Native Docs: Image Props]
+bq. - [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
+bq. - [https://docs.expo.dev/ui-programming/image/|Expo Docs: Image] (Note: Expo Image is a separate, more powerful component)
+bq. - _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uiview/contentmode|Apple Developer: UIImageView contentMode]
+bq. - _(Native Docs)_ [https://developer.android.com/reference/android/widget/ImageView.ScaleType|Android Developer: ImageView.ScaleType]
 
 h2. Image Caching & Performance
 

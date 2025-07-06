@@ -83,8 +83,9 @@ The following table summarizes some of the key {{Platform.constants}} properties
 ** If none of the above conditions are met, {{undefined}} is returned.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/platform-specific-code|React Native Docs: Platform Specific Code] (Covers {{Platform.OS}}, {{Platform.select}}, and platform-specific file extensions)
-- [https://reactnative.dev/docs/platform|React Native Docs: Platform API] (Covers {{Platform.Version}} and {{Platform.constants}})
+>
+bq. - [https://reactnative.dev/docs/platform-specific-code|React Native Docs: Platform Specific Code] (Covers {{Platform.OS}}, {{Platform.select}}, and platform-specific file extensions)
+bq. - [https://reactnative.dev/docs/platform|React Native Docs: Platform API] (Covers {{Platform.Version}} and {{Platform.constants}})
 
 h2. Procedural Content
 
@@ -419,15 +420,22 @@ This native sourcing ensures accuracy, as the information comes directly from th
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
-> *Comparison:*
-> - In native iOS development, you might use compiler directives like `#if os(iOS)` or `#if targetEnvironment(simulator)`, or runtime checks like `UIDevice.current.systemName` or `if #available(iOS 15, *) { ... }`. `Platform.constants.osVersion` is similar to `UIDevice.current.systemVersion`, and `Platform.isPad` corresponds to checking `UIDevice.current.userInterfaceIdiom == .pad`.
-- For Android, you'd use `Build.VERSION.SDK_INT` for API level checks (like `Platform.Version`), `Build.MODEL` for device model (`Platform.constants.Model`), and resource qualifiers (e.g., `layout-sw600dp`, `values-v21`) for layouts/styles. Android Build Flavors allow for even more extensive build-time code/resource variations, which is a more powerful version of what React Native's platform-specific file extensions (`.android.tsx`) achieve.
-> *Key Takeaway:* React Native's `Platform` module centralizes this logic in JavaScript, providing a unified API to query platform information. This simplifies cross-platform logic compared to managing separate native code checks for many common scenarios. However, for deep native integrations or extensive build-time variations, platform-specific files or native modules might still be necessary.
-> *Source:* [https://docs.swift.org/swift-book/ReferenceManual/Statements.html#grammar_conditional-compilation-block|Swift Conditional Compilation], [https://developer.android.com/studio/build/build-variants|Android Build Variants], [https://developer.android.com/guide/topics/resources/providing-resources|Android Providing Resources]
+>
+bq. *Comparison:*
+>
+bq. - In native iOS development, you might use compiler directives like `#if os(iOS)` or `#if targetEnvironment(simulator)`, or runtime checks like `UIDevice.current.systemName` or `if #available(iOS 15, *) { ... }`. `Platform.constants.osVersion` is similar to `UIDevice.current.systemVersion`, and `Platform.isPad` corresponds to checking `UIDevice.current.userInterfaceIdiom == .pad`.
+bq. - For Android, you'd use `Build.VERSION.SDK_INT` for API level checks (like `Platform.Version`), `Build.MODEL` for device model (`Platform.constants.Model`), and resource qualifiers (e.g., `layout-sw600dp`, `values-v21`) for layouts/styles. Android Build Flavors allow for even more extensive build-time code/resource variations, which is a more powerful version of what React Native's platform-specific file extensions (`.android.tsx`) achieve.
+>
+bq. *Key Takeaway:* React Native's `Platform` module centralizes this logic in JavaScript, providing a unified API to query platform information. This simplifies cross-platform logic compared to managing separate native code checks for many common scenarios. However, for deep native integrations or extensive build-time variations, platform-specific files or native modules might still be necessary.
+>
+bq. *Source:* [https://docs.swift.org/swift-book/ReferenceManual/Statements.html#grammar_conditional-compilation-block|Swift Conditional Compilation], [https://developer.android.com/studio/build/build-variants|Android Build Variants], [https://developer.android.com/guide/topics/resources/providing-resources|Android Providing Resources]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Web developers often resort to parsing the `navigator.userAgent` string to detect browsers or operating systems, which can be unreliable and complex. The `Platform` module in React Native is more robust and explicit for its supported native platforms. Platform-specific file extensions (`.ios.tsx`, `.android.tsx`) are conceptually similar to having different entry points or using conditional imports managed by a web bundler (like Webpack or Rollup) based on environment variables. Furthermore, bundlers like Metro can perform "platform shaking" by statically analyzing `Platform.OS` checks. This process can remove dead code paths intended for other platforms from the final bundle, an optimization akin to tree-shaking in web bundlers.
-> *Key Takeaway:* `Platform.OS` and `Platform.select()` offer a cleaner, more reliable way to handle platform differences than user-agent sniffing. It's specifically tailored for the React Native environment, with build-time optimizations possible.
-> *Source:* [https://docs.expo.dev/guides/tree-shaking/|Expo Tree Shaking]
+>
+bq. *Comparison:* Web developers often resort to parsing the `navigator.userAgent` string to detect browsers or operating systems, which can be unreliable and complex. The `Platform` module in React Native is more robust and explicit for its supported native platforms. Platform-specific file extensions (`.ios.tsx`, `.android.tsx`) are conceptually similar to having different entry points or using conditional imports managed by a web bundler (like Webpack or Rollup) based on environment variables. Furthermore, bundlers like Metro can perform "platform shaking" by statically analyzing `Platform.OS` checks. This process can remove dead code paths intended for other platforms from the final bundle, an optimization akin to tree-shaking in web bundlers.
+>
+bq. *Key Takeaway:* `Platform.OS` and `Platform.select()` offer a cleaner, more reliable way to handle platform differences than user-agent sniffing. It's specifically tailored for the React Native environment, with build-time optimizations possible.
+>
+bq. *Source:* [https://docs.expo.dev/guides/tree-shaking/|Expo Tree Shaking]
 
 Using the `Platform` module effectively allows you to embrace the unique strengths and conventions of each platform while maintaining a largely shared codebase for your SpeedyMeds application.

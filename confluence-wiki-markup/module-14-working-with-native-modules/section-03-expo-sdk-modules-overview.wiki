@@ -293,7 +293,8 @@ _(This table is not exhaustive but covers many frequently used modules. Other mo
 The Expo SDK is constantly evolving. Always refer to the [https://docs.expo.dev/versions/latest/|official Expo documentation] for the most current list of modules, their detailed APIs, and usage examples.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/versions/latest/|Expo API Reference] (Browse individual modules here)
+>
+bq. - [https://docs.expo.dev/versions/latest/|Expo API Reference] (Browse individual modules here)
 
 The extensive nature of the Expo SDK significantly lowers the barrier to entry for incorporating native features into React Native applications. For developers, especially those without deep native Android or iOS experience, the SDK provides a highly productive path. However, this convenience comes with a dependency on the Expo ecosystem and its release cycle. Understanding this trade-off between the convenience of the Expo SDK and the potential need for deeper native control is important for long-term project planning.
 

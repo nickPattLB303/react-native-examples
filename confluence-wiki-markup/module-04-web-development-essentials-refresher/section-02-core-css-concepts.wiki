@@ -116,17 +116,25 @@ h2. Margin
 
 Transparent space around the border, separating the element from others.
 
-[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20Box%20Model%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20A%5BMargin%5D%20--%3E%20B(Border)%3B%0A%20%20%20%20%20%20%20%20B%20--%3E%20C(Padding)%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%20D%5BContent%5D%3B%0A%20%20%20%20end|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph LR
+    subgraph Box Model
+        direction LR
+        A[Margin] --> B(Border);
+        B --> C(Padding);
+        C --> D[Content];
+    end
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
-_Diagram: Conceptual layout of the CSS Box Model._ This diagram visually represents the layered structure of the CSS Box Model, which is fundamental to understanding how elements occupy space and how spacing is controlled on a webpage. At the very center is the *Content* area, which holds the actual text, images, or other media. Surrounding the content is the *Padding*, an optional transparent space that provides an inner cushion between the content and its border. The *Border* itself is a line that can be styled with various thicknesses, styles (solid, dashed, etc.), and colors, defining the visible edge of the element. Finally, the outermost layer is the *Margin*, another transparent space that separates this element from any adjacent elements on the page. Understanding these distinct layers—Content, Padding, Border, and Margin—and how their sizes interact (especially with the {{box-sizing}} property) is critical for precise layout and spacing in web design, a concept that also heavily influences React Native styling.
+_Diagram: Conceptual layout of the CSS Box Model._ This diagram visually represents the layered structure of the CSS Box Model, which is fundamental to understanding how elements occupy space and how spacing is controlled on a webpage. At the very center is the *Content* area, which holds the actual text, images, or other media. Surrounding the content is the *Padding*, an optional transparent space that provides an inner cushion between the content and its border. The *Border* itself is a line that can be styled with various thicknesses, styles (solid, dashed, etc.), and colors, defining the visible edge of the element. Finally, the outermost layer is the *Margin*, another transparent space that separates this element from any adjacent elements on the page. Understanding these distinct layers—Content, Padding, Border, and Margin—and how their sizes interact (especially with the `box-sizing` property) is critical for precise layout and spacing in web design, a concept that also heavily influences React Native styling.
 
 Understanding the box model is crucial for controlling element size and spacing.
 
-*{{box-sizing}} Property:*
-* {{content-box}} (default): {{width}} and {{height}} apply only to the content area. Total width = {{width}} + {{padding}} + {{border}}.
-* {{border-box}}: {{width}} and {{height}} include content, padding, and border. The content area shrinks to accommodate padding/border. This is often considered more intuitive for layout.
+*`box-sizing` Property:*
+* `content-box` (default): `width` and `height` apply only to the content area. Total width = `width` + `padding` + `border`.
+* `border-box`: `width` and `height` include content, padding, and border. The content area shrinks to accommodate padding/border. This is often considered more intuitive for layout.
 
 *Margin Collapsing:*
 Vertical margins (top/bottom) of adjacent block-level boxes can collapse into a single margin (usually the size of the larger margin). This occurs only vertically under specific conditions.
@@ -235,23 +243,28 @@ After building the DOM from HTML, browsers process CSS:
 # *Compositing:* Combine painted layers into the final screen image. Changes affecting layout trigger reflow and repaint; appearance-only changes may only trigger repaint.
 
 bq. 📚 *Official Documentation:*
-> - [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors|MDN Web Docs: CSS Selectors]
-- [https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade|MDN Web Docs: The Cascade]
-- [https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity|MDN Web Docs: Specificity]
-- [https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model|MDN Web Docs: Introduction to the CSS Box Model]
-- [https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing|MDN Web Docs: box-sizing]
-- [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout|MDN Web Docs: CSS Flexible Box Layout (Flexbox)]
-- [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox|MDN Web Docs: Basic Concepts of Flexbox]
-- [https://css-tricks.com/snippets/css/a-guide-to-flexbox/|CSS-Tricks: A Complete Guide to Flexbox]
-- [https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_browsers_work|MDN Web Docs: Introduction to how browsers work]
+>
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors|MDN Web Docs: CSS Selectors]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade|MDN Web Docs: The Cascade]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity|MDN Web Docs: Specificity]
+bq. - [https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model|MDN Web Docs: Introduction to the CSS Box Model]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing|MDN Web Docs: box-sizing]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout|MDN Web Docs: CSS Flexible Box Layout (Flexbox)]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox|MDN Web Docs: Basic Concepts of Flexbox]
+bq. - [https://css-tricks.com/snippets/css/a-guide-to-flexbox/|CSS-Tricks: A Complete Guide to Flexbox]
+bq. - [https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_browsers_work|MDN Web Docs: Introduction to how browsers work]
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* CSS Selectors are conceptually similar to how you might find views by ID or tag in native code. The Box Model is analogous to properties like padding and margins on native views. Flexbox is very similar to layout systems like `ConstraintLayout` (Android) or Auto Layout using `UIStackView` (iOS), but often simpler for one-dimensional arrangements. React Native adopts Flexbox as its _default_ layout system, unlike native platforms which offer multiple systems.
-> *Key Takeaway:* CSS concepts like spacing (box model) and layout (Flexbox) have direct parallels in React Native, with Flexbox being the dominant layout mechanism you'll use.
+>
+bq. *Comparison:* CSS Selectors are conceptually similar to how you might find views by ID or tag in native code. The Box Model is analogous to properties like padding and margins on native views. Flexbox is very similar to layout systems like `ConstraintLayout` (Android) or Auto Layout using `UIStackView` (iOS), but often simpler for one-dimensional arrangements. React Native adopts Flexbox as its _default_ layout system, unlike native platforms which offer multiple systems.
+>
+bq. *Key Takeaway:* CSS concepts like spacing (box model) and layout (Flexbox) have direct parallels in React Native, with Flexbox being the dominant layout mechanism you'll use.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Selectors, the Box Model, and Flexbox are familiar. The main differences in React Native are: styling is done via JavaScript objects (`StyleSheet`) not separate CSS files; property names use camelCase (e.g., `flexDirection` instead of `flex-direction`); there is no cascading or inheritance in the same way as web CSS; and Flexbox is the default (`display: flex` is implied for `<View>`). `flexDirection` defaults to `column` in React Native, unlike the web's default of `row`.
-> *Key Takeaway:* Your CSS knowledge, especially Flexbox, is highly transferable, but be mindful of the syntax differences (JS objects, camelCase) and the slightly different defaults and behavior (no cascade, default `flexDirection: 'column'`).
+>
+bq. *Comparison:* Selectors, the Box Model, and Flexbox are familiar. The main differences in React Native are: styling is done via JavaScript objects (`StyleSheet`) not separate CSS files; property names use camelCase (e.g., `flexDirection` instead of `flex-direction`); there is no cascading or inheritance in the same way as web CSS; and Flexbox is the default (`display: flex` is implied for `<View>`). `flexDirection` defaults to `column` in React Native, unlike the web's default of `row`.
+>
+bq. *Key Takeaway:* Your CSS knowledge, especially Flexbox, is highly transferable, but be mindful of the syntax differences (JS objects, camelCase) and the slightly different defaults and behavior (no cascade, default `flexDirection: 'column'`).
 
 h2. Procedural Content
 

@@ -58,50 +58,138 @@ For web deployments, Expo Router can automatically split your code by route, opt
 
 Let's explore how Expo Router maps file structure to navigation:
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22File%20System%20Structure%22%0A%20%20%20%20%20%20%20%20appDir%5B%22app%2F%20(Root%20Directory)%22%5D%0A%0A%20%20%20%20%20%20%20%20homeTsx%5B%22app%2Findex.tsx%3Cbr%2F%3EHome%20Screen%3Cbr%2F%3EURL%3A%20%2F%22%5D%0A%0A%20%20%20%20%20%20%20%20medsDir%5B%22app%2Fmedications%2F%20(Directory)%22%5D%0A%20%20%20%20%20%20%20%20medsIndex%5B%22app%2Fmedications%2Findex.tsx%3Cbr%2F%3EMedications%20List%3Cbr%2F%3EURL%3A%20%2Fmedications%22%5D%0A%20%20%20%20%20%20%20%20medsId%5B%22app%2Fmedications%2F%5Bid%5D.tsx%3Cbr%2F%3EMedication%20Detail%3Cbr%2F%3EURL%3A%20%2Fmedications%2F%3Aid%22%5D%0A%0A%20%20%20%20%20%20%20%20tabsDir%5B%22app%2F(tabs)%2F%20(Group)%3Cbr%2F%3ETab%20Navigation%22%5D%0A%20%20%20%20%20%20%20%20tabsLayout%5B%22app%2F(tabs)%2F_layout.tsx%3Cbr%2F%3ETab%20Navigator%20Config%22%5D%0A%20%20%20%20%20%20%20%20homeTab%5B%22app%2F(tabs)%2Fhome.tsx%3Cbr%2F%3EHome%20Tab%20Screen%3Cbr%2F%3EURL%3A%20%2F(tabs)%2Fhome%22%5D%0A%20%20%20%20%20%20%20%20profileTab%5B%22app%2F(tabs)%2Fprofile.tsx%3Cbr%2F%3EProfile%20Screen%3Cbr%2F%3EURL%3A%20%2F(tabs)%2Fprofile%22%5D%0A%0A%20%20%20%20%20%20%20%20settingsDir%5B%22app%2Fsettings%2F%20(Directory)%22%5D%0A%20%20%20%20%20%20%20%20settingsLayout%5B%22app%2Fsettings%2F_layout.tsx%3Cbr%2F%3EStack%20Navigator%20Config%22%5D%0A%20%20%20%20%20%20%20%20settingsIndex%5B%22app%2Fsettings%2Findex.tsx%3Cbr%2F%3ESettings%20List%3Cbr%2F%3EURL%3A%20%2Fsettings%22%5D%0A%20%20%20%20%20%20%20%20settingsAccount%5B%22app%2Fsettings%2Faccount.tsx%3Cbr%2F%3EAccount%20Settings%3Cbr%2F%3EURL%3A%20%2Fsettings%2Faccount%22%5D%0A%20%20%20%20%20%20%20%20settingsNotifs%5B%22app%2Fsettings%2Fnotifications.tsx%3Cbr%2F%3ENotification%20Settings%3Cbr%2F%3EURL%3A%20%2Fsettings%2Fnotifications%22%5D%0A%0A%20%20%20%20%20%20%20%20appDir%20--%3E%20homeTsx%0A%20%20%20%20%20%20%20%20appDir%20--%3E%20medsDir%0A%20%20%20%20%20%20%20%20medsDir%20--%3E%20medsIndex%0A%20%20%20%20%20%20%20%20medsDir%20--%3E%20medsId%0A%0A%20%20%20%20%20%20%20%20appDir%20--%3E%20tabsDir%0A%20%20%20%20%20%20%20%20tabsDir%20--%3E%20tabsLayout%0A%20%20%20%20%20%20%20%20tabsDir%20--%3E%20homeTab%0A%20%20%20%20%20%20%20%20tabsDir%20--%3E%20profileTab%0A%0A%20%20%20%20%20%20%20%20appDir%20--%3E%20settingsDir%0A%20%20%20%20%20%20%20%20settingsDir%20--%3E%20settingsLayout%0A%20%20%20%20%20%20%20%20settingsDir%20--%3E%20settingsIndex%0A%20%20%20%20%20%20%20%20settingsDir%20--%3E%20settingsAccount%0A%20%20%20%20%20%20%20%20settingsDir%20--%3E%20settingsNotifs%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Resulting%20Navigation%20Structure%22%0A%20%20%20%20%20%20%20%20rootNav%5B%22Root%20(Implicit%20Stack)%22%5D%0A%0A%20%20%20%20%20%20%20%20home%5B%22%2F%20(Home)%22%5D%0A%20%20%20%20%20%20%20%20meds%5B%22%2Fmedications%20(List)%22%5D%0A%20%20%20%20%20%20%20%20medDetail%5B%22%2Fmedications%2F%3Aid%20(Detail)%22%5D%0A%0A%20%20%20%20%20%20%20%20tabs%5B%22Tab%20Navigator%22%5D%0A%20%20%20%20%20%20%20%20homeTabScreen%5B%22%2Fhome%20Tab%22%5D%0A%20%20%20%20%20%20%20%20profileTabScreen%5B%22%2Fprofile%20Tab%22%5D%0A%0A%20%20%20%20%20%20%20%20settingsStack%5B%22Settings%20Stack%22%5D%0A%20%20%20%20%20%20%20%20settingsList%5B%22%2Fsettings%20(Index)%22%5D%0A%20%20%20%20%20%20%20%20settingsAccountScreen%5B%22%2Fsettings%2Faccount%22%5D%0A%20%20%20%20%20%20%20%20settingsNotifsScreen%5B%22%2Fsettings%2Fnotifications%22%5D%0A%0A%20%20%20%20%20%20%20%20rootNav%20--%3E%20home%0A%20%20%20%20%20%20%20%20rootNav%20--%3E%20meds%0A%20%20%20%20%20%20%20%20meds%20--%3E%20medDetail%0A%0A%20%20%20%20%20%20%20%20rootNav%20--%3E%20tabs%0A%20%20%20%20%20%20%20%20tabs%20--%3E%20homeTabScreen%0A%20%20%20%20%20%20%20%20tabs%20--%3E%20profileTabScreen%0A%0A%20%20%20%20%20%20%20%20rootNav%20--%3E%20settingsStack%0A%20%20%20%20%20%20%20%20settingsStack%20--%3E%20settingsList%0A%20%20%20%20%20%20%20%20settingsStack%20--%3E%20settingsAccountScreen%0A%20%20%20%20%20%20%20%20settingsStack%20--%3E%20settingsNotifsScreen%0A%20%20%20%20end%0A%0A%20%20%20%20classDef%20file%20fill%3A%23f9f9f9%2Cstroke%3A%23999%2Cstroke-width%3A1px%3B%0A%20%20%20%20classDef%20directory%20fill%3A%23e6f7ff%2Cstroke%3A%230066cc%2Cstroke-width%3A1px%3B%0A%20%20%20%20classDef%20layout%20fill%3A%23ffe6cc%2Cstroke%3A%23ff8c00%2Cstroke-width%3A1px%3B%0A%20%20%20%20classDef%20dynamicRoute%20fill%3A%23f2e6ff%2Cstroke%3A%238000ff%2Cstroke-width%3A1px%3B%0A%20%20%20%20classDef%20group%20fill%3A%23e6ffe6%2Cstroke%3A%23006600%2Cstroke-width%3A1px%3B%0A%0A%20%20%20%20classDef%20navStack%20fill%3A%23ffcccb%2Cstroke%3A%23ff0000%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20navTabs%20fill%3A%23cce5ff%2Cstroke%3A%230066cc%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20navScreen%20fill%3A%23f2f2f2%2Cstroke%3A%23999999%2Cstroke-width%3A1px%3B%0A%0A%20%20%20%20class%20homeTsx%2CmedsIndex%2CsettingsIndex%2ChomeTab%2CprofileTab%2CsettingsAccount%2CsettingsNotifs%20file%3B%0A%20%20%20%20class%20medsDir%2CsettingsDir%20directory%3B%0A%20%20%20%20class%20medsId%20dynamicRoute%3B%0A%20%20%20%20class%20tabsLayout%2CsettingsLayout%20layout%3B%0A%20%20%20%20class%20tabsDir%20group%3B%0A%0A%20%20%20%20class%20rootNav%2CsettingsStack%20navStack%3B%0A%20%20%20%20class%20tabs%20navTabs%3B%0A%20%20%20%20class%20home%2Cmeds%2CmedDetail%2ChomeTabScreen%2CprofileTabScreen%2CsettingsList%2CsettingsAccountScreen%2CsettingsNotifsScreen%20navScreen%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph "File System Structure"
+        appDir["app/ (Root Directory)"]
 
-_(Interactive diagram - click to view)_
+        homeTsx["app/index.tsx<br/>Home Screen<br/>URL: /"]
+
+        medsDir["app/medications/ (Directory)"]
+        medsIndex["app/medications/index.tsx<br/>Medications List<br/>URL: /medications"]
+        medsId["app/medications/[id].tsx<br/>Medication Detail<br/>URL: /medications/:id"]
+
+        tabsDir["app/(tabs)/ (Group)<br/>Tab Navigation"]
+        tabsLayout["app/(tabs)/_layout.tsx<br/>Tab Navigator Config"]
+        homeTab["app/(tabs)/home.tsx<br/>Home Tab Screen<br/>URL: /(tabs)/home"]
+        profileTab["app/(tabs)/profile.tsx<br/>Profile Screen<br/>URL: /(tabs)/profile"]
+
+        settingsDir["app/settings/ (Directory)"]
+        settingsLayout["app/settings/_layout.tsx<br/>Stack Navigator Config"]
+        settingsIndex["app/settings/index.tsx<br/>Settings List<br/>URL: /settings"]
+        settingsAccount["app/settings/account.tsx<br/>Account Settings<br/>URL: /settings/account"]
+        settingsNotifs["app/settings/notifications.tsx<br/>Notification Settings<br/>URL: /settings/notifications"]
+
+        appDir --> homeTsx
+        appDir --> medsDir
+        medsDir --> medsIndex
+        medsDir --> medsId
+
+        appDir --> tabsDir
+        tabsDir --> tabsLayout
+        tabsDir --> homeTab
+        tabsDir --> profileTab
+
+        appDir --> settingsDir
+        settingsDir --> settingsLayout
+        settingsDir --> settingsIndex
+        settingsDir --> settingsAccount
+        settingsDir --> settingsNotifs
+    end
+
+    subgraph "Resulting Navigation Structure"
+        rootNav["Root (Implicit Stack)"]
+
+        home["/ (Home)"]
+        meds["/medications (List)"]
+        medDetail["/medications/:id (Detail)"]
+
+        tabs["Tab Navigator"]
+        homeTabScreen["/home Tab"]
+        profileTabScreen["/profile Tab"]
+
+        settingsStack["Settings Stack"]
+        settingsList["/settings (Index)"]
+        settingsAccountScreen["/settings/account"]
+        settingsNotifsScreen["/settings/notifications"]
+
+        rootNav --> home
+        rootNav --> meds
+        meds --> medDetail
+
+        rootNav --> tabs
+        tabs --> homeTabScreen
+        tabs --> profileTabScreen
+
+        rootNav --> settingsStack
+        settingsStack --> settingsList
+        settingsStack --> settingsAccountScreen
+        settingsStack --> settingsNotifsScreen
+    end
+
+    classDef file fill:#f9f9f9,stroke:#999,stroke-width:1px;
+    classDef directory fill:#e6f7ff,stroke:#0066cc,stroke-width:1px;
+    classDef layout fill:#ffe6cc,stroke:#ff8c00,stroke-width:1px;
+    classDef dynamicRoute fill:#f2e6ff,stroke:#8000ff,stroke-width:1px;
+    classDef group fill:#e6ffe6,stroke:#006600,stroke-width:1px;
+
+    classDef navStack fill:#ffcccb,stroke:#ff0000,stroke-width:2px;
+    classDef navTabs fill:#cce5ff,stroke:#0066cc,stroke-width:2px;
+    classDef navScreen fill:#f2f2f2,stroke:#999999,stroke-width:1px;
+
+    class homeTsx,medsIndex,settingsIndex,homeTab,profileTab,settingsAccount,settingsNotifs file;
+    class medsDir,settingsDir directory;
+    class medsId dynamicRoute;
+    class tabsLayout,settingsLayout layout;
+    class tabsDir group;
+
+    class rootNav,settingsStack navStack;
+    class tabs navTabs;
+    class home,meds,medDetail,homeTabScreen,profileTabScreen,settingsList,settingsAccountScreen,settingsNotifsScreen navScreen;
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates how Expo Router's file-based approach maps your project's file and directory structure to navigation routes and screens:
-# *Root Structure*: The {{app/}} directory serves as the root for all routes. Files directly in this directory (like {{index.tsx}}) map to root-level routes.
-# *Directories as Routes*: Each directory (like {{medications/}} or {{settings/}}) creates a new route segment. Files within these directories become sub-routes.
+# *Root Structure*: The `app/` directory serves as the root for all routes. Files directly in this directory (like `index.tsx`) map to root-level routes.
+# *Directories as Routes*: Each directory (like `medications/` or `settings/`) creates a new route segment. Files within these directories become sub-routes.
 # *Special Files*:
-*** {{_layout.tsx}} files define navigation layouts (Stack, Tabs, Drawer) for their containing directory
-** Files with brackets like {{[id].tsx}} define dynamic routes that can match variable parameters
-# *Groups*: Directories with parentheses like {{(tabs)}} create logical groupings without affecting the URL path
+*** `_layout.tsx` files define navigation layouts (Stack, Tabs, Drawer) for their containing directory
+** Files with brackets like `[id].tsx` define dynamic routes that can match variable parameters
+# *Groups*: Directories with parentheses like `(tabs)` create logical groupings without affecting the URL path
 # *Resulting Navigation*: The file structure automatically generates a complete navigation system with proper nesting and relationships between screens.
 
 This approach makes your navigation structure intuitively visible through your project's file organization, reducing the need for extensive configuration code. In Expo Router, the file system becomes a representation of your application's routing topology.
 
 h3. Conceptual Content: Core Concepts of Expo Router
-# *The {{app}} Directory:* This is the heart of Expo Router. All files within the {{app}} directory (at the root of your project) are automatically treated as routes.
-*** {{app/index.tsx}}: Becomes the home screen (route {{/}}).
-*** {{app/profile.tsx}}: Becomes the {{/profile}} route.
-*** {{app/settings/index.tsx}}: Becomes the {{/settings}} route.
-*** {{app/settings/notifications.tsx}}: Becomes the {{/settings/notifications}} route.
+# *The `app` Directory:* This is the heart of Expo Router. All files within the `app` directory (at the root of your project) are automatically treated as routes.
+*** `app/index.tsx`: Becomes the home screen (route `/`).
+*** `app/profile.tsx`: Becomes the `/profile` route.
+*** `app/settings/index.tsx`: Becomes the `/settings` route.
+*** `app/settings/notifications.tsx`: Becomes the `/settings/notifications` route.
 # *Dynamic Routes:* Create routes with dynamic segments by using square brackets in filenames.
-*** {{app/medications/[id].tsx}}: Matches routes like {{/medications/aspirin123}} or {{/medications/amox456}}. The {{id}} value becomes a route parameter.
-*** {{app/users/[...rest].tsx}}: A catch-all or deep dynamic route.
-# *Layout Routes ({{_layout.tsx}}):* These special files define shared UI and navigation structure for a segment of routes (a directory and its children).
-*** An {{app/_layout.tsx}} file at the root of the {{app}} directory can define the root navigator (e.g., a Stack, Tabs, or Drawer navigator) for the entire app. When Expo Router initializes, this root layout effectively replaces the traditional {{App.tsx}} (from the project root) as the main UI entry point for your application.
-*** A {{app/settings/_layout.tsx}} file can define a specific navigator (e.g., a Stack navigator) just for routes within the {{settings}} directory.
+*** `app/medications/[id].tsx`: Matches routes like `/medications/aspirin123` or `/medications/amox456`. The `id` value becomes a route parameter.
+*** `app/users/[...rest].tsx`: A catch-all or deep dynamic route.
+# *Layout Routes (`_layout.tsx`):* These special files define shared UI and navigation structure for a segment of routes (a directory and its children).
+*** An `app/_layout.tsx` file at the root of the `app` directory can define the root navigator (e.g., a Stack, Tabs, or Drawer navigator) for the entire app. When Expo Router initializes, this root layout effectively replaces the traditional `App.tsx` (from the project root) as the main UI entry point for your application.
+*** A `app/settings/_layout.tsx` file can define a specific navigator (e.g., a Stack navigator) just for routes within the `settings` directory.
 *** Layouts are where you configure your React Navigation navigators (Stack, Tabs, Drawer) using components provided by Expo Router.
-h3. The {{<Slot />}} Component
+h3. The `<Slot />` Component
 
-Layout routes use the {{<Slot />}} component (imported from {{expo-router}}) to render their child routes. Think of {{<Slot />}} as a placeholder where the content of the matched child route will be injected. If a layout route uses a specific navigator component like {{<Stack />}}, {{<Tabs />}}, or {{<Drawer />}} (from {{expo-router}}), these components implicitly handle rendering the child routes, effectively acting like specialized Slots. You typically don't use {{<Slot />}} _and_ a navigator component like {{<Stack />}} in the same layout; the navigator itself manages the rendering of its children (screens).
-# *Navigators in Expo Router ({{Stack}}, {{Tabs}}, {{Drawer}}):*
-    Expo Router provides its own versions of Stack, Tabs, and Drawer components (e.g., {{import { Stack } from 'expo-router/stack';}}). You use these within your {{_layout.tsx}} files to define the navigation structure.
-*** {{<Stack />}}: Renders a stack navigator for the current directory segment.
-*** {{<Tabs />}}: Renders a tab navigator.
-*** {{<Drawer />}}: Renders a drawer navigator.
-      Screen configuration (like titles, header options) is done directly on these navigator components or on their {{Screen}} children within the layout file.
-# *Linking ({{<Link />}} component and {{router}} object):*
-*** {{expo-router}} provides a {{<Link href="/routeName">}} component for declarative navigation, similar to an {{<a>}} tag in HTML.
-*** It also provides a {{router}} object (e.g., {{import { router } from 'expo-router';}}) with imperative methods like {{router.push('/routeName')}}, {{router.replace('/routeName')}}, and {{router.back()}}.
-# *Route Groups ({{(group-name)}}):*
-    Directories named with parentheses, like {{app/(tabs)/home.tsx}}, are used to organize files or define layouts without affecting the URL structure. This is useful for grouping routes under a common layout (e.g., a tab bar defined in {{app/(tabs)/_layout.tsx}}) without adding {{(tabs)}} to the URL path.
+Layout routes use the `<Slot />` component (imported from `expo-router`) to render their child routes. Think of `<Slot />` as a placeholder where the content of the matched child route will be injected. If a layout route uses a specific navigator component like `<Stack />`, `<Tabs />`, or `<Drawer />` (from `expo-router`), these components implicitly handle rendering the child routes, effectively acting like specialized Slots. You typically don't use `<Slot />` _and_ a navigator component like `<Stack />` in the same layout; the navigator itself manages the rendering of its children (screens).
+# *Navigators in Expo Router (`Stack`, `Tabs`, `Drawer`):*
+    Expo Router provides its own versions of Stack, Tabs, and Drawer components (e.g., `import { Stack } from 'expo-router/stack';`). You use these within your `_layout.tsx` files to define the navigation structure.
+*** `<Stack />`: Renders a stack navigator for the current directory segment.
+*** `<Tabs />`: Renders a tab navigator.
+*** `<Drawer />`: Renders a drawer navigator.
+      Screen configuration (like titles, header options) is done directly on these navigator components or on their `Screen` children within the layout file.
+# *Linking (`<Link />` component and `router` object):*
+*** `expo-router` provides a `<Link href="/routeName">` component for declarative navigation, similar to an `<a>` tag in HTML.
+*** It also provides a `router` object (e.g., `import { router } from 'expo-router';`) with imperative methods like `router.push('/routeName')`, `router.replace('/routeName')`, and `router.back()`.
+# *Route Groups (`(group-name)`):*
+    Directories named with parentheses, like `app/(tabs)/home.tsx`, are used to organize files or define layouts without affecting the URL structure. This is useful for grouping routes under a common layout (e.g., a tab bar defined in `app/(tabs)/_layout.tsx`) without adding `(tabs)` to the URL path.
 # *Underlying Mechanism: Built on React Navigation:*
-    It's important to understand that Expo Router is built on top of React Navigation. At build time, Expo Router translates your file system structure (files and layouts in the {{app}} directory) into a standard React Navigation configuration object. At runtime, the actual navigation state management (tracking active screens, history, parameters) is still handled by React Navigation's core. This means that many concepts and capabilities from React Navigation (like screen options, navigator props, and even some hooks if used carefully) can still be relevant or accessible, though Expo Router aims to provide a more streamlined API for most common use cases.
+    It's important to understand that Expo Router is built on top of React Navigation. At build time, Expo Router translates your file system structure (files and layouts in the `app` directory) into a standard React Navigation configuration object. At runtime, the actual navigation state management (tracking active screens, history, parameters) is still handled by React Navigation's core. This means that many concepts and capabilities from React Navigation (like screen options, navigator props, and even some hooks if used carefully) can still be relevant or accessible, though Expo Router aims to provide a more streamlined API for most common use cases.
 
 h3. Procedural Content: Initial Setup for Expo Router
 
@@ -295,19 +383,24 @@ const styles = StyleSheet.create({
 Now, when you run your app (`npx expo start`), Expo Router will pick up these files and create the navigation structure.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/router/introduction/|Expo Router: Introduction]
-- [https://docs.expo.dev/router/installation/|Expo Router: Installation]
-- [https://docs.expo.dev/router/routing/|Expo Router: File Conventions (Routing)]
-- [https://docs.expo.dev/router/layouts/|Expo Router: Layouts]
-- [https://docs.expo.dev/router/navigating/|Expo Router: Navigating Between Pages]
+>
+bq. - [https://docs.expo.dev/router/introduction/|Expo Router: Introduction]
+bq. - [https://docs.expo.dev/router/installation/|Expo Router: Installation]
+bq. - [https://docs.expo.dev/router/routing/|Expo Router: File Conventions (Routing)]
+bq. - [https://docs.expo.dev/router/layouts/|Expo Router: Layouts]
+bq. - [https://docs.expo.dev/router/navigating/|Expo Router: Navigating Between Pages]
 
 bq. 🌐 *(Web Developers using Next.js/Remix):*
-> *Comparison:* The file-system routing based on an `app` directory, dynamic routes with `[param].tsx`, and layout files (`_layout.tsx`) will feel very familiar. Expo Router brings this productive development pattern to native mobile development.
-> *Key Takeaway:* You can leverage your existing mental model for routing from these modern web frameworks.
+>
+bq. *Comparison:* The file-system routing based on an `app` directory, dynamic routes with `[param].tsx`, and layout files (`_layout.tsx`) will feel very familiar. Expo Router brings this productive development pattern to native mobile development.
+>
+bq. *Key Takeaway:* You can leverage your existing mental model for routing from these modern web frameworks.
 
 bq. ⚛️ *(React Developers using React Navigation):*
-> *Comparison:* Instead of explicitly creating navigator components (`createStackNavigator`, `createBottomTabNavigator`) and defining screens within them in JavaScript, you primarily define routes through file structure and configure navigators in `_layout.tsx` files. React Navigation is still used under the hood.
-> *Key Takeaway:* Expo Router offers a higher-level, convention-over-configuration approach on top of React Navigation's capabilities.
+>
+bq. *Comparison:* Instead of explicitly creating navigator components (`createStackNavigator`, `createBottomTabNavigator`) and defining screens within them in JavaScript, you primarily define routes through file structure and configure navigators in `_layout.tsx` files. React Navigation is still used under the hood.
+>
+bq. *Key Takeaway:* Expo Router offers a higher-level, convention-over-configuration approach on top of React Navigation's capabilities.
 
 h3. Next Steps
 

@@ -152,7 +152,8 @@ Constraints ensure that your generic function can safely access the properties i
 Generics significantly enhance code reusability and type safety. When you find yourself writing similar functions or interfaces for different types, consider if generics can provide a more elegant and type-safe solution.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://www.typescriptlang.org/docs/handbook/2/generics.html|TypeScript Handbook: Generics]
+>
+bq. - [https://www.typescriptlang.org/docs/handbook/2/generics.html|TypeScript Handbook: Generics]
 
 Generics are a key tool for building scalable and maintainable applications. They are particularly useful when creating utility functions, data structures, or working with APIs that handle various types of data.
 

@@ -124,8 +124,9 @@ h3. Prerequisites for this Exercise
 This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators in the upcoming sections.
 {info}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/get-started/create-a-new-app/|Expo Docs: Create your first app]
-- [https://docs.expo.dev/more/create-expo/|Expo Docs: `create-expo-app`]
-- [https://docs.expo.dev/get-started/templates/|Expo Docs: Templates]
-- [https://www.typescriptlang.org/docs/|TypeScript Documentation]
-- [https://reactnative.dev/docs/typescript|React Native TypeScript]
+>
+bq. - [https://docs.expo.dev/get-started/create-a-new-app/|Expo Docs: Create your first app]
+bq. - [https://docs.expo.dev/more/create-expo/|Expo Docs: `create-expo-app`]
+bq. - [https://docs.expo.dev/get-started/templates/|Expo Docs: Templates]
+bq. - [https://www.typescriptlang.org/docs/|TypeScript Documentation]
+bq. - [https://reactnative.dev/docs/typescript|React Native TypeScript]

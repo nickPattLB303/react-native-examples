@@ -211,17 +211,20 @@ For screens within a stack that is itself a tab, the `options` for the `<Stack.S
 The `getFocusedRouteNameFromRoute` helper from `@react-navigation/native` can be useful when nesting navigators to determine the currently focused route in a child navigator, which can then be used to conditionally hide the tab bar from the parent navigator's `screenOptions`.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://reactnavigation.org/docs/header-buttons|Configuring the header bar - React Navigation]
-- [https://reactnavigation.org/docs/stack-navigator/#headerstyle|Header styling - React Navigation]
-- [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
-- [https://reactnavigation.org/docs/hiding-tabbar-in-screens|Hiding tab bar in specific screens - React Navigation]
-- [https://reactnavigation.org/docs/screen-options-resolution/#setting-parent-screen-options-based-on-child-navigators-state|`getFocusedRouteNameFromRoute` - React Navigation]
+>
+bq. - [https://reactnavigation.org/docs/header-buttons|Configuring the header bar - React Navigation]
+bq. - [https://reactnavigation.org/docs/stack-navigator/#headerstyle|Header styling - React Navigation]
+bq. - [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
+bq. - [https://reactnavigation.org/docs/hiding-tabbar-in-screens|Hiding tab bar in specific screens - React Navigation]
+bq. - [https://reactnavigation.org/docs/screen-options-resolution/#setting-parent-screen-options-based-on-child-navigators-state|`getFocusedRouteNameFromRoute` - React Navigation]
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* Customizing `UINavigationBar` appearance (background, title text attributes) and `UIBarButtonItem`s is analogous. For `UITabBar`, setting `tabBarItem` properties (title, image, selectedImage) and `UITabBarAppearance` is similar.
+>
+bq. *Comparison:* Customizing `UINavigationBar` appearance (background, title text attributes) and `UIBarButtonItem`s is analogous. For `UITabBar`, setting `tabBarItem` properties (title, image, selectedImage) and `UITabBarAppearance` is similar.
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* Styling the `Toolbar` or `AppBarLayout` (title, background, menu items) and `BottomNavigationView` (item icons, labels, colors, background) directly relates to these options.
+>
+bq. *Comparison:* Styling the `Toolbar` or `AppBarLayout` (title, background, menu items) and `BottomNavigationView` (item icons, labels, colors, background) directly relates to these options.
 
 h3. Next Steps
 

@@ -313,22 +313,29 @@ Convenient for exercises that don't involve custom native code or complex native
 For most other scenarios, especially when integrating third-party native libraries or needing to test native configurations accurately, transitioning to a *Development Build* is necessary.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* Expo Go eliminates the need for code signing, provisioning profiles, and USB debugging setup that traditional iOS/Android development requires for physical device testing. Instead of deploying a compiled binary to the device through Xcode or Android Studio, you're remotely loading your JavaScript bundle into Expo's pre-compiled container app. This is similar to how web developers can instantly serve HTML/JS to a browser without compilation.
-> *Key Takeaway:* Expo Go offers speed by decoupling your JS from local native builds, at the cost of native customization.
-> *Source:* [https://reactnative.dev/docs/running-on-device|React Native: Running on Device]
+>
+bq. *Comparison:* Expo Go eliminates the need for code signing, provisioning profiles, and USB debugging setup that traditional iOS/Android development requires for physical device testing. Instead of deploying a compiled binary to the device through Xcode or Android Studio, you're remotely loading your JavaScript bundle into Expo's pre-compiled container app. This is similar to how web developers can instantly serve HTML/JS to a browser without compilation.
+>
+bq. *Key Takeaway:* Expo Go offers speed by decoupling your JS from local native builds, at the cost of native customization.
+>
+bq. *Source:* [https://reactnative.dev/docs/running-on-device|React Native: Running on Device]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Using Expo Go is conceptually similar to opening a website on your mobile device browser. Your local development server (like running a web server on localhost) serves your code to the Expo Go app (the "browser"). The QR code scanning is analogous to typing a URL, just more convenient for mobile.
-> *Key Takeaway:* Think of Expo Go as a specialized browser for your React Native app, with the QR code as the URL.
-> *Source:* [https://docs.expo.dev/get-started/expo-go/|Expo Go Documentation]
+>
+bq. *Comparison:* Using Expo Go is conceptually similar to opening a website on your mobile device browser. Your local development server (like running a web server on localhost) serves your code to the Expo Go app (the "browser"). The QR code scanning is analogous to typing a URL, just more convenient for mobile.
+>
+bq. *Key Takeaway:* Think of Expo Go as a specialized browser for your React Native app, with the QR code as the URL.
+>
+bq. *Source:* [https://docs.expo.dev/get-started/expo-go/|Expo Go Documentation]
 
 bq. 🔁 *(Asynchronous Learners):* Physical device testing is especially important when learning asynchronously. Make sure to test on real devices regularly since you won't have an instructor or peers immediately available to help troubleshoot device-specific issues.
 
 While this course primarily uses the iOS Simulator, running on a physical device via Expo Go is valuable for initial testing and experiencing real-world interaction.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/workflow/run-on-device/#running-on-devices-via-lan|Expo Docs: Running on Devices]
-- [https://docs.expo.dev/get-started/expo-go/|Expo Docs: Expo Go]
-- [https://docs.expo.dev/more/expo-cli/#start|Expo CLI: `start`] (mentions `--tunnel`)
-- [https://docs.expo.dev/versions/latest/sdk/camera/|Expo Camera Documentation]
-- [https://docs.expo.dev/versions/latest/sdk/bar-code-scanner/|Expo Barcode Scanner Documentation]
+>
+bq. - [https://docs.expo.dev/workflow/run-on-device/#running-on-devices-via-lan|Expo Docs: Running on Devices]
+bq. - [https://docs.expo.dev/get-started/expo-go/|Expo Docs: Expo Go]
+bq. - [https://docs.expo.dev/more/expo-cli/#start|Expo CLI: `start`] (mentions `--tunnel`)
+bq. - [https://docs.expo.dev/versions/latest/sdk/camera/|Expo Camera Documentation]
+bq. - [https://docs.expo.dev/versions/latest/sdk/bar-code-scanner/|Expo Barcode Scanner Documentation]

@@ -34,8 +34,8 @@ Best for graphics with transparency or sharp lines (like icons, logos). Can be l
 h3. WebP
 
 A modern image format that provides superior lossless and lossy compression for images on the web and mobile. WebP images are often significantly smaller than JPEGs and PNGs at equivalent quality, and it supports transparency and animation. Support for WebP is widespread in React Native, especially with libraries like {{expo-image}}.
-bq. [!TIP]
-Prefer WebP where possible for its excellent compression-to-quality ratio. For the SpeedyMeds app, using WebP for medication packaging images could significantly reduce asset sizes.
+> [!TIP]
+bq. Prefer WebP where possible for its excellent compression-to-quality ratio. For the SpeedyMeds app, using WebP for medication packaging images could significantly reduce asset sizes.
 # *Resizing Images to Display Dimensions:*
 *** Avoid serving images that are much larger than their display size. For example, don't use a 2000x2000 pixel image for a 100x100 pixel thumbnail in a medication list.
 h3. Server-Side Resizing
@@ -63,14 +63,14 @@ h3. Features
 *** {{expo-image}} can facilitate this with its placeholder and transition features.
 
 bq. 📲 *(Native Developers):*
-*Comparison:* Native platforms offer robust image loading libraries (e.g., Glide/Picasso on Android, SDWebImage/Kingfisher on iOS) that excel at caching, transformations, and memory management. {{expo-image}} aims to provide a similar level of sophistication and convenience within the React Native ecosystem.
-*Key Takeaway:* {{expo-image}} is generally the recommended solution for handling images in Expo and React Native projects, offering superior performance and features compared to the core {{<Image>}} component, akin to what dedicated native libraries provide.
-*Source:* {{[https://docs.expo.dev/versions/latest/sdk/image/|expo-image Documentation]}}, {{[https://bumptech.github.io/glide/|Glide (Android)]}}, {{[https://sdwebimage.github.io/|SDWebImage (iOS)]}}
+bq. *Comparison:* Native platforms offer robust image loading libraries (e.g., Glide/Picasso on Android, SDWebImage/Kingfisher on iOS) that excel at caching, transformations, and memory management. {{expo-image}} aims to provide a similar level of sophistication and convenience within the React Native ecosystem.
+bq. *Key Takeaway:* {{expo-image}} is generally the recommended solution for handling images in Expo and React Native projects, offering superior performance and features compared to the core {{<Image>}} component, akin to what dedicated native libraries provide.
+bq. *Source:* {{[https://docs.expo.dev/versions/latest/sdk/image/|expo-image Documentation]}}, {{[https://bumptech.github.io/glide/|Glide (Android)]}}, {{[https://sdwebimage.github.io/|SDWebImage (iOS)]}}
 
 bq. 🌐 *(Web Developers):*
-*Comparison:* Core concepts like responsive images (e.g., HTML\'s {{<picture>}} element, {{srcset}} attribute), lazy loading (e.g., {{loading="lazy"}} attribute on {{<img>}}), and using modern image formats like WebP are common in web development to optimize image delivery.
-*Key Takeaway:* While the underlying principles of image optimization are similar between web and React Native, the implementation details and available tools differ. In React Native, you often rely more on component libraries like {{expo-image}} or third-party solutions to achieve these optimizations, rather than direct browser-level support.
-*Source:* {{[https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images|MDN Web Docs: Responsive images]}}, {{[https://web.dev/articles/lazy-loading-images|web.dev: Lazy loading images]}}
+bq. *Comparison:* Core concepts like responsive images (e.g., HTML\'s {{<picture>}} element, {{srcset}} attribute), lazy loading (e.g., {{loading="lazy"}} attribute on {{<img>}}), and using modern image formats like WebP are common in web development to optimize image delivery.
+bq. *Key Takeaway:* While the underlying principles of image optimization are similar between web and React Native, the implementation details and available tools differ. In React Native, you often rely more on component libraries like {{expo-image}} or third-party solutions to achieve these optimizations, rather than direct browser-level support.
+bq. *Source:* {{[https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images|MDN Web Docs: Responsive images]}}, {{[https://web.dev/articles/lazy-loading-images|web.dev: Lazy loading images]}}
 
 h2. Procedural Content: Implementing Image Optimizations
 
@@ -218,9 +218,10 @@ This `LazyMedicationImage` component would only attempt to load the `actualSourc
 When implementing lazy loading, ensure placeholders are lightweight and provide a good user experience. Avoid content jumping as images load by specifying fixed dimensions for your image containers.
 {note}
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/versions/latest/sdk/image/|`expo-image`]
-- [https://reactnative.dev/docs/images|React Native Docs: Images]
-- [https://reactnative.dev/docs/performance#optimizing-images|React Native Docs: Performance - Optimizing Images]
-- [https://developers.google.com/speed/webp|WebP Introduction (Google Developers)]
+>
+bq. - [https://docs.expo.dev/versions/latest/sdk/image/|`expo-image`]
+bq. - [https://reactnative.dev/docs/images|React Native Docs: Images]
+bq. - [https://reactnative.dev/docs/performance#optimizing-images|React Native Docs: Performance - Optimizing Images]
+bq. - [https://developers.google.com/speed/webp|WebP Introduction (Google Developers)]
 
 By applying these image optimization strategies, you can significantly improve the performance and user experience of your SpeedyMeds application, making it faster and more memory-efficient.

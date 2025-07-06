@@ -303,9 +303,37 @@ h2. Under the Hood: Style Translation and Performance
 
 Understanding how React Native handles styles internally clarifies the performance benefits of `StyleSheet.create()`. Styles defined in JavaScript need to be communicated to the native UI thread (running Objective-C/Swift on iOS or Java/Kotlin on Android) to be applied to the actual native views (e.g., `UIView`, `android.view.View`).
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BJS%20Thread%3A%20Component%20Renders%5D%20--%3E%20B(StyleSheet.create%20object%20defined)%3B%0A%20%20%20%20B%20--%20Initial%20Processing%20--%3E%20C%7BStyle%20IDs%20Generated%7D%3B%0A%20%20%20%20A%20--%3E%20D%7BInline%20Style%20Object%7D%3B%0A%0A%20%20%20%20subgraph%20%22Style%20Application%22%0A%20%20%20%20%20%20%20%20C%20--%20Subsequent%20Renders%20--%3E%20E%5BSend%20Style%20ID%20to%20Native%5D%3B%0A%20%20%20%20%20%20%20%20D%20--%20Each%20Render%20--%3E%20F%5BSerialize%20%26%20Send%20Full%20JS%20Object%20to%20Native%5D%3B%0A%20%20%20%20end%0A%0A%20%20%20%20E%20--%3E%20G%5BNative%20UI%20Thread%3A%20Apply%20Cached%20Native%20Styles%5D%3B%0A%20%20%20%20F%20--%3E%20H%5BNative%20UI%20Thread%3A%20Parse%20JS%20Object%20%26%20Apply%20Styles%5D%3B%0A%0A%20%20%20%20G%20--%3E%20I((%F0%9F%9A%80%20Efficient%20Update))%3B%0A%20%20%20%20H%20--%3E%20J((%F0%9F%90%A2%20Potential%20Overhead))%3B%0A%0A%20%20%20%20classDef%20jsThread%20fill%3A%23D6EAF8%2Cstroke%3A%232E86C1%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20nativeThread%20fill%3A%23D5F5E3%2Cstroke%3A%2328B463%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20process%20fill%3A%23FCF3CF%2Cstroke%3A%23F1C40F%2Cstroke-width%3A2px%3B%0A%20%20%20%20classDef%20goodPerf%20fill%3A%23ABEBC6%2Cstroke%3A%232ECC71%2Cstroke-width%3A2px%2Ccolor%3A%23000%3B%0A%20%20%20%20classDef%20badPerf%20fill%3A%23FADBD8%2Cstroke%3A%23E74C3C%2Cstroke-width%3A2px%2Ccolor%3A%23000%3B%0A%0A%20%20%20%20class%20A%2CB%2CD%20jsThread%3B%0A%20%20%20%20class%20C%2CF%20process%3B%0A%20%20%20%20class%20E%2CG%2CH%20nativeThread%3B%0A%20%20%20%20class%20I%20goodPerf%3B%0A%20%20%20%20class%20J%20badPerf%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    A[JS Thread: Component Renders] --> B(StyleSheet.create object defined);
+    B -- Initial Processing --> C{Style IDs Generated};
+    A --> D{Inline Style Object};
 
-_(Interactive diagram - click to view)_
+    subgraph "Style Application"
+        C -- Subsequent Renders --> E[Send Style ID to Native];
+        D -- Each Render --> F[Serialize & Send Full JS Object to Native];
+    end
+
+    E --> G[Native UI Thread: Apply Cached Native Styles];
+    F --> H[Native UI Thread: Parse JS Object & Apply Styles];
+
+    G --> I((🚀 Efficient Update));
+    H --> J((🐢 Potential Overhead));
+
+    classDef jsThread fill:#D6EAF8,stroke:#2E86C1,stroke-width:2px;
+    classDef nativeThread fill:#D5F5E3,stroke:#28B463,stroke-width:2px;
+    classDef process fill:#FCF3CF,stroke:#F1C40F,stroke-width:2px;
+    classDef goodPerf fill:#ABEBC6,stroke:#2ECC71,stroke-width:2px,color:#000;
+    classDef badPerf fill:#FADBD8,stroke:#E74C3C,stroke-width:2px,color:#000;
+
+    class A,B,D jsThread;
+    class C,F process;
+    class E,G,H nativeThread;
+    class I goodPerf;
+    class J badPerf;
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 *Diagram Explanation: StyleSheet vs. Inline Styles Performance*
 

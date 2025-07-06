@@ -5,50 +5,57 @@ h1. Section 4: Objects and Arrays
 Objects and arrays are two of JavaScript's most powerful data types, used extensively in React Native applications. This section will explore their syntax, features, and common operations.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* JavaScript's objects and arrays differ from similar structures in native platforms. In Swift, you'd use {{Dictionary}} and {{Array}}, which have strong typing. In Kotlin/Java, you'd use {{Map}} and {{List}} interfaces. JavaScript objects are more like dynamic dictionaries with no required interface or class definition.
-> *Key Takeaway:* JavaScript objects and arrays are more flexible but less type-safe than their native counterparts. They're also directly serializable to/from JSON, which is heavily used in API communication in React Native.
-> *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/|Swift Collection Types] and [https://kotlinlang.org/docs/collections-overview.html|Kotlin Collections]
-> *Example:*
-> ```swift
-// Swift Dictionary and Array
-var patient: [String: Any] = [
-"name": "John Doe",
-"age": 42,
-"medications": ["Lisinopril", "Metformin"]
-]
-patient["age"] = 43 // Mutable Dictionary
-// In Swift, direct array mutation in dictionary needs care if it's Any.
-// Assuming meds is correctly cast and mutable:
-if var meds = patient["medications"] as? [String] {
-meds.append("Amlodipine")
-patient["medications"] = meds
-meds.forEach { print($0) }
-}
-```
-> ```kotlin
-// Kotlin MutableMap and MutableList
-val patient = mutableMapOf<String, Any>(
-"name" to "John Doe",
-"age" to 42,
-"medications" to mutableListOf("Lisinopril", "Metformin")
-)
-patient["age"] = 43 // Mutable Map
-@Suppress("UNCHECKED_CAST")
-val meds = patient["medications"] as? MutableList<String> ?: mutableListOf()
-meds.add("Amlodipine")
-meds.forEach { println(it) }
-```
-> ```javascript
-// JavaScript Object and Array
-const patient = {
-name: "John Doe",
-age: 42,
-medications: ["Lisinopril", "Metformin"],
-};
-patient.age = 43; // Objects are mutable
-patient.medications.push("Amlodipine"); // Arrays are mutable
-patient.medications.forEach((med) => console.log(med));
-```
+>
+bq. *Comparison:* JavaScript's objects and arrays differ from similar structures in native platforms. In Swift, you'd use {{Dictionary}} and {{Array}}, which have strong typing. In Kotlin/Java, you'd use {{Map}} and {{List}} interfaces. JavaScript objects are more like dynamic dictionaries with no required interface or class definition.
+>
+bq. *Key Takeaway:* JavaScript objects and arrays are more flexible but less type-safe than their native counterparts. They're also directly serializable to/from JSON, which is heavily used in API communication in React Native.
+>
+bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/|Swift Collection Types] and [https://kotlinlang.org/docs/collections-overview.html|Kotlin Collections]
+>
+bq. *Example:*
+>
+bq. ```swift
+bq. // Swift Dictionary and Array
+bq. var patient: [String: Any] = [
+bq. "name": "John Doe",
+bq. "age": 42,
+bq. "medications": ["Lisinopril", "Metformin"]
+bq. ]
+bq. patient["age"] = 43 // Mutable Dictionary
+bq. // In Swift, direct array mutation in dictionary needs care if it's Any.
+bq. // Assuming meds is correctly cast and mutable:
+bq. if var meds = patient["medications"] as? [String] {
+bq. meds.append("Amlodipine")
+bq. patient["medications"] = meds
+bq. meds.forEach { print($0) }
+bq. }
+bq. ```
+>
+bq. ```kotlin
+bq. // Kotlin MutableMap and MutableList
+bq. val patient = mutableMapOf<String, Any>(
+bq. "name" to "John Doe",
+bq. "age" to 42,
+bq. "medications" to mutableListOf("Lisinopril", "Metformin")
+bq. )
+bq. patient["age"] = 43 // Mutable Map
+bq. @Suppress("UNCHECKED_CAST")
+bq. val meds = patient["medications"] as? MutableList<String> ?: mutableListOf()
+bq. meds.add("Amlodipine")
+bq. meds.forEach { println(it) }
+bq. ```
+>
+bq. ```javascript
+bq. // JavaScript Object and Array
+bq. const patient = {
+bq. name: "John Doe",
+bq. age: 42,
+bq. medications: ["Lisinopril", "Metformin"],
+bq. };
+bq. patient.age = 43; // Objects are mutable
+bq. patient.medications.push("Amlodipine"); // Arrays are mutable
+bq. patient.medications.forEach((med) => console.log(med));
+bq. ```
 
 h2. Objects
 
@@ -197,9 +204,32 @@ console.log(combinedMedInfo);
 
 {code}
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20OriginalData%20%5BOriginal%20Data%20Structures%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20Obj%5B%22Object%3A%20const%20O%20%3D%20%7B%20a%3A%201%2C%20b%3A%202%2C%20c%3A%203%20%7D%22%5D%0A%20%20%20%20%20%20%20%20Arr%5B%22Array%3A%20const%20A%20%3D%20%5B10%2C%2020%2C%2030%5D%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20DestructuringOps%20%5BDestructuring%20Assignment%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20ObjDestructure%5B%22Object%20Destructuring%3A%20const%20%7B%20a%2C%20b%20%7D%20%3D%20O%3B%22%5D%20--%3E%20Res1%5B%22Variables%20Created%3A%20a%20%3D%201%2C%20b%20%3D%202%22%5D%0A%20%20%20%20%20%20%20%20ArrDestructure%5B%22Array%20Destructuring%3A%20const%20%5Bx%2C%20y%5D%20%3D%20A%3B%22%5D%20--%3E%20Res2%5B%22Variables%20Created%3A%20x%20%3D%2010%2C%20y%20%3D%2020%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20SpreadOps%20%5BSpread%20Syntax%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20ArrSpread%5B%22In%20Array%20Literal%3A%20const%20newA%20%3D%20%5B...A%2C%2040%5D%3B%22%5D%20--%3E%20Res3%5B%22newA%20%3D%20%5B10%2C%2020%2C%2030%2C%2040%5D%22%5D%0A%20%20%20%20%20%20%20%20ObjSpread%5B%22In%20Object%20Literal%3A%20const%20newO%20%3D%20%7B%20...O%2C%20d%3A%204%20%7D%3B%22%5D%20--%3E%20Res4%5B%22newO%20%3D%20%7B%20a%3A1%2C%20b%3A2%2C%20c%3A3%2C%20d%3A4%20%7D%22%5D%0A%20%20%20%20%20%20%20%20FuncSpread%5B%22In%20Function%20Call%3A%20Math.max(...A)%3B%22%5D%20--%3E%20Res5%5B%22Equivalent%20to%3A%20Math.max(10%2C%2020%2C%2030)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20OriginalData%20--%3E%20DestructuringOps%0A%20%20%20%20OriginalData%20--%3E%20SpreadOps|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph OriginalData [Original Data Structures]
+        direction LR
+        Obj["Object: const O = { a: 1, b: 2, c: 3 }"]
+        Arr["Array: const A = [10, 20, 30]"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph DestructuringOps [Destructuring Assignment]
+        direction TB
+        ObjDestructure["Object Destructuring: const { a, b } = O;"] --> Res1["Variables Created: a = 1, b = 2"]
+        ArrDestructure["Array Destructuring: const [x, y] = A;"] --> Res2["Variables Created: x = 10, y = 20"]
+    end
+
+    subgraph SpreadOps [Spread Syntax]
+        direction TB
+        ArrSpread["In Array Literal: const newA = [...A, 40];"] --> Res3["newA = [10, 20, 30, 40]"]
+        ObjSpread["In Object Literal: const newO = { ...O, d: 4 };"] --> Res4["newO = { a:1, b:2, c:3, d:4 }"]
+        FuncSpread["In Function Call: Math.max(...A);"] --> Res5["Equivalent to: Math.max(10, 20, 30)"]
+    end
+
+    OriginalData --> DestructuringOps
+    OriginalData --> SpreadOps
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates how destructuring and spread syntax work with JavaScript objects and arrays. *Destructuring Assignment* (middle section) allows you to unpack values from arrays or properties from objects into distinct variables. For instance, `const { a, b } = O;` extracts `a` and `b` from object `O`. Similarly, `const [x, y] = A;` extracts the first two elements from array `A`. *Spread Syntax* (right section) expands iterables (like arrays) into individual elements or object properties into key-value pairs. It can be used to create new arrays (`[...A, 40]`), new objects (`{ ...O, d: 4 }`), or to pass array elements as individual arguments to functions (`Math.max(...A)`). Both features provide more concise and readable ways to work with data structures.
 
@@ -522,14 +552,15 @@ Remember the difference:
 * *Rest (`...`)* _collects_ function arguments or object properties.
 {info}
 bq. 📚 *Official Documentation:*
-> - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects|MDN Web Docs: Objects]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|MDN Web Docs: Arrays]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment|MDN Web Docs: Destructuring assignment]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax|MDN Web Docs: Spread syntax (...)]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters|MDN Web Docs: Rest parameters]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer|MDN Web Docs: Object initializer]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors|MDN Web Docs: Property accessors]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions|MDN Web Docs: Method definitions]
+>
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects|MDN Web Docs: Objects]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|MDN Web Docs: Arrays]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment|MDN Web Docs: Destructuring assignment]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax|MDN Web Docs: Spread syntax (...)]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters|MDN Web Docs: Rest parameters]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer|MDN Web Docs: Object initializer]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors|MDN Web Docs: Property accessors]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions|MDN Web Docs: Method definitions]
 
 h2. Exercise 5.2: Data Manipulation
 

@@ -5,9 +5,12 @@ h1. Section 8: Testing Strategies
 This section provides an introduction to testing strategies in React Native. Writing tests is a crucial part of software development that helps ensure your application's quality, reliability, and maintainability. We will focus on unit testing with Jest and component testing with React Native Testing Library.
 
 bq. 🧑‍🏫 *(Instructor-Led):* In a classroom setting, consider forming small groups to write tests for the same component or utility function, then compare approaches. Discussing different testing strategies can lead to valuable insights about what makes a good test. Be prepared to demonstrate how to debug failing tests.
-> 🧗‍♀️ *(Self-Led):* Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
-> 🔁 *(Asynchronous):* If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
-> 🛣️ *(All Learners):* Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
+>
+bq. 🧗‍♀️ *(Self-Led):* Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
+>
+bq. 🔁 *(Asynchronous):* If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
+>
+bq. 🛣️ *(All Learners):* Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
 
 h2. Conceptual Content
 
@@ -61,9 +64,34 @@ h2. React Native Testing Library (RNTL)
 
 Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20%22Test%20Execution%20Flow%22%0A%20%20%20%20%20%20%20%20A%5BJest%20Test%20Runner%5D%20--%3E%7C1.%20Load%20Tests%7C%20B%5BTest%20Files%5D%0A%20%20%20%20%20%20%20%20B%20--%3E%7C2.%20Setup%20Environment%7C%20C%5BTest%20Environment%3Cbr%3Ejsdom%2Fnode%5D%0A%20%20%20%20%20%20%20%20C%20--%3E%7C3.%20Before%20All%20Hooks%7C%20D%5BGlobal%20Setup%5D%0A%20%20%20%20%20%20%20%20D%20--%3E%7C4.%20For%20Each%20Test%7C%20E%5BTest%20Suite%20-%20describe()%5D%0A%20%20%20%20%20%20%20%20E%20--%3E%7C5.%20Before%20Each%20Hooks%7C%20F%5BTest%20Setup%5D%0A%20%20%20%20%20%20%20%20F%20--%3E%7C6.%20Run%20Test%7C%20G%5BTest%20Case%20-%20it()%2Ftest()%5D%0A%20%20%20%20%20%20%20%20G%20--%3E%7C7.%20Assertions%7C%20H%7BPass%2FFail%3F%7D%0A%20%20%20%20%20%20%20%20H%20--%3E%7CPass%7C%20I%5BReport%20Success%5D%0A%20%20%20%20%20%20%20%20H%20--%3E%7CFail%7C%20J%5BReport%20Error%5D%0A%20%20%20%20%20%20%20%20I%20--%3E%7C8.%20After%20Each%20Hooks%7C%20K%5BTest%20Cleanup%5D%0A%20%20%20%20%20%20%20%20J%20--%3E%7C8.%20After%20Each%20Hooks%7C%20K%0A%20%20%20%20%20%20%20%20K%20--%3E%7C9.%20Next%20Test%20or%7C%20F%0A%20%20%20%20%20%20%20%20K%20--%3E%7C10.%20All%20Tests%20Done%7C%20L%5BAfter%20All%20Hooks%5D%0A%20%20%20%20%20%20%20%20L%20--%3E%7C11.%20Finalize%7C%20M%5BTest%20Summary%20Report%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20%22Component%20Test%20Example%22%0A%20%20%20%20%20%20%20%20AA%5BRNTL%20render()%5D%20--%3E%7C1.%20Create%7C%20BB%5BVirtual%20Component%20Tree%5D%0A%20%20%20%20%20%20%20%20BB%20--%3E%7C2.%20Query%7C%20CC%5BFind%20Elements%3Cbr%3EgetByText%2FgetByTestId%5D%0A%20%20%20%20%20%20%20%20CC%20--%3E%7C3.%20Simulate%7C%20DD%5BUser%20Interactions%3Cbr%3EfireEvent.press()%5D%0A%20%20%20%20%20%20%20%20DD%20--%3E%7C4.%20Assert%7C%20EE%5BVerify%20Component%20State%3Cbr%3Eexpect(...).toBeTrue()%5D%0A%20%20%20%20end|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph "Test Execution Flow"
+        A[Jest Test Runner] -->|1. Load Tests| B[Test Files]
+        B -->|2. Setup Environment| C[Test Environment<br>jsdom/node]
+        C -->|3. Before All Hooks| D[Global Setup]
+        D -->|4. For Each Test| E[Test Suite - describe()]
+        E -->|5. Before Each Hooks| F[Test Setup]
+        F -->|6. Run Test| G[Test Case - it()/test()]
+        G -->|7. Assertions| H{Pass/Fail?}
+        H -->|Pass| I[Report Success]
+        H -->|Fail| J[Report Error]
+        I -->|8. After Each Hooks| K[Test Cleanup]
+        J -->|8. After Each Hooks| K
+        K -->|9. Next Test or| F
+        K -->|10. All Tests Done| L[After All Hooks]
+        L -->|11. Finalize| M[Test Summary Report]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph "Component Test Example"
+        AA[RNTL render()] -->|1. Create| BB[Virtual Component Tree]
+        BB -->|2. Query| CC[Find Elements<br>getByText/getByTestId]
+        CC -->|3. Simulate| DD[User Interactions<br>fireEvent.press()]
+        DD -->|4. Assert| EE[Verify Component State<br>expect(...).toBeTrue()]
+    end
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram shows the test execution flow when running Jest tests for React Native applications. For SpeedyMeds, this process would be applied when testing medication-related components, prescription formatting utilities, and other app functionality. The first section demonstrates Jest's execution sequence from loading test files through running individual test cases to producing a final report. The second section illustrates how a typical component test using React Native Testing Library would operate, focusing on rendering components, finding elements, simulating user interactions, and making assertions about the component's behavior.
 
@@ -423,10 +451,11 @@ Practice writing tests for medication-related utilities in the SpeedyMeds app.
 {code}
 
 bq. 📚 *Official Documentation:*
-> - [https://jestjs.io/docs/getting-started|Jest Documentation]
-- [https://callstack.github.io/react-native-testing-library/|React Native Testing Library Documentation]
-- [https://docs.expo.dev/develop/unit-testing/|Expo: Unit Testing Guide]
-- [https://reactnative.dev/docs/testing-overview|React Native Docs: Testing]
+>
+bq. - [https://jestjs.io/docs/getting-started|Jest Documentation]
+bq. - [https://callstack.github.io/react-native-testing-library/|React Native Testing Library Documentation]
+bq. - [https://docs.expo.dev/develop/unit-testing/|Expo: Unit Testing Guide]
+bq. - [https://reactnative.dev/docs/testing-overview|React Native Docs: Testing]
 
 h2. Next Steps
 

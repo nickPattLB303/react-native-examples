@@ -28,9 +28,19 @@ h2. Simplified Maintenance
 
 Updates and bug fixes can often be implemented once and deployed everywhere, streamlining the maintenance effort.
 
-[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BNative%20iOS%20App%5D%20--%20Separate%20codebase%20--%3E%20C%5BApp%20Store%5D%0A%20%20%20%20B%5BNative%20Android%20App%5D%20--%20Separate%20codebase%20--%3E%20D%5BGoogle%20Play%5D%0A%20%20%20%20A%20%26%20B%20--%20Duplicated%20effort%2C%20cost%2C%20inconsistency%20--%3E%20E%5BDeveloper%20Frustration%5D%0A%20%20%20%20E%20--%20Early%20Solutions%20--%3E%20F%5BPhoneGap%20%2F%20Xamarin%5D%0A%20%20%20%20F%20--%20Performance%20%26%20UX%20trade-offs%20--%3E%20G%5BModern%20Frameworks%5D%0A%20%20%20%20G%20--%20Single%20codebase%20--%3E%20C%0A%20%20%20%20G%20--%20Single%20codebase%20--%3E%20D%0A%20%20%20%20G%5BModern%20Frameworks%20React%20Native%2C%20Flutter%5D|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+flowchart TD
+    A[Native iOS App] -- Separate codebase --> C[App Store]
+    B[Native Android App] -- Separate codebase --> D[Google Play]
+    A & B -- Duplicated effort, cost, inconsistency --> E[Developer Frustration]
+    E -- Early Solutions --> F[PhoneGap / Xamarin]
+    F -- Performance & UX trade-offs --> G[Modern Frameworks]
+    G -- Single codebase --> C
+    G -- Single codebase --> D
+    G[Modern Frameworks React Native, Flutter]
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 The flowchart diagram above illustrates the conceptual journey and motivations behind the shift towards modern cross-platform development frameworks. It begins by depicting the traditional native development model: a 'Native iOS App' and a 'Native Android App', each requiring a 'Separate codebase' to reach their respective 'App Store' and 'Google Play' distribution channels. This bifurcated approach often leads to 'Duplicated effort, cost, inconsistency,' culminating in 'Developer Frustration.'
 
@@ -45,7 +55,7 @@ Cross-platform development isn't a single technique; various approaches have eme
 
 h3. Concept
 
-These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a {{WebView}}). Originating with tools like PhoneGap (created by Nitobi Software in 2008, later acquired by Adobe and contributed to the Apache Software Foundation as Apache Cordova), this approach allowed web developers to create installable mobile apps. The core idea was to display a web app using the platform's built-in WebView component (a chromeless browser view), with plugins often used to bridge JavaScript to native device features.
+These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a `WebView`). Originating with tools like PhoneGap (created by Nitobi Software in 2008, later acquired by Adobe and contributed to the Apache Software Foundation as Apache Cordova), this approach allowed web developers to create installable mobile apps. The core idea was to display a web app using the platform's built-in WebView component (a chromeless browser view), with plugins often used to bridge JavaScript to native device features.
 h3. Pros
 
 Leverages existing web development skills, very high code reuse, access to some native features via plugins.
@@ -103,14 +113,20 @@ Written using platform-specific SDKs (iOS/Android), offering optimal performance
 The limitations of early approaches like PWAs and hybrid apps (especially around performance and UX) were key drivers for the development of modern compiled frameworks like React Native, which aim to deliver a more native-like result while retaining cross-platform efficiency.
 
 bq. 🤖🍏 *(Native Developers):*
-> *Comparison:* Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
-> *Key Takeaway:* Cross-platform offers potential efficiency gains by reducing code duplication but introduces an abstraction layer and might require learning new framework concepts.
-> *Source:* [https://www.netguru.com/blog/cross-platform-vs-native-app-development|Cross-Platform vs Native App Development]
+>
+bq. *Comparison:* Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
+>
+bq. *Key Takeaway:* Cross-platform offers potential efficiency gains by reducing code duplication but introduces an abstraction layer and might require learning new framework concepts.
+>
+bq. *Source:* [https://www.netguru.com/blog/cross-platform-vs-native-app-development|Cross-Platform vs Native App Development]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* If you're coming from the web, cross-platform development, especially using frameworks like React Native, feels more familiar than diving straight into native SDKs. Hybrid approaches directly use your HTML/CSS/JS skills. Compiled approaches like React Native leverage JavaScript and concepts like components (especially familiar if you know React) but require learning mobile-specific UI elements and APIs instead of the browser's DOM.
-> *Key Takeaway:* Your web skills are highly transferable to many cross-platform approaches, but you'll need to adapt to mobile UI conventions, performance considerations, and native API interactions.
-> *Source:* [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive web apps (PWAs)]
+>
+bq. *Comparison:* If you're coming from the web, cross-platform development, especially using frameworks like React Native, feels more familiar than diving straight into native SDKs. Hybrid approaches directly use your HTML/CSS/JS skills. Compiled approaches like React Native leverage JavaScript and concepts like components (especially familiar if you know React) but require learning mobile-specific UI elements and APIs instead of the browser's DOM.
+>
+bq. *Key Takeaway:* Your web skills are highly transferable to many cross-platform approaches, but you'll need to adapt to mobile UI conventions, performance considerations, and native API interactions.
+>
+bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive web apps (PWAs)]
 
 h2. General Pros and Cons of Cross-Platform
 
@@ -146,6 +162,7 @@ The following table summarizes the key trade-offs between Native Development, We
 Understanding this evolution is key. The shortcomings of purely native development (cost, time) and early cross-platform attempts (performance, UX) created the specific need that frameworks like React Native were designed to fill: achieving efficient development _with_ a high-quality, native user experience.
 
 bq. 📚 *Official Documentation:*
-> - [https://cordova.apache.org/docs/en/latest|Apache Cordova Documentation]
-- [https://docs.flutter.dev|Flutter Documentation]
-- [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive Web Apps (PWAs)]
+>
+bq. - [https://cordova.apache.org/docs/en/latest|Apache Cordova Documentation]
+bq. - [https://docs.flutter.dev|Flutter Documentation]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive Web Apps (PWAs)]

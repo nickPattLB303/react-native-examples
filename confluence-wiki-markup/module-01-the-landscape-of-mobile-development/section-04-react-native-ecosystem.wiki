@@ -52,12 +52,16 @@ A command-line interface for creating, running, and managing Expo projects.
 Using Expo, especially the managed workflow, dramatically lowers the barrier to entry for React Native development and streamlines many common tasks.
 
 bq. 🤖🍏 *(Native Developers):*
-> *Comparison:* Expo, particularly the managed workflow, abstracts away much of the native build configuration (Gradle scripts, Xcode project settings, provisioning profiles) that you typically handle manually. Expo Go is similar in concept to running debug builds on a device/simulator, but it bundles many common native modules already. EAS Build is like using a cloud CI/CD service specifically tailored for React Native/Expo builds.
-> *Key Takeaway:* Expo simplifies or automates many native build and configuration complexities, allowing you to focus more on the JavaScript/React Native code, but potentially reducing direct control in the managed workflow.
+>
+bq. *Comparison:* Expo, particularly the managed workflow, abstracts away much of the native build configuration (Gradle scripts, Xcode project settings, provisioning profiles) that you typically handle manually. Expo Go is similar in concept to running debug builds on a device/simulator, but it bundles many common native modules already. EAS Build is like using a cloud CI/CD service specifically tailored for React Native/Expo builds.
+>
+bq. *Key Takeaway:* Expo simplifies or automates many native build and configuration complexities, allowing you to focus more on the JavaScript/React Native code, but potentially reducing direct control in the managed workflow.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* Think of Expo as analogous to platforms like Vercel or Netlify for the web, but focused on mobile app development. It provides a development server ({{expo start}}), a curated set of libraries (Expo SDK, like a set of well-maintained npm packages), cloud build services (EAS Build), and update mechanisms (EAS Update, somewhat like deploying new web assets). Expo Go allows for quick previews similar to opening a web dev server URL on different devices.
-> *Key Takeaway:* Expo provides a familiar platform-like experience with tools and services that simplify the mobile development lifecycle, mirroring many conveniences found in modern web development workflows.
+>
+bq. *Comparison:* Think of Expo as analogous to platforms like Vercel or Netlify for the web, but focused on mobile app development. It provides a development server ({{expo start}}), a curated set of libraries (Expo SDK, like a set of well-maintained npm packages), cloud build services (EAS Build), and update mechanisms (EAS Update, somewhat like deploying new web assets). Expo Go allows for quick previews similar to opening a web dev server URL on different devices.
+>
+bq. *Key Takeaway:* Expo provides a familiar platform-like experience with tools and services that simplify the mobile development lifecycle, mirroring many conveniences found in modern web development workflows.
 
 h2. The Community
 
@@ -190,9 +194,20 @@ To further clarify the roles of various parts of the React Native world, the fol
 |TanStack Query|Server state management (data fetching, caching)|
 |Zustand|Client state management|
 |Metro|JavaScript bundler for React Native|
-[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BReact%20Native%20Core%5D%20--%3E%20B%5BExpo%5D%0A%20%20%20%20A%20--%3E%20C%5BCommunity%20Libraries%5D%0A%20%20%20%20B%20--%3E%20D%5BExpo%20CLI%5D%0A%20%20%20%20C%20--%3E%20E%5BReact%20Navigation%5D%0A%20%20%20%20C%20--%3E%20F%5BReact%20Native%20Paper%5D%0A%20%20%20%20C%20--%3E%20G%5BZustand%5D%0A%20%20%20%20C%20--%3E%20H%5BTanStack%20Query%5D%0A%20%20%20%20A%20--%3E%20I%5BMetro%20Bundler%5D%0A%20%20%20%20B%20--%3E%20J%5BExpo%20Go%5D|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+flowchart TD
+    A[React Native Core] --> B[Expo]
+    A --> C[Community Libraries]
+    B --> D[Expo CLI]
+    C --> E[React Navigation]
+    C --> F[React Native Paper]
+    C --> G[Zustand]
+    C --> H[TanStack Query]
+    A --> I[Metro Bundler]
+    B --> J[Expo Go]
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 The flowchart diagram provided illustrates the interconnected nature of the React Native ecosystem. At its heart is 'React Native Core,' the foundational framework. Branching from this, 'Expo' is shown as a significant platform that builds upon and extends the core, offering tools like the 'Expo CLI' and services like 'Expo Go' for development and testing.
 
@@ -201,11 +216,12 @@ Another major output from the core is its support for 'Community Libraries.' The
 Underpinning the development process is the 'Metro Bundler,' which is integral to React Native Core for packaging JavaScript code. This visualization effectively demonstrates that developing a React Native application involves leveraging not just the core framework but also a rich suite of tools, platforms like Expo, and a diverse array of community-driven libraries to build full-featured applications. Understanding these relationships helps in navigating the ecosystem and selecting the right tools for specific project needs.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/getting-started|React Native Documentation]
-- [https://docs.expo.dev|Expo Documentation]
-- [https://docs.expo.dev/versions/latest|Expo SDK API Reference]
-- [https://docs.expo.dev/eas|Expo Application Services (EAS)]
-- [https://reactnative.dev/community/overview|Community Resources (React Native Docs)]
+>
+bq. - [https://reactnative.dev/docs/getting-started|React Native Documentation]
+bq. - [https://docs.expo.dev|Expo Documentation]
+bq. - [https://docs.expo.dev/versions/latest|Expo SDK API Reference]
+bq. - [https://docs.expo.dev/eas|Expo Application Services (EAS)]
+bq. - [https://reactnative.dev/community/overview|Community Resources (React Native Docs)]
 
 Together, React Native core, the Expo platform, and the vibrant community form a powerful ecosystem for building cross-platform mobile applications efficiently. It's important to remember that the strength of the surrounding ecosystem—the quality of tooling like Expo, the availability of libraries, the responsiveness of the community, and the clarity of documentation—is often just as critical to a project's success as the technical features of the core framework itself. With this foundational understanding of the mobile development landscape and React Native's place within it, you are ready to move on to exploring the architecture that powers these applications.
 

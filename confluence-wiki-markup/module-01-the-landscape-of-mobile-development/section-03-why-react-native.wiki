@@ -85,31 +85,45 @@ h2. Comparing frameworks
 The table below summarizes how React Native compares to other popular mobile development approaches.
 
 ||Approach||Language(s)||UI Rendering||Code Sharing||Performance||Typical Use Cases||
-[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BJavaScript%2FTypeScript%20Code%5D%20--%3E%20B%5BReact%20Native%20Bridge%5D%0A%20%20%20%20B%20--%3E%20C%5BiOS%20Native%20Components%5D%0A%20%20%20%20B%20--%3E%20D%5BAndroid%20Native%20Components%5D%0A%20%20%20%20C%20%26%20D%20--%3E%20E%5BMobile%20Device%20UI%5D|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+flowchart TD
+    A[JavaScript/TypeScript Code] --> B[React Native Bridge]
+    B --> C[iOS Native Components]
+    B --> D[Android Native Components]
+    C & D --> E[Mobile Device UI]
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 The flowchart above provides a simplified visual representation of React Native's core architectural concept. It starts with the 'JavaScript/TypeScript Code,' which is where developers write their application logic and define UI using React principles. This code doesn't run directly on the mobile device's native environment in the same way Swift or Kotlin code does. Instead, it communicates through an intermediary layer, labeled here as the 'React Native Bridge' (representing both the older Bridge architecture and the newer JSI – JavaScript Interface).
 
-This Bridge is crucial as it facilitates communication between the JavaScript realm and the native platform. It's responsible for translating the JavaScript instructions into actions that the underlying operating system can understand. The diagram shows the Bridge then interacting with both 'iOS Native Components' (like UIViews, UILabels) and 'Android Native Components' (like Android Views, TextViews). This means that when you use a React Native component like {{<View>}} or {{<Text>}}, the Bridge ensures that the corresponding actual native UI element is rendered on the screen.
+This Bridge is crucial as it facilitates communication between the JavaScript realm and the native platform. It's responsible for translating the JavaScript instructions into actions that the underlying operating system can understand. The diagram shows the Bridge then interacting with both 'iOS Native Components' (like UIViews, UILabels) and 'Android Native Components' (like Android Views, TextViews). This means that when you use a React Native component like `<View>` or `<Text>`, the Bridge ensures that the corresponding actual native UI element is rendered on the screen.
 
 Ultimately, both paths lead to the 'Mobile Device UI,' signifying that the end-user sees and interacts with a genuinely native interface, not a web-based one. This architecture is key to React Native's ability to offer a native look, feel, and performance while allowing developers to work primarily in JavaScript and share a large portion of their codebase across platforms.
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* React Native uses JavaScript (or TypeScript) instead of Kotlin/Java. UI is declared using React components (like {{<View>}}, {{<Text>}}) which map to native Android Views, rather than defining layouts in XML. Lifecycle management uses React Hooks ({{useEffect}}) which differs from Android's Activity/Fragment lifecycle. Performance is generally good, but you lose the fine-grained control over threading and rendering available in native development.
-> *Key Takeaway:* You trade direct native SDK access and XML layouts for faster development cycles, code reuse with iOS, and a component-based UI paradigm driven by JavaScript/React.
+>
+bq. *Comparison:* React Native uses JavaScript (or TypeScript) instead of Kotlin/Java. UI is declared using React components (like `<View>`, `<Text>`) which map to native Android Views, rather than defining layouts in XML. Lifecycle management uses React Hooks (`useEffect`) which differs from Android's Activity/Fragment lifecycle. Performance is generally good, but you lose the fine-grained control over threading and rendering available in native development.
+>
+bq. *Key Takeaway:* You trade direct native SDK access and XML layouts for faster development cycles, code reuse with iOS, and a component-based UI paradigm driven by JavaScript/React.
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* Instead of Swift/Objective-C and UIKit/SwiftUI, you'll use JavaScript/TypeScript and React components. React Native's Flexbox-based layout is different from Auto Layout or SwiftUI's declarative layout system. Navigation is typically handled by libraries like React Navigation or Expo Router, rather than UINavigationController. While React Native compiles to native UIViews, complex view hierarchies or custom drawing might be less straightforward than direct UIKit manipulation.
-> *Key Takeaway:* You gain cross-platform capabilities and rapid iteration speed but adopt a different language, UI paradigm (React components), and layout system (Flexbox).
+>
+bq. *Comparison:* Instead of Swift/Objective-C and UIKit/SwiftUI, you'll use JavaScript/TypeScript and React components. React Native's Flexbox-based layout is different from Auto Layout or SwiftUI's declarative layout system. Navigation is typically handled by libraries like React Navigation or Expo Router, rather than UINavigationController. While React Native compiles to native UIViews, complex view hierarchies or custom drawing might be less straightforward than direct UIKit manipulation.
+>
+bq. *Key Takeaway:* You gain cross-platform capabilities and rapid iteration speed but adopt a different language, UI paradigm (React components), and layout system (Flexbox).
 
 bq. ⚛️ *(React Web Developers):*
-> *Comparison:* The core concepts of React (Components, Props, State, Hooks, Context) are identical. However, instead of HTML DOM elements ({{<div>}}, {{<p>}}, {{<img>}}), you use React Native Core Components ({{<View>}}, {{<Text>}}, {{<Image>}}). CSS is replaced by the {{StyleSheet}} API or CSS-in-JS libraries, using Flexbox for layout (which works slightly differently than on the web). Browser APIs are replaced by native device APIs accessed through React Native modules.
-> *Key Takeaway:* Your React knowledge is directly applicable, but you need to learn the specific React Native components, styling methods, and mobile-specific APIs.
+>
+bq. *Comparison:* The core concepts of React (Components, Props, State, Hooks, Context) are identical. However, instead of HTML DOM elements (`<div>`, `<p>`, `<img>`), you use React Native Core Components (`<View>`, `<Text>`, `<Image>`). CSS is replaced by the `StyleSheet` API or CSS-in-JS libraries, using Flexbox for layout (which works slightly differently than on the web). Browser APIs are replaced by native device APIs accessed through React Native modules.
+>
+bq. *Key Takeaway:* Your React knowledge is directly applicable, but you need to learn the specific React Native components, styling methods, and mobile-specific APIs.
 
 bq. 🅰️ *(Angular Web Developers):*
-> *Comparison:* Like Angular, React Native uses a component-based architecture and often relies on TypeScript. However, React's functional components and Hooks are different from Angular's class-based components (or newer signal-based components) and dependency injection system. State management solutions (like Zustand or Context API in RN) differ from Angular's services or NgRx. Templating uses JSX instead of Angular's HTML templates with directives like {{*ngFor}} or {{*ngIf}}.
-> *Key Takeaway:* The component model will feel familiar, but you'll need to learn React's specific patterns (JSX, Hooks), styling, state management, and the React Native component set.
+>
+bq. *Comparison:* Like Angular, React Native uses a component-based architecture and often relies on TypeScript. However, React's functional components and Hooks are different from Angular's class-based components (or newer signal-based components) and dependency injection system. State management solutions (like Zustand or Context API in RN) differ from Angular's services or NgRx. Templating uses JSX instead of Angular's HTML templates with directives like `*ngFor` or `*ngIf`.
+>
+bq. *Key Takeaway:* The component model will feel familiar, but you'll need to learn React's specific patterns (JSX, Hooks), styling, state management, and the React Native component set.
 
 h2. Common Use Cases for React Native
 
@@ -134,9 +148,10 @@ It might be less suitable for:
 * *Apps where absolute minimum size or peak single-platform performance is the top priority.*
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/getting-started|React Native: Introduction]
-- [https://reactnative.dev/docs/tutorial|React Native: Learn the Basics]
-- [https://reactnative.dev/showcase|Showcase: Discover apps built with React Native]
+>
+bq. - [https://reactnative.dev/docs/getting-started|React Native: Introduction]
+bq. - [https://reactnative.dev/docs/tutorial|React Native: Learn the Basics]
+bq. - [https://reactnative.dev/showcase|Showcase: Discover apps built with React Native]
 
 h2. Exercise
 

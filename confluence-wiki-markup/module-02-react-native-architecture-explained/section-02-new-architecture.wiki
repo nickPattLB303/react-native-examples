@@ -33,28 +33,64 @@ At its core, JSI provides a C++ API that lets JavaScript interact with C++ objec
 
 *Diagram: Legacy Bridge vs. JSI Communication Flow*
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20%20%20%20%20subgraph%20Legacy%20Bridge%20Architecture%0A%20%20%20%20%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20%20%20%20%20JS_App_Legacy%5B%22JS%20App%20Code%22%5D%20--%3E%20JS_Bridge_Legacy%5B%22JS%20Bridge%22%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20JS_Bridge_Legacy%20--%20%22Serialize%20(JSON)%0ABatched%2C%20Async%22%20--%3E%20Native_Bridge_Legacy%5B%22Native%20Bridge%22%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20Native_Bridge_Legacy%20--%20%22Deserialize%22%20--%3E%20Native_Code_Legacy%5B%22Native%20Code%2FUI%22%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20Native_Code_Legacy%20--%20%22Native%20Events%22%20--%3E%20Native_Bridge_Legacy%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20Native_Bridge_Legacy%20--%20%22Serialize%20(JSON)%0AAsync%22%20--%3E%20JS_Bridge_Legacy%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20JS_Bridge_Legacy%20--%20%22Deserialize%22%20--%3E%20JS_App_Legacy%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20style%20JS_Bridge_Legacy%20fill%3A%23f99%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20%20%20%20%20%20%20%20%20style%20Native_Bridge_Legacy%20fill%3A%23f99%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20%20%20%20%20end%0A%0A%20%20%20%20%20%20%20%20subgraph%20New%20Architecture%20with%20JSI%0A%20%20%20%20%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20%20%20%20%20JS_App_JSI%5B%22JS%20App%20Code%20(Hermes)%22%5D%20--%3E%20JSI_Layer%5B%22JSI%20(C%2B%2B%20Layer)%22%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20JSI_Layer%20--%20%22Direct%20C%2B%2B%20Calls%0A(Synchronous%20or%20Async)%22%20--%3E%20Native_Cpp_JSI%5B%22Native%20C%2B%2B%20(TurboModule%2FFabric)%22%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20Native_Cpp_JSI%20--%20%22Direct%20C%2B%2B%20Calls%2FEvents%22%20--%3E%20JSI_Layer%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20JSI_Layer%20--%3E%20JS_App_JSI%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20style%20JSI_Layer%20fill%3A%239cf%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20%20%20%20%20end|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+        subgraph Legacy Bridge Architecture
+            direction LR
+            JS_App_Legacy["JS App Code"] --> JS_Bridge_Legacy["JS Bridge"];
+            JS_Bridge_Legacy -- "Serialize (JSON)
+Batched, Async" --> Native_Bridge_Legacy["Native Bridge"];
+            Native_Bridge_Legacy -- "Deserialize" --> Native_Code_Legacy["Native Code/UI"];
+            Native_Code_Legacy -- "Native Events" --> Native_Bridge_Legacy;
+            Native_Bridge_Legacy -- "Serialize (JSON)
+Async" --> JS_Bridge_Legacy;
+            JS_Bridge_Legacy -- "Deserialize" --> JS_App_Legacy;
+            style JS_Bridge_Legacy fill:#f99,stroke:#333,stroke-width:2px
+            style Native_Bridge_Legacy fill:#f99,stroke:#333,stroke-width:2px
+        end
 
-_(Interactive diagram - click to view)_
+        subgraph New Architecture with JSI
+            direction LR
+            JS_App_JSI["JS App Code (Hermes)"] --> JSI_Layer["JSI (C++ Layer)"];
+            JSI_Layer -- "Direct C++ Calls
+(Synchronous or Async)" --> Native_Cpp_JSI["Native C++ (TurboModule/Fabric)"];
+            Native_Cpp_JSI -- "Direct C++ Calls/Events" --> JSI_Layer;
+            JSI_Layer --> JS_App_JSI;
+            style JSI_Layer fill:#9cf,stroke:#333,stroke-width:2px
+        end
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 bq. *Diagram Explanation (Legacy Bridge vs. JSI):*
-> This diagram contrasts the communication flow. The Legacy Bridge (top) shows JS code communicating indirectly with Native code through distinct JS and Native Bridge components, relying on asynchronous, batched, and serialized (JSON) messages. This introduces overhead and latency.
-> The New Architecture with JSI (bottom) shows JS code interacting with a C++ JSI layer. This layer allows direct C++ method calls (synchronous or asynchronous) to Native C++ components (TurboModules/Fabric), eliminating the serialization bottleneck and the explicit Bridge queue. This direct interaction is significantly more efficient.
+>
+bq. This diagram contrasts the communication flow. The Legacy Bridge (top) shows JS code communicating indirectly with Native code through distinct JS and Native Bridge components, relying on asynchronous, batched, and serialized (JSON) messages. This introduces overhead and latency.
+>
+bq. The New Architecture with JSI (bottom) shows JS code interacting with a C++ JSI layer. This layer allows direct C++ method calls (synchronous or asynchronous) to Native C++ components (TurboModules/Fabric), eliminating the serialization bottleneck and the explicit Bridge queue. This direct interaction is significantly more efficient.
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* JSI brings the communication model slightly closer to how JavaScript interacts with browser APIs (which are often implemented in C++). While the browser sandbox provides security boundaries, JSI offers a more direct C++ interface than the legacy Bridge allowed, enabling faster interactions.
-> *Key Takeaway:* JSI removes the primary bottleneck (the async, serialized Bridge) allowing for potentially faster and synchronous communication between JS and native code, something not directly possible with the old Bridge.
-> *Source:* [https://blog.notesnook.com/an-deep-dive-into-react-native-new-architecture-jsi/|An Deep Dive into React Native\'s New Architecture - JSI]
+>
+bq. *Comparison:* JSI brings the communication model slightly closer to how JavaScript interacts with browser APIs (which are often implemented in C++). While the browser sandbox provides security boundaries, JSI offers a more direct C++ interface than the legacy Bridge allowed, enabling faster interactions.
+>
+bq. *Key Takeaway:* JSI removes the primary bottleneck (the async, serialized Bridge) allowing for potentially faster and synchronous communication between JS and native code, something not directly possible with the old Bridge.
+>
+bq. *Source:* [https://blog.notesnook.com/an-deep-dive-into-react-native-new-architecture-jsi/|An Deep Dive into React Native\'s New Architecture - JSI]
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* JSI's approach to providing direct access between JavaScript and C++ is conceptually similar to how Swift can interface directly with C/C++ through bridging headers or modules, bypassing the more verbose Objective-C interop layer.
-> *Key Takeaway:* Much like how Swift's direct C++ interop improves performance over going through Objective-C, JSI provides a faster path from JavaScript to native than the legacy Bridge, without requiring serialization.
-> *Source:* [https://developer.apple.com/documentation/swift/swift-c-interoperability|Swift and C++ Interop | Apple Swift Documentation]
+>
+bq. *Comparison:* JSI's approach to providing direct access between JavaScript and C++ is conceptually similar to how Swift can interface directly with C/C++ through bridging headers or modules, bypassing the more verbose Objective-C interop layer.
+>
+bq. *Key Takeaway:* Much like how Swift's direct C++ interop improves performance over going through Objective-C, JSI provides a faster path from JavaScript to native than the legacy Bridge, without requiring serialization.
+>
+bq. *Source:* [https://developer.apple.com/documentation/swift/swift-c-interoperability|Swift and C++ Interop | Apple Swift Documentation]
 
 bq. 🤖 *(Android Developers):*
-> *Comparison:* JSI's ability to share objects between JavaScript and C++ has parallels to how Android's JNI allows Java objects to reference and interact with native C++ objects, but with less boilerplate thanks to JSI's higher-level abstractions.
-> *Key Takeaway:* JSI simplifies what would otherwise be complex JNI-style bindings between JavaScript and native code, while maintaining similar performance benefits.
-> *Source:* [https://developer.android.com/training/articles/perf-jni|Android JNI Tips | Android Developers]
+>
+bq. *Comparison:* JSI's ability to share objects between JavaScript and C++ has parallels to how Android's JNI allows Java objects to reference and interact with native C++ objects, but with less boilerplate thanks to JSI's higher-level abstractions.
+>
+bq. *Key Takeaway:* JSI simplifies what would otherwise be complex JNI-style bindings between JavaScript and native code, while maintaining similar performance benefits.
+>
+bq. *Source:* [https://developer.android.com/training/articles/perf-jni|Android JNI Tips | Android Developers]
 
 h2. TurboModules
 
@@ -117,14 +153,20 @@ h2. Automatic Code Creation
 Codegen runs at build time, reading these type definitions and automatically generating the C++ JSI bindings and platform-specific native interface code (e.g., Java interfaces for Android, Objective-C++ headers for iOS). This significantly reduces the amount of repetitive boilerplate code developers need to write manually and minimizes potential errors.
 
 bq. ⚛️ *(React Developers):*
-> *Comparison:* Codegen's role in the New Architecture is somewhat analogous to how TypeScript's type checking works for your React components, but extended to cross the JavaScript-native boundary. It ensures consistency not just in your JS code, but between your JS and native code.
-> *Key Takeaway:* The same type safety benefits you get from TypeScript in your React components now extend to native module interactions, catching errors at build time rather than runtime.
-> *Source:* [https://react.dev/learn/typescript|TypeScript with React]
+>
+bq. *Comparison:* Codegen's role in the New Architecture is somewhat analogous to how TypeScript's type checking works for your React components, but extended to cross the JavaScript-native boundary. It ensures consistency not just in your JS code, but between your JS and native code.
+>
+bq. *Key Takeaway:* The same type safety benefits you get from TypeScript in your React components now extend to native module interactions, catching errors at build time rather than runtime.
+>
+bq. *Source:* [https://react.dev/learn/typescript|TypeScript with React]
 
 bq. 🅰 *(Angular Developers):*
-> *Comparison:* Codegen's approach to generating interface code from TypeScript definitions is conceptually similar to Angular's ahead-of-time compilation, which converts TypeScript decorators and metadata into optimized JavaScript. Both improve type safety and runtime performance through build-time processing.
-> *Key Takeaway:* Like Angular's AOT compilation, Codegen enhances both developer experience (through better typing) and runtime performance (through optimized bindings).
-> *Source:* [https://angular.io/guide/aot-compiler|Angular Ahead-of-Time Compilation]
+>
+bq. *Comparison:* Codegen's approach to generating interface code from TypeScript definitions is conceptually similar to Angular's ahead-of-time compilation, which converts TypeScript decorators and metadata into optimized JavaScript. Both improve type safety and runtime performance through build-time processing.
+>
+bq. *Key Takeaway:* Like Angular's AOT compilation, Codegen enhances both developer experience (through better typing) and runtime performance (through optimized bindings).
+>
+bq. *Source:* [https://angular.io/guide/aot-compiler|Angular Ahead-of-Time Compilation]
 
 h2. Benefits of the New Architecture:
 
@@ -157,38 +199,110 @@ For our SpeedyMeds pharmacy application, the New Architecture delivers several k
 
 *Diagram: Legacy Bridge Architecture*
 
-[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20JS%20%5BJS%20Realm%5D%0A%20%20%20%20%20%20%20%20A%5BReact%20App%20JS%20Code%5D%20--%3E%20B(JS%20Bridge)%3B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20Native%20%5BNative%20Realm%5D%0A%20%20%20%20%20%20%20%20subgraph%20Native%20UI%20Thread%0A%20%20%20%20%20%20%20%20%20%20%20%20D(Native%20UI)%20---%20E(Native%20Modules)%3B%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20C(Native%20Bridge)%20---%20E%3B%0A%20%20%20%20end%0A%0A%20%20%20%20B%20--%20Async%2C%20Serialized%20(JSON)%20--%3E%20C%3B%0A%20%20%20%20C%20--%20Async%2C%20Serialized%20(JSON)%20--%3E%20B%3B%0A%0A%20%20%20%20E%20--%20Direct%20Calls%20--%3E%20D%3B%0A%20%20%20%20D%20--%20Native%20Events%20--%3E%20C%3B%0A%0A%20%20%20%20style%20JS%20fill%3A%23D6EAF8%2Cstroke%3A%23333%2Cstroke-width%3A1px%3B%0A%20%20%20%20style%20Native%20fill%3A%23D5F5E3%2Cstroke%3A%23333%2Cstroke-width%3A1px%3B%0A%20%20%20%20style%20B%20fill%3A%23FADBD8%2Cstroke%3A%23C0392B%3B%0A%20%20%20%20style%20C%20fill%3A%23FADBD8%2Cstroke%3A%23C0392B%3B%0A%20%20%20%20style%20A%20fill%3A%23AED6F1%3B%0A%20%20%20%20style%20D%20fill%3A%23A9DFBF%3B%0A%20%20%20%20style%20E%20fill%3A%23A9DFBF%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph LR
+    subgraph JS [JS Realm]
+        A[React App JS Code] --> B(JS Bridge);
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph Native [Native Realm]
+        subgraph Native UI Thread
+            D(Native UI) --- E(Native Modules);
+        end
+        C(Native Bridge) --- E;
+    end
+
+    B -- Async, Serialized (JSON) --> C;
+    C -- Async, Serialized (JSON) --> B;
+
+    E -- Direct Calls --> D;
+    D -- Native Events --> C;
+
+    style JS fill:#D6EAF8,stroke:#333,stroke-width:1px;
+    style Native fill:#D5F5E3,stroke:#333,stroke-width:1px;
+    style B fill:#FADBD8,stroke:#C0392B;
+    style C fill:#FADBD8,stroke:#C0392B;
+    style A fill:#AED6F1;
+    style D fill:#A9DFBF;
+    style E fill:#A9DFBF;
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 bq. *Diagram Explanation (Legacy Bridge Architecture):*
-> This diagram illustrates the core components of React Native's Legacy Architecture. It depicts two distinct environments: the JavaScript (JS) Realm, running on a dedicated JS thread (often with JavaScriptCore), and the Native Realm, which includes the main Native UI thread and a separate Shadow Thread for layout calculations (using Yoga).
-> Communication between these realms is exclusively handled by the *Bridge*, shown here as two parts: the JS Bridge and the Native Bridge. Messages initiated from the *React App JS Code* (e.g., a request to update UI or call a native API) are sent to the *JS Bridge*. This bridge *serializes* the data (typically into JSON) and sends it *asynchronously* and in *batches* across the boundary to the *Native Bridge*. The Native Bridge then deserializes the message and dispatches it to the appropriate *Native Module* or UI update mechanism on the *Native UI Thread*.
-> Conversely, events originating from the *Native UI* (like button taps) or *Native Modules* (like GPS updates) are sent to the Native Bridge, serialized, and asynchronously passed to the JS Bridge, which then notifies the React App JS Code. The key characteristics are the *asynchronous* nature, *batched communication*, and the *serialization/deserialization* overhead, represented by the red Bridge components and the labelled communication lines. This separation and communication method forms the basis of the performance limitations discussed previously.
+>
+bq. This diagram illustrates the core components of React Native's Legacy Architecture. It depicts two distinct environments: the JavaScript (JS) Realm, running on a dedicated JS thread (often with JavaScriptCore), and the Native Realm, which includes the main Native UI thread and a separate Shadow Thread for layout calculations (using Yoga).
+>
+bq. Communication between these realms is exclusively handled by the *Bridge*, shown here as two parts: the JS Bridge and the Native Bridge. Messages initiated from the *React App JS Code* (e.g., a request to update UI or call a native API) are sent to the *JS Bridge*. This bridge *serializes* the data (typically into JSON) and sends it *asynchronously* and in *batches* across the boundary to the *Native Bridge*. The Native Bridge then deserializes the message and dispatches it to the appropriate *Native Module* or UI update mechanism on the *Native UI Thread*.
+>
+bq. Conversely, events originating from the *Native UI* (like button taps) or *Native Modules* (like GPS updates) are sent to the Native Bridge, serialized, and asynchronously passed to the JS Bridge, which then notifies the React App JS Code. The key characteristics are the *asynchronous* nature, *batched communication*, and the *serialization/deserialization* overhead, represented by the red Bridge components and the labelled communication lines. This separation and communication method forms the basis of the performance limitations discussed previously.
 
 *Diagram: New Architecture Overview*
 
-[https://mermaid.ink/svg/graph%20LR%0A%20%20%20%20subgraph%20JS%20%5BJS%20Thread%20-%20Hermes%5D%0A%20%20%20%20%20%20%20%20A%5BReact%20App%20JS%20Code%5D%3B%0A%20%20%20%20%20%20%20%20B%5BJavaScript%20Interface%20JSI%20C%2B%2B%5D%3B%0A%20%20%20%20%20%20%20%20A%20--%3E%20B%3B%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20Native%20%5BNative%20Realm%5D%0A%20%20%20%20%20%20%20%20subgraph%20Native%20UI%20Thread%0A%20%20%20%20%20%20%20%20%20%20%20%20E(Native%20UI%20-%20Fabric%20Managed)%3B%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20C%5BC%2B%2B%20TurboModule%5D%3B%0A%20%20%20%20%20%20%20%20D%5BC%2B%2B%20Fabric%20Component%20%2F%20Renderer%5D%3B%0A%20%20%20%20%20%20%20%20F%5BNative%20Platform%20APIs%5D%3B%0A%0A%20%20%20%20%20%20%20%20E%20---%20D%3B%0A%20%20%20%20%20%20%20%20C%20--%3E%20F%3B%0A%20%20%20%20%20%20%20%20D%20--%3E%20F%3B%0A%20%20%20%20end%0A%0A%20%20%20%20B%20--%20Synchronous%20C%2B%2B%20Calls%20--%3E%20C%3B%0A%20%20%20%20B%20--%20Synchronous%20C%2B%2B%20Calls%20--%3E%20D%3B%0A%0A%20%20%20%20C%20--%20Native%20Events%20via%20JSI%20--%3E%20B%3B%0A%20%20%20%20D%20--%20Native%20Events%20via%20JSI%20--%3E%20B%3B%0A%0A%20%20%20%20%25%25%20Styling%0A%20%20%20%20style%20JS%20fill%3A%23D6EAF8%2Cstroke%3A%23333%2Cstroke-width%3A1px%3B%0A%20%20%20%20style%20Native%20fill%3A%23D5F5E3%2Cstroke%3A%23333%2Cstroke-width%3A1px%3B%0A%20%20%20%20style%20B%20fill%3A%23AEB6BF%2Cstroke%3A%2334495E%3B%0A%20%20%20%20style%20C%20fill%3A%23A9DFBF%2Cstroke%3A%231E8449%3B%0A%20%20%20%20style%20D%20fill%3A%23A9DFBF%2Cstroke%3A%231E8449%3B%0A%20%20%20%20style%20E%20fill%3A%23A9DFBF%2Cstroke%3A%231E8449%3B%0A%20%20%20%20style%20F%20fill%3A%23E8DAEF%2Cstroke%3A%238E44AD%3B%0A%20%20%20%20style%20A%20fill%3A%23AED6F1%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph LR
+    subgraph JS [JS Thread - Hermes]
+        A[React App JS Code];
+        B[JavaScript Interface JSI C++];
+        A --> B;
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph Native [Native Realm]
+        subgraph Native UI Thread
+            E(Native UI - Fabric Managed);
+        end
+        C[C++ TurboModule];
+        D[C++ Fabric Component / Renderer];
+        F[Native Platform APIs];
+
+        E --- D;
+        C --> F;
+        D --> F;
+    end
+
+    B -- Synchronous C++ Calls --> C;
+    B -- Synchronous C++ Calls --> D;
+
+    C -- Native Events via JSI --> B;
+    D -- Native Events via JSI --> B;
+
+    %% Styling
+    style JS fill:#D6EAF8,stroke:#333,stroke-width:1px;
+    style Native fill:#D5F5E3,stroke:#333,stroke-width:1px;
+    style B fill:#AEB6BF,stroke:#34495E;
+    style C fill:#A9DFBF,stroke:#1E8449;
+    style D fill:#A9DFBF,stroke:#1E8449;
+    style E fill:#A9DFBF,stroke:#1E8449;
+    style F fill:#E8DAEF,stroke:#8E44AD;
+    style A fill:#AED6F1;
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 bq. *Diagram Explanation (New Architecture Overview):*
-> This diagram illustrates the fundamental shift introduced by React Native's New Architecture. While the JS Realm (running on the Hermes engine by default) and Native Realm still exist, the communication layer is drastically different.
-> The central piece is the *JavaScript Interface (JSI)*, a C++ layer accessible directly by the *React App JS Code*. JSI eliminates the asynchronous, serialized Bridge bottleneck. JavaScript code can now obtain direct references to C++ objects and invoke methods on them *synchronously*.
-> Native functionality is exposed through C++ modules: *TurboModules* (for native APIs) and *Fabric Components/Renderer* (for UI elements). The JS code interacts with these C++ objects directly via JSI calls. These C++ modules, in turn, interact with the underlying *Native Platform APIs* and manage the *Native UI* (rendering handled by Fabric).
-> Crucially, the diagram shows direct, synchronous lines of communication between JSI and the C++ TurboModules/Fabric Components. Native events are also relayed back to the JS Realm via JSI, potentially more efficiently than through the old Bridge. This direct C++ layer allows for faster interactions, removes serialization overhead for many calls, and enables synchronous execution when needed, addressing the core limitations of the Legacy Architecture. *Codegen* (not explicitly shown as a runtime component but crucial at build time) plays a vital role by generating the necessary C++ bindings based on TypeScript/Flow definitions, ensuring type safety across the JSI boundary.
+>
+bq. This diagram illustrates the fundamental shift introduced by React Native's New Architecture. While the JS Realm (running on the Hermes engine by default) and Native Realm still exist, the communication layer is drastically different.
+>
+bq. The central piece is the *JavaScript Interface (JSI)*, a C++ layer accessible directly by the *React App JS Code*. JSI eliminates the asynchronous, serialized Bridge bottleneck. JavaScript code can now obtain direct references to C++ objects and invoke methods on them *synchronously*.
+>
+bq. Native functionality is exposed through C++ modules: *TurboModules* (for native APIs) and *Fabric Components/Renderer* (for UI elements). The JS code interacts with these C++ objects directly via JSI calls. These C++ modules, in turn, interact with the underlying *Native Platform APIs* and manage the *Native UI* (rendering handled by Fabric).
+>
+bq. Crucially, the diagram shows direct, synchronous lines of communication between JSI and the C++ TurboModules/Fabric Components. Native events are also relayed back to the JS Realm via JSI, potentially more efficiently than through the old Bridge. This direct C++ layer allows for faster interactions, removes serialization overhead for many calls, and enables synchronous execution when needed, addressing the core limitations of the Legacy Architecture. *Codegen* (not explicitly shown as a runtime component but crucial at build time) plays a vital role by generating the necessary C++ bindings based on TypeScript/Flow definitions, ensuring type safety across the JSI boundary.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/architecture/overview|Architecture Overview | React Native]
-- [https://reactnative.dev/docs/new-architecture-intro|The New Architecture | React Native]
-- [https://reactnative.dev/docs/new-architecture-jsi|JSI | React Native]
-- [https://reactnative.dev/docs/new-architecture-turbomodules|TurboModules | React Native]
-- [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric | React Native]
-- [https://reactnative.dev/docs/new-architecture-codegen|Codegen | React Native]
-> 🗂️ *Additional Resources:*
-> - [https://formidable.com/blog/2022/react-native-new-architecture-overview/|React Native New Architecture Explained]
-- [https://shopify.engineering/react-native-at-shopify-benefits-of-the-new-architecture|Practical Guide to the New Architecture]
-- [https://reactnative.dev/docs/next/new-architecture-app-modules-android|Migrating to the New Architecture]
+>
+bq. - [https://reactnative.dev/architecture/overview|Architecture Overview | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-intro|The New Architecture | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-jsi|JSI | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-turbomodules|TurboModules | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric | React Native]
+bq. - [https://reactnative.dev/docs/new-architecture-codegen|Codegen | React Native]
+>
+bq. 🗂️ *Additional Resources:*
+>
+bq. - [https://formidable.com/blog/2022/react-native-new-architecture-overview/|React Native New Architecture Explained]
+bq. - [https://shopify.engineering/react-native-at-shopify-benefits-of-the-new-architecture|Practical Guide to the New Architecture]
+bq. - [https://reactnative.dev/docs/next/new-architecture-app-modules-android|Migrating to the New Architecture]
 
 h2. Next Steps
 

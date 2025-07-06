@@ -80,8 +80,10 @@ let ibuprofen: PrescriptionMedication = {
 {code}
 
 bq. 📲 *(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):*
-> *Comparison:* TypeScript interfaces are similar to `interface` in Java/Kotlin or `protocol` in Swift. They define a contract that classes or objects can adhere to. The concept of defining expected properties and their types will be very familiar.
-> *Key Takeaway:* Use interfaces to define clear structures for your objects, just as you would in native development to ensure consistency and type safety for data models or service contracts.
+>
+bq. *Comparison:* TypeScript interfaces are similar to `interface` in Java/Kotlin or `protocol` in Swift. They define a contract that classes or objects can adhere to. The concept of defining expected properties and their types will be very familiar.
+>
+bq. *Key Takeaway:* Use interfaces to define clear structures for your objects, just as you would in native development to ensure consistency and type safety for data models or service contracts.
 
 h2. Type Aliases
 
@@ -178,10 +180,11 @@ h2. Use `type` alias when
 For defining object shapes, both are often viable. Many teams choose one and stick with it for consistency. Interfaces are often preferred for public APIs or when defining shapes that might be extended or implemented by others, while type aliases can be more concise for simpler object shapes or union/intersection types.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces|TypeScript Handbook: Everyday Types (Interfaces are part of this)]
-- [https://www.typescriptlang.org/docs/handbook/2/objects.html|TypeScript Handbook: Object Types]
-- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases|TypeScript Handbook: Type Aliases]
-- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces|TypeScript Documentation: Interfaces vs. Type Aliases]
+>
+bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces|TypeScript Handbook: Everyday Types (Interfaces are part of this)]
+bq. - [https://www.typescriptlang.org/docs/handbook/2/objects.html|TypeScript Handbook: Object Types]
+bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases|TypeScript Handbook: Type Aliases]
+bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces|TypeScript Documentation: Interfaces vs. Type Aliases]
 
 By mastering interfaces and type aliases, you can create highly descriptive and robust data models for your SpeedyMeds application, such as defining patient profiles, medication details, prescription structures, and API responses.
 

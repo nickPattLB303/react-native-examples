@@ -62,8 +62,9 @@ h2. Output
 They can return any value (an array, an object, a primitive) that represents the shared state or logic.
 
 bq. 📚 *Official Documentation:*
-> - [https://react.dev/learn/reusing-logic-with-custom-hooks|React Docs: Building Your Own Hooks]
-- [https://react.dev/warnings/invalid-hook-call-warning|React Docs: Rules of Hooks]
+>
+bq. - [https://react.dev/learn/reusing-logic-with-custom-hooks|React Docs: Building Your Own Hooks]
+bq. - [https://react.dev/warnings/invalid-hook-call-warning|React Docs: Rules of Hooks]
 
 h2. Procedural Content
 
@@ -203,12 +204,16 @@ Custom Hooks are a fundamental pattern for building scalable and maintainable Re
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* Custom Hooks can be thought of as creating utility classes or helper functions that manage a specific piece of stateful behavior or data fetching/processing logic, which you might then instantiate or call from your ViewControllers (iOS) or Activities/Fragments (Android). The key difference is Hooks integrate directly into React's composition and lifecycle model.
-> *Key Takeaway:* Custom Hooks provide a structured way to extract and reuse stateful logic within the React paradigm, promoting better code organization than scattering similar logic across multiple native UI components.
+>
+bq. *Comparison:* Custom Hooks can be thought of as creating utility classes or helper functions that manage a specific piece of stateful behavior or data fetching/processing logic, which you might then instantiate or call from your ViewControllers (iOS) or Activities/Fragments (Android). The key difference is Hooks integrate directly into React's composition and lifecycle model.
+>
+bq. *Key Takeaway:* Custom Hooks provide a structured way to extract and reuse stateful logic within the React paradigm, promoting better code organization than scattering similar logic across multiple native UI components.
 
 bq. 🌐 *(Web Developers - React):*
-> *Comparison:* Custom Hooks in React Native are identical in concept and implementation to custom Hooks in React for the web. If you've built custom Hooks for web projects (e.g., for form handling, API calls, animations), you'll feel right at home.
-> *Key Takeaway:* The power and patterns of custom Hooks are fully transferable. You can leverage this to share complex UI-independent logic between your React web and React Native projects if structured carefully.
+>
+bq. *Comparison:* Custom Hooks in React Native are identical in concept and implementation to custom Hooks in React for the web. If you've built custom Hooks for web projects (e.g., for form handling, API calls, animations), you'll feel right at home.
+>
+bq. *Key Takeaway:* The power and patterns of custom Hooks are fully transferable. You can leverage this to share complex UI-independent logic between your React web and React Native projects if structured carefully.
 
 h2. Exercise
 * *Exercise 9.3: Building a Custom Hook (`useTimer`)*

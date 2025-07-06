@@ -574,11 +574,12 @@ Refer to the `README.md` in the Snack for detailed instructions.
 By using `Controller`, React Hook Form provides a flexible way to integrate a wide variety of input components, making your forms highly adaptable to different data types and UI requirements in applications like SpeedyMeds.
 
 bq. 📚 *Official Documentation:*
-> - [https://callstack.github.io/react-native-paper/docs/components/Switch/|React Native Paper - `Switch`]
-- [https://callstack.github.io/react-native-paper/docs/components/Menu/|React Native Paper - `Menu`]
-- [https://callstack.github.io/react-native-paper/docs/components/Dialog/|React Native Paper - `Dialog`]
-- [https://github.com/lawnstarter/react-native-picker-select|`react-native-picker-select` - GitHub]
-- [https://github.com/react-native-picker/picker|`@react-native-picker/picker` - GitHub] (often a dependency)
+>
+bq. - [https://callstack.github.io/react-native-paper/docs/components/Switch/|React Native Paper - `Switch`]
+bq. - [https://callstack.github.io/react-native-paper/docs/components/Menu/|React Native Paper - `Menu`]
+bq. - [https://callstack.github.io/react-native-paper/docs/components/Dialog/|React Native Paper - `Dialog`]
+bq. - [https://github.com/lawnstarter/react-native-picker-select|`react-native-picker-select` - GitHub]
+bq. - [https://github.com/react-native-picker/picker|`@react-native-picker/picker` - GitHub] (often a dependency)
 
 h1. Challenge 12: Create a Patient Information Form
 

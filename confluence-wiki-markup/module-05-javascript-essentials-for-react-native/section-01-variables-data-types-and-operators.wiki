@@ -9,25 +9,32 @@ h2. Variables
 In JavaScript, a variable is a named container for storing data values. Think of it as a label you can attach to a value, allowing you to refer to and manipulate that value throughout your code. In modern JavaScript (ES6 and later), we primarily use {{let}} and {{const}} to declare variables.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* JavaScript's variable and type system differs significantly from Swift (iOS) and Kotlin/Java (Android). While Swift uses type inference but is statically typed ({{var}} and {{let}}), and Kotlin/Java use explicit type declarations, JavaScript is dynamically typed with no need to specify types when declaring variables. Types are associated with values, not variables.
-> *Key Takeaway:* In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
-> *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/|Swift Language Guide: The Basics] and [https://kotlinlang.org/docs/basic-syntax.html#variables|Kotlin Basic Syntax]
-> *Example:*
-> ```swift
-// Swift: Type is inferred but fixed
-let name: String = "John"
-// name = 42 // Error: Cannot assign value of type 'Int' to type 'String'
-```
-> ```kotlin
-// Kotlin: Type is required and fixed
-val name: String = "John"
-// name = 42 // Error: The integer literal does not conform to the expected type String
-```
-> ```javascript
-// JavaScript: No type declaration, type can change
-let name = "John";
-name = 42; // Valid in JavaScript
-```
+
+bq. *Comparison:* JavaScript's variable and type system differs significantly from Swift (iOS) and Kotlin/Java (Android). While Swift uses type inference but is statically typed ({{var}} and {{let}}), and Kotlin/Java use explicit type declarations, JavaScript is dynamically typed with no need to specify types when declaring variables. Types are associated with values, not variables.
+>
+bq. *Key Takeaway:* In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
+>
+bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/|Swift Language Guide: The Basics] and [https://kotlinlang.org/docs/basic-syntax.html#variables|Kotlin Basic Syntax]
+>
+bq. *Example:*
+>
+bq. ```swift
+bq. // Swift: Type is inferred but fixed
+bq. let name: String = "John"
+bq. // name = 42 // Error: Cannot assign value of type 'Int' to type 'String'
+bq. ```
+>
+bq. ```kotlin
+bq. // Kotlin: Type is required and fixed
+bq. val name: String = "John"
+bq. // name = 42 // Error: The integer literal does not conform to the expected type String
+bq. ```
+>
+bq. ```javascript
+bq. // JavaScript: No type declaration, type can change
+bq. let name = "John";
+bq. name = 42; // Valid in JavaScript
+bq. ```
 
 h3. {{let}}
 
@@ -203,9 +210,30 @@ h2. Block Scope
 
 Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20GlobalScope%20%5BGlobal%20Scope%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20GV%5BGlobal%20Variable%20let%2C%20const%2C%20var%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20FunctionScope%20%5BFunction%20Scope%20function%20exampleFunc%5D%0A%20%20%20%20%20%20%20%20direction%20TB%0A%20%20%20%20%20%20%20%20FV%5BFunction%20Variable%20var%2C%20let%2C%20const%20inside%20function%5D%0A%20%20%20%20%20%20%20%20subgraph%20BlockScope1%20%5BBlock%20Scope%20e.g.%2C%20if%20block%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20BV1%5BBlock%20Variable%20let%2C%20const%20inside%20if%5D%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20subgraph%20BlockScope2%20%5BBlock%20Scope%20e.g.%2C%20for%20loop%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20BV2%5BBlock%20Variable%20let%2C%20const%20inside%20for%5D%0A%20%20%20%20%20%20%20%20end%0A%20%20%20%20%20%20%20%20FV%20--%3E%20BlockScope1%0A%20%20%20%20%20%20%20%20FV%20--%3E%20BlockScope2%0A%20%20%20%20end%0A%0A%20%20%20%20GlobalScope%20--%3E%20FunctionScope|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph GlobalScope [Global Scope]
+        direction LR
+        GV[Global Variable let, const, var]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph FunctionScope [Function Scope function exampleFunc]
+        direction TB
+        FV[Function Variable var, let, const inside function]
+        subgraph BlockScope1 [Block Scope e.g., if block]
+            BV1[Block Variable let, const inside if]
+        end
+        subgraph BlockScope2 [Block Scope e.g., for loop]
+            BV2[Block Variable let, const inside for]
+        end
+        FV --> BlockScope1
+        FV --> BlockScope2
+    end
+
+    GlobalScope --> FunctionScope
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the hierarchy of scopes in JavaScript. The outermost is the *Global Scope*, where variables declared outside any function or block reside. Variables like `GV` (Global Variable) defined here are accessible throughout your program, though `let` and `const` don't attach to the global object (e.g., `window`) like `var` does in non-module scripts. Nested within, a *Function Scope* is created by functions like `exampleFunc()`. Variables such as `FV` (Function Variable) declared directly inside a function are accessible anywhere within that function. Further nested are *Block Scopes*, created by constructs like `if` statements or `for` loops (represented by `BlockScope1` and `BlockScope2`). Variables like `BV1` or `BV2`, declared with `let` or `const` within these blocks, are only accessible within that specific block. This structured scoping helps manage variable lifetimes and prevent naming conflicts, making code more modular and predictable. Understanding how these scopes interact is fundamental to writing robust JavaScript.
 
@@ -397,19 +425,21 @@ h3. Non-Primitive Data Type (Reference Type)
     We will cover objects in more detail in a later section.
 
 bq. 📲 *(Native Developers): Data Type Comparisons*
-> - *Java:*
-- JS has fewer primitive numeric types (`number` for all floats/integers, `bigint`) compared to Java's specific types (`byte`, `short`, `int`, `long`, `float`, `double`).
-- JS `string` is primitive and immutable, similar to Java `String` (though Java `String` is technically an object, it's special-cased for immutability and string pooling).
-- JS `boolean` matches Java `boolean`.
-- JS `undefined` and `symbol` have no direct Java equivalents for variable types.
-- JS `null` is similar to Java `null`. Java variables for objects hold references, similar to JS objects.
-- *Kotlin:*
-- Kotlin aims to treat all types as objects from a developer perspective, though it optimizes basic types to JVM primitives under the hood. Basic types like `Int`, `Double`, `Boolean`, `String` correspond well to their JS counterparts regarding usage.
-- Kotlin uses nullable types (e.g., `String?`) and smart casts for handling the absence of value, which is a more robust system than JS's `null` and `undefined` combination.
-- *Swift:*
-- Swift's basic types (`Int`, `Double`, `Bool`, `String`) are value types (structs), not primitives in the JS sense, but they are copied on assignment/pass, which is conceptually similar to how JS primitives behave regarding immutability upon reassignment, but different from JS objects (which are reference types).
-- Swift uses `nil` within its optional type system (e.g., `String?`) to handle the absence of value, providing compile-time safety. This is different from JS's runtime `null` and `undefined`.
-> *Key Takeaway:* While JS has primitives, its dynamic nature and the specific behaviors of `null` and `undefined` require careful attention, especially compared to the more strictly typed and often null-safe environments of modern native development.
+>
+bq. - *Java:*
+bq. - JS has fewer primitive numeric types (`number` for all floats/integers, `bigint`) compared to Java's specific types (`byte`, `short`, `int`, `long`, `float`, `double`).
+bq. - JS `string` is primitive and immutable, similar to Java `String` (though Java `String` is technically an object, it's special-cased for immutability and string pooling).
+bq. - JS `boolean` matches Java `boolean`.
+bq. - JS `undefined` and `symbol` have no direct Java equivalents for variable types.
+bq. - JS `null` is similar to Java `null`. Java variables for objects hold references, similar to JS objects.
+bq. - *Kotlin:*
+bq. - Kotlin aims to treat all types as objects from a developer perspective, though it optimizes basic types to JVM primitives under the hood. Basic types like `Int`, `Double`, `Boolean`, `String` correspond well to their JS counterparts regarding usage.
+bq. - Kotlin uses nullable types (e.g., `String?`) and smart casts for handling the absence of value, which is a more robust system than JS's `null` and `undefined` combination.
+bq. - *Swift:*
+bq. - Swift's basic types (`Int`, `Double`, `Bool`, `String`) are value types (structs), not primitives in the JS sense, but they are copied on assignment/pass, which is conceptually similar to how JS primitives behave regarding immutability upon reassignment, but different from JS objects (which are reference types).
+bq. - Swift uses `nil` within its optional type system (e.g., `String?`) to handle the absence of value, providing compile-time safety. This is different from JS's runtime `null` and `undefined`.
+>
+bq. *Key Takeaway:* While JS has primitives, its dynamic nature and the specific behaviors of `null` and `undefined` require careful attention, especially compared to the more strictly typed and often null-safe environments of modern native development.
 
 h2. Operators
 
@@ -654,31 +684,33 @@ Understanding precedence is crucial for writing correct code. Here's a simplifie
 ||Precedence||Operator(s)||Description||Associativity||
 |19 (highest)|`()`|Grouping|n/a|
 bq. 📲 *(Native Developers): Operator Comparisons*
-> - Most arithmetic (`+`, `-`, `*`, `/`, `%`), relational (`>`, `<`, `>=`, `<=`), and standard logical operators (`&&`, `||`, `!`) in JavaScript behave very similarly to their counterparts in Java, Kotlin, and Swift.
-- *Equality:* The most significant difference lies in equality comparison. JavaScript's loose equality (`==`) with its type coercion is unique and a common source of bugs. Java (`equals()` method for objects, `==` for primitives), Kotlin (`==` which calls `equals()`, `===` for referential equality), and Swift (`==` for `Equatable` types, `===` for class instance identity) behave more like JavaScript's strict equality (`===`), which compares both value and type (or identity for reference types). *Always prefer `===` in JavaScript.*
-- *Ternary Operator:* The ternary operator (`condition ? value1 : value2`) exists with similar syntax and function in Java, Kotlin (though `if` is an expression in Kotlin, often preferred), and Swift.
-- *Type Operators:* JavaScript's `typeof` and `instanceof` have analogs like Java's `instanceof` and Kotlin's `is` / `!is` (for type checks and smart casts) and Swift's `is` (type check) and `as?`/`as!` (type casting).
+>
+bq. - Most arithmetic (`+`, `-`, `*`, `/`, `%`), relational (`>`, `<`, `>=`, `<=`), and standard logical operators (`&&`, `||`, `!`) in JavaScript behave very similarly to their counterparts in Java, Kotlin, and Swift.
+bq. - *Equality:* The most significant difference lies in equality comparison. JavaScript's loose equality (`==`) with its type coercion is unique and a common source of bugs. Java (`equals()` method for objects, `==` for primitives), Kotlin (`==` which calls `equals()`, `===` for referential equality), and Swift (`==` for `Equatable` types, `===` for class instance identity) behave more like JavaScript's strict equality (`===`), which compares both value and type (or identity for reference types). *Always prefer `===` in JavaScript.*
+bq. - *Ternary Operator:* The ternary operator (`condition ? value1 : value2`) exists with similar syntax and function in Java, Kotlin (though `if` is an expression in Kotlin, often preferred), and Swift.
+bq. - *Type Operators:* JavaScript's `typeof` and `instanceof` have analogs like Java's `instanceof` and Kotlin's `is` / `!is` (for type checks and smart casts) and Swift's `is` (type check) and `as?`/`as!` (type casting).
 
 {tip}
 When in doubt, use parentheses `()` to make the order of operations explicit and improve code readability.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures|MDN Web Docs: JavaScript data types and data structures]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var|MDN Web Docs: `var`]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let|MDN Web Docs: `let`]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const|MDN Web Docs: `const`]
-- [https://developer.mozilla.org/en-US/docs/Glossary/Scope|MDN Web Docs: Scope]
-- [https://developer.mozilla.org/en-US/docs/Glossary/Hoisting|MDN Web Docs: Hoisting]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz|MDN Web Docs: Temporal Dead Zone (TDZ)]
-- [https://developer.mozilla.org/en-US/docs/Glossary/Primitive|MDN: Primitive]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null|MDN: null]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined|MDN: undefined]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators|MDN Web Docs: Expressions and operators]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#comparison_operators|MDN: Comparison Operators]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness|MDN: Equality comparisons and sameness]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#logical_operators|MDN: Logical Operators]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator|MDN: Conditional (ternary) operator]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence|MDN: Operator Precedence]
+>
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures|MDN Web Docs: JavaScript data types and data structures]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var|MDN Web Docs: `var`]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let|MDN Web Docs: `let`]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const|MDN Web Docs: `const`]
+bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Scope|MDN Web Docs: Scope]
+bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Hoisting|MDN Web Docs: Hoisting]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz|MDN Web Docs: Temporal Dead Zone (TDZ)]
+bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Primitive|MDN: Primitive]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null|MDN: null]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined|MDN: undefined]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators|MDN Web Docs: Expressions and operators]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#comparison_operators|MDN: Comparison Operators]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness|MDN: Equality comparisons and sameness]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#logical_operators|MDN: Logical Operators]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator|MDN: Conditional (ternary) operator]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence|MDN: Operator Precedence]
 
 h2. Next Steps
 

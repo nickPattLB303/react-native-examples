@@ -8,9 +8,31 @@ bq. 🧑‍🏫 *(Instructor-Led):* For instructor-led sessions, prepare questio
 
 bq. 🧗‍♀️ *(Self-Led):* As you work through this historical section, try to identify the key technological shifts that enabled each major advancement. This will help you recognize patterns of innovation that might predict future developments in mobile.
 
-[https://mermaid.ink/svg/gantt%0A%20%20%20%20dateFormat%20%20YYYY%0A%20%20%20%20title%20Mobile%20Platform%20Evolution%20Timeline%0A%20%20%20%20section%20Early%20Era%0A%20%20%20%20Early%20PDAs%20(Newton%2C%20Simon)%20%3Amilestone%2C%20m1%2C%201993%2C%201d%0A%20%20%20%20Palm%20OS%20%3Aa1%2C%201996%2C%2011y%0A%20%20%20%20Symbian%20OS%20%3Aa2%2C%201998%2C%2012y%0A%20%20%20%20BlackBerry%20OS%20%3Aa3%2C%201999%2C%2011y%0A%20%20%20%20Windows%20Mobile%20%3Aa4%2C%202000%2C%2010y%0A%20%20%20%20Java%20ME%20(J2ME)%20Apps%20%3Aa5%2C%202000%2C%2010y%0A%20%20%20%20section%20Smartphone%20Revolution%0A%20%20%20%20iOS%20Launch%20(iPhone)%20%3Amilestone%2C%20m2%2C%202007%2C%201d%0A%20%20%20%20App%20Store%20Launch%20(iOS%202)%20%3Amilestone%2C%20m3%2C%202008%2C%201d%0A%20%20%20%20Android%201.0%20Launch%20%3Amilestone%2C%20m4%2C%202008%2C%201d%0A%20%20%20%20Android%20Market%20Launch%20%3Amilestone%2C%20m5%2C%202008%2C%201d%0A%20%20%20%20Android%20Screen%20Size%20Support%20(Donut%201.6)%20%3Amilestone%2C%20m6%2C%202009%2C%201d%0A%20%20%20%20section%20Modern%20Duopoly%20%26%20Cross-Platform%0A%20%20%20%20iOS%20%2F%20Android%20Domination%20%3Acrit%2C%20active%2C%202009%2C%2016y%0A%20%20%20%20Unified%20Android%20UI%20(ICS%204.0)%20%3Amilestone%2C%20m7%2C%202011%2C%201d%0A%20%20%20%20React%20Native%20Launch%20%3Amilestone%2C%20m8%2C%202015%2C%201d%0A%20%20%20%20Rise%20of%20Modern%20Cross-Platform%20%3Aactive%2C%202015%2C%2010y|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+gantt
+    dateFormat  YYYY
+    title Mobile Platform Evolution Timeline
+    section Early Era
+    Early PDAs (Newton, Simon) :milestone, m1, 1993, 1d
+    Palm OS :a1, 1996, 11y
+    Symbian OS :a2, 1998, 12y
+    BlackBerry OS :a3, 1999, 11y
+    Windows Mobile :a4, 2000, 10y
+    Java ME (J2ME) Apps :a5, 2000, 10y
+    section Smartphone Revolution
+    iOS Launch (iPhone) :milestone, m2, 2007, 1d
+    App Store Launch (iOS 2) :milestone, m3, 2008, 1d
+    Android 1.0 Launch :milestone, m4, 2008, 1d
+    Android Market Launch :milestone, m5, 2008, 1d
+    Android Screen Size Support (Donut 1.6) :milestone, m6, 2009, 1d
+    section Modern Duopoly & Cross-Platform
+    iOS / Android Domination :crit, active, 2009, 16y
+    Unified Android UI (ICS 4.0) :milestone, m7, 2011, 1d
+    React Native Launch :milestone, m8, 2015, 1d
+    Rise of Modern Cross-Platform :active, 2015, 10y
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 The Gantt chart above, titled 'Mobile Platform Evolution Timeline,' visually maps the significant periods and pivotal moments in the history of mobile platforms, spanning from 1993 into the present day. The timeline is divided into three key eras: the 'Early Era,' the 'Smartphone Revolution,' and the 'Modern Duopoly & Cross-Platform' era.
 

@@ -35,9 +35,9 @@ This is one of the most powerful features for in-depth performance analysis. It 
 * With Hermes, you can also generate and view Hermes trace profiles, which give very detailed insight into JS execution.
 
 bq. 📲 *(Native Developers):*
-*Comparison:* Flipper acts as a comprehensive debugging platform, somewhat analogous to Xcode\'s Instruments or Android Studio\'s Profiler suite. For instance, its performance profiler (Systrace/Perfetto) provides views similar to Time Profiler on iOS or Android Studio\'s CPU Profiler, helping visualize activity across different threads.
-*Key Takeaway:* Flipper offers a unified view for both JavaScript and native code, crucial for understanding React Native\'s cross-platform performance characteristics.
-*Source:* {{[https://fbflipper.com/docs/getting-started/index/|Flipper Documentation]}}, {{[https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/|Xcode Instruments User Guide]}}, {{[https://developer.android.com/studio/profile|Android Studio Profiler Documentation]}}
+bq. *Comparison:* Flipper acts as a comprehensive debugging platform, somewhat analogous to Xcode\'s Instruments or Android Studio\'s Profiler suite. For instance, its performance profiler (Systrace/Perfetto) provides views similar to Time Profiler on iOS or Android Studio\'s CPU Profiler, helping visualize activity across different threads.
+bq. *Key Takeaway:* Flipper offers a unified view for both JavaScript and native code, crucial for understanding React Native\'s cross-platform performance characteristics.
+bq. *Source:* {{[https://fbflipper.com/docs/getting-started/index/|Flipper Documentation]}}, {{[https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/|Xcode Instruments User Guide]}}, {{[https://developer.android.com/studio/profile|Android Studio Profiler Documentation]}}
 
 h3. 2. React DevTools Profiler
 
@@ -51,9 +51,10 @@ h2. Commit Information
 Shows you which props or state changes caused a component to re-render.
 
 bq. 🌐 *(Web Developers):*
-> - ⚛️ *(React Developers):* > *Comparison:* This is the same Profiler you use for web development. Its application and interpretation are identical.
-*Key Takeaway:* Your existing React Profiler skills are directly transferable to React Native performance tuning.
-*Source:* {{[https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools|Profiling with React DevTools]}}
+>
+bq. - ⚛️ *(React Developers):* > *Comparison:* This is the same Profiler you use for web development. Its application and interpretation are identical.
+bq. *Key Takeaway:* Your existing React Profiler skills are directly transferable to React Native performance tuning.
+bq. *Source:* {{[https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools|Profiling with React DevTools]}}
 
 h3. 3. Browser DevTools (Chrome DevTools)
 
@@ -114,9 +115,21 @@ h2. Performance Measurement Workflow
 
 The general workflow for measuring and addressing performance issues can be visualized as follows:
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20A%5BIdentify%20Potential%20Bottleneck%5D%20--%3E%20B(Choose%20Appropriate%20Tool)%3B%0A%20%20%20%20B%20--%3E%20C%7BRecord%20Performance%20Data%7D%3B%0A%20%20%20%20C%20--%20User%20Interaction%20--%3E%20C%3B%0A%20%20%20%20C%20--%3E%20D%5BAnalyze%20Results%5D%3B%0A%20%20%20%20D%20--%20Identify%20Root%20Cause%20--%3E%20E%5BImplement%20Optimization%5D%3B%0A%20%20%20%20E%20--%3E%20F%5BRe-measure%20Performance%5D%3B%0A%20%20%20%20F%20--%20Issue%20Resolved%3F%20--%3E%20G((Done))%3B%0A%20%20%20%20F%20--%20No%20--%3E%20D%3B%0A%20%20%20%20A%20--%20User%20Reports%20Slowness%20--%3E%20A%3B%0A%20%20%20%20A%20--%20Code%20Review%2FStatic%20Analysis%20--%3E%20A%3B|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    A[Identify Potential Bottleneck] --> B(Choose Appropriate Tool);
+    B --> C{Record Performance Data};
+    C -- User Interaction --> C;
+    C --> D[Analyze Results];
+    D -- Identify Root Cause --> E[Implement Optimization];
+    E --> F[Re-measure Performance];
+    F -- Issue Resolved? --> G((Done));
+    F -- No --> D;
+    A -- User Reports Slowness --> A;
+    A -- Code Review/Static Analysis --> A;
+{code}
 
-_(Interactive diagram - click to view)_
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates the iterative process of performance tuning. You start by identifying a potential issue (e.g., slow rendering of the SpeedyMeds medication list). Then, you select a tool like the React DevTools Profiler. You record data while interacting with the problematic feature. After analyzing the results (e.g., noticing list items re-render unnecessarily), you implement an optimization (e.g., using `React.memo` on list items). Finally, you re-measure to confirm the improvement. If the issue persists or new ones arise, you repeat the analysis and optimization steps.
 
@@ -124,10 +137,11 @@ This diagram illustrates the iterative process of performance tuning. You start 
 Always profile your application in *release/production mode* or a development build that closely mimics it for the most accurate performance metrics. Debug mode in React Native adds significant overhead that can skew measurements.
 {tip}
 bq. 📚 *Official Documentation:*
-> - [https://fbflipper.com/|Flipper]
-- [https://reactnative.dev/docs/profiling|React Native Docs: Profiling]
-- [https://reactnative.dev/docs/profile-hermes|React Native Docs: Profiling with Hermes]
-- [https://docs.expo.dev/debugging/flipper/|Expo Docs: Debugging - Flipper]
-- [https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools|React DevTools Profiler]
+>
+bq. - [https://fbflipper.com/|Flipper]
+bq. - [https://reactnative.dev/docs/profiling|React Native Docs: Profiling]
+bq. - [https://reactnative.dev/docs/profile-hermes|React Native Docs: Profiling with Hermes]
+bq. - [https://docs.expo.dev/debugging/flipper/|Expo Docs: Debugging - Flipper]
+bq. - [https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools|React DevTools Profiler]
 
 By familiarizing yourself with these tools, you can move from guessing about performance to making data-driven decisions to optimize your SpeedyMeds app.

@@ -161,22 +161,29 @@ h2. Login Failures
 If you encounter persistent issues, running the command with a verbose flag (if available, e.g., `eas login --verbose`, though verbosity flags vary by command) or checking the EAS CLI GitHub repository for known issues can be helpful. The Expo community forums and Discord are also excellent resources for support.
 {tip}
 bq. 🤖 *(Android Developers):*
-> *Comparison:* The EAS CLI (`eas`) can be compared to specialized command-line tools you might already use for certain development or deployment tasks, such as `fastlane` for automation, or `gradlew` for compiling and building. However, `eas-cli` acts as a unified interface to a comprehensive suite of cloud-based services, rather than being solely focused on local tooling. It orchestrates remote actions.
-> *Key Takeaway:* `eas-cli` is your command center for cloud operations like building your `.aab` and submitting it to the Play Store, distinct from local `gradlew` commands.
+>
+bq. *Comparison:* The EAS CLI (`eas`) can be compared to specialized command-line tools you might already use for certain development or deployment tasks, such as `fastlane` for automation, or `gradlew` for compiling and building. However, `eas-cli` acts as a unified interface to a comprehensive suite of cloud-based services, rather than being solely focused on local tooling. It orchestrates remote actions.
+>
+bq. *Key Takeaway:* `eas-cli` is your command center for cloud operations like building your `.aab` and submitting it to the Play Store, distinct from local `gradlew` commands.
 
 bq. 🍏 *(iOS Developers):*
-> *Comparison:* Similar to Android developers, `eas-cli` can be likened to tools like `fastlane` or even `xcodebuild` when used for scripting CI/CD tasks. It provides a higher-level abstraction for interacting with cloud services for building (`.ipa`) and submitting to App Store Connect.
-> *Key Takeaway:* `eas-cli` manages cloud builds and submissions, simplifying the interaction with Apple's ecosystem without needing to manually run `xcodebuild` commands for these specific cloud tasks.
+>
+bq. *Comparison:* Similar to Android developers, `eas-cli` can be likened to tools like `fastlane` or even `xcodebuild` when used for scripting CI/CD tasks. It provides a higher-level abstraction for interacting with cloud services for building (`.ipa`) and submitting to App Store Connect.
+>
+bq. *Key Takeaway:* `eas-cli` manages cloud builds and submissions, simplifying the interaction with Apple's ecosystem without needing to manually run `xcodebuild` commands for these specific cloud tasks.
 
 bq. 🌐 *(Web Developers - React/Angular):*
-> *Comparison:* `eas-cli` is conceptually similar to the command-line interfaces provided by various cloud platforms (e.g., `vercel cli`, `netlify cli`, `aws cli`, `gcloud cli`). It serves as your local gateway for managing remote resources and services, but in this context, those resources are specifically tailored for mobile application build and deployment lifecycles.
-> *Key Takeaway:* Just as you use a CLI to deploy your web app to a hosting provider, you use `eas-cli` to send your mobile app to cloud build services and app stores.
+>
+bq. *Comparison:* `eas-cli` is conceptually similar to the command-line interfaces provided by various cloud platforms (e.g., `vercel cli`, `netlify cli`, `aws cli`, `gcloud cli`). It serves as your local gateway for managing remote resources and services, but in this context, those resources are specifically tailored for mobile application build and deployment lifecycles.
+>
+bq. *Key Takeaway:* Just as you use a CLI to deploy your web app to a hosting provider, you use `eas-cli` to send your mobile app to cloud build services and app stores.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/build/setup/#install-the-latest-eas-cli|Expo Docs: Install EAS CLI]
-- [https://docs.expo.dev/build/setup/#log-in-to-your-expo-account|Expo Docs: Log in to your account (from Build setup)]
-- [https://docs.expo.dev/eas/getting-started/#log-in-to-your-account|Expo Docs: Getting Started with EAS (includes login)]
-- [https://github.com/expo/eas-cli|EAS CLI GitHub Repository] (For checking releases, issues, and contributing)
+>
+bq. - [https://docs.expo.dev/build/setup/#install-the-latest-eas-cli|Expo Docs: Install EAS CLI]
+bq. - [https://docs.expo.dev/build/setup/#log-in-to-your-expo-account|Expo Docs: Log in to your account (from Build setup)]
+bq. - [https://docs.expo.dev/eas/getting-started/#log-in-to-your-account|Expo Docs: Getting Started with EAS (includes login)]
+bq. - [https://github.com/expo/eas-cli|EAS CLI GitHub Repository] (For checking releases, issues, and contributing)
 
 With EAS CLI installed and configured, you are now ready to start defining build configurations for your project, which is the focus of our next section.
 

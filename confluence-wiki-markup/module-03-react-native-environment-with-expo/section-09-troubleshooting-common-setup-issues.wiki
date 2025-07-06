@@ -31,79 +31,112 @@ When faced with an error or unexpected behavior, adopt a systematic approach:
 
 h2. Troubleshooting Flow Diagram
 
-[https://mermaid.ink/svg/flowchart%20TD%0A%20%20%20%20A%5BEncounter%20Error%5D%20--%3E%20B%7BError%20Type%3F%7D%0A%0A%20%20%20%20B%20--%3E%7CCommand%20Not%20Found%7C%20C%5BInstallation%20Issue%5D%0A%20%20%20%20C%20--%3E%20C1%5BVerify%20installation%5D%0A%20%20%20%20C1%20--%3E%20C2%5BCheck%20PATH%20environment%5D%0A%20%20%20%20C2%20--%3E%20C3%5BReinstall%20if%20needed%5D%0A%0A%20%20%20%20B%20--%3E%7CBuild%20Error%7C%20D%5BNative%20Build%20Issue%5D%0A%20%20%20%20D%20--%3E%20D1%5BCheck%20native%20tools%5D%0A%20%20%20%20D1%20--%3E%20D2%5BClear%20caches%5D%0A%20%20%20%20D2%20--%3E%20D3%5BRun%20prebuild%20with%20clean%20flag%5D%0A%0A%20%20%20%20B%20--%3E%7CRuntime%20Error%7C%20E%5BApp%20Execution%20Issue%5D%0A%20%20%20%20E%20--%3E%20E1%5BCheck%20logs%20for%20specifics%5D%0A%20%20%20%20E1%20--%3E%20E2%5BTry%20with%20--clear%20flag%5D%0A%20%20%20%20E2%20--%3E%20E3%5BVerify%20package%20versions%5D%0A%0A%20%20%20%20B%20--%3E%7CConnection%20Error%7C%20F%5BNetworking%20Issue%5D%0A%20%20%20%20F%20--%3E%20F1%5BVerify%20same%20network%5D%0A%20%20%20%20F1%20--%3E%20F2%5BCheck%20firewall%20settings%5D%0A%20%20%20%20F2%20--%3E%20F3%5BTry%20tunnel%20mode%5D%0A%0A%20%20%20%20G%5BGeneral%20Solutions%5D%20--%3E%20G1%5BClear%20node_modules%5D%0A%20%20%20%20G%20--%3E%20G2%5BClear%20caches%5D%0A%20%20%20%20G%20--%3E%20G3%5BReinstall%20dependencies%5D%0A%20%20%20%20G%20--%3E%20G4%5BRestart%20services%2Fdevice%5D%0A%0A%20%20%20%20C3%20-.-%3E%20G%0A%20%20%20%20D3%20-.-%3E%20G%0A%20%20%20%20E3%20-.-%3E%20G%0A%20%20%20%20F3%20-.-%3E%20G|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+flowchart TD
+    A[Encounter Error] --> B{Error Type?}
 
-_(Interactive diagram - click to view)_
+    B -->|Command Not Found| C[Installation Issue]
+    C --> C1[Verify installation]
+    C1 --> C2[Check PATH environment]
+    C2 --> C3[Reinstall if needed]
+
+    B -->|Build Error| D[Native Build Issue]
+    D --> D1[Check native tools]
+    D1 --> D2[Clear caches]
+    D2 --> D3[Run prebuild with clean flag]
+
+    B -->|Runtime Error| E[App Execution Issue]
+    E --> E1[Check logs for specifics]
+    E1 --> E2[Try with --clear flag]
+    E2 --> E3[Verify package versions]
+
+    B -->|Connection Error| F[Networking Issue]
+    F --> F1[Verify same network]
+    F1 --> F2[Check firewall settings]
+    F2 --> F3[Try tunnel mode]
+
+    G[General Solutions] --> G1[Clear node_modules]
+    G --> G2[Clear caches]
+    G --> G3[Reinstall dependencies]
+    G --> G4[Restart services/device]
+
+    C3 -.-> G
+    D3 -.-> G
+    E3 -.-> G
+    F3 -.-> G
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram illustrates a systematic approach to troubleshooting common React Native and Expo setup issues. By identifying the general category of your error first, you can follow a specific branch of solutions. If those don't work, there are general solutions (clearing caches, reinstalling dependencies, etc.) that often resolve many issues regardless of their type.
 
 h2. Specific Issues & Solutions
 
-*Issue 1: Command Not Found ({{node}}, {{npm}}, {{yarn}}, {{watchman}}, {{npx}}, {{expo}}, {{adb}})*
+*Issue 1: Command Not Found (`node`, `npm`, `yarn`, `watchman`, `npx`, `expo`, `adb`)*
 
 h2. Symptom
 
-Terminal responds {{command not found}}.
+Terminal responds `command not found`.
 h2. Solutions
 * Verify installation (Section 2).
-* Check {{PATH}} environment variable (restart terminal/system, check {{.zshrc}}/{{.bash_profile}}/System Environment Variables). For {{adb}}, ensure {{$ANDROID_SDK_ROOT/platform-tools}} is in {{PATH}}.
+* Check `PATH` environment variable (restart terminal/system, check `.zshrc`/`.bash_profile`/System Environment Variables). For `adb`, ensure `$ANDROID_SDK_ROOT/platform-tools` is in `PATH`.
 * Check for typos.
-* Run {{brew doctor}} (macOS) if installed via Homebrew.
+* Run `brew doctor` (macOS) if installed via Homebrew.
 
-*Issue 2: Metro Bundler Fails to Start ({{npx expo start}})*
+*Issue 2: Metro Bundler Fails to Start (`npx expo start`)*
 
 h2. Symptom
 
 Errors on startup (port conflicts, Watchman, module resolution).
 h2. Solutions
-* *Port Conflict ({{EADDRINUSE}}):* Stop other servers (check ports 8081, 19000-19002). Try {{npx expo start --port 8088}}. Find conflicting process: {{lsof -i :8081}} (macOS/Linux) or Resource Monitor (Windows), then {{kill <PID>}}.
-* *Watchman Errors:* Ensure Watchman is running. Try {{watchman watch-del-all}}, {{brew reinstall watchman}} (macOS). For persistent errors on macOS, you might need to increase file watching limits ({{sudo launchctl limit maxfiles ...}}).
-* *"Unable to resolve module {{<module_name>}}" Error:*
+* *Port Conflict (`EADDRINUSE`):* Stop other servers (check ports 8081, 19000-19002). Try `npx expo start --port 8088`. Find conflicting process: `lsof -i :8081` (macOS/Linux) or Resource Monitor (Windows), then `kill <PID>`.
+* *Watchman Errors:* Ensure Watchman is running. Try `watchman watch-del-all`, `brew reinstall watchman` (macOS). For persistent errors on macOS, you might need to increase file watching limits (`sudo launchctl limit maxfiles ...`).
+* *"Unable to resolve module `<module_name>`" Error:*
 ** Verify the import path is correct (check spelling, case sensitivity, and relative path).
 ** Ensure the imported file actually exists.
-** Check that the required package is listed in {{package.json}} and installed in {{node_modules}}.
-** Make sure the file isn't accidentally excluded by {{.gitignore}}.
-** Restart the Metro server ({{npx expo start --clear}}).
-* *{{EXPO_ROUTER_APP_ROOT}} not defined error (Expo Router specific):*
-** This usually indicates an issue with the Babel configuration for Expo Router. Ensure {{babel-preset-expo}} (which includes the router plugin) is correctly set up in {{babel.config.js}}. Try clearing the cache ({{npx expo start --clear}}). Verify the {{metro.config.js}} extends {{expo/metro-config}} if customized.
+** Check that the required package is listed in `package.json` and installed in `node_modules`.
+** Make sure the file isn't accidentally excluded by `.gitignore`.
+** Restart the Metro server (`npx expo start --clear`).
+* *`EXPO_ROUTER_APP_ROOT` not defined error (Expo Router specific):*
+** This usually indicates an issue with the Babel configuration for Expo Router. Ensure `babel-preset-expo` (which includes the router plugin) is correctly set up in `babel.config.js`. Try clearing the cache (`npx expo start --clear`). Verify the `metro.config.js` extends `expo/metro-config` if customized.
 * *Corrupted Cache/Modules:* See General Tips (Clear Caches & Reinstall Dependencies).
 
 *Issue 3: Simulator/Emulator Launch Failures*
 
 h2. Symptom
 
-{{npx expo run:ios}} or {{run:android}} fails, or pressing {{i}}/{{a}} in {{expo start}} doesn't launch the simulator/emulator.
+`npx expo run:ios` or `run:android` fails, or pressing `i`/`a` in `expo start` doesn't launch the simulator/emulator.
 h2. Solutions
 * *Verify Setup:* Ensure *full Xcode* (for iOS Sim) or Android Studio (with correct SDKs/AVD) is installed and configured correctly (Section 2).
-* *Launch Manually:* Try opening the Simulator ({{open -a Simulator}}) or Android Studio AVD Manager and launching an instance directly _before_ running the Expo command.
+* *Launch Manually:* Try opening the Simulator (`open -a Simulator`) or Android Studio AVD Manager and launching an instance directly _before_ running the Expo command.
 * *Resources:* Check for sufficient disk space and RAM.
-* *Corrupted Instance:* (Simulator) {{Hardware > Erase All Content and Settings...}}; (Emulator) Wipe data via AVD Manager.
-* *Signing Errors:* If running on a physical device, ensure your Apple Developer account is set up correctly in Xcode ({{Xcode > Settings > Accounts}}) and the correct signing certificate/provisioning profile is selected in the project settings ({{Xcode > Your Project > Signing & Capabilities}}).
-* *Clean Build:* {{npx expo prebuild --platform ios --clean}} (deletes {{ios}} folder first), then {{npx expo run:ios}}. Or, clean the build folder in Xcode ({{Product > Clean Build Folder}}).
-* *Test Locally in Release Mode:* Before relying solely on EAS Build for release candidate testing, try building locally in release configuration: {{npx expo run:ios --configuration Release}}. If this fails, the issue is likely in the project setup or local environment.
+* *Corrupted Instance:* (Simulator) `Hardware > Erase All Content and Settings...`; (Emulator) Wipe data via AVD Manager.
+* *Signing Errors:* If running on a physical device, ensure your Apple Developer account is set up correctly in Xcode (`Xcode > Settings > Accounts`) and the correct signing certificate/provisioning profile is selected in the project settings (`Xcode > Your Project > Signing & Capabilities`).
+* *Clean Build:* `npx expo prebuild --platform ios --clean` (deletes `ios` folder first), then `npx expo run:ios`. Or, clean the build folder in Xcode (`Product > Clean Build Folder`).
+* *Test Locally in Release Mode:* Before relying solely on EAS Build for release candidate testing, try building locally in release configuration: `npx expo run:ios --configuration Release`. If this fails, the issue is likely in the project setup or local environment.
 
-*Issue 4: iOS Build Failures ({{npx expo run:ios}})*
+*Issue 4: iOS Build Failures (`npx expo run:ios`)*
 
 h2. Symptom
 
-Errors during the native build phase, often mentioning CocoaPods ({{pod install}}), linking, or signing.
+Errors during the native build phase, often mentioning CocoaPods (`pod install`), linking, or signing.
 h2. Solutions
-* *Check Xcode/CLTs:* Ensure full Xcode is installed and selected ({{xcode-select -p}}).
-* *CocoaPods Issues:* Run {{cd ios && pod install --repo-update}}. Sometimes {{pod deintegrate && pod install}} helps.
-* *Signing Errors:* If running on a physical device, ensure your Apple Developer account is set up correctly in Xcode ({{Xcode > Settings > Accounts}}) and the correct signing certificate/provisioning profile is selected in the project settings ({{Xcode > Your Project > Signing & Capabilities}}).
-* *Clean Build:* {{npx expo prebuild --platform ios --clean}} (deletes {{ios}} folder first), then {{npx expo run:ios}}. Or, clean the build folder in Xcode ({{Product > Clean Build Folder}}).
+* *Check Xcode/CLTs:* Ensure full Xcode is installed and selected (`xcode-select -p`).
+* *CocoaPods Issues:* Run `cd ios && pod install --repo-update`. Sometimes `pod deintegrate && pod install` helps.
+* *Signing Errors:* If running on a physical device, ensure your Apple Developer account is set up correctly in Xcode (`Xcode > Settings > Accounts`) and the correct signing certificate/provisioning profile is selected in the project settings (`Xcode > Your Project > Signing & Capabilities`).
+* *Clean Build:* `npx expo prebuild --platform ios --clean` (deletes `ios` folder first), then `npx expo run:ios`. Or, clean the build folder in Xcode (`Product > Clean Build Folder`).
 
-*Issue 5: Android Build Failures ({{npx expo run:android}})*
+*Issue 5: Android Build Failures (`npx expo run:android`)*
 
 h2. Symptom
 
 Errors during the native build phase, often mentioning Gradle, SDK location, or dependencies.
 h2. Solutions
-* *Verify Android SDK:* Check {{ANDROID_SDK_ROOT}} environment variable ({{echo $ANDROID_SDK_ROOT}} or {{echo %ANDROID_SDK_ROOT%}}). Ensure correct SDK Platform (35) and Build Tools (35.0.0) are installed via SDK Manager.
-* *Gradle Issues:* Try stopping the Gradle Daemon: {{cd android && ./gradlew --stop}}. Clean the build: {{cd android && ./gradlew clean}}.
-* *Memory Issues:* If errors mention {{OutOfMemoryError}} or Java heap space, try increasing Gradle's memory limit. Create/edit {{android/gradle.properties}} and add/modify {{org.gradle.jvmargs=-Xmx4g}} (or higher, e.g., {{6g}}).
-* *Clean Build:* {{npx expo prebuild --platform android --clean}} (deletes {{android}} folder), then {{npx expo run:android}}.
-* *Test Locally in Release Mode:* Similar to iOS, try {{npx expo run:android --variant release}}.
+* *Verify Android SDK:* Check `ANDROID_SDK_ROOT` environment variable (`echo $ANDROID_SDK_ROOT` or `echo %ANDROID_SDK_ROOT%`). Ensure correct SDK Platform (35) and Build Tools (35.0.0) are installed via SDK Manager.
+* *Gradle Issues:* Try stopping the Gradle Daemon: `cd android && ./gradlew --stop`. Clean the build: `cd android && ./gradlew clean`.
+* *Memory Issues:* If errors mention `OutOfMemoryError` or Java heap space, try increasing Gradle's memory limit. Create/edit `android/gradle.properties` and add/modify `org.gradle.jvmargs=-Xmx4g` (or higher, e.g., `6g`).
+* *Clean Build:* `npx expo prebuild --platform android --clean` (deletes `android` folder), then `npx expo run:android`.
+* *Test Locally in Release Mode:* Similar to iOS, try `npx expo run:android --variant release`.
 
 *Issue 6: Expo Go Connection Issues (Physical Device)*
 
@@ -113,19 +146,25 @@ Expo Go cannot connect to the development server; QR code scanning fails or hang
 h2. Solutions
 * *Same Wi-Fi:* Verify computer and device are on the exact same network.
 * *Network Isolation/Firewall:* Check for router settings (client isolation) or firewalls blocking local connections (ports 8081, 19000-19002).
-* *QR Code Format:* Ensure the QR code starts with {{exp://...}} (for Expo Go). If it starts with {{exp+...://}}, you started with {{--dev-client}}. Use {{npx expo start}}.
-* *Try Tunnel:* Use {{npx expo start --tunnel}} to bypass local network issues.
-* *Restart:* Restart Wi-Fi on both devices, restart Expo Go, restart {{npx expo start}}.
+* *QR Code Format:* Ensure the QR code starts with `exp://...` (for Expo Go). If it starts with `exp+...://`, you started with `--dev-client`. Use `npx expo start`.
+* *Try Tunnel:* Use `npx expo start --tunnel` to bypass local network issues.
+* *Restart:* Restart Wi-Fi on both devices, restart Expo Go, restart `npx expo start`.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* Many issues mirror native development: PATH problems, port conflicts, SDK/toolchain verification (Xcode, Android SDK), build tool issues (CocoaPods, Gradle), signing complexities. The unique Expo layers are Watchman, Metro cache ({{--clear}}), Expo Go connection quirks, and the {{npx expo install}} compatibility layer.
-> *Key Takeaway:* Apply standard native troubleshooting, plus Expo-specific checks for Metro, Watchman, and dependencies ({{expo install}}).
-> *Source:* [https://developer.apple.com/documentation/xcode/diagnosing-issues-using-crash-reports-and-device-logs/|Apple Developer: Resolving Common Development Errors]
+>
+bq. *Comparison:* Many issues mirror native development: PATH problems, port conflicts, SDK/toolchain verification (Xcode, Android SDK), build tool issues (CocoaPods, Gradle), signing complexities. The unique Expo layers are Watchman, Metro cache (`--clear`), Expo Go connection quirks, and the `npx expo install` compatibility layer.
+>
+bq. *Key Takeaway:* Apply standard native troubleshooting, plus Expo-specific checks for Metro, Watchman, and dependencies (`expo install`).
+>
+bq. *Source:* [https://developer.apple.com/documentation/xcode/diagnosing-issues-using-crash-reports-and-device-logs/|Apple Developer: Resolving Common Development Errors]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* {{command not found}} (PATH), port conflicts, cache clearing ({{npm cache}}), and dependency issues are familiar. The new territory is troubleshooting the native toolchains (Xcode, Android Studio, Simulators, Emulators), native build systems (CocoaPods, Gradle), and device/emulator connectivity issues, which have no direct web equivalent.
-> *Key Takeaway:* Augment web troubleshooting skills with checks for native tool installations, configurations, and build processes.
-> *Source:* [https://forums.expo.dev/c/help/6|Expo Community Forum: Troubleshooting]
+>
+bq. *Comparison:* `command not found` (PATH), port conflicts, cache clearing (`npm cache`), and dependency issues are familiar. The new territory is troubleshooting the native toolchains (Xcode, Android Studio, Simulators, Emulators), native build systems (CocoaPods, Gradle), and device/emulator connectivity issues, which have no direct web equivalent.
+>
+bq. *Key Takeaway:* Augment web troubleshooting skills with checks for native tool installations, configurations, and build processes.
+>
+bq. *Source:* [https://forums.expo.dev/c/help/6|Expo Community Forum: Troubleshooting]
 
 {tip}
 When asking for help (e.g., on forums or Stack Overflow), provide:
@@ -230,8 +269,9 @@ The prevalence of troubleshooting sections in documentation and the volume of se
 While Expo significantly simplifies many aspects, particularly the initial setup and native builds, it doesn't eliminate the possibility of encountering issues, especially as applications grow in complexity, integrate numerous third-party libraries, or involve custom native code. Therefore, developers must cultivate the ability to systematically diagnose problems across this entire stack. This involves more than just knowing specific commands; it requires learning how to effectively read and interpret logs, understand different types of error messages (JavaScript vs. native), isolate the source of the problem, and leverage documentation and community resources. This troubleshooting section aims to instill this methodical approach, which is indispensable for becoming a productive and self-sufficient React Native developer.
 
 bq. 📚 *Official Documentation:*
-> - [https://docs.expo.dev/troubleshooting/errors/|Expo Docs: Troubleshooting]
-- [https://reactnative.dev/docs/troubleshooting|React Native Docs: Troubleshooting]
-- [https://docs.expo.dev/workflow/continuous-native-generation/#faq|Expo Docs: Continuous Native Generation FAQ]
-- [https://docs.expo.dev/debugging/common-problems/|Expo Docs: Common Development Errors]
-- [https://reactnative.dev/docs/known-issues|React Native Docs: Known Issues]
+>
+bq. - [https://docs.expo.dev/troubleshooting/errors/|Expo Docs: Troubleshooting]
+bq. - [https://reactnative.dev/docs/troubleshooting|React Native Docs: Troubleshooting]
+bq. - [https://docs.expo.dev/workflow/continuous-native-generation/#faq|Expo Docs: Continuous Native Generation FAQ]
+bq. - [https://docs.expo.dev/debugging/common-problems/|Expo Docs: Common Development Errors]
+bq. - [https://reactnative.dev/docs/known-issues|React Native Docs: Known Issues]

@@ -166,8 +166,9 @@ lastLoginDate = new Date();
 {code}
 
 bq. 📚 *Official Documentation:*
-> - [https://www.typescriptlang.org/docs/handbook/2/basic-types.html|TypeScript Handbook: Basic Types]
-- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html|TypeScript Handbook: Everyday Types (includes primitives, arrays, any, unknown, etc.)]
-- [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#stricternullundefined-checking|TypeScript `strictNullChecks`]
+>
+bq. - [https://www.typescriptlang.org/docs/handbook/2/basic-types.html|TypeScript Handbook: Basic Types]
+bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html|TypeScript Handbook: Everyday Types (includes primitives, arrays, any, unknown, etc.)]
+bq. - [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#stricternullundefined-checking|TypeScript `strictNullChecks`]
 
 Understanding these basic types is crucial as they form the foundation for more complex type definitions and patterns you'll encounter. In the next section, we'll explore how to create your own custom types using interfaces and type aliases.

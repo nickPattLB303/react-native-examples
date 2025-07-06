@@ -41,54 +41,64 @@ console.log("Third: Continuing with other tasks (e.g., updating UI)...");
 This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
-> *Key Takeaway:* In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
-> *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
-> *Example:*
-> ```swift
-// Swift: Actual concurrency with async/await
-func fetchData() async throws -> Data {
-let (data, _) = try await URLSession.shared.data(from: url)
-return data // This thread yields while waiting
-}
-> // Usage:
-Task {
-do {
-let data = try await fetchData()
-processData(data)
-} catch {
-handleError(error)
-}
-}
-```
-> ```kotlin
-// Kotlin: Coroutines for structured concurrency
-suspend fun fetchData(): Data {
-return withContext(Dispatchers.IO) {
-val response = URL(url).readText() // Suspends coroutine, not thread
-parseData(response)
-}
-}
-> // Usage:
-CoroutineScope(Dispatchers.Main).launch {
-try {
-val data = fetchData()
-processData(data)
-} catch (e: Exception) {
-handleError(e)
-}
-}
-```
-> ```javascript
-// JavaScript: Single-threaded with Promises
-async function fetchData() {
-const response = await fetch(url); // Non-blocking, returns to event loop
-const data = await response.json();
-return data;
-}
-> // Usage:
-fetchData().then(processData).catch(handleError);
-```
+>
+bq. *Comparison:* JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
+>
+bq. *Key Takeaway:* In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
+>
+bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
+>
+bq. *Example:*
+>
+bq. ```swift
+bq. // Swift: Actual concurrency with async/await
+bq. func fetchData() async throws -> Data {
+bq. let (data, _) = try await URLSession.shared.data(from: url)
+bq. return data // This thread yields while waiting
+bq. }
+>
+bq. // Usage:
+bq. Task {
+bq. do {
+bq. let data = try await fetchData()
+bq. processData(data)
+bq. } catch {
+bq. handleError(error)
+bq. }
+bq. }
+bq. ```
+>
+bq. ```kotlin
+bq. // Kotlin: Coroutines for structured concurrency
+bq. suspend fun fetchData(): Data {
+bq. return withContext(Dispatchers.IO) {
+bq. val response = URL(url).readText() // Suspends coroutine, not thread
+bq. parseData(response)
+bq. }
+bq. }
+>
+bq. // Usage:
+bq. CoroutineScope(Dispatchers.Main).launch {
+bq. try {
+bq. val data = fetchData()
+bq. processData(data)
+bq. } catch (e: Exception) {
+bq. handleError(e)
+bq. }
+bq. }
+bq. ```
+>
+bq. ```javascript
+bq. // JavaScript: Single-threaded with Promises
+bq. async function fetchData() {
+bq. const response = await fetch(url); // Non-blocking, returns to event loop
+bq. const data = await response.json();
+bq. return data;
+bq. }
+>
+bq. // Usage:
+bq. fetchData().then(processData).catch(handleError);
+bq. ```
 
 h3. The Event Loop
 
@@ -100,9 +110,51 @@ JavaScript environments (like browsers, Node.js, and React Native's JavaScript e
 
 This mechanism ensures that long-running operations don't block the main thread, allowing the UI to remain responsive.
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20JavaScriptRuntime%20%5BJavaScript%20Runtime%5D%0A%20%20%20%20%20%20%20%20CallStack%5B%22Call%20Stack%20(LIFO)%22%5D%0A%20%20%20%20%20%20%20%20Heap%5B%22Heap%20(Memory%20Allocation)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20EnvironmentAPIs%20%5BBrowser%2FNode.js%20APIs%20(Background%20Processing)%5D%0A%20%20%20%20%20%20%20%20APIs%5B%22Web%20APIs%20%2F%20C%2B%2B%20APIs%20%3Cbr%2F%3E(setTimeout%2C%20fetch%2C%20DOM%20events%2C%20fs)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20TaskQueues%20%5BTask%20Queues%5D%0A%20%20%20%20%20%20%20%20direction%20LR%0A%20%20%20%20%20%20%20%20CallbackQueue%5B%22Callback%20Queue%20(Macrotasks)%22%5D%0A%20%20%20%20%20%20%20%20MicrotaskQueue%5B%22Microtask%20Queue%20%3Cbr%2F%3E(Promise%20.then%2F.catch%2F.finally%2C%20queueMicrotask)%22%5D%0A%20%20%20%20end%0A%0A%20%20%20%20EventLoop%5B%22(Event%20Loop)%22%5D%0A%0A%20%20%20%20CallStack%20--%20%22Executes%20Synchronous%20Code%22%20--%3E%20Heap%0A%20%20%20%20CallStack%20--%20%22Initiates%20Async%20Operation%22%20--%3E%20APIs%0A%20%20%20%20APIs%20--%20%22Operation%20Complete%20(e.g.%2C%20timer%20done)%22%20--%3E%20CallbackQueue%0A%20%20%20%20APIs%20--%20%22Promise%20Settles%22%20--%3E%20MicrotaskQueue%0A%0A%20%20%20%20EventLoop%20-.-%3E%20CallStack%0A%20%20%20%20EventLoop%20-.-%3E%20MicrotaskQueue%0A%20%20%20%20EventLoop%20-.-%3E%20CallbackQueue%0A%0A%20%20%20%20MicrotaskQueue%20--%20%22Dequeues%20Task%20if%20Call%20Stack%20Empty%22%20--%3E%20CallStack%0A%20%20%20%20CallbackQueue%20--%20%22Dequeues%20Task%20if%20Call%20Stack%20%26%20Microtask%20Queue%20Empty%22%20--%3E%20CallStack%0A%0A%20%20%20%20note%20right%20of%20EventLoop%0A%20%20%20%20%20%20Monitors%20Call%20Stack%20%26%20Task%20Queues%3A%0A%20%20%20%20%20%201.%20If%20Call%20Stack%20empty%2C%20process%20ALL%20Microtasks.%0A%20%20%20%20%20%202.%20If%20Call%20Stack%20%26%20Microtask%20Queue%20empty%2C%20process%20ONE%20Macrotask.%0A%20%20%20%20%20%203.%20Repeat.%0A%20%20%20%20end%0A%0A%20%20%20%20style%20EventLoop%20fill%3A%23f9f%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20CallStack%20fill%3A%23lightblue%0A%20%20%20%20style%20MicrotaskQueue%20fill%3A%23lightgreen%0A%20%20%20%20style%20CallbackQueue%20fill%3A%23orange|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph JavaScriptRuntime [JavaScript Runtime]
+        CallStack["Call Stack (LIFO)"]
+        Heap["Heap (Memory Allocation)"]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph EnvironmentAPIs [Browser/Node.js APIs (Background Processing)]
+        APIs["Web APIs / C++ APIs <br/>(setTimeout, fetch, DOM events, fs)"]
+    end
+
+    subgraph TaskQueues [Task Queues]
+        direction LR
+        CallbackQueue["Callback Queue (Macrotasks)"]
+        MicrotaskQueue["Microtask Queue <br/>(Promise .then/.catch/.finally, queueMicrotask)"]
+    end
+
+    EventLoop["(Event Loop)"]
+
+    CallStack -- "Executes Synchronous Code" --> Heap
+    CallStack -- "Initiates Async Operation" --> APIs
+    APIs -- "Operation Complete (e.g., timer done)" --> CallbackQueue
+    APIs -- "Promise Settles" --> MicrotaskQueue
+
+    EventLoop -.-> CallStack
+    EventLoop -.-> MicrotaskQueue
+    EventLoop -.-> CallbackQueue
+
+    MicrotaskQueue -- "Dequeues Task if Call Stack Empty" --> CallStack
+    CallbackQueue -- "Dequeues Task if Call Stack & Microtask Queue Empty" --> CallStack
+
+    note right of EventLoop
+      Monitors Call Stack & Task Queues:
+#### If Call Stack empty, process ALL Microtasks.
+#### If Call Stack & Microtask Queue empty, process ONE Macrotask.
+#### Repeat.
+    end
+
+    style EventLoop fill:#f9f,stroke:#333,stroke-width:2px
+    style CallStack fill:#lightblue
+    style MicrotaskQueue fill:#lightgreen
+    style CallbackQueue fill:#orange
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram visualizes the JavaScript Event Loop mechanism. The *Call Stack* executes synchronous code. When an asynchronous operation (like `setTimeout` or `fetch`) is initiated, it's offloaded to *Browser/Node.js APIs* which run in the background. Upon completion, these APIs place their callbacks into one of two queues: the *Microtask Queue* (for Promise handlers like `.then()`, `.catch()`, which have higher priority) or the *Callback Queue* (also known as Macrotask Queue, for `setTimeout`, I/O). The *Event Loop* continuously monitors the Call Stack. When the Call Stack is empty, it first processes _all_ tasks in the Microtask Queue. Only if both the Call Stack and Microtask Queue are empty will it take _one_ task from the Callback Queue to push onto the Call Stack for execution. This ensures non-blocking behavior and prioritizes promise resolutions.
 
@@ -379,9 +431,31 @@ h2. Diagram: `async/await` Flow Conceptual Model
 
 The following diagram illustrates conceptually how `async/await` simplifies asynchronous control flow, making it appear more synchronous while still being non-blocking under the hood.
 
-[https://mermaid.ink/svg/sequenceDiagram%0A%20%20%20%20participant%20Caller%0A%20%20%20%20participant%20AsyncFunction%20as%20async%20processOrder()%0A%20%20%20%20participant%20EventLoop%20as%20Event%20Loop%20%2F%20Other%20Tasks%0A%0A%20%20%20%20Caller-%3E%3E%2BAsyncFunction%3A%20processOrder('RX123')%0A%20%20%20%20Note%20over%20AsyncFunction%3A%20Execution%20starts%0A%20%20%20%20AsyncFunction-%3E%3EAsyncFunction%3A%20console.log('Start%20processing')%0A%20%20%20%20Note%20over%20AsyncFunction%3A%20Encounter%20%60await%20verifyPatient()%60%0A%20%20%20%20AsyncFunction--%3E%3EEventLoop%3A%20Pauses%20processOrder()%2C%20verifyPatient()%20runs%0A%20%20%20%20Note%20over%20EventLoop%3A%20Main%20thread%20free%20for%20other%20tasks%20(UI%20updates%2C%20etc.)%0A%20%20%20%20EventLoop--%3E%3EAsyncFunction%3A%20verifyPatient()%20Promise%20resolves%2Frejects%0A%20%20%20%20Note%20over%20AsyncFunction%3A%20Resumes%20processOrder()%20after%20%60await%60%0A%20%20%20%20AsyncFunction-%3E%3EAsyncFunction%3A%20console.log('Patient%20verified')%0A%20%20%20%20Note%20over%20AsyncFunction%3A%20Encounter%20%60await%20checkStock()%60%0A%20%20%20%20AsyncFunction--%3E%3EEventLoop%3A%20Pauses%20processOrder()%2C%20checkStock()%20runs%0A%20%20%20%20Note%20over%20EventLoop%3A%20Main%20thread%20free%0A%20%20%20%20EventLoop--%3E%3EAsyncFunction%3A%20checkStock()%20Promise%20resolves%2Frejects%0A%20%20%20%20Note%20over%20AsyncFunction%3A%20Resumes%20processOrder()%20after%20%60await%60%0A%20%20%20%20AsyncFunction-%3E%3EAsyncFunction%3A%20console.log('Stock%20checked')%0A%20%20%20%20AsyncFunction--%3E%3E-Caller%3A%20Returns%20Promise%20(eventually%20resolves%2Frejects)|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+sequenceDiagram
+    participant Caller
+    participant AsyncFunction as async processOrder()
+    participant EventLoop as Event Loop / Other Tasks
 
-_(Interactive diagram - click to view)_
+    Caller->>+AsyncFunction: processOrder('RX123')
+    Note over AsyncFunction: Execution starts
+    AsyncFunction->>AsyncFunction: console.log('Start processing')
+    Note over AsyncFunction: Encounter `await verifyPatient()`
+    AsyncFunction-->>EventLoop: Pauses processOrder(), verifyPatient() runs
+    Note over EventLoop: Main thread free for other tasks (UI updates, etc.)
+    EventLoop-->>AsyncFunction: verifyPatient() Promise resolves/rejects
+    Note over AsyncFunction: Resumes processOrder() after `await`
+    AsyncFunction->>AsyncFunction: console.log('Patient verified')
+    Note over AsyncFunction: Encounter `await checkStock()`
+    AsyncFunction-->>EventLoop: Pauses processOrder(), checkStock() runs
+    Note over EventLoop: Main thread free
+    EventLoop-->>AsyncFunction: checkStock() Promise resolves/rejects
+    Note over AsyncFunction: Resumes processOrder() after `await`
+    AsyncFunction->>AsyncFunction: console.log('Stock checked')
+    AsyncFunction-->>-Caller: Returns Promise (eventually resolves/rejects)
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 This diagram shows that when an `async` function encounters an `await` keyword, it pauses its own execution at that point, allowing other JavaScript code (like UI updates or other event handlers) to run. The `await` waits for the asynchronous operation (the Promise) to complete. Once the awaited Promise settles (resolves or rejects), the `async` function resumes from where it left off. This makes complex asynchronous sequences much easier to write and understand because the code flows top-to-bottom, similar to synchronous code, but without freezing the main thread. The Event Loop is crucial in managing these paused functions and resuming them when their awaited operations are done.
 
@@ -450,13 +524,14 @@ h2. `async/await` Integration
 Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
 bq. 📚 *Official Documentation:*
-> - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function|MDN Web Docs: Asynchronous JavaScript] (This link points to `async function`, a good starting point)
-- [https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing|MDN Web Docs: Introducing asynchronous JavaScript]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop|MDN Web Docs: Event Loop]
-- [https://developer.mozilla.org/en-US/docs/Glossary/Callback_function|MDN Web Docs: Callback function]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise|MDN Web Docs: Promise]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function|MDN Web Docs: `async function`]
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await|MDN Web Docs: `await`]
+>
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function|MDN Web Docs: Asynchronous JavaScript] (This link points to `async function`, a good starting point)
+bq. - [https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing|MDN Web Docs: Introducing asynchronous JavaScript]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop|MDN Web Docs: Event Loop]
+bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Callback_function|MDN Web Docs: Callback function]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise|MDN Web Docs: Promise]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function|MDN Web Docs: `async function`]
+bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await|MDN Web Docs: `await`]
 
 h2. Exercise 5.3: Async Function Implementation
 

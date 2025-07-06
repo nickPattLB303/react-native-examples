@@ -77,9 +77,21 @@ h3. Visualizing the Change: Bridge vs. JSI
 
 This diagram illustrates the conceptual difference in communication:
 
-[https://mermaid.ink/svg/graph%20TD%0A%20%20%20%20subgraph%20Legacy%20Architecture%0A%20%20%20%20%20%20%20%20JS%5BJavaScript%20Thread%5D%20--%20JSON%20Messages%20--%3E%20Bridge%5BAsync%20Bridge%5D%20--%20JSON%20Messages%20--%3E%20Native%5BNative%20Modules%2FUI%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20New%20Architecture%0A%20%20%20%20%20%20%20%20JS_NA%5BJavaScript%20Thread%5D%20%3C%3D%3D%20JSI%20%3D%3D%3E%20Native_NA%5BNative%20Modules%2FUI%20(Fabric%2FTurboModules)%5D%0A%20%20%20%20end%0A%0A%20%20%20%20style%20Bridge%20fill%3A%23f96%2Cstroke%3A%23333%2Cstroke-width%3A2px%0A%20%20%20%20style%20JSI%20fill%3A%239cf%2Cstroke%3A%23333%2Cstroke-width%3A2px|View Mermaid Diagram]
+{code:title=Mermaid Diagram|language=text}
+graph TD
+    subgraph Legacy Architecture
+        JS[JavaScript Thread] -- JSON Messages --> Bridge[Async Bridge] -- JSON Messages --> Native[Native Modules/UI]
+    end
 
-_(Interactive diagram - click to view)_
+    subgraph New Architecture
+        JS_NA[JavaScript Thread] <== JSI ==> Native_NA[Native Modules/UI (Fabric/TurboModules)]
+    end
+
+    style Bridge fill:#f96,stroke:#333,stroke-width:2px
+    style JSI fill:#9cf,stroke:#333,stroke-width:2px
+{code}
+
+_(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https://mermaid.live to view the diagram)_
 
 *Description:* In the Legacy Architecture, the JavaScript thread communicates with Native Modules and UI by sending JSON messages asynchronously across the Bridge. This introduces latency and serialization overhead. In the New Architecture, the JavaScript thread, through JSI (JavaScript Interface), can communicate more directly and often synchronously with Native Modules (TurboModules) and the UI rendering system (Fabric). This direct path reduces overhead and improves responsiveness.
 
@@ -98,36 +110,37 @@ h2. Synchronous Nature of JSI
 While powerful, synchronous calls from JS to native, if misused for long-running native tasks, could potentially block the JS thread. Proper design of native module APIs remains important.
 
 bq. 📲 *(Native Developers):*
-*Comparison:* The New Architecture, particularly with JSI enabling direct C++ interop, moves React Native closer to how native components often interact with the system or each other—more directly and with less marshaling or serialization overhead than the old bridge. Fabric\'s approach to rendering off the main JS thread and allowing for prioritized updates shares principles with how native UI frameworks (like UIKit on iOS or Android\'s UI toolkit) manage their rendering pipelines to ensure responsiveness.
-*Key Takeaway:* The New Architecture aims to make React Native feel more "native" in its performance characteristics by reducing indirection and overhead in the communication between JavaScript and native code, leading to potentially smoother UIs and faster interactions.
-*Source:* {{[https://reactnative.dev/docs/the-new-architecture/jsi|React Native Docs: The New Architecture - JSI]}}, {{[https://reactnative.dev/docs/the-new-architecture/fabric-renderer|React Native Docs: The New Architecture - Fabric]}}
+bq. *Comparison:* The New Architecture, particularly with JSI enabling direct C++ interop, moves React Native closer to how native components often interact with the system or each other—more directly and with less marshaling or serialization overhead than the old bridge. Fabric\'s approach to rendering off the main JS thread and allowing for prioritized updates shares principles with how native UI frameworks (like UIKit on iOS or Android\'s UI toolkit) manage their rendering pipelines to ensure responsiveness.
+bq. *Key Takeaway:* The New Architecture aims to make React Native feel more "native" in its performance characteristics by reducing indirection and overhead in the communication between JavaScript and native code, leading to potentially smoother UIs and faster interactions.
+bq. *Source:* `[https://reactnative.dev/docs/the-new-architecture/jsi|React Native Docs: The New Architecture - JSI]`, `[https://reactnative.dev/docs/the-new-architecture/fabric-renderer|React Native Docs: The New Architecture - Fabric]`
 
 bq. 🌐 *(Web Developers):*
-*Comparison:* JSI enabling direct calls between JavaScript and C++ is somewhat analogous to how WebAssembly (Wasm) allows near-native performance for compiled C++/Rust/etc. code running in the browser, or how Node.js C++ addons can be called synchronously or asynchronously from JavaScript. Fabric\'s concurrency features, designed to work with React 18+, align with modern React\'s capabilities for smoother, non-blocking rendering updates on the web (e.g., {{startTransition}}).
-*Key Takeaway:* The New Architecture brings a more sophisticated and performant execution model to React Native, addressing limitations that were more apparent when comparing the legacy bridge architecture to typical web or native execution models. It allows for more direct interop and better UI rendering strategies.
-*Source:* {{[https://webassembly.org/|WebAssembly.org]}}, {{[https://react.dev/blog/2022/03/29/react-v18#new-features-automatic-batching|React Docs: Concurrent Rendering]}}
+bq. *Comparison:* JSI enabling direct calls between JavaScript and C++ is somewhat analogous to how WebAssembly (Wasm) allows near-native performance for compiled C++/Rust/etc. code running in the browser, or how Node.js C++ addons can be called synchronously or asynchronously from JavaScript. Fabric\'s concurrency features, designed to work with React 18+, align with modern React\'s capabilities for smoother, non-blocking rendering updates on the web (e.g., `startTransition`).
+bq. *Key Takeaway:* The New Architecture brings a more sophisticated and performant execution model to React Native, addressing limitations that were more apparent when comparing the legacy bridge architecture to typical web or native execution models. It allows for more direct interop and better UI rendering strategies.
+bq. *Source:* `[https://webassembly.org/|WebAssembly.org]`, `[https://react.dev/blog/2022/03/29/react-v18#new-features-automatic-batching|React Docs: Concurrent Rendering]`
 
 h2. Procedural Content: Enabling the New Architecture
 
 Enabling the New Architecture involves several steps and can vary slightly between React Native versions and project types (standard RN CLI vs. Expo).
 # *Update React Native:* Ensure your project is on a React Native version that supports the New Architecture (generally 0.68+ for initial support, 0.70+ for more widespread adoption and Hermes on iOS as default with it).
 # *Android Configuration:*
-*** In {{android/gradle.properties}}, set {{newArchEnabled=true}}.
-*** Rebuild your Android app ({{cd android && ./gradlew clean && cd .. && npx react-native run-android}}).
+*** In `android/gradle.properties`, set `newArchEnabled=true`.
+*** Rebuild your Android app (`cd android && ./gradlew clean && cd .. && npx react-native run-android`).
 # *iOS Configuration:*
-*** In your {{ios}} directory, run {{RCT_NEW_ARCH_ENABLED=1 pod install}}.
-*** Rebuild your iOS app from Xcode or using {{npx react-native run-ios}}.
+*** In your `ios` directory, run `RCT_NEW_ARCH_ENABLED=1 pod install`.
+*** Rebuild your iOS app from Xcode or using `npx react-native run-ios`.
 # *Expo Projects:*
-*** For projects using {{expo-dev-client}} or bare workflow, you typically follow the standard React Native instructions. Expo managed workflow support for the New Architecture is evolving; check the latest Expo SDK documentation.
-*** Expo often simplifies enabling the New Architecture through build profiles or configuration in {{eas.json}} or {{app.json}} for EAS Builds.
+*** For projects using `expo-dev-client` or bare workflow, you typically follow the standard React Native instructions. Expo managed workflow support for the New Architecture is evolving; check the latest Expo SDK documentation.
+*** Expo often simplifies enabling the New Architecture through build profiles or configuration in `eas.json` or `app.json` for EAS Builds.
 
 {note}
 Migrating an existing application, especially one with custom native modules, requires careful planning and testing. Native modules need to be adapted or rewritten as TurboModules to be fully compatible and leverage JSI benefits. Consult the official React Native migration guide for detailed steps.
 {note}
 bq. 📚 *Official Documentation & Resources:*
-> - [https://github.com/react-native-community/new-architecture-working-group|React Native New Architecture Working Group]
-- [https://reactnative.dev/docs/the-new-architecture/landing-page|React Native Docs: The New Architecture]
-- [https://reactnative.dev/docs/new-architecture-migration|React Native Docs: Migrating to the New Architecture]
-- [https://docs.expo.dev/|Expo Docs on New Architecture (Search for latest guides)]
+>
+bq. - [https://github.com/react-native-community/new-architecture-working-group|React Native New Architecture Working Group]
+bq. - [https://reactnative.dev/docs/the-new-architecture/landing-page|React Native Docs: The New Architecture]
+bq. - [https://reactnative.dev/docs/new-architecture-migration|React Native Docs: Migrating to the New Architecture]
+bq. - [https://docs.expo.dev/|Expo Docs on New Architecture (Search for latest guides)]
 
 The New Architecture represents the future of React Native performance. As it matures and library support becomes ubiquitous, apps like SpeedyMeds will be able to deliver even smoother and more responsive user experiences.

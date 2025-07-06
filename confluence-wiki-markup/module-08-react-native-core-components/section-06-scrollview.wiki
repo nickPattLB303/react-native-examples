@@ -33,14 +33,20 @@ h2. Interaction with Keyboard
 Props like {{keyboardDismissMode}} and {{keyboardShouldPersistTaps}} allow intelligent interaction with the keyboard, crucial for forms or chat interfaces within scrollable content.
 
 bq. 📲 *(Native Developers):*
-> *Comparison:* {{<ScrollView>}} is analogous to {{UIScrollView}} on iOS and {{ScrollView}} (or {{HorizontalScrollView}}) on Android. It provides the same fundamental capability of a scrollable viewport. The need for a bounded height/width mirrors how native scroll views require a defined frame.
-> *Key Takeaway:* Use {{<ScrollView>}} for generic scrollable content. Be mindful of performance with very large numbers of child components; consider {{<FlatList>}} for those cases. Features like {{refreshControl}} and {{stickyHeaderIndices}} provide JS abstractions for common native patterns.
-> *Source:* [https://reactnative.dev/docs/scrollview|React Native Docs: ScrollView]
+>
+bq. *Comparison:* {{<ScrollView>}} is analogous to {{UIScrollView}} on iOS and {{ScrollView}} (or {{HorizontalScrollView}}) on Android. It provides the same fundamental capability of a scrollable viewport. The need for a bounded height/width mirrors how native scroll views require a defined frame.
+>
+bq. *Key Takeaway:* Use {{<ScrollView>}} for generic scrollable content. Be mindful of performance with very large numbers of child components; consider {{<FlatList>}} for those cases. Features like {{refreshControl}} and {{stickyHeaderIndices}} provide JS abstractions for common native patterns.
+>
+bq. *Source:* [https://reactnative.dev/docs/scrollview|React Native Docs: ScrollView]
 
 bq. 🌐 *(Web Developers):*
-> *Comparison:* {{<ScrollView>}} is similar to setting {{overflow: scroll}} or {{overflow: auto}} on a {{<div>}} in CSS. The performance consideration of rendering all children at once is akin to having a very long HTML page. The scroll direction is explicit via the {{horizontal}} prop.
-> *Key Takeaway:* {{<ScrollView>}} enables scrolling. For optimal performance with lists, React Native offers specialized list components like {{<FlatList>}}.
-> *Source:* [https://developer.mozilla.org/en-US/docs/Web/CSS/overflow|MDN Web Docs: {{overflow}}]
+>
+bq. *Comparison:* {{<ScrollView>}} is similar to setting {{overflow: scroll}} or {{overflow: auto}} on a {{<div>}} in CSS. The performance consideration of rendering all children at once is akin to having a very long HTML page. The scroll direction is explicit via the {{horizontal}} prop.
+>
+bq. *Key Takeaway:* {{<ScrollView>}} enables scrolling. For optimal performance with lists, React Native offers specialized list components like {{<FlatList>}}.
+>
+bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/CSS/overflow|MDN Web Docs: {{overflow}}]
 
 h2. Referential Content: Common {{<ScrollView>}} Props and Methods
 
@@ -69,13 +75,14 @@ h2. Referential Content: Common {{<ScrollView>}} Props and Methods
 * {{flashScrollIndicators()}}: Briefly makes the scroll indicators visible.
 
 bq. 📚 *Official Documentation:*
-> - [https://reactnative.dev/docs/scrollview|React Native Docs: ScrollView]
-- [https://reactnative.dev/docs/scrollview#props|React Native Docs: ScrollView Props]
-- [https://reactnative.dev/docs/using-a-scrollview|React Native Docs: Using a ScrollView Guide]
-- [https://docs.expo.dev/ui-programming/scrollview/|Expo Docs: ScrollView]
-- _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uiscrollview|Apple Developer: UIScrollView]
-- _(Native Docs)_ [https://developer.android.com/reference/android/widget/ScrollView|Android Developer: ScrollView]
-- _(Native Docs)_ [https://developer.android.com/reference/android/widget/HorizontalScrollView|Android Developer: HorizontalScrollView]
+>
+bq. - [https://reactnative.dev/docs/scrollview|React Native Docs: ScrollView]
+bq. - [https://reactnative.dev/docs/scrollview#props|React Native Docs: ScrollView Props]
+bq. - [https://reactnative.dev/docs/using-a-scrollview|React Native Docs: Using a ScrollView Guide]
+bq. - [https://docs.expo.dev/ui-programming/scrollview/|Expo Docs: ScrollView]
+bq. - _(Native Docs)_ [https://developer.apple.com/documentation/uikit/uiscrollview|Apple Developer: UIScrollView]
+bq. - _(Native Docs)_ [https://developer.android.com/reference/android/widget/ScrollView|Android Developer: ScrollView]
+bq. - _(Native Docs)_ [https://developer.android.com/reference/android/widget/HorizontalScrollView|Android Developer: HorizontalScrollView]
 
 h2. "Under the Hood": {{<ScrollView>}} Internals
 
