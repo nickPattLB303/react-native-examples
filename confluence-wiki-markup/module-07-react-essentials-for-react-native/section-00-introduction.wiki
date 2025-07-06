@@ -2,22 +2,22 @@ h1. Module 7: React Essentials for React Native
 
 Welcome to Module 7! Now that you have a solid understanding of JavaScript and TypeScript, it's time to dive into the core concepts of React. React is the JavaScript library that powers React Native, and mastering its fundamentals is essential for building robust and efficient mobile applications. This module will equip you with the foundational React knowledge you'll need to start creating dynamic user interfaces in React Native.
 
-bq. 🛣️ _(All Learners):_ This module is crucial for everyone, regardless of your background. While the concepts might seem familiar to those with web React experience, pay close attention to how these fundamentals apply within the React Native context and any differences highlighted.
+bq. 🛣️ *(All Learners):* This module is crucial for everyone, regardless of your background. While the concepts might seem familiar to those with web React experience, pay close attention to how these fundamentals apply within the React Native context and any differences highlighted.
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ You'll find many concepts like JSX, components, props, and state very familiar. Key differences in React Native include the set of available UI elements (Core Components like {{<View>}}, {{<Text>}} instead of HTML DOM elements like {{<div>}}, {{<p>}}) and event handling (e.g., {{onPress}} for touch events instead of {{onClick}} for mouse clicks).
-> _Key Takeaway:_ While the core React philosophy remains, adapt your knowledge to mobile-specific UI components and interaction patterns.
-> _Source:_ [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components], [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* You'll find many concepts like JSX, components, props, and state very familiar. Key differences in React Native include the set of available UI elements (Core Components like {{<View>}}, {{<Text>}} instead of HTML DOM elements like {{<div>}}, {{<p>}}) and event handling (e.g., {{onPress}} for touch events instead of {{onClick}} for mouse clicks).
+> *Key Takeaway:* While the core React philosophy remains, adapt your knowledge to mobile-specific UI components and interaction patterns.
+> *Source:* [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components], [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches]
 
-bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
-> _Comparison:_ React uses JSX for templating, which integrates HTML-like syntax directly within JavaScript, differing from Angular's separate HTML templates. State management often starts with the {{useState}} Hook for local component state, and React generally follows a unidirectional data flow, contrasting with Angular's two-way data binding capabilities with {{ngModel}}.
-> _Key Takeaway:_ Embrace JSX for UI definition and understand React's approach to state and data flow, which might be more explicit than what you're used to.
-> _Source:_ [https://react.dev/learn/writing-markup-with-jsx|React Docs: Introducing JSX], [https://react.dev/learn/state-a-components-memory|React Docs: State - A Component's Memory]
+bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
+> *Comparison:* React uses JSX for templating, which integrates HTML-like syntax directly within JavaScript, differing from Angular's separate HTML templates. State management often starts with the {{useState}} Hook for local component state, and React generally follows a unidirectional data flow, contrasting with Angular's two-way data binding capabilities with {{ngModel}}.
+> *Key Takeaway:* Embrace JSX for UI definition and understand React's approach to state and data flow, which might be more explicit than what you're used to.
+> *Source:* [https://react.dev/learn/writing-markup-with-jsx|React Docs: Introducing JSX], [https://react.dev/learn/state-a-components-memory|React Docs: State - A Component's Memory]
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ React Native employs a declarative UI paradigm where you describe _what_ the UI should look like based on the current state, unlike the imperative approach often used in native development (e.g., manually updating UI elements in UIKit or Android Views). Component lifecycle events, managed with the {{useEffect}} Hook, are analogous to {{UIViewController}} lifecycles (e.g., {{viewDidLoad}}, {{viewWillAppear}}) or Android {{Activity}} lifecycles (e.g., {{onCreate}}, {{onResume}}), but are handled within a JavaScript context.
-> _Key Takeaway:_ Shift your thinking from direct manipulation of UI elements to describing UI based on state, and learn how {{useEffect}} manages component behavior over time.
-> _Source:_ [https://react.dev/learn/describing-the-ui|React Docs: Describing the UI], [https://react.dev/learn/lifecycle-of-reactive-effects|React Docs: Lifecycle of Reactive Effects]
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* React Native employs a declarative UI paradigm where you describe _what_ the UI should look like based on the current state, unlike the imperative approach often used in native development (e.g., manually updating UI elements in UIKit or Android Views). Component lifecycle events, managed with the {{useEffect}} Hook, are analogous to {{UIViewController}} lifecycles (e.g., {{viewDidLoad}}, {{viewWillAppear}}) or Android {{Activity}} lifecycles (e.g., {{onCreate}}, {{onResume}}), but are handled within a JavaScript context.
+> *Key Takeaway:* Shift your thinking from direct manipulation of UI elements to describing UI based on state, and learn how {{useEffect}} manages component behavior over time.
+> *Source:* [https://react.dev/learn/describing-the-ui|React Docs: Describing the UI], [https://react.dev/learn/lifecycle-of-reactive-effects|React Docs: Lifecycle of Reactive Effects]
 
 h2. Learning Objectives
 
@@ -36,9 +36,9 @@ By the end of this module, you will be able to:
 h2. Prerequisites
 
 Before starting this module, ensure you have a good understanding of the following:
-* Completion of _Module 4: Web Development Essentials Refresher_ (especially HTML and CSS concepts)
-* Completion of _Module 5: JavaScript Essentials for React Native_ (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
-* Completion of _Module 6: TypeScript Essentials_ (all subsequent code examples in this course will use TypeScript)
+* Completion of *Module 4: Web Development Essentials Refresher* (especially HTML and CSS concepts)
+* Completion of *Module 5: JavaScript Essentials for React Native* (especially ES6+ features like arrow functions, destructuring, and asynchronous JavaScript)
+* Completion of *Module 6: TypeScript Essentials* (all subsequent code examples in this course will use TypeScript)
 
 With these prerequisites, you're ready to explore the powerful world of React! Let's begin.
 

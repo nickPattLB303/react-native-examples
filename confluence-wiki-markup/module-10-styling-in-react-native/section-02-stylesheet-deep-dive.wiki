@@ -7,10 +7,10 @@ h3. What is {{StyleSheet}}?
 {{StyleSheet}} is a React Native module that provides an abstraction layer, similar to CSS Stylesheets, for styling your application components. It allows you to define styles in a JavaScript object and then reference them within your components. While you _can_ use plain JavaScript objects for inline styles, {{StyleSheet.create}} offers several advantages.
 
 *Key Benefits of {{StyleSheet.create()}}:*
-# _Performance Optimization:_ Styles created with {{StyleSheet.create}} are processed once. React Native can then refer to them by an internally assigned ID. This means that instead of sending the entire JavaScript style object to the native side on every render, only the ID needs to be communicated. This significantly reduces the amount of data transferred between the JavaScript and native threads, especially for complex styles or frequently re-rendering components, leading to a smoother UI. Plain JavaScript objects used for inline styles, in contrast, might be created and processed on every render.
-# _Code Organization & Readability:_ It encourages separating styles from your component's rendering logic, leading to cleaner, more maintainable code. Styles are defined in a dedicated object, making them easier to find, manage, and read, thus reducing clutter from large inline style objects in your JSX.
-# _Reusability:_ Defined styles can be easily reused across multiple components or within the same component for different elements, promoting consistency and reducing code duplication.
-# _Validation & Static Analysis:_ {{StyleSheet.create}} can perform validation on your style properties in development mode, warning you about invalid style properties or values. This helps catch typos and errors early. Furthermore, using {{StyleSheet.create}} enables better static type checking (with TypeScript) and autocompletion for style properties in many IDEs.
+# *Performance Optimization:* Styles created with {{StyleSheet.create}} are processed once. React Native can then refer to them by an internally assigned ID. This means that instead of sending the entire JavaScript style object to the native side on every render, only the ID needs to be communicated. This significantly reduces the amount of data transferred between the JavaScript and native threads, especially for complex styles or frequently re-rendering components, leading to a smoother UI. Plain JavaScript objects used for inline styles, in contrast, might be created and processed on every render.
+# *Code Organization & Readability:* It encourages separating styles from your component's rendering logic, leading to cleaner, more maintainable code. Styles are defined in a dedicated object, making them easier to find, manage, and read, thus reducing clutter from large inline style objects in your JSX.
+# *Reusability:* Defined styles can be easily reused across multiple components or within the same component for different elements, promoting consistency and reducing code duplication.
+# *Validation & Static Analysis:* {{StyleSheet.create}} can perform validation on your style properties in development mode, warning you about invalid style properties or values. This helps catch typos and errors early. Furthermore, using {{StyleSheet.create}} enables better static type checking (with TypeScript) and autocompletion for style properties in many IDEs.
 
 h3. Creating and Using {{StyleSheet}}
 
@@ -205,7 +205,7 @@ export default ComposedStylesExample;
 h3. Utility Styles and Methods
 
 The `StyleSheet` API also provides several helpful utility properties and methods:
-* _`StyleSheet.flatten()`_: This method takes an array of style objects (or a single style object) and merges them into a single, "flat" style object. This can be useful for debugging, inspecting computed styles, or when you need to pass a unified style object to a child component that expects a single style object rather than an array.
+* *`StyleSheet.flatten()`*: This method takes an array of style objects (or a single style object) and merges them into a single, "flat" style object. This can be useful for debugging, inspecting computed styles, or when you need to pass a unified style object to a child component that expects a single style object rather than an array.
 
   {code:language=js}
 const style1 = { color: "blue", fontSize: 16 };
@@ -216,9 +216,9 @@ const style1 = { color: "blue", fontSize: 16 };
 
   > [!NOTE]
   > For React Native for Web, using `StyleSheet.flatten()` might interfere with static style extraction optimizations. Use it judiciously if web compatibility is a primary concern.
-* _`StyleSheet.absoluteFill` and `StyleSheet.absoluteFillObject`_: These provide a convenient shorthand for creating overlay styles that cover the entire parent.
-* `StyleSheet.absoluteFill` is a reference to a pre-defined style object: `{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }`. You can use it directly in your style array.
-* `StyleSheet.absoluteFillObject` is the object itself. This is useful if you need to spread it into another style object or modify parts of it.
+* *`StyleSheet.absoluteFill` and `StyleSheet.absoluteFillObject`*: These provide a convenient shorthand for creating overlay styles that cover the entire parent.
+** `StyleSheet.absoluteFill` is a reference to a pre-defined style object: `{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }`. You can use it directly in your style array.
+** `StyleSheet.absoluteFillObject` is the object itself. This is useful if you need to spread it into another style object or modify parts of it.
 
   ```tsx
   // Using StyleSheet.absoluteFill
@@ -227,7 +227,7 @@ const style1 = { color: "blue", fontSize: 16 };
   // Using StyleSheet.absoluteFillObject to add a semi-transparent background
   // <View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' }} />
   ```
-* _`StyleSheet.hairlineWidth`_: This is a platform-aware constant representing the thinnest possible line width that can be drawn on the device's screen without being aliased. Its value is typically `1 / PixelRatio.get()`. It's ideal for creating crisp borders or separators that look consistent across different screen densities.
+* *`StyleSheet.hairlineWidth`*: This is a platform-aware constant representing the thinnest possible line width that can be drawn on the device's screen without being aliased. Its value is typically `1 / PixelRatio.get()`. It's ideal for creating crisp borders or separators that look consistent across different screen densities.
   ```tsx
   const styles = StyleSheet.create({
     separator: {
@@ -246,8 +246,8 @@ const style1 = { color: "blue", fontSize: 16 };
   > Be aware that hairline borders might not render correctly or appear thicker if the iOS Simulator is scaled down (e.g., "Fit to Screen" on a large monitor). Always test on actual devices or at 100% scale in the simulator for accurate visual representation.
 
 h3. Best Practices for `StyleSheet`
-# _Keep Styles Colocated:_ For smaller components, define styles in the same file as the component. This makes it easy to see both the structure (JSX) and its appearance (styles) together.
-# _Separate Styles for Larger Components/Shared Styles:_ If a component becomes very large or if styles are shared across multiple components, consider moving them to a separate `styles.ts` file within the component's directory or a shared styles directory.
+# *Keep Styles Colocated:* For smaller components, define styles in the same file as the component. This makes it easy to see both the structure (JSX) and its appearance (styles) together.
+# *Separate Styles for Larger Components/Shared Styles:* If a component becomes very large or if styles are shared across multiple components, consider moving them to a separate `styles.ts` file within the component's directory or a shared styles directory.
 
     ```typescript
     // components/cards/MedicationCardStyles.ts
@@ -255,25 +255,25 @@ h3. Best Practices for `StyleSheet`
 
     export const medicationCardStyles = StyleSheet.create({
       container: {
-        /_ ... _/
+        /* ... */
       },
       // ... more styles
     });
     ```
-# _Use Meaningful Names:_ Choose descriptive names for your style rules (e.g., `submitButtonContainer`, `patientNameText`) to make them understandable.
-# _Avoid Unnecessary Abstraction:_ While it might be tempting to create highly granular style rules, balance this with readability. Sometimes, slightly more verbose but clearer rules are better.
-# _Leverage Arrays for Conditional/Shared Styles:_ As shown above, arrays are excellent for combining base styles with conditional or modifier styles.
-# _Absolute vs. Relative Units:_ React Native primarily uses density-independent pixels (dp) for sizing and positioning. Font sizes are specified in points (pt), which are also density-independent. Avoid using hardcoded pixel values if you intend for your UI to scale across different screen densities. `StyleSheet` handles this abstraction for you.
+# *Use Meaningful Names:* Choose descriptive names for your style rules (e.g., `submitButtonContainer`, `patientNameText`) to make them understandable.
+# *Avoid Unnecessary Abstraction:* While it might be tempting to create highly granular style rules, balance this with readability. Sometimes, slightly more verbose but clearer rules are better.
+# *Leverage Arrays for Conditional/Shared Styles:* As shown above, arrays are excellent for combining base styles with conditional or modifier styles.
+# *Absolute vs. Relative Units:* React Native primarily uses density-independent pixels (dp) for sizing and positioning. Font sizes are specified in points (pt), which are also density-independent. Avoid using hardcoded pixel values if you intend for your UI to scale across different screen densities. `StyleSheet` handles this abstraction for you.
 
 h3. Performance Considerations
-* _`StyleSheet.create` is Generally Performant:_ As emphasized earlier, styles are processed once and identified by IDs. This is efficient because it minimizes the data that needs to be sent from JavaScript to the native UI thread on each render.
-* _Inline Styles for Dynamic Values:_ For styles that change frequently based on animations or gestures (e.g., `transform`, `opacity`), inline styles might be necessary. The performance impact of inline styles is often negligible for simple cases but can add up in complex, frequently re-rendering lists or animated scenes. Profile your application if you suspect performance issues.
-* _Avoid Passing `StyleSheet.create` in Render:_ Do not call `StyleSheet.create` inside your component's render method or function body if it's a functional component. This would redefine the styles on every render, negating the performance benefits. Define stylesheets outside the component or ensure they are memoized if defined inside.
+* *`StyleSheet.create` is Generally Performant:* As emphasized earlier, styles are processed once and identified by IDs. This is efficient because it minimizes the data that needs to be sent from JavaScript to the native UI thread on each render.
+* *Inline Styles for Dynamic Values:* For styles that change frequently based on animations or gestures (e.g., `transform`, `opacity`), inline styles might be necessary. The performance impact of inline styles is often negligible for simple cases but can add up in complex, frequently re-rendering lists or animated scenes. Profile your application if you suspect performance issues.
+* *Avoid Passing `StyleSheet.create` in Render:* Do not call `StyleSheet.create` inside your component's render method or function body if it's a functional component. This would redefine the styles on every render, negating the performance benefits. Define stylesheets outside the component or ensure they are memoized if defined inside.
 
   ```tsx
   // Good: Defined outside
   const styles = StyleSheet.create({
-    /_ ... _/
+    /* ... */
   });
   const MyComponent = () => {
     return <View style={styles.someStyle} />;
@@ -281,7 +281,7 @@ h3. Performance Considerations
 
   // Bad: Defined inside render (functional component body)
   // const MyComponent = () => {
-  //   const styles = StyleSheet.create({ /_ ... _/ }); // Redefined on every render
+  //   const styles = StyleSheet.create({ /* ... */ }); // Redefined on every render
   //   return <View style={styles.someStyle} />;
   // };
   ```
@@ -325,25 +325,25 @@ graph TD
 *Diagram Explanation: StyleSheet vs. Inline Styles Performance*
 
 The diagram above illustrates the conceptual difference in how styles from `StyleSheet.create` and inline styles are processed and communicated to the native side:
-# _`StyleSheet.create` Path (Optimized):_
-*_ _Initial Processing:* When styles are defined using `StyleSheet.create({...})`, React Native processes these style objects once during the initial load or component definition.
-*_ _ID Generation:* During this processing, unique integer IDs can be assigned to each distinct style rule or a combination of rules. These IDs map to the actual native styling instructions.
-*_ _Subsequent Renders:* When a component re-renders and references these styles (e.g., `styles.container`), React Native only needs to send the corresponding pre-calculated ID to the native UI thread.
-*_ _Native Application:* The native side, having already received and processed the full style definition associated with that ID, can quickly look up and apply the cached native styling instructions. This is highly efficient.
-# _Inline Style Path (Potential Overhead):_
-*_ _Object Creation:* Inline styles (e.g., `style={{ color: 'blue' }}`) often result in new JavaScript objects being created on each render cycle of the component.
-*_ _Serialization & Transfer:* These potentially large JavaScript objects must be serialized (converted into a format that can be transferred) and sent to the native side _every time_ the component renders and the style object instance changes.
-*_ _Native Parsing & Application:* The native UI thread then needs to parse this incoming JavaScript object and translate its properties into native styling instructions. This repeated serialization, transfer, and parsing can introduce overhead.
+# *`StyleSheet.create` Path (Optimized):*
+*** *Initial Processing:* When styles are defined using `StyleSheet.create({...})`, React Native processes these style objects once during the initial load or component definition.
+*** *ID Generation:* During this processing, unique integer IDs can be assigned to each distinct style rule or a combination of rules. These IDs map to the actual native styling instructions.
+*** *Subsequent Renders:* When a component re-renders and references these styles (e.g., `styles.container`), React Native only needs to send the corresponding pre-calculated ID to the native UI thread.
+*** *Native Application:* The native side, having already received and processed the full style definition associated with that ID, can quickly look up and apply the cached native styling instructions. This is highly efficient.
+# *Inline Style Path (Potential Overhead):*
+*** *Object Creation:* Inline styles (e.g., `style={{ color: 'blue' }}`) often result in new JavaScript objects being created on each render cycle of the component.
+*** *Serialization & Transfer:* These potentially large JavaScript objects must be serialized (converted into a format that can be transferred) and sent to the native side _every time_ the component renders and the style object instance changes.
+*** *Native Parsing & Application:* The native UI thread then needs to parse this incoming JavaScript object and translate its properties into native styling instructions. This repeated serialization, transfer, and parsing can introduce overhead.
 
 *The Core Difference:*
 
-The key performance benefit of `StyleSheet.create()` isn't just about avoiding object creation in JavaScript (though that helps with garbage collection). More importantly, it's about _streamlining the communication between the JavaScript thread and the native UI thread_. By sending only lightweight IDs for pre-processed styles, `StyleSheet.create()` minimizes the data payload and processing required on the native side during re-renders.
+The key performance benefit of `StyleSheet.create()` isn't just about avoiding object creation in JavaScript (though that helps with garbage collection). More importantly, it's about *streamlining the communication between the JavaScript thread and the native UI thread*. By sending only lightweight IDs for pre-processed styles, `StyleSheet.create()` minimizes the data payload and processing required on the native side during re-renders.
 
 Historically, this communication happened asynchronously via the "React Native Bridge." While the New Architecture introduces synchronous communication capabilities via the JavaScript Interface (JSI), TurboModules, and the Fabric renderer, the principle of minimizing the amount and complexity of data transferred between JavaScript and native code remains crucial for optimal performance. `StyleSheet.create()` aligns perfectly with this principle.
 
 This pre-processing and ID system means that if the same style object (from `StyleSheet.create`) is used multiple times or in frequently updated components, React Native can efficiently reuse the already processed native style representation, contributing to a smoother user experience.
 
-📚 *Official Documentation:**
+📚 *Official Documentation:*
 * [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet API]
 * [https://reactnative.dev/docs/style|React Native Docs: Style]
 * [https://reactnative.dev/docs/view-style-props|React Native Docs: View Style Props]

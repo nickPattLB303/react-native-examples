@@ -1,6 +1,6 @@
 h1. Module 13: State Management
 
-bq. [!NOTE] > _Preliminary Note on Target Versions:_
+bq. [!NOTE] > *Preliminary Note on Target Versions:*
 This module adheres to the following target versions for all technical information, API descriptions, and code examples:
 > - React Native: 0.7x (specifically 0.76 as bundled with Expo SDK 52)
 - Expo SDK: 52+
@@ -14,22 +14,22 @@ Managing data that changes over time—the "state"—is a fundamental aspect of 
 
 We'll begin by revisiting familiar territory with {{useState}} and the React Context API, analyzing their strengths and limitations. Then, we'll dive into dedicated client-side state management with Zustand, a lightweight and flexible solution. Finally, we'll tackle the complexities of server state—fetching, caching, and synchronizing data from your backend—using the robust TanStack Query library. By the end of this module, you'll be equipped to make informed decisions about the best state management approaches for different parts of your React Native applications.
 
-bq. 🛣️ _(All Learners):_ Effective state management is key to building robust applications. This module will equip you with various techniques; pay close attention to the use cases for each to understand when and why to choose a particular approach.
+bq. 🛣️ *(All Learners):* Effective state management is key to building robust applications. This module will equip you with various techniques; pay close attention to the use cases for each to understand when and why to choose a particular approach.
 
-🍏 _(iOS Developers):_
+🍏 *(iOS Developers):*
 
-bq. _Comparison:_ You're likely familiar with managing state using patterns like MVC, MVP, MVVM, and tools such as {{UserDefaults}}, Core Data, or SwiftUIs {{@State}}, {{@ObservedObject}}, and {{@EnvironmentObject}}. React Native's state management also emphasizes separating data from UI, but often relies on component-level state, a global store paradigm (like Redux or Zustand), or hooks for managing data lifecycles. The concept of "props" for passing data down is similar to passing data during segue preparation or view controller initialization, while "state" is more akin to internal properties that a view controller or SwiftUI view manages.
-> _Key Takeaway:_ React Native's approach is heavily influenced by web development patterns, particularly React's unidirectional data flow and component composition. Libraries like Zustand or TanStack Query provide powerful, declarative ways to manage complex state, which might feel different from more imperative or framework-bound native solutions.
+bq. *Comparison:* You're likely familiar with managing state using patterns like MVC, MVP, MVVM, and tools such as {{UserDefaults}}, Core Data, or SwiftUIs {{@State}}, {{@ObservedObject}}, and {{@EnvironmentObject}}. React Native's state management also emphasizes separating data from UI, but often relies on component-level state, a global store paradigm (like Redux or Zustand), or hooks for managing data lifecycles. The concept of "props" for passing data down is similar to passing data during segue preparation or view controller initialization, while "state" is more akin to internal properties that a view controller or SwiftUI view manages.
+> *Key Takeaway:* React Native's approach is heavily influenced by web development patterns, particularly React's unidirectional data flow and component composition. Libraries like Zustand or TanStack Query provide powerful, declarative ways to manage complex state, which might feel different from more imperative or framework-bound native solutions.
 
-🤖 _(Android Developers):_
+🤖 *(Android Developers):*
 
-bq. _Comparison:_ You've managed state using {{ViewModel}}s, {{LiveData}}, {{StateFlow/SharedFlow}}, {{SharedPreferences}}, Room, or Jetpack Compose's {{remember}} and {{mutableStateOf}}. React Native similarly encourages separating data logic from UI. {{useState}} is analogous to {{mutableStateOf}} for component-local state. Global state solutions like Zustand or Context API can be compared to using singleton ViewModels or dependency injection to provide shared data scopes. TanStack Query's role in managing server data and caching is similar to what you might achieve with a Repository pattern combined with Room and Retrofit, but often with more built-in declarative features.
-> _Key Takeaway:_ The JavaScript/React ecosystem offers a wide array of state management libraries. The focus is often on immutability and a declarative approach to UI updates based on state changes. Unidirectional data flow is a core principle.
+bq. *Comparison:* You've managed state using {{ViewModel}}s, {{LiveData}}, {{StateFlow/SharedFlow}}, {{SharedPreferences}}, Room, or Jetpack Compose's {{remember}} and {{mutableStateOf}}. React Native similarly encourages separating data logic from UI. {{useState}} is analogous to {{mutableStateOf}} for component-local state. Global state solutions like Zustand or Context API can be compared to using singleton ViewModels or dependency injection to provide shared data scopes. TanStack Query's role in managing server data and caching is similar to what you might achieve with a Repository pattern combined with Room and Retrofit, but often with more built-in declarative features.
+> *Key Takeaway:* The JavaScript/React ecosystem offers a wide array of state management libraries. The focus is often on immutability and a declarative approach to UI updates based on state changes. Unidirectional data flow is a core principle.
 
-🌐 _(Web Developers):_
+🌐 *(Web Developers):*
 
-bq. _Comparison:_ If you're coming from a web background, especially with React, many concepts will be familiar. {{useState}}, {{useEffect}}, and Context API are directly from React. Libraries like Zustand share similarities with Redux (though simpler) or other flux-pattern-inspired libraries. TanStack Query (formerly React Query) is a popular choice for data fetching in React web apps as well. If you're from an Angular background, you might compare React's local component state to component properties, Context API or Zustand to shared services or NgRx store, and TanStack Query to using services with HttpClient and RxJS for handling asynchronous data, caching, and state synchronization.
-> _Key Takeaway:_ While core React state concepts translate directly, this module will emphasize their application and best practices within the React Native environment. For Angular developers, the shift to a more component-centric state model and the specific libraries covered will be key learning points. The JavaScript-based ecosystem of libraries is a significant aspect.
+bq. *Comparison:* If you're coming from a web background, especially with React, many concepts will be familiar. {{useState}}, {{useEffect}}, and Context API are directly from React. Libraries like Zustand share similarities with Redux (though simpler) or other flux-pattern-inspired libraries. TanStack Query (formerly React Query) is a popular choice for data fetching in React web apps as well. If you're from an Angular background, you might compare React's local component state to component properties, Context API or Zustand to shared services or NgRx store, and TanStack Query to using services with HttpClient and RxJS for handling asynchronous data, caching, and state synchronization.
+> *Key Takeaway:* While core React state concepts translate directly, this module will emphasize their application and best practices within the React Native environment. For Angular developers, the shift to a more component-centric state model and the specific libraries covered will be key learning points. The JavaScript-based ecosystem of libraries is a significant aspect.
 
 h2. Learning Objectives
 
@@ -70,8 +70,8 @@ This module is divided into the following sections:
 h2. Module Challenge
 
 At the end of this module, you will apply your knowledge in a practical challenge:
-* _Challenge 13: Integrate Zustand and TanStack Query for Medication Data_
-* *(https://snack.expo.dev/@course-author/module-13-challenge)**
+* *Challenge 13: Integrate Zustand and TanStack Query for Medication Data*
+** *(https://snack.expo.dev/@course-author/module-13-challenge)*
 
 h2. Module Summary
 

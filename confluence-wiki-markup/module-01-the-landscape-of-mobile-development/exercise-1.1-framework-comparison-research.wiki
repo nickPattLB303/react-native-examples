@@ -6,19 +6,19 @@ Compare React Native with other popular cross-platform development frameworks to
 
 h2. Instructions
 # Research the following cross-platform development frameworks:
-** React Native
-* Flutter
-* Xamarin
-* Ionic
-* Unity (for mobile game development)
+*** React Native
+** Flutter
+** Xamarin
+** Ionic
+** Unity (for mobile game development)
 # For each framework, identify:
-** The primary programming language(s) used
-* The company/organization behind it
-* How UI rendering is handled (WebView, native components, custom engine, etc.)
-* Target platforms supported
-* Performance characteristics compared to fully native development
-* Types of applications it's best suited for
-* Notable companies or applications built with it
+*** The primary programming language(s) used
+** The company/organization behind it
+** How UI rendering is handled (WebView, native components, custom engine, etc.)
+** Target platforms supported
+** Performance characteristics compared to fully native development
+** Types of applications it's best suited for
+** Notable companies or applications built with it
 # Complete the research form by filling out your findings:
    *(https://forms.office.com/Pages/ResponsePage.aspx?id=EXAMPLE-FORM-ID-FRAMEWORK-COMPARISON)*
 

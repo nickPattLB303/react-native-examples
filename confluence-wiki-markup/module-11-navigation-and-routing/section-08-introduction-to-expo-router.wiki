@@ -2,7 +2,7 @@ h2. Section 8: Introduction to Expo Router
 
 This section introduces Expo Router, a file-system-based routing solution for React Native and web applications built with Expo. It offers a different paradigm for defining navigation compared to the more explicit configuration required by React Navigation. We will explore its core concepts, benefits, and how it simplifies setting up routes in your SpeedyMeds application.
 
-bq. 🛣️ _(All Learners):_ Expo Router is built on top of React Navigation. Understanding the fundamental React Navigation concepts (navigators, screens) covered in previous sections will provide a good foundation for grasping how Expo Router works under the hood.
+bq. 🛣️ *(All Learners):* Expo Router is built on top of React Navigation. Understanding the fundamental React Navigation concepts (navigators, screens) covered in previous sections will provide a good foundation for grasping how Expo Router works under the hood.
 
 h3. Core Content
 
@@ -11,22 +11,22 @@ h4. Conceptual Content: What is Expo Router?
 Expo Router is a routing library from Expo that enables file-system-based routing for native mobile (iOS and Android) and web platforms. This means you define your app's routes by organizing files and directories within a specific project folder (usually {{app/}}), similar to how routing works in web frameworks like Next.js or Remix.
 
 *Key Features & Benefits:*
-* _File-System Routing:_ Define routes by creating files and folders. This can lead to a more intuitive and organized project structure for navigation.
-* _Universal (Cross-Platform):_ Works seamlessly across iOS, Android, and web from a single codebase.
-* _Built on React Navigation:_ Leverages the power and stability of React Navigation for native navigation primitives (stack, tabs, etc.) while providing a simpler API on top.
-* _Layouts:_ Define shared UI components (like headers or tab bars) for groups of routes using layout files.
-* _Typed Routes (with TypeScript):_ Provides utilities for type-safe navigation and parameter passing.
-* _Deep Linking Simplified:_ Handles deep linking and URL integration more automatically.
-* _API Routes:_ Supports creating server-side API endpoints within your Expo app (primarily for web/serverful contexts).
-* _Fast Refresh & Hot Reloading:_ Excellent developer experience with Expo's tooling.
+* *File-System Routing:* Define routes by creating files and folders. This can lead to a more intuitive and organized project structure for navigation.
+* *Universal (Cross-Platform):* Works seamlessly across iOS, Android, and web from a single codebase.
+* *Built on React Navigation:* Leverages the power and stability of React Navigation for native navigation primitives (stack, tabs, etc.) while providing a simpler API on top.
+* *Layouts:* Define shared UI components (like headers or tab bars) for groups of routes using layout files.
+* *Typed Routes (with TypeScript):* Provides utilities for type-safe navigation and parameter passing.
+* *Deep Linking Simplified:* Handles deep linking and URL integration more automatically.
+* *API Routes:* Supports creating server-side API endpoints within your Expo app (primarily for web/serverful contexts).
+* *Fast Refresh & Hot Reloading:* Excellent developer experience with Expo's tooling.
 
 Expo Router aims to simplify the setup and maintenance of navigation by making it more declarative and convention-based.
 
 Expo Router introduces a shift in how we structure navigation by aligning it with web-based routing paradigms and utilizing the file system to define routes. This approach brings several benefits:
-* _Intuitive Structure:_ The app's routes directly mirror the file structure, making it easy to understand the application's navigation at a glance.
-* _URL-First:_ Every screen has a corresponding URL that can be linked to directly, integrating deep linking directly into the routing system.
-* _Reduced Boilerplate:_ Much of the navigation configuration is inferred from the file structure, reducing the amount of code you need to write.
-* _Automatic Code Splitting:_ For web deployments, Expo Router can automatically split your code by route, optimizing performance.
+* *Intuitive Structure:* The app's routes directly mirror the file structure, making it easy to understand the application's navigation at a glance.
+* *URL-First:* Every screen has a corresponding URL that can be linked to directly, integrating deep linking directly into the routing system.
+* *Reduced Boilerplate:* Much of the navigation configuration is inferred from the file structure, reducing the amount of code you need to write.
+* *Automatic Code Splitting:* For web deployments, Expo Router can automatically split your code by route, optimizing performance.
 
 Let's explore how Expo Router maps file structure to navigation:
 
@@ -121,42 +121,42 @@ graph TD
 {mermaid}
 
 This diagram illustrates how Expo Router's file-based approach maps your project's file and directory structure to navigation routes and screens:
-# _Root Structure_: The {{app/}} directory serves as the root for all routes. Files directly in this directory (like {{index.tsx}}) map to root-level routes.
-# _Directories as Routes_: Each directory (like {{medications/}} or {{settings/}}) creates a new route segment. Files within these directories become sub-routes.
-# _Special Files_:
-** {{_layout.tsx}} files define navigation layouts (Stack, Tabs, Drawer) for their containing directory
-* Files with brackets like {{[id].tsx}} define dynamic routes that can match variable parameters
-# _Groups_: Directories with parentheses like {{(tabs)}} create logical groupings without affecting the URL path
-# _Resulting Navigation_: The file structure automatically generates a complete navigation system with proper nesting and relationships between screens.
+# *Root Structure*: The {{app/}} directory serves as the root for all routes. Files directly in this directory (like {{index.tsx}}) map to root-level routes.
+# *Directories as Routes*: Each directory (like {{medications/}} or {{settings/}}) creates a new route segment. Files within these directories become sub-routes.
+# *Special Files*:
+*** {{_layout.tsx}} files define navigation layouts (Stack, Tabs, Drawer) for their containing directory
+** Files with brackets like {{[id].tsx}} define dynamic routes that can match variable parameters
+# *Groups*: Directories with parentheses like {{(tabs)}} create logical groupings without affecting the URL path
+# *Resulting Navigation*: The file structure automatically generates a complete navigation system with proper nesting and relationships between screens.
 
 This approach makes your navigation structure intuitively visible through your project's file organization, reducing the need for extensive configuration code. In Expo Router, the file system becomes a representation of your application's routing topology.
 
 h4. Conceptual Content: Core Concepts of Expo Router
-# _The {{app}} Directory:_ This is the heart of Expo Router. All files within the {{app}} directory (at the root of your project) are automatically treated as routes.
-** {{app/index.tsx}}: Becomes the home screen (route {{/}}).
-** {{app/profile.tsx}}: Becomes the {{/profile}} route.
-** {{app/settings/index.tsx}}: Becomes the {{/settings}} route.
-** {{app/settings/notifications.tsx}}: Becomes the {{/settings/notifications}} route.
-# _Dynamic Routes:_ Create routes with dynamic segments by using square brackets in filenames.
-** {{app/medications/[id].tsx}}: Matches routes like {{/medications/aspirin123}} or {{/medications/amox456}}. The {{id}} value becomes a route parameter.
-** {{app/users/[...rest].tsx}}: A catch-all or deep dynamic route.
-# _Layout Routes ({{_layout.tsx}}):_ These special files define shared UI and navigation structure for a segment of routes (a directory and its children).
-** An {{app/_layout.tsx}} file at the root of the {{app}} directory can define the root navigator (e.g., a Stack, Tabs, or Drawer navigator) for the entire app. When Expo Router initializes, this root layout effectively replaces the traditional {{App.tsx}} (from the project root) as the main UI entry point for your application.
-** A {{app/settings/_layout.tsx}} file can define a specific navigator (e.g., a Stack navigator) just for routes within the {{settings}} directory.
-** Layouts are where you configure your React Navigation navigators (Stack, Tabs, Drawer) using components provided by Expo Router.
-*_ _The {{<Slot />}} Component:* Layout routes use the {{<Slot />}} component (imported from {{expo-router}}) to render their child routes. Think of {{<Slot />}} as a placeholder where the content of the matched child route will be injected. If a layout route uses a specific navigator component like {{<Stack />}}, {{<Tabs />}}, or {{<Drawer />}} (from {{expo-router}}), these components implicitly handle rendering the child routes, effectively acting like specialized Slots. You typically don't use {{<Slot />}} _and_ a navigator component like {{<Stack />}} in the same layout; the navigator itself manages the rendering of its children (screens).
-# _Navigators in Expo Router ({{Stack}}, {{Tabs}}, {{Drawer}}):_
+# *The {{app}} Directory:* This is the heart of Expo Router. All files within the {{app}} directory (at the root of your project) are automatically treated as routes.
+*** {{app/index.tsx}}: Becomes the home screen (route {{/}}).
+*** {{app/profile.tsx}}: Becomes the {{/profile}} route.
+*** {{app/settings/index.tsx}}: Becomes the {{/settings}} route.
+*** {{app/settings/notifications.tsx}}: Becomes the {{/settings/notifications}} route.
+# *Dynamic Routes:* Create routes with dynamic segments by using square brackets in filenames.
+*** {{app/medications/[id].tsx}}: Matches routes like {{/medications/aspirin123}} or {{/medications/amox456}}. The {{id}} value becomes a route parameter.
+*** {{app/users/[...rest].tsx}}: A catch-all or deep dynamic route.
+# *Layout Routes ({{_layout.tsx}}):* These special files define shared UI and navigation structure for a segment of routes (a directory and its children).
+*** An {{app/_layout.tsx}} file at the root of the {{app}} directory can define the root navigator (e.g., a Stack, Tabs, or Drawer navigator) for the entire app. When Expo Router initializes, this root layout effectively replaces the traditional {{App.tsx}} (from the project root) as the main UI entry point for your application.
+*** A {{app/settings/_layout.tsx}} file can define a specific navigator (e.g., a Stack navigator) just for routes within the {{settings}} directory.
+*** Layouts are where you configure your React Navigation navigators (Stack, Tabs, Drawer) using components provided by Expo Router.
+*** *The {{<Slot />}} Component:* Layout routes use the {{<Slot />}} component (imported from {{expo-router}}) to render their child routes. Think of {{<Slot />}} as a placeholder where the content of the matched child route will be injected. If a layout route uses a specific navigator component like {{<Stack />}}, {{<Tabs />}}, or {{<Drawer />}} (from {{expo-router}}), these components implicitly handle rendering the child routes, effectively acting like specialized Slots. You typically don't use {{<Slot />}} _and_ a navigator component like {{<Stack />}} in the same layout; the navigator itself manages the rendering of its children (screens).
+# *Navigators in Expo Router ({{Stack}}, {{Tabs}}, {{Drawer}}):*
     Expo Router provides its own versions of Stack, Tabs, and Drawer components (e.g., {{import { Stack } from 'expo-router/stack';}}). You use these within your {{_layout.tsx}} files to define the navigation structure.
-** {{<Stack />}}: Renders a stack navigator for the current directory segment.
-** {{<Tabs />}}: Renders a tab navigator.
-** {{<Drawer />}}: Renders a drawer navigator.
+*** {{<Stack />}}: Renders a stack navigator for the current directory segment.
+*** {{<Tabs />}}: Renders a tab navigator.
+*** {{<Drawer />}}: Renders a drawer navigator.
       Screen configuration (like titles, header options) is done directly on these navigator components or on their {{Screen}} children within the layout file.
-# _Linking ({{<Link />}} component and {{router}} object):_
-** {{expo-router}} provides a {{<Link href="/routeName">}} component for declarative navigation, similar to an {{<a>}} tag in HTML.
-** It also provides a {{router}} object (e.g., {{import { router } from 'expo-router';}}) with imperative methods like {{router.push('/routeName')}}, {{router.replace('/routeName')}}, and {{router.back()}}.
-# _Route Groups ({{(group-name)}}):_
+# *Linking ({{<Link />}} component and {{router}} object):*
+*** {{expo-router}} provides a {{<Link href="/routeName">}} component for declarative navigation, similar to an {{<a>}} tag in HTML.
+*** It also provides a {{router}} object (e.g., {{import { router } from 'expo-router';}}) with imperative methods like {{router.push('/routeName')}}, {{router.replace('/routeName')}}, and {{router.back()}}.
+# *Route Groups ({{(group-name)}}):*
     Directories named with parentheses, like {{app/(tabs)/home.tsx}}, are used to organize files or define layouts without affecting the URL structure. This is useful for grouping routes under a common layout (e.g., a tab bar defined in {{app/(tabs)/_layout.tsx}}) without adding {{(tabs)}} to the URL path.
-# _Underlying Mechanism: Built on React Navigation:_
+# *Underlying Mechanism: Built on React Navigation:*
     It's important to understand that Expo Router is built on top of React Navigation. At build time, Expo Router translates your file system structure (files and layouts in the {{app}} directory) into a standard React Navigation configuration object. At runtime, the actual navigation state management (tracking active screens, history, parameters) is still handled by React Navigation's core. This means that many concepts and capabilities from React Navigation (like screen options, navigator props, and even some hooks if used carefully) can still be relevant or accessible, though Expo Router aims to provide a more streamlined API for most common use cases.
 
 h4. Procedural Content: Initial Setup for Expo Router
@@ -209,7 +209,7 @@ module.exports = function (api) {
 };
 {code}
 
-*4. Configure `app.json` (Expo Config File):**
+*4. Configure `app.json` (Expo Config File):*
 
 Ensure your Expo configuration file (`app.json` or `app.config.js/ts`) is set up for Expo Router, especially for web support and deep linking schemes.
 
@@ -263,7 +263,7 @@ export default function RootLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ title: "SpeedyMeds Home" }} />
       <Stack.Screen name="profile" options={{ title: "My Profile" }} />
-      {/_ Add other global screens or nested navigators here _/}
+      {/* Add other global screens or nested navigators here */}
     </Stack>
   );
 }
@@ -329,8 +329,8 @@ import { Stack } from "expo-router"; // To configure screen-specific options if 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      {/_ Screen-specific header config can go here if not in _layout _/}
-      {/_ <Stack.Screen options={{ title: 'User Profile' }} /> _/}
+      {/* Screen-specific header config can go here if not in _layout */}
+      {/* <Stack.Screen options={{ title: 'User Profile' }} /> */}
       <Text style={styles.title}>My Profile</Text>
       <Text>Name: John Doe</Text>
       <Text>Email: john.doe@example.com</Text>
@@ -350,20 +350,20 @@ const styles = StyleSheet.create({
 
 Now, when you run your app (`npx expo start`), Expo Router will pick up these files and create the navigation structure.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/router/introduction/|Expo Router: Introduction]
 - [https://docs.expo.dev/router/installation/|Expo Router: Installation]
 - [https://docs.expo.dev/router/routing/|Expo Router: File Conventions (Routing)]
 - [https://docs.expo.dev/router/layouts/|Expo Router: Layouts]
 - [https://docs.expo.dev/router/navigating/|Expo Router: Navigating Between Pages]
 
-bq. 🌐 _(Web Developers using Next.js/Remix):_
-> _Comparison:_ The file-system routing based on an `app` directory, dynamic routes with `[param].tsx`, and layout files (`_layout.tsx`) will feel very familiar. Expo Router brings this productive development pattern to native mobile development.
-> _Key Takeaway:_ You can leverage your existing mental model for routing from these modern web frameworks.
+bq. 🌐 *(Web Developers using Next.js/Remix):*
+> *Comparison:* The file-system routing based on an `app` directory, dynamic routes with `[param].tsx`, and layout files (`_layout.tsx`) will feel very familiar. Expo Router brings this productive development pattern to native mobile development.
+> *Key Takeaway:* You can leverage your existing mental model for routing from these modern web frameworks.
 
-bq. ⚛️ _(React Developers using React Navigation):_
-> _Comparison:_ Instead of explicitly creating navigator components (`createStackNavigator`, `createBottomTabNavigator`) and defining screens within them in JavaScript, you primarily define routes through file structure and configure navigators in `_layout.tsx` files. React Navigation is still used under the hood.
-> _Key Takeaway:_ Expo Router offers a higher-level, convention-over-configuration approach on top of React Navigation's capabilities.
+bq. ⚛️ *(React Developers using React Navigation):*
+> *Comparison:* Instead of explicitly creating navigator components (`createStackNavigator`, `createBottomTabNavigator`) and defining screens within them in JavaScript, you primarily define routes through file structure and configure navigators in `_layout.tsx` files. React Navigation is still used under the hood.
+> *Key Takeaway:* Expo Router offers a higher-level, convention-over-configuration approach on top of React Navigation's capabilities.
 
 h4. Next Steps
 

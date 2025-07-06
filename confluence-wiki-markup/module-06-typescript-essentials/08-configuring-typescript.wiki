@@ -5,8 +5,8 @@ The {{tsconfig.json}} file is the heart of a TypeScript project. It specifies th
 h3. What is {{tsconfig.json}}?
 
 When you have a {{tsconfig.json}} file in the root directory of your TypeScript project, it signifies that the directory is the root of a TypeScript project. The file itself contains JSON that outlines:
-* _Project Files:_ Which files TypeScript should compile.
-* _Compiler Options:_ How TypeScript should compile those files (e.g., what JavaScript version to target, which strictness checks to apply, how to handle modules).
+* *Project Files:* Which files TypeScript should compile.
+* *Compiler Options:* How TypeScript should compile those files (e.g., what JavaScript version to target, which strictness checks to apply, how to handle modules).
 
 When you run the TypeScript compiler ({{tsc}}), it looks for this file in the current directory and then progressively up the directory chain.
 
@@ -29,8 +29,8 @@ When you create a new Expo project with TypeScript (e.g., using {{npx create-exp
     "baseUrl": ".", // Base directory to resolve non-absolute module names
     "paths": {
       // Optional: For setting up module path aliases
-      "@components/_": ["src/components/_"],
-      "@screens/_": ["src/screens/_"]
+      "@components/*": ["src/components/*"],
+      "@screens/*": ["src/screens/*"]
     }
     // ... other options
   }
@@ -61,7 +61,7 @@ For most cases, especially when starting, it's best to rely on the default `tsco
 {note}
 If you ever need to reset your `tsconfig.json` or create one for an existing JavaScript project you're migrating to TypeScript with Expo, you can often regenerate it or refer to the Expo documentation.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html|TypeScript Handbook: `tsconfig.json`]
 - [https://www.typescriptlang.org/tsconfig|TypeScript Compiler Options Reference]
 - [https://docs.expo.dev/guides/typescript/|Expo: Using TypeScript (includes `tsconfig.json` info)]

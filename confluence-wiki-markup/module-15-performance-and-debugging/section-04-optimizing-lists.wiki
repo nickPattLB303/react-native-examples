@@ -2,60 +2,60 @@ h2. Section 4: Optimizing Lists
 
 Displaying lists of data is a fundamental part of many mobile applications, including our SpeedyMeds app which might show lists of medications, prescriptions, or patient reminders. When these lists become long, performance can degrade significantly if not handled correctly. This section focuses on optimizing list rendering in React Native using {{FlatList}}, {{SectionList}}, and introducing {{FlashList}}.
 
-bq. 🛣️ _(All Learners):_ Efficiently rendering lists is crucial for a smooth scrolling experience and preventing your app from becoming sluggish or consuming excessive memory, especially on less powerful devices.
+bq. 🛣️ *(All Learners):* Efficiently rendering lists is crucial for a smooth scrolling experience and preventing your app from becoming sluggish or consuming excessive memory, especially on less powerful devices.
 
 h3. Conceptual Content: The Challenge of Long Lists
 
 h4. Why {{ScrollView}} Isn't Enough
 
 React Native's {{<ScrollView>}} component is simple for making content scrollable. However, it has a major drawback for long lists: it renders all its child components at once, even those not currently visible on the screen. For a list with hundreds or thousands of items (e.g., a comprehensive drug formulary in SpeedyMeds), this can lead to:
-* _High Memory Consumption:_ All list items reside in memory.
-* _Slow Initial Render:_ The app has to create and render every item before the list is usable.
-* _Poor Scrolling Performance:_ The sheer number of views can overwhelm the rendering system.
+* *High Memory Consumption:* All list items reside in memory.
+* *Slow Initial Render:* The app has to create and render every item before the list is usable.
+* *Poor Scrolling Performance:* The sheer number of views can overwhelm the rendering system.
 
 h4. Virtualization with {{FlatList}} and {{SectionList}}
 
-To address these issues, React Native provides {{<FlatList>}} and {{<SectionList>}}. These components implement _virtualization_ (also known as windowing). Virtualization means rendering only the items currently visible on the screen (or a small buffer around them) and recycling (or unmounting/remounting) views as the user scrolls.
-* _{{<FlatList>}}:_ For simple, flat lists of data.
-* _{{<SectionList>}}:_ For sectioned lists, like a contact list grouped by alphabet or medications grouped by therapeutic class.
+To address these issues, React Native provides {{<FlatList>}} and {{<SectionList>}}. These components implement *virtualization* (also known as windowing). Virtualization means rendering only the items currently visible on the screen (or a small buffer around them) and recycling (or unmounting/remounting) views as the user scrolls.
+* *{{<FlatList>}}:* For simple, flat lists of data.
+* *{{<SectionList>}}:* For sectioned lists, like a contact list grouped by alphabet or medications grouped by therapeutic class.
 
 h4. Key {{FlatList}} Props for Optimization
 
 Effectively using {{FlatList}} involves understanding and utilizing its various props:
-# _{{data}}_: An array of data items for the list.
-# _{{renderItem}}_: A function that takes an item from {{data}} and returns a React component to render for that item. This function should be efficient and ideally use memoized components (see Section 3) for list items.
-** {{({ item, index, separators }) => <YourListItemComponent ... />}}
-# _{{keyExtractor}}_: A function that returns a unique key for each item. React uses these keys to track items, manage reordering, and optimize updates. Keys must be strings and stable (not change between renders for the same item).
-** {{(item, index) => item.id.toString()}} (A common pattern if your items have unique IDs).
-** > [!IMPORTANT]
+# *{{data}}*: An array of data items for the list.
+# *{{renderItem}}*: A function that takes an item from {{data}} and returns a React component to render for that item. This function should be efficient and ideally use memoized components (see Section 3) for list items.
+*** {{({ item, index, separators }) => <YourListItemComponent ... />}}
+# *{{keyExtractor}}*: A function that returns a unique key for each item. React uses these keys to track items, manage reordering, and optimize updates. Keys must be strings and stable (not change between renders for the same item).
+*** {{(item, index) => item.id.toString()}} (A common pattern if your items have unique IDs).
+*** > [!IMPORTANT]
       > Using {{index}} as a key is generally discouraged if the list can be reordered, or items can be added/removed from the middle, as it can lead to incorrect state and rendering issues. Always prefer a stable, unique ID from your data.
-# _{{getItemLayout}}_: An optional optimization. If your list items all have the same fixed height (or width, for horizontal lists), providing {{getItemLayout}} allows {{FlatList}} to calculate scroll positions and jump to items directly without needing to render them first. This significantly improves scroll performance, especially for {{scrollToIndex}}.
-*_ {{(data, index) => ({ length: ITEM_HEIGHT, offset: ITEM_HEIGHT _ index, index })}}
-# _{{initialNumToRender}}_: How many items to render in the initial batch. A smaller number can speed up the initial mount time. Default is 10.
-# _{{maxToRenderPerBatch}}_: The number of items to render per batch in asynchronous rendering cycles. Default is 10.
-# _{{windowSize}}_: Determines how many "screens" worth of items are kept rendered (above and below the visible area). A larger {{windowSize}} means fewer blank areas when scrolling fast but more memory usage. The default is 21 (10 viewports above, 10 below, 1 current).
-# _{{updateCellsBatchingPeriod}}_: Delay in milliseconds between batch renders. Default is 50ms.
-# _{{removeClippedSubviews}}_ (Android only): If {{true}}, views that are scrolled off-screen are removed from their native superview. This can improve scrolling performance on Android by reducing the number of native views to process, but it has caveats:
-** It's an experimental prop and can have bugs.
-** It can break components that rely on maintaining native state (e.g., some third-party libraries, input fields within list items if not handled carefully).
-** Use with caution and test thoroughly.
+# *{{getItemLayout}}*: An optional optimization. If your list items all have the same fixed height (or width, for horizontal lists), providing {{getItemLayout}} allows {{FlatList}} to calculate scroll positions and jump to items directly without needing to render them first. This significantly improves scroll performance, especially for {{scrollToIndex}}.
+*** {{(data, index) => ({ length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index })}}
+# *{{initialNumToRender}}*: How many items to render in the initial batch. A smaller number can speed up the initial mount time. Default is 10.
+# *{{maxToRenderPerBatch}}*: The number of items to render per batch in asynchronous rendering cycles. Default is 10.
+# *{{windowSize}}*: Determines how many "screens" worth of items are kept rendered (above and below the visible area). A larger {{windowSize}} means fewer blank areas when scrolling fast but more memory usage. The default is 21 (10 viewports above, 10 below, 1 current).
+# *{{updateCellsBatchingPeriod}}*: Delay in milliseconds between batch renders. Default is 50ms.
+# *{{removeClippedSubviews}}* (Android only): If {{true}}, views that are scrolled off-screen are removed from their native superview. This can improve scrolling performance on Android by reducing the number of native views to process, but it has caveats:
+*** It's an experimental prop and can have bugs.
+*** It can break components that rely on maintaining native state (e.g., some third-party libraries, input fields within list items if not handled carefully).
+*** Use with caution and test thoroughly.
 
 h4. Introducing {{FlashList}} by Shopify
 
 While {{FlatList}} is a significant improvement over {{ScrollView}}, it can still have performance limitations for very complex lists or certain edge cases due to its underlying {{VirtualizedList}} implementation.
 
-Shopify developed *{{FlashList}}** as a drop-in replacement for {{FlatList}}, aiming for superior performance. Key features:
-* _Recycles Views:_ {{FlashList}} recycles views created by {{renderItem}} instead of re-rendering them from scratch, which can drastically reduce JS execution time and memory churn.
-* _Optimized Architecture:_ Built from the ground up for performance.
-* _Similar API:_ Designed to be mostly API-compatible with {{FlatList}}, making migration relatively easy.
+Shopify developed *{{FlashList}}* as a drop-in replacement for {{FlatList}}, aiming for superior performance. Key features:
+* *Recycles Views:* {{FlashList}} recycles views created by {{renderItem}} instead of re-rendering them from scratch, which can drastically reduce JS execution time and memory churn.
+* *Optimized Architecture:* Built from the ground up for performance.
+* *Similar API:* Designed to be mostly API-compatible with {{FlatList}}, making migration relatively easy.
 
 {tip}
 If you encounter performance issues with {{FlatList}} even after applying standard optimizations, consider trying {{FlashList}}. It often provides noticeable improvements, especially for lists with complex items or frequent updates.
 {tip}
-bq. 📲 _(Native Developers):_
-_Comparison:_ {{FlatList}} and {{FlashList}} implement virtualization and view recycling, concepts similar to {{UITableView}} with cell reuse ({{dequeueReusableCell(withIdentifier:)}}) on iOS and {{RecyclerView}} with {{ViewHolder}} recycling on Android. {{FlashList}}, in particular, aims for highly efficient view recycling.
-_Key Takeaway:_ The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
-_Source:_ {{[https://developer.apple.com/documentation/uikit/uitableview|Apple Developer Docs: UITableView]}}, {{[https://developer.android.com/guide/topics/ui/layout/recyclerview|Android Developer Docs: RecyclerView]}}
+bq. 📲 *(Native Developers):*
+*Comparison:* {{FlatList}} and {{FlashList}} implement virtualization and view recycling, concepts similar to {{UITableView}} with cell reuse ({{dequeueReusableCell(withIdentifier:)}}) on iOS and {{RecyclerView}} with {{ViewHolder}} recycling on Android. {{FlashList}}, in particular, aims for highly efficient view recycling.
+*Key Takeaway:* The core principle of only rendering visible items and reusing views is a common performance pattern in native list implementations, which React Native\'s advanced list components adopt.
+*Source:* {{[https://developer.apple.com/documentation/uikit/uitableview|Apple Developer Docs: UITableView]}}, {{[https://developer.android.com/guide/topics/ui/layout/recyclerview|Android Developer Docs: RecyclerView]}}
 
 h3. Procedural Content: Implementing Optimized Lists
 
@@ -339,7 +339,7 @@ To use `FlashList`, you install `@shopify/flash-list` and import it. The main ch
 {warning}
 When implementing `getItemLayout`, ensure the `length` you provide is accurate. Incorrect values can lead to jumpy scrolling or items not rendering correctly.
 {warning}
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/flatlist|React Native Docs: `FlatList`]
 - [https://reactnative.dev/docs/sectionlist|React Native Docs: `SectionList`]
 - [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]

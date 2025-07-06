@@ -2,7 +2,7 @@ h2. Section 3: Stack Navigator Setup and Usage
 
 This section focuses on the Stack Navigator from React Navigation. You'll learn how to define a stack of screens, navigate between them, and understand the basic configuration options. The Stack Navigator is fundamental for creating linear flows where users move forwards and backwards through a sequence of screens, such as a sign-up process or drilling down into details within the SpeedyMeds app.
 
-bq. 🛣️ _(All Learners):_ Ensure you have completed the React Navigation installation steps from the previous section. The concepts here build directly on that foundation.
+bq. 🛣️ *(All Learners):* Ensure you have completed the React Navigation installation steps from the previous section. The concepts here build directly on that foundation.
 
 h3. Core Content
 
@@ -11,9 +11,9 @@ h4. Conceptual Content: Understanding the Stack Navigator
 The Stack Navigator provides a way to transition between screens where each new screen is placed on top of a stack. When you navigate back, the top screen is removed from the stack, revealing the previous screen. It's managed by the {{@react-navigation/stack}} package.
 
 *Key Concepts:*
-* _Screen:_ A React component that represents a single view in your application.
-* _Navigator:_ A React component that defines a specific navigation pattern (e.g., Stack, Tab, Drawer). It takes route configuration as props and renders the active screen.
-* _Route:_ A configuration object that maps a name to a screen component and can include options for how that screen is presented (e.g., header title).
+* *Screen:* A React component that represents a single view in your application.
+* *Navigator:* A React component that defines a specific navigation pattern (e.g., Stack, Tab, Drawer). It takes route configuration as props and renders the active screen.
+* *Route:* A configuration object that maps a name to a screen component and can include options for how that screen is presented (e.g., header title).
 * {{createStackNavigator}}:
   A function that returns an object containing two components: {{Navigator}} and {{Screen}}. You use these to configure your stack.
 
@@ -60,12 +60,12 @@ sequenceDiagram
 {mermaid}
 
 This diagram illustrates the core operations of a stack navigator:
-# _Initial Rendering:_ The app starts with HomeScreen on the stack.
-# _Navigation to a New Screen:_ When a user taps "Go to Details," {{navigation.navigate()}} pushes the DetailScreen onto the stack with parameters.
-# _Going Back:_ Tapping the back button triggers {{navigation.goBack()}}, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
-# _Navigate vs. Push:_ The diagram also shows the difference between {{navigate()}} and {{push()}}:
-* {{navigate("Detail")}} will go to an existing "Detail" screen if it's already in the stack, but
-* {{push("Detail")}} will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
+# *Initial Rendering:* The app starts with HomeScreen on the stack.
+# *Navigation to a New Screen:* When a user taps "Go to Details," {{navigation.navigate()}} pushes the DetailScreen onto the stack with parameters.
+# *Going Back:* Tapping the back button triggers {{navigation.goBack()}}, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
+# *Navigate vs. Push:* The diagram also shows the difference between {{navigate()}} and {{push()}}:
+** {{navigate("Detail")}} will go to an existing "Detail" screen if it's already in the stack, but
+** {{push("Detail")}} will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
 
 This stack-based navigation model is ideal for drill-down flows, where users explore progressively more detailed information and need a clear path to return to previous screens.
 
@@ -179,7 +179,7 @@ export default function PrescriptionDetailScreen({
         title="Go to Home (alternative)"
         onPress={() => navigation.navigate("Home")}
       />
-      {/_ Example of pushing another instance of the same screen (less common for details) _/}
+      {/* Example of pushing another instance of the same screen (less common for details) */}
       {/* <Button 
         title="Go to another Detail (e.g., related item)" 
         onPress={() => navigation.push('PrescriptionDetail', { prescriptionId: 'relatedItem789' })} 
@@ -260,11 +260,11 @@ export default function App() {
 * `<Stack.Navigator>`: This component is the actual navigator. It manages the stack of screens.
 ** `initialRouteName="Home"`: Specifies that the `Home` screen should be the first one displayed when the app loads.
 * `<Stack.Screen>`: Each instance of this component defines a route in our stack.
-* `name="Home"`: This is the unique name for this route. We use this name when navigating (e.g., `navigation.navigate('Home')`).
-* `component={HomeScreen}`: Specifies the React component to render for this route.
-* `options={{ title: 'SpeedyMeds Dashboard' }}`: Configures options for this screen, such as the header title. Options can be an object or a function that returns an object (useful for dynamic options based on `route` or `navigation` props).
+** `name="Home"`: This is the unique name for this route. We use this name when navigating (e.g., `navigation.navigate('Home')`).
+** `component={HomeScreen}`: Specifies the React component to render for this route.
+** `options={{ title: 'SpeedyMeds Dashboard' }}`: Configures options for this screen, such as the header title. Options can be an object or a function that returns an object (useful for dynamic options based on `route` or `navigation` props).
 
-*3. Navigating Between Screens:**
+*3. Navigating Between Screens:*
 
 In `HomeScreen.tsx`, we used `navigation.navigate('PrescriptionDetail', { prescriptionId: 'aspirin123' })`:
 * `navigation.navigate('RouteName')`: This function is used to navigate to another screen in the stack. If the screen is already in the stack, it will navigate back to it. If not, it pushes the new screen onto the stack.
@@ -292,19 +292,19 @@ This type definition helps React Navigation provide type checking for route name
 {note}
 The keys in `RootStackParamList` (e.g., `Home`, `PrescriptionDetail`) MUST match the `name` prop of your `<Stack.Screen>` components.
 {note}
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator - React Navigation]
 - [https://reactnavigation.org/docs/navigating|Navigating to a new screen - React Navigation]
 - [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
 - [https://reactnavigation.org/docs/typescript/|TypeScript with React Navigation]
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
-> _Key Takeaway:_ The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
+> *Key Takeaway:* The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
-> _Key Takeaway:_ React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
+> *Key Takeaway:* React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
 
 h4. Referential Content: Key Stack Navigator Configuration Options
 
@@ -323,8 +323,8 @@ While we'll dive deeper into styling headers in Section 7, it's useful to be awa
 
 *Screen Presentation and Animation:*
 * `presentation: 'card' | 'modal' | 'transparentModal'`: Defines how the screen is presented and animated.
-* `'card'` (default): Standard platform-specific push/pop animations.
-* `'modal'`: Platform-specific modal presentation (e.g., slides up from the bottom on iOS). Often used for flows that temporarily interrupt the main app flow.
+** `'card'` (default): Standard platform-specific push/pop animations.
+** `'modal'`: Platform-specific modal presentation (e.g., slides up from the bottom on iOS). Often used for flows that temporarily interrupt the main app flow.
 ** `'transparentModal'`: Similar to `modal` but with a transparent background, allowing content underneath to be partially visible. Useful for dialogs or pop-ups.
 * Animation options: More granular control over animations (gestures, transitions) can be achieved using options like `animationEnabled`, `gestureEnabled`, `cardStyleInterpolator`, etc. Some advanced header animations might require the optional `@react-native-masked-view/masked-view` package.
 
@@ -336,7 +336,7 @@ Now it's time to practice! This exercise will guide you through setting up a bas
 
 *(https://snack.expo.dev/SpeedyMedsStackEx11-1)*
 
-bq. _Instructions for Expo Snack `README.md` (Exercise 11.1):_
+bq. *Instructions for Expo Snack `README.md` (Exercise 11.1):*
 
 h4. Next Steps
 

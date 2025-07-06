@@ -13,8 +13,8 @@ React Native's architecture involves a bridge that facilitates communication bet
 *React Native's Animated API*
 
 The {{Animated}} API was React Native's first solution for animations. It provides a declarative way to create time-based, gesture-driven, or event-based animations.
-* _How it Works:_ The {{Animated}} API can be configured to offload animation calculations to the native UI thread for certain types of animations by setting {{useNativeDriver: true}}. When this option is used, the animation logic is serialized and sent over the bridge once, and then the native side handles the frame-by-frame updates. This significantly improves performance for supported animations (primarily non-layout properties like {{opacity}}, {{transform}}).
-* _Limitations with {{useNativeDriver: false}}:_ If {{useNativeDriver}} is {{false}} or an animation targets a property not supported by the native driver (e.g., most layout properties like {{width}}, {{height}}, {{flex}}), the JavaScript thread calculates the animation values for each frame and sends updates over the bridge. This can lead to stuttering or dropped frames, especially during heavy JS workloads.
+* *How it Works:* The {{Animated}} API can be configured to offload animation calculations to the native UI thread for certain types of animations by setting {{useNativeDriver: true}}. When this option is used, the animation logic is serialized and sent over the bridge once, and then the native side handles the frame-by-frame updates. This significantly improves performance for supported animations (primarily non-layout properties like {{opacity}}, {{transform}}).
+* *Limitations with {{useNativeDriver: false}}:* If {{useNativeDriver}} is {{false}} or an animation targets a property not supported by the native driver (e.g., most layout properties like {{width}}, {{height}}, {{flex}}), the JavaScript thread calculates the animation values for each frame and sends updates over the bridge. This can lead to stuttering or dropped frames, especially during heavy JS workloads.
 
 {mermaid}
 graph TD;
@@ -52,7 +52,7 @@ Animations using {{Animated}} with {{useNativeDriver: false}} can be janky if th
 *React Native Reanimated*
 
 React Native Reanimated (currently in version 3) was created to overcome the limitations of the {{Animated}} API, especially regarding performance and the ability to run complex animations entirely on the UI thread.
-* _How it Works:_ Reanimated allows you to define animation logic in JavaScript, but it executes this logic directly on the UI thread. This is achieved by leveraging JSI (JavaScript Interface), which enables more direct and synchronous communication between JS and native. Animations defined with Reanimated are not constrained by the bridge for per-frame updates.
+* *How it Works:* Reanimated allows you to define animation logic in JavaScript, but it executes this logic directly on the UI thread. This is achieved by leveraging JSI (JavaScript Interface), which enables more direct and synchronous communication between JS and native. Animations defined with Reanimated are not constrained by the bridge for per-frame updates.
 
 {mermaid}
 graph TD;
@@ -80,37 +80,37 @@ graph TD;
 {mermaid}
 
 This diagram illustrates the architecture of React Native Reanimated and its use of the JavaScript Interface (JSI). On the JS Thread, developers define application logic and sophisticated animation behaviors using Reanimated's constructs like JS Worklets (small pieces of JavaScript code that can run on the UI thread) and Shared Values (data that can be read and written from both JS and UI threads). Unlike the traditional {{Animated}} API's reliance on the asynchronous bridge for frequent updates, Reanimated leverages JSI. JSI provides a direct, synchronous communication channel between the JavaScript environment and the native side. This allows the compiled animation logic (worklets) and shared data to be efficiently passed to Reanimated's core native logic. Consequently, the animation execution itself happens predominantly on the Native/UI Thread, leading to highly performant, fluid animations that are not typically blocked by JavaScript thread computations. This direct execution on the UI thread is key to Reanimated's ability to handle complex animations smoothly.
-* _Key Benefits:_
-* _Performance:_ Animations are generally smoother and less prone to jank because they run independently of the JavaScript thread.
-* _Flexibility:_ Allows animation of a wider range of properties, including layout properties, directly on the UI thread.
-* _Power:_ Offers a more extensive set of tools and primitives (worklets, shared values, hooks) for creating complex and interactive animations and gestures.
+* *Key Benefits:*
+** *Performance:* Animations are generally smoother and less prone to jank because they run independently of the JavaScript thread.
+** *Flexibility:* Allows animation of a wider range of properties, including layout properties, directly on the UI thread.
+** *Power:* Offers a more extensive set of tools and primitives (worklets, shared values, hooks) for creating complex and interactive animations and gestures.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ If you're familiar with native animation frameworks like Core Animation on iOS or {{android.animation}} on Android, Reanimated aims to provide a similar level of control and performance but with a JavaScript-based declarative API. The concept of offloading work to the UI thread is central to both native animations and Reanimated.
-> _Key Takeaway:_ Reanimated brings the performance characteristics closer to native animations by running directly on the UI thread.
-> _Source:_ [https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html|Core Animation Programming Guide (iOS)], [https://developer.android.com/guide/topics/graphics/prop-animation|Property Animation (Android)]
+bq. 📲 *(Native Developers):*
+> *Comparison:* If you're familiar with native animation frameworks like Core Animation on iOS or {{android.animation}} on Android, Reanimated aims to provide a similar level of control and performance but with a JavaScript-based declarative API. The concept of offloading work to the UI thread is central to both native animations and Reanimated.
+> *Key Takeaway:* Reanimated brings the performance characteristics closer to native animations by running directly on the UI thread.
+> *Source:* [https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html|Core Animation Programming Guide (iOS)], [https://developer.android.com/guide/topics/graphics/prop-animation|Property Animation (Android)]
 
-bq. ⚛️ _(React Developers):_
-> _Comparison:_ You might be used to CSS animations/transitions or JavaScript animation libraries on the web. Reanimated shares the declarative nature of React but is specifically designed for the performance demands of native mobile apps. Its hook-based API ({{useSharedValue}}, {{useAnimatedStyle}}) will feel familiar.
-> _Key Takeaway:_ Reanimated lets you write animations in a React-friendly way while ensuring they perform well on mobile devices by running on the UI thread.
+bq. ⚛️ *(React Developers):*
+> *Comparison:* You might be used to CSS animations/transitions or JavaScript animation libraries on the web. Reanimated shares the declarative nature of React but is specifically designed for the performance demands of native mobile apps. Its hook-based API ({{useSharedValue}}, {{useAnimatedStyle}}) will feel familiar.
+> *Key Takeaway:* Reanimated lets you write animations in a React-friendly way while ensuring they perform well on mobile devices by running on the UI thread.
 
 h3. Referential Content
 
 Here's a table summarizing the key differences.
 
 ||Feature||Animated API||React Native Reanimated (v2+)||
-|_Execution Thread_|JS thread (default), UI thread ({{useNativeDriver: true}} for supported props)|UI thread (via worklets)|
-|_Performance_|Good with {{useNativeDriver: true}}, can be janky otherwise|Generally excellent, smoother|
-|_Layout Props_|Not animatable with {{useNativeDriver: true}}|Animatable on UI thread|
-|_Complexity_|Simpler API for basic animations|More powerful, steeper learning curve|
-|_Gesture Handling_|Basic integration|Deep integration with Gesture Handler|
-bq. 📚 _Official Documentation:_
+|*Execution Thread*|JS thread (default), UI thread ({{useNativeDriver: true}} for supported props)|UI thread (via worklets)|
+|*Performance*|Good with {{useNativeDriver: true}}, can be janky otherwise|Generally excellent, smoother|
+|*Layout Props*|Not animatable with {{useNativeDriver: true}}|Animatable on UI thread|
+|*Complexity*|Simpler API for basic animations|More powerful, steeper learning curve|
+|*Gesture Handling*|Basic integration|Deep integration with Gesture Handler|
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/animated|React Native Docs: Animated API]
 - [https://docs.swmansion.com/react-native-reanimated/|React Native Reanimated Documentation]
 
 h3. Why Reanimated is Preferred for New Development
 
-For most new React Native projects or when implementing complex animations, *React Native Reanimated is the recommended choice** due to its superior performance and flexibility. While the {{Animated}} API can still be suitable for very simple, non-layout animations where {{useNativeDriver: true}} can be leveraged, Reanimated provides a more robust and future-proof solution.
+For most new React Native projects or when implementing complex animations, *React Native Reanimated is the recommended choice* due to its superior performance and flexibility. While the {{Animated}} API can still be suitable for very simple, non-layout animations where {{useNativeDriver: true}} can be leveraged, Reanimated provides a more robust and future-proof solution.
 
 This course will focus on React Native Reanimated for implementing animations.
 

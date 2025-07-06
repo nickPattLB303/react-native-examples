@@ -64,7 +64,7 @@ const SpeedyMedsAppbar: React.FC<SpeedyMedsAppbarProps> = ({
 //       onBackPress={() => navigation.goBack()}
 //       onMorePress={() => console.log('More options')}
 //     />
-//     {/_ Screen content goes here _/}
+//     {/* Screen content goes here */}
 //   </>
 // );
 
@@ -141,9 +141,9 @@ export default PrescriptionActions;
 * `mode="contained"`: A filled button, typically for primary actions. In MD3, this offers strong emphasis.
 * `mode="outlined"`: A button with a border and no fill, for medium emphasis secondary actions.
 * `mode="text"`: A flat button with no border or fill, often for low emphasis actions.
-* _MD3 Modes_: React Native Paper v5 Buttons also include additional Material Design 3 modes like:
-* `mode="elevated"`: An elevated button with a shadow, offering slightly less emphasis than `contained`.
-* `mode="contained-tonal"`: A filled button that uses a secondary theme color, offering a medium emphasis often used for actions like "Add to cart" in a product card where the primary action is "Buy now".
+* *MD3 Modes*: React Native Paper v5 Buttons also include additional Material Design 3 modes like:
+** `mode="elevated"`: An elevated button with a shadow, offering slightly less emphasis than `contained`.
+** `mode="contained-tonal"`: A filled button that uses a secondary theme color, offering a medium emphasis often used for actions like "Add to cart" in a product card where the primary action is "Buy now".
 * `icon` prop can take the name of any Material Community Icon.
 * `style` prop can be used to apply additional custom styles.
 
@@ -481,7 +481,7 @@ _Instructions and requirements for the exercise are provided within the Expo Sna
 
 Next, we'll learn how to customize the look and feel of these React Native Paper components using its theming system.
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://callstack.github.io/react-native-paper/docs/components/ActivityIndicator|React Native Paper: Components (Browse all)]
 * [https://callstack.github.io/react-native-paper/docs/components/Appbar|React Native Paper: Appbar]
 * [https://callstack.github.io/react-native-paper/docs/components/Button|React Native Paper: Button]

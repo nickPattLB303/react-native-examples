@@ -2,9 +2,9 @@ h1. Module 14: Working with Native Modules
 
 React Native offers a vast array of components and APIs to build powerful cross-platform applications. However, there are times when you need to access platform-specific APIs or integrate existing native code that isn't available out-of-the-box. This is where native modules come into play. This module explores what native modules are, why they're essential, how to use existing ones, and provides a conceptual overview of creating your own. Understanding native modules unlocks the full potential of React Native, allowing you to bridge the gap between JavaScript and the underlying native platforms.
 
-📲 _(Native Developers):_ You're already familiar with writing code for iOS or Android. This module will show you how React Native allows your JavaScript code to interact with the native features you know, and how to leverage pre-built native functionalities within a React Native context. The concept of "bridging" will be key here, translating JavaScript calls into native operations.
+📲 *(Native Developers):* You're already familiar with writing code for iOS or Android. This module will show you how React Native allows your JavaScript code to interact with the native features you know, and how to leverage pre-built native functionalities within a React Native context. The concept of "bridging" will be key here, translating JavaScript calls into native operations.
 
-🌐 _(Web Developers):_ Coming from a web background, the idea of interacting directly with device hardware or platform-specific operating system features might be new. This module will introduce you to how React Native extends JavaScript's capabilities into the native realm. You'll learn that while React Native abstracts many platform differences, native modules are the gateway to deeper device integration.
+🌐 *(Web Developers):* Coming from a web background, the idea of interacting directly with device hardware or platform-specific operating system features might be new. This module will introduce you to how React Native extends JavaScript's capabilities into the native realm. You'll learn that while React Native abstracts many platform differences, native modules are the gateway to deeper device integration.
 
 h2. Learning Objectives
 

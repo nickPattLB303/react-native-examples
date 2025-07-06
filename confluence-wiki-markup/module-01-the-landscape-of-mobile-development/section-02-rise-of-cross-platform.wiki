@@ -9,11 +9,11 @@ Cross-platform development is the practice of writing code once and deploying it
 h3. Motivations for Going Cross-Platform
 
 Several factors drive businesses and developers towards cross-platform solutions:
-* _Cost Efficiency:_ Maintaining a single codebase is generally less expensive than managing separate native teams and projects for iOS and Android.
-* _Faster Development:_ Reusing code significantly speeds up the development process, allowing for quicker time-to-market.
-* _Wider Audience Reach:_ Easily target users on both major mobile platforms simultaneously.
-* _Code Consistency:_ Ensures business logic and core features are consistent across platforms, reducing potential discrepancies.
-* _Simplified Maintenance:_ Updates and bug fixes can often be implemented once and deployed everywhere, streamlining the maintenance effort.
+* *Cost Efficiency:* Maintaining a single codebase is generally less expensive than managing separate native teams and projects for iOS and Android.
+* *Faster Development:* Reusing code significantly speeds up the development process, allowing for quicker time-to-market.
+* *Wider Audience Reach:* Easily target users on both major mobile platforms simultaneously.
+* *Code Consistency:* Ensures business logic and core features are consistent across platforms, reducing potential discrepancies.
+* *Simplified Maintenance:* Updates and bug fixes can often be implemented once and deployed everywhere, streamlining the maintenance effort.
 
 {mermaid}
 flowchart TD
@@ -36,46 +36,46 @@ The diagram shows how these modern frameworks address the core problem by enabli
 h3. Evolution of Cross-Platform Approaches
 
 Cross-platform development isn't a single technique; various approaches have emerged over time, each with its own trade-offs:
-# _Webviews / Hybrid Apps:_
-*_ _Concept:* These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a {{WebView}}). Originating with tools like PhoneGap (created by Nitobi Software in 2008, later acquired by Adobe and contributed to the Apache Software Foundation as Apache Cordova), this approach allowed web developers to create installable mobile apps. The core idea was to display a web app using the platform's built-in WebView component (a chromeless browser view), with plugins often used to bridge JavaScript to native device features.
-*_ _Pros:* Leverages existing web development skills, very high code reuse, access to some native features via plugins.
-*_ _Cons:* Performance limitations (runs in a web browser view, not native components), difficulty accessing _all_ native device features, often doesn't feel truly "native" in terms of UI/UX, potential plugin maintenance issues.
-*_ _Key WebView Limitations:*
-**_ _Performance Bottlenecks:* The abstraction layer and WebView performance could lead to sluggishness, especially for complex UIs, animations, or computationally intensive tasks. Graphics-heavy apps were particularly challenging.
-*_ _Non-Native Look and Feel:* Achieving a UI that perfectly matched platform design guidelines and native component behavior was difficult, often resulting in apps that felt "web-like."
-*_ _Limited Native API Access:* While plugins helped, WebView-based apps often couldn't leverage the full spectrum of native APIs as seamlessly as native apps.
-*_ _User Experience Compromises:* The combination of performance issues and a non-native feel could lead to a suboptimal user experience. Facebook famously pivoted away from an HTML5-based mobile strategy in 2012 due to these limitations, highlighting the need for better cross-platform solutions.
-# _Compiled to Native Code:_
-*_ _Concept:* Developers write code in one language (like JavaScript with React Native, Dart with Flutter, or C# with .NET MAUI), which is then compiled or interpreted to interact with native UI components and APIs.
-*_ _Pros:* Achieves near-native performance and look-and-feel, allows access to native device features (often via bridges or modules), significant code reuse.
-*_ _Cons:* May require learning a specific framework or language, potential abstraction layer overhead, might still need platform-specific adjustments or native modules for certain features.
-# _Progressive Web Apps (PWAs):_
-*_ _Concept:* Web applications that utilize modern web capabilities to provide an app-like experience directly through the browser. They leverage specific technologies like:
-*_ _Web App Manifest:* A JSON file defining app metadata (name, icons, start URL, display mode) for installation and presentation.
-*_ _Service Workers:* Background JavaScript proxies that intercept network requests, enabling offline caching and push notifications.
-*_ _HTTPS:* Mandatory for security, especially for Service Workers.
-*_ _Pros:* No app store submission needed, highly shareable via URL, leverages web technologies, always up-to-date.
-*_ _Cons:** Limited access to native device features compared to compiled or native apps, platform support/feature consistency can lag (especially on iOS), discovery might be harder without an app store presence, performance tied to browser.
+# *Webviews / Hybrid Apps:*
+*** *Concept:* These applications are essentially web applications (HTML, CSS, JavaScript) packaged inside a native container (a {{WebView}}). Originating with tools like PhoneGap (created by Nitobi Software in 2008, later acquired by Adobe and contributed to the Apache Software Foundation as Apache Cordova), this approach allowed web developers to create installable mobile apps. The core idea was to display a web app using the platform's built-in WebView component (a chromeless browser view), with plugins often used to bridge JavaScript to native device features.
+*** *Pros:* Leverages existing web development skills, very high code reuse, access to some native features via plugins.
+*** *Cons:* Performance limitations (runs in a web browser view, not native components), difficulty accessing _all_ native device features, often doesn't feel truly "native" in terms of UI/UX, potential plugin maintenance issues.
+*** *Key WebView Limitations:*
+**** *Performance Bottlenecks:* The abstraction layer and WebView performance could lead to sluggishness, especially for complex UIs, animations, or computationally intensive tasks. Graphics-heavy apps were particularly challenging.
+**** *Non-Native Look and Feel:* Achieving a UI that perfectly matched platform design guidelines and native component behavior was difficult, often resulting in apps that felt "web-like."
+**** *Limited Native API Access:* While plugins helped, WebView-based apps often couldn't leverage the full spectrum of native APIs as seamlessly as native apps.
+**** *User Experience Compromises:* The combination of performance issues and a non-native feel could lead to a suboptimal user experience. Facebook famously pivoted away from an HTML5-based mobile strategy in 2012 due to these limitations, highlighting the need for better cross-platform solutions.
+# *Compiled to Native Code:*
+*** *Concept:* Developers write code in one language (like JavaScript with React Native, Dart with Flutter, or C# with .NET MAUI), which is then compiled or interpreted to interact with native UI components and APIs.
+*** *Pros:* Achieves near-native performance and look-and-feel, allows access to native device features (often via bridges or modules), significant code reuse.
+*** *Cons:* May require learning a specific framework or language, potential abstraction layer overhead, might still need platform-specific adjustments or native modules for certain features.
+# *Progressive Web Apps (PWAs):*
+*** *Concept:* Web applications that utilize modern web capabilities to provide an app-like experience directly through the browser. They leverage specific technologies like:
+**** *Web App Manifest:* A JSON file defining app metadata (name, icons, start URL, display mode) for installation and presentation.
+**** *Service Workers:* Background JavaScript proxies that intercept network requests, enabling offline caching and push notifications.
+**** *HTTPS:* Mandatory for security, especially for Service Workers.
+*** *Pros:* No app store submission needed, highly shareable via URL, leverages web technologies, always up-to-date.
+*** *Cons:* Limited access to native device features compared to compiled or native apps, platform support/feature consistency can lag (especially on iOS), discovery might be harder without an app store presence, performance tied to browser.
 
 h3. The Spectrum of Nativeness
 
 It's helpful to think of these approaches on a spectrum based on how closely they interact with the native platform:
-* _PWAs:_ Operate entirely within the browser sandbox, offering maximum web code reuse but minimal native integration.
-* _Hybrid Apps (WebView):_ Use a native wrapper, allowing app store distribution and plugin-based access to some native features, but UI rendering relies on web tech.
-* _Compiled Cross-Platform (React Native, Flutter, etc.):_ Employ sophisticated techniques (bridges, custom rendering engines) to achieve near-native performance and UI while maximizing code reuse.
-* _Native Apps:_ Written using platform-specific SDKs (iOS/Android), offering optimal performance and full feature access but requiring separate codebases.
+* *PWAs:* Operate entirely within the browser sandbox, offering maximum web code reuse but minimal native integration.
+* *Hybrid Apps (WebView):* Use a native wrapper, allowing app store distribution and plugin-based access to some native features, but UI rendering relies on web tech.
+* *Compiled Cross-Platform (React Native, Flutter, etc.):* Employ sophisticated techniques (bridges, custom rendering engines) to achieve near-native performance and UI while maximizing code reuse.
+* *Native Apps:* Written using platform-specific SDKs (iOS/Android), offering optimal performance and full feature access but requiring separate codebases.
 
 The limitations of early approaches like PWAs and hybrid apps (especially around performance and UX) were key drivers for the development of modern compiled frameworks like React Native, which aim to deliver a more native-like result while retaining cross-platform efficiency.
 
-bq. 🤖🍏 _(Native Developers):_
-> _Comparison:_ Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
-> _Key Takeaway:_ Cross-platform offers potential efficiency gains by reducing code duplication but introduces an abstraction layer and might require learning new framework concepts.
-> _Source:_ [https://www.netguru.com/blog/cross-platform-vs-native-app-development|Cross-Platform vs Native App Development]
+bq. 🤖🍏 *(Native Developers):*
+> *Comparison:* Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
+> *Key Takeaway:* Cross-platform offers potential efficiency gains by reducing code duplication but introduces an abstraction layer and might require learning new framework concepts.
+> *Source:* [https://www.netguru.com/blog/cross-platform-vs-native-app-development|Cross-Platform vs Native App Development]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ If you're coming from the web, cross-platform development, especially using frameworks like React Native, feels more familiar than diving straight into native SDKs. Hybrid approaches directly use your HTML/CSS/JS skills. Compiled approaches like React Native leverage JavaScript and concepts like components (especially familiar if you know React) but require learning mobile-specific UI elements and APIs instead of the browser's DOM.
-> _Key Takeaway:_ Your web skills are highly transferable to many cross-platform approaches, but you'll need to adapt to mobile UI conventions, performance considerations, and native API interactions.
-> _Source:_ [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive web apps (PWAs)]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* If you're coming from the web, cross-platform development, especially using frameworks like React Native, feels more familiar than diving straight into native SDKs. Hybrid approaches directly use your HTML/CSS/JS skills. Compiled approaches like React Native leverage JavaScript and concepts like components (especially familiar if you know React) but require learning mobile-specific UI elements and APIs instead of the browser's DOM.
+> *Key Takeaway:* Your web skills are highly transferable to many cross-platform approaches, but you'll need to adapt to mobile UI conventions, performance considerations, and native API interactions.
+> *Source:* [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive web apps (PWAs)]
 
 h3. General Pros and Cons of Cross-Platform
 
@@ -95,7 +95,7 @@ While specific approaches vary, some general advantages and disadvantages apply:
 * Reliance on framework updates and community support.
 * Potential limitations in accessing certain device hardware or APIs without native code.
 
-bq. 🔁 _(Asynchronous Learners):_ This section on cross-platform development approaches is particularly valuable as standalone knowledge, even if you're jumping directly to this topic. The concepts covered here apply broadly to mobile development decisions regardless of which specific framework you ultimately choose. The trade-offs between development speed, performance, and platform integration are universal considerations in the mobile space.
+bq. 🔁 *(Asynchronous Learners):* This section on cross-platform development approaches is particularly valuable as standalone knowledge, even if you're jumping directly to this topic. The concepts covered here apply broadly to mobile development decisions regardless of which specific framework you ultimately choose. The trade-offs between development speed, performance, and platform integration are universal considerations in the mobile space.
 
 The decision between native and cross-platform development depends heavily on the specific project requirements, budget, timeline, and performance needs. However, the increasing sophistication of cross-platform tools has made them a viable and often preferred option for many applications. The next section focuses specifically on React Native, a popular choice in the "compiled to native" category.
 
@@ -110,7 +110,7 @@ The following table summarizes the key trade-offs between Native Development, We
 |Maintenance|Complex (Two Codebases)|Simpler (Single Web Codebase)|Simpler (Mostly Single Codebase)|
 Understanding this evolution is key. The shortcomings of purely native development (cost, time) and early cross-platform attempts (performance, UX) created the specific need that frameworks like React Native were designed to fill: achieving efficient development _with_ a high-quality, native user experience.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://cordova.apache.org/docs/en/latest|Apache Cordova Documentation]
 - [https://docs.flutter.dev|Flutter Documentation]
 - [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive Web Apps (PWAs)]

@@ -39,12 +39,12 @@ This diagram illustrates how React Native Reanimated achieves smooth animations 
 *Installation and Setup*
 
 In an Expo project, adding Reanimated is straightforward. Expo manages much of the native configuration for you.
-# _Install the library:_
+# *Install the library:*
 
     {code:language=bash}
 npx expo install react-native-reanimated
     ```
-# _Add the Babel plugin:_
+# *Add the Babel plugin:*
     Modify your `babel.config.js` file to include the Reanimated Babel plugin. This plugin is crucial as it transforms your JavaScript code (specifically worklets) into a format that can run on the UI thread.
 
     ```javascript
@@ -75,8 +75,8 @@ Reanimated introduces several core concepts that are fundamental to its usage:
 *1. Worklets*
 
 Worklets are small pieces of JavaScript code, marked with the `'worklet';` directive at the top, that Reanimated can execute synchronously on the UI thread. They are the building blocks for running animation logic off the JavaScript thread.
-* _Purpose:_ To define functions that can run on the UI thread, allowing direct manipulation of shared values and computation of styles without crossing the bridge for each frame.
-* _Syntax:_ A function becomes a worklet by adding the `'worklet';` string literal as the first statement in its body.
+* *Purpose:* To define functions that can run on the UI thread, allowing direct manipulation of shared values and computation of styles without crossing the bridge for each frame.
+* *Syntax:* A function becomes a worklet by adding the `'worklet';` string literal as the first statement in its body.
 
   ```typescript
   // Example of a worklet
@@ -91,9 +91,9 @@ Worklets are small pieces of JavaScript code, marked with the `'worklet';` direc
 *2. Shared Values (`useSharedValue`)*
 
 Shared Values are reactive variables that can be read and modified by both JavaScript code (on the JS thread) and worklets (on the UI thread). They are the primary drivers for animations.
-* _Purpose:_ To hold data that changes over time to drive animations. Changes to shared values can trigger updates in animated styles.
-* _Hook:_ `useSharedValue(initialValue)`
-* _Usage:_ You create a shared value using the `useSharedValue` hook. Its `.value` property can be accessed and modified from both JS and UI threads.
+* *Purpose:* To hold data that changes over time to drive animations. Changes to shared values can trigger updates in animated styles.
+* *Hook:* `useSharedValue(initialValue)`
+* *Usage:* You create a shared value using the `useSharedValue` hook. Its `.value` property can be accessed and modified from both JS and UI threads.
 
   ```typescript
   import { useSharedValue } from "react-native-reanimated";
@@ -108,9 +108,9 @@ Shared Values are reactive variables that can be read and modified by both JavaS
 *3. Animated Styles (`useAnimatedStyle`)*
 
 This hook is used to create style objects that depend on Shared Values. When a Shared Value changes, the style object is automatically recomputed on the UI thread, and the connected component re-renders with the new style.
-* _Purpose:_ To define styles that react to changes in shared values, allowing animated components to update their appearance smoothly.
-* _Hook:_ `useAnimatedStyle(() => { ... }, [dependencies])`
-* _Usage:_ It takes a worklet function as its first argument. This worklet returns a style object. The properties in this style object can be derived from shared values.
+* *Purpose:* To define styles that react to changes in shared values, allowing animated components to update their appearance smoothly.
+* *Hook:* `useAnimatedStyle(() => { ... }, [dependencies])`
+* *Usage:* It takes a worklet function as its first argument. This worklet returns a style object. The properties in this style object can be derived from shared values.
 
   ```typescript
   import Animated, {
@@ -132,13 +132,13 @@ This hook is used to create style objects that depend on Shared Values. When a S
 *4. Animation Functions/Modifiers (e.g., `withTiming`, `withSpring`)*
 
 Reanimated provides functions to update Shared Values over time, creating animations. These are typically used to change a shared value from its current state to a target state with a specific animation curve.
-* _Purpose:_ To apply timed or physics-based transitions to shared values.
-* _Examples:_
-* `withTiming(targetValue, config?, callback?)`: Animates a shared value to a `targetValue` over a specified duration with an easing function.
-* `withSpring(targetValue, config?, callback?)`: Animates a shared value to a `targetValue` using spring physics.
-* `withRepeat(animation, numberOfReps?, reverse?, callback?)`: Repeats an animation a certain number of times or indefinitely.
-* `withSequence(animation1, animation2, ...)`: Runs animations one after another.
-* _Usage:_ These functions are used when assigning a new value to a shared value's `.value` property.
+* *Purpose:* To apply timed or physics-based transitions to shared values.
+* *Examples:*
+** `withTiming(targetValue, config?, callback?)`: Animates a shared value to a `targetValue` over a specified duration with an easing function.
+** `withSpring(targetValue, config?, callback?)`: Animates a shared value to a `targetValue` using spring physics.
+** `withRepeat(animation, numberOfReps?, reverse?, callback?)`: Repeats an animation a certain number of times or indefinitely.
+** `withSequence(animation1, animation2, ...)`: Runs animations one after another.
+* *Usage:* These functions are used when assigning a new value to a shared value's `.value` property.
 
   ```typescript
   // const opacity = useSharedValue(0);
@@ -149,8 +149,8 @@ Reanimated provides functions to update Shared Values over time, creating animat
 *5. Animated Components*
 
 To apply animated styles, you need to use special animated versions of React Native components. Reanimated provides these, or you can create your own.
-* _Purpose:_ Components whose style props can accept style objects generated by `useAnimatedStyle`.
-* _Usage:_ Reanimated exports animated versions of standard components, like `Animated.View`, `Animated.Text`, `Animated.ScrollView`, etc. You can also create animatable versions of your own components or third-party components using `Animated.createAnimatedComponent()`.
+* *Purpose:* Components whose style props can accept style objects generated by `useAnimatedStyle`.
+* *Usage:* Reanimated exports animated versions of standard components, like `Animated.View`, `Animated.Text`, `Animated.ScrollView`, etc. You can also create animatable versions of your own components or third-party components using `Animated.createAnimatedComponent()`.
 
   ```typescript
   // <Animated.View style={animatedStyle} />
@@ -338,13 +338,13 @@ export default MedicationReminderCard;
 This `MedicationReminderCard` component serves as a practical introduction to React Native Reanimated, demonstrating a common UI pattern: a fade-in animation for newly appearing content, themed for our SpeedyMeds application. The goal is to visually introduce an important alert, such as a new prescription being ready, in an engaging way.
 
 The core of the animation lies in several Reanimated hooks working in concert:
-# _`useSharedValue(0)`:_ We initialize a `shared value` called `opacity` with a starting value of 0. Shared values are special reactive variables that can be accessed and modified from both the JavaScript thread and, crucially, directly from the UI thread via worklets. This `opacity` value will drive our animation, starting completely transparent.
-# _`useAnimatedStyle(() => { ... })`:_ This hook creates `animatedCardStyle`. The function passed to `useAnimatedStyle` is a worklet – a small piece of JavaScript that Reanimated executes on the UI thread. Inside this worklet, we return a style object: `{ opacity: opacity.value, transform: [{ scale: scale.value }] }`. Whenever `opacity.value` or `scale.value` changes, this worklet re-runs on the UI thread, and a new style object is generated. This direct execution on the UI thread is key to Reanimated's performance, as it avoids sending style updates over the React Native bridge for each frame.
-# _`useEffect(() => { ... }, [])`:_ This standard React hook is used here to trigger the animation once the component mounts. Inside `useEffect`, we update our shared values: `opacity.value = withTiming(1, { duration: 800 })` and `scale.value = withSequence(withTiming(1.02, { duration: 200 }), withTiming(1, { duration: 150 }))`.
-** `withTiming` is a Reanimated animation helper. It tells Reanimated to change `opacity.value` and `scale.value` from their current states to the target values over specified durations. Reanimated handles the interpolation of values frame by frame on the UI thread.
-# _`<Animated.View style={[styles.medicationCard, animatedCardStyle]}>`:_ Instead of a regular `<View>`, we use `Animated.View`. This special component from Reanimated is capable of accepting style objects generated by `useAnimatedStyle`. As `animatedCardStyle` changes (driven by `opacity.value` and `scale.value`), the `Animated.View` smoothly updates its appearance.
+# *`useSharedValue(0)`:* We initialize a `shared value` called `opacity` with a starting value of 0. Shared values are special reactive variables that can be accessed and modified from both the JavaScript thread and, crucially, directly from the UI thread via worklets. This `opacity` value will drive our animation, starting completely transparent.
+# *`useAnimatedStyle(() => { ... })`:* This hook creates `animatedCardStyle`. The function passed to `useAnimatedStyle` is a worklet – a small piece of JavaScript that Reanimated executes on the UI thread. Inside this worklet, we return a style object: `{ opacity: opacity.value, transform: [{ scale: scale.value }] }`. Whenever `opacity.value` or `scale.value` changes, this worklet re-runs on the UI thread, and a new style object is generated. This direct execution on the UI thread is key to Reanimated's performance, as it avoids sending style updates over the React Native bridge for each frame.
+# *`useEffect(() => { ... }, [])`:* This standard React hook is used here to trigger the animation once the component mounts. Inside `useEffect`, we update our shared values: `opacity.value = withTiming(1, { duration: 800 })` and `scale.value = withSequence(withTiming(1.02, { duration: 200 }), withTiming(1, { duration: 150 }))`.
+*** `withTiming` is a Reanimated animation helper. It tells Reanimated to change `opacity.value` and `scale.value` from their current states to the target values over specified durations. Reanimated handles the interpolation of values frame by frame on the UI thread.
+# *`<Animated.View style={[styles.medicationCard, animatedCardStyle]}>`:* Instead of a regular `<View>`, we use `Animated.View`. This special component from Reanimated is capable of accepting style objects generated by `useAnimatedStyle`. As `animatedCardStyle` changes (driven by `opacity.value` and `scale.value`), the `Animated.View` smoothly updates its appearance.
 
-*In summary:** When `MedicationReminderCard` mounts, `useEffect` initiates an animation using `withTiming` and `withSequence` to change `opacity.value` and `scale.value` from 0 to 1 and 0.95 to 1.02 and back to 1 over 800ms and 200ms, respectively. The `useAnimatedStyle` worklet reacts to these changes in `opacity.value` and `scale.value` on the UI thread, updating the styles of the `Animated.View`. This results in the medication reminder card smoothly fading into full visibility and slightly scaling up to create a subtle "pop" effect over 800ms and 200ms. This entire animation sequence for opacity and scale is managed on the UI thread, ensuring a fluid user experience even if the JavaScript thread is busy with other tasks. This approach is fundamental for creating high-performance animations in React Native and is a core strength of the Reanimated library.
+*In summary:* When `MedicationReminderCard` mounts, `useEffect` initiates an animation using `withTiming` and `withSequence` to change `opacity.value` and `scale.value` from 0 to 1 and 0.95 to 1.02 and back to 1 over 800ms and 200ms, respectively. The `useAnimatedStyle` worklet reacts to these changes in `opacity.value` and `scale.value` on the UI thread, updating the styles of the `Animated.View`. This results in the medication reminder card smoothly fading into full visibility and slightly scaling up to create a subtle "pop" effect over 800ms and 200ms. This entire animation sequence for opacity and scale is managed on the UI thread, ensuring a fluid user experience even if the JavaScript thread is busy with other tasks. This approach is fundamental for creating high-performance animations in React Native and is a core strength of the Reanimated library.
 
 {tip}
 In Expo Go, if you make changes to Reanimated code, especially in `babel.config.js` or install/update the library, it's often a good idea to restart the Metro bundler with the `--clear` flag (`npx expo start --clear`) to ensure changes are correctly applied.
@@ -352,9 +352,9 @@ In Expo Go, if you make changes to Reanimated code, especially in `babel.config.
 h3. Section Exercise
 
 Apply your understanding of these core concepts in the following exercise.
-* _Exercise 17.1: Basic Reanimated Animation_ `_(https://snack.expo.dev/SpeedyMeds-Exercise-17-1)_`
+* *Exercise 17.1: Basic Reanimated Animation* `*(https://snack.expo.dev/SpeedyMeds-Exercise-17-1)*`
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/core-concepts|React Native Reanimated - Core Concepts]
 - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/shared-values|React Native Reanimated - `useSharedValue`]
 - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/styles|React Native Reanimated - `useAnimatedStyle`]

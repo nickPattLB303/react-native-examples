@@ -2,25 +2,25 @@ h2. Section 3: How Rendering Works (Legacy vs. Fabric)
 
 A core function of React Native is translating your React component hierarchy into actual native UI elements displayed on the screen. The way this rendering process occurs differs significantly between the Legacy Architecture and the New Architecture's Fabric renderer. Understanding these rendering differences is crucial when developing sophisticated UIs like those needed in our SpeedyMeds pharmacy application.
 
-bq. 🧗‍♀️ _(Self-Led):_ As you work through this section, try to visualize the rendering flow in both architectures. Consider drawing your own diagrams to reinforce your understanding of how UI elements move from JavaScript to the screen.
+bq. 🧗‍♀️ *(Self-Led):* As you work through this section, try to visualize the rendering flow in both architectures. Consider drawing your own diagrams to reinforce your understanding of how UI elements move from JavaScript to the screen.
 
 h3. Legacy Rendering Process (UI Manager)
 
 In the Legacy Architecture, rendering involved multiple steps across different threads:
-# _JS Thread:_ React executes your component code and creates a tree of React elements (the virtual DOM).
-# _Shadow Thread:_ React Native calculates layout information based on your styles (using the Yoga layout engine on the dedicated Shadow Thread) and generates a "shadow tree" representing the native UI hierarchy and layout.
-# _JS Thread -> Bridge:_ Instructions to create, update, or delete native views based on the shadow tree calculation are serialized into JSON messages.
-# _Bridge -> Native Thread:_ These messages are sent asynchronously across the Bridge to the native side.
-# _Native (UI) Thread:_ The native UI Manager receives the messages, deserializes them, and executes the corresponding native UI operations (e.g., creating an {{UIView}} on iOS or a {{ViewGroup}} on Android) on the main UI thread.
+# *JS Thread:* React executes your component code and creates a tree of React elements (the virtual DOM).
+# *Shadow Thread:* React Native calculates layout information based on your styles (using the Yoga layout engine on the dedicated Shadow Thread) and generates a "shadow tree" representing the native UI hierarchy and layout.
+# *JS Thread -> Bridge:* Instructions to create, update, or delete native views based on the shadow tree calculation are serialized into JSON messages.
+# *Bridge -> Native Thread:* These messages are sent asynchronously across the Bridge to the native side.
+# *Native (UI) Thread:* The native UI Manager receives the messages, deserializes them, and executes the corresponding native UI operations (e.g., creating an {{UIView}} on iOS or a {{ViewGroup}} on Android) on the main UI thread.
 
 This multi-step, asynchronous process, heavily reliant on the Bridge, could lead to delays, especially during complex updates or animations, resulting in dropped frames and a less fluid user experience. Coordinating layout calculations on the Shadow Thread with UI updates on the native main thread via the asynchronous bridge was a key challenge.
 
 h3. New Architecture Rendering (Fabric)
 
 Fabric streamlines the rendering process by leveraging JSI and integrating layout calculation more tightly, often moving work off the main native thread:
-# _Render Phase (JS Thread -> C++ via JSI):_ React executes your JS code to create a React Element Tree. Fabric immediately uses this, via JSI, to create a corresponding React Shadow Tree directly in C++. This bypasses the need to send serialized descriptions of the UI over the Bridge.
-# _Commit Phase (C++):_ The C++ Shadow Tree is finalized. Layout information is calculated within the C++ layer, typically on a background thread, using the Yoga layout engine. The tree, now including layout data, is promoted as the "next tree" ready to be displayed.
-# _Mount Phase (C++ -> Native UI Thread via JSI):_ Fabric efficiently determines the difference ("diffing") between the currently displayed Host View Tree and the newly calculated Shadow Tree. It then schedules the necessary atomic UI operations (view creation, updates, deletions) on the native main thread via JSI. Fabric has more control over prioritizing these updates.
+# *Render Phase (JS Thread -> C++ via JSI):* React executes your JS code to create a React Element Tree. Fabric immediately uses this, via JSI, to create a corresponding React Shadow Tree directly in C++. This bypasses the need to send serialized descriptions of the UI over the Bridge.
+# *Commit Phase (C++):* The C++ Shadow Tree is finalized. Layout information is calculated within the C++ layer, typically on a background thread, using the Yoga layout engine. The tree, now including layout data, is promoted as the "next tree" ready to be displayed.
+# *Mount Phase (C++ -> Native UI Thread via JSI):* Fabric efficiently determines the difference ("diffing") between the currently displayed Host View Tree and the newly calculated Shadow Tree. It then schedules the necessary atomic UI operations (view creation, updates, deletions) on the native main thread via JSI. Fabric has more control over prioritizing these updates.
 
 *Diagram: Legacy vs. Fabric Rendering Flow*
 
@@ -66,25 +66,25 @@ The diagram above illustrates the fundamental differences between the legacy and
 In contrast, the Fabric Rendering flow (bottom) shows a more streamlined process. Through JSI, JavaScript can directly communicate with the C++ layer to create the Shadow Tree. The layout calculations still use Yoga but occur within the C++ environment, eliminating a Bridge crossing. The final mounting process is more direct and controlled, with better diffing and prioritization capabilities. These improvements result in faster, smoother rendering performance with fewer dropped frames—essential for responsive UIs like medication lists or patient records in our SpeedyMeds application.
 
 h3. Key Differences and Benefits of Fabric:
-* _Reduced Bridge Overhead:_ Fabric minimizes reliance on the asynchronous Bridge for rendering, reducing serialization costs and latency significantly.
-* _Synchronous Operations:_ JSI allows for more synchronous communication between JavaScript and the rendering system when needed (e.g., layout measurement), improving responsiveness for things like text input measurement or gesture handling.
-* _Improved Threading Model:_ Layout calculations happen in C++ (often off the main thread), freeing the main native UI thread to respond to user interactions more quickly. Fabric enables better prioritization of UI updates.
-* _Faster Mounting:_ Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
-* _Concurrent React Features:_ Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
+* *Reduced Bridge Overhead:* Fabric minimizes reliance on the asynchronous Bridge for rendering, reducing serialization costs and latency significantly.
+* *Synchronous Operations:* JSI allows for more synchronous communication between JavaScript and the rendering system when needed (e.g., layout measurement), improving responsiveness for things like text input measurement or gesture handling.
+* *Improved Threading Model:* Layout calculations happen in C++ (often off the main thread), freeing the main native UI thread to respond to user interactions more quickly. Fabric enables better prioritization of UI updates.
+* *Faster Mounting:* Diffing the trees in C++ and scheduling atomic updates via JSI leads to faster and more efficient creation and updating of native views.
+* *Concurrent React Features:* Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/architecture/fabric-renderer|Fabric Renderer | React Native]
 - [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric Native Components | React Native]
 - [https://react.dev/learn/render-and-commit|React Docs: Render and Commit]
 - [https://yogalayout.com/docs/|Understanding Yoga Layout Engine]
-> 🗂️ _Additional Resources:_
+> 🗂️ *Additional Resources:*
 > - [https://medium.com/shopify-engineering/react-native-at-shopify-benefits-of-the-new-architecture-edcecef0b5f|React Native New Architecture Deep Dive]
 - [https://formidable.com/blog/2019/lean-core-and-react-native-new-architecture/|The Evolution of React Native's Architecture]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
-> _Key Takeaway:_ Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
-> _Source:_ [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
+> *Key Takeaway:* Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
+> *Source:* [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
 
 h3. Implications for SpeedyMeds Development
 

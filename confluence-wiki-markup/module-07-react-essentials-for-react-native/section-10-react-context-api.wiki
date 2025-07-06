@@ -20,7 +20,7 @@ Context provides a cleaner way to make this data available to `UserAvatar` direc
 h3. The React Context API
 
 The Context API consists of three main parts:
-# _`React.createContext()`:_ This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching `Provider` above it in the tree.
+# *`React.createContext()`:* This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching `Provider` above it in the tree.
 
     {code:language=js}
 import React from "react";
@@ -47,7 +47,7 @@ import React from "react";
     ```
 
     The default value is used only when a component that consumes the context does not have a matching `Provider` above it in the component tree. If a component tries to consume a context value that is `undefined` (because no provider was found and the default was `undefined`), it can lead to errors if not handled carefully.
-# _`Context.Provider`:_ Every Context object comes with a Provider component. The Provider component accepts a `value` prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
+# *`Context.Provider`:* Every Context object comes with a Provider component. The Provider component accepts a `value` prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
 
     ```tsx
     // In your App.tsx or a top-level component
@@ -73,8 +73,8 @@ import React from "react";
     ```
 
     All components within `<MyPageLayout />` can now access the `themeMode` and `toggleMode` function.
-# _`useContext` Hook (or `Context.Consumer`):_
-*_ _`useContext(MyContext)`:** This Hook is the modern and preferred way to consume a context value. It accepts a context object (the result of `React.createContext`) and returns the current context value for that context. The context value is determined by the `value` prop of the nearest `Context.Provider` above the calling component in the tree.
+# *`useContext` Hook (or `Context.Consumer`):*
+*** *`useContext(MyContext)`:* This Hook is the modern and preferred way to consume a context value. It accepts a context object (the result of `React.createContext`) and returns the current context value for that context. The context value is determined by the `value` prop of the nearest `Context.Provider` above the calling component in the tree.
 
       When this nearest `Context.Provider` updates (i.e., its `value` prop changes), the `useContext` Hook will trigger a re-render of the component consuming the context, providing it with the latest context `value`.
 
@@ -106,7 +106,7 @@ import React from "react";
               onPress={theme.toggleMode}
               color={buttonStyles.backgroundColor} // Button color prop might not work this way directly
             />
-            {/_ For more custom button styling, use <Pressable> _/}
+            {/* For more custom button styling, use <Pressable> */}
           </View>
         );
       };
@@ -121,13 +121,13 @@ import React from "react";
 
       export default ThemedButton;
       ```
-*_ _`Context.Consumer`:* An older way to consume context using a render prop pattern. You'll rarely need this if you're using Hooks.
+*** *`Context.Consumer`:* An older way to consume context using a render prop pattern. You'll rarely need this if you're using Hooks.
 
 h3. When to Use Context
 
 Context is designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme, or preferred language.
 
-*Use Context when:**
+*Use Context when:*
 * You need to pass data through many levels of components.
 * You are managing global application concerns like theming, localization, or user authentication status.
 
@@ -169,24 +169,24 @@ graph TD
 
 This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
-> _Key Takeaway:_ Your existing knowledge of the Context API is directly transferable.
-> _Source:_ [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Passing Data Deeply with Context]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
+> *Key Takeaway:* Your existing knowledge of the Context API is directly transferable.
+> *Source:* [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Passing Data Deeply with Context]
 
-bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
-> _Comparison:_ React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
-> _Key Takeaway:_ Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
-> _Source:_ [https://angular.io/guide/dependency-injection|Angular Docs: Dependency injection in Angular]
+bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
+> *Comparison:* React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
+> *Key Takeaway:* Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
+> *Source:* [https://angular.io/guide/dependency-injection|Angular Docs: Dependency injection in Angular]
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
-> _Key Takeaway:_ When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
-> _Source:_ [https://developer.android.com/reference/android/content/SharedPreferences|Android Dev Docs: SharedPreferences], [https://developer.apple.com/documentation/foundation/userdefaults|Apple Dev Docs: UserDefaults]
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
+> *Key Takeaway:* When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
+> *Source:* [https://developer.android.com/reference/android/content/SharedPreferences|Android Dev Docs: SharedPreferences], [https://developer.apple.com/documentation/foundation/userdefaults|Apple Dev Docs: UserDefaults]
 
 The Context API is a valuable tool in your React toolkit for managing state that needs to be shared across many components. Used judiciously, it can simplify your component structure and make your application easier to maintain.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Context - Passing Data Deeply]
 - [https://react.dev/reference/react/useContext|React Docs: Hooks - `useContext`]
 - [https://react.dev/reference/react/createContext|React Docs: `React.createContext`]
@@ -200,17 +200,17 @@ Let's practice using the Context API to share simple data.
 *Objective:* Create a simple application context to share a username across different components in your SpeedyMeds app.
 
 *Instructions:*
-# _Create UserContext:_
-** Create a new file (e.g., `UserContext.ts`).
-** Use `React.createContext` to create a `UserContext`. The context should be able to hold a string value (the username) or be `null` if no user is set.
-** Provide a default value of `null` for the context.
-# _Create UserProvider:_
-** In your main `App` component (or a similar top-level component in CodeSandbox), use `useState` to manage a `currentUser` state, initialized to a sample username (e.g., "PharmacistPat").
-** Wrap a part of your component tree with `UserContext.Provider`.
-** Pass the `currentUser` state as the `value` to the `UserContext.Provider`.
-# _Create Consumer Components:_
-** Create a `UserProfileDisplay` component that uses `useContext(UserContext)` to get the username and displays it (e.g., "Logged in as: [username]").
-** Create another component, perhaps a `WelcomeHeader`, also nested under the `UserProvider`, that consumes the `UserContext` and displays a welcome message including the username.
+# *Create UserContext:*
+*** Create a new file (e.g., `UserContext.ts`).
+*** Use `React.createContext` to create a `UserContext`. The context should be able to hold a string value (the username) or be `null` if no user is set.
+*** Provide a default value of `null` for the context.
+# *Create UserProvider:*
+*** In your main `App` component (or a similar top-level component in CodeSandbox), use `useState` to manage a `currentUser` state, initialized to a sample username (e.g., "PharmacistPat").
+*** Wrap a part of your component tree with `UserContext.Provider`.
+*** Pass the `currentUser` state as the `value` to the `UserContext.Provider`.
+# *Create Consumer Components:*
+*** Create a `UserProfileDisplay` component that uses `useContext(UserContext)` to get the username and displays it (e.g., "Logged in as: [username]").
+*** Create another component, perhaps a `WelcomeHeader`, also nested under the `UserProvider`, that consumes the `UserContext` and displays a welcome message including the username.
 # Render these components within the `UserProvider` in your `App` to see the context value being shared.
 # (Optional) Add a button in `App` to change the `currentUser` state (e.g., to "NurseNancy" or `null`) and observe how the consumer components update.
 

@@ -88,15 +88,15 @@ graph TD
 {mermaid}
 
 This diagram illustrates a common navigation architecture for a mobile application like SpeedyMeds. The architecture combines multiple navigation patterns:
-# At the highest level, there's a _Root Navigation Container_ that manages the main navigation state of the app.
+# At the highest level, there's a *Root Navigation Container* that manages the main navigation state of the app.
 # The app is divided into two main flows:
-*_ An _Authentication Flow* that handles login and registration screens, typically implemented as a stack navigator.
-* The _Main App Flow_ which becomes accessible after authentication.
-# The Main App uses a _Drawer Navigator_ as its primary navigation container, providing access to the main app sections and less frequently used screens like Settings.
-# Within the drawer, a _Tab Navigator_ offers quick access to the main features: Home, Profile, and Medications.
-# Each tab can lead to its own _Stack Navigator_, allowing for a hierarchy of screens within that section:
-* The Home stack might include a dashboard and alerts screens.
-* The Medications stack might include a list view, detailed medication information, and screens for adding new medications.
+*** An *Authentication Flow* that handles login and registration screens, typically implemented as a stack navigator.
+** The *Main App Flow* which becomes accessible after authentication.
+# The Main App uses a *Drawer Navigator* as its primary navigation container, providing access to the main app sections and less frequently used screens like Settings.
+# Within the drawer, a *Tab Navigator* offers quick access to the main features: Home, Profile, and Medications.
+# Each tab can lead to its own *Stack Navigator*, allowing for a hierarchy of screens within that section:
+** The Home stack might include a dashboard and alerts screens.
+** The Medications stack might include a list view, detailed medication information, and screens for adding new medications.
 
 The dotted arrows represent common navigation paths between screens, while solid arrows show the hierarchical structure. This combination of navigation patterns creates a comprehensive and intuitive user experience by leveraging each pattern's strengths:
 * Stack navigation for sequential flows and details
@@ -112,46 +112,46 @@ While React Native allows for cross-platform development, users have expectation
 h5. iOS Human Interface Guidelines (HIG)
 
 Apple's HIG emphasizes clarity, deference (UI doesn't overshadow content), and depth (visual layers guide users). For navigation, this translates to:
-* _Navigation Styles:_ iOS primarily uses three navigation styles:
-* _Hierarchical:_ Sequential choices screen by screen (e.g., Settings app). Typically uses a Navigation Bar at the top with a title and back button.
-* _Flat:_ Switching between distinct categories (e.g., Music app). Often uses a Tab Bar at the bottom or a Page Control for swiping.
-* *Content-driven:** Navigation emerges from the content itself (e.g., games, books).
-* _Core Principles:_ Navigation should feel natural, predictable, and logical. The UI should support the user's task without being obtrusive.
-* _Standard Components:_ Using standard iOS navigation controls (or their React Native equivalents like Native Stack for {{UINavigationBar}} and well-styled tab components for {{UITabBar}}) is strongly encouraged for familiarity.
-* _Consistency and Usability:_ Ensure clear and predictable navigation paths. Transitions should be consistent. Interactive elements (icons, buttons) need clear iconography and appropriate touch target sizes.
+* *Navigation Styles:* iOS primarily uses three navigation styles:
+** *Hierarchical:* Sequential choices screen by screen (e.g., Settings app). Typically uses a Navigation Bar at the top with a title and back button.
+** *Flat:* Switching between distinct categories (e.g., Music app). Often uses a Tab Bar at the bottom or a Page Control for swiping.
+** *Content-driven:* Navigation emerges from the content itself (e.g., games, books).
+* *Core Principles:* Navigation should feel natural, predictable, and logical. The UI should support the user's task without being obtrusive.
+* *Standard Components:* Using standard iOS navigation controls (or their React Native equivalents like Native Stack for {{UINavigationBar}} and well-styled tab components for {{UITabBar}}) is strongly encouraged for familiarity.
+* *Consistency and Usability:* Ensure clear and predictable navigation paths. Transitions should be consistent. Interactive elements (icons, buttons) need clear iconography and appropriate touch target sizes.
 
 h5. Android Material Design Guidelines
 
 Google's Material Design (currently Material 3 or M3) provides comprehensive guidelines for Android. Key navigation aspects include:
-* _Key Navigation Components (M3):_
-* _Navigation Bar:_ Replaces the older "Bottom Navigation." Used for 3-5 top-level destinations, typically on compact screens. Features updated M3 styling (e.g., pill-shaped active indicator).
-* _Navigation Drawer:_ Recommended for apps with 5+ top-level destinations or complex hierarchies. Can be Modal (overlaying content on smaller screens) or Standard (alongside content on larger screens).
-* _Navigation Rail:_ A compact vertical navigation component for medium and expanded screen sizes (tablets/desktops).
-* _Top App Bar:_ Often contains navigation controls like a back button (Up action) or a menu icon to open a Navigation Drawer.
-* _Navigation Directions:_ Material Design defines three primary navigation directions:
-* _Lateral:_ Moving between screens at the same hierarchy level (e.g., using Navigation Bar, Drawer, Tabs).
-* _Forward:_ Moving deeper into the hierarchy or through steps in a flow.
-* *Reverse:** Moving backward, either chronologically (system Back button) or hierarchically within the app (Up action in the Top App Bar).
-* _Back Stack Behavior:_ Android's navigation relies heavily on a back stack. The system Back button typically pops the current screen. Apps should ensure that the "Up" action (often in the app bar) and the system back button provide a consistent and predictable experience for navigating the screen history within the app.
+* *Key Navigation Components (M3):*
+** *Navigation Bar:* Replaces the older "Bottom Navigation." Used for 3-5 top-level destinations, typically on compact screens. Features updated M3 styling (e.g., pill-shaped active indicator).
+** *Navigation Drawer:* Recommended for apps with 5+ top-level destinations or complex hierarchies. Can be Modal (overlaying content on smaller screens) or Standard (alongside content on larger screens).
+** *Navigation Rail:* A compact vertical navigation component for medium and expanded screen sizes (tablets/desktops).
+** *Top App Bar:* Often contains navigation controls like a back button (Up action) or a menu icon to open a Navigation Drawer.
+* *Navigation Directions:* Material Design defines three primary navigation directions:
+** *Lateral:* Moving between screens at the same hierarchy level (e.g., using Navigation Bar, Drawer, Tabs).
+** *Forward:* Moving deeper into the hierarchy or through steps in a flow.
+** *Reverse:* Moving backward, either chronologically (system Back button) or hierarchically within the app (Up action in the Top App Bar).
+* *Back Stack Behavior:* Android's navigation relies heavily on a back stack. The system Back button typically pops the current screen. Apps should ensure that the "Up" action (often in the app bar) and the system back button provide a consistent and predictable experience for navigating the screen history within the app.
 
 By considering these platform-specific guidelines, you can tailor your SpeedyMeds app's navigation to meet user expectations on both iOS and Android, leading to a more polished and professional feel.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > While specific libraries implement these concepts, general UI/UX design principles cover these patterns extensively. For library-specific takes:
 > - [https://reactnavigation.org/docs/navigators/|React Navigation - Navigators]
 - [https://docs.expo.dev/router/layouts/|Expo Router - Layouts (conceptual similarity)]
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ You've seen these patterns in iOS: {{UINavigationController}} for stacks, {{UITabBarController}} for tabs, and often custom implementations or {{UISplitViewController}} (for larger screens) for drawer-like experiences.
-> _Key Takeaway:_ The core concepts are the same. React Native libraries will provide components that replicate this behavior, but you'll configure them declaratively in JavaScript/TypeScript.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* You've seen these patterns in iOS: {{UINavigationController}} for stacks, {{UITabBarController}} for tabs, and often custom implementations or {{UISplitViewController}} (for larger screens) for drawer-like experiences.
+> *Key Takeaway:* The core concepts are the same. React Native libraries will provide components that replicate this behavior, but you'll configure them declaratively in JavaScript/TypeScript.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ Android's Navigation Component directly supports graphs that can represent stacks. {{BottomNavigationView}} is used for tabs, and {{NavigationView}} within a {{DrawerLayout}} is used for drawers.
-> _Key Takeaway:_ React Native navigators offer a cross-platform abstraction for these native patterns, allowing you to define them once.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* Android's Navigation Component directly supports graphs that can represent stacks. {{BottomNavigationView}} is used for tabs, and {{NavigationView}} within a {{DrawerLayout}} is used for drawers.
+> *Key Takeaway:* React Native navigators offer a cross-platform abstraction for these native patterns, allowing you to define them once.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ Stack navigation is like browser history. Tabs can be like different sections of a single-page application (SPA) controlled by a router. Drawers are common as responsive menus on mobile web.
-> _Key Takeaway:_ The main difference in mobile is the tight integration with native gestures and transitions, and the expectation of persistent states within each tab or section.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* Stack navigation is like browser history. Tabs can be like different sections of a single-page application (SPA) controlled by a router. Drawers are common as responsive menus on mobile web.
+> *Key Takeaway:* The main difference in mobile is the tight integration with native gestures and transitions, and the expectation of persistent states within each tab or section.
 
 h4. Next Steps
 

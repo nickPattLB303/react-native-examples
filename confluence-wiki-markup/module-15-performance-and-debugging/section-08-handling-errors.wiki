@@ -2,7 +2,7 @@ h2. Section 8: Handling Errors
 
 Errors are an inevitable part of software development. Robust error handling is crucial for creating stable and user-friendly applications like SpeedyMeds. This section covers techniques for catching, handling, and logging errors in React Native applications, including the use of Error Boundaries.
 
-bq. 🛣️ _(All Learners):_ Implementing proper error handling prevents your app from crashing unexpectedly and allows you to provide a better user experience by displaying helpful messages or fallback UIs when things go wrong.
+bq. 🛣️ *(All Learners):* Implementing proper error handling prevents your app from crashing unexpectedly and allows you to provide a better user experience by displaying helpful messages or fallback UIs when things go wrong.
 
 h3. Conceptual Content: Understanding and Managing Errors
 
@@ -11,15 +11,15 @@ Errors in React Native can originate from JavaScript code (e.g., syntax errors, 
 h4. 1. Error Boundaries
 
 Error Boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. They are a key mechanism for preventing a single UI component error from crashing the entire application.
-* _How they work:_ A class component becomes an Error Boundary if it defines either (or both) of these lifecycle methods:
-* {{static getDerivedStateFromError(error)}}: This static method is called during the "render" phase after an error has been thrown by a descendant component. It should return a value to update state, which then allows you to render a fallback UI in the {{render}} method.
-* {{componentDidCatch(error, errorInfo)}}: This method is called during the "commit" phase after an error has been thrown by a descendant component. It's used for side effects like logging the error to an external service (e.g., Sentry, Bugsnag). It receives both the error and an {{errorInfo}} object with a {{componentStack}} property.
-* _Limitations:_ Error Boundaries do _not_ catch errors for:
-* Event handlers (use {{try/catch}} instead).
-* Asynchronous code (e.g., {{setTimeout}} or {{requestAnimationFrame}} callbacks, Promise chains without explicit {{catch}}).
-* Server-side rendering (not applicable to React Native in the traditional sense).
-* Errors thrown in the Error Boundary component itself (rather than its children).
-* _SpeedyMeds Example:_ Wrapping a complex {{PrescriptionDetailCard}} component with an Error Boundary to show a "Could not display details" message if an unexpected error occurs while rendering the card, rather than crashing the entire prescriptions screen.
+* *How they work:* A class component becomes an Error Boundary if it defines either (or both) of these lifecycle methods:
+** {{static getDerivedStateFromError(error)}}: This static method is called during the "render" phase after an error has been thrown by a descendant component. It should return a value to update state, which then allows you to render a fallback UI in the {{render}} method.
+** {{componentDidCatch(error, errorInfo)}}: This method is called during the "commit" phase after an error has been thrown by a descendant component. It's used for side effects like logging the error to an external service (e.g., Sentry, Bugsnag). It receives both the error and an {{errorInfo}} object with a {{componentStack}} property.
+* *Limitations:* Error Boundaries do _not_ catch errors for:
+** Event handlers (use {{try/catch}} instead).
+** Asynchronous code (e.g., {{setTimeout}} or {{requestAnimationFrame}} callbacks, Promise chains without explicit {{catch}}).
+** Server-side rendering (not applicable to React Native in the traditional sense).
+** Errors thrown in the Error Boundary component itself (rather than its children).
+* *SpeedyMeds Example:* Wrapping a complex {{PrescriptionDetailCard}} component with an Error Boundary to show a "Could not display details" message if an unexpected error occurs while rendering the card, rather than crashing the entire prescriptions screen.
 
 {mermaid}
 flowchart TD
@@ -53,8 +53,8 @@ This diagram illustrates how errors flow through a React Native application with
 h4. 2. Global Error Handlers
 
 While Error Boundaries are great for component-level errors, you might also want a global mechanism to catch unhandled JavaScript exceptions.
-* _{{ErrorUtils}} (Legacy):_ React Native historically had a global variable {{ErrorUtils}} with {{setGlobalHandler}} and {{getGlobalHandler}} methods. While still present, modern approaches often involve dedicated error reporting services.
-* _Error Reporting Services:_ Libraries like Sentry, Bugsnag, or Firebase Crashlytics provide SDKs for React Native that automatically capture unhandled JS errors, native crashes, and allow you to log additional context. These are highly recommended for production applications.
+* *{{ErrorUtils}} (Legacy):* React Native historically had a global variable {{ErrorUtils}} with {{setGlobalHandler}} and {{getGlobalHandler}} methods. While still present, modern approaches often involve dedicated error reporting services.
+* *Error Reporting Services:* Libraries like Sentry, Bugsnag, or Firebase Crashlytics provide SDKs for React Native that automatically capture unhandled JS errors, native crashes, and allow you to log additional context. These are highly recommended for production applications.
 * {{expo-dev-client}} and some Expo modules might also provide hooks or mechanisms for improved error reporting during development.
 
 h4. 3. {{try...catch}} Blocks
@@ -119,16 +119,16 @@ Always handle Promise rejections. Unhandled promise rejections can lead to diffi
 h4. 5. Logging Errors
 
 Consistently logging errors is crucial for debugging and monitoring your application in production.
-* _Development:_ `console.error()` is useful for seeing errors during development.
-* _Production:_ Integrate with a remote logging or error tracking service (Sentry, Bugsnag, Firebase Crashlytics). These services provide dashboards, alerts, and detailed context (like device info, user actions, stack traces) to help you understand and prioritize fixes.
+* *Development:* `console.error()` is useful for seeing errors during development.
+* *Production:* Integrate with a remote logging or error tracking service (Sentry, Bugsnag, Firebase Crashlytics). These services provide dashboards, alerts, and detailed context (like device info, user actions, stack traces) to help you understand and prioritize fixes.
 
-bq. 🌐 _(Web Developers):_ > _Comparison:_ Error Boundaries are a React-specific concept and function identically in React for the web. Similarly, `try...catch` blocks and Promise `.catch()` are standard JavaScript mechanisms for error handling that you already use.
-_Key Takeaway:_ The primary difference when handling errors in React Native is the potential for native errors to surface from underlying device capabilities or native modules. Effective error handling often involves services that can capture and report both JavaScript exceptions and native crashes.
-_Source:_ `[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling|MDN Web Docs: Control flow and error handling]`
+bq. 🌐 *(Web Developers):* > *Comparison:* Error Boundaries are a React-specific concept and function identically in React for the web. Similarly, `try...catch` blocks and Promise `.catch()` are standard JavaScript mechanisms for error handling that you already use.
+*Key Takeaway:* The primary difference when handling errors in React Native is the potential for native errors to surface from underlying device capabilities or native modules. Effective error handling often involves services that can capture and report both JavaScript exceptions and native crashes.
+*Source:* `[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling|MDN Web Docs: Control flow and error handling]`
 
-bq. 📲 _(Native Developers):_ > _Comparison:_ React\'s Error Boundaries provide a component-level `try...catch` mechanism specifically for errors occurring during the render lifecycle of their children, which is a JavaScript-layer concept. Global error handlers and third-party reporting services (like Sentry or Firebase Crashlytics) in React Native serve a purpose similar to how these services capture unhandled exceptions and native crashes in pure native Android/iOS development.
-_Key Takeaway:_ It\'s important to distinguish between JavaScript errors (which can be caught by Error Boundaries or `try...catch` within JS) and native code crashes. Comprehensive error reporting tools are valuable as they can often capture both types of issues.
-_Source:_ `[https://firebase.google.com/docs/crashlytics|Firebase Crashlytics Documentation]`
+bq. 📲 *(Native Developers):* > *Comparison:* React\'s Error Boundaries provide a component-level `try...catch` mechanism specifically for errors occurring during the render lifecycle of their children, which is a JavaScript-layer concept. Global error handlers and third-party reporting services (like Sentry or Firebase Crashlytics) in React Native serve a purpose similar to how these services capture unhandled exceptions and native crashes in pure native Android/iOS development.
+*Key Takeaway:* It\'s important to distinguish between JavaScript errors (which can be caught by Error Boundaries or `try...catch` within JS) and native code crashes. Comprehensive error reporting tools are valuable as they can often capture both types of issues.
+*Source:* `[https://firebase.google.com/docs/crashlytics|Firebase Crashlytics Documentation]`
 
 h3. Procedural Content: Implementing Error Handling
 
@@ -276,7 +276,7 @@ If `ProblematicComponent` throws an error during rendering, the `ErrorBoundary` 
 {tip}
 Place Error Boundaries strategically. You might have a global one at the root of your app, and more specific ones around complex or critical UI sections (like navigation routes or major features).
 {tip}
-bq. 📚 _Official Documentation & Resources:_
+bq. 📚 *Official Documentation & Resources:*
 > - [https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary|React Docs: Error Boundaries]
 - [https://reactnative.dev/docs/javascript-environment#javascript-runtime|React Native Docs: Handling Errors (Conceptual, often points to general JS practices)]
 - [https://docs.expo.dev/debugging/errors-and-warnings/|Expo Docs: Error Handling and Debugging]
@@ -286,6 +286,6 @@ bq. 📚 _Official Documentation & Resources:_
 h3. Exercise
 
 Time to practice implementing an Error Boundary.
-* _Exercise 15.2: Implementing an Error Boundary_
-* `_(https://snack.expo.dev/Error-Boundary-Exercise-15-2)_`
-* _Instructions: You will be provided with a Snack that includes a component prone to errors when rendering SpeedyMeds data. Your task is to create and implement an `ErrorBoundary` component to gracefully handle these errors and display a fallback UI. The `README.md` in the Snack will have detailed requirements._
+* *Exercise 15.2: Implementing an Error Boundary*
+** `*(https://snack.expo.dev/Error-Boundary-Exercise-15-2)*`
+** _Instructions: You will be provided with a Snack that includes a component prone to errors when rendering SpeedyMeds data. Your task is to create and implement an `ErrorBoundary` component to gracefully handle these errors and display a fallback UI. The `README.md` in the Snack will have detailed requirements._

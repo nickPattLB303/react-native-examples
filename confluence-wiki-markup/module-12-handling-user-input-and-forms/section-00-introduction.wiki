@@ -13,13 +13,13 @@ This module assumes the use of the following technology versions:
 * React Native Paper: v5.x (specifically 5.14.0 or later, as per report)
 * TypeScript: 5.x (as per report)
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ You're likely familiar with native UI elements for input (like {{EditText}} on Android or {{UITextField}} on iOS) and their associated listeners or delegate methods for handling changes. In React Native, while the {{TextInput}} component serves a similar purpose, the patterns for state management (often using React state hooks) and data flow will be different, emphasizing a declarative approach. Form validation, often handled manually or with platform-specific utilities, can be streamlined with JavaScript libraries.
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* You're likely familiar with native UI elements for input (like {{EditText}} on Android or {{UITextField}} on iOS) and their associated listeners or delegate methods for handling changes. In React Native, while the {{TextInput}} component serves a similar purpose, the patterns for state management (often using React state hooks) and data flow will be different, emphasizing a declarative approach. Form validation, often handled manually or with platform-specific utilities, can be streamlined with JavaScript libraries.
 
-bq. 🌐 _(Web Developers - React/Angular):_
-> _Comparison:_ If you're coming from React for the web, the concept of controlled components will be very familiar. The {{TextInput}} in React Native is analogous to the {{<input>}} element in HTML. Angular developers will find similarities in template-driven or reactive forms, but React Native's approach, especially with libraries like React Hook Form, often leans more towards hook-based, explicit state management.
-> _Key Takeaway:_ Leverage your understanding of controlled components. Pay attention to how React Native handles specific input events (like {{onChangeText}} vs. {{onChange}}) and how form libraries adapt to the React Native environment.
-> _Source:_ [https://react-hook-form.com/get-started|React Hook Form - Get Started]
+bq. 🌐 *(Web Developers - React/Angular):*
+> *Comparison:* If you're coming from React for the web, the concept of controlled components will be very familiar. The {{TextInput}} in React Native is analogous to the {{<input>}} element in HTML. Angular developers will find similarities in template-driven or reactive forms, but React Native's approach, especially with libraries like React Hook Form, often leans more towards hook-based, explicit state management.
+> *Key Takeaway:* Leverage your understanding of controlled components. Pay attention to how React Native handles specific input events (like {{onChangeText}} vs. {{onChange}}) and how form libraries adapt to the React Native environment.
+> *Source:* [https://react-hook-form.com/get-started|React Hook Form - Get Started]
 
 *Learning Objectives:*
 

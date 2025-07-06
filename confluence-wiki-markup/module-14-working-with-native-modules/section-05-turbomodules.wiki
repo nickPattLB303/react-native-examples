@@ -4,22 +4,22 @@ This section delves into TurboModules, a key component of React Native's New Arc
 
 ![../../assets/diagrams/react-native-new-architecture.png|Diagram: React Native's New Architecture]
 
-This diagram illustrates React Native's New Architecture, highlighting key layers and components. The _JavaScript Layer_, containing your application code, interacts via the _JavaScript Interface (JSI)_. JSI enables direct, high-performance communication with the _C++ Layer_. Here, _Codegen_ automatically generates bindings for _TurboModules_ (for native device APIs) and _Fabric_ (the new UI management system). Dotted lines from JSI show these direct call capabilities. At the base, the _Native Layer_ depicts TurboModules accessing _Device APIs_ (e.g., camera, sensors) and Fabric managing platform-specific _Native UI_ elements. This streamlined structure aims for enhanced performance and type safety.
+This diagram illustrates React Native's New Architecture, highlighting key layers and components. The *JavaScript Layer*, containing your application code, interacts via the *JavaScript Interface (JSI)*. JSI enables direct, high-performance communication with the *C++ Layer*. Here, *Codegen* automatically generates bindings for *TurboModules* (for native device APIs) and *Fabric* (the new UI management system). Dotted lines from JSI show these direct call capabilities. At the base, the *Native Layer* depicts TurboModules accessing *Device APIs* (e.g., camera, sensors) and Fabric managing platform-specific *Native UI* elements. This streamlined structure aims for enhanced performance and type safety.
 
 h3. Purpose and Goals of TurboModules
 
 TurboModules represent the evolution of Native Modules within React Native's New Architecture. They are designed to replace the legacy native module system, addressing its performance bottlenecks and lack of type safety. The primary goals are:
-* _Improved Performance:_ Leverage the JSI layer for faster, more direct communication between JavaScript and native code, including the possibility of synchronous execution.
-* _Strong Type Safety:_ Enforce consistency between the JavaScript interface and the native implementation at build time, reducing runtime errors.
-* _Lazy Loading:_ Load native modules into memory only when they are first required by the JavaScript code, improving application startup time.
-* _Reduced Initialization Overhead:_ Streamline the process of making native modules available to JavaScript.
+* *Improved Performance:* Leverage the JSI layer for faster, more direct communication between JavaScript and native code, including the possibility of synchronous execution.
+* *Strong Type Safety:* Enforce consistency between the JavaScript interface and the native implementation at build time, reducing runtime errors.
+* *Lazy Loading:* Load native modules into memory only when they are first required by the JavaScript code, improving application startup time.
+* *Reduced Initialization Overhead:* Streamline the process of making native modules available to JavaScript.
 
 h3. Core Concepts of TurboModules (Under the Hood)
 
 TurboModules achieve their goals through a combination of JSI, explicit specifications, and code generation:
-# _JSI (JavaScript Interface):_
+# *JSI (JavaScript Interface):*
     As discussed previously, TurboModules are fundamentally built upon JSI. They rely on JSI's ability to allow JavaScript to hold direct references to native objects (implemented in C++ initially, then bridging to platform native code) and invoke methods on them. This direct interaction bypasses the serialization and asynchronous queuing of the legacy Bridge.
-# _Specification (Spec) File:_
+# *Specification (Spec) File:*
     The contract, or API, of a TurboModule is explicitly defined in a JavaScript file using strict typing. This is typically done using TypeScript (or Flow). This "spec" file (e.g., {{NativeMyModule.ts}}) details the exact methods the module will expose to JavaScript, including the method names, parameter types, and return types (including Promises).
 
     ```typescript
@@ -44,10 +44,10 @@ TurboModules achieve their goals through a combination of JSI, explicit specific
     ```
 
     This TypeScript interface, {{MyTurboModuleSpec.ts}}, serves as the definitive contract for the {{MyTurboModule}}. It explicitly declares all methods intended for JavaScript consumption, along with their parameter types and return types. For example, {{getConstants}} is expected to return an object with a {{PI}} number, {{sayHelloSync}} is a synchronous function taking a string and returning a string, and {{doSomethingAsync}} is an asynchronous function returning a Promise. This spec file is the single source of truth that Codegen will use.
-# _Codegen (Code Generation):_
-    React Native includes a build-time tool called _Codegen_. This tool reads the JavaScript spec file (TypeScript/Flow) and automatically generates significant portions of the boilerplate code required to connect the JavaScript side to the native implementations. This generated code includes:
-*_ _C++ interface code:* Defines the C++ representation of the module that interacts directly with JSI.
-*_ _Native interface code:* Generates interfaces or protocols in the target native languages (Java/Kotlin for Android, Objective-C++ for iOS) that the developer's custom native implementation must conform to.
+# *Codegen (Code Generation):*
+    React Native includes a build-time tool called *Codegen*. This tool reads the JavaScript spec file (TypeScript/Flow) and automatically generates significant portions of the boilerplate code required to connect the JavaScript side to the native implementations. This generated code includes:
+*** *C++ interface code:* Defines the C++ representation of the module that interacts directly with JSI.
+*** *Native interface code:* Generates interfaces or protocols in the target native languages (Java/Kotlin for Android, Objective-C++ for iOS) that the developer's custom native implementation must conform to.
 
     ```mermaid
     graph LR
@@ -83,52 +83,52 @@ TurboModules achieve their goals through a combination of JSI, explicit specific
     This diagram outlines the Codegen process within the New Architecture. It begins with the developer creating a specification file (typically in TypeScript) that strictly defines the interface of the native module—its methods, parameters, and return types. During the application's build process, Codegen is triggered. It parses this spec file and, based on the defined contract, automatically generates several pieces of code. Key outputs include C++ JSI interface code, which forms the low-level bridge for JavaScript to interact with native C++ objects, and native interface stubs or protocols for each target platform (Java/Kotlin for Android, Objective-C++/Swift for iOS). Developers then write their platform-specific native logic, ensuring their implementations conform to these Codegen-generated interfaces. This automated generation of bridging code and strict interface enforcement are central to TurboModules' type safety and efficiency.
 
     Codegen ensures that the native implementation adheres precisely to the structure defined in the JS spec, guaranteeing type consistency across the JS-Native boundary. It also significantly reduces the amount of manual "glue" code developers need to write.
-# _Lazy Loading:_
+# *Lazy Loading:*
     Unlike legacy modules, which were often discovered and initialized eagerly during application startup, TurboModules are designed to be loaded on demand. The JavaScript runtime only resolves and initializes the native implementation of a TurboModule the first time one of its methods is actually called from JavaScript. This "just-in-time" loading contributes to faster application startup times.
 
 This shift towards an interface-driven approach (Spec + Codegen) marks a significant maturation in how React Native handles native integrations, leading to more robust and maintainable native modules.
 
 h3. Key Benefits of TurboModules
-# _Performance:_ The combination of JSI's direct, synchronous-capable communication and lazy loading leads to significant performance improvements, especially for frequently called methods and app startup time.
-# _Type Safety:_ By defining the module interface in TypeScript/Flow and using Codegen to generate corresponding native interfaces, type mismatches between JavaScript calls and native implementations are caught at build time, not as runtime errors.
-# _Reduced Boilerplate:_ Codegen automates the generation of repetitive and error-prone bridging code (especially the C++ JSI layer), allowing developers to focus more on the core native logic.
-# _Better Developer Experience (in the long run):_ While the initial setup for creating a TurboModule can be more involved, the strongly-typed interfaces and improved performance characteristics aim to provide a more robust development experience. The Expo Modules API is built with the New Architecture in mind and aims to simplify the creation of modern native modules that can leverage these benefits.
+# *Performance:* The combination of JSI's direct, synchronous-capable communication and lazy loading leads to significant performance improvements, especially for frequently called methods and app startup time.
+# *Type Safety:* By defining the module interface in TypeScript/Flow and using Codegen to generate corresponding native interfaces, type mismatches between JavaScript calls and native implementations are caught at build time, not as runtime errors.
+# *Reduced Boilerplate:* Codegen automates the generation of repetitive and error-prone bridging code (especially the C++ JSI layer), allowing developers to focus more on the core native logic.
+# *Better Developer Experience (in the long run):* While the initial setup for creating a TurboModule can be more involved, the strongly-typed interfaces and improved performance characteristics aim to provide a more robust development experience. The Expo Modules API is built with the New Architecture in mind and aims to simplify the creation of modern native modules that can leverage these benefits.
 
 h3. Development Workflow for TurboModules (Conceptual)
 
 Creating a TurboModule involves these conceptual steps:
-# _Write the Spec:_ Create a TypeScript (or Flow) file defining the interface of the module, specifying all methods and their signatures (e.g., {{NativeMyModule.ts}}).
-# _Configure Codegen:_ Set up the project's build configuration (e.g., in {{package.json}} and Gradle/Podfile scripts) to run Codegen, pointing it to the spec file(s).
-# _Run Codegen:_ Execute the build process (e.g., {{yarn android}} or {{yarn ios}}), which triggers Codegen to generate the C++ and native interface code based on the spec.
-# _Implement Native Logic:_ Write the platform-specific native code (Java/Kotlin for Android, Objective-C++/Swift for iOS) that implements the logic for the methods defined in the spec. This implementation must conform to the interfaces generated by Codegen.
-# _Register the Module:_ Ensure the native module implementation is registered with React Native so it can be found and invoked via JSI (often handled by the generated code and module setup).
-# _Integrate:_ Link the native code into the application's build process (e.g., via Gradle for Android, CocoaPods for iOS).
+# *Write the Spec:* Create a TypeScript (or Flow) file defining the interface of the module, specifying all methods and their signatures (e.g., {{NativeMyModule.ts}}).
+# *Configure Codegen:* Set up the project's build configuration (e.g., in {{package.json}} and Gradle/Podfile scripts) to run Codegen, pointing it to the spec file(s).
+# *Run Codegen:* Execute the build process (e.g., {{yarn android}} or {{yarn ios}}), which triggers Codegen to generate the C++ and native interface code based on the spec.
+# *Implement Native Logic:* Write the platform-specific native code (Java/Kotlin for Android, Objective-C++/Swift for iOS) that implements the logic for the methods defined in the spec. This implementation must conform to the interfaces generated by Codegen.
+# *Register the Module:* Ensure the native module implementation is registered with React Native so it can be found and invoked via JSI (often handled by the generated code and module setup).
+# *Integrate:* Link the native code into the application's build process (e.g., via Gradle for Android, CocoaPods for iOS).
 
 While Codegen simplifies the bridging aspect, implementing TurboModules still demands substantial native development expertise.
 
 h3. Conceptual Differences from Legacy Modules
 
 ||Feature||Legacy Native Modules||TurboModules (New Architecture)||
-|_Communication_|Asynchronous Bridge|JSI (Synchronous & Asynchronous)|
-|_Loading_|Eager (often at startup)|Lazy (on first use)|
-|_JS Interface_|JavaScriptCore (iOS), V8/JSC (Android)|JSI (abstracts JS engine)|
-|_Boilerplate_|Manual bridging code|Less manual C++ via Codegen, more spec files|
+|*Communication*|Asynchronous Bridge|JSI (Synchronous & Asynchronous)|
+|*Loading*|Eager (often at startup)|Lazy (on first use)|
+|*JS Interface*|JavaScriptCore (iOS), V8/JSC (Android)|JSI (abstracts JS engine)|
+|*Boilerplate*|Manual bridging code|Less manual C++ via Codegen, more spec files|
 {note}
 Adopting the New Architecture, including TurboModules, is an ongoing process for the React Native ecosystem. Many existing community libraries are still based on the legacy architecture. However, new libraries and updates are increasingly supporting or being built for the New Architecture. The Expo SDK is also progressively aligning with the New Architecture.
 {note}
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ With TurboModules, you still write Swift or Objective-C code, but the way it's exposed and interacts with JavaScript changes. You'll define your module's interface more explicitly, often using a JavaScript type definition (like TypeScript) that Codegen uses to generate bridging code (including C++ and Objective-C++ protocols). The interaction becomes more direct thanks to JSI.
-> _Key Takeaway:_ TurboModules represent a more modern, performant, and type-safe way to bridge your native iOS code, moving away from {{RCT_EXPORT_METHOD}} macros towards JSI-backed interactions facilitated by Codegen.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* With TurboModules, you still write Swift or Objective-C code, but the way it's exposed and interacts with JavaScript changes. You'll define your module's interface more explicitly, often using a JavaScript type definition (like TypeScript) that Codegen uses to generate bridging code (including C++ and Objective-C++ protocols). The interaction becomes more direct thanks to JSI.
+> *Key Takeaway:* TurboModules represent a more modern, performant, and type-safe way to bridge your native iOS code, moving away from {{RCT_EXPORT_METHOD}} macros towards JSI-backed interactions facilitated by Codegen.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ Similar to iOS, you'll write Kotlin or Java code. The interface for your module will be strictly defined, typically with TypeScript, which Codegen uses to create the JSI bindings and native Java interfaces. This offers more robust type checking than the traditional {{@ReactMethod}} annotations and allows for more direct native calls from JavaScript.
-> _Key Takeaway:_ TurboModules provide a more structured and efficient mechanism for exposing your Android native logic, with improved type safety and performance due to JSI and Codegen.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* Similar to iOS, you'll write Kotlin or Java code. The interface for your module will be strictly defined, typically with TypeScript, which Codegen uses to create the JSI bindings and native Java interfaces. This offers more robust type checking than the traditional {{@ReactMethod}} annotations and allows for more direct native calls from JavaScript.
+> *Key Takeaway:* TurboModules provide a more structured and efficient mechanism for exposing your Android native logic, with improved type safety and performance due to JSI and Codegen.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ Think of the evolution from older server communication methods (like complex XMLHttpRequests with manual data parsing) to modern typed APIs (like GraphQL with generated client-side types or gRPC). TurboModules, with Codegen and JSI, bring a similar level of formality, type safety, and efficiency to the communication layer between JavaScript and native mobile code, compared to the older, more loosely typed bridge.
-> _Key Takeaway:_ TurboModules represent a significant step towards making JavaScript-to-native communication faster, more reliable, and easier to maintain due to build-time checks and more direct interaction.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* Think of the evolution from older server communication methods (like complex XMLHttpRequests with manual data parsing) to modern typed APIs (like GraphQL with generated client-side types or gRPC). TurboModules, with Codegen and JSI, bring a similar level of formality, type safety, and efficiency to the communication layer between JavaScript and native mobile code, compared to the older, more loosely typed bridge.
+> *Key Takeaway:* TurboModules represent a significant step towards making JavaScript-to-native communication faster, more reliable, and easier to maintain due to build-time checks and more direct interaction.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/the-new-architecture/why|React Native New Architecture: Why a new architecture?]
 - [https://reactnative.dev/docs/the-new-architecture/pillars-turbomodules|React Native New Architecture: TurboModules]
 - [https://reactnative.dev/docs/the-new-architecture/modules-codegen|React Native New Architecture: Codegen]

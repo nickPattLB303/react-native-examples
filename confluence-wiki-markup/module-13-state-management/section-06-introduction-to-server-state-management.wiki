@@ -1,21 +1,21 @@
 h2. Section 6: Introduction to Server State Management
 
-So far in this module, we've focused on _client state_: data that originates and lives primarily within your application on the user's device. This includes UI state (like whether a modal is open), theme preferences, user input, or cached user settings. We've seen how tools like {{useState}}, Context API, and Zustand can help manage this type of state effectively.
+So far in this module, we've focused on *client state*: data that originates and lives primarily within your application on the user's device. This includes UI state (like whether a modal is open), theme preferences, user input, or cached user settings. We've seen how tools like {{useState}}, Context API, and Zustand can help manage this type of state effectively.
 
-However, a significant portion of the data in modern mobile applications like SpeedyMeds doesn't originate on the client. Instead, it resides on a _server_ and is fetched, updated, and synchronized over a network. This is what we call _server state_, and managing it comes with a unique set of challenges that often require specialized tools.
+However, a significant portion of the data in modern mobile applications like SpeedyMeds doesn't originate on the client. Instead, it resides on a *server* and is fetched, updated, and synchronized over a network. This is what we call *server state*, and managing it comes with a unique set of challenges that often require specialized tools.
 
-bq. 🛣️ _(All Learners):_ This section marks an important transition from client-side to server-side state management, which is crucial for building real-world applications. The concepts covered here will fundamentally change how you think about data in your React Native apps, making your API integration more robust and maintainable.
+bq. 🛣️ *(All Learners):* This section marks an important transition from client-side to server-side state management, which is crucial for building real-world applications. The concepts covered here will fundamentally change how you think about data in your React Native apps, making your API integration more robust and maintainable.
 
-bq. 🔁 _(Asynchronous Learners):_ Even if you're jumping directly to this section, ensure you understand the basics of React state (useState, useEffect) as the server state management solutions we'll cover build upon those foundations. This section serves as a standalone introduction to server state concepts regardless of which client-side state management approach you prefer.
+bq. 🔁 *(Asynchronous Learners):* Even if you're jumping directly to this section, ensure you understand the basics of React state (useState, useEffect) as the server state management solutions we'll cover build upon those foundations. This section serves as a standalone introduction to server state concepts regardless of which client-side state management approach you prefer.
 
 h3. What is Server State?
 
 Server state refers to data that is persisted remotely on a server and is not directly controlled by your client application. Key characteristics of server state include:
-* _Asynchronously Fetched:_ You need to make network requests (e.g., HTTP GET, POST, PUT, DELETE) to retrieve or modify this data.
-* _Owned Remotely:_ The canonical source of truth for this data is the server. Your client application holds a local _copy_ or cache of this data.
-* _Can Become Stale:_ The data on the server can be changed by other users, other devices, or background processes at any time. Your client's copy can quickly become outdated or "stale."
-* _Shared Across Users/Devices:_ The same server data (e.g., a list of available medications in SpeedyMeds) might be accessed and modified by multiple users or different instances of your app.
-* _Caching is Crucial:_ To provide a good user experience and reduce network load, this data needs to be cached on the client.
+* *Asynchronously Fetched:* You need to make network requests (e.g., HTTP GET, POST, PUT, DELETE) to retrieve or modify this data.
+* *Owned Remotely:* The canonical source of truth for this data is the server. Your client application holds a local _copy_ or cache of this data.
+* *Can Become Stale:* The data on the server can be changed by other users, other devices, or background processes at any time. Your client's copy can quickly become outdated or "stale."
+* *Shared Across Users/Devices:* The same server data (e.g., a list of available medications in SpeedyMeds) might be accessed and modified by multiple users or different instances of your app.
+* *Caching is Crucial:* To provide a good user experience and reduce network load, this data needs to be cached on the client.
 
 Examples of server state in the SpeedyMeds app could include:
 * The user's profile information (name, address, insurance details).
@@ -29,25 +29,25 @@ h3. Client State vs. Server State
 It's crucial to differentiate between client state and server state because they have different lifecycles and concerns:
 
 ||Feature||Client State||Server State||
-|_Ownership_|Client application controls it directly|Server owns the data; client has a cached copy|
-|_Persistence_|On the device (memory, {{AsyncStorage}}, etc.)|On a remote server (databases, etc.)|
-|_Source of Truth_|The client application|The server|
-|_Volatility_|Changes based on user interaction or app logic|Can change at any time due to external factors, becomes stale|
-|_Access_|Synchronous (usually)|Asynchronous (requires network requests)|
-|_Sharing_|Typically local to a user/device|Often shared across multiple users/devices|
+|*Ownership*|Client application controls it directly|Server owns the data; client has a cached copy|
+|*Persistence*|On the device (memory, {{AsyncStorage}}, etc.)|On a remote server (databases, etc.)|
+|*Source of Truth*|The client application|The server|
+|*Volatility*|Changes based on user interaction or app logic|Can change at any time due to external factors, becomes stale|
+|*Access*|Synchronous (usually)|Asynchronous (requires network requests)|
+|*Sharing*|Typically local to a user/device|Often shared across multiple users/devices|
 h3. Unique Challenges of Managing Server State
 
 Because of its nature, managing server state presents several challenges that aren't as prevalent with client state:
-# _Fetching and Re-fetching:_ You need robust mechanisms to fetch initial data and then re-fetch it when necessary (e.g., when the user pulls to refresh, when the app comes to the foreground, or after a mutation).
-# _Caching:_ Storing fetched data locally is essential for performance and offline access. This involves deciding how long to cache data, when to invalidate it (mark as stale), and when to garbage collect (remove) old data.
-# _Synchronization and Staleness:_ How do you ensure the data displayed to the user is reasonably up-to-date? This involves strategies for background updates, refetching on intervals, or real-time updates.
-# _Optimistic Updates:_ To make the UI feel responsive, you might want to update the UI _immediately_ after a user performs an action before the server confirms the change. If the server request fails, you need to roll back the optimistic update.
-# _Pagination and Infinite Scrolling:_ Efficiently loading and displaying large datasets often requires fetching data in chunks (pages) or implementing infinite scrolling.
-# _Mutations (Updates, Creates, Deletes):_ Modifying data on the server requires sending requests and then handling the response, often by invalidating relevant cached data.
-# _Error Handling and Retries:_ Network requests can fail. You need strategies for handling errors gracefully, possibly retrying failed requests automatically.
-# _Loading States:_ Users need clear feedback when data is being fetched or mutations are in progress.
-# _Request Deduplication:_ Preventing multiple identical API requests from being fired simultaneously when several components need the same data requires coordination.
-# _Boilerplate Code:_ Manually managing all the above often leads to a lot of repetitive {{useEffect}} hooks and state variables for loading, error, and data states.
+# *Fetching and Re-fetching:* You need robust mechanisms to fetch initial data and then re-fetch it when necessary (e.g., when the user pulls to refresh, when the app comes to the foreground, or after a mutation).
+# *Caching:* Storing fetched data locally is essential for performance and offline access. This involves deciding how long to cache data, when to invalidate it (mark as stale), and when to garbage collect (remove) old data.
+# *Synchronization and Staleness:* How do you ensure the data displayed to the user is reasonably up-to-date? This involves strategies for background updates, refetching on intervals, or real-time updates.
+# *Optimistic Updates:* To make the UI feel responsive, you might want to update the UI _immediately_ after a user performs an action before the server confirms the change. If the server request fails, you need to roll back the optimistic update.
+# *Pagination and Infinite Scrolling:* Efficiently loading and displaying large datasets often requires fetching data in chunks (pages) or implementing infinite scrolling.
+# *Mutations (Updates, Creates, Deletes):* Modifying data on the server requires sending requests and then handling the response, often by invalidating relevant cached data.
+# *Error Handling and Retries:* Network requests can fail. You need strategies for handling errors gracefully, possibly retrying failed requests automatically.
+# *Loading States:* Users need clear feedback when data is being fetched or mutations are in progress.
+# *Request Deduplication:* Preventing multiple identical API requests from being fired simultaneously when several components need the same data requires coordination.
+# *Boilerplate Code:* Manually managing all the above often leads to a lot of repetitive {{useEffect}} hooks and state variables for loading, error, and data states.
 
 Treating server state merely as another piece of client state ignores its unique lifecycle and characteristics (asynchronicity, caching needs, staleness). This mismatch leads developers using client-state tools for server state to inevitably build complex, often buggy, and hard-to-maintain abstractions around {{useEffect}} and {{useState}}.
 
@@ -68,35 +68,35 @@ Client state libraries excel at managing UI state and data that truly belongs to
 h3. Dedicated Server State Management Libraries
 
 Recognizing these unique challenges, a category of libraries has emerged specifically designed to manage server state in client applications. These libraries provide declarative APIs and handle much of the complexity of data fetching, caching, synchronization, and updates automatically. They typically offer benefits like:
-* _Abstraction:_ They abstract away the complexities of manual data fetching, caching, background updates, synchronization, retries, etc.
-* _Declarative API:_ Provide a declarative way to specify data dependencies (e.g., "this component needs this data") and mutations, letting the library handle the imperative fetching logic.
-* _Built-in Features:_ Offer pre-built solutions for common problems like caching strategies (stale-while-revalidate), window focus refetching, network reconnection refetching, pagination, optimistic updates, and more.
-* _Reduced Boilerplate:_ Drastically reduce the amount of repetitive code needed compared to manual fetching approaches with {{useEffect}} and {{useState}}.
-* _Improved Developer Experience:_ Provide better tooling (like DevTools for inspecting cache and query states) and established conventions, leading to faster development and easier debugging.
+* *Abstraction:* They abstract away the complexities of manual data fetching, caching, background updates, synchronization, retries, etc.
+* *Declarative API:* Provide a declarative way to specify data dependencies (e.g., "this component needs this data") and mutations, letting the library handle the imperative fetching logic.
+* *Built-in Features:* Offer pre-built solutions for common problems like caching strategies (stale-while-revalidate), window focus refetching, network reconnection refetching, pagination, optimistic updates, and more.
+* *Reduced Boilerplate:* Drastically reduce the amount of repetitive code needed compared to manual fetching approaches with {{useEffect}} and {{useState}}.
+* *Improved Developer Experience:* Provide better tooling (like DevTools for inspecting cache and query states) and established conventions, leading to faster development and easier debugging.
 
 By using such a library, you can significantly reduce boilerplate, improve application performance, and provide a more robust and responsive user experience when dealing with server data.
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ You're familiar with fetching data using {{URLSession}} (with completion handlers or {{async/await}}) and parsing JSON. Managing the lifecycle of this data—caching it (e.g., with {{NSCache}} or Core Data), handling loading states, errors, and deciding when to re-fetch—is often custom-built. While SwiftUI offers property wrappers like {{@State}} and {{@ObservedObject}} for UI updates, they don't inherently solve server state concerns like caching or background sync without additional logic. The challenges of keeping data fresh and avoiding excessive network calls are universal.
-> _Key Takeaway:_ Dedicated server state libraries in React Native aim to abstract away much of the manual work you'd do around {{URLSession}} data tasks, providing built-in solutions for caching, staleness, and refetching that you might otherwise implement with custom managers or combine with Core Data for persistence.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* You're familiar with fetching data using {{URLSession}} (with completion handlers or {{async/await}}) and parsing JSON. Managing the lifecycle of this data—caching it (e.g., with {{NSCache}} or Core Data), handling loading states, errors, and deciding when to re-fetch—is often custom-built. While SwiftUI offers property wrappers like {{@State}} and {{@ObservedObject}} for UI updates, they don't inherently solve server state concerns like caching or background sync without additional logic. The challenges of keeping data fresh and avoiding excessive network calls are universal.
+> *Key Takeaway:* Dedicated server state libraries in React Native aim to abstract away much of the manual work you'd do around {{URLSession}} data tasks, providing built-in solutions for caching, staleness, and refetching that you might otherwise implement with custom managers or combine with Core Data for persistence.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ You likely use Retrofit for network calls, potentially with Coroutines or RxJava for asynchronous operations. Data might be stored in a Room database (as a cache or local source of truth) and exposed via {{LiveData}} or {{Flow}} from a {{ViewModel}} using a Repository pattern. While this is a robust setup, managing caching logic, deciding when data is stale, handling optimistic updates, and background synchronization often require significant manual implementation within the Repository or {{ViewModel}}.
-> _Key Takeaway:_ Server state libraries in React Native automate many of the patterns you might build into a Repository (like caching, background refresh logic, handling loading/error states per request). They provide a more declarative approach to data fetching compared to manually orchestrating calls through Retrofit and managing the subsequent state in {{ViewModel}}s.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* You likely use Retrofit for network calls, potentially with Coroutines or RxJava for asynchronous operations. Data might be stored in a Room database (as a cache or local source of truth) and exposed via {{LiveData}} or {{Flow}} from a {{ViewModel}} using a Repository pattern. While this is a robust setup, managing caching logic, deciding when data is stale, handling optimistic updates, and background synchronization often require significant manual implementation within the Repository or {{ViewModel}}.
+> *Key Takeaway:* Server state libraries in React Native automate many of the patterns you might build into a Repository (like caching, background refresh logic, handling loading/error states per request). They provide a more declarative approach to data fetching compared to manually orchestrating calls through Retrofit and managing the subsequent state in {{ViewModel}}s.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison (React):_ Before libraries like TanStack Query, React developers often managed server state with {{useEffect}} for fetching, {{useState}} for data/loading/error states, and potentially Context API or Redux to store this data globally. This involved a lot of boilerplate for caching, optimistic updates, and synchronization logic, essentially building a mini-query library per project.
-_Comparison (Angular):_ Angular developers typically use Services with HttpClient for data fetching, often combined with RxJS for managing asynchronous streams. While RxJS provides powerful operators, implementing caching, retries, and background sync still requires custom logic within these services. NGRX can store server state, but like Redux, requires more boilerplate for the fetching lifecycle.
-> _Key Takeaway:_ Dedicated server state libraries like TanStack Query provide a specialized layer that handles the complexities of server communication, caching, and synchronization, significantly reducing the custom boilerplate common in earlier React patterns or manual service implementations in Angular.
+bq. 🌐 *(Web Developers):*
+> *Comparison (React):* Before libraries like TanStack Query, React developers often managed server state with {{useEffect}} for fetching, {{useState}} for data/loading/error states, and potentially Context API or Redux to store this data globally. This involved a lot of boilerplate for caching, optimistic updates, and synchronization logic, essentially building a mini-query library per project.
+*Comparison (Angular):* Angular developers typically use Services with HttpClient for data fetching, often combined with RxJS for managing asynchronous streams. While RxJS provides powerful operators, implementing caching, retries, and background sync still requires custom logic within these services. NGRX can store server state, but like Redux, requires more boilerplate for the fetching lifecycle.
+> *Key Takeaway:* Dedicated server state libraries like TanStack Query provide a specialized layer that handles the complexities of server communication, caching, and synchronization, significantly reducing the custom boilerplate common in earlier React patterns or manual service implementations in Angular.
 
-bq. 📚 _Official Documentation & Explanatory Articles:_
+bq. 📚 *Official Documentation & Explanatory Articles:*
 > - [https://tanstack.com/query/v5|TanStack Query Docs (Covers Server State concepts extensively)]
 - [https://dev.to/jeetvora331/server-state-vs-client-state-in-react-for-beginners-3pl6|Understanding Server State vs. Client State (DEV.to Article)]
 - [https://www.fullstackfoundations.com/blog/client-side-vs-server-side|Client-Side vs. Server-Side (Fullstack Foundations - General Concepts)]
 
 h3. Setting the Stage for TanStack Query
 
-One of the most popular and powerful server state management libraries in the React ecosystem is _TanStack Query_ (formerly known as React Query). It provides a comprehensive set of tools to tackle all the challenges of server state management we've discussed.
+One of the most popular and powerful server state management libraries in the React ecosystem is *TanStack Query* (formerly known as React Query). It provides a comprehensive set of tools to tackle all the challenges of server state management we've discussed.
 
 In the upcoming sections, we will dive deep into TanStack Query, exploring its core concepts and how it can revolutionize the way you handle server data in your SpeedyMeds React Native application.
 

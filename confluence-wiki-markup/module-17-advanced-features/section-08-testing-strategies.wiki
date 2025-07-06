@@ -2,37 +2,37 @@ h2. Section 8: Testing Strategies
 
 This section provides an introduction to testing strategies in React Native. Writing tests is a crucial part of software development that helps ensure your application's quality, reliability, and maintainability. We will focus on unit testing with Jest and component testing with React Native Testing Library.
 
-bq. 🧑‍🏫 _(Instructor-Led):_ In a classroom setting, consider forming small groups to write tests for the same component or utility function, then compare approaches. Discussing different testing strategies can lead to valuable insights about what makes a good test. Be prepared to demonstrate how to debug failing tests.
-> 🧗‍♀️ _(Self-Led):_ Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
-> 🔁 _(Asynchronous):_ If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
-> 🛣️ _(All Learners):_ Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
+bq. 🧑‍🏫 *(Instructor-Led):* In a classroom setting, consider forming small groups to write tests for the same component or utility function, then compare approaches. Discussing different testing strategies can lead to valuable insights about what makes a good test. Be prepared to demonstrate how to debug failing tests.
+> 🧗‍♀️ *(Self-Led):* Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
+> 🔁 *(Asynchronous):* If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
+> 🛣️ *(All Learners):* Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
 
 h3. Conceptual Content
 
 *Why Test?*
 
 Testing your code offers numerous benefits:
-* _Bug Prevention:_ Catch bugs early in the development cycle before they reach users.
-* _Confidence in Refactoring:_ Allows you to refactor code and make changes with greater confidence, knowing that tests will catch regressions.
-* _Documentation:_ Tests serve as a form of documentation, illustrating how components and functions are intended to be used.
-* _Improved Design:_ Thinking about how to test your code can often lead to better, more modular designs.
-* _Collaboration:_ Facilitates collaboration by providing a clear, verifiable standard for code contributions.
+* *Bug Prevention:* Catch bugs early in the development cycle before they reach users.
+* *Confidence in Refactoring:* Allows you to refactor code and make changes with greater confidence, knowing that tests will catch regressions.
+* *Documentation:* Tests serve as a form of documentation, illustrating how components and functions are intended to be used.
+* *Improved Design:* Thinking about how to test your code can often lead to better, more modular designs.
+* *Collaboration:* Facilitates collaboration by providing a clear, verifiable standard for code contributions.
 
 *Types of Tests in React Native:*
-* _Unit Tests:_ Focus on testing individual functions, modules, or small pieces of logic in isolation. They are typically fast to run.
+* *Unit Tests:* Focus on testing individual functions, modules, or small pieces of logic in isolation. They are typically fast to run.
 ** _Example for SpeedyMeds:_ Testing a helper function that formats a prescription dosage string.
-* _Component Tests:_ Verify the behavior and rendering of individual React components. This includes checking if they render correctly given certain props, if they respond to user interactions (simulated), and if they manage their state appropriately.
+* *Component Tests:* Verify the behavior and rendering of individual React components. This includes checking if they render correctly given certain props, if they respond to user interactions (simulated), and if they manage their state appropriately.
 ** _Example for SpeedyMeds:_ Testing if a {{MedicationCard}} component displays the correct medication name and dosage passed as props.
-* _Integration Tests:_ Test the interaction between multiple components or modules. They ensure that different parts of your application work together as expected.
+* *Integration Tests:* Test the interaction between multiple components or modules. They ensure that different parts of your application work together as expected.
 ** _Example for SpeedyMeds:_ Testing if adding a medication to a list correctly updates the summary view.
-* _End-to-End (E2E) Tests:_ Simulate real user scenarios by testing the entire application flow from the user's perspective. These are typically slower and more complex to set up.
-* _Example for SpeedyMeds:_ Testing the entire flow of a user logging in, searching for a medication, and adding it to their reminder list.
+* *End-to-End (E2E) Tests:* Simulate real user scenarios by testing the entire application flow from the user's perspective. These are typically slower and more complex to set up.
+** _Example for SpeedyMeds:_ Testing the entire flow of a user logging in, searching for a medication, and adding it to their reminder list.
 
 This section will primarily focus on unit and component testing, which form the foundation of a solid testing strategy.
 
-*Common Testing Tools:**
-* _Jest:_ A popular JavaScript testing framework developed by Facebook. It's often the default choice for React and React Native projects. Jest provides a test runner, assertion library, and mocking capabilities.
-* _React Native Testing Library (RNTL):_ Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
+*Common Testing Tools:*
+* *Jest:* A popular JavaScript testing framework developed by Facebook. It's often the default choice for React and React Native projects. Jest provides a test runner, assertion library, and mocking capabilities.
+* *React Native Testing Library (RNTL):* Built on top of {{react-test-renderer}} and a similar philosophy to {{DOM Testing Library}}, RNTL encourages writing tests that interact with your components as a user would, focusing on accessibility and user-facing behavior rather than implementation details.
 
 {mermaid}
 graph TD
@@ -66,14 +66,14 @@ This diagram shows the test execution flow when running Jest tests for React Nat
 *Setting up Testing in an Expo Project*
 
 Expo projects typically come with Jest pre-configured or can be easily set up.
-# _Install dev dependencies:_
+# *Install dev dependencies:*
 
     {code:language=bash}
 npx expo install jest jest-expo @testing-library/react-native @types/jest
     # For TypeScript projects, also install type definitions
     # npm install --save-dev @types/jest (if not already included by jest-expo or similar)
     ```
-# _Configure Jest (`jest.config.js` or in `package.json`):_
+# *Configure Jest (`jest.config.js` or in `package.json`):*
     Expo projects usually have a `jest.config.js` or Jest configuration within `package.json`. The `jest-expo` preset handles much of the React Native specific configuration.
 
     A typical `jest.config.js` might look like:
@@ -82,14 +82,14 @@ npx expo install jest jest-expo @testing-library/react-native @types/jest
     module.exports = {
       preset: "jest-expo",
       transformIgnorePatterns: [
-        "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/._|@expo-google-fonts/._|react-navigation|@react-navigation/._|@unimodules/._|unimodules|sentry-expo|native-base|react-native-svg)",
+        "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)",
       ],
       setupFilesAfterEnv: ["@testing-library/react-native/extend-expect"], // Optional: for RNTL custom matchers
     };
     ```
 
     The `transformIgnorePatterns` array is crucial for telling Jest to transform certain `node_modules` that are written in ES6+ syntax.
-# _Add Test Script to `package.json`:_
+# *Add Test Script to `package.json`:*
 
     ```json
     // package.json
@@ -106,26 +106,26 @@ npx expo install jest jest-expo @testing-library/react-native @types/jest
 h3. Referential Content
 
 *Writing Tests with Jest*
-* _Test Files:_ Jest typically looks for files with `.test.js`, `.spec.js`, `.test.tsx`, or `.spec.tsx` extensions, or files within a `_tests_` directory.
-* _Core Jest Functions:_
-* `describe(name, fn)`: Creates a block that groups together several related tests.
-* `it(name, fn)` or `test(name, fn)`: Defines an individual test case.
-* `expect(value)`: Used to create an assertion. It's typically chained with matcher functions.
-* _Matchers:_ Functions used with `expect` to assert values (e.g., `toBe()`, `toEqual()`, `toBeTruthy()`, `toContain()`, `toHaveBeenCalled()`).
-* _Mocking:_ Jest allows you to mock functions, modules, or timers to isolate tests and control dependencies.
-* `jest.fn()`: Creates a mock function whose calls can be tracked.
-* `jest.mock('./moduleName')`: Mocks an entire module.
+* *Test Files:* Jest typically looks for files with `.test.js`, `.spec.js`, `.test.tsx`, or `.spec.tsx` extensions, or files within a `*tests*` directory.
+* *Core Jest Functions:*
+** `describe(name, fn)`: Creates a block that groups together several related tests.
+** `it(name, fn)` or `test(name, fn)`: Defines an individual test case.
+** `expect(value)`: Used to create an assertion. It's typically chained with matcher functions.
+** *Matchers:* Functions used with `expect` to assert values (e.g., `toBe()`, `toEqual()`, `toBeTruthy()`, `toContain()`, `toHaveBeenCalled()`).
+* *Mocking:* Jest allows you to mock functions, modules, or timers to isolate tests and control dependencies.
+** `jest.fn()`: Creates a mock function whose calls can be tracked.
+** `jest.mock('./moduleName')`: Mocks an entire module.
 
 *Writing Component Tests with React Native Testing Library (RNTL)*
 
 React Native Testing Library helps you write tests that resemble how users interact with your components.
-* _Philosophy:_ Test your components from the user's perspective. Query for elements by their text content, accessibility labels, or test IDs rather than relying on internal component structure or state.
-* _Core RNTL Functions:_
-* `render(Component)`: Renders a React component into a virtual tree.
-* _Queries:_ Functions to find elements in the rendered output (e.g., `getByText`, `queryByText`, `findByText`, `getByTestId`, `getByRole`, `getByLabelText`).
-* `fireEvent`: Used to simulate user interactions (e.g., `fireEvent.press(button)`).
-* `waitFor`: Useful for asynchronous operations, waiting for an assertion to pass.
-* _Custom Matchers:_ RNTL extends Jest's `expect` with custom matchers like `toBeVisible()`, `toHaveTextContent()`, etc. (requires `setupFilesAfterEnv` configuration as shown above).
+* *Philosophy:* Test your components from the user's perspective. Query for elements by their text content, accessibility labels, or test IDs rather than relying on internal component structure or state.
+* *Core RNTL Functions:*
+** `render(Component)`: Renders a React component into a virtual tree.
+** *Queries:* Functions to find elements in the rendered output (e.g., `getByText`, `queryByText`, `findByText`, `getByTestId`, `getByRole`, `getByLabelText`).
+** `fireEvent`: Used to simulate user interactions (e.g., `fireEvent.press(button)`).
+** `waitFor`: Useful for asynchronous operations, waiting for an assertion to pass.
+* *Custom Matchers:* RNTL extends Jest's `expect` with custom matchers like `toBeVisible()`, `toHaveTextContent()`, etc. (requires `setupFilesAfterEnv` configuration as shown above).
 
 h3. Procedural Content
 
@@ -156,7 +156,7 @@ export function formatSchedule(
 {code:language=text}
 A unit test for this function might look like:
 {code}typescript
-// _tests_/utils/medicationFormatter.test.ts
+// *tests*/utils/medicationFormatter.test.ts
 import { formatSchedule } from "../../utils/medicationFormatter";
 
 describe("formatSchedule", () => {
@@ -189,8 +189,8 @@ describe("formatSchedule", () => {
 * The test file imports the function to be tested (`formatSchedule`).
 * `describe("formatSchedule", ...)` groups all tests related to the `formatSchedule` function, enhancing organization and readability of test outputs.
 * Each `it(...)` block defines an individual test case, clearly describing the specific scenario it covers. This helps in quickly understanding the purpose of each test.
-* The first test (`"should format correctly for once daily"`) checks the standard output for a single daily dosage.
-* The second test (`"should format correctly for multiple times daily"`) verifies the output for medications taken more than once a day.
+** The first test (`"should format correctly for once daily"`) checks the standard output for a single daily dosage.
+** The second test (`"should format correctly for multiple times daily"`) verifies the output for medications taken more than once a day.
 ** The third and fourth tests (`"should handle zero times per day"` and `"should handle negative times per day"`) are crucial edge case tests. They ensure the function behaves gracefully and provides an informative message when potentially invalid input (like 0 or negative repetitions) is provided, preventing unexpected errors or nonsensical schedule descriptions in the SpeedyMeds app.
 * `expect(functionCall).toBe(expectedOutput)` is the core assertion. `expect` takes the actual value returned by `formatSchedule` and the `toBe` matcher checks for strict equality (===) against the `expectedOutput` string.
 * These unit tests thoroughly validate the `formatSchedule` function by covering typical use cases and important boundary conditions, ensuring its reliability within the SpeedyMeds application logic.
@@ -258,7 +258,7 @@ export default CustomButton;
 {code:language=text}
 A component test for `CustomButton`:
 {code}tsx
-// _tests_/components/CustomButton.test.tsx
+// *tests*/components/CustomButton.test.tsx
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import CustomButton from "../../components/CustomButton";
@@ -345,10 +345,10 @@ describe("<CustomButton />", () => {
 *Explanation of Example 2:*
 
 This set of tests for the `CustomButton` component demonstrates how to use React Native Testing Library (RNTL) to verify component behavior from a user's perspective. The goal is to ensure the SpeedyMeds `CustomButton` is accessible, interactive, and visually appropriate in different states.
-# _`renders the button title correctly`_: This is a basic smoke test. We `render` the `CustomButton` with a specific `title`. Then, using `getByText(buttonTitle)`, RNTL attempts to find an element in the rendered output that displays this title. `expect(...).toBeVisible()` asserts that such an element is found and is visible to the user. This confirms the button displays its intended text.
-# _`calls onPress prop when pressed`_: This test verifies interactivity. We create a mock function `mockOnPress = jest.fn()`. This mock allows us to track if and how it's called. The `CustomButton` is rendered with this mock and a `testID` ("my-tap-button") for easy querying. `fireEvent.press(getByTestId("my-tap-button"))` simulates a user tapping the button. Finally, `expect(mockOnPress).toHaveBeenCalledTimes(1)` asserts that our mock function was called exactly once, confirming the `onPress` handler is correctly wired up.
-# _`disables the button when disabled prop is true`_: This tests the `disabled` state. The button is rendered with `disabled={true}`. We then query for the button using its `testID`. The key assertion here is `expect(button.props.accessibilityState.disabled).toBe(true)`, which checks an important accessibility property indicating the button is indeed disabled. To further confirm, we `fireEvent.press(button)` and assert that `mockOnPress` (a new mock for this test) was `not.toHaveBeenCalled()`, ensuring a disabled button doesn't trigger its action.
-# _`applies disabled styles when disabled`_: This test delves into visual confirmation, though RNTL generally encourages testing behavior over specific styles as styles can be brittle. Here, we render a disabled button. We then get the button and text elements. `expect(button.props.style).toEqual(expect.arrayContaining([expect.objectContaining({ backgroundColor: "#BDBDBD" })]))` checks if the button's style array contains an object with the disabled background color. A similar check is done for the text color. This test case is included for demonstration but highlights that such style tests should be used judiciously, focusing on styles that are critical to communicating the disabled state visually if behavior/accessibility checks aren_t sufficient.
+# *`renders the button title correctly`*: This is a basic smoke test. We `render` the `CustomButton` with a specific `title`. Then, using `getByText(buttonTitle)`, RNTL attempts to find an element in the rendered output that displays this title. `expect(...).toBeVisible()` asserts that such an element is found and is visible to the user. This confirms the button displays its intended text.
+# *`calls onPress prop when pressed`*: This test verifies interactivity. We create a mock function `mockOnPress = jest.fn()`. This mock allows us to track if and how it's called. The `CustomButton` is rendered with this mock and a `testID` ("my-tap-button") for easy querying. `fireEvent.press(getByTestId("my-tap-button"))` simulates a user tapping the button. Finally, `expect(mockOnPress).toHaveBeenCalledTimes(1)` asserts that our mock function was called exactly once, confirming the `onPress` handler is correctly wired up.
+# *`disables the button when disabled prop is true`*: This tests the `disabled` state. The button is rendered with `disabled={true}`. We then query for the button using its `testID`. The key assertion here is `expect(button.props.accessibilityState.disabled).toBe(true)`, which checks an important accessibility property indicating the button is indeed disabled. To further confirm, we `fireEvent.press(button)` and assert that `mockOnPress` (a new mock for this test) was `not.toHaveBeenCalled()`, ensuring a disabled button doesn't trigger its action.
+# *`applies disabled styles when disabled`*: This test delves into visual confirmation, though RNTL generally encourages testing behavior over specific styles as styles can be brittle. Here, we render a disabled button. We then get the button and text elements. `expect(button.props.style).toEqual(expect.arrayContaining([expect.objectContaining({ backgroundColor: "#BDBDBD" })]))` checks if the button's style array contains an object with the disabled background color. A similar check is done for the text color. This test case is included for demonstration but highlights that such style tests should be used judiciously, focusing on styles that are critical to communicating the disabled state visually if behavior/accessibility checks aren_t sufficient.
 
 These tests collectively ensure that the `CustomButton` component not only renders correctly but also behaves as expected under different conditions and user interactions, contributing to a more robust UI for the SpeedyMeds application.
 
@@ -358,27 +358,27 @@ Aim for tests that are resilient to minor implementation changes. Querying by te
 h3. Section Exercise
 
 Practice writing tests for medication-related utilities in the SpeedyMeds app.
-* _Exercise 17.3: Writing a Simple Unit Test for SpeedyMeds_
-  `_(https://codesandbox.io/s/speedymeds-exercise-17-3)_`
+* *Exercise 17.3: Writing a Simple Unit Test for SpeedyMeds*
+  `*(https://codesandbox.io/s/speedymeds-exercise-17-3)*`
 
   In this exercise, you'll implement unit tests for two medication-related utility functions:
 ## `calculateDosage`: A function that calculates medication dosage based on patient weight and medication parameters
 ## `formatMedicationSchedule`: A function that generates a human-readable medication schedule from frequency data
 
   The CodeSandbox includes:
-* Pre-written utility functions in `/src/utils/medicationUtils.js`
-* Test skeleton files in `/src/_tests_/medicationUtils.test.js`
-* A README.md with detailed instructions
+** Pre-written utility functions in `/src/utils/medicationUtils.js`
+** Test skeleton files in `/src/*tests*/medicationUtils.test.js`
+** A README.md with detailed instructions
 
   *Your tasks:*
-* Complete the test cases for both functions
-* Test normal use cases and edge cases
-* Use Jest's `describe`, `it`, and `expect` functions
-* Ensure all tests pass
+** Complete the test cases for both functions
+** Test normal use cases and edge cases
+** Use Jest's `describe`, `it`, and `expect` functions
+** Ensure all tests pass
 
   This exercise will help you understand how to write thorough tests for critical application logic, ensuring medication calculations are accurate and reliable—an essential safety feature for a pharmacy application like SpeedyMeds.
 
-  *Sample test case from the exercise:**
+  *Sample test case from the exercise:*
 
   ```typescript
   // Example of one of the test cases you'll complete
@@ -401,7 +401,7 @@ Practice writing tests for medication-related utilities in the SpeedyMeds app.
   });
   ```
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://jestjs.io/docs/getting-started|Jest Documentation]
 - [https://callstack.github.io/react-native-testing-library/|React Native Testing Library Documentation]
 - [https://docs.expo.dev/develop/unit-testing/|Expo: Unit Testing Guide]

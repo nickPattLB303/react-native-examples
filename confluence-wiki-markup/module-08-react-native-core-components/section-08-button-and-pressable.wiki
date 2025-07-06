@@ -11,56 +11,56 @@ Both components allow users to trigger an action by tapping them, but they offer
 The {{<Button>}} component is a simple, pre-styled button that renders with a look and feel native to the platform (iOS or Android). It's convenient for quick use when you don't need much customization.
 
 *Key Characteristics of {{<Button>}}:*
-* _Platform-Native Look:_ It renders as a standard native button, meaning its appearance will differ between iOS and Android to match the respective OS design guidelines.
-* _Limited Styling:_ Customization options for {{<Button>}} are very limited. You can set a {{title}} (the text on the button), a {{color}} (which affects the text color on iOS and the background color on Android for some styles), and an {{onPress}} handler. You cannot style it with the {{style}} prop like other components, nor can you embed other components (like an icon) inside it.
-* _Accessibility:_ It comes with built-in accessibility features appropriate for a native button.
-* _Simplicity:_ Easy to use for basic actions where the default platform styling is acceptable.
+* *Platform-Native Look:* It renders as a standard native button, meaning its appearance will differ between iOS and Android to match the respective OS design guidelines.
+* *Limited Styling:* Customization options for {{<Button>}} are very limited. You can set a {{title}} (the text on the button), a {{color}} (which affects the text color on iOS and the background color on Android for some styles), and an {{onPress}} handler. You cannot style it with the {{style}} prop like other components, nor can you embed other components (like an icon) inside it.
+* *Accessibility:* It comes with built-in accessibility features appropriate for a native button.
+* *Simplicity:* Easy to use for basic actions where the default platform styling is acceptable.
 
 *{{<Pressable>}} Component:*
 
 The {{<Pressable>}} component is a more generic and highly customizable touch responder. It was introduced to provide a more flexible way to handle various states of user interaction (e.g., when a press begins, ends, or is held long) and to give developers full control over the visual feedback.
 
 *Key Characteristics of {{<Pressable>}}:*
-* _Highly Customizable:_ You can wrap any {{<View>}}, {{<Text>}}, {{<Image>}}, or custom component(s) within a {{<Pressable>}} and define how it looks and responds to touch events. It fully supports the {{style}} prop.
-* _Interaction Feedback:_ Provides props to detect different phases of a press gesture ({{onPressIn}}, {{onPressOut}}, {{onLongPress}}).
-* _State-Dependent Styling:_ The {{style}} prop can be a function that receives an object with a {{pressed}} boolean state (e.g., {{style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1.0 })}}}). This allows you to change the style dynamically when the component is pressed.
-* _No Default Styling:_ Unlike {{<Button>}}, {{<Pressable>}} has no default visual appearance. It's up to you to style it and its children.
-* _Accessibility:_ Provides props like {{accessibilityRole="button"}} to ensure it's treated as a button by assistive technologies.
-* _HitRect (Hit Slop):_ The {{hitSlop}} prop allows you to extend the touchable area of the {{<Pressable>}} beyond its visual bounds, making it easier for users to tap small elements.
+* *Highly Customizable:* You can wrap any {{<View>}}, {{<Text>}}, {{<Image>}}, or custom component(s) within a {{<Pressable>}} and define how it looks and responds to touch events. It fully supports the {{style}} prop.
+* *Interaction Feedback:* Provides props to detect different phases of a press gesture ({{onPressIn}}, {{onPressOut}}, {{onLongPress}}).
+* *State-Dependent Styling:* The {{style}} prop can be a function that receives an object with a {{pressed}} boolean state (e.g., {{style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1.0 })}}}). This allows you to change the style dynamically when the component is pressed.
+* *No Default Styling:* Unlike {{<Button>}}, {{<Pressable>}} has no default visual appearance. It's up to you to style it and its children.
+* *Accessibility:* Provides props like {{accessibilityRole="button"}} to ensure it's treated as a button by assistive technologies.
+* *HitRect (Hit Slop):* The {{hitSlop}} prop allows you to extend the touchable area of the {{<Pressable>}} beyond its visual bounds, making it easier for users to tap small elements.
 
 *When to Use Which:*
 * Use {{<Button>}} when:
-* You need a very simple button with standard platform styling.
-* Minimal customization is required.
+** You need a very simple button with standard platform styling.
+** Minimal customization is required.
 ** Quick implementation is prioritized.
 * Use {{<Pressable>}} when:
-* You need custom styling, layout, or content (e.g., a button with an icon and text).
-* You need to provide specific visual feedback for different press states (e.g., change opacity, background color on press).
-* You require more advanced touch interactions like {{onLongPress}}.
-* You need to control the hit area with {{hitSlop}}.
-* You want a consistent look and feel across both iOS and Android that you define yourself.
+** You need custom styling, layout, or content (e.g., a button with an icon and text).
+** You need to provide specific visual feedback for different press states (e.g., change opacity, background color on press).
+** You require more advanced touch interactions like {{onLongPress}}.
+** You need to control the hit area with {{hitSlop}}.
+** You want a consistent look and feel across both iOS and Android that you define yourself.
 
 In most modern React Native development, {{<Pressable>}} is often preferred for its flexibility and control, especially when building custom-designed UIs like those in the SpeedyMeds app.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_
+bq. 📲 *(Native Developers):*
+> *Comparison:*
 > - {{<Button>}} is like a basic {{UIButton}} (iOS) or {{android.widget.Button}} (Android) with its default system appearance. Customization is limited, similar to trying to heavily modify a default system button without subclassing or creating a custom view.
 - {{<Pressable>}} is more like creating a custom {{UIControl}} (iOS) or a custom {{View}} with touch handling (Android). It gives you a blank slate to define the appearance and behavior of a tappable element.
-> _Key Takeaway:_ {{<Button>}} for quick, standard buttons. {{<Pressable>}} for all custom button needs and advanced interaction feedback.
-> _Source:_ [https://reactnative.dev/docs/button|React Native Docs: Button], [https://reactnative.dev/docs/pressable|React Native Docs: Pressable]
+> *Key Takeaway:* {{<Button>}} for quick, standard buttons. {{<Pressable>}} for all custom button needs and advanced interaction feedback.
+> *Source:* [https://reactnative.dev/docs/button|React Native Docs: Button], [https://reactnative.dev/docs/pressable|React Native Docs: Pressable]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_
+bq. 🌐 *(Web Developers):*
+> *Comparison:*
 > - {{<Button title="Click Me" />}} is somewhat analogous to a basic HTML {{<button>Click Me</button>}} that largely inherits browser/OS default styling.
 - {{<Pressable>}} is like a {{<div>}} or {{<span>}} that you've made interactive with JavaScript event listeners ({{onClick}}, {{onMouseDown}}, {{onMouseUp}}) and styled with CSS, including pseudo-classes like {{:hover}} or {{:active}} (though React Native uses a function for {{style}} to achieve state-dependent styling).
-> _Key Takeaway:_ {{<Button>}} is for simple use cases. {{<Pressable>}} offers the power to create any kind of tappable UI element with full style control, much like building custom interactive elements on the web.
-> _Source:_ [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button|MDN Web Docs: {{<button>}}]
+> *Key Takeaway:* {{<Button>}} is for simple use cases. {{<Pressable>}} offers the power to create any kind of tappable UI element with full style control, much like building custom interactive elements on the web.
+> *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button|MDN Web Docs: {{<button>}}]
 
 h3. Referential Content: Common Props
 
-*Common {{<Button>}} Props:**
-* {{title}}: (string, _required_) Text to display inside the button.
-* {{onPress}}: (function, _required_) Handler to be called when the user taps the button.
+*Common {{<Button>}} Props:*
+* {{title}}: (string, *required*) Text to display inside the button.
+* {{onPress}}: (function, *required*) Handler to be called when the user taps the button.
 * {{color}}: (string) Color of the text on iOS, background color on Android (for default button style). On Android, the color control can be limited for some button styles.
 * {{disabled}}: (boolean) If {{true}}, disable all interactions for this component. Default is {{false}}.
 * {{accessibilityLabel}}: (string) Text that screen readers will speak.
@@ -81,7 +81,7 @@ h3. Referential Content: Common Props
 * {{accessibilityRole}}: (string) e.g., {{'button'}}, {{'link'}}, {{'checkbox'}}.
 * {{android_ripple}}: (object) Configuration for Android's ripple effect. E.g., {{{ color: 'grey', borderless: false }}}.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/button#props|React Native Docs: Button Props]
 - [https://reactnative.dev/docs/pressable#props|React Native Docs: Pressable Props]
 - [https://docs.expo.dev/ui-programming/button/|Expo Docs: Button]
@@ -238,14 +238,14 @@ const styles = StyleSheet.create({
 {code}
 
 *Explanation of `<Pressable>` Example:*
-* _Custom Content:_ The `<Pressable>` wraps a `<Text>` component, allowing full control over the button's content.
-* _Stateful Styling:_ The `style` prop of `<Pressable>` is a function: `({ pressed }) => [...]`.
-* It takes an object with a `pressed` boolean as an argument.
-* It returns an array of styles: `styles.buttonBase` (common styles), then conditional styles for enabled/disabled state (`isAdding ? styles.buttonDisabled : styles.buttonEnabled`), and finally a style for the pressed state (`pressed && !isAdding ? styles.buttonPressed : null`).
-* _Interaction Feedback:_ When pressed, the button's background color changes due to `styles.buttonPressed`.
-* _Disabled State:_ The `disabled={isAdding}` prop prevents multiple presses while an action is in progress. The button style also changes to reflect this disabled state.
-* _Accessibility:_ `accessibilityRole="button"` ensures it's recognized as a button.
-* _Children as a Function:_ The child of `<Pressable>` is also a function `({ pressed }) => <Text>...</Text>`. This allows the text itself to change based on the pressed state if needed, though in this example, it changes based on the `isAdding` state.
+* *Custom Content:* The `<Pressable>` wraps a `<Text>` component, allowing full control over the button's content.
+* *Stateful Styling:* The `style` prop of `<Pressable>` is a function: `({ pressed }) => [...]`.
+** It takes an object with a `pressed` boolean as an argument.
+** It returns an array of styles: `styles.buttonBase` (common styles), then conditional styles for enabled/disabled state (`isAdding ? styles.buttonDisabled : styles.buttonEnabled`), and finally a style for the pressed state (`pressed && !isAdding ? styles.buttonPressed : null`).
+* *Interaction Feedback:* When pressed, the button's background color changes due to `styles.buttonPressed`.
+* *Disabled State:* The `disabled={isAdding}` prop prevents multiple presses while an action is in progress. The button style also changes to reflect this disabled state.
+* *Accessibility:* `accessibilityRole="button"` ensures it's recognized as a button.
+* *Children as a Function:* The child of `<Pressable>` is also a function `({ pressed }) => <Text>...</Text>`. This allows the text itself to change based on the pressed state if needed, though in this example, it changes based on the `isAdding` state.
 
 This `<Pressable>` example demonstrates the flexibility needed to create custom-designed, interactive elements for SpeedyMeds, matching a specific visual theme and providing clear user feedback.
 
@@ -260,8 +260,8 @@ Let's get hands-on with `<Pressable>` to create a custom interactive element for
 # Use `<Pressable>` as the main component.
 # Inside the `<Pressable>`, include a `<Text>` component that says 'Request Refill'.
 # Define styles using `StyleSheet.create()`:
-** A base style for the button (e.g., background color, padding, rounded corners).
-** A style for when the button is pressed (e.g., a slightly darker background color or reduced opacity).
+*** A base style for the button (e.g., background color, padding, rounded corners).
+*** A style for when the button is pressed (e.g., a slightly darker background color or reduced opacity).
 # Use the function form of the `style` prop on `<Pressable>` to apply the different styles based on the `pressed` state.
 # When the button is pressed (`onPress` event), show an `Alert` saying 'Refill requested!'.
 # Render your `RefillButton` in your app.

@@ -192,7 +192,7 @@ Utility types significantly reduce the need to write repetitive type definitions
 * `ReturnType<Type>`: Constructs a type consisting of the return type of function `Type`.
 * `Parameters<Type>`: Constructs a tuple type from the types used in the parameters of a function type `Type`.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://www.typescriptlang.org/docs/handbook/utility-types.html|TypeScript Handbook: Utility Types]
 
 Utility types are indispensable tools in a TypeScript developer's toolkit, allowing for flexible and robust type manipulations throughout your SpeedyMeds application development.

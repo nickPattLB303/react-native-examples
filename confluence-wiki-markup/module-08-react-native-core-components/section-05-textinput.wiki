@@ -7,7 +7,7 @@ h3. Conceptual Content: Understanding {{<TextInput>}}
 The {{<TextInput>}} component is a foundational component that allows users to enter text into your app via a keyboard. It can be configured for single-line or multi-line input and supports various features like placeholders, password masking, and different keyboard types.
 
 *Controlled Component Pattern:*
-The standard and highly recommended way to use {{<TextInput>}} in React Native is as a _controlled component_. This pattern ensures that the component's value is driven by React state, providing a single source of truth for the input's content.
+The standard and highly recommended way to use {{<TextInput>}} in React Native is as a *controlled component*. This pattern ensures that the component's value is driven by React state, providing a single source of truth for the input's content.
 * A state variable (e.g., using {{useState}}) holds the current value of the input.
 * This state variable is passed to the {{value}} prop of the {{<TextInput>}}.
 * The {{onChangeText}} prop of the {{<TextInput>}} is set to a callback function that updates the state variable whenever the user types.
@@ -15,21 +15,21 @@ The standard and highly recommended way to use {{<TextInput>}} in React Native i
 This approach makes the application state more predictable and easier to debug.
 
 *Key Characteristics of {{<TextInput>}}:*
-* _Text Entry:_ Its primary purpose is to provide a field for users to type text.
-* _State Management:_ Best managed as a controlled component with its value tied to React state.
-* _Event Handling:_ Key props like {{onChangeText}} (to update state as the user types), {{onSubmitEditing}} (when the user presses the submit button on the keyboard), {{onFocus}}, and {{onBlur}} allow you to respond to user interactions.
-* _Customization:_ You can customize its appearance (placeholder text, borders, background) and behavior (keyboard type, auto-capitalization, secure text entry for passwords).
-* _Styling:_ {{<TextInput>}} can be styled using {{StyleSheet}}. Common styles include {{height}}, {{borderColor}}, {{borderWidth}}, {{padding}}, {{fontSize}}, and {{color}}.
+* *Text Entry:* Its primary purpose is to provide a field for users to type text.
+* *State Management:* Best managed as a controlled component with its value tied to React state.
+* *Event Handling:* Key props like {{onChangeText}} (to update state as the user types), {{onSubmitEditing}} (when the user presses the submit button on the keyboard), {{onFocus}}, and {{onBlur}} allow you to respond to user interactions.
+* *Customization:* You can customize its appearance (placeholder text, borders, background) and behavior (keyboard type, auto-capitalization, secure text entry for passwords).
+* *Styling:* {{<TextInput>}} can be styled using {{StyleSheet}}. Common styles include {{height}}, {{borderColor}}, {{borderWidth}}, {{padding}}, {{fontSize}}, and {{color}}.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ {{<TextInput>}} is analogous to {{UITextField}} or {{UITextView}} (for multi-line) on iOS, and {{EditText}} on Android. React Native provides a unified API for these native input elements. The controlled component pattern, where {{value}} is set from state and {{onChangeText}} updates that state, differs from typical native approaches of getting text directly (e.g., {{editText.getText().toString()}}) and listening for changes via delegates or watchers.
-> _Key Takeaway:_ {{<TextInput>}} is your primary tool for text input fields. Managing its value through state (controlled component) is a common React pattern.
-> _Source:_ [https://reactnative.dev/docs/textinput|React Native Docs: TextInput]
+bq. 📲 *(Native Developers):*
+> *Comparison:* {{<TextInput>}} is analogous to {{UITextField}} or {{UITextView}} (for multi-line) on iOS, and {{EditText}} on Android. React Native provides a unified API for these native input elements. The controlled component pattern, where {{value}} is set from state and {{onChangeText}} updates that state, differs from typical native approaches of getting text directly (e.g., {{editText.getText().toString()}}) and listening for changes via delegates or watchers.
+> *Key Takeaway:* {{<TextInput>}} is your primary tool for text input fields. Managing its value through state (controlled component) is a common React pattern.
+> *Source:* [https://reactnative.dev/docs/textinput|React Native Docs: TextInput]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ {{<TextInput>}} is similar to the HTML {{<input type="text">}} or {{<textarea>}} elements. The concept of a controlled component, where the input's value is managed by component state and updated via an {{onChange}} handler ({{onChangeText}} in React Native), is identical to how you'd manage form inputs in React for the web. The {{multiline}} prop differentiates between single-line and multi-line input.
-> _Key Takeaway:_ Use {{<TextInput>}} for all text input needs. The controlled component pattern is standard practice.
-> _Source:_ [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text|MDN Web Docs: {{<input type="text">}}], [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea|MDN Web Docs: {{<textarea>}}]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* {{<TextInput>}} is similar to the HTML {{<input type="text">}} or {{<textarea>}} elements. The concept of a controlled component, where the input's value is managed by component state and updated via an {{onChange}} handler ({{onChangeText}} in React Native), is identical to how you'd manage form inputs in React for the web. The {{multiline}} prop differentiates between single-line and multi-line input.
+> *Key Takeaway:* Use {{<TextInput>}} for all text input needs. The controlled component pattern is standard practice.
+> *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text|MDN Web Docs: {{<input type="text">}}], [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea|MDN Web Docs: {{<textarea>}}]
 
 h3. Referential Content: Common {{<TextInput>}} Props and Methods
 
@@ -60,7 +60,7 @@ Below is a table summarizing important props for the {{<TextInput>}} component:
 * {{isFocused()}}: Returns {{true}} if the input field is currently focused, {{false}} otherwise.
 * {{clear()}}: Programmatically clears all text from the input field.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/textinput|React Native Docs: TextInput]
 - [https://reactnative.dev/docs/textinput#props|React Native Docs: TextInput Props]
 - [https://reactnative.dev/docs/handling-text-input|React Native Docs: Handling Text Input Guide]
@@ -158,15 +158,15 @@ const styles = StyleSheet.create({
 {code}
 
 *Explanation of the Example:*
-# _State Management:_ We use `useState` to create two state variables: `name` and `age`, initialized as empty strings. These will hold the values entered by the user.
-# _Controlled Components:_
-** The `value` prop of each `<TextInput>` is bound to its respective state variable (`name` or `age`).
-** The `onChangeText` prop is set to the state setter function (`setName` or `setAge`). This means that every time the user types a character, the corresponding state variable is updated, and the `<TextInput>` re-renders to show the new value. This is the controlled component pattern.
-# _Customization:_
-** The first `<TextInput>` for the name uses `placeholder='Enter full name'` and `autoCapitalize='words'`.
-** The second `<TextInput>` for age uses `placeholder='Enter age'`, `keyboardType='numeric'` (to show a numeric keypad), and `maxLength={3}`.
-# _Styling:_ Both `<TextInput>` components share the `styles.input` style, which defines their background color, border, padding, and font size.
-# _Submission:_ A `<Button>` (covered in a later section) is used to trigger the `handleSubmit` function. This function currently shows an alert with the entered data and then clears the fields. In a real SpeedyMeds app, this data might be used to register a new patient or update patient records.
+# *State Management:* We use `useState` to create two state variables: `name` and `age`, initialized as empty strings. These will hold the values entered by the user.
+# *Controlled Components:*
+*** The `value` prop of each `<TextInput>` is bound to its respective state variable (`name` or `age`).
+*** The `onChangeText` prop is set to the state setter function (`setName` or `setAge`). This means that every time the user types a character, the corresponding state variable is updated, and the `<TextInput>` re-renders to show the new value. This is the controlled component pattern.
+# *Customization:*
+*** The first `<TextInput>` for the name uses `placeholder='Enter full name'` and `autoCapitalize='words'`.
+*** The second `<TextInput>` for age uses `placeholder='Enter age'`, `keyboardType='numeric'` (to show a numeric keypad), and `maxLength={3}`.
+# *Styling:* Both `<TextInput>` components share the `styles.input` style, which defines their background color, border, padding, and font size.
+# *Submission:* A `<Button>` (covered in a later section) is used to trigger the `handleSubmit` function. This function currently shows an alert with the entered data and then clears the fields. In a real SpeedyMeds app, this data might be used to register a new patient or update patient records.
 
 This example provides a solid foundation for creating forms and capturing user text input in your React Native applications. You'll frequently use `<TextInput>` in various parts of the SpeedyMeds app, such as patient registration, medication search, or feedback forms.
 
@@ -179,8 +179,8 @@ Now it's time to practice! Create a simple form for the SpeedyMeds app where use
 *Instructions:*
 # Create two state variables to hold the medication name and dosage instructions.
 # Render two `<TextInput>` components, one for each piece of information.
-** Use appropriate `placeholder` text.
-** The dosage instructions input could be `multiline`.
+*** Use appropriate `placeholder` text.
+*** The dosage instructions input could be `multiline`.
 # Style the inputs and the container `<View>` for a clean presentation.
 # Add a `<Button>` that, when pressed, displays an alert showing the entered medication name and dosage.
 

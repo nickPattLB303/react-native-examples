@@ -1,7 +1,7 @@
 h2. Section 5: {{useRef}} Hook
 
 The {{useRef}} Hook is a versatile tool in React that serves two primary purposes:
-# Creating a mutable reference object whose {{.current}} property can hold any value (e.g., numbers, strings, objects, component instances). This reference persists for the full lifetime of the component, and importantly, changing its {{.current}} property does _not_ trigger a re-render.
+# Creating a mutable reference object whose {{.current}} property can hold any value (e.g., numbers, strings, objects, component instances). This reference persists for the full lifetime of the component, and importantly, changing its {{.current}} property does *not* trigger a re-render.
 # Accessing underlying native component instances (like {{<TextInput>}}, {{<ScrollView>}}) or DOM elements in web React. This allows you to call imperative methods on them (e.g., {{focus()}} on an input, {{scrollTo()}} on a list).
 
 While direct DOM manipulation is less common in React Native compared to the web, {{useRef}} is crucial for interacting with native component methods and managing values that shouldn\'t trigger the rendering lifecycle.
@@ -13,27 +13,27 @@ h3. Conceptual Content
 {{useRef}} returns a mutable ref object. Its {{.current}} property is initialized to the value you pass as an argument (the {{initialValue}}). The ref object itself (the container) is stable and will be the same object across all re-renders of the component.
 
 *Key Characteristics & Use Cases:*
-* _Accessing Native Component Instances:_ You attach a ref to a React Native component (e.g., {{<TextInput ref={myInputRef} />}}) to get access to its underlying native instance. This allows imperative calls like {{myInputRef.current.focus()}} or {{myListRef.current.scrollToEnd()}}.
-* _Storing Mutable Values Without Re-renders:_ Useful for values that change but shouldn\'t cause a re-render, such as:
-* Timer IDs (from {{setTimeout}} or {{setInterval}}).
-* Subscription objects from event listeners or external data sources.
-* Previous state or prop values for comparison in {{useEffect}}.
-* Handles to imperative animation libraries.
-* _Persistence:_ The ref object persists for the component\'s entire lifetime.
-* _Mutability of {{.current}}:_ You can directly read and write to {{ref.current}}.
-* _No Re-render on {{.current}} Change:_ Modifying {{ref.current}} does not trigger a component re-render. This is the key difference from state managed by {{useState}}.
+* *Accessing Native Component Instances:* You attach a ref to a React Native component (e.g., {{<TextInput ref={myInputRef} />}}) to get access to its underlying native instance. This allows imperative calls like {{myInputRef.current.focus()}} or {{myListRef.current.scrollToEnd()}}.
+* *Storing Mutable Values Without Re-renders:* Useful for values that change but shouldn\'t cause a re-render, such as:
+** Timer IDs (from {{setTimeout}} or {{setInterval}}).
+** Subscription objects from event listeners or external data sources.
+** Previous state or prop values for comparison in {{useEffect}}.
+** Handles to imperative animation libraries.
+* *Persistence:* The ref object persists for the component\'s entire lifetime.
+* *Mutability of {{.current}}:* You can directly read and write to {{ref.current}}.
+* *No Re-render on {{.current}} Change:* Modifying {{ref.current}} does not trigger a component re-render. This is the key difference from state managed by {{useState}}.
 
 {note}
 If a value stored in a ref is directly used in your JSX for rendering, and you expect the UI to update when that value changes, {{useRef}} is the wrong tool. You should use {{useState}} for values that drive the component\'s visual output.
 {note}
 h3. Referential Content
-* _{{useRef<T>(initialValue: T): React.MutableRefObject<T>}}_ (When you have a definite initial value and the type T is known and won\'t be null later, e.g., {{useRef<number>(0)}})
-* _{{useRef<T | null>(initialValue: T | null): React.RefObject<T>}}_ (More common for refs that will hold component instances, where {{initialValue}} is often {{null}}. {{T}} is the type of the component instance, e.g., {{TextInput}} from {{react-native}}. {{RefObject}} has a read-only {{.current}} from TypeScript\'s perspective initially, but React populates it.)
-* _{{initialValue}}_: The initial value for the {{ref.current}} property. Often set to {{null}} when the ref will hold a component instance, as the instance is only available after the initial render when the component mounts.
-* _Returns_: A ref object with a single property: {{current}}.
-** {{ref.current}}: Initially set to {{initialValue}}. You can later set it to something else. If you pass a ref object to React as a {{ref}} attribute on a component (e.g., {{<TextInput ref={myRef} />}}), React will set its {{current}} property to the corresponding native component instance when the component mounts, and back to {{null}} when it unmounts.
+* *{{useRef<T>(initialValue: T): React.MutableRefObject<T>}}* (When you have a definite initial value and the type T is known and won\'t be null later, e.g., {{useRef<number>(0)}})
+* *{{useRef<T | null>(initialValue: T | null): React.RefObject<T>}}* (More common for refs that will hold component instances, where {{initialValue}} is often {{null}}. {{T}} is the type of the component instance, e.g., {{TextInput}} from {{react-native}}. {{RefObject}} has a read-only {{.current}} from TypeScript\'s perspective initially, but React populates it.)
+** *{{initialValue}}*: The initial value for the {{ref.current}} property. Often set to {{null}} when the ref will hold a component instance, as the instance is only available after the initial render when the component mounts.
+** *Returns*: A ref object with a single property: {{current}}.
+*** {{ref.current}}: Initially set to {{initialValue}}. You can later set it to something else. If you pass a ref object to React as a {{ref}} attribute on a component (e.g., {{<TextInput ref={myRef} />}}), React will set its {{current}} property to the corresponding native component instance when the component mounts, and back to {{null}} when it unmounts.
 
-bq. 📚 *Official Documentation:**
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/reference/react/useRef|React Docs: {{useRef}}]
 - [https://react.dev/learn/manipulating-the-dom-with-refs|React Docs: Manipulating the DOM with Refs] (Web-focused, but core concepts of attaching refs and calling methods apply)
 - [https://reactnative.dev/docs/refs-and-the-dom|React Native Docs: Refs and the DOM] (Explains differences from web DOM and focus on native components)
@@ -268,8 +268,8 @@ const PrescriptionChangeTracker: React.FC<PrescriptionDisplayProps> = ({
   const previousPrescriptionIdRef = useRef<string | null>();
 
   useEffect(() => {
-    // This effect runs _after_ the component has rendered with the new props.
-    // So, previousPrescriptionIdRef.current still holds the ID from the _previous_ render.
+    // This effect runs *after* the component has rendered with the new props.
+    // So, previousPrescriptionIdRef.current still holds the ID from the *previous* render.
     if (
       previousPrescriptionIdRef.current !== undefined && // Check if it\'s not the first render
       previousPrescriptionIdRef.current !== currentPrescriptionId
@@ -280,7 +280,7 @@ const PrescriptionChangeTracker: React.FC<PrescriptionDisplayProps> = ({
       // Here you could trigger data re-fetch for the new prescription, analytics, etc.
     }
 
-    // Update the ref\'s current value to the current ID for the _next_ render cycle.
+    // Update the ref\'s current value to the current ID for the *next* render cycle.
     previousPrescriptionIdRef.current = currentPrescriptionId;
   }, [currentPrescriptionId, patientName]); // Effect depends on currentPrescriptionId and patientName
 
@@ -344,9 +344,9 @@ import {
 * Extends standard TextInputProps.
  */
 interface SpeedyMedsInputProps extends TextInputProps {
-  /*_ The label to display above the input field. _/
+  /** The label to display above the input field. */
   label: string;
-  /*_ Optional initial value for the input field. _/
+  /** Optional initial value for the input field. */
   initialValue?: string;
 }
 
@@ -355,13 +355,13 @@ interface SpeedyMedsInputProps extends TextInputProps {
 * when accessed via a ref.
  */
 export interface SpeedyMedsInputRef {
-  /*_ Focuses the underlying TextInput field. _/
+  /** Focuses the underlying TextInput field. */
   focusInput: () => void;
-  /*_ Clears the underlying TextInput field and its internal state. _/
+  /** Clears the underlying TextInput field and its internal state. */
   clearInput: () => void;
-  /*_ Gets the current value of the input field from its internal state. _/
+  /** Gets the current value of the input field from its internal state. */
   getValue: () => string | undefined;
-  /*_ Sets the value of the input field in its internal state. _/
+  /** Sets the value of the input field in its internal state. */
   setValue: (text: string) => void;
 }
 
@@ -474,13 +474,13 @@ export default MedicationRefillForm;
 
 h3. Background Bridge Notes
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ In native iOS (Swift/Objective-C), you might hold direct references to UI elements (like `UITextField` instances via `@IBOutlet` or programmatically). `useRef` for component instances is similar to having such a reference, allowing you to call methods on it. For mutable values not triggering UI updates, you'd use regular instance variables/properties.
-> _Key Takeaway:_ `useRef` provides a React-idiomatic way to get hold of these instance-like references within functional components and to manage mutable data outside the standard state rendering flow.
+bq. 📲 *(Native Developers):*
+> *Comparison:* In native iOS (Swift/Objective-C), you might hold direct references to UI elements (like `UITextField` instances via `@IBOutlet` or programmatically). `useRef` for component instances is similar to having such a reference, allowing you to call methods on it. For mutable values not triggering UI updates, you'd use regular instance variables/properties.
+> *Key Takeaway:* `useRef` provides a React-idiomatic way to get hold of these instance-like references within functional components and to manage mutable data outside the standard state rendering flow.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ This is very similar to `useRef` in React for the web. You use it to get references to DOM elements (e.g., `<input ref={myRef} />`) to call methods like `focus()` or to store mutable values like animation IDs or subscription objects without causing re-renders.
-> _Key Takeaway:_ The concept and usage of `useRef`, `forwardRef`, and `useImperativeHandle` are largely consistent between React for web and React Native. The main difference lies in _what_ you are referencing – native component instances in React Native versus DOM elements in web React, and thus the specific imperative methods available on those references will differ.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* This is very similar to `useRef` in React for the web. You use it to get references to DOM elements (e.g., `<input ref={myRef} />`) to call methods like `focus()` or to store mutable values like animation IDs or subscription objects without causing re-renders.
+> *Key Takeaway:* The concept and usage of `useRef`, `forwardRef`, and `useImperativeHandle` are largely consistent between React for web and React Native. The main difference lies in _what_ you are referencing – native component instances in React Native versus DOM elements in web React, and thus the specific imperative methods available on those references will differ.
 
 *Table: `useRef` vs. Other Referencing/Mutable Value Mechanisms*
 

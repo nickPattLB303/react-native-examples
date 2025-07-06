@@ -9,35 +9,35 @@ The Expo SDK is a curated collection of native modules, developed and maintained
 When you create an app with {{create-expo-app}}, many of these modules are readily available or can be easily added. Modules within the Expo SDK are designed for seamless integration, working reliably within the Expo Go app, Development Builds, and production applications built using EAS Build.
 
 *Benefits of Using Expo SDK Modules:*
-* _Well-Maintained and Tested:_ Expo modules are actively maintained and rigorously tested across various iOS and Android versions and devices.
-* _Guaranteed Compatibility:_ Modules within a specific Expo SDK version are designed to work together seamlessly. Using {{npx expo install}} ensures you get compatible versions.
-* _Consistent API Design:_ Expo strives for a consistent and developer-friendly API design across its modules.
-* _Simplified Setup:_ Most Expo modules can be added to your project with a single {{npx expo install}} command, often requiring no further native configuration.
-* _Comprehensive Documentation:_ The Expo documentation provides detailed guides and API references for each module.
+* *Well-Maintained and Tested:* Expo modules are actively maintained and rigorously tested across various iOS and Android versions and devices.
+* *Guaranteed Compatibility:* Modules within a specific Expo SDK version are designed to work together seamlessly. Using {{npx expo install}} ensures you get compatible versions.
+* *Consistent API Design:* Expo strives for a consistent and developer-friendly API design across its modules.
+* *Simplified Setup:* Most Expo modules can be added to your project with a single {{npx expo install}} command, often requiring no further native configuration.
+* *Comprehensive Documentation:* The Expo documentation provides detailed guides and API references for each module.
 
 h3. Categorization of Expo SDK Modules (Conceptual)
 
 The Expo SDK is extensive. To aid navigation, its modules can be conceptually grouped by functionality:
-* _Sensors:_ Accessing accelerometer, gyroscope, magnetometer, barometer, pedometer (e.g., {{expo-sensors}}).
-* _UI Components & APIs:_ Providing native UI elements or APIs like Maps (e.g., {{react-native-maps}}), SVG (e.g., {{react-native-svg}}), Haptics (e.g., {{expo-haptics}}).
-* _Device Information:_ Getting details about the device hardware and software (e.g., {{expo-device}}, {{expo-network}}, {{expo-battery}}).
-* _File System:_ Reading and writing to the app's sandboxed file system, downloading/uploading files (e.g., {{expo-file-system}}), managing assets (e.g., {{expo-asset}}).
-* _Camera/Media:_ Accessing the camera, photo library, audio/video playback (e.g., {{expo-camera}}, {{expo-media-library}}, {{expo-image-picker}}, {{expo-av}}).
-* _Location:_ Getting the device's geographic location (e.g., {{expo-location}}).
-* _Notifications:_ Handling push notifications and local notifications (e.g., {{expo-notifications}}).
-* _Authentication:_ Integrating with local authentication methods (e.g., {{expo-local-authentication}}).
-* _Storage:_ Securely storing small pieces of data (e.g., {{expo-secure-store}}), key-value storage (e.g., {{@react-native-async-storage/async-storage}}).
-* _Updates:_ Implementing Over-the-Air (OTA) updates (e.g., {{expo-updates}}).
-* _Core Utilities:_ Font loading (e.g., {{expo-font}}), splash screen control (e.g., {{expo-splash-screen}}), constants (e.g., {{expo-constants}}).
+* *Sensors:* Accessing accelerometer, gyroscope, magnetometer, barometer, pedometer (e.g., {{expo-sensors}}).
+* *UI Components & APIs:* Providing native UI elements or APIs like Maps (e.g., {{react-native-maps}}), SVG (e.g., {{react-native-svg}}), Haptics (e.g., {{expo-haptics}}).
+* *Device Information:* Getting details about the device hardware and software (e.g., {{expo-device}}, {{expo-network}}, {{expo-battery}}).
+* *File System:* Reading and writing to the app's sandboxed file system, downloading/uploading files (e.g., {{expo-file-system}}), managing assets (e.g., {{expo-asset}}).
+* *Camera/Media:* Accessing the camera, photo library, audio/video playback (e.g., {{expo-camera}}, {{expo-media-library}}, {{expo-image-picker}}, {{expo-av}}).
+* *Location:* Getting the device's geographic location (e.g., {{expo-location}}).
+* *Notifications:* Handling push notifications and local notifications (e.g., {{expo-notifications}}).
+* *Authentication:* Integrating with local authentication methods (e.g., {{expo-local-authentication}}).
+* *Storage:* Securely storing small pieces of data (e.g., {{expo-secure-store}}), key-value storage (e.g., {{@react-native-async-storage/async-storage}}).
+* *Updates:* Implementing Over-the-Air (OTA) updates (e.g., {{expo-updates}}).
+* *Core Utilities:* Font loading (e.g., {{expo-font}}), splash screen control (e.g., {{expo-splash-screen}}), constants (e.g., {{expo-constants}}).
 
 h3. Deep Dive into Key Modules
 
 Below are examples of key Expo SDK modules, illustrating their functionality, use cases, basic usage in TypeScript, and a conceptual "under the hood" explanation.
 
 h4. 1. {{expo-device}}
-* _Functionality:_ Provides comprehensive information about the physical device executing the application, such as OS name and version, device model and manufacturer, total memory, device type (phone, tablet, tv), and more.
-* _Common Use Cases:_ Gathering analytics data about user devices, tailoring UI elements or features based on device characteristics (e.g., different layouts for tablets), displaying debugging information, checking OS compatibility for certain features.
-* _TypeScript Code Example:_
+* *Functionality:* Provides comprehensive information about the physical device executing the application, such as OS name and version, device model and manufacturer, total memory, device type (phone, tablet, tv), and more.
+* *Common Use Cases:* Gathering analytics data about user devices, tailoring UI elements or features based on device characteristics (e.g., different layouts for tablets), displaying debugging information, checking OS compatibility for certain features.
+* *TypeScript Code Example:*
 
   ```typescript
   import * as Device from "expo-device";
@@ -48,17 +48,17 @@ h4. 1. {{expo-device}}
   console.log(
     `Total Memory: ${
       Device.totalMemory
-        ? (Device.totalMemory / (1024 _ 1024 _ 1024)).toFixed(2) + " GB"
+        ? (Device.totalMemory / (1024 * 1024 * 1024)).toFixed(2) + " GB"
         : "N/A"
     }`
   );
   ```
-* _Under the Hood Nugget:_ This module acts as a wrapper around standard native platform APIs. On Android, it primarily utilizes the {{android.os.Build}} class and related system services. On iOS, it accesses properties from {{UIDevice}} and {{ProcessInfo.processInfo}}. Expo ensures these disparate native APIs are presented through a consistent JavaScript interface.
+* *Under the Hood Nugget:* This module acts as a wrapper around standard native platform APIs. On Android, it primarily utilizes the {{android.os.Build}} class and related system services. On iOS, it accesses properties from {{UIDevice}} and {{ProcessInfo.processInfo}}. Expo ensures these disparate native APIs are presented through a consistent JavaScript interface.
 
 h4. 2. {{expo-location}}
-* _Functionality:_ Enables access to the device's geographic location information using various providers (GPS, Wi-Fi, cellular). It includes built-in handling for requesting necessary user permissions.
-* _Common Use Cases:_ Implementing map features, geotagging photos or posts, providing location-aware recommendations or services, tracking movement (with appropriate permissions and battery considerations).
-* _TypeScript Code Example:_
+* *Functionality:* Enables access to the device's geographic location information using various providers (GPS, Wi-Fi, cellular). It includes built-in handling for requesting necessary user permissions.
+* *Common Use Cases:* Implementing map features, geotagging photos or posts, providing location-aware recommendations or services, tracking movement (with appropriate permissions and battery considerations).
+* *TypeScript Code Example:*
 
   ```typescript
   import * as Location from "expo-location";
@@ -90,22 +90,22 @@ h4. 2. {{expo-location}}
     }
   }
   ```
-* _Under the Hood Nugget:_ {{expo-location}} abstracts the platform-specific location services frameworks. On Android, it typically interacts with the {{FusedLocationProviderClient}} API (part of Google Play Services). On iOS, it utilizes the {{CoreLocation}} framework ({{CLLocationManager}}). Expo's module handles permission requests and unifies location updates.
+* *Under the Hood Nugget:* {{expo-location}} abstracts the platform-specific location services frameworks. On Android, it typically interacts with the {{FusedLocationProviderClient}} API (part of Google Play Services). On iOS, it utilizes the {{CoreLocation}} framework ({{CLLocationManager}}). Expo's module handles permission requests and unifies location updates.
 
 h4. 3. {{expo-camera}}
-* _Functionality:_ Provides components and APIs for displaying a live camera preview, capturing photos, and recording videos. It also manages camera permissions.
-* _Common Use Cases:_ Building custom in-app camera interfaces, integrating QR code or barcode scanning capabilities (often used with {{expo-barcode-scanner}}), capturing images or videos for user profiles or content creation.
-* _TypeScript Code Example (Conceptual JSX & Logic):_
+* *Functionality:* Provides components and APIs for displaying a live camera preview, capturing photos, and recording videos. It also manages camera permissions.
+* *Common Use Cases:* Building custom in-app camera interfaces, integrating QR code or barcode scanning capabilities (often used with {{expo-barcode-scanner}}), capturing images or videos for user profiles or content creation.
+* *TypeScript Code Example (Conceptual JSX & Logic):*
 
   ```typescript
   import React, { useState, useRef } from "react";
   import { View, Button, Text } from "react-native";
   import { Camera, CameraType, CameraCapturedPicture } from "expo-camera";
 
-  /*
-* A React component demonstrating basic usage of the {{expo-camera}} module.
-* It requests camera permissions, displays a camera preview, and provides a button
-* to take a picture.
+  /**
+** A React component demonstrating basic usage of the {{expo-camera}} module.
+** It requests camera permissions, displays a camera preview, and provides a button
+** to take a picture.
    */
   function MyCameraComponent() {
     const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -129,10 +129,10 @@ h4. 3. {{expo-camera}}
       );
     }
 
-    /*
-** Captures a picture using the camera reference.
-** The captured photo is logged to the console.
-** @async
+    /**
+*** Captures a picture using the camera reference.
+*** The captured photo is logged to the console.
+*** @async
      */
     async function takePicture() {
       if (cameraRef.current) {
@@ -146,20 +146,20 @@ h4. 3. {{expo-camera}}
     return (
       <View style={{ flex: 1 }}>
         <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
-          {/_ UI Overlays for controls can go here _/}
+          {/* UI Overlays for controls can go here */}
         </Camera>
         <Button title="Take Pic" onPress={takePicture} />
-        {/_ Add button to flip camera type etc. _/}
+        {/* Add button to flip camera type etc. */}
       </View>
     );
   }
   ```
-* _Under the Hood Nugget:_ {{expo-camera}} renders a native view component displaying the live camera feed. It uses modern native camera APIs: {{CameraX}} on Android (part of Android Jetpack) and {{AVFoundation}} on iOS. The JavaScript API methods trigger corresponding native operations on the camera view instance.
+* *Under the Hood Nugget:* {{expo-camera}} renders a native view component displaying the live camera feed. It uses modern native camera APIs: {{CameraX}} on Android (part of Android Jetpack) and {{AVFoundation}} on iOS. The JavaScript API methods trigger corresponding native operations on the camera view instance.
 
 h4. 4. {{expo-file-system}}
-* _Functionality:_ Provides access to a portion of the device's local file system that is sandboxed for the application. Allows reading, writing, deleting files and directories, downloading files from network URLs, and uploading files.
-* _Common Use Cases:_ Caching network responses or images, storing user-generated content (like downloaded documents or saved drafts), managing application assets or configuration files, downloading files for offline access.
-* _TypeScript Code Example:_
+* *Functionality:* Provides access to a portion of the device's local file system that is sandboxed for the application. Allows reading, writing, deleting files and directories, downloading files from network URLs, and uploading files.
+* *Common Use Cases:* Caching network responses or images, storing user-generated content (like downloaded documents or saved drafts), managing application assets or configuration files, downloading files for offline access.
+* *TypeScript Code Example:*
 
   ```typescript
   import * as FileSystem from "expo-file-system";
@@ -199,7 +199,7 @@ h4. 4. {{expo-file-system}}
     }
   }
   ```
-* _Under the Hood Nugget:_ This module interacts with standard native file I/O APIs, operating within the app's sandboxed directories (Internal Storage/External Cache on Android; Application Support/Caches on iOS). Constants like {{FileSystem.documentDirectory}} map to appropriate platform-specific paths.
+* *Under the Hood Nugget:* This module interacts with standard native file I/O APIs, operating within the app's sandboxed directories (Internal Storage/External Cache on Android; Application Support/Caches on iOS). Constants like {{FileSystem.documentDirectory}} map to appropriate platform-specific paths.
 
 h3. Expo Abstraction Layer
 
@@ -224,7 +224,7 @@ _(This table is not exhaustive but covers many frequently used modules. Other mo
 {tip}
 The Expo SDK is constantly evolving. Always refer to the [https://docs.expo.dev/versions/latest/|official Expo documentation] for the most current list of modules, their detailed APIs, and usage examples.
 {tip}
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/versions/latest/|Expo API Reference] (Browse individual modules here)
 
 The extensive nature of the Expo SDK significantly lowers the barrier to entry for incorporating native features into React Native applications. For developers, especially those without deep native Android or iOS experience, the SDK provides a highly productive path. However, this convenience comes with a dependency on the Expo ecosystem and its release cycle. Understanding this trade-off between the convenience of the Expo SDK and the potential need for deeper native control is important for long-term project planning.

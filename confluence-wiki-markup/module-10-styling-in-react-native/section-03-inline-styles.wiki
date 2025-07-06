@@ -54,26 +54,26 @@ export default DynamicStatusPill;
 h3. When to Use Inline Styles
 
 Inline styles are most appropriate in a few specific scenarios:
-# _Dynamic Styles:_ When style properties need to change based on component state, props, or animations. If only one or two properties are dynamic, inline styles can be simpler than managing multiple `StyleSheet` entries and conditional arrays.
-** _SpeedyMeds Example:_ A medication item in a list might change its background color based on whether it's due for a refill soon (dynamic prop).
-# _Very Small, Specific Adjustments:_ For minor, one-off styling tweaks that are unlikely to be reused and are specific to a single instance of a component. For example, adding a small amount of margin to a single element in a complex layout.
-# _Prototyping and Quick Experiments:_ When quickly trying out styles, inline styling can be faster than setting up `StyleSheet` entries. However, it's good practice to refactor these into `StyleSheet` if they become permanent or complex.
+# *Dynamic Styles:* When style properties need to change based on component state, props, or animations. If only one or two properties are dynamic, inline styles can be simpler than managing multiple `StyleSheet` entries and conditional arrays.
+*** _SpeedyMeds Example:_ A medication item in a list might change its background color based on whether it's due for a refill soon (dynamic prop).
+# *Very Small, Specific Adjustments:* For minor, one-off styling tweaks that are unlikely to be reused and are specific to a single instance of a component. For example, adding a small amount of margin to a single element in a complex layout.
+# *Prototyping and Quick Experiments:* When quickly trying out styles, inline styling can be faster than setting up `StyleSheet` entries. However, it's good practice to refactor these into `StyleSheet` if they become permanent or complex.
 
 h3. Limitations of Inline Styles
 
 While convenient, inline styles have several drawbacks, especially if overused:
-# _Readability:_ Large inline style objects can clutter your JSX, making the component's rendering logic harder to read and understand. `StyleSheet` promotes separation of concerns.
-# _Reusability:_ Inline styles are not easily reusable across multiple components or even multiple instances of the same component if the styles are identical. `StyleSheet` allows you to define a style once and reference it many times.
-# _Performance Considerations:_ For static styles, `StyleSheet.create` offers clear performance benefits because the style objects are created once and identified by an ID. Inline style objects, especially if defined as new object literals within the render function (e.g., `style={{ color: 'blue' }}`), are often recreated on every render. This can lead to:
-** Increased JavaScript execution time to create these new objects.
-** More work for the garbage collector to clean up these short-lived objects.
-** Potentially more data being serialized and sent to the native side if these objects are passed across the bridge (though React Native has optimizations, frequent creation of new, complex style objects can still contribute to overhead, especially in lists or frequently updated components).
-# _Limited Tooling and Validation:_ Unlike styles created with `StyleSheet.create`, inline styles generally do not benefit from the same level of static analysis, autocompletion for style properties, or advanced type-checking that IDEs can provide for `StyleSheet` objects. Furthermore, `StyleSheet.create` can perform validations on style properties and values in development mode, helping to catch typos or invalid styles early, a feature typically bypassed by inline styles.
-# _Lack of Organization:_ As an application grows, relying heavily on inline styles can lead to a disorganized and inconsistent styling approach, making maintenance, refactoring, and theming more difficult.
+# *Readability:* Large inline style objects can clutter your JSX, making the component's rendering logic harder to read and understand. `StyleSheet` promotes separation of concerns.
+# *Reusability:* Inline styles are not easily reusable across multiple components or even multiple instances of the same component if the styles are identical. `StyleSheet` allows you to define a style once and reference it many times.
+# *Performance Considerations:* For static styles, `StyleSheet.create` offers clear performance benefits because the style objects are created once and identified by an ID. Inline style objects, especially if defined as new object literals within the render function (e.g., `style={{ color: 'blue' }}`), are often recreated on every render. This can lead to:
+*** Increased JavaScript execution time to create these new objects.
+*** More work for the garbage collector to clean up these short-lived objects.
+*** Potentially more data being serialized and sent to the native side if these objects are passed across the bridge (though React Native has optimizations, frequent creation of new, complex style objects can still contribute to overhead, especially in lists or frequently updated components).
+# *Limited Tooling and Validation:* Unlike styles created with `StyleSheet.create`, inline styles generally do not benefit from the same level of static analysis, autocompletion for style properties, or advanced type-checking that IDEs can provide for `StyleSheet` objects. Furthermore, `StyleSheet.create` can perform validations on style properties and values in development mode, helping to catch typos or invalid styles early, a feature typically bypassed by inline styles.
+# *Lack of Organization:* As an application grows, relying heavily on inline styles can lead to a disorganized and inconsistent styling approach, making maintenance, refactoring, and theming more difficult.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ This is very similar to using the `style` attribute directly on HTML elements (e.g., `<div style={{color: 'blue'}}></div>` in React for web). The same principles apply: convenient for dynamic or very specific styles, but generally discouraged for overall styling architecture due to maintainability and separation of concerns.
-> _Key Takeaway:_ The trade-offs are largely the same as on the web. Use inline styles judiciously.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* This is very similar to using the `style` attribute directly on HTML elements (e.g., `<div style={{color: 'blue'}}></div>` in React for web). The same principles apply: convenient for dynamic or very specific styles, but generally discouraged for overall styling architecture due to maintainability and separation of concerns.
+> *Key Takeaway:* The trade-offs are largely the same as on the web. Use inline styles judiciously.
 
 h3. Combining Inline Styles with `StyleSheet`
 
@@ -135,5 +135,5 @@ Inline styles are a convenient tool in your React Native styling toolkit, especi
 
 In the next section, we will delve into Flexbox, the powerful layout system that underpins how you arrange components in React Native.
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://reactnative.dev/docs/style#inline-styles|React Native Docs: Style - Inline Styles]

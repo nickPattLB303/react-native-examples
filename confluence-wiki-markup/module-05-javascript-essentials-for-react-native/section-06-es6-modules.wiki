@@ -4,19 +4,19 @@ As your JavaScript applications grow in complexity, organizing your code becomes
 
 h3. What are Modules?
 
-A module is typically a single file that encapsulates related code. Variables, functions, and classes declared within a module are private to that module by default, meaning they cannot be accessed directly from other modules unless they are explicitly _exported_.
+A module is typically a single file that encapsulates related code. Variables, functions, and classes declared within a module are private to that module by default, meaning they cannot be accessed directly from other modules unless they are explicitly *exported*.
 
 *Benefits of using modules:*
-* _Organization:_ Code is structured into logical units, making it easier to understand and navigate.
-* _Reusability:_ Exported functionality can be easily _imported_ and used in other parts of your application or even in different projects.
-* _Maintainability:_ Changes within one module are less likely to unintentionally affect other parts of the application, simplifying updates and debugging.
-* _Namespace Management:_ Modules help avoid naming conflicts by keeping declarations within their own scope, preventing pollution of the global namespace.
+* *Organization:* Code is structured into logical units, making it easier to understand and navigate.
+* *Reusability:* Exported functionality can be easily *imported* and used in other parts of your application or even in different projects.
+* *Maintainability:* Changes within one module are less likely to unintentionally affect other parts of the application, simplifying updates and debugging.
+* *Namespace Management:* Modules help avoid naming conflicts by keeping declarations within their own scope, preventing pollution of the global namespace.
 
-bq. 📲 _(Native Developers):_
->  _Comparison:_ ES6 modules in JavaScript work differently from module systems in native platforms. Swift uses modules where each framework or package is a module with explicit imports. Android uses Java/Kotlin packages with import statements. JavaScript ES6 modules have more granular export/import syntax that works at the individual function/class level.
-> _Key Takeaway:_ All these systems isolate code and prevent namespace collisions, but JavaScript's module system feels more granular than Swift's module-level imports or Android's package-level organization.
-> _Source:_ [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/|Swift Modules and Imports] and [https://kotlinlang.org/docs/packages.html|Kotlin Packages and Imports]
-> _Example:_
+bq. 📲 *(Native Developers):*
+>  *Comparison:* ES6 modules in JavaScript work differently from module systems in native platforms. Swift uses modules where each framework or package is a module with explicit imports. Android uses Java/Kotlin packages with import statements. JavaScript ES6 modules have more granular export/import syntax that works at the individual function/class level.
+> *Key Takeaway:* All these systems isolate code and prevent namespace collisions, but JavaScript's module system feels more granular than Swift's module-level imports or Android's package-level organization.
+> *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/|Swift Modules and Imports] and [https://kotlinlang.org/docs/packages.html|Kotlin Packages and Imports]
+> *Example:*
 > {code:language=swift}
 // Swift imports an entire module
 import UIKit
@@ -38,10 +38,10 @@ import React from "react"; // Default import
 import * as Utils from "./utils"; // Namespace import
 ```
 
-bq. 🌐 _(Web Developers):_ > _Comparison:_ If you're familiar with Node.js, you've likely used CommonJS modules (`require()/module.exports`), which differ from ES6 modules (`import/export`). CommonJS modules are synchronous and load at runtime, while ES6 modules are asynchronous and statically analyzed at compile time.
-> _Key Takeaway:_ React Native's bundler (Metro) supports both module systems, but the ES6 module syntax is preferred for modern React Native development.
-> _Source:_ [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules|JavaScript Modules: ES modules]
-> _Example:_
+bq. 🌐 *(Web Developers):* > *Comparison:* If you're familiar with Node.js, you've likely used CommonJS modules ({{require()/module.exports}}), which differ from ES6 modules ({{import/export}}). CommonJS modules are synchronous and load at runtime, while ES6 modules are asynchronous and statically analyzed at compile time.
+> *Key Takeaway:* React Native's bundler (Metro) supports both module systems, but the ES6 module syntax is preferred for modern React Native development.
+> *Source:* [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules|JavaScript Modules: ES modules]
+> *Example:*
 > ```javascript
 // CommonJS (older Node.js style)
 const React = require("react");
@@ -54,11 +54,11 @@ export default MyComponent;
 export const helper = helperFunction;
 ```
 
-In ES6 modules, each file is treated as a separate module. Modules operate in _strict mode_ by default.
+In ES6 modules, each file is treated as a separate module. Modules operate in *strict mode* by default.
 
-h3. `export` Statement
+h3. {{export}} Statement
 
-The `export` statement is used to make JavaScript variables, functions, or classes available for use in other modules.
+The {{export}} statement is used to make JavaScript variables, functions, or classes available for use in other modules.
 
 h4. Named Exports
 
@@ -104,7 +104,7 @@ export { checkStockLevel as getInventoryCount };
 {code:language=text}
 h4. Default Export
 
-A module can also have _one_ default export. This is often used for the primary piece of functionality the module provides, like a class or a main function.
+A module can also have *one* default export. This is often used for the primary piece of functionality the module provides, like a class or a main function.
 
 *1. Exporting a function or class directly:*
 {code}javascript
@@ -132,8 +132,8 @@ function logEvent(message, level = "INFO") {
 export default logEvent;
 {code:language=text}
 *When to use Named vs. Default Exports:*
-* Use _named exports_ when a module provides multiple utility functions, constants, or classes that can be used independently.
-* Use a _default export_ when a module has a primary purpose or provides a single, main piece of functionality (e.g., a class, a main configuration object).
+* Use *named exports* when a module provides multiple utility functions, constants, or classes that can be used independently.
+* Use a *default export* when a module has a primary purpose or provides a single, main piece of functionality (e.g., a class, a main configuration object).
 * It's possible to have both named exports and a default export in the same module, but keep it logical for clarity.
 
 h3. `import` Statement
@@ -190,14 +190,14 @@ console.log(displayCost);
 h4. Module Specifiers (Paths)
 
 The string that specifies the location of the module (e.g., `'./pharmacyUtils.js'`) is called the module specifier.
-* _Relative paths:_ Start with `./` (same directory) or `../` (parent directory).
-* _Absolute paths:_ Can be used but are less common for project-local modules. More typical for importing from installed packages (e.g., `import React from 'react';`).
-* _File Extensions:_ In many modern JavaScript environments and bundlers (like Metro for React Native), you can often omit the `.js` extension when importing local files. However, being explicit can sometimes improve clarity or be required by certain configurations.
+* *Relative paths:* Start with `./` (same directory) or `../` (parent directory).
+* *Absolute paths:* Can be used but are less common for project-local modules. More typical for importing from installed packages (e.g., `import React from 'react';`).
+* *File Extensions:* In many modern JavaScript environments and bundlers (like Metro for React Native), you can often omit the `.js` extension when importing local files. However, being explicit can sometimes improve clarity or be required by certain configurations.
 
 h3. Modules in Practice (Conceptual)
-* _Bundlers:_ In React Native (and most modern web development), a tool called a _bundler_ (Metro for React Native) processes your modules. It traverses the `import` statements, starting from your application's entry point, and bundles all the necessary code into one or more files that can be efficiently loaded by the JavaScript engine.
-* _Strict Mode:_ All ES6 modules are automatically in strict mode, which helps catch common coding mistakes and ensures more secure JavaScript.
-* _Scope:_ As mentioned, declarations within a module are local to that module unless exported. This helps prevent accidental modification of global variables and promotes encapsulation.
+* *Bundlers:* In React Native (and most modern web development), a tool called a *bundler* (Metro for React Native) processes your modules. It traverses the `import` statements, starting from your application's entry point, and bundles all the necessary code into one or more files that can be efficiently loaded by the JavaScript engine.
+* *Strict Mode:* All ES6 modules are automatically in strict mode, which helps catch common coding mistakes and ensures more secure JavaScript.
+* *Scope:* As mentioned, declarations within a module are local to that module unless exported. This helps prevent accidental modification of global variables and promotes encapsulation.
 
 *Example: Structuring SpeedyMeds Code*
 
@@ -275,8 +275,8 @@ export { getMedicationId } from "./medicationHelpers.js";
 // Now another module can import directly from allUtils.js:
 // import { formatCurrency, getMedicationId } from './allUtils.js';
 {code:language=text}
-*_2. Re-exporting all named exports (`export _ from ...`):*
-This syntax re-exports all _named_ exports from the specified module. It does *not** re-export the default export.
+**2. Re-exporting all named exports (`export * from ...`):*
+This syntax re-exports all *named* exports from the specified module. It does *not** re-export the default export.
 {code}javascript
 // file: allServices.js
 export * from "./medicationService.js"; // Re-exports getMedicationDetails, updateStock, etc.
@@ -300,7 +300,7 @@ export { default } from "./loggerService.js";
 {code:language=text}
 h3. Dynamic Imports (Advanced)
 
-Besides the static `import` statement (which is processed at build time), JavaScript also supports dynamic `import()`. This looks like a function call and returns a _Promise_ that resolves with the module object.
+Besides the static `import` statement (which is processed at build time), JavaScript also supports dynamic `import()`. This looks like a function call and returns a *Promise* that resolves with the module object.
 {code}javascript
 // Conceptual Example
 async function loadReportingModule() {
@@ -314,9 +314,9 @@ async function loadReportingModule() {
   }
 }
 {code:language=text}
-Dynamic imports are useful for _code splitting_ – loading code only when it's actually needed, which can improve initial application load times, especially in web contexts. While Metro (React Native's bundler) handles bundling differently, the concept of loading resources dynamically is relevant.
+Dynamic imports are useful for *code splitting* – loading code only when it's actually needed, which can improve initial application load times, especially in web contexts. While Metro (React Native's bundler) handles bundling differently, the concept of loading resources dynamically is relevant.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules|MDN Web Docs: JavaScript modules]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export|MDN Web Docs: `export`]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import|MDN Web Docs: `import`]
@@ -406,39 +406,39 @@ export const dailyPrescriptions = [
 h2. Tasks
 
 Create functions (potentially in a separate `processor.js` file, imported into `index.js`) to perform the following operations:
-# _`calculateTotalRevenue(prescriptions)`:_
-** Accepts the `dailyPrescriptions` array.
-*_ Calculates the total revenue from all prescriptions (quantity \_ unitPrice for each).
-** Returns the total revenue formatted as a currency string (e.g., "$123.45"). You can create a simple helper for currency formatting.
-# _`getPrescriptionsByMedication(prescriptions, medicationName)`:_
-** Accepts the `prescriptions` array and a `medicationName` string.
-** Returns a new array containing only the prescriptions for the specified medication.
-# _`getPatientsWithHighCostPrescriptions(prescriptions, costThreshold)`:_
-** Accepts the `prescriptions` array and a `costThreshold` number.
-**_ Calculates the total cost for each prescription (quantity \_ unitPrice).
-** Returns a new array of unique patient names who have at least one prescription exceeding the `costThreshold`.
-# _`summarizeInsuranceCoverage(prescriptions)`:_
-** Accepts the `prescriptions` array.
-** Returns an object with two properties: `coveredCount` (number of prescriptions covered by insurance) and `uncoveredCount` (number of prescriptions not covered).
-# _`generateDailyReport(prescriptions)`:_
-** This function should call the other functions you've created to generate a summary report string.
-** The report should include:
-** Total revenue.
-** Number of Lisinopril prescriptions.
-** Names of patients with prescriptions costing more than $20.
-** Insurance coverage summary (covered vs. uncovered count).
-** The output should be a well-formatted multi-line string.
+# *`calculateTotalRevenue(prescriptions)`:*
+*** Accepts the `dailyPrescriptions` array.
+*** Calculates the total revenue from all prescriptions (quantity \* unitPrice for each).
+*** Returns the total revenue formatted as a currency string (e.g., "$123.45"). You can create a simple helper for currency formatting.
+# *`getPrescriptionsByMedication(prescriptions, medicationName)`:*
+*** Accepts the `prescriptions` array and a `medicationName` string.
+*** Returns a new array containing only the prescriptions for the specified medication.
+# *`getPatientsWithHighCostPrescriptions(prescriptions, costThreshold)`:*
+*** Accepts the `prescriptions` array and a `costThreshold` number.
+*** Calculates the total cost for each prescription (quantity \* unitPrice).
+*** Returns a new array of unique patient names who have at least one prescription exceeding the `costThreshold`.
+# *`summarizeInsuranceCoverage(prescriptions)`:*
+*** Accepts the `prescriptions` array.
+*** Returns an object with two properties: `coveredCount` (number of prescriptions covered by insurance) and `uncoveredCount` (number of prescriptions not covered).
+# *`generateDailyReport(prescriptions)`:*
+*** This function should call the other functions you've created to generate a summary report string.
+*** The report should include:
+**** Total revenue.
+**** Number of Lisinopril prescriptions.
+**** Names of patients with prescriptions costing more than $20.
+**** Insurance coverage summary (covered vs. uncovered count).
+*** The output should be a well-formatted multi-line string.
 
 h2. Implementation Notes
 * Use `let` and `const` appropriately.
 * Utilize array methods like `map`, `filter`, `reduce`, `forEach`.
 * Employ object and array destructuring where it improves readability.
 * Use arrow functions where appropriate.
-* _Module Structure (Conceptual for CodeSandbox):_
-* You can put your data in `data.js` and export it.
-* Put your processing functions in `processor.js` and export them.
-* In `index.js`, import the data and functions, then call `generateDailyReport` and log its output.
-* CodeSandbox might require you to use `require` and `module.exports` for simpler multi-file setups without full bundler emulation, or you can do it all in `index.js` and just structure your code with functions as if they were in modules.
+* *Module Structure (Conceptual for CodeSandbox):*
+** You can put your data in `data.js` and export it.
+** Put your processing functions in `processor.js` and export them.
+** In `index.js`, import the data and functions, then call `generateDailyReport` and log its output.
+** CodeSandbox might require you to use `require` and `module.exports` for simpler multi-file setups without full bundler emulation, or you can do it all in `index.js` and just structure your code with functions as if they were in modules.
 
 h2. Expected Output (Example for `generateDailyReport`)
 
@@ -470,12 +470,12 @@ h2. Module 5 Summary
 Congratulations on completing Module 5: JavaScript Essentials for React Native! You've covered a significant amount of ground, building a strong foundation in the language that powers React Native development.
 
 Key takeaways from this module include:
-* _Variables and Data Types:_ Understanding `let` and `const` for variable declaration, and mastering JavaScript's primitive and object data types, along with various operators for manipulation and comparison.
-* _Control Flow:_ Using conditional statements (`if/else`, `switch`) and loops (`for`, `while`, `for...of`) to direct the execution path of your programs.
-* _Functions:_ Defining and using functions (including concise arrow functions), understanding scope (global, function, block, lexical), and harnessing the power of closures for data encapsulation and persistent state.
-* _Objects and Arrays:_ Working proficiently with these core data structures, including their methods, and leveraging ES6+ features like destructuring, the spread operator, and rest parameters for efficient data manipulation.
-* _Asynchronous JavaScript:_ Grasping the concepts of asynchronous operations, and managing them effectively using callbacks, Promises, and the modern `async/await` syntax to prevent blocking and maintain responsive applications.
-* _ES6 Modules:_ Learning how to organize code into reusable and maintainable modules using `import` and `export` statements.
+* *Variables and Data Types:* Understanding `let` and `const` for variable declaration, and mastering JavaScript's primitive and object data types, along with various operators for manipulation and comparison.
+* *Control Flow:* Using conditional statements (`if/else`, `switch`) and loops (`for`, `while`, `for...of`) to direct the execution path of your programs.
+* *Functions:* Defining and using functions (including concise arrow functions), understanding scope (global, function, block, lexical), and harnessing the power of closures for data encapsulation and persistent state.
+* *Objects and Arrays:* Working proficiently with these core data structures, including their methods, and leveraging ES6+ features like destructuring, the spread operator, and rest parameters for efficient data manipulation.
+* *Asynchronous JavaScript:* Grasping the concepts of asynchronous operations, and managing them effectively using callbacks, Promises, and the modern `async/await` syntax to prevent blocking and maintain responsive applications.
+* *ES6 Modules:* Learning how to organize code into reusable and maintainable modules using `import` and `export` statements.
 
 These JavaScript skills are not just prerequisites but are actively used every day when building React Native applications. From managing component state and props to handling API responses and structuring your application logic, a solid understanding of these concepts will make your journey into React Native much smoother and more productive.
 
@@ -489,4 +489,4 @@ For further exploration and to deepen your JavaScript knowledge, consider these 
 
 h3. Next Steps
 
-With these JavaScript essentials under your belt, you're well-prepared to enhance your code with static typing. Proceed to _[../module-06-typescript-essentials/section-00-introduction.md|Module 6: TypeScript Essentials]_ (link to be updated based on final structure) to learn how TypeScript can help you write more robust and maintainable React Native applications.
+With these JavaScript essentials under your belt, you're well-prepared to enhance your code with static typing. Proceed to *[../module-06-typescript-essentials/section-00-introduction.md|Module 6: TypeScript Essentials]* (link to be updated based on final structure) to learn how TypeScript can help you write more robust and maintainable React Native applications.

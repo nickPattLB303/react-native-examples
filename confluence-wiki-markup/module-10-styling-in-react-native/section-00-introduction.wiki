@@ -10,20 +10,20 @@ h2. Target Audience Adaptation
 
 Styling in React Native draws concepts from web development, particularly CSS, but with its own unique APIs and paradigms.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ You'll find Flexbox layout very familiar to CSS Flexbox. React Native's {{StyleSheet}} API will remind you of writing CSS in JavaScript, but with camelCased property names (e.g., {{backgroundColor}} instead of {{background-color}}). Concepts like "cascading" don't apply in the same way; styles are typically scoped to components.
-> _Key Takeaway:_ While many CSS concepts apply, React Native uses a JavaScript-based approach ({{StyleSheet}} or CSS-in-JS libraries) rather than separate CSS files. Style properties are also a subset of what's available on the web.
-> _Source:_ [https://reactnative.dev/docs/style|Style - React Native]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* You'll find Flexbox layout very familiar to CSS Flexbox. React Native's {{StyleSheet}} API will remind you of writing CSS in JavaScript, but with camelCased property names (e.g., {{backgroundColor}} instead of {{background-color}}). Concepts like "cascading" don't apply in the same way; styles are typically scoped to components.
+> *Key Takeaway:* While many CSS concepts apply, React Native uses a JavaScript-based approach ({{StyleSheet}} or CSS-in-JS libraries) rather than separate CSS files. Style properties are also a subset of what's available on the web.
+> *Source:* [https://reactnative.dev/docs/style|Style - React Native]
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ Styling in React Native is quite different from XML-based layouts and styles (e.g., {{styles.xml}}, themes, material design components). Instead of defining styles in XML, you'll use JavaScript objects. Flexbox will be the primary layout mechanism, which differs from ConstraintLayout or LinearLayout.
-> _Key Takeaway:_ Embrace the JavaScript-centric styling and Flexbox for layout. You'll find more dynamic control over styles directly within your component logic.
-> _Source:_ [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
+bq. 🤖 *(Android Developers):*
+> *Comparison:* Styling in React Native is quite different from XML-based layouts and styles (e.g., {{styles.xml}}, themes, material design components). Instead of defining styles in XML, you'll use JavaScript objects. Flexbox will be the primary layout mechanism, which differs from ConstraintLayout or LinearLayout.
+> *Key Takeaway:* Embrace the JavaScript-centric styling and Flexbox for layout. You'll find more dynamic control over styles directly within your component logic.
+> *Source:* [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ React Native styling diverges from UIKit's Storyboards, XIBs, or programmatic Auto Layout and UIAppearance. Style definitions live in JavaScript. Flexbox is the layout engine, which has conceptual similarities to Auto Layout but with a different syntax and model.
-> _Key Takeaway:_ Shift from visual tools or Swift/Objective-C styling APIs to JavaScript objects and Flexbox. The direct manipulation of style objects in code offers flexibility.
-> _Source:_ [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* React Native styling diverges from UIKit's Storyboards, XIBs, or programmatic Auto Layout and UIAppearance. Style definitions live in JavaScript. Flexbox is the layout engine, which has conceptual similarities to Auto Layout but with a different syntax and model.
+> *Key Takeaway:* Shift from visual tools or Swift/Objective-C styling APIs to JavaScript objects and Flexbox. The direct manipulation of style objects in code offers flexibility.
+> *Source:* [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
 
 h2. Learning Objectives
 
@@ -53,16 +53,16 @@ If you have extensive experience with CSS, particularly Flexbox, you may find so
 h2. Module Sections Overview
 
 This module is divided into the following sections, each building upon the last to provide a comprehensive understanding of styling in React Native:
-# _Styling Approaches Overview:_ A high-level look at {{StyleSheet}}, inline styles, CSS-in-JS, and UI libraries.
-# _StyleSheet Deep Dive (Best Practices, Performance):_ Best practices and performance considerations for {{StyleSheet.create()}}.
-# _Inline Styles (Usage and Limitations):_ Appropriate usage and limitations of direct style application.
-# _Layout with Flexbox (Comprehensive Guide):_ A comprehensive guide to React Native's layout engine.
-# _Introduction to Styled Components:_ Using this popular CSS-in-JS library.
-# _Theming with Styled Components:_ Creating consistent designs with themes.
-# _Introduction to UI Libraries: React Native Paper:_ Leveraging pre-built Material Design components.
-# _Using React Native Paper Components:_ Practical examples of common Paper components.
-# _Theming with React Native Paper (v5):_ Customizing the look and feel of Paper components.
-# _Responsive Design Techniques (Platform, Dimensions):_ Adapting your UI to various screen sizes and platforms.
+# *Styling Approaches Overview:* A high-level look at {{StyleSheet}}, inline styles, CSS-in-JS, and UI libraries.
+# *StyleSheet Deep Dive (Best Practices, Performance):* Best practices and performance considerations for {{StyleSheet.create()}}.
+# *Inline Styles (Usage and Limitations):* Appropriate usage and limitations of direct style application.
+# *Layout with Flexbox (Comprehensive Guide):* A comprehensive guide to React Native's layout engine.
+# *Introduction to Styled Components:* Using this popular CSS-in-JS library.
+# *Theming with Styled Components:* Creating consistent designs with themes.
+# *Introduction to UI Libraries: React Native Paper:* Leveraging pre-built Material Design components.
+# *Using React Native Paper Components:* Practical examples of common Paper components.
+# *Theming with React Native Paper (v5):* Customizing the look and feel of Paper components.
+# *Responsive Design Techniques (Platform, Dimensions):* Adapting your UI to various screen sizes and platforms.
 
 h2. Module Challenge
 

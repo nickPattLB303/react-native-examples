@@ -67,7 +67,7 @@ The `switch` statement is used to perform different actions based on different c
 * If there is a match, the associated block of code is executed.
 * The `break` keyword exits the `switch` block. If `break` is omitted, execution will continue into the next `case` (fall-through), which is usually unintended.
 * The `default` keyword specifies the code to run if there is no `case` match.
-* _Important:_ `switch` uses _strict equality (`===`)_ for comparisons, similar to the `===` operator. No type coercion is performed.
+* *Important:* `switch` uses *strict equality (`===`)* for comparisons, similar to the `===` operator. No type coercion is performed.
 
 {code:language=js}
 let dosageForm = "Tablet";
@@ -99,16 +99,16 @@ As with `if/else` statements, always use curly braces `{}` for loop bodies, even
 h4. Truthy and Falsy Values
 
 In JavaScript, conditions don't strictly need to be boolean values. JavaScript uses the concept of "truthy" and "falsy" to evaluate non-boolean values in a boolean context (like an `if` statement).
-* _Falsy values_ are values that translate to `false` when evaluated in a Boolean context. The falsy values in JavaScript are:
-* `false`
-* `0` (zero)
-* `-0` (minus zero)
-* `0n` (BigInt zero)
-* `''` or `""` (empty string)
-* `null`
-* `undefined`
-* `NaN` (Not a Number)
-* _Truthy values_ are all other values, including objects, arrays, non-empty strings, numbers other than zero, etc.
+* *Falsy values* are values that translate to `false` when evaluated in a Boolean context. The falsy values in JavaScript are:
+** `false`
+** `0` (zero)
+** `-0` (minus zero)
+** `0n` (BigInt zero)
+** `''` or `""` (empty string)
+** `null`
+** `undefined`
+** `NaN` (Not a Number)
+* *Truthy values* are all other values, including objects, arrays, non-empty strings, numbers other than zero, etc.
 
 {code:language=js}
 let patientNotes = ""; // Falsy
@@ -134,9 +134,9 @@ h4. `for` Loop
 The `for` loop repeats a block of code as long as a specified condition evaluates to true. It's commonly used when you know the number of iterations beforehand.
 
 It consists of three optional expressions, followed by a code block:
-# _Initialization:_ Executed once before the loop starts (e.g., `let i = 0`).
-# _Condition:_ Evaluated before each iteration. If `true`, the loop continues. If `false`, the loop ends.
-# _Final Expression (Increment/Decrement):_ Executed at the end of each iteration (e.g., `i++`).
+# *Initialization:* Executed once before the loop starts (e.g., `let i = 0`).
+# *Condition:* Evaluated before each iteration. If `true`, the loop continues. If `false`, the loop ends.
+# *Final Expression (Increment/Decrement):* Executed at the end of each iteration (e.g., `i++`).
 
 {code:language=js}
 console.log("Printing prescription refill reminders:");
@@ -191,7 +191,7 @@ While the `for`, `while`, and `do...while` loops are fundamental, for iterating 
 {info}
 h4. `for...of` Loop (ES6)
 
-The `for...of` loop iterates over the _values_ of iterable objects. Iterable objects include built-in types like `Array`, `String`, `Map`, `Set`, etc. It provides a simple and direct way to access the elements of a collection.
+The `for...of` loop iterates over the *values* of iterable objects. Iterable objects include built-in types like `Array`, `String`, `Map`, `Set`, etc. It provides a simple and direct way to access the elements of a collection.
 
 {code:language=js}
 const medications = ["Amoxicillin", "Ibuprofen", "Paracetamol"];
@@ -207,12 +207,12 @@ for (const medication of medications) {
 
 h4. `for...in` Loop
 
-The `for...in` loop iterates over the enumerable string _property names (keys)_ of an object. The order of iteration is not guaranteed.
+The `for...in` loop iterates over the enumerable string *property names (keys)* of an object. The order of iteration is not guaranteed.
 
 {warning}
-* _Use with Objects:_ `for...in` is intended for iterating over the keys of plain objects.
-* _Avoid with Arrays:_ Do not use `for...in` to iterate over Arrays. It iterates over indices (as strings) and potentially any other added properties, including inherited ones. The order is not guaranteed. Use `for...of` or array methods (`forEach`, `map`, etc.) for arrays.
-* _Check `hasOwnProperty`:_ When using `for...in` with objects, it's often wise to check if the property belongs directly to the object and is not inherited from its prototype chain, using `Object.prototype.hasOwnProperty.call(object, key)` or `object.hasOwnProperty(key)`.
+* *Use with Objects:* `for...in` is intended for iterating over the keys of plain objects.
+* *Avoid with Arrays:* Do not use `for...in` to iterate over Arrays. It iterates over indices (as strings) and potentially any other added properties, including inherited ones. The order is not guaranteed. Use `for...of` or array methods (`forEach`, `map`, etc.) for arrays.
+* *Check `hasOwnProperty`:* When using `for...in` with objects, it's often wise to check if the property belongs directly to the object and is not inherited from its prototype chain, using `Object.prototype.hasOwnProperty.call(object, key)` or `object.hasOwnProperty(key)`.
 {warning}
 
 {code:language=js}
@@ -236,7 +236,7 @@ for (const propertyKey in patientRecord) {
 {code}
 
 h4. Loop Control Statements
-* _`break`:_ Terminates the current loop (or `switch` statement) and transfers program control to the statement following the terminated statement.
+* *`break`:* Terminates the current loop (or `switch` statement) and transfers program control to the statement following the terminated statement.
 
   ```javascript
   const medicationBatchNumbers = [101, 102, 0, 104, 105]; // 0 indicates an error/end of valid batches
@@ -253,7 +253,7 @@ h4. Loop Control Statements
   // Processing batch: 102
   // Invalid batch number found. Stopping process.
   ```
-* _`continue`:_ Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
+* *`continue`:* Terminates execution of the statements in the current iteration of the current loop, and continues execution of the loop with the next iteration.
 
   ```javascript
   const patientAges = [25, 17, 65, 12, 40]; // Ages for a clinical trial
@@ -272,7 +272,7 @@ h4. Loop Control Statements
   // Patient aged 12 is not eligible, skipping.
   // Patient aged 40 is eligible.
   ```
-* _Labeled Statements (Advanced):_ JavaScript allows you to label loops. You can then use `break labelName;` or `continue labelName;` to control nested loops more precisely, jumping to the statement after the labeled loop (`break`) or starting the next iteration of the labeled loop (`continue`). This is less common but useful in specific complex scenarios.
+* *Labeled Statements (Advanced):* JavaScript allows you to label loops. You can then use `break labelName;` or `continue labelName;` to control nested loops more precisely, jumping to the statement after the labeled loop (`break`) or starting the next iteration of the labeled loop (`continue`). This is less common but useful in specific complex scenarios.
   ```javascript
   // Example (Conceptual)
   outerLoop: for (let i = 0; i < 3; i++) {
@@ -291,11 +291,11 @@ h4. Loop Control Statements
   console.log("Loop finished");
   ```
 
-bq. 📲 _(Native Developers): Control Flow Comparisons_
+bq. 📲 *(Native Developers): Control Flow Comparisons*
 > The syntax and fundamental behavior of `if/else`, `switch`, `for`, `while`, and `do...while` loops in JavaScript are highly similar to their counterparts in Java, Kotlin, and Swift, which should make this section feel familiar.
-> - _`switch` Statement:_ Be mindful that JavaScript's `switch` uses strict (`===`) comparison for its `case` values and requires explicit `break` statements to prevent "fall-through" into subsequent cases. This might differ slightly from default behaviors or syntax in other languages (e.g., Swift's `switch` does not fall through by default and is more powerful with pattern matching).
-- _Looping Constructs:_ The classic C-style `for` loop (`for (init; condition; afterthought)`) is common across these languages. JavaScript also offers `for...of` for iterating over iterable values (like arrays, strings), which is similar to Kotlin's `for (item in collection)` or Swift's `for item in collection`. JavaScript's `for...in` is for object property iteration and is distinct.
-- _`while` / `do...while`:_ These loops function almost identically across the languages in terms of their core logic (condition before vs. condition after).
+> - *`switch` Statement:* Be mindful that JavaScript's `switch` uses strict (`===`) comparison for its `case` values and requires explicit `break` statements to prevent "fall-through" into subsequent cases. This might differ slightly from default behaviors or syntax in other languages (e.g., Swift's `switch` does not fall through by default and is more powerful with pattern matching).
+- *Looping Constructs:* The classic C-style `for` loop (`for (init; condition; afterthought)`) is common across these languages. JavaScript also offers `for...of` for iterating over iterable values (like arrays, strings), which is similar to Kotlin's `for (item in collection)` or Swift's `for item in collection`. JavaScript's `for...in` is for object property iteration and is distinct.
+- *`while` / `do...while`:* These loops function almost identically across the languages in terms of their core logic (condition before vs. condition after).
 
 h4. Loop Comparison Summary
 
@@ -303,9 +303,9 @@ h4. Loop Comparison Summary
 |`for`|`for (init; cond; final)`|Known number of iterations, iterating with a counter|Before each iteration|No|
 |`while`|`while (condition)`|Iterations based on a condition, number unknown|Before each iteration|No|
 |`do...while`|`do {...} while (condition);`|Iterations based on a condition, body _must_ run at least once|After each iteration|Yes|
-|`for...in`|`for (const key in object)`|Enumerating object _property names (keys)_|Implicit (each key)|No (if 0 properties)|
-|`for...of`|`for (const value of iterable)`|Iterating over _values_ of iterable objects (Arrays, Strings, etc.)|Implicit (each value)|No (if empty iterable)|
-bq. 📚 _Official Documentation:_
+|`for...in`|`for (const key in object)`|Enumerating object *property names (keys)*|Implicit (each key)|No (if 0 properties)|
+|`for...of`|`for (const value of iterable)`|Iterating over *values* of iterable objects (Arrays, Strings, etc.)|Implicit (each value)|No (if empty iterable)|
+bq. 📚 *Official Documentation:*
 > - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling|MDN Web Docs: Control flow and error handling]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else|MDN Web Docs: `if...else`]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch|MDN Web Docs: `switch`]

@@ -5,8 +5,8 @@ Now that we've established the benefits of using a form library and recommended 
 *Installation*
 
 Integrating React Hook Form into your Expo project is straightforward using {{npx expo install}} or your preferred package manager (npm/yarn). Using {{npx expo install}} is recommended as it ensures compatibility with your Expo SDK version.
-# _Open your terminal_ in the root directory of your Expo project.
-# _Run the installation command:_
+# *Open your terminal* in the root directory of your Expo project.
+# *Run the installation command:*
 
     {code:language=bash}
 npx expo install react-hook-form
@@ -75,12 +75,12 @@ const {
 * `control`: An object containing methods for registering components into React Hook Form and sharing their state. It is crucial for integrating controlled components in React Native using the `Controller` component.
 * `handleSubmit`: A function that you wrap around your form submission handler. It will first trigger validation, and only if validation passes will it call your provided `onValid` submit function with the form data. It can also accept an `onInvalid` callback.
 * `formState`: An object containing real-time information about the form's state:
-* `errors`: An object holding validation errors for each field.
-* `isDirty`: Boolean, `true` if any field has been modified from its `defaultValues`.
-* `isValid`: Boolean, `true` if the form has no validation errors.
-* `isSubmitting`: Boolean, `true` while the async submit handler is executing.
-* `touchedFields`: An object indicating which fields have been interacted with (blurred).
-* `dirtyFields`: An object indicating which fields have been modified from their default value.
+** `errors`: An object holding validation errors for each field.
+** `isDirty`: Boolean, `true` if any field has been modified from its `defaultValues`.
+** `isValid`: Boolean, `true` if the form has no validation errors.
+** `isSubmitting`: Boolean, `true` while the async submit handler is executing.
+** `touchedFields`: An object indicating which fields have been interacted with (blurred).
+** `dirtyFields`: An object indicating which fields have been modified from their default value.
 ** `submitCount`: Number of times the form has been submitted.
 * `register`: A function used to register inputs into React Hook Form, primarily for uncontrolled components (common in web development). In React Native, where `TextInput` often becomes controlled when its `value` prop is used, `Controller` is the more common way to integrate inputs.
 * `setValue`: A function to programmatically set the value of a registered field and optionally trigger validation or update dirty/touched state.
@@ -98,12 +98,12 @@ These options control when validation is triggered. `mode` (default: `'onSubmit'
 *Basic Setup in a Component*
 
 Let's refine the basic structure for a form component using `useForm` as shown in the `BasicRHFScreen` example below.
-# _Import `useForm` and `Controller`:_
+# *Import `useForm` and `Controller`:*
 
     ```typescript
     import { useForm, Controller } from "react-hook-form";
     ```
-# _Define `FormData` Interface and Call `useForm`:_
+# *Define `FormData` Interface and Call `useForm`:*
     (As shown in the `BasicRHFScreen` example below, where `PatientFormData` is used).
 
 *Integrating with `TextInput` using `Controller`*
@@ -118,12 +118,12 @@ The `Controller` component wraps your input component and takes care of register
 * `rules?: object`: An object specifying validation rules for this field (e.g., `required`, `minLength`, `pattern`). Covered in detail in the next section.
 * `defaultValue?: any`: Sets an initial value for this specific field. This can override the `defaultValues` provided at the `useForm` level for this particular field.
 * `render: ({ field: { onChange, onBlur, value, ref }, fieldState: { error, invalid, isTouched, isDirty }, formState }) => JSX.Element`: A render prop function that receives an object with `field`, `fieldState`, and `formState` properties. You use these to integrate with your input component:
-* `field.onChange`: This function should be passed to your input's text change handler (e.g., `onChangeText` for `TextInput`). Calling it updates RHF's internal state for this field.
-* `field.onBlur`: This function should be passed to your input's blur handler (e.g., `onBlur` for `TextInput`). It notifies RHF that the field has been touched.
-* `field.value`: This prop contains the current value of the field as managed by RHF. It should be passed to your input's `value` prop.
-* `field.ref`: This `ref` should be passed to your input's `ref` prop. It allows RHF to, for example, focus on the input if it has a validation error.
-* `fieldState`: An object containing state specific to this input, such as `error` (with message), `invalid` (boolean), `isTouched` (boolean), and `isDirty` (boolean).
-* `formState`: The overall form state object (as described under `useForm`).
+** `field.onChange`: This function should be passed to your input's text change handler (e.g., `onChangeText` for `TextInput`). Calling it updates RHF's internal state for this field.
+** `field.onBlur`: This function should be passed to your input's blur handler (e.g., `onBlur` for `TextInput`). It notifies RHF that the field has been touched.
+** `field.value`: This prop contains the current value of the field as managed by RHF. It should be passed to your input's `value` prop.
+** `field.ref`: This `ref` should be passed to your input's `ref` prop. It allows RHF to, for example, focus on the input if it has a validation error.
+** `fieldState`: An object containing state specific to this input, such as `error` (with message), `invalid` (boolean), `isTouched` (boolean), and `isDirty` (boolean).
+** `formState`: The overall form state object (as described under `useForm`).
 
 *"Under the Hood": `Controller`'s Internal Mechanism*
 
@@ -289,15 +289,15 @@ export default BasicRHFScreen;
 
 This setup provides a solid foundation for building forms with React Hook Form in React Native. You now have a mechanism to register inputs, handle their state, and prepare for validation and submission, all with significantly less boilerplate than manual state management for complex forms.
 
-bq. 📱 _Background Bridge Notes:_
-> _For Native Developers (Android/iOS):_
+bq. 📱 *Background Bridge Notes:*
+> *For Native Developers (Android/iOS):*
 React Hook Form abstracts away a significant amount of manual state tracking, listener/delegate setup, and validation logic that you might be accustomed to writing natively. The `Controller` is a React-specific concept for bridging a state management library (RHF) with UI components, allowing RHF to manage their data and validation status.
-> _For Web Developers (React):_
+> *For Web Developers (React):*
 The `useForm` hook and the general principles of RHF will be very familiar. The main difference in React Native is the almost mandatory use of the `Controller` component for standard inputs like `TextInput` if you are controlling their `value` prop, whereas on the web, `register` with a `ref` is more common for uncontrolled HTML inputs.
-> _For Web Developers (Angular):_
+> *For Web Developers (Angular):*
 The `useForm` hook is somewhat analogous to setting up a `FormGroup` in Angular Reactive Forms. The `Controller` component, which wraps individual inputs, can be conceptually compared to Angular directives like `formControlName` that link template input elements to the `FormControl` instances within the `FormGroup`. Both approaches aim to connect the UI representation of an input to a centralized form model.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react-hook-form.com/docs/useform|React Hook Form - `useForm`]
 - [https://react-hook-form.com/docs/usecontroller/controller|React Hook Form - `Controller`]
 - [https://react-hook-form.com/get-started|React Hook Form - Get Started]

@@ -37,8 +37,8 @@ console.log(`Standard refill frequency: ${standardRefill} days`); // Output: Sta
 {code}
 
 *Key characteristics of numeric enums:*
-* _Auto-incrementing:_ If you don't assign values, they auto-increment starting from 0.
-* _Reverse Mapping:_ TypeScript generates a reverse mapping for numeric enums, allowing you to get the string name of an enum member from its numeric value (e.g., `PrescriptionStatus[1]` returns `"Approved"`).
+* *Auto-incrementing:* If you don't assign values, they auto-increment starting from 0.
+* *Reverse Mapping:* TypeScript generates a reverse mapping for numeric enums, allowing you to get the string name of an enum member from its numeric value (e.g., `PrescriptionStatus[1]` returns `"Approved"`).
 
 h3. String Enums
 
@@ -66,9 +66,9 @@ if (alertType === MedicationAlertType.Interaction) {
 {code}
 
 *Key characteristics of string enums:*
-* _Explicit Initialization:_ Each member must be initialized with a string literal (or another string enum member).
-* _Readability:_ String values are often more descriptive than numeric values, especially when debugging or logging.
-* _No Reverse Mapping:_ Unlike numeric enums, string enums do not have an automatic reverse mapping.
+* *Explicit Initialization:* Each member must be initialized with a string literal (or another string enum member).
+* *Readability:* String values are often more descriptive than numeric values, especially when debugging or logging.
+* *No Reverse Mapping:* Unlike numeric enums, string enums do not have an automatic reverse mapping.
 
 {info}
 String enums are often preferred over numeric enums for their improved readability and clarity, especially when the enum values might be serialized (e.g., sent to an API or stored in a database).
@@ -94,10 +94,10 @@ let myDelivery: DeliveryStatus = DeliveryStatus.InProgress;
 {code}
 
 *Key characteristics of `const` enums:*
-* _Inlined Values:_ Enum member values are inlined at compile time.
-* _No Generated JavaScript Object:_ The enum itself doesn't exist as an object in the compiled JavaScript.
-* _Performance:_ Can offer slight performance benefits due to inlining.
-* _Limitations:_ Cannot have computed members. Accessing members via dynamic values (like `DeliveryStatus[myDelivery]`) is not allowed; you must use literal access (e.g. `DeliveryStatus.InProgress`).
+* *Inlined Values:* Enum member values are inlined at compile time.
+* *No Generated JavaScript Object:* The enum itself doesn't exist as an object in the compiled JavaScript.
+* *Performance:* Can offer slight performance benefits due to inlining.
+* *Limitations:* Cannot have computed members. Accessing members via dynamic values (like `DeliveryStatus[myDelivery]`) is not allowed; you must use literal access (e.g. `DeliveryStatus.InProgress`).
 
 h3. When to Use Enums
 
@@ -109,7 +109,7 @@ Enums are best used when you have a small, distinct set of related constants whe
 
 Using enums instead of magic strings or numbers improves type safety and makes the intent of your code clearer.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://www.typescriptlang.org/docs/handbook/enums.html|TypeScript Handbook: Enums]
 
 Enums provide a structured way to work with sets of named constants, contributing to more maintainable and understandable TypeScript code for your SpeedyMeds application features.

@@ -7,12 +7,12 @@ h3. What are Styled Components?
 {{styled-components}} allow you to write actual CSS code to style your components using tagged template literals. It brings the power of ES6 template literals and CSS together to create React components with styles attached directly to them. This approach results in components that are inherently styled, making your styling logic more colocated and component-centric.
 
 *Key Benefits of Styled Components:*
-# _Scoped Styles:_ Styles are automatically scoped to the component, eliminating concerns about class name collisions or global style leakage.
-# _Dynamic Styling with Props:_ Easily adapt styles based on component props, leading to highly reusable and configurable components.
-# _CSS Syntax:_ You can use familiar CSS syntax (with some React Native specific considerations), which can be more intuitive for developers with a web background.
-# _Theming:_ Built-in support for theming allows you to define a consistent look and feel across your application and switch themes easily.
-# _Automatic Vendor Prefixing (for web):_ While less relevant for React Native, it showcases the library's robustness.
-# _Better Readability (Subjective):_ Some developers find that colocating styles with component definitions improves readability and maintainability.
+# *Scoped Styles:* Styles are automatically scoped to the component, eliminating concerns about class name collisions or global style leakage.
+# *Dynamic Styling with Props:* Easily adapt styles based on component props, leading to highly reusable and configurable components.
+# *CSS Syntax:* You can use familiar CSS syntax (with some React Native specific considerations), which can be more intuitive for developers with a web background.
+# *Theming:* Built-in support for theming allows you to define a consistent look and feel across your application and switch themes easily.
+# *Automatic Vendor Prefixing (for web):* While less relevant for React Native, it showcases the library's robustness.
+# *Better Readability (Subjective):* Some developers find that colocating styles with component definitions improves readability and maintainability.
 
 h3. Installation
 
@@ -70,9 +70,9 @@ const StyledButtonContainer = styled.TouchableOpacity<StyledButtonContainerProps
   border-radius: 8px;
   align-items: center;
   justify-content: center;
-  margin-vertical: 10px; /_ Example of a CSS-like property _/
+  margin-vertical: 10px; /* Example of a CSS-like property */
 
-  /_ Example of adapting styles based on a prop _/
+  /* Example of adapting styles based on a prop */
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
@@ -130,16 +130,16 @@ export default SpeedyButton;
 {code}
 
 *Explanation of the Example:*
-# _Import:_ We import `styled` from `styled-components/native`.
-# _Creating Styled Components:_
-** `styled.TouchableOpacity` creates a new component that is a `TouchableOpacity` but with the specified styles applied. The styles are written inside backticks (`` ` ``) which are template literals.
-** `styled.Text` creates a styled `Text` component.
-# _CSS-like Syntax:_ Inside the template literal, you can write CSS-like properties. React Native compatible properties are used (e.g., `backgroundColor`, `borderRadius`, `marginVertical`). Notice `margin-vertical` is a valid way to write it here, though `marginVertical` also works.
-# _Adapting Based on Props:_
-** The `background-color` of `StyledButtonContainer` changes based on the `primary` prop: `background-color: ${(props) => props.primary ? '#007bff' : '#6c757d'};`.
-** The `opacity` changes based on the `disabled` prop: `opacity: ${(props) => props.disabled ? 0.5 : 1};`.
-** This is a powerful feature where style rules can be functions that receive the component's props and return a style value.
-# *Usage:** The `SpeedyButton` component then uses `StyledButtonContainer` and `StyledButtonText` just like regular React Native components, passing props like `primary` and `disabled` to control their appearance.
+# *Import:* We import `styled` from `styled-components/native`.
+# *Creating Styled Components:*
+*** `styled.TouchableOpacity` creates a new component that is a `TouchableOpacity` but with the specified styles applied. The styles are written inside backticks (`` ` ``) which are template literals.
+*** `styled.Text` creates a styled `Text` component.
+# *CSS-like Syntax:* Inside the template literal, you can write CSS-like properties. React Native compatible properties are used (e.g., `backgroundColor`, `borderRadius`, `marginVertical`). Notice `margin-vertical` is a valid way to write it here, though `marginVertical` also works.
+# *Adapting Based on Props:*
+*** The `background-color` of `StyledButtonContainer` changes based on the `primary` prop: `background-color: ${(props) => props.primary ? '#007bff' : '#6c757d'};`.
+*** The `opacity` changes based on the `disabled` prop: `opacity: ${(props) => props.disabled ? 0.5 : 1};`.
+*** This is a powerful feature where style rules can be functions that receive the component's props and return a style value.
+# *Usage:* The `SpeedyButton` component then uses `StyledButtonContainer` and `StyledButtonText` just like regular React Native components, passing props like `primary` and `disabled` to control their appearance.
 
 h3. Styling Any Component
 
@@ -172,7 +172,7 @@ const StyledCustomCard = styled(MyCustomCard)`
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 5px;
-  /_ Additional styles specific to this usage of MyCustomCard _/
+  /* Additional styles specific to this usage of MyCustomCard */
   ${(props: { urgent?: boolean }) =>
     props.urgent &&
     `
@@ -211,14 +211,14 @@ const SecondaryButton = styled(BaseButton)`
 
 This allows you to create a base set of styles and then create variations easily.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ Styled Components work almost identically in React and React Native. The main difference is the set of valid CSS properties (React Native uses a subset and its own specific properties like `elevation` for Android shadow) and the base elements you style (e.g., `styled.View` instead of `styled.div`).
-> _Key Takeaway:_ If you've used Styled Components on the web, you'll feel right at home. Just remember to import from `styled-components/native` and use React Native compatible style properties.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* Styled Components work almost identically in React and React Native. The main difference is the set of valid CSS properties (React Native uses a subset and its own specific properties like `elevation` for Android shadow) and the base elements you style (e.g., `styled.View` instead of `styled.div`).
+> *Key Takeaway:* If you've used Styled Components on the web, you'll feel right at home. Just remember to import from `styled-components/native` and use React Native compatible style properties.
 
 h3. Considerations
-* _Performance:_ Styled Components is generally performant. It intelligently injects styles and avoids unnecessary re-renders. However, very complex dynamic styles within frequently updated components could potentially have an impact. As always, profile if you encounter issues.
-* _Bundle Size:_ Adding any library increases your app's bundle size. Styled Components is a reasonably sized library, but it's a factor to consider.
-* _Learning Curve:_ While CSS syntax is familiar, the concept of tagged template literals and function-based styles might take a little getting used to for those new to these JavaScript features.
+* *Performance:* Styled Components is generally performant. It intelligently injects styles and avoids unnecessary re-renders. However, very complex dynamic styles within frequently updated components could potentially have an impact. As always, profile if you encounter issues.
+* *Bundle Size:* Adding any library increases your app's bundle size. Styled Components is a reasonably sized library, but it's a factor to consider.
+* *Learning Curve:* While CSS syntax is familiar, the concept of tagged template literals and function-based styles might take a little getting used to for those new to these JavaScript features.
 
 Styled Components offer a powerful and expressive way to handle styling in React Native, particularly for applications with dynamic styling needs or those benefiting from a theming system. We will explore theming with Styled Components in the next section.
 
@@ -232,6 +232,6 @@ Practice using `styled-components` to create a styled version of the SpeedyMeds 
 
 _Instructions and requirements for the exercise are provided within the Expo Snack linked above._
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://styled-components.com/docs/basics|Styled Components: Basics]
 * [https://styled-components.com/docs/basics#react-native|Styled Components: React Native]

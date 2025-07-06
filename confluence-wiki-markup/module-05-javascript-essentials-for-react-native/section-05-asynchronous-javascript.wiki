@@ -3,16 +3,16 @@ h2. Section 5: Asynchronous JavaScript
 JavaScript is single-threaded, meaning it can only execute one piece of code at a time. However, many operations in web and mobile development, like fetching data from a server, reading files, or waiting for user input, can take time. If these operations were synchronous (blocking), they would freeze the entire application, leading to a poor user experience. Asynchronous JavaScript allows your program to perform long-running tasks without blocking the main thread, ensuring your application remains responsive.
 
 h3. Synchronous vs. Asynchronous Code
-* _Synchronous Code:_ Executes in a sequence, one line at a time. Each operation must complete before the next one begins. If an operation takes a long time (e.g., a large network request), the application will be unresponsive until it finishes.
+* *Synchronous Code:* Executes in a sequence, one line at a time. Each operation must complete before the next one begins. If an operation takes a long time (e.g., a large network request), the application will be unresponsive until it finishes.
 
   {code:language=js}
 console.log("First: Preparing medication list...");
   // Imagine a long, blocking operation here
-  // for (let i = 0; i < 1e9; i++) { /_ do nothing _/ }
+  // for (let i = 0; i < 1e9; i++) { /* do nothing */ }
   console.log("Second: Medication list prepared."); // This logs only after the blocking operation
   console.log("Third: Displaying list.");
   ```
-* _Asynchronous Code:_ Allows the program to initiate a task that might take time (like fetching data) and then continue executing other code without waiting for that task to complete. When the task finishes, a callback function or a Promise handler is executed with the result.
+* *Asynchronous Code:* Allows the program to initiate a task that might take time (like fetching data) and then continue executing other code without waiting for that task to complete. When the task finishes, a callback function or a Promise handler is executed with the result.
 
   ```javascript
   console.log("First: Requesting patient data...");
@@ -32,11 +32,11 @@ console.log("First: Preparing medication list...");
 
 This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
-> _Key Takeaway:_ In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
-> _Source:_ [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
-> _Example:_
+bq. 📲 *(Native Developers):*
+> *Comparison:* JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
+> *Key Takeaway:* In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
+> *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
+> *Example:*
 > ```swift
 // Swift: Actual concurrency with async/await
 func fetchData() async throws -> Data {
@@ -84,11 +84,11 @@ fetchData().then(processData).catch(handleError);
 
 h4. The Event Loop
 
-JavaScript environments (like browsers, Node.js, and React Native's JavaScript engine) manage asynchronous operations using an _event loop_, a _call stack_, and a _message queue_ (or task queue).
-# _Call Stack:_ Where JavaScript keeps track of function calls. When a function is called, it's added to the stack. When it returns, it's removed.
-# _Web APIs / Native APIs:_ Asynchronous operations (like `setTimeout`, network requests via `fetch`) are handed off to browser/native APIs to be processed outside the main JavaScript thread.
-# _Message Queue (Task Queue):_ When an asynchronous operation completes (e.g., timer expires, data arrives), its callback function is placed in the message queue.
-# _Event Loop:_ Continuously checks if the call stack is empty. If it is, it takes the first message (callback) from the queue and pushes it onto the call stack for execution.
+JavaScript environments (like browsers, Node.js, and React Native's JavaScript engine) manage asynchronous operations using an *event loop*, a *call stack*, and a *message queue* (or task queue).
+# *Call Stack:* Where JavaScript keeps track of function calls. When a function is called, it's added to the stack. When it returns, it's removed.
+# *Web APIs / Native APIs:* Asynchronous operations (like `setTimeout`, network requests via `fetch`) are handed off to browser/native APIs to be processed outside the main JavaScript thread.
+# *Message Queue (Task Queue):* When an asynchronous operation completes (e.g., timer expires, data arrives), its callback function is placed in the message queue.
+# *Event Loop:* Continuously checks if the call stack is empty. If it is, it takes the first message (callback) from the queue and pushes it onto the call stack for execution.
 
 This mechanism ensures that long-running operations don't block the main thread, allowing the UI to remain responsive.
 {code}mermaid
@@ -134,7 +134,7 @@ graph TD
     style MicrotaskQueue fill:#lightgreen
     style CallbackQueue fill:#orange
 {code:language=text}
-This diagram visualizes the JavaScript Event Loop mechanism. The _Call Stack_ executes synchronous code. When an asynchronous operation (like `setTimeout` or `fetch`) is initiated, it's offloaded to _Browser/Node.js APIs_ which run in the background. Upon completion, these APIs place their callbacks into one of two queues: the _Microtask Queue_ (for Promise handlers like `.then()`, `.catch()`, which have higher priority) or the _Callback Queue_ (also known as Macrotask Queue, for `setTimeout`, I/O). The _Event Loop_ continuously monitors the Call Stack. When the Call Stack is empty, it first processes _all_ tasks in the Microtask Queue. Only if both the Call Stack and Microtask Queue are empty will it take _one_ task from the Callback Queue to push onto the Call Stack for execution. This ensures non-blocking behavior and prioritizes promise resolutions.
+This diagram visualizes the JavaScript Event Loop mechanism. The *Call Stack* executes synchronous code. When an asynchronous operation (like `setTimeout` or `fetch`) is initiated, it's offloaded to *Browser/Node.js APIs* which run in the background. Upon completion, these APIs place their callbacks into one of two queues: the *Microtask Queue* (for Promise handlers like `.then()`, `.catch()`, which have higher priority) or the *Callback Queue* (also known as Macrotask Queue, for `setTimeout`, I/O). The *Event Loop* continuously monitors the Call Stack. When the Call Stack is empty, it first processes _all_ tasks in the Microtask Queue. Only if both the Call Stack and Microtask Queue are empty will it take _one_ task from the Callback Queue to push onto the Call Stack for execution. This ensures non-blocking behavior and prioritizes promise resolutions.
 
 h3. Callbacks
 
@@ -187,9 +187,9 @@ h3. Promises (ES6)
 A Promise is an object representing the eventual completion (or failure) of an asynchronous operation and its resulting value. It allows you to associate handlers with an asynchronous action's eventual success value or failure reason.
 
 A Promise can be in one of three states:
-* _`pending`_: Initial state, neither fulfilled nor rejected.
-* _`fulfilled` (or `resolved`)_: The operation completed successfully, and the Promise has a resulting value.
-* _`rejected`_: The operation failed, and the Promise has a reason for the failure.
+* *`pending`*: Initial state, neither fulfilled nor rejected.
+* *`fulfilled` (or `resolved`)*: The operation completed successfully, and the Promise has a resulting value.
+* *`rejected`*: The operation failed, and the Promise has a reason for the failure.
 
 Once a Promise is _settled_ (i.e., it is either fulfilled or rejected), its state and value/reason are immutable and will not change.
 
@@ -231,11 +231,11 @@ function fetchMedicationStock(medicationName) {
 This `fetchMedicationStock` function demonstrates Promise creation. It returns a `new Promise` that simulates fetching data asynchronously using `setTimeout`. Inside the executor function, after a 1-second delay, it checks a mock `inventory`. If the `medicationName` exists and has stock > 0, the Promise is `resolve`d with an object containing the medication and stock count. If the medication is out of stock or not found, the Promise is `reject`ed with an appropriate `Error` object. This encapsulates the asynchronous logic and provides a clear success (`resolve`) or failure (`reject`) path for consumers of the Promise.
 
 h4. Consuming Promises
-* _`.then(onFulfilled, onRejected)`_: Attaches callbacks for the resolution and/or rejection of the Promise.
-* `onFulfilled`: Called if the Promise is fulfilled (resolved).
-* `onRejected`: Called if the Promise is rejected.
-* _`.catch(onRejected)`_: A shorthand for `promise.then(null, onRejected)`. Used for error handling.
-* _`.finally(onFinally)` (ES2018)_: Schedules a function to be called when the promise is settled (either fulfilled or rejected).
+* *`.then(onFulfilled, onRejected)`*: Attaches callbacks for the resolution and/or rejection of the Promise.
+** `onFulfilled`: Called if the Promise is fulfilled (resolved).
+** `onRejected`: Called if the Promise is rejected.
+* *`.catch(onRejected)`*: A shorthand for `promise.then(null, onRejected)`. Used for error handling.
+* *`.finally(onFinally)` (ES2018)*: Schedules a function to be called when the promise is settled (either fulfilled or rejected).
 {code}javascript
 fetchMedicationStock("Amoxicillin")
   .then((result) => {
@@ -262,9 +262,9 @@ fetchMedicationStock("Aspirin")
 {code:language=text}
 *Chaining Promises:*
 `.then()`, `.catch()`, and `.finally()` return new Promises, allowing you to chain asynchronous operations. The way you return values or throw errors within these handlers determines the state and value of the chained Promise:
-* _Returning a Value:_ If an `onFulfilled` or `onRejected` handler returns a regular value (not a Promise), the new Promise returned by `.then()` (or `.catch()`) is _fulfilled_ with that value.
-* _Throwing an Error:_ If a handler throws an error, the new Promise is _rejected_ with that error.
-* _Returning a Promise:_ If a handler returns another Promise (let's call it `P2`), the new Promise returned by `.then()` (or `.catch()`) will "adopt" the state of `P2`. It will wait for `P2` to settle and then settle with `P2`'s fulfillment value or rejection reason. This is key for sequencing dependent asynchronous operations.
+* *Returning a Value:* If an `onFulfilled` or `onRejected` handler returns a regular value (not a Promise), the new Promise returned by `.then()` (or `.catch()`) is *fulfilled* with that value.
+* *Throwing an Error:* If a handler throws an error, the new Promise is *rejected* with that error.
+* *Returning a Promise:* If a handler returns another Promise (let's call it `P2`), the new Promise returned by `.then()` (or `.catch()`) will "adopt" the state of `P2`. It will wait for `P2` to settle and then settle with `P2`'s fulfillment value or rejection reason. This is key for sequencing dependent asynchronous operations.
 {code}javascript
 function verifyPatient(patientId) {
   return new Promise((resolve, reject) => {
@@ -298,8 +298,8 @@ h4. Static Promise Methods
 * `Promise.race(iterable)`: Waits for the first promise in an iterable to settle (either resolve or reject). Returns a Promise that settles with the result/reason of the first promise that settles.
 * `Promise.resolve(value)`: Returns a Promise object that is resolved with the given value.
 * `Promise.reject(reason)`: Returns a Promise object that is rejected with the given reason.
-* _`Promise.allSettled(iterableOfPromises)` (ES2020+):_ Takes an iterable of Promises. It returns a Promise that fulfills after _all_ of the given Promises have either fulfilled or rejected. The fulfillment value is an array of objects, each describing the outcome of a Promise: `{status: "fulfilled", value:...}` or `{status: "rejected", reason:...}`. This is useful when you need to know the outcome of all operations, regardless of individual failures.
-* _`Promise.any(iterableOfPromises)` (ES2021+):_ Takes an iterable of Promises. It returns a Promise that fulfills as soon as _any_ of the input Promises fulfill, with the value of the first one that fulfilled. If all input Promises reject, it rejects with an `AggregateError` (an error object that groups all the individual rejection reasons).
+* *`Promise.allSettled(iterableOfPromises)` (ES2020+):* Takes an iterable of Promises. It returns a Promise that fulfills after _all_ of the given Promises have either fulfilled or rejected. The fulfillment value is an array of objects, each describing the outcome of a Promise: `{status: "fulfilled", value:...}` or `{status: "rejected", reason:...}`. This is useful when you need to know the outcome of all operations, regardless of individual failures.
+* *`Promise.any(iterableOfPromises)` (ES2021+):* Takes an iterable of Promises. It returns a Promise that fulfills as soon as _any_ of the input Promises fulfill, with the value of the first one that fulfilled. If all input Promises reject, it rejects with an `AggregateError` (an error object that groups all the individual rejection reasons).
 {code}javascript
 Promise.all([
   fetchMedicationStock("Amoxicillin"),
@@ -334,8 +334,8 @@ Promise.allSettled([
 h3. `async/await` (ES2017)
 
 `async/await` is syntactic sugar built on top of Promises, making asynchronous code look and feel more like synchronous code. This greatly improves readability and maintainability.
-* _`async` function:_ Declaring a function with the `async` keyword means it will automatically return a Promise. If the function returns a value, the Promise will be resolved with that value. If the function throws an error, the Promise will be rejected with that error.
-* _`await` operator:_ Can only be used inside an `async` function. It pauses the execution of the `async` function and waits for the Promise to its right to settle (resolve or reject). If the Promise resolves, `await` returns the resolved value. If it rejects, `await` throws the rejected reason (which can be caught by `try...catch`).
+* *`async` function:* Declaring a function with the `async` keyword means it will automatically return a Promise. If the function returns a value, the Promise will be resolved with that value. If the function throws an error, the Promise will be rejected with that error.
+* *`await` operator:* Can only be used inside an `async` function. It pauses the execution of the `async` function and waits for the Promise to its right to settle (resolve or reject). If the Promise resolves, `await` returns the resolved value. If it rejects, `await` throws the rejected reason (which can be caught by `try...catch`).
 {code}javascript
 async function processPrescription(patientId, medicationName) {
   console.log("--- Processing Prescription with async/await ---");
@@ -407,32 +407,32 @@ This diagram shows that when an `async` function encounters an `await` keyword, 
 h3. Under the Hood: Event Loop, Task Queues, and Microtasks
 
 To truly understand how JavaScript handles asynchronicity without multiple threads, we need to look at the runtime environment's components:
-# _JavaScript Engine & Call Stack:_
-*_ As discussed, JavaScript itself is single-threaded with one _Call Stack*. The Call Stack keeps track of function calls. When a script wants to call a function, it pushes a frame for that function onto the stack. When the function returns, its frame is popped.
-# _Web APIs / Native Environment APIs (Background Operations):_
-** Asynchronous operations like `setTimeout`, DOM events (in browsers), `fetch` requests, or file system operations (in Node.js) are not handled directly by the JavaScript engine's main thread. Instead, they are offloaded to the browser's Web APIs or the Node.js environment's C++ APIs (often using separate threads managed by the environment, not directly accessible to your JS code).
-** When these background operations complete, they don't interrupt JavaScript execution. Instead, they place their associated callback functions into specific queues.
-# _Callback Queue (Task Queue / Macrotask Queue):_
-*_ This queue holds callback functions that are ready to be executed from completed _macrotasks*. Examples of macrotasks include:
-*** `setTimeout` and `setInterval` timers.
-** I/O operations (e.g., network responses from `fetch` after the initial Promise part, file reads).
-** User interaction events (e.g., clicks, key presses).
-** UI rendering updates (in browsers, this is a complex part of the event loop cycle).
-# _Microtask Queue:_
-*_ This queue holds callbacks from completed _microtasks_. Microtasks have a _higher priority* than macrotasks.
-** The primary sources of microtasks are:
-*_ _Promise handlers:* Callbacks attached via `.then()`, `.catch()`, and `.finally()`.
-** Callbacks registered with `queueMicrotask()` (a way to schedule a function to run as a microtask).
-** `MutationObserver` callbacks (in browsers).
-# _The Event Loop:_
-** The Event Loop is a constantly running process that orchestrates these components. Its fundamental job is to monitor the Call Stack and the task queues. Its cycle can be simplified as:
+# *JavaScript Engine & Call Stack:*
+*** As discussed, JavaScript itself is single-threaded with one *Call Stack*. The Call Stack keeps track of function calls. When a script wants to call a function, it pushes a frame for that function onto the stack. When the function returns, its frame is popped.
+# *Web APIs / Native Environment APIs (Background Operations):*
+*** Asynchronous operations like `setTimeout`, DOM events (in browsers), `fetch` requests, or file system operations (in Node.js) are not handled directly by the JavaScript engine's main thread. Instead, they are offloaded to the browser's Web APIs or the Node.js environment's C++ APIs (often using separate threads managed by the environment, not directly accessible to your JS code).
+*** When these background operations complete, they don't interrupt JavaScript execution. Instead, they place their associated callback functions into specific queues.
+# *Callback Queue (Task Queue / Macrotask Queue):*
+*** This queue holds callback functions that are ready to be executed from completed *macrotasks*. Examples of macrotasks include:
+**** `setTimeout` and `setInterval` timers.
+**** I/O operations (e.g., network responses from `fetch` after the initial Promise part, file reads).
+**** User interaction events (e.g., clicks, key presses).
+**** UI rendering updates (in browsers, this is a complex part of the event loop cycle).
+# *Microtask Queue:*
+*** This queue holds callbacks from completed *microtasks*. Microtasks have a *higher priority* than macrotasks.
+*** The primary sources of microtasks are:
+**** *Promise handlers:* Callbacks attached via `.then()`, `.catch()`, and `.finally()`.
+**** Callbacks registered with `queueMicrotask()` (a way to schedule a function to run as a microtask).
+**** `MutationObserver` callbacks (in browsers).
+# *The Event Loop:*
+*** The Event Loop is a constantly running process that orchestrates these components. Its fundamental job is to monitor the Call Stack and the task queues. Its cycle can be simplified as:
 #### Execute all currently available synchronous code on the Call Stack until it is empty.
-#### After the synchronous code finishes (and after each Macrotask from step 4 finishes), _process the Microtask Queue_: Execute all microtasks in the queue, one by one, until the Microtask Queue is empty. If a microtask adds another microtask, that new one is also processed before moving on.
+#### After the synchronous code finishes (and after each Macrotask from step 4 finishes), *process the Microtask Queue*: Execute all microtasks in the queue, one by one, until the Microtask Queue is empty. If a microtask adds another microtask, that new one is also processed before moving on.
 #### (Browser-specific) If rendering updates are needed and conditions are met, the browser may perform UI rendering steps.
-#### If the Call Stack is empty and the Microtask Queue is empty, take _one Macrotask_ from the Callback Queue (if available) and push its callback function onto the Call Stack for execution. This brings us back to step 1 (the callback itself is synchronous code).
+#### If the Call Stack is empty and the Microtask Queue is empty, take *one Macrotask* from the Callback Queue (if available) and push its callback function onto the Call Stack for execution. This brings us back to step 1 (the callback itself is synchronous code).
 
 *Implications for Developers:*
-* _Priority:_ Microtasks (like Promise handlers) will always execute before Macrotasks (like `setTimeout` callbacks), even if both are scheduled at roughly the same time.
+* *Priority:* Microtasks (like Promise handlers) will always execute before Macrotasks (like `setTimeout` callbacks), even if both are scheduled at roughly the same time.
 
   ```javascript
   console.log("Start");
@@ -453,12 +453,12 @@ To truly understand how JavaScript handles asynchronicity without multiple threa
   // Promise.then callback (Microtask)
   // Timeout callback (Macrotask)
   ```
-* _Non-Blocking:_ This entire system ensures that the main JavaScript thread is not blocked by long-running I/O operations, keeping the UI responsive.
-* _`async/await` Integration:_ `await` works by pausing the `async` function and letting the event loop continue. When the awaited Promise settles, the continuation of the `async` function is typically scheduled as a microtask.
+* *Non-Blocking:* This entire system ensures that the main JavaScript thread is not blocked by long-running I/O operations, keeping the UI responsive.
+* *`async/await` Integration:* `await` works by pausing the `async` function and letting the event loop continue. When the awaited Promise settles, the continuation of the `async` function is typically scheduled as a microtask.
 
 Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function|MDN Web Docs: Asynchronous JavaScript] (This link points to `async function`, a good starting point)
 - [https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing|MDN Web Docs: Introducing asynchronous JavaScript]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop|MDN Web Docs: Event Loop]
@@ -486,32 +486,32 @@ Gain experience with asynchronous JavaScript by implementing functions that simu
 h2. Tasks
 
 h3. Part 1: Using Promises
-# _`fetchPatientProfile(patientId)` Function (Promise-based):_
-** Define a function `fetchPatientProfile(patientId)` that returns a `Promise`.
-** Inside the Promise executor, simulate a network request using `setTimeout` (e.g., delay of 1 second).
-** If `patientId` is a non-empty string, the Promise should resolve with a patient profile object (e.g., `{ id: patientId, name: 'Patient ' + patientId, lastVisit: '2023-03-15' }`).
-** If `patientId` is empty or not a string, the Promise should reject with an `Error('Invalid patient ID')`.
-** Call this function with a valid ID and chain `.then()` to log the profile and `.catch()` to log any error.
-** Call this function with an invalid ID to test the rejection.
-# _`fetchMedicationDetails(medicationName)` Function (Promise-based):_
-** Define a function `fetchMedicationDetails(medicationName)` that returns a `Promise`.
-** Simulate a network request (e.g., delay of 1.5 seconds).
-** If `medicationName` is 'Lisinopril', resolve with `{ name: 'Lisinopril', dosage: '10mg', type: 'Tablet' }`.
-** If `medicationName` is 'Amoxicillin', resolve with `{ name: 'Amoxicillin', dosage: '250mg', type: 'Capsule' }`.
-** For any other medication name, reject with an `Error('Medication details not found')`.
-** Test this function similarly by calling it and using `.then()` and `.catch()`.
-# _Chain `fetchPatientProfile` and `fetchMedicationDetails`:_
-** Call `fetchPatientProfile` for a valid patient.
-** In its `.then()` handler, if successful, call `fetchMedicationDetails` for 'Lisinopril'.
-** Chain another `.then()` to log both the patient name and the medication details (e.g., "Patient [Name] is prescribed [Medication Name] ([Dosage])").
-** Include a `.catch()` at the end of the chain to handle any errors from either Promise.
+# *`fetchPatientProfile(patientId)` Function (Promise-based):*
+*** Define a function `fetchPatientProfile(patientId)` that returns a `Promise`.
+*** Inside the Promise executor, simulate a network request using `setTimeout` (e.g., delay of 1 second).
+*** If `patientId` is a non-empty string, the Promise should resolve with a patient profile object (e.g., `{ id: patientId, name: 'Patient ' + patientId, lastVisit: '2023-03-15' }`).
+*** If `patientId` is empty or not a string, the Promise should reject with an `Error('Invalid patient ID')`.
+*** Call this function with a valid ID and chain `.then()` to log the profile and `.catch()` to log any error.
+*** Call this function with an invalid ID to test the rejection.
+# *`fetchMedicationDetails(medicationName)` Function (Promise-based):*
+*** Define a function `fetchMedicationDetails(medicationName)` that returns a `Promise`.
+*** Simulate a network request (e.g., delay of 1.5 seconds).
+*** If `medicationName` is 'Lisinopril', resolve with `{ name: 'Lisinopril', dosage: '10mg', type: 'Tablet' }`.
+*** If `medicationName` is 'Amoxicillin', resolve with `{ name: 'Amoxicillin', dosage: '250mg', type: 'Capsule' }`.
+*** For any other medication name, reject with an `Error('Medication details not found')`.
+*** Test this function similarly by calling it and using `.then()` and `.catch()`.
+# *Chain `fetchPatientProfile` and `fetchMedicationDetails`:*
+*** Call `fetchPatientProfile` for a valid patient.
+*** In its `.then()` handler, if successful, call `fetchMedicationDetails` for 'Lisinopril'.
+*** Chain another `.then()` to log both the patient name and the medication details (e.g., "Patient [Name] is prescribed [Medication Name] ([Dosage])").
+*** Include a `.catch()` at the end of the chain to handle any errors from either Promise.
 
 h3. Part 2: Refactoring with `async/await`
-# _`getPrescriptionInfoAsync(patientId, medicationName)` Function (`async/await`):_
-** Define an `async` function `getPrescriptionInfoAsync(patientId, medicationName)`.
-** Inside this function, use `await` to call `fetchPatientProfile(patientId)` and then `fetchMedicationDetails(medicationName)` sequentially.
-** If both are successful, log a message like: "(Async) Patient: [Patient Name], Medication: [Medication Name], Dosage: [Medication Dosage]".
-** Use a `try...catch` block to handle any potential errors from the awaited promises and log an appropriate error message (e.g., "(Async) Error fetching prescription info: [error message]").
+# *`getPrescriptionInfoAsync(patientId, medicationName)` Function (`async/await`):*
+*** Define an `async` function `getPrescriptionInfoAsync(patientId, medicationName)`.
+*** Inside this function, use `await` to call `fetchPatientProfile(patientId)` and then `fetchMedicationDetails(medicationName)` sequentially.
+*** If both are successful, log a message like: "(Async) Patient: [Patient Name], Medication: [Medication Name], Dosage: [Medication Dosage]".
+*** Use a `try...catch` block to handle any potential errors from the awaited promises and log an appropriate error message (e.g., "(Async) Error fetching prescription info: [error message]").
 *** Call `getPrescriptionInfoAsync` with valid data and also with data that would cause one of the underlying functions to reject (to test error handling).
 
 h2. Getting Started

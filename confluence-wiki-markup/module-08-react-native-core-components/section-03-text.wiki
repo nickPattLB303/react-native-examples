@@ -9,12 +9,12 @@ The {{<Text>}} component is used to render strings of text. Unlike on the web wh
 This requirement is a direct consequence of React Native's need to efficiently manage text rendering and styling on native platforms. Native operating systems typically use specific UI elements for text (like {{UILabel}} on iOS or {{TextView}} on Android). The {{<Text>}} component provides the necessary abstraction layer to interact with these native text elements, ensuring that text rendering goes through React Native's controlled pipeline for applying text-specific native properties and layout.
 
 *Key Characteristics of {{<Text>}}:*
-* _Text Rendering:_ Its sole purpose is to display text content.
-* _Styling:_ {{<Text>}} components can be styled using the {{StyleSheet}} API to control font size, color, font family, weight, alignment, line height, and more. Common text-specific style properties include {{color}}, {{fontFamily}}, {{fontSize}}, {{fontStyle}}, {{fontWeight}}, {{letterSpacing}}, {{lineHeight}}, {{textAlign}}, {{textDecorationLine}}, {{textShadowColor}}, {{textShadowOffset}}, {{textShadowRadius}}, {{textTransform}}, {{includeFontPadding}} (Android), and {{textAlignVertical}} (Android).
-* _Nesting:_ {{<Text>}} components can be nested within each other. This is powerful because style inheritance works within nested {{<Text>}} components. For example, if an outer {{<Text>}} has a default font color, an inner {{<Text>}} will inherit that color unless explicitly overridden. This inheritance does _not_ apply from {{<View>}} to {{<Text>}}. Internally, React Native translates these nested structures into a flat {{NSAttributedString}} on iOS or a {{SpannableString}} on Android, which are the native mechanisms for handling styled text ranges.
-* _Text-Specific Props:_ It supports various props for text layout and interaction, such as {{numberOfLines}}, {{ellipsizeMode}}, {{onPress}} (to make text tappable), {{selectable}}, {{allowFontScaling}}, {{adjustsFontSizeToFit}} (iOS), and {{minimumFontScale}} (iOS).
-* _Accessibility:_ Text content within {{<Text>}} components is automatically accessible to screen readers.
-* _Text Layout vs. Flexbox:_ Everything rendered inside a {{<Text>}} component uses text layout rules, not Flexbox. Child elements (which must also be {{<Text>}} components or raw strings) are treated as inline elements. They flow together and wrap to the next line when they reach the end of the parent {{<Text>}} container's boundary. This contrasts with {{<View>}} components, whose children are laid out as rectangular blocks according to Flexbox rules.
+* *Text Rendering:* Its sole purpose is to display text content.
+* *Styling:* {{<Text>}} components can be styled using the {{StyleSheet}} API to control font size, color, font family, weight, alignment, line height, and more. Common text-specific style properties include {{color}}, {{fontFamily}}, {{fontSize}}, {{fontStyle}}, {{fontWeight}}, {{letterSpacing}}, {{lineHeight}}, {{textAlign}}, {{textDecorationLine}}, {{textShadowColor}}, {{textShadowOffset}}, {{textShadowRadius}}, {{textTransform}}, {{includeFontPadding}} (Android), and {{textAlignVertical}} (Android).
+* *Nesting:* {{<Text>}} components can be nested within each other. This is powerful because style inheritance works within nested {{<Text>}} components. For example, if an outer {{<Text>}} has a default font color, an inner {{<Text>}} will inherit that color unless explicitly overridden. This inheritance does _not_ apply from {{<View>}} to {{<Text>}}. Internally, React Native translates these nested structures into a flat {{NSAttributedString}} on iOS or a {{SpannableString}} on Android, which are the native mechanisms for handling styled text ranges.
+* *Text-Specific Props:* It supports various props for text layout and interaction, such as {{numberOfLines}}, {{ellipsizeMode}}, {{onPress}} (to make text tappable), {{selectable}}, {{allowFontScaling}}, {{adjustsFontSizeToFit}} (iOS), and {{minimumFontScale}} (iOS).
+* *Accessibility:* Text content within {{<Text>}} components is automatically accessible to screen readers.
+* *Text Layout vs. Flexbox:* Everything rendered inside a {{<Text>}} component uses text layout rules, not Flexbox. Child elements (which must also be {{<Text>}} components or raw strings) are treated as inline elements. They flow together and wrap to the next line when they reach the end of the parent {{<Text>}} container's boundary. This contrasts with {{<View>}} components, whose children are laid out as rectangular blocks according to Flexbox rules.
 
   For example:
 
@@ -36,15 +36,15 @@ This requirement is a direct consequence of React Native's need to efficiently m
   // |second part    |
   ```
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering. Styling using JavaScript style objects is akin to working with `NSAttributedString` (iOS) or `SpannableString` (Android).
-> _Key Takeaway:_ `<Text>` is your go-to component for all textual content, providing features similar to native text display widgets, with a unified styling approach.
-> _Source:_ [https://reactnative.dev/docs/text|React Native Docs: Text]
+bq. 📲 *(Native Developers):*
+> *Comparison:* `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering. Styling using JavaScript style objects is akin to working with `NSAttributedString` (iOS) or `SpannableString` (Android).
+> *Key Takeaway:* `<Text>` is your go-to component for all textual content, providing features similar to native text display widgets, with a unified styling approach.
+> *Source:* [https://reactnative.dev/docs/text|React Native Docs: Text]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ While on the web, text can exist within many elements (`<p>`, `<span>`, `<h1>`, etc.) or even as bare text nodes within a `<div>`, React Native is stricter. All text _must_ be inside a `<Text>` component. Think of `<Text>` as a universal text container. Style inheritance for text properties (like `color` or `fontSize`) only works between nested `<Text>` components, not from a parent `<View>` to a child `<Text>` as it might with CSS inheritance from a `<div>` to a `<p>`. The layout of elements _within_ a `<Text>` component follows text flow rules (inline, wrapping), whereas `<Text>` itself, when placed in a `<View>`, behaves according to Flexbox rules applied to that `<View>`.
-> _Key Takeaway:_ Always wrap your text in `<Text>`. Nested `<Text>` components allow for rich text styling through inheritance.
-> _Source:_ [https://developer.mozilla.org/en-US/docs/Web/HTML/Element#text-content|MDN Web Docs: Text-level semantics]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* While on the web, text can exist within many elements (`<p>`, `<span>`, `<h1>`, etc.) or even as bare text nodes within a `<div>`, React Native is stricter. All text _must_ be inside a `<Text>` component. Think of `<Text>` as a universal text container. Style inheritance for text properties (like `color` or `fontSize`) only works between nested `<Text>` components, not from a parent `<View>` to a child `<Text>` as it might with CSS inheritance from a `<div>` to a `<p>`. The layout of elements _within_ a `<Text>` component follows text flow rules (inline, wrapping), whereas `<Text>` itself, when placed in a `<View>`, behaves according to Flexbox rules applied to that `<View>`.
+> *Key Takeaway:* Always wrap your text in `<Text>`. Nested `<Text>` components allow for rich text styling through inheritance.
+> *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element#text-content|MDN Web Docs: Text-level semantics]
 
 h3. Referential Content: Common `<Text>` Props
 
@@ -61,7 +61,7 @@ Here is a table summarizing some of the most common and important props for the 
 |`allowFontScaling`|`boolean`|Whether fonts should scale to respect Text Size accessibility settings. Default is `true`.|
 |`adjustsFontSizeToFit`|`boolean` (iOS only)|Automatically adjusts font size to fit within the component's bounds.|
 |`minimumFontScale`|`number` (iOS only)|Used with `adjustsFontSizeToFit` to set a minimum font scale factor.|
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/text|React Native Docs: Text]
 - [https://reactnative.dev/docs/text-props|React Native Docs: Text Props]
 - [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Style Props]
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
 In this `MedicationInfo` component, we have several `<Text>` elements wrapped in a parent `<View>`.
 # `medicationName`: Displays the drug name with a larger font size and bold weight.
 # `prescriptionDetails`: Shows patient information with a standard font size.
-# `instructions`: This demonstrates _nested `<Text>` components_. The general instruction text inherits the style from `styles.instructions`. However, specific parts like "1 tablet" and "once daily" are wrapped in their own `<Text>` components with `styles.boldInstruction` to make them bold and a different color, showcasing style inheritance and overriding.
+# `instructions`: This demonstrates *nested `<Text>` components*. The general instruction text inherits the style from `styles.instructions`. However, specific parts like "1 tablet" and "once daily" are wrapped in their own `<Text>` components with `styles.boldInstruction` to make them bold and a different color, showcasing style inheritance and overriding.
 # `refillInfo`: This `<Text>` component uses the `numberOfLines={1}` and `ellipsizeMode="tail"` props. If the refill information is too long to fit on a single line, it will be truncated with an ellipsis (...) at the end.
 
 The example effectively uses various text styling props like `fontSize`, `fontWeight`, `color`, `lineHeight`, and `fontStyle` to create a clear and readable medication information display. The `StyleSheet` at the bottom defines these styles in an organized manner.

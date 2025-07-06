@@ -2,7 +2,7 @@ h2. Section 7: Debugging Tools
 
 Effective debugging is essential for resolving issues quickly and efficiently during development. React Native offers a variety of tools to help you inspect your app's state, debug JavaScript code, analyze network requests, and more. This section explores the key debugging tools available for your SpeedyMeds application.
 
-bq. 🛣️ _(All Learners):_ Familiarizing yourself with these debugging tools will significantly speed up your development workflow and help you build more stable and reliable applications.
+bq. 🛣️ *(All Learners):* Familiarizing yourself with these debugging tools will significantly speed up your development workflow and help you build more stable and reliable applications.
 
 h3. Conceptual Content: Your Debugging Arsenal
 
@@ -41,44 +41,44 @@ This diagram illustrates the typical debugging workflow for a React Native appli
 h4. 1. React Native Debugger (Standalone App)
 
 React Native Debugger is a powerful standalone desktop application that combines several essential debugging tools into a single interface. It typically includes:
-* _React DevTools:_ For inspecting the React component hierarchy, props, state, and hooks. (Covered for profiling in Section 2, but equally a debugging tool).
-* _Redux DevTools:_ If you're using Redux for state management, this allows you to inspect actions, state changes, and time-travel debugging.
-* _Network Inspector:_ To inspect outgoing network requests and their responses.
-* _Chrome DevTools elements (partial):_ Offers a JavaScript console and debugger, allowing you to set breakpoints, step through code, and inspect variables.
+* *React DevTools:* For inspecting the React component hierarchy, props, state, and hooks. (Covered for profiling in Section 2, but equally a debugging tool).
+* *Redux DevTools:* If you're using Redux for state management, this allows you to inspect actions, state changes, and time-travel debugging.
+* *Network Inspector:* To inspect outgoing network requests and their responses.
+* *Chrome DevTools elements (partial):* Offers a JavaScript console and debugger, allowing you to set breakpoints, step through code, and inspect variables.
 
 It essentially provides a dedicated window with a pre-configured set of tools tailored for React Native, connecting to your app running in debug mode.
 
 h4. 2. Flipper (Revisiting for Debugging)
 
 Flipper, introduced in Section 2 for performance measurement, is also a comprehensive debugging platform. Many of its plugins are invaluable for day-to-day debugging:
-* _Layout Inspector:_ Allows you to inspect the native view hierarchy, similar to the element inspector in browser developer tools. You can see view bounds, properties, and styles. This is great for debugging UI layout issues in SpeedyMeds, like why a button isn't where you expect it.
-* _Network Inspector:_ Detailed inspection of network requests and responses, including headers and bodies.
-* _Hermes Debugger (if using Hermes):_ A full-fledged JavaScript debugger for Hermes, allowing breakpoints, code stepping, variable inspection, and console interaction directly with the on-device JS engine.
-* _Shared Preferences / AsyncStorage Viewer:_ Inspect and modify data stored in AsyncStorage or Shared Preferences (Android) / NSUserDefaults (iOS).
-* _Crash Reporter:_ View native crash logs.
-* _Logs (Device and Application):_ Access native device logs (Logcat for Android, Console for iOS) and application-specific logs, including {{console.log}} output from JavaScript when Hermes is active.
+* *Layout Inspector:* Allows you to inspect the native view hierarchy, similar to the element inspector in browser developer tools. You can see view bounds, properties, and styles. This is great for debugging UI layout issues in SpeedyMeds, like why a button isn't where you expect it.
+* *Network Inspector:* Detailed inspection of network requests and responses, including headers and bodies.
+* *Hermes Debugger (if using Hermes):* A full-fledged JavaScript debugger for Hermes, allowing breakpoints, code stepping, variable inspection, and console interaction directly with the on-device JS engine.
+* *Shared Preferences / AsyncStorage Viewer:* Inspect and modify data stored in AsyncStorage or Shared Preferences (Android) / NSUserDefaults (iOS).
+* *Crash Reporter:* View native crash logs.
+* *Logs (Device and Application):* Access native device logs (Logcat for Android, Console for iOS) and application-specific logs, including {{console.log}} output from JavaScript when Hermes is active.
 
 h4. 3. Chrome DevTools (via Metro Bundler)
 
 When your React Native application is running in development mode with "Debug JS Remotely" enabled (or "Open JS Debugger"), it executes its JavaScript code within a WebWorker in your Chrome browser. This allows you to use the standard Chrome DevTools for debugging:
-* _Console Tab:_ View {{console.log}} statements, execute arbitrary JavaScript in the context of your app, and inspect objects.
-* _Sources Tab:_ Set breakpoints in your JavaScript/TypeScript code, step through execution, inspect variables, and analyze call stacks.
-* _Network Tab:_ Provides a basic view of network requests initiated from the JavaScript thread.
-* _Caveats of Remote JS Debugging:_
-* _Performance Impact:_ Running JS in Chrome is slower than on the device/emulator via Hermes or JSC. This can mask or alter performance characteristics.
-* _Hermes Disabled:_ When remote JS debugging is active, the Hermes engine (if enabled for your app) is bypassed. You lose Hermes-specific features and performance benefits during that debug session.
-* *Debugger Discrepancies:** Subtle differences can exist between how code behaves in Chrome's V8 engine versus Hermes/JSC on the device.
+* *Console Tab:* View {{console.log}} statements, execute arbitrary JavaScript in the context of your app, and inspect objects.
+* *Sources Tab:* Set breakpoints in your JavaScript/TypeScript code, step through execution, inspect variables, and analyze call stacks.
+* *Network Tab:* Provides a basic view of network requests initiated from the JavaScript thread.
+* *Caveats of Remote JS Debugging:*
+** *Performance Impact:* Running JS in Chrome is slower than on the device/emulator via Hermes or JSC. This can mask or alter performance characteristics.
+** *Hermes Disabled:* When remote JS debugging is active, the Hermes engine (if enabled for your app) is bypassed. You lose Hermes-specific features and performance benefits during that debug session.
+** *Debugger Discrepancies:* Subtle differences can exist between how code behaves in Chrome's V8 engine versus Hermes/JSC on the device.
 
 h4. 4. Expo Go Debugging Menu / React Native Developer Menu
 
 Both Expo Go and standard React Native development builds provide an in-app developer menu, typically accessed by shaking your device or using a keyboard shortcut on emulators/simulators (e.g., {{Cmd+D}} for iOS Simulator, {{Cmd+M}} or {{Ctrl+M}} for Android Emulator).
 
 This menu offers several debugging options:
-* _Open JS Debugger / Debug JS Remotely:_ Launches the Chrome DevTools for JavaScript debugging.
-* _Toggle Element Inspector:_ Overlays an inspector on your app UI, allowing you to tap on elements to see their properties, styles, and hierarchy. Useful for quick UI inspection without external tools.
-* _Performance Monitor:_ Shows a real-time overlay graph of RAM usage, JS heap, Views, UI frame rate, and JS frame rate. Useful for a quick glance at performance.
-* _Enable/Disable Fast Refresh:_ Toggles Fast Refresh, which provides near-instant feedback for changes in your code.
-* _Reload App:_ Reloads the JavaScript bundle.
+* *Open JS Debugger / Debug JS Remotely:* Launches the Chrome DevTools for JavaScript debugging.
+* *Toggle Element Inspector:* Overlays an inspector on your app UI, allowing you to tap on elements to see their properties, styles, and hierarchy. Useful for quick UI inspection without external tools.
+* *Performance Monitor:* Shows a real-time overlay graph of RAM usage, JS heap, Views, UI frame rate, and JS frame rate. Useful for a quick glance at performance.
+* *Enable/Disable Fast Refresh:* Toggles Fast Refresh, which provides near-instant feedback for changes in your code.
+* *Reload App:* Reloads the JavaScript bundle.
 
 h4. 5. VS Code Debugger Extension for React Native
 
@@ -90,29 +90,29 @@ The official "React Native Tools" extension for Visual Studio Code provides an i
 
 This is often preferred for a more integrated development and debugging workflow, keeping you within your editor.
 
-bq. 📲 _(Native Developers):_ > _Comparison:_ Flipper and React Native Debugger aim to provide a similar level of introspection as Xcode\'s debugger and view hierarchy inspector (for iOS) or Android Studio\'s Layout Inspector and debugger (for Android). For instance, Flipper\'s Layout Inspector is akin to native UI inspection tools, and its Hermes Debugger is analogous to using LLDB (iOS) or the JVM debugger (Android) for your JavaScript code.
-_Key Takeaway:_ While the specific tools and underlying language (JavaScript vs. Swift/Kotlin) differ, the fundamental goals and many paradigms of debugging—inspecting state, stepping through code, analyzing UI hierarchies, and monitoring network traffic—remain consistent. React Native tools bridge these familiar concepts to the JavaScript world.
-_Source:_ {{[https://fbflipper.com/|Flipper Documentation]}}, {{[https://developer.apple.com/xcode/ide-features/#debugger|Xcode: Debugging]}}, {{[https://developer.android.com/studio/debug|Android Studio: Debug your app]}}
+bq. 📲 *(Native Developers):* > *Comparison:* Flipper and React Native Debugger aim to provide a similar level of introspection as Xcode\'s debugger and view hierarchy inspector (for iOS) or Android Studio\'s Layout Inspector and debugger (for Android). For instance, Flipper\'s Layout Inspector is akin to native UI inspection tools, and its Hermes Debugger is analogous to using LLDB (iOS) or the JVM debugger (Android) for your JavaScript code.
+*Key Takeaway:* While the specific tools and underlying language (JavaScript vs. Swift/Kotlin) differ, the fundamental goals and many paradigms of debugging—inspecting state, stepping through code, analyzing UI hierarchies, and monitoring network traffic—remain consistent. React Native tools bridge these familiar concepts to the JavaScript world.
+*Source:* {{[https://fbflipper.com/|Flipper Documentation]}}, {{[https://developer.apple.com/xcode/ide-features/#debugger|Xcode: Debugging]}}, {{[https://developer.android.com/studio/debug|Android Studio: Debug your app]}}
 
-bq. 🌐 _(Web Developers):_ > _Comparison:_ Chrome DevTools, when used for React Native remote JS debugging, will feel very familiar to web development debugging sessions. React Native Debugger essentially packages these familiar Chrome DevTools (like the JS console and sources tab) with React-specific tools (React DevTools, Redux DevTools). Flipper extends this further by offering a more mobile-centric and extensible approach, including insights into native device features and logs not typically available in web browser developer tools.
-_Key Takeaway:_ Your web debugging skills, particularly with Chrome DevTools, are highly transferable to React Native. Tools like Flipper and React Native Debugger build upon that foundation, adding mobile-specific and React Native-centric enhancements.
-_Source:_ {{[https://developer.chrome.com/docs/devtools/|Chrome DevTools Documentation]}}, {{[https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]}}
+bq. 🌐 *(Web Developers):* > *Comparison:* Chrome DevTools, when used for React Native remote JS debugging, will feel very familiar to web development debugging sessions. React Native Debugger essentially packages these familiar Chrome DevTools (like the JS console and sources tab) with React-specific tools (React DevTools, Redux DevTools). Flipper extends this further by offering a more mobile-centric and extensible approach, including insights into native device features and logs not typically available in web browser developer tools.
+*Key Takeaway:* Your web debugging skills, particularly with Chrome DevTools, are highly transferable to React Native. Tools like Flipper and React Native Debugger build upon that foundation, adding mobile-specific and React Native-centric enhancements.
+*Source:* {{[https://developer.chrome.com/docs/devtools/|Chrome DevTools Documentation]}}, {{[https://github.com/jhen0409/react-native-debugger|React Native Debugger GitHub]}}
 
 h3. Procedural Content: Getting Started with Debugging Tools
 
 h4. Setting Up React Native Debugger
-# _Installation:_ Download the standalone React Native Debugger application from its GitHub releases page for your operating system.
-# _Launch:_ Open React Native Debugger _before_ you enable remote JS debugging in your app.
-# _Connect App:_ Run your React Native app on a simulator/device. Open the Developer Menu (shake or keyboard shortcut) and select "Debug JS Remotely" or "Open JS Debugger". React Native Debugger should automatically connect.
-** If it doesn't connect, ensure the port (usually 8081) is not conflicting. You might need to configure the port in React Native Debugger settings.
+# *Installation:* Download the standalone React Native Debugger application from its GitHub releases page for your operating system.
+# *Launch:* Open React Native Debugger _before_ you enable remote JS debugging in your app.
+# *Connect App:* Run your React Native app on a simulator/device. Open the Developer Menu (shake or keyboard shortcut) and select "Debug JS Remotely" or "Open JS Debugger". React Native Debugger should automatically connect.
+*** If it doesn't connect, ensure the port (usually 8081) is not conflicting. You might need to configure the port in React Native Debugger settings.
 
 h4. Using Flipper for Debugging
-# _Installation & Setup:_ (Covered in Section 2). Ensure your app is a development build or native build compatible with Flipper.
-# _Launch App & Flipper:_ Start your app and Flipper. Your app should appear in Flipper.
-# _Explore Plugins:_
-*_ _Layout Inspector:* Select your app, then "Layout". Inspect the UI tree.
-*_ _Network:* Select "Network". Observe requests as your app makes them.
-*_ _Hermes Debugger:* If Hermes is enabled and your app is compatible, select "Hermes Debugger". You can set breakpoints in the JS code that Flipper shows, view console logs, etc.
+# *Installation & Setup:* (Covered in Section 2). Ensure your app is a development build or native build compatible with Flipper.
+# *Launch App & Flipper:* Start your app and Flipper. Your app should appear in Flipper.
+# *Explore Plugins:*
+*** *Layout Inspector:* Select your app, then "Layout". Inspect the UI tree.
+*** *Network:* Select "Network". Observe requests as your app makes them.
+*** *Hermes Debugger:* If Hermes is enabled and your app is compatible, select "Hermes Debugger". You can set breakpoints in the JS code that Flipper shows, view console logs, etc.
 
 h4. Enabling JS Debugging with Chrome DevTools
 # Run your app on a simulator/device or in Expo Go.
@@ -125,7 +125,7 @@ h4. Enabling JS Debugging with Chrome DevTools
 {tip}
 For a more streamlined debugging experience within your editor, the VS Code React Native Tools extension is highly recommended. It often provides a good balance of features without needing to switch between multiple windows as much.
 {tip}
-bq. 📚 _Official Documentation & Resources:_
+bq. 📚 *Official Documentation & Resources:*
 > - [https://reactnative.dev/docs/debugging|React Native Docs: Debugging]
 - [https://reactnative.dev/docs/debugging-hermes|React Native Docs: Debugging Hermes]
 - [https://fbflipper.com/|Flipper - Extensible Mobile App Debugger]

@@ -9,10 +9,10 @@ React Native Paper's theming is built on top of Material Design principles. You 
 The theme is an object that contains these design tokens. When you provide a theme via the {{PaperProvider}}, all descendant Paper components will automatically use these values.
 
 *Key Theming Concepts:*
-* _{{PaperProvider}}:_ As seen previously, this component from {{react-native-paper}} wraps your application (or a part of it) and injects the theme into the context.
-* _Theme Object:_ A JavaScript object defining various style attributes. You can either use the default theme, extend it, or create a completely custom one.
-* _{{MD3Theme}} (Material Design 3):_ React Native Paper v5 aligns with Material Design 3 (MD3). The theme object structure reflects MD3 color roles (e.g., {{primary}}, {{secondary}}, {{tertiary}}, {{surface}}, {{background}}, {{error}}, and their {{on-}} counterparts like {{onPrimary}}, {{onSurface}}).
-* _{{useTheme}} Hook:_ Paper provides a {{useTheme}} hook that allows your custom components to access the current theme object, enabling you to apply theme values in your own styles.
+* *{{PaperProvider}}:* As seen previously, this component from {{react-native-paper}} wraps your application (or a part of it) and injects the theme into the context.
+* *Theme Object:* A JavaScript object defining various style attributes. You can either use the default theme, extend it, or create a completely custom one.
+* *{{MD3Theme}} (Material Design 3):* React Native Paper v5 aligns with Material Design 3 (MD3). The theme object structure reflects MD3 color roles (e.g., {{primary}}, {{secondary}}, {{tertiary}}, {{surface}}, {{background}}, {{error}}, and their {{on-}} counterparts like {{onPrimary}}, {{onSurface}}).
+* *{{useTheme}} Hook:* Paper provides a {{useTheme}} hook that allows your custom components to access the current theme object, enabling you to apply theme values in your own styles.
 
 h3. Defining a Custom Theme
 
@@ -173,23 +173,23 @@ If you need a specific part of your app to have a different theme (e.g., a singl
 
 // const MainApp = () => (
 //   <PaperProvider theme={speedyMedsPaperTheme}>
-//     {/_ ... most of your app ... _/}
-//     {/_ <SpecialScreenWithDarkTheme /> _/}
+//     {/* ... most of your app ... */}
+//     {/* <SpecialScreenWithDarkTheme /> */}
 //   </PaperProvider>
 // );
 
 // const SpecialScreenWithDarkTheme = () => (
 //   <PaperProvider theme={darkPaperTheme}>
-//     {/_ This screen and its children will use darkPaperTheme _/}
+//     {/* This screen and its children will use darkPaperTheme */}
 //   </PaperProvider>
 // );
 {code}
 
 h3. Tips for Effective Theming
-* _Start with Defaults:_ Begin by spreading the default theme and override only what you need. This ensures you don't miss any essential theme properties.
-* _Material Design Color Tool:_ Use tools like the official Material Design Color Tool to help you choose accessible and harmonious color palettes for your MD3 theme roles.
-* _Test on Devices:_ Always test your theme on actual devices (iOS and Android) to see how colors and fonts render in practice.
-* _Consider Dark Mode:_ If implementing dark mode, ensure your color choices provide sufficient contrast and readability. MD3 has specific guidance on dark themes.
+* *Start with Defaults:* Begin by spreading the default theme and override only what you need. This ensures you don't miss any essential theme properties.
+* *Material Design Color Tool:* Use tools like the official Material Design Color Tool to help you choose accessible and harmonious color palettes for your MD3 theme roles.
+* *Test on Devices:* Always test your theme on actual devices (iOS and Android) to see how colors and fonts render in practice.
+* *Consider Dark Mode:* If implementing dark mode, ensure your color choices provide sufficient contrast and readability. MD3 has specific guidance on dark themes.
 
 React Native Paper's theming system is a powerful way to create a polished and branded user experience for SpeedyMeds, ensuring consistency across all Material Design components.
 
@@ -205,7 +205,7 @@ _Instructions and requirements for the exercise are provided within the Expo Sna
 
 In the final section of this module, we will discuss responsive design techniques to ensure your styled application looks great on various screen sizes.
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://callstack.github.io/react-native-paper/docs/guides/theming|React Native Paper: Theming]
 * [https://callstack.github.io/react-native-paper/docs/guides/theming#defaulttheme|React Native Paper: DefaultTheme (MD2 - for reference, but use MD3 types for v5)]
 * [https://callstack.github.io/react-native-paper/docs/guides/theming#usetheme|React Native Paper: `useTheme` hook]

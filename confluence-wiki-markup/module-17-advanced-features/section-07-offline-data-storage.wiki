@@ -7,70 +7,70 @@ h3. Conceptual Content
 Many mobile applications need to store data locally on the device. This could be user preferences, application settings, cached API responses, or even a full dataset for offline functionality. For SpeedyMeds, this could include storing user login tokens, drafted prescription notes, or a local cache of medication information.
 
 *Why Offline Storage?*
-* _Offline Access:_ Allows users to access data and use app features even when they are not connected to the internet.
-* _Performance:_ Reduces the need for frequent network requests by caching data locally, leading to faster load times.
-* _Reduced Data Usage:_ Minimizes data transfer by relying on local data when possible.
-* _Improved User Experience:_ Provides a smoother experience by minimizing loading states and handling network interruptions gracefully.
+* *Offline Access:* Allows users to access data and use app features even when they are not connected to the internet.
+* *Performance:* Reduces the need for frequent network requests by caching data locally, leading to faster load times.
+* *Reduced Data Usage:* Minimizes data transfer by relying on local data when possible.
+* *Improved User Experience:* Provides a smoother experience by minimizing loading states and handling network interruptions gracefully.
 
 *Choosing an Offline Storage Solution*
 
 The choice of storage solution depends on the type and complexity of the data you need to store:
-* _Simple Key-Value Data:_ For settings, user preferences, or small pieces of unstructured data, a key-value store is often sufficient.
-* _Structured/Relational Data:_ For more complex data with relationships (e.g., a list of medications with dosages and schedules), a local SQL database is more appropriate.
-* _Performance-Critical Data:_ For scenarios requiring very fast read/write operations, specialized storage libraries might be considered.
+* *Simple Key-Value Data:* For settings, user preferences, or small pieces of unstructured data, a key-value store is often sufficient.
+* *Structured/Relational Data:* For more complex data with relationships (e.g., a list of medications with dosages and schedules), a local SQL database is more appropriate.
+* *Performance-Critical Data:* For scenarios requiring very fast read/write operations, specialized storage libraries might be considered.
 
 h3. Referential Content
 
 *1. AsyncStorage ({{@react-native-async-storage/async-storage}})*
 
 AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system that is global to the app. It's suitable for storing small amounts of data, like user preferences or authentication tokens.
-* _Characteristics:_
-* Asynchronous API (returns Promises).
-* Stores data as strings. You need to serialize (e.g., {{JSON.stringify}}) objects/arrays before storing and deserialize ({{JSON.parse}}) after retrieving.
-* Unencrypted: Not suitable for sensitive data without an additional encryption layer.
-* Can be slow for large amounts of data due to its asynchronous nature and serialization overhead.
-* _Installation:_
+* *Characteristics:*
+** Asynchronous API (returns Promises).
+** Stores data as strings. You need to serialize (e.g., {{JSON.stringify}}) objects/arrays before storing and deserialize ({{JSON.parse}}) after retrieving.
+** Unencrypted: Not suitable for sensitive data without an additional encryption layer.
+** Can be slow for large amounts of data due to its asynchronous nature and serialization overhead.
+* *Installation:*
 
   {code:language=bash}
 npx expo install @react-native-async-storage/async-storage
   ```
-* _Common Methods:_
-* `setItem(key: string, value: string): Promise<void>`
-* `getItem(key: string): Promise<string | null>`
-* `removeItem(key: string): Promise<void>`
-* `mergeItem(key: string, value: string): Promise<void>` (merges a JSON value into an existing JSON value)
-* `getAllKeys(): Promise<string[]>`
-* `clear(): Promise<void>` (clears all AsyncStorage for all keys)
+* *Common Methods:*
+** `setItem(key: string, value: string): Promise<void>`
+** `getItem(key: string): Promise<string | null>`
+** `removeItem(key: string): Promise<void>`
+** `mergeItem(key: string, value: string): Promise<void>` (merges a JSON value into an existing JSON value)
+** `getAllKeys(): Promise<string[]>`
+** `clear(): Promise<void>` (clears all AsyncStorage for all keys)
 
 *2. `expo-sqlite`*
 
 `expo-sqlite` provides an API to interact with a SQLite database stored on the device. SQLite is a lightweight, file-based relational database, ideal for storing structured data.
-* _Characteristics:_
-* SQL-based relational database.
-* Supports transactions for atomic operations.
-* Data is persistent.
-* Good for managing larger datasets and complex queries.
-* _Installation:_
+* *Characteristics:*
+** SQL-based relational database.
+** Supports transactions for atomic operations.
+** Data is persistent.
+** Good for managing larger datasets and complex queries.
+* *Installation:*
 
   ```bash
   npx expo install expo-sqlite
   ```
-* _Core API:_
-* `SQLite.openDatabase(name: string, version?: string, description?: string, size?: number, callback?: (db: WebSQLDatabase) => void): WebSQLDatabase`
-* `db.transaction(callback: (tx: SQLTransaction) => void, errorCallback?: (error: SQLError) => void, successCallback?: () => void)`
-* `tx.executeSql(sqlStatement: string, arguments?: any[], successCallback?: (transaction: SQLTransaction, resultSet: SQLResultSet) => void, errorCallback?: (transaction: SQLTransaction, error: SQLError) => boolean)`
-** `SQLResultSet` contains `rowsAffected`, `insertId`, and `rows` (an array of objects).
+* *Core API:*
+** `SQLite.openDatabase(name: string, version?: string, description?: string, size?: number, callback?: (db: WebSQLDatabase) => void): WebSQLDatabase`
+** `db.transaction(callback: (tx: SQLTransaction) => void, errorCallback?: (error: SQLError) => void, successCallback?: () => void)`
+** `tx.executeSql(sqlStatement: string, arguments?: any[], successCallback?: (transaction: SQLTransaction, resultSet: SQLResultSet) => void, errorCallback?: (transaction: SQLTransaction, error: SQLError) => boolean)`
+*** `SQLResultSet` contains `rowsAffected`, `insertId`, and `rows` (an array of objects).
 
 *3. MMKV (`react-native-mmkv`)*
 
 MMKV (Multi-Process Key-Value) is a high-performance, persistent key-value storage framework developed by Tencent. `react-native-mmkv` provides a React Native binding for it.
-* _Characteristics:_
-* Extremely fast read/write operations (often faster than AsyncStorage).
-* Synchronous API (though asynchronous wrappers can be built).
-* Supports storing strings, numbers, booleans, and `Uint8Array`.
-* Offers built-in encryption capabilities.
+* *Characteristics:*
+** Extremely fast read/write operations (often faster than AsyncStorage).
+** Synchronous API (though asynchronous wrappers can be built).
+** Supports storing strings, numbers, booleans, and `Uint8Array`.
+** Offers built-in encryption capabilities.
 ** Can be a good alternative to AsyncStorage for performance-sensitive key-value storage or when encryption is needed out-of-the-box.
-* \_\_Installation (requires a development build for native modules if not already set up):
+* \*\*Installation (requires a development build for native modules if not already set up):
 
   ```bash
   npm install react-native-mmkv
@@ -79,7 +79,7 @@ MMKV (Multi-Process Key-Value) is a high-performance, persistent key-value stora
   ```
 
   Then, `npx expo prebuild` (if you haven't already) or use a development build with EAS Build.
-* _Basic Usage:_
+* *Basic Usage:*
 
   ```typescript
   import { MMKV } from "react-native-mmkv";
@@ -212,11 +212,11 @@ export default ThemePreference;
 The `ThemePreference` component demonstrates a practical use of AsyncStorage for storing simple user preferences in the SpeedyMeds app. The component manages a light/dark theme preference that persists even when the app is closed and reopened.
 
 Here's how it works:
-# _Loading the Preference:_ On component mount, the `loadThemePreference` function retrieves the stored theme value from AsyncStorage using the key `@SpeedyMeds:appTheme`. Note the naming convention with a prefix to avoid potential key collisions with other data.
-# _Saving the Preference:_ When the user toggles the switch, the `saveThemePreference` function stores the new theme value in AsyncStorage, making it available for future app sessions.
-# _Error Handling:_ Both functions include error handling to gracefully manage cases where AsyncStorage operations fail.
-# _UI Responsiveness:_ The component displays a loading state while retrieving the preference, then immediately applies the theme to its own styles, providing visual feedback.
-# _State Management:_ React's `useState` and `useEffect` hooks manage the component's state and lifecycle, ensuring AsyncStorage operations occur at appropriate times.
+# *Loading the Preference:* On component mount, the `loadThemePreference` function retrieves the stored theme value from AsyncStorage using the key `@SpeedyMeds:appTheme`. Note the naming convention with a prefix to avoid potential key collisions with other data.
+# *Saving the Preference:* When the user toggles the switch, the `saveThemePreference` function stores the new theme value in AsyncStorage, making it available for future app sessions.
+# *Error Handling:* Both functions include error handling to gracefully manage cases where AsyncStorage operations fail.
+# *UI Responsiveness:* The component displays a loading state while retrieving the preference, then immediately applies the theme to its own styles, providing visual feedback.
+# *State Management:* React's `useState` and `useEffect` hooks manage the component's state and lifecycle, ensuring AsyncStorage operations occur at appropriate times.
 
 This pattern can be extended to store various user preferences in SpeedyMeds, such as notification settings, display options, or accessibility configurations.
 
@@ -279,8 +279,8 @@ const MedicationManager: React.FC = () => {
 
   const db = openDatabase();
 
-  /*
-* @function initDatabase
+  /**
+** @function initDatabase
 ** @description Creates the medications table if it doesn't exist.
    */
   const initDatabase = () => {
@@ -305,8 +305,8 @@ const MedicationManager: React.FC = () => {
     });
   };
 
-  /*
-* @function loadMedications
+  /**
+** @function loadMedications
 ** @description Loads all medication records from the database.
    */
   const loadMedications = () => {
@@ -328,8 +328,8 @@ const MedicationManager: React.FC = () => {
     });
   };
 
-  /*
-* @function addMedication
+  /**
+** @function addMedication
 ** @description Adds a new medication record to the database.
    */
   const addMedication = () => {
@@ -366,10 +366,10 @@ const MedicationManager: React.FC = () => {
     });
   };
 
-  /*
-* @function deleteMedication
-* @description Deletes a medication record from the database.
-* @param {number} id - The ID of the medication to delete.
+  /**
+** @function deleteMedication
+** @description Deletes a medication record from the database.
+** @param {number} id - The ID of the medication to delete.
    */
   const deleteMedication = (id: number) => {
     Alert.alert(
@@ -410,10 +410,10 @@ const MedicationManager: React.FC = () => {
     loadMedications();
   }, []);
 
-  /*
-* @function renderMedicationItem
-* @description Renders an individual medication item in the list.
-* @param {Medication} item - The medication to render.
+  /**
+** @function renderMedicationItem
+** @description Renders an individual medication item in the list.
+** @param {Medication} item - The medication to render.
 ** @returns {React.ReactElement} The rendered medication item.
    */
   const renderMedicationItem = ({ item }: { item: Medication }) => (
@@ -440,7 +440,7 @@ const MedicationManager: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Medication Manager</Text>
 
-      {/_ Form to add a new medication _/}
+      {/* Form to add a new medication */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -472,7 +472,7 @@ const MedicationManager: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {/_ List of medications _/}
+      {/* List of medications */}
       <Text style={styles.subtitle}>Your Medications</Text>
       {isLoading ? (
         <Text style={styles.loadingText}>Loading medications...</Text>
@@ -605,29 +605,29 @@ export default MedicationManager;
 *Explanation of Example 2:*
 
 This `MedicationManager` component demonstrates a comprehensive implementation of SQLite for structured data storage in a React Native application. It represents a feature of the SpeedyMeds app where users can manage their medications with persistent local storage. Let's break down its key aspects:
-# _Database Initialization:_
+# *Database Initialization:*
    The `initDatabase` function ensures a `medications` table exists with the necessary columns. This is wrapped in a `db.transaction` which provides atomicity—either all SQL statements within the transaction succeed, or none do.
-# _CRUD Operations:_
-*_ _Create:* The `addMedication` function inserts a new record into the database using parameterized SQL (`?` placeholders) for security and to prevent SQL injection.
-* _Read:_ The `loadMedications` function queries all records, ordered by name, and updates the component's state with the results.
-* _Delete:_ The `deleteMedication` function removes a record by ID after user confirmation.
-* (Update could be added for a complete CRUD implementation but is omitted for brevity.)
-# _Structured Data Model:_
+# *CRUD Operations:*
+*** *Create:* The `addMedication` function inserts a new record into the database using parameterized SQL (`?` placeholders) for security and to prevent SQL injection.
+** *Read:* The `loadMedications` function queries all records, ordered by name, and updates the component's state with the results.
+** *Delete:* The `deleteMedication` function removes a record by ID after user confirmation.
+** (Update could be added for a complete CRUD implementation but is omitted for brevity.)
+# *Structured Data Model:*
    The `Medication` interface defines a clear type structure for medication records, ensuring consistency in how data is stored and retrieved.
-# _Transaction Pattern:_
+# *Transaction Pattern:*
    All database operations use the `transaction` method, which provides:
-*_ _Error Handling:* Each transaction has success and error callbacks.
-* _Rollback Support:_ By returning `false` from error callbacks, the transaction is rolled back.
-* _Atomicity:_ Multiple SQL operations can be grouped to succeed or fail together.
-# _User Experience Considerations:_
-** Loading states are managed to inform users when data is being retrieved.
-* Form validation ensures required fields are filled.
-* Success and error feedback is provided via alerts.
-* Confirmation is requested before destructive actions (deletion).
-# _UI Components:_
-* A form for adding new medications.
-* A list displaying existing medications with delete functionality.
-* Empty state messaging when no medications exist.
+*** *Error Handling:* Each transaction has success and error callbacks.
+** *Rollback Support:* By returning `false` from error callbacks, the transaction is rolled back.
+** *Atomicity:* Multiple SQL operations can be grouped to succeed or fail together.
+# *User Experience Considerations:*
+*** Loading states are managed to inform users when data is being retrieved.
+** Form validation ensures required fields are filled.
+** Success and error feedback is provided via alerts.
+** Confirmation is requested before destructive actions (deletion).
+# *UI Components:*
+** A form for adding new medications.
+** A list displaying existing medications with delete functionality.
+** Empty state messaging when no medications exist.
 
 This example demonstrates how SQLite provides advantages over AsyncStorage for structured data:
 * It supports complex querying (e.g., sorting by name).
@@ -640,7 +640,7 @@ In the SpeedyMeds app, this functionality would be vital for maintaining an offl
 {tip}
 While this example uses direct SQL queries for clarity, in a larger application, consider creating a data access layer or using an ORM (Object-Relational Mapping) library to abstract SQL operations and make database code more maintainable.
 {tip}
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/versions/latest/sdk/sqlite/|Expo SQLite Documentation]
 - [https://www.sqlite.org/docs.html|SQLite Official Documentation]
 

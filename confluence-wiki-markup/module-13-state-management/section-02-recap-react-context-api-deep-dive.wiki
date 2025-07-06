@@ -1,6 +1,6 @@
 h2. Section 2: Recap: React Context API Deep Dive
 
-In the previous section, we discussed the limitations of {{useState}} and prop drilling for managing state that needs to be shared across many components in your application. Prop drilling can make your code verbose and hard to maintain. React provides a built-in solution to this problem: the _Context API_.
+In the previous section, we discussed the limitations of {{useState}} and prop drilling for managing state that needs to be shared across many components in your application. Prop drilling can make your code verbose and hard to maintain. React provides a built-in solution to this problem: the *Context API*.
 
 This section revisits the React Context API, which you were briefly introduced to in Module 7. We'll take a deeper look at how it works, its core components ({{Provider}}, {{Consumer}}, and the {{useContext}} Hook), and how it can help us manage global state more effectively in our SpeedyMeds application.
 
@@ -16,14 +16,14 @@ While Context is powerful for avoiding prop drilling, it's not a replacement for
 h3. Core Concepts of the Context API
 
 There are three main parts to understanding and using the Context API:
-# _{{React.createContext()}}_: This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching {{Provider}} above it in the tree.
+# *{{React.createContext()}}*: This function creates a Context object. When React renders a component that subscribes to this Context object, it will read the current context value from the closest matching {{Provider}} above it in the tree.
     It accepts an optional {{defaultValue}} argument. This default value is used only when a component does not have a matching {{Provider}} above it in the tree. This can be useful for testing components in isolation without wrapping them.
-# _{{Context.Provider}}_: Every Context object comes with a Provider component. This component allows consuming components to subscribe to context changes. The {{Provider}} component accepts a {{value}} prop to be passed to consuming components that are descendants of this {{Provider}}. One {{Provider}} can be connected to many consumers. Providers can be nested to override values deeper within the tree.
+# *{{Context.Provider}}*: Every Context object comes with a Provider component. This component allows consuming components to subscribe to context changes. The {{Provider}} component accepts a {{value}} prop to be passed to consuming components that are descendants of this {{Provider}}. One {{Provider}} can be connected to many consumers. Providers can be nested to override values deeper within the tree.
     All consumers that are descendants of a {{Provider}} will re-render whenever the {{Provider}}\'s {{value}} prop changes. React determines if the {{value}} has changed by comparing the previous {{value}} prop with the new {{value}} prop using the {{Object.is}} comparison algorithm. When the {{value}} prop is an object or an array (a common scenario), creating this inline within the Provider component\'s render function can generate a new reference on every render of the Provider. This reference instability is a common cause of unexpected re-renders, which we will discuss in detail in the performance considerations section.
-# _Consuming the Context_: There are two ways to consume a context value:
-*_ _{{Context.Consumer}}*: (Primarily for class components or older functional components) This component requires a function as a child (the "render prop" pattern). The function receives the current context value and returns a React node. This approach is less common with the advent of Hooks.
-*_ _{{useContext}} Hook*: (The modern and preferred way in functional components) This Hook accepts a context object (the result of {{React.createContext}}) and returns the current context value for that context. The {{useContext}} Hook makes consuming context cleaner and more straightforward within functional components. Any component calling {{useContext}} will re-render whenever the context value provided by the corresponding {{Provider}} changes.
-*_ _{{Class.contextType}}*: (For class components) A class component can subscribe to a single context by assigning the Context object to a static {{contextType}} property on the class. The context value is then available as {{this.context}}. This is mentioned for completeness, as our course focuses on functional components.
+# *Consuming the Context*: There are two ways to consume a context value:
+*** *{{Context.Consumer}}*: (Primarily for class components or older functional components) This component requires a function as a child (the "render prop" pattern). The function receives the current context value and returns a React node. This approach is less common with the advent of Hooks.
+*** *{{useContext}} Hook*: (The modern and preferred way in functional components) This Hook accepts a context object (the result of {{React.createContext}}) and returns the current context value for that context. The {{useContext}} Hook makes consuming context cleaner and more straightforward within functional components. Any component calling {{useContext}} will re-render whenever the context value provided by the corresponding {{Provider}} changes.
+*** *{{Class.contextType}}*: (For class components) A class component can subscribe to a single context by assigning the Context object to a static {{contextType}} property on the class. The context value is then available as {{this.context}}. This is mentioned for completeness, as our course focuses on functional components.
 
 h3. Implementing Context API: SpeedyMeds Theme Example
 
@@ -80,7 +80,7 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-/*
+/**
 * Provides the theme context to its children components.
 * Manages the current theme mode (light/dark) and updates colors accordingly.
 * Optimizes context value using useMemo and useCallback to prevent unnecessary re-renders.
@@ -133,13 +133,13 @@ export const useTheme = () => {
 {code}
 
 *Explanation of `ThemeContext.tsx`:*
-# _Types and Defaults_: We define `ThemeMode` and `ThemeContextType` to ensure type safety. We also define `lightColors` and `darkColors` objects.
-# _`createContext`_: `ThemeContext` is created. We provide a default value that includes a `toggleTheme` function which logs a warning. This is helpful for cases where a component tries to use the context without a `ThemeProvider` ancestor, though our `useTheme` hook also provides a more explicit error.
-# _`ThemeProvider`_: This component is crucial. It manages the actual theme state (`light` or `dark`) using `useState` (here named `themeMode`).
-** It provides the `themeMode` (as `theme` in the context value), the `toggleTheme` function, and the appropriate `colors` object via the `ThemeContext.Provider`'s `value` prop.
-*_ _Optimization*: Notice the use of `useCallback` for `toggleTheme` and `useMemo` for the `contextValue` object. `useCallback` ensures that the `toggleTheme` function reference remains stable unless its dependencies change (none in this case). `useMemo` ensures that the `contextValue` object itself only gets a new reference if `themeMode`, `toggleTheme`, or `colors` actually change. This is a key optimization to prevent unnecessary re-renders of consuming components, which we will explore further in the next section on performance.
-# _`useTheme` Hook_: This custom Hook simplifies consuming the context. It calls `useContext(ThemeContext)` and also includes a check to ensure it's used within a `ThemeProvider`.
-# _StatusBar_: We also update the `StatusBar` style based on the current `themeMode` for a more integrated look and feel.
+# *Types and Defaults*: We define `ThemeMode` and `ThemeContextType` to ensure type safety. We also define `lightColors` and `darkColors` objects.
+# *`createContext`*: `ThemeContext` is created. We provide a default value that includes a `toggleTheme` function which logs a warning. This is helpful for cases where a component tries to use the context without a `ThemeProvider` ancestor, though our `useTheme` hook also provides a more explicit error.
+# *`ThemeProvider`*: This component is crucial. It manages the actual theme state (`light` or `dark`) using `useState` (here named `themeMode`).
+*** It provides the `themeMode` (as `theme` in the context value), the `toggleTheme` function, and the appropriate `colors` object via the `ThemeContext.Provider`'s `value` prop.
+*** *Optimization*: Notice the use of `useCallback` for `toggleTheme` and `useMemo` for the `contextValue` object. `useCallback` ensures that the `toggleTheme` function reference remains stable unless its dependencies change (none in this case). `useMemo` ensures that the `contextValue` object itself only gets a new reference if `themeMode`, `toggleTheme`, or `colors` actually change. This is a key optimization to prevent unnecessary re-renders of consuming components, which we will explore further in the next section on performance.
+# *`useTheme` Hook*: This custom Hook simplifies consuming the context. It calls `useContext(ThemeContext)` and also includes a check to ensure it's used within a `ThemeProvider`.
+# *StatusBar*: We also update the `StatusBar` style based on the current `themeMode` for a more integrated look and feel.
 
 Now, let's wrap our root application component with `ThemeProvider`:
 
@@ -157,7 +157,7 @@ const AppContent: React.FC = () => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      {/_ Your app components go here _/}
+      {/* Your app components go here */}
       <PatientDashboard />
     </SafeAreaView>
   );
@@ -235,34 +235,34 @@ export default PatientDashboard;
 {code}
 
 *Explanation of Usage:*
-# _`App.tsx`_: The entire application (or relevant part) is wrapped with `<ThemeProvider>`. This makes the theme context available to all descendant components.
-# _`AppContent.tsx`_: This component, even if it's the direct child, can use `useTheme()` to access `colors` and apply them. We use `AppContent` to ensure `useTheme` is called within the `ThemeProvider`.
-# _`PatientDashboard.tsx`_: This component, potentially nested deep within the app, can directly access `theme`, `toggleTheme`, and `colors` using the `useTheme` custom Hook without any props being passed down through intermediate components. It can display the current theme, use theme-specific colors, and trigger a theme change.
+# *`App.tsx`*: The entire application (or relevant part) is wrapped with `<ThemeProvider>`. This makes the theme context available to all descendant components.
+# *`AppContent.tsx`*: This component, even if it's the direct child, can use `useTheme()` to access `colors` and apply them. We use `AppContent` to ensure `useTheme` is called within the `ThemeProvider`.
+# *`PatientDashboard.tsx`*: This component, potentially nested deep within the app, can directly access `theme`, `toggleTheme`, and `colors` using the `useTheme` custom Hook without any props being passed down through intermediate components. It can display the current theme, use theme-specific colors, and trigger a theme change.
 
 This `ThemeContext` example illustrates a common and effective use of the Context API. It centralizes theme logic and makes theme-related data and functions easily accessible throughout the application, significantly reducing the need for prop drilling. The code is cleaner, more maintainable, and components like `PatientDashboard` only subscribe to the data they truly need from the context.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/reference/react/createContext|React Docs: `createContext`]
 - [https://react.dev/reference/react/useContext|React Docs: `useContext` Hook]
 - [https://legacy.reactjs.org/docs/context.html|React Docs: Context (Legacy - good for Provider/Consumer concepts)]
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is|MDN Web Docs: Object.is (for understanding value comparison)]
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ The Context API's `Provider` concept is somewhat analogous to how you might use an `EnvironmentObject` in SwiftUI. You provide a value at a higher level in the view hierarchy, and descendant views can subscribe to it. The custom `useTheme` hook is a common pattern in React to make context consumption cleaner, similar to how you might define helper methods or computed properties in Swift.
-> _Key Takeaway:_ Context API offers a reactive way to share global data, which updates consuming components when the `value`
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* The Context API's `Provider` concept is somewhat analogous to how you might use an `EnvironmentObject` in SwiftUI. You provide a value at a higher level in the view hierarchy, and descendant views can subscribe to it. The custom `useTheme` hook is a common pattern in React to make context consumption cleaner, similar to how you might define helper methods or computed properties in Swift.
+> *Key Takeaway:* Context API offers a reactive way to share global data, which updates consuming components when the `value`
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ In Android development, sharing data across multiple Fragments or Activities without direct passing often involves using a shared `ViewModel` scoped to an Activity or Navigation graph, holding data in `LiveData` or `StateFlow`. Components (Fragments/Activities) then observe these data holders. This is analogous to how a React `Provider` holds state and consumers subscribe. For simpler, read-only data that doesn't change often (like theme information), you might also use dependency injection frameworks (like Hilt or Koin) to provide instances of configuration objects down the DI tree, which has a similar goal of avoiding manual passing.
-> _Key Takeaway:_ React's Context API is a more direct, tree-based mechanism for dependency injection and state propagation compared to Android's often more structured `ViewModel` and observable patterns for shared state. The explicit `Provider` and `useContext` hook are core to this.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* In Android development, sharing data across multiple Fragments or Activities without direct passing often involves using a shared `ViewModel` scoped to an Activity or Navigation graph, holding data in `LiveData` or `StateFlow`. Components (Fragments/Activities) then observe these data holders. This is analogous to how a React `Provider` holds state and consumers subscribe. For simpler, read-only data that doesn't change often (like theme information), you might also use dependency injection frameworks (like Hilt or Koin) to provide instances of configuration objects down the DI tree, which has a similar goal of avoiding manual passing.
+> *Key Takeaway:* React's Context API is a more direct, tree-based mechanism for dependency injection and state propagation compared to Android's often more structured `ViewModel` and observable patterns for shared state. The explicit `Provider` and `useContext` hook are core to this.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison (React):_ If you're a React web developer, the Context API is identical. You're likely familiar with its use cases for theming, authentication, and avoiding prop drilling, as well as its performance considerations (leading to patterns like memoizing provider values or splitting contexts).
-_Comparison (Angular):_ Angular developers achieve similar goals using Services with Dependency Injection (DI). A shared service can hold state (e.g., using RxJS `BehaviorSubject` or Signals) and be injected into any component that needs it, regardless of its position in the component tree. This DI approach is Angular's primary way to share data and logic, effectively bypassing the need for manual prop drilling. Context API can be seen as React's more explicit, component-tree-based DI and state propagation mechanism for certain types of shared data.
-> _Key Takeaway:_ Context API provides React's built-in solution for what Angular often solves with services and DI. The core idea is to make "global" data available to a subtree of components without manual prop passing.
+bq. 🌐 *(Web Developers):*
+> *Comparison (React):* If you're a React web developer, the Context API is identical. You're likely familiar with its use cases for theming, authentication, and avoiding prop drilling, as well as its performance considerations (leading to patterns like memoizing provider values or splitting contexts).
+*Comparison (Angular):* Angular developers achieve similar goals using Services with Dependency Injection (DI). A shared service can hold state (e.g., using RxJS `BehaviorSubject` or Signals) and be injected into any component that needs it, regardless of its position in the component tree. This DI approach is Angular's primary way to share data and logic, effectively bypassing the need for manual prop drilling. Context API can be seen as React's more explicit, component-tree-based DI and state propagation mechanism for certain types of shared data.
+> *Key Takeaway:* Context API provides React's built-in solution for what Angular often solves with services and DI. The core idea is to make "global" data available to a subtree of components without manual prop passing.
 
 h3. Exercise 13.1: Managing Global Theme with Context
-* _Objective:_ Apply the `ThemeContext` created in this section to a small set of components, allowing them to display themed content and toggle the theme.
-* _Task:_ Implement a settings screen where the user can tap a button to switch between light and dark themes. Ensure other components on a mock "home" screen react to this theme change.
+* *Objective:* Apply the `ThemeContext` created in this section to a small set of components, allowing them to display themed content and toggle the theme.
+* *Task:* Implement a settings screen where the user can tap a button to switch between light and dark themes. Ensure other components on a mock "home" screen react to this theme change.
 
 *(https://snack.expo.dev/@course-author/m13-ex01-context-theme)*
 

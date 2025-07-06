@@ -7,29 +7,29 @@ Once you have your form fields set up and validation in place with React Hook Fo
 As we've seen in previous examples, the {{handleSubmit}} function is provided by the {{useForm}} hook. Its primary role is to orchestrate the validation and submission flow:
 # When invoked (e.g., by a button press), {{handleSubmit}} first triggers the validation rules defined for all registered form fields (based on your defined {{mode}} and rules).
 # Based on the validation outcome, it calls one of two callback functions that you can provide as arguments:
-*_ _{{onValid}} (First Argument):* {{(data: YourFormData, event?: Event) => void | Promise<void>}}
-** This function is executed only if all form validations pass successfully.
-** {{data}}: An object containing the current values of all registered and validated form fields. The structure of this object matches the type you provided to {{useForm}} (e.g., {{MedicationFormData}}).
-** {{event?}}: An optional event object (more relevant in web environments, often undefined or not used in React Native {{onPress}} handlers).
-** This is where you'll typically put your logic for sending data to an API or performing other actions with the valid form data.
-*_ _{{onInvalid}} (Optional Second Argument):* {{(errors: FieldErrors<YourFormData>, event?: Event) => void | Promise<void>}}
-*** This function is executed if any of the form's validation rules fail.
-** {{errors}}: An object containing details about the validation errors for each invalid field. This is the same {{errors}} object available from {{formState}}.
-** {{event?}}: An optional event object.
-** You can use this callback to handle validation failures, such as focusing on the first invalid field or displaying a general error summary.
+*** *{{onValid}} (First Argument):* {{(data: YourFormData, event?: Event) => void | Promise<void>}}
+**** This function is executed only if all form validations pass successfully.
+**** {{data}}: An object containing the current values of all registered and validated form fields. The structure of this object matches the type you provided to {{useForm}} (e.g., {{MedicationFormData}}).
+**** {{event?}}: An optional event object (more relevant in web environments, often undefined or not used in React Native {{onPress}} handlers).
+**** This is where you'll typically put your logic for sending data to an API or performing other actions with the valid form data.
+*** *{{onInvalid}} (Optional Second Argument):* {{(errors: FieldErrors<YourFormData>, event?: Event) => void | Promise<void>}}
+**** This function is executed if any of the form's validation rules fail.
+**** {{errors}}: An object containing details about the validation errors for each invalid field. This is the same {{errors}} object available from {{formState}}.
+**** {{event?}}: An optional event object.
+**** You can use this callback to handle validation failures, such as focusing on the first invalid field or displaying a general error summary.
 
-*Usage:**
+*Usage:*
 
 {code:language=js}
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
 // ... other imports
 
 interface MyFormData {
-  /_ ... your form fields ... _/
+  /* ... your form fields ... */
 }
 
 const MyComponent = () => {
-  const { handleSubmit, control /_ ...other properties from useForm _/ } =
+  const { handleSubmit, control /* ...other properties from useForm */ } =
     useForm<MyFormData>();
 
   const handleValidSubmit: SubmitHandler<MyFormData> = (data) => {
@@ -336,34 +336,34 @@ export default AsyncSubmitRHFScreen;
 {code}
 
 *Explanation of the Asynchronous Example:*
-# _`submitMedicationToAPI` Function:_ A mock function that returns a `Promise` to simulate an API call with a 2-second delay. It randomly resolves or rejects to mimic real-world scenarios.
-# _`isSubmitting` State:_ Destructured from `formState`. It's used to:
-** Show an `ActivityIndicator` instead of the submit button while the submission is in progress.
-** Disable the submit button (`disabled={!isValid || isSubmitting}`).
-** Optionally disable input fields (`editable={!isSubmitting}`) to prevent changes during submission.
-# _`onSubmit` as an `async` Function:_
-** The `await submitMedicationToAPI(data)` call will pause execution until the promise resolves or rejects.
-** A `try...catch` block handles potential errors from the API call.
-** `Alert` messages notify the user of success or failure.
-** `reset()` is called on successful submission.
-# _Error Handling with `setError` (Commented Out):_
-** The example includes commented-out lines showing how you might use `setError` (from `useForm`) to display API-specific errors directly in your form, either as general form errors (`root.serverError`) or tied to specific fields.
-*** `setError('root.serverError', { type: 'custom', message: 'Server communication failed.' });`
-** `setError('fieldName', { type: 'server', message: 'This value is already taken.' });`
-** Displaying these `root` errors would typically involve checking `errors.root?.serverError?.message` in your JSX.
+# *`submitMedicationToAPI` Function:* A mock function that returns a `Promise` to simulate an API call with a 2-second delay. It randomly resolves or rejects to mimic real-world scenarios.
+# *`isSubmitting` State:* Destructured from `formState`. It's used to:
+*** Show an `ActivityIndicator` instead of the submit button while the submission is in progress.
+*** Disable the submit button (`disabled={!isValid || isSubmitting}`).
+*** Optionally disable input fields (`editable={!isSubmitting}`) to prevent changes during submission.
+# *`onSubmit` as an `async` Function:*
+*** The `await submitMedicationToAPI(data)` call will pause execution until the promise resolves or rejects.
+*** A `try...catch` block handles potential errors from the API call.
+*** `Alert` messages notify the user of success or failure.
+*** `reset()` is called on successful submission.
+# *Error Handling with `setError` (Commented Out):*
+*** The example includes commented-out lines showing how you might use `setError` (from `useForm`) to display API-specific errors directly in your form, either as general form errors (`root.serverError`) or tied to specific fields.
+**** `setError('root.serverError', { type: 'custom', message: 'Server communication failed.' });`
+**** `setError('fieldName', { type: 'server', message: 'This value is already taken.' });`
+*** Displaying these `root` errors would typically involve checking `errors.root?.serverError?.message` in your JSX.
 
 {tip}
 Always provide feedback to the user during asynchronous operations. Using `isSubmitting` to show loading indicators and disable buttons significantly improves the user experience by clearly communicating that an action is in progress.
 {tip}
 Effectively handling form submissions, including managing loading states and potential errors from asynchronous operations, is key to creating professional and user-friendly forms. React Hook Form provides the necessary tools to manage this complexity cleanly.
 
-bq. 📱 _Background Bridge Notes:_
-> _For Native Developers (Android/iOS):_
+bq. 📱 *Background Bridge Notes:*
+> *For Native Developers (Android/iOS):*
 In native app development, form submission typically involves manually gathering values from each input UI element (e.g., `EditText.getText().toString()`, `UITextField.text`) when a submit button is pressed, then performing validation, and finally constructing and executing a network request. React Hook Form's `handleSubmit` automates the data gathering from all registered fields and the validation check before your submission logic is even called. The `isSubmitting` state also simplifies UI updates that would otherwise be managed manually.
-> _For Web Developers (React/Angular):_
+> *For Web Developers (React/Angular):*
 The concept of a submit handler function is standard. RHF's `handleSubmit` is analogous to how one might handle an `onSubmit` event on a `<form>` element in web React, but with the significant advantage of built-in validation integration before your custom handler is invoked. Angular Reactive Forms also have mechanisms like `(ngSubmit)` on the form and methods to access form values and validity status (`formGroup.value`, `formGroup.valid`) that serve a similar purpose of orchestrating submission.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react-hook-form.com/docs/useform/handlesubmit|React Hook Form - `handleSubmit`]
 - [https://react-hook-form.com/docs/useform/formstate|React Hook Form - `formState`]
 - [https://react-hook-form.com/docs/useform/reset|React Hook Form - `reset`]

@@ -35,26 +35,26 @@ class MarkdownToConfluenceConverter {
     // 2. Handle code blocks (must be before inline code)
     confluence = this.convertCodeBlocks(confluence);
 
-    // 3. Handle inline code (backticks) - must be after code blocks
+    // 3. Handle text formatting (bold, italic) - before inline code to avoid conflicts
+    confluence = this.convertTextFormatting(confluence);
+
+    // 4. Handle inline code (backticks) - after text formatting
     confluence = this.convertInlineCode(confluence);
 
-    // 4. Handle headers
+    // 5. Handle headers
     confluence = this.convertHeaders(confluence);
 
-    // 5. Handle tables
+    // 6. Handle tables
     confluence = this.convertTables(confluence);
 
-    // 6. Handle lists
+    // 7. Handle lists
     confluence = this.convertLists(confluence);
 
-    // 7. Handle links
+    // 8. Handle links
     confluence = this.convertLinks(confluence);
 
-    // 8. Handle images
+    // 9. Handle images
     confluence = this.convertImages(confluence);
-
-    // 9. Handle text formatting (bold, italic)
-    confluence = this.convertTextFormatting(confluence);
 
     // 10. Handle block quotes
     confluence = this.convertBlockQuotes(confluence);
@@ -150,15 +150,17 @@ class MarkdownToConfluenceConverter {
       const line = lines[i];
       
       // Check if we're entering or leaving a code block
-      if (line.includes('{code')) {
+      if (line.trim().startsWith('{code')) {
         inCodeBlock = true;
-      } else if (line.includes('{code}') && inCodeBlock) {
+      } else if (line.trim() === '{code}' && inCodeBlock) {
         inCodeBlock = false;
       }
       
       // Only convert backticks if we're not in a code block
       if (!inCodeBlock) {
-        lines[i] = line.replace(/`([^`\n]+)`/g, '{{$1}}');
+        // Convert single backticks to Confluence monospace
+        // Avoid converting backticks that are already part of formatted text
+        lines[i] = line.replace(/(?<!{)`([^`\n]+)`(?!})/g, '{{$1}}');
       }
     }
     
@@ -256,17 +258,39 @@ class MarkdownToConfluenceConverter {
    * Convert text formatting (bold, italic)
    */
   convertTextFormatting(content) {
-    // Handle bold (**text** or __text__)
-    content = content.replace(/\*\*([^*]+)\*\*/g, '*$1*');
-    content = content.replace(/__([^_]+)__/g, '*$1*');
+    // Handle bold first (**text** or __text__)
+    // Use more specific matching to ensure we catch all bold text
+    content = content.replace(/\*\*([^*]+?)\*\*/g, '*$1*');
+    content = content.replace(/__([^_]+?)__/g, '*$1*');
     
-    // Handle italic (*text* or _text_) - be very careful to avoid list markers
-    // Only match italic when not at start of line and not after whitespace + asterisk
-    content = content.replace(/(?<!^[\s]*)\*([^*\n]+)\*(?!\*)/gm, '_$1_');
-    content = content.replace(/(?<!_)_([^_\n]+)_(?!_)/g, '_$1_');
+    // Handle italic (*text* or _text_) - only after bold is converted
+    // Be extremely careful to avoid list markers and already processed content
+    // Split into lines and process each line individually to avoid issues
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      // Skip if line starts with list marker
+      if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+        continue;
+      }
+      
+      // Convert single asterisk italic (but not at start of list)
+      lines[i] = line.replace(/(?<!^[\s]*)\*([^*\n]+?)\*/g, (match, text) => {
+        // Extra safety: don't convert if it contains asterisks or looks like a list
+        if (text.includes('*') || match.trim().startsWith('*')) {
+          return match;
+        }
+        return `_${text}_`;
+      });
+    }
+    content = lines.join('\n');
+    
+    // Handle underscore italic carefully
+    content = content.replace(/(?<!_)\b_([^_\n]+?)_\b(?!_)/g, '_$1_');
     
     // Handle strikethrough (~~text~~)
-    content = content.replace(/~~([^~]+)~~/g, '-$1-');
+    content = content.replace(/~~([^~\n]+?)~~/g, '-$1-');
     
     return content;
   }

@@ -4,4 +4,4 @@ In this module, we've journeyed through the evolution of mobile platforms, from 
 
 This foundational understanding of mobile development history, cross-platform strategies, and the specific strengths and ecosystem of React Native prepares you to appreciate its architecture and capabilities, which will be explored in subsequent modules. The key skills gained include articulating why React Native is a compelling choice for many applications and recognizing the importance of its surrounding tools and community.
 
-bq. 🛣️ _(All Learners):_ As you progress through the course, keep these fundamentals in mind. The history and context of mobile development will help you better understand the design decisions behind React Native and make more informed choices in your own projects.
+bq. 🛣️ *(All Learners):* As you progress through the course, keep these fundamentals in mind. The history and context of mobile development will help you better understand the design decisions behind React Native and make more informed choices in your own projects.

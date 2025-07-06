@@ -3,9 +3,9 @@ h2. Section 10: Responsive Design Techniques
 Mobile devices come in a variety of screen sizes, aspect ratios, and resolutions. A well-crafted application should provide a good user experience across this diverse range of devices. Responsive design in React Native involves creating layouts and styles that adapt gracefully to these variations. This section explores techniques to make your SpeedyMeds application responsive.
 
 h3. Why Responsive Design Matters
-* _User Experience:_ A responsive UI feels more professional and is easier to use, regardless of the device.
-* _Accessibility:_ Ensures that content is readable and interactive on both small and large screens.
-* _Future-Proofing:_ New devices with different screen dimensions are constantly released. Responsive design helps your app adapt without requiring a complete overhaul for each new device.
+* *User Experience:* A responsive UI feels more professional and is easier to use, regardless of the device.
+* *Accessibility:* Ensures that content is readable and interactive on both small and large screens.
+* *Future-Proofing:* New devices with different screen dimensions are constantly released. Responsive design helps your app adapt without requiring a complete overhaul for each new device.
 
 h3. Core Techniques for Responsive Design
 
@@ -16,11 +16,11 @@ Flexbox, as covered in Section 4, is inherently designed for creating flexible a
 *2. {{Dimensions}} API*
 
 The {{Dimensions}} API from {{react-native}} allows you to get the width and height of the device screen or the application window. It's a way to get static dimension values at the time of invocation.
-* _{{Dimensions.get(dim)}}_: Synchronously retrieves the dimensions.
-* {{dim}}: Can be {{'window'}} (the visible application window, excluding status/navigation bars on some Android versions) or {{'screen'}} (the entire physical screen size).
-* Returns a {{ScaledSize}} object: {{{ width: number, height: number, scale: number, fontScale: number }}}.
-** {{scale}}: The pixel density of the screen.
-** {{fontScale}}: The scaling factor for fonts chosen by the user.
+* *{{Dimensions.get(dim)}}*: Synchronously retrieves the dimensions.
+** {{dim}}: Can be {{'window'}} (the visible application window, excluding status/navigation bars on some Android versions) or {{'screen'}} (the entire physical screen size).
+** Returns a {{ScaledSize}} object: {{{ width: number, height: number, scale: number, fontScale: number }}}.
+*** {{scale}}: The pixel density of the screen.
+*** {{fontScale}}: The scaling factor for fonts chosen by the user.
 
 {code:language=js}
 import React from "react";
@@ -94,10 +94,10 @@ export default ResponsiveCard;
 * These dimensions can then be used to calculate sizes for components dynamically (e.g., `cardWidth = windowWidthInitial * 0.9`).
 
 *Limitations of `Dimensions` API:*
-* _Static Values:_ `Dimensions.get()` only provides the dimensions at the time it's called. It does not update automatically if the screen size or orientation changes.
-* _Manual Updates for Changes:_ To react to dimension changes (e.g., device rotation), you would need to manually set up event listeners using `Dimensions.addEventListener('change', handler)` and manage state updates yourself. This `handler` receives an object like `{ window: ScaledSize, screen: ScaledSize }`. This imperative approach is less aligned with React's declarative model.
-* _No Automatic Re-renders:_ Components using values from `Dimensions.get()` won't automatically re-render when dimensions change unless you implement the event listener and state update logic.
-* _Caching Discouraged:_ Caching values from `Dimensions.get()` is unreliable as dimensions can change at any time.
+* *Static Values:* `Dimensions.get()` only provides the dimensions at the time it's called. It does not update automatically if the screen size or orientation changes.
+* *Manual Updates for Changes:* To react to dimension changes (e.g., device rotation), you would need to manually set up event listeners using `Dimensions.addEventListener('change', handler)` and manage state updates yourself. This `handler` receives an object like `{ window: ScaledSize, screen: ScaledSize }`. This imperative approach is less aligned with React's declarative model.
+* *No Automatic Re-renders:* Components using values from `Dimensions.get()` won't automatically re-render when dimensions change unless you implement the event listener and state update logic.
+* *Caching Discouraged:* Caching values from `Dimensions.get()` is unreliable as dimensions can change at any time.
 
 For these reasons, while `Dimensions.get()` can be useful for one-time measurements (e.g., outside of component render lifecycles), the `useWindowDimensions` hook is generally preferred for responsive UI in functional components.
 
@@ -135,7 +135,7 @@ const DynamicResponsiveCard = () => {
       <Text style={[styles.dynamicCardTitle, { fontSize: titleFontSize }]}>
         Refill Due: Metformin
       </Text>
-      {/_ ... other content ... _/}
+      {/* ... other content ... */}
     </View>
   );
 };
@@ -162,10 +162,10 @@ export default DynamicResponsiveCard;
 {code}
 
 *Explanation & Benefits of `useWindowDimensions`:*
-* _Reactive:_ Automatically provides the current `width`, `height`, `scale`, and `fontScale` of the application window.
-* _Automatic Re-renders:_ Components using this hook will re-render whenever these dimension values change (e.g., due to device rotation or foldable screen state change), ensuring your UI adapts.
-* _Declarative:_ Fits seamlessly into the React hook paradigm, eliminating the need for manual event listener setup and state management for dimensions.
-* _Simplicity:_ Offers a cleaner and more intuitive API for building responsive layouts compared to the `Dimensions` API for dynamic scenarios.
+* *Reactive:* Automatically provides the current `width`, `height`, `scale`, and `fontScale` of the application window.
+* *Automatic Re-renders:* Components using this hook will re-render whenever these dimension values change (e.g., due to device rotation or foldable screen state change), ensuring your UI adapts.
+* *Declarative:* Fits seamlessly into the React hook paradigm, eliminating the need for manual event listener setup and state management for dimensions.
+* *Simplicity:* Offers a cleaner and more intuitive API for building responsive layouts compared to the `Dimensions` API for dynamic scenarios.
 
 *3. `Platform` Module*
 
@@ -174,8 +174,8 @@ The `Platform` module from `react-native` helps you write platform-specific code
 *`Platform.OS` and `Platform.Version`*
 * `Platform.OS`: A string that can be `'ios'`, `'android'`, `'windows'`, `'macos'`, or `'web'`. This is commonly used for simple conditional checks.
 * `Platform.Version`:
-* On Android, this returns the Android API level as a number (e.g., `21` for Lollipop, `30` for Android 11).
-* On iOS, this returns the iOS version as a string (e.g., `"15.4"`). You might need to parse it if you need to check major/minor versions.
+** On Android, this returns the Android API level as a number (e.g., `21` for Lollipop, `30` for Android 11).
+** On iOS, this returns the iOS version as a string (e.g., `"15.4"`). You might need to parse it if you need to check major/minor versions.
 
 {code:language=js}
 import React from "react";
@@ -305,7 +305,7 @@ interface MedicationImageProps {
 const MedicationImage: React.FC<MedicationImageProps> = ({ imageUrl }) => {
   return (
     <View style={styles.imageContainer}>
-      {/_ In a real app, use <Image source={{uri: imageUrl}} style={styles.image} /> _/}
+      {/* In a real app, use <Image source={{uri: imageUrl}} style={styles.image} /> */}
       <View style={styles.image} />
     </View>
   );
@@ -362,9 +362,9 @@ const OrientationAwareLayout = () => {
 h3. Platform-Specific File Extensions
 
 For more substantial differences where entire components or large sections of code vary between platforms, React Native's bundler (Metro) supports platform-specific file extensions. This approach helps keep your codebase cleaner and more manageable by separating platform-specific logic into distinct files.
-* _`.ios.tsx` / `.ios.js`_: Files with this extension will only be bundled for iOS.
-* _`.android.tsx` / `.android.js`_: Files with this extension will only be bundled for Android.
-* _`.native.tsx` / `.native.js`_: Files with this extension will be bundled for both iOS and Android, but not for web or other platforms.
+* *`.ios.tsx` / `.ios.js`*: Files with this extension will only be bundled for iOS.
+* *`.android.tsx` / `.android.js`*: Files with this extension will only be bundled for Android.
+* *`.native.tsx` / `.native.js`*: Files with this extension will be bundled for both iOS and Android, but not for web or other platforms.
 
 *Example:*
 
@@ -401,8 +401,8 @@ import SpeedyMedsMap from "./components/SpeedyMedsMap"; // No extension needed
 {code}
 
 *When to Use:*
-* _`Platform.OS` / `Platform.select()`_: Best for small, inline differences in styles, simple logic branching, or minor configuration changes.
-* _Platform-Specific File Extensions_: Ideal when the implementation of a component or module differs significantly between platforms, or when you want to include platform-exclusive native module integrations.
+* *`Platform.OS` / `Platform.select()`*: Best for small, inline differences in styles, simple logic branching, or minor configuration changes.
+* *Platform-Specific File Extensions*: Ideal when the implementation of a component or module differs significantly between platforms, or when you want to include platform-exclusive native module integrations.
 
 h3. Handling Safe Area Insets
 
@@ -415,7 +415,7 @@ React Native provides a built-in `<SafeAreaView>` component. However, it has lim
 * It can sometimes cause jumpy behavior during screen transitions or with animations.
 * It might ignore explicit padding styles applied to it.
 
-For these reasons, it's generally _not recommended_ for comprehensive safe area management.
+For these reasons, it's generally *not recommended* for comprehensive safe area management.
 
 *2. `react-native-safe-area-context` (Recommended Cross-Platform Solution)*
 
@@ -488,7 +488,7 @@ const ScreenWithCustomSafePadding = () => {
         This content is perfectly padded within the safe areas of your device.
         The status bar, notch, and home indicator (if any) should not overlap.
       </Text>
-      {/_ Your screen content here _/}
+      {/* Your screen content here */}
     </View>
   );
 };
@@ -526,8 +526,8 @@ If you do use the library's `<SafeAreaView>`:
 For most cases, using `useSafeAreaInsets()` and manually applying padding to your root view of a screen provides the best control and reliability.
 
 h3. Strategies for Responsive UI
-* _Mobile-First (or Smallest Screen First):_ Design for the smallest target screen size first, then adapt for larger screens. This often leads to cleaner, more focused designs.
-* _Breakpoints:_ While React Native doesn't have CSS-style media queries out-of-the-box, you can define your own breakpoints using `Dimensions` or `useWindowDimensions` and apply different styles or even render different component trees.
+* *Mobile-First (or Smallest Screen First):* Design for the smallest target screen size first, then adapt for larger screens. This often leads to cleaner, more focused designs.
+* *Breakpoints:* While React Native doesn't have CSS-style media queries out-of-the-box, you can define your own breakpoints using `Dimensions` or `useWindowDimensions` and apply different styles or even render different component trees.
 
   ```tsx
   const { width } = useWindowDimensions();
@@ -537,15 +537,15 @@ h3. Strategies for Responsive UI
   // ... in your component
   // style={isSmallDevice ? styles.smallButton : styles.largeButton}
   ```
-* _Dynamic Font Sizes:_ Adjust font sizes based on screen width or height to maintain readability.
-* _Image Optimization:_ Use appropriate image sizes for different screen densities and dimensions. Libraries like `expo-image` can help with this.
-* _Test on Multiple Devices/Simulators:_ Always test your UI on a range of physical devices and simulators (different sizes, iOS/Android) to catch layout issues.
+* *Dynamic Font Sizes:* Adjust font sizes based on screen width or height to maintain readability.
+* *Image Optimization:* Use appropriate image sizes for different screen densities and dimensions. Libraries like `expo-image` can help with this.
+* *Test on Multiple Devices/Simulators:* Always test your UI on a range of physical devices and simulators (different sizes, iOS/Android) to catch layout issues.
 
 Responsive design is an ongoing process of testing and refinement. By leveraging Flexbox, the `Dimensions` API, `useWindowDimensions`, and the `Platform` module, you can build adaptive and user-friendly interfaces for SpeedyMeds that work well across the diverse landscape of mobile devices.
 
 This concludes Module 10 on Styling in React Native. You should now have a solid understanding of various styling techniques, from basic `StyleSheet` usage and Flexbox layouts to advanced theming with Styled Components and UI libraries like React Native Paper, as well as how to make your designs responsive.
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://reactnative.dev/docs/dimensions|React Native Docs: Dimensions]
 * [https://reactnative.dev/docs/usewindowdimensions|React Native Docs: `useWindowDimensions` hook]
 * [https://reactnative.dev/docs/platform-specific-code|React Native Docs: Platform Module]

@@ -15,10 +15,10 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 * {{<!DOCTYPE html>}}: Declares the document type (HTML5) and ensures browsers use standards mode.
 * {{<html lang="en">}}: The root element, enclosing all other content. Crucially, specify the document language using the {{lang}} attribute (e.g., {{<html lang="en">}}) for accessibility and search engines.
 * {{<head>}}: Contains meta-information about the document (not displayed directly). This includes:
-* {{<title>}}: The page title shown in the browser tab.
-* {{<meta charset="UTF-8">}}: Specifies the character encoding.
-* {{<link>}}: Links to external resources, most commonly CSS stylesheets.
-* {{<meta>}}: Other metadata for SEO, viewport settings, descriptions, etc.
+** {{<title>}}: The page title shown in the browser tab.
+** {{<meta charset="UTF-8">}}: Specifies the character encoding.
+** {{<link>}}: Links to external resources, most commonly CSS stylesheets.
+** {{<meta>}}: Other metadata for SEO, viewport settings, descriptions, etc.
 ** {{<script>}}: Links to JavaScript files or contains inline script (often placed before the closing {{</body>}} tag for performance reasons).
 * {{<body>}}: Contains the visible page content (text, images, links, etc.). Only one {{<body>}} element per document.
 
@@ -39,18 +39,18 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 
 This example illustrates the fundamental boilerplate of an HTML5 document, including the `<!DOCTYPE>` declaration, the root `<html>` element with a language attribute, the `<head>` for metadata like the title and character set, and the `<body>` where all visible content resides. This hierarchical structure is foundational to how web pages are organized and later interpreted by browsers to build the DOM.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ HTML's hierarchical structure is conceptually similar to native UI hierarchies like Android's View hierarchy or iOS's UIView hierarchy. The parent-child relationships in HTML (container elements with nested children) parallel how native UI elements are nested within parent containers. The DOM (Document Object Model) is comparable to Android's View tree or iOS's UIView hierarchy in memory.
-> _Key Takeaway:_ HTML's structural patterns will feel familiar if you've worked with native UI hierarchies. Both use tree-like structures where parent elements/views contain and manage child elements/views, forming a complete UI.
-> _Source:_ [https://developer.android.com/guide/topics/ui/ui-events.html|Android Developers: View Hierarchy] / [https://developer.apple.com/documentation/uikit/uiview|Apple Developer: UIView]
+bq. 📲 *(Native Developers):*
+> *Comparison:* HTML's hierarchical structure is conceptually similar to native UI hierarchies like Android's View hierarchy or iOS's UIView hierarchy. The parent-child relationships in HTML (container elements with nested children) parallel how native UI elements are nested within parent containers. The DOM (Document Object Model) is comparable to Android's View tree or iOS's UIView hierarchy in memory.
+> *Key Takeaway:* HTML's structural patterns will feel familiar if you've worked with native UI hierarchies. Both use tree-like structures where parent elements/views contain and manage child elements/views, forming a complete UI.
+> *Source:* [https://developer.android.com/guide/topics/ui/ui-events.html|Android Developers: View Hierarchy] / [https://developer.apple.com/documentation/uikit/uiview|Apple Developer: UIView]
 
 h4. Semantic HTML: Meaningful Structure
 
-While HTML can structure content using generic container elements like `<div>` (block-level) and `<span>` (inline-level), _semantic HTML_ uses elements that convey the meaning or purpose of the content they enclose. Using semantic elements provides significant benefits:
-* _Accessibility:_ Screen readers can interpret the page structure more effectively, enabling users to navigate by landmarks (e.g., main navigation, articles).
-* _SEO:_ Search engines better understand content hierarchy, potentially improving rankings.
-* _Maintainability:_ Code becomes more readable and self-documenting.
-* _Browser Functionality:_ Browsers might provide optimized default behaviors or styles.
+While HTML can structure content using generic container elements like `<div>` (block-level) and `<span>` (inline-level), *semantic HTML* uses elements that convey the meaning or purpose of the content they enclose. Using semantic elements provides significant benefits:
+* *Accessibility:* Screen readers can interpret the page structure more effectively, enabling users to navigate by landmarks (e.g., main navigation, articles).
+* *SEO:* Search engines better understand content hierarchy, potentially improving rankings.
+* *Maintainability:* Code becomes more readable and self-documenting.
+* *Browser Functionality:* Browsers might provide optimized default behaviors or styles.
 
 Key semantic structural elements include:
 * `<header>`: Introductory content for a page or section (logo, navigation, search).
@@ -66,23 +66,23 @@ Choosing the right element focuses on meaning ("What does this content represent
 h4. Common Content Elements
 
 HTML uses "tags" (like `<p>` for paragraph) to define elements. Here are a few core element types relevant for comparison with React Native:
-* _Structure & Grouping:_
-* `<div>`: A generic block-level container for grouping content, often used for layout purposes.
-* `<span>`: A generic inline container, often used for styling specific parts of text.
-* _Headings:_ `<h1>` to `<h6>` define section headings, establishing a document outline.
-* _Text Content:_
-* `<p>`: Represents a paragraph of text.
-* `<em>`: Indicates emphasis (typically italic).
+* *Structure & Grouping:*
+** `<div>`: A generic block-level container for grouping content, often used for layout purposes.
+** `<span>`: A generic inline container, often used for styling specific parts of text.
+* *Headings:* `<h1>` to `<h6>` define section headings, establishing a document outline.
+* *Text Content:*
+** `<p>`: Represents a paragraph of text.
+** `<em>`: Indicates emphasis (typically italic).
 ** `<strong>`: Indicates strong importance (typically bold).
-* _Lists:_
-* `<ul>`: Unordered (bulleted) list.
-* `<ol>`: Ordered (numbered) list.
-* `<li>`: List item (used within `<ul>` or `<ol>`).
-* `<dl>`, `<dt>`, `<dd>`: Description list, term, and description.
-* _Links:_ `<a>` creates hyperlinks using the `href` attribute.
-* _Media:_ `<img>` embeds images (requires `src` and `alt` attributes).
-* _Tables:_ `<table>`, `<tr>` (row), `<th>` (header cell), `<td>` (data cell). Use `<thead>`, `<tbody>`, `<tfoot>`, `<caption>` for better structure. Tables are for tabular data, not page layout.
-* _Forms:_ `<form>` contains interactive controls. Common elements include `<input>` (various types like `text`, `password`, `checkbox`, `radio`, `submit`), `<textarea>`, `<select>`, `<option>`, `<button>`, and `<label>` (essential for accessibility).
+* *Lists:*
+** `<ul>`: Unordered (bulleted) list.
+** `<ol>`: Ordered (numbered) list.
+** `<li>`: List item (used within `<ul>` or `<ol>`).
+** `<dl>`, `<dt>`, `<dd>`: Description list, term, and description.
+* *Links:* `<a>` creates hyperlinks using the `href` attribute.
+* *Media:* `<img>` embeds images (requires `src` and `alt` attributes).
+* *Tables:* `<table>`, `<tr>` (row), `<th>` (header cell), `<td>` (data cell). Use `<thead>`, `<tbody>`, `<tfoot>`, `<caption>` for better structure. Tables are for tabular data, not page layout.
+* *Forms:* `<form>` contains interactive controls. Common elements include `<input>` (various types like `text`, `password`, `checkbox`, `radio`, `submit`), `<textarea>`, `<select>`, `<option>`, `<button>`, and `<label>` (essential for accessibility).
 
 To further clarify how these fundamental HTML elements relate to both native development and React Native, consider the following conceptual mapping:
 
@@ -90,15 +90,15 @@ To further clarify how these fundamental HTML elements relate to both native dev
 |Generic Container|`<div>`|`UIView`|`ViewGroup`|`<View>`|
 |Text Display|`<p>`, `<h1>`, `<span>`|`UILabel`, `UITextView`|`TextView`|`<Text>`|
 |Image Display|`<img>`|`UIImageView`|`ImageView`|`<Image>`|
-bq. _Background Bridge Note:_ As shown in the table, common HTML tags for structure, text, and images have direct conceptual parallels in native iOS/Android UI elements and, subsequently, in React Native's core components. The `<View>` component is React Native's fundamental building block for UI structure, much like `<div>` in HTML or `UIView`/`ViewGroup` in native development. Similarly, `<Text>` is essential for all text rendering, and `<Image>` for displaying images. React Native abstracts these platform-specific elements into a unified JavaScript API. You'll learn more about these mappings and the "why" behind them in Section 3.
+bq. *Background Bridge Note:* As shown in the table, common HTML tags for structure, text, and images have direct conceptual parallels in native iOS/Android UI elements and, subsequently, in React Native's core components. The `<View>` component is React Native's fundamental building block for UI structure, much like `<div>` in HTML or `UIView`/`ViewGroup` in native development. Similarly, `<Text>` is essential for all text rendering, and `<Image>` for displaying images. React Native abstracts these platform-specific elements into a unified JavaScript API. You'll learn more about these mappings and the "why" behind them in Section 3.
 
 h4. Under the Hood: HTML Parsing and the DOM
 
 When a browser receives an HTML document, it parses the markup to understand and render it:
-# _Tokenization:_ The browser reads the raw HTML bytes, converts them to characters, and then breaks them down into recognized units called tokens (e.g., start tags like `<p>`, end tags like `</p>`, attribute names, attribute values, text content).
-# _Tree Construction (DOM):_ These tokens are processed to build a tree-like data structure in memory called the _Document Object Model (DOM)_. Each HTML element becomes an object (a node) in this tree, preserving the parent-child and sibling relationships defined in the markup. Text within elements also becomes text nodes. The DOM is the browser's live representation of the page structure, which CSS uses for styling and JavaScript interacts with for dynamic behavior.
+# *Tokenization:* The browser reads the raw HTML bytes, converts them to characters, and then breaks them down into recognized units called tokens (e.g., start tags like `<p>`, end tags like `</p>`, attribute names, attribute values, text content).
+# *Tree Construction (DOM):* These tokens are processed to build a tree-like data structure in memory called the *Document Object Model (DOM)*. Each HTML element becomes an object (a node) in this tree, preserving the parent-child and sibling relationships defined in the markup. Text within elements also becomes text nodes. The DOM is the browser's live representation of the page structure, which CSS uses for styling and JavaScript interacts with for dynamic behavior.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://developer.mozilla.org/en-US/docs/Web/HTML|MDN Web Docs: HTML (HyperText Markup Language)]
 - [https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements|MDN Web Docs: HTML Element Reference]
 - [https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML|MDN Web Docs: Introduction to HTML]

@@ -59,13 +59,13 @@ h3. The Importance of `key` Prop
 When you render a list of elements, React needs a way to uniquely identify each list item to efficiently update the UI when the list changes (e.g., items are added, removed, or reordered). This is where the `key` prop comes in.
 
 *Keys must be:*
-* _Strings:_ Keys should be strings that uniquely identify a list item among its siblings.
-* _Stable:_ The key for a specific item should not change between renders. If a key changes, React will destroy the old component instance and create a new one, meaning any internal state of that component will be lost.
-* _Unique (among siblings):_ Keys only need to be unique among the direct children in the list, not globally unique in your entire application.
+* *Strings:* Keys should be strings that uniquely identify a list item among its siblings.
+* *Stable:* The key for a specific item should not change between renders. If a key changes, React will destroy the old component instance and create a new one, meaning any internal state of that component will be lost.
+* *Unique (among siblings):* Keys only need to be unique among the direct children in the list, not globally unique in your entire application.
 
 *Why are keys necessary?*
-* _Efficient Updates:_ Keys are React's primary mechanism for identifying list items. When a list is updated (items added, removed, or reordered), React uses these keys to determine the minimal changes needed for the UI. If keys are stable and unique, React can efficiently reuse existing component instances by just updating their props if the data changed, or correctly reorder/add/remove component instances.
-* _Preserving State:_ If list items have their own internal state (e.g., an input field in a to-do item, a toggle switch), stable keys ensure that React correctly associates the state with the specific item. Without proper keys, or if keys change unnecessarily, this state can be lost or incorrectly assigned to another item during re-renders, especially if the list order changes.
+* *Efficient Updates:* Keys are React's primary mechanism for identifying list items. When a list is updated (items added, removed, or reordered), React uses these keys to determine the minimal changes needed for the UI. If keys are stable and unique, React can efficiently reuse existing component instances by just updating their props if the data changed, or correctly reorder/add/remove component instances.
+* *Preserving State:* If list items have their own internal state (e.g., an input field in a to-do item, a toggle switch), stable keys ensure that React correctly associates the state with the specific item. Without proper keys, or if keys change unnecessarily, this state can be lost or incorrectly assigned to another item during re-renders, especially if the list order changes.
 
 If you don't provide keys, React will default to using array indices as keys, which can lead to performance issues and bugs with component state if the list items can be reordered, added to, or removed from anywhere but the end. React will also log a warning in the console in such cases.
 
@@ -84,7 +84,7 @@ const MedicationListWithKeys = () => {
       <Text style={styles.listTitle}>Current Prescriptions (with Keys):</Text>
       {medications.map((medication) => (
         <View key={medication.id} style={styles.medicationItem}>
-          {/_ `medication.id` is used as the key _/}
+          {/* `medication.id` is used as the key */}
           <Text style={styles.medicationName}>{medication.name}</Text>
           <Text>Dosage: {medication.dosage}</Text>
         </View>
@@ -113,7 +113,7 @@ If your data does not have stable IDs, you might be tempted to use the array ind
 // ));
 {code}
 
-Using the index as a key is generally _not recommended_ if:
+Using the index as a key is generally *not recommended* if:
 * The order of items in the list can change.
 * Items can be added or removed from the middle of the list.
 
@@ -161,7 +161,7 @@ const MedicationListItem: React.FC<MedicationListItemProps> = ({
   //   <React.Fragment key={medication.id}> // Key on the Fragment
   //     <Text style={styles.medicationName}>{medication.name}</Text>
   //     <Text>Dosage: {medication.dosage}</Text>
-  //     {/_ Other elements ... _/}
+  //     {/* Other elements ... */}
   //   </React.Fragment>
   // );
   // However, for list items that have their own distinct visual container or Pressable behavior,
@@ -216,24 +216,24 @@ In this improved example:
 * `MedicationListItem` is a separate component responsible for rendering a single medication.
 * The `key` prop is now passed to the `<MedicationListItem />` component within the `.map()`.
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ Rendering lists using `.map()` and the rules for `key` props are identical in React Native and React for web.
-> _Key Takeaway:_ Your existing knowledge of list rendering and keys in React applies directly.
-> _Source:_ [https://react.dev/learn/rendering-lists|React Docs: Rendering Lists]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* Rendering lists using `.map()` and the rules for `key` props are identical in React Native and React for web.
+> *Key Takeaway:* Your existing knowledge of list rendering and keys in React applies directly.
+> *Source:* [https://react.dev/learn/rendering-lists|React Docs: Rendering Lists]
 
-bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
-> _Comparison:_ Angular uses `_ngFor` directive to iterate over lists (e.g., `<li _ngFor="let item of items; trackBy: trackByFn">`). React uses the standard JavaScript `.map()` method within JSX. The `key` prop in React serves a similar purpose to Angular's `trackBy` function for optimizing list updates.
-> _Key Takeaway:_ Use `.map()` for list rendering and always provide a stable, unique `key` prop for each list item to ensure efficient rendering and state preservation.
-> _Source:_ [https://angular.io/guide/built-in-directives#ngfor-with-trackby|Angular Docs: NgFor with trackBy]
+bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
+> *Comparison:* Angular uses `*ngFor` directive to iterate over lists (e.g., `<li *ngFor="let item of items; trackBy: trackByFn">`). React uses the standard JavaScript `.map()` method within JSX. The `key` prop in React serves a similar purpose to Angular's `trackBy` function for optimizing list updates.
+> *Key Takeaway:* Use `.map()` for list rendering and always provide a stable, unique `key` prop for each list item to ensure efficient rendering and state preservation.
+> *Source:* [https://angular.io/guide/built-in-directives#ngfor-with-trackby|Angular Docs: NgFor with trackBy]
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ This is analogous to populating a `RecyclerView` in Android (using an Adapter) or a `UITableView`/`UICollectionView` in iOS (using a DataSource). React's `.map()` and `key` system is its declarative way of achieving this. React Native's `<FlatList>` and `<SectionList>` components (covered later) are more optimized for long lists and are closer to `RecyclerView` or `UITableView` in terms of performance features like virtualization.
-> _Key Takeaway:_ For simple lists, `.map()` with keys is sufficient. React uses these keys to efficiently update the underlying native views when the list data changes.
-> _Source:_ [https://developer.android.com/develop/ui/views/layout/lists|Android Dev Docs: Create dynamic lists with RecyclerView], [https://developer.apple.com/documentation/uikit/uitableview|Apple Dev Docs: UITableView]
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* This is analogous to populating a `RecyclerView` in Android (using an Adapter) or a `UITableView`/`UICollectionView` in iOS (using a DataSource). React's `.map()` and `key` system is its declarative way of achieving this. React Native's `<FlatList>` and `<SectionList>` components (covered later) are more optimized for long lists and are closer to `RecyclerView` or `UITableView` in terms of performance features like virtualization.
+> *Key Takeaway:* For simple lists, `.map()` with keys is sufficient. React uses these keys to efficiently update the underlying native views when the list data changes.
+> *Source:* [https://developer.android.com/develop/ui/views/layout/lists|Android Dev Docs: Create dynamic lists with RecyclerView], [https://developer.apple.com/documentation/uikit/uitableview|Apple Dev Docs: UITableView]
 
 Properly rendering lists with unique and stable keys is essential for performance and correctness in React applications. For very long lists or performance-critical scenarios, React Native provides more advanced list components like `<FlatList>` and `<SectionList>`, which we will cover in a later module.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/learn/rendering-lists|React Docs: Rendering Lists]
 - [https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key|React Docs: Lists and Keys]
 
@@ -251,7 +251,7 @@ Time to practice rendering lists of data with keys.
 # Create a functional component called `AppointmentList`.
 # Inside `AppointmentList`, use the `.map()` method to iterate over your array of appointments.
 # For each appointment, render a component (you can create a simple inline structure or a separate `AppointmentItem` component) that displays the appointment details (patient name, time, reason).
-# _Crucially, ensure each rendered appointment item has a unique `key` prop using the appointment's `id`._
+# *Crucially, ensure each rendered appointment item has a unique `key` prop using the appointment's `id`.*
 # Add some basic styling to make the list readable.
 
 *Tool:* CodeSandbox

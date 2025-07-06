@@ -5,30 +5,30 @@ In React, a "controlled component" is an input form element whose value is contr
 *What Makes a Component "Controlled"?*
 
 An input component (like {{TextInput}}) becomes a controlled component when you manage its value using React state and update that state via a callback function. Specifically:
-# _State as the Source of Truth:_ The component's {{value}} prop is set from a state variable (e.g., managed by {{useState}}).
-# _State Updates on Change:_ A function (typically passed to {{onChangeText}} for {{TextInput}}) updates this state variable whenever the user types or interacts with the input.
+# *State as the Source of Truth:* The component's {{value}} prop is set from a state variable (e.g., managed by {{useState}}).
+# *State Updates on Change:* A function (typically passed to {{onChangeText}} for {{TextInput}}) updates this state variable whenever the user types or interacts with the input.
 
 This creates a closed loop: user input triggers a state update, and the updated state then dictates what is displayed in the input field. React state becomes the single source of truth for the input's value.
 
 *Benefits of Controlled Components:*
-* _Single Source of Truth:_ The React state is the definitive source for the input's value. This centralizes data management and makes it easier to reason about the data flow and debug issues.
-* _Predictable Behavior:_ Because the state controls the value, the input's behavior is highly predictable. The value can be programmatically changed by modifying the state.
-* _Instant Validation & Formatting:_ You can validate or format input on every keystroke because the value is available in the state immediately after each change (e.g., converting text to uppercase, restricting input length, formatting currency).
-* _Conditional Logic:_ Easily implement logic based on the input's value (e.g., enabling/disabling a submit button, showing/hiding other UI elements).
-* _Integration with React State Management:_ This pattern integrates seamlessly with React's built-in state management hooks ({{useState}}, {{useReducer}}) and can also be used with more comprehensive state management libraries.
+* *Single Source of Truth:* The React state is the definitive source for the input's value. This centralizes data management and makes it easier to reason about the data flow and debug issues.
+* *Predictable Behavior:* Because the state controls the value, the input's behavior is highly predictable. The value can be programmatically changed by modifying the state.
+* *Instant Validation & Formatting:* You can validate or format input on every keystroke because the value is available in the state immediately after each change (e.g., converting text to uppercase, restricting input length, formatting currency).
+* *Conditional Logic:* Easily implement logic based on the input's value (e.g., enabling/disabling a submit button, showing/hiding other UI elements).
+* *Integration with React State Management:* This pattern integrates seamlessly with React's built-in state management hooks ({{useState}}, {{useReducer}}) and can also be used with more comprehensive state management libraries.
 
 *Implementation Steps:*
 
 Let's consider a {{TextInput}} for a patient's age in our SpeedyMeds app.
-# _Initialize State:_ Use {{useState}} to create a state variable for the input's value.
+# *Initialize State:* Use {{useState}} to create a state variable for the input's value.
     {code:language=js}
 const [patientAge, setPatientAge] = useState<string>("");
     ```
-# _Set `value` Prop:_ Bind the `TextInput`'s `value` prop to this state variable.
+# *Set `value` Prop:* Bind the `TextInput`'s `value` prop to this state variable.
     ```tsx
-    <TextInput value={patientAge} /_ ...other props _/ />
+    <TextInput value={patientAge} /* ...other props */ />
     ```
-# _Handle Changes with `onChangeText`:_ Provide a callback to `onChangeText` that updates the state.
+# *Handle Changes with `onChangeText`:* Provide a callback to `onChangeText` that updates the state.
     ```tsx
     <TextInput
       value={patientAge}
@@ -138,9 +138,9 @@ export default ControlledInputDemoScreen;
 # The `TextInput`'s `value` prop is bound to `patientContact`.
 # The `onChangeText` prop calls `handleContactChange`.
 # `handleContactChange` processes the input text:
-** It uses a regular expression (`/[^0-9]/g`) to remove any non-numeric characters.
-** It checks if the length of the numeric text is 10 or less before updating the state.
-** This demonstrates how controlled components allow for real-time input validation and transformation.
+*** It uses a regular expression (`/[^0-9]/g`) to remove any non-numeric characters.
+*** It checks if the length of the numeric text is 10 or less before updating the state.
+*** This demonstrates how controlled components allow for real-time input validation and transformation.
 # The `keyboardType="phone-pad"` prop suggests a numeric keyboard to the user.
 # `maxLength={10}` provides an additional constraint directly on the `TextInput`.
 # The current value of `patientContact` is displayed below the input field, showing the effect of the controlled pattern and the validation logic.
@@ -161,7 +161,7 @@ This approach can be useful for grouping related data but requires careful handl
 
 When you use a controlled `TextInput` in React Native, React effectively enforces that the native input element's displayed value matches the `value` prop passed from JavaScript. If the `value` prop is set, but no `onChangeText` handler (or an incorrect one) is provided to update the corresponding state variable, the input field will appear to be read-only from the user's perspective. They can type, but the input will revert to the value dictated by the state on each render.
 
-*Performance Considerations:**
+*Performance Considerations:*
 
 A key characteristic of controlled components is that every keystroke triggers a state update, which in turn causes a re-render of the component (and potentially its children).
 * For simple inputs and forms, this re-render overhead is usually negligible and perfectly acceptable.
@@ -174,25 +174,25 @@ The benefits of controlled components—such as having a single source of truth 
 *Comparison with Uncontrolled Components*
 
 In contrast to controlled components, uncontrolled components allow the form data to be handled by the native component itself, rather than by React state. The values are typically read from the input field using a `ref` when needed, such as during form submission.
-* _Pros of Uncontrolled Components:_
-* Can be simpler for very basic forms where real-time state tracking isn't necessary.
-* Potentially better performance by avoiding re-renders on every keystroke, as React isn't managing the input's value in its state.
-* _Cons of Uncontrolled Components:_
-* Harder to implement real-time validation or dynamic formatting, as the value isn't readily available in React state.
-* Managing data flow can become more complex if you need to react to input changes programmatically.
+* *Pros of Uncontrolled Components:*
+** Can be simpler for very basic forms where real-time state tracking isn't necessary.
+** Potentially better performance by avoiding re-renders on every keystroke, as React isn't managing the input's value in its state.
+* *Cons of Uncontrolled Components:*
+** Harder to implement real-time validation or dynamic formatting, as the value isn't readily available in React state.
+** Managing data flow can become more complex if you need to react to input changes programmatically.
 
 While React Hook Form (which we will cover later) cleverly uses refs for performance similar to uncontrolled components, it provides an API that often makes working with inputs feel like they are controlled.
 
-bq. 📱 _Background Bridge Notes:_
-> _For Native Developers (Android/iOS):_
-> - _Android `EditText`:_ The controlled component pattern in React Native is akin to continuously calling `EditText.setText()` in response to a `TextWatcher.afterTextChanged()` event. Typically, in native Android development, an `EditText` manages its own text content internally unless explicitly manipulated.
-- _iOS `UITextField`:_ This is similar to programmatically setting the `textField.text` property within the `textField(_:shouldChangeCharactersIn:replacementString:)` delegate method or in response to a `UIControl.Event.editingChanged` event. Native iOS also allows `UITextField` to manage its own text by default.
+bq. 📱 *Background Bridge Notes:*
+> *For Native Developers (Android/iOS):*
+> - *Android `EditText`:* The controlled component pattern in React Native is akin to continuously calling `EditText.setText()` in response to a `TextWatcher.afterTextChanged()` event. Typically, in native Android development, an `EditText` manages its own text content internally unless explicitly manipulated.
+- *iOS `UITextField`:* This is similar to programmatically setting the `textField.text` property within the `textField(_:shouldChangeCharactersIn:replacementString:)` delegate method or in response to a `UIControl.Event.editingChanged` event. Native iOS also allows `UITextField` to manage its own text by default.
 The core difference lies in React's declarative paradigm: the UI is a direct function of its state. Changes to the state automatically propagate to the UI, including the value of input fields.
-> _For Web Developers (React):_
+> *For Web Developers (React):*
 The controlled component pattern is identical to its counterpart in React for web development. The concepts of binding `value` to state and updating state via `onChange` (or `onChangeText` in RN) are the same.
-> _For Web Developers (Angular):_
-> - _Template-Driven Forms:_ Angular's `[(ngModel)]="property"` syntax provides two-way data binding, which is conceptually similar to controlled components. Changes in the input update the component property, and changes to the property update the input's display.
-- _Reactive Forms:_ Binding an input using `[formControl]="controlName"` links it to a `FormControl` instance in the component class. The `FormControl`'s value acts as the source of truth, and its state is managed programmatically, which aligns closely with the principles of React's controlled components.
+> *For Web Developers (Angular):*
+> - *Template-Driven Forms:* Angular's `[(ngModel)]="property"` syntax provides two-way data binding, which is conceptually similar to controlled components. Changes in the input update the component property, and changes to the property update the input's display.
+- *Reactive Forms:* Binding an input using `[formControl]="controlName"` links it to a `FormControl` instance in the component class. The `FormControl`'s value acts as the source of truth, and its state is managed programmatically, which aligns closely with the principles of React's controlled components.
 
 Mastering controlled components is a key step towards building complex forms. In the next sections, we'll see how libraries can help manage the state and validation for larger forms more efficiently.
 
@@ -200,6 +200,6 @@ Mastering controlled components is a key step towards building complex forms. In
 
 *(TODO: Link to Expo Snack for Exercise 12.1 - Building a Controlled Form Input. The Snack should guide the student to build a controlled TextInput for a field like 'Patient Emergency Contact Name' or similar, including state management and displaying the captured value, reinforcing the concepts from this section. Ensure the Snack README has clear objectives and instructions.)*
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components|React Docs: Controlled Components]
 - [https://reactnative.dev/docs/textinput#value|React Native Docs: `TextInput` (value prop)]

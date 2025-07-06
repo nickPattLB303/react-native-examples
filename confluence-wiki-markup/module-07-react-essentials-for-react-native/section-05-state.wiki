@@ -7,9 +7,9 @@ h3. What is State?
 State is data that a component owns and can change during its lifecycle. When a component's state changes, React automatically re-renders the component (and potentially its children) to reflect the new state. This is key to creating interactive UIs.
 
 *Key characteristics of state:*
-* _Internal:_ State is local and encapsulated within the component that defines it. It cannot be directly accessed or modified by parent or sibling components (though parents can pass down functions via props that can indirectly update a child's or parent's state).
-* _Mutable:_ Unlike props, state can be updated by the component itself, usually in response to user interactions or other events.
-* _Triggers Re-renders:_ Changes to state trigger React to re-render the component and its descendants.
+* *Internal:* State is local and encapsulated within the component that defines it. It cannot be directly accessed or modified by parent or sibling components (though parents can pass down functions via props that can indirectly update a child's or parent's state).
+* *Mutable:* Unlike props, state can be updated by the component itself, usually in response to user interactions or other events.
+* *Triggers Re-renders:* Changes to state trigger React to re-render the component and its descendants.
 
 State allows components to "remember" information across renders and respond to user interactions or other events by changing what's displayed.
 
@@ -109,8 +109,8 @@ In this `Counter` component (themed for SpeedyMeds as prescription refills):
 h3. Updating State
 
 When you call the `setStateFunction` (e.g., `setCount`):
-* _Batching & Asynchronous Updates:_ React may batch multiple state updates for performance. State updates are asynchronous. This means that when you call a setter function (e.g., `setCount(1)`), the state variable (`count`) is not updated immediately within the currently executing code block of that render cycle. If you try to log or use the state variable right after calling its setter, you will still see the old value from the current render. React performs a single re-render at the end of the event loop tick, after all event handlers have run and called their respective setter functions.
-* _Functional Updates:_ If your new state depends on the previous state, you _must_ pass a function to the `setStateFunction`. This function receives the previous (or pending) state as its argument and should return the new state. React queues these updater functions and processes them in order during the next render, ensuring updates are based on the most up-to-date previous state.
+* *Batching & Asynchronous Updates:* React may batch multiple state updates for performance. State updates are asynchronous. This means that when you call a setter function (e.g., `setCount(1)`), the state variable (`count`) is not updated immediately within the currently executing code block of that render cycle. If you try to log or use the state variable right after calling its setter, you will still see the old value from the current render. React performs a single re-render at the end of the event loop tick, after all event handlers have run and called their respective setter functions.
+* *Functional Updates:* If your new state depends on the previous state, you *must* pass a function to the `setStateFunction`. This function receives the previous (or pending) state as its argument and should return the new state. React queues these updater functions and processes them in order during the next render, ensuring updates are based on the most up-to-date previous state.
 
   {code:language=js}
 const incrementSafely = () => {
@@ -122,8 +122,8 @@ const incrementSafely = () => {
 h3. Rules of Hooks
 
 There are two important rules for using Hooks (including `useState`):
-# _Only Call Hooks at the Top Level:_ Don't call Hooks inside loops, conditions, or nested functions. Always use Hooks at the top level of your React function, before any early returns.
-# _Only Call Hooks from React Functions:_ Call Hooks from React functional components or from custom Hooks. Don't call Hooks from regular JavaScript functions.
+# *Only Call Hooks at the Top Level:* Don't call Hooks inside loops, conditions, or nested functions. Always use Hooks at the top level of your React function, before any early returns.
+# *Only Call Hooks from React Functions:* Call Hooks from React functional components or from custom Hooks. Don't call Hooks from regular JavaScript functions.
 
 ESLint plugins (like `eslint-plugin-react-hooks`) can help enforce these rules.
 
@@ -148,32 +148,32 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 // setPatient({ id: '123', name: 'Jane Doe', age: 34 });
 ```
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ `useState` and the rules of Hooks are identical in React Native and React for web. Your knowledge of managing local component state with `useState` is directly transferable.
-> _Key Takeaway:_ No new concepts here if you're proficient with `useState` in React.
-> _Source:_ [https://react.dev/reference/react/useState|React Docs: Using the State Hook]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* `useState` and the rules of Hooks are identical in React Native and React for web. Your knowledge of managing local component state with `useState` is directly transferable.
+> *Key Takeaway:* No new concepts here if you're proficient with `useState` in React.
+> *Source:* [https://react.dev/reference/react/useState|React Docs: Using the State Hook]
 
-bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
-> _Comparison:_ State in React components is somewhat analogous to component properties in Angular that you might modify (e.g., via `this.propertyName = ...`). However, React enforces state updates exclusively through the setter function provided by `useState`. Direct mutation of state variables (like `count = count + 1;`) is not allowed and will not trigger re-renders. Angular's change detection, often based on Zone.js, is different from React's re-rendering mechanism, which is explicitly triggered by state setters from Hooks like `useState` or prop changes.
-> _Key Takeaway:_ Always use the setter function (e.g., `setCount`) to update state. This is how React knows to re-render the component. Understand the Rules of Hooks, especially calling them at the top level, and the importance of immutability when updating objects or arrays in state.
-> _Source:_ [https://angular.io/guide/change-detection|Angular Docs: Change detection overview]
+bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
+> *Comparison:* State in React components is somewhat analogous to component properties in Angular that you might modify (e.g., via `this.propertyName = ...`). However, React enforces state updates exclusively through the setter function provided by `useState`. Direct mutation of state variables (like `count = count + 1;`) is not allowed and will not trigger re-renders. Angular's change detection, often based on Zone.js, is different from React's re-rendering mechanism, which is explicitly triggered by state setters from Hooks like `useState` or prop changes.
+> *Key Takeaway:* Always use the setter function (e.g., `setCount`) to update state. This is how React knows to re-render the component. Understand the Rules of Hooks, especially calling them at the top level, and the importance of immutability when updating objects or arrays in state.
+> *Source:* [https://angular.io/guide/change-detection|Angular Docs: Change detection overview]
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ React's `useState` is for managing local component state. This is similar to how you might manage instance variables or properties within your native UI classes (`Activity`/`Fragment` in Android, `UIViewController`/`UIView` in iOS) that hold data determining the UI's appearance or behavior. When this data changes in native code, you often manually update the UI elements. With React's `useState`, you change the state variable using its setter, and React automatically handles the UI update (re-rendering).
-> - 🤖 _Android Developers:_ `useState` is for state local to a single React component. This is distinct from `ViewModel` with `LiveData`/`StateFlow`, which are designed to store UI-related data in a lifecycle-conscious way, surviving configuration changes (like screen rotations). For shared state or state that needs to persist like a `ViewModel`, React uses other patterns like lifting state up, Context API, or state management libraries (e.g., Zustand, Redux).
-- 🍏 _iOS Developers (SwiftUI):_ `useState` in React is very similar to the `@State` property wrapper in SwiftUI, which is used for managing simple, local view state. When an `@State` property changes, the SwiftUI view re-renders. For more complex or shared state, SwiftUI uses `ObservableObject` with `@StateObject` or `@ObservedObject`, and `@EnvironmentObject`, which have parallels to React's Context API or external state management libraries.
-> _Key Takeaway:_ `useState` is the primary mechanism for making your components interactive and dynamic. Changes to state variables (via their setters) drive UI updates. It's primarily for component-local state. The principle of immutability is also critical when updating state, especially for objects and arrays.
-> _Source:_ [https://developer.android.com/topic/libraries/architecture/viewmodel|Android Dev Docs: ViewModel Overview], [https://developer.apple.com/documentation/swiftui/managing-user-interface-state#Managing-Local-State-with-State|Apple Dev Docs: SwiftUI State and Data Flow - @State]
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* React's `useState` is for managing local component state. This is similar to how you might manage instance variables or properties within your native UI classes (`Activity`/`Fragment` in Android, `UIViewController`/`UIView` in iOS) that hold data determining the UI's appearance or behavior. When this data changes in native code, you often manually update the UI elements. With React's `useState`, you change the state variable using its setter, and React automatically handles the UI update (re-rendering).
+> - 🤖 *Android Developers:* `useState` is for state local to a single React component. This is distinct from `ViewModel` with `LiveData`/`StateFlow`, which are designed to store UI-related data in a lifecycle-conscious way, surviving configuration changes (like screen rotations). For shared state or state that needs to persist like a `ViewModel`, React uses other patterns like lifting state up, Context API, or state management libraries (e.g., Zustand, Redux).
+- 🍏 *iOS Developers (SwiftUI):* `useState` in React is very similar to the `@State` property wrapper in SwiftUI, which is used for managing simple, local view state. When an `@State` property changes, the SwiftUI view re-renders. For more complex or shared state, SwiftUI uses `ObservableObject` with `@StateObject` or `@ObservedObject`, and `@EnvironmentObject`, which have parallels to React's Context API or external state management libraries.
+> *Key Takeaway:* `useState` is the primary mechanism for making your components interactive and dynamic. Changes to state variables (via their setters) drive UI updates. It's primarily for component-local state. The principle of immutability is also critical when updating state, especially for objects and arrays.
+> *Source:* [https://developer.android.com/topic/libraries/architecture/viewmodel|Android Dev Docs: ViewModel Overview], [https://developer.apple.com/documentation/swiftui/managing-user-interface-state#Managing-Local-State-with-State|Apple Dev Docs: SwiftUI State and Data Flow - @State]
 
 Here's a table comparing `useState` with common local state management in native development:
 
 ||Feature||React (`useState`)||Android (Local variables in Activity/Fragment/View)||iOS (SwiftUI `@State` / UIKit local properties)||
-|_Primary Scope_|Local to a single functional component instance.|Local to an `Activity`, `Fragment`, or custom `View` instance.|Local to a single `View` struct (`@State`) or `UIView`/`UIViewController` instance.|
-|_Update Mechanism_|Setter function from `useState()`. Asynchronous, batched.|Direct assignment. UI update is manual or via data binding.|Direct assignment to `@State` property. Direct assignment for UIKit properties.|
-|_Primary Purpose_|Managing interactive UI state, toggles, form inputs within a specific component.|Holding temporary data for UI logic or view properties.|Managing transient UI state, user input within a specific view/component.|
+|*Primary Scope*|Local to a single functional component instance.|Local to an `Activity`, `Fragment`, or custom `View` instance.|Local to a single `View` struct (`@State`) or `UIView`/`UIViewController` instance.|
+|*Update Mechanism*|Setter function from `useState()`. Asynchronous, batched.|Direct assignment. UI update is manual or via data binding.|Direct assignment to `@State` property. Direct assignment for UIKit properties.|
+|*Primary Purpose*|Managing interactive UI state, toggles, form inputs within a specific component.|Holding temporary data for UI logic or view properties.|Managing transient UI state, user input within a specific view/component.|
 State is a fundamental concept in React that enables components to be dynamic and interactive. The `useState` Hook provides a simple and powerful way to manage state within your functional components. The shift from class component state (`this.state` and `this.setState`) to the `useState` Hook was a significant improvement in React's ergonomics, simplifying state management without the boilerplate of constructors or complexities of the `this` keyword.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/learn/state-a-components-memory|React Docs: State - A Component's Memory (`useState`)]
 - [https://react.dev/reference/react/useState|React Docs: Hooks - Using the State Hook]
 - [https://react.dev/warnings/rules-of-hooks|React Docs: Rules of Hooks]

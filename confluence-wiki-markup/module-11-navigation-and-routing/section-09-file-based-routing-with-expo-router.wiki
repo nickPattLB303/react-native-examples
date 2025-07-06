@@ -2,16 +2,16 @@ h2. Section 9: File-Based Routing with Expo Router in Practice
 
 This section delves into the practical application of Expo Router's file-based routing paradigm. You will learn how to implement common navigation patterns such as Stack, Tab, and Drawer navigators using layout routes ({{_layout.tsx}}) and how to leverage Expo Router's features for typed routes to build more robust applications like SpeedyMeds.
 
-bq. 🛣️ _(All Learners):_ Building on the introduction to Expo Router, this section will solidify your understanding of how file structure translates into navigation structure. Pay attention to the role of {{_layout.tsx}} files in defining navigators.
+bq. 🛣️ *(All Learners):* Building on the introduction to Expo Router, this section will solidify your understanding of how file structure translates into navigation structure. Pay attention to the role of {{_layout.tsx}} files in defining navigators.
 
 h3. Core Content
 
 h4. Conceptual Content: From Files to Navigators
 
 Expo Router uses the file system to define your app's navigation structure. Each file in the {{app/}} directory typically corresponds to a route, and special {{_layout.tsx}} files define the navigator components (like Stack, Tabs, or Drawer) that wrap these routes.
-* _Layout Routes ({{_layout.tsx}}):_ These are the cornerstone for defining navigators. A {{_layout.tsx}} file in a directory configures the navigator for all routes within that directory and its subdirectories (unless another nested {{_layout.tsx}} takes precedence).
-* _Navigator Components:_ Expo Router provides its own navigator components (e.g., {{import { Stack } from 'expo-router';}}, {{import { Tabs } from 'expo-router';}}, {{import { Drawer } from 'expo-router';}}). These are used within {{_layout.tsx}} files.
-* _Screen Configuration:_ Options for screens (like header titles, tab icons, drawer labels) are typically configured using the {{<Navigator.Screen name="route-file-name" />}} component directly within the {{_layout.tsx}} file associated with that route's segment.
+* *Layout Routes ({{_layout.tsx}}):* These are the cornerstone for defining navigators. A {{_layout.tsx}} file in a directory configures the navigator for all routes within that directory and its subdirectories (unless another nested {{_layout.tsx}} takes precedence).
+* *Navigator Components:* Expo Router provides its own navigator components (e.g., {{import { Stack } from 'expo-router';}}, {{import { Tabs } from 'expo-router';}}, {{import { Drawer } from 'expo-router';}}). These are used within {{_layout.tsx}} files.
+* *Screen Configuration:* Options for screens (like header titles, tab icons, drawer labels) are typically configured using the {{<Navigator.Screen name="route-file-name" />}} component directly within the {{_layout.tsx}} file associated with that route's segment.
 
 h4. Procedural Content: Implementing Navigators with Layout Routes
 
@@ -20,7 +20,7 @@ Let's explore how to set up Stack, Tabs, and Drawer navigators.
 *1. Stack Navigator with Expo Router*
 
 Stack navigators are used for hierarchical navigation where screens are pushed onto and popped from a stack.
-* _File Structure Example:_
+* *File Structure Example:*
 
   ```
   app/
@@ -31,16 +31,16 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
   │   └── item/[id].tsx    # Dynamic route '/item/:id'
   └── _layout.tsx          # Root layout, could mount the (main) stack
   ```
-* _Example {{app/(main)/_layout.tsx}} (Stack Navigator Definition):_
+* *Example {{app/(main)/_layout.tsx}} (Stack Navigator Definition):*
 
   ```tsx
   // app/(main)/_layout.tsx
   import { Stack } from "expo-router";
 
-  /*
-* Defines the layout for the main stack navigation group {{(main)}}.
-* This Stack navigator includes screens for home ({{index}}), details, and a dynamic item screen.
-* It also applies default header styling to all screens within this stack.
+  /**
+** Defines the layout for the main stack navigation group {{(main)}}.
+** This Stack navigator includes screens for home ({{index}}), details, and a dynamic item screen.
+** It also applies default header styling to all screens within this stack.
 ** @returns {JSX.Element} The Stack navigator for the (main) group.
    */
   export default function MainStackLayout() {
@@ -61,10 +61,10 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
     );
   }
   ```
-* The {{Stack}} component from {{expo-router}} creates the stack.
-* {{Stack.Screen}} components correspond to the files in the {{app/(main)/}} directory. The {{name}} prop should match the filename (without extension) or the file path for nested/dynamic routes.
+** The {{Stack}} component from {{expo-router}} creates the stack.
+** {{Stack.Screen}} components correspond to the files in the {{app/(main)/}} directory. The {{name}} prop should match the filename (without extension) or the file path for nested/dynamic routes.
 ** {{options}} on {{Stack.Screen}} or {{screenOptions}} on {{Stack}} are used for configuration (e.g., {{title}}, {{headerStyle}}).
-* _Example {{app/_layout.tsx}} (Root Layout Mounting the Stack):_
+* *Example {{app/_layout.tsx}} (Root Layout Mounting the Stack):*
 
   ```tsx
   // app/_layout.tsx
@@ -72,10 +72,10 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
   // Or specifically import the stack if it's the only thing
   // import { Stack } from 'expo-router/stack'; // if using a stack from a group like (app)
 
-  /*
-* Defines the root layout for the application when the primary content
-* is managed by a nested navigator (e.g., in a route group like {{(main)}}).
-* This layout uses {{<Slot />}} to render the matched child route/navigator.
+  /**
+** Defines the root layout for the application when the primary content
+** is managed by a nested navigator (e.g., in a route group like {{(main)}}).
+** This layout uses {{<Slot />}} to render the matched child route/navigator.
 ** @returns {JSX.Element} The Slot component rendering the child navigator.
    */
   export default function RootLayout() {
@@ -89,7 +89,7 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
     // For example, if (main) was named {{(app)}}:
     // return <Stack screenOptions={{ headerShown: false }} />;
     // This assumes your routes are structured like app/(app)/index.tsx etc.
-    // The key is that app/_layout.tsx sets up the _root_ navigator context.
+    // The key is that app/_layout.tsx sets up the *root* navigator context.
   }
   ```
 
@@ -98,7 +98,7 @@ Stack navigators are used for hierarchical navigation where screens are pushed o
 *2. Tab Navigator with Expo Router*
 
 Tab navigators are ideal for primary, distinct sections of an app.
-* _File Structure Example:_
+* *File Structure Example:*
 
   ```
   app/
@@ -109,19 +109,19 @@ Tab navigators are ideal for primary, distinct sections of an app.
   │   └── settings.tsx     # Route '/settings'
   └── _layout.tsx          # Root layout, could mount the (tabs) group
   ```
-* _Example {{app/(tabs)/_layout.tsx}} (Tabs Navigator Definition):_
+* *Example {{app/(tabs)/_layout.tsx}} (Tabs Navigator Definition):*
 
   ```tsx
   // app/(tabs)/_layout.tsx
   import { Tabs } from "expo-router";
   import Ionicons from "@expo/vector-icons/Ionicons"; // Example
 
-  /*
-* Defines the layout for the {{(tabs)}} navigation group.
-* This component sets up a Tabs navigator with screens for home, prescriptions, and settings,
-* each configured with titles and icons.
-* Default styling for active/inactive tabs is also applied.
-* @returns {JSX.Element} The Tabs navigator for the (tabs) group.
+  /**
+** Defines the layout for the {{(tabs)}} navigation group.
+** This component sets up a Tabs navigator with screens for home, prescriptions, and settings,
+** each configured with titles and icons.
+** Default styling for active/inactive tabs is also applied.
+** @returns {JSX.Element} The Tabs navigator for the (tabs) group.
    */
   export default function TabLayout() {
     return (
@@ -162,21 +162,21 @@ Tab navigators are ideal for primary, distinct sections of an app.
     );
   }
   ```
-* The {{Tabs}} component from {{expo-router}} creates the tab bar.
-* {{Tabs.Screen}} configures each tab, linking to files in {{app/(tabs)/}}.
+** The {{Tabs}} component from {{expo-router}} creates the tab bar.
+** {{Tabs.Screen}} configures each tab, linking to files in {{app/(tabs)/}}.
 ** Options like {{title}}, {{tabBarLabel}}, {{tabBarIcon}} are set on {{Tabs.Screen}}.
-* _Root Layout ({{app/_layout.tsx}})_: This would typically mount the {{(tabs)}} layout, often by simply being a {{<Stack />}} or {{<Slot />}} that defaults to the {{(tabs)}} group if it contains the initial route ({{index.tsx}} within {{(tabs)}} or {{(tabs)/home.tsx}} if no index).
+* *Root Layout ({{app/_layout.tsx}})*: This would typically mount the {{(tabs)}} layout, often by simply being a {{<Stack />}} or {{<Slot />}} that defaults to the {{(tabs)}} group if it contains the initial route ({{index.tsx}} within {{(tabs)}} or {{(tabs)/home.tsx}} if no index).
 
   ```tsx
   // app/_layout.tsx
   import { Stack } from "expo-router";
 
-  /*
-* Defines the root layout for an application where the primary navigation
-* is a Tab navigator (defined in a route group like {{(tabs)}}).
-* This root layout uses a Stack navigator to contain the Tabs, often to manage
-* global modals or other screens outside the tab structure, while hiding the Stack's own header.
-* @returns {JSX.Element} The root Stack navigator configured to display the Tabs navigator.
+  /**
+** Defines the root layout for an application where the primary navigation
+** is a Tab navigator (defined in a route group like {{(tabs)}}).
+** This root layout uses a Stack navigator to contain the Tabs, often to manage
+** global modals or other screens outside the tab structure, while hiding the Stack's own header.
+** @returns {JSX.Element} The root Stack navigator configured to display the Tabs navigator.
    */
   export default function RootLayout() {
     // This setup makes the (tabs) navigator available at the root.
@@ -189,7 +189,7 @@ Tab navigators are ideal for primary, distinct sections of an app.
 *3. Drawer Navigator with Expo Router*
 
 Drawer navigators provide a slide-out menu.
-* _File Structure Example:_
+* *File Structure Example:*
 
   ```
   app/
@@ -203,19 +203,19 @@ Drawer navigators provide a slide-out menu.
   │       └── ...
   └── _layout.tsx          # Root layout
   ```
-* _Example {{app/(drawer)/_layout.tsx}} (Drawer Navigator Definition):_
+* *Example {{app/(drawer)/_layout.tsx}} (Drawer Navigator Definition):*
 
   ```tsx
   // app/(drawer)/_layout.tsx
   import { Drawer } from "expo-router/drawer"; // Or import { Drawer } from "expo-router"
   import Ionicons from "@expo/vector-icons/Ionicons";
 
-  /*
-* Defines the layout for the {{(drawer)}} navigation group.
-* This component sets up a Drawer navigator with screens for a feed, notifications,
-* and a main content area (which itself could be another navigator group like {{(mainContent)}}).
-* It configures drawer labels, titles, and icons for each drawer item.
-* @returns {JSX.Element} The Drawer navigator for the (drawer) group.
+  /**
+** Defines the layout for the {{(drawer)}} navigation group.
+** This component sets up a Drawer navigator with screens for a feed, notifications,
+** and a main content area (which itself could be another navigator group like {{(mainContent)}}).
+** It configures drawer labels, titles, and icons for each drawer item.
+** @returns {JSX.Element} The Drawer navigator for the (drawer) group.
    */
   export default function DrawerLayout() {
     return (
@@ -246,9 +246,9 @@ Drawer navigators provide a slide-out menu.
             ),
           }}
         />
-        {/_ This screen represents the main content area, likely a Stack or Tabs _/}
-        {/_ It won't appear in the drawer list itself if its name starts with an underscore _/}
-        {/_ or is a group like (mainContent) _/}
+        {/* This screen represents the main content area, likely a Stack or Tabs */}
+        {/* It won't appear in the drawer list itself if its name starts with an underscore */}
+        {/* or is a group like (mainContent) */}
         <Drawer.Screen
           name="(mainContent)" // This refers to the app/(drawer)/(mainContent)/_layout.tsx navigator
           options={{
@@ -261,26 +261,26 @@ Drawer navigators provide a slide-out menu.
     );
   }
   ```
-* The {{Drawer}} component (e.g., from {{expo-router/drawer}}) creates the drawer.
-* {{Drawer.Screen}} configures items. Use options like {{drawerLabel}}, {{title}}, and {{drawerIcon}}.
+** The {{Drawer}} component (e.g., from {{expo-router/drawer}}) creates the drawer.
+** {{Drawer.Screen}} configures items. Use options like {{drawerLabel}}, {{title}}, and {{drawerIcon}}.
 ** To integrate main app content (like a Stack or Tabs) within a drawer, you often define that content in a route group (e.g., {{(mainContent)}}) and reference it as a {{Drawer.Screen}}. The header for the main content (with the hamburger icon) is typically part of the {{Drawer.Screen}} options for this main content route, or configured within the {{(mainContent)/_layout.tsx}} itself.
 
 h4. Conceptual Content: Typed Routes in Expo Router
 
 Expo Router supports generating types for your routes, providing autocompletion and compile-time checks for route paths and parameters. This greatly enhances developer experience and reduces runtime errors.
-* _Benefits:_
-* Catch typos in route names during development.
-* Get autocompletion for {{href}} props in {{<Link>}} components and for {{router.push()}}, etc.
+* *Benefits:*
+** Catch typos in route names during development.
+** Get autocompletion for {{href}} props in {{<Link>}} components and for {{router.push()}}, etc.
 ** Ensure required parameters are passed and that their types are correct (when combined with {{useLocalSearchParams}} generics).
-* _Type Generation:_
-* Expo Router can automatically generate a {{typed-router.d.ts}} file. This process is often triggered during the {{npx expo prebuild --clean}} command or can be part of the development server's startup or build phase. Consult the latest Expo Router documentation for specific commands if needed for manual generation.
-* Once generated, your editor should pick up these types, enabling features like typed links.
-* _Accessing Route Information (Typed):_
-* {{useLocalSearchParams<T>()}}: As seen in Section 6, you can provide a generic type {{T}} to {{useLocalSearchParams}} that matches your expected parameters for the current route, giving you typed access to them.
-* {{useGlobalSearchParams<T>()}}: Similar to {{useLocalSearchParams}} but for accessing parameters that could be present on any route in the app (global query params).
-* {{usePathname()}}: A hook that returns the current route's pathname string (e.g., {{/users/profile}}).
-* {{useSegments<T extends string[]>()}}: Returns an array of the current route's segments (e.g., {{['users', 'profile']}}).
-* _Example of Typed Navigation (Conceptual):_
+* *Type Generation:*
+** Expo Router can automatically generate a {{typed-router.d.ts}} file. This process is often triggered during the {{npx expo prebuild --clean}} command or can be part of the development server's startup or build phase. Consult the latest Expo Router documentation for specific commands if needed for manual generation.
+** Once generated, your editor should pick up these types, enabling features like typed links.
+* *Accessing Route Information (Typed):*
+** {{useLocalSearchParams<T>()}}: As seen in Section 6, you can provide a generic type {{T}} to {{useLocalSearchParams}} that matches your expected parameters for the current route, giving you typed access to them.
+** {{useGlobalSearchParams<T>()}}: Similar to {{useLocalSearchParams}} but for accessing parameters that could be present on any route in the app (global query params).
+** {{usePathname()}}: A hook that returns the current route's pathname string (e.g., {{/users/profile}}).
+** {{useSegments<T extends string[]>()}}: Returns an array of the current route's segments (e.g., {{['users', 'profile']}}).
+* *Example of Typed Navigation (Conceptual):*
   While direct {{Link hrefTyped}} might not be the exact syntax (it depends on editor integration and generated types), the principle is that the {{href}} prop will be type-checked:
 
   ```tsx
@@ -299,7 +299,7 @@ Expo Router supports generating types for your routes, providing autocompletion 
 
   The primary benefit comes from autocompletion and error checking when constructing {{href}} objects or using {{router.push()}} with pathnames and params.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://docs.expo.dev/router/layouts/|Expo Router: Layouts and Navigators]
 - [https://docs.expo.dev/router/navigators/stack/|Expo Router: Stack Navigator]
 - [https://docs.expo.dev/router/navigators/tabs/|Expo Router: Tabs Navigator]
@@ -307,13 +307,13 @@ bq. 📚 _Official Documentation:_
 - [https://docs.expo.dev/router/reference/typed-routes/|Expo Router: Typed Routes]
 - [https://docs.expo.dev/router/navigating/|Expo Router: Linking and Navigation]
 
-bq. 🌐 _(Web Developers using File-System Routers):_
-> _Comparison:_ The way {{_layout.tsx}} files define shared UI for a directory (segment) is very similar to layout components in Next.js (e.g., {{layout.tsx}} or {{template.tsx}}) or Remix ({{app/routes/_index.tsx}} structure). The navigator components ({{Stack}}, {{Tabs}}) are specific to Expo Router but serve the same purpose of structuring the UI for that segment.
-> _Key Takeaway:_ The pattern of collocated layouts defining the "chrome" for a set of routes is consistent.
+bq. 🌐 *(Web Developers using File-System Routers):*
+> *Comparison:* The way {{_layout.tsx}} files define shared UI for a directory (segment) is very similar to layout components in Next.js (e.g., {{layout.tsx}} or {{template.tsx}}) or Remix ({{app/routes/_index.tsx}} structure). The navigator components ({{Stack}}, {{Tabs}}) are specific to Expo Router but serve the same purpose of structuring the UI for that segment.
+> *Key Takeaway:* The pattern of collocated layouts defining the "chrome" for a set of routes is consistent.
 
-bq. ⚛️ _(React Developers using React Navigation):_
-> _Comparison:_ Instead of imperatively defining {{createStackNavigator().Navigator}} and then nesting {{Screen}} components with their {{component}} props, you define the navigator type in {{_layout.tsx}} (e.g., {{<Stack />}}) and Expo Router automatically maps files in that directory to screens within that stack. Screen-specific options are still applied, but typically within the {{_layout.tsx}} file on the {{<Navigator.Screen name="filename" />}} elements.
-> _Key Takeaway:_ Configuration shifts from being purely in JavaScript objects/components to being driven by file structure, with {{_layout.tsx}} files acting as the configuration hub for each segment.
+bq. ⚛️ *(React Developers using React Navigation):*
+> *Comparison:* Instead of imperatively defining {{createStackNavigator().Navigator}} and then nesting {{Screen}} components with their {{component}} props, you define the navigator type in {{_layout.tsx}} (e.g., {{<Stack />}}) and Expo Router automatically maps files in that directory to screens within that stack. Screen-specific options are still applied, but typically within the {{_layout.tsx}} file on the {{<Navigator.Screen name="filename" />}} elements.
+> *Key Takeaway:* Configuration shifts from being purely in JavaScript objects/components to being driven by file structure, with {{_layout.tsx}} files acting as the configuration hub for each segment.
 
 h4. Exercise 11.4: Implementing Routes with Expo Router
 
@@ -321,7 +321,7 @@ Now it's time to practice! In this exercise, you'll convert a navigator-based st
 
 *(https://snack.expo.dev/SpeedyMedsExpoRouterEx11-4)*
 
-bq. _Instructions for Expo Snack {{README.md}} (Exercise 11.4):_
+bq. *Instructions for Expo Snack {{README.md}} (Exercise 11.4):*
 
 h4. Next Steps
 

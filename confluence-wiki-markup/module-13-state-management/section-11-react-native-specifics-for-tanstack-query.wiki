@@ -2,15 +2,15 @@ h2. Section 11: React Native Specifics for TanStack Query
 
 While TanStack Query is designed to work seamlessly across different JavaScript environments, including React Native, there are a couple of platform-specific considerations that can enhance its behavior and reliability on mobile devices. These primarily revolve around how TanStack Query detects application focus and network online status, which are crucial for its automatic refetching strategies like {{refetchOnWindowFocus}} and {{refetchOnReconnect}}.
 
-bq. 🧑‍🏫 _(Instructor-Led):_ During this section's live demonstration, we'll set up a complete React Native project with TanStack Query integration including proper focus and network status management. Come prepared with questions about real-world issues you might encounter when implementing these patterns in production apps, particularly around offline support and synchronization.
+bq. 🧑‍🏫 *(Instructor-Led):* During this section's live demonstration, we'll set up a complete React Native project with TanStack Query integration including proper focus and network status management. Come prepared with questions about real-world issues you might encounter when implementing these patterns in production apps, particularly around offline support and synchronization.
 
-bq. 🧗‍♀️ _(Self-Led):_ This section contains important implementation details that significantly improve your app's behavior on mobile devices. Make sure to set up both the focus management and online status management in your project even if you're just experimenting. These patterns will become essential as your app grows more complex.
+bq. 🧗‍♀️ *(Self-Led):* This section contains important implementation details that significantly improve your app's behavior on mobile devices. Make sure to set up both the focus management and online status management in your project even if you're just experimenting. These patterns will become essential as your app grows more complex.
 
 h3. Focus Management ({{refetchOnWindowFocus}})
 
 By default, {{refetchOnWindowFocus}} is enabled in TanStack Query. This means that when the application regains focus after being in the background, TanStack Query will automatically attempt to refetch stale queries.
-* _Web Browsers:_ In a web browser, this is typically handled by listening to the browser's {{window}} focus and blur events.
-* _React Native:_ While TanStack Query (since v4+) includes built-in support for React Native's {{AppState}} module to detect app focus, the official documentation recommends a more explicit setup to inform {{focusManager}}. This ensures TanStack Query accurately knows when the app is active, especially on native platforms where window focus events don't exist as they do on the web.
+* *Web Browsers:* In a web browser, this is typically handled by listening to the browser's {{window}} focus and blur events.
+* *React Native:* While TanStack Query (since v4+) includes built-in support for React Native's {{AppState}} module to detect app focus, the official documentation recommends a more explicit setup to inform {{focusManager}}. This ensures TanStack Query accurately knows when the app is active, especially on native platforms where window focus events don't exist as they do on the web.
 
 You should set this up once in your app, for example, in your root {{App.tsx}} component:
 
@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/_ Your App's main navigator or components _/}
+      {/* Your App's main navigator or components */}
     </QueryClientProvider>
   );
 };
@@ -98,8 +98,8 @@ For React Native, the key takeaway is that `refetchOnWindowFocus` usually works 
 h3. Online Status Management (`refetchOnReconnect`)
 
 Similarly, `refetchOnReconnect` is enabled by default, meaning TanStack Query will try to refetch stale queries when the network connection is restored after being offline.
-* _Web Browsers:_ This relies on the browser's `online` and `offline` events on the `window` object.
-* _React Native:_ For native platforms, browser events are not available. TanStack Query needs a way to be notified of network status changes. While it might have some basic internal detection, for the most reliable behavior in React Native, you should integrate it with a library like `@react-native-community/netinfo`.
+* *Web Browsers:* This relies on the browser's `online` and `offline` events on the `window` object.
+* *React Native:* For native platforms, browser events are not available. TanStack Query needs a way to be notified of network status changes. While it might have some basic internal detection, for the most reliable behavior in React Native, you should integrate it with a library like `@react-native-community/netinfo`.
 
 *`onlineManager` and `NetInfo` Integration:*
 TanStack Query exports an `onlineManager` object that allows you to set up a listener for network status changes.
@@ -143,8 +143,8 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/_ <MainNavigator /> _/}
-      {/_ Replace with your app's root component or navigator _/}
+      {/* <MainNavigator /> */}
+      {/* Replace with your app's root component or navigator */}
     </QueryClientProvider>
   );
 };
@@ -152,30 +152,30 @@ const App: React.FC = () => {
 export default App;
 {code:language=text}
 *Explanation:*
-# _Install `@react-native-community/netinfo`:_
+# *Install `@react-native-community/netinfo`:*
     ```bash
     npm install @react-native-community/netinfo
     # or
     yarn add @react-native-community/netinfo
     # Don't forget to run pod install for iOS: npx pod-install
     ```
-# _Import `onlineManager` and `NetInfo`._
-# _`useEffect` Hook:_ In your main `App` component (or a suitable place that runs once on app startup), set up an effect hook.
-# _`NetInfo.addEventListener`:_ Subscribe to network state updates from `NetInfo`.
-# _`onlineManager.setOnline()`:_ Inside the event listener, call `onlineManager.setOnline()` with the current network status. It's important to check both `state.isConnected` (basic connectivity) and `state.isInternetReachable` (actual internet access) for a more robust online check.
-# _Cleanup:_ Return the `unsubscribe` function from `useEffect` to remove the listener when the app unmounts (though for the root `App` component, this might only happen when the app closes entirely).
+# *Import `onlineManager` and `NetInfo`.*
+# *`useEffect` Hook:* In your main `App` component (or a suitable place that runs once on app startup), set up an effect hook.
+# *`NetInfo.addEventListener`:* Subscribe to network state updates from `NetInfo`.
+# *`onlineManager.setOnline()`:* Inside the event listener, call `onlineManager.setOnline()` with the current network status. It's important to check both `state.isConnected` (basic connectivity) and `state.isInternetReachable` (actual internet access) for a more robust online check.
+# *Cleanup:* Return the `unsubscribe` function from `useEffect` to remove the listener when the app unmounts (though for the root `App` component, this might only happen when the app closes entirely).
 
 By setting this up, you ensure that TanStack Query's `refetchOnReconnect` feature works reliably in your React Native app, helping to keep data consistent when users experience intermittent network connectivity while using SpeedyMeds.
 
 This integration ensures `refetchOnReconnect` works reliably in your SpeedyMeds app.
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ React Native's `AppState` is similar to observing `UIApplication.didBecomeActiveNotification` or `UIApplication.willResignActiveNotification`. `NetInfo` provides network reachability similar to using `NWPathMonitor`. The key here is that TanStack Query provides `focusManager` and `onlineManager` as specific integration points to feed these platform events into its own state machine, automating refetches. You'd otherwise manually trigger data reloads in response to these system notifications.
-> _Key Takeaway:_ TanStack Query requires this explicit bridging from native app/network events to its internal managers for optimal behavior on mobile, unlike web where it can often infer from browser events.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* React Native's `AppState` is similar to observing `UIApplication.didBecomeActiveNotification` or `UIApplication.willResignActiveNotification`. `NetInfo` provides network reachability similar to using `NWPathMonitor`. The key here is that TanStack Query provides `focusManager` and `onlineManager` as specific integration points to feed these platform events into its own state machine, automating refetches. You'd otherwise manually trigger data reloads in response to these system notifications.
+> *Key Takeaway:* TanStack Query requires this explicit bridging from native app/network events to its internal managers for optimal behavior on mobile, unlike web where it can often infer from browser events.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ `AppState` changes are like `Activity` lifecycle events (`onResume`, `onPause`). `NetInfo` is similar to using `ConnectivityManager` to monitor network status. TanStack Query's `focusManager` and `onlineManager` act as centralized listeners that you update based on these Android-specific events, allowing the library to react appropriately (e.g., `refetchOnFocus`, `refetchOnReconnect`). Without this, you'd be building custom logic in your `Activity` or `ViewModel` to re-trigger fetches.
-> _Key Takeaway:_ Providing TanStack Query with explicit signals about app focus and network status via its managers is crucial for its automatic refetching strategies to work correctly and reliably on Android.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* `AppState` changes are like `Activity` lifecycle events (`onResume`, `onPause`). `NetInfo` is similar to using `ConnectivityManager` to monitor network status. TanStack Query's `focusManager` and `onlineManager` act as centralized listeners that you update based on these Android-specific events, allowing the library to react appropriately (e.g., `refetchOnFocus`, `refetchOnReconnect`). Without this, you'd be building custom logic in your `Activity` or `ViewModel` to re-trigger fetches.
+> *Key Takeaway:* Providing TanStack Query with explicit signals about app focus and network status via its managers is crucial for its automatic refetching strategies to work correctly and reliably on Android.
 
 h3. Refreshing Queries on Screen Focus (with React Navigation)
 
@@ -246,7 +246,7 @@ const fetchPatientAppointments = async (
 * @param {{ route: any }} props - Component props, expects route params with patientId.
  */
 const PatientAppointmentsScreen: React.FC<{
-  route: any /_ or specific route type _/;
+  route: any /* or specific route type */;
 }> = ({ route }) => {
   const patientId = route.params?.patientId || "defaultPatient"; // Get patientId from navigation params
 
@@ -375,8 +375,8 @@ export default RealTimeMedicationStatusWidget;
 *Explanation:*
 # `useIsFocused()` from `@react-navigation/native` returns `true` if the screen containing this component is currently focused, and `false` otherwise.
 # The `enabled: isScreenFocused` option in `useQuery` controls whether the query is active.
-** When `isScreenFocused` is `true`, the query behaves normally (fetches, re-fetches, polls if `refetchInterval` is set).
-** When `isScreenFocused` is `false`, the query becomes disabled. It won't fetch new data, and its existing data will eventually be marked as stale and potentially garbage collected based on `gcTime`.
+*** When `isScreenFocused` is `true`, the query behaves normally (fetches, re-fetches, polls if `refetchInterval` is set).
+*** When `isScreenFocused` is `false`, the query becomes disabled. It won't fetch new data, and its existing data will eventually be marked as stale and potentially garbage collected based on `gcTime`.
 # The TanStack Query documentation mentions using the `subscribed: isScreenFocused` option for this pattern. `subscribed: false` means the specific `useQuery` instance will not receive updates or trigger re-renders. If other instances of `useQuery` for the same `queryKey` exist and are subscribed, they would still manage the query. For effectively pausing a query associated with a screen, `enabled: isScreenFocused` is a more common and direct approach to stop fetching and background activity for that query instance.
 
 These React Navigation-specific patterns significantly enhance how TanStack Query can be tailored to the lifecycle of different screens within your app, optimizing data fetching and resource usage.
@@ -384,7 +384,7 @@ These React Navigation-specific patterns significantly enhance how TanStack Quer
 h3. Persisting Query Cache (Experimental/Advanced)
 
 TanStack Query (v5+) includes an experimental `persistQueryClient` utility designed to persist and rehydrate the query cache. While its primary adapters (like `createSyncStoragePersister` and `createAsyncStoragePersister`) are demonstrated with web storage (`localStorage`, `sessionStorage`), the `createAsyncStoragePersister` can be theoretically adapted for React Native using `AsyncStorage`.
-* _How it Works:_ The `persistQueryClient` function from `@tanstack/react-query-persist-client` (needs to be installed separately) would be used with a persister that you configure (e.g., `createAsyncStoragePersister` with `AsyncStorage`). This setup would save the state of your queries (data, metadata, timings) and attempt to restore it when the app initializes.
+* *How it Works:* The `persistQueryClient` function from `@tanstack/react-query-persist-client` (needs to be installed separately) would be used with a persister that you configure (e.g., `createAsyncStoragePersister` with `AsyncStorage`). This setup would save the state of your queries (data, metadata, timings) and attempt to restore it when the app initializes.
 
   ```tsx
   // Conceptual setup - requires @tanstack/react-query-persist-client
@@ -395,7 +395,7 @@ TanStack Query (v5+) includes an experimental `persistQueryClient` utility desig
   // const queryClient = new QueryClient({
   //   defaultOptions: {
   //     queries: {
-  //       gcTime: 1000 _ 60 _ 60 * 24, // 24 hours
+  //       gcTime: 1000 * 60 * 60 * 24, // 24 hours
   //     },
   //   },
   // });
@@ -408,18 +408,18 @@ TanStack Query (v5+) includes an experimental `persistQueryClient` utility desig
   // persistQueryClient({
   //   queryClient,
   //   persister: asyncStoragePersister,
-  //   maxAge: 1000 _ 60 _ 60 * 24, // Optional: max age of persisted data
+  //   maxAge: 1000 * 60 * 60 * 24, // Optional: max age of persisted data
   //   // buster: 'build-version-or-timestamp', // Optional: for cache busting
   // });
   ```
-* _Why Persist the Entire Cache?_ Potentially faster initial loads after an app restart by rehydrating the entire query cache, including data that might still be considered fresh according to its `staleTime`. This can make the app feel instantly populated with data on subsequent launches.
-* _Complexity & Considerations for React Native:_
-* _Experimental Nature:_ This feature is still often marked as experimental or evolving.
-* _Separate Packages:_ You'll need to install `@tanstack/react-query-persist-client` and an appropriate async storage persister package (like `@tanstack/query-async-storage-persister`).
-* _Serialization:_ Persisting complex data structures, including non-serializable values (like functions or Dates if not handled correctly), can be tricky. The persister usually handles JSON serialization.
-* _Storage Limits:_ `AsyncStorage` has its own limitations on storage size.
-* *Cache Versioning/Busting:** If your data structures change between app versions, you'll need a strategy (like the `buster` option) to invalidate old persisted caches.
-* _Alternative:_ Often, relying on TanStack Query's built-in in-memory caching combined with efficient re-fetching strategies (and specific data persistence for critical _client state_ like user settings using Zustand's persist middleware) is sufficient and less complex for many React Native apps.
+* *Why Persist the Entire Cache?* Potentially faster initial loads after an app restart by rehydrating the entire query cache, including data that might still be considered fresh according to its `staleTime`. This can make the app feel instantly populated with data on subsequent launches.
+* *Complexity & Considerations for React Native:*
+** *Experimental Nature:* This feature is still often marked as experimental or evolving.
+** *Separate Packages:* You'll need to install `@tanstack/react-query-persist-client` and an appropriate async storage persister package (like `@tanstack/query-async-storage-persister`).
+** *Serialization:* Persisting complex data structures, including non-serializable values (like functions or Dates if not handled correctly), can be tricky. The persister usually handles JSON serialization.
+** *Storage Limits:* `AsyncStorage` has its own limitations on storage size.
+** *Cache Versioning/Busting:* If your data structures change between app versions, you'll need a strategy (like the `buster` option) to invalidate old persisted caches.
+* *Alternative:* Often, relying on TanStack Query's built-in in-memory caching combined with efficient re-fetching strategies (and specific data persistence for critical _client state_ like user settings using Zustand's persist middleware) is sufficient and less complex for many React Native apps.
 
 For most common scenarios in SpeedyMeds, focusing on robust `staleTime`/`gcTime` configurations and ensuring `refetchOnWindowFocus` and `refetchOnReconnect` work well (with `NetInfo`) will provide a great user experience. Consider persisting the entire query cache only if you have a strong need for immediate data availability on app launch for many queries and are prepared to manage the additional setup and potential complexities.
 
@@ -427,16 +427,16 @@ For most common scenarios in SpeedyMeds, focusing on robust `staleTime`/`gcTime`
 If you need offline _mutation_ capabilities (queuing updates made while offline to sync when back online), TanStack Query itself doesn't provide this out of the box. You would typically integrate it with other libraries or custom logic designed for offline-first applications.
 {info}
 h3. Other Considerations
-* _Devtools in React Native:_ TanStack Query Devtools are web-based. To use them with React Native, you can explore:
-* _Expo Dev Plugins:_ For Expo projects, `<https://github.com/expo/dev-plugins/tree/main/packages/react-query>`
-* _Flipper Plugin:_ A popular choice for native development, `<https://github.com/bgaleotti/react-query-native-devtools>` (ensure compatibility with TanStack Query v5).
-* *Reactotron Plugin:** `<https://github.com/hsndmr/reactotron-react-query>` (check for v5 compatibility).
+* *Devtools in React Native:* TanStack Query Devtools are web-based. To use them with React Native, you can explore:
+** *Expo Dev Plugins:* For Expo projects, `<https://github.com/expo/dev-plugins/tree/main/packages/react-query>`
+** *Flipper Plugin:* A popular choice for native development, `<https://github.com/bgaleotti/react-query-native-devtools>` (ensure compatibility with TanStack Query v5).
+** *Reactotron Plugin:* `<https://github.com/hsndmr/reactotron-react-query>` (check for v5 compatibility).
     These tools allow you to open the Devtools in a browser or a desktop app connected to your running React Native app, which is invaluable for debugging.
-* _Error Handling:_ Ensure robust error handling for your queries and mutations. Display user-friendly messages and consider retry mechanisms (TanStack Query has built-in retry capabilities for queries, configurable via the `retry` option).
+* *Error Handling:* Ensure robust error handling for your queries and mutations. Display user-friendly messages and consider retry mechanisms (TanStack Query has built-in retry capabilities for queries, configurable via the `retry` option).
 
 By paying attention to these React Native specifics, you can fine-tune TanStack Query to behave optimally in the mobile environment, making your SpeedyMeds application more resilient and user-friendly.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://tanstack.com/query/v5/docs/react/reference/onlineManager|TanStack Query - `onlineManager`]
 - [https://tanstack.com/query/v5/docs/react/reference/focusManager|TanStack Query - `focusManager`]
 - [https://tanstack.com/query/v5/docs/react/guides/important-defaults#platform-status|TanStack Query - Platform Status (Mentions React Native AppState/NetInfo)]

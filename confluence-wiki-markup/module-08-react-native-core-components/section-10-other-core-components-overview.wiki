@@ -5,35 +5,35 @@ Beyond the foundational components we've covered in detail, React Native offers 
 h3. Conceptual Content: Overview of Other Core Components
 
 Here are a few more Core Components you might encounter or need:
-* _{{<ActivityIndicator>}}:_
-* _Purpose:_ Displays a circular loading indicator (a spinner).
-* _Use Case:_ Useful for showing that some background activity is in progress, like fetching data from a server for SpeedyMeds (e.g., loading prescription history).
-* _Key Props:_ {{size}} ({{'small'}} or {{'large'}}), {{color}}, {{animating}} (boolean to show/hide).
-* _Docs:_ [https://reactnative.dev/docs/activityindicator|ActivityIndicator]
-* _{{<Modal>}}:_
-* _Purpose:_ Presents content above an enclosing view. It's a way to display temporary UI that requires user interaction or attention, like dialogs, pop-ups, or full-screen overlays.
-* _Use Case:_ In SpeedyMeds, a modal could be used to display a confirmation dialog before refilling a prescription, show an enlarged image of a medication, or present a date picker.
-* _Key Props:_ {{visible}} (boolean to show/hide), {{animationType}} ({{'slide'}}, {{'fade'}}, {{'none'}}), {{transparent}} (boolean), {{onRequestClose}} (Android back button handler).
-* _Docs:_ [https://reactnative.dev/docs/modal|Modal]
-* _{{<Switch>}}:_
-* _Purpose:_ Renders a boolean input (an on/off switch).
-* _Use Case:_ For settings in SpeedyMeds, like enabling/disabling notifications for prescription refills.
-* _Key Props:_ {{value}} (boolean), {{onValueChange}} (function called when the switch is toggled), {{trackColor}} (color of the switch track), {{thumbColor}} (color of the switch thumb).
-* _Docs:_ [https://reactnative.dev/docs/switch|Switch]
-* _{{<StatusBar>}}:_
-* _Purpose:_ Allows you to control the app's status bar (the bar at the top of the screen that displays time, battery, network signal, etc.).
-* _Use Case:_ To set the status bar's style (light or dark content), background color, or visibility, to match the SpeedyMeds app theme on different screens.
-* _Key Props:_ {{barStyle}} ({{'default'}}, {{'light-content'}}, {{'dark-content'}}), {{backgroundColor}} (Android only), {{hidden}} (boolean), {{translucent}} (Android only).
-* _Docs:_ [https://reactnative.dev/docs/statusbar|StatusBar]
-* _{{<RefreshControl>}}:_
-* _Purpose:_ This component is used inside a {{<ScrollView>}} or {{<FlatList>}} to add pull-to-refresh functionality.
-* _Use Case:_ Allowing users of SpeedyMeds to pull down on a list of prescriptions or messages to check for new updates.
-* _Key Props:_ {{refreshing}} (boolean, set to true when data is loading), {{onRefresh}} (function called when a refresh is initiated), {{tintColor}} (iOS), {{colors}} (Android).
-* _Docs:_ [https://reactnative.dev/docs/refreshcontrol|RefreshControl]
+* *{{<ActivityIndicator>}}:*
+** *Purpose:* Displays a circular loading indicator (a spinner).
+** *Use Case:* Useful for showing that some background activity is in progress, like fetching data from a server for SpeedyMeds (e.g., loading prescription history).
+** *Key Props:* {{size}} ({{'small'}} or {{'large'}}), {{color}}, {{animating}} (boolean to show/hide).
+** *Docs:* [https://reactnative.dev/docs/activityindicator|ActivityIndicator]
+* *{{<Modal>}}:*
+** *Purpose:* Presents content above an enclosing view. It's a way to display temporary UI that requires user interaction or attention, like dialogs, pop-ups, or full-screen overlays.
+** *Use Case:* In SpeedyMeds, a modal could be used to display a confirmation dialog before refilling a prescription, show an enlarged image of a medication, or present a date picker.
+** *Key Props:* {{visible}} (boolean to show/hide), {{animationType}} ({{'slide'}}, {{'fade'}}, {{'none'}}), {{transparent}} (boolean), {{onRequestClose}} (Android back button handler).
+** *Docs:* [https://reactnative.dev/docs/modal|Modal]
+* *{{<Switch>}}:*
+** *Purpose:* Renders a boolean input (an on/off switch).
+** *Use Case:* For settings in SpeedyMeds, like enabling/disabling notifications for prescription refills.
+** *Key Props:* {{value}} (boolean), {{onValueChange}} (function called when the switch is toggled), {{trackColor}} (color of the switch track), {{thumbColor}} (color of the switch thumb).
+** *Docs:* [https://reactnative.dev/docs/switch|Switch]
+* *{{<StatusBar>}}:*
+** *Purpose:* Allows you to control the app's status bar (the bar at the top of the screen that displays time, battery, network signal, etc.).
+** *Use Case:* To set the status bar's style (light or dark content), background color, or visibility, to match the SpeedyMeds app theme on different screens.
+** *Key Props:* {{barStyle}} ({{'default'}}, {{'light-content'}}, {{'dark-content'}}), {{backgroundColor}} (Android only), {{hidden}} (boolean), {{translucent}} (Android only).
+** *Docs:* [https://reactnative.dev/docs/statusbar|StatusBar]
+* *{{<RefreshControl>}}:*
+** *Purpose:* This component is used inside a {{<ScrollView>}} or {{<FlatList>}} to add pull-to-refresh functionality.
+** *Use Case:* Allowing users of SpeedyMeds to pull down on a list of prescriptions or messages to check for new updates.
+** *Key Props:* {{refreshing}} (boolean, set to true when data is loading), {{onRefresh}} (function called when a refresh is initiated), {{tintColor}} (iOS), {{colors}} (Android).
+** *Docs:* [https://reactnative.dev/docs/refreshcontrol|RefreshControl]
 
 These components, along with the ones covered in previous sections, form a powerful toolkit for building rich and interactive user interfaces in React Native. Always refer to the official documentation for the most up-to-date information on props and usage.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/components-and-apis|React Native Docs: Components and APIs] (A good starting point to explore all available components)
 
 ----
@@ -47,30 +47,30 @@ Now it's time to combine your knowledge of various Core Components to build a UI
 This card should display information about a prescription and allow the user to initiate a refill request.
 
 *Requirements:*
-# _Structure ({{<View>}}):_
-** The card should have a main container {{<View>}}.
-** Inside, structure the content into logical sections using nested {{<View>}}s (e.g., a header section for medication name, a body for details, and a footer for the action button).
-# _Text Display ({{<Text>}}):_
-*_ Display the _Medication Name* (e.g., 'Atorvastatin 20mg').
-*_ Display the _Quantity* (e.g., '90 Tablets').
-*_ Display the _Last Refilled Date* (e.g., 'Last Refilled: 2023-10-15').
-*_ Display the _Refills Remaining* (e.g., '2 Refills Left').
-# _Image ({{<Image>}}):_
-** Include a small placeholder icon for the medication (you can use a local image if you set up asset bundling, or a simple network image URL like 'https://picsum.photos/50').
-# _User Input (Optional Bonus):_
-** (Bonus) Add a {{<TextInput>}} where the user could hypothetically enter the number of refills they want to request (e.g., default to '1'). Style it to look like a small input field.
-# _Action ({{<Pressable>}}):_
-** Include a 'Request Refill' button using {{<Pressable>}}.
-** The button should have custom styling (background color, text color, padding, rounded corners).
-** When pressed, it should show an {{Alert}} confirming the refill request (e.g., {{Refill requested for Atorvastatin 20mg}}).
-** The button should change its appearance when pressed (e.g., slightly darker background or opacity change).
-# _Styling ({{StyleSheet}}):_
-** Define all styles using {{StyleSheet.create()}}.
-** The card should have a distinct background color, padding, rounded corners, and a subtle shadow.
-** Style the text elements for readability (e.g., medication name larger and bolder, details smaller).
-** Ensure the layout is clean and user-friendly.
-# _Data:_
-** Create a sample data object or pass props to your {{PrescriptionRefillCard}} component to populate the information.
+# *Structure ({{<View>}}):*
+*** The card should have a main container {{<View>}}.
+*** Inside, structure the content into logical sections using nested {{<View>}}s (e.g., a header section for medication name, a body for details, and a footer for the action button).
+# *Text Display ({{<Text>}}):*
+*** Display the *Medication Name* (e.g., 'Atorvastatin 20mg').
+*** Display the *Quantity* (e.g., '90 Tablets').
+*** Display the *Last Refilled Date* (e.g., 'Last Refilled: 2023-10-15').
+*** Display the *Refills Remaining* (e.g., '2 Refills Left').
+# *Image ({{<Image>}}):*
+*** Include a small placeholder icon for the medication (you can use a local image if you set up asset bundling, or a simple network image URL like 'https://picsum.photos/50').
+# *User Input (Optional Bonus):*
+*** (Bonus) Add a {{<TextInput>}} where the user could hypothetically enter the number of refills they want to request (e.g., default to '1'). Style it to look like a small input field.
+# *Action ({{<Pressable>}}):*
+*** Include a 'Request Refill' button using {{<Pressable>}}.
+*** The button should have custom styling (background color, text color, padding, rounded corners).
+*** When pressed, it should show an {{Alert}} confirming the refill request (e.g., {{Refill requested for Atorvastatin 20mg}}).
+*** The button should change its appearance when pressed (e.g., slightly darker background or opacity change).
+# *Styling ({{StyleSheet}}):*
+*** Define all styles using {{StyleSheet.create()}}.
+*** The card should have a distinct background color, padding, rounded corners, and a subtle shadow.
+*** Style the text elements for readability (e.g., medication name larger and bolder, details smaller).
+*** Ensure the layout is clean and user-friendly.
+# *Data:*
+*** Create a sample data object or pass props to your {{PrescriptionRefillCard}} component to populate the information.
 
 *Example Structure (Conceptual):*
 
@@ -87,7 +87,7 @@ This card should display information about a prescription and allow the user to 
 +------------------------------------------+
 {code}
 
-*Implementation:**
+*Implementation:*
 * You can build this as a new component in a Snack project or your local Expo environment.
 * Focus on combining the Core Components covered in this module.
 
@@ -100,17 +100,17 @@ h2. Module 8 Summary: React Native Core Components
 Congratulations on completing Module 8! You've gained a foundational understanding of React Native's Core Components, which are the essential building blocks for creating user interfaces in your mobile applications.
 
 *Key Takeaways:*
-* _Role of Core Components:_ They are pre-built, platform-agnostic elements that translate to native UI widgets, enabling cross-platform development with a native look and feel.
-* _`<View>`:_ The fundamental container for layout and grouping other components. Uses Flexbox for layout.
-* _`<Text>`:_ Used for displaying all text content. Supports nesting for rich text styling.
-* _`<Image>`:_ Displays local and network images. Requires explicit width and height dimensions.
-* _`<TextInput>`:_ Enables user text input. Typically used as a controlled component with state management.
-* _`<ScrollView>`:_ Provides a scrollable container for content that might exceed screen size. Renders all children at once.
-* _`StyleSheet` API:_ The preferred way to define and organize styles using JavaScript objects with camelCased properties. Offers performance and organizational benefits.
-* _`<Button>`:_ A simple, platform-styled button with limited customization.
-* _`<Pressable>`:_ A highly customizable component for handling taps and providing detailed interaction feedback. Often preferred for custom button designs.
-* _`<FlatList>` & `<SectionList>`:_ Performant components for displaying long lists of data (flat or sectioned) using virtualization.
-* _Other Components:_ You were introduced to `<ActivityIndicator>`, `<Modal>`, `<Switch>`, `<StatusBar>`, and `<RefreshControl>`, expanding your toolkit for various UI needs.
+* *Role of Core Components:* They are pre-built, platform-agnostic elements that translate to native UI widgets, enabling cross-platform development with a native look and feel.
+* *`<View>`:* The fundamental container for layout and grouping other components. Uses Flexbox for layout.
+* *`<Text>`:* Used for displaying all text content. Supports nesting for rich text styling.
+* *`<Image>`:* Displays local and network images. Requires explicit width and height dimensions.
+* *`<TextInput>`:* Enables user text input. Typically used as a controlled component with state management.
+* *`<ScrollView>`:* Provides a scrollable container for content that might exceed screen size. Renders all children at once.
+* *`StyleSheet` API:* The preferred way to define and organize styles using JavaScript objects with camelCased properties. Offers performance and organizational benefits.
+* *`<Button>`:* A simple, platform-styled button with limited customization.
+* *`<Pressable>`:* A highly customizable component for handling taps and providing detailed interaction feedback. Often preferred for custom button designs.
+* *`<FlatList>` & `<SectionList>`:* Performant components for displaying long lists of data (flat or sectioned) using virtualization.
+* *Other Components:* You were introduced to `<ActivityIndicator>`, `<Modal>`, `<Switch>`, `<StatusBar>`, and `<RefreshControl>`, expanding your toolkit for various UI needs.
 
 *Skills Gained:*
 
@@ -130,4 +130,4 @@ By now, you should be able to:
 With a solid understanding of Core Components, you are well-equipped to build a wide variety of user interfaces. The next modules will build upon this foundation, diving deeper into navigation, layout with Flexbox, and state management, enabling you to create more complex and dynamic applications like SpeedyMeds.
 
 Keep practicing with these components, experiment with their props, and refer to the official React Native documentation as you continue your development journey.
-* _Module 9: React Native Core APIs and Hooks_
+* *Module 9: React Native Core APIs and Hooks*

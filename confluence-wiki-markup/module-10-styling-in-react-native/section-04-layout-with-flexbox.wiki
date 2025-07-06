@@ -7,13 +7,13 @@ h3. What is Flexbox?
 Flexbox is a one-dimensional layout model designed to provide a more efficient way to arrange, align, and distribute space among items in a container, even when their size is unknown or dynamic. In React Native, Flexbox works similarly to how it does on the web (CSS Flexbox), but with some differences in default values and property names.
 
 *Core Concepts:*
-* _Flex Container:_ Any {{<View>}} component can become a flex container by setting its {{display}} style property to {{'flex'}}. In React Native, {{display: 'flex'}} is the default for all {{<View>}} components, so you don't usually need to set it explicitly.
-* _Flex Items:_ Direct children of a flex container are called flex items.
-* _Main Axis:_ The primary axis along which flex items are laid out. This is determined by the {{flexDirection}} property. If {{flexDirection}} is {{'row'}}, the main axis is horizontal. If it's {{'column'}}, the main axis is vertical.
-* _Cross Axis:_ The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis is vertical, and vice versa.
+* *Flex Container:* Any {{<View>}} component can become a flex container by setting its {{display}} style property to {{'flex'}}. In React Native, {{display: 'flex'}} is the default for all {{<View>}} components, so you don't usually need to set it explicitly.
+* *Flex Items:* Direct children of a flex container are called flex items.
+* *Main Axis:* The primary axis along which flex items are laid out. This is determined by the {{flexDirection}} property. If {{flexDirection}} is {{'row'}}, the main axis is horizontal. If it's {{'column'}}, the main axis is vertical.
+* *Cross Axis:* The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis is vertical, and vice versa.
 
-bq. 🌐 _(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Flexbox_
-> _Comparison:_ While the core concepts of Flexbox (containers, items, main/cross axes) are identical to CSS Flexbox, React Native's implementation has some crucial differences, primarily in default values. Understanding these is key to translating your web layout skills effectively.
+bq. 🌐 *(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Flexbox*
+> *Comparison:* While the core concepts of Flexbox (containers, items, main/cross axes) are identical to CSS Flexbox, React Native's implementation has some crucial differences, primarily in default values. Understanding these is key to translating your web layout skills effectively.
 > | Property        | React Native Default/Behavior                               | Web CSS Default/Behavior                               | Key Difference Explanation                                                                                                                                                         |
 | --------------- | ----------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {{flexDirection}} | {{'column'}}                                                  | {{'row'}}                                                | React Native defaults to a vertical layout for items, aligning with common mobile portrait orientations. You must explicitly set {{flexDirection: 'row'}} for horizontal layouts.    |
@@ -22,7 +22,7 @@ bq. 🌐 _(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Fl
 | {{flex}}          | Single non-negative number (primarily sets {{flexGrow}})      | Shorthand for {{flex-grow}}, {{flex-shrink}}, {{flex-basis}} | React Native's {{flex}} prop is simplified. {{flex: N}} sets {{flexGrow: N}}, {{flexShrink: 1}}, {{flexBasis: '0%'}}. Use {{flexGrow}}, {{flexShrink}}, {{flexBasis}} explicitly for more control. |
 | {{display}}       | Not applicable ({{<View>}} is implicitly {{display: flex}})     | Requires {{display: flex}} or {{inline-flex}}              | Flexbox is automatically enabled on {{<View>}} components; no need to declare {{display: 'flex'}}.                                                                                     |
 | Property Names  | camelCased (e.g., {{alignItems}})                             | kebab-cased (e.g., {{align-items}})                      | Standard JavaScript convention for property naming.                                                                                                                                |
-> _Key Takeaway:_ Your CSS Flexbox knowledge is highly transferable. However, you MUST be mindful of React Native's default {{flexDirection: 'column'}}, the nuanced {{flexShrink}} defaults, the behavior of the {{flex}} shorthand, and camelCased property names to avoid common layout frustrations.
+> *Key Takeaway:* Your CSS Flexbox knowledge is highly transferable. However, you MUST be mindful of React Native's default {{flexDirection: 'column'}}, the nuanced {{flexShrink}} defaults, the behavior of the {{flex}} shorthand, and camelCased property names to avoid common layout frustrations.
 
 h3. Flex Container Properties
 
@@ -306,11 +306,11 @@ graph TD
 {mermaid}
 
 *Explanation of the Diagram:*
-* _`flexDirection: 'row'`_: Shows items A, B, and C laid out horizontally from left to right.
-* _`flexDirection: 'column'`_: Shows items D, E, and F laid out vertically from top to bottom. This is the default in React Native.
-* _`justifyContent: 'space-between'`_: Illustrates how items (Start, End) are pushed to the edges of the main axis, with the space (...) distributed between them.
-* _`alignItems: 'center'`_: Shows two items (Item A, Item B) of different heights, both centered along the cross axis (vertically in this column-direction container example).
-* _`flexGrowExample`_: Demonstrates how `flex: 1` (Y) and `flex: 2` (Z) items share the remaining space after accounting for a fixed-width item (X). Item Z will take twice as much of the available flexible space as item Y.
+* *`flexDirection: 'row'`*: Shows items A, B, and C laid out horizontally from left to right.
+* *`flexDirection: 'column'`*: Shows items D, E, and F laid out vertically from top to bottom. This is the default in React Native.
+* *`justifyContent: 'space-between'`*: Illustrates how items (Start, End) are pushed to the edges of the main axis, with the space (...) distributed between them.
+* *`alignItems: 'center'`*: Shows two items (Item A, Item B) of different heights, both centered along the cross axis (vertically in this column-direction container example).
+* *`flexGrowExample`*: Demonstrates how `flex: 1` (Y) and `flex: 2` (Z) items share the remaining space after accounting for a fixed-width item (X). Item Z will take twice as much of the available flexible space as item Y.
 
 h3. Building a Complex Layout: SpeedyMeds Prescription Card
 
@@ -416,7 +416,7 @@ const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
         <Text style={styles.dosage}>{strength}</Text>
       </View>
       <View style={styles.middleRow}>
-        {/_ Placeholder for an icon. You'd use <Image source={...} /> _/}
+        {/* Placeholder for an icon. You'd use <Image source={...} /> */}
         <View style={[styles.icon, { backgroundColor: "#ddd" }]} />
         <Text style={styles.instructions}>{instructionsText}</Text>
       </View>
@@ -436,18 +436,18 @@ export default PrescriptionCard;
 {code}
 
 *Explanation of the `PrescriptionCard` Layout:*
-* _`cardContainer`_: The main container with padding, margin, and shadow.
-* _`topRow`_: Uses `flexDirection: 'row'` and `justifyContent: 'space-between'` to place the medication name on the left and dosage on the right. `alignItems: 'center'` ensures they are vertically centered relative to each other. `medicationName` has `flex: 1` to allow it to grow and wrap if the name is long.
-* _`middleRow`_: Also `flexDirection: 'row'` and `alignItems: 'center'` to align an icon (placeholder `View` for now) and the instructions text vertically.
-* _`bottomRow`_: Uses `alignItems: 'flex-end'` to push the `refillButton` to the right side of the card.
+* *`cardContainer`*: The main container with padding, margin, and shadow.
+* *`topRow`*: Uses `flexDirection: 'row'` and `justifyContent: 'space-between'` to place the medication name on the left and dosage on the right. `alignItems: 'center'` ensures they are vertically centered relative to each other. `medicationName` has `flex: 1` to allow it to grow and wrap if the name is long.
+* *`middleRow`*: Also `flexDirection: 'row'` and `alignItems: 'center'` to align an icon (placeholder `View` for now) and the instructions text vertically.
+* *`bottomRow`*: Uses `alignItems: 'flex-end'` to push the `refillButton` to the right side of the card.
 
 This example demonstrates how combining various Flexbox properties allows you to create structured and visually appealing component layouts.
 
 h3. Troubleshooting Flexbox
-* _Check `flexDirection`_: This is the most common source of confusion, especially for web developers used to `row` as the default.
-* _Parent vs. Child Properties_: Ensure you are applying container properties (`flexDirection`, `justifyContent`, `alignItems`) to the parent `View` and item properties (`flex`, `alignSelf`) to the children.
-* _Use Background Colors for Debugging_: Temporarily add background colors to your `View` components to visually understand their boundaries and how Flexbox is affecting them.
-* _Inspect Element_: Use the element inspector in React Native Debugger or Flipper to examine computed styles and layout properties.
+* *Check `flexDirection`*: This is the most common source of confusion, especially for web developers used to `row` as the default.
+* *Parent vs. Child Properties*: Ensure you are applying container properties (`flexDirection`, `justifyContent`, `alignItems`) to the parent `View` and item properties (`flex`, `alignSelf`) to the children.
+* *Use Background Colors for Debugging*: Temporarily add background colors to your `View` components to visually understand their boundaries and how Flexbox is affecting them.
+* *Inspect Element*: Use the element inspector in React Native Debugger or Flipper to examine computed styles and layout properties.
 
 {note}
 Mastering Flexbox is crucial for React Native development. Experiment with these properties in an Expo Snack to solidify your understanding. Small changes can have significant visual impact, so practice is key.
@@ -466,7 +466,7 @@ _Instructions and requirements for the exercise are provided within the Expo Sna
 
 h3. Under the Hood: The Yoga Layout Engine
 
-It's beneficial to understand that React Native doesn't implement the Flexbox algorithm directly in JavaScript or within its native view systems (like UIKit for iOS or Android UI toolkit). Instead, it relies on _Yoga_, an open-source, cross-platform layout engine developed by Meta.
+It's beneficial to understand that React Native doesn't implement the Flexbox algorithm directly in JavaScript or within its native view systems (like UIKit for iOS or Android UI toolkit). Instead, it relies on *Yoga*, an open-source, cross-platform layout engine developed by Meta.
 
 {mermaid}
 graph LR
@@ -505,32 +505,32 @@ graph LR
 {mermaid}
 
 *Diagram Explanation: React Native Layout with Yoga*
-* _JavaScript Realm_: Your React Native components define Flexbox styles using JavaScript (via `StyleSheet` or inline styles).
-* _Yoga Layout Engine (C++)_: This is where the core layout computation happens. React Native passes the layout-related style properties from your JavaScript components to Yoga.
-* _Native Realm_: Yoga returns the calculated positions and sizes for each element to the native platform, which then renders the actual native UI views on the screen.
+* *JavaScript Realm*: Your React Native components define Flexbox styles using JavaScript (via `StyleSheet` or inline styles).
+* *Yoga Layout Engine (C++)*: This is where the core layout computation happens. React Native passes the layout-related style properties from your JavaScript components to Yoga.
+* *Native Realm*: Yoga returns the calculated positions and sizes for each element to the native platform, which then renders the actual native UI views on the screen.
 
 *Yoga's Key Functions:*
-# _Cross-Platform Consistency_: Yoga is written in C++ and has bindings for various platforms. This ensures that the Flexbox styles you write in JavaScript produce consistent visual results on both iOS (which uses AutoLayout or frames natively) and Android (which has its own layout systems). This fulfills a core promise of React Native: write once, render consistently.
-# _Performance_: Being implemented in C++, Yoga is highly optimized for performance and has a small binary size, making it suitable for resource-constrained mobile devices. It performs the complex Flexbox calculations efficiently off the main JavaScript thread (though the coordination happens via the bridge/JSI).
-# _Abstraction_: Yoga acts as an abstraction layer. Instead of React Native needing to implement Flexbox logic natively for each platform, it delegates this task to Yoga. This simplifies React Native's core and makes layout behavior more predictable.
+# *Cross-Platform Consistency*: Yoga is written in C++ and has bindings for various platforms. This ensures that the Flexbox styles you write in JavaScript produce consistent visual results on both iOS (which uses AutoLayout or frames natively) and Android (which has its own layout systems). This fulfills a core promise of React Native: write once, render consistently.
+# *Performance*: Being implemented in C++, Yoga is highly optimized for performance and has a small binary size, making it suitable for resource-constrained mobile devices. It performs the complex Flexbox calculations efficiently off the main JavaScript thread (though the coordination happens via the bridge/JSI).
+# *Abstraction*: Yoga acts as an abstraction layer. Instead of React Native needing to implement Flexbox logic natively for each platform, it delegates this task to Yoga. This simplifies React Native's core and makes layout behavior more predictable.
 
 *The Layout Process (Conceptual):*
 
 The process of layout involving Yoga generally follows these phases:
-# _Render Phase (JS):_ React creates a tree of elements in JavaScript. In the New Architecture (Fabric), this corresponds to a "React Shadow Tree" created in C++ which holds the layout information.
-# _Commit Phase (Layout Calculation with Yoga):_
-** During the commit phase, when the layout needs to be determined, React Native passes the layout-related styles (like `flexDirection`, `alignItems`, `width`, `padding`, etc.) from the Shadow Tree nodes (or legacy UI manager) to Yoga.
-** Yoga constructs its own internal layout tree based on these styles and the parent-child relationships.
-** It then performs the Flexbox calculations. For certain elements like `<Text>`, Yoga might need to call back to the host platform (iOS/Android) to accurately measure the content (e.g., how much space a piece of text will occupy with a given font size).
-# _Mount Phase (Native Rendering):_
-** Yoga returns the computed layout (x, y coordinates, width, height) for each node back to the React Native renderer (Fabric in the New Architecture).
-** The renderer then uses this information to position and size the actual native views (`UIView` on iOS, `android.view.View` on Android) on the screen.
+# *Render Phase (JS):* React creates a tree of elements in JavaScript. In the New Architecture (Fabric), this corresponds to a "React Shadow Tree" created in C++ which holds the layout information.
+# *Commit Phase (Layout Calculation with Yoga):*
+*** During the commit phase, when the layout needs to be determined, React Native passes the layout-related styles (like `flexDirection`, `alignItems`, `width`, `padding`, etc.) from the Shadow Tree nodes (or legacy UI manager) to Yoga.
+*** Yoga constructs its own internal layout tree based on these styles and the parent-child relationships.
+*** It then performs the Flexbox calculations. For certain elements like `<Text>`, Yoga might need to call back to the host platform (iOS/Android) to accurately measure the content (e.g., how much space a piece of text will occupy with a given font size).
+# *Mount Phase (Native Rendering):*
+*** Yoga returns the computed layout (x, y coordinates, width, height) for each node back to the React Native renderer (Fabric in the New Architecture).
+*** The renderer then uses this information to position and size the actual native views (`UIView` on iOS, `android.view.View` on Android) on the screen.
 
 By using Yoga, React Native ensures that your Flexbox-based layouts are performant and consistent across platforms, without you needing to worry about the native layout intricacies of iOS or Android directly.
 
 In the next section, we'll explore another powerful styling technique: Styled Components.
 
-📚 *Official Documentation:**
+📚 *Official Documentation:*
 * [https://reactnative.dev/docs/flexbox|React Native Docs: Layout with Flexbox]
 * [https://reactnative.dev/docs/height-and-width|React Native Docs: Height and Width] (Related to sizing items within Flexbox)
 * [https://css-tricks.com/snippets/css/a-guide-to-flexbox/|A Complete Guide to Flexbox (CSS-Tricks)] (Excellent resource for general Flexbox concepts, highly transferable)

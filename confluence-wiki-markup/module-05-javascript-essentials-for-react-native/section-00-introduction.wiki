@@ -8,10 +8,10 @@ If you have extensive experience with modern JavaScript (ES6+), you might find s
 h2. Target Audience Adaptation
 
 This module is designed to benefit all learners, regardless of your prior development background:
-* 🌐 _(Web Developers - React/Angular):_ You'll likely recognize many JavaScript concepts. This module will serve as a valuable refresher, focusing on ES6+ syntax (like {{let}}/{{const}}, arrow functions, destructuring, and modules) and patterns commonly encountered in React Native. Pay attention to how these features are leveraged in a mobile-specific environment.
-* 🍏 _(iOS Developers):_ Welcome to the world of JavaScript! You'll find that JavaScript's dynamic typing and event-driven, asynchronous nature differ from Swift or Objective-C. This module will carefully guide you through core syntax, data structures, and the asynchronous programming model crucial for React Native.
-* 🤖 _(Android Developers):_ If you're coming from Kotlin or Java, JavaScript will present a new programming paradigm. We'll focus on understanding its syntax, object model, and how asynchronous operations are handled, which are fundamental for effective React Native development.
-* 🛣️ _(All Learners):_ Regardless of your background, this module will solidify your understanding of the essential JavaScript features that are heavily used in building React Native applications.
+* 🌐 *(Web Developers - React/Angular):* You'll likely recognize many JavaScript concepts. This module will serve as a valuable refresher, focusing on ES6+ syntax (like {{let}}/{{const}}, arrow functions, destructuring, and modules) and patterns commonly encountered in React Native. Pay attention to how these features are leveraged in a mobile-specific environment.
+* 🍏 *(iOS Developers):* Welcome to the world of JavaScript! You'll find that JavaScript's dynamic typing and event-driven, asynchronous nature differ from Swift or Objective-C. This module will carefully guide you through core syntax, data structures, and the asynchronous programming model crucial for React Native.
+* 🤖 *(Android Developers):* If you're coming from Kotlin or Java, JavaScript will present a new programming paradigm. We'll focus on understanding its syntax, object model, and how asynchronous operations are handled, which are fundamental for effective React Native development.
+* 🛣️ *(All Learners):* Regardless of your background, this module will solidify your understanding of the essential JavaScript features that are heavily used in building React Native applications.
 
 h2. Learning Objectives
 
@@ -33,14 +33,14 @@ A general familiarity with basic programming concepts will also be beneficial.
 h2. What You'll Cover in This Module
 
 Throughout this module, we will explore the following key areas of JavaScript:
-* _Section 1: Variables, Data Types, and Operators:_ Understanding the building blocks ({{let}}, {{const}}, various types).
-* _Section 2: Control Flow:_ Mastering conditional logic and loops.
-* _Section 3: Functions:_ Exploring arrow functions, scope, and closures. (_Includes Exercise 5.1_)
-* _Section 4: Objects and Arrays:_ Working with data structures, methods, destructuring, and spread/rest operators. (_Includes Exercise 5.2_)
-* _Section 5: Asynchronous JavaScript:_ Handling asynchronous operations with Callbacks, Promises, and {{async/await}}. (_Includes Exercise 5.3 and a Mermaid diagram_)
-* _Section 6: ES6 Modules:_ Organizing code with {{import}} and {{export}}.
+* *Section 1: Variables, Data Types, and Operators:* Understanding the building blocks ({{let}}, {{const}}, various types).
+* *Section 2: Control Flow:* Mastering conditional logic and loops.
+* *Section 3: Functions:* Exploring arrow functions, scope, and closures. (_Includes Exercise 5.1_)
+* *Section 4: Objects and Arrays:* Working with data structures, methods, destructuring, and spread/rest operators. (_Includes Exercise 5.2_)
+* *Section 5: Asynchronous JavaScript:* Handling asynchronous operations with Callbacks, Promises, and {{async/await}}. (_Includes Exercise 5.3 and a Mermaid diagram_)
+* *Section 6: ES6 Modules:* Organizing code with {{import}} and {{export}}.
 
 You will apply these concepts in exercises and a culminating module challenge:
-* _Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)_
+* *Challenge 5: Mini Pharmacy Data Processor (CodeSandbox)*
 
 This structured approach will help you build a strong command of JavaScript, preparing you for advanced React Native development.

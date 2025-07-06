@@ -8,20 +8,20 @@ React Native allows you to build mobile apps using JavaScript and React, but how
 
 One of the key benefits of understanding React Native's architecture is the ability to make better decisions for our SpeedyMeds pharmacy application. For instance, knowing how the Bridge affects performance can help us optimize areas like medication list rendering or patient form handling, ensuring a smooth user experience even with large datasets.
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ You'll see parallels between the communication mechanisms discussed here and concepts like Objective-C bridging or Swift interoperability, but also key differences in how React Native manages the UI thread.
-> _Key Takeaway:_ React Native's architecture mediates between JavaScript and native code in ways that differ from traditional iOS development patterns.
-> _Source:_ [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* You'll see parallels between the communication mechanisms discussed here and concepts like Objective-C bridging or Swift interoperability, but also key differences in how React Native manages the UI thread.
+> *Key Takeaway:* React Native's architecture mediates between JavaScript and native code in ways that differ from traditional iOS development patterns.
+> *Source:* [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ Concepts like Java Native Interface (JNI) might come to mind, but React Native's approach, especially with the New Architecture, introduces different patterns for cross-language communication and UI rendering.
-> _Key Takeaway:_ While JNI allows Java code to call native methods, React Native's architecture creates a more structured bridge that's evolving toward direct JavaScript-to-native communication.
-> _Source:_ [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
+bq. 🤖 *(Android Developers):*
+> *Comparison:* Concepts like Java Native Interface (JNI) might come to mind, but React Native's approach, especially with the New Architecture, introduces different patterns for cross-language communication and UI rendering.
+> *Key Takeaway:* While JNI allows Java code to call native methods, React Native's architecture creates a more structured bridge that's evolving toward direct JavaScript-to-native communication.
+> *Source:* [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ While you're familiar with JavaScript controlling the UI, the way React Native interacts with distinct native platforms introduces complexities not found in the browser DOM, particularly around threading and native module communication.
-> _Key Takeaway:_ Understanding this architecture is vital as it explains why some React patterns work differently in React Native and how performance considerations differ from web.
-> _Source:_ [https://reactnative.dev/architecture/glossary#bridge|React Native: Bridging in React Native]
+bq. 🌐 *(Web Developers):*
+> *Comparison:* While you're familiar with JavaScript controlling the UI, the way React Native interacts with distinct native platforms introduces complexities not found in the browser DOM, particularly around threading and native module communication.
+> *Key Takeaway:* Understanding this architecture is vital as it explains why some React patterns work differently in React Native and how performance considerations differ from web.
+> *Source:* [https://reactnative.dev/architecture/glossary#bridge|React Native: Bridging in React Native]
 
 h2. Learning Objectives
 

@@ -2,13 +2,13 @@ h2. Section 3: Bridging Web Concepts to React Native
 
 This section explains how the fundamental concepts of HTML structure and CSS styling, reviewed in the previous sections, translate to the React Native environment. Understanding this mapping is key to leveraging your web development knowledge (or understanding the web-inspired paradigms if you come from a native background).
 
-React Native allows you to build native mobile applications using React and JavaScript, but it does _not_ render HTML or use traditional CSS. Instead, it provides a set of _Core Components_ that map conceptually to native UI widgets on iOS and Android, and a _JavaScript-based styling system ({{StyleSheet}})_ that borrows heavily from CSS, particularly Flexbox.
+React Native allows you to build native mobile applications using React and JavaScript, but it does _not_ render HTML or use traditional CSS. Instead, it provides a set of *Core Components* that map conceptually to native UI widgets on iOS and Android, and a *JavaScript-based styling system ({{StyleSheet}})* that borrows heavily from CSS, particularly Flexbox.
 
 h4. Mapping HTML Elements to React Native Components
 
 There isn't a direct one-to-one mapping for every HTML element, but common web elements have clear counterparts in React Native's Core Components:
 * {{<div>}}, {{<span>}}: Generally map to {{<View>}}. {{<View>}} is the fundamental building block for UI layouts, acting as a container that supports styling and Flexbox layout. It's analogous to a generic container view in native development ({{UIView}}/{{ViewGroup}}).
-* {{<p>}}, {{<h1>}}-{{<h6>}}, {{<span>}} (for text): Map to {{<Text>}}. All text content in React Native _must_ be wrapped within a {{<Text>}} component. Unlike HTML, you cannot place text directly inside a {{<View>}}.
+* {{<p>}}, {{<h1>}}-{{<h6>}}, {{<span>}} (for text): Map to {{<Text>}}. All text content in React Native *must* be wrapped within a {{<Text>}} component. Unlike HTML, you cannot place text directly inside a {{<View>}}.
 * {{<img>}}: Maps to {{<Image>}}. Used for displaying various types of images, including network images, static resources, and temporary local images.
 * {{<input type="text">}}: Maps to {{<TextInput>}}. Allows users to enter text.
 * {{<button>}}: Maps to {{<Button>}} or {{<Pressable>}}. {{<Button>}} provides a basic platform-specific button, while {{<Pressable>}} is a more flexible component for detecting various types of touch interactions on its children.
@@ -76,9 +76,9 @@ React Native uses JavaScript objects, typically created via the {{StyleSheet.cre
 *Benefits of {{StyleSheet.create}}:*
 
 Using {{StyleSheet.create}} offers several advantages over defining styles inline directly within the component's JSX:
-* _Performance:_ It allows React Native to perform optimizations. Style objects are assigned unique IDs, and in the legacy architecture, only these IDs were sent across the communication bridge between JavaScript and the native side. While the new architecture (Fabric) changes some of these dynamics, {{StyleSheet.create}} still allows for styles to be processed and potentially optimized ahead of time. This can lead to performance improvements, especially in complex applications with many styled components.
-* _Organization & Maintainability:_ It promotes better code organization by separating styling concerns from the component's rendering logic. This makes the code easier to read, maintain, and reuse. Styles are defined in a centralized, static manner, which helps in understanding the component's appearance at a glance.
-* _Error Detection:_ {{StyleSheet.create}} can also help validate your style declarations at compile time or soon after, catching typos or invalid property values early.
+* *Performance:* It allows React Native to perform optimizations. Style objects are assigned unique IDs, and in the legacy architecture, only these IDs were sent across the communication bridge between JavaScript and the native side. While the new architecture (Fabric) changes some of these dynamics, {{StyleSheet.create}} still allows for styles to be processed and potentially optimized ahead of time. This can lead to performance improvements, especially in complex applications with many styled components.
+* *Organization & Maintainability:* It promotes better code organization by separating styling concerns from the component's rendering logic. This makes the code easier to read, maintain, and reuse. Styles are defined in a centralized, static manner, which helps in understanding the component's appearance at a glance.
+* *Error Detection:* {{StyleSheet.create}} can also help validate your style declarations at compile time or soon after, catching typos or invalid property values early.
 
 *Example {{StyleSheet.create}} Usage:*
 
@@ -109,36 +109,36 @@ const styles = StyleSheet.create({
 {code}
 
 *Key Differences from Web CSS:*
-# _Syntax:_ Styles are defined in JavaScript objects, not separate `.css` files.
-# _Property Names:_ CSS properties are written in `camelCase` (e.g., `backgroundColor` instead of `background-color`, `fontSize` instead of `font-size`).
-# _Units:_ Most dimensions (width, height, margin, padding, fontSize, etc.) and positioning properties (top, left, etc.) are unitless numbers interpreted as density-independent pixels (dp). Strings with units (e.g., `'5em'`) are not supported. Percentage values (e.g., `'50%'`) are accepted for some properties like width, height, margin, padding.
-# _No Cascading & Very Limited Inheritance (Component Encapsulation by Design):_
-** Styles are typically not inherited from parent elements in the same way as web CSS's cascade. For example, setting `margin` or `padding` on a parent `<View>` will not affect its children.
-** There's no complex cascade calculation or specificity wars between rules defined in `StyleSheet`. Styles applied directly via the `style` prop generally take precedence.
-*_ _Exception: `<Text>` Components:** The primary exception involves text styling properties within nested `<Text>` components. Properties like `color`, `fontSize`, `fontWeight`, `fontFamily`, `lineHeight`, etc., _do_ inherit from a parent `<Text>` component to its direct `<Text>` children.
+# *Syntax:* Styles are defined in JavaScript objects, not separate `.css` files.
+# *Property Names:* CSS properties are written in `camelCase` (e.g., `backgroundColor` instead of `background-color`, `fontSize` instead of `font-size`).
+# *Units:* Most dimensions (width, height, margin, padding, fontSize, etc.) and positioning properties (top, left, etc.) are unitless numbers interpreted as density-independent pixels (dp). Strings with units (e.g., `'5em'`) are not supported. Percentage values (e.g., `'50%'`) are accepted for some properties like width, height, margin, padding.
+# *No Cascading & Very Limited Inheritance (Component Encapsulation by Design):*
+*** Styles are typically not inherited from parent elements in the same way as web CSS's cascade. For example, setting `margin` or `padding` on a parent `<View>` will not affect its children.
+*** There's no complex cascade calculation or specificity wars between rules defined in `StyleSheet`. Styles applied directly via the `style` prop generally take precedence.
+*** *Exception: `<Text>` Components:* The primary exception involves text styling properties within nested `<Text>` components. Properties like `color`, `fontSize`, `fontWeight`, `fontFamily`, `lineHeight`, etc., _do_ inherit from a parent `<Text>` component to its direct `<Text>` children.
       {code:language=js}
 // Example of Text style inheritance
       <Text style={{ color: "navy", fontSize: 16 }}>
         This is navy, 16pt.
         <Text style={{ fontWeight: "bold" }}>
-          {/_ This inherits navy color and 16pt size, but adds bold weight. _/}
+          {/* This inherits navy color and 16pt size, but adds bold weight. */}
           This is also navy, 16pt, but bold.
           <Text style={{ color: "darkred", fontSize: 12 }}>
-            {/_ This inherits bold weight, but overrides color and font size. _/}
+            {/* This inherits bold weight, but overrides color and font size. */}
             This is dark red, 12pt, and bold.
           </Text>
         </Text>
       </Text>
       ```
-*_ _Why Limited Inheritance? Component Encapsulation:* This limited inheritance model is a deliberate design choice in React Native, aligning with the core principles of React itself, particularly component encapsulation and isolation. In React, components are intended to be self-contained and reusable units. Relying heavily on inherited styles (like the CSS cascade) can make a component's appearance overly dependent on its context within the application tree, potentially leading to unexpected visual changes when the component is moved or reused elsewhere. By requiring styles to be more explicitly applied, React Native encourages the creation of components that are more predictable and maintainable. While this might seem like more work initially compared to relying on the CSS cascade, it often prevents complex specificity issues and makes debugging styles easier in large applications. It encourages developers to define styles locally within components or create explicitly shared style modules or theme objects rather than depending on implicit inheritance through the component hierarchy.
-# _Limited Selectors & Subset:_ There are no complex CSS selectors (like attribute or pseudo-selectors). Styles are applied directly to components via the `style` prop. React Native implements a subset of CSS properties, primarily focusing on layout (Flexbox), text styling, colors, backgrounds, borders, and transformations. Not all web CSS properties are available.
-# _Flexbox is Default & Different:_ Flexbox is the _default_ layout model for `<View>` components; you don't need `display: flex`. Key differences from web Flexbox include:
-** `flexDirection` defaults to `column` (aligning items vertically) instead of `row`.
-** `alignItems` defaults to `stretch`.
-** `flex: 1` is a common pattern on a root container `<View>` to make it expand and fill all available space along the main axis.
-** Properties like `justifyContent`, `alignItems`, `alignSelf`, `flexWrap`, `flexGrow`, `flexShrink`, `flexBasis` work very similarly.
+*** *Why Limited Inheritance? Component Encapsulation:* This limited inheritance model is a deliberate design choice in React Native, aligning with the core principles of React itself, particularly component encapsulation and isolation. In React, components are intended to be self-contained and reusable units. Relying heavily on inherited styles (like the CSS cascade) can make a component's appearance overly dependent on its context within the application tree, potentially leading to unexpected visual changes when the component is moved or reused elsewhere. By requiring styles to be more explicitly applied, React Native encourages the creation of components that are more predictable and maintainable. While this might seem like more work initially compared to relying on the CSS cascade, it often prevents complex specificity issues and makes debugging styles easier in large applications. It encourages developers to define styles locally within components or create explicitly shared style modules or theme objects rather than depending on implicit inheritance through the component hierarchy.
+# *Limited Selectors & Subset:* There are no complex CSS selectors (like attribute or pseudo-selectors). Styles are applied directly to components via the `style` prop. React Native implements a subset of CSS properties, primarily focusing on layout (Flexbox), text styling, colors, backgrounds, borders, and transformations. Not all web CSS properties are available.
+# *Flexbox is Default & Different:* Flexbox is the *default* layout model for `<View>` components; you don't need `display: flex`. Key differences from web Flexbox include:
+*** `flexDirection` defaults to `column` (aligning items vertically) instead of `row`.
+*** `alignItems` defaults to `stretch`.
+*** `flex: 1` is a common pattern on a root container `<View>` to make it expand and fill all available space along the main axis.
+*** Properties like `justifyContent`, `alignItems`, `alignSelf`, `flexWrap`, `flexGrow`, `flexShrink`, `flexBasis` work very similarly.
 
-*Applying Styles and Combining Multiple Styles:**
+*Applying Styles and Combining Multiple Styles:*
 
 Styles are applied to components using the `style` prop. This prop can accept a single style object (e.g., `style={styles.container}`) or an array of style objects (e.g., `style={[styles.base, styles.modifier, dynamicStyles]}`).
 
@@ -215,7 +215,7 @@ const BoxModelDemoCard = ({ title, children }) => {
   return (
     // The outer View demonstrates margin, border, and padding
     <View style={styles.cardContainer}>
-      {/_ This inner View represents the Content Area conceptually _/}
+      {/* This inner View represents the Content Area conceptually */}
       <View style={styles.contentArea}>
         {title && <Text style={styles.titleText}>{title}</Text>}
         {children}
@@ -292,7 +292,7 @@ export default App;
 
 This example illustrates how to use `StyleSheet` to control the sizing and spacing of elements according to the Box Model principles, which is fundamental for structuring UI layouts in React Native.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]
 - [https://reactnative.dev/docs/style|React Native Docs: Style]
 - [https://reactnative.dev/docs/layout-props|React Native Docs: Layout with Flexbox] (Note: URL updated as `/flexbox` redirects to `/layout-props` which covers flex)
@@ -300,13 +300,13 @@ bq. 📚 _Official Documentation:_
 - [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Style Props]
 - [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ The mapping feels intuitive but requires adjusting to JavaScript syntax (camelCase, objects) and the absence of cascading/complex selectors. The biggest paradigm shift is often the `flexDirection: 'column'` default and the strict requirement to wrap all text in `<Text>`.
-> _Key Takeaway:_ Reuse your understanding of component structure and CSS properties (especially Flexbox), but adapt to the `StyleSheet` API, camelCase syntax, unitless dimensions, and React Native's specific defaults and component requirements.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* The mapping feels intuitive but requires adjusting to JavaScript syntax (camelCase, objects) and the absence of cascading/complex selectors. The biggest paradigm shift is often the `flexDirection: 'column'` default and the strict requirement to wrap all text in `<Text>`.
+> *Key Takeaway:* Reuse your understanding of component structure and CSS properties (especially Flexbox), but adapt to the `StyleSheet` API, camelCase syntax, unitless dimensions, and React Native's specific defaults and component requirements.
 
-bq. 📲 _(Native Developers):_
-> _Comparison:_ You'll recognize the mapping of elements to native views. The `StyleSheet` approach might feel different from XML layouts or programmatic constraints/frames. Think of `StyleSheet` as defining attributes for your views (like setting `backgroundColor`, `width`, `height` in native code), but centralized in JavaScript. Flexbox becomes your primary tool for positioning and sizing, replacing systems like Auto Layout or ConstraintLayout for most common scenarios.
-> _Key Takeaway:_ React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
+bq. 📲 *(Native Developers):*
+> *Comparison:* You'll recognize the mapping of elements to native views. The `StyleSheet` approach might feel different from XML layouts or programmatic constraints/frames. Think of `StyleSheet` as defining attributes for your views (like setting `backgroundColor`, `width`, `height` in native code), but centralized in JavaScript. Flexbox becomes your primary tool for positioning and sizing, replacing systems like Auto Layout or ConstraintLayout for most common scenarios.
+> *Key Takeaway:* React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
 
 h4. Example: Basic Card Layout (React Native)
 
@@ -349,9 +349,9 @@ import { StyleSheet, Text, View } from 'react-native';
 * Props for the MedicationCard component.
  */
 interface MedicationCardProps {
-  /*_ The name of the medication. _/
+  /** The name of the medication. */
   name: string;
-  /*_ The instructions for taking the medication. _/
+  /** The instructions for taking the medication. */
   instructions: string;
 }
 

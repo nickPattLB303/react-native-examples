@@ -5,23 +5,23 @@ This section provides an overview of the primary methods you can use to style yo
 h3. Core Styling Methods
 
 React Native offers several built-in and community-driven ways to apply styles:
-# _{{StyleSheet.create()}}:_ This is the most common and generally recommended approach for organizing styles in React Native. It involves defining styles in JavaScript objects, similar to CSS, but with camelCased property names. Styles are defined separately from the component rendering logic, promoting better organization and potential performance optimizations as styles can be sent to the native side efficiently.
+# *{{StyleSheet.create()}}:* This is the most common and generally recommended approach for organizing styles in React Native. It involves defining styles in JavaScript objects, similar to CSS, but with camelCased property names. Styles are defined separately from the component rendering logic, promoting better organization and potential performance optimizations as styles can be sent to the native side efficiently.
 
-    React Native's styling system uses unitless numbers for dimensions (like {{width}}, {{height}}, {{margin}}, {{padding}}). These unitless values represent _Density-Independent Pixels (DIPs)_. DIPs are abstract units designed to ensure that UI elements appear roughly the same physical size across devices with varying screen pixel densities. This is similar to how {{dp}} (density-independent pixels) and {{sp}} (scale-independent pixels) work on Android, and {{points}} work on iOS. By using DIPs, React Native abstracts away the complexity of different screen resolutions, allowing you to define sizes in a consistent manner.
+    React Native's styling system uses unitless numbers for dimensions (like {{width}}, {{height}}, {{margin}}, {{padding}}). These unitless values represent *Density-Independent Pixels (DIPs)*. DIPs are abstract units designed to ensure that UI elements appear roughly the same physical size across devices with varying screen pixel densities. This is similar to how {{dp}} (density-independent pixels) and {{sp}} (scale-independent pixels) work on Android, and {{points}} work on iOS. By using DIPs, React Native abstracts away the complexity of different screen resolutions, allowing you to define sizes in a consistent manner.
 
     *Color Values* in React Native style properties accept standard CSS color formats as strings, including:
-** Hexadecimal: {{#RRGGBB}} (e.g., {{#FF0000}}), {{#RGB}} (e.g., {{#F00}}), {{#RRGGBBAA}} (e.g., {{#FF000080}}), {{#RGBA}} (e.g., {{#F008}})
-** RGB: {{rgb(255, 0, 0)}}
-** RGBA: {{rgba(255, 0, 0, 0.5)}}
-** HSL: {{hsl(0, 100%, 50%)}}
-** HSLA: {{hsla(0, 100%, 50%, 0.5)}}
-** Predefined color names: {{'red'}}, {{'blue'}}, {{'transparent'}}, etc.
+*** Hexadecimal: {{#RRGGBB}} (e.g., {{#FF0000}}), {{#RGB}} (e.g., {{#F00}}), {{#RRGGBBAA}} (e.g., {{#FF000080}}), {{#RGBA}} (e.g., {{#F008}})
+*** RGB: {{rgb(255, 0, 0)}}
+*** RGBA: {{rgba(255, 0, 0, 0.5)}}
+*** HSL: {{hsl(0, 100%, 50%)}}
+*** HSLA: {{hsla(0, 100%, 50%, 0.5)}}
+*** Predefined color names: {{'red'}}, {{'blue'}}, {{'transparent'}}, etc.
 
     > [!NOTE]
     > As of React Native 0.79, there is stricter compliance with CSS specifications. This might affect support for invalid unitless lengths in properties like {{box-shadow}} and {{filter}}, and restrict some previously supported invalid syntaxes for {{hwb()}} (e.g., comma-separated values are no longer supported; space-separated values like {{hwb(0 0% 100%)}} should be used). Always consult the [https://reactnative.dev/docs/colors|official React Native documentation on Colors] for the most up-to-date details.
-# _Inline Styles:_ Styles can be applied directly to a component via its {{style}} prop using a JavaScript object. While convenient for dynamic styling or quick, small adjustments, overuse can lead to less readable code and may have performance implications if not managed carefully.
-# _CSS-in-JS Libraries (e.g., Styled Components):_ These libraries allow you to write actual CSS syntax (or CSS-like syntax) directly within your JavaScript/TypeScript files to create styled React components. They offer benefits like scoped styles, prop-based styling, and theming capabilities, which can be very powerful for building complex UIs. We will explore {{styled-components}} in this module.
-# _UI Component Libraries (e.g., React Native Paper):_ These libraries provide pre-built, pre-styled, and often themeable components (buttons, cards, navigation elements, etc.) that you can use out-of-the-box. They help accelerate development and ensure a consistent look and feel. We will delve into {{React Native Paper}} later in this module.
+# *Inline Styles:* Styles can be applied directly to a component via its {{style}} prop using a JavaScript object. While convenient for dynamic styling or quick, small adjustments, overuse can lead to less readable code and may have performance implications if not managed carefully.
+# *CSS-in-JS Libraries (e.g., Styled Components):* These libraries allow you to write actual CSS syntax (or CSS-like syntax) directly within your JavaScript/TypeScript files to create styled React components. They offer benefits like scoped styles, prop-based styling, and theming capabilities, which can be very powerful for building complex UIs. We will explore {{styled-components}} in this module.
+# *UI Component Libraries (e.g., React Native Paper):* These libraries provide pre-built, pre-styled, and often themeable components (buttons, cards, navigation elements, etc.) that you can use out-of-the-box. They help accelerate development and ensure a consistent look and feel. We will delve into {{React Native Paper}} later in this module.
 
 h3. Choosing the Right Approach
 
@@ -52,17 +52,17 @@ The following table provides a quick reference for some common properties.
 |{{top}}, {{left}}, etc.|{{top}}, {{left}}, {{right}}, {{bottom}}|Unitless (DIPs). Affect positioning based on {{position}} property.|
 |{{transform}}|{{transform}}|Array of objects, e.g., {{[{ rotate: '45deg' }, { scale: 1.2 }]}}.|
 {note}
-This table is not exhaustive. React Native supports a subset of CSS properties, and some behave differently. The CSS cascade mechanism (where styles from different sources are applied based on specificity and order) does _not_ apply in React Native. Styles are generally inherited only within nested {{<Text>}} components. Always refer to the official [https://reactnative.dev/docs/view-style-props|View Style Props] and [https://reactnative.dev/docs/text-style-props|Text Style Props] documentation for a complete list and detailed behavior.
+This table is not exhaustive. React Native supports a subset of CSS properties, and some behave differently. The CSS cascade mechanism (where styles from different sources are applied based on specificity and order) does *not* apply in React Native. Styles are generally inherited only within nested {{<Text>}} components. Always refer to the official [https://reactnative.dev/docs/view-style-props|View Style Props] and [https://reactnative.dev/docs/text-style-props|Text Style Props] documentation for a complete list and detailed behavior.
 {note}
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ The landscape is similar to web development where you have plain CSS, CSS Modules (akin to {{StyleSheet}}), CSS-in-JS (Styled Components, Emotion), and component libraries (Bootstrap, Material-UI). React Native's {{StyleSheet}} provides a more direct, JavaScript-integrated way of defining styles compared to separate {{.css}} files. The table above illustrates common property mappings.
-> _Key Takeaway:_ You'll leverage your understanding of CSS principles (like the box model and flexbox), but the implementation (JavaScript objects, camelCase, no direct CSS files or cascade) and specific property availability will be specific to the React Native ecosystem.
+bq. 🌐 *(Web Developers):*
+> *Comparison:* The landscape is similar to web development where you have plain CSS, CSS Modules (akin to {{StyleSheet}}), CSS-in-JS (Styled Components, Emotion), and component libraries (Bootstrap, Material-UI). React Native's {{StyleSheet}} provides a more direct, JavaScript-integrated way of defining styles compared to separate {{.css}} files. The table above illustrates common property mappings.
+> *Key Takeaway:* You'll leverage your understanding of CSS principles (like the box model and flexbox), but the implementation (JavaScript objects, camelCase, no direct CSS files or cascade) and specific property availability will be specific to the React Native ecosystem.
 
 {info}
 React Native does not use traditional CSS files that are linked to HTML. All styling is done through JavaScript objects or libraries that generate these objects.
 {info}
 Later sections in this module will dive deeper into each of these methods, providing practical examples and guidance on how to implement them effectively in your SpeedyMeds application.
 
-📚 _Official Documentation:_
+📚 *Official Documentation:*
 * [https://reactnative.dev/docs/style|React Native Docs: Style]
 * [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]

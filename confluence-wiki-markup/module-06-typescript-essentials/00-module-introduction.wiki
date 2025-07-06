@@ -4,26 +4,26 @@ Welcome to Module 6: TypeScript Essentials! In the ever-evolving landscape of we
 
 Understanding TypeScript is crucial as it has become the standard for many large-scale React Native projects, including those built with Expo. It helps catch errors early in the development process, improves code readability, and enhances the overall developer experience, especially when working in teams.
 
-<TARGET_AUDIENCE_EMOJI> _Target Audience Adaptation:_
+<TARGET_AUDIENCE_EMOJI> *Target Audience Adaptation:*
 
-bq. 🌐 _(Web Developers with JavaScript Background):_
-> _Comparison:_ If you're coming from a JavaScript background, TypeScript will feel familiar yet more structured. The key difference is the addition of static types. While JavaScript is dynamically typed (types are checked at runtime), TypeScript checks types at compile time, helping you catch errors before your code even runs. Think of it as adding guardrails to your JavaScript development process.
-> _Key Takeaway:_ TypeScript empowers you to define explicit types for variables, function parameters, and return values, reducing runtime errors and improving code predictability.
-> _Source:_ [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html|TypeScript for JavaScript Programmers]
+bq. 🌐 *(Web Developers with JavaScript Background):*
+> *Comparison:* If you're coming from a JavaScript background, TypeScript will feel familiar yet more structured. The key difference is the addition of static types. While JavaScript is dynamically typed (types are checked at runtime), TypeScript checks types at compile time, helping you catch errors before your code even runs. Think of it as adding guardrails to your JavaScript development process.
+> *Key Takeaway:* TypeScript empowers you to define explicit types for variables, function parameters, and return values, reducing runtime errors and improving code predictability.
+> *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html|TypeScript for JavaScript Programmers]
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ Many React web projects already use TypeScript. If you've used it with React, you'll find its application in React Native very similar. Concepts like typing props, state, and component functions directly translate. The benefits of type-checking your component interfaces remain just as significant.
-> _Key Takeaway:_ Your existing TypeScript knowledge with React is a strong foundation. This module will solidify those concepts and highlight any nuances relevant to the Expo and React Native ecosystem.
-> _Source:_ [https://react-typescript-cheatsheet.netlify.app/|React TypeScript Cheatsheets]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* Many React web projects already use TypeScript. If you've used it with React, you'll find its application in React Native very similar. Concepts like typing props, state, and component functions directly translate. The benefits of type-checking your component interfaces remain just as significant.
+> *Key Takeaway:* Your existing TypeScript knowledge with React is a strong foundation. This module will solidify those concepts and highlight any nuances relevant to the Expo and React Native ecosystem.
+> *Source:* [https://react-typescript-cheatsheet.netlify.app/|React TypeScript Cheatsheets]
 
-bq. 🅰 _(Web Developers with Angular Experience):_
-> _Comparison:_ Angular developers are typically well-versed in TypeScript, as it's the primary language for Angular development. You'll find the core TypeScript concepts covered here (like types, interfaces, generics) directly applicable and familiar.
-> _Key Takeaway:_ This module will serve as a focused refresher on TypeScript fundamentals, reinforcing how these concepts are leveraged within a React Native context, which might differ from Angular's specific patterns and decorators.
+bq. 🅰 *(Web Developers with Angular Experience):*
+> *Comparison:* Angular developers are typically well-versed in TypeScript, as it's the primary language for Angular development. You'll find the core TypeScript concepts covered here (like types, interfaces, generics) directly applicable and familiar.
+> *Key Takeaway:* This module will serve as a focused refresher on TypeScript fundamentals, reinforcing how these concepts are leveraged within a React Native context, which might differ from Angular's specific patterns and decorators.
 
-bq. 📲 _(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):_
-> _Comparison:_ Coming from languages like Kotlin, Swift, or Java, you're already accustomed to statically typed systems. TypeScript brings a similar level of type safety to the JavaScript world. You'll appreciate the compile-time checks and explicit type definitions. However, TypeScript's type system is structural ("duck typing"), which might differ from the nominal typing you're used to.
-> _Key Takeaway:_ TypeScript offers familiar benefits of type safety in a JavaScript environment. Pay attention to how types are defined and inferred, and the flexibility of structural typing.
-> _Source:_ [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html|TypeScript for Java/C# Programmers]
+bq. 📲 *(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):*
+> *Comparison:* Coming from languages like Kotlin, Swift, or Java, you're already accustomed to statically typed systems. TypeScript brings a similar level of type safety to the JavaScript world. You'll appreciate the compile-time checks and explicit type definitions. However, TypeScript's type system is structural ("duck typing"), which might differ from the nominal typing you're used to.
+> *Key Takeaway:* TypeScript offers familiar benefits of type safety in a JavaScript environment. Pay attention to how types are defined and inferred, and the flexibility of structural typing.
+> *Source:* [https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html|TypeScript for Java/C# Programmers]
 
 h2. Learning Objectives
 
@@ -45,13 +45,13 @@ Before starting this module, you should have a solid understanding of JavaScript
 h2. Module Sections
 
 This module will cover the following key topics:
-# _Why TypeScript?_: Understanding the advantages and motivation for using TypeScript.
-# _Basic Types_: Exploring fundamental data types in TypeScript.
-# _Interfaces and Type Aliases_: Defining shapes for your data structures.
-# _Functions in TypeScript_: Ensuring type safety in function inputs and outputs.
-# _Generics_: Writing reusable and type-agnostic code.
-# _Enums_: Working with named constant values.
-# _Utility Types_: Manipulating and creating new types from existing ones.
-# _Configuring TypeScript_: A brief overview of the {{tsconfig.json}} file in Expo projects.
+# *Why TypeScript?*: Understanding the advantages and motivation for using TypeScript.
+# *Basic Types*: Exploring fundamental data types in TypeScript.
+# *Interfaces and Type Aliases*: Defining shapes for your data structures.
+# *Functions in TypeScript*: Ensuring type safety in function inputs and outputs.
+# *Generics*: Writing reusable and type-agnostic code.
+# *Enums*: Working with named constant values.
+# *Utility Types*: Manipulating and creating new types from existing ones.
+# *Configuring TypeScript*: A brief overview of the {{tsconfig.json}} file in Expo projects.
 
 Let's dive into the world of TypeScript and enhance your React Native development skills!

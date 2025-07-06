@@ -2,12 +2,12 @@ h1. Module 16: EAS Build and Publishing
 
 Welcome to Module 16! This module is your comprehensive guide to Expo Application Services (EAS), a powerful suite of tools that streamline the process of building, submitting, and updating your React Native applications. As you transition from development to production, EAS provides the cloud services necessary to create installable app binaries for iOS and Android, manage your app store submissions, and deploy updates seamlessly. Understanding EAS is crucial for any developer looking to efficiently deliver and maintain high-quality Expo and React Native apps. By the end of this module, you'll be equipped to take your projects from your local machine to the app stores and beyond.
 
-bq. 🛣️ _(All Learners):_ This module covers concepts essential for deploying real-world applications. For instructor-led sessions, come prepared with questions about your specific deployment needs. Self-led learners should take time to understand each EAS service individually before attempting to use them together. Asynchronous learners may want to bookmark specific sections for reference when you reach the deployment stage of your own projects.
+bq. 🛣️ *(All Learners):* This module covers concepts essential for deploying real-world applications. For instructor-led sessions, come prepared with questions about your specific deployment needs. Self-led learners should take time to understand each EAS service individually before attempting to use them together. Asynchronous learners may want to bookmark specific sections for reference when you reach the deployment stage of your own projects.
 
 This module is particularly relevant for developers looking to understand the full lifecycle of a React Native application, from coding to deployment.
-* 🍏 _(iOS Developers):_ You'll find EAS Build offers a cloud-based alternative to building {{ipa}} files with Xcode, simplifying provisioning and certificate management. The concepts of app signing and submission will be familiar, but EAS provides a unified workflow.
-* 🤖 _(Android Developers):_ You're likely familiar with generating APKs or AABs using Android Studio. EAS Build provides a similar capability in the cloud, integrated with the Expo ecosystem, making build and submission processes more streamlined.
-* 🌐 _(Web Developers - React/Angular):_ While web deployment often involves static site hosting or server deployments, mobile app deployment has distinct steps like code signing, binary compilation, and store submissions. EAS abstracts much of this complexity, making the transition smoother. Understanding build profiles in EAS will be key.
+* 🍏 *(iOS Developers):* You'll find EAS Build offers a cloud-based alternative to building {{ipa}} files with Xcode, simplifying provisioning and certificate management. The concepts of app signing and submission will be familiar, but EAS provides a unified workflow.
+* 🤖 *(Android Developers):* You're likely familiar with generating APKs or AABs using Android Studio. EAS Build provides a similar capability in the cloud, integrated with the Expo ecosystem, making build and submission processes more streamlined.
+* 🌐 *(Web Developers - React/Angular):* While web deployment often involves static site hosting or server deployments, mobile app deployment has distinct steps like code signing, binary compilation, and store submissions. EAS abstracts much of this complexity, making the transition smoother. Understanding build profiles in EAS will be key.
 
 h2. Learning Objectives
 
@@ -33,7 +33,7 @@ Before starting this module, ensure you have a solid understanding of the follow
 h2. Module Challenge
 
 At the end of this module, you'll apply your knowledge by completing a conceptual challenge:
-* _Challenge 16: EAS Build Workflow Diagram_ {{_(The URL for this Microsoft Whiteboard challenge will be provided through your learning platform)_}}
+* *Challenge 16: EAS Build Workflow Diagram* {{*(The URL for this Microsoft Whiteboard challenge will be provided through your learning platform)*}}
 
 h2. Module Summary
 

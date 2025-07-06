@@ -2,7 +2,7 @@ h2. Section 6: Passing Parameters Between Screens
 
 In most applications, you'll need to pass data from one screen to another. For example, when a user taps on a list item in the SpeedyMeds app (like a specific medication), you'll want to navigate to a detail screen and show information specific to that selected item. React Navigation provides a straightforward way to pass parameters to routes during navigation.
 
-bq. 🛣️ _(All Learners):_ Understanding how to type these parameters with TypeScript is crucial for building robust and maintainable applications. We'll build upon the {{RootStackParamList}} (or similar param lists for other navigators) concept introduced earlier.
+bq. 🛣️ *(All Learners):* Understanding how to type these parameters with TypeScript is crucial for building robust and maintainable applications. We'll build upon the {{RootStackParamList}} (or similar param lists for other navigators) concept introduced earlier.
 
 h3. Core Content
 
@@ -26,7 +26,7 @@ When you navigate to a screen, you can include a {{params}} object:
 
 {code:language=js}
 // Example from a HomeScreen component
-// navigation.navigate('RouteName', { /_ parameters object _/ });
+// navigation.navigate('RouteName', { /* parameters object */ });
 
 // To navigate to a PrescriptionDetail screen for SpeedyMeds, passing a prescriptionId
 navigation.navigate("PrescriptionDetail", {
@@ -81,7 +81,7 @@ export default function PrescriptionDetailScreen({
       {sourceScreen && (
         <Text style={styles.text}>Navigated from: {sourceScreen}</Text>
       )}
-      {/_ ... rest of the component ... _/}
+      {/* ... rest of the component ... */}
     </View>
   );
 }
@@ -213,10 +213,10 @@ navigation.navigate("HomeTabs", {
 });
 {code}
 
-bq. [!IMPORTANT] > _Best Practices for Passing Parameters (React Navigation):_
-> - _Keep Parameters Simple:_ It's highly recommended that parameters are JSON-serializable (plain objects, strings, numbers, booleans, arrays of serializable values). This ensures compatibility with features like state persistence, deep linking, and developer tools.
-- _Avoid Passing Complex Data:_ Instead of passing large or complex data objects (like full user profiles or fetched API responses) as parameters, it's often better to pass only an identifier (e.g., `userId`, `itemId`). The destination screen can then use this ID to fetch the required data itself, potentially using a global state management solution (like Zustand or TanStack Query, covered later) if the data is shared or needs to be cached.
-- _Functions are Not Serializable:_ Do not pass functions as parameters. If you need to trigger an action in a previous screen, use the "passing parameters back" pattern or a shared state/event system.
+bq. [!IMPORTANT] > *Best Practices for Passing Parameters (React Navigation):*
+> - *Keep Parameters Simple:* It's highly recommended that parameters are JSON-serializable (plain objects, strings, numbers, booleans, arrays of serializable values). This ensures compatibility with features like state persistence, deep linking, and developer tools.
+- *Avoid Passing Complex Data:* Instead of passing large or complex data objects (like full user profiles or fetched API responses) as parameters, it's often better to pass only an identifier (e.g., `userId`, `itemId`). The destination screen can then use this ID to fetch the required data itself, potentially using a global state management solution (like Zustand or TanStack Query, covered later) if the data is shared or needs to be cached.
+- *Functions are Not Serializable:* Do not pass functions as parameters. If you need to trigger an action in a previous screen, use the "passing parameters back" pattern or a shared state/event system.
 
 h3. Passing Parameters with Expo Router
 
@@ -231,7 +231,7 @@ To create a route that accepts a parameter as part of its path, you name the fil
 *2. Passing Parameters via `<Link>` and `router.push/navigate`:*
 
 Parameters are embedded in the `href` prop of the `<Link>` component or as arguments to imperative navigation functions like `router.push()` or `router.navigate()`.
-* _For Dynamic Segments:_ Include the value directly in the path string.
+* *For Dynamic Segments:* Include the value directly in the path string.
 
   {code:language=js}
 import { Link, router } from 'expo-router';
@@ -244,7 +244,7 @@ import { Link, router } from 'expo-router';
   router.push('/users/dave');
   router.push({ pathname: '/users/[id]', params: { id: 'eve' } });
   ```
-* _For Query Parameters:_ Append them to the URL string or use a `params` object where keys not matching dynamic segments become query parameters.
+* *For Query Parameters:* Append them to the URL string or use a `params` object where keys not matching dynamic segments become query parameters.
 
   ```tsx
   import { Link, router } from 'expo-router';
@@ -311,21 +311,21 @@ import { router } from "expo-router";
 
 This will update the URL and the values returned by `useLocalSearchParams` without re-mounting the screen, allowing for reactive updates based on params.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
 - [https://reactnavigation.org/docs/typescript/#type-checking-navigation-prop|Type checking with TypeScript - Navigation Props]
 - [https://reactnavigation.org/docs/typescript/#type-checking-the-route-prop|Type checking with TypeScript - Route Prop]
 - [https://reactnavigation.org/docs/screen/#initialparams|`initialParams` on Screen - React Navigation]
 - [https://reactnavigation.org/docs/navigation-prop/#setparams|`navigation.setParams` - React Navigation]
 
-bq. 🍏 _(iOS Developers):_
-> _Comparison:_ Passing parameters is similar to setting properties on a `UIViewController` before pushing it, or passing data through a segue's `prepare(for:sender:)` method in UIKit Storyboards. The `route.params` object is analogous to accessing these properties in the destination view controller.
+bq. 🍏 *(iOS Developers):*
+> *Comparison:* Passing parameters is similar to setting properties on a `UIViewController` before pushing it, or passing data through a segue's `prepare(for:sender:)` method in UIKit Storyboards. The `route.params` object is analogous to accessing these properties in the destination view controller.
 
-bq. 🤖 _(Android Developers):_
-> _Comparison:_ This is like passing data between Activities using `Intent.putExtra()` and retrieving it in the receiving Activity with `getIntent().getExtras()`, or passing arguments between Fragments using a `Bundle` with Jetpack Navigation.
+bq. 🤖 *(Android Developers):*
+> *Comparison:* This is like passing data between Activities using `Intent.putExtra()` and retrieving it in the receiving Activity with `getIntent().getExtras()`, or passing arguments between Fragments using a `Bundle` with Jetpack Navigation.
 
-bq. 🌐 _(Web Developers):_
-> _Comparison:_ If you've used React Router, this is similar to route parameters (e.g., `/users/:id`) and query parameters. `route.params` in React Navigation often serves both purposes, though you primarily pass data through the `navigate` call rather than encoding it all in the URL string directly (unless dealing with deep linking, covered later).
+bq. 🌐 *(Web Developers):*
+> *Comparison:* If you've used React Router, this is similar to route parameters (e.g., `/users/:id`) and query parameters. `route.params` in React Navigation often serves both purposes, though you primarily pass data through the `navigate` call rather than encoding it all in the URL string directly (unless dealing with deep linking, covered later).
 
 h4. Exercise 11.3: Passing Data via Navigation
 
@@ -333,14 +333,14 @@ This exercise will help you practice passing and receiving parameters between sc
 
 *(Placeholder: URL_to_Expo_Snack_for_Exercise_11.3)*
 
-bq. _Instructions for Expo Snack `README.md` (Exercise 11.3):_
+bq. *Instructions for Expo Snack `README.md` (Exercise 11.3):*
 > ````md
 # Exercise 11.3: Passing Data via Navigation
-> _Objective:_ Create a stack navigator with two screens for the SpeedyMeds app: `MedicationSearchScreen` and `MedicationInfoScreen`. Pass search query and medication details between them.
-> _Tasks:_
-> 1.  _Project Setup:_
+> *Objective:* Create a stack navigator with two screens for the SpeedyMeds app: `MedicationSearchScreen` and `MedicationInfoScreen`. Pass search query and medication details between them.
+> *Tasks:*
+> 1.  *Project Setup:*
 >     - Ensure React Navigation (native, stack) is installed.
-> 2.  _Define TypeScript `RootStackParamList`:_
+> 2.  *Define TypeScript `RootStackParamList`:*
 >     ```typescript
 export type RootStackParamList = {
 MedicationSearch: undefined;
@@ -351,7 +351,7 @@ searchQuery?: string; // Optional: the query that found this med
 };
 };
 ```
-> 3.  _Create Screen Components:_
+> 3.  *Create Screen Components:*
 >     - `MedicationSearchScreen.tsx`:
 - Should have a (mock) search input (you can use a simple `<TextInput>`).
 - A button "Search for Aspirin". When pressed, it navigates to `MedicationInfoScreen`, passing `{ medicationName: 'Aspirin', dosage: '100mg', searchQuery: 'headache relief' }`.
@@ -361,17 +361,17 @@ searchQuery?: string; // Optional: the query that found this med
 - Should display the `medicationName`, `dosage`, and `searchQuery` (if provided) received from `route.params`.
 - Add a button to navigate back (`navigation.goBack()`).
 - Type its props using `StackScreenProps<RootStackParamList, 'MedicationInfo'>`.
-> 4.  _Implement the Stack Navigator (`App.tsx` or navigator file):_
+> 4.  *Implement the Stack Navigator (`App.tsx` or navigator file):*
 - Use `createStackNavigator<RootStackParamList>()`.
 - Add `Stack.Screen` entries for `MedicationSearch` and `MedicationInfo`.
 - Set `MedicationSearch` as the `initialRouteName`.
 - For `MedicationInfoScreen`, set a dynamic header title using `options` that includes the `medicationName` from `route.params` (e.g., `options: ({ route }) => ({ title: route.params.medicationName })`).
-> _Expected Outcome:_
+> *Expected Outcome:*
 > - The app starts on the "Medication Search" screen.
 - Tapping "Search for Aspirin" navigates to a screen displaying "Aspirin", "100mg", and "headache relief", with "Aspirin" in the header.
 - Tapping "Search for Amoxicillin" navigates to a screen displaying "Amoxicillin", "250mg", and "infection", with "Amoxicillin" in the header.
 - The back button on the `MedicationInfoScreen` should return to the search screen.
-> _Bonus (Optional):_
+> *Bonus (Optional):*
 > - In `MedicationSearchScreen`, add an actual `<TextInput>` and allow the user to type a search query. Pass this dynamic query as the `searchQuery` parameter.
 - Set `initialParams` for the `MedicationInfoScreen` in the navigator configuration with some default medication data.
 ````

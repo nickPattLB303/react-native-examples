@@ -14,24 +14,24 @@ The primary motivation for using TypeScript is to add a layer of safety and pred
 h3. Key Benefits of Using TypeScript
 
 Adopting TypeScript brings several advantages to your development process:
-* _Enhanced Type Safety & Early Error Detection:_ This is the cornerstone of TypeScript. By defining types for your variables, function parameters, and return values, the TypeScript compiler can identify type mismatches and other type-related errors before you run your application. For example, if a function expects a {{number}} but receives a {{string}}, TypeScript will flag this as an error during development.
+* *Enhanced Type Safety & Early Error Detection:* This is the cornerstone of TypeScript. By defining types for your variables, function parameters, and return values, the TypeScript compiler can identify type mismatches and other type-related errors before you run your application. For example, if a function expects a {{number}} but receives a {{string}}, TypeScript will flag this as an error during development.
 ** _Example:_ Trying to call a string method on a number would be caught.
-* _Improved Code Quality and Readability:_ Explicit types make your code easier to understand. When you see a function signature, you immediately know what kind of data it expects and what it will return. This self-documenting aspect is invaluable, especially when working in teams or revisiting old code.
-* _Superior Tooling & Developer Experience:_ TypeScript powers a rich ecosystem of development tools. Code editors like Visual Studio Code offer exceptional autocompletion, intelligent code navigation, and refactoring capabilities thanks to TypeScript's type information. This significantly boosts productivity and makes a real difference in the day-to-day coding experience.
+* *Improved Code Quality and Readability:* Explicit types make your code easier to understand. When you see a function signature, you immediately know what kind of data it expects and what it will return. This self-documenting aspect is invaluable, especially when working in teams or revisiting old code.
+* *Superior Tooling & Developer Experience:* TypeScript powers a rich ecosystem of development tools. Code editors like Visual Studio Code offer exceptional autocompletion, intelligent code navigation, and refactoring capabilities thanks to TypeScript's type information. This significantly boosts productivity and makes a real difference in the day-to-day coding experience.
 
   > [!TIP]
   > Features like IntelliSense in VS Code become much more powerful with TypeScript, providing accurate suggestions and inline documentation as you type.
-* _Increased Maintainability and Scalability:_ As projects grow in size and complexity, maintaining a JavaScript codebase can become challenging. TypeScript helps manage this complexity by providing a clear structure and reducing the chances of introducing bugs during refactoring or when adding new features. Typed code is generally easier to reason about and modify with confidence.
-* _Better Team Collaboration:_ When multiple developers work on a project, TypeScript provides a shared understanding of data structures and API contracts. This reduces misinterpretations and makes integrating different parts of an application smoother.
-* _Seamless Integration with Modern JavaScript:_ TypeScript is a superset of JavaScript, meaning any valid JavaScript code is also valid TypeScript code. This allows for gradual adoption. You can start by renaming your {{.js}} files to {{.ts}} and incrementally add types as you go.
+* *Increased Maintainability and Scalability:* As projects grow in size and complexity, maintaining a JavaScript codebase can become challenging. TypeScript helps manage this complexity by providing a clear structure and reducing the chances of introducing bugs during refactoring or when adding new features. Typed code is generally easier to reason about and modify with confidence.
+* *Better Team Collaboration:* When multiple developers work on a project, TypeScript provides a shared understanding of data structures and API contracts. This reduces misinterpretations and makes integrating different parts of an application smoother.
+* *Seamless Integration with Modern JavaScript:* TypeScript is a superset of JavaScript, meaning any valid JavaScript code is also valid TypeScript code. This allows for gradual adoption. You can start by renaming your {{.js}} files to {{.ts}} and incrementally add types as you go.
 
-bq. 🤖 _(Native Android Developers - Kotlin/Java):_
-> _Comparison:_ You're used to the benefits of static typing from Kotlin or Java, such as catching null pointer exceptions (or their equivalents) at compile time and having clear method signatures. TypeScript brings this level of rigor to the JavaScript world.
-> _Key Takeaway:_ The transition regarding type safety will feel natural. The improved tooling and refactoring support powered by types will be familiar and welcome.
+bq. 🤖 *(Native Android Developers - Kotlin/Java):*
+> *Comparison:* You're used to the benefits of static typing from Kotlin or Java, such as catching null pointer exceptions (or their equivalents) at compile time and having clear method signatures. TypeScript brings this level of rigor to the JavaScript world.
+> *Key Takeaway:* The transition regarding type safety will feel natural. The improved tooling and refactoring support powered by types will be familiar and welcome.
 
-bq. 🍏 _(Native iOS Developers - Swift/Objective-C):_
-> _Comparison:_ Swift developers, in particular, will find TypeScript's focus on type safety and modern syntax (like optionals, though handled slightly differently with {{null}} and {{undefined}}) quite aligned with their experience. The ability to define clear interfaces and types for data models is a shared benefit.
-> _Key Takeaway:_ TypeScript helps prevent common JavaScript pitfalls by enforcing type contracts, much like Swift does for iOS development.
+bq. 🍏 *(Native iOS Developers - Swift/Objective-C):*
+> *Comparison:* Swift developers, in particular, will find TypeScript's focus on type safety and modern syntax (like optionals, though handled slightly differently with {{null}} and {{undefined}}) quite aligned with their experience. The ability to define clear interfaces and types for data models is a shared benefit.
+> *Key Takeaway:* TypeScript helps prevent common JavaScript pitfalls by enforcing type contracts, much like Swift does for iOS development.
 
 h3. TypeScript in the React Native Ecosystem
 
@@ -39,7 +39,7 @@ Expo and the broader React Native community have embraced TypeScript. Many popul
 
 Using TypeScript in your React Native projects means you can define types for your component props, state, API responses, and even your navigation parameters. This leads to more robust components and a more reliable application overall.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://www.typescriptlang.org/|TypeScript Official Website]
 - [https://www.typescriptlang.org/docs/handbook/intro.html|TypeScript Handbook]
 - [https://docs.expo.dev/guides/typescript/|Expo: Using TypeScript]

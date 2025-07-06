@@ -6,17 +6,17 @@ h3. Target Audience Adaptation
 
 This module is designed to provide foundational knowledge for all aspiring mobile developers, regardless of your background:
 
-bq. 🤖 _(Android Developers):_ You're familiar with native development on Android. This module will help you understand the broader mobile landscape and how cross-platform solutions like React Native compare to traditional Android development, setting the stage for leveraging your existing mobile concepts in a new environment.
+bq. 🤖 *(Android Developers):* You're familiar with native development on Android. This module will help you understand the broader mobile landscape and how cross-platform solutions like React Native compare to traditional Android development, setting the stage for leveraging your existing mobile concepts in a new environment.
 
-bq. 🍏 _(iOS Developers):_ With your experience in the Apple ecosystem, you'll find the historical context interesting. We'll explore how React Native offers an alternative to pure Swift/Objective-C development, enabling you to build for multiple platforms more efficiently.
+bq. 🍏 *(iOS Developers):* With your experience in the Apple ecosystem, you'll find the historical context interesting. We'll explore how React Native offers an alternative to pure Swift/Objective-C development, enabling you to build for multiple platforms more efficiently.
 
-bq. ⚛️ _(React Web Developers):_ You're already comfortable with React. This module will show you how the mobile world differs from the web and how React Native extends your existing skills to build mobile applications, bridging the gap between web and mobile paradigms.
+bq. ⚛️ *(React Web Developers):* You're already comfortable with React. This module will show you how the mobile world differs from the web and how React Native extends your existing skills to build mobile applications, bridging the gap between web and mobile paradigms.
 
-bq. 🅰️ _(Angular Web Developers):_ Your experience with component-based architectures and TypeScript is valuable. This module will introduce the unique aspects of mobile development and how React Native, while different from Angular, shares some core principles in building UIs, providing context for the tools and techniques you'll learn.
+bq. 🅰️ *(Angular Web Developers):* Your experience with component-based architectures and TypeScript is valuable. This module will introduce the unique aspects of mobile development and how React Native, while different from Angular, shares some core principles in building UIs, providing context for the tools and techniques you'll learn.
 
-bq. 🌐 _(All Web Developers):_ If your background is primarily in web development, this module provides a crucial overview of the mobile-specific considerations and introduces how cross-platform tools, particularly React Native, are changing the game.
+bq. 🌐 *(All Web Developers):* If your background is primarily in web development, this module provides a crucial overview of the mobile-specific considerations and introduces how cross-platform tools, particularly React Native, are changing the game.
 
-bq. 🛣️ _(All Learners):_ Understanding the history and current trends in mobile development provides a solid foundation for appreciating why React Native is a compelling choice for building modern mobile applications.
+bq. 🛣️ *(All Learners):* Understanding the history and current trends in mobile development provides a solid foundation for appreciating why React Native is a compelling choice for building modern mobile applications.
 
 h3. Learning Objectives
 

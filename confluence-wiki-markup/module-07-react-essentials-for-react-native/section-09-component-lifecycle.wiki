@@ -30,12 +30,12 @@ useEffect(() => {
   };
 }, [dependency1, dependency2]); // Optional dependency array
 {code}
-* _Effect Function:_ The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
-* _Dependency Array (Optional):_ The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
-* If you _omit_ the dependency array, the effect function runs after _every_ render.
-* If you provide an _empty array `[]`_, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
-* If you provide an array with *variables `[propA, stateB]`**, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
-* _Cleanup Function (Optional):_ The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
+* *Effect Function:* The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
+* *Dependency Array (Optional):* The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
+** If you *omit* the dependency array, the effect function runs after _every_ render.
+** If you provide an *empty array `[]`*, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
+** If you provide an array with *variables `[propA, stateB]`*, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
+* *Cleanup Function (Optional):* The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
 
 h3. Simulating Lifecycle Events with `useEffect`
 
@@ -168,24 +168,24 @@ graph TD
 
 This diagram shows that when a component mounts, the effect function runs (if dependencies allow or if no array). On subsequent re-renders, React checks if the dependencies (if specified) have changed using `Object.is` comparison. If they have (or if no dependency array), the cleanup function from the previous effect (if one was returned) runs, followed by the new effect function. When the component unmounts, the cleanup function for the last run effect is executed.
 
-bq. ⚛️ _(Web Developers with React Experience):_
-> _Comparison:_ `useEffect` works exactly the same way in React Native as it does in React for the web. The concepts of the effect function, dependency array, and cleanup function are identical.
-> _Key Takeaway:_ Your existing understanding of `useEffect` is directly applicable.
-> _Source:_ [https://react.dev/reference/react/useEffect|React Docs: Using the Effect Hook (`useEffect`)]
+bq. ⚛️ *(Web Developers with React Experience):*
+> *Comparison:* `useEffect` works exactly the same way in React Native as it does in React for the web. The concepts of the effect function, dependency array, and cleanup function are identical.
+> *Key Takeaway:* Your existing understanding of `useEffect` is directly applicable.
+> *Source:* [https://react.dev/reference/react/useEffect|React Docs: Using the Effect Hook (`useEffect`)]
 
-bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
-> _Comparison:_ `useEffect` covers functionalities similar to Angular's lifecycle hooks like `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`. However, `useEffect` is more flexible and unified. The dependency array is key to controlling when the effect runs, mimicking different lifecycle events.
-> _Key Takeaway:_ `useEffect` is the go-to Hook for handling side effects. Master the use of the dependency array to control its execution precisely.
-> _Source:_ [https://angular.io/guide/lifecycle-hooks|Angular Docs: Lifecycle hooks]
+bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
+> *Comparison:* `useEffect` covers functionalities similar to Angular's lifecycle hooks like `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`. However, `useEffect` is more flexible and unified. The dependency array is key to controlling when the effect runs, mimicking different lifecycle events.
+> *Key Takeaway:* `useEffect` is the go-to Hook for handling side effects. Master the use of the dependency array to control its execution precisely.
+> *Source:* [https://angular.io/guide/lifecycle-hooks|Angular Docs: Lifecycle hooks]
 
-bq. 📲 _(Native Developers - Android/iOS):_
-> _Comparison:_ `useEffect` can be compared to lifecycle methods like `onCreate`/`onResume`/`onPause`/`onDestroy` in Android Activities/Fragments, or `viewDidLoad`/`viewWillAppear`/`viewWillDisappear` in iOS ViewControllers. The empty dependency array `[]` provides behavior similar to `onCreate` or `viewDidLoad` for setup, and the cleanup function to `onDestroy` or `viewDidDisappear` for teardown. Effects with dependencies relate to updates based on data changes.
-> _Key Takeaway:_ Use `useEffect` to manage operations that need to happen at specific points in your component's existence on the screen, such as data fetching when it appears, or cleaning up resources when it disappears.
-> _Source:_ [https://developer.android.com/guide/components/activities/activity-lifecycle|Android Dev Docs: Understand the Activity Lifecycle], [https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW1|Apple Dev Docs: Managing Your View Controller's Life Cycle]
+bq. 📲 *(Native Developers - Android/iOS):*
+> *Comparison:* `useEffect` can be compared to lifecycle methods like `onCreate`/`onResume`/`onPause`/`onDestroy` in Android Activities/Fragments, or `viewDidLoad`/`viewWillAppear`/`viewWillDisappear` in iOS ViewControllers. The empty dependency array `[]` provides behavior similar to `onCreate` or `viewDidLoad` for setup, and the cleanup function to `onDestroy` or `viewDidDisappear` for teardown. Effects with dependencies relate to updates based on data changes.
+> *Key Takeaway:* Use `useEffect` to manage operations that need to happen at specific points in your component's existence on the screen, such as data fetching when it appears, or cleaning up resources when it disappears.
+> *Source:* [https://developer.android.com/guide/components/activities/activity-lifecycle|Android Dev Docs: Understand the Activity Lifecycle], [https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW1|Apple Dev Docs: Managing Your View Controller's Life Cycle]
 
 The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
 - [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
 - [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
@@ -194,12 +194,12 @@ bq. 📚 _Official Documentation:_
 h3. A Note on `useLayoutEffect`
 
 React provides another Hook called `useLayoutEffect` which has the same signature as `useEffect` but fires _synchronously_ after all DOM mutations are complete, but _before_ the browser has painted the changes to the screen. This means it can block visual updates.
-* _Use Case:_ `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
-* _Preference:_ For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), _`useEffect` is preferred_ because it does not block the browser from painting, leading to a more responsive UI.
+* *Use Case:* `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
+* *Preference:* For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), *`useEffect` is preferred* because it does not block the browser from painting, leading to a more responsive UI.
 
 Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
 
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
 - [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
 - [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
@@ -217,13 +217,13 @@ Let's practice using `useEffect` to perform a side effect, such as fetching data
 # Use `useState` to manage `userName`, initialized to `null` or an empty string.
 # Use `useState` to manage `isLoading`, initialized to `true`.
 # Use `useEffect` to simulate fetching user data when the component mounts (i.e., run the effect only once):
-** Inside the effect, set `isLoading` to `true` (though it's already true, good practice if fetch could be re-triggered).
-** Use `setTimeout` to simulate a network request delay (e.g., 1.5 seconds).
-** After the timeout, set `userName` to a sample name (e.g., "SpeedyMeds User").
-** Set `isLoading` to `false`.
+*** Inside the effect, set `isLoading` to `true` (though it's already true, good practice if fetch could be re-triggered).
+*** Use `setTimeout` to simulate a network request delay (e.g., 1.5 seconds).
+*** After the timeout, set `userName` to a sample name (e.g., "SpeedyMeds User").
+*** Set `isLoading` to `false`.
 # Conditionally render:
-** If `isLoading` is true, display a `<Text>` component showing "Loading profile...".
-** If `isLoading` is false and `userName` is available, display a welcome message like "Welcome, [userName]!".
+*** If `isLoading` is true, display a `<Text>` component showing "Loading profile...".
+*** If `isLoading` is false and `userName` is available, display a welcome message like "Welcome, [userName]!".
 # (Optional) Ensure your `useEffect` has an empty dependency array `[]` so it only runs on mount.
 
 *Tool:* CodeSandbox

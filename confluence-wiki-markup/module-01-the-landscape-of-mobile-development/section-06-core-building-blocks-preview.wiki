@@ -1,15 +1,15 @@
 h2. Section 6: Core Building Blocks (A Preview)
 
-React Native provides a set of essential, pre-built components that work across both iOS and Android. These _Core Components_ are the basic tools in your UI toolkit, each mapping to corresponding native UI elements for optimal performance and look-and-feel. This section offers a brief preview of some fundamental ones. Later modules will delve much deeper into each component, exploring their props, styling, layout, and interactions.
+React Native provides a set of essential, pre-built components that work across both iOS and Android. These *Core Components* are the basic tools in your UI toolkit, each mapping to corresponding native UI elements for optimal performance and look-and-feel. This section offers a brief preview of some fundamental ones. Later modules will delve much deeper into each component, exploring their props, styling, layout, and interactions.
 
 h3. Key Core Components
 
 Here are a few of the most commonly used Core Components:
 
 h4. {{<View>}}
-* _Role:_ The most basic container component. Use it to group other components, apply styles, and control layout using Flexbox.
-* _Analogy:_ Think of it like a {{<div>}} in web development, or {{UIView}} on iOS / {{ViewGroup}} on Android.
-* _Example:_
+* *Role:* The most basic container component. Use it to group other components, apply styles, and control layout using Flexbox.
+* *Analogy:* Think of it like a {{<div>}} in web development, or {{UIView}} on iOS / {{ViewGroup}} on Android.
+* *Example:*
 
   ```tsx
   import React from "react";
@@ -27,10 +27,10 @@ h4. {{<View>}}
   ```
 
 h4. {{<Text>}}
-* _Role:_ Used for displaying all text content. Any text string in your JSX _must_ be wrapped within a {{<Text>}} component.
-* _Features:_ Supports nesting {{<Text>}} components for varied styling and can handle touch events.
-* _Analogy:_ Similar to {{<p>}} or {{<span>}} in web development, or {{UILabel}}/{{UITextView}} on iOS / {{TextView}} on Android.
-* _Example:_
+* *Role:* Used for displaying all text content. Any text string in your JSX _must_ be wrapped within a {{<Text>}} component.
+* *Features:* Supports nesting {{<Text>}} components for varied styling and can handle touch events.
+* *Analogy:* Similar to {{<p>}} or {{<span>}} in web development, or {{UILabel}}/{{UITextView}} on iOS / {{TextView}} on Android.
+* *Example:*
 
   ```tsx
   import React from "react";
@@ -49,10 +49,10 @@ h4. {{<Text>}}
   ```
 
 h4. {{<Image>}}
-* _Role:_ Displays images from various sources: network URLs, static project resources (using {{require('./path/to/image.png')}}), or local device storage.
-* _Requirement:_ Network images _must_ have {{width}} and {{height}} styles specified.
-* _Analogy:_ Like {{<img>}} in web development, or {{UIImageView}} on iOS / {{ImageView}} on Android.
-* _Example:_
+* *Role:* Displays images from various sources: network URLs, static project resources (using {{require('./path/to/image.png')}}), or local device storage.
+* *Requirement:* Network images _must_ have {{width}} and {{height}} styles specified.
+* *Analogy:* Like {{<img>}} in web development, or {{UIImageView}} on iOS / {{ImageView}} on Android.
+* *Example:*
 
   ```tsx
   import React from "react";
@@ -64,7 +64,7 @@ h4. {{<Image>}}
         style={styles.logo}
         source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
       />
-      {/_ <Image style={styles.localImage} source={require('./assets/my-icon.png')} /> _/}
+      {/* <Image style={styles.localImage} source={require('./assets/my-icon.png')} /> */}
     </View>
   );
 
@@ -75,17 +75,17 @@ h4. {{<Image>}}
   ```
 
 h4. {{<StyleSheet>}}
-* _Role:_ An API (not a component itself) used to define reusable style objects in JavaScript. {{StyleSheet.create()}} is used to centralize style definitions.
-* _Benefits:_ Improves code organization by separating styles from rendering logic and can offer performance optimizations by sending styles over the bridge only once.
-* _Analogy:_ Conceptually similar to creating CSS rules in a {{<style>}} tag or {{.css}} file on the web.
-* _Example:_ (See {{styles}} objects in the examples above and below – they all use {{StyleSheet.create}})
+* *Role:* An API (not a component itself) used to define reusable style objects in JavaScript. {{StyleSheet.create()}} is used to centralize style definitions.
+* *Benefits:* Improves code organization by separating styles from rendering logic and can offer performance optimizations by sending styles over the bridge only once.
+* *Analogy:* Conceptually similar to creating CSS rules in a {{<style>}} tag or {{.css}} file on the web.
+* *Example:* (See {{styles}} objects in the examples above and below – they all use {{StyleSheet.create}})
 
 h4. {{<Button>}}
-* _Role:_ A simple, cross-platform button component for basic user interactions.
-* _Props:_ Requires {{title}} (string for button text) and {{onPress}} (function to call when tapped). Optional {{color}} and {{disabled}} props.
-* _Customization:_ Offers minimal styling customization. For more control, use {{<Pressable>}} or build custom touchable components.
-* _Analogy:_ Like {{<button>}} in web development, or {{UIButton}} on iOS / {{Button}} on Android.
-* _Example:_
+* *Role:* A simple, cross-platform button component for basic user interactions.
+* *Props:* Requires {{title}} (string for button text) and {{onPress}} (function to call when tapped). Optional {{color}} and {{disabled}} props.
+* *Customization:* Offers minimal styling customization. For more control, use {{<Pressable>}} or build custom touchable components.
+* *Analogy:* Like {{<button>}} in web development, or {{UIButton}} on iOS / {{Button}} on Android.
+* *Example:*
 
   ```tsx
   import React from "react";

@@ -6,7 +6,7 @@ h3. What are Generics?
 
 Imagine you need a function that returns the first item of an array. Without generics, you might have to write separate functions for an array of numbers, an array of strings, and so on, or resort to using {{any}} which sacrifices type safety.
 
-Generics solve this by allowing you to define a _type variable_ (often denoted by {{T}}, {{U}}, {{K}}, {{V}}, etc., by convention) that acts as a placeholder for the actual type. This type variable is then used to type the function's parameters, return value, or an interface's members.
+Generics solve this by allowing you to define a *type variable* (often denoted by {{T}}, {{U}}, {{K}}, {{V}}, etc., by convention) that acts as a placeholder for the actual type. This type variable is then used to type the function's parameters, return value, or an interface's members.
 
 h3. Generic Functions
 
@@ -149,7 +149,7 @@ Constraints ensure that your generic function can safely access the properties i
 {tip}
 Generics significantly enhance code reusability and type safety. When you find yourself writing similar functions or interfaces for different types, consider if generics can provide a more elegant and type-safe solution.
 {tip}
-bq. 📚 _Official Documentation:_
+bq. 📚 *Official Documentation:*
 > - [https://www.typescriptlang.org/docs/handbook/2/generics.html|TypeScript Handbook: Generics]
 
 Generics are a key tool for building scalable and maintainable applications. They are particularly useful when creating utility functions, data structures, or working with APIs that handle various types of data.
