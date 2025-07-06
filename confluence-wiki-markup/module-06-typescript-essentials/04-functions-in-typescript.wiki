@@ -1,0 +1,191 @@
+h2. Section 4: Functions in TypeScript
+
+Functions are fundamental to any application, and TypeScript enhances them by allowing you to define types for their parameters and return values. This brings greater clarity, predictability, and error prevention to your function definitions and calls.
+
+h3. Typing Parameters
+
+You can specify the type for each parameter a function accepts. If you call the function with arguments of incorrect types, TypeScript will issue a compile-time error.
+
+{code:language=js}
+interface Patient {
+  id: string;
+  name: string;
+  age: number;
+}
+
+// Function with typed parameters
+function getPatientGreeting(patient: Patient, greeting: string): string {
+  return `${greeting}, ${patient.name}! You are ${patient.age} years old.`;
+}
+
+const aPatient: Patient = { id: "P001", name: "Sarah Connor", age: 35 };
+
+console.log(getPatientGreeting(aPatient, "Welcome"));
+// Output: Welcome, Sarah Connor! You are 35 years old.
+
+// const invalidCall = getPatientGreeting({ name: "John Doe", age: "40" }, "Hello");
+// Error: Argument of type '{ name: string; age: string; }' is not assignable to parameter of type 'Patient'.
+// Type 'string' is not assignable to type 'number' for property 'age', and 'id' is missing.
+{code}
+
+h3. Typing Return Values
+
+You can also explicitly set the type of the value a function returns. While TypeScript can often infer the return type, being explicit can improve readability and catch errors if the function accidentally returns an unexpected type.
+
+{code:language=js}
+interface Medication {
+  name: string;
+  strength: number;
+  strengthUnit: string;
+}
+
+// Function with an explicit return type (Medication)
+function findMedicationByName(name: string): Medication | undefined {
+  // In a real app, this would search a database or list
+  const medications: Medication[] = [
+    { name: "Lisinopril", strength: 10, strengthUnit: "mg" },
+    { name: "Metformin", strength: 500, strengthUnit: "mg" },
+  ];
+  return medications.find(
+    (med) => med.name.toLowerCase() === name.toLowerCase()
+  );
+}
+
+let foundMed = findMedicationByName("Metformin");
+
+if (foundMed) {
+  console.log(
+    `Found: ${foundMed.name} ${foundMed.strength}${foundMed.strengthUnit}`
+  );
+} else {
+  console.log("Medication not found.");
+}
+
+{code}
+
+*`void` Return Type:*
+If a function doesn't return any value, you can specify its return type as `void`.
+
+{code:language=js}
+function logPrescriptionIssue(medicationName: string, patientId: string): void {
+  console.log(
+    `Prescription for ${medicationName} issued to patient ${patientId}.`
+  );
+  // No return value
+}
+
+logPrescriptionIssue("Amoxicillin", "PAT789");
+{code}
+
+{tip}
+It's a good practice to explicitly type function return values, especially for complex functions or functions in a public API. This makes the function's contract clearer and helps TypeScript catch errors if the function's logic changes and it unintentionally returns a different type.
+{tip}
+h3. Optional and Default Parameters
+
+TypeScript allows you to define optional parameters in functions by adding a `?` after the parameter name. Optional parameters must come after required parameters.
+
+You can also provide default values for parameters. If a default value is provided, the parameter is automatically considered optional.
+
+{code:language=js}
+function recordVitalSigns(
+  patientId: string,
+  heartRate: number,
+  temperature?: number,
+  notes: string = "N/A"
+): void {
+  console.log(`Patient ID: ${patientId}`);
+  console.log(`Heart Rate: ${heartRate} bpm`);
+  if (temperature !== undefined) {
+    // Check if optional parameter was provided
+    console.log(`Temperature: ${temperature}°C`);
+  }
+  console.log(`Notes: ${notes}`);
+}
+
+recordVitalSigns("PAT101", 72);
+// Output:
+// Patient ID: PAT101
+// Heart Rate: 72 bpm
+// Notes: N/A
+
+recordVitalSigns("PAT102", 80, 37.5);
+// Output:
+// Patient ID: PAT102
+// Heart Rate: 80 bpm
+// Temperature: 37.5°C
+// Notes: N/A
+
+recordVitalSigns("PAT103", 65, 36.8, "Patient calm and resting.");
+// Output:
+// Patient ID: PAT103
+// Heart Rate: 65 bpm
+// Temperature: 36.8°C
+// Notes: Patient calm and resting.
+{code}
+
+h3. Rest Parameters
+
+You can define functions that accept a variable number of arguments using rest parameters. These are specified with a `...` prefix and must be an array type.
+
+{code:language=js}
+function listAllergies(patientName: string, ...allergies: string[]): void {
+  console.log(`Patient: ${patientName}`);
+  if (allergies.length > 0) {
+    console.log("Allergies:");
+    allergies.forEach((allergy) => console.log(`- ${allergy}`));
+  } else {
+    console.log("No known allergies.");
+  }
+}
+
+listAllergies("John Doe", "Penicillin", "Sulfa");
+// Output:
+// Patient: John Doe
+// Allergies:
+// - Penicillin
+// - Sulfa
+
+listAllergies("Jane Smith");
+// Output:
+// Patient: Jane Smith
+// No known allergies.
+{code}
+
+h3. Function Types
+
+Just like you can create type aliases for objects or primitives, you can also define a type for a function. This is useful when you want to ensure consistency for callback functions or when functions are passed as parameters.
+
+{code:language=js}
+// Define a function type using a type alias
+type PatientFilter = (patient: Patient) => boolean;
+
+const isPediatricPatient: PatientFilter = (patient) => {
+  return patient.age < 18;
+};
+
+const adultPatients: Patient[] = [
+  { id: "A001", name: "Alice", age: 30 },
+  { id: "C002", name: "Charlie", age: 12 },
+  { id: "B003", name: "Bob", age: 45 },
+];
+
+// Using the typed function
+const pediatricPatientRecords = adultPatients.filter(isPediatricPatient);
+console.log("Pediatric Patients:", pediatricPatientRecords);
+// Output: Pediatric Patients: [ { id: 'C002', name: 'Charlie', age: 12 } ]
+
+// Another example: function type for an event handler
+type ButtonPressHandler = (eventTime: Date, buttonId: string) => void;
+
+const handleRefillRequest: ButtonPressHandler = (eventTime, buttonId) => {
+  console.log(
+    `Refill requested at ${eventTime.toISOString()} for button ${buttonId}`
+  );
+};
+{code}
+
+bq. 📚 _Official Documentation:_
+> - [https://www.typescriptlang.org/docs/handbook/2/functions.html|TypeScript Handbook: More on Functions]
+- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#function-type-expressions|TypeScript Handbook: Everyday Types (covers function types)]
+
+Typed functions are a cornerstone of writing robust TypeScript code. They make your function contracts explicit, helping to prevent bugs and improve the overall maintainability of your SpeedyMeds application logic.

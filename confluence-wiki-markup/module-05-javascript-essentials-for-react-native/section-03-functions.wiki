@@ -1,0 +1,495 @@
+h2. Section 3: Functions
+
+Functions are fundamental building blocks in JavaScript. They are reusable blocks of code that perform a specific task or calculate a value. By encapsulating logic within functions, you can make your code more organized, readable, and maintainable. This section explores how to define and use functions, with a special focus on modern ES6 features like arrow functions, and important concepts like scope and closures.
+
+h3. Defining and Calling Functions
+
+There are several ways to define functions in JavaScript.
+
+bq. 📲 _(Native Developers):_ 
+> _Comparison:_ JavaScript functions differ from Swift and Kotlin methods in several important ways. In Swift, functions are first-class types with clear parameter/return types. In Kotlin/Java, methods belong to classes with explicit typing. JavaScript functions are more flexible - they can be declared multiple ways, passed as values, and don't require explicit type annotations.
+> _Key Takeaway:_ JavaScript's arrow functions ({{=>}}) are similar to Swift closures and Kotlin lambdas, but with a critical difference in how {{this}} is handled - arrow functions inherit {{this}} from their parent scope, which is especially important in React Native.
+> _Source:_ [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/|Swift Functions] and [https://kotlinlang.org/docs/functions.html|Kotlin Functions]
+> _Example:_
+> {code:language=swift}
+// Swift function
+func greet(name: String) -> String {
+return "Hello, \(name)!"
+}
+// Swift closure
+let greetClosure = { (name: String) -> String in
+return "Hello, \(name)!"
+}
+```
+> ```kotlin
+// Kotlin function
+fun greet(name: String): String {
+return "Hello, $name!"
+}
+// Kotlin lambda
+val greetLambda = { name: String -> "Hello, $name!" }
+```
+> ```javascript
+// JavaScript function declaration
+function greet(name) {
+return `Hello, ${name}!`;
+}
+// JavaScript arrow function
+const greetArrow = (name) => `Hello, ${name}!`;
+```
+
+h4. Function Declarations
+
+A function declaration defines a named function. These declarations are _hoisted_, meaning the entire function definition (name and body) is conceptually moved to the top of its enclosing scope (function or global) by the JavaScript engine before the code is executed. This allows you to call a declared function _before_ its textual definition in the code.
+{code}javascript
+// Calling the function before declaration (hoisting makes this work)
+let welcomeMessage = greetPatient("Maria Rodriguez");
+console.log(welcomeMessage); // Output: Welcome to SpeedyMeds, Maria Rodriguez!
+
+// Function Declaration
+function greetPatient(patientName) {
+  return `Welcome to SpeedyMeds, ${patientName}!`;
+}
+
+// Calling the function
+console.log(greetPatient("Maria Rodriguez")); // Output: Welcome to SpeedyMeds, Maria Rodriguez!
+
+// Function Expression (named - useful for debugging)
+const getMedicationInfo = function medicationInfo(medicationId) {
+  // Imagine fetching info from a database
+  if (medicationId === "AMX250") {
+    return "Amoxicillin 250mg";
+  }
+  return "Medication not found";
+};
+console.log(getMedicationInfo("AMX250")); // Output: Amoxicillin 250mg
+{code:language=text}
+This code block first demonstrates hoisting with the `greetPatient` function. Notice `greetPatient("Maria Rodriguez")` is called _before_ its declaration, yet it executes correctly, outputting "Welcome to SpeedyMeds, Maria Rodriguez!". This is because function declarations are fully hoisted. The subsequent call after the declaration behaves identically. The second part shows a named function expression, `medicationInfo`, assigned to `getMedicationInfo`. While the name `medicationInfo` can be useful for debugging (e.g., in stack traces), the function is invoked via the constant `getMedicationInfo`. This example primarily illustrates the basic syntax of function declaration and a named function expression, and highlights the hoisting behavior unique to declarations.
+
+*Hoisting Differences: Declarations vs. Expressions:*
+* _Function Declarations:_ Fully hoisted (name and body). Callable anywhere in their scope.
+* _Function Expressions:_ Only the variable declaration (`var`, `let`, or `const`) is hoisted, not the function assignment itself.
+* If assigned to `var`, the variable is initialized to `undefined` until the assignment line. Calling it before assignment results in a `TypeError` (`variable is not a function`).
+* If assigned to `let` or `const`, the variable enters the Temporal Dead Zone (TDZ) until the assignment line. Calling it before assignment results in a `ReferenceError`.
+
+h3. Parameters and Arguments
+* _Parameters:_ These are the names listed in the function definition. They act as placeholders for the values that will be passed to the function when it's called.
+* _Arguments:_ These are the actual values passed to the function when it is invoked.
+
+h4. Default Parameters (ES6)
+
+You can assign default values to function parameters. If an argument for that parameter is not provided when the function is called, the default value is used.
+{code}javascript
+function scheduleRefill(patientId, medicationName, daysSupply = 30) {
+  console.log(
+    `Scheduling a ${daysSupply}-day refill for ${medicationName} for patient ${patientId}.`
+  );
+}
+
+scheduleRefill("P001", "Lisinopril");
+// Output: Scheduling a 30-day refill for Lisinopril for patient P001.
+scheduleRefill("P002", "Metformin", 90);
+// Output: Scheduling a 90-day refill for Metformin for patient P002.
+{code:language=text}
+This example showcases ES6 default parameters. The `scheduleRefill` function defines `daysSupply = 30`, meaning if the third argument isn't provided during a call, `daysSupply` will automatically be 30. In the first call, `scheduleRefill("P001", "Lisinopril")`, only two arguments are passed, so `daysSupply` defaults to 30, resulting in the output "Scheduling a 30-day refill...". In the second call, `scheduleRefill("P002", "Metformin", 90)`, three arguments are provided, so the passed value `90` overrides the default for `daysSupply`, leading to "Scheduling a 90-day refill...". This feature simplifies function calls by making certain parameters optional with sensible defaults.
+
+h4. Rest Parameters (`...`) (ES6)
+
+Rest parameters allow a function to accept an indefinite number of arguments as an _array_. This provides a cleaner way to handle variadic functions (functions that accept a variable number of arguments) compared to the older `arguments` object.
+* _Syntax:_ Use three dots (`...`) followed by the name of the array that will hold the arguments.
+* _Position:_ The rest parameter must be the _last_ parameter in the function definition.
+* _Type:_ The collected parameter is a true `Array` instance, so you can use array methods like `map`, `filter`, `reduce` directly on it.
+{code}javascript
+function sumAll(...numbers) {
+  // 'numbers' is an array containing all arguments passed
+  console.log("Arguments received:", numbers); // e.g., [ 1, 5, 10, 3 ]
+  return numbers.reduce((sum, current) => sum + current, 0);
+}
+
+console.log(sumAll(1, 5, 10, 3)); // Output: Arguments received: [ 1, 5, 10, 3 ] -> 19
+console.log(sumAll(10, 20)); // Output: Arguments received: [ 10, 20 ] -> 30
+
+// Can be used with other parameters
+function logMedicationBatch(batchId, ...validationCodes) {
+  console.log(`Processing Batch ID: ${batchId}`);
+  console.log(`Validation Codes: ${validationCodes.join(", ")}`);
+}
+
+logMedicationBatch("B10X5", "VC01", "VC07", "VC12");
+// Output:
+// Processing Batch ID: B10X5
+// Validation Codes: VC01, VC07, VC12
+{code:language=text}
+h4. The `arguments` Object (Legacy)
+
+Before rest parameters, the `arguments` object was the primary way to access all arguments passed to a _regular function_ (not arrow functions).
+* _Availability:_ Available only inside _non-arrow_ functions.
+* _Type:_ It's an _array-like_ object, not a true array. This means it has a `length` property and indexed elements (e.g., `arguments[0]`), but it lacks standard array methods like `map`, `forEach`, `filter` directly (though they can be used via `Array.prototype.method.call(arguments, ...)`).
+* _Content:_ Contains _all_ arguments passed to the function, regardless of the number of named parameters defined.
+{code}javascript
+function logAllArgs() {
+  console.log("Number of arguments:", arguments.length);
+  for (let i = 0; i < arguments.length; i++) {
+    console.log(`Argument ${i}: ${arguments[i]}`);
+  }
+}
+
+logAllArgs("hello", true, 100);
+// Output:
+// Number of arguments: 3
+// Argument 0: hello
+// Argument 1: true
+// Argument 2: 100
+{code:language=text}
+
+{info}
+In modern JavaScript (ES6+), _prefer rest parameters (`...`)_ over the `arguments` object. Rest parameters are more explicit, provide a true array, and work in all function types including arrow functions.
+{info}
+h3. Return Values
+
+A function can return a value using the `return` statement. If a function doesn't have a `return` statement, or has a `return` statement without an expression, it implicitly returns `undefined`.
+{code}javascript
+function isMedicationInStock(medicationName) {
+  // Simplified stock check
+  const stock = {
+    Amoxicillin: 100,
+    Ibuprofen: 50,
+  };
+  if (stock[medicationName] > 0) {
+    return true;
+  }
+  // No explicit else return, implies return undefined if not in stock, but better to be explicit:
+  return false;
+}
+
+console.log(`Is Amoxicillin in stock? ${isMedicationInStock("Amoxicillin")}`); // Output: Is Amoxicillin in stock? true
+console.log(`Is Aspirin in stock? ${isMedicationInStock("Aspirin")}`); // Output: Is Aspirin in stock? false
+{code:language=text}
+h3. Arrow Functions (ES6)
+
+Arrow functions provide a more concise syntax for writing function expressions. They are particularly useful for simple functions and have a significant difference in how they handle the `this` keyword, which is crucial in React and React Native.
+
+*Syntax Variations:*
+* No parameters: `() => expression`
+* One parameter: `param => expression` or `(param) => expression`
+* Multiple parameters: `(param1, param2) => expression`
+* With a function body (multiple statements): `(param1, param2) => { statements; return value; }`
+* Implicit return (for single expression): `(param1, param2) => param1 + param2` (returns the sum)
+* Returning an object literal: `() => ({ key: 'value' })` (note the parentheses around the object)
+{code}javascript
+// Traditional function expression
+const add = function (a, b) {
+  return a + b;
+};
+
+// Arrow function equivalent
+const addArrow = (a, b) => a + b;
+console.log(addArrow(5, 3)); // Output: 8
+
+const getPatientSummary = (patientName, age) =>
+  `Patient: ${patientName}, Age: ${age}`;
+console.log(getPatientSummary("David Lee", 45)); // Output: Patient: David Lee, Age: 45
+
+const processOrder = (orderId) => {
+  console.log(`Processing order ${orderId}...`);
+  // ... more logic
+  return { orderId: orderId, status: "Processed" };
+};
+console.log(processOrder("ORD123")); // Output: Processing order ORD123... { orderId: 'ORD123', status: 'Processed' }
+
+{code:language=text}
+*Key Differences from Traditional Functions (Recap & `this` Details):*
+* _Lexical `this` Binding:_ This is the most significant difference. Arrow functions _do not_ have their own `this` value. Instead, `this` is _lexically inherited_ from the surrounding (enclosing) non-arrow function scope at the time the arrow function is _defined_. The value of `this` inside an arrow function cannot be changed using methods like `call`, `apply`, or `bind`.
+* _No `arguments` Object:_ Use rest parameters (`...args`) instead.
+* _Cannot be used as Constructors:_ Arrow functions throw a `TypeError` if used with `new`.
+* _No `prototype` Property:_ Arrow functions do not have a `prototype` property.
+* _Cannot be used as Generator Functions:_ Arrow functions cannot use the `yield` keyword.
+
+h3. The `this` Keyword Explained
+
+The `this` keyword is a common source of confusion in JavaScript because its value is determined dynamically by _how a function is called_ (its invocation context), especially for traditional functions.
+
+h4. `this` in Regular Functions (Declarations & Expressions)
+# _Global Context (Standalone Call):_ When a regular function is called standalone (not as an object method, not with `new`), `this` usually refers to the global object (`window` in browsers, `global` in Node.js) in non-strict mode. In _strict mode (`'use strict';`)_, `this` will be `undefined` in this case.
+    ```javascript
+    function showThis() {
+      console.log(this);
+    }
+    showThis(); // In browser (non-strict): Window object
+    // In Node.js (non-strict): Global object
+    // In strict mode: undefined
+    ```
+# _Method Invocation:_ When a function is called as a method of an object (e.g., `myObject.myMethod()`), `this` inside that method is bound to the object the method was called on (`myObject`).
+    ```javascript
+    const pharmacy = {
+      name: "Downtown Pharmacy",
+      displayInfo: function () {
+        console.log(`Pharmacy Name: ${this.name}`); // 'this' refers to the pharmacy object
+      },
+    };
+    pharmacy.displayInfo(); // Output: Pharmacy Name: Downtown Pharmacy
+    ```
+# _Constructor Invocation:_ When a function is used as a constructor with the `new` keyword (e.g., `new Patient('...')`), a new object is created, and `this` inside the constructor function is bound to this newly created object instance.
+    ```javascript
+    function Patient(name) {
+      this.name = name;
+      this.admissionDate = new Date();
+      console.log("Creating new patient:", this); // 'this' refers to the new object being created
+    }
+    const patient1 = new Patient("Charles Xavier");
+    // Output: Creating new patient: { name: 'Charles Xavier', admissionDate: [Date object] }
+    ```
+# _Explicit Binding (`call`, `apply`, `bind`):_ You can manually set the value of `this` for a function call, regardless of how it's called.
+** `function.call(thisArg, arg1, arg2, ...)`: Calls the function with a specific `thisArg` and individual arguments.
+** `function.apply(thisArg, [argsArray])`: Calls the function with a specific `thisArg` and an array of arguments.
+*_ `function.bind(thisArg)`: Creates a _new function* where `this` is permanently bound to `thisArg`. Subsequent calls to the bound function always use the bound `this` value.
+
+    ```javascript
+    function logDetails(label) {
+      console.log(`${label}: ${this.value}`);
+    }
+    const data1 = { value: 100 };
+    const data2 = { value: 200 };
+
+    logDetails.call(data1, "Data 1 Call"); // Output: Data 1 Call: 100
+    logDetails.apply(data2, ["Data 2 Apply"]); // Output: Data 2 Apply: 200
+
+    const boundLogData1 = logDetails.bind(data1);
+    boundLogData1("Data 1 Bound"); // Output: Data 1 Bound: 100
+
+    // .bind() can also be used for partial application (pre-loading arguments)
+    const boundLogData1WithLabel = logDetails.bind(
+      data1,
+      "Fixed Label for Data1"
+    );
+    boundLogData1WithLabel(); // Output: Fixed Label for Data1: 100
+
+    // While still important, the need for .bind() in particular has decreased in contexts
+    // like React class components or event handlers due to the prevalence of arrow functions
+    // for preserving the 'this' context correctly.
+    ```
+
+h4. `this` in Arrow Functions
+
+Arrow functions behave differently: they _do not have their own `this` binding_. They inherit `this` lexically from their parent scope at the time they are defined.
+
+This is often advantageous, especially in callbacks and frameworks like React/React Native:
+{code}javascript
+function Timer() {
+  this.seconds = 0;
+
+  // Using a regular function callback (this would be global/undefined in strict mode)
+  // setInterval(function() {
+  //   this.seconds++; // 'this' here is NOT the Timer instance
+  //   console.log(this.seconds); // Would likely result in NaN or error
+  // }, 1000);
+
+  // Using an arrow function callback (inherits 'this' from Timer)
+  setInterval(() => {
+    this.seconds++; // 'this' here correctly refers to the Timer instance
+    console.log(this.seconds);
+  }, 1000);
+}
+
+// const myTimer = new Timer(); // Uncomment to run the timer
+{code:language=text}
+
+{code}mermaid
+graph TD
+    subgraph OuterScope ["Outer Scope (e.g., a Method or Global space)"]
+        direction LR
+        OuterContextValue{{this = outerContextValue}}
+        AF["Arrow Function: const fn = () => this;"] -- Inherits & captures --> OuterContextValue
+    end
+
+    subgraph InvocationTypes [Regular Function Invocation Types]
+        direction TB
+        RF["Regular Function: function fn() { this }"]
+        CallSite1["Standalone: fn()"] --> IC1["this = global/undefined (strict)"]
+        CallSite2["Method: obj.fn()"] --> IC2["this = obj"]
+        CallSite3["Constructor: new fn()"] --> IC3["this = new instance"]
+        CallSite4["Explicit: fn.call(ctx)"] --> IC4["this = ctx"]
+        RF -.-> CallSite1
+        RF -.-> CallSite2
+        RF -.-> CallSite3
+        RF -.-> CallSite4
+    end
+
+    style AF fill:#D5F5E3,stroke:#2ECC71
+    style RF fill:#EBF5FB,stroke:#3498DB
+{code:language=text}
+This diagram contrasts how `this` is determined in arrow functions versus regular functions. For an _Arrow Function_ (green box), its `this` value is lexically inherited from its surrounding scope (Outer Scope) when it's defined. It captures the `this` of its enclosing context (shown as `outerContextValue`) and retains it, regardless of how or where the arrow function is later invoked. This provides a predictable `this`. In contrast, a *Regular Function** (blue box) has a dynamic `this`. Its `this` value is determined at call time based on how it's invoked: a standalone call might set `this` to the global object (or `undefined` in strict mode); a method call (`obj.fn()`) sets `this` to `obj`; a constructor call (`new fn()`) sets `this` to the newly created instance; and explicit binding (`fn.call(ctx)`) sets `this` to `ctx`. This dynamic nature is powerful but can be a source of errors if not carefully managed, a problem largely solved by arrow functions for many common use cases like callbacks.
+
+{note}
+The predictable lexical `this` of arrow functions eliminates many common bugs and the need for workarounds like `const self = this;` or `.bind(this)` that were prevalent with traditional function callbacks.
+{note}
+h3. Scope
+
+Scope determines the accessibility (visibility) of variables and functions at various parts of your code during runtime.
+* _Global Scope:_ Variables declared outside any function or block have global scope. They can be accessed from anywhere in your JavaScript code. It's generally good practice to minimize the use of global variables to avoid naming conflicts.
+* _Function Scope (Local Scope):_ Variables declared within a function (using `var`, or `let`/`const` before ES6 behavior was common) are only accessible within that function.
+* _Block Scope (ES6):_ Variables declared with `let` and `const` inside a block (e.g., within an `if` statement or a `for` loop, denoted by `{}`) are only accessible within that block.
+{code}javascript
+let pharmacyLocation = "Main Street Branch"; // Global scope
+
+function dispenseMedication(medication) {
+  let dispensingStation = "Counter 3"; // Function scope (local to dispenseMedication)
+  console.log(
+    `Dispensing ${medication} from ${dispensingStation} at ${pharmacyLocation}.`
+  );
+
+  if (medication === "ControlledSubstance") {
+    let requiresPharmacistApproval = true; // Block scope (local to if block)
+    console.log(`Pharmacist approval required: ${requiresPharmacistApproval}`);
+  }
+  // console.log(requiresPharmacistApproval); // Error: requiresPharmacistApproval is not defined here
+}
+
+dispenseMedication("Amoxicillin");
+// console.log(dispensingStation); // Error: dispensingStation is not defined here
+{code:language=text}
+*Lexical Scoping (Static Scope):_ JavaScript uses lexical scoping, which means that the scope of a variable is determined by its position within the nested structure of functions at the time the code is written (lexically), not when it's executed. Inner functions have access to variables and parameters of their outer functions. This chain of accessible scopes is known as the _scope chain*.
+
+h3. Closures
+
+A closure is a powerful JavaScript feature where an inner function has access to its outer (enclosing) function's variables and parameters, even after the outer function has finished executing and returned.
+
+In essence, a closure "remembers" the environment (the lexical scope) in which it was created.
+
+*How Closures Work (Under the Hood):*
+
+When a function is created in JavaScript, it doesn't just store its code; it also keeps a hidden reference to the _Lexical Environment_ of the scope in which it was created. A Lexical Environment consists of:
+# _Environment Record:_ An internal structure that stores local variable declarations, function parameters, and the value of `this` within that specific scope.
+# _Reference to Outer Lexical Environment:_ A pointer to the Lexical Environment of the enclosing (parent) scope. This creates the scope chain.
+
+When an outer function finishes executing, its execution context might be gone, but if an inner function (the closure) is still accessible (e.g., it was returned or passed as a callback), the JavaScript engine ensures that the Lexical Environment (or at least the parts of it referenced by the closure) remains in memory. When the closure is later called, it uses its stored reference to its creation scope to look up variables in the scope chain.
+
+*Practical Uses of Closures (Examples):*
+* _Data Encapsulation/Privacy:_ (As shown in `createPrescriptionTracker`)
+* _Function Factories:_ Creating configured functions.
+  ```javascript
+  function createMultiplier(factor) {
+    return (number) => number * factor;
+  }
+  const double = createMultiplier(2);
+  const triple = createMultiplier(3);
+  console.log(double(5)); // Output: 10
+  console.log(triple(5)); // Output: 15
+  ```
+* _Callbacks with State:_ Attaching specific state to event handlers.
+  ```javascript
+  // Hypothetical button click example
+  // function setupButton(buttonId, message) {
+  //   const button = document.getElementById(buttonId);
+  //   button.addEventListener('click', () => { // Arrow function is a closure
+  //     console.log(message); // Accesses 'message' from outer scope
+  //   });
+  // }
+  // setupButton("saveBtn", "Data saved successfully!");
+  ```
+{code}javascript
+function createPrescriptionTracker(medicationName) {
+  let prescriptionsFilled = 0; // This variable is private to the closure
+
+  return function fillPrescription(patientName) {
+    prescriptionsFilled++;
+    console.log(
+      `${medicationName} prescription #${prescriptionsFilled} filled for ${patientName}.`
+    );
+    return prescriptionsFilled;
+  };
+}
+
+// Create a specific tracker for Amoxicillin
+const trackAmoxicillin = createPrescriptionTracker("Amoxicillin");
+
+trackAmoxicillin("John Doe"); // Output: Amoxicillin prescription #1 filled for John Doe.
+trackAmoxicillin("Jane Smith"); // Output: Amoxicillin prescription #2 filled for Jane Smith.
+let totalAmoxicillinFilled = trackAmoxicillin("Robert Brown"); // Output: Amoxicillin prescription #3 filled for Robert Brown.
+console.log(`Total Amoxicillin filled: ${totalAmoxicillinFilled}`); // Output: Total Amoxicillin filled: 3
+
+// Create another independent tracker for Lisinopril
+const trackLisinopril = createPrescriptionTracker("Lisinopril");
+trackLisinopril("Alice Green"); // Output: Lisinopril prescription #1 filled for Alice Green.
+
+// prescriptionsFilled directly is not accessible here:
+// console.log(prescriptionsFilled); // Error: prescriptionsFilled is not defined
+{code:language=text}
+In this example, `fillPrescription` is a closure. It has access to `medicationName` and `prescriptionsFilled` from its lexical scope (the `createPrescriptionTracker` function), even after `createPrescriptionTracker` has returned. Each call to `createPrescriptionTracker` creates a new, independent closure with its own `prescriptionsFilled` counter.
+
+h4. Function Definition Comparison
+
+||Feature||Function declaration||Function expression||Arrow function||
+|Syntax example|`function greet() {}`|`const greet = function() {};`|`const greet = () => {};`|
+|Hoisting behavior|Fully hoisted|Variable hoisted/TDZ only|Variable hoisted/TDZ only|
+|`this` binding|Dynamic|Dynamic|Lexical|
+|`arguments` object|Available|Available|Not available|
+|Usable as constructor (`new`)|Yes|Yes (if not arrow)|No (`TypeError`)|
+|`prototype` property|Yes|Yes (if not arrow)|No|
+h3. Higher-Order Functions
+
+A higher-order function is a function that either:
+# Takes one or more functions as arguments, OR
+# Returns a function as its result.
+
+Closures are often created by higher-order functions (like `createPrescriptionTracker` above, which returns a function). Many built-in JavaScript array methods like `map()`, `filter()`, and `reduce()` are also higher-order functions because they take a callback function as an argument. We will explore these array methods in the next section.
+
+bq. 📚 _Official Documentation:_
+> - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions|MDN Web Docs: Functions]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions|MDN Web Docs: Arrow functions]
+- [https://developer.mozilla.org/en-US/docs/Glossary/Scope|MDN Web Docs: Scope]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures|MDN Web Docs: Closures]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this|MDN Web Docs: `this`]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call|MDN Web Docs: Function.prototype.call()]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply|MDN Web Docs: Function.prototype.apply()]
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind|MDN Web Docs: Function.prototype.bind()]
+
+h3. Exercise 5.1: Function Practice
+
+Apply your understanding of JavaScript functions by completing the exercises in CodeSandbox. This exercise will involve creating functions related to pharmacy operations, practicing parameters, return values, and potentially closures.
+
+*(https://codesandbox.io/s/module-5-exercise-1-function-practice-placeholder-g9x2z)*
+
+_(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the exercise prompt will be provided in the actual course materials.)_
+
+*Instructions for Exercise 5.1 (to be placed in CodeSandbox `README.md`):*
+{code}markdown
+h1. Exercise 5.1: Function Practice - SpeedyMeds Pharmacy
+
+h2. Objective
+
+Practice defining and using various types of JavaScript functions, including parameters, return values, arrow functions, and a simple closure, all within the context of the SpeedyMeds pharmacy theme.
+
+h2. Tasks
+# _`getMedicationLabel(medicationName, patientName, dosage)`_
+** Define a traditional function declaration named `getMedicationLabel`.
+** It should accept three parameters: `medicationName` (string), `patientName` (string), and `dosage` (string, e.g., "10mg").
+** The function should return a formatted string for a medication label, for example: "Medication: Amoxicillin - Patient: John Doe - Dosage: 250mg".
+** Call this function with sample data and log the result to the console.
+# _`isEligibleForRefill(lastFilledDate, daysSupply)`_
+** Define an arrow function named `isEligibleForRefill`.
+** It should accept two parameters: `lastFilledDate` (a JavaScript `Date` object) and `daysSupply` (number).
+** The function should determine if a refill is due. A refill is due if the `lastFilledDate` plus `daysSupply` is before or on the current date.
+** Return `true` if eligible, `false` otherwise.
+** _Hint:_ You can create a `Date` object for today: `new Date()`. To add days to `lastFilledDate`, you might create a new date object from it and use `setDate(lastFilledDate.getDate() + daysSupply)`.
+** Call this function with sample data (e.g., a `lastFilledDate` that is 35 days ago for a 30-day supply) and log the result.
+# _`createPatientIdGenerator(prefix)`_
+** Define a function named `createPatientIdGenerator` that demonstrates a closure.
+** This function should accept one parameter: `prefix` (string, e.g., "SM").
+** It should return _another function_. This inner function, when called, should generate a patient ID by concatenating the `prefix`, a hyphen, and an incrementing number (starting from 1).
+** Each call to the _returned_ function should generate the next ID in the sequence for that specific prefix.
+** Create two separate ID generators with different prefixes (e.g., `smGenerator` for "SM" and `phGenerator` for "PH").
+** Call each generator a few times and log the generated IDs to show they maintain their own sequence.
+
+h2. Getting Started
+# Open the `index.js` file.
+# Implement the functions as described above.
+# Use `console.log()` to display the outputs of your function calls.
+# Check the console in CodeSandbox to see your results.
+
+Good luck!
+```
+
+h3. Next Steps
+
+Functions are a cornerstone of JavaScript. Now that you can create and manage them effectively, let's move on to another crucial aspect: working with complex data structures. Proceed to [./section-04-objects-and-arrays.md|Section 4: Objects and Arrays] to learn how to organize and manipulate collections of data.

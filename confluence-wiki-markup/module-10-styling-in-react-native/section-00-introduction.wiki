@@ -1,0 +1,90 @@
+h1. Module 10: Styling in React Native
+
+<!-- Optional: Relevant banner image (e.g., abstract graphic related to styling) -->
+<!-- ![./assets/images/module-10/styling-banner.png|Styling Banner] -->
+<!-- Caption: Visualizing different styling approaches in React Native. -->
+
+Welcome to Module 10, where we'll explore the diverse world of styling in React Native. Effective styling is crucial for creating visually appealing, brand-aligned, and user-friendly mobile applications. This module will equip you with the knowledge and skills to implement various styling strategies, from fundamental {{StyleSheet}} techniques to advanced theming with UI libraries, all within the context of our SpeedyMeds application.
+
+h2. Target Audience Adaptation
+
+Styling in React Native draws concepts from web development, particularly CSS, but with its own unique APIs and paradigms.
+
+bq. 🌐 _(Web Developers):_
+> _Comparison:_ You'll find Flexbox layout very familiar to CSS Flexbox. React Native's {{StyleSheet}} API will remind you of writing CSS in JavaScript, but with camelCased property names (e.g., {{backgroundColor}} instead of {{background-color}}). Concepts like "cascading" don't apply in the same way; styles are typically scoped to components.
+> _Key Takeaway:_ While many CSS concepts apply, React Native uses a JavaScript-based approach ({{StyleSheet}} or CSS-in-JS libraries) rather than separate CSS files. Style properties are also a subset of what's available on the web.
+> _Source:_ [https://reactnative.dev/docs/style|Style - React Native]
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ Styling in React Native is quite different from XML-based layouts and styles (e.g., {{styles.xml}}, themes, material design components). Instead of defining styles in XML, you'll use JavaScript objects. Flexbox will be the primary layout mechanism, which differs from ConstraintLayout or LinearLayout.
+> _Key Takeaway:_ Embrace the JavaScript-centric styling and Flexbox for layout. You'll find more dynamic control over styles directly within your component logic.
+> _Source:_ [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ React Native styling diverges from UIKit's Storyboards, XIBs, or programmatic Auto Layout and UIAppearance. Style definitions live in JavaScript. Flexbox is the layout engine, which has conceptual similarities to Auto Layout but with a different syntax and model.
+> _Key Takeaway:_ Shift from visual tools or Swift/Objective-C styling APIs to JavaScript objects and Flexbox. The direct manipulation of style objects in code offers flexibility.
+> _Source:_ [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
+
+h2. Learning Objectives
+
+By the end of this module, you will be able to:
+* Describe various styling approaches available in React Native.
+* Implement styles using the {{StyleSheet}} API effectively, adhering to best practices.
+* Utilize inline styles and understand their appropriate use cases and limitations.
+* Master layout creation and management using Flexbox.
+* Integrate and use Styled Components for component-centric styling.
+* Implement basic theming concepts using Styled Components.
+* Introduce React Native Paper as a UI component library.
+* Incorporate and customize React Native Paper components in an application.
+* Apply theming to React Native Paper components to match application branding.
+* Implement responsive design techniques to adapt UIs to different screen sizes and platforms.
+
+h2. Prerequisites
+
+Before starting this module, ensure you have completed:
+* [../module-07-react-essentials-for-react-native/section-00-introduction.md|Module 7: React Essentials for React Native]
+* [../module-08-react-native-core-components/section-00-introduction.md|Module 8: React Native Core Components]
+
+{tip}
+If you have extensive experience with CSS, particularly Flexbox, you may find some layout concepts familiar. However, pay close attention to the React Native-specific {{StyleSheet}} API, CSS-in-JS libraries, and UI component library integration, as these will be key to building UIs for SpeedyMeds.
+{tip}
+----
+
+h2. Module Sections Overview
+
+This module is divided into the following sections, each building upon the last to provide a comprehensive understanding of styling in React Native:
+# _Styling Approaches Overview:_ A high-level look at {{StyleSheet}}, inline styles, CSS-in-JS, and UI libraries.
+# _StyleSheet Deep Dive (Best Practices, Performance):_ Best practices and performance considerations for {{StyleSheet.create()}}.
+# _Inline Styles (Usage and Limitations):_ Appropriate usage and limitations of direct style application.
+# _Layout with Flexbox (Comprehensive Guide):_ A comprehensive guide to React Native's layout engine.
+# _Introduction to Styled Components:_ Using this popular CSS-in-JS library.
+# _Theming with Styled Components:_ Creating consistent designs with themes.
+# _Introduction to UI Libraries: React Native Paper:_ Leveraging pre-built Material Design components.
+# _Using React Native Paper Components:_ Practical examples of common Paper components.
+# _Theming with React Native Paper (v5):_ Customizing the look and feel of Paper components.
+# _Responsive Design Techniques (Platform, Dimensions):_ Adapting your UI to various screen sizes and platforms.
+
+h2. Module Challenge
+
+After completing all sections, you will apply your knowledge in a practical challenge:
+
+*Challenge 10: Style the Prescription Card with Paper and Styled Components*
+
+This challenge involves taking a basic {{PrescriptionCard}} component (similar to examples seen throughout the module) and applying a comprehensive styling treatment. You will be required to use React Native Paper for some structural elements and theming, and {{styled-components}} for more granular or custom styling aspects, ensuring the card is visually appealing and responsive.
+
+*(https://snack.expo.dev/@course-materials/module-10-challenge)*
+
+_Detailed requirements and starter code for the challenge are provided within the Expo Snack linked above._
+
+h2. Module Summary
+
+In this module, we've journeyed through the multifaceted landscape of styling in React Native. We started by understanding the core styling mechanisms: the efficient {{StyleSheet}} API and the flexible, albeit more cautiously used, inline styles. A significant portion was dedicated to mastering Flexbox, the cornerstone of layout in React Native, enabling you to arrange components with precision and adaptability.
+
+We then explored more advanced and opinionated styling solutions. {{styled-components}} introduced a component-centric approach with CSS-in-JS, enhancing reusability and enabling powerful prop-based dynamic styles and theming. Building on this, we delved into UI component libraries, focusing on React Native Paper, to leverage pre-built Material Design components for rapid UI development and its own robust theming system. Finally, we tied these concepts together by discussing responsive design techniques, ensuring your applications provide an optimal user experience across a multitude of devices by utilizing the {{Dimensions}} and {{Platform}} APIs.
+
+By now, you should be equipped to make informed decisions about which styling strategies to employ for different parts of your SpeedyMeds application, balancing code organization, performance, and development speed to create beautiful and functional user interfaces.
+
+h2. Additional Resources (Optional)
+* [https://www.sgrider.com/archive/react-native-style-sheet-cheat-sheet/|React Native Styling Cheatsheet by Stephen Grider]: A handy quick reference for common React Native style properties.
+* [https://m3.material.io/|Material Design 3 Specification]: For a deeper understanding of the design principles behind React Native Paper v5.
+* [https://caniuse.com/|Can I use... Support tables for HTML5, CSS3, etc.]: While web-focused, it can be helpful for understanding CSS property support which often informs React Native styling capabilities (though always verify with React Native docs).

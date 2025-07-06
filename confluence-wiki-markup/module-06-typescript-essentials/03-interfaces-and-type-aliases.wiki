@@ -1,0 +1,186 @@
+h2. Section 3: Interfaces and Type Aliases
+
+While basic types are essential, most real-world applications deal with more complex data structures. TypeScript provides two primary ways to define these custom types: _interfaces_ and _type aliases_. These constructs allow you to create named types that describe the shape of objects and other data structures, significantly enhancing code clarity and type safety.
+
+h3. Interfaces
+
+An interface in TypeScript is a way to define a "contract" for an object's shape. It specifies what properties an object should have and what types those properties should be. If an object claims to implement an interface, it must adhere to the structure defined by that interface.
+
+*Defining an Interface:*
+
+{code:language=js}
+interface Medication {
+  name: string;
+  dosageForm: string; // e.g., 'Tablet', 'Capsule', 'Syrup'
+  strength: number; // e.g., 500 (for 500mg)
+  strengthUnit: string; // e.g., 'mg', 'ml'
+  quantity: number;
+  instructions?: string; // Optional property
+  readonly rxCUI: string; // Readonly property, cannot be changed after an object is created
+}
+
+// Using the interface
+let amoxicillin: Medication = {
+  name: "Amoxicillin",
+  dosageForm: "Capsule",
+  strength: 250,
+  strengthUnit: "mg",
+  quantity: 30,
+  instructions: "Take one capsule three times a day.",
+  rxCUI: "RXCUI831073",
+};
+
+// amoxicillin.rxCUI = "NEW_ID"; // Error: Cannot assign to 'rxCUI' because it is a read-only property.
+
+function displayMedication(med: Medication): void {
+  console.log(`Medication: ${med.name} (${med.strength}${med.strengthUnit})`);
+  if (med.instructions) {
+    console.log(`Instructions: ${med.instructions}`);
+  }
+}
+
+displayMedication(amoxicillin);
+{code}
+
+*Key features of interfaces:*
+* _Optional Properties:_ Mark a property as optional by adding a `?` after its name (e.g., `instructions?: string`).
+* _Readonly Properties:_ Use the `readonly` modifier to specify properties that can only be set when an object is first created and cannot be modified afterward (e.g., `readonly rxCUI: string`).
+
+*Extending Interfaces:*
+
+Interfaces can extend other interfaces, inheriting their members. This is a powerful way to create more specialized types from general ones.
+
+{code:language=js}
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+interface PrescriptionMedication extends Product {
+  requiresPrescription: boolean;
+  dispensingPharmacy: string;
+  // It also inherits id, name, and price from Product
+}
+
+let ibuprofen: PrescriptionMedication = {
+  id: "NDC0001-1234",
+  name: "Ibuprofen 200mg Tablets",
+  price: 10.99,
+  requiresPrescription: false, // Over-the-counter in some cases
+  dispensingPharmacy: "SpeedyMeds Central",
+};
+{code}
+
+bq. 📲 _(Native Developers - Android (Kotlin/Java) / iOS (Swift/Objective-C)):_
+> _Comparison:_ TypeScript interfaces are similar to `interface` in Java/Kotlin or `protocol` in Swift. They define a contract that classes or objects can adhere to. The concept of defining expected properties and their types will be very familiar.
+> _Key Takeaway:_ Use interfaces to define clear structures for your objects, just as you would in native development to ensure consistency and type safety for data models or service contracts.
+
+h3. Type Aliases
+
+A type alias allows you to create a new name (an alias) for any type. This can be a primitive type, an object type, a union type, a tuple, or any other type.
+
+*Defining a Type Alias:*
+
+{code:language=js}
+// For a primitive type
+type PatientID = string;
+
+// For an object type (similar to an interface)
+type PatientProfile = {
+  patientId: PatientID;
+  fullName: string;
+  dateOfBirth: Date;
+  allergies?: string[];
+};
+
+// For a union type
+type DosageForm = "Tablet" | "Capsule" | "Syrup" | "Injection";
+
+// For a tuple type
+type MedicationTuple = [name: string, dosage: number, unit: string];
+
+let currentPatientId: PatientID = "PAT12345";
+
+let newPatient: PatientProfile = {
+  patientId: "PAT67890",
+  fullName: "Alice Wonderland",
+  dateOfBirth: new Date(1990, 5, 15), // June 15, 1990
+};
+
+let prescribedForm: DosageForm = "Tablet";
+// prescribedForm = "Powder"; // Error: Type '"Powder"' is not assignable to type 'DosageForm'.
+
+let warfarinDetails: MedicationTuple = ["Warfarin", 5, "mg"];
+{code}
+
+Type aliases are very flexible. You can use them to make your code more readable by giving descriptive names to complex types.
+
+h3. Interfaces vs. Type Aliases
+
+Interfaces and type aliases can often be used for similar purposes, especially for describing object shapes. However, there are some key differences:
+# _Declaration Merging (Interfaces):_ Interfaces can be defined multiple times with the same name, and TypeScript will merge their definitions. This is useful for augmenting existing interfaces, perhaps from third-party libraries.
+
+    ```typescript
+    interface User {
+      name: string;
+    }
+
+    interface User {
+      age: number;
+    }
+
+    // User now has both name and age
+    let user: User = { name: "Bob", age: 30 };
+    ```
+
+    Type aliases cannot be merged in this way; defining a type alias with the same name twice will result in an error.
+# _Extending (Interfaces vs. Type Aliases with Intersection Types):_
+** Interfaces use the `extends` keyword to inherit from other interfaces.
+** Type aliases can achieve similar results using intersection types (`&`).
+
+    ```typescript
+    // Using interfaces (as shown before)
+    interface Animal {
+      name: string;
+    }
+    interface Dog extends Animal {
+      breed: string;
+    }
+
+    // Using type aliases with intersection
+    type Pet = { name: string };
+    type Cat = Pet & { livesLeft: number };
+
+    let myCat: Cat = { name: "Whiskers", livesLeft: 9 };
+    ```
+# _Implementation (Primarily Interfaces for Classes):_ While not covered in detail in this module, when working with classes and object-oriented patterns, interfaces are traditionally used with the `implements` keyword to ensure a class adheres to a contract.
+
+*When to use which?*
+* _Use `interface` when:_
+* Defining the shape of an object or the contract for a class.
+* You anticipate needing declaration merging (e.g., for extensibility by others).
+* _Use `type` alias when:_
+* Defining aliases for primitive types (e.g., `type UserID = string;`).
+* Defining union types (e.g., `type Status = "success" | "error";`).
+* Defining tuple types.
+* You need to create a named type for a more complex type that isn't easily represented by an interface (e.g., a mapped type, though this is more advanced).
+
+{tip}
+For defining object shapes, both are often viable. Many teams choose one and stick with it for consistency. Interfaces are often preferred for public APIs or when defining shapes that might be extended or implemented by others, while type aliases can be more concise for simpler object shapes or union/intersection types.
+{tip}
+bq. 📚 _Official Documentation:_
+> - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces|TypeScript Handbook: Everyday Types (Interfaces are part of this)]
+- [https://www.typescriptlang.org/docs/handbook/2/objects.html|TypeScript Handbook: Object Types]
+- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases|TypeScript Handbook: Type Aliases]
+- [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces|TypeScript Documentation: Interfaces vs. Type Aliases]
+
+By mastering interfaces and type aliases, you can create highly descriptive and robust data models for your SpeedyMeds application, such as defining patient profiles, medication details, prescription structures, and API responses.
+
+h3. Exercise 6.1: Defining Interfaces
+
+Practice defining interfaces for common data structures you might encounter in the SpeedyMeds application.
+
+*(https://codesandbox.io/s/module6-exercise-6-1-defining-interfaces-SPEEDYMEDS_UNIQUE_ID)*
+
+_The CodeSandbox environment contains the exercise instructions in the `README.md` file. A separate link to the solution will be provided by your instructor or in the course materials._

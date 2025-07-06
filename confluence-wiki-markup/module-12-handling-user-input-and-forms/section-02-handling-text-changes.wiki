@@ -1,0 +1,181 @@
+h2. Section 2: Handling Text Changes ({{onChangeText}})
+
+Now that we've recapped the {{TextInput}} component, let's focus on one of its most critical props for interactivity: {{onChangeText}}. This prop is the gateway to capturing what the user types, allowing your application to react to input in real-time, update state, and perform validation or other actions.
+
+*Understanding {{onChangeText}}*
+
+The {{onChangeText}} prop accepts a callback function that is executed every time the text within the {{TextInput}} changes. This function receives a single argument: the new text string currently in the input field.
+
+*Signature:*
+
+{{(text: string) => void}}
+
+This means the function you provide to {{onChangeText}} will be invoked with a single argument: a string representing the new, current text content of the {{TextInput}}. This direct provision of the text string simplifies development compared to web-based event handling where one might typically access {{event.target.value}}.
+
+*Using {{onChangeText}} with State*
+
+The most common use case for {{onChangeText}} is to update a component's state. This allows you to store the user's input and use it elsewhere in your component or application (e.g., display it, send it to an API, or use it for validation). This pattern is fundamental to creating "controlled components," which we will explore in depth in Section 4.
+
+Let's see a simple example of how to capture input using {{onChangeText}} and display it using a {{useState}} hook.
+
+*Short, Self-Contained Example: Capturing and Displaying Input*
+
+This example demonstrates capturing text from a {{TextInput}} and displaying it elsewhere on the screen. It also shows how to clear the input.
+
+{code:language=js}
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  Button,
+} from "react-native";
+
+const CaptureInputScreen = () => {
+  const [medicationName, setMedicationName] = useState<string>("");
+  const [dosage, setDosage] = useState<string>("");
+
+  const handleClearInputs = () => {
+    setMedicationName("");
+    setDosage("");
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.label}>Medication Name:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="e.g., Paracetamol"
+          value={medicationName} // Controlled component: value is tied to state
+          onChangeText={setMedicationName} // Update state on text change
+          placeholderTextColor="#888"
+          accessibilityLabel="Enter Medication Name"
+        />
+
+        <Text style={styles.label}>Dosage:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="e.g., 500mg"
+          value={dosage} // Controlled component
+          onChangeText={setDosage} // Update state
+          keyboardType="default" // Changed from numeric to allow for units like 'mg'
+          placeholderTextColor="#888"
+          accessibilityLabel="Enter Dosage"
+        />
+
+        <View style={styles.summaryContainer}>
+          <Text style={styles.summaryText}>
+            Entered Medication: {medicationName || "N/A"}
+          </Text>
+          <Text style={styles.summaryText}>
+            Entered Dosage: {dosage || "N/A"}
+          </Text>
+        </View>
+
+        <Button
+          title="Clear Inputs"
+          onPress={handleClearInputs}
+          color="#d9534f"
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#f0f4f7", // Light background for better contrast
+  },
+  formContainer: {
+    backgroundColor: "#ffffff",
+    padding: 25,
+    borderRadius: 10,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  label: {
+    fontSize: 17,
+    marginBottom: 10,
+    color: "#2c3e50", // Darker text for labels
+    fontWeight: "600",
+  },
+  input: {
+    height: 50,
+    borderColor: "#bdc3c7", // Softer border color
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    backgroundColor: "#ecf0f1", // Light input background
+    marginBottom: 20, // Added margin for spacing
+    color: "#34495e", // Input text color
+  },
+  summaryContainer: {
+    marginTop: 20,
+    marginBottom: 25,
+    padding: 15,
+    backgroundColor: "#e9f5f9", // Light blue background for summary
+    borderRadius: 8,
+    borderLeftColor: "#3498db",
+    borderLeftWidth: 5,
+  },
+  summaryText: {
+    fontSize: 16,
+    color: "#2980b9", // Blue text for summary
+    marginBottom: 8,
+  },
+  // Button style is handled by the color prop for basic Button
+});
+
+export default CaptureInputScreen;
+{code}
+
+In this `CaptureInputScreen` example:
+# We initialize two state variables, `medicationName` and `dosage`, to empty strings using `useState`.
+# The `onChangeText` prop of each `TextInput` is directly set to the state setter function (`setMedicationName` and `setDosage`). This is a common and concise pattern. Every time the text changes, the corresponding state variable is updated with the new text.
+# The `value` prop of each `TextInput` is bound to its respective state variable. This makes it a controlled component: React state is the single source of truth for the input's value.
+# We display the captured input values in `<Text>` components, demonstrating that the state is being updated correctly.
+# A "Clear Inputs" button is added to demonstrate how updating the state variables (`medicationName` and `dosage` to empty strings) also clears the `TextInput` fields, further illustrating the controlled nature of these inputs.
+
+This example is intentionally simple to illustrate the core mechanism. In real applications, `onChangeText` handlers might involve more complex logic, such as formatting input (e.g., for dates or phone numbers) or performing inline validation as the user types.
+
+{tip}
+For simple state updates like in the example above, you can pass the state setter function (e.g., `setMedicationName`) directly to `onChangeText`. For more complex updates or when you need to perform additional logic, you would define a separate handler function: `onChangeText={(text) => handleMedicationNameChange(text)}`.
+{tip}
+By mastering `onChangeText` and its interplay with component state, you gain precise control over user input, paving the way for more interactive and dynamic forms in your SpeedyMeds application.
+
+*"Under the Hood": Event Propagation*
+
+The mechanism by which the `onChangeText` event is delivered from the native side to your JavaScript code has evolved with React Native's architecture.
+* _Legacy Bridge Architecture:_
+  In the older architecture, when a user typed into the native input (e.g., `EditText` on Android or `UITextField` on iOS), the native platform would generate a text change event. This event, along with the new text data, would be serialized (often into a JSON string). This serialized data was then passed asynchronously across the React Native bridge to the JavaScript thread. Once received on the JS side, the data would be deserialized, and finally, the JavaScript callback function provided to `onChangeText` would be invoked. For instance, on Android, a `ReactTextChangedEvent` would be created and dispatched via the `RCTEventEmitter`. This asynchronous and serialized communication inherently introduced some latency.
+* _New Architecture (Fabric/JSI):_
+  The New Architecture, with Fabric and JSI, significantly changes this event propagation. Fabric components, like the updated `TextInput`, are designed for more direct communication. When the native input's text changes, the native Fabric component can use JSI to directly invoke the JavaScript callback function associated with `onChangeText`. This communication is more synchronous (or can be, depending on the specific implementation details) and avoids the overhead of serializing/deserializing data across an asynchronous bridge. The JavaScript function essentially gets called with the string data more directly from the native side. This architectural improvement aims to reduce the latency associated with text input events, leading to a more responsive feel, especially in complex applications or during rapid typing. The core idea is that JSI allows JavaScript and Native code to hold references to each other's functions and objects and call them directly, which is a fundamental shift from the message-passing paradigm of the legacy bridge.
+
+This architectural evolution from the legacy bridge to JSI/Fabric for event propagation represents a pivotal advancement in React Native. It directly addresses one of the core challenges in cross-platform development: the speed and efficiency of communication between the JavaScript runtime and native platform capabilities. For developers, this translates to a more performant framework, but it's also important to understand the nuances. While JSI enables synchronous calls, the controlled component pattern (where JavaScript state dictates the `TextInput`'s `value` prop) still involves a round trip: native input change -> JSI -> JS `onChangeText` callback -> JS state update -> React re-render -> `value` prop updates native input. Even with JSI's speed, this loop isn't instantaneous. This can, in some scenarios with complex real-time formatting or masking, still lead to a perceptible delay or "flicker" where the native input might visually update momentarily before the JS-controlled value is re-applied. This subtlety highlights that while the communication mechanism is faster, the pattern of JS controlling native UI in real-time has inherent complexities.
+
+bq. 📲 _(Native Developers - Android/iOS):_
+> _Comparison:_
+> - _Android:_ The `onChangeText` callback is analogous to implementing `android.text.TextWatcher` and using its `afterTextChanged(Editable s)` method. In `afterTextChanged`, `s.toString()` would provide the new text. React Native abstracts the listener registration and event handling, providing the string directly to your JS function.
+- _iOS:_ `onChangeText` is similar in concept to the `UITextFieldDelegate` method `textField(_:shouldChangeCharactersIn:replacementString:)` or observing the `UITextField.textDidChangeNotification`. React Native manages the delegate pattern or notification subscription internally and surfaces the change as a direct string callback.
+> _Key Takeaway:_ A key difference is that in React Native, you work directly with JavaScript strings in the callback, rather than native types like `CharSequence` (Android) or `NSString` (iOS).
+
+bq. 🌐 _(Web Developers - React/Angular):_
+> _Comparison:_
+> - _React (Web):_ The `onChangeText={(newText) => ...}` pattern in React Native is more direct than the typical web React approach for controlled inputs, which is `onChange={(event) => event.target.value}`. React Native\'s `onChangeText` directly provides the text string, eliminating the need to access it through an event object.
+- _Angular:_ This is conceptually similar to handling the `(input)` event or `(ngModelChange)` event on an HTML `<input>` element and receiving the new value directly in the event handler.
+> _Key Takeaway:_ The primary convenience for web developers is the directness of `onChangeText`, which bypasses the `event.target.value` boilerplate common in web forms.
+
+bq. 📚 _Official Documentation:_
+> - [https://reactnative.dev/docs/textinput#onchangetext|React Native Docs: `TextInput` (onChangeText prop)]
+- [https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface|React Native New Architecture: JSI]
+- [https://reactnative.dev/docs/the-new-architecture/pillars-fabric|React Native New Architecture: Fabric]

@@ -1,0 +1,111 @@
+h2. Section 6: Reducing Bundle Size
+
+The JavaScript bundle size of your React Native application directly impacts its startup performance and memory footprint. A smaller bundle means less code for the JavaScript engine to parse and execute, leading to a faster launch. This section discusses why bundle size matters and strategies to reduce it for your SpeedyMeds app.
+
+bq. 🛣️ _(All Learners):_ Keeping your app's bundle size in check is an ongoing process. Regularly analyzing and optimizing your bundle can lead to noticeable improvements in startup time, especially on older or less powerful devices.
+
+h3. Conceptual Content: The Impact of a Large Bundle
+
+When a React Native application starts, the JavaScript engine (like Hermes or JavaScriptCore) needs to load, parse, and execute your application's JavaScript bundle. This bundle contains all your application code, React Native framework code, and any third-party libraries you've included.
+* _Startup Time:_ A larger bundle takes longer to process, directly increasing the time it takes for your app to become interactive (Time To Interactive - TTI).
+* _Memory Usage:_ The parsed JavaScript code and its associated objects consume memory. Larger bundles typically lead to higher initial memory usage.
+* _Over-the-Air (OTA) Updates:_ If you use services like EAS Update, smaller bundles mean quicker OTA updates for your users.
+
+h4. Analyzing Your Bundle Contents
+
+Before you can reduce your bundle size, you need to understand what's contributing to it. Tools can help visualize the contents of your JavaScript bundle, showing which modules and libraries are taking up the most space.
+* _{{react-native-bundle-visualizer}} / {{expo-bundle-analyzer}}:_ These tools generate an interactive treemap visualization of your bundle. You can use them to identify large dependencies or unexpectedly included modules.
+* {{react-native-bundle-visualizer}} is a general tool for React Native projects.
+* {{expo-bundle-analyzer}} is a convenient wrapper often used with Expo projects.
+
+h4. Strategies for Reducing Bundle Size
+# _Removing Unused Code (Tree Shaking):_
+** Metro, the default bundler for React Native, performs tree shaking. Tree shaking is a process that eliminates unused exports from your JavaScript modules. Ensure your code is written in a way that facilitates tree shaking (e.g., using ES6 module syntax {{import}}/{{export}}).
+** Regularly audit your codebase for dead code or unused features that can be removed.
+# _Optimizing Assets:_
+*_ _Images:* As discussed in Section 5, use optimized image formats (like WebP), resize images appropriately, and compress them. Large image assets bundled with the app contribute to the overall app size (though not directly to the JS bundle size, they impact initial install size and memory).
+*_ _SVGs:* If using SVGs, optimize them using tools like SVGO to remove unnecessary data.
+*_ _Fonts:* Only include font weights and styles that your app actually uses.
+# _Choosing Lightweight Libraries:_
+** When selecting third-party libraries, consider their impact on bundle size. Tools like [https://bundlephobia.com/|BundlePhobia] can help you analyze the size of npm packages.
+** Look for libraries that are modular, allowing you to import only the parts you need.
+** Sometimes, a smaller, more focused library or even a custom implementation might be preferable to a large, feature-rich one if you only need a subset of its functionality for SpeedyMeds.
+# _Code Splitting (Conceptual):_
+** In web development, code splitting involves breaking down your bundle into smaller chunks that can be loaded on demand. While React Native's Metro bundler doesn't support arbitrary code splitting in the same way as Webpack for web apps, the concept of loading code or features lazily is still relevant.
+*_ _RAM Bundles (Indexed RAM Bundles):* For very large apps, React Native supports Random Access Modules (RAM) bundles. These allow parts of the bundle to be loaded into memory as needed, rather than loading the entire bundle at once. Hermes is optimized for RAM bundles. This is an advanced technique typically used for optimizing very large applications.
+** Consider architectural patterns that might allow you to defer loading of non-critical features until they are needed, though this often requires more manual setup in React Native compared to automatic code splitting on the web.
+# _Using Hermes Engine:_
+** Hermes is a JavaScript engine optimized for running React Native apps on Android (and increasingly on iOS). It pre-compiles JavaScript to bytecode during the app build process.
+** This bytecode is often smaller and more efficient to parse than raw JavaScript, leading to faster startup times and potentially a smaller memory footprint. This will be discussed in more detail in Section 9.
+# _Dynamic Imports (Experimental/Limited):_
+** While full-fledged code splitting isn't standard, experimental support for dynamic {{import()}} statements is evolving in the React Native ecosystem. This could allow more web-like on-demand loading of modules in the future. Keep an eye on the React Native and Metro documentation for updates.
+
+bq. 🌐 _(Web Developers):_
+_Comparison:_ You\'re likely familiar with bundle analysis and optimization techniques from web development, using tools like Webpack Bundle Analyzer or Rollup, and employing strategies such as code splitting, tree shaking, and lazy loading routes/components.
+_Key Takeaway:_ While Metro (React Native\'s bundler) handles some optimizations like tree shaking automatically, direct control over advanced code splitting is less straightforward compared to web setups. Analyzing your bundle composition and making informed choices about dependencies are key transferable skills. The impact of bundle size on mobile app startup can be even more critical than on desktop web experiences.
+_Source:_ {{[https://webpack.js.org/guides/bundle-analysis/|Webpack: Bundle Analysis]}}, {{[https://web.dev/articles/reduce-javascript-payloads-with-tree-shaking|web.dev: Reduce JavaScript payloads with tree shaking]}}
+
+bq. 📲 _(Native Developers):_
+_Comparison:_ While native app size management involves optimizing compiled native code (e.g., Swift, Kotlin/Java), assets, and dependencies using tools like Proguard/R8 for Android or App Thinning for iOS, the JavaScript bundle is an additional, distinct component specific to React Native that requires its own set of optimization strategies and analysis tools.
+_Key Takeaway:_ The JS bundle significantly contributes to the overall React Native app size and directly impacts startup performance. Tools and techniques for analyzing and optimizing this JS bundle are different from those used for native code.
+_Source:_ {{[https://developer.android.com/studio/build/shrink-code|Android Developer Docs: Shrink, obfuscate, and optimize your app]}}, {{[https://developer.apple.com/documentation/xcode/reducing-your-app-s-size|Apple Developer Docs: Reducing your app's size]}}
+
+h3. Procedural Content: Analyzing Your Bundle
+
+h4. Using {{expo-bundle-analyzer}} (Example with Expo)
+
+If you're using Expo, you can use {{expo-bundle-analyzer}} (which often uses {{react-native-bundle-visualizer}} under the hood).
+# _Generate a Bundle and Source Map:_
+    First, you need to build your JavaScript bundle and its corresponding source map. For an Expo project, you might do this as part of an export or build process, or specifically for analysis.
+
+    ```bash
+    # For Expo projects (SDK 49+ example)
+    npx expo export --platform android --dev --entry-file App.tsx # or your entry file
+    # This command will output bundle and source map typically in a dist/bundles directory.
+    # The exact command might vary based on your Expo SDK version and project setup.
+    # Refer to Expo documentation for the most current way to output a bundle and sourcemap.
+    ```
+
+    Alternatively, for a quick analysis during development, you can often get the bundle and map from Metro directly.
+# _Run the Analyzer:_
+    Once you have the bundle ({{.js}} file) and the source map ({{.map}} file), you can use a visualizer.
+    If {{react-native-bundle-visualizer}} is installed globally or as a project dependency:
+
+    ```bash
+    # npx react-native-bundle-visualizer -b <path-to-bundle.js> -m <path-to-sourcemap.map> -o output.html
+    # Example with typical Expo export output (paths may vary):
+    npx react-native-bundle-visualizer -b dist/bundles/android-xxxxxxxx.js -m dist/bundles/android-xxxxxxxx.map -o bundle-report.html
+    ```
+
+    Some versions or setups might require different commands or use {{webpack-bundle-analyzer}} if your project uses Webpack for web builds (though this analyzes the web bundle, not the native one).
+
+    For {{expo-bundle-analyzer}} specifically (ensure it's installed: {{npm install -g expo-bundle-analyzer}} or add to project devDependencies):
+
+    ```bash
+    # This command attempts to automate finding the bundle and map after a build or export.
+    # It might require specific project configurations or environment variables.
+    # expo-bundle-analyzer
+    # Or, you might point it to your output files similar to react-native-bundle-visualizer.
+    ```
+
+    > [!NOTE]
+    > The exact commands and best tools can evolve. Always refer to the documentation for {{react-native-bundle-visualizer}}, {{expo-bundle-analyzer}}, or your specific Expo SDK version for the most accurate instructions.
+# _Analyze the Output:_
+    The tool will typically generate an HTML file (e.g., {{bundle-report.html}}). Open this in your browser. You'll see an interactive treemap where larger boxes represent larger modules. Hover over or click on sections to see details about specific libraries or application code contributing to the size.
+** Look for large, unexpected dependencies.
+** Identify if multiple versions of the same library are being bundled.
+** See how much space your own application code takes up versus third-party libraries.
+
+This analysis will guide your efforts in removing unused code, finding lighter alternative libraries, or further investigating specific modules.
+
+{note}
+Bundle analysis should ideally be done on a production/release build of your JavaScript bundle, as development builds contain extra code and are not optimized in the same way.
+{note}
+bq. 📚 *Official Documentation & Resources:**
+> - [https://reactnative.dev/docs/performance#ram-bundles-and-inline-requires|React Native Docs: Performance - RAM Bundles & Inline Requires] (Explains RAM bundles which relate to advanced bundle optimization)
+- [https://docs.expo.dev/guides/analyzing-bundle-size/|Expo Docs: Analyzing Bundle Size] (Often provides the most up-to-date guidance for Expo projects)
+- [https://hermesengine.dev/docs/reducing-app-size/|Hermes JS Engine: Reducing App Size]
+- [https://www.npmjs.com/package/react-native-bundle-visualizer|{{react-native-bundle-visualizer}} on npm]
+- [https://bundlephobia.com/|BundlePhobia] (Check npm package sizes)
+
+By actively monitoring and managing your JavaScript bundle size, you can ensure the SpeedyMeds app starts quickly and runs efficiently for all users.

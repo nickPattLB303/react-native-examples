@@ -1,0 +1,100 @@
+h2. Section 6: JSI for Direct Communication
+
+This section focuses on the JavaScript Interface (JSI), a fundamental part of React Native's New Architecture. You'll learn what JSI is, how it enables direct and synchronous communication between JavaScript and native code, its advantages over the legacy bridge, and the implications of this powerful mechanism.
+
+h3. What is JSI (JavaScript Interface)?
+
+JSI, or JavaScript Interface, is a lightweight, general-purpose API written in C++ that allows JavaScript code to hold references to C++ objects and invoke methods on them. Conversely, it allows C++ code to hold references to JavaScript objects and invoke their methods.
+
+In the context of React Native's New Architecture, JSI serves as the foundational layer for communication between the JavaScript thread and the native side. It effectively replaces the asynchronous, message-based bridge used in the legacy architecture. JSI is JavaScript-engine-agnostic, meaning it can work with different JavaScript engines like Hermes (React Native's default optimized engine) or JavaScriptCore.
+
+JSI is the single most critical architectural innovation enabling the performance leap and enhanced capabilities of the New Architecture. It directly tackles the limitations of the legacy bridge by providing a more direct and efficient communication pathway.
+
+h3. How JSI Works and Enables Direct Communication (Under the Hood)
+
+Instead of sending JSON messages over a bridge, JSI allows JavaScript to directly interact with C++ code, which in turn interfaces with platform-native code (Swift/Kotlin).
+
+*Key aspects of JSI-based communication:*
+# _C++ Layer:_ JSI defines a set of C++ interfaces, classes, and functions. The JavaScript engine implements one side of these interfaces, and the host environment (React Native) implements the other. This shared C++ interface allows them to communicate directly.
+# _Direct Method Calls & Host Objects:_ JSI allows C++ code to expose objects, known as _Host Objects_, directly to the JavaScript runtime. JavaScript code can obtain references to these Host Objects and invoke their methods as if they were regular JavaScript objects. This method invocation translates into a direct call to the underlying C++ method.
+# _Synchronous Execution Potential:_ Because JavaScript can directly call C++ methods, these calls can be _synchronous_ if the native method itself is synchronous and doesn't block. This eliminates the need for {{async/await}} or Promises for certain types of operations where an immediate result is expected and can be provided quickly by the native side (e.g., accessing a simple, cached native value).
+# _Efficient Data Transfer (Avoiding Serialization):_ For many common data types (numbers, booleans, strings), JSI allows more direct manipulation and transfer between JavaScript and C++ compared to the legacy bridge's mandatory serialization/deserialization to/from JSON strings. While complex objects might still require some form of conversion, bypassing JSON for frequent, simple calls significantly reduces overhead.
+# _Asynchronous Operations Still Supported:_ While JSI allows for synchronous calls, complex or long-running native operations will still be executed asynchronously to avoid blocking the JavaScript thread. In these cases, JavaScript would typically invoke a JSI method that returns a Promise.
+
+{mermaid}
+sequenceDiagram
+    participant JS as JavaScript Thread
+    participant JSI_Cpp as JSI (C++ Layer)
+    participant Native as Native Code (Swift/Kotlin)
+
+    Note over JS,Native: Legacy Bridge Communication (Asynchronous)
+    JS->>Native: Send Message (JSON)
+    Native-->>JS: Send Callback/Promise (JSON)
+
+    Note over JS,Native: JSI Communication (Synchronous Example)
+    JS->>JSI_Cpp: Direct method call on C++ Host Object
+    JSI_Cpp->>Native: Invoke corresponding native method
+    Native-->>JSI_Cpp: Return result
+    JSI_Cpp-->>JS: Return result directly
+{mermaid}
+
+*Diagram Description:*
+The diagram above illustrates the conceptual difference between the legacy bridge communication and JSI-based communication in React Native.
+
+In the _Legacy Bridge Communication_ (top part):
+# The JavaScript Thread sends a message, typically a JSON payload, to the Native Code asynchronously across the bridge.
+# The Native Code processes the message and eventually sends a response, often via a callback or Promise, back to the JavaScript Thread, again as a JSON payload over the bridge.
+   This model involves serialization/deserialization and asynchronous hops.
+
+In the _JSI Communication (Synchronous Example)_ (bottom part):
+# The JavaScript Thread makes a direct method call on a C++ Host Object exposed via JSI.
+# The JSI (C++ Layer) immediately invokes the corresponding native method in the Swift/Kotlin Native Code.
+# The Native Code executes and returns the result to the JSI Layer.
+# The JSI Layer returns the result directly to the JavaScript Thread.
+   This model allows for synchronous execution and avoids the serialization overhead of the bridge for certain types of calls. It signifies a tighter, more direct integration between the JavaScript and native realms.
+
+h3. Implications of Synchronous Communication via JSI
+
+The ability of JSI to facilitate synchronous calls has profound implications:
+* _Performance Gains:_ For interactions that require immediate responses or high frequency, JSI offers substantial performance improvements by eliminating the latency and overhead associated with the Bridge's asynchronous queuing and JSON serialization. This is crucial for smooth animations driven by native events or real-time updates from sensors.
+* _Simplified Logic:_ In the legacy system, managing sequences of operations involving native calls often required complex Promise chains or nested callbacks. Synchronous JSI calls can simplify this logic, making code easier to write, read, and debug in scenarios where an immediate result from native code is needed.
+* _New Capabilities:_ JSI unlocks possibilities that were previously impractical. For example, JavaScript can synchronously query native state information needed for immediate UI rendering calculations, or complex C++ libraries can be exposed directly to JS for instant invocation.
+
+h3. JSI vs. The Bridge (Comparison)
+
+||Aspect||Legacy Bridge||JSI (New Architecture)||Key Difference||
+|_Communication_|Indirect (Message Queue), Asynchronous|Direct (C++ Layer), Synchronous Capable|Synchronicity, Latency|
+|_Data Transfer_|JSON Serialization/Deserialization (Overhead)|More Direct (Less Serialization Overhead)|Efficiency, Reduced Bottleneck|
+|_Performance_|Slower (Async Latency, Serialization Bottleneck)|Significantly Faster (for many operations)|Speed, Responsiveness|
+|_JS Interaction_|Callbacks, Promises|Direct Method Calls (on Host Objects), Promises|Potential for Simpler Logic (Synchronous cases)|
+h3. Advantages of JSI over the Legacy Bridge (Summary)
+* _Performance:_ Direct method calls are much faster than sending serialized messages.
+* _Synchronous Access:_ Simplifies certain interactions needing immediate native results.
+* _Concurrency:_ Allows native modules to expose methods callable from any thread (advanced).
+* _Reduced Serialization Overhead:_ More efficient data transfer for common types.
+* _Foundation for TurboModules and Fabric:_ Core enabler for the New Architecture's pillars.
+
+{note}
+While JSI enables synchronous native method calls, it's crucial to understand that long-running or blocking operations should still be performed asynchronously (e.g., by returning a Promise from the JSI method) to avoid freezing the JavaScript thread and negatively impacting UI responsiveness. Synchronous calls are best suited for quick, non-blocking operations.
+{note}
+
+{info}
+While Codegen for TurboModules and Fabric abstracts away much of the direct JSI/C++ interaction, developers venturing into highly custom JSI integrations or debugging complex cross-language issues might find themselves needing to understand or even write C++ code. This adds another potential layer of complexity for those pushing the boundaries of native integration.
+{info}
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ Think of JSI as creating a more direct binding between your JavaScript code and your native Swift/Objective-C code, facilitated by C++. Instead of messages being queued and processed asynchronously, JavaScript can, in some cases, invoke your native logic as if it were a direct function call, receiving results immediately. This is much closer to how Swift code might call an Objective-C method (or vice-versa) directly within the same process.
+> _Key Takeaway:_ JSI provides a lower-level, more performant, and potentially synchronous communication channel than the old {{RCTBridge}}, making JavaScript-to-native interactions feel more integrated.
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ JSI allows your JavaScript logic to interact with C++ objects that, in turn, call your Kotlin/Java code. This is more direct than the previous bridge mechanism, which involved passing messages. For synchronous operations, it feels more like a direct method invocation within the same runtime rather than an event being dispatched and handled.
+> _Key Takeaway:_ JSI is the technology that allows TurboModules to achieve better performance and offer synchronous capabilities, moving beyond the limitations of the traditional Android bridge.
+
+bq. 🌐 _(Web Developers):_
+> _Comparison:_ JSI is somewhat analogous to WebAssembly (Wasm). Wasm allows you to run code written in languages like C++ or Rust directly in the browser, with JavaScript able to call Wasm functions and vice-versa with high performance. JSI provides a similar high-performance interop layer, but between JavaScript and native mobile code (via C++). It's a much tighter integration than, for example, making an {{fetch}} request to a separate backend process.
+> _Key Takeaway:_ JSI is an advanced mechanism that makes the boundary between JavaScript and native code more permeable and performant, enabling features not possible with the traditional asynchronous bridge.
+
+bq. 📚 _Official Documentation:_
+> - [https://reactnative.dev/docs/the-new-architecture/pillars-jsi|React Native New Architecture: JavaScript Interface (JSI)]
+- [https://docs.expo.dev/new-architecture/jsi-turbomodules-fabric/|Expo Docs: JSI and TurboModules]
+- [https://hermesengine.dev/docs/jsi/|Hermes Engine - JSI] (Hermes specific documentation on its JSI implementation)
+- [https://www.oscarfranco.dev/p/understanding-jsi|Blog Post: Understanding JSI by Oscar Franco] (Community resource, often cited for its clarity)

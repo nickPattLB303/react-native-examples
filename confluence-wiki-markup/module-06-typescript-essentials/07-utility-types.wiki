@@ -1,0 +1,198 @@
+h2. Section 7: Utility Types
+
+TypeScript comes with a set of built-in utility types that help you transform existing types into new ones. These are incredibly useful for common type manipulations, reducing boilerplate and making your type definitions more expressive and maintainable. Let's explore some of the most frequently used utility types.
+
+h3. {{Partial<Type>}}
+
+{{Partial<Type>}} constructs a type with all properties of {{Type}} set to optional. This is useful when you want to represent an object where only some properties might be present, such as when updating an entity.
+
+{code:language=js}
+interface PatientProfile {
+  id: string;
+  name: string;
+  dateOfBirth: Date;
+  phoneNumber: string;
+  email?: string;
+  address: string;
+}
+
+// Represents an update payload where any field of PatientProfile can be provided
+type PatientProfileUpdate = Partial<PatientProfile>;
+
+function updatePatient(
+  id: string,
+  updates: PatientProfileUpdate
+): PatientProfile {
+  // In a real app, this would fetch the existing patient and apply updates
+  let existingPatient: PatientProfile = getPatientById(id);
+  if (!existingPatient) throw new Error("Patient not found");
+
+  // Apply updates (simplified example)
+  const updatedProfile = { ...existingPatient, ...updates };
+  console.log(`Updating patient ${id} with:`, updates);
+  return updatedProfile;
+}
+
+// Example: only updating phone number and email
+const profileChanges: PatientProfileUpdate = {
+  phoneNumber: "555-0123",
+  email: "new.email@example.com",
+};
+updatePatient("PAT001", profileChanges);
+
+// Dummy function for example
+function getPatientById(id: string): PatientProfile {
+  return {
+    id,
+    name: "Original Name",
+    dateOfBirth: new Date(),
+    phoneNumber: "555-0000",
+    address: "123 Main St",
+  };
+}
+{code}
+
+h3. `Required<Type>`
+
+`Required<Type>` constructs a type with all properties of `Type` set to required. This is useful when you want to ensure all properties of an object are present, even if they were originally optional in `Type`.
+
+{code:language=js}
+interface MedicationOrder {
+  medicationId: string;
+  quantity: number;
+  patientInstructions?: string; // Optional for initial order
+  pharmacistNotes?: string; // Optional for initial order
+}
+
+// Represents a finalized order ready for dispensing, where all notes must be present or explicitly empty
+type FinalizedMedicationOrder = Required<MedicationOrder>;
+
+const finalOrder: FinalizedMedicationOrder = {
+  medicationId: "RXCUI123",
+  quantity: 30,
+  patientInstructions: "Take one tablet daily with food.",
+  pharmacistNotes: "Verified with prescriber.",
+};
+
+// const incompleteFinalOrder: FinalizedMedicationOrder = { medicationId: "RXC456", quantity: 10 };
+// Error: Property 'patientInstructions' is missing...
+// Error: Property 'pharmacistNotes' is missing...
+{code}
+
+h3. `Readonly<Type>`
+
+`Readonly<Type>` constructs a type with all properties of `Type` set to `readonly`. This means the properties cannot be reassigned after the object is created.
+
+{code:language=js}
+interface AppConfig {
+  apiBaseUrl: string;
+  featureFlags: { [key: string]: boolean };
+}
+
+const currentConfig: Readonly<AppConfig> = {
+  apiBaseUrl: "https://api.speedymeds.com/v1",
+  featureFlags: { enableTelehealth: true, enableDarkmode: false },
+};
+
+// currentConfig.apiBaseUrl = "http://new.api.url"; // Error: Cannot assign to 'apiBaseUrl' because it is a read-only property.
+// currentConfig.featureFlags.enableDarkmode = true; // Error: Cannot assign to 'enableDarkmode' because it is a read-only property (if featureFlags was Readonly<{[key:string]:boolean}>)
+// Note: Readonly is shallow. For deep readonly, you might need a custom utility or library.
+{code}
+
+h3. `Pick<Type, Keys>`
+
+`Pick<Type, Keys>` constructs a type by picking a specified set of properties (`Keys`) from `Type`. `Keys` must be a union of property names from `Type`.
+
+{code:language=js}
+interface MedicationDetails {
+  id: string;
+  name: string;
+  description: string;
+  dosageForm: string;
+  strength: number;
+  strengthUnit: string;
+  manufacturer: string;
+}
+
+// Type for a medication summary card, only showing name and dosage
+type MedicationSummary = Pick<
+  MedicationDetails,
+  "name" | "dosageForm" | "strength" | "strengthUnit"
+bq. ;
+
+const amlodipineSummary: MedicationSummary = {
+  name: "Amlodipine Besylate",
+  dosageForm: "Tablet",
+  strength: 5,
+  strengthUnit: "mg",
+};
+
+// const invalidSummary: MedicationSummary = { name: "Test", manufacturer: "TestCorp" };
+// Error: Object literal may only specify known properties, and 'manufacturer' does not exist in type 'MedicationSummary'.
+{code}
+
+h3. `Omit<Type, Keys>`
+
+`Omit<Type, Keys>` constructs a type by picking all properties from `Type` and then removing `Keys` (a union of property names from `Type`).
+
+{code:language=js}
+interface UserProfile {
+  userId: string;
+  username: string;
+  email: string;
+  lastLogin: Date;
+  passwordHash: string; // Sensitive information
+  securityQuestionAnswer: string; // Sensitive information
+}
+
+// Type for a publicly viewable user profile, omitting sensitive fields
+type PublicUserProfile = Omit<
+  UserProfile,
+  "passwordHash" | "securityQuestionAnswer"
+bq. ;
+
+const publicView: PublicUserProfile = {
+  userId: "USR789",
+  username: "PublicUser123",
+  email: "public.user@example.com",
+  lastLogin: new Date(),
+};
+
+// console.log(publicView.passwordHash); // Error: Property 'passwordHash' does not exist on type 'PublicUserProfile'.
+{code}
+
+h3. `Record<Keys, Type>`
+
+`Record<Keys, Type>` constructs an object type whose property keys are `Keys` (a union of strings, numbers, or symbols) and whose property values are of `Type`.
+
+{code:language=js}
+// Representing available stock for different medication IDs
+type MedicationID = `RXCUI${string}` | `NDC${string}`;
+type StockLevel = number;
+
+const pharmacyInventory: Record<MedicationID, StockLevel> = {
+  RXCUI12345: 150, // Lisinopril stock
+  RXCUI67890: 75, // Metformin stock
+  "NDC0001-0001": 200, // Some other medication by NDC code
+};
+
+pharmacyInventory["RXCUI12345"] = 140; // Update stock
+// pharmacyInventory["INVALID_ID"] = 10; // Error if MedicationID is more strictly defined and "INVALID_ID" doesn't match
+
+console.log(`Lisinopril stock: ${pharmacyInventory["RXCUI12345"]}`);
+{code}
+
+{tip}
+Utility types significantly reduce the need to write repetitive type definitions. Familiarize yourself with them, as they can make your TypeScript code much more concise and expressive when dealing with type transformations.
+{tip}
+*Other Notable Utility Types:*
+* `Exclude<UnionType, ExcludedMembers>`: Constructs a type by excluding from `UnionType` all union members that are assignable to `ExcludedMembers`.
+* `Extract<Type, Union>`: Constructs a type by extracting from `Type` all union members that are assignable to `Union`.
+* `NonNullable<Type>`: Constructs a type by excluding `null` and `undefined` from `Type`.
+* `ReturnType<Type>`: Constructs a type consisting of the return type of function `Type`.
+* `Parameters<Type>`: Constructs a tuple type from the types used in the parameters of a function type `Type`.
+
+bq. 📚 _Official Documentation:_
+> - [https://www.typescriptlang.org/docs/handbook/utility-types.html|TypeScript Handbook: Utility Types]
+
+Utility types are indispensable tools in a TypeScript developer's toolkit, allowing for flexible and robust type manipulations throughout your SpeedyMeds application development.

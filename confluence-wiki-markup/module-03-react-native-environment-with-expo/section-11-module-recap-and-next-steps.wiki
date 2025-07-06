@@ -1,0 +1,51 @@
+h2. Section 11: Module Recap & Next Steps
+
+Congratulations on completing Module 3: Setting Up Your React Native Environment with Expo! You've laid a critical foundation for your journey into React Native development.
+
+h3. Summary of Module 3
+
+This module provided a comprehensive guide to establishing a local development environment using the Expo framework on macOS, with a focus on the iOS Simulator. Key areas covered include:
+* _Understanding the Expo Ecosystem:_ We explored what Expo is, including the Expo Framework, the extensive Expo SDK, and the powerful Expo Application Services (EAS) like EAS Build, Submit, and Update.
+* _Expo CLI vs. React Native CLI:_ You learned about the differences between these CLIs and the advantages Expo CLI brings for a streamlined development experience, including Continuous Native Generation (CNG).
+* _Prerequisite Installation:_ We walked through installing essential tools: Node.js (LTS via nvm), Watchman, and the full Xcode package (including Command Line Tools and iOS Simulators).
+* _Project Creation & Structure:_ You created your first Expo project using {{npx create-expo-app@latest}} and delved into the typical project structure, understanding key files and directories like {{app/}} for Expo Router, {{app.json}}/{{app.config.js}} for project-wide configuration (including dynamic configuration), {{babel.config.js}}, and {{metro.config.js}}.
+* _Running Your Application:_ You learned how to start the development server with {{npx expo start}}, launch your app on the iOS Simulator, and understood the client-server model that powers this workflow.
+* _Choosing Your Development Environment:_ A crucial distinction was made between Expo Go (its benefits and critical limitations), Development Builds (using {{expo-dev-client}} for custom native code and full configuration testing), and Production Builds.
+* _Essential CLI Commands:_ You were introduced to vital Expo CLI commands like {{start}}, {{run:ios}}/{{android}}, {{install}}, {{prebuild}}, {{doctor}}, and how to install and use {{eas-cli}} for EAS services.
+* _Troubleshooting:_ We covered common setup and runtime issues, emphasizing a proactive debugging mindset and providing specific solutions.
+* _Expo Snack:_ You learned about Expo Snack as a web-based playground for quick experiments and early course exercises, understanding its benefits and limitations.
+
+h3. Key Takeaways from Module 3
+* _Environment is Foundational:_ A correctly configured local development environment is paramount for an efficient and productive React Native development experience.
+* _Expo Streamlines Development:_ The Expo framework, CLI, and services significantly simplify the setup, build, and iteration process compared to a "bare" React Native workflow, especially by managing native complexities through configuration and CNG.
+* _Understand Your Development Target (Go vs. Builds):_ Expo Go is excellent for getting started and for projects without custom native needs. However, Development Builds are essential for most real-world applications requiring custom native modules or thorough configuration testing. Knowing when and how to transition is key.
+* _Configuration is Powerful:_ Files like {{app.config.js}}, {{babel.config.js}}, and {{metro.config.js}} offer powerful control over your application's metadata, native behavior, and build process.
+* _Troubleshooting is a Core Skill:_ Expect to encounter issues. Learning to systematically diagnose and resolve them using logs, documentation, {{npx expo doctor}}, and community resources is a vital skill for any mobile developer.
+* _{{npx expo install}} is Your Friend:_ Always use this command to add dependencies with native code to ensure compatibility within the Expo ecosystem.
+
+h3. Next Module Preview
+
+Having successfully set up your development environment, you are now ready to dive into the core mechanics of building React Native applications. The next module is:
+
+*Module 4: React Native Fundamentals: Core Components, Props, and State*
+
+In Module 4, you will learn about:
+* Fundamental React Native UI components like {{View}}, {{Text}}, {{Image}}, {{TextInput}}, {{Button}}, and {{StyleSheet}}.
+* How data is passed between components using {{props}}.
+* Managing component-level data and interactivity using React Hooks, primarily {{useState}} and {{useEffect}}.
+* Basic styling techniques in React Native.
+
+Get ready to start bringing your app ideas to life!
+
+h3. Further Resources for Environment Setup
+
+For more in-depth information on the topics covered in this module, refer to the official Expo and React Native documentation:
+* _Expo Documentation - Get Started:_ [https://docs.expo.dev/get-started/create-a-new-app/|https://docs.expo.dev/get-started/create-a-new-app/]
+* _Expo CLI Reference:_ [https://docs.expo.dev/more/expo-cli/|https://docs.expo.dev/more/expo-cli/]
+* _Expo Configuration ({{app.json}}/{{app.config.js}}):_ [https://docs.expo.dev/versions/latest/config/app/|https://docs.expo.dev/versions/latest/config/app/]
+* _Expo Development Builds:_ [https://docs.expo.dev/develop/development-builds/introduction/|https://docs.expo.dev/develop/development-builds/introduction/]
+* _Expo Go:_ [https://docs.expo.dev/get-started/expo-go/|https://docs.expo.dev/get-started/expo-go/]
+* _Expo Snack:_ [https://snack.expo.dev/|https://snack.expo.dev/]
+* _Expo Troubleshooting:_ [https://docs.expo.dev/troubleshooting/errors/|https://docs.expo.dev/troubleshooting/errors/]
+* _Continuous Native Generation (CNG):_ [https://docs.expo.dev/workflow/continuous-native-generation/|https://docs.expo.dev/workflow/continuous-native-generation/]
+* _React Native Docs - Setting up the development environment:_ [https://reactnative.dev/docs/environment-setup|https://reactnative.dev/docs/environment-setup]

@@ -1,0 +1,122 @@
+h2. Section 6: Core Building Blocks (A Preview)
+
+React Native provides a set of essential, pre-built components that work across both iOS and Android. These _Core Components_ are the basic tools in your UI toolkit, each mapping to corresponding native UI elements for optimal performance and look-and-feel. This section offers a brief preview of some fundamental ones. Later modules will delve much deeper into each component, exploring their props, styling, layout, and interactions.
+
+h3. Key Core Components
+
+Here are a few of the most commonly used Core Components:
+
+h4. {{<View>}}
+* _Role:_ The most basic container component. Use it to group other components, apply styles, and control layout using Flexbox.
+* _Analogy:_ Think of it like a {{<div>}} in web development, or {{UIView}} on iOS / {{ViewGroup}} on Android.
+* _Example:_
+
+  ```tsx
+  import React from "react";
+  import { View, Text, StyleSheet } from "react-native";
+
+  const MyCard = () => (
+    <View style={styles.cardContainer}>
+      <Text>This is a card</Text>
+    </View>
+  );
+
+  const styles = StyleSheet.create({
+    cardContainer: { padding: 10, backgroundColor: "#eee" },
+  });
+  ```
+
+h4. {{<Text>}}
+* _Role:_ Used for displaying all text content. Any text string in your JSX _must_ be wrapped within a {{<Text>}} component.
+* _Features:_ Supports nesting {{<Text>}} components for varied styling and can handle touch events.
+* _Analogy:_ Similar to {{<p>}} or {{<span>}} in web development, or {{UILabel}}/{{UITextView}} on iOS / {{TextView}} on Android.
+* _Example:_
+
+  ```tsx
+  import React from "react";
+  import { Text, StyleSheet } from "react-native";
+
+  const Greeting = () => (
+    <Text style={styles.greeting}>
+      Hello, <Text style={styles.name}>React Native</Text>!
+    </Text>
+  );
+
+  const styles = StyleSheet.create({
+    greeting: { fontSize: 18 },
+    name: { fontWeight: "bold" },
+  });
+  ```
+
+h4. {{<Image>}}
+* _Role:_ Displays images from various sources: network URLs, static project resources (using {{require('./path/to/image.png')}}), or local device storage.
+* _Requirement:_ Network images _must_ have {{width}} and {{height}} styles specified.
+* _Analogy:_ Like {{<img>}} in web development, or {{UIImageView}} on iOS / {{ImageView}} on Android.
+* _Example:_
+
+  ```tsx
+  import React from "react";
+  import { Image, StyleSheet, View } from "react-native";
+
+  const LogoDisplay = () => (
+    <View>
+      <Image
+        style={styles.logo}
+        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+      />
+      {/_ <Image style={styles.localImage} source={require('./assets/my-icon.png')} /> _/}
+    </View>
+  );
+
+  const styles = StyleSheet.create({
+    logo: { width: 50, height: 50 },
+    // localImage: { width: 100, height: 100 },
+  });
+  ```
+
+h4. {{<StyleSheet>}}
+* _Role:_ An API (not a component itself) used to define reusable style objects in JavaScript. {{StyleSheet.create()}} is used to centralize style definitions.
+* _Benefits:_ Improves code organization by separating styles from rendering logic and can offer performance optimizations by sending styles over the bridge only once.
+* _Analogy:_ Conceptually similar to creating CSS rules in a {{<style>}} tag or {{.css}} file on the web.
+* _Example:_ (See {{styles}} objects in the examples above and below – they all use {{StyleSheet.create}})
+
+h4. {{<Button>}}
+* _Role:_ A simple, cross-platform button component for basic user interactions.
+* _Props:_ Requires {{title}} (string for button text) and {{onPress}} (function to call when tapped). Optional {{color}} and {{disabled}} props.
+* _Customization:_ Offers minimal styling customization. For more control, use {{<Pressable>}} or build custom touchable components.
+* _Analogy:_ Like {{<button>}} in web development, or {{UIButton}} on iOS / {{Button}} on Android.
+* _Example:_
+
+  ```tsx
+  import React from "react";
+  import { Button, Alert, View, StyleSheet } from "react-native";
+
+  const ActionButton = () => (
+    <View style={styles.buttonContainer}>
+      <Button
+        title="Press Me"
+        onPress={() => Alert.alert("Button Pressed!")}
+        color="#841584"
+      />
+    </View>
+  );
+  const styles = StyleSheet.create({
+    buttonContainer: { margin: 10 },
+  });
+  ```
+
+h3. Component Mapping Reference
+
+This table helps visualize how common React Native Core Components relate to their native counterparts and web equivalents:
+
+||React Native Component||Android Native View||iOS Native View||Web Analog||Description||
+|{{<View>}}|{{android.view.ViewGroup}}|{{UIView}}|{{<div>}}|Fundamental container supporting Flexbox layout, styling, and touch handling.|
+|{{<Text>}}|{{android.widget.TextView}}|{{UILabel}}/{{UITextView}}|{{<p>}}, {{<span>}}|Displays styled text; must wrap all text nodes.|
+|{{<Image>}}|{{android.widget.ImageView}}|{{UIImageView}}|{{<img>}}|Displays network or static images.|
+|{{<TextInput>}}|{{android.widget.EditText}}|{{UITextField}}|{{<input type="text">}}|Allows user text input via keyboard.|
+|{{<ScrollView>}}|{{android.widget.ScrollView}}|{{UIScrollView}}|{{<div>}} (with overflow)|Generic scrolling container for heterogeneous content.|
+|{{<Button>}}|{{android.widget.Button}}|{{UIButton}}|{{<button>}}|Basic, minimally customizable button.|
+|{{StyleSheet}} (API)|N/A (Style System)|N/A (Style System)|CSS|JavaScript API for defining optimized style objects.|
+_(Note: This mapping is conceptual; the underlying implementation involves complex bridging and rendering logic, especially with the New Architecture.)_
+
+This preview is just the tip of the iceberg. Subsequent modules will explore these and other Core Components (like {{<TextInput>}}, {{<ScrollView>}}, {{<FlatList>}}, {{<Pressable>}}) in much greater detail, including their full range of props, advanced usage patterns, styling techniques, layout with Flexbox, and handling user interactions.

@@ -1,0 +1,404 @@
+h2. Section 7: Basic Form Validation with React Hook Form
+
+Validation is a crucial part of any form, ensuring that users provide data in the correct format and that all necessary information is captured. React Hook Form offers a straightforward and powerful way to implement validation directly within your form logic. This section focuses on its built-in validation capabilities using the {{rules}} prop in the {{Controller}} component.
+
+*Why Validate?*
+
+In applications like SpeedyMeds, accurate data is paramount. Validation helps to:
+* Prevent errors by ensuring data integrity (e.g., a valid email format, a numeric age).
+* Improve user experience by providing immediate and clear feedback on input errors.
+* Secure your application by sanitizing inputs and preventing malicious data.
+* Reduce server-side load by catching errors on the client before data is submitted.
+
+*Validation with the {{rules}} Prop*
+
+React Hook Form allows you to define validation rules directly on the {{Controller}} component using its {{rules}} prop. This prop accepts an object where keys are validation rule names, and values are the rule definitions or error messages.
+
+{code:language=js}
+<Controller
+  control={control}
+  name="fieldName"
+  rules={{
+    required: 'This field is mandatory.',
+    minLength: { value: 5, message: 'Must be at least 5 characters long.' },
+    // ...other rules
+  }}
+  render={({ field, fieldState: { error } }) => ( /_ ... _/ )}
+/>
+{code}
+
+*Common Built-in Validation Rules:*
+
+React Hook Form provides several built-in validation rules that you can use. For each rule, you can provide a custom error message string that will be accessible via `formState.errors` if the validation fails.
+* _`required`_: Ensures the field must have a value.
+* _Type:_ `boolean | string | { value: boolean, message: string }`
+* _Example:_ `rules={{ required: 'This field is mandatory' }}` or `rules={{ required: { value: true, message: 'Patient email is required' } }}`
+* _`minLength`_: Specifies the minimum allowed length for a string input.
+* _Type:_ `number | { value: number, message: string }`
+* _Example:_ `rules={{ minLength: { value: 8, message: 'Password must be at least 8 characters' } }}`
+* _`maxLength`_: Specifies the maximum allowed length for a string input.
+* _Type:_ `number | { value: number, message: string }`
+* _Example:_ `rules={{ maxLength: { value: 100, message: 'Notes cannot exceed 100 characters' } }}`
+* _`min`_: Specifies the minimum allowed numerical value for an input.
+* _Type:_ `number | { value: number, message: string }`
+* _Example:_ `rules={{ min: { value: 18, message: 'Patient must be at least 18 years old' } }}`
+* _`max`_: Specifies the maximum allowed numerical value for an input.
+* _Type:_ `number | { value: number, message: string }`
+* _Example:_ `rules={{ max: { value: 120, message: 'Age cannot exceed 120 years' } }}`
+* _`pattern`_: Validates the input value against a regular expression.
+* _Type:_ `RegExp | { value: RegExp, message: string }`
+* _Example (for email validation):_ `rules={{ pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email format' } }}`
+
+*Custom Validation with the `validate` Option*
+
+For more complex or business-specific validation logic that isn\'t covered by the built-in rules, React Hook Form provides a `validate` option within the `rules` prop.
+
+The `validate` option can accept:
+* A single validation function: `(value: any, formValues: Record<string, any>) => boolean | string | Promise<boolean | string>`
+* An object of validation functions: Where each key is a name for the validation rule (e.g., `isPositive`, `noAdmin`), and the value is a validation function with the same signature.
+
+Each validation function receives the current field\'s value as its first argument and an object containing all current `formValues` as the second argument (useful for dependent field validation).
+* If the validation passes, the function should return `true`.
+* If the validation fails, it should return a string containing the error message.
+* For asynchronous validation (e.g., checking if a username is taken by querying an API), the function can return a `Promise` that resolves to `true` (valid) or an error message string (invalid).
+
+*Example of `validate`:*
+
+{code:language=js}
+// In Controller rules prop:
+rules={{
+  validate: {
+    noAdmin: (value: string) =>
+      value.toLowerCase() !== 'admin' || 'Username "admin" is not allowed',
+    // Example of dependent validation (e.g., for a confirmPassword field):
+    // confirmPasswordMatch: (value: string, formValues) =>
+    //   value === formValues.password || 'Passwords do not match',
+    // Example of async validation (conceptual):
+    // isUsernameAvailable: async (value: string) => {
+    //   try {
+    //     const response = await fetch(`/api/check-username?username=${value}`);
+    //     if (!response.ok) throw new Error('Network response was not ok.');
+    //     const data = await response.json();
+    //     return data.isAvailable || 'This username is already taken';
+    //   } catch (error) {
+    //     return 'Failed to check username availability.'; // Or rethrow, handle appropriately
+    //   }
+    // }
+  }
+}}
+{code}
+
+*Displaying Error Messages*
+
+React Hook Form makes error messages accessible through the `formState: { errors }` object from `useForm` or the `fieldState: { error }` object provided by the `Controller`'s `render` prop.
+* `formState.errors`: An object where keys are field names, and values are error objects containing the `message` and `type` of error for that field.
+* `fieldState.error`: Within the `Controller`'s `render` prop, `error` directly gives you the error object for that specific field.
+
+{code:language=js}
+render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+  <View>
+    <TextInput
+      onBlur={onBlur}
+      onChangeText={onChange}
+      value={value}
+      style={[styles.input, error ? styles.inputError : null]}
+      // ... other props
+    />
+    {error && <Text style={styles.errorText}>{error.message}</Text>}
+  </View>
+)}
+{code}
+
+In this snippet:
+* We conditionally apply an `inputError` style to the `TextInput` if `error` exists.
+* We display the `error.message` in a `<Text>` component if an error is present for the field.
+
+*Validation Modes (`mode` in `useForm`)*
+
+React Hook Form allows you to configure when validation should occur using the `mode` option in `useForm`:
+* `onSubmit` (default): Validation is triggered when the form is submitted.
+* `onBlur`: Validation is triggered when a field loses focus (blur event).
+* `onChange`: Validation is triggered on every change to an input field.
+* `onTouched`: Validation is triggered when a field is first interacted with (touched) and then on subsequent changes.
+* `all`: Combines `onBlur` and `onChange` behaviors.
+
+Choosing the right mode depends on the desired user experience. `onChange` provides immediate feedback but can be noisy. `onBlur` is a common compromise. `onSubmit` is the least intrusive but provides feedback only after the user attempts to submit.
+
+{note}
+The `mode: 'onChange'` provides the most immediate feedback to the user as they type, which can be very helpful for usability. However, for complex validation rules or performance-sensitive forms, consider `onBlur` or `onSubmit` to reduce the frequency of validation checks.
+{note}
+*Short, Self-Contained Example: Basic Validation*
+
+Let's expand our previous SpeedyMeds patient registration form to include basic validation for patient name (required, minLength) and a new field for patient age (required, numeric, min/max).
+
+{code:language=js}
+import React from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  Button,
+  Alert,
+  ScrollView, // Added for longer forms
+} from "react-native";
+import { useForm, Controller } from "react-hook-form";
+
+interface PatientFormData {
+  patientName: string;
+  patientAge: string; // Keep as string for TextInput, convert on submit if needed
+}
+
+const ValidationRHFScreen = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<PatientFormData>({
+    defaultValues: {
+      patientName: "",
+      patientAge: "",
+    },
+    mode: "onChange", // Validate as user types and on blur
+  });
+
+  const onSubmit = (data: PatientFormData) => {
+    // Convert age to number if necessary before submission
+    const ageAsNumber = parseInt(data.patientAge, 10);
+    if (isNaN(ageAsNumber)) {
+      Alert.alert("Error", "Invalid age entered.");
+      return;
+    }
+    const submissionData = { ...data, patientAge: ageAsNumber };
+    Alert.alert(
+      "Form Submitted (SpeedyMeds)",
+      `Name: ${submissionData.patientName}, Age: ${submissionData.patientAge}`
+    );
+    console.log("SpeedyMeds Validated Data:", submissionData);
+    reset();
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Patient Details (SpeedyMeds)</Text>
+
+          {/_ Patient Name Input _/}
+          <Controller
+            control={control}
+            rules={{
+              required: "Patient name is required.",
+              minLength: {
+                value: 3,
+                message: "Name must be at least 3 characters.",
+              },
+              maxLength: {
+                value: 50,
+                message: "Name cannot exceed 50 characters.",
+              },
+            }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Full Name:</Text>
+                <TextInput
+                  style={[styles.input, error ? styles.inputError : null]}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="e.g., Jane Smith"
+                  placeholderTextColor="#b0bec5"
+                  accessibilityLabel="Enter Patient Full Name"
+                />
+                {error && <Text style={styles.errorText}>{error.message}</Text>}
+              </View>
+            )}
+            name="patientName"
+          />
+
+          {/_ Patient Age Input _/}
+          <Controller
+            control={control}
+            rules={{
+              required: "Patient age is required.",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Age must be a number.",
+              },
+              min: { value: 1, message: "Age must be at least 1." },
+              max: {
+                value: 120,
+                message: "Age seems a bit high, please verify.",
+              },
+            }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Age:</Text>
+                <TextInput
+                  style={[styles.input, error ? styles.inputError : null]}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="e.g., 35"
+                  keyboardType="numeric"
+                  placeholderTextColor="#b0bec5"
+                  maxLength={3} // Practical limit for age input
+                  accessibilityLabel="Enter Patient Age"
+                />
+                {error && <Text style={styles.errorText}>{error.message}</Text>}
+              </View>
+            )}
+            name="patientAge"
+          />
+
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Submit Details"
+              onPress={handleSubmit(onSubmit)}
+              color="#00796b" // A teal color
+              disabled={!isValid}
+            />
+          </View>
+          <View style={[styles.buttonContainer, { marginTop: 10 }]}>
+            <Button
+              title="Reset Form"
+              onPress={() => reset()} // Reset all fields to defaultValues
+              color="#c62828" // A darker red
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#e8eaf6", // Light lavender background
+  },
+  scrollContainer: {
+    flexGrow: 1, // Ensures content can scroll if it overflows
+    justifyContent: "center",
+    padding: 16,
+  },
+  formContainer: {
+    backgroundColor: "#ffffff",
+    padding: 30, // Increased padding
+    borderRadius: 15, // More rounded corners
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 }, // Increased shadow
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 8,
+  },
+  title: {
+    fontSize: 24, // Larger title
+    fontWeight: "bold",
+    color: "#3949ab", // Indigo color
+    textAlign: "center",
+    marginBottom: 30,
+  },
+  inputGroup: {
+    marginBottom: 22, // Increased spacing
+  },
+  label: {
+    fontSize: 16,
+    color: "#546e7a", // Blue-grey color
+    marginBottom: 10,
+    fontWeight: "600",
+  },
+  input: {
+    height: 55, // Taller input fields
+    borderColor: "#b0bec5", // Lighter border
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 18,
+    fontSize: 16,
+    backgroundColor: "#f5f5f5", // Off-white background for input
+    color: "#263238", // Darker input text
+  },
+  inputError: {
+    borderColor: "#d32f2f", // Material design error red
+    borderWidth: 1.5, // Slightly thicker border for error
+  },
+  errorText: {
+    color: "#d32f2f",
+    fontSize: 14,
+    marginTop: 6,
+    fontWeight: "500",
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+});
+
+export default ValidationRHFScreen;
+{code}
+
+*Explanation of the Example:*
+# _`PatientFormData` interface:_ Defines the structure of our form data, including `patientName` and `patientAge` (kept as a string from `TextInput` initially).
+# _`useForm` Configuration:_
+** `defaultValues` are set for both fields.
+** `mode: 'onChange'` is used to provide instant validation feedback as the user types and also on blur.
+# _`onSubmit` Function:_
+** It receives the validated `data`.
+** It attempts to parse `patientAge` to a number if necessary before constructing the `submissionData`.
+** An alert displays the submitted data, and `reset()` clears the form.
+# _`patientName` `Controller`:_
+** `rules`: Includes `required`, `minLength`, and `maxLength` with custom error messages.
+** The `render` prop destructures `error` from `fieldState` to display messages and apply error styling.
+# _`patientAge` `Controller`:_
+** `rules`: Includes `required`, a `pattern` to allow only numbers (`/^[0-9]+$/`), and `min`/`max` values.
+** `keyboardType="numeric"` is set on the `TextInput` for better UX.
+# _Error Display:_ Conditional rendering of `<Text style={styles.errorText}>{error.message}</Text>` shows validation errors below each field.
+# _Submit Button:_ The `disabled={!isValid}` prop uses the `isValid` state from `formState` to enable the button only when all validations pass.
+# _ScrollView:_ The form is wrapped in a `ScrollView` to ensure all fields are accessible on smaller screens.
+
+This example demonstrates how to effectively use React Hook Form's built-in validation rules to create more robust and user-friendly forms. For more complex validation scenarios, React Hook Form can also be integrated with schema validation libraries like Yup or Zod, which we might explore later if needed.
+
+*Exercise 12.2: Form with React Hook Form Validation**
+
+Now, let's apply these validation concepts.
+* _Objective:_ Extend a basic form using React Hook Form to include validation for several fields relevant to a medication logging feature in the SpeedyMeds app.
+* _Requirements:_
+## Create an Expo Snack with React Hook Form installed.
+## Design a form with fields for: `medicationName` (string), `dosage` (string, e.g., "1 tablet", "10mg"), and `frequency` (string, e.g., "Once a day").
+## Implement the following validation rules using the `rules` prop:
+*** `medicationName`: `required`, `minLength: 3`.
+** `dosage`: `required`.
+** `frequency`: `required`.
+## Display appropriate error messages next to each field if validation fails.
+## Use `mode: 'onChange'` for `useForm`.
+## The submit button should be disabled if the form is not valid (`!isValid`).
+## On successful submission (when `handleSubmit` calls your `onSubmit` function), show an `Alert` with the submitted data.
+
+*(URL_to_Tool)* _(Link to Expo Snack for Exercise 12.2)_
+
+Refer to the `README.md` within the Snack for detailed instructions and starter code if provided.
+
+By implementing these basic validation techniques, you can significantly improve the quality and reliability of the data collected through your SpeedyMeds application forms.
+
+*Table: React Hook Form Validation Rules Summary*
+
+The following table provides a quick reference for the common validation rules discussed, their parameters, and example usage within the `rules` prop of a React Hook Form `Controller`.
+
+||Rule Name||Parameter Type(s)||Example Usage in `rules` Prop||Default Message (Example if RHF provides one)||
+|`required`|`boolean`, `string`, `{ value: boolean, message: string }`|`required: \'Field is required\'`|Varies by browser/RHF; often generic|
+|`minLength`|`{ value: number, message: string }`|`minLength: { value: 5, message: 'Too short' }`|"MinLength is 5"|
+|`maxLength`|`{ value: number, message: string }`|`maxLength: { value: 10, message: 'Too long' }`|"MaxLength is 10"|
+|`min`|`{ value: number, message: string }`|`min: { value: 0, message: 'Must be positive' }`|"Min is 0"|
+|`max`|`{ value: number, message: string }`|`max: { value: 100, message: 'Max 100' }`|"Max is 100"|
+|`pattern`|`{ value: RegExp, message: string }`|`pattern: { value: /^\d+$/, message: 'Numbers only' }`|"Pattern does not match"|
+|`validate`|`function` or `object_of_functions`|`validate: value => value === 'test' \|\|'Must be test'`|(No default, message comes from function)|
+bq. 📚 *Official Documentation:**
+> - [https://react-hook-form.com/docs/useform/register#validation|React Hook Form - Validation (`register` rules, applicable to `Controller` `rules` prop)]
+- [https://react-hook-form.com/docs/useform/formstate|React Hook Form - `formState` (for errors)]

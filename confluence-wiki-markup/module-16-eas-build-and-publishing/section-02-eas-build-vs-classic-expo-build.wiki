@@ -1,0 +1,83 @@
+h2. Section 2: EAS Build vs. Classic Expo Build
+
+This section delves into the evolution of Expo's build services, comparing the modern EAS Build with the legacy "classic" Expo build system (commands like {{expo build:ios}} and {{expo build:android}}). Understanding this transition is key to appreciating the power and flexibility that EAS Build brings to your development workflow, especially when dealing with custom native code and requiring more control over the build environment.
+
+bq. 🧑‍🏫 _(Instructor-Led):_ During workshop sessions, we'll discuss real-world migration examples from Classic Build to EAS Build. Come prepared with questions about your specific project needs. Instructors may demonstrate a live EAS Build process to highlight key differences.
+
+bq. 🧗‍♀️ _(Self-Led):_ If you're new to Expo, don't worry about the historical context too deeply - focus on understanding EAS Build capabilities as they are today. If you're migrating from Classic Build, pay special attention to the limitations section to identify potential challenges.
+
+h3. Understanding Classic {{expo build}}
+
+The classic {{expo build:[ios/android]}} service (commonly referred to as "Classic Build") was Expo's original solution for creating standalone app binaries. For many years, it served developers by providing a way to build {{ipa}} and {{apk}}/{{aab}} files without needing to configure Xcode or Android Studio locally. It worked well for projects that stayed within the confines of the Expo Go environment, meaning they primarily used JavaScript and the pre-included native modules available in the Expo SDK.
+
+*Key Characteristics and Limitations of Classic {{expo build}}:*
+* _Managed Workflow Focus:_ It was principally designed for "managed workflow" apps that used only the pre-included Expo SDK modules.
+* _Limited Custom Native Code Support:_ Support for custom native code or linking arbitrary third-party native modules was severely limited or non-existent. This was a major factor for developers "ejecting" from the managed workflow.
+* _Larger App Sizes:_ Builds often resulted in larger app binary sizes because they typically included a significant portion, if not all, of the Expo SDK's native modules, regardless of whether the app used them.
+* _Less Configuration Flexibility:_ Developers had limited control over the build environment, native dependencies, or direct native project modifications compared to a bare React Native project (primarily through {{app.json}}).
+* _Opaque Build Process:_ Debugging build failures could be challenging due to the lack of visibility into the build steps.
+
+bq. [!WARNING] > _Classic Build Discontinuation:_
+Expo officially discontinued the Classic Build service (e.g., {{expo build:ios}}, {{expo build:android}}) as of January 4, 2023. Developers using Classic Build were required to migrate to EAS Build or adopt local native build processes. All new projects and existing projects MUST use EAS Build for cloud build services.
+For migration guidance, see the [https://blog.expo.dev/classic-build-service-no-longer-supported-73c82b500f56|Expo Blog: Classic Build Service No Longer Supported] and the [https://docs.expo.dev/build-reference/migrating/|official migration guide].
+
+h3. Introducing EAS Build: The Modern Successor
+
+EAS Build was introduced as a modern, powerful, and flexible cloud build service, designed to cater to all React Native applications, whether they are Expo managed projects, bare React Native projects, or projects with extensive custom native code.
+
+*Key Advantages and Improvements with EAS Build:*
+* _Full Custom Native Code Support:_ This is arguably the most significant improvement. EAS Build can compile apps with any custom native modules (written in Swift, Kotlin, Objective-C, Java) or third-party libraries that require native linking.
+* _Smaller App Sizes:_ Unlike Classic Build, EAS Build includes only the native code that your application actually uses, resulting in significantly smaller application binaries.
+* _Development Builds:_ EAS Build allows the creation of development builds based on {{expo-dev-client}}. These builds enable developers to test custom native code changes directly on physical devices or simulators, offering a rich development experience similar to Expo Go but within their custom native environment.
+* _Granular Control and Configuration:_ Through the {{eas.json}} file, developers have extensive control over build profiles, environment variables, build tool versions (Node.js, CocoaPods, etc.), and other build parameters.
+* _Improved Build Infrastructure:_ EAS Build utilizes more powerful and configurable cloud build workers (e.g., M4 Pro-powered workers for iOS builds), often leading to faster build times.
+* _Seamless Workflow Integration:_ EAS Build integrates smoothly with other EAS services like EAS Submit (for app store deployment) and EAS Update (for OTA updates), creating a cohesive CI/CD pipeline.
+* _Bare React Native Project Support:_ EAS Build is not limited to Expo managed projects; it works equally well for bare React Native projects, providing them with a powerful cloud build solution.
+* _Transparent Build Process:_ Provides more detailed logs and insights into the build steps, making it easier to troubleshoot issues.
+* _Reproducible Builds:_ Configuration-as-code via {{eas.json}} helps ensure that builds are reproducible.
+* _Local Build Option:_ EAS Build can also be executed locally using the {{--local}} flag (e.g., {{eas build --platform ios --profile development --local}}), or potentially on a developer's own CI infrastructure, although the cloud-hosted service is its primary mode of operation.
+
+h3. Comparison: EAS Build vs. Classic {{expo build}}
+
+The following table summarizes the key differences between EAS Build and the classic {{expo build}} service:
+
+||Feature||Classic {{expo build:[platform]}}||EAS Build||
+|_App Binary Size_|Often large (included many SDK modules)|Significantly smaller (only includes used native code)|
+|_Build Configuration Flexibility_|Limited (primarily {{app.json}})|Extensive (via {{eas.json}} profiles, env vars, tool versions)|
+|_Native Project Customization_|Minimal|Full, via config plugins or bare workflow structure|
+|_Build Infrastructure & Speed_|Older infrastructure|Modern, configurable workers (e.g., M4 Pro for iOS), faster|
+|_Workflow Integration_|Limited|Seamless integration with EAS Submit & EAS Update|
+|_Service Status_|Deprecated / Sunset|Active / Recommended|
+h3. Under the Hood: The Shift in Build Philosophy
+
+The differences between Classic Build and EAS Build are fundamental:
+* _Classic Build:_ This system essentially took the user's JavaScript bundle and injected it into a pre-built native application shell that contained all the Expo SDK's native modules. Configuration was primarily managed through {{app.json}}, with limited capacity for direct manipulation of the native project structure.
+* _EAS Build:_ This service performs a full native build from the project's source code, much like compiling an app directly in Xcode or Android Studio. For projects using Expo's managed workflow features, it typically uses a process similar to {{npx expo prebuild}} internally. This command generates the native {{ios}} and {{android}} project folders based on the configurations in {{app.json}} or {{app.config.js}} and the installed native dependencies. EAS Build then applies further configurations specified in {{eas.json}} (such as build schemes, build types, and signing credentials) to customize the native build process. Finally, it compiles the native code and bundles the JavaScript, producing a truly custom native binary tailored to the specific application.
+
+This architectural shift allows EAS Build to offer the configuration simplicity characteristic of the managed workflow (via {{app.json}}/{{app.config.js}} and config plugins) while still permitting the full customization and power inherent in native builds. Config plugins automate the modification of native project files (like {{Info.plist}}, {{AndroidManifest.xml}}, {{build.gradle}}) based on declarative settings, bridging JavaScript configuration with the native project world.
+
+By moving to EAS Build, you gain the flexibility to incorporate any native module or custom code your project requires, aligning your Expo development experience more closely with the broader React Native ecosystem, while still benefiting from Expo's managed services and cloud infrastructure.
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ The transition from Classic Build to EAS Build signifies that Expo's build process now aligns more closely with standard native Android development practices. You regain full control over the native project structure and dependencies (akin to working with {{build.gradle}} files in Android Studio), but with the added layer of EAS's cloud-based build management. Classic Build was more of an opaque "black box."
+> _Key Takeaway:_ EAS Build means your {{.apk}} or {{.aab}} contains only the native code you need, leading to smaller app sizes. You can integrate any Android library or write custom Kotlin/Java code.
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ For those familiar with Xcode build schemes and manual {{xcodebuild}} commands, Classic Build abstracted all of that away. EAS Build, through profiles in {{eas.json}}, reintroduces a level of customization akin to managing different build configurations and targets, but without needing to directly manage Xcode on a CI server for cloud builds.
+> _Key Takeaway:_ EAS Build grants full control over the iOS native project, allowing custom Swift/Objective-C code and any CocoaPods, leading to optimized {{.ipa}} files. You are no longer restricted by a pre-defined set of native capabilities.
+
+bq. 🌐 _(Web Developers - React/Angular):_
+> _Comparison:_ This evolution can be likened to moving from a highly restrictive Platform-as-a-Service (PaaS) that only permitted the use of certain pre-defined backend modules or configurations, to a more flexible PaaS or even an Infrastructure-as-a-Service (IaaS)-like model. EAS Build allows custom server-side code (native mobile code, in this analogy), arbitrary dependencies, and more control over the build environment, similar to using Docker or custom build scripts in web CI/CD.
+> _Key Takeaway:_ EAS Build compiles your JavaScript and also true native code into a distributable package, unlike web builds that produce static assets. This allows for deep device integration not possible in a browser.
+
+bq. 📚 _Official Documentation:_
+> - [https://docs.expo.dev/build-reference/migrating/|Expo Docs: Migrating from classic builds to EAS Build]
+- [https://blog.expo.dev/classic-build-service-no-longer-supported-73c82b500f56|Expo Blog: Classic Build Service No Longer Supported]
+- [https://docs.expo.dev/build/introduction/#why-eas-build|Expo Docs: Why EAS Build?]
+- [https://docs.expo.dev/build-reference/differences/|Expo Docs: Differences between EAS Build and {{expo build}}]
+
+Next, we will guide you through setting up the EAS CLI, the command-line tool you'll use to interact with all EAS services, including EAS Build.
+
+----
+
+_Next: [./section-03-setting-up-eas-cli.md|Section 3: Setting up EAS CLI]_

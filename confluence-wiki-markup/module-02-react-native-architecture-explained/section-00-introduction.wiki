@@ -1,0 +1,62 @@
+h1. Module 2: React Native Architecture Explained
+
+![./assets/images/module-02/architecture-overview-banner.png|React Native architecture showing JavaScript thread and native components connected via bridges and interfaces]
+
+A conceptual overview of React Native's architecture, showing the interplay of its core components.
+
+React Native allows you to build mobile apps using JavaScript and React, but how does that JavaScript code actually interact with the native platform (iOS or Android) to display UI and access device features? Understanding the underlying architecture is key to writing efficient, performant applications and troubleshooting effectively. This module delves into the core mechanisms that power React Native, comparing the original "Legacy Architecture" with the modern "New Architecture."
+
+One of the key benefits of understanding React Native's architecture is the ability to make better decisions for our SpeedyMeds pharmacy application. For instance, knowing how the Bridge affects performance can help us optimize areas like medication list rendering or patient form handling, ensuring a smooth user experience even with large datasets.
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ You'll see parallels between the communication mechanisms discussed here and concepts like Objective-C bridging or Swift interoperability, but also key differences in how React Native manages the UI thread.
+> _Key Takeaway:_ React Native's architecture mediates between JavaScript and native code in ways that differ from traditional iOS development patterns.
+> _Source:_ [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ Concepts like Java Native Interface (JNI) might come to mind, but React Native's approach, especially with the New Architecture, introduces different patterns for cross-language communication and UI rendering.
+> _Key Takeaway:_ While JNI allows Java code to call native methods, React Native's architecture creates a more structured bridge that's evolving toward direct JavaScript-to-native communication.
+> _Source:_ [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
+
+bq. 🌐 _(Web Developers):_
+> _Comparison:_ While you're familiar with JavaScript controlling the UI, the way React Native interacts with distinct native platforms introduces complexities not found in the browser DOM, particularly around threading and native module communication.
+> _Key Takeaway:_ Understanding this architecture is vital as it explains why some React patterns work differently in React Native and how performance considerations differ from web.
+> _Source:_ [https://reactnative.dev/architecture/glossary#bridge|React Native: Bridging in React Native]
+
+h2. Learning Objectives
+
+By the end of this module, you will be able to:
+* Describe the key components and limitations of React Native's Legacy Architecture (the Bridge).
+* Explain the core concepts and benefits of the New Architecture (JSI, TurboModules, Fabric, Codegen).
+* Compare and contrast how rendering works in the Legacy Architecture versus the New Architecture (Fabric).
+* Discuss the practical implications of the New Architecture for performance and developer capabilities.
+* Create a basic diagram illustrating the core components of both architectures.
+* Apply architectural understanding to make informed decisions for the SpeedyMeds application development.
+
+h2. Prerequisites
+* Completion of [../module-01-mobile-landscape/section-00-introduction.md|Module 1: The Landscape of Mobile Development]
+* Basic understanding of JavaScript and React concepts
+* Familiarity with general application development principles
+
+h2. Module Sections
+* [./section-01-legacy-architecture.md|Section 1: Legacy Architecture: The Bridge (Concepts, Limitations)]
+* [./section-02-new-architecture.md|Section 2: The New Architecture: JSI, TurboModules, Fabric, Codegen (Concepts, Benefits)]
+* [./section-03-rendering.md|Section 3: How Rendering Works (Legacy vs. Fabric)]
+* [./section-04-implications.md|Section 4: Implications for Developers (Performance, Synchronous Operations)]
+
+h2. Module Challenge
+
+After completing all sections, you'll test your understanding by creating architectural diagrams in the module challenge:
+
+*(https://whiteboard.microsoft.com/architecture-diagramming)*
+
+h2. Module Summary
+
+This module explores the evolution of React Native's architecture from the Legacy Bridge model to the modern New Architecture. You'll gain insight into how JavaScript code communicates with native platforms, the rendering process for UI components, and the practical implications of these architectural designs on performance and development. This knowledge forms a crucial foundation for building efficient React Native applications, including our SpeedyMeds pharmacy app, where understanding these principles will help us make better technical decisions throughout development.
+
+h2. Additional Resources
+* [https://reactnative.dev/architecture/overview|React Native Architecture Documentation]
+* [https://hermesengine.dev/|Hermes Engine: Improving React Native Performance]
+* [https://github.com/react-native-community/discussions-and-proposals/labels/new%20architecture|React Native New Architecture Working Group Discussions]
+* [https://medium.com/@DhruvHarsora/deep-dive-into-react-natives-new-architecture-jsi-turbomodules-fabric-yoga-234bbdf853b4|React Native New Architecture - Deep Dive Blog Post]
+* [https://react-native-community.github.io/upgrade-helper/|React Native Upgrade Helper]

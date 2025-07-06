@@ -1,0 +1,33 @@
+Markdown to Confluence Wiki Markup Conversion Summary
+Generated: 2025-07-06T22:04:54.574Z
+
+This directory contains all markdown files from ./modules converted to Confluence Wiki Markup format.
+
+Key Conversions Applied:
+- Headers: ## Title → h2. Title
+- Code blocks: ```js → {code:language=js}
+- Inline code: `code` → {{code}}
+- Admonitions: > [!NOTE] → {info}
+- Tables: | cell | → ||header|| and |cell|
+- Lists: - item → * item, 1. item → # item
+- Links: [text](url) → [url|text]
+- Images: ![alt](src) → !src|alt=alt!
+- Bold: **text** → *text*
+- Italic: *text* → _text_
+- Block quotes: > text → bq. text
+
+Special Handling:
+- Mermaid diagrams converted to {mermaid} macro
+- GitHub-style admonitions converted to appropriate Confluence macros
+- Language-specific code highlighting preserved
+- Nested lists maintain proper indentation
+
+File Extensions:
+- All .md files converted to .wiki files
+- Directory structure preserved
+
+Usage in Confluence:
+1. Copy the content from the .wiki files
+2. Paste directly into Confluence editor
+3. Switch to "Wiki Markup" mode if needed
+4. Content should render properly with all formatting preserved

@@ -1,0 +1,649 @@
+h2. Section 7: Offline Data Storage
+
+This section explores strategies for storing data offline in your React Native application. Offline data storage is crucial for creating apps that remain functional without an internet connection, improve performance by caching data, and provide a seamless user experience. We will cover {{AsyncStorage}} for simple key-value storage, {{expo-sqlite}} for relational data, and briefly mention MMKV as a high-performance alternative.
+
+h3. Conceptual Content
+
+Many mobile applications need to store data locally on the device. This could be user preferences, application settings, cached API responses, or even a full dataset for offline functionality. For SpeedyMeds, this could include storing user login tokens, drafted prescription notes, or a local cache of medication information.
+
+*Why Offline Storage?*
+* _Offline Access:_ Allows users to access data and use app features even when they are not connected to the internet.
+* _Performance:_ Reduces the need for frequent network requests by caching data locally, leading to faster load times.
+* _Reduced Data Usage:_ Minimizes data transfer by relying on local data when possible.
+* _Improved User Experience:_ Provides a smoother experience by minimizing loading states and handling network interruptions gracefully.
+
+*Choosing an Offline Storage Solution*
+
+The choice of storage solution depends on the type and complexity of the data you need to store:
+* _Simple Key-Value Data:_ For settings, user preferences, or small pieces of unstructured data, a key-value store is often sufficient.
+* _Structured/Relational Data:_ For more complex data with relationships (e.g., a list of medications with dosages and schedules), a local SQL database is more appropriate.
+* _Performance-Critical Data:_ For scenarios requiring very fast read/write operations, specialized storage libraries might be considered.
+
+h3. Referential Content
+
+*1. AsyncStorage ({{@react-native-async-storage/async-storage}})*
+
+AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system that is global to the app. It's suitable for storing small amounts of data, like user preferences or authentication tokens.
+* _Characteristics:_
+* Asynchronous API (returns Promises).
+* Stores data as strings. You need to serialize (e.g., {{JSON.stringify}}) objects/arrays before storing and deserialize ({{JSON.parse}}) after retrieving.
+* Unencrypted: Not suitable for sensitive data without an additional encryption layer.
+* Can be slow for large amounts of data due to its asynchronous nature and serialization overhead.
+* _Installation:_
+
+  {code:language=bash}
+npx expo install @react-native-async-storage/async-storage
+  ```
+* _Common Methods:_
+* `setItem(key: string, value: string): Promise<void>`
+* `getItem(key: string): Promise<string | null>`
+* `removeItem(key: string): Promise<void>`
+* `mergeItem(key: string, value: string): Promise<void>` (merges a JSON value into an existing JSON value)
+* `getAllKeys(): Promise<string[]>`
+* `clear(): Promise<void>` (clears all AsyncStorage for all keys)
+
+*2. `expo-sqlite`*
+
+`expo-sqlite` provides an API to interact with a SQLite database stored on the device. SQLite is a lightweight, file-based relational database, ideal for storing structured data.
+* _Characteristics:_
+* SQL-based relational database.
+* Supports transactions for atomic operations.
+* Data is persistent.
+* Good for managing larger datasets and complex queries.
+* _Installation:_
+
+  ```bash
+  npx expo install expo-sqlite
+  ```
+* _Core API:_
+* `SQLite.openDatabase(name: string, version?: string, description?: string, size?: number, callback?: (db: WebSQLDatabase) => void): WebSQLDatabase`
+* `db.transaction(callback: (tx: SQLTransaction) => void, errorCallback?: (error: SQLError) => void, successCallback?: () => void)`
+* `tx.executeSql(sqlStatement: string, arguments?: any[], successCallback?: (transaction: SQLTransaction, resultSet: SQLResultSet) => void, errorCallback?: (transaction: SQLTransaction, error: SQLError) => boolean)`
+** `SQLResultSet` contains `rowsAffected`, `insertId`, and `rows` (an array of objects).
+
+*3. MMKV (`react-native-mmkv`)*
+
+MMKV (Multi-Process Key-Value) is a high-performance, persistent key-value storage framework developed by Tencent. `react-native-mmkv` provides a React Native binding for it.
+* _Characteristics:_
+* Extremely fast read/write operations (often faster than AsyncStorage).
+* Synchronous API (though asynchronous wrappers can be built).
+* Supports storing strings, numbers, booleans, and `Uint8Array`.
+* Offers built-in encryption capabilities.
+** Can be a good alternative to AsyncStorage for performance-sensitive key-value storage or when encryption is needed out-of-the-box.
+* \_\_Installation (requires a development build for native modules if not already set up):
+
+  ```bash
+  npm install react-native-mmkv
+  # or
+  yarn add react-native-mmkv
+  ```
+
+  Then, `npx expo prebuild` (if you haven't already) or use a development build with EAS Build.
+* _Basic Usage:_
+
+  ```typescript
+  import { MMKV } from "react-native-mmkv";
+  const storage = new MMKV({
+    id: "user-preferences",
+    encryptionKey: "your-secure-key",
+  });
+  storage.set("username", "SpeedyUser");
+  const username = storage.getString("username");
+  ```
+
+{note}
+While MMKV offers excellent performance and encryption, it adds native dependencies. Ensure your build process (e.g., EAS Build with a development client) can handle this if you choose to use it. For this course, we will primarily focus on AsyncStorage and `expo-sqlite` as they are more commonly integrated with Expo Go compatible examples.
+{note}
+h3. Procedural Content
+
+*Example 1: Using AsyncStorage to Store User Preferences*
+
+Let's say SpeedyMeds allows users to choose a theme (light/dark). We can store this preference using AsyncStorage.
+{code}tsx
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, Button, StyleSheet, Switch } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const THEME_KEY = "@SpeedyMeds:appTheme"; // Convention: use a prefix for keys
+
+type Theme = "light" | "dark";
+
+const ThemePreference: React.FC = () => {
+  const [currentTheme, setCurrentTheme] = useState<Theme>("light");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadThemePreference = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const storedTheme = (await AsyncStorage.getItem(
+        THEME_KEY
+      )) as Theme | null;
+      if (storedTheme) {
+        setCurrentTheme(storedTheme);
+      }
+    } catch (error) {
+      console.error("Failed to load theme preference:", error);
+      // Default to light theme on error
+      setCurrentTheme("light");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const saveThemePreference = async (theme: Theme) => {
+    try {
+      await AsyncStorage.setItem(THEME_KEY, theme);
+      setCurrentTheme(theme);
+      alert(`Theme saved: ${theme}`);
+    } catch (error) {
+      console.error("Failed to save theme preference:", error);
+      alert("Error saving theme.");
+    }
+  };
+
+  useEffect(() => {
+    loadThemePreference();
+  }, [loadThemePreference]);
+
+  if (isLoading) {
+    return <Text>Loading theme...</Text>;
+  }
+
+  const isDarkMode = currentTheme === "dark";
+
+  return (
+    <View
+      style={[
+        styles.container,
+        isDarkMode ? styles.darkContainer : styles.lightContainer,
+      ]}
+    >
+      <Text style={isDarkMode ? styles.darkText : styles.lightText}>
+        Current Theme: {currentTheme}
+      </Text>
+      <View style={styles.switchContainer}>
+        <Text style={isDarkMode ? styles.darkText : styles.lightText}>
+          Dark Mode:
+        </Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={isDarkMode ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={(value) =>
+            saveThemePreference(value ? "dark" : "light")
+          }
+          value={isDarkMode}
+        />
+      </View>
+      <Button
+        title="Clear Theme Preference"
+        onPress={async () => {
+          await AsyncStorage.removeItem(THEME_KEY);
+          setCurrentTheme("light"); // Reset to default
+          alert("Theme preference cleared.");
+        }}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  lightContainer: { backgroundColor: "#FFFFFF" },
+  darkContainer: { backgroundColor: "#333333" },
+  lightText: { color: "#000000" },
+  darkText: { color: "#FFFFFF" },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+});
+
+export default ThemePreference;
+{code:language=text}
+*Explanation of Example 1:*
+
+The `ThemePreference` component demonstrates a practical use of AsyncStorage for storing simple user preferences in the SpeedyMeds app. The component manages a light/dark theme preference that persists even when the app is closed and reopened.
+
+Here's how it works:
+# _Loading the Preference:_ On component mount, the `loadThemePreference` function retrieves the stored theme value from AsyncStorage using the key `@SpeedyMeds:appTheme`. Note the naming convention with a prefix to avoid potential key collisions with other data.
+# _Saving the Preference:_ When the user toggles the switch, the `saveThemePreference` function stores the new theme value in AsyncStorage, making it available for future app sessions.
+# _Error Handling:_ Both functions include error handling to gracefully manage cases where AsyncStorage operations fail.
+# _UI Responsiveness:_ The component displays a loading state while retrieving the preference, then immediately applies the theme to its own styles, providing visual feedback.
+# _State Management:_ React's `useState` and `useEffect` hooks manage the component's state and lifecycle, ensuring AsyncStorage operations occur at appropriate times.
+
+This pattern can be extended to store various user preferences in SpeedyMeds, such as notification settings, display options, or accessibility configurations.
+
+*Example 2: Using expo-sqlite for Medication Records*
+
+Let's create a component that demonstrates using `expo-sqlite` to manage a more complex data structure: a list of medications with their details.
+{code}tsx
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import * as SQLite from "expo-sqlite";
+
+// SQLite database interface for medications
+/**
+* @interface Medication
+* @description Defines the structure of a medication record in our database.
+* @property {number} id - The unique identifier for the medication (auto-generated by SQLite).
+* @property {string} name - The name of the medication.
+* @property {string} dosage - The dosage information for the medication.
+* @property {string} frequency - How often the medication should be taken.
+* @property {string} notes - Additional notes about the medication (optional).
+ */
+interface Medication {
+  id?: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  notes?: string;
+}
+
+/**
+* @function openDatabase
+* @description Opens or creates a SQLite database.
+* @returns {SQLite.WebSQLDatabase} The opened database object.
+ */
+function openDatabase(): SQLite.WebSQLDatabase {
+  return SQLite.openDatabase("speedymedsdb.db");
+}
+
+/**
+* @component MedicationManager
+* @description A component that demonstrates SQLite database operations for
+* managing medications in the SpeedyMeds app. It allows adding, viewing, and
+* deleting medication records using expo-sqlite.
+ */
+const MedicationManager: React.FC = () => {
+  const [medications, setMedications] = useState<Medication[]>([]);
+  const [name, setName] = useState("");
+  const [dosage, setDosage] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [notes, setNotes] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const db = openDatabase();
+
+  /*
+* @function initDatabase
+** @description Creates the medications table if it doesn't exist.
+   */
+  const initDatabase = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS medications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          dosage TEXT NOT NULL,
+          frequency TEXT NOT NULL,
+          notes TEXT
+        );`,
+        [],
+        () => {
+          console.log("Database and table initialized successfully");
+        },
+        (_, error) => {
+          console.error("Error creating table:", error);
+          return false; // Rollback the transaction
+        }
+      );
+    });
+  };
+
+  /*
+* @function loadMedications
+** @description Loads all medication records from the database.
+   */
+  const loadMedications = () => {
+    setIsLoading(true);
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM medications ORDER BY name;",
+        [],
+        (_, { rows: { _array } }) => {
+          setMedications(_array);
+          setIsLoading(false);
+        },
+        (_, error) => {
+          console.error("Error loading medications:", error);
+          setIsLoading(false);
+          return false;
+        }
+      );
+    });
+  };
+
+  /*
+* @function addMedication
+** @description Adds a new medication record to the database.
+   */
+  const addMedication = () => {
+    // Basic validation
+    if (!name || !dosage || !frequency) {
+      Alert.alert(
+        "Validation Error",
+        "Name, dosage, and frequency are required."
+      );
+      return;
+    }
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO medications (name, dosage, frequency, notes) VALUES (?, ?, ?, ?);",
+        [name, dosage, frequency, notes],
+        (_, { insertId }) => {
+          console.log("Medication added with ID:", insertId);
+          Alert.alert("Success", "Medication added successfully!");
+
+          // Clear form and reload data
+          setName("");
+          setDosage("");
+          setFrequency("");
+          setNotes("");
+          loadMedications();
+        },
+        (_, error) => {
+          console.error("Error adding medication:", error);
+          Alert.alert("Error", "Failed to add medication");
+          return false;
+        }
+      );
+    });
+  };
+
+  /*
+* @function deleteMedication
+* @description Deletes a medication record from the database.
+* @param {number} id - The ID of the medication to delete.
+   */
+  const deleteMedication = (id: number) => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this medication?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            db.transaction((tx) => {
+              tx.executeSql(
+                "DELETE FROM medications WHERE id = ?;",
+                [id],
+                (_, { rowsAffected }) => {
+                  if (rowsAffected > 0) {
+                    loadMedications();
+                    Alert.alert("Success", "Medication deleted successfully!");
+                  }
+                },
+                (_, error) => {
+                  console.error("Error deleting medication:", error);
+                  Alert.alert("Error", "Failed to delete medication");
+                  return false;
+                }
+              );
+            });
+          },
+        },
+      ]
+    );
+  };
+
+  // Initialize database and load medications on component mount
+  useEffect(() => {
+    initDatabase();
+    loadMedications();
+  }, []);
+
+  /*
+* @function renderMedicationItem
+* @description Renders an individual medication item in the list.
+* @param {Medication} item - The medication to render.
+** @returns {React.ReactElement} The rendered medication item.
+   */
+  const renderMedicationItem = ({ item }: { item: Medication }) => (
+    <View style={styles.medicationItem}>
+      <View style={styles.medicationDetails}>
+        <Text style={styles.medicationName}>{item.name}</Text>
+        <Text style={styles.medicationDosage}>
+          {item.dosage} - {item.frequency}
+        </Text>
+        {item.notes ? (
+          <Text style={styles.medicationNotes}>{item.notes}</Text>
+        ) : null}
+      </View>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => deleteMedication(item.id!)}
+      >
+        <Text style={styles.deleteButtonText}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Medication Manager</Text>
+
+      {/_ Form to add a new medication _/}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Medication Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Dosage (e.g., 100mg)"
+          value={dosage}
+          onChangeText={setDosage}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Frequency (e.g., Twice daily)"
+          value={frequency}
+          onChangeText={setFrequency}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Notes (Optional)"
+          value={notes}
+          onChangeText={setNotes}
+          multiline
+        />
+        <TouchableOpacity style={styles.addButton} onPress={addMedication}>
+          <Text style={styles.addButtonText}>Add Medication</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/_ List of medications _/}
+      <Text style={styles.subtitle}>Your Medications</Text>
+      {isLoading ? (
+        <Text style={styles.loadingText}>Loading medications...</Text>
+      ) : (
+        <FlatList
+          data={medications}
+          renderItem={renderMedicationItem}
+          keyExtractor={(item) =>
+            item.id?.toString() || Math.random().toString()
+          }
+          style={styles.list}
+          ListEmptyComponent={
+            <Text style={styles.emptyListText}>No medications found</Text>
+          }
+        />
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f5f5f5",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#03A9F4",
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+    color: "#03A9F4",
+  },
+  inputContainer: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    marginBottom: 15,
+    padding: 8,
+    fontSize: 16,
+  },
+  addButton: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 4,
+    padding: 12,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  addButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  list: {
+    marginTop: 10,
+  },
+  medicationItem: {
+    backgroundColor: "white",
+    borderRadius: 6,
+    padding: 15,
+    marginBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  medicationDetails: {
+    flex: 1,
+  },
+  medicationName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  medicationDosage: {
+    fontSize: 16,
+    color: "#555",
+    marginTop: 4,
+  },
+  medicationNotes: {
+    fontSize: 14,
+    color: "#777",
+    marginTop: 4,
+    fontStyle: "italic",
+  },
+  deleteButton: {
+    backgroundColor: "#F44336",
+    padding: 8,
+    borderRadius: 4,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  loadingText: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#555",
+  },
+  emptyListText: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#777",
+    fontStyle: "italic",
+  },
+});
+
+export default MedicationManager;
+```
+
+*Explanation of Example 2:*
+
+This `MedicationManager` component demonstrates a comprehensive implementation of SQLite for structured data storage in a React Native application. It represents a feature of the SpeedyMeds app where users can manage their medications with persistent local storage. Let's break down its key aspects:
+# _Database Initialization:_
+   The `initDatabase` function ensures a `medications` table exists with the necessary columns. This is wrapped in a `db.transaction` which provides atomicity—either all SQL statements within the transaction succeed, or none do.
+# _CRUD Operations:_
+*_ _Create:* The `addMedication` function inserts a new record into the database using parameterized SQL (`?` placeholders) for security and to prevent SQL injection.
+* _Read:_ The `loadMedications` function queries all records, ordered by name, and updates the component's state with the results.
+* _Delete:_ The `deleteMedication` function removes a record by ID after user confirmation.
+* (Update could be added for a complete CRUD implementation but is omitted for brevity.)
+# _Structured Data Model:_
+   The `Medication` interface defines a clear type structure for medication records, ensuring consistency in how data is stored and retrieved.
+# _Transaction Pattern:_
+   All database operations use the `transaction` method, which provides:
+*_ _Error Handling:* Each transaction has success and error callbacks.
+* _Rollback Support:_ By returning `false` from error callbacks, the transaction is rolled back.
+* _Atomicity:_ Multiple SQL operations can be grouped to succeed or fail together.
+# _User Experience Considerations:_
+** Loading states are managed to inform users when data is being retrieved.
+* Form validation ensures required fields are filled.
+* Success and error feedback is provided via alerts.
+* Confirmation is requested before destructive actions (deletion).
+# _UI Components:_
+* A form for adding new medications.
+* A list displaying existing medications with delete functionality.
+* Empty state messaging when no medications exist.
+
+This example demonstrates how SQLite provides advantages over AsyncStorage for structured data:
+* It supports complex querying (e.g., sorting by name).
+* Data is organized in tables with defined schemas.
+* Relationships between data can be established (though not shown in this simple example).
+* Transactions ensure data integrity across multiple operations.
+
+In the SpeedyMeds app, this functionality would be vital for maintaining an offline-accessible medication list that users can reference even without internet connectivity, which is crucial for medication management applications.
+
+{tip}
+While this example uses direct SQL queries for clarity, in a larger application, consider creating a data access layer or using an ORM (Object-Relational Mapping) library to abstract SQL operations and make database code more maintainable.
+{tip}
+bq. 📚 _Official Documentation:_
+> - [https://docs.expo.dev/versions/latest/sdk/sqlite/|Expo SQLite Documentation]
+- [https://www.sqlite.org/docs.html|SQLite Official Documentation]
+
+h3. Next Steps
+
+Now that you've learned about storing data offline using both key-value storage (AsyncStorage) and relational databases (SQLite), let's explore testing strategies in React Native.

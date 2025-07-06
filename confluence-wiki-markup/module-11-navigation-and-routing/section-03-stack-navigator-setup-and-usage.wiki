@@ -1,0 +1,343 @@
+h2. Section 3: Stack Navigator Setup and Usage
+
+This section focuses on the Stack Navigator from React Navigation. You'll learn how to define a stack of screens, navigate between them, and understand the basic configuration options. The Stack Navigator is fundamental for creating linear flows where users move forwards and backwards through a sequence of screens, such as a sign-up process or drilling down into details within the SpeedyMeds app.
+
+bq. 🛣️ _(All Learners):_ Ensure you have completed the React Navigation installation steps from the previous section. The concepts here build directly on that foundation.
+
+h3. Core Content
+
+h4. Conceptual Content: Understanding the Stack Navigator
+
+The Stack Navigator provides a way to transition between screens where each new screen is placed on top of a stack. When you navigate back, the top screen is removed from the stack, revealing the previous screen. It's managed by the {{@react-navigation/stack}} package.
+
+*Key Concepts:*
+* _Screen:_ A React component that represents a single view in your application.
+* _Navigator:_ A React component that defines a specific navigation pattern (e.g., Stack, Tab, Drawer). It takes route configuration as props and renders the active screen.
+* _Route:_ A configuration object that maps a name to a screen component and can include options for how that screen is presented (e.g., header title).
+* {{createStackNavigator}}:
+  A function that returns an object containing two components: {{Navigator}} and {{Screen}}. You use these to configure your stack.
+
+Let's visualize how the stack navigator works with user interactions:
+
+{mermaid}
+sequenceDiagram
+    participant User
+    participant HomeScreen
+    participant StackNavigator as Stack Navigator
+    participant NavState as Navigation State
+    participant DetailScreen
+
+    Note over NavState: Initial Stack: [Home]
+    User->>HomeScreen: Opens App
+    HomeScreen->>StackNavigator: Initialize
+    StackNavigator->>NavState: Set initial route: "Home"
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med123"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med123"}
+
+    User->>DetailScreen: Taps back button
+    DetailScreen->>StackNavigator: navigation.goBack()
+    StackNavigator->>NavState: Pop top screen from stack
+    Note over NavState: Updated Stack: [Home]
+    NavState-->>HomeScreen: Render screen
+
+    User->>HomeScreen: Taps another "Go to Details" button
+    HomeScreen->>StackNavigator: navigation.navigate("Detail", {id: "med456"})
+    StackNavigator->>NavState: Push "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail]
+    NavState-->>DetailScreen: Render screen with params {id: "med456"}
+
+    User->>DetailScreen: Taps "View Related" button
+    DetailScreen->>StackNavigator: navigation.push("Detail", {id: "relatedMed789"})
+    StackNavigator->>NavState: Push another "Detail" screen onto stack
+    Note over NavState: Updated Stack: [Home, Detail, Detail]
+    NavState-->>DetailScreen: Render new instance with params {id: "relatedMed789"}
+
+{mermaid}
+
+This diagram illustrates the core operations of a stack navigator:
+# _Initial Rendering:_ The app starts with HomeScreen on the stack.
+# _Navigation to a New Screen:_ When a user taps "Go to Details," {{navigation.navigate()}} pushes the DetailScreen onto the stack with parameters.
+# _Going Back:_ Tapping the back button triggers {{navigation.goBack()}}, which pops the top screen off the stack, revealing the previous screen (HomeScreen).
+# _Navigate vs. Push:_ The diagram also shows the difference between {{navigate()}} and {{push()}}:
+* {{navigate("Detail")}} will go to an existing "Detail" screen if it's already in the stack, but
+* {{push("Detail")}} will always add a new instance of "Detail" to the stack, allowing for multiple instances of the same screen type.
+
+This stack-based navigation model is ideal for drill-down flows, where users explore progressively more detailed information and need a clear path to return to previous screens.
+
+h4. Procedural Content: Implementing a Basic Stack Navigator
+
+Let's create a simple two-screen stack for our SpeedyMeds app: a {{HomeScreen}} and a {{PrescriptionDetailScreen}}.
+
+*1. Define Your Screen Components:*
+
+First, create the React components for your screens. These are just regular React Native components.
+
+{code:language=js}
+// screens/HomeScreen.tsx
+import React from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import type { StackScreenProps } from "@react-navigation/stack"; // For type checking
+
+// Define a type for your stack parameters if you plan to pass params
+// We'll cover this in detail in a later section (Section 6)
+/**
+* Defines the parameter list for the root stack navigator.
+* Specifies the parameters expected by each screen in the stack.
+* - `Home`: No parameters expected.
+* - `PrescriptionDetail`: Expects a `prescriptionId` of type string.
+ */
+export type RootStackParamList = {
+  Home: undefined; // No params for Home
+  PrescriptionDetail: { prescriptionId: string }; // Expects prescriptionId
+};
+
+// Type for HomeScreen props
+type HomeScreenProps = StackScreenProps<RootStackParamList, "Home">;
+
+/**
+* Represents the home screen of the SpeedyMeds application.
+* It displays a welcome message and buttons to navigate to prescription detail screens.
+* @param {HomeScreenProps} props - The properties passed to the component, including navigation.
+* @returns {JSX.Element} The rendered home screen component.
+ */
+export default function HomeScreen({ navigation }: HomeScreenProps) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>SpeedyMeds Home</Text>
+      <Button
+        title="Go to Aspirin Details"
+        onPress={() =>
+          navigation.navigate("PrescriptionDetail", {
+            prescriptionId: "aspirin123",
+          })
+        }
+      />
+      <Button
+        title="Go to Amoxicillin Details (Non-Existent Example)"
+        onPress={() =>
+          navigation.navigate("PrescriptionDetail", {
+            prescriptionId: "amox456",
+          })
+        }
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});
+{code}
+
+{code:language=js}
+// screens/PrescriptionDetailScreen.tsx
+import React from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import type { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "./HomeScreen"; // Import the param list
+
+// Type for PrescriptionDetailScreen props
+type PrescriptionDetailScreenProps = StackScreenProps<
+  RootStackParamList,
+  "PrescriptionDetail"
+bq. ;
+
+/**
+* Represents the prescription detail screen of the SpeedyMeds application.
+* It displays details for a specific prescription identified by `prescriptionId` received via route params.
+* @param {PrescriptionDetailScreenProps} props - The properties passed to the component, including route and navigation.
+* @returns {JSX.Element} The rendered prescription detail screen component.
+ */
+export default function PrescriptionDetailScreen({
+  route,
+  navigation,
+}: PrescriptionDetailScreenProps) {
+  // Access the route params
+  const { prescriptionId } = route.params;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Prescription Detail</Text>
+      <Text style={styles.text}>Details for: {prescriptionId}</Text>
+      <Button title="Go back to Home" onPress={() => navigation.goBack()} />
+      <Button
+        title="Go to Home (alternative)"
+        onPress={() => navigation.navigate("Home")}
+      />
+      {/_ Example of pushing another instance of the same screen (less common for details) _/}
+      {/* <Button 
+        title="Go to another Detail (e.g., related item)" 
+        onPress={() => navigation.push('PrescriptionDetail', { prescriptionId: 'relatedItem789' })} 
+      /> */}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 18,
+    marginBottom: 15,
+  },
+});
+{code}
+
+{tip}
+It's a good practice to define your screen components in separate files (e.g., within a `screens` directory) to keep your project organized.
+{tip}
+*2. Create the Stack Navigator:*
+
+Now, let's integrate these screens into a stack navigator. You'll typically do this in your `App.tsx` or a dedicated navigation file.
+
+{code:language=js}
+// App.tsx (or a dedicated navigator file)
+import "react-native-gesture-handler";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import HomeScreen, { RootStackParamList } from "./screens/HomeScreen"; // Assuming files are in ./screens/
+import PrescriptionDetailScreen from "./screens/PrescriptionDetailScreen";
+
+const Stack = createStackNavigator<RootStackParamList>();
+
+/**
+* The main application component for SpeedyMeds.
+* Sets up the root navigation container and the primary stack navigator
+* with `HomeScreen` and `PrescriptionDetailScreen`.
+* @returns {JSX.Element} The root application component with navigation.
+ */
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "SpeedyMeds Dashboard" }} // Sets header title
+        />
+        <Stack.Screen
+          name="PrescriptionDetail"
+          component={PrescriptionDetailScreen}
+          options={({ route }) => ({
+            title: `Detail: ${route.params.prescriptionId}`,
+          })} // Dynamic title
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+{code}
+
+*Explanation:*
+* `createStackNavigator<RootStackParamList>()`: We call this function to get our `Stack` object. Providing `RootStackParamList` here gives us type safety for route names and parameters.
+* `<NavigationContainer>`: Wraps the entire navigation structure, as discussed in the previous section.
+* `<Stack.Navigator>`: This component is the actual navigator. It manages the stack of screens.
+** `initialRouteName="Home"`: Specifies that the `Home` screen should be the first one displayed when the app loads.
+* `<Stack.Screen>`: Each instance of this component defines a route in our stack.
+* `name="Home"`: This is the unique name for this route. We use this name when navigating (e.g., `navigation.navigate('Home')`).
+* `component={HomeScreen}`: Specifies the React component to render for this route.
+* `options={{ title: 'SpeedyMeds Dashboard' }}`: Configures options for this screen, such as the header title. Options can be an object or a function that returns an object (useful for dynamic options based on `route` or `navigation` props).
+
+*3. Navigating Between Screens:**
+
+In `HomeScreen.tsx`, we used `navigation.navigate('PrescriptionDetail', { prescriptionId: 'aspirin123' })`:
+* `navigation.navigate('RouteName')`: This function is used to navigate to another screen in the stack. If the screen is already in the stack, it will navigate back to it. If not, it pushes the new screen onto the stack.
+* `{ prescriptionId: 'aspirin123' }`: This is an optional second argument to `navigate`, an object containing parameters to pass to the target screen. The `PrescriptionDetailScreen` can access this via `route.params`.
+
+In `PrescriptionDetailScreen.tsx`:
+* `navigation.goBack()`: Pops the current screen from the stack and navigates to the previous screen.
+* `navigation.navigate('Home')`: Navigates to the 'Home' screen. If 'Home' is already in the stack below the current screen, it will pop screens until 'Home' is reached. If 'Home' is not in the stack (which is unlikely in this simple stack if you started from Home), it would push 'Home'.
+* `navigation.push('RouteName')`: This function _always_ pushes a new screen onto the stack, even if a screen with the same name is already present. This is useful if you want multiple instances of the same screen type in your stack (e.g., navigating from one profile screen to another profile screen).
+
+*TypeScript Integration (`RootStackParamList`):*
+
+Defining `RootStackParamList` is crucial for TypeScript projects:
+
+{code:language=js}
+export type RootStackParamList = {
+  Home: undefined; // 'Home' screen takes no parameters
+  PrescriptionDetail: { prescriptionId: string }; // 'PrescriptionDetail' screen expects a prescriptionId string
+  // Add other screens and their params here
+};
+{code}
+
+This type definition helps React Navigation provide type checking for route names and parameters passed between screens. You then use `StackScreenProps<RootStackParamList, 'ScreenName'>` to type the props for your screen components, giving you autocompletion and type safety for `navigation` and `route` props.
+
+{note}
+The keys in `RootStackParamList` (e.g., `Home`, `PrescriptionDetail`) MUST match the `name` prop of your `<Stack.Screen>` components.
+{note}
+bq. 📚 _Official Documentation:_
+> - [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator - React Navigation]
+- [https://reactnavigation.org/docs/navigating|Navigating to a new screen - React Navigation]
+- [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
+- [https://reactnavigation.org/docs/typescript/|TypeScript with React Navigation]
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
+> _Key Takeaway:_ The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
+> _Key Takeaway:_ React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
+
+h4. Referential Content: Key Stack Navigator Configuration Options
+
+While we'll dive deeper into styling headers in Section 7, it's useful to be aware of some key configuration options available for the Stack Navigator. These options can be applied to individual screens via the `options` prop on `<Stack.Screen>` or to all screens in the navigator via the `screenOptions` prop on `<Stack.Navigator>`.
+
+*Common Header Options:*
+* `title: string`: Sets the text for the header title. Can also be a component.
+* `headerShown: boolean`: Defaults to `true`. Set to `false` to hide the header for a particular screen or for the entire stack.
+* `headerStyle: object`: Styles for the header container (e.g., `{ backgroundColor: '#f4511e' }`).
+* `headerTintColor: string`: Color for the header title and back button icon (e.g., `'#fff'`).
+* `headerTitleStyle: object`: Style object for the title text (e.g., `{ fontWeight: 'bold' }`).
+* `headerBackTitleVisible: boolean` (iOS specific): Defaults to `true`. Whether the back button title (typically the title of the previous screen) should be visible. In React Navigation v7+, this is often replaced or supplemented by `headerBackButtonDisplayMode`.
+* `headerLeft: (props) => React.ReactNode`: Function that returns a React Element to display on the left side of the header (e.g., a custom back button or menu icon).
+* `headerRight: (props) => React.ReactNode`: Function that returns a React Element to display on the right side of the header (e.g., a save button or profile icon).
+* `header: (props) => React.ReactNode`: Function that returns a completely custom React Element to use as the header, replacing the default header entirely.
+
+*Screen Presentation and Animation:*
+* `presentation: 'card' | 'modal' | 'transparentModal'`: Defines how the screen is presented and animated.
+* `'card'` (default): Standard platform-specific push/pop animations.
+* `'modal'`: Platform-specific modal presentation (e.g., slides up from the bottom on iOS). Often used for flows that temporarily interrupt the main app flow.
+** `'transparentModal'`: Similar to `modal` but with a transparent background, allowing content underneath to be partially visible. Useful for dialogs or pop-ups.
+* Animation options: More granular control over animations (gestures, transitions) can be achieved using options like `animationEnabled`, `gestureEnabled`, `cardStyleInterpolator`, etc. Some advanced header animations might require the optional `@react-native-masked-view/masked-view` package.
+
+These options provide a high degree of control over the look, feel, and behavior of your Stack Navigator screens.
+
+h4. Exercise 11.1: Basic Stack Navigation
+
+Now it's time to practice! This exercise will guide you through setting up a basic two-screen stack navigator.
+
+*(https://snack.expo.dev/SpeedyMedsStackEx11-1)*
+
+bq. _Instructions for Expo Snack `README.md` (Exercise 11.1):_
+
+h4. Next Steps
+
+Now that you can create a basic stack of screens, the next step is to explore other types of navigators. In the upcoming section, we will look at how to implement Tab Navigation for different sections of your app.

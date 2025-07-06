@@ -1,0 +1,120 @@
+h2. Section 1: Recap: TextInput Component
+
+This section revisits the {{TextInput}} component, a fundamental building block for capturing user input in React Native. We previously introduced {{TextInput}} in Module 8, but a focused recap here is essential as it forms the basis for all text-based forms we'll be building. Understanding its core props and behavior is crucial before we dive into more advanced form handling techniques.
+
+*Core Concept: What is {{TextInput}}?*
+
+The {{TextInput}} component is a core React Native component that allows users to enter text into your application. It can be configured for single-line or multi-line input and supports a variety of features like placeholders, keyboard types, and event handling for text changes.
+
+Think of it as the equivalent of an {{<input type="text">}} or {{<textarea>}} element in web development, but specifically designed for mobile interfaces.
+
+*"Under the Hood": Native Mapping and Architecture*
+
+The React Native {{TextInput}} component serves as a bridge to the underlying native input controls of the host platform.
+* On Android, it typically maps to the native {{EditText}} widget.
+* On iOS, it corresponds to {{UITextField}} for single-line input or {{UITextView}} for multi-line input.
+
+With the advent of React Native's New Architecture, {{TextInput}} is implemented as a Fabric component. This architectural shift is significant because Fabric components communicate with the native side more directly and efficiently through the JavaScript Interface (JSI), bypassing the asynchronous nature of the legacy bridge. This direct communication channel aims to reduce latency and improve the responsiveness of UI elements like {{TextInput}}, especially during frequent updates such as typing. The move to Fabric for core components like {{TextInput}} addresses historical performance concerns, particularly in scenarios involving complex input interactions or frequent re-renders.
+
+Understanding that {{TextInput}} is deeply connected to the native platform's input mechanisms means that its behavior often involves considering how these underlying native controls operate. This awareness is particularly useful when debugging platform-specific quirks or performance characteristics. The evolution towards Fabric for {{TextInput}} underscores a commitment to enhancing its responsiveness and mitigating the overhead previously associated with the bridge.
+
+*Key Properties Review:*
+
+Here's a refresher on some of the most commonly used {{TextInput}} props. For a complete list, always refer to the official documentation.
+* {{value}} (string): The actual text to display inside the input. To create a controlled component (which we'll discuss in detail soon), this prop is essential and is typically tied to a state variable.
+* {{onChangeText}} ((text: string) => void): A callback function that is invoked when the text in the input changes. It receives the new text string as an argument. This is the primary way to capture user input.
+* {{placeholder}} (string): Text that is displayed when the {{TextInput}} is empty. This is useful for giving users a hint about what kind of input is expected (e.g., "Enter patient name").
+* {{keyboardType}} (enum): Controls which type of keyboard is displayed to the user. Common values include:
+* {{'default'}}: The standard keyboard.
+* {{'numeric'}}: A keyboard with numbers and punctuation.
+* {{'email-address'}}: A keyboard optimized for email input (often includes {{@}} and {{.}} keys).
+* {{'phone-pad'}}: A numeric keypad for phone numbers.
+* {{secureTextEntry}} (boolean): If {{true}}, the text input obscures the text entered, which is useful for password fields.
+* {{multiline}} (boolean): If {{true}}, the {{TextInput}} can accept multiple lines of text. Useful for comments or longer descriptions.
+* {{style}}: Used to apply styling to the {{TextInput}} component, similar to how you style other React Native components using {{StyleSheet}}.
+* {{placeholderTextColor}} (string): Sets the color of the placeholder text.
+* {{autoCapitalize}} (enum: {{'none'}}, {{'sentences'}}, {{'words'}}, {{'characters'}}): Controls automatic capitalization behavior.
+* {{autoCorrect}} (boolean): If {{false}}, disables automatic correction.
+* {{editable}} (boolean): If {{false}}, text is not editable. Defaults to {{true}}.
+
+bq. 📲 _(Native Developers - Android/iOS):_
+> _Comparison:_ The React Native {{TextInput}} component abstracts the complexities of platform-specific input controls like Android\'s {{EditText}} or iOS\'s {{UITextField}}/{{UITextView}}. While you might be accustomed to directly interacting with these native elements and their respective APIs (e.g., listeners, delegates), React Native provides a unified JavaScript-based interface. The underlying native behavior is still present but managed by React Native.
+> _Key Takeaway:_ Notice how React Native provides a consistent API ({{TextInput}} props and event handlers) that translates to the appropriate native behavior, simplifying cross-platform development for input fields.
+
+bq. 🌐 _(Web Developers - React/Angular):_
+> _Comparison:_ The {{TextInput}} component is conceptually similar to the HTML {{<input>}} and {{<textarea>}} elements. Many props, like {{placeholder}} and {{value}}, will feel familiar. However, event handling, such as {{onChangeText}} (which we\'ll cover in the next section), is more direct in React Native compared to accessing {{event.target.value}} in web React. For Angular developers, this single component model might contrast with the more structured {{FormsModule}} or {{ReactiveFormsModule}} for handling form inputs.
+> _Key Takeaway:_ While the element is different, the core idea of capturing text input remains. Pay attention to the specific props and event names in React Native.
+
+*Basic Usage Example:*
+
+Let's look at a very simple, uncontrolled {{TextInput}} for context. We will explore controlled inputs extensively in Section 4.
+
+{code:language=js}
+import React from "react";
+import { SafeAreaView, StyleSheet, TextInput, Text, View } from "react-native";
+
+const SimpleInputScreen = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.label}>Medication Name:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="e.g., Amoxicillin 250mg"
+          placeholderTextColor="#888"
+          accessibilityLabel="Enter Medication Name"
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#f5f5f5",
+  },
+  formContainer: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: "#333",
+    fontWeight: "500",
+  },
+  input: {
+    height: 45,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
+});
+
+export default SimpleInputScreen;
+{code}
+
+This basic example renders a styled `TextInput` field where a user could visually type. However, in this uncontrolled state, the application isn't actively managing or storing the typed text in its state. If you were to type into this input, the text would appear on the screen due to native behavior, but React would not be aware of its current value. This distinction is key to understanding why controlled components, which we'll explore in Section 4, are the preferred pattern in React for managing form data. We'll soon cover how to capture and manage the input's value using state.
+
+Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
+
+bq. 📚 _Official Documentation:_
+> - [https://reactnative.dev/docs/textinput|React Native Docs: `TextInput`]
+- [https://docs.expo.dev/ui-programming/user-interface-libraries/#textinput|Expo Docs: `TextInput`] (Often links to React Native core docs for these components)
+- [https://reactnative.dev/docs/the-new-architecture/pillars-fabric|React Native New Architecture: Fabric]
+- [https://reactnative.dev/docs/the-new-architecture/pillars-javascript-interface|React Native New Architecture: JSI]

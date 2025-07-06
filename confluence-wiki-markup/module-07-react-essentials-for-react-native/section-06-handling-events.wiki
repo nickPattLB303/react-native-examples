@@ -1,0 +1,196 @@
+h2. Section 6: Handling Events (Press Events)
+
+Interactive applications respond to user input. In React Native, this often involves handling touch events, such as a user pressing a button. This section focuses on how to handle these events, particularly "press" events, using React's event system, which provides a consistent API across platforms by abstracting native differences.
+
+h3. Event Handling in React
+
+Handling events in React (and React Native) is very similar to handling events on DOM elements in web development, but with a few syntactical differences:
+* _camelCase:_ React event handlers are named using camelCase, rather than lowercase. For example, an {{onclick}} event in HTML becomes {{onClick}} in React/JSX. In React Native, a common event is {{onPress}}.
+* _Functions:_ You pass a function as the event handler, rather than a string.
+
+  {code:language=js}
+// HTML (for comparison)
+  // <button onclick="handleLogin()">Login</button>
+
+  // JSX (React/React Native)
+  <Button title="Login" onPress={handleLogin} />
+  ```
+
+Event handler functions can also receive an optional argument, often called `event` (or `e`), which contains information about the user interaction. For basic `onPress` events with the `<Button>` component, this argument is often not explicitly used as the primary action is clear. However, for more complex interactions or components like `<Pressable>`, this event object can provide useful details (e.g., touch coordinates via `event.nativeEvent`). We will explore components like `<Pressable>` in more detail later.
+
+h3. Handling `onPress` Events
+
+The most common touch event you'll handle in React Native is `onPress`. This event is available on several Core Components like `<Button>`, `<Pressable>`, and `<TouchableOpacity>` (though `<Pressable>` is now generally recommended over `TouchableOpacity`).
+
+*Example: A Simple Alert Button*
+
+Let's create a button that shows an alert when pressed.
+{code}tsx
+import React from "react";
+import { View, Button, Alert, StyleSheet } from "react-native";
+
+const AlertButton = () => {
+  const handlePress = () => {
+    Alert.alert("SpeedyMeds Reminder", "Time to take your medication!");
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Show Reminder" onPress={handlePress} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export default AlertButton;
+{code:language=text}
+In this example:
+* We define a function `handlePress`.
+* This function is passed as the `onPress` prop to the `<Button>` component.
+* When the button is pressed, `handlePress` is executed, and an `Alert` (from React Native's `Alert` API) is shown.
+
+h3. Inline Event Handlers
+
+You can also define event handler functions inline using arrow functions, especially for very simple logic:
+{code}tsx
+import React, { useState } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+
+const DosageAdjuster = () => {
+  const [dosage, setDosage] = useState<number>(10); // Initial dosage in mg
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.dosageText}>Current Dosage: {dosage}mg</Text>
+      <Button
+        title="Increase Dosage by 5mg"
+        onPress={() => setDosage((prevDosage) => prevDosage + 5)}
+      />
+      <Button
+        title="Decrease Dosage by 5mg"
+        onPress={() => setDosage((prevDosage) => Math.max(0, prevDosage - 5))} // Prevent negative dosage
+        disabled={dosage === 0}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    alignItems: "center",
+  },
+  dosageText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+});
+
+export default DosageAdjuster;
+{code:language=text}
+Here, the `onPress` handlers directly call `setDosage` using inline arrow functions.
+
+h3. Passing Arguments to Event Handlers
+
+Sometimes you need to pass arguments to your event handler function. For example, if you have a list of items and each item has a button.
+
+To do this, you typically use an arrow function in the `onPress` prop that then calls your handler with the desired arguments.
+{code}tsx
+import React from "react";
+import { View, Text, Button, Alert, StyleSheet } from "react-native";
+
+interface MedicationItemProps {
+  id: string;
+  name: string;
+  onSelectMedication: (id: string, name: string) => void;
+}
+
+const MedicationItem: React.FC<MedicationItemProps> = ({
+  id,
+  name,
+  onSelectMedication,
+}) => {
+  return (
+    <View style={styles.itemContainer}>
+      <Text>{name}</Text>
+      <Button
+        title="Select"
+        onPress={() => onSelectMedication(id, name)} // Arrow function calls handler with id and name
+      />
+    </View>
+  );
+};
+
+// Example Usage (Conceptual - would be part of a list)
+const PrescriptionSelector = () => {
+  const handleMedicationSelection = (id: string, name: string) => {
+    Alert.alert(
+      "Medication Selected",
+      `You selected ${name} (ID: ${id}) for refill.`
+    );
+  };
+
+  return (
+    <View>
+      <MedicationItem
+        id="med123"
+        name="Atorvastatin"
+        onSelectMedication={handleMedicationSelection}
+      />
+      <MedicationItem
+        id="med456"
+        name="Omeprazole"
+        onSelectMedication={handleMedicationSelection}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+});
+
+export default PrescriptionSelector;
+```
+
+In `MedicationItem`, `onPress={() => onSelectMedication(id, name)}` creates a new function that, when called, executes `onSelectMedication` with the specific `id` and `name` of that item.
+
+{note}
+Avoid calling the event handler function directly in the prop, like `onPress={onSelectMedication(id, name)}`. This would execute the function when the component renders, not when the event occurs. Always pass a function reference or an arrow function.
+{note}
+bq. ⚛️ _(Web Developers with React Experience):_
+> _Comparison:_ Event handling (e.g., `onClick`, `onChange`) in React for web is very similar. React Native uses specific event props like `onPress` for touch interactions. The pattern of passing functions and using arrow functions to pass arguments is identical.
+> _Key Takeaway:_ Your React event handling knowledge is directly applicable. Just be aware of the specific event prop names available on React Native components (e.g., `onPress` instead of `onClick` for button-like interactions).
+> _Source:_ [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches]
+
+bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
+> _Comparison:_ Angular uses `(event)="handler()"` syntax (e.g., `(click)="onSave()"`). React uses props like `onPress={handler}`. The concept of binding events to methods is similar, but the syntax differs. React's inline arrow functions for passing arguments are a common pattern.
+> _Key Takeaway:_ Event handlers are props that expect functions. Pay attention to how arguments are passed using arrow functions if needed.
+> _Source:_ [https://angular.io/guide/event-binding|Angular Docs: Event binding]
+
+bq. 📲 _(Native Developers - Android/iOS):_
+> _Comparison:_ This is akin to setting listeners or targets/actions. For example, `button.setOnClickListener(...)` in Android or `addTarget(_:action:for:)` in iOS. In React Native, you assign a JavaScript function to an event prop like `onPress`.
+> _Key Takeaway:_ You handle user interactions by providing JavaScript functions to specific event props on components. These functions are executed when the interaction (e.g., a press) occurs.
+> _Source:_ [https://developer.android.com/develop/ui/views/touch-and-input/input-events/click-events|Android Dev Docs: Handle click events], [https://developer.apple.com/documentation/uikit/uicontrol/1618259-addtarget|Apple Dev Docs: UIControl addTarget]
+
+React Native provides a consistent way to handle user interactions across platforms. The `onPress` event is fundamental for making your SpeedyMeds app interactive, allowing users to trigger actions like selecting a medication, confirming an order, or navigating to a new screen.
+
+bq. 📚 _Official Documentation:_
+> - [https://react.dev/learn/responding-to-events|React Docs: Responding to Events]
+- [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches (covers `Button`, `Pressable` etc.)]
+- [https://reactnative.dev/docs/button|React Native Docs: `Button`]
+- [https://reactnative.dev/docs/pressable|React Native Docs: `Pressable`]

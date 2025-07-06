@@ -1,0 +1,115 @@
+h2. Section 6: Enums
+
+Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less error-prone by restricting variables to a predefined collection of values. They are particularly useful when you have a small, fixed set of related values that have semantic meaning.
+
+h3. Numeric Enums
+
+By default, enums are number-based. The first value is initialized to {{0}}, and subsequent values auto-increment from that point.
+
+{code:language=js}
+// Numeric Enum for prescription status in SpeedyMeds
+enum PrescriptionStatus {
+  Pending, // 0
+  Approved, // 1
+  Filled, // 2
+  Dispensed, // 3
+  Cancelled, // 4
+}
+
+let currentStatus: PrescriptionStatus = PrescriptionStatus.Approved;
+
+console.log(currentStatus); // Output: 1 (the numeric value of Approved)
+console.log(PrescriptionStatus[currentStatus]); // Output: "Approved" (reverse mapping)
+
+if (currentStatus === PrescriptionStatus.Approved) {
+  console.log("Prescription is approved and ready to be filled.");
+}
+
+// You can also assign specific numeric values
+enum RefillFrequencyDays {
+  OnceAMonth = 30,
+  EveryTwoMonths = 60,
+  Quarterly = 90,
+}
+
+let standardRefill: RefillFrequencyDays = RefillFrequencyDays.OnceAMonth;
+console.log(`Standard refill frequency: ${standardRefill} days`); // Output: Standard refill frequency: 30 days
+{code}
+
+*Key characteristics of numeric enums:*
+* _Auto-incrementing:_ If you don't assign values, they auto-increment starting from 0.
+* _Reverse Mapping:_ TypeScript generates a reverse mapping for numeric enums, allowing you to get the string name of an enum member from its numeric value (e.g., `PrescriptionStatus[1]` returns `"Approved"`).
+
+h3. String Enums
+
+String enums are similar, but each member must be explicitly initialized with a string value. String enums offer better readability and debugging experiences because the string value is directly available and meaningful.
+
+{code:language=js}
+// String Enum for medication alert types in SpeedyMeds
+enum MedicationAlertType {
+  Interaction = "DRUG_INTERACTION_ALERT",
+  Allergy = "PATIENT_ALLERGY_WARNING",
+  Dosage = "DOSAGE_CHECK_ADVISORY",
+  RefillReminder = "REFILL_DUE_SOON",
+}
+
+let alertType: MedicationAlertType = MedicationAlertType.Interaction;
+
+console.log(alertType); // Output: "DRUG_INTERACTION_ALERT"
+
+if (alertType === MedicationAlertType.Interaction) {
+  console.log(
+    "Warning: Potential drug interaction detected for this medication."
+  );
+}
+
+{code}
+
+*Key characteristics of string enums:*
+* _Explicit Initialization:_ Each member must be initialized with a string literal (or another string enum member).
+* _Readability:_ String values are often more descriptive than numeric values, especially when debugging or logging.
+* _No Reverse Mapping:_ Unlike numeric enums, string enums do not have an automatic reverse mapping.
+
+{info}
+String enums are often preferred over numeric enums for their improved readability and clarity, especially when the enum values might be serialized (e.g., sent to an API or stored in a database).
+{info}
+h3. Const Enums
+
+For performance-critical applications, you can use `const` enums. `const` enums are completely removed during compilation, and their values are inlined wherever they are used. This can result in more optimized JavaScript code.
+
+{code:language=js}
+const enum DeliveryStatus {
+  Scheduled,
+  InProgress,
+  Delivered,
+  Failed,
+}
+
+let myDelivery: DeliveryStatus = DeliveryStatus.InProgress;
+
+// In the compiled JavaScript, 'myDelivery' would likely be assigned the numeric value
+// directly (e.g., 'let myDelivery = 1;'), and DeliveryStatus itself wouldn't exist as an object.
+
+// console.log(DeliveryStatus[myDelivery]); // Error: A const enum member can only be accessed using a string literal.
+{code}
+
+*Key characteristics of `const` enums:*
+* _Inlined Values:_ Enum member values are inlined at compile time.
+* _No Generated JavaScript Object:_ The enum itself doesn't exist as an object in the compiled JavaScript.
+* _Performance:_ Can offer slight performance benefits due to inlining.
+* _Limitations:_ Cannot have computed members. Accessing members via dynamic values (like `DeliveryStatus[myDelivery]`) is not allowed; you must use literal access (e.g. `DeliveryStatus.InProgress`).
+
+h3. When to Use Enums
+
+Enums are best used when you have a small, distinct set of related constants where each constant has a specific semantic meaning. Examples in the SpeedyMeds context could include:
+* Order statuses (Pending, Processing, Shipped, Delivered)
+* Payment types (CreditCard, PayPal, Insurance)
+* Notification levels (Info, Warning, Error)
+* User roles (Admin, Pharmacist, Patient)
+
+Using enums instead of magic strings or numbers improves type safety and makes the intent of your code clearer.
+
+bq. 📚 _Official Documentation:_
+> - [https://www.typescriptlang.org/docs/handbook/enums.html|TypeScript Handbook: Enums]
+
+Enums provide a structured way to work with sets of named constants, contributing to more maintainable and understandable TypeScript code for your SpeedyMeds application features.

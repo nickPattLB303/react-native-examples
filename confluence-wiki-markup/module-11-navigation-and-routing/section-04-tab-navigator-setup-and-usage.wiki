@@ -1,0 +1,318 @@
+h2. Section 4: Tab Navigator Setup and Usage
+
+This section explores the Tab Navigator, a common pattern for top-level navigation where different sections of an app are accessible via tabs, typically at the bottom of the screen. We will use React Navigation's Bottom Tab Navigator ({{@react-navigation/bottom-tabs}}) to implement this pattern in our SpeedyMeds app, allowing users to easily switch between main features like a list of medications and pharmacy information.
+
+bq. 🛣️ _(All Learners):_ A solid understanding of Stack Navigator concepts from the previous section will be beneficial, as tabs often manage their own independent navigation stacks.
+
+h3. Core Content
+
+h4. Conceptual Content: Understanding Bottom Tab Navigation
+
+The Tab Navigator is a common mobile UI pattern that places a tab bar at the bottom of the screen (iOS pattern) or sometimes at the top (Material Design / Android pattern). Each tab acts as a gateway to a separate section of your app, allowing users to quickly switch between different features or content categories.
+
+Unlike the Stack Navigator, which is designed for sequential navigation and going back, the Tab Navigator is designed for lateral movement between equally important sections of your app. The Bottom Tab Navigator specifically places the tab bar at the bottom of the screen, making it easy to reach with your thumb on mobile devices.
+
+{mermaid}
+stateDiagram-v2
+    [*] --> HomeTab
+
+    state TabNavigator {
+        state "Tab Bar UI Element" as TabBar
+
+        state HomeTab {
+            HomeScreen --> PrescriptionDetail: tap item
+            PrescriptionDetail --> HomeScreen: back button
+            note right of HomeScreen
+                Stack state preserved
+                when switching tabs
+            end note
+        }
+
+        state ProfileTab {
+            ProfileScreen --> EditProfile: tap edit
+            EditProfile --> ProfileScreen: save/cancel
+        }
+
+        state MedicationsTab {
+            MedListScreen --> MedDetailScreen: tap medication
+            MedDetailScreen --> MedListScreen: back button
+            MedListScreen --> AddMedScreen: tap add
+            AddMedScreen --> MedListScreen: save/cancel
+        }
+
+        TabBar --> HomeTab: tap Home icon
+        TabBar --> ProfileTab: tap Profile icon
+        TabBar --> MedicationsTab: tap Medications icon
+    }
+
+    note right of TabNavigator
+        Each tab maintains its own
+        navigation state and history
+    end note
+{mermaid}
+
+This diagram illustrates several key characteristics of tab-based navigation:
+# _Independent Tab States:_ Each tab (Home, Profile, Medications) maintains its own independent navigation state and history. This means if you navigate to a detail screen within the Home tab, then switch to the Profile tab and return to Home, you'll still be on the detail screen, not back at the home screen.
+# _Persistent Tab Bar:_ The tab bar remains visible across all screens within the tab navigator (though it can be hidden programmatically if needed). This provides consistent access to primary navigation options.
+# _Nested Navigation:_ Each tab can contain its own navigator (typically a Stack Navigator), allowing for hierarchical navigation within each tab section. This creates logical groupings of related screens.
+# _State Preservation:_ If a user navigates deep into one tab (e.g., from HomeScreen to PrescriptionDetail), then switches to another tab and returns, the navigation state of the first tab is preserved, returning the user to where they left off.
+
+This navigation pattern works well for SpeedyMeds because it allows users to quickly access different primary features of the application without losing their context within each feature area.
+
+h4. Procedural Content: Implementing a Bottom Tab Navigator
+
+Let's add a tab navigator to our SpeedyMeds app. We'll imagine two main sections: {{MedicationsStack}} (which could be the stack navigator we started building in the previous section) and a new {{PharmacyInfoScreen}}.
+
+*1. Define Screen Components (if new ones are needed):*
+
+Assume we already have {{HomeScreen}} and {{PrescriptionDetailScreen}} from the previous section, which will form our {{MedicationsStack}}. Let's create a simple {{PharmacyInfoScreen}}.
+
+{code:language=js}
+// screens/PharmacyInfoScreen.tsx
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+/**
+* Displays static information about the SpeedyMeds pharmacy.
+* This includes address, opening hours, and contact details.
+* @returns {JSX.Element} The rendered pharmacy information screen.
+ */
+export default function PharmacyInfoScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>SpeedyMeds Pharmacy</Text>
+      <Text style={styles.text}>123 Health St, Wellness City</Text>
+      <Text style={styles.text}>Open 24/7</Text>
+      <Text style={styles.text}>Contact: 555-0123</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+});
+{code}
+
+*2. Define the Stack Navigator for Medications (if not already done):*
+
+It's common for a tab to manage its own stack of screens. Let's define a `MedicationsNavigator` using the `StackNavigator` from the previous section.
+
+{code:language=js}
+// navigators/MedicationsNavigator.tsx
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen, { RootStackParamList } from "../screens/HomeScreen"; // Adjust path as needed
+import PrescriptionDetailScreen from "../screens/PrescriptionDetailScreen"; // Adjust path
+
+const Stack = createStackNavigator<RootStackParamList>();
+
+/**
+* A stack navigator responsible for managing screens related to medications.
+* This includes the list of medications (`HomeScreen`) and details for a specific prescription (`PrescriptionDetailScreen`).
+* It is intended to be nested within a parent navigator (e.g., a TabNavigator).
+* @returns {JSX.Element} The rendered medications stack navigator.
+ */
+export default function MedicationsNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: "My Medications" }}
+      />
+      <Stack.Screen
+        name="PrescriptionDetail"
+        component={PrescriptionDetailScreen}
+        options={({ route }) => ({
+          title: `Detail: ${route.params.prescriptionId}`,
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
+{code}
+
+{tip}
+Organizing navigators into their own files (e.g., in a `navigators` directory) helps keep `App.tsx` clean, especially as your app grows.
+{tip}
+*3. Define TypeScript Types for Tab Navigator:*
+
+Similar to the Stack Navigator, we should define types for our Tab Navigator's routes.
+
+{code:language=js}
+// App.tsx or a shared types file
+/**
+* Defines the parameter list for the root tab navigator.
+* Specifies the routes available in the tab bar and any parameters they expect.
+* - `Medications`: Route for the medications section (likely a nested stack), expects no parameters directly.
+* - `PharmacyInfo`: Route for the pharmacy information screen, expects no parameters.
+ */
+export type RootTabParamList = {
+  Medications: undefined;
+  PharmacyInfo: undefined;
+  // Add other tab screens and their params here
+};
+{code}
+
+*4. Create the Tab Navigator:*
+
+Now, let's create the `BottomTabNavigator` in `App.tsx`.
+
+{code:language=js}
+// App.tsx
+import "react-native-gesture-handler";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "@expo/vector-icons/Ionicons"; // Example icon library
+
+import MedicationsNavigator from "./navigators/MedicationsNavigator"; // Our stack
+import PharmacyInfoScreen from "./screens/PharmacyInfoScreen";
+
+/**
+* Defines the parameter list for the root tab navigator.
+* Specifies the routes available in the tab bar and any parameters they expect.
+* - `Medications`: Route for the medications section (likely a nested stack), expects no parameters directly.
+* - `PharmacyInfo`: Route for the pharmacy information screen, expects no parameters.
+ */
+export type RootTabParamList = {
+  Medications: undefined;
+  PharmacyInfo: undefined;
+};
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
+
+/**
+* The main application component that sets up the root Tab Navigator.
+* This navigator includes a "Medications" tab (which is a nested StackNavigator)
+* and a "PharmacyInfo" tab.
+* @returns {JSX.Element} The root application component with Tab navigation.
+ */
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Medications"
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === "Medications") {
+              iconName = focused ? "list-circle" : "list-circle-outline";
+            } else if (route.name === "PharmacyInfo") {
+              iconName = focused
+                ? "information-circle"
+                : "information-circle-outline";
+            }
+            // You can return any component that you like here!
+            return (
+              <Ionicons name={iconName as any} size={size} color={color} />
+            );
+          },
+          tabBarActiveTintColor: "tomato",
+          tabBarInactiveTintColor: "gray",
+          headerShown: false, // Often hide header for tabs if each tab has its own stack header
+        })}
+      >
+        <Tab.Screen
+          name="Medications"
+          component={MedicationsNavigator} // Nesting the Stack Navigator
+          options={{ title: "Medications" }} // Title for the tab, header might be from stack
+        />
+        <Tab.Screen
+          name="PharmacyInfo"
+          component={PharmacyInfoScreen}
+          options={{
+            title: "Pharmacy Info",
+            headerShown: true, // Example: Show header for this specific tab screen
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+{code}
+
+*Explanation:*
+* `createBottomTabNavigator<RootTabParamList>()`: Creates the tab navigator instance with type support.
+* `<Tab.Navigator>`: The main tab navigator component.
+* `initialRouteName="Medications"`: Sets the default tab.
+* `screenOptions`: Allows you to define default options for all screens in the tab navigator. This is a powerful prop.
+** `tabBarIcon`: A function that returns a React element to be used as the tab icon. It receives `focused` (boolean), `color` (string), and `size` (number) props.
+** We use `Ionicons` from `@expo/vector-icons` for icons. You'd need to install this package (`npx expo install @expo/vector-icons`).
+** `tabBarActiveTintColor`: Color for the active tab icon and label.
+** `tabBarInactiveTintColor`: Color for inactive tabs.
+** `headerShown: false`: We set this to `false` globally for the tabs because our `MedicationsNavigator` (the stack) already provides its own headers. If a tab screen is a simple component (like `PharmacyInfoScreen`) and needs a header, you can enable it in its specific `Tab.Screen` options.
+* `<Tab.Screen>`: Defines each tab.
+* `name="Medications" component={MedicationsNavigator}`: Here, the `Medications` tab renders our entire `MedicationsNavigator` (the stack navigator). This is a common pattern for nesting navigators.
+* `name="PharmacyInfo" component={PharmacyInfoScreen}`: This tab renders a simple screen component.
+* `options`: Can be used to set tab-specific options, like the `title` for the tab label or overriding `headerShown`.
+
+{info}
+When nesting navigators (e.g., a Stack inside a Tab), the `navigation` prop in screens of the inner navigator (Stack) will refer to the Stack navigator. To access the parent Tab navigator's `navigation` prop, you might need `navigation.getParent()`.
+{info}
+bq. 📚 _Official Documentation:_
+> - [https://reactnavigation.org/docs/bottom-tab-navigator/|Bottom Tab Navigator - React Navigation]
+- [https://reactnavigation.org/docs/nesting-navigators/|Nesting Navigators - React Navigation]
+- [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
+- [https://docs.expo.dev/guides/icons/|Icons - Expo Documentation] (for using `@expo/vector-icons`)
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ `createBottomTabNavigator` is analogous to `UITabBarController`. Each `<Tab.Screen>` is like adding a `UIViewController` (or a `UINavigationController` if nesting) to the `viewControllers` array of the tab bar controller. Customizing `tabBarIcon` and `tabBarLabel` is similar to setting `tabBarItem` properties.
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
+
+h4. Referential Content: Key Tab Navigator Configuration Options
+
+Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` shown in the example, `@react-navigation/bottom-tabs` offers more options to customize its appearance and behavior. These can typically be set in the `screenOptions` prop of `<Tab.Navigator>` or the `options` prop of individual `<Tab.Screen>` components.
+
+*Common Options:**
+* `tabBarLabel: string | (({ focused, color }) => string | React.ReactNode)`: Explicitly sets the label for a tab. If not set, `options.title` is often used as a fallback.
+* `tabBarBadge: string | number`: Displays a badge on the tab icon, useful for notifications.
+* `tabBarActiveBackgroundColor: string`: Background color for the active tab item.
+* `tabBarInactiveBackgroundColor: string`: Background color for inactive tab items.
+* `tabBarStyle: object`: Style object for the tab bar container itself (e.g., to change its height, background color, or add borders).
+* `tabBarItemStyle: object`: Style object for individual tab item containers.
+* `tabBarLabelStyle: object`: Style object for the tab labels.
+* `tabBarShowLabel: boolean`: Whether to show the label for tabs. Defaults to `true`.
+* `tabBarHideOnKeyboard: boolean`: Whether the tab bar should be hidden when the keyboard opens. The default behavior for this has varied across React Navigation versions (e.g., `true` in v4, `false` in v7 for new projects). For v6, it's generally best to test or explicitly set based on desired behavior.
+* `tabBarButton: (props) => React.ReactNode`: Allows you to render a custom component for the tab button, giving full control over its touch handling and rendering.
+* `tabBar: (props) => React.ReactNode`: Allows replacing the entire tab bar with a custom React component. This gives maximum flexibility but requires you to handle tab switching logic.
+
+*Lazy Loading:*
+* `lazy: boolean`: Defaults to `true`. When `true`, screens for tabs are not mounted until they are first focused. Setting `lazy={false}` on a `<Tab.Screen>` will cause it to be mounted immediately when the tab navigator mounts. This can be useful for pre-loading content but may impact initial app load time if many tabs are set to `lazy={false}`.
+
+*Note on `tabBarOptions` (Legacy):*
+* In older versions of React Navigation (and still somewhat functional in v6 for backward compatibility, though not the primary way), many tab bar styling options were grouped under a single `tabBarOptions` object within `screenOptions` or `options`. While you might see this in older examples, the current best practice (and the direction from v7 onwards) is to use the individual top-level options like `tabBarActiveTintColor`, `tabBarStyle`, etc.
+
+bq. [!TIP] > _Native Tab Bar Alternatives:_
+For projects requiring a tab bar that strictly adheres to the native platform's look and feel (e.g., iOS blur effects, Material Design 3 ripple effects and theming), and potentially offers better performance for complex tab structures, you might explore third-party libraries like `react-native-bottom-tabs`. This library integrates native iOS (`UITabBar`) and Android (`BottomNavigationView`) components with React Navigation.
+> _Pros:_ More authentic native appearance, platform-specific styling (like iOS blur, Material You theming), adapts layout across different devices (iPadOS, tvOS, etc.).
+_Cons:_ Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
+The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.
+
+h4. Exercise 11.2: Basic Tab Navigation
+
+Now it's time to practice! In this exercise, you'll create a simple tab navigator for the SpeedyMeds app.
+
+*(https://snack.expo.dev/SpeedyMedsTabsEx11-2)*
+
+bq. _Instructions for Expo Snack `README.md` (Exercise 11.2):_
+
+h4. Next Steps
+
+With stack and tab navigators covered, we'll move on to another common pattern: the Drawer Navigator, which is useful for side menus and less frequently accessed application sections.

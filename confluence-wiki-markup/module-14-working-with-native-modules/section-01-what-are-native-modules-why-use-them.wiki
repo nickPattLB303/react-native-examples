@@ -1,0 +1,158 @@
+h2. Section 1: What are Native Modules? Why Use Them?
+
+This section introduces the fundamental concept of native modules in React Native. You'll learn what they are, how they facilitate communication between JavaScript and native code, and the key reasons and scenarios for incorporating them into your applications.
+
+h3. What are Native Modules?
+
+At its heart, a React Native application orchestrates two distinct worlds: the _JavaScript realm_, where your application logic resides and runs within a JavaScript engine (commonly Hermes in modern React Native), and the _Native Platform realm_, encompassing the underlying operating system code (Java/Kotlin for Android, Objective-C/Swift for iOS).
+
+A _Native Module_ is, fundamentally, a piece of native code—written in Java or Kotlin for Android, and Swift or Objective-C for iOS—that is "bridged" or exposed to your JavaScript/TypeScript code. It serves as an essential conduit, a communication channel that allows your React Native application to execute native platform-specific functionality that isn't available through standard React Native APIs or JavaScript itself.
+
+It is crucial to understand that nearly every interaction a React Native application has with the device or operating system, beyond pure JavaScript computation and UI rendering managed directly by React Native's core, relies on some form of native module.
+
+h3. Core Mechanism Evolution (Under the Hood)
+
+The way JavaScript communicates with native code has evolved significantly in React Native, directly impacting the performance and capabilities of Native Modules:
+
+h4. Legacy Architecture: The Bridge
+
+In older versions of React Native (pre-0.68, approximately, though the transition is gradual), communication relied heavily on the _"Bridge."_ This was an asynchronous, message-passing mechanism.
+* _Process:_ When JavaScript needed to call a native function, it would construct a message containing the module name, method name, and arguments. This payload was serialized into a JSON string.
+* _Transmission:_ The serialized message was placed onto a queue and sent across the Bridge to the native side.
+* _Native Execution:_ The native side would deserialize the message, identify the target module and method, convert the arguments to native types, and invoke the native code.
+* _Callback (Optional):_ If the JavaScript call expected a result (via a callback or Promise), the native code would execute, potentially perform its own asynchronous operations, and eventually send a result back across the Bridge, again involving serialization and deserialization.
+
+{mermaid}
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code] --> Format_Msg[Format Message Module, Method, Args];
+        Format_Msg --> Serialize_JSON[Serialize to JSON];
+        Serialize_JSON --> JS_Queue[Enqueue Message];
+    end
+
+    subgraph Native Realm
+        Native_Queue[Dequeue Message] --> Deserialize_JSON[Deserialize JSON];
+        Deserialize_JSON --> Native_Lookup[Lookup Native Module/Method];
+        Native_Lookup --> Execute_Native[Execute Native Code];
+        Execute_Native --> Native_Result[Native Result];
+        Native_Result --> Format_Callback_Msg[Format Callback Message Optional];
+        Format_Callback_Msg --> Serialize_Callback_JSON[Serialize to JSON Optional];
+        Serialize_Callback_JSON --> Native_Queue_Callback[Enqueue Callback Message Optional];
+    end
+
+    JS_Queue --> Bridge_Transit[Bridge Async Message Passing];
+    Bridge_Transit --> Native_Queue;
+
+    Native_Queue_Callback ==> Bridge_Return_Transit[Bridge Async Message Passing];
+    Bridge_Return_Transit ==> JS_Code_Callback[JavaScript Receives Callback/Promise Resolution Optional];
+
+    style Bridge_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style Bridge_Return_Transit fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
+    style JS_Code fill:#ccf,stroke:#333,stroke-width:2px
+    style Execute_Native fill:#cfc,stroke:#333,stroke-width:2px
+{mermaid}
+
+This diagram illustrates the communication flow in React Native's legacy architecture. The process begins in the JavaScript realm where application code intends to invoke a native function. The JavaScript code first formats a message specifying the target native module, the method to be called, and any arguments. This message is then serialized into a JSON string. This JSON payload is enqueued and passed asynchronously across the "Bridge" – a conceptual boundary between the JavaScript and native environments.
+
+On the native side (iOS or Android), the platform's infrastructure dequeues this message. The JSON string is deserialized back into a usable format. The system then looks up the specified native module and method. Once identified, the native code is executed with the provided arguments (after type conversion). If the JavaScript call included a callback or expected a Promise resolution, the native code, after completing its task (which might involve its own asynchronous operations), would prepare a result. This result is then packaged, serialized back into JSON, and sent back across the Bridge to the JavaScript realm, where it's processed by the original callback or Promise. The key characteristics are the asynchronous nature and the JSON serialization/deserialization at each step of the communication.
+
+{note}
+*Key Characteristics of the Legacy Bridge:_ The defining traits of the Bridge were its _asynchronous nature_ (JS calls didn't block waiting for the native side, relying on callbacks/Promises) and the _serialization overhead* (converting data to/from JSON for every call). This could lead to latency and bottlenecks, especially for frequent or high-throughput communication.
+{note}
+h4. New Architecture: JSI (JavaScript Interface)
+
+The New Architecture introduces a fundamentally different communication layer built upon the _JavaScript Interface (JSI)._ JSI represents a paradigm shift.
+* _Direct C++ Layer:_ JSI is essentially an API defined in C++ that allows the JavaScript engine (Hermes) to interact directly with C++ code, and vice-versa. React Native leverages this C++ layer as an intermediary between JavaScript and the native platform code (Java/Kotlin/Objective-C/Swift).
+* _Synchronous Potential:_ The most significant change enabled by JSI is the ability for JavaScript to hold direct references to native objects (represented as C++ Host Objects) and invoke methods on them _synchronously_. This means JS can call a function, execution can jump to C++/native code, perform an operation, and return a result directly back to JS, all within the same "tick" of the JS event loop (assuming the native operation itself is synchronous).
+* _Bypassing Overhead:_ JSI eliminates the need for JSON serialization/deserialization for many types of data transfer and bypasses the asynchronous message queue of the legacy bridge. This results in significantly faster and more efficient communication.
+* _Foundation for Modern Modules:_ It's critical to understand that modern native module implementations (specifically TurboModules, discussed later) are built on top of JSI. JSI provides the underlying high-performance communication channel.
+
+{mermaid}
+graph TD
+    subgraph JavaScript Realm
+        JS_Code[JavaScript Code]
+        JS_Engine[JavaScript Engine e.g., Hermes]
+        JS_Code --> JS_Engine;
+    end
+
+    subgraph Native Realm
+        Native_Code[Platform Native Code Swift/Kotlin/Obj-C/Java]
+        Native_Object[Native Object/Function]
+        Native_Code --> Native_Object;
+    end
+
+    subgraph JSI_Layer
+        JSI_HostObject[C++ Host Object exposing Native Functionality]
+        JSI_Bindings[JSI Bindings]
+        JSI_HostObject <--> JSI_Bindings;
+    end
+
+    JS_Engine <-->|Direct, Potentially Synchronous Calls via JSI| JSI_Bindings;
+    JSI_HostObject <-->|Direct Invocation| Native_Object;
+
+    style JS_Engine fill:#ccf,stroke:#333,stroke-width:2px
+    style Native_Object fill:#cfc,stroke:#333,stroke-width:2px
+    style JSI_Layer fill:#fcf,stroke:#333,stroke-width:1px,opacity:0.5
+{mermaid}
+
+This diagram depicts the communication model facilitated by the JavaScript Interface (JSI) in React Native's New Architecture. Unlike the legacy bridge, JSI allows for more direct and potentially synchronous interaction. The JavaScript code, running within its engine (like Hermes), can interact with native functionalities via a C++ layer. This C++ layer, enabled by JSI, exposes native objects or functions as "Host Objects" that JavaScript can hold references to and invoke methods on directly.
+
+When JavaScript calls a method on such a Host Object, the JSI bindings translate this call into an invocation on the corresponding C++ object. This C++ object, in turn, can directly call the actual native platform code (Swift, Kotlin, Objective-C, or Java). If the native operation is synchronous and quick, the result can be returned directly through the C++ layer back to JavaScript within the same execution cycle, eliminating the serialization and asynchronous queuing overhead inherent in the legacy bridge. This direct pathway significantly enhances performance for many types of native interactions, making JavaScript-to-native communication much more efficient and enabling a tighter integration between the two realms. This forms the basis for TurboModules.
+
+The move from the asynchronous, serialization-heavy Bridge to the direct, synchronous-capable JSI layer is more than just an internal implementation detail. It fundamentally enhances the potential for deep, performant integration between JavaScript and native code. The limitations imposed by the Bridge's latency and overhead restricted certain types of interactions, particularly those requiring frequent updates or low-latency responses (like driving animations smoothly from native events or handling real-time data streams). JSI removes these barriers, allowing JavaScript and native code to interact almost as if they were in the same execution environment for synchronous operations. This capability makes React Native feel considerably "closer" to native performance in scenarios leveraging JSI-based communication, enabling features and integrations that were previously impractical or inefficient.
+
+Recognizing the core reasons for using native modules—accessing platform APIs, optimizing performance, reusing code, integrating SDKs—helps developers make informed architectural decisions. When faced with a complex feature or a performance challenge, understanding why native modules exist provides a framework for evaluation.
+
+h3. Why Use Native Modules?
+
+While React Native and Expo provide a rich set of APIs, there are several compelling reasons why you might need to use or create native modules:
+# _Accessing Platform-Specific APIs and Features:_
+    This is the most common reason. Mobile operating systems (iOS and Android) offer a vast range of APIs for device hardware (like specific sensors, Bluetooth Low Energy), system services (like calendars, contacts, alarms), or unique OS-level features that are not exposed by React Native's core components or common community libraries.
+# _Reusing Existing Native Code or Libraries:_
+    If you or your organization have existing native libraries (e.g., an SDK for an internal service, a complex business logic module written in Swift or Kotlin), native modules allow you to integrate this code directly into your React Native app, saving significant redevelopment effort.
+# _Performance-Critical Operations:_
+    While JavaScript engines like Hermes are highly optimized, certain tasks remain computationally intensive. Operations like heavy image or video processing, complex mathematical calculations, cryptographic operations, or large-scale data manipulation can sometimes block the single JavaScript thread, leading to a sluggish user interface and poor user experience. Executing these demanding tasks within native code, which can leverage multi-threading and highly optimized platform libraries, often yields significantly better performance. Native Modules allow developers to offload these computations to the native side. However, always profile first, as JavaScript is often surprisingly performant.
+# _Integrating with Third-Party SDKs:_
+    Many third-party services (analytics, payment gateways, mapping tools, advertising, etc.) provide native SDKs for iOS and Android. If a React Native wrapper doesn't exist or doesn't meet your needs, you'll need to create a native module to bridge the gap.
+# _Background Tasks and Processes:_
+    For tasks that need to run reliably in the background, even when the app isn't in the foreground (e.g., syncing data, tracking location for an extended period), native APIs often provide more robust and OS-compliant solutions than what can be achieved purely in JavaScript.
+
+h3. Common Scenarios and Use Cases
+
+Here are some practical examples where native modules are essential:
+* _Device Hardware Access:_
+* Advanced camera controls beyond basic capture.
+* Interacting with Bluetooth Low Energy (BLE) peripherals.
+* Reading data from specific sensors (e.g., barometer, pedometer, ambient light sensor if not covered by Expo).
+* Implementing biometric authentication (Face ID, Touch ID, Android BiometricPrompt) if more granular control is needed than provided by {{expo-local-authentication}}.
+* _Operating System Features:_
+* Deep integration with the native calendar or contacts.
+* Advanced file system operations or encrypted storage.
+* Custom push notification handling or local notification scheduling with platform-specific features.
+* Inter-app communication or handling custom URL schemes.
+* _Specialized Libraries:_
+* Integrating a native charting library for complex visualizations.
+* Using a native PDF generation or manipulation tool.
+** Wrapping a native machine learning library (e.g., Core ML, TensorFlow Lite) for on-device inference.
+* _Custom UI Components:_
+  While this module focuses on native _modules_ (APIs), a related concept is bridging native _UI components_. If you need a highly specific native UI element not available in React Native (e.g., a platform-specific map view with custom annotations or a specialized video player), you'd create a native UI component. We'll briefly touch on this concept later.
+
+bq. 🍏 _(iOS Developers):_
+> _Comparison:_ Think of native modules as similar to creating a Swift or Objective-C class that you want to make accessible from another part of your app. In React Native, you'll use specific macros (Objective-C) or attributes (Swift, with {{expo-modules-core}}) to expose your native methods and properties to the JavaScript runtime. The "bridge" or JSI acts as the intermediary.
+> _Key Takeaway:_ You're leveraging your existing iOS development skills to extend JavaScript's reach into the native iOS environment.
+> _Source:_ [https://reactnative.dev/docs/native-modules-ios|Native Modules (iOS) | React Native]
+
+bq. 🤖 _(Android Developers):_
+> _Comparison:_ This is akin to creating a Java or Kotlin class with public methods. To expose these to React Native, you'll typically extend {{ReactContextBaseJavaModule}} or use annotations provided by {{expo-modules-core}}. These methods can then be invoked from JavaScript.
+> _Key Takeaway:_ Your Android development expertise is directly applicable in creating these Java/Kotlin counterparts to JavaScript functions.
+> _Source:_ [https://reactnative.dev/docs/native-modules-android|Native Modules (Android) | React Native]
+
+bq. 🌐 _(Web Developers):_
+> _Comparison:_ Imagine if, in web development, you could define your own custom browser APIs (like {{navigator.geolocation}} or {{window.localStorage}}) that directly interact with the underlying operating system features of the user's computer. Native modules in React Native give you that power for mobile devices. JavaScript makes calls to these "custom APIs" you've defined, which then execute native code.
+> _Key Takeaway:_ Native modules are your toolkit for breaking out of the JavaScript sandbox and tapping into the rich native capabilities of iOS and Android when standard React Native or Expo APIs don't suffice.
+
+bq. 📚 _Official Documentation:_
+> - [https://reactnative.dev/docs/native-modules-intro|React Native Docs: Native Modules Introduction]
+- [https://reactnative.dev/docs/communication-native-react-native|React Native Docs: Communication between Native and React Native (New Architecture focus)]
+- [https://docs.expo.dev/modules/overview/|Expo Docs: Overview of Expo modules]
+- [https://docs.expo.dev/modules/overview/#when-should-i-use-turbo-modules-and-when-should-i-use-the-expo-modules-api|Expo Docs: Why use Expo Modules API?]

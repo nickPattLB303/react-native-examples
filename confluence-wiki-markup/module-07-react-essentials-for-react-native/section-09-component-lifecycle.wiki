@@ -1,0 +1,231 @@
+h2. Section 9: Component Lifecycle ({{useEffect}} Hook)
+
+Components in React have a lifecycle: they are created (mounted), they update when their props or state change, and eventually, they are destroyed (unmounted). The {{useEffect}} Hook allows you to perform "side effects" in your functional components, which are operations that happen outside the normal rendering flow, often related to these lifecycle events.
+
+h3. What are Side Effects?
+
+Side effects are actions that your component performs that interact with the outside world, beyond just rendering UI based on props and state. Common side effects include:
+* Fetching data from an API.
+* Setting up or clearing subscriptions (e.g., to event listeners, timers).
+* Manually changing the DOM (less common in React Native, but possible).
+* Logging.
+
+h3. The {{useEffect}} Hook
+
+The {{useEffect}} Hook lets you synchronize a component with an external system. You pass it a function (the "effect") and an optional array of dependencies.
+
+*Syntax:*
+
+{code:language=js}
+import React, { useEffect, useState } from "react";
+
+useEffect(() => {
+  // Your effect function: runs after every render by default
+  // (if no dependency array is provided)
+  console.log("Component rendered or updated");
+
+  // Optional: Return a cleanup function
+  return () => {
+    console.log("Cleanup before next effect or on unmount");
+  };
+}, [dependency1, dependency2]); // Optional dependency array
+{code}
+* _Effect Function:_ The first argument to `useEffect` is a function that contains the side effect logic. This function will run _after_ React has committed changes to the screen and the browser/native view has painted (for `useEffect`).
+* _Dependency Array (Optional):_ The second argument is an array of dependencies. React compares each value in this array with its value from the previous render using `Object.is` comparison.
+* If you _omit_ the dependency array, the effect function runs after _every_ render.
+* If you provide an _empty array `[]`_, the effect runs only _once_ after the initial render (component did mount). This works because the props and state inside an effect with an empty dependency array will always have their initial values (captured by the closure), and React compares the empty array `[]` from one render to the empty array `[]` from the next, which are considered the same, thus not re-triggering the effect.
+* If you provide an array with *variables `[propA, stateB]`**, the effect runs after the initial render and _anytime_ any of the values in the dependency array change.
+* _Cleanup Function (Optional):_ The effect function can optionally return another function. This is the cleanup function. React will run this cleanup function before running the effect again (if dependencies change causing a re-run) and also when the component is unmounted from the UI. This is crucial for preventing memory leaks, for example, by clearing timers or removing event listeners and subscriptions.
+
+h3. Simulating Lifecycle Events with `useEffect`
+
+*1. Running an Effect Once (Component Did Mount):*
+To run an effect only once after the component mounts (similar to `componentDidMount` in class components), provide an empty dependency array `[]`.
+
+{code:language=js}
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet } from "react-native";
+
+const PharmacyWelcomeMessage = () => {
+  const [message, setMessage] = useState("Loading welcome message...");
+
+  useEffect(() => {
+    // This effect runs only once after the initial render
+    console.log("PharmacyWelcomeMessage: Mounted");
+    // Simulate fetching a welcome message for SpeedyMeds
+    const timerId = setTimeout(() => {
+      setMessage("Welcome to SpeedyMeds! Your health, our priority.");
+    }, 2000);
+
+    // Cleanup function: runs when the component unmounts
+    return () => {
+      console.log("PharmacyWelcomeMessage: Unmounting, clearing timer.");
+      clearTimeout(timerId);
+    };
+  }, []); // Empty dependency array
+
+  return (
+    <View style={styles.container}>
+      <Text>{message}</Text>
+    </View>
+  );
+};
+// ... styles
+{code}
+
+*2. Running an Effect When Dependencies Change (Component Did Update):*
+To run an effect after the initial render and whenever specific props or state values change (similar to `componentDidUpdate`), include those values in the dependency array.
+
+{code:language=js}
+import React, { useState, useEffect } from "react";
+import { Text, View, Button, StyleSheet } from "react-native";
+
+interface PatientDetailsProps {
+  patientId: string;
+}
+
+const PatientDetailsFetcher: React.FC<PatientDetailsProps> = ({
+  patientId,
+}) => {
+  const [patientData, setPatientData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(`PatientDetailsFetcher: Effect for patientId: ${patientId}`);
+    setLoading(true);
+    // Simulate fetching patient data for SpeedyMeds
+    let isActive = true;
+    const fetchPatientData = async () => {
+      // In a real app, this would be an API call: fetch(`/api/patients/${patientId}`)
+      // Consider using AbortController for real fetch requests
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+      if (isActive) {
+        // Only update state if the component is still mounted
+        setPatientData({
+          id: patientId,
+          name: `Patient ${patientId.slice(-3)}`,
+          condition: "Stable",
+        });
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
+
+    return () => {
+      isActive = false; // Set flag to false on cleanup
+    };
+  }, [patientId]); // Dependency: effect runs if patientId changes
+
+  if (loading) {
+    return <Text>Loading patient details for ID: {patientId}...</Text>;
+  }
+
+  if (!patientData) {
+    return <Text>No patient data found for ID: {patientId}.</Text>;
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>Patient ID: {patientData.id}</Text>
+      <Text>Name: {patientData.name}</Text>
+      <Text>Condition: {patientData.condition}</Text>
+    </View>
+  );
+};
+// ... styles
+{code}
+
+In this example, if the `patientId` prop changes, the effect will re-run, fetching data for the new patient.
+
+*3. Cleanup (Component Will Unmount):*
+The cleanup function returned by the effect is crucial for preventing memory leaks and issues. It runs when the component is about to be removed from the UI (unmounted) or before the effect runs again.
+Common use cases for cleanup:
+* Clearing timers (`clearTimeout`, `clearInterval`).
+* Removing event listeners.
+* Canceling API subscriptions or aborting fetch requests.
+
+Refer back to the `PharmacyWelcomeMessage` example for a `clearTimeout` cleanup.
+
+h3. Diagram: `useEffect` Lifecycle
+
+The following diagram illustrates the basic flow of the `useEffect` Hook in relation to component rendering and updates.
+
+{mermaid}
+graph TD
+    A[Component Renders / Re-renders] --> B{Has Dependency Array?};
+    B -- No (or omitted) --> C[Run Effect After Every Render];
+    B -- Yes --> D{Dependencies Changed (Object.is)?};
+    C --> E{Effect Returns Cleanup Function?};
+    D -- No --> F[Do Nothing];
+    D -- Yes --> G[PREV: Run Previous Effect's Cleanup (if any)];
+    G --> H[Run Current Effect Function];
+    H --> E;
+    E -- Yes --> I[Register Cleanup for Unmount / Next Effect Run];
+    E -- No --> J[No Cleanup Registered for this Effect];
+    K[Component Unmounts] --> L[Run All Registered Cleanups for this Component];
+{mermaid}
+
+This diagram shows that when a component mounts, the effect function runs (if dependencies allow or if no array). On subsequent re-renders, React checks if the dependencies (if specified) have changed using `Object.is` comparison. If they have (or if no dependency array), the cleanup function from the previous effect (if one was returned) runs, followed by the new effect function. When the component unmounts, the cleanup function for the last run effect is executed.
+
+bq. ⚛️ _(Web Developers with React Experience):_
+> _Comparison:_ `useEffect` works exactly the same way in React Native as it does in React for the web. The concepts of the effect function, dependency array, and cleanup function are identical.
+> _Key Takeaway:_ Your existing understanding of `useEffect` is directly applicable.
+> _Source:_ [https://react.dev/reference/react/useEffect|React Docs: Using the Effect Hook (`useEffect`)]
+
+bq. 🅰️ _(Web Developers with Angular/Other Framework Experience):_
+> _Comparison:_ `useEffect` covers functionalities similar to Angular's lifecycle hooks like `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`. However, `useEffect` is more flexible and unified. The dependency array is key to controlling when the effect runs, mimicking different lifecycle events.
+> _Key Takeaway:_ `useEffect` is the go-to Hook for handling side effects. Master the use of the dependency array to control its execution precisely.
+> _Source:_ [https://angular.io/guide/lifecycle-hooks|Angular Docs: Lifecycle hooks]
+
+bq. 📲 _(Native Developers - Android/iOS):_
+> _Comparison:_ `useEffect` can be compared to lifecycle methods like `onCreate`/`onResume`/`onPause`/`onDestroy` in Android Activities/Fragments, or `viewDidLoad`/`viewWillAppear`/`viewWillDisappear` in iOS ViewControllers. The empty dependency array `[]` provides behavior similar to `onCreate` or `viewDidLoad` for setup, and the cleanup function to `onDestroy` or `viewDidDisappear` for teardown. Effects with dependencies relate to updates based on data changes.
+> _Key Takeaway:_ Use `useEffect` to manage operations that need to happen at specific points in your component's existence on the screen, such as data fetching when it appears, or cleaning up resources when it disappears.
+> _Source:_ [https://developer.android.com/guide/components/activities/activity-lifecycle|Android Dev Docs: Understand the Activity Lifecycle], [https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW1|Apple Dev Docs: Managing Your View Controller's Life Cycle]
+
+The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
+
+bq. 📚 _Official Documentation:_
+> - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
+- [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
+- [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
+- [https://react.dev/learn/you-might-not-need-an-effect|React Docs: You Might Not Need an Effect] (Important considerations for when _not_ to use `useEffect`)
+
+h3. A Note on `useLayoutEffect`
+
+React provides another Hook called `useLayoutEffect` which has the same signature as `useEffect` but fires _synchronously_ after all DOM mutations are complete, but _before_ the browser has painted the changes to the screen. This means it can block visual updates.
+* _Use Case:_ `useLayoutEffect` is useful for tasks that need to read layout from the DOM (e.g., measuring an element's size or position) and then synchronously re-render the component based on that information before the user sees any visual inconsistency.
+* _Preference:_ For most side effects (like data fetching, subscriptions, or manual DOM changes that don't require immediate layout reads), _`useEffect` is preferred_ because it does not block the browser from painting, leading to a more responsive UI.
+
+Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
+
+bq. 📚 _Official Documentation:_
+> - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
+- [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
+- [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
+
+----
+
+h3. Exercise 7.5: Using `useEffect` for Side Effects
+
+Let's practice using `useEffect` to perform a side effect, such as fetching data (simulated).
+
+*Objective:* Create a `UserProfile` component that simulates fetching user data when it mounts and displays a welcome message.
+
+*Instructions:*
+# Define a functional component named `UserProfile`.
+# Use `useState` to manage `userName`, initialized to `null` or an empty string.
+# Use `useState` to manage `isLoading`, initialized to `true`.
+# Use `useEffect` to simulate fetching user data when the component mounts (i.e., run the effect only once):
+** Inside the effect, set `isLoading` to `true` (though it's already true, good practice if fetch could be re-triggered).
+** Use `setTimeout` to simulate a network request delay (e.g., 1.5 seconds).
+** After the timeout, set `userName` to a sample name (e.g., "SpeedyMeds User").
+** Set `isLoading` to `false`.
+# Conditionally render:
+** If `isLoading` is true, display a `<Text>` component showing "Loading profile...".
+** If `isLoading` is false and `userName` is available, display a welcome message like "Welcome, [userName]!".
+# (Optional) Ensure your `useEffect` has an empty dependency array `[]` so it only runs on mount.
+
+*Tool:* CodeSandbox
+
+*(https://codesandbox.io/s/react-native-exercise-7-5-user-profile-useeffect-c38kt9)*

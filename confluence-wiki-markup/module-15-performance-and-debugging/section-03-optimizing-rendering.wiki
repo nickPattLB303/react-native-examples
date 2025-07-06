@@ -1,0 +1,325 @@
+h2. Section 3: Optimizing Rendering
+
+Unnecessary component re-renders are a primary cause of performance issues in React applications, including React Native. This section focuses on techniques to optimize rendering performance by preventing these needless updates, ensuring your SpeedyMeds app remains smooth and responsive.
+
+bq. 🛣️ _(All Learners):_ Mastering these optimization techniques is fundamental to building high-performance UIs. Even small optimizations in frequently rendered components, like items in a medication list, can have a significant impact.
+
+h3. Conceptual Content: The Pillars of Render Optimization
+
+React's default behavior is to re-render a component whenever its parent re-renders, or when its own props or state change. While this ensures UI consistency, it can lead to performance degradation if components re-render without actual changes to their output. We can use {{React.memo}}, {{useCallback}}, and {{useMemo}} to fine-tune this behavior.
+
+{mermaid}
+flowchart TD
+    A[Parent Component Renders] --> B{Props Changed?}
+    B -->|Yes| C[Re-render Child]
+    B -->|No| D{Child is Wrapped in React.memo?}
+    D -->|No| C
+    D -->|Yes| E[Skip Re-render]
+
+    F[State Changes] --> C
+    G[Context Changes] --> C
+
+    H[Parent Passes Function Prop] --> I{useCallback?}
+    I -->|No| J[New Function Reference]
+    I -->|Yes| K[Memoized Function]
+    J --> B
+    K --> B
+
+    L[Expensive Calculation] --> M{useMemo?}
+    M -->|No| N[Recalculate Every Render]
+    M -->|Yes| O[Use Cached Value]
+{mermaid}
+
+The diagram above illustrates how React's rendering cycle works, and how optimization techniques like {{React.memo}}, {{useCallback}}, and {{useMemo}} intercept this cycle to prevent unnecessary work. When a parent component renders, React normally re-renders all its children. However, {{React.memo}} can prevent this by comparing props, {{useCallback}} can maintain stable function references, and {{useMemo}} can cache expensive calculations.
+
+h4. 1. {{React.memo}}
+
+{{React.memo}} is a higher-order component (HOC) that memoizes your functional component. This means React will skip rendering the component if its props have not changed. It performs a shallow comparison of the props by default.
+* _How it works:_ When a component wrapped in {{React.memo}} is about to re-render due to its parent re-rendering, React compares its current props with the previous props. If they are shallowly equal, React reuses the last rendered result, skipping the render.
+* _Custom Comparison:_ You can provide an optional second argument to {{React.memo}}, a custom comparison function, if a shallow comparison isn't sufficient (e.g., for complex prop objects).
+
+h4. 2. {{useCallback}}
+
+The {{useCallback}} Hook returns a memoized version of a callback function that only changes if one of its dependencies has changed. This is particularly useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary re-renders (e.g., a child component wrapped in {{React.memo}}).
+* _How it works:_ If you pass a regular inline function as a prop to a child component, that function is recreated on every render of the parent. This new function reference will cause the memoized child to re-render, even if the function does the same thing. {{useCallback}} gives you the same function reference as long as its dependencies don't change.
+* _Dependency Array:_ Similar to {{useEffect}}, {{useCallback}} takes a dependency array. The callback will be re-created if any value in this array changes.
+
+h4. 3. {{useMemo}}
+
+The {{useMemo}} Hook returns a memoized value. It recomputes the memoized value only when one of its dependencies has changed. This is useful for optimizing expensive calculations, preventing them from running on every render.
+* _How it works:_ You provide a "create" function and an array of dependencies. {{useMemo}} will only recompute the memoized value when one of the dependencies has changed. Otherwise, it will return the cached value from the previous render.
+* _Use Cases:_ Calculating derived data, performing complex transformations, or any computationally intensive operation that doesn't need to run on every single render.
+
+bq. 🌐 _(Web Developers):_
+> - ⚛️ _(React Developers):_ > _Comparison:_ These are the exact same APIs ({{React.memo}}, {{useCallback}}, {{useMemo}}) you use in React for the web. Their purpose and behavior are identical.
+_Key Takeaway:_ Your existing knowledge of these React optimization tools is directly applicable and highly valuable in React Native.
+_Source:_ {{[https://react.dev/reference/react/memo|React Docs: memo]}}, {{[https://react.dev/reference/react/useCallback|useCallback]}}, {{[https://react.dev/reference/react/useMemo|useMemo]}}
+- 🅰️ _(Angular Developers):_ > _Comparison:_ While Angular has its own change detection mechanisms and performance tuning strategies (like {{OnPush}} change detection, pure pipes for memoizing transformations), React\'s Hooks ({{useCallback}}, {{useMemo}}) and {{React.memo}} HOC provide more granular, manual control over memoization of functions, values, and components respectively.
+_Key Takeaway:_ React\'s memoization tools offer fine-grained control, which can be powerful but also requires careful implementation to avoid premature optimization or incorrect dependency tracking, differing from some of Angular\'s more automated or convention-based approaches.
+_Source:_ {{[https://angular.io/guide/performance|Angular Documentation: Optimizing Performance]}}
+
+h3. Procedural Content: Applying Render Optimizations
+
+Let's see how to apply these techniques in the context of our SpeedyMeds app.
+
+h4. Using {{React.memo}} for a {{MedicationListItem}}
+
+Imagine a {{MedicationListItem}} component in SpeedyMeds that displays medication details. If the list re-renders, we only want individual items to re-render if their specific data has changed.
+
+This example shows how to use {{React.memo}} to prevent unnecessary re-renders of {{MedicationListItem}}.
+
+{code:language=js}
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+interface MedicationListItemProps {
+  id: string;
+  name: string;
+  dosage: string;
+  onPressItem: (id: string) => void; // Example prop that might change
+}
+
+const MedicationListItem: React.FC<MedicationListItemProps> = React.memo(
+  ({ name, dosage, onPressItem, id }) => {
+    console.log(`Rendering MedicationListItem: ${name}`);
+    return (
+      <View style={styles.itemContainer}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.dosage}>{dosage}</Text>
+      </View>
+    );
+  }
+);
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    backgroundColor: "#f9f9f9",
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  dosage: {
+    fontSize: 14,
+    color: "#555",
+  },
+});
+
+export default MedicationListItem;
+{code}
+
+When `MedicationListItem` is used in a list, `React.memo` will prevent it from re-rendering if its `name`, `dosage`, `id`, and `onPressItem` props remain the same between renders of the parent list component. The `console.log` helps observe when it renders. If `onPressItem` is defined inline in the parent, it will change on every parent render, negating `React.memo`'s benefit for that prop. This is where `useCallback` comes in.
+
+h4. Using `useCallback` for an `onPress` Handler
+
+If the parent component of `MedicationListItem` defines `onPressItem` inline, it will be a new function on every render. To prevent this, the parent can use `useCallback`.
+
+This example demonstrates memoizing a press handler using `useCallback` in a parent component that renders `MedicationListItem`.
+
+{code:language=js}
+import React, { useCallback, useState } from "react";
+import { View, FlatList, Button, Text, StyleSheet } from "react-native";
+import MedicationListItem from "./MedicationListItem"; // Assuming MedicationListItem is in a separate file
+
+interface Medication {
+  id: string;
+  name: string;
+  dosage: string;
+}
+
+const initialMedications: Medication[] = [
+  { id: "1", name: "Amoxicillin", dosage: "250mg" },
+  { id: "2", name: "Ibuprofen", dosage: "200mg" },
+  { id: "3", name: "Metformin", dosage: "500mg" },
+];
+
+const MedicationScreen: React.FC = () => {
+  const [medications, setMedications] =
+    useState<Medication[]>(initialMedications);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // Memoize the onPressItem callback
+  const handlePressItem = useCallback((id: string) => {
+    console.log("Item pressed:", id);
+    setSelectedId(id);
+    // In a real SpeedyMeds app, this might navigate to a detail screen
+  }, []); // Empty dependency array means this function is created once
+
+  const addMedication = () => {
+    // This function causes the MedicationScreen to re-render
+    // but handlePressItem will remain the same reference
+    const newMedId = (medications.length + 1).toString();
+    setMedications((prevMeds) => [
+      ...prevMeds,
+      { id: newMedId, name: `New Med ${newMedId}`, dosage: "10mg" },
+    ]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button
+        title="Add Random Medication (to trigger re-render)"
+        onPress={addMedication}
+      />
+      {selectedId && (
+        <Text style={styles.selectedText}>Selected ID: {selectedId}</Text>
+      )}
+      <FlatList
+        data={medications}
+        renderItem={({ item }) => (
+          <MedicationListItem
+            id={item.id}
+            name={item.name}
+            dosage={item.dosage}
+            onPressItem={handlePressItem} // Now passing a memoized callback
+          />
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, paddingTop: 20 },
+  selectedText: { padding: 10, fontSize: 16, color: "blue" },
+});
+
+// To run this example, you would typically have MedicationListItem in a separate file
+// and import it. For a runnable Snack, you might combine them or mock MedicationListItem.
+// For Expo Snack, ensure MedicationListItem is defined or imported correctly.
+export default MedicationScreen;
+{code}
+
+In `MedicationScreen`, `handlePressItem` is memoized with `useCallback`. Now, even if `MedicationScreen` re-renders (e.g., due to `selectedId` changing or `addMedication` being called), `MedicationListItem` components will not re-render solely because of `onPressItem` changing, as its reference remains stable thanks to `useCallback`. This allows `React.memo` on `MedicationListItem` to work effectively for the `onPressItem` prop.
+
+h4. Using `useMemo` for Optimizing a Calculation
+
+Suppose in our SpeedyMeds app, we need to display a stock status message based on a medication's quantity, which might involve some (potentially complex) logic.
+
+This example shows how `useMemo` can optimize a derived calculation, preventing it from re-running on every render if its dependencies haven't changed.
+
+{code:language=js}
+import React, { useMemo, useState } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+
+interface MedicationStockProps {
+  name: string;
+  quantity: number;
+  lowStockThreshold: number;
+}
+
+const MedicationStockDisplay: React.FC<MedicationStockProps> = ({
+  name,
+  quantity,
+  lowStockThreshold,
+}) => {
+  // This calculation will only re-run if quantity or lowStockThreshold changes.
+  const stockStatusMessage = useMemo(() => {
+    console.log(`Calculating stock status for ${name}...`);
+    if (quantity <= 0) {
+      return "Out of Stock";
+    }
+    if (quantity <= lowStockThreshold) {
+      return "Low Stock!";
+    }
+    return "In Stock";
+  }, [quantity, lowStockThreshold, name]); // name included for console.log context
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.name}>{name}</Text>
+      <Text>Quantity: {quantity}</Text>
+      <Text
+        style={
+          stockStatusMessage === "Low Stock!" ||
+          stockStatusMessage === "Out of Stock"
+            ? styles.warning
+            : styles.normal
+        }
+      >
+        Status: {stockStatusMessage}
+      </Text>
+    </View>
+  );
+};
+
+// Example Usage
+const App: React.FC = () => {
+  const [med1Quantity, setMed1Quantity] = useState(5);
+  const [med2Quantity, setMed2Quantity] = useState(15);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // To trigger re-render of App
+
+  return (
+    <View style={styles.appContainer}>
+      <MedicationStockDisplay
+        name="Aspirin"
+        quantity={med1Quantity}
+        lowStockThreshold={5}
+      />
+      <MedicationStockDisplay
+        name="Panadol"
+        quantity={med2Quantity}
+        lowStockThreshold={10}
+      />
+      <Button
+        title="Decrease Aspirin Stock"
+        onPress={() => setMed1Quantity((q) => Math.max(0, q - 1))}
+      />
+      <Button
+        title="Increase Panadol Stock"
+        onPress={() => setMed2Quantity((q) => q + 5)}
+      />
+      <Button
+        title="Refresh App (No Stock Change)"
+        onPress={() => setRefreshTrigger((c) => c + 1)}
+      />
+      <Text>App Refresh Count: {refreshTrigger}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  container: {
+    padding: 15,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 5,
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  name: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
+  warning: { color: "red", fontWeight: "bold" },
+  normal: { color: "green" },
+});
+
+export default App; // In a real app, MedicationStockDisplay might be separate
+{code}
+
+In `MedicationStockDisplay`, the `stockStatusMessage` is calculated using `useMemo`. The calculation (including the `console.log`) will only run if `quantity` or `lowStockThreshold` changes. If the parent component `App` re-renders due to `refreshTrigger` changing, but `med1Quantity` and `med2Quantity` remain the same, the `stockStatusMessage` for both `MedicationStockDisplay` instances will not be recalculated, demonstrating the optimization.
+
+{note}
+Don't overuse memoization. Profile your application first to identify actual bottlenecks. Premature optimization can sometimes make code harder to read and maintain for negligible performance gains. Use these tools judiciously where they provide a clear benefit.
+{note}
+bq. 📚 _Official Documentation:_
+> - [https://react.dev/reference/react/memo|React Docs: `memo`]
+- [https://react.dev/reference/react/useCallback|React Docs: `useCallback`]
+- [https://react.dev/reference/react/useMemo|React Docs: `useMemo`]
+- [https://reactnative.dev/docs/performance#optimizing-your-app-state|React Native Docs: Performance - Optimizing Rendering]
+
+h3. Exercise
+
+Now, let's apply these concepts.
+* _Exercise 15.1: Applying Memoization_
+* `_(https://snack.expo.dev/React-Native-Memoization-Exercise-15-1)_`
+* _Instructions: You will be provided with a Snack containing a list of SpeedyMeds prescription items. Your task is to use `React.memo`, `useCallback`, and `useMemo` appropriately to optimize the rendering of this list and its items. The `README.md` in the Snack will have detailed requirements._
