@@ -206,7 +206,7 @@ Variables declared with `var` inside a function are scoped to that entire functi
 
 h2. Block Scope
 
-Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{...}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
+Introduced with `let` and `const`, block scope confines a variable's accessibility to the specific block (`{{...}}`) in which it is declared. This is the most granular scope and helps prevent variable leakage and naming collisions. Block scoping aligns JavaScript more closely with scoping rules in languages like Java and Kotlin.
 
 {code:title=Mermaid Diagram|language=text}
 graph TD

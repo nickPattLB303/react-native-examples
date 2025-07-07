@@ -340,7 +340,7 @@ The diagram above illustrates the conceptual difference in how styles from `Styl
 
 h3. Initial Processing
 
-When styles are defined using `StyleSheet.create({...})`, React Native processes these style objects once during the initial load or component definition.
+When styles are defined using `StyleSheet.create({{...}})`, React Native processes these style objects once during the initial load or component definition.
 h3. ID Generation
 
 During this processing, unique integer IDs can be assigned to each distinct style rule or a combination of rules. These IDs map to the actual native styling instructions.

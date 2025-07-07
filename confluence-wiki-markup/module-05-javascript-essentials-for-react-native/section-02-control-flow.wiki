@@ -321,7 +321,7 @@ h3. Loop Comparison Summary
 ||Loop type||Syntax||Primary use case||Condition check||Executes at least once?||
 |`for`|`for (init; cond; final)`|Known number of iterations, iterating with a counter|Before each iteration|No|
 |`while`|`while (condition)`|Iterations based on a condition, number unknown|Before each iteration|No|
-|`do...while`|`do {...} while (condition);`|Iterations based on a condition, body _must_ run at least once|After each iteration|Yes|
+|`do...while`|`do {{...}} while (condition);`|Iterations based on a condition, body _must_ run at least once|After each iteration|Yes|
 |`for...in`|`for (const key in object)`|Enumerating object *property names (keys)*|Implicit (each key)|No (if 0 properties)|
 |`for...of`|`for (const value of iterable)`|Iterating over *values* of iterable objects (Arrays, Strings, etc.)|Implicit (each value)|No (if empty iterable)|
 bq. 📚 *Official Documentation:*

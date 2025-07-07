@@ -103,7 +103,7 @@ h2. Referential Content: Common Props
 * {{sections}}: (array, *required*) The array of section objects.
 ** _Section Object Shape:_ {{{ title: string, data: ItemT[], [key: string]: any }}} (You can add other properties to your section object, e.g., a section ID).
 * {{renderItem}}: (function, *required*) Renders each item in a section. Receives an object with {{item}}, {{index}}, {{section}}, and {{separators}}.
-** _Signature:_ {{({ item: ItemT, index: number, section: SectionT, separators: {...} }) => React.ReactElement | null}}
+** _Signature:_ {{({ item: ItemT, index: number, section: SectionT, separators: {{...}} }) => React.ReactElement | null}}
 * {{renderSectionHeader}}: (function, *required*) Renders the header for each section. Receives an object with {{section}}.
 ** _Signature:_ {{({ section: SectionT }) => React.ReactElement | null}}
 * {{keyExtractor}}: (function, *required*) Returns a unique key for a given item. Typically {{(item, index) => item.id || index.toString()}}.

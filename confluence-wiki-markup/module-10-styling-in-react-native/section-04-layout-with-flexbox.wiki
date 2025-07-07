@@ -430,7 +430,7 @@ const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
         <Text style={styles.dosage}>{strength}</Text>
       </View>
       <View style={styles.middleRow}>
-        {/* Placeholder for an icon. You'd use <Image source={...} /> */}
+        {/* Placeholder for an icon. You'd use <Image source={{...}} /> */}
         <View style={[styles.icon, { backgroundColor: "#ddd" }]} />
         <Text style={styles.instructions}>{instructionsText}</Text>
       </View>

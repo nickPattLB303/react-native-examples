@@ -30,7 +30,7 @@ h2. Elements
 JSX elements look like HTML tags. They can be React Native Core Components (e.g., `<View>`), custom components you create (e.g., `<MedicationCard />`), or standard HTML tags if you were using React for the web (though these are not directly used in React Native UIs).
 h2. Closing Tags
 
-Every JSX tag must be closed, either with a self-closing tag (e.g., `<Image source={...} />`) or a corresponding closing tag (e.g., `<Text>Hello</Text>`).
+Every JSX tag must be closed, either with a self-closing tag (e.g., `<Image source={{...}} />`) or a corresponding closing tag (e.g., `<Text>Hello</Text>`).
 h2. Single Root Element
 
 A React component (or a JSX expression returned from a function) must return a single root JSX element. If you need to return multiple elements, you must wrap them in a single parent element, like a `<View>`, or use a React Fragment (`<>...</>`).
