@@ -153,28 +153,20 @@ Android's navigation relies heavily on a back stack. The system Back button typi
 By considering these platform-specific guidelines, you can tailor your SpeedyMeds app's navigation to meet user expectations on both iOS and Android, leading to a more polished and professional feel.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. While specific libraries implement these concepts, general UI/UX design principles cover these patterns extensively. For library-specific takes:
-bq. 
 bq. - [https://reactnavigation.org/docs/navigators/|React Navigation - Navigators]
 bq. - [https://docs.expo.dev/router/layouts/|Expo Router - Layouts (conceptual similarity)]
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* You've seen these patterns in iOS: `UINavigationController` for stacks, `UITabBarController` for tabs, and often custom implementations or `UISplitViewController` (for larger screens) for drawer-like experiences.
-bq. 
 bq. *Key Takeaway:* The core concepts are the same. React Native libraries will provide components that replicate this behavior, but you'll configure them declaratively in JavaScript/TypeScript.
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* Android's Navigation Component directly supports graphs that can represent stacks. `BottomNavigationView` is used for tabs, and `NavigationView` within a `DrawerLayout` is used for drawers.
-bq. 
 bq. *Key Takeaway:* React Native navigators offer a cross-platform abstraction for these native patterns, allowing you to define them once.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Stack navigation is like browser history. Tabs can be like different sections of a single-page application (SPA) controlled by a router. Drawers are common as responsive menus on mobile web.
-bq. 
 bq. *Key Takeaway:* The main difference in mobile is the tight integration with native gestures and transitions, and the expectation of persistent states within each tab or section.
 
 h3. Next Steps

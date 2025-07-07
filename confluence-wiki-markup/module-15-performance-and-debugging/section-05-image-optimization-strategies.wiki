@@ -216,7 +216,6 @@ This `LazyMedicationImage` component would only attempt to load the `actualSourc
 When implementing lazy loading, ensure placeholders are lightweight and provide a good user experience. Avoid content jumping as images load by specifying fixed dimensions for your image containers.
 {note}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/versions/latest/sdk/image/|`expo-image`]
 bq. - [https://reactnative.dev/docs/images|React Native Docs: Images]
 bq. - [https://reactnative.dev/docs/performance#optimizing-images|React Native Docs: Performance - Optimizing Images]

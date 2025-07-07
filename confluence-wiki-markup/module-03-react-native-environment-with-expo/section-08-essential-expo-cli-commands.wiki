@@ -195,19 +195,13 @@ h2. Summary Table
 |`npx expo customize [file]`|Copy default config files for customization|
 |`npx expo login/logout/whoami`|Manage Expo account session (for EAS)|
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* `start` manages Metro (like running `react-native start` but integrated). `run:*` orchestrates `xcodebuild`/`gradlew`. `install` is a package manager wrapper with version validation. `prebuild` automates native project generation based on JS config (akin to code generation tools). `config` introspects this generation process. `doctor` is a diagnostic tool.
-bq. 
 bq. *Key Takeaway:* Expo CLI wraps and extends native tools and package managers with Expo-specific logic and workflows (like CNG and compatibility checks).
-bq. 
 bq. *Source:* [https://docs.expo.dev/workflow/ios-simulator/|Expo Docs: Developing with the iOS Simulator]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* `start` is like your `npm run dev` or `vite` command. `run:*` has no direct web equivalent but involves native compilation similar to a build process. `install` is `npm install` plus safety checks, like using a smart package manager that knows about compatibility. `prebuild`/`config` relate to generating the underlying native app structure from your config, somewhat analogous to how webpack might generate optimized bundles from your configuration.
-bq. 
 bq. *Key Takeaway:* Familiar concepts (`start`, `install`) have native-specific enhancements (`run:*`, `prebuild`, compatibility checks).
-bq. 
 bq. *Source:* [https://facebook.github.io/metro/|Metro Bundler Documentation] - The bundler under the hood of `npx expo start`
 
 bq. 🔁 *(Asynchronous Learners):* Focus on remembering the most essential commands first: `start`, `run:ios`/`run:android`, and `install`. Once you're comfortable with those, gradually incorporate the maintenance commands like `doctor` and `upgrade` as needed. Creating a reference sheet with example usages will be helpful.
@@ -299,7 +293,6 @@ This code snippet illustrates a `MedicationScanScreen` component for the SpeedyM
 Mastering these commands provides a solid foundation for your daily Expo development workflow.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/more/expo-cli/|Expo Docs: Expo CLI Reference]
 bq. - [https://docs.expo.dev/more/expo-cli/#npx-expo-start|Expo Docs: CLI commands list]
 bq. - [https://docs.expo.dev/guides/customizing-metro/|Expo Docs: Metro Bundler Configuration]

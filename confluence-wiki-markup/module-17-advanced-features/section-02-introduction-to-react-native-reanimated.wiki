@@ -390,7 +390,6 @@ Apply your understanding of these core concepts in the following exercise.
 * *Exercise 17.1: Basic Reanimated Animation* `*(https://snack.expo.dev/SpeedyMeds-Exercise-17-1)*`
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/core-concepts|React Native Reanimated - Core Concepts]
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/shared-values|React Native Reanimated - `useSharedValue`]
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/styles|React Native Reanimated - `useAnimatedStyle`]

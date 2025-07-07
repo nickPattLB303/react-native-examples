@@ -86,23 +86,17 @@ h2. Concurrent React Features
 Fabric is designed to integrate seamlessly with React 18+ features like Concurrent Rendering, Suspense for data fetching, and Transitions, enabling more sophisticated UI patterns and better performance under heavy load.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/architecture/fabric-renderer|Fabric Renderer | React Native]
 bq. - [https://reactnative.dev/docs/new-architecture-fabric-components|Fabric Native Components | React Native]
 bq. - [https://react.dev/learn/render-and-commit|React Docs: Render and Commit]
 bq. - [https://yogalayout.com/docs/|Understanding Yoga Layout Engine]
-bq. 
 bq. 🗂️ *Additional Resources:*
-bq. 
 bq. - [https://medium.com/shopify-engineering/react-native-at-shopify-benefits-of-the-new-architecture-edcecef0b5f|React Native New Architecture Deep Dive]
 bq. - [https://formidable.com/blog/2019/lean-core-and-react-native-new-architecture/|The Evolution of React Native's Architecture]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Fabric's rendering approach brings React Native closer to how React works in the browser with its Virtual DOM, but with the added complexity of managing native UI elements. The direct interaction via JSI and C++ shadow tree is a significant departure from manipulating a browser DOM directly or via web workers. The three-phase pipeline (Render, Commit, Mount) mirrors concepts in React itself.
-bq. 
 bq. *Key Takeaway:* Fabric significantly optimizes the rendering pipeline compared to the legacy approach by reducing asynchronous bottlenecks, improving thread management through its C++ core, and enabling modern React features, leading to performance closer to native apps.
-bq. 
 bq. *Source:* [https://react.dev/learn/render-and-commit|React Documentation: Rendering Process]
 
 h2. Implications for SpeedyMeds Development

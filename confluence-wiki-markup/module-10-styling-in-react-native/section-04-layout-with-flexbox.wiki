@@ -22,9 +22,7 @@ h2. Cross Axis
 The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis is vertical, and vice versa.
 
 bq. 🌐 *(Web Developers): Key Differences: React Native Flexbox vs. Web CSS Flexbox*
-bq. 
 bq. *Comparison:* While the core concepts of Flexbox (containers, items, main/cross axes) are identical to CSS Flexbox, React Native's implementation has some crucial differences, primarily in default values. Understanding these is key to translating your web layout skills effectively.
-bq. 
 bq. | Property        | React Native Default/Behavior                               | Web CSS Default/Behavior                               | Key Difference Explanation                                                                                                                                                         |
 bq. | --------------- | ----------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 bq. | {{flexDirection}} | {{'column'}}                                                  | {{'row'}}                                                | React Native defaults to a vertical layout for items, aligning with common mobile portrait orientations. You must explicitly set {{flexDirection: 'row'}} for horizontal layouts.    |
@@ -33,7 +31,6 @@ bq. | {{flexShrink}}    | {{0}} for column layout children, {{1}} for row layout
 bq. | {{flex}}          | Single non-negative number (primarily sets {{flexGrow}})      | Shorthand for {{flex-grow}}, {{flex-shrink}}, {{flex-basis}} | React Native's {{flex}} prop is simplified. {{flex: N}} sets {{flexGrow: N}}, {{flexShrink: 1}}, {{flexBasis: '0%'}}. Use {{flexGrow}}, {{flexShrink}}, {{flexBasis}} explicitly for more control. |
 bq. | {{display}}       | Not applicable ({{<View>}} is implicitly {{display: flex}})     | Requires {{display: flex}} or {{inline-flex}}              | Flexbox is automatically enabled on {{<View>}} components; no need to declare {{display: 'flex'}}.                                                                                     |
 bq. | Property Names  | camelCased (e.g., {{alignItems}})                             | kebab-cased (e.g., {{align-items}})                      | Standard JavaScript convention for property naming.                                                                                                                                |
-bq. 
 bq. *Key Takeaway:* Your CSS Flexbox knowledge is highly transferable. However, you MUST be mindful of React Native's default {{flexDirection: 'column'}}, the nuanced {{flexShrink}} defaults, the behavior of the {{flex}} shorthand, and camelCased property names to avoid common layout frustrations.
 
 h2. Flex Container Properties

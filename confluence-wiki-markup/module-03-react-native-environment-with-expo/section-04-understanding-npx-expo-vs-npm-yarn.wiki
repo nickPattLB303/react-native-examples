@@ -29,11 +29,8 @@ They also run *scripts* defined in your {{package.json}} file. Open your {{packa
 Running `npm run start` or `yarn start` executes the command defined for the `start` script (which is `expo start`). Similarly, `npm run ios` or `yarn ios` would execute `expo run:ios`.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* This `scripts` section and the concept of running tasks via `npm run` or `yarn` is identical to standard web development workflows with tools like webpack or Vite.
-bq. 
 bq. *Key Takeaway:* Your existing knowledge of npm scripts transfers directly to Expo projects.
-bq. 
 bq. *Source:* [https://docs.npmjs.com/cli/v10/commands/npm-run-script|npm Docs: npm run]
 
 h2. The Expo CLI: `npx expo <command>`
@@ -141,19 +138,13 @@ h2. When to Use Which?
 # *Running Other Expo CLI Commands:* Use `npx expo <command>` directly for tasks not covered by basic scripts (e.g., `npx expo doctor`, `npx expo prebuild`, `npx expo config`, EAS commands).
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* Think of `npx expo install` as a smarter dependency manager like a Gradle plugin or CocoaPods hook enforcing strict version compatibility within the React Native/Expo ecosystem, beyond simple semantic versioning. `npm install` lacks this check. `npx expo start`/`run:*` are scripts automating interactions with tools you might otherwise use directly (Metro, `xcodebuild`, `gradlew`). `npm run start` is just a shortcut to `npx expo start`.
-bq. 
 bq. *Key Takeaway:* Prioritize `npx expo install` for adding libraries. Use `npx expo` directly or `npm/yarn run` for executing tasks.
-bq. 
 bq. *Source:* [https://docs.expo.dev/more/expo-cli/|Expo CLI documentation]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* While `npm install`/`yarn add` and the `scripts` in `package.json` are familiar, `npx expo install` adds a crucial compatibility layer specific to native development challenges. Because JS code interacts with native APIs bundled with React Native, version alignment is critical. `npx expo` commands act as higher-level wrappers around the bundler (Metro) and native build tools needed to run your code on devices/simulators.
-bq. 
 bq. *Key Takeaway:* Use `npx expo install` instead of `npm install`/`yarn add` for new dependencies. Use `npx expo` or `npm/yarn run` for development tasks.
-bq. 
 bq. *Source:* [https://www.freecodecamp.org/news/npm-vs-npx-whats-the-difference/|npm vs npx: What's the Difference?]
 
 bq. 🧗‍♀️ *(Self-Led):* Create a reference card for yourself with the key commands covered in this section. Having these commands readily available will save you time and prevent errors as you work through subsequent modules and exercises.
@@ -235,7 +226,6 @@ function MedicationScannerScreen() {
 This TypeScript snippet outlines a `MedicationScannerScreen` component. The crucial first step, highlighted in the comments, is installing the `expo-barcode-scanner` package using `npx expo install`. This ensures version compatibility with your Expo SDK. The component then requests camera permissions using `BarCodeScanner.requestPermissionsAsync()` inside a `useEffect` hook. Based on the `hasPermission` state, it would either show a permission request message or, if permission is granted, render the `BarCodeScanner` UI (conceptualized in comments for brevity). When a barcode is successfully scanned, `handleBarCodeScanned` is triggered, updating the state and simulating feedback. This example emphasizes the correct installation method and basic API usage for an Expo SDK package.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/more/expo-cli/|Expo Docs: Expo CLI]
 bq. - [https://docs.expo.dev/more/expo-cli/#install|Expo Docs: `expo install`]
 bq. - [https://docs.npmjs.com/cli/v10/commands/npx|npm Docs: npx]

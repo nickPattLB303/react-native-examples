@@ -55,9 +55,7 @@ The following table provides a quick reference for some common properties.
 This table is not exhaustive. React Native supports a subset of CSS properties, and some behave differently. The CSS cascade mechanism (where styles from different sources are applied based on specificity and order) does *not* apply in React Native. Styles are generally inherited only within nested {{<Text>}} components. Always refer to the official [https://reactnative.dev/docs/view-style-props|View Style Props] and [https://reactnative.dev/docs/text-style-props|Text Style Props] documentation for a complete list and detailed behavior.
 {note}
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* The landscape is similar to web development where you have plain CSS, CSS Modules (akin to {{StyleSheet}}), CSS-in-JS (Styled Components, Emotion), and component libraries (Bootstrap, Material-UI). React Native's {{StyleSheet}} provides a more direct, JavaScript-integrated way of defining styles compared to separate {{.css}} files. The table above illustrates common property mappings.
-bq. 
 bq. *Key Takeaway:* You'll leverage your understanding of CSS principles (like the box model and flexbox), but the implementation (JavaScript objects, camelCase, no direct CSS files or cascade) and specific property availability will be specific to the React Native ecosystem.
 
 {info}

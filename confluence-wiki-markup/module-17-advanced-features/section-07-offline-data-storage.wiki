@@ -680,7 +680,6 @@ In the SpeedyMeds app, this functionality would be vital for maintaining an offl
 While this example uses direct SQL queries for clarity, in a larger application, consider creating a data access layer or using an ORM (Object-Relational Mapping) library to abstract SQL operations and make database code more maintainable.
 {tip}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/versions/latest/sdk/sqlite/|Expo SQLite Documentation]
 bq. - [https://www.sqlite.org/docs.html|SQLite Official Documentation]
 

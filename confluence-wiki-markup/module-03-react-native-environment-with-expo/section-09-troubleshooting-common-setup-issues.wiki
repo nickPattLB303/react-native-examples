@@ -149,19 +149,13 @@ h2. Solutions
 * *Restart:* Restart Wi-Fi on both devices, restart Expo Go, restart `npx expo start`.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* Many issues mirror native development: PATH problems, port conflicts, SDK/toolchain verification (Xcode, Android SDK), build tool issues (CocoaPods, Gradle), signing complexities. The unique Expo layers are Watchman, Metro cache (`--clear`), Expo Go connection quirks, and the `npx expo install` compatibility layer.
-bq. 
 bq. *Key Takeaway:* Apply standard native troubleshooting, plus Expo-specific checks for Metro, Watchman, and dependencies (`expo install`).
-bq. 
 bq. *Source:* [https://developer.apple.com/documentation/xcode/diagnosing-issues-using-crash-reports-and-device-logs/|Apple Developer: Resolving Common Development Errors]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* `command not found` (PATH), port conflicts, cache clearing (`npm cache`), and dependency issues are familiar. The new territory is troubleshooting the native toolchains (Xcode, Android Studio, Simulators, Emulators), native build systems (CocoaPods, Gradle), and device/emulator connectivity issues, which have no direct web equivalent.
-bq. 
 bq. *Key Takeaway:* Augment web troubleshooting skills with checks for native tool installations, configurations, and build processes.
-bq. 
 bq. *Source:* [https://forums.expo.dev/c/help/6|Expo Community Forum: Troubleshooting]
 
 {tip}
@@ -267,7 +261,6 @@ The prevalence of troubleshooting sections in documentation and the volume of se
 While Expo significantly simplifies many aspects, particularly the initial setup and native builds, it doesn't eliminate the possibility of encountering issues, especially as applications grow in complexity, integrate numerous third-party libraries, or involve custom native code. Therefore, developers must cultivate the ability to systematically diagnose problems across this entire stack. This involves more than just knowing specific commands; it requires learning how to effectively read and interpret logs, understand different types of error messages (JavaScript vs. native), isolate the source of the problem, and leverage documentation and community resources. This troubleshooting section aims to instill this methodical approach, which is indispensable for becoming a productive and self-sufficient React Native developer.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/troubleshooting/errors/|Expo Docs: Troubleshooting]
 bq. - [https://reactnative.dev/docs/troubleshooting|React Native Docs: Troubleshooting]
 bq. - [https://docs.expo.dev/workflow/continuous-native-generation/#faq|Expo Docs: Continuous Native Generation FAQ]

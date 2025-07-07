@@ -46,19 +46,13 @@ h2. Collapsable (Android)
 The {{collapsable}} prop (Android only), if true (default), allows this view to be potentially removed from the native hierarchy as an optimization if it's purely for layout and doesn't draw anything or handle touches. Using {{nativeID}} or {{testID}} disables this.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* {{<View>}} directly maps to {{UIView}} on iOS and {{ViewGroup}} on Android. Just as you'd use {{UIView}} or a {{LinearLayout}}/{{FrameLayout}} to group and arrange other UI elements, you use {{<View>}} in React Native. The layout mechanism (Flexbox) will be the main new concept compared to Auto Layout or Android's XML layout system.
-bq. 
 bq. *Key Takeaway:* {{<View>}} is your go-to for creating structure and applying layout policies to a collection of UI elements.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/view|React Native Docs: View]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* {{<View>}} is analogous to a {{<div>}} element in HTML. Both are used as generic containers for grouping and styling other elements. The primary layout system in React Native is Flexbox, which you might already be familiar with from web CSS.
-bq. 
 bq. *Key Takeaway:* Use {{<View>}} wherever you would typically use a {{<div>}} for layout and grouping purposes.
-bq. 
 bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div|MDN Web Docs: {{<div>}}]
 
 h2. Referential Content: Common {{<View>}} Props
@@ -82,7 +76,6 @@ The {{<View>}} component supports a variety of props to control its behavior and
 For a full list of props and more detailed explanations, always refer to the official React Native documentation.
 {info}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/view|React Native Docs: View]
 bq. - [https://reactnative.dev/docs/view-props|React Native Docs: View Props]
 bq. - [https://reactnative.dev/docs/flexbox|React Native Docs: Layout with Flexbox]
@@ -109,19 +102,13 @@ The {{<View>}} component serves as the universal layout primitive in React Nativ
 h2. Background Bridge Notes: Layout Systems
 
 bq. 📲 *(Native Developers - Android & iOS):*
-bq. 
 bq. *Comparison:* React Native's {{<View>}} is the primary container, similar to {{UIView}} (iOS) or {{ViewGroup}} (Android). Layout is primarily managed by Flexbox properties applied via the {{style}} prop. This differs from XML-based layouts ({{LinearLayout}}, {{RelativeLayout}}, {{ConstraintLayout}}) in Android or Auto Layout/programmatic frames in iOS. The concept of {{flex: 1}} is key for making views expand to fill available space, analogous to certain weight/constraint configurations in native layouts. Units are density-independent pixels by default, simplifying cross-resolution design compared to manually managing dp/sp (Android) or points and scale factors (iOS).
-bq. 
 bq. *Key Takeaway:* Flexbox is the dominant layout model you'll use with {{<View>}} in React Native. While different from native layout systems, it provides a unified and powerful approach across both platforms.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/flexbox|React Native Docs: Layout with Flexbox]
 
 bq. 🌐 *(Web Developers - React & Angular):*
-bq. 
 bq. *Comparison:* {{<View>}} is the closest equivalent to HTML's {{<div>}}. It's the fundamental container for layout. Flexbox in React Native is very similar to CSS Flexbox, making layout concepts largely transferable. Key differences include {{flexDirection}} defaulting to {{'column'}} instead of {{'row'}}, and some property names or supported values might differ slightly. There is no direct equivalent of CSS Grid, though complex layouts can be achieved with nested Flexbox. Positioning ({{absolute}}, {{relative}}) works similarly to CSS, but the context for absolute positioning is tied to parent views.
-bq. 
 bq. *Key Takeaway:* Your web Flexbox knowledge is highly applicable, but be mindful of React Native's defaults and specific property implementations.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/flexbox|React Native Docs: Layout with Flexbox]
 
 h2. Procedural Content: Basic {{<View>}} Usage

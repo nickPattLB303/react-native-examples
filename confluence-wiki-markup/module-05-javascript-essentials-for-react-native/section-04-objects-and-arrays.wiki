@@ -3,15 +3,10 @@
 Objects and arrays are two of JavaScript's most powerful data types, used extensively in React Native applications. This section will explore their syntax, features, and common operations.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* JavaScript's objects and arrays differ from similar structures in native platforms. In Swift, you'd use {{Dictionary}} and {{Array}}, which have strong typing. In Kotlin/Java, you'd use {{Map}} and {{List}} interfaces. JavaScript objects are more like dynamic dictionaries with no required interface or class definition.
-bq. 
 bq. *Key Takeaway:* JavaScript objects and arrays are more flexible but less type-safe than their native counterparts. They're also directly serializable to/from JSON, which is heavily used in API communication in React Native.
-bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/|Swift Collection Types] and [https://kotlinlang.org/docs/collections-overview.html|Kotlin Collections]
-bq. 
 bq. *Example:*
-bq. 
 {code:language=swift}
 // Swift Dictionary and Array
 var patient: [String: Any] = [
@@ -28,7 +23,6 @@ patient["medications"] = meds
 meds.forEach { print($0) }
 }
 {code}
-bq. 
 {code:language=kotlin}
 // Kotlin MutableMap and MutableList
 val patient = mutableMapOf<String, Any>(
@@ -43,7 +37,6 @@ meds.add("Amlodipine")
 meds.forEach { println(it) }
 
 {code}
-bq. 
 {code:language=js}
 // JavaScript Object and Array
 const patient = {
@@ -551,7 +544,6 @@ Remember the difference:
 * *Rest (`...`)* _collects_ function arguments or object properties.
 {info}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects|MDN Web Docs: Objects]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|MDN Web Docs: Arrays]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment|MDN Web Docs: Destructuring assignment]

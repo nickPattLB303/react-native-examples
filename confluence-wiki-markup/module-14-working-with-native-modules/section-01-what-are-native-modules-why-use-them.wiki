@@ -161,29 +161,20 @@ h2. Custom UI Components
 While this module focuses on native _modules_ (APIs), a related concept is bridging native _UI components_. If you need a highly specific native UI element not available in React Native (e.g., a platform-specific map view with custom annotations or a specialized video player), you'd create a native UI component. We'll briefly touch on this concept later.
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* Think of native modules as similar to creating a Swift or Objective-C class that you want to make accessible from another part of your app. In React Native, you'll use specific macros (Objective-C) or attributes (Swift, with `expo-modules-core`) to expose your native methods and properties to the JavaScript runtime. The "bridge" or JSI acts as the intermediary.
-bq. 
 bq. *Key Takeaway:* You're leveraging your existing iOS development skills to extend JavaScript's reach into the native iOS environment.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/native-modules-ios|Native Modules (iOS) | React Native]
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* This is akin to creating a Java or Kotlin class with public methods. To expose these to React Native, you'll typically extend `ReactContextBaseJavaModule` or use annotations provided by `expo-modules-core`. These methods can then be invoked from JavaScript.
-bq. 
 bq. *Key Takeaway:* Your Android development expertise is directly applicable in creating these Java/Kotlin counterparts to JavaScript functions.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/native-modules-android|Native Modules (Android) | React Native]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Imagine if, in web development, you could define your own custom browser APIs (like `navigator.geolocation` or `window.localStorage`) that directly interact with the underlying operating system features of the user's computer. Native modules in React Native give you that power for mobile devices. JavaScript makes calls to these "custom APIs" you've defined, which then execute native code.
-bq. 
 bq. *Key Takeaway:* Native modules are your toolkit for breaking out of the JavaScript sandbox and tapping into the rich native capabilities of iOS and Android when standard React Native or Expo APIs don't suffice.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/native-modules-intro|React Native Docs: Native Modules Introduction]
 bq. - [https://reactnative.dev/docs/communication-native-react-native|React Native Docs: Communication between Native and React Native (New Architecture focus)]
 bq. - [https://docs.expo.dev/modules/overview/|Expo Docs: Overview of Expo modules]

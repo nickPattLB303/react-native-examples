@@ -212,9 +212,7 @@ const SecondaryButton = styled(BaseButton)`
 This allows you to create a base set of styles and then create variations easily.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Styled Components work almost identically in React and React Native. The main difference is the set of valid CSS properties (React Native uses a subset and its own specific properties like `elevation` for Android shadow) and the base elements you style (e.g., `styled.View` instead of `styled.div`).
-bq. 
 bq. *Key Takeaway:* If you've used Styled Components on the web, you'll feel right at home. Just remember to import from `styled-components/native` and use React Native compatible style properties.
 
 h2. Considerations

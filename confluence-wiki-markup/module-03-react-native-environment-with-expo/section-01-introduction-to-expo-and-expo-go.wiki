@@ -125,15 +125,11 @@ Expo Go uses the pre-built app. Development Builds require a local build (`npx e
 * Using older Expo SDK versions on physical iOS devices (due to App Store limitations).
 
 bq. 🤖 *(Native Developers):*
-bq. 
 bq. *Comparison:* Think of Expo Go as a pre-compiled shell where your contribution is primarily JavaScript injected at runtime; you don't control the shell's native dependencies. Development Builds are analogous to your standard native workflow – you compile the _entire_ application from source, managing all native libraries and configurations directly. `expo-dev-client` just adds tooling for the JS server connection.
-bq. 
 bq. *Key Takeaway:* Expo Go abstracts native builds away; Development Builds embrace them, giving you full control.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Imagine Expo Go as a specialized browser with a fixed set of built-in "Web APIs" (the bundled native modules). You can only use those APIs. A Development Build is like compiling your own custom version of this browser, where you can include _any_ specific "APIs" (native modules) you require.
-bq. 
 bq. *Key Takeaway:* Expo Go provides a limited, fixed native runtime; Development Builds let you define and compile your own native runtime.
 
 *Table 1: Expo Go vs. Development Builds Comparison*
@@ -148,7 +144,6 @@ bq. *Key Takeaway:* Expo Go provides a limited, fixed native runtime; Developmen
 Expo Go is an excellent starting point and useful for quickly testing platform-agnostic JavaScript logic. However, most production apps eventually transition to using Development Builds to incorporate specific native dependencies or customizations. We will cover creating Development Builds and using EAS Build in Module 16.
 {info}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/get-started/introduction/|Expo Docs: Introduction]
 bq. - [https://docs.expo.dev/get-started/expo-go/|Expo Docs: Expo Go]
 bq. - [https://docs.expo.dev/develop/development-builds/introduction/|Expo Docs: Development Builds Introduction]

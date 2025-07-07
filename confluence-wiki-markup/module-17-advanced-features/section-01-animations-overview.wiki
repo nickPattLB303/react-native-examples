@@ -99,17 +99,12 @@ h2. Key Benefits
 * *Power:* Offers a more extensive set of tools and primitives (worklets, shared values, hooks) for creating complex and interactive animations and gestures.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* If you're familiar with native animation frameworks like Core Animation on iOS or `android.animation` on Android, Reanimated aims to provide a similar level of control and performance but with a JavaScript-based declarative API. The concept of offloading work to the UI thread is central to both native animations and Reanimated.
-bq. 
 bq. *Key Takeaway:* Reanimated brings the performance characteristics closer to native animations by running directly on the UI thread.
-bq. 
 bq. *Source:* [https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html|Core Animation Programming Guide (iOS)], [https://developer.android.com/guide/topics/graphics/prop-animation|Property Animation (Android)]
 
 bq. ⚛️ *(React Developers):*
-bq. 
 bq. *Comparison:* You might be used to CSS animations/transitions or JavaScript animation libraries on the web. Reanimated shares the declarative nature of React but is specifically designed for the performance demands of native mobile apps. Its hook-based API (`useSharedValue`, `useAnimatedStyle`) will feel familiar.
-bq. 
 bq. *Key Takeaway:* Reanimated lets you write animations in a React-friendly way while ensuring they perform well on mobile devices by running on the UI thread.
 
 h2. Referential Content
@@ -123,7 +118,6 @@ Here's a table summarizing the key differences.
 |*Complexity*|Simpler API for basic animations|More powerful, steeper learning curve|
 |*Gesture Handling*|Basic integration|Deep integration with Gesture Handler|
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/animated|React Native Docs: Animated API]
 bq. - [https://docs.swmansion.com/react-native-reanimated/|React Native Reanimated Documentation]
 

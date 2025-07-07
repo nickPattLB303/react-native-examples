@@ -72,9 +72,7 @@ While convenient, inline styles have several drawbacks, especially if overused:
 # *Lack of Organization:* As an application grows, relying heavily on inline styles can lead to a disorganized and inconsistent styling approach, making maintenance, refactoring, and theming more difficult.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* This is very similar to using the `style` attribute directly on HTML elements (e.g., `<div style={{color: 'blue'}}></div>` in React for web). The same principles apply: convenient for dynamic or very specific styles, but generally discouraged for overall styling architecture due to maintainability and separation of concerns.
-bq. 
 bq. *Key Takeaway:* The trade-offs are largely the same as on the web. Use inline styles judiciously.
 
 h2. Combining Inline Styles with `StyleSheet`

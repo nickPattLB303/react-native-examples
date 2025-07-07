@@ -164,30 +164,20 @@ const [patient, setPatient] = useState<PatientProfile | null>(null);
 {code}
 
 bq. ⚛️ *(Web Developers with React Experience):*
-bq. 
 bq. *Comparison:* `useState` and the rules of Hooks are identical in React Native and React for web. Your knowledge of managing local component state with `useState` is directly transferable.
-bq. 
 bq. *Key Takeaway:* No new concepts here if you're proficient with `useState` in React.
-bq. 
 bq. *Source:* [https://react.dev/reference/react/useState|React Docs: Using the State Hook]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
-bq. 
 bq. *Comparison:* State in React components is somewhat analogous to component properties in Angular that you might modify (e.g., via `this.propertyName = ...`). However, React enforces state updates exclusively through the setter function provided by `useState`. Direct mutation of state variables (like `count = count + 1;`) is not allowed and will not trigger re-renders. Angular's change detection, often based on Zone.js, is different from React's re-rendering mechanism, which is explicitly triggered by state setters from Hooks like `useState` or prop changes.
-bq. 
 bq. *Key Takeaway:* Always use the setter function (e.g., `setCount`) to update state. This is how React knows to re-render the component. Understand the Rules of Hooks, especially calling them at the top level, and the importance of immutability when updating objects or arrays in state.
-bq. 
 bq. *Source:* [https://angular.io/guide/change-detection|Angular Docs: Change detection overview]
 
 bq. 📲 *(Native Developers - Android/iOS):*
-bq. 
 bq. *Comparison:* React's `useState` is for managing local component state. This is similar to how you might manage instance variables or properties within your native UI classes (`Activity`/`Fragment` in Android, `UIViewController`/`UIView` in iOS) that hold data determining the UI's appearance or behavior. When this data changes in native code, you often manually update the UI elements. With React's `useState`, you change the state variable using its setter, and React automatically handles the UI update (re-rendering).
-bq. 
 bq. - 🤖 *Android Developers:* `useState` is for state local to a single React component. This is distinct from `ViewModel` with `LiveData`/`StateFlow`, which are designed to store UI-related data in a lifecycle-conscious way, surviving configuration changes (like screen rotations). For shared state or state that needs to persist like a `ViewModel`, React uses other patterns like lifting state up, Context API, or state management libraries (e.g., Zustand, Redux).
 bq. - 🍏 *iOS Developers (SwiftUI):* `useState` in React is very similar to the `@State` property wrapper in SwiftUI, which is used for managing simple, local view state. When an `@State` property changes, the SwiftUI view re-renders. For more complex or shared state, SwiftUI uses `ObservableObject` with `@StateObject` or `@ObservedObject`, and `@EnvironmentObject`, which have parallels to React's Context API or external state management libraries.
-bq. 
 bq. *Key Takeaway:* `useState` is the primary mechanism for making your components interactive and dynamic. Changes to state variables (via their setters) drive UI updates. It's primarily for component-local state. The principle of immutability is also critical when updating state, especially for objects and arrays.
-bq. 
 bq. *Source:* [https://developer.android.com/topic/libraries/architecture/viewmodel|Android Dev Docs: ViewModel Overview], [https://developer.apple.com/documentation/swiftui/managing-user-interface-state#Managing-Local-State-with-State|Apple Dev Docs: SwiftUI State and Data Flow - @State]
 
 Here's a table comparing `useState` with common local state management in native development:
@@ -199,7 +189,6 @@ Here's a table comparing `useState` with common local state management in native
 State is a fundamental concept in React that enables components to be dynamic and interactive. The `useState` Hook provides a simple and powerful way to manage state within your functional components. The shift from class component state (`this.state` and `this.setState`) to the `useState` Hook was a significant improvement in React's ergonomics, simplifying state management without the boilerplate of constructors or complexities of the `this` keyword.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://react.dev/learn/state-a-components-memory|React Docs: State - A Component's Memory (`useState`)]
 bq. - [https://react.dev/reference/react/useState|React Docs: Hooks - Using the State Hook]
 bq. - [https://react.dev/warnings/rules-of-hooks|React Docs: Rules of Hooks]

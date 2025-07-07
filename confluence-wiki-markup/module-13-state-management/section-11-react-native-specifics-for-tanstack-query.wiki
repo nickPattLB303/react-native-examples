@@ -184,15 +184,11 @@ By setting this up, you ensure that TanStack Query's `refetchOnReconnect` featur
 This integration ensures `refetchOnReconnect` works reliably in your SpeedyMeds app.
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* React Native's `AppState` is similar to observing `UIApplication.didBecomeActiveNotification` or `UIApplication.willResignActiveNotification`. `NetInfo` provides network reachability similar to using `NWPathMonitor`. The key here is that TanStack Query provides `focusManager` and `onlineManager` as specific integration points to feed these platform events into its own state machine, automating refetches. You'd otherwise manually trigger data reloads in response to these system notifications.
-bq. 
 bq. *Key Takeaway:* TanStack Query requires this explicit bridging from native app/network events to its internal managers for optimal behavior on mobile, unlike web where it can often infer from browser events.
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* `AppState` changes are like `Activity` lifecycle events (`onResume`, `onPause`). `NetInfo` is similar to using `ConnectivityManager` to monitor network status. TanStack Query's `focusManager` and `onlineManager` act as centralized listeners that you update based on these Android-specific events, allowing the library to react appropriately (e.g., `refetchOnFocus`, `refetchOnReconnect`). Without this, you'd be building custom logic in your `Activity` or `ViewModel` to re-trigger fetches.
-bq. 
 bq. *Key Takeaway:* Providing TanStack Query with explicit signals about app focus and network status via its managers is crucial for its automatic refetching strategies to work correctly and reliably on Android.
 
 h2. Refreshing Queries on Screen Focus (with React Navigation)
@@ -470,7 +466,6 @@ Ensure robust error handling for your queries and mutations. Display user-friend
 By paying attention to these React Native specifics, you can fine-tune TanStack Query to behave optimally in the mobile environment, making your SpeedyMeds application more resilient and user-friendly.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/reference/onlineManager|TanStack Query - `onlineManager`]
 bq. - [https://tanstack.com/query/v5/docs/react/reference/focusManager|TanStack Query - `focusManager`]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/important-defaults#platform-status|TanStack Query - Platform Status (Mentions React Native AppState/NetInfo)]

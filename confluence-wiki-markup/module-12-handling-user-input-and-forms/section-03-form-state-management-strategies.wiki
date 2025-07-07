@@ -343,15 +343,11 @@ Adds a dependency and a learning curve for the library\'s API.
 *** We will delve into React Hook Form starting in Section 5.
 
 bq. 📲 *(Native Developers - Android/iOS):*
-bq. 
 bq. *Comparison:* In native development, you often manage input values by directly querying the UI elements (e.g., `editText.getText().toString()` on Android, `textField.text` on iOS) or through listeners/delegates that update instance variables. The "controlled components" pattern in React is more explicit about state driving the UI. Form libraries like React Hook Form abstract away much of the manual state handling and validation logic you might write natively.
-bq. 
 bq. *Key Takeaway:* The declarative nature of React means that the UI (your form inputs) is a function of its state. Understanding how this differs from imperatively reading values from UI elements is key. Form libraries offer a higher-level abstraction than typical native SDKs provide out-of-the-box for form management.
 
 bq. 🌐 *(Web Developers - React/Angular):*
-bq. 
 bq. *Comparison:* If you're a React web developer, controlled components using `useState` will be your default approach. Libraries like Formik or React Hook Form are also common. Angular developers will recognize parallels with Template-Driven Forms (similar to uncontrolled in some aspects, with `ngModel`) or Reactive Forms (closer to controlled components, with `FormControl`, `FormGroup`). React Hook Form, while using uncontrolled inputs internally for performance, offers an API that leverages React Hooks and feels natural to React developers.
-bq. 
 bq. *Key Takeaway:* Your existing knowledge of controlled components (for React devs) or reactive forms (for Angular devs) is highly transferable. The main difference will be the specific components (`TextInput` vs. `<input>`) and the nuances of the chosen form library in the React Native context.
 
 *Choosing the Right Strategy:*
@@ -370,7 +366,6 @@ The following table summarizes the key characteristics, pros, and cons of these 
 |*Pros*|Easy to learn, minimal code for simple state|Centralized logic, predictable, better for complex updates, perf gains with `dispatch`|Avoids prop drilling, simple for relatively static data|
 |*Cons*|Can get messy for complex state, potential for scattered logic|Verbose for simple state, learning curve for reducer pattern|Performance issues with frequent input value changes|
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://react.dev/reference/react/useState|React `useState` Hook]
 bq. - [https://react.dev/reference/react/useReducer|React `useReducer` Hook]
 bq. - [https://react.dev/reference/react/useContext|React Context API] (and `createContext`)

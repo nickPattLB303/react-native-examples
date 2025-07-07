@@ -193,7 +193,6 @@ Utility types significantly reduce the need to write repetitive type definitions
 * `Parameters<Type>`: Constructs a tuple type from the types used in the parameters of a function type `Type`.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/utility-types.html|TypeScript Handbook: Utility Types]
 
 Utility types are indispensable tools in a TypeScript developer's toolkit, allowing for flexible and robust type manipulations throughout your SpeedyMeds application development.

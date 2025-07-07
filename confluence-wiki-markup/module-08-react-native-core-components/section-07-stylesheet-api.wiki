@@ -40,19 +40,13 @@ h2. Units
 Dimension values (like {{width}}, {{height}}, {{margin}}, {{padding}}, {{fontSize}}) are generally unitless and represent density-independent pixels (dp).
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* Styling in React Native with {{StyleSheet}} is different from using XML layouts and {{<style>}} resources (Android) or Interface Builder/programmatic constraints (iOS). You define styles in JavaScript. Flexbox for layout is a key concept. There's no direct equivalent to Android's theme system for global styling; theming is custom-built.
-bq. 
 bq. *Key Takeaway:* Styles are JavaScript objects. {{StyleSheet.create}} is the preferred way for organization and potential performance benefits. Units are density-independent pixels by default.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* While you use JavaScript for styling instead of CSS files, many CSS concepts apply. Property names are camelCased. Flexbox is the dominant layout model. The biggest difference is the lack of global CSS cascading and selectors. Styles are scoped to components.
-bq. 
 bq. *Key Takeaway:* Think of {{StyleSheet}} objects as similar to CSS rules, but written in JavaScript and scoped locally. Flexbox knowledge is highly transferable. React Native uses unitless numbers for density-independent pixels, differing from CSS units like {{px}}, {{em}}, {{rem}}.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/style|React Native Docs: Style]
 
 h2. Referential Content: {{StyleSheet}} API
@@ -105,7 +99,6 @@ Pass an array to the `style` prop. Later styles override earlier ones.
 |`flex`|`flex`|In RN, typically a single number (e.g., `flex: 1`).|
 |`position: 'absolute'`|`position: absolute;`||
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet API]
 bq. - [https://reactnative.dev/docs/style|React Native Docs: Style Prop]
 bq. - [https://reactnative.dev/docs/view-style-props|React Native Docs: View Style Props]

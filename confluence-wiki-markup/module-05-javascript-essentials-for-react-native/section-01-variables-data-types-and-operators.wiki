@@ -7,27 +7,21 @@ h2. Variables
 In JavaScript, a variable is a named container for storing data values. Think of it as a label you can attach to a value, allowing you to refer to and manipulate that value throughout your code. In modern JavaScript (ES6 and later), we primarily use {{let}} and {{const}} to declare variables.
 
 bq. 📲 *(Native Developers):*
-bq. 
+
 bq. *Comparison:* JavaScript's variable and type system differs significantly from Swift (iOS) and Kotlin/Java (Android). While Swift uses type inference but is statically typed ({{var}} and {{let}}), and Kotlin/Java use explicit type declarations, JavaScript is dynamically typed with no need to specify types when declaring variables. Types are associated with values, not variables.
-bq. 
 bq. *Key Takeaway:* In JavaScript, a variable can hold any type of value, and that type can change during runtime - there's no compiler enforcing type safety like in native development.
-bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/|Swift Language Guide: The Basics] and [https://kotlinlang.org/docs/basic-syntax.html#variables|Kotlin Basic Syntax]
-bq. 
 bq. *Example:*
-bq. 
 {code:language=swift}
 // Swift: Type is inferred but fixed
 let name: String = "John"
 // name = 42 // Error: Cannot assign value of type 'Int' to type 'String'
 {code}
-bq. 
 {code:language=kotlin}
 // Kotlin: Type is required and fixed
 val name: String = "John"
 // name = 42 // Error: The integer literal does not conform to the expected type String
 {code}
-bq. 
 {code:language=js}
 // JavaScript: No type declaration, type can change
 let name = "John";
@@ -423,7 +417,6 @@ h3. Non-Primitive Data Type (Reference Type)
     We will cover objects in more detail in a later section.
 
 bq. 📲 *(Native Developers): Data Type Comparisons*
-bq. 
 bq. - *Java:*
 bq. - JS has fewer primitive numeric types (`number` for all floats/integers, `bigint`) compared to Java's specific types (`byte`, `short`, `int`, `long`, `float`, `double`).
 bq. - JS `string` is primitive and immutable, similar to Java `String` (though Java `String` is technically an object, it's special-cased for immutability and string pooling).
@@ -436,7 +429,6 @@ bq. - Kotlin uses nullable types (e.g., `String?`) and smart casts for handling 
 bq. - *Swift:*
 bq. - Swift's basic types (`Int`, `Double`, `Bool`, `String`) are value types (structs), not primitives in the JS sense, but they are copied on assignment/pass, which is conceptually similar to how JS primitives behave regarding immutability upon reassignment, but different from JS objects (which are reference types).
 bq. - Swift uses `nil` within its optional type system (e.g., `String?`) to handle the absence of value, providing compile-time safety. This is different from JS's runtime `null` and `undefined`.
-bq. 
 bq. *Key Takeaway:* While JS has primitives, its dynamic nature and the specific behaviors of `null` and `undefined` require careful attention, especially compared to the more strictly typed and often null-safe environments of modern native development.
 
 h2. Operators
@@ -682,7 +674,6 @@ Understanding precedence is crucial for writing correct code. Here's a simplifie
 ||Precedence||Operator(s)||Description||Associativity||
 |19 (highest)|`()`|Grouping|n/a|
 bq. 📲 *(Native Developers): Operator Comparisons*
-bq. 
 bq. - Most arithmetic (`+`, `-`, `*`, `/`, `%`), relational (`>`, `<`, `>=`, `<=`), and standard logical operators (`&&`, `||`, `!`) in JavaScript behave very similarly to their counterparts in Java, Kotlin, and Swift.
 bq. - *Equality:* The most significant difference lies in equality comparison. JavaScript's loose equality (`==`) with its type coercion is unique and a common source of bugs. Java (`equals()` method for objects, `==` for primitives), Kotlin (`==` which calls `equals()`, `===` for referential equality), and Swift (`==` for `Equatable` types, `===` for class instance identity) behave more like JavaScript's strict equality (`===`), which compares both value and type (or identity for reference types). *Always prefer `===` in JavaScript.*
 bq. - *Ternary Operator:* The ternary operator (`condition ? value1 : value2`) exists with similar syntax and function in Java, Kotlin (though `if` is an expression in Kotlin, often preferred), and Swift.
@@ -692,7 +683,6 @@ bq. - *Type Operators:* JavaScript's `typeof` and `instanceof` have analogs like
 When in doubt, use parentheses `()` to make the order of operations explicit and improve code readability.
 {tip}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures|MDN Web Docs: JavaScript data types and data structures]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var|MDN Web Docs: `var`]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let|MDN Web Docs: `let`]

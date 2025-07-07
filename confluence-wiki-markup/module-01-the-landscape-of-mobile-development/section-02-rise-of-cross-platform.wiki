@@ -111,19 +111,13 @@ Written using platform-specific SDKs (iOS/Android), offering optimal performance
 The limitations of early approaches like PWAs and hybrid apps (especially around performance and UX) were key drivers for the development of modern compiled frameworks like React Native, which aim to deliver a more native-like result while retaining cross-platform efficiency.
 
 bq. 🤖🍏 *(Native Developers):*
-bq. 
 bq. *Comparison:* Cross-platform development contrasts sharply with writing directly in Kotlin/Java (Android) or Swift/Objective-C (iOS). While you give up some direct control and potentially the absolute peak performance achievable natively, compiled approaches like React Native aim to bridge this gap significantly. They translate your logic into native views, unlike WebViews which simply display web content. The need for "bridges" or "modules" to access specific native APIs might feel like an extra layer compared to direct SDK calls.
-bq. 
 bq. *Key Takeaway:* Cross-platform offers potential efficiency gains by reducing code duplication but introduces an abstraction layer and might require learning new framework concepts.
-bq. 
 bq. *Source:* [https://www.netguru.com/blog/cross-platform-vs-native-app-development|Cross-Platform vs Native App Development]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* If you're coming from the web, cross-platform development, especially using frameworks like React Native, feels more familiar than diving straight into native SDKs. Hybrid approaches directly use your HTML/CSS/JS skills. Compiled approaches like React Native leverage JavaScript and concepts like components (especially familiar if you know React) but require learning mobile-specific UI elements and APIs instead of the browser's DOM.
-bq. 
 bq. *Key Takeaway:* Your web skills are highly transferable to many cross-platform approaches, but you'll need to adapt to mobile UI conventions, performance considerations, and native API interactions.
-bq. 
 bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive web apps (PWAs)]
 
 h2. General Pros and Cons of Cross-Platform
@@ -160,7 +154,6 @@ The following table summarizes the key trade-offs between Native Development, We
 Understanding this evolution is key. The shortcomings of purely native development (cost, time) and early cross-platform attempts (performance, UX) created the specific need that frameworks like React Native were designed to fill: achieving efficient development _with_ a high-quality, native user experience.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://cordova.apache.org/docs/en/latest|Apache Cordova Documentation]
 bq. - [https://docs.flutter.dev|Flutter Documentation]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps|MDN Web Docs: Progressive Web Apps (PWAs)]

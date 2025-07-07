@@ -121,7 +121,6 @@ This analysis will guide your efforts in removing unused code, finding lighter a
 Bundle analysis should ideally be done on a production/release build of your JavaScript bundle, as development builds contain extra code and are not optimized in the same way.
 {note}
 bq. 📚 *Official Documentation & Resources:*
-bq. 
 bq. - [https://reactnative.dev/docs/performance#ram-bundles-and-inline-requires|React Native Docs: Performance - RAM Bundles & Inline Requires] (Explains RAM bundles which relate to advanced bundle optimization)
 bq. - [https://docs.expo.dev/guides/analyzing-bundle-size/|Expo Docs: Analyzing Bundle Size] (Often provides the most up-to-date guidance for Expo projects)
 bq. - [https://hermesengine.dev/docs/reducing-app-size/|Hermes JS Engine: Reducing App Size]

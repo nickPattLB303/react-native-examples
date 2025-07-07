@@ -7,27 +7,18 @@ This module explores how to implement intuitive and effective navigation in your
 bq. 🛣️ *(All Learners):* This module is foundational for building any non-trivial React Native application. Pay close attention to the setup and configuration details for each navigation library, as these are common areas where developers encounter issues. Understanding how to structure navigation is key to a good user experience in SpeedyMeds.
 
 bq. 🍏 *(iOS Developers):* You're likely familiar with UIKit's {{UINavigationController}} or SwiftUI's {{NavigationView}} and {{NavigationStack}}. React Native navigation libraries provide similar concepts like stacks, tabs, and drawers, but with a declarative, component-based approach common in React.
-bq. 
 bq. *Comparison:* Think of navigation containers like {{StackNavigator}} as analogous to {{UINavigationController}}, managing a stack of view controllers. Tab and Drawer navigators correspond to {{UITabBarController}} and {{UISplitViewController}} or custom drawer implementations, respectively. The way you define routes and transitions will feel different, moving from imperative code or storyboard configurations to JavaScript objects and components.
-bq. 
 bq. *Key Takeaway:* The primary difference lies in the JavaScript-driven configuration and the use of components to define your navigation structure, rather than Interface Builder or imperative Swift/Objective-C code. You'll be defining screens as React components and linking them via navigation props and functions.
-bq. 
 bq. *Source:* [https://developer.apple.com/documentation/uikit/uinavigationcontroller|UINavigationController | Apple Developer Documentation]
 
 bq. 🤖 *(Android Developers):* You're accustomed to Activities, Fragments, and the Android Jetpack Navigation Component for managing app navigation. React Native libraries offer a unified way to handle navigation across platforms, managed within the JavaScript layer.
-bq. 
 bq. *Comparison:* React Navigation's stack navigator is similar to managing a back stack of Fragments within an Activity, or using the Jetpack Navigation Component to define destinations and actions. Concepts like Intents for starting new Activities and passing data are handled through navigation actions and route parameters in React Native.
-bq. 
 bq. *Key Takeaway:* React Native navigation is typically centralized within the JavaScript layer, offering a more unified approach compared to Android's distinct Activity and Fragment lifecycles. You'll define navigation graphs using JavaScript objects or file-system conventions (with Expo Router) rather than XML.
-bq. 
 bq. *Source:* [https://developer.android.com/guide/navigation/overview|Navigation overview | Android Developers]
 
 bq. 🌐 *(Web Developers):* If you've used routing libraries like React Router (for React) or Angular Router, you'll find some familiar concepts such as defining routes and linking to different views. However, mobile navigation has unique patterns like native stack behavior, gestures, and distinct visual components like tab bars and drawers.
-bq. 
 bq. *Comparison:* The concept of routes and linking to different "pages" (screens in mobile) is similar. Expo Router, with its file-based routing, might feel particularly akin to frameworks like Next.js or Remix. React Navigation's configuration is more explicit, defining navigators and screens in JavaScript.
-bq. 
 bq. *Key Takeaway:* While the core idea of routing is similar, be prepared for mobile-specific UI paradigms, native screen transition animations, and managing navigation state that deeply integrates with the mobile OS back button behavior.
-bq. 
 bq. *Source:* [https://reactrouter.com/|React Router Docs]
 
 h1. Understanding the Ecosystem: Versions and Compatibility

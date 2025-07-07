@@ -152,7 +152,6 @@ The `origin` property in the `expo-router` plugin configuration in `app.json` is
 
 {note}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/router/guides/deep-linking/|Expo Router: Deep Linking]
 bq. - [https://docs.expo.dev/guides/linking/|Expo: Linking (covers general deep linking concepts)]
 bq. - [https://docs.expo.dev/guides/universal-links/|Expo: Universal Links (iOS)]
@@ -161,7 +160,6 @@ bq. - [https://docs.expo.dev/guides/linking/#configuring-a-url-scheme|Expo: Conf
 bq. - [https://docs.expo.dev/eas/metadata/|Expo: EAS Metadata (for hosting AASA/assetlinks.json)]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Key Takeaway:* Deep linking in mobile with Expo Router feels very much like standard URL routing on the web. The primary additional complexity comes from configuring the native OS (iOS/Android) to correctly associate your web domain or custom scheme with your app through AASA and assetlinks.json files.
 
 h3. Next Steps

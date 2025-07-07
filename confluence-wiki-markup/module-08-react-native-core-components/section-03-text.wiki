@@ -50,19 +50,13 @@ For example:
 {code}
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* `<Text>` in React Native is analogous to `UILabel` on iOS and `TextView` on Android. These native elements are the standard way to display text in their respective platforms. React Native's `<Text>` component provides a unified API to control text properties that then get translated to the appropriate native text rendering. Styling using JavaScript style objects is akin to working with `NSAttributedString` (iOS) or `SpannableString` (Android).
-bq. 
 bq. *Key Takeaway:* `<Text>` is your go-to component for all textual content, providing features similar to native text display widgets, with a unified styling approach.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/text|React Native Docs: Text]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* While on the web, text can exist within many elements (`<p>`, `<span>`, `<h1>`, etc.) or even as bare text nodes within a `<div>`, React Native is stricter. All text _must_ be inside a `<Text>` component. Think of `<Text>` as a universal text container. Style inheritance for text properties (like `color` or `fontSize`) only works between nested `<Text>` components, not from a parent `<View>` to a child `<Text>` as it might with CSS inheritance from a `<div>` to a `<p>`. The layout of elements _within_ a `<Text>` component follows text flow rules (inline, wrapping), whereas `<Text>` itself, when placed in a `<View>`, behaves according to Flexbox rules applied to that `<View>`.
-bq. 
 bq. *Key Takeaway:* Always wrap your text in `<Text>`. Nested `<Text>` components allow for rich text styling through inheritance.
-bq. 
 bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element#text-content|MDN Web Docs: Text-level semantics]
 
 h2. Referential Content: Common `<Text>` Props
@@ -81,7 +75,6 @@ Here is a table summarizing some of the most common and important props for the 
 |`adjustsFontSizeToFit`|`boolean` (iOS only)|Automatically adjusts font size to fit within the component's bounds.|
 |`minimumFontScale`|`number` (iOS only)|Used with `adjustsFontSizeToFit` to set a minimum font scale factor.|
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/text|React Native Docs: Text]
 bq. - [https://reactnative.dev/docs/text-props|React Native Docs: Text Props]
 bq. - [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Style Props]

@@ -302,22 +302,17 @@ This type definition helps React Navigation provide type checking for route name
 The keys in `RootStackParamList` (e.g., `Home`, `PrescriptionDetail`) MUST match the `name` prop of your `<Stack.Screen>` components.
 {note}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnavigation.org/docs/stack-navigator/|Stack Navigator - React Navigation]
 bq. - [https://reactnavigation.org/docs/navigating|Navigating to a new screen - React Navigation]
 bq. - [https://reactnavigation.org/docs/params/|Passing parameters to routes - React Navigation]
 bq. - [https://reactnavigation.org/docs/typescript/|TypeScript with React Navigation]
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* `createStackNavigator` is like instantiating a `UINavigationController`. Each `<Stack.Screen>` is akin to a `UIViewController` pushed onto the navigation stack. `navigation.navigate()` is similar to `pushViewController()`, and `navigation.goBack()` is like `popViewController(animated:)`.
-bq. 
 bq. *Key Takeaway:* The declarative nature of defining screens as components and managing navigation via props is the main difference from UIKit's imperative approach.
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* This is similar to using Android Jetpack Navigation Component where you define destinations in a navigation graph and use `NavController.navigate()` to move between them. Parameters are passed similarly to using `Bundle` objects.
-bq. 
 bq. *Key Takeaway:* React Navigation provides a unified JavaScript API for these familiar concepts, abstracting the platform-specific implementations.
 
 h3. Referential Content: Key Stack Navigator Configuration Options

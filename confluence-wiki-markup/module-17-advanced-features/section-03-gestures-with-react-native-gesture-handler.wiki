@@ -321,7 +321,6 @@ Practice using `GestureHandler` components to create interactive elements.
 * *Exercise 17.2: Implementing a Basic Gesture* `*(https://snack.expo.dev/SpeedyMeds-Exercise-17-2)*`
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/|React Native Gesture Handler - Getting Started]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/api|React Native Gesture Handler - API]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/pan-gesture|React Native Gesture Handler - `PanGestureHandler`]

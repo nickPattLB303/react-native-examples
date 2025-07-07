@@ -326,7 +326,6 @@ While manual conversion is feasible for simple SVGs like this logo, for projects
 For managing a large number of SVG icons, consider using a tool like SVGR to automatically convert your SVG files into React Native components. This can be integrated into your build process or run as a one-time script.
 {tip}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://github.com/react-native-svg/react-native-svg|React Native SVG GitHub Repository (Primary Docs)]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial|MDN Web Docs: SVG Tutorial]
 bq. - [https://react-svgr.com/|SVGR Tool]

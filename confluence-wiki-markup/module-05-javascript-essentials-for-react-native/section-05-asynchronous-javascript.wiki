@@ -39,15 +39,10 @@ console.log("Third: Continuing with other tasks (e.g., updating UI)...");
 This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
-bq. 
 bq. *Key Takeaway:* In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
-bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
-bq. 
 bq. *Example:*
-bq. 
 {code:language=swift}
 // Swift: Actual concurrency with async/await
 func fetchData() async throws -> Data {
@@ -65,7 +60,6 @@ handleError(error)
 }
 }
 {code}
-bq. 
 {code:language=kotlin}
 // Kotlin: Coroutines for structured concurrency
 suspend fun fetchData(): Data {
@@ -85,7 +79,6 @@ handleError(e)
 }
 }
 {code}
-bq. 
 {code:language=js}
 // JavaScript: Single-threaded with Promises
 async function fetchData() {
@@ -522,7 +515,6 @@ h2. `async/await` Integration
 Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function|MDN Web Docs: Asynchronous JavaScript] (This link points to `async function`, a good starting point)
 bq. - [https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing|MDN Web Docs: Introducing asynchronous JavaScript]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop|MDN Web Docs: Event Loop]

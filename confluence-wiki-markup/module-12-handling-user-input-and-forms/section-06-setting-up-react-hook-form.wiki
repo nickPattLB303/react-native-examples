@@ -293,18 +293,14 @@ export default BasicRHFScreen;
 This setup provides a solid foundation for building forms with React Hook Form in React Native. You now have a mechanism to register inputs, handle their state, and prepare for validation and submission, all with significantly less boilerplate than manual state management for complex forms.
 
 bq. 📱 *Background Bridge Notes:*
-bq. 
 bq. *For Native Developers (Android/iOS):*
 bq. React Hook Form abstracts away a significant amount of manual state tracking, listener/delegate setup, and validation logic that you might be accustomed to writing natively. The `Controller` is a React-specific concept for bridging a state management library (RHF) with UI components, allowing RHF to manage their data and validation status.
-bq. 
 bq. *For Web Developers (React):*
 bq. The `useForm` hook and the general principles of RHF will be very familiar. The main difference in React Native is the almost mandatory use of the `Controller` component for standard inputs like `TextInput` if you are controlling their `value` prop, whereas on the web, `register` with a `ref` is more common for uncontrolled HTML inputs.
-bq. 
 bq. *For Web Developers (Angular):*
 bq. The `useForm` hook is somewhat analogous to setting up a `FormGroup` in Angular Reactive Forms. The `Controller` component, which wraps individual inputs, can be conceptually compared to Angular directives like `formControlName` that link template input elements to the `FormControl` instances within the `FormGroup`. Both approaches aim to connect the UI representation of an input to a centralized form model.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://react-hook-form.com/docs/useform|React Hook Form - `useForm`]
 bq. - [https://react-hook-form.com/docs/usecontroller/controller|React Hook Form - `Controller`]
 bq. - [https://react-hook-form.com/get-started|React Hook Form - Get Started]

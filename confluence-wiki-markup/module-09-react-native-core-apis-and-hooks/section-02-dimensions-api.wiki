@@ -70,7 +70,6 @@ While {{Dimensions.get()}} is synchronous and convenient for initial rendering, 
 There have been some reports of {{Dimensions.addEventListener}} behaving unexpectedly with tools like Expo Go, particularly concerning the initial values or timing of updates during orientation changes. Using the {{useWindowDimensions}} hook is generally recommended for new component development as it often provides a more stable and React-idiomatic approach.
 {info}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/dimensions|React Native Docs: {{Dimensions}}]
 bq. - [https://reactnative.dev/docs/usewindowdimensions|React Native Docs: {{useWindowDimensions}} Hook]
 bq. - [https://reactnative.dev/docs/height-and-width|React Native Docs: Height and Width] (General concepts of sizing)
@@ -351,17 +350,12 @@ This component initializes its `dimensions` state with the current window dimens
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* In native iOS (Swift/Objective-C), you might use `UIScreen.main.bounds` or listen for `UIDevice.orientationDidChangeNotification` and react to view controller lifecycle methods like `viewWillTransition(to:with:)`. `Dimensions.scale` is analogous to `UIScreen.scale`. In Android (Kotlin/Java), you would use `DisplayMetrics` (where `DisplayMetrics.density` is like `Dimensions.scale`, and `DisplayMetrics.scaledDensity` relates to `fontScale`), resource qualifiers for different screen sizes/orientations, or handle configuration changes for dynamic updates.
-bq. 
 bq. *Key Takeaway:* React Native's `Dimensions` API and `useWindowDimensions` hook provide a JavaScript-centric way to access this information and react to changes, abstracting away some of the platform-specific APIs while offering a consistent approach. `fontScale` in React Native directly reflects system font size preferences, similar to `sp` units in Android or Dynamic Type in iOS.
-bq. 
 bq. *Source:* [https://developer.apple.com/documentation/uikit/uiscreen|UIScreen (Apple Docs)], [https://developer.android.com/guide/topics/resources/runtime-changes|Handle configuration changes (Android Docs)], [https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes|Supporting different screen sizes (Android Docs)]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* In web development, you use `window.innerWidth`, `window.innerHeight`, `window.devicePixelRatio` (similar to `Dimensions.scale`), and CSS media queries (`@media (max-width: 600px)`) or JavaScript (`window.matchMedia`) to create responsive designs. React Native\'s unitless points differ from web CSS `px`. `fontScale` offers a concept similar to user-adjustable font sizes, which `rem` units can facilitate on the web.
-bq. 
 bq. *Key Takeaway:* The `Dimensions` API and `useWindowDimensions` hook are React Native\'s equivalents for getting viewport information. While there isn\'t a direct CSS media query equivalent in `StyleSheet`, you achieve similar results by getting dimensions and applying styles conditionally in JavaScript. The `useWindowDimensions` Hook simplifies this for functional components, similar to how resize observers or custom hooks might be used in React for the web.
 
 *Table: Comparison of Sizing Units Across Platforms*

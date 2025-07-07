@@ -161,7 +161,6 @@ h2. List of Favorite Medications (as in our Zustand example)
 Zustand shines here due to easy persistence and selective updates for components displaying or interacting with favorites.
 
 bq. 🛣️ *(All Learners): Background Bridge Note: Architectural Choices*
-bq. 
 bq. Choosing between state management tools like Context API and Zustand, or deciding when to use local state versus a global solution, is a type of architectural decision common across all software development platforms. Whether you're an iOS developer deciding between {{@StateObject}}, {{@EnvironmentObject}}, or a custom service layer; an Android developer choosing scope for a {{ViewModel}} or implementing a repository pattern; or a backend developer selecting a caching strategy, the core thought process is similar. You weigh factors like complexity, performance, scalability, maintainability, and the specific problem at hand. The comparisons made in this section reflect these universal trade-offs, tailored to the React Native ecosystem.
 
 {tip}
@@ -170,7 +169,6 @@ It's not uncommon to use both Context API and a library like Zustand in the same
 Understanding these trade-offs will empower you to make informed decisions about which client-side state management tool is appropriate for different parts of your React Native application, leading to a more maintainable, performant, and developer-friendly codebase.
 
 bq. 📚 *Official Documentation & Comparative Resources:*
-bq. 
 bq. - [https://react.dev/learn/passing-data-deeply-with-context|React Context API (Official Docs)]
 bq. - [https://github.com/pmndrs/zustand|Zustand GitHub Repository (Official Docs)]
 bq. - [https://codedamn.com/news/reactjs/zustand-vs-react|Codedamn: Zustand vs React Context API (Comparison Article)]

@@ -359,7 +359,6 @@ To use `FlashList`, you install `@shopify/flash-list` and import it. The main ch
 When implementing `getItemLayout`, ensure the `length` you provide is accurate. Incorrect values can lead to jumpy scrolling or items not rendering correctly.
 {warning}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/flatlist|React Native Docs: `FlatList`]
 bq. - [https://reactnative.dev/docs/sectionlist|React Native Docs: `SectionList`]
 bq. - [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]

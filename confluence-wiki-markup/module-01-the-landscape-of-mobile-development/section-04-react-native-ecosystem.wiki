@@ -50,15 +50,11 @@ A command-line interface for creating, running, and managing Expo projects.
 Using Expo, especially the managed workflow, dramatically lowers the barrier to entry for React Native development and streamlines many common tasks.
 
 bq. 🤖🍏 *(Native Developers):*
-bq. 
 bq. *Comparison:* Expo, particularly the managed workflow, abstracts away much of the native build configuration (Gradle scripts, Xcode project settings, provisioning profiles) that you typically handle manually. Expo Go is similar in concept to running debug builds on a device/simulator, but it bundles many common native modules already. EAS Build is like using a cloud CI/CD service specifically tailored for React Native/Expo builds.
-bq. 
 bq. *Key Takeaway:* Expo simplifies or automates many native build and configuration complexities, allowing you to focus more on the JavaScript/React Native code, but potentially reducing direct control in the managed workflow.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* Think of Expo as analogous to platforms like Vercel or Netlify for the web, but focused on mobile app development. It provides a development server ({{expo start}}), a curated set of libraries (Expo SDK, like a set of well-maintained npm packages), cloud build services (EAS Build), and update mechanisms (EAS Update, somewhat like deploying new web assets). Expo Go allows for quick previews similar to opening a web dev server URL on different devices.
-bq. 
 bq. *Key Takeaway:* Expo provides a familiar platform-like experience with tools and services that simplify the mobile development lifecycle, mirroring many conveniences found in modern web development workflows.
 
 h2. The Community
@@ -214,7 +210,6 @@ Another major output from the core is its support for 'Community Libraries.' The
 Underpinning the development process is the 'Metro Bundler,' which is integral to React Native Core for packaging JavaScript code. This visualization effectively demonstrates that developing a React Native application involves leveraging not just the core framework but also a rich suite of tools, platforms like Expo, and a diverse array of community-driven libraries to build full-featured applications. Understanding these relationships helps in navigating the ecosystem and selecting the right tools for specific project needs.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/getting-started|React Native Documentation]
 bq. - [https://docs.expo.dev|Expo Documentation]
 bq. - [https://docs.expo.dev/versions/latest|Expo SDK API Reference]

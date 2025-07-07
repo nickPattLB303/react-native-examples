@@ -162,7 +162,6 @@ When considering third-party libraries, especially smaller or less-known ones:
 An unmaintained library can become a source of bugs or compatibility issues.
 {warning}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/guides/using-libraries/|Expo Docs: Using Libraries (Explains `npx expo install`)]
 bq. - [https://docs.expo.dev/guides/config-plugins/|Expo Docs: Config Plugins]
 bq. - [https://reactnative.dev/docs/linking-libraries-ios|React Native Docs: Linking Libraries (Explains autolinking)] (iOS section, concept applies to Android too)

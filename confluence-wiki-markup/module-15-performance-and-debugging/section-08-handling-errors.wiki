@@ -298,7 +298,6 @@ If `ProblematicComponent` throws an error during rendering, the `ErrorBoundary` 
 Place Error Boundaries strategically. You might have a global one at the root of your app, and more specific ones around complex or critical UI sections (like navigation routes or major features).
 {tip}
 bq. 📚 *Official Documentation & Resources:*
-bq. 
 bq. - [https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary|React Docs: Error Boundaries]
 bq. - [https://reactnative.dev/docs/javascript-environment#javascript-runtime|React Native Docs: Handling Errors (Conceptual, often points to general JS practices)]
 bq. - [https://docs.expo.dev/debugging/errors-and-warnings/|Expo Docs: Error Handling and Debugging]

@@ -7,15 +7,10 @@ h2. Defining and Calling Functions
 There are several ways to define functions in JavaScript.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* JavaScript functions differ from Swift and Kotlin methods in several important ways. In Swift, functions are first-class types with clear parameter/return types. In Kotlin/Java, methods belong to classes with explicit typing. JavaScript functions are more flexible - they can be declared multiple ways, passed as values, and don't require explicit type annotations.
-bq. 
 bq. *Key Takeaway:* JavaScript's arrow functions ({{=>}}) are similar to Swift closures and Kotlin lambdas, but with a critical difference in how {{this}} is handled - arrow functions inherit {{this}} from their parent scope, which is especially important in React Native.
-bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/|Swift Functions] and [https://kotlinlang.org/docs/functions.html|Kotlin Functions]
-bq. 
 bq. *Example:*
-bq. 
 {code:language=swift}
 // Swift function
 func greet(name: String) -> String {
@@ -27,7 +22,6 @@ return "Hello, \(name)!"
 }
 
 {code}
-bq. 
 {code:language=kotlin}
 // Kotlin function
 fun greet(name: String): String {
@@ -37,7 +31,6 @@ return "Hello, $name!"
 val greetLambda = { name: String -> "Hello, $name!" }
 
 {code}
-bq. 
 {code:language=js}
 // JavaScript function declaration
 function greet(name) {
@@ -513,7 +506,6 @@ A higher-order function is a function that either:
 Closures are often created by higher-order functions (like `createPrescriptionTracker` above, which returns a function). Many built-in JavaScript array methods like `map()`, `filter()`, and `reduce()` are also higher-order functions because they take a callback function as an argument. We will explore these array methods in the next section.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions|MDN Web Docs: Functions]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions|MDN Web Docs: Arrow functions]
 bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Scope|MDN Web Docs: Scope]

@@ -131,7 +131,6 @@ Enums are best used when you have a small, distinct set of related constants whe
 Using enums instead of magic strings or numbers improves type safety and makes the intent of your code clearer.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/enums.html|TypeScript Handbook: Enums]
 
 Enums provide a structured way to work with sets of named constants, contributing to more maintainable and understandable TypeScript code for your SpeedyMeds application features.

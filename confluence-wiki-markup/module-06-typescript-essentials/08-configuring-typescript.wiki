@@ -67,7 +67,6 @@ For most cases, especially when starting, it's best to rely on the default `tsco
 If you ever need to reset your `tsconfig.json` or create one for an existing JavaScript project you're migrating to TypeScript with Expo, you can often regenerate it or refer to the Expo documentation.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html|TypeScript Handbook: `tsconfig.json`]
 bq. - [https://www.typescriptlang.org/tsconfig|TypeScript Compiler Options Reference]
 bq. - [https://docs.expo.dev/guides/typescript/|Expo: Using TypeScript (includes `tsconfig.json` info)]

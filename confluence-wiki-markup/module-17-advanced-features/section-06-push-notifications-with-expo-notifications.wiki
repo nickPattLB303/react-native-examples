@@ -536,18 +536,14 @@ This `SpeedyMedsNotificationScheduler` component provides a comprehensive demons
 This component encapsulates the core notification functionality needed for the SpeedyMeds app, where notifications are critical for medication reminders. By following this pattern and expanding upon it (e.g., with persistent scheduling, customization for different medications, integration with a backend notification service), you can implement a robust notification system for your application.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:* If you're familiar with `UserNotifications` on iOS or the notification framework on Android, `expo-notifications` provides a unified API that abstracts away the platform differences. The concept of requesting permissions, creating notification content, and setting triggers is similar, but Expo standardizes the approach.
-bq. 
 bq. *Key Takeaway:* Expo handles many of the platform-specific details of notifications for you, letting you write mostly the same code for both platforms.
-bq. 
 bq. *Source:* [https://developer.apple.com/documentation/usernotifications|iOS UserNotifications Framework], [https://developer.android.com/develop/ui/views/notifications|Android Notification Guide]
 
 {note}
 For production apps, always test notification behavior on real devices. Simulators/emulators can sometimes behave differently with notifications, especially with background/killed app states.
 {note}
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/versions/latest/sdk/notifications/|Expo Notifications Documentation]
 bq. - [https://docs.expo.dev/push-notifications/overview/|Push Notifications with Expo]
 bq. - [https://docs.expo.dev/versions/latest/sdk/notifications/#scheduling-a-notification|Scheduling Local Notifications]

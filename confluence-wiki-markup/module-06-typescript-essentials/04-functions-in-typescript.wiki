@@ -185,7 +185,6 @@ const handleRefillRequest: ButtonPressHandler = (eventTime, buttonId) => {
 {code}
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/2/functions.html|TypeScript Handbook: More on Functions]
 bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#function-type-expressions|TypeScript Handbook: Everyday Types (covers function types)]
 

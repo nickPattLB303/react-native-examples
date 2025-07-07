@@ -39,7 +39,6 @@ h2. {{<RefreshControl>}}
 These components, along with the ones covered in previous sections, form a powerful toolkit for building rich and interactive user interfaces in React Native. Always refer to the official documentation for the most up-to-date information on props and usage.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/components-and-apis|React Native Docs: Components and APIs] (A good starting point to explore all available components)
 
 ----

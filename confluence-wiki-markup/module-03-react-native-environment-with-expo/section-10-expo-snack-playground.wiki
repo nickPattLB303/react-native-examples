@@ -53,11 +53,9 @@ However, as we progress to modules focusing on integrating diverse native capabi
 
 bq. 💡 *Key Insight: Snack as a Learning Accelerator with Clear Boundaries*
 bq. Expo Snack serves as a powerful learning accelerator by removing the initial friction of environment setup. This barrier is often the most significant hurdle when learning a new framework. Snack allows learners to dive directly into writing code and understanding fundamental React Native concepts and exploring many Expo SDK APIs without delay. This immediate feedback loop is highly beneficial for reinforcing learning.
-bq. 
 bq. However, it's crucial to recognize that Snack's limitations mirror those of Expo Go. It provides a simplified view of the React Native world and does not encompass the full development workflow required for building and testing production applications, especially those involving custom native integrations or configurations. Therefore, while Snack is an excellent pedagogical tool for introductory exercises and illustrating concepts, the curriculum explicitly addresses its limitations and guides learners toward local development using their own environment and Development Builds as they progress to more advanced topics and prepare for real-world application development.
 
 bq. 📚 *Official Documentation & Resources:*
-bq. 
 bq. - [https://snack.expo.dev/|Expo Snack Website]
 bq. - [https://docs.expo.dev/guides/sharing-code/|Expo Docs: Sharing Code (mentions Snack)]
 bq. - [https://github.com/expo/snack|Expo Snack GitHub (snack-sdk)]

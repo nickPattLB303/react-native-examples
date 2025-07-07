@@ -175,7 +175,6 @@ h3. Enabling JS Debugging with Chrome DevTools
 For a more streamlined debugging experience within your editor, the VS Code React Native Tools extension is highly recommended. It often provides a good balance of features without needing to switch between multiple windows as much.
 {tip}
 bq. 📚 *Official Documentation & Resources:*
-bq. 
 bq. - [https://reactnative.dev/docs/debugging|React Native Docs: Debugging]
 bq. - [https://reactnative.dev/docs/debugging-hermes|React Native Docs: Debugging Hermes]
 bq. - [https://fbflipper.com/|Flipper - Extensible Mobile App Debugger]

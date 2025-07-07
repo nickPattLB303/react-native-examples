@@ -21,7 +21,6 @@ Throughout this module, we explored the "why" behind TypeScript, understanding i
 Mastering these TypeScript concepts will be invaluable as you progress through this course and build more complex features for the SpeedyMeds application. The ability to define clear data contracts and catch errors at compile time will save you significant debugging time and lead to higher-quality software.
 
 > [!IMPORTANT] > *Moving Forward: TypeScript is Mandatory*
-bq. 
 bq. From this point onwards in the course, all JavaScript, React, and React Native code examples, exercises, and challenge solutions *MUST* be written in TypeScript. This will reinforce your learning and ensure you are applying these concepts consistently.
 
 Continue to practice these TypeScript fundamentals. The more you use them, the more natural they will become, and the more you'll appreciate the safety and clarity they bring to your development workflow.

@@ -67,19 +67,13 @@ By default, section headers stick to the top of the screen as you scroll through
 For the SpeedyMeds app, {{<FlatList>}} could be used to display a list of available medications or a patient's order history. {{<SectionList>}} could be used to display a formulary grouped by drug class or a patient's medication schedule grouped by time of day.
 
 bq. 📲 *(Native Developers):*
-bq. 
 bq. *Comparison:*
-bq. 
 bq. - {{<FlatList>}} and {{<SectionList>}} are analogous to {{UITableView}} (iOS) or {{RecyclerView}} (Android). They provide efficient ways to display large, scrollable lists of data by recycling views (or components in React Native's case) and only rendering what's necessary.
-bq. 
 bq. *Key Takeaway:* These are your go-to components for displaying lists of data, offering performance benefits over {{<ScrollView>}} for large datasets.
-bq. 
 bq. *Source:* [https://reactnative.dev/docs/flatlist|React Native Docs: FlatList], [https://reactnative.dev/docs/sectionlist|React Native Docs: SectionList]
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* {{<FlatList>}} and {{<SectionList>}} provide functionality similar to virtualized list libraries on the web (e.g., {{react-window}} or {{react-virtualized}}). They address the performance issues of rendering a very large number of DOM elements by only rendering what's visible.
-bq. 
 bq. *Key Takeaway:* For lists, especially long ones, these components are essential for good performance, unlike simply mapping over an array to create many elements within a scrollable {{<div>}} which can be slow.
 
 h2. Referential Content: Common Props
@@ -111,7 +105,6 @@ h2. Referential Content: Common Props
 * (Many props similar to {{<FlatList>}} like {{ListHeaderComponent}}, {{ListFooterComponent}}, {{onRefresh}}, {{refreshing}} also apply).
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/flatlist#props|React Native Docs: FlatList Props]
 bq. - [https://reactnative.dev/docs/sectionlist#props|React Native Docs: SectionList Props]
 bq. - [https://docs.expo.dev/ui-programming/flatlist/|Expo Docs: FlatList]

@@ -179,33 +179,23 @@ _(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https:
 This diagram shows the `App` component providing a theme value. The `ThemedButton`, a grandchild component, consumes this value using `useContext` without its immediate parents (`Child Component 1` or `Child Component 2`) needing to know about or pass down the theme props.
 
 bq. ⚛️ *(Web Developers with React Experience):*
-bq. 
 bq. *Comparison:* The Context API (`React.createContext`, `Provider`, `useContext`) is identical in React Native and React for web.
-bq. 
 bq. *Key Takeaway:* Your existing knowledge of the Context API is directly transferable.
-bq. 
 bq. *Source:* [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Passing Data Deeply with Context]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
-bq. 
 bq. *Comparison:* React's Context API can be loosely compared to Angular's services that are provided at a certain level (e.g., root or specific module/component) and injected into components. However, Context is more focused on providing data down the component tree, whereas Angular services are more general-purpose for sharing logic and data.
-bq. 
 bq. *Key Takeaway:* Context is React's built-in solution for avoiding prop drilling for global-like data. The `useContext` Hook is the standard way to access this data in functional components.
-bq. 
 bq. *Source:* [https://angular.io/guide/dependency-injection|Angular Docs: Dependency injection in Angular]
 
 bq. 📲 *(Native Developers - Android/iOS):*
-bq. 
 bq. *Comparison:* Context can be thought of as a way to provide app-wide singletons or shared preferences/data stores that UI components can easily access without explicit passing through every layer. For example, providing access to a user session object or theme settings throughout your UI hierarchy.
-bq. 
 bq. *Key Takeaway:* When you have data or functions that many components at different nesting levels need, Context can be a good solution to make that data accessible without complex prop passing.
-bq. 
 bq. *Source:* [https://developer.android.com/reference/android/content/SharedPreferences|Android Dev Docs: SharedPreferences], [https://developer.apple.com/documentation/foundation/userdefaults|Apple Dev Docs: UserDefaults]
 
 The Context API is a valuable tool in your React toolkit for managing state that needs to be shared across many components. Used judiciously, it can simplify your component structure and make your application easier to maintain.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://react.dev/learn/passing-data-deeply-with-context|React Docs: Context - Passing Data Deeply]
 bq. - [https://react.dev/reference/react/useContext|React Docs: Hooks - `useContext`]
 bq. - [https://react.dev/reference/react/createContext|React Docs: `React.createContext`]

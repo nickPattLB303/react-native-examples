@@ -7,11 +7,8 @@ h2. Target Audience Adaptation
 This module delves into topics that will appeal to developers from all backgrounds, offering new tools and perspectives:
 
 bq. 📲 *(Native Developers):* You'll find React Native Reanimated and Gesture Handler offer a declarative approach to animations and gestures, potentially contrasting with imperative methods you're used to. The concepts of offline storage and push notifications will be familiar, but you'll learn how Expo simplifies their cross-platform implementation.
-bq. 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. ⚛️ *(React Developers):* Many concepts, like animations and testing strategies, will have parallels with web development. You'll appreciate how Reanimated builds upon React's declarative paradigm and how testing tools are adapted for the native environment.
-bq. 
 bq. 🅰️ *(Angular Developers):* While the specific libraries will be new, the underlying principles of enhancing user interfaces with animations, handling complex user interactions, and managing data will resonate with your experience.
 
 h2. Learning Objectives
@@ -64,7 +61,6 @@ This module provides a comprehensive look into advanced React Native development
 h2. Additional Resources (Optional)
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.swmansion.com/react-native-reanimated/|React Native Reanimated Documentation]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/|React Native Gesture Handler Documentation]
 bq. - [https://docs.expo.dev/versions/latest/sdk/notifications/|Expo Push Notifications ({{expo-notifications}})]

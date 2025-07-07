@@ -239,25 +239,18 @@ While OTA updates are powerful, relying on them too heavily for major feature re
 EAS Update is an indispensable tool for maintaining and iterating on your React Native application post-launch, providing speed and flexibility that traditional app store releases alone cannot offer.
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* OTA updates are distinct from submitting new `.aab` files to the Play Store. They exclusively affect the JavaScript and asset layers. The `runtimeVersion` is crucial for ensuring the JS bundle is compatible with the installed native binary. Code signing for OTA updates is an additional security layer for these dynamic updates, complementing the standard signing of the app binary.
-bq. 
 bq. *Key Takeaway:* Use OTA for rapid JS-based fixes and UI tweaks. Native changes still require a new Play Store release. `runtimeVersion` is your safety contract.
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* OTA updates bypass the App Store review for JS/asset changes, unlike full `.ipa` submissions. The `runtimeVersion` ensures JS compatibility with the native iOS code. OTA code signing is an app-level security measure for the JS bundle, separate from Apple's binary signing.
-bq. 
 bq. *Key Takeaway:* OTA updates offer speed for non-native changes. For native module updates or SDK upgrades, a new App Store submission is necessary. `runtimeVersion` prevents crashes from incompatible updates.
 
 bq. 🌐 *(Web Developers - React/Angular):*
-bq. 
 bq. *Comparison:* OTA updates are like deploying new frontend code to a web app. If your web app fetches its main JS bundle from a server, updating that bundle is somewhat analogous. However, `expo-updates` adds more sophistication: active client-side update checks, efficient asset downloading, caching, controlled application of updates, `runtimeVersion` for native compatibility, and cryptographic code signing—features beyond a typical browser cache refresh.
-bq. 
 bq. *Key Takeaway:* EAS Update is a managed delivery system for your app's JS and assets, more advanced than simple web deploys, with strong safety (runtime versioning) and security (code signing) features.
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://docs.expo.dev/eas-update/introduction/|Expo Docs: EAS Update Introduction]
 bq. - [https://docs.expo.dev/eas-update/how-eas-update-works/|Expo Docs: How EAS Update works]
 bq. - [https://docs.expo.dev/versions/latest/sdk/updates/|Expo Docs: `expo-updates` library]

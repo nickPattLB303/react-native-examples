@@ -27,19 +27,13 @@ h2. Reduced Overhead for Native Calls (JSI & TurboModules)
 Communicating with native modules via JSI and TurboModules is significantly more efficient than through the legacy Bridge, reducing the "Bridge tax" for each call. This is particularly beneficial for SpeedyMeds since we'll be frequently accessing device features like camera (for scanning prescriptions), secure storage (for patient data), and potentially health monitoring integrations.
 
 bq. 🍏 *(iOS Developers):*
-bq. 
 bq. *Comparison:* The performance improvements in the New Architecture might remind you of Swift's performance benefits over Objective-C. Similar to how Swift's direct memory access and value types reduce overhead compared to Objective-C's message dispatch, JSI provides more direct access to native functionality compared to the Bridge's message-passing approach.
-bq. 
 bq. *Key Takeaway:* The New Architecture's performance optimizations allow for UI responsiveness closer to what you'd expect from a pure native iOS app, particularly for animations and gestures.
-bq. 
 bq. *Source:* [https://developer.apple.com/videos/play/wwdc2016/416/|Swift Performance: High Performance Swift Code]
 
 bq. 🤖 *(Android Developers):*
-bq. 
 bq. *Comparison:* The performance benefits of the New Architecture are similar to moving from reflection-based APIs to more direct method calls in Android. Just as Android's ViewBinding eliminated the performance overhead of findViewById() with direct property access, JSI eliminates serialization overhead with direct C++ function calls.
-bq. 
 bq. *Key Takeaway:* The New Architecture significantly reduces the performance gap between React Native and pure native Android development, especially for UI-intensive operations.
-bq. 
 bq. *Source:* [https://developer.android.com/topic/performance|Android Performance Patterns]
 
 h2. Synchronous Operations:
@@ -74,22 +68,16 @@ h2. Future-Proofing
 Adopting the New Architecture aligns your app with the future direction of React Native, ensuring compatibility with new React features and ongoing performance enhancements.
 
 bq. 🌐 *(Web Developers):*
-bq. 
 bq. *Comparison:* The type safety improvements from Codegen are similar to the benefits TypeScript brings to JavaScript development. Just as TypeScript catches type-related errors at compile time rather than runtime, Codegen ensures type consistency between your JavaScript and native code.
-bq. 
 bq. *Key Takeaway:* While requiring a bit more upfront work defining interfaces, the New Architecture's type system can significantly reduce debugging time by catching issues at build time rather than during testing or production.
-bq. 
 bq. *Source:* [https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html|TypeScript Handbook: Type Checking]
 
 bq. 📚 *Official Documentation:*
-bq. 
 bq. - [https://reactnative.dev/docs/the-new-architecture/landing-page|React Native: New Architecture Benefits]
 bq. - [https://reactnative.dev/docs/new-architecture-turbomodules|React Native: TurboModules]
 bq. - [https://reactnative.dev/docs/new-architecture-fabric-components|React Native: Fabric Components]
 bq. - [https://reactnative.dev/docs/new-architecture-intro|React Native: Migration to New Architecture]
-bq. 
 bq. 🗂️ *Additional Resources:*
-bq. 
 bq. - [https://blog.nativebits.com/posts/react-native-new-architecture-at-scale|React Native at Scale with the New Architecture]
 bq. - [https://callstack.com/blog/what-are-the-benefits-of-the-new-architecture/|Performance Improvements in the New Architecture]
 
@@ -209,7 +197,6 @@ Native modules created using the modern `expo-modules-core` API (the standard wa
 Expo effectively acts as a helpful layer, managing the transition to the New Architecture by setting sensible defaults, providing compatibility checking tools (`expo-doctor`), and ensuring its own libraries and module APIs work seamlessly with the new system. This significantly simplifies the adoption process for developers using the Expo ecosystem.
 
 bq. 📚 *Official Documentation Links related to Expo & New Architecture:*
-bq. 
 bq. - [https://docs.expo.dev/guides/new-architecture/|React Native's New Architecture - Expo Documentation]
 bq. - [https://docs.expo.dev/develop/tools/|Tools for development (expo-doctor) - Expo Documentation]
 

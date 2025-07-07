@@ -144,7 +144,6 @@ Understanding these performance characteristics and optimization techniques will
 The performance characteristics of Context API are a direct result of how React handles rendering, state updates, and reference comparisons. Because React relies on reference equality (`Object.is`) for performance optimizations when comparing props and context values, passing unstable references (like newly created objects/arrays/functions on each render) breaks these optimizations and forces re-renders. Techniques like `useMemo` and `useCallback` directly address this by providing stable references unless the underlying data genuinely changes. Understanding this connection between React's rendering mechanism and context propagation is key to effectively optimizing Context API usage.
 
 bq. 📚 *Official Documentation & Resources:*
-bq. 
 bq. - [https://legacy.reactjs.org/docs/optimizing-performance.html|React Docs - Optimizing Performance (Legacy but relevant concepts)]
 bq. - [https://react.dev/reference/react/useMemo|React Docs - `useMemo`]
 bq. - [https://react.dev/reference/react/useCallback|React Docs - `useCallback`]
@@ -153,11 +152,8 @@ bq. - [https://www.codiga.io/blog/react-context-performance/|Blog: Understanding
 bq. 🛣️ *Background Bridge Note: UI Update Mechanisms and Performance*
 
 bq. Comparing React Context's update mechanism to other platforms highlights different approaches to performance:
-bq. 
 bq. 🤖 *(Android Developers):* UI updates triggered by `LiveData` or `StateFlow` emissions are typically handled within observers or collectors. Performance often depends on how efficiently the UI updates are performed within these callbacks. Tools like `RecyclerView.Adapter` with `DiffUtil` provide highly optimized updates for lists by calculating minimal changes. `StateFlow` also offers operators like `distinctUntilChanged()` to prevent emissions (and thus potential UI updates) if the state value hasn't actually changed.
-bq. 
 bq. 🍏 *(iOS Developers - SwiftUI):* SwiftUI's declarative system automatically re-renders views when dependencies (like properties marked with `@State`, `@StateObject`, `@ObservedObject`, or `@EnvironmentObject`) change. SwiftUI aims for efficiency by only recomputing the bodies of views whose dependencies have changed, but complex view structures or frequent data updates can still lead to performance considerations. View identity and structural changes play a significant role in SwiftUI's rendering performance.
-bq. 
 bq. 🅰️ *(Angular Developers):* Angular uses its change detection mechanism. With the default strategy (leveraging Zone.js), Angular checks components for changes more broadly. However, the `OnPush` change detection strategy offers significant performance benefits. `OnPush` components are only checked (and potentially re-rendered) if their `@Input()` references change, an event originates from within the component or its children, or an Observable subscribed to via the `async` pipe emits a new value. This is more comparable to React's `React.memo` combined with careful prop management.
 
 h2. Next Steps
