@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Introduction to Expo Router
-
 This section introduces Expo Router, a file-system-based routing solution for React Native and web applications built with Expo. It offers a different paradigm for defining navigation compared to the more explicit configuration required by React Navigation. We will explore its core concepts, benefits, and how it simplifies setting up routes in your SpeedyMeds application.
 
 bq. 🛣️ *(All Learners):* Expo Router is built on top of React Navigation. Understanding the fundamental React Navigation concepts (navigators, screens) covered in previous sections will provide a good foundation for grasping how Expo Router works under the hood.
@@ -383,7 +381,7 @@ const styles = StyleSheet.create({
 Now, when you run your app (`npx expo start`), Expo Router will pick up these files and create the navigation structure.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/router/introduction/|Expo Router: Introduction]
 bq. - [https://docs.expo.dev/router/installation/|Expo Router: Installation]
 bq. - [https://docs.expo.dev/router/routing/|Expo Router: File Conventions (Routing)]
@@ -391,15 +389,15 @@ bq. - [https://docs.expo.dev/router/layouts/|Expo Router: Layouts]
 bq. - [https://docs.expo.dev/router/navigating/|Expo Router: Navigating Between Pages]
 
 bq. 🌐 *(Web Developers using Next.js/Remix):*
->
+bq. 
 bq. *Comparison:* The file-system routing based on an `app` directory, dynamic routes with `[param].tsx`, and layout files (`_layout.tsx`) will feel very familiar. Expo Router brings this productive development pattern to native mobile development.
->
+bq. 
 bq. *Key Takeaway:* You can leverage your existing mental model for routing from these modern web frameworks.
 
 bq. ⚛️ *(React Developers using React Navigation):*
->
+bq. 
 bq. *Comparison:* Instead of explicitly creating navigator components (`createStackNavigator`, `createBottomTabNavigator`) and defining screens within them in JavaScript, you primarily define routes through file structure and configure navigators in `_layout.tsx` files. React Navigation is still used under the hood.
->
+bq. 
 bq. *Key Takeaway:* Expo Router offers a higher-level, convention-over-configuration approach on top of React Navigation's capabilities.
 
 h3. Next Steps

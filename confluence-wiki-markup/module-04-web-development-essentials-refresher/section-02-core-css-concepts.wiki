@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: Core CSS Concepts (Brief Review)
-
 This section reviews fundamental CSS (Cascading Style Sheets) concepts, with a particular emphasis on Flexbox for layout. CSS is used to style HTML documents, controlling aspects like color, font, spacing, and positioning. While React Native uses a JavaScript-based styling system ({{StyleSheet}}), it borrows heavily from CSS principles, especially Flexbox.
 
 {tip}
@@ -243,7 +241,7 @@ After building the DOM from HTML, browsers process CSS:
 # *Compositing:* Combine painted layers into the final screen image. Changes affecting layout trigger reflow and repaint; appearance-only changes may only trigger repaint.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors|MDN Web Docs: CSS Selectors]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade|MDN Web Docs: The Cascade]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity|MDN Web Docs: Specificity]
@@ -255,15 +253,15 @@ bq. - [https://css-tricks.com/snippets/css/a-guide-to-flexbox/|CSS-Tricks: A Com
 bq. - [https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_browsers_work|MDN Web Docs: Introduction to how browsers work]
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* CSS Selectors are conceptually similar to how you might find views by ID or tag in native code. The Box Model is analogous to properties like padding and margins on native views. Flexbox is very similar to layout systems like `ConstraintLayout` (Android) or Auto Layout using `UIStackView` (iOS), but often simpler for one-dimensional arrangements. React Native adopts Flexbox as its _default_ layout system, unlike native platforms which offer multiple systems.
->
+bq. 
 bq. *Key Takeaway:* CSS concepts like spacing (box model) and layout (Flexbox) have direct parallels in React Native, with Flexbox being the dominant layout mechanism you'll use.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* Selectors, the Box Model, and Flexbox are familiar. The main differences in React Native are: styling is done via JavaScript objects (`StyleSheet`) not separate CSS files; property names use camelCase (e.g., `flexDirection` instead of `flex-direction`); there is no cascading or inheritance in the same way as web CSS; and Flexbox is the default (`display: flex` is implied for `<View>`). `flexDirection` defaults to `column` in React Native, unlike the web's default of `row`.
->
+bq. 
 bq. *Key Takeaway:* Your CSS knowledge, especially Flexbox, is highly transferable, but be mindful of the syntax differences (JS objects, camelCase) and the slightly different defaults and behavior (no cascade, default `flexDirection: 'column'`).
 
 h2. Procedural Content

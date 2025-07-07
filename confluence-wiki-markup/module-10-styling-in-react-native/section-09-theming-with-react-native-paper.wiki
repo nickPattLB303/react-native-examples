@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: Theming with React Native Paper (v5)
-
 React Native Paper comes with a powerful theming system that allows you to customize the appearance of its components to match your application's brand identity. This is crucial for ensuring that the SpeedyMeds app has a unique and consistent look and feel, even when using pre-built components. This section explores how to define and apply custom themes with React Native Paper.
 
 h2. Understanding React Native Paper Theming

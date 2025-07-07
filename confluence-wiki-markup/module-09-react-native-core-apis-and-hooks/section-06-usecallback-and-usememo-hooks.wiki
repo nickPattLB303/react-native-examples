@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: {{useCallback}} and {{useMemo}} Hooks
-
 Performance is a critical aspect of mobile application development. React\'s {{useCallback}} and {{useMemo}} Hooks are powerful tools for optimizing functional components by memoizing functions and values, respectively. This helps prevent unnecessary re-renders and expensive recalculations, primarily by preserving *referential equality* for props passed to child components, leading to smoother user experiences in your SpeedyMeds app.
 
 h2. Conceptual Content
@@ -46,7 +44,7 @@ h2. Referential Content
   {{useMemo}} executes the {{computeExpensiveValue}} function during the render. It stores the returned value. On subsequent renders, it compares the current dependencies with the previous ones. If they are the same, it returns the stored value without re-executing {{computeExpensiveValue}}. If dependencies differ, it re-executes the function, stores the new result, and returns it.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/reference/react/useCallback|React Docs: {{useCallback}}]
 bq. - [https://react.dev/reference/react/useMemo|React Docs: {{useMemo}}]
 bq. - [https://react.dev/reference/react/memo|React Docs: {{React.memo}}]
@@ -311,15 +309,15 @@ Over-reliance on `useCallback` and `useMemo` without understanding the root caus
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* The concept of memoization to avoid redundant work is universal. In native development, you might achieve similar outcomes by caching calculation results in properties and only invalidating/recalculating them when underlying data changes, or by carefully managing UI updates to avoid redrawing unchanged parts of the screen.
->
+bq. 
 bq. *Key Takeaway:* `useCallback` and `useMemo` provide React-specific Hooks to declare these optimizations directly within your functional components, integrating with React's rendering model.
 
 bq. 🌐 *(Web Developers - React):*
->
+bq. 
 bq. *Comparison:* `useCallback` and `useMemo` work identically in React Native as they do in React for the web. The scenarios where they are beneficial (passing stable callbacks to memoized children, memoizing expensive calculations) are also the same.
->
+bq. 
 bq. *Key Takeaway:* Your existing knowledge of these Hooks from React web development is directly transferable to React Native.
 
 h2. Exercise

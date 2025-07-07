@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: Caching and Background Updates with TanStack Query
-
 One of the most powerful aspects of TanStack Query is its sophisticated caching mechanism and its ability to keep your data synchronized with the server through intelligent background updates. These features work together to provide a responsive user experience while minimizing unnecessary network requests and ensuring data freshness in your SpeedyMeds application.
 
 bq. 🔁 *(Asynchronous Learners):* This section is especially valuable if you're skimming through the module for specific information. The caching and automatic background updates are what truly set TanStack Query apart from simple data fetching, so understanding these concepts is essential even if you skip other details.
@@ -181,22 +179,22 @@ While TanStack Query itself is not a full offline solution (it doesn't handle mu
 By intelligently combining `staleTime`, `gcTime`, and the various `refetchOn...` options, you can create a robust data synchronization strategy tailored to the specific needs of different data types within your SpeedyMeds application.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* iOS's `URLCache` provides some level of HTTP response caching, but its control is often at the `URLRequest` level (cache policies). TanStack Query's `staleTime` and `gcTime` offer more granular, application-level control over cached data freshness and lifetime, independent of HTTP headers. Features like `refetchOnWindowFocus` or `refetchOnReconnect` would require manual implementation using `NotificationCenter` for app lifecycle events or network reachability listeners.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query provides a higher-level abstraction for data caching and background synchronization than what's typically offered by `URLCache` alone, integrating these concerns directly into the data fetching lifecycle with more developer control over staleness and garbage collection.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* While using Retrofit with OkHttp allows for HTTP caching, managing staleness (`staleTime`) and garbage collection (`gcTime`) as explicitly as TanStack Query often requires custom interceptors or logic. Automatic refetching on app focus or network reconnect would typically be handled by listening to lifecycle events or using `ConnectivityManager` and then programmatically triggering data reloads in `ViewModel`s or Repositories.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query automates many of the sophisticated caching and background refresh strategies that Android developers might otherwise build manually on top of their networking and database layers. It provides a consistent API for these concerns across all queries.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison (React):* TanStack Query is the standard for this. Before it, developers might use `useEffect` with complex dependency arrays and timers for polling, or custom context/Redux setups for caching, all of which are less robust and more boilerplate-heavy than TanStack Query's built-in features like `staleTime`, `gcTime`, and automatic refetches.
 bq. *Comparison (Service Workers/Browser Cache):* While browser HTTP caching and Service Workers offer powerful caching capabilities, TanStack Query operates at the application data layer, giving JavaScript more direct control over cache invalidation, background updates, and synchronization logic tied to component lifecycle and application events, often complementing browser-level caching.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query offers a sophisticated in-app data caching and synchronization layer that simplifies managing data freshness and background updates, often providing more granular control and automation than relying solely on browser HTTP caching or manual `useEffect` implementations.
 
 h2. Table: TanStack Query Caching and Refetching Options
@@ -209,7 +207,7 @@ h2. Table: TanStack Query Caching and Refetching Options
 |`refetchOnReconnect`|`true`|Refetch stale query on network reconnection.|Updates data after network interruptions. Requires OnlineManager setup in RN.|
 |`refetchIntervalInBackground`|`false`|If `refetchInterval` is set, determines if polling continues when app is not focused.|Can keep data fresh even in background, but use with caution on mobile for battery.|
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/guides/caching|TanStack Query - Caching]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/important-defaults|TanStack Query - `staleTime` and `gcTime`] (covers `staleTime` and `gcTime` as important defaults)
 bq. - [https://tanstack.com/query/v5/docs/react/guides/background-fetching-indicators|TanStack Query - Background Fetching Indicators (`isFetching`)]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Theming with Styled Components
-
 One of the significant advantages of using {{styled-components}} is its built-in support for theming. Theming allows you to define a consistent set of design tokens (colors, fonts, spacing, etc.) that can be accessed by any styled component within your application. This makes it easier to manage your app's look and feel, enforce brand consistency, and even implement features like dark mode for your SpeedyMeds app.
 
 h2. What is Theming?

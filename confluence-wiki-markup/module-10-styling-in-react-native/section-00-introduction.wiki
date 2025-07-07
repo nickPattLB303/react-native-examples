@@ -11,27 +11,27 @@ h1. Target Audience Adaptation
 Styling in React Native draws concepts from web development, particularly CSS, but with its own unique APIs and paradigms.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* You'll find Flexbox layout very familiar to CSS Flexbox. React Native's {{StyleSheet}} API will remind you of writing CSS in JavaScript, but with camelCased property names (e.g., {{backgroundColor}} instead of {{background-color}}). Concepts like "cascading" don't apply in the same way; styles are typically scoped to components.
->
+bq. 
 bq. *Key Takeaway:* While many CSS concepts apply, React Native uses a JavaScript-based approach ({{StyleSheet}} or CSS-in-JS libraries) rather than separate CSS files. Style properties are also a subset of what's available on the web.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/style|Style - React Native]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* Styling in React Native is quite different from XML-based layouts and styles (e.g., {{styles.xml}}, themes, material design components). Instead of defining styles in XML, you'll use JavaScript objects. Flexbox will be the primary layout mechanism, which differs from ConstraintLayout or LinearLayout.
->
+bq. 
 bq. *Key Takeaway:* Embrace the JavaScript-centric styling and Flexbox for layout. You'll find more dynamic control over styles directly within your component logic.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* React Native styling diverges from UIKit's Storyboards, XIBs, or programmatic Auto Layout and UIAppearance. Style definitions live in JavaScript. Flexbox is the layout engine, which has conceptual similarities to Auto Layout but with a different syntax and model.
->
+bq. 
 bq. *Key Takeaway:* Shift from visual tools or Swift/Objective-C styling APIs to JavaScript objects and Flexbox. The direct manipulation of style objects in code offers flexibility.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/flexbox|Layout with Flexbox - React Native]
 
 h1. Learning Objectives

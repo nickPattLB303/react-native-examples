@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Button and Pressable ({{<Button>}}, {{<Pressable>}}) - Handling Taps
-
 User interaction is at the heart of mobile applications. The {{<Button>}} and {{<Pressable>}} components are React Native's primary tools for capturing tap gestures and triggering actions. This section explores both, highlighting their differences and use cases.
 
 h2. Conceptual Content: Understanding {{<Button>}} and {{<Pressable>}}
@@ -67,25 +65,25 @@ The {{hitSlop}} prop allows you to extend the touchable area of the {{<Pressable
 In most modern React Native development, {{<Pressable>}} is often preferred for its flexibility and control, especially when building custom-designed UIs like those in the SpeedyMeds app.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:*
->
+bq. 
 bq. - {{<Button>}} is like a basic {{UIButton}} (iOS) or {{android.widget.Button}} (Android) with its default system appearance. Customization is limited, similar to trying to heavily modify a default system button without subclassing or creating a custom view.
 bq. - {{<Pressable>}} is more like creating a custom {{UIControl}} (iOS) or a custom {{View}} with touch handling (Android). It gives you a blank slate to define the appearance and behavior of a tappable element.
->
+bq. 
 bq. *Key Takeaway:* {{<Button>}} for quick, standard buttons. {{<Pressable>}} for all custom button needs and advanced interaction feedback.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/button|React Native Docs: Button], [https://reactnative.dev/docs/pressable|React Native Docs: Pressable]
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:*
->
+bq. 
 bq. - {{<Button title="Click Me" />}} is somewhat analogous to a basic HTML {{<button>Click Me</button>}} that largely inherits browser/OS default styling.
 bq. - {{<Pressable>}} is like a {{<div>}} or {{<span>}} that you've made interactive with JavaScript event listeners ({{onClick}}, {{onMouseDown}}, {{onMouseUp}}) and styled with CSS, including pseudo-classes like {{:hover}} or {{:active}} (though React Native uses a function for {{style}} to achieve state-dependent styling).
->
+bq. 
 bq. *Key Takeaway:* {{<Button>}} is for simple use cases. {{<Pressable>}} offers the power to create any kind of tappable UI element with full style control, much like building custom interactive elements on the web.
->
+bq. 
 bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button|MDN Web Docs: {{<button>}}]
 
 h2. Referential Content: Common Props
@@ -114,7 +112,7 @@ h2. Referential Content: Common Props
 * {{android_ripple}}: (object) Configuration for Android's ripple effect. E.g., {{{ color: 'grey', borderless: false }}}.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/button#props|React Native Docs: Button Props]
 bq. - [https://reactnative.dev/docs/pressable#props|React Native Docs: Pressable Props]
 bq. - [https://docs.expo.dev/ui-programming/button/|Expo Docs: Button]

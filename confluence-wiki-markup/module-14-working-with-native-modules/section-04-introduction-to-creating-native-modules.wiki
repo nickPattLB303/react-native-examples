@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Introduction to Creating Native Modules (Conceptual Overview)
-
 This section provides a conceptual overview of what's involved in creating your own native modules. While detailed implementation is an advanced topic, understanding the general process, when to consider it, and the foundational shift towards the New Architecture is important for appreciating how React Native can be extended.
 
 h2. When to Consider Creating Custom Modules
@@ -122,29 +120,29 @@ Often involves using native debugging tools (Xcode, Android Studio) in addition 
 This course provides a conceptual overview of these advanced topics to ensure you understand the underlying mechanisms and the modern approach. It does not aim to be a comprehensive guide to implementing custom native modules from scratch, which would require dedicated, in-depth study of each platform and the New Architecture specifics.
 {info}
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* The process involves creating native Swift or Objective-C classes. To make methods available to JavaScript, you'd typically use {{RCT_EXPORT_METHOD}} (Objective-C in legacy) or specific function definitions if using Expo's newer module API with Swift, or conform to Codegen-generated interfaces in the New Architecture.
->
+bq. 
 bq. *Key Takeaway:* You're writing standard iOS code but with an additional layer (JSI, Codegen) to expose it to the React Native runtime.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/native-modules-ios|React Native Docs: Native Modules (iOS) - Legacy]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* You'll create Java or Kotlin classes, often extending {{ReactContextBaseJavaModule}} (legacy) or using the Expo Modules API, or conforming to Codegen-generated interfaces in the New Architecture. Methods annotated with {{@ReactMethod}} (Java in legacy) or defined within an Expo module specification (Kotlin) become callable from JavaScript.
->
+bq. 
 bq. *Key Takeaway:* It's standard Android development practices plus the React Native specific annotations/structures for exposure, now more formalized with Codegen.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/native-modules-android|React Native Docs: Native Modules (Android) - Legacy]
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* There's no direct equivalent in standard web development for creating new "browser-level" APIs that interact with the OS using Swift or Java. This is unique to environments like React Native that bridge JavaScript to native device capabilities. Think of it as defining a backend service, but that service runs directly on the device and is written in native code, with a strictly typed interface defined for JavaScript consumption.
->
+bq. 
 bq. *Key Takeaway:* This is where React Native truly extends beyond typical JavaScript environments, allowing you to write the underlying "system" APIs your JS code can then consume, with the New Architecture providing stronger contracts between the two worlds.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/new-architecture-intro|React Native Docs: New Architecture - Introduction]
 bq. - [https://reactnative.dev/docs/native-modules-npm-package-setup|React Native Docs: Setting Up a Native Module (NPM Package Setup - general)]
 bq. - [https://docs.expo.dev/modules/get-started/|Expo Docs: Get started with Expo Modules API]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Introduction to Styled Components
-
 Beyond {{StyleSheet}} and inline styles, the React Native community widely uses CSS-in-JS libraries to create more dynamic, reusable, and themeable styling solutions. One of the most popular such libraries is {{styled-components}}. This section introduces {{styled-components}}, its core concepts, benefits, and how to start using it in your SpeedyMeds application.
 
 h2. What are Styled Components?
@@ -23,7 +21,7 @@ To use {{styled-components}} in your Expo React Native project, you need to inst
 First, install the library itself:
 
 {code:language=bash}
-
+h1. Using npm
 npm install styled-components
 
 h1. Or using yarn
@@ -214,9 +212,9 @@ const SecondaryButton = styled(BaseButton)`
 This allows you to create a base set of styles and then create variations easily.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* Styled Components work almost identically in React and React Native. The main difference is the set of valid CSS properties (React Native uses a subset and its own specific properties like `elevation` for Android shadow) and the base elements you style (e.g., `styled.View` instead of `styled.div`).
->
+bq. 
 bq. *Key Takeaway:* If you've used Styled Components on the web, you'll feel right at home. Just remember to import from `styled-components/native` and use React Native compatible style properties.
 
 h2. Considerations

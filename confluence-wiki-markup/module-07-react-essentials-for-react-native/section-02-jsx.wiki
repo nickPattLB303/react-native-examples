@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: JSX (Syntax, Embedding Expressions, Attributes)
-
 This section introduces JSX, a syntax extension for JavaScript that you'll use extensively in React and React Native to describe what your UI should look like. We'll cover its basic syntax, how to embed JavaScript expressions, and how to specify attributes (similar to HTML attributes).
 
 h2. What is JSX?
@@ -149,17 +147,17 @@ The `style` prop in React Native is special. It accepts a JavaScript object (or 
 {code}
 
 bq. 🌐 *(Web Developers - React/Angular/HTML):*
->
+bq. 
 bq. *Comparison:* JSX closely resembles HTML but it's not HTML. Key differences include:
->
+bq. 
 bq. - `className` instead of `class` (because `class` is a reserved keyword in JavaScript).
 bq. - The `style` attribute accepts a JavaScript object with camelCased CSS property names (e.g., `style={{backgroundColor: 'blue'}}`) not a string (`style="color: blue;"`). For React on the web, numeric values for certain style properties (like `height: 10`) might be automatically appended with "px" by React DOM, though it's good practice to be explicit. In React Native, `fontSize` is often a unitless number, and other layout properties are also typically numbers.
 bq. - All tags must be closed (e.g. `<img src="..." />` or `<br />`).
 bq. - Attribute names are generally camelCased (e.g., `onClick` vs `onclick`, `tabIndex` vs `tabindex`, `htmlFor` vs `for`). However, standard `data-*` and `aria-*` attributes retain their hyphenated HTML syntax (more relevant for web React).
 bq. - In React Native, you won't use HTML tags like `div`, `p`, `img`. Instead, you use React Native Core Components like `<View>`, `<Text>`, `<Image>` which compile to native UI elements.
->
+bq. 
 bq. *Key Takeaway:* While JSX syntax feels familiar if you know HTML, remember it's JavaScript with specific rules. Pay attention to the differences in attribute naming (camelCase), how `style` works, and that the elements themselves are specific to React Native. Below is a quick reference table for common HTML attributes and their JSX counterparts:
->
+bq. 
 bq. | HTML Feature/Attribute                | JSX Equivalent                 | Reason/Note                                                                    |
 bq. | ------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------ |
 bq. | `class`                               | `className`                    | `class` is a reserved keyword in JavaScript.                                   |
@@ -171,15 +169,15 @@ bq. | `<input type="text">`                 | `<input type="text" />`        | A
 bq. | `tabindex`                            | `tabIndex`                     | Attribute names are generally camelCased.                                      |
 bq. | `readonly`                            | `readOnly`                     | Attribute names are generally camelCased.                                      |
 bq. | SVG attributes (e.g., `stroke-width`) | `strokeWidth` (React specific) | SVG attributes also follow camelCase convention when used in React components. |
->
+bq. 
 bq. *Source:* [https://react.dev/reference/react-dom/components/common#common-props|React Docs: DOM Elements]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* JSX is your primary way of defining UI layouts in React Native, similar to how you might use XML in Android (for ViewGroups and Views) or Storyboards/programmatic UIKit/SwiftUI in iOS. Instead of writing XML tags or using a visual design tool for layout, you write these JavaScript-based tags directly in your component files. These JSX tags directly correspond to native UI components.
->
+bq. 
 bq. *Key Takeaway:* JSX provides a unified way to define UI structures in JavaScript, mapping to native components. Familiarize yourself with the available React Native Core Components that you will use within JSX.
->
+bq. 
 bq. *Source:* [https://developer.android.com/guide/topics/ui/declaring-layout|Android Dev: Layouts], [https://developer.apple.com/documentation/swiftui/views-and-controls|Apple Dev: SwiftUI Views and Controls]
 
 JSX is a powerful feature that makes writing React UIs intuitive. As you get more comfortable with it, you'll find it a natural way to express your UI structure and logic.
@@ -260,7 +258,7 @@ h2. TypeScript Projects
 Files containing JSX *must* use the `.tsx` extension. The `.ts` extension is for plain TypeScript files without JSX. This is crucial for the TypeScript compiler to correctly parse and type-check JSX.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/writing-markup-with-jsx|React Docs: Writing Markup with JSX]
 bq. - [https://react.dev/learn/javascript-in-jsx-with-curly-braces|React Docs: JavaScript in JSX with Curly Braces]
 bq. - [https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html|React Blog: Introducing the New JSX Transform]

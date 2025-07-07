@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Using React Native Paper Components
-
 Now that we've introduced React Native Paper and completed the basic setup, let's explore how to use some of its common components to build UIs for our SpeedyMeds application. React Native Paper offers a rich set of pre-styled Material Design components that can significantly speed up your development process.
 
 We'll cover examples of {{Appbar}}, {{Button}}, {{TextInput}}, and {{Card}} components. Remember to wrap your root component with {{<PaperProvider>}} as shown in the previous section for these components to render correctly with the default theme.

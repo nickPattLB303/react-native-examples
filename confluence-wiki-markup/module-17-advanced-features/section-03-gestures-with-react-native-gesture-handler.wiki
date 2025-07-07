@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Gestures with React Native Gesture Handler
-
 This section introduces React Native Gesture Handler, a library that provides a more comprehensive and reliable way to handle touch gestures in React Native compared to the built-in gesture responder system. We will explore its core concepts, different types of gesture handlers, and how to integrate them into your application.
 
 h2. Conceptual Content
@@ -323,7 +321,7 @@ Practice using `GestureHandler` components to create interactive elements.
 * *Exercise 17.2: Implementing a Basic Gesture* `*(https://snack.expo.dev/SpeedyMeds-Exercise-17-2)*`
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/|React Native Gesture Handler - Getting Started]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/api|React Native Gesture Handler - API]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/pan-gesture|React Native Gesture Handler - `PanGestureHandler`]

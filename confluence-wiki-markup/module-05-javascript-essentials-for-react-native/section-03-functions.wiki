@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Functions
-
 Functions are fundamental building blocks in JavaScript. They are reusable blocks of code that perform a specific task or calculate a value. By encapsulating logic within functions, you can make your code more organized, readable, and maintainable. This section explores how to define and use functions, with a special focus on modern ES6 features like arrow functions, and important concepts like scope and closures.
 
 h2. Defining and Calling Functions
@@ -9,43 +7,45 @@ h2. Defining and Calling Functions
 There are several ways to define functions in JavaScript.
 
 bq. 📲 *(Native Developers):*
-
+bq. 
 bq. *Comparison:* JavaScript functions differ from Swift and Kotlin methods in several important ways. In Swift, functions are first-class types with clear parameter/return types. In Kotlin/Java, methods belong to classes with explicit typing. JavaScript functions are more flexible - they can be declared multiple ways, passed as values, and don't require explicit type annotations.
->
+bq. 
 bq. *Key Takeaway:* JavaScript's arrow functions ({{=>}}) are similar to Swift closures and Kotlin lambdas, but with a critical difference in how {{this}} is handled - arrow functions inherit {{this}} from their parent scope, which is especially important in React Native.
->
+bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/|Swift Functions] and [https://kotlinlang.org/docs/functions.html|Kotlin Functions]
->
+bq. 
 bq. *Example:*
->
-bq. ```swift
-bq. // Swift function
-bq. func greet(name: String) -> String {
-bq. return "Hello, \(name)!"
-bq. }
-bq. // Swift closure
-bq. let greetClosure = { (name: String) -> String in
-bq. return "Hello, \(name)!"
-bq. }
-bq. ```
->
-bq. ```kotlin
-bq. // Kotlin function
-bq. fun greet(name: String): String {
-bq. return "Hello, $name!"
-bq. }
-bq. // Kotlin lambda
-bq. val greetLambda = { name: String -> "Hello, $name!" }
-bq. ```
->
-bq. ```javascript
-bq. // JavaScript function declaration
-bq. function greet(name) {
-bq. return {{Hello, ${name}!}};
-bq. }
-bq. // JavaScript arrow function
-bq. const greetArrow = (name) => {{Hello, ${name}!}};
-bq. ```
+bq. 
+{code:language=swift}
+// Swift function
+func greet(name: String) -> String {
+return "Hello, \(name)!"
+}
+// Swift closure
+let greetClosure = { (name: String) -> String in
+return "Hello, \(name)!"
+}
+
+{code}
+bq. 
+{code:language=kotlin}
+// Kotlin function
+fun greet(name: String): String {
+return "Hello, $name!"
+}
+// Kotlin lambda
+val greetLambda = { name: String -> "Hello, $name!" }
+
+{code}
+bq. 
+{code:language=js}
+// JavaScript function declaration
+function greet(name) {
+return {{Hello, ${name}!}};
+}
+// JavaScript arrow function
+const greetArrow = (name) => {{Hello, ${name}!}};
+{code}
 
 h3. Function Declarations
 
@@ -513,7 +513,7 @@ A higher-order function is a function that either:
 Closures are often created by higher-order functions (like `createPrescriptionTracker` above, which returns a function). Many built-in JavaScript array methods like `map()`, `filter()`, and `reduce()` are also higher-order functions because they take a callback function as an argument. We will explore these array methods in the next section.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions|MDN Web Docs: Functions]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions|MDN Web Docs: Arrow functions]
 bq. - [https://developer.mozilla.org/en-US/docs/Glossary/Scope|MDN Web Docs: Scope]
@@ -534,6 +534,7 @@ _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the
 *Instructions for Exercise 5.1 (to be placed in CodeSandbox `README.md`):*
 
 {code:language=markdown}
+h1. Exercise 5.1: Function Practice - SpeedyMeds Pharmacy
 
 h1. Objective
 

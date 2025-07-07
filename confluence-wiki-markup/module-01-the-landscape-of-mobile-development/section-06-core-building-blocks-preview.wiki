@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Core Building Blocks (A Preview)
-
 React Native provides a set of essential, pre-built components that work across both iOS and Android. These *Core Components* are the basic tools in your UI toolkit, each mapping to corresponding native UI elements for optimal performance and look-and-feel. This section offers a brief preview of some fundamental ones. Later modules will delve much deeper into each component, exploring their props, styling, layout, and interactions.
 
 h2. Key Core Components

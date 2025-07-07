@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Core React Hooks Recap
-
 Before diving into more specialized React Native APIs and Hooks, it's essential to have a solid understanding of the core React Hooks: {{useState}}, {{useEffect}}, and {{useContext}}. These Hooks are the bedrock of managing state, side effects, and global data in modern React applications, including those built with React Native. This section serves as a detailed recap; for the initial comprehensive introduction, please refer to Module 7: React Essentials for React Native.
 
 h2. Rules of Hooks (Recap)
@@ -137,7 +135,7 @@ h3. Example (SpeedyMeds Theme)
 {code}
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://legacy.reactjs.org/docs/hooks-overview.html|React Docs: Hooks Overview]
 bq. - [https://react.dev/reference/rules/rules-of-hooks|React Docs: Rules of Hooks]
 
@@ -380,23 +378,23 @@ This component uses `useContext` to access `theme` properties (like `colors.back
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:*
->
+bq. 
 bq. - `useState` is somewhat analogous to managing instance variables or properties that affect a View's rendering (e.g., properties in a custom `UIView` subclass or `ViewModel` fields in Android that are observed for UI updates).
 bq. - `useEffect` combines aspects of lifecycle methods like `viewDidLoad`/`viewDidAppear`/`viewWillAppear` (iOS) or `onCreate`/`onResume`/`onStart` (Android) for setup, and `viewWillDisappear`/`viewDidDisappear`/`deinit` (iOS) or `onPause`/`onStop`/`onDestroy` (Android) for cleanup. Reacting to dependency changes (`[dep]`) is akin to observing `LiveData` (Android) or using Key-Value Observing (KVO) or `NotificationCenter` observers (iOS) to respond to data changes, but `useEffect` ties these reactions directly to the component's render cycle and its declared data dependencies.
 bq. - `useContext` can be compared to dependency injection frameworks (like Dagger/Hilt on Android, or manual DI in iOS) or accessing singleton services/managers that provide shared data or configuration.
->
+bq. 
 bq. *Key Takeaway:* React Hooks offer a more declarative and composable way to manage state and lifecycle logic within functional components. This can be a shift from the more imperative, class-based, or specific lifecycle callback patterns prevalent in native development.
 
 bq. 🌐 *(Web Developers - Angular specific):*
->
+bq. 
 bq. *Comparison:*
->
+bq. 
 bq. - Angular developers can relate `useState` to component class properties that are part of Angular's change detection mechanism.
 bq. - `useEffect` is similar to lifecycle hooks like `ngOnInit`, `ngAfterViewInit`, and `ngOnDestroy`, particularly when dealing with RxJS subscriptions (which need cleanup) or direct DOM manipulations (though direct DOM manipulation is less common in React Native). `ngOnChanges` is somewhat comparable to `useEffect` with dependencies for reacting to input property changes.
 bq. - `useContext` shares similarities with using Angular Services (often provided at a module or root level and injected into components) to share data or state across different parts of the application.
->
+bq. 
 bq. *Key Takeaway:* While the syntax and paradigms differ (e.g., Hooks vs. decorators and classes), the core challenges of state management, side effect handling, and data sharing are addressed by these Hooks in React, just as services, lifecycle hooks, and RxJS address them in Angular.
 
 *Table: `useEffect` Lifecycle Equivalents (Conceptual)*

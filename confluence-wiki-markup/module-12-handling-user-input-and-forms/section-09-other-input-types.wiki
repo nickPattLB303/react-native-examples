@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: Other Input Types (Switches, Pickers - using Paper components)
-
 Forms often require more than just text inputs. Users might need to make binary choices (e.g., with a switch), select from a predefined list of options (e.g., with a picker/dropdown), or input dates. React Hook Form, through its {{Controller}} component, can integrate seamlessly with various custom input components, including those from UI libraries like React Native Paper, which is recommended in our course blueprint.
 
 This section will demonstrate how to incorporate React Native Paper's {{Switch}}, build custom pickers using Paper components like {{Menu}}, and integrate popular third-party pickers like {{react-native-picker-select}} into your forms managed by React Hook Form.
@@ -386,7 +384,7 @@ Integration with RHF `Controller` would involve:
 
 {code:language=bash}
 npm install react-native-picker-select @react-native-picker/picker
-
+h1. For iOS, if not using Expo Prebuild or if issues arise:
 h1. npx pod-install ios
 {code}
 
@@ -574,7 +572,7 @@ Refer to the `README.md` in the Snack for detailed instructions.
 By using `Controller`, React Hook Form provides a flexible way to integrate a wide variety of input components, making your forms highly adaptable to different data types and UI requirements in applications like SpeedyMeds.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://callstack.github.io/react-native-paper/docs/components/Switch/|React Native Paper - `Switch`]
 bq. - [https://callstack.github.io/react-native-paper/docs/components/Menu/|React Native Paper - `Menu`]
 bq. - [https://callstack.github.io/react-native-paper/docs/components/Dialog/|React Native Paper - `Dialog`]

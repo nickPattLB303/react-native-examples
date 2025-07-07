@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Image Optimization Strategies
-
 Images are vital for a rich user experience, but unoptimized images can be a major performance drag, especially in mobile apps like SpeedyMeds where medication images or health banners might be common. This section explores strategies to optimize image loading and display in React Native, ensuring your app remains fast and responsive.
 
 bq. 🛣️ *(All Learners):* Properly optimized images lead to faster load times, reduced memory consumption, and a smoother overall experience. Paying attention to image assets is a high-impact area for performance improvement.
@@ -218,7 +216,7 @@ This `LazyMedicationImage` component would only attempt to load the `actualSourc
 When implementing lazy loading, ensure placeholders are lightweight and provide a good user experience. Avoid content jumping as images load by specifying fixed dimensions for your image containers.
 {note}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/versions/latest/sdk/image/|`expo-image`]
 bq. - [https://reactnative.dev/docs/images|React Native Docs: Images]
 bq. - [https://reactnative.dev/docs/performance#optimizing-images|React Native Docs: Performance - Optimizing Images]

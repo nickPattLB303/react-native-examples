@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Bridging Web Concepts to React Native
-
 This section explains how the fundamental concepts of HTML structure and CSS styling, reviewed in the previous sections, translate to the React Native environment. Understanding this mapping is key to leveraging your web development knowledge (or understanding the web-inspired paradigms if you come from a native background).
 
 React Native allows you to build native mobile applications using React and JavaScript, but it does _not_ render HTML or use traditional CSS. Instead, it provides a set of *Core Components* that map conceptually to native UI widgets on iOS and Android, and a *JavaScript-based styling system ({{StyleSheet}})* that borrows heavily from CSS, particularly Flexbox.
@@ -312,7 +310,7 @@ export default App;
 This example illustrates how to use `StyleSheet` to control the sizing and spacing of elements according to the Box Model principles, which is fundamental for structuring UI layouts in React Native.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/stylesheet|React Native Docs: StyleSheet]
 bq. - [https://reactnative.dev/docs/style|React Native Docs: Style]
 bq. - [https://reactnative.dev/docs/layout-props|React Native Docs: Layout with Flexbox] (Note: URL updated as `/flexbox` redirects to `/layout-props` which covers flex)
@@ -321,15 +319,15 @@ bq. - [https://reactnative.dev/docs/text-style-props|React Native Docs: Text Sty
 bq. - [https://reactnative.dev/docs/image-style-props|React Native Docs: Image Style Props]
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* The mapping feels intuitive but requires adjusting to JavaScript syntax (camelCase, objects) and the absence of cascading/complex selectors. The biggest paradigm shift is often the `flexDirection: 'column'` default and the strict requirement to wrap all text in `<Text>`.
->
+bq. 
 bq. *Key Takeaway:* Reuse your understanding of component structure and CSS properties (especially Flexbox), but adapt to the `StyleSheet` API, camelCase syntax, unitless dimensions, and React Native's specific defaults and component requirements.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* You'll recognize the mapping of elements to native views. The `StyleSheet` approach might feel different from XML layouts or programmatic constraints/frames. Think of `StyleSheet` as defining attributes for your views (like setting `backgroundColor`, `width`, `height` in native code), but centralized in JavaScript. Flexbox becomes your primary tool for positioning and sizing, replacing systems like Auto Layout or ConstraintLayout for most common scenarios.
->
+bq. 
 bq. *Key Takeaway:* React Native uses web-inspired concepts (components analogous to HTML elements, styling analogous to CSS via `StyleSheet`) to define native UI. Embrace Flexbox as the core layout mechanism.
 
 h3. Example: Basic Card Layout (React Native)

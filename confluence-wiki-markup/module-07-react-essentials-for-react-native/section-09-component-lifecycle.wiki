@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: Component Lifecycle ({{useEffect}} Hook)
-
 Components in React have a lifecycle: they are created (mounted), they update when their props or state change, and eventually, they are destroyed (unmounted). The {{useEffect}} Hook allows you to perform "side effects" in your functional components, which are operations that happen outside the normal rendering flow, often related to these lifecycle events.
 
 h2. What are Side Effects?
@@ -180,33 +178,33 @@ _(Note: This is a Mermaid diagram. Copy the code to a Mermaid editor like https:
 This diagram shows that when a component mounts, the effect function runs (if dependencies allow or if no array). On subsequent re-renders, React checks if the dependencies (if specified) have changed using `Object.is` comparison. If they have (or if no dependency array), the cleanup function from the previous effect (if one was returned) runs, followed by the new effect function. When the component unmounts, the cleanup function for the last run effect is executed.
 
 bq. ⚛️ *(Web Developers with React Experience):*
->
+bq. 
 bq. *Comparison:* `useEffect` works exactly the same way in React Native as it does in React for the web. The concepts of the effect function, dependency array, and cleanup function are identical.
->
+bq. 
 bq. *Key Takeaway:* Your existing understanding of `useEffect` is directly applicable.
->
+bq. 
 bq. *Source:* [https://react.dev/reference/react/useEffect|React Docs: Using the Effect Hook (`useEffect`)]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
->
+bq. 
 bq. *Comparison:* `useEffect` covers functionalities similar to Angular's lifecycle hooks like `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`. However, `useEffect` is more flexible and unified. The dependency array is key to controlling when the effect runs, mimicking different lifecycle events.
->
+bq. 
 bq. *Key Takeaway:* `useEffect` is the go-to Hook for handling side effects. Master the use of the dependency array to control its execution precisely.
->
+bq. 
 bq. *Source:* [https://angular.io/guide/lifecycle-hooks|Angular Docs: Lifecycle hooks]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* `useEffect` can be compared to lifecycle methods like `onCreate`/`onResume`/`onPause`/`onDestroy` in Android Activities/Fragments, or `viewDidLoad`/`viewWillAppear`/`viewWillDisappear` in iOS ViewControllers. The empty dependency array `[]` provides behavior similar to `onCreate` or `viewDidLoad` for setup, and the cleanup function to `onDestroy` or `viewDidDisappear` for teardown. Effects with dependencies relate to updates based on data changes.
->
+bq. 
 bq. *Key Takeaway:* Use `useEffect` to manage operations that need to happen at specific points in your component's existence on the screen, such as data fetching when it appears, or cleaning up resources when it disappears.
->
+bq. 
 bq. *Source:* [https://developer.android.com/guide/components/activities/activity-lifecycle|Android Dev Docs: Understand the Activity Lifecycle], [https://developer.apple.com/library/archive/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW1|Apple Dev Docs: Managing Your View Controller's Life Cycle]
 
 The `useEffect` Hook is a powerful tool for managing side effects and synchronizing your components with the outside world. Understanding its dependency array and cleanup mechanism is crucial for writing correct and efficient React Native applications.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
 bq. - [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
 bq. - [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]
@@ -226,7 +224,7 @@ For most side effects (like data fetching, subscriptions, or manual DOM changes 
 Use `useLayoutEffect` sparingly and only when `useEffect` causes issues like visual flickering due to asynchronous updates after a layout-dependent change.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/reference/react/useEffect|React Docs: Hooks - Using the Effect Hook (`useEffect`)]
 bq. - [https://react.dev/reference/react/useLayoutEffect|React Docs: Hooks - `useLayoutEffect`]
 bq. - [https://react.dev/learn/synchronizing-with-effects|React Docs: Synchronizing with Effects]

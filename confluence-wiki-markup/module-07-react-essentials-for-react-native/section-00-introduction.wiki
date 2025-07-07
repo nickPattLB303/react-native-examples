@@ -5,27 +5,27 @@ Welcome to Module 7! Now that you have a solid understanding of JavaScript and T
 bq. 🛣️ *(All Learners):* This module is crucial for everyone, regardless of your background. While the concepts might seem familiar to those with web React experience, pay close attention to how these fundamentals apply within the React Native context and any differences highlighted.
 
 bq. ⚛️ *(Web Developers with React Experience):*
->
+bq. 
 bq. *Comparison:* You'll find many concepts like JSX, components, props, and state very familiar. Key differences in React Native include the set of available UI elements (Core Components like {{<View>}}, {{<Text>}} instead of HTML DOM elements like {{<div>}}, {{<p>}}) and event handling (e.g., {{onPress}} for touch events instead of {{onClick}} for mouse clicks).
->
+bq. 
 bq. *Key Takeaway:* While the core React philosophy remains, adapt your knowledge to mobile-specific UI components and interaction patterns.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components], [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
->
+bq. 
 bq. *Comparison:* React uses JSX for templating, which integrates HTML-like syntax directly within JavaScript, differing from Angular's separate HTML templates. State management often starts with the {{useState}} Hook for local component state, and React generally follows a unidirectional data flow, contrasting with Angular's two-way data binding capabilities with {{ngModel}}.
->
+bq. 
 bq. *Key Takeaway:* Embrace JSX for UI definition and understand React's approach to state and data flow, which might be more explicit than what you're used to.
->
+bq. 
 bq. *Source:* [https://react.dev/learn/writing-markup-with-jsx|React Docs: Introducing JSX], [https://react.dev/learn/state-a-components-memory|React Docs: State - A Component's Memory]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* React Native employs a declarative UI paradigm where you describe _what_ the UI should look like based on the current state, unlike the imperative approach often used in native development (e.g., manually updating UI elements in UIKit or Android Views). Component lifecycle events, managed with the {{useEffect}} Hook, are analogous to {{UIViewController}} lifecycles (e.g., {{viewDidLoad}}, {{viewWillAppear}}) or Android {{Activity}} lifecycles (e.g., {{onCreate}}, {{onResume}}), but are handled within a JavaScript context.
->
+bq. 
 bq. *Key Takeaway:* Shift your thinking from direct manipulation of UI elements to describing UI based on state, and learn how {{useEffect}} manages component behavior over time.
->
+bq. 
 bq. *Source:* [https://react.dev/learn/describing-the-ui|React Docs: Describing the UI], [https://react.dev/learn/lifecycle-of-reactive-effects|React Docs: Lifecycle of Reactive Effects]
 
 h1. Learning Objectives

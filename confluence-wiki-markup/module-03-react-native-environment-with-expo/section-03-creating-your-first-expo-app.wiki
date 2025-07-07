@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Creating Your First Expo App ({{npx create-expo-app@latest}})
-
 With all the prerequisites installed, you're now ready to create your first React Native application using Expo! We'll use the {{create-expo-app}} command-line tool, which sets up a new project with a sensible default configuration and template, embodying the principle of "convention over configuration" to get you started quickly.
 
 h2. The {{create-expo-app}} Command
@@ -124,7 +122,7 @@ h3. Prerequisites for this Exercise
 This exercise confirms your basic setup. We'll explore other commands and running on devices/emulators in the upcoming sections.
 {info}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/get-started/create-a-new-app/|Expo Docs: Create your first app]
 bq. - [https://docs.expo.dev/more/create-expo/|Expo Docs: `create-expo-app`]
 bq. - [https://docs.expo.dev/get-started/templates/|Expo Docs: Templates]

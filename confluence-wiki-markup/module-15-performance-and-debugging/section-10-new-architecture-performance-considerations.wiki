@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: New Architecture Performance Considerations
-
 React Native's New Architecture marks a significant evolution, aiming to address performance bottlenecks and improve the developer experience. This section provides an overview of the New Architecture's components—JSI, Fabric, and TurboModules—and discusses their performance implications for apps like SpeedyMeds.
 
 bq. 🛣️ *(All Learners):* While migrating to the New Architecture is a significant step, understanding its performance benefits can help you appreciate its long-term advantages and make informed decisions as the ecosystem matures around it.
@@ -137,7 +135,7 @@ Enabling the New Architecture involves several steps and can vary slightly betwe
 Migrating an existing application, especially one with custom native modules, requires careful planning and testing. Native modules need to be adapted or rewritten as TurboModules to be fully compatible and leverage JSI benefits. Consult the official React Native migration guide for detailed steps.
 {note}
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://github.com/react-native-community/new-architecture-working-group|React Native New Architecture Working Group]
 bq. - [https://reactnative.dev/docs/the-new-architecture/landing-page|React Native Docs: The New Architecture]
 bq. - [https://reactnative.dev/docs/new-architecture-migration|React Native Docs: Migrating to the New Architecture]

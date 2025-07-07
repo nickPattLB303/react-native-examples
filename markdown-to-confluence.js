@@ -320,24 +320,30 @@ class MarkdownToConfluenceConverter {
    */
   convertHeaders(content) {
     // Convert headers (h1-h6) but adjust levels:
-    // - Skip the first h1 (top level heading)
-    // - Make the first h2 become h1, h3 become h2, etc.
+    // - Remove the first heading completely (regardless of level)
+    // - Adjust all subsequent headings down by one level
     
     const lines = content.split('\n');
-    let firstH1Found = false;
+    let firstHeaderFound = false;
     
-    const result = lines.map(line => {
+    const result = lines.filter(line => {
+      const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
+      
+      if (headerMatch) {
+        // Remove the very first header (usually the document title)
+        if (!firstHeaderFound) {
+          firstHeaderFound = true;
+          return false; // Remove this line completely
+        }
+      }
+      
+      return true; // Keep all other lines
+    }).map(line => {
       const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
       
       if (headerMatch) {
         const level = headerMatch[1].length;
         const title = headerMatch[2];
-        
-        // Skip the very first h1 (usually the document title)
-        if (level === 1 && !firstH1Found) {
-          firstH1Found = true;
-          return ''; // Skip this line
-        }
         
         // Adjust header levels: h2->h1, h3->h2, h4->h3, etc.
         const adjustedLevel = Math.max(1, level - 1);
@@ -571,26 +577,77 @@ class MarkdownToConfluenceConverter {
    */
   convertBlockQuotes(content) {
     // Handle all remaining > blockquotes that haven't been converted yet
-    // This includes nested blockquotes within existing bq. sections
+    // This includes nested blockquotes within existing bq. sections and code blocks within blockquotes
     const lines = content.split('\n');
     const result = [];
+    let i = 0;
     
-    for (let i = 0; i < lines.length; i++) {
+    while (i < lines.length) {
       const line = lines[i];
       
       // Check if this line starts with > and is not already part of an admonition
-      if (line.match(/^>\s+/) && !line.includes('[!')) {
+      if (line.match(/^>\s*/) && !line.includes('[!')) {
         // This is a blockquote line that needs conversion
         const cleanedLine = line.replace(/^>\s*/, '').trim();
         
-        // If it's not empty, add as blockquote
-        if (cleanedLine) {
-          result.push(`bq. ${cleanedLine}`);
+        // Check if this is a code block start within a blockquote
+        const codeBlockMatch = cleanedLine.match(/^```(\w+)?/);
+        if (codeBlockMatch) {
+          const language = codeBlockMatch[1] || 'text';
+          const languageMap = {
+            'javascript': 'js',
+            'typescript': 'js',
+            'tsx': 'js',
+            'jsx': 'js',
+            'bash': 'bash',
+            'shell': 'bash',
+            'json': 'js',
+            'yaml': 'yaml',
+            'yml': 'yaml',
+            'xml': 'xml',
+            'html': 'html',
+            'css': 'css',
+            'sql': 'sql',
+            'python': 'py',
+            'java': 'java',
+            'kotlin': 'kotlin',
+            'swift': 'swift',
+            'objective-c': 'objc',
+            'c': 'c',
+            'cpp': 'cpp',
+            'c++': 'cpp'
+          };
+          const confluenceLanguage = languageMap[language.toLowerCase()] || language;
+          
+          result.push(`{code:language=${confluenceLanguage}}`);
+          i++;
+          
+          // Process code content until we find the closing ```
+          while (i < lines.length) {
+            const codeLine = lines[i];
+            const cleanedCodeLine = codeLine.replace(/^>\s*/, '');
+            
+            if (cleanedCodeLine.trim() === '```') {
+              result.push('{code}');
+              i++;
+              break;
+            } else {
+              result.push(cleanedCodeLine);
+              i++;
+            }
+          }
         } else {
-          result.push(''); // Preserve empty lines
+          // Regular blockquote content
+          if (cleanedLine) {
+            result.push(`bq. ${cleanedLine}`);
+          } else {
+            result.push('bq. '); // Convert empty blockquote lines too
+          }
+          i++;
         }
       } else {
         result.push(line);
+        i++;
       }
     }
     

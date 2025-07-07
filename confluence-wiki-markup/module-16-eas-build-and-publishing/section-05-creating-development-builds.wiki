@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Creating Development Builds
-
 This section explains what development builds are, why they are essential when working with custom native code, and how to create and use them with EAS Build. Development builds bridge the gap between the rapid iteration of Expo Go and the need to test your app's full native capabilities on physical devices or simulators/emulators.
 
 h2. What are Development Builds?
@@ -213,25 +211,25 @@ h2. Installation Issues (iOS)
 Development builds are a powerful tool in the Expo and React Native development workflow, enabling robust testing and iteration when custom native code is involved.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* A development build in the Expo context is essentially your standard "Debug" build configuration that you would typically compile and run from Android Studio directly onto a device or emulator for testing purposes. The `expo-dev-client` library augments this by adding the Expo-specific bridge for live reloading and JavaScript bundling from a Metro server.
->
+bq. 
 bq. *Key Takeaway:* You can test any Android native module or custom Java/Kotlin code with live reload for your JS changes, similar to running a debug build but with the Expo dev experience integrated.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* This is like running your app in "Debug" mode from Xcode on a simulator or device. `expo-dev-client` enhances this by connecting to the Metro bundler for rapid JavaScript updates, giving you an experience closer to web development HMR while working with your full native iOS project.
->
+bq. 
 bq. *Key Takeaway:* Test custom Swift/Objective-C code and any CocoaPod with immediate JS feedback. It's your actual app, not a generic container like Expo Go.
 
 bq. 🌐 *(Web Developers - React/Angular):*
->
+bq. 
 bq. *Comparison:* The concept of a development build combined with a running Metro server is very similar to your local development server setup (e.g., running `npm start` for a React app using `webpack-dev-server`, or `ng serve` for an Angular app). The development build artifact (the `.apk` or `.ipa`) acts like your web browser, but it's a native application shell. The `npx expo start --dev-client` command, which runs Metro, is analogous to your `webpack-dev-server` or other development server that bundles and serves your web application's assets with HMR capabilities.
->
+bq. 
 bq. *Key Takeaway:* The main difference from web dev is the initial, explicit "build" step required to create the native shell (your app binary) before you can start serving JavaScript to it. Once built, JS iteration is very fast.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/develop/development-builds/introduction/|Expo Docs: Development builds overview]
 bq. - [https://docs.expo.dev/develop/development-builds/create-a-build/|Expo Docs: Creating your first development build]
 bq. - [https://docs.expo.dev/develop/development-builds/use-the-build/|Expo Docs: Using the development build]

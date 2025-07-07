@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Handling Form Submission
-
 Once you have your form fields set up and validation in place with React Hook Form, the next crucial step is handling the submission process. This involves taking the validated form data and performing an action, such as sending it to an API, storing it locally, or navigating to another screen. React Hook Form simplifies this with its {{handleSubmit}} function and by providing state to manage the submission process, including asynchronous operations.
 
 *The {{handleSubmit}} Function*
@@ -364,15 +362,15 @@ Always provide feedback to the user during asynchronous operations. Using `isSub
 Effectively handling form submissions, including managing loading states and potential errors from asynchronous operations, is key to creating professional and user-friendly forms. React Hook Form provides the necessary tools to manage this complexity cleanly.
 
 bq. 📱 *Background Bridge Notes:*
->
+bq. 
 bq. *For Native Developers (Android/iOS):*
 bq. In native app development, form submission typically involves manually gathering values from each input UI element (e.g., `EditText.getText().toString()`, `UITextField.text`) when a submit button is pressed, then performing validation, and finally constructing and executing a network request. React Hook Form's `handleSubmit` automates the data gathering from all registered fields and the validation check before your submission logic is even called. The `isSubmitting` state also simplifies UI updates that would otherwise be managed manually.
->
+bq. 
 bq. *For Web Developers (React/Angular):*
 bq. The concept of a submit handler function is standard. RHF's `handleSubmit` is analogous to how one might handle an `onSubmit` event on a `<form>` element in web React, but with the significant advantage of built-in validation integration before your custom handler is invoked. Angular Reactive Forms also have mechanisms like `(ngSubmit)` on the form and methods to access form values and validity status (`formGroup.value`, `formGroup.valid`) that serve a similar purpose of orchestrating submission.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react-hook-form.com/docs/useform/handlesubmit|React Hook Form - `handleSubmit`]
 bq. - [https://react-hook-form.com/docs/useform/formstate|React Hook Form - `formState`]
 bq. - [https://react-hook-form.com/docs/useform/reset|React Hook Form - `reset`]

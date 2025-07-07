@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Components (Functional Components Focus, Class Components Brief Mention)
-
 In this section, we delve deeper into React components, the fundamental building blocks of React applications. We will focus primarily on functional components, which are the modern standard, and briefly touch upon class components for context.
 
 h2. What are Components?
@@ -193,33 +191,33 @@ export default GreetingClass;
 While you might encounter class components in older codebases or some third-party libraries, *new development in React and React Native strongly favors functional components with Hooks.* Hooks provide a more direct and composable way to manage state and side effects.
 
 bq. ⚛️ *(Web Developers with React Experience):*
->
+bq. 
 bq. *Comparison:* The distinction and preference for functional components with Hooks over class components are the same in React Native as in React for web. If you've been working with modern React, this will be very familiar.
->
+bq. 
 bq. *Key Takeaway:* Continue using functional components and Hooks. Class components are mainly for understanding legacy code.
->
+bq. 
 bq. *Source:* [https://react.dev/reference/react/hooks|React Docs: Hooks at a Glance]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
->
+bq. 
 bq. *Comparison:* Angular components are class-based (using TypeScript classes and decorators like `@Component`). React's functional components are a more lightweight approach. Think of them as functions that render UI based on input (props) and internal state (managed by Hooks).
->
+bq. 
 bq. *Key Takeaway:* Embrace the functional programming paradigm for components in React. Logic that you might encapsulate in class methods in Angular will often be handled by Hooks or helper functions within or outside your functional components.
->
+bq. 
 bq. *Source:* [https://angular.io/guide/component-overview|Angular Docs: Component Overview], [https://legacy.reactjs.org/docs/components-and-props.html#function-and-class-components|React Docs: Functional and Class Components]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* In native development, UI elements or controllers often have a class-based structure (e.g., `UIViewController` in iOS, `Activity` or `Fragment` in Android). React's functional components might seem simpler. They don't inherit from a large base class by default; instead, they gain capabilities through composition and Hooks.
->
+bq. 
 bq. *Key Takeaway:* Functional components are the primary way to define UI elements. Their "lifecycle" and state are managed using specific Hooks like `useEffect` and `useState`, which we will cover soon.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components and Native Components] (Illustrates React component usage for native views)
 
 Understanding how to create and use components is central to React development. In the next sections, we'll explore how to pass data into components using props and how components can manage their own internal data using state.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/your-first-component|React Docs: Your First Component]
 bq. - [https://react.dev/learn/passing-props-to-a-component|React Docs: Components and Props]
 bq. - [https://legacy.reactjs.org/docs/composition-vs-inheritance.html|React Docs: Composition vs Inheritance]
@@ -402,7 +400,7 @@ The Virtual DOM and reconciliation are fundamental to React's performance. They 
 In the next sections, we'll explore how to pass data into components using props and how components can manage their own internal data using state.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/your-first-component|React Docs: Your First Component]
 bq. - [https://react.dev/learn/passing-props-to-a-component|React Docs: Components and Props]
 bq. - [https://legacy.reactjs.org/docs/composition-vs-inheritance.html|React Docs: Composition vs Inheritance]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Recap: TextInput Component
-
 This section revisits the {{TextInput}} component, a fundamental building block for capturing user input in React Native. We previously introduced {{TextInput}} in Module 8, but a focused recap here is essential as it forms the basis for all text-based forms we'll be building. Understanding its core props and behavior is crucial before we dive into more advanced form handling techniques.
 
 *Core Concept: What is {{TextInput}}?*
@@ -40,15 +38,15 @@ Here's a refresher on some of the most commonly used {{TextInput}} props. For a 
 * {{editable}} (boolean): If {{false}}, text is not editable. Defaults to {{true}}.
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* The React Native {{TextInput}} component abstracts the complexities of platform-specific input controls like Android\'s {{EditText}} or iOS\'s {{UITextField}}/{{UITextView}}. While you might be accustomed to directly interacting with these native elements and their respective APIs (e.g., listeners, delegates), React Native provides a unified JavaScript-based interface. The underlying native behavior is still present but managed by React Native.
->
+bq. 
 bq. *Key Takeaway:* Notice how React Native provides a consistent API ({{TextInput}} props and event handlers) that translates to the appropriate native behavior, simplifying cross-platform development for input fields.
 
 bq. 🌐 *(Web Developers - React/Angular):*
->
+bq. 
 bq. *Comparison:* The {{TextInput}} component is conceptually similar to the HTML {{<input>}} and {{<textarea>}} elements. Many props, like {{placeholder}} and {{value}}, will feel familiar. However, event handling, such as {{onChangeText}} (which we\'ll cover in the next section), is more direct in React Native compared to accessing {{event.target.value}} in web React. For Angular developers, this single component model might contrast with the more structured {{FormsModule}} or {{ReactiveFormsModule}} for handling form inputs.
->
+bq. 
 bq. *Key Takeaway:* While the element is different, the core idea of capturing text input remains. Pay attention to the specific props and event names in React Native.
 
 *Basic Usage Example:*
@@ -120,7 +118,7 @@ This basic example renders a styled `TextInput` field where a user could visuall
 Understanding these `TextInput` basics is the first step towards building functional and interactive forms in your SpeedyMeds application.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/textinput|React Native Docs: `TextInput`]
 bq. - [https://docs.expo.dev/ui-programming/user-interface-libraries/#textinput|Expo Docs: `TextInput`] (Often links to React Native core docs for these components)
 bq. - [https://reactnative.dev/docs/the-new-architecture/pillars-fabric|React Native New Architecture: Fabric]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 11: Module Recap & Next Steps
-
 Congratulations on completing Module 3: Setting Up Your React Native Environment with Expo! You've laid a critical foundation for your journey into React Native development.
 
 h2. Summary of Module 3

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 7: Submitting to App Stores (Overview)
-
 This section provides an overview of the process for submitting your React Native application to the Apple App Store and Google Play Store. We will focus on how Expo Application Services (EAS) Submit can simplify and automate parts of this often complex workflow.
 
 h2. The General App Store Submission Workflow
@@ -253,25 +251,25 @@ For your first few submissions, allocate extra time for the review process and p
 Submitting to app stores is a critical step, and EAS Submit provides valuable automation to make the technical parts smoother, allowing you to focus more on your app's quality and store presence.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* Using EAS Submit is conceptually similar to employing tools like `fastlane deliver` or other CI/CD automation scripts tailored for app store deployment. You will recognize familiar concepts such as Google Play Console's release tracks (internal, alpha, beta, production) for managing Android releases.
->
+bq. 
 bq. *Key Takeaway:* EAS Submit streamlines uploading your AAB and managing release tracks on the Play Console, reducing manual steps, especially when integrated with EAS Build.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* This is like using `fastlane deliver` or Xcode's Organizer to upload to App Store Connect. EAS Submit handles the communication with Apple's services, including the binary upload (which happens on EAS servers, not requiring Transporter locally) and associating it with TestFlight or a store version.
->
+bq. 
 bq. *Key Takeaway:* EAS Submit simplifies the upload to App Store Connect and can be run from any OS. It helps manage the complexities of API keys for authentication with Apple services.
 
 bq. 🌐 *(Web Developers - React/Angular):*
->
+bq. 
 bq. *Comparison:* App store submission is a significantly different paradigm compared to typical web application deployment. It's not merely a `git push` or an FTP upload. It's a formal, regulated process involving reviews by platform holders (Apple and Google), strict metadata requirements, and specific binary packaging formats.
->
+bq. 
 bq. *Key Takeaway:* EAS Submit endeavors to make this multi-step, platform-specific process feel more like a single, unified command, abstracting away many of the underlying complexities, similar to how a CLI for a PaaS would deploy your web app, but with many more mobile-specific considerations.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/submit/introduction/|Expo Docs: EAS Submit]
 bq. - [https://docs.expo.dev/submit/ios/|Expo Docs: Submitting to Apple App Store]
 bq. - [https://docs.expo.dev/submit/android/|Expo Docs: Submitting to Google Play Store]

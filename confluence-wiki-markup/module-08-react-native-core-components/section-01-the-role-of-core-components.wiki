@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: The Role of Core Components
-
 Welcome to the first section of Module 8. Here, we'll explore the fundamental concept of Core Components in React Native. Understanding their role is crucial because they are the primary tools you'll use to build the user interface (UI) of your mobile applications. Think of them as the essential Lego bricks provided by React Native for constructing everything the user sees and interacts with on the screen.
 
 h2. What are Core Components?
@@ -120,7 +118,7 @@ It's important to distinguish Core Components from third-party UI libraries like
 While Core Components aim for a consistent API, their exact visual rendering and behavior can sometimes have subtle differences between iOS and Android due to the underlying native platforms. Always test your UI on both platforms.
 {note}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/intro-react-native-components|React Native Docs: Core Components and Native Components]
 bq. - [https://react.dev/learn/your-first-component|React Docs: Your First Component]
 bq. - [https://legacy.reactjs.org/docs/components-and-props.html|React Docs: Components and Props (Legacy)]
@@ -129,27 +127,27 @@ bq. - [https://docs.expo.dev/tutorial/view-text-and-image/|Expo Docs: Learn the 
 h2. Background Bridge Notes
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* Think of React Native Core Components like the fundamental classes in UIKit such as `UIView`, `UILabel`, `UIImageView`, `UIButton`, and `UITableView`. The primary difference is that you define them declaratively using JSX instead of programmatically creating and configuring them in Swift or Objective-C. The layout system (Flexbox) will also be a significant shift from Auto Layout or manual frame setting.
->
+bq. 
 bq. *Key Takeaway:* You're still working with native-backed UI elements, but through a JavaScript abstraction layer that offers cross-platform benefits.
->
+bq. 
 bq. *Source:* [https://developer.apple.com/documentation/uikit|Apple Developer: UIKit]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* React Native Core Components are analogous to Android's View system classes like `View`, `TextView`, `ImageView`, `Button`, and `RecyclerView`. Instead of defining layouts in XML and manipulating Views in Kotlin or Java, you'll use JSX for structure and JavaScript for logic and styling. Flexbox will be your primary tool for layout, which differs from Android's ConstraintLayout, LinearLayout, etc.
->
+bq. 
 bq. *Key Takeaway:* The components map to native Android Views, providing familiar UI primitives but with a new way of defining and styling them.
->
+bq. 
 bq. *Source:* [https://developer.android.com/guide/topics/ui/declaring-layout|Android Developer: Views]
 
 bq. 🌐 *(Web Developers - React & Angular):*
->
+bq. 
 bq. *Comparison:* Unlike web development where you use HTML tags (e.g., `<div>`, `<span>`, `<img>`, `<p>`), React Native provides its own set of components like `<View>`, `<Text>`, `<Image>`. These are not HTML elements running in a WebView (unless you explicitly use a WebView component for a specific purpose). They are true native components.
->
+bq. 
 bq. *Key Takeaway:* You must use the components provided by React Native. Standard HTML tags will not work. The concept of components mapping to native elements is key, distinguishing React Native from web-based mobile frameworks.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/react-native-for-web-developers|React Native for Web Developers]
 
 Throughout this module, we will delve into the most commonly used Core Components, exploring their props, usage patterns, and how they can be combined to build user interfaces for an application like SpeedyMeds. For example, a patient's prescription list item in SpeedyMeds might be built using a `<View>` as a container, several `<Text>` components for displaying medication name, dosage, and instructions, and perhaps an `<Image>` for a pill icon.

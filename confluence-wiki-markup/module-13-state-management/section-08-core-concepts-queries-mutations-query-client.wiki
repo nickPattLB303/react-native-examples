@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Core Concepts: Queries ({{useQuery}}), Mutations ({{useMutation}}), Query Client
-
 Now that we have TanStack Query set up with {{QueryClientProvider}}, it's time to explore its core building blocks: queries for fetching data, mutations for changing data, and the {{QueryClient}} that orchestrates everything. These concepts are fundamental to leveraging TanStack Query effectively in your SpeedyMeds application.
 
 h2. Queries with {{useQuery}}
@@ -209,7 +207,7 @@ This diagram illustrates the lifecycle of a `useQuery` call:
 This flow ensures that components get data quickly if available, while also efficiently managing background updates and error states.
 
 bq. 📚 *Official Documentation (`useQuery`):*
->
+bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/guides/queries|TanStack Query - Queries (`useQuery`)]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/query-keys|TanStack Query - Query Keys]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/query-functions|TanStack Query - Query Functions]
@@ -401,7 +399,7 @@ export default AddPrescriptionForm;
 A crucial pattern after a successful mutation is to invalidate queries whose data might have changed due to the mutation. `queryClient.invalidateQueries({ queryKey: [...] })` tells TanStack Query to mark matching queries as stale, triggering a re-fetch for active queries. This ensures your UI displays fresh data. We'll cover this in more detail in Section 10.
 
 bq. 📚 *Official Documentation (`useMutation`):*
->
+bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/guides/mutations|TanStack Query - Mutations (`useMutation`)]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/query-invalidation|TanStack Query - Query Invalidation]
 
@@ -432,7 +430,7 @@ You can set default options for all queries and mutations when creating the `Que
 We'll see more practical uses of `QueryClient` methods, especially for cache management and mutations, in the upcoming sections.
 
 bq. 📚 *Official Documentation (`QueryClient`):*
->
+bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/reference/QueryClient|TanStack Query - `QueryClient`]
 
 h2. TanStack Query Core Concepts Summary
@@ -459,22 +457,22 @@ You will simulate an API call to get appointment data and display it in a list f
 Understanding `useQuery` and `useMutation` is key to harnessing the power of TanStack Query. In the next sections, we'll delve deeper into caching strategies and how to effectively manage data updates with mutations.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison (`useQuery`):* The `useQuery` hook is like setting up an `ObservableObject` in SwiftUI that fetches data in its initializer or an `onAppear` block. The various status flags (`isLoading`, `isError`, `data`) are similar to `@Published` properties you'd expose. `queryKey` providing automatic re-fetching on change is like SwiftUI reacting to changes in an `@State` variable used in a fetch request.
 bq. *Comparison (`useMutation`):* `useMutation` is like defining a function in your `ObservableObject` that performs an async task (e.g., saving data) and updates `@Published` properties for loading/error states. Query invalidation (`queryClient.invalidateQueries`) is similar to manually re-triggering a fetch or refreshing data after a successful save, or using Combine publishers to signal a data change that other parts of the app might subscribe to.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query provides a structured way to handle the lifecycle (loading, success, error, refetching) of both data fetching and data modification operations, which often requires more manual setup with Combine and `ObservableObject`.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison (`useQuery`):* `useQuery` resembles a `ViewModel` method that exposes a `StateFlow<Resource<List<Medication>>>` (where `Resource` is a wrapper for loading/success/error states). The Composable would collect this Flow. The `queryKey` concept ensures that if the inputs to your data fetch change (like a user ID), the data is re-fetched, similar to how a `ViewModel` might re-trigger a fetch when an input `StateFlow` changes.
 bq. *Comparison (`useMutation`):* `useMutation` is like a `ViewModel` function that calls a suspend function in a Repository to update data. The `isLoading`, `isError` flags are similar to states you'd manage in the `ViewModel` (e.g., via a `MutableStateFlow`) to drive UI changes during the mutation. Invalidating queries is like having the `ViewModel` re-fetch data or signal other `Flows` to update after a successful mutation.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query hooks encapsulate much of the state management logic for async operations (loading, error, data, success status) directly usable by the component, reducing the need for extensive `ViewModel` boilerplate for each network call and its states.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison (`useQuery` & `useMutation`):* > *React:* These hooks are the core of TanStack Query (React Query). They directly replace manual `useEffect` and `useState` patterns for data fetching and state management, providing caching, synchronization, and status management out-of-the-box.
 bq. *Angular:* `useQuery` is like subscribing to an Observable returned by an HttpClient call in a service, with added benefits of automatic caching and status tracking. `useMutation` is like a service method that performs a POST/PUT/DELETE and returns an Observable for the result, but again, TanStack Query adds lifecycle management (isLoading, onSuccess callbacks, etc.) and integrates query invalidation directly.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query offers a declarative, hook-based API that standardizes and simplifies asynchronous server state management in React, providing features that often require manual implementation or more extensive setups in both React (pre-TanStack Query) and Angular applications.

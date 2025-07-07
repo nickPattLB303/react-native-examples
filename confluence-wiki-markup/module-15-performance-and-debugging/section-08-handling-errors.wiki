@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 8: Handling Errors
-
 Errors are an inevitable part of software development. Robust error handling is crucial for creating stable and user-friendly applications like SpeedyMeds. This section covers techniques for catching, handling, and logging errors in React Native applications, including the use of Error Boundaries.
 
 bq. 🛣️ *(All Learners):* Implementing proper error handling prevents your app from crashing unexpectedly and allows you to provide a better user experience by displaying helpful messages or fallback UIs when things go wrong.
@@ -300,7 +298,7 @@ If `ProblematicComponent` throws an error during rendering, the `ErrorBoundary` 
 Place Error Boundaries strategically. You might have a global one at the root of your app, and more specific ones around complex or critical UI sections (like navigation routes or major features).
 {tip}
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary|React Docs: Error Boundaries]
 bq. - [https://reactnative.dev/docs/javascript-environment#javascript-runtime|React Native Docs: Handling Errors (Conceptual, often points to general JS practices)]
 bq. - [https://docs.expo.dev/debugging/errors-and-warnings/|Expo Docs: Error Handling and Debugging]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Tab Navigator Setup and Usage
-
 This section explores the Tab Navigator, a common pattern for top-level navigation where different sections of an app are accessible via tabs, typically at the bottom of the screen. We will use React Navigation's Bottom Tab Navigator ({{@react-navigation/bottom-tabs}}) to implement this pattern in our SpeedyMeds app, allowing users to easily switch between main features like a list of medications and pharmacy information.
 
 bq. 🛣️ *(All Learners):* A solid understanding of Stack Navigator concepts from the previous section will be beneficial, as tabs often manage their own independent navigation stacks.
@@ -269,18 +267,18 @@ export default function App() {
 When nesting navigators (e.g., a Stack inside a Tab), the `navigation` prop in screens of the inner navigator (Stack) will refer to the Stack navigator. To access the parent Tab navigator's `navigation` prop, you might need `navigation.getParent()`.
 {info}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnavigation.org/docs/bottom-tab-navigator/|Bottom Tab Navigator - React Navigation]
 bq. - [https://reactnavigation.org/docs/nesting-navigators/|Nesting Navigators - React Navigation]
 bq. - [https://reactnavigation.org/docs/bottom-tab-navigator/#options|Screen options for tabs - React Navigation]
 bq. - [https://docs.expo.dev/guides/icons/|Icons - Expo Documentation] (for using `@expo/vector-icons`)
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* `createBottomTabNavigator` is analogous to `UITabBarController`. Each `<Tab.Screen>` is like adding a `UIViewController` (or a `UINavigationController` if nesting) to the `viewControllers` array of the tab bar controller. Customizing `tabBarIcon` and `tabBarLabel` is similar to setting `tabBarItem` properties.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* This is similar to using a `BottomNavigationView` with menu items, where each item corresponds to a Fragment or an Activity. Nesting stacks within tabs is a common pattern also achievable with the Navigation Component by having separate navigation graphs for each tab's content.
 
 h3. Referential Content: Key Tab Navigator Configuration Options
@@ -308,7 +306,7 @@ Beyond the `tabBarIcon`, `tabBarActiveTintColor`, and `tabBarInactiveTintColor` 
 
 > [!TIP] > *Native Tab Bar Alternatives:*
 bq. For projects requiring a tab bar that strictly adheres to the native platform's look and feel (e.g., iOS blur effects, Material Design 3 ripple effects and theming), and potentially offers better performance for complex tab structures, you might explore third-party libraries like `react-native-bottom-tabs`. This library integrates native iOS (`UITabBar`) and Android (`BottomNavigationView`) components with React Navigation.
->
+bq. 
 bq. *Pros:* More authentic native appearance, platform-specific styling (like iOS blur, Material You theming), adapts layout across different devices (iPadOS, tvOS, etc.).
 bq. *Cons:* Icon customization is often more restricted (may require image assets, SF Symbols, or URIs instead of arbitrary React components), and it introduces another dependency.
 bq. The standard `@react-navigation/bottom-tabs` provides a highly customizable JavaScript-based implementation suitable for most use cases.

@@ -1,15 +1,13 @@
 {toc}
 
-h1. Section 8: Testing Strategies
-
 This section provides an introduction to testing strategies in React Native. Writing tests is a crucial part of software development that helps ensure your application's quality, reliability, and maintainability. We will focus on unit testing with Jest and component testing with React Native Testing Library.
 
 bq. 🧑‍🏫 *(Instructor-Led):* In a classroom setting, consider forming small groups to write tests for the same component or utility function, then compare approaches. Discussing different testing strategies can lead to valuable insights about what makes a good test. Be prepared to demonstrate how to debug failing tests.
->
+bq. 
 bq. 🧗‍♀️ *(Self-Led):* Testing can sometimes feel overwhelming at first. Start with simple unit tests for utility functions before moving to component testing. Create a dedicated "playground" project where you can practice writing different types of tests without the pressure of a production codebase.
->
+bq. 
 bq. 🔁 *(Asynchronous):* If you're working through this section independently, try to apply these testing concepts to a small part of your existing project. Even adding tests for just one utility function or simple component will help reinforce these skills in a practical context.
->
+bq. 
 bq. 🛣️ *(All Learners):* Testing is a skill that improves with practice. Don't expect to master it immediately. Focus first on understanding the core patterns and gradually expand your testing knowledge. For SpeedyMeds, prioritize testing critical functionality like medication dosage calculations where bugs could have serious consequences.
 
 h2. Conceptual Content
@@ -451,7 +449,7 @@ Practice writing tests for medication-related utilities in the SpeedyMeds app.
 {code}
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://jestjs.io/docs/getting-started|Jest Documentation]
 bq. - [https://callstack.github.io/react-native-testing-library/|React Native Testing Library Documentation]
 bq. - [https://docs.expo.dev/develop/unit-testing/|Expo: Unit Testing Guide]

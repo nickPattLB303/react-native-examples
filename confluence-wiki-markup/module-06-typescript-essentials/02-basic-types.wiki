@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: Basic Types
-
 Now that we understand why TypeScript is beneficial, let's explore its fundamental building blocks: the basic types. These types allow you to define the kinds of values your variables and functions will work with, forming the core of TypeScript's type system.
 
 h2. Type Annotation and Inference
@@ -166,7 +164,7 @@ lastLoginDate = new Date();
 {code}
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/2/basic-types.html|TypeScript Handbook: Basic Types]
 bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html|TypeScript Handbook: Everyday Types (includes primitives, arrays, any, unknown, etc.)]
 bq. - [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#stricternullundefined-checking|TypeScript `strictNullChecks`]

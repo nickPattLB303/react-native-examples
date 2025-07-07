@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Asynchronous JavaScript
-
 JavaScript is single-threaded, meaning it can only execute one piece of code at a time. However, many operations in web and mobile development, like fetching data from a server, reading files, or waiting for user input, can take time. If these operations were synchronous (blocking), they would freeze the entire application, leading to a poor user experience. Asynchronous JavaScript allows your program to perform long-running tasks without blocking the main thread, ensuring your application remains responsive.
 
 h2. Synchronous vs. Asynchronous Code
@@ -41,64 +39,64 @@ console.log("Third: Continuing with other tasks (e.g., updating UI)...");
 This example illustrates a fundamental async pattern using `setTimeout`. The first `console.log` executes immediately. `setTimeout` then schedules its callback function (which logs "Second: Patient data received...") to run after approximately 2000 milliseconds. Importantly, `setTimeout` itself is non-blocking; the script doesn't wait. Thus, "Third: Continuing with other tasks..." logs next. Only after the main script finishes and the 2-second delay elapses does the event loop pick up the `setTimeout` callback and execute it. This demonstrates how JavaScript handles time-consuming operations without freezing the main execution thread.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* JavaScript's asynchronous model differs fundamentally from native platforms. iOS uses GCD (Grand Central Dispatch) and Swift's structured concurrency to manage multiple threads. Android uses thread pools, Kotlin Coroutines, or RxJava for multithreaded operations. JavaScript in React Native, however, runs on a _single thread_ with an event loop, using callbacks, Promises, and async/await for non-blocking operations.
->
+bq. 
 bq. *Key Takeaway:* In native development, you're actually running code concurrently on multiple threads. In JavaScript, you're simulating concurrency on a single thread using the event loop, which executes asynchronous callbacks when the main thread is free.
->
+bq. 
 bq. *Source:* [https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/|Swift Concurrency] and [https://kotlinlang.org/docs/coroutines-overview.html|Kotlin Coroutines]
->
+bq. 
 bq. *Example:*
->
-bq. ```swift
-bq. // Swift: Actual concurrency with async/await
-bq. func fetchData() async throws -> Data {
-bq. let (data, _) = try await URLSession.shared.data(from: url)
-bq. return data // This thread yields while waiting
-bq. }
->
-bq. // Usage:
-bq. Task {
-bq. do {
-bq. let data = try await fetchData()
-bq. processData(data)
-bq. } catch {
-bq. handleError(error)
-bq. }
-bq. }
-bq. ```
->
-bq. ```kotlin
-bq. // Kotlin: Coroutines for structured concurrency
-bq. suspend fun fetchData(): Data {
-bq. return withContext(Dispatchers.IO) {
-bq. val response = URL(url).readText() // Suspends coroutine, not thread
-bq. parseData(response)
-bq. }
-bq. }
->
-bq. // Usage:
-bq. CoroutineScope(Dispatchers.Main).launch {
-bq. try {
-bq. val data = fetchData()
-bq. processData(data)
-bq. } catch (e: Exception) {
-bq. handleError(e)
-bq. }
-bq. }
-bq. ```
->
-bq. ```javascript
-bq. // JavaScript: Single-threaded with Promises
-bq. async function fetchData() {
-bq. const response = await fetch(url); // Non-blocking, returns to event loop
-bq. const data = await response.json();
-bq. return data;
-bq. }
->
-bq. // Usage:
-bq. fetchData().then(processData).catch(handleError);
-bq. ```
+bq. 
+{code:language=swift}
+// Swift: Actual concurrency with async/await
+func fetchData() async throws -> Data {
+let (data, _) = try await URLSession.shared.data(from: url)
+return data // This thread yields while waiting
+}
+
+// Usage:
+Task {
+do {
+let data = try await fetchData()
+processData(data)
+} catch {
+handleError(error)
+}
+}
+{code}
+bq. 
+{code:language=kotlin}
+// Kotlin: Coroutines for structured concurrency
+suspend fun fetchData(): Data {
+return withContext(Dispatchers.IO) {
+val response = URL(url).readText() // Suspends coroutine, not thread
+parseData(response)
+}
+}
+
+// Usage:
+CoroutineScope(Dispatchers.Main).launch {
+try {
+val data = fetchData()
+processData(data)
+} catch (e: Exception) {
+handleError(e)
+}
+}
+{code}
+bq. 
+{code:language=js}
+// JavaScript: Single-threaded with Promises
+async function fetchData() {
+const response = await fetch(url); // Non-blocking, returns to event loop
+const data = await response.json();
+return data;
+}
+
+// Usage:
+fetchData().then(processData).catch(handleError);
+{code}
 
 h3. The Event Loop
 
@@ -524,7 +522,7 @@ h2. `async/await` Integration
 Understanding this event loop mechanism is key to predicting the behavior of complex asynchronous code and debugging timing-related issues.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function|MDN Web Docs: Asynchronous JavaScript] (This link points to `async function`, a good starting point)
 bq. - [https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing|MDN Web Docs: Introducing asynchronous JavaScript]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop|MDN Web Docs: Event Loop]
@@ -544,6 +542,7 @@ _(Note: The CodeSandbox link is a placeholder. A functional CodeSandbox with the
 *Instructions for Exercise 5.3 (to be placed in CodeSandbox `README.md`):*
 
 {code:language=markdown}
+h1. Exercise 5.3: Async Function Implementation - SpeedyMeds Pharmacy
 
 h1. Objective
 

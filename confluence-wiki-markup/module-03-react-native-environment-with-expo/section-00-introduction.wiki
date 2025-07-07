@@ -12,29 +12,29 @@ The primary goal of this module is to guide you through the process of successfu
 h1. Target Audience Adaptation
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* If you've set up Node.js web applications before, this process will feel familiar with package managers and command-line tools. Expo abstracts away the complex native build configurations you'd otherwise need to manage with vanilla React Native. Concepts related to native mobile development, simulators/emulators (Xcode), and the specifics of React Native's component system and styling (vs. HTML/CSS) will be emphasized. Expo's tooling aims to make this transition smoother.
->
+bq. 
 bq. *Key Takeaway:* Expo eliminates the need to install and configure native SDKs directly, saving significant setup time. You're moving from targeting the browser DOM to controlling native iOS/Android UI elements via JavaScript.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/environment-setup|React Native Environment Setup - CLI], [https://mantelgroup.com.au/react-native-thoughts-from-a-web-developer/|React Native: Thoughts from a web developer - Mantel]
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* While native development requires Xcode (iOS) or Android Studio with extensive configuration, Expo provides a streamlined alternative. Instead of managing build settings, provisioning profiles, and simulator configurations manually, Expo handles these complexities behind the scenes. Concepts like JavaScript runtimes (Node.js), package managers (npm), and bundlers (Metro) might be new. This module will relate Expo's abstractions (like the Expo CLI managing native builds) back to familiar tools like Android Studio or Xcode.
->
+bq. 
 bq. *Key Takeaway:* Expo offers a significantly faster development cycle for prototyping and initial development compared to traditional native workflows. Think of Expo CLI as adding a simplifying layer on top of the familiar Xcode/Android Studio build processes for many common tasks.
->
+bq. 
 bq. *Source:* [https://docs.expo.dev/workflow/already-used-react-native/|Expo vs. Native Development], [https://atomicrobot.com/blog/compose-to-react-native/|From Jetpack Compose to React Native: An Android Developer's Perspective - Atomic Robot]
->
+bq. 
 bq. *Example:* Instead of configuring CocoaPods dependencies or Gradle files manually, Expo manages native dependencies through simple JavaScript commands.
 
 bq. 🛣️ *(All Learners):* This module serves as a critical foundation for all learning paths.
->
+bq. 
 bq. 🧑‍🏫 *(Instructor-Led):* Active participation in setup sessions is encouraged. Use the live coding demonstrations as an opportunity to follow along and ask clarifying questions regarding environment configuration or Expo concepts.
->
+bq. 
 bq. 🧗‍♀️ *(Self-Led):* Proceed through the steps sequentially. Utilize the provided links to official documentation for deeper understanding. Do not hesitate to request instructor support via Webex chat or huddles if installation or configuration issues arise.
->
+bq. 
 bq. 🔁 *(Asynchronous):* This module is fundamental, regardless of the specific topics targeted later. Ensure the development environment is correctly set up by carefully following these instructions. If specific setup errors are encountered later, the Troubleshooting section can be referenced directly.
 
 h1. Learning Objectives

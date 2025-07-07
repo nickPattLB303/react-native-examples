@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Creating Production Builds (iOS and Android)
-
 This section details the process of creating production builds using EAS Build. Production builds are optimized, signed versions of your app, ready for submission to the Apple App Store and Google Play Store, or for final beta testing before a public release.
 
 h2. What are Production Builds?
@@ -132,13 +130,13 @@ This requires a *Keystore*, a binary file containing one or more private keys. Y
 EAS's role is to abstract away many of the manual and error-prone steps in managing and applying these credentials during the build process.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* If you've manually managed App IDs, Certificates (Development and Distribution), and Provisioning Profiles (Development, Ad Hoc, App Store) in the Apple Developer Portal and Xcode, you'll find EAS Build's automated handling of these for cloud builds to be a significant parallel. It's like having Xcode's "Archive" feature for creating an `.ipa`, but managed and executed by EAS with your credentials.
->
+bq. 
 bq. *Key Takeaway:* EAS streamlines the creation of App Store-ready `.ipa` files by handling the complex signing process and ensuring your app is built with release optimizations, often without needing direct Xcode interaction for these cloud builds.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* You're likely familiar with generating a Keystore (`.jks` or `.keystore` file) and configuring your `build.gradle` file with signing configurations. EAS can handle the generation and secure storage of this Keystore, applying it automatically during the release build process. This avoids needing to store the Keystore in your repository or manage it manually on a CI server.
 
 h2. Initiating a Production Build
@@ -214,25 +212,25 @@ Always test your production builds on a variety of real devices if possible, cov
 Creating production builds is a significant milestone in your app development journey. EAS Build streamlines this complex process, allowing you to focus on delivering a quality application.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* Creating production builds with EAS is analogous to configuring and running your "Release" build configuration in Android Studio, generating a signed AAB or APK. EAS steps in to help manage the signing keystores, which you might otherwise handle manually within the IDE or build scripts. The emphasis on the AAB format is key for modern Play Store distribution.
->
+bq. 
 bq. *Key Takeaway:* EAS simplifies the creation of store-ready AABs, handling complexities like release signing and build optimization, letting you focus on the app itself rather than intricate Gradle configurations for release.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* This is like using Xcode's "Archive" feature to create an `.ipa` for App Store submission. EAS automates the selection of distribution certificates and provisioning profiles and runs the archive process in the cloud. It ensures your build uses release configurations.
->
+bq. 
 bq. *Key Takeaway:* EAS streamlines the creation of `.ipa` files for the App Store, managing the often complex signing process and ensuring your app is built with release optimizations, without requiring direct Xcode interaction for cloud builds.
 
 bq. 🌐 *(Web Developers - React/Angular):*
->
+bq. 
 bq. *Comparison:* The concept of a "production build" is familiar from web development (e.g., running `npm run build` to create optimized, minified static assets). However, for mobile applications, this process involves several additional layers: compiling native code and, crucially, code signing with platform-specific cryptographic keys—a step with no direct parallel in typical web deployment. The resulting `.ipa` or `.aab` files are self-contained executable packages, not just static files served by a web server.
->
+bq. 
 bq. *Key Takeaway:* A mobile production build is more than just optimized JavaScript; it's a fully compiled and signed native application package. EAS manages this complexity, making it feel closer to a web build-and-deploy pipeline, but for native mobile apps.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/deploy/build-project/|Expo Docs: Build your project for app stores]
 bq. - [https://docs.expo.dev/app-signing/managed-credentials/|Expo Docs: App signing (managed credentials overview)]
 bq. - [https://docs.expo.dev/app-signing/android/|Expo Docs: Android app signing]

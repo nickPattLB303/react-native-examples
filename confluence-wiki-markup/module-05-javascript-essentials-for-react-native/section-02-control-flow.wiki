@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: Control Flow
-
 Control flow statements are essential tools in JavaScript that allow you to dictate the order in which your code is executed. They enable your programs to make decisions, repeat actions, and respond dynamically to different situations. This section covers conditional statements for decision-making and looping statements for repetitive tasks.
 
 h2. Conditional Statements
@@ -311,9 +309,9 @@ console.log("Loop finished");
 {code}
 
 bq. 📲 *(Native Developers): Control Flow Comparisons*
->
+bq. 
 bq. The syntax and fundamental behavior of `if/else`, `switch`, `for`, `while`, and `do...while` loops in JavaScript are highly similar to their counterparts in Java, Kotlin, and Swift, which should make this section feel familiar.
->
+bq. 
 bq. - *`switch` Statement:* Be mindful that JavaScript's `switch` uses strict (`===`) comparison for its `case` values and requires explicit `break` statements to prevent "fall-through" into subsequent cases. This might differ slightly from default behaviors or syntax in other languages (e.g., Swift's `switch` does not fall through by default and is more powerful with pattern matching).
 bq. - *Looping Constructs:* The classic C-style `for` loop (`for (init; condition; afterthought)`) is common across these languages. JavaScript also offers `for...of` for iterating over iterable values (like arrays, strings), which is similar to Kotlin's `for (item in collection)` or Swift's `for item in collection`. JavaScript's `for...in` is for object property iteration and is distinct.
 bq. - *`while` / `do...while`:* These loops function almost identically across the languages in terms of their core logic (condition before vs. condition after).
@@ -327,7 +325,7 @@ h3. Loop Comparison Summary
 |`for...in`|`for (const key in object)`|Enumerating object *property names (keys)*|Implicit (each key)|No (if 0 properties)|
 |`for...of`|`for (const value of iterable)`|Iterating over *values* of iterable objects (Arrays, Strings, etc.)|Implicit (each value)|No (if empty iterable)|
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling|MDN Web Docs: Control flow and error handling]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else|MDN Web Docs: `if...else`]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch|MDN Web Docs: `switch`]

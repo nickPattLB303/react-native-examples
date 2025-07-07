@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Recap: {{useState}} and Prop Drilling Limitations
-
 Welcome to the first section of our deep dive into state management in React Native! Before we explore more advanced techniques, it's essential to solidify our understanding of the foundational tools React provides for managing state and to recognize their limitations, especially as applications like our SpeedyMeds app begin to scale.
 
 h2. Revisiting {{useState}}: The Building Block of Local State
@@ -105,7 +103,7 @@ Do not call Hooks inside loops, conditional statements (`if`/`else`), or nested 
 Violating these rules disrupts the order in which Hooks are called, preventing React from correctly associating state and effects with their respective Hook calls between renders.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/reference/react/useState|React `useState` Hook (Current)]
 bq. - [https://legacy.reactjs.org/docs/hooks-state.html|React `useState` Hook (Legacy)]
 bq. - [https://dev.to/nadim_ch0wdhury/how-does-reactjs-usestate-hook-work-under-the-hood-44lk|How `useState` works internally (Community Article)]
@@ -214,9 +212,9 @@ In this example, the `medications` array originates in `PatientProfileScreen`. T
 The key issue illustrated here is that `MedicationOverview` acts as a conduit for the `medications` prop (or parts of it, like `medications[0].name`) purely to serve `MedicationDisplay`. If the component tree were deeper, more components would be involved in this pass-through, even if they don't directly use the prop themselves.
 
 bq. 📚 *Official Documentation & Explanations:*
->
+bq. 
 bq. (Note: "Prop drilling" is a community term, not an official React concept with dedicated documentation. These articles provide excellent explanations.)
->
+bq. 
 bq. - [https://www.geekster.in/articles/props-drilling-in-react/|Geekster - Props Drilling in React]
 bq. - [https://www.angularminds.com/blog/what-is-prop-drilling-in-react|AngularMinds - What is Prop Drilling in React]
 
@@ -233,21 +231,21 @@ While prop drilling works for simple cases or shallow component trees, it quickl
 These limitations are precisely why more advanced state management patterns and libraries exist. They aim to provide more direct and efficient ways for components to access and update shared state without explicit manual prop passing through every level of the tree.
 {note}
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* Developers often pass data between Activities or Fragments using Intent extras or Fragment arguments. For sharing data across multiple screens or surviving configuration changes, the recommended pattern involves using ViewModels scoped to an Activity, Fragment, or Navigation graph. These ViewModels hold data (often using `LiveData` or `StateFlow`) which UI controllers can observe. This observer pattern avoids manually passing data through every intermediate UI element. However, if developers don't use shared ViewModels and instead pass data manually between fragments, it can lead to a situation analogous to prop drilling.
->
+bq. 
 bq. *Key Takeaway:* React Native's state flow emphasizes unidirectional data. Prop drilling is a direct consequence when not using broader state solutions. Android's `ViewModel` with `LiveData`/`StateFlow` offers a more structured way to avoid this for shared data.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* Data can be passed down explicitly through view initializers or during segue preparation in UIKit. While simple for shallow hierarchies, this becomes cumbersome for deep nesting. SwiftUI provides `@EnvironmentObject`, a mechanism where an ancestor view provides an `ObservableObject`, and any descendant view can subscribe to it without explicit passing through intermediates. This directly addresses the prop drilling issue, similar to React's Context API. Using `@ObservedObject` to pass an object down manually can still lead to prop drilling if that object isn't owned by a higher-level `@StateObject` or managed externally.
->
+bq. 
 bq. *Key Takeaway:* React Native's prop drilling is similar to manual data passing in UIKit or basic `@ObservedObject` usage. SwiftUI's `@EnvironmentObject` is a closer analog to solutions like React Context that avoid prop drilling.
 
 bq. 🅰️ *(Angular Developers):*
->
+bq. 
 bq. *Comparison:* Angular components use the `@Input()` decorator to receive data from parents. Passing data through multiple layers via `@Input()` is the Angular equivalent of prop drilling. However, Angular's strong emphasis on Dependency Injection encourages the use of Services to manage shared state. Components inject the required service and access shared data or methods directly, effectively bypassing the component hierarchy for state sharing and avoiding prop drilling. RxJS `BehaviorSubject` or Angular Signals within services are common patterns for reactive state management.
->
+bq. 
 bq. *Key Takeaway:* While prop drilling has an Angular counterpart, Angular's service architecture provides a robust, built-in way to avoid it for shared state, which differs from React's initial approach that often leads to prop drilling before introducing context or libraries.
 
 In the next sections, we'll explore solutions like the React Context API, Zustand, and TanStack Query, which offer different strategies to mitigate the challenges posed by prop drilling and manage global or remote state more effectively.

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Handling Events (Press Events)
-
 Interactive applications respond to user input. In React Native, this often involves handling touch events, such as a user pressing a button. This section focuses on how to handle these events, particularly "press" events, using React's event system, which provides a consistent API across platforms by abstracting native differences.
 
 h2. Event Handling in React
@@ -185,33 +183,33 @@ In `MedicationItem`, `onPress={() => onSelectMedication(id, name)}` creates a ne
 Avoid calling the event handler function directly in the prop, like `onPress={onSelectMedication(id, name)}`. This would execute the function when the component renders, not when the event occurs. Always pass a function reference or an arrow function.
 {note}
 bq. ⚛️ *(Web Developers with React Experience):*
->
+bq. 
 bq. *Comparison:* Event handling (e.g., `onClick`, `onChange`) in React for web is very similar. React Native uses specific event props like `onPress` for touch interactions. The pattern of passing functions and using arrow functions to pass arguments is identical.
->
+bq. 
 bq. *Key Takeaway:* Your React event handling knowledge is directly applicable. Just be aware of the specific event prop names available on React Native components (e.g., `onPress` instead of `onClick` for button-like interactions).
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
->
+bq. 
 bq. *Comparison:* Angular uses `(event)="handler()"` syntax (e.g., `(click)="onSave()"`). React uses props like `onPress={handler}`. The concept of binding events to methods is similar, but the syntax differs. React's inline arrow functions for passing arguments are a common pattern.
->
+bq. 
 bq. *Key Takeaway:* Event handlers are props that expect functions. Pay attention to how arguments are passed using arrow functions if needed.
->
+bq. 
 bq. *Source:* [https://angular.io/guide/event-binding|Angular Docs: Event binding]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* This is akin to setting listeners or targets/actions. For example, `button.setOnClickListener(...)` in Android or `addTarget(_:action:for:)` in iOS. In React Native, you assign a JavaScript function to an event prop like `onPress`.
->
+bq. 
 bq. *Key Takeaway:* You handle user interactions by providing JavaScript functions to specific event props on components. These functions are executed when the interaction (e.g., a press) occurs.
->
+bq. 
 bq. *Source:* [https://developer.android.com/develop/ui/views/touch-and-input/input-events/click-events|Android Dev Docs: Handle click events], [https://developer.apple.com/documentation/uikit/uicontrol/1618259-addtarget|Apple Dev Docs: UIControl addTarget]
 
 React Native provides a consistent way to handle user interactions across platforms. The `onPress` event is fundamental for making your SpeedyMeds app interactive, allowing users to trigger actions like selecting a medication, confirming an order, or navigating to a new screen.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/responding-to-events|React Docs: Responding to Events]
 bq. - [https://reactnative.dev/docs/handling-touches|React Native Docs: Handling Touches (covers `Button`, `Pressable` etc.)]
 bq. - [https://reactnative.dev/docs/button|React Native Docs: `Button`]

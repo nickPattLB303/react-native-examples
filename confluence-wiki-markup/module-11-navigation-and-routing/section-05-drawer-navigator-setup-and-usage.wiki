@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Drawer Navigator Setup and Usage
-
 This section introduces the Drawer Navigator, a navigation pattern where a panel slides in from the side of the screen (typically the left) to reveal a list of navigation links. We will use React Navigation's Drawer Navigator ({{@react-navigation/drawer}}) to implement this. Drawers are often used for primary navigation in some apps or for housing secondary items like settings, user profiles, or less frequently accessed sections of the SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Familiarity with {{NavigationContainer}} and the basic structure of React Navigation screens is assumed. Ensure {{react-native-gesture-handler}} and {{react-native-reanimated}} are correctly set up as they are crucial for drawer animations and gestures.
@@ -203,18 +201,18 @@ For `react-native-gesture-handler` to work correctly, especially on Android, ens
 The `react-native-reanimated` library is a powerful animation library. The Drawer Navigator uses it for smooth animations. Ensure it's correctly installed and its Babel plugin is configured (as mentioned in Section 2 for React Navigation setup).
 {tip}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnavigation.org/docs/drawer-navigator/|Drawer Navigator - React Navigation]
 bq. - [https://reactnavigation.org/docs/drawer-navigator/#opening-and-closing-drawer-programmatically|Opening and closing drawer programmatically - React Navigation]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/|`react-native-gesture-handler` Documentation]
 bq. - [https://docs.swmansion.com/react-native-reanimated/|`react-native-reanimated` Documentation]
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* This is similar to implementing a custom side menu using a `UIViewController` that manages a main content view controller and a hidden menu view controller, often triggered by a `UIScreenEdgePanGestureRecognizer` or a bar button item. Some third-party libraries also provide this.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* This directly corresponds to Android's `DrawerLayout` and `NavigationView`. The swipe gesture and the concept of a main content area with a sliding drawer are identical. React Navigation provides the cross-platform abstraction.
 
 h3. Referential Content: Key Drawer Navigator Configuration Options

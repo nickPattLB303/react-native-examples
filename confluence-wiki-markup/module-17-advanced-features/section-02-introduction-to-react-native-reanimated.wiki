@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: Introduction to React Native Reanimated
-
 This section introduces React Native Reanimated, a powerful library for creating fluid and high-performance animations. We will explore its core concepts, understand how it achieves its performance benefits, and walk through setting it up and creating a basic animation.
 
 h2. Conceptual Content
@@ -392,7 +390,7 @@ Apply your understanding of these core concepts in the following exercise.
 * *Exercise 17.1: Basic Reanimated Animation* `*(https://snack.expo.dev/SpeedyMeds-Exercise-17-1)*`
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/core-concepts|React Native Reanimated - Core Concepts]
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/shared-values|React Native Reanimated - `useSharedValue`]
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/styles|React Native Reanimated - `useAnimatedStyle`]

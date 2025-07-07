@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: Measuring Performance
-
 Identifying that your SpeedyMeds app might be slow is one thing; pinpointing _why_ it's slow requires specific tools and techniques. This section explores how to measure the performance of your React Native application to diagnose bottlenecks effectively.
 
 bq. 🛣️ *(All Learners):* Learning to use these measurement tools is like a doctor learning to use a stethoscope. They help you listen to the heartbeat of your application and understand what's happening under the hood.
@@ -51,7 +49,7 @@ h2. Commit Information
 Shows you which props or state changes caused a component to re-render.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. - ⚛️ *(React Developers):* > *Comparison:* This is the same Profiler you use for web development. Its application and interpretation are identical.
 bq. *Key Takeaway:* Your existing React Profiler skills are directly transferable to React Native performance tuning.
 bq. *Source:* {{[https://react.dev/learn/optimizing-performance#profiling-with-the-react-devtools|Profiling with React DevTools]}}
@@ -137,7 +135,7 @@ This diagram illustrates the iterative process of performance tuning. You start 
 Always profile your application in *release/production mode* or a development build that closely mimics it for the most accurate performance metrics. Debug mode in React Native adds significant overhead that can skew measurements.
 {tip}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://fbflipper.com/|Flipper]
 bq. - [https://reactnative.dev/docs/profiling|React Native Docs: Profiling]
 bq. - [https://reactnative.dev/docs/profile-hermes|React Native Docs: Profiling with Hermes]

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Controlled Components Pattern
-
 In React, a "controlled component" is an input form element whose value is controlled by React state. This is the most common and recommended way to handle form inputs in both React and React Native. This section will explain the pattern in detail, demonstrate its implementation, and highlight its benefits and performance considerations for creating predictable and manageable forms.
 
 *What Makes a Component "Controlled"?*
@@ -201,18 +199,18 @@ h2. Cons of Uncontrolled Components
 While React Hook Form (which we will cover later) cleverly uses refs for performance similar to uncontrolled components, it provides an API that often makes working with inputs feel like they are controlled.
 
 bq. 📱 *Background Bridge Notes:*
->
+bq. 
 bq. *For Native Developers (Android/iOS):*
->
+bq. 
 bq. - *Android `EditText`:* The controlled component pattern in React Native is akin to continuously calling `EditText.setText()` in response to a `TextWatcher.afterTextChanged()` event. Typically, in native Android development, an `EditText` manages its own text content internally unless explicitly manipulated.
 bq. - *iOS `UITextField`:* This is similar to programmatically setting the `textField.text` property within the `textField(_:shouldChangeCharactersIn:replacementString:)` delegate method or in response to a `UIControl.Event.editingChanged` event. Native iOS also allows `UITextField` to manage its own text by default.
 bq. The core difference lies in React's declarative paradigm: the UI is a direct function of its state. Changes to the state automatically propagate to the UI, including the value of input fields.
->
+bq. 
 bq. *For Web Developers (React):*
 bq. The controlled component pattern is identical to its counterpart in React for web development. The concepts of binding `value` to state and updating state via `onChange` (or `onChangeText` in RN) are the same.
->
+bq. 
 bq. *For Web Developers (Angular):*
->
+bq. 
 bq. - *Template-Driven Forms:* Angular's `[(ngModel)]="property"` syntax provides two-way data binding, which is conceptually similar to controlled components. Changes in the input update the component property, and changes to the property update the input's display.
 bq. - *Reactive Forms:* Binding an input using `[formControl]="controlName"` links it to a `FormControl` instance in the component class. The `FormControl`'s value acts as the source of truth, and its state is managed programmatically, which aligns closely with the principles of React's controlled components.
 
@@ -223,6 +221,6 @@ Mastering controlled components is a key step towards building complex forms. In
 *(TODO: Link to Expo Snack for Exercise 12.1 - Building a Controlled Form Input. The Snack should guide the student to build a controlled TextInput for a field like 'Patient Emergency Contact Name' or similar, including state management and displaying the captured value, reinforcing the concepts from this section. Ensure the Snack README has clear objectives and instructions.)*
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components|React Docs: Controlled Components]
 bq. - [https://reactnative.dev/docs/textinput#value|React Native Docs: `TextInput` (value prop)]

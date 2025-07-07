@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Enums
-
 Enums (enumerations) in TypeScript allow you to define a set of named constants. Using enums can make your code more readable and less error-prone by restricting variables to a predefined collection of values. They are particularly useful when you have a small, fixed set of related values that have semantic meaning.
 
 h2. Numeric Enums
@@ -133,7 +131,7 @@ Enums are best used when you have a small, distinct set of related constants whe
 Using enums instead of magic strings or numbers improves type safety and makes the intent of your code clearer.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/enums.html|TypeScript Handbook: Enums]
 
 Enums provide a structured way to work with sets of named constants, contributing to more maintainable and understandable TypeScript code for your SpeedyMeds application features.

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Core HTML Concepts (Brief Review)
-
 This section provides a high-level overview of fundamental HTML concepts. Understanding how web pages are structured using HTML helps in grasping the analogous component-based structure in React Native.
 
 {tip}
@@ -42,11 +40,11 @@ HTML (HyperText Markup Language) is the standard language for creating web pages
 This example illustrates the fundamental boilerplate of an HTML5 document, including the `<!DOCTYPE>` declaration, the root `<html>` element with a language attribute, the `<head>` for metadata like the title and character set, and the `<body>` where all visible content resides. This hierarchical structure is foundational to how web pages are organized and later interpreted by browsers to build the DOM.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* HTML's hierarchical structure is conceptually similar to native UI hierarchies like Android's View hierarchy or iOS's UIView hierarchy. The parent-child relationships in HTML (container elements with nested children) parallel how native UI elements are nested within parent containers. The DOM (Document Object Model) is comparable to Android's View tree or iOS's UIView hierarchy in memory.
->
+bq. 
 bq. *Key Takeaway:* HTML's structural patterns will feel familiar if you've worked with native UI hierarchies. Both use tree-like structures where parent elements/views contain and manage child elements/views, forming a complete UI.
->
+bq. 
 bq. *Source:* [https://developer.android.com/guide/topics/ui/ui-events.html|Android Developers: View Hierarchy] / [https://developer.apple.com/documentation/uikit/uiview|Apple Developer: UIView]
 
 h3. Semantic HTML: Meaningful Structure
@@ -124,7 +122,7 @@ When a browser receives an HTML document, it parses the markup to understand and
 # *Tree Construction (DOM):* These tokens are processed to build a tree-like data structure in memory called the *Document Object Model (DOM)*. Each HTML element becomes an object (a node) in this tree, preserving the parent-child and sibling relationships defined in the markup. Text within elements also becomes text nodes. The DOM is the browser's live representation of the page structure, which CSS uses for styling and JavaScript interacts with for dynamic behavior.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://developer.mozilla.org/en-US/docs/Web/HTML|MDN Web Docs: HTML (HyperText Markup Language)]
 bq. - [https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements|MDN Web Docs: HTML Element Reference]
 bq. - [https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML|MDN Web Docs: Introduction to HTML]

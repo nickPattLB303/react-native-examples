@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 2: StyleSheet Deep Dive (Best Practices, Performance)
-
 This section takes a closer look at the {{StyleSheet}} API, the most fundamental way to style your React Native applications. We'll explore how to create and use stylesheets, discuss best practices for organizing your styles, and touch upon performance considerations to ensure your SpeedyMeds app not only looks good but also runs smoothly.
 
 h2. What is {{StyleSheet}}?

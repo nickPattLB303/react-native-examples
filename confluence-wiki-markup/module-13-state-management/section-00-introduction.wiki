@@ -2,14 +2,14 @@
 
 > [!NOTE] > *Preliminary Note on Target Versions:*
 bq. This module adheres to the following target versions for all technical information, API descriptions, and code examples:
->
+bq. 
 bq. - React Native: 0.7x (specifically 0.76 as bundled with Expo SDK 52)
 bq. - Expo SDK: 52+
 bq. - TanStack Query (React Query): v5
 bq. - Zustand: v4+
 bq. - TypeScript: Latest stable (used in all code examples)
 bq. - React: Version compatible with React Native 0.7x
->
+bq. 
 bq. Stating these versions upfront is crucial for ensuring accuracy and relevance, as features and APIs can change between versions. Learners should always consult the official documentation corresponding to the specific versions used in their projects.
 
 Managing data that changes over time—the "state"—is a fundamental aspect of building any interactive application. In React Native, as your SpeedyMeds app grows in complexity, handling state effectively becomes crucial for creating a responsive, maintainable, and scalable user experience. This module explores various strategies and tools for state management, moving from foundational React concepts to powerful libraries designed for both client-side and server-side data.
@@ -21,19 +21,19 @@ bq. 🛣️ *(All Learners):* Effective state management is key to building robu
 🍏 *(iOS Developers):*
 
 bq. *Comparison:* You're likely familiar with managing state using patterns like MVC, MVP, MVVM, and tools such as {{UserDefaults}}, Core Data, or SwiftUIs {{@State}}, {{@ObservedObject}}, and {{@EnvironmentObject}}. React Native's state management also emphasizes separating data from UI, but often relies on component-level state, a global store paradigm (like Redux or Zustand), or hooks for managing data lifecycles. The concept of "props" for passing data down is similar to passing data during segue preparation or view controller initialization, while "state" is more akin to internal properties that a view controller or SwiftUI view manages.
->
+bq. 
 bq. *Key Takeaway:* React Native's approach is heavily influenced by web development patterns, particularly React's unidirectional data flow and component composition. Libraries like Zustand or TanStack Query provide powerful, declarative ways to manage complex state, which might feel different from more imperative or framework-bound native solutions.
 
 🤖 *(Android Developers):*
 
 bq. *Comparison:* You've managed state using {{ViewModel}}s, {{LiveData}}, {{StateFlow/SharedFlow}}, {{SharedPreferences}}, Room, or Jetpack Compose's {{remember}} and {{mutableStateOf}}. React Native similarly encourages separating data logic from UI. {{useState}} is analogous to {{mutableStateOf}} for component-local state. Global state solutions like Zustand or Context API can be compared to using singleton ViewModels or dependency injection to provide shared data scopes. TanStack Query's role in managing server data and caching is similar to what you might achieve with a Repository pattern combined with Room and Retrofit, but often with more built-in declarative features.
->
+bq. 
 bq. *Key Takeaway:* The JavaScript/React ecosystem offers a wide array of state management libraries. The focus is often on immutability and a declarative approach to UI updates based on state changes. Unidirectional data flow is a core principle.
 
 🌐 *(Web Developers):*
 
 bq. *Comparison:* If you're coming from a web background, especially with React, many concepts will be familiar. {{useState}}, {{useEffect}}, and Context API are directly from React. Libraries like Zustand share similarities with Redux (though simpler) or other flux-pattern-inspired libraries. TanStack Query (formerly React Query) is a popular choice for data fetching in React web apps as well. If you're from an Angular background, you might compare React's local component state to component properties, Context API or Zustand to shared services or NgRx store, and TanStack Query to using services with HttpClient and RxJS for handling asynchronous data, caching, and state synchronization.
->
+bq. 
 bq. *Key Takeaway:* While core React state concepts translate directly, this module will emphasize their application and best practices within the React Native environment. For Angular developers, the shift to a more component-centric state model and the specific libraries covered will be key learning points. The JavaScript-based ecosystem of libraries is a significant aspect.
 
 h1. Learning Objectives

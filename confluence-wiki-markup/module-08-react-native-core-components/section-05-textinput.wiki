@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: TextInput ({{<TextInput>}}) - User Input
-
 Capturing user input is a fundamental requirement for most applications. In React Native, the {{<TextInput>}} component is the standard way to allow users to enter text. This section will cover its usage, common props, and how to handle text input for an app like SpeedyMeds, for instance, when a patient needs to enter their information.
 
 h2. Conceptual Content: Understanding {{<TextInput>}}
@@ -35,19 +33,19 @@ h2. Styling
 {{<TextInput>}} can be styled using {{StyleSheet}}. Common styles include {{height}}, {{borderColor}}, {{borderWidth}}, {{padding}}, {{fontSize}}, and {{color}}.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* {{<TextInput>}} is analogous to {{UITextField}} or {{UITextView}} (for multi-line) on iOS, and {{EditText}} on Android. React Native provides a unified API for these native input elements. The controlled component pattern, where {{value}} is set from state and {{onChangeText}} updates that state, differs from typical native approaches of getting text directly (e.g., {{editText.getText().toString()}}) and listening for changes via delegates or watchers.
->
+bq. 
 bq. *Key Takeaway:* {{<TextInput>}} is your primary tool for text input fields. Managing its value through state (controlled component) is a common React pattern.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/textinput|React Native Docs: TextInput]
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* {{<TextInput>}} is similar to the HTML {{<input type="text">}} or {{<textarea>}} elements. The concept of a controlled component, where the input's value is managed by component state and updated via an {{onChange}} handler ({{onChangeText}} in React Native), is identical to how you'd manage form inputs in React for the web. The {{multiline}} prop differentiates between single-line and multi-line input.
->
+bq. 
 bq. *Key Takeaway:* Use {{<TextInput>}} for all text input needs. The controlled component pattern is standard practice.
->
+bq. 
 bq. *Source:* [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text|MDN Web Docs: {{<input type="text">}}], [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea|MDN Web Docs: {{<textarea>}}]
 
 h2. Referential Content: Common {{<TextInput>}} Props and Methods
@@ -80,7 +78,7 @@ Below is a table summarizing important props for the {{<TextInput>}} component:
 * {{clear()}}: Programmatically clears all text from the input field.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/textinput|React Native Docs: TextInput]
 bq. - [https://reactnative.dev/docs/textinput#props|React Native Docs: TextInput Props]
 bq. - [https://reactnative.dev/docs/handling-text-input|React Native Docs: Handling Text Input Guide]

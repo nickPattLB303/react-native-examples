@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Legacy Architecture: The Bridge (Concepts, Limitations)
-
 Welcome to the first step in understanding how React Native works under the hood. For many years, the "Legacy Architecture" was the standard way React Native enabled communication between your JavaScript code and the native platforms (iOS and Android). Understanding this architecture is essential for appreciating the improvements in the newer architecture and for troubleshooting existing applications that may still use it, including early versions of pharmacy apps like the SpeedyMeds project we'll be building.
 
 bq. 🛣️ *(All Learners):* This section establishes foundational concepts that will be referenced throughout the module. Even if you're using the New Architecture in your projects, understanding the legacy approach provides valuable context for React Native's evolution.
@@ -54,39 +52,39 @@ Communication across the Bridge was fundamentally *asynchronous*, *serialized*, 
 # *Batched:* To avoid flooding the Bridge with too many small messages (which would be inefficient), React Native often batched multiple operations together into a single message sent across the Bridge, typically at the end of each iteration of the JavaScript event loop.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/architecture/glossary#bridge|React Native Glossary: Bridge]
 bq. - [https://reactnative.dev/architecture/glossary#threading-model|React Native Glossary: Threading Model]
 bq. - [https://yogalayout.com/|Yoga Layout Engine]
 bq. - [https://reactnative.dev/docs/communication-android|Understanding the React Native Bridge Concept]
->
+bq. 
 bq. 🗂️ *Additional Resources:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/performance#javascript-frame-rate|JavaScript Thread Performance]
 bq. - [https://medium.com/react-native-training/react-native-internals-a-tour-of-the-codebase-811c3c3b6b1e|Deep Dive into React Native Internals]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* This asynchronous, message-passing approach is different from directly calling Java/Kotlin methods from C++ via JNI, which can be synchronous. The serialization step adds overhead not typically present in direct JNI calls.
->
+bq. 
 bq. *Key Takeaway:* The Bridge introduces inherent latency due to its asynchronous nature and the need for serialization/deserialization, unlike potentially faster, synchronous JNI interactions.
->
+bq. 
 bq. *Source:* [https://developer.android.com/training/articles/perf-jni#jni-tips|JNI Tips | Android Developers]
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* While Objective-C/Swift bridging allows communication between languages, the React Native Bridge imposes a specific asynchronous, JSON-based protocol. Directly calling native APIs from JavaScript isn't possible in the way you might call Swift code from Objective-C.
->
+bq. 
 bq. *Key Takeaway:* The Bridge acts as a necessary but potentially bottlenecking intermediary, unlike the more direct (though still rule-bound) interoperability between Objective-C and Swift.
->
+bq. 
 bq. *Source:* [https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift|Swift and Objective-C Interoperability | Apple Developer Documentation]
 
 bq. ⚛️ *(React Developers):*
->
+bq. 
 bq. *Comparison:* Unlike React for web where your JavaScript directly manipulates the DOM, React Native's Bridge creates a significant barrier between your JavaScript code and the native UI elements it controls. This asynchronous communication model means that UI updates in React Native follow a fundamentally different path than in web React.
->
+bq. 
 bq. *Key Takeaway:* Actions that are instant in React web can face small delays in React Native due to Bridge crossing, which can affect animations and gestures in particular.
->
+bq. 
 bq. *Source:* [https://react.dev/reference/react-dom/client/createRoot|React DOM Rendering | React Documentation]
 
 h2. Limitations of the Bridge:

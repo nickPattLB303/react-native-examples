@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: TurboModules (New Architecture Native Modules)
-
 This section delves into TurboModules, a key component of React Native's New Architecture. You'll learn their purpose and goals, the core concepts that underpin them (including JSI, Specification files, and Codegen), the benefits they bring, and the conceptual workflow for their creation.
 
 ![../../assets/diagrams/react-native-new-architecture.png|Diagram: React Native's New Architecture]
@@ -135,25 +133,25 @@ h2. Conceptual Differences from Legacy Modules
 Adopting the New Architecture, including TurboModules, is an ongoing process for the React Native ecosystem. Many existing community libraries are still based on the legacy architecture. However, new libraries and updates are increasingly supporting or being built for the New Architecture. The Expo SDK is also progressively aligning with the New Architecture.
 {note}
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* With TurboModules, you still write Swift or Objective-C code, but the way it's exposed and interacts with JavaScript changes. You'll define your module's interface more explicitly, often using a JavaScript type definition (like TypeScript) that Codegen uses to generate bridging code (including C++ and Objective-C++ protocols). The interaction becomes more direct thanks to JSI.
->
+bq. 
 bq. *Key Takeaway:* TurboModules represent a more modern, performant, and type-safe way to bridge your native iOS code, moving away from `RCT_EXPORT_METHOD` macros towards JSI-backed interactions facilitated by Codegen.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* Similar to iOS, you'll write Kotlin or Java code. The interface for your module will be strictly defined, typically with TypeScript, which Codegen uses to create the JSI bindings and native Java interfaces. This offers more robust type checking than the traditional `@ReactMethod` annotations and allows for more direct native calls from JavaScript.
->
+bq. 
 bq. *Key Takeaway:* TurboModules provide a more structured and efficient mechanism for exposing your Android native logic, with improved type safety and performance due to JSI and Codegen.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* Think of the evolution from older server communication methods (like complex XMLHttpRequests with manual data parsing) to modern typed APIs (like GraphQL with generated client-side types or gRPC). TurboModules, with Codegen and JSI, bring a similar level of formality, type safety, and efficiency to the communication layer between JavaScript and native mobile code, compared to the older, more loosely typed bridge.
->
+bq. 
 bq. *Key Takeaway:* TurboModules represent a significant step towards making JavaScript-to-native communication faster, more reliable, and easier to maintain due to build-time checks and more direct interaction.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/the-new-architecture/why|React Native New Architecture: Why a new architecture?]
 bq. - [https://reactnative.dev/docs/the-new-architecture/pillars-turbomodules|React Native New Architecture: TurboModules]
 bq. - [https://reactnative.dev/docs/the-new-architecture/modules-codegen|React Native New Architecture: Codegen]

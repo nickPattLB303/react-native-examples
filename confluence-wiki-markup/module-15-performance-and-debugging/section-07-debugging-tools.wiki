@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 7: Debugging Tools
-
 Effective debugging is essential for resolving issues quickly and efficiently during development. React Native offers a variety of tools to help you inspect your app's state, debug JavaScript code, analyze network requests, and more. This section explores the key debugging tools available for your SpeedyMeds application.
 
 bq. 🛣️ *(All Learners):* Familiarizing yourself with these debugging tools will significantly speed up your development workflow and help you build more stable and reliable applications.
@@ -177,7 +175,7 @@ h3. Enabling JS Debugging with Chrome DevTools
 For a more streamlined debugging experience within your editor, the VS Code React Native Tools extension is highly recommended. It often provides a good balance of features without needing to switch between multiple windows as much.
 {tip}
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/debugging|React Native Docs: Debugging]
 bq. - [https://reactnative.dev/docs/debugging-hermes|React Native Docs: Debugging Hermes]
 bq. - [https://fbflipper.com/|Flipper - Extensible Mobile App Debugger]

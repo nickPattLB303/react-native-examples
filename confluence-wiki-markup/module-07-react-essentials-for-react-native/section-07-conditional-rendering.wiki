@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 7: Conditional Rendering
-
 Conditional rendering is a core concept in React that allows you to display different UI elements or components based on certain conditions or the current state of your application. This section explores common techniques for implementing conditional rendering in your React Native components.
 
 h2. Why Use Conditional Rendering?
@@ -199,33 +197,33 @@ export default OptionalMessage;
 {code}
 
 bq. ⚛️ *(Web Developers with React Experience):*
->
+bq. 
 bq. *Comparison:* All these conditional rendering techniques (`if` statements, `&&`, ternary operator, returning `null`) are identical to how you'd do it in React for the web.
->
+bq. 
 bq. *Key Takeaway:* Your existing React conditional rendering patterns are directly applicable.
->
+bq. 
 bq. *Source:* [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
 
 bq. 🅰️ *(Web Developers with Angular/Other Framework Experience):*
->
+bq. 
 bq. *Comparison:* Angular uses directives like `*ngIf` for conditional rendering. React integrates these concepts directly into JavaScript logic within JSX. The ternary operator and logical `&&` are common JavaScript idioms that React leverages effectively for this purpose.
->
+bq. 
 bq. *Key Takeaway:* Learn to use JavaScript's own conditional operators and `if` statements (outside JSX or by assigning JSX to variables) to control what gets rendered. There are no special template directives for this in React.
->
+bq. 
 bq. *Source:* [https://angular.io/guide/built-in-directives#ngif|Angular Docs: Built-in structural directives - NgIf]
 
 bq. 📲 *(Native Developers - Android/iOS):*
->
+bq. 
 bq. *Comparison:* This is similar to programmatically setting the visibility of UI elements (e.g., `view.setVisibility(View.GONE)` in Android or `view.isHidden = true` in iOS) or choosing which views to add to a layout based on conditions. React makes this declarative: you describe the conditions, and React handles the showing/hiding or swapping of native views.
->
+bq. 
 bq. *Key Takeaway:* You control the presence or appearance of UI elements by embedding JavaScript conditions directly or indirectly within your JSX structure.
->
+bq. 
 bq. *Source:* [<https://developer.android.com/reference/android/view/View#setVisibility(int|Android Dev Docs: View Visibility]>), [https://developer.apple.com/documentation/uikit/uiview/1622585-ishidden|Apple Dev Docs: UIView isHidden]
 
 Conditional rendering is essential for creating responsive and dynamic UIs that adapt to changing data and application states. Mastering these techniques will allow you to build more sophisticated user experiences in your SpeedyMeds app.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/learn/conditional-rendering|React Docs: Conditional Rendering]
 
 h2. Using `switch` Statements

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: Understanding Hermes Engine Benefits
-
 The JavaScript engine is a fundamental part of any React Native application, responsible for executing your application's logic. Hermes is an open-source JavaScript engine specifically optimized for running React Native apps. This section explores what Hermes is, its key benefits, and how it contributes to better performance for applications like SpeedyMeds.
 
 bq. 🛣️ *(All Learners):* Understanding the role of the JavaScript engine, and Hermes in particular, helps in making informed decisions about your app's architecture and appreciating the underlying technology that boosts its performance.
@@ -173,7 +171,7 @@ As shown above, use the `jsEngine: "hermes"` setting in `app.json` or `app.confi
 After enabling or disabling Hermes, you usually need to clean your build artifacts and rebuild the native application entirely (e.g., `cd android && ./gradlew clean && cd .. && npx react-native run-android`, or similar for iOS in Xcode).
 {note}
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://hermesengine.dev/|Hermes Engine Official Website]
 bq. - [https://reactnative.dev/docs/hermes|React Native Docs: Using Hermes]
 bq. - [https://docs.expo.dev/guides/customizing-metro/#javascript-engine|Expo Docs: JavaScript engine]

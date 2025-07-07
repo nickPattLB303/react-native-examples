@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 7: Expo Project Structure (File/Folder Overview)
-
 When you create a new project with {{create-expo-app}} using the default template (or the {{tabs}} template), it generates a specific directory structure built around *Expo Router* for file-based navigation. Understanding this structure is essential for navigating your project, adding screens, managing assets, and configuring your application.
 
 bq. 🧑‍🏫 *(Instructor-Led):* Consider having students create a diagram of their own project structure as a reference. This physical mapping activity helps solidify understanding of how different files relate to each other.
@@ -473,25 +471,25 @@ This structure highlights Expo's philosophy: manage native configuration primari
 bq. The way Expo centralizes a significant amount of project configuration—spanning app metadata, native platform settings, build options, and plugin integrations—into `app.json` or its dynamic counterparts (`app.config.js`/`.ts`) is a cornerstone of its developer experience. This abstraction is further empowered by Config Plugins, which allow libraries or developers to programmatically modify the underlying native project files based on the app config during the prebuild step. This "configuration as code" paradigm is fundamental to enabling *Continuous Native Generation (CNG)*. With CNG, the `ios` and `android/` directories are treated not as primary source code to be manually edited and version-controlled, but as build artifacts generated deterministically from the project's configuration and dependencies. Consequently, developers need to understand that `app.config.js` is more than just metadata; it's a powerful mechanism for controlling the native aspects of the application, often without directly touching native code, especially when used in conjunction with prebuild and config plugins. This represents a significant departure and simplification compared to the standard React Native CLI workflow.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* `app.json`/`app.config.js` replaces direct editing of `Info.plist`/`AndroidManifest.xml` for many common settings. Config Plugins handle more complex native modifications programmatically. The `ios/` and `android/` folders are treated like build outputs, not primary source code, unless you specifically move away from the CNG workflow. Expo Router replaces manual setup of native navigation containers (like `UINavigationController` or Android Fragments/Activities for navigation structure).
->
+bq. 
 bq. *Key Takeaway:* Configuration is centralized in JS/JSON; native projects are generated artifacts.
->
+bq. 
 bq. *Source:* [https://docs.expo.dev/config-plugins/introduction/|Expo Config Plugins Documentation]
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* Expo Router's `app/` directory feels similar to file-based routing in frameworks like Next.js or Remix. `app.json` is like a mix of `package.json` metadata and build configurations specific to mobile apps. The `ios/`/`android/` folders are analogous to a complex build output directory (`dist/`, `build/`) that you wouldn't typically edit directly.
->
+bq. 
 bq. *Key Takeaway:* File-based routing in `app/`, central configuration in `app.json`, native folders are generated.
->
+bq. 
 bq. *Source:* [https://nextjs.org/docs/app/building-your-application/routing|Next.js App Router Documentation]
 
 Understanding this structure, particularly the role of the `app/` directory and `app.json`, is key to developing effectively with Expo and Expo Router.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/router/basics/project-structure/|Expo Docs: Project Structure (Expo Router)]
 bq. - [https://docs.expo.dev/versions/latest/config/app/|Expo Docs: Configuration with app.json / app.config.js]
 bq. - [https://docs.expo.dev/workflow/continuous-native-generation/|Expo Docs: Continuous Native Generation (CNG)]

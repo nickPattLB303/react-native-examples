@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Optimizing Rendering
-
 Unnecessary component re-renders are a primary cause of performance issues in React applications, including React Native. This section focuses on techniques to optimize rendering performance by preventing these needless updates, ensuring your SpeedyMeds app remains smooth and responsive.
 
 bq. 🛣️ *(All Learners):* Mastering these optimization techniques is fundamental to building high-performance UIs. Even small optimizations in frequently rendered components, like items in a medication list, can have a significant impact.
@@ -70,7 +68,7 @@ h2. Use Cases
 Calculating derived data, performing complex transformations, or any computationally intensive operation that doesn't need to run on every single render.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. - ⚛️ *(React Developers):* > *Comparison:* These are the exact same APIs (`React.memo`, `useCallback`, `useMemo`) you use in React for the web. Their purpose and behavior are identical.
 bq. *Key Takeaway:* Your existing knowledge of these React optimization tools is directly applicable and highly valuable in React Native.
 bq. *Source:* `[https://react.dev/reference/react/memo|React Docs: memo]`, `[https://react.dev/reference/react/useCallback|useCallback]`, `[https://react.dev/reference/react/useMemo|useMemo]`
@@ -332,7 +330,7 @@ In `MedicationStockDisplay`, the `stockStatusMessage` is calculated using `useMe
 Don't overuse memoization. Profile your application first to identify actual bottlenecks. Premature optimization can sometimes make code harder to read and maintain for negligible performance gains. Use these tools judiciously where they provide a clear benefit.
 {note}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react.dev/reference/react/memo|React Docs: `memo`]
 bq. - [https://react.dev/reference/react/useCallback|React Docs: `useCallback`]
 bq. - [https://react.dev/reference/react/useMemo|React Docs: `useMemo`]

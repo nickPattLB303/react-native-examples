@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 6: Reducing Bundle Size
-
 The JavaScript bundle size of your React Native application directly impacts its startup performance and memory footprint. A smaller bundle means less code for the JavaScript engine to parse and execute, leading to a faster launch. This section discusses why bundle size matters and strategies to reduce it for your SpeedyMeds app.
 
 bq. 🛣️ *(All Learners):* Keeping your app's bundle size in check is an ongoing process. Regularly analyzing and optimizing your bundle can lead to noticeable improvements in startup time, especially on older or less powerful devices.
@@ -123,7 +121,7 @@ This analysis will guide your efforts in removing unused code, finding lighter a
 Bundle analysis should ideally be done on a production/release build of your JavaScript bundle, as development builds contain extra code and are not optimized in the same way.
 {note}
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/performance#ram-bundles-and-inline-requires|React Native Docs: Performance - RAM Bundles & Inline Requires] (Explains RAM bundles which relate to advanced bundle optimization)
 bq. - [https://docs.expo.dev/guides/analyzing-bundle-size/|Expo Docs: Analyzing Bundle Size] (Often provides the most up-to-date guidance for Expo projects)
 bq. - [https://hermesengine.dev/docs/reducing-app-size/|Hermes JS Engine: Reducing App Size]

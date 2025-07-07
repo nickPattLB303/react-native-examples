@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 3: Alert API
-
 Communicating important information or prompting users for confirmation are common tasks in mobile applications. React Native's {{Alert}} API provides a simple way to display standard native alert dialogs with a title, message, and buttons.
 
 h2. Conceptual Content
@@ -63,7 +61,7 @@ For more complex dialogs requiring custom layouts, diverse input types (beyond s
 > [!IMPORTANT] > *Testing Alerts:* Interactions with native {{Alert}} dialogs (especially {{Alert.prompt}}) often cannot be tested effectively with JavaScript-based testing libraries like React Native Testing Library, as these libraries operate on the React component tree. Native alerts are outside this tree. Testing them typically requires End-to-End (E2E) testing tools such as Detox or Maestro, which can interact with actual native UI elements, or by mocking the {{Alert}} module during unit/integration tests.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/alert|React Native Docs: {{Alert}}]
 
 h2. "Under the Hood": Native Implementation of {{Alert.alert}}
@@ -433,13 +431,13 @@ Here, the "Delete" button has `style: 'destructive'`. On iOS, this usually rende
 h2. Background Bridge Notes
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* In iOS, `Alert.alert()` is very similar to using `UIAlertController` with different `UIAlertAction` styles (`.default`, `.cancel`, `.destructive`). `Alert.prompt()` also maps to `UIAlertController` but utilizes the `addTextField(configurationHandler:)` method to include input fields. On Android, `Alert.alert()` is akin to using `AlertDialog.Builder` to create and show dialogs with positive, negative, and neutral buttons. Android lacks a direct system-level equivalent to `Alert.prompt()` with built-in text fields within the standard `AlertDialog`; creating such a prompt natively would require a custom dialog layout containing `EditText` views.
->
+bq. 
 bq. *Key Takeaway:* React Native's `Alert` API provides a cross-platform abstraction for standard alerts and an iOS-specific method for simple input prompts, simplifying their usage from JavaScript. However, its calls are asynchronous, unlike some synchronous native dialog interactions.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* The closest web equivalents are `window.alert()`, `window.confirm()`, and `window.prompt()`. However, these are very basic, often considered intrusive, and cannot be styled or customized as much as native alerts. Unlike web `alert()`, `confirm()`, and `prompt()`, which are synchronous and block JavaScript execution, React Native\'s `Alert` API calls are asynchronous. The `onPress`, `onDismiss` (Android), or prompt callback functions are invoked when the user interacts with the native dialog.
 
 h2. Exercise

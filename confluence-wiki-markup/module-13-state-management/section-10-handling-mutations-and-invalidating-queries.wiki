@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: Handling Mutations and Invalidating Queries
-
 In Section 8, we introduced {{useMutation}} as the hook for creating, updating, or deleting data on the server. A critical aspect of using mutations effectively is ensuring that your client-side cache and UI are updated to reflect these changes. TanStack Query provides robust mechanisms for this, primarily through query invalidation and, for more advanced scenarios, optimistic updates or direct cache manipulation.
 
 h2. Recap: {{useMutation}}
@@ -340,26 +338,26 @@ Choosing between invalidation and direct cache updates often depends on:
 Invalidation is generally safer and simpler to start with.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* After a successful data modification (e.g., saving to a server via `URLSession`), you'd typically need to manually update your local data model (perhaps an array backing a `UITableView` or `ObservableObject` properties) and/or re-fetch data to ensure UI consistency. TanStack Query's `invalidateQueries` automates the re-fetching part. Optimistic updates would involve manually changing your local model before the network call returns and then reverting if it fails, which TanStack Query provides a structured way to handle via `onMutate` and `onError`.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query streamlines post-mutation data synchronization. `invalidateQueries` is like a smart refresh mechanism, and `setQueryData` or optimistic updates offer more immediate UI feedback than typical manual approaches without significant custom logic.
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* When you update data via a Repository method (e.g., calling a Retrofit service), the Repository might then signal its `ViewModel` (perhaps by re-emitting a `Flow` from Room or by manually triggering a refresh of a `LiveData` object) to get fresh data. `queryClient.invalidateQueries` achieves a similar outcome declaratively. Optimistic updates in Android would involve updating local data (e.g., in a `MutableStateFlow` or `LiveData`) immediately and then handling success/failure from the network call, which is what TanStack Query formalizes in its `useMutation` callbacks.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query's mutation handling with cache invalidation or optimistic updates provides a standardized pattern for UI consistency post-server changes, reducing the need for custom event buses or manual refresh triggers in ViewModels/Repositories.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison (React):* These patterns are core to TanStack Query. Before its widespread adoption, developers might manually re-fetch in `useEffect` after a successful POST/PUT, or dispatch actions to Redux to update the store optimistically and then handle server responses. TanStack Query standardizes these flows beautifully.
 bq. *Comparison (Angular):* After a successful HttpClient POST/PUT in an Angular service, you might use an RxJS `Subject` or an event emitter to notify other components/services to refresh their data, or directly update a shared state in a service. `invalidateQueries` is a more targeted and automatic way to achieve this refresh. Optimistic updates would involve similar logic of updating local state first and then handling the server response.
->
+bq. 
 bq. *Key Takeaway:* TanStack Query provides powerful and declarative primitives (`invalidateQueries`, `setQueryData`, `onMutate`) for managing cache consistency after mutations, significantly simplifying what used to be complex, manual state synchronization logic in many web applications.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://tanstack.com/query/v5/docs/react/guides/mutations|TanStack Query - Mutations (`useMutation`)] (covers `onSuccess`, `onError`, etc.)
 bq. - [https://tanstack.com/query/v5/docs/react/guides/query-invalidation|TanStack Query - Query Invalidation]
 bq. - [https://tanstack.com/query/v5/docs/react/guides/optimistic-updates|TanStack Query - Optimistic Updates]

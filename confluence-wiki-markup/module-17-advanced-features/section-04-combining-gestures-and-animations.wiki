@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Combining Gestures and Animations
-
 This section explores the powerful synergy between React Native Gesture Handler and React Native Reanimated. By combining these libraries, you can create sophisticated, interactive animations that respond fluidly to user touch input, all running smoothly on the UI thread.
 
 h2. Conceptual Content
@@ -194,13 +192,13 @@ This `PrescriptionCard` component showcases a sophisticated interactive element 
 This combination of direct manipulation during the `onActive` phase (dragging and rotating) and a physics-based animation on `onEnd` (spring-back) results in an engaging and polished user experience, demonstrating the power of using Gesture Handler and Reanimated in tandem.
 
 bq. 📲 *(Native Developers):*
->
+bq. 
 bq. *Comparison:* This pattern of capturing gesture data (like translation or velocity) and using it to drive animation parameters is very similar to how you might implement custom interactive animations on iOS (e.g., with `UIPanGestureRecognizer` and `UIViewPropertyAnimator`) or Android (e.g., `GestureDetector` and `ObjectAnimator` or spring physics).
->
+bq. 
 bq. *Key Takeaway:* Reanimated and Gesture Handler provide a high-level, declarative way to achieve complex, physics-based interactions that feel native, managing the UI thread updates for you.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/events#using-usedeclarativegesturehandler|React Native Reanimated - Combining with Gesture Handler]
 bq. - [https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/overview|React Native Gesture Handler - Overview]
 bq. - [https://docs.swmansion.com/react-native-reanimated/docs/utilities/interpolate|React Native Reanimated - `interpolate`]

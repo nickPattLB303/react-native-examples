@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Common Performance Bottlenecks in React Native
-
 This section introduces common performance bottlenecks that can arise in React Native applications. Understanding these potential issues is the first step towards building highly performant mobile apps for SpeedyMeds or any other project.
 
 bq. 🛣️ *(All Learners):* Recognizing these bottlenecks early in development or during optimization phases can save significant time and effort, leading to a much smoother user experience.
@@ -22,7 +20,7 @@ h2. SpeedyMeds Example
 A medication list item re-rendering every time any part of the parent list screen's state changes, even if that specific item's data remains the same.
 
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. - ⚛️ *(React Developers):* > *Comparison:* This is a familiar problem. Techniques like {{React.memo}}, {{shouldComponentUpdate}} (for class components), {{useMemo}}, and {{useCallback}} are equally crucial in React Native.
 bq. *Key Takeaway:* The core principles of preventing unnecessary renders are the same, but the impact can feel more pronounced on mobile due to resource constraints.
 bq. *Source:* {{[https://react.dev/learn/optimizing-performance|React Documentation: Optimizing Performance]}}
@@ -99,7 +97,7 @@ h2. SpeedyMeds Example
 Rendering a list of thousands of available medications without virtualization, causing all items to be rendered in memory at once.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]
 
 h3. 7. Large Bundle Size
@@ -135,7 +133,7 @@ bq. *Key Takeaway:* When working with or creating native modules (especially in 
 bq. *Source:* {{[https://reactnative.dev/docs/the-new-architecture/jsi|React Native Documentation: The New Architecture - JavaScript Interface (JSI)]}}
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/performance|React Native Performance Overview]
 bq. - [https://reactnative.dev/docs/performance#ram-format-bundles-and-inline-requires|Understanding React Native Memory Management] (RAM bundles and inline requires relate to memory and startup)
 bq. - [https://reactnative.dev/docs/debugging|Debugging in React Native (includes performance profiling)]

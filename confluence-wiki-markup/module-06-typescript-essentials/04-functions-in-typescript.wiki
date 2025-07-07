@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Functions in TypeScript
-
 Functions are fundamental to any application, and TypeScript enhances them by allowing you to define types for their parameters and return values. This brings greater clarity, predictability, and error prevention to your function definitions and calls.
 
 h2. Typing Parameters
@@ -187,7 +185,7 @@ const handleRefillRequest: ButtonPressHandler = (eventTime, buttonId) => {
 {code}
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://www.typescriptlang.org/docs/handbook/2/functions.html|TypeScript Handbook: More on Functions]
 bq. - [https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#function-type-expressions|TypeScript Handbook: Everyday Types (covers function types)]
 

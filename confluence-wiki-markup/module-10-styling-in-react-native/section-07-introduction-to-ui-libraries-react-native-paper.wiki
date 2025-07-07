@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 7: Introduction to UI Libraries: React Native Paper
-
 While {{StyleSheet}}, inline styles, and CSS-in-JS libraries like {{styled-components}} provide powerful tools for styling from scratch, UI component libraries can significantly accelerate development by offering pre-built, pre-styled, and often themeable components. In this section, we'll introduce the concept of UI libraries and focus on React Native Paper, a popular choice for implementing Material Design in React Native applications like SpeedyMeds.
 
 h2. What are UI Component Libraries?
@@ -104,9 +102,9 @@ This setup makes the theme (default or custom) available to all React Native Pap
 If you are using other global providers in your application (e.g., for navigation like React Navigation, or for state management like Redux), ensure that `PaperProvider` is placed appropriately in the component tree. Often, `PaperProvider` will wrap your main navigation/app content, but it might be nested inside other providers like a navigation container. Consult the documentation for any other global providers you use to determine the best hierarchy.
 {info}
 bq. 🌐 *(Web Developers):*
->
+bq. 
 bq. *Comparison:* This is similar to using component libraries like Material-UI, Ant Design, or Bootstrap in web development. You install the library, import components, and often have a top-level provider for theming or global configuration.
->
+bq. 
 bq. *Key Takeaway:* React Native Paper brings a comprehensive, Material Design-compliant component suite to your mobile development workflow, abstracting away much of the low-level styling and behavior implementation.
 
 In the next section, we will start using some of the common components provided by React Native Paper and see how they can be integrated into our SpeedyMeds application.

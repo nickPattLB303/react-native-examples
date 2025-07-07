@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 5: Introduction to Form Libraries (React Hook Form Recommended)
-
 While the controlled components pattern using local {{useState}} is effective for simple forms, managing more complex forms with numerous fields, intricate validation logic, and submission states can become cumbersome. This is where form management libraries shine. They provide robust solutions to streamline form development, reduce boilerplate, improve performance, and offer a more declarative way to handle forms in React Native.
 
 *Why Use a Form Library?*
@@ -82,18 +80,18 @@ While React Hook Form often uses the term "uncontrolled inputs" to describe its 
 In the following sections, we will dive into setting up React Hook Form, registering inputs, implementing validation, and handling form submissions. This will equip you to build sophisticated and efficient forms for your SpeedyMeds application.
 
 bq. 📱 *Background Bridge Notes:*
->
+bq. 
 bq. *For Native Developers (Android/iOS):*
 bq. Native mobile development typically doesn\'t involve "form libraries" in the same comprehensive sense as in the web/React ecosystem. Developers usually compose UI elements provided by the platform SDKs and manually implement the logic for data collection, validation, and submission, perhaps using utility classes or architectural patterns like MVVM/MVC to organize this logic. React Hook Form provides a high-level, structured framework for these tasks, abstracting much of the manual effort into a declarative, React-centric paradigm.
->
+bq. 
 bq. *For Web Developers (React):*
 bq. Many React web developers will already be familiar with React Hook Form, Formik, or similar libraries. The benefits and core concepts largely translate to React Native development, with the primary adaptation being how RHF interacts with React Native\'s specific UI components (often via the {{Controller}}).
->
+bq. 
 bq. *For Web Developers (Angular):*
 bq. Angular provides a robust, built-in solution for form management with its Reactive Forms module ({{@angular/forms}}), featuring {{FormGroup}}, {{FormControl}}, {{FormArray}}, and built-in validators. React Hook Form is a third-party library that brings a similarly comprehensive set of capabilities to the React/React Native ecosystem. The key difference is philosophical: Angular includes this as a core part of the framework, while React relies on the ecosystem to provide such specialized solutions.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://react-hook-form.com/|React Hook Form - Website]
 bq. - [https://react-hook-form.com/get-started|React Hook Form - Get Started]
 bq. - [https://react-hook-form.com/api|React Hook Form - API Documentation]

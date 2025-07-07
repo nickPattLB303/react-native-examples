@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: Expo Router vs. React Navigation Configuration
-
 This section provides a comparative overview of configuring navigation using Expo Router versus the traditional React Navigation library. Both approaches have their strengths and are suitable for different use cases or developer preferences. Understanding these differences will help you decide which tool (or combination of tools) is best for your SpeedyMeds application or future projects.
 
 bq. 🛣️ *(All Learners):* This section assumes you have a basic understanding of how to set up simple stack and tab navigators with both React Navigation (Sections 3 & 4) and Expo Router (Section 9).
@@ -155,7 +153,7 @@ h2. Choose Expo Router when
 Expo Router uses React Navigation for its core functionalities. So, you are still benefiting from the robustness of React Navigation. Expo Router primarily offers a different, often more convenient, way to define and manage your routes and layouts, particularly within the Expo ecosystem.
 {note}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/router/comparison/|Expo Router: Comparison to React Navigation]
 bq. - [https://reactnavigation.org/docs/thinking-in-react-navigation/|React Navigation: Thinking in React Navigation]
 

@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 1: Introduction to EAS (Expo Application Services)
-
 This section introduces you to Expo Application Services (EAS), a suite of hosted services built by Expo to simplify and enhance the lifecycle of your React Native applications. We'll explore what EAS is, its core components, and the significant benefits it brings to your development workflow, especially when preparing your app for production and distribution.
 
 h2. What is Expo Application Services (EAS)?
@@ -131,7 +129,7 @@ EAS is tightly integrated with the Expo CLI, `app.config.js`, and your Expo proj
 While EAS offers many services for free, some features or higher usage tiers may require a paid subscription. Always check the latest pricing and feature availability on the [https://expo.dev/pricing|Expo website].
 {note}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/eas/|Expo Docs: Expo Application Services (EAS) Overview]
 bq. - [https://docs.expo.dev/build/introduction/|Expo Docs: EAS Build]
 bq. - [https://docs.expo.dev/submit/introduction/|Expo Docs: EAS Submit]
@@ -140,21 +138,21 @@ bq. - [https://docs.expo.dev/build/introduction/#why-eas-build|Expo Docs: Why EA
 bq. - [https://docs.expo.dev/build/concepts/|Expo Docs: Core concepts of EAS Build]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* EAS Build can be conceptualized as a cloud-hosted, managed equivalent of your local Android Studio build processes (using Gradle). It abstracts away much of the intricate environment setup and the often-complex management of signing keystores. EAS Submit automates interactions that would typically occur manually through the Google Play Console web interface.
->
+bq. 
 bq. *Key Takeaway:* OTA updates delivered via EAS Update are fundamentally different from native code updates. They target the JavaScript bundle and associated assets, enabling rapid deployments for UI and logic changes without a new store-reviewed `.aab` or `.apk`.
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* EAS Build is like having Xcode's build and archive process running in the cloud, managed for you. It handles the complexities of signing certificates and provisioning profiles. EAS Submit automates what you'd normally do through App Store Connect or with tools like Transporter.
->
+bq. 
 bq. *Key Takeaway:* OTA updates via EAS Update allow quick JS and asset changes without a full App Store review, distinct from native code updates which still require a new `.ipa` submission.
 
 bq. 🌐 *(Web Developers - React/Angular):*
->
+bq. 
 bq. *Comparison:* Consider EAS as a comprehensive CI/CD and deployment platform tailored specifically for mobile applications, analogous to services like Vercel, Netlify, or AWS Amplify for web applications, but with the added complexities of native code compilation and app store interactions.
->
+bq. 
 bq. *Key Takeaway:* The "building" of an app within EAS involves native compilation into platform-specific package files (`.ipa` for iOS, `.aab` for Android). These are then installed directly onto devices. App store submission is a formal review process, not merely a `git push`. OTA updates share some conceptual similarities with Hot Module Replacement (HMR), but are for production users and involve a more structured delivery system.
 
 In the next section, we'll compare EAS Build with the classic `expo build` system to understand its evolution and advantages more clearly.

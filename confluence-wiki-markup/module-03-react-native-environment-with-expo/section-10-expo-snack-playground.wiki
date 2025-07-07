@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: Expo Snack - The Online React Native Playground
-
 ![https://user-images.githubusercontent.com/13632436/129965324-12b9907d-84a6-4320-ab8e-33dbf393a4e3.png|Expo Snack Logo] <!-- Placeholder: Replace with an actual asset path if available, e.g., ./assets/images/module-3/expo-snack-logo.png -->
 
 Expo Snack ([https://snack.expo.dev|snack.expo.dev]) is an invaluable tool, especially during the learning process and for quick experimentation. It's an open-source, web-based Integrated Development Environment (IDE) that allows you to write and run React Native code directly in your browser without any local installation.
@@ -55,11 +53,11 @@ However, as we progress to modules focusing on integrating diverse native capabi
 
 bq. 💡 *Key Insight: Snack as a Learning Accelerator with Clear Boundaries*
 bq. Expo Snack serves as a powerful learning accelerator by removing the initial friction of environment setup. This barrier is often the most significant hurdle when learning a new framework. Snack allows learners to dive directly into writing code and understanding fundamental React Native concepts and exploring many Expo SDK APIs without delay. This immediate feedback loop is highly beneficial for reinforcing learning.
->
+bq. 
 bq. However, it's crucial to recognize that Snack's limitations mirror those of Expo Go. It provides a simplified view of the React Native world and does not encompass the full development workflow required for building and testing production applications, especially those involving custom native integrations or configurations. Therefore, while Snack is an excellent pedagogical tool for introductory exercises and illustrating concepts, the curriculum explicitly addresses its limitations and guides learners toward local development using their own environment and Development Builds as they progress to more advanced topics and prepare for real-world application development.
 
 bq. 📚 *Official Documentation & Resources:*
->
+bq. 
 bq. - [https://snack.expo.dev/|Expo Snack Website]
 bq. - [https://docs.expo.dev/guides/sharing-code/|Expo Docs: Sharing Code (mentions Snack)]
 bq. - [https://github.com/expo/snack|Expo Snack GitHub (snack-sdk)]

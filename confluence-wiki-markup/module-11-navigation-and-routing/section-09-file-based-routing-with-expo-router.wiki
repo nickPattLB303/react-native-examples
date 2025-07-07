@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 9: File-Based Routing with Expo Router in Practice
-
 This section delves into the practical application of Expo Router's file-based routing paradigm. You will learn how to implement common navigation patterns such as Stack, Tab, and Drawer navigators using layout routes ({{_layout.tsx}}) and how to leverage Expo Router's features for typed routes to build more robust applications like SpeedyMeds.
 
 bq. 🛣️ *(All Learners):* Building on the introduction to Expo Router, this section will solidify your understanding of how file structure translates into navigation structure. Pay attention to the role of {{_layout.tsx}} files in defining navigators.
@@ -320,7 +318,7 @@ import { Link } from "expo-router";
 The primary benefit comes from autocompletion and error checking when constructing `href` objects or using `router.push()` with pathnames and params.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://docs.expo.dev/router/layouts/|Expo Router: Layouts and Navigators]
 bq. - [https://docs.expo.dev/router/navigators/stack/|Expo Router: Stack Navigator]
 bq. - [https://docs.expo.dev/router/navigators/tabs/|Expo Router: Tabs Navigator]
@@ -329,15 +327,15 @@ bq. - [https://docs.expo.dev/router/reference/typed-routes/|Expo Router: Typed R
 bq. - [https://docs.expo.dev/router/navigating/|Expo Router: Linking and Navigation]
 
 bq. 🌐 *(Web Developers using File-System Routers):*
->
+bq. 
 bq. *Comparison:* The way `_layout.tsx` files define shared UI for a directory (segment) is very similar to layout components in Next.js (e.g., `layout.tsx` or `template.tsx`) or Remix (`app/routes/_index.tsx` structure). The navigator components (`Stack`, `Tabs`) are specific to Expo Router but serve the same purpose of structuring the UI for that segment.
->
+bq. 
 bq. *Key Takeaway:* The pattern of collocated layouts defining the "chrome" for a set of routes is consistent.
 
 bq. ⚛️ *(React Developers using React Navigation):*
->
+bq. 
 bq. *Comparison:* Instead of imperatively defining `createStackNavigator().Navigator` and then nesting `Screen` components with their `component` props, you define the navigator type in `_layout.tsx` (e.g., `<Stack />`) and Expo Router automatically maps files in that directory to screens within that stack. Screen-specific options are still applied, but typically within the `_layout.tsx` file on the `<Navigator.Screen name="filename" />` elements.
->
+bq. 
 bq. *Key Takeaway:* Configuration shifts from being purely in JavaScript objects/components to being driven by file structure, with `_layout.tsx` files acting as the configuration hub for each segment.
 
 h3. Exercise 11.4: Implementing Routes with Expo Router

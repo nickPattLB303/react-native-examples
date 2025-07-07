@@ -13,35 +13,35 @@ bq. 🔁 *(Asynchronous Learners):* The official React Native documentation for 
 h1. Target Audience Adaptation
 
 bq. 🍏 *(iOS Developers):*
->
+bq. 
 bq. *Comparison:* React Native Core Components like {{<View>}}, {{<Text>}}, and {{<Image>}} are analogous to UIKit elements such as {{UIView}}, {{UILabel}}, and {{UIImageView}}. The primary difference is that you define and manipulate these components using JavaScript/JSX instead of Swift/Objective-C and Interface Builder or programmatic layout. Styling via {{StyleSheet}} (using Flexbox) will also differ from Auto Layout or SwiftUI modifiers.
->
+bq. 
 bq. *Key Takeaway:* You'll recognize the purpose of many components. The main learning curve will be the JSX syntax, prop-based configuration, and JavaScript-based styling.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/core-components-and-native-components|React Native Docs: Core Components and Native Components], [https://developer.apple.com/documentation/uikit|Apple Developer Docs: UIKit]
 
 bq. 🤖 *(Android Developers):*
->
+bq. 
 bq. *Comparison:* React Native Core Components map directly to Android Views. For example, {{<View>}} is like a {{ViewGroup}}, {{<Text>}} to {{TextView}}, and {{<Image>}} to {{ImageView}}. Instead of XML layouts, you'll use JSX. Styling is done with JavaScript objects via {{StyleSheet}}, which is different from Android's XML attributes or themes.
->
+bq. 
 bq. *Key Takeaway:* The concept of UI widgets will be familiar. Focus on learning the JSX syntax for these components and how styling is applied using JavaScript.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/core-components-and-native-components|React Native Docs: Core Components and Native Components], [https://developer.android.com/guide/topics/ui/declaring-layout|Android Developer Docs: Views]
 
 bq. ⚛️ *(Web Developers with React):*
->
+bq. 
 bq. *Comparison:* The component model, JSX syntax, and props are identical to React for the web. Think of {{<View>}} as {{<div>}}, {{<Text>}} as {{<p>}} or {{<span>}}, and {{<Image>}} as {{<img>}}. The main differences are the specific set of components available (native mobile widgets vs. HTML elements) and their unique props. Styling is also different: React Native uses {{StyleSheet}} objects and Flexbox by default, not standard web CSS (though many CSS concepts translate).
->
+bq. 
 bq. *Key Takeaway:* Your React knowledge is highly transferable. Focus on learning the available Core Components and their specific props, as well as the React Native styling system.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/core-components-and-native-components|React Native Docs: Core Components and Native Components], [https://reactnative.dev/docs/style|React Native Docs: Style]
 
 bq. 🅰️ *(Web Developers with Angular/Other Frameworks):*
->
+bq. 
 bq. *Comparison:* While the architectural specifics differ, the idea of using pre-defined UI elements to build your application is similar to using common components or directives in Angular (e.g., {{<button>}}, {{<input>}}, or Material Design components). In React Native, you define these using JSX. Styling is done with JavaScript objects via {{StyleSheet}}, which contrasts with Angular's component-scoped CSS or global stylesheets.
->
+bq. 
 bq. *Key Takeaway:* The concept of UI building blocks will be familiar. Concentrate on learning JSX for component definition, the available Core Components, and the {{StyleSheet}} API for styling.
->
+bq. 
 bq. *Source:* [https://reactnative.dev/docs/core-components-and-native-components|React Native Docs: Core Components and Native Components], [https://angular.io/guide/built-in-directives|Angular Docs: Built-in directives]
 
 h1. Learning Objectives
@@ -97,7 +97,7 @@ This module provides a comprehensive exploration of React Native's Core Componen
 h1. Additional Resources
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/core-components-and-apis|React Native Docs: Core Components and APIs]
 bq. - [https://reactnative.dev/docs/components-and-apis|React Native Docs: Components Section (Browse individual components)]
 bq. - [https://docs.expo.dev/ui-programming/react-native-styling/|Expo Docs: React Native Core Components (Often mirrors RN docs but good to be aware of)]

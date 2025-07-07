@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: Responsive Design Techniques
-
 Mobile devices come in a variety of screen sizes, aspect ratios, and resolutions. A well-crafted application should provide a good user experience across this diverse range of devices. Responsive design in React Native involves creating layouts and styles that adapt gracefully to these variations. This section explores techniques to make your SpeedyMeds application responsive.
 
 h2. Why Responsive Design Matters
@@ -451,7 +449,7 @@ This community library provides a more robust and flexible cross-platform soluti
 *Installation:*
 
 {code:language=bash}
-
+h1. Using npm
 npm install react-native-safe-area-context
 
 h1. Or using yarn

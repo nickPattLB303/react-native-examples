@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 4: Optimizing Lists
-
 Displaying lists of data is a fundamental part of many mobile applications, including our SpeedyMeds app which might show lists of medications, prescriptions, or patient reminders. When these lists become long, performance can degrade significantly if not handled correctly. This section focuses on optimizing list rendering in React Native using {{FlatList}}, {{SectionList}}, and introducing {{FlashList}}.
 
 bq. 🛣️ *(All Learners):* Efficiently rendering lists is crucial for a smooth scrolling experience and preventing your app from becoming sluggish or consuming excessive memory, especially on less powerful devices.
@@ -361,7 +359,7 @@ To use `FlashList`, you install `@shopify/flash-list` and import it. The main ch
 When implementing `getItemLayout`, ensure the `length` you provide is accurate. Incorrect values can lead to jumpy scrolling or items not rendering correctly.
 {warning}
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/flatlist|React Native Docs: `FlatList`]
 bq. - [https://reactnative.dev/docs/sectionlist|React Native Docs: `SectionList`]
 bq. - [https://reactnative.dev/docs/optimizing-flatlist-configuration|React Native Docs: Optimizing FlatList Configuration]

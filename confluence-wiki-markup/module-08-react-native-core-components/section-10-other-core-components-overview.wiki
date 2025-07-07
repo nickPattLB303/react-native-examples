@@ -1,7 +1,5 @@
 {toc}
 
-h1. Section 10: Other Core Components Overview, Challenge, and Summary
-
 Beyond the foundational components we've covered in detail, React Native offers several other Core Components that are useful in various scenarios. This section provides a brief overview of some of them, followed by a module challenge and a summary of what you've learned in Module 8.
 
 h2. Conceptual Content: Overview of Other Core Components
@@ -41,7 +39,7 @@ h2. {{<RefreshControl>}}
 These components, along with the ones covered in previous sections, form a powerful toolkit for building rich and interactive user interfaces in React Native. Always refer to the official documentation for the most up-to-date information on props and usage.
 
 bq. 📚 *Official Documentation:*
->
+bq. 
 bq. - [https://reactnative.dev/docs/components-and-apis|React Native Docs: Components and APIs] (A good starting point to explore all available components)
 
 ----
